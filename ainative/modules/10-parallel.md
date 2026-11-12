@@ -287,8 +287,8 @@ For REMIT-350 it is short: S1 and S2 are independent, S3 builds on S1's contract
 
 **4. An orchestrator starts a subagent with "implement the statement command as we discussed". Why is that a weak brief?**
 
-- A. Subagents cannot be told which files they may change, only what to build
-- B. A subagent is not allowed to read `CLAUDE.md`, so rules must be repeated
+- A. Subagents cannot be told which files they may change, only what they should build
+- B. A subagent is not allowed to read `CLAUDE.md`, so rules must be repeated each time
 - C. It never sees your conversation, so the contract has to be in the message
 - D. The orchestrator cannot read the reply until the whole worker session ends
 
@@ -614,7 +614,7 @@ Streams at once: 3.  Integration: 20 min.  A ÷ R from this one row: 1.5, so two
 - A. Yes: a branch that did not overlap another would fail "branches merged"
 - B. Yes: the grader sees the worktrees, which only exist during a session
 - C. No: tasks done one after another leave the same files and history
-- D. No: the grader ignores the history and reads only the final files
+- D. No: the grader ignores the history and reads only the files as they end
 
 <details><summary>Answer</summary>
 

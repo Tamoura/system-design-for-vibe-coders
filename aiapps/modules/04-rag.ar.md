@@ -190,9 +190,9 @@ quality_gate: {recall_at_3: "agreed target on 40 questions", refusal_tests: 5}
 
 **2. قطعة رتبتها 2 في بحث المتجهات (vector search) وغائبة عن BM25، وقطعة أخرى رتبتها 4 في كليهما. عند k = 60، أيهما تحصل على درجة أعلى (which scores higher)؟**
 
-- A. الأولى، لأن الرتبة 2 تتفوق دائمًا على الرتبة 4 في قائمة واحدة (in a single list)
+- A. الأولى، لأن الرتبة 2 تتفوق دائمًا على الرتبة 4 في القائمة الواحدة نفسها (in one list)
 - B. يتعادلان، لأن k = 60 تسطّح الرتب (flattens the ranks away)
-- C. الأولى، لأن رتب المتجهات (vector ranks) تُحتسب أكثر من رتب BM25 (count for more)
+- C. الأولى، لأن رتب المتجهات (vector ranks) تفوق رتب BM25 بكثير (far outweigh BM25 ranks)
 - D. الثانية، لأن قائمتين تتفقان وتتجمع نقاطهما (two lists agree and their points add)
 
 <details><summary>الإجابة</summary>
@@ -629,7 +629,7 @@ Do not tune MIN_SIM or edit the questions to make a number look better.
 
 **1. عند السؤال «كم يستغرق طلب حاسوب محمول جديد؟» ⁦(How long does a new laptop request take?)⁩ لا يُظهر السجل إلا `laptop-requests#0` وتقتبس الإجابة جملة البوابة الإلكترونية (the portal sentence). لماذا؟**
 
-- A. أصبح الفهرس قديمًا (went stale) بعد إعادة استيعاب السياسة (re-ingested)
+- A. أصبح الفهرس قديمًا (went stale) بعد إعادة استيعاب (re-ingested) صفحة السياسة إلى المخزن (into the store)
 - B. `MIN_SIM` منخفضة جدًا (too low)، فمرّ ضجيج غير مرتبط (unrelated noise)
 - C. القطعة الحاملة للإجابة (the chunk holding the answer) لا تشترك في أي كلمة مع السؤال
 - D. تجاهل النموذج جملة الأيام الخمسة (the 5-business-days sentence)

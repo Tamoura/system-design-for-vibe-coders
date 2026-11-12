@@ -626,8 +626,8 @@ Strong answer, out loud, in order:
 **1. كل ليلة يعيد مهندس في فريق مها تشغيل مهمة مطابقة عالقة (a stuck reconciliation job) يدويًا (by hand). يستغرق ذلك عشر دقائق، ويزداد العمل كلما انتقلت خدمات أكثر إلى السحابة (as more services move to the cloud). كيف تصنّف ممارسة هندسة موثوقية المواقع (SRE practice) هذا العمل، وما الذي يترتب على ذلك؟**
 
 - A. عمل تشغيلي عادي (Normal operations work) للمناوبة (for on-call)، لذا ينبغي ببساطة إضافته إلى دليل جدول المناوبة (the rota handbook)
-- B. عمل شاق متكرر (Toil): عمل يدوي متكرر ينمو مع الحجم (manual, repetitive work that grows with scale)، يُحدّ ثم يُزال بالأتمتة (to cap and then automate away)
-- C. خطر أمني (A security risk) يجب أن يذهب إلى فريق نورة قبل فعل أي شيء آخر
+- B. عمل شاق متكرر (Toil): عمل يدوي ينمو مع الحجم، يُحدّ ثم يُزال بالأتمتة
+- C. خطر أمني (A security risk) يجب أن يُرفع إلى فريق نورة (Noura's team) قبل فعل أي شيء آخر في الأمر
 - D. عمل منتج (Product work)، لذا ينبغي لفريق التطبيق إضافته إلى خارطة طريق الميزات (feature roadmap) للعام القادم
 
 <details><summary>الإجابة</summary>
@@ -640,8 +640,8 @@ Strong answer, out loud, in order:
 
 - A. TLS: ربما انتهت صلاحية الشهادة على المستمع (the certificate on the listener has probably expired) ويلزم تجديدها الآن
 - B. DNS: مدة بقاء السجل (the record's TTL) طويلة جدًا، فلا يزال العملاء يحتفظون بإجابة قديمة مخزّنة مؤقتًا (an old cached answer)
-- C. التطبيق (The application): خطأ 5xx في الحجيرات (in the pods) يغلق كل اتصال فورًا
-- D. مسار الشبكة (The network path): جدار حماية أو مجموعة أمان (a firewall or security group) تُسقط الحزم بصمت (silently dropping the packets)
+- C. التطبيق (The application): خطأ 5xx في الحجيرات (in the pods) يغلق كل اتصال فورًا (closing every connection)
+- D. مسار الشبكة (The network path): جدار حماية أو مجموعة أمان تُسقط الحزم بصمت (silently dropping packets)
 
 <details><summary>الإجابة</summary>
 
@@ -652,7 +652,7 @@ Strong answer, out loud, in order:
 **3. يجب أن يُنزّل بناء (build) واجهة برمجة تطبيق نجم للهاتف (Najm Mobile API) حزمًا من فهرس حزم خاص (a private package index) يحتاج إلى بيانات اعتماد (a credential). ما الطريقة الآمنة لإعطاء البناء بيانات الاعتماد هذه؟**
 
 - A. ركّبها سرًّا للبناء (Mount it as a build secret) لخطوة `RUN` التي تحتاجها، فلا تحويها أي طبقة (no layer has it)
-- B. عيّنها بـ `ENV` في ملف Dockerfile كي يقرأها `pip` أثناء البناء
+- B. عيّنها بـ `ENV` (Set it with ENV) في ملف Dockerfile كي يقرأها `pip` أثناء البناء
 - C. انسخ ملف `pip.conf` إلى الداخل (Copy a file in)، ونفّذ التثبيت (run the install)، ثم احذف الملف في الخطوة التالية (in the next step)
 - D. ادمجها في الصورة الأساسية المعتمدة (Bake it into the approved base image) كي يعيد كل فريق استخدامها بسهولة (so that every team can reuse it easily)
 
@@ -666,7 +666,7 @@ Strong answer, out loud, in order:
 
 - A. غيّر أحدهم كل مورد في وحدة التحكم (in the console) ليلًا؛ تراجع عنها كلها دفعة واحدة بتطبيق جديد (a fresh apply)
 - B. ملف الحالة تالف (The state file is corrupt)؛ احذفه واستورد كل مورد من جديد (import every resource again) من سطر الأوامر
-- C. جلب الأمر init مزوّدًا أحدث بقيم افتراضية متغيّرة (a newer provider with changed defaults)؛ ثبّت الإصدار وأودِع ملف القفل (pin the version and commit the lock file)
+- C. جلب الأمر init مزوّدًا أحدث بقيم افتراضية متغيّرة (a newer provider with changed defaults)؛ ثبّت الإصدار وأودِع ملف القفل
 - D. الخطط ليست حتمية (Plans are not deterministic)، لذا أعِد تشغيل الخطة حتى لا تُظهر أي تغييرات قبل التطبيق
 
 <details><summary>الإجابة</summary>
@@ -679,7 +679,7 @@ Strong answer, out loud, in order:
 
 - A. أن يُطلب من المطوّرين إعلان كل دمج (announce each merge) في محادثة الفريق وانتظار بعضهم بعضًا
 - B. إعادة تشغيل خط التسليم (Re-running the pipeline) على `main` حتى ينجح، ثم الانتقال إلى التغيير التالي
-- C. طابور دمج (A merge queue) يختبر كل طلب سحب فوق الطلبات التي تسبقه في الطابور (on top of those queued ahead of it) قبل الدمج
+- C. طابور دمج (A merge queue) يختبر كل طلب سحب فوق الطلبات التي تسبقه (queued ahead of it) قبل الدمج
 - D. فروع ميزات أطول عمرًا (Longer-lived feature branches)، كي يصل عدد أقل من عمليات الدمج إلى `main` كل يوم
 
 <details><summary>الإجابة</summary>
@@ -706,7 +706,7 @@ Strong answer, out loud, in order:
 - A. لا شيء، لأن منطقة احتياطية دافئة (a warm standby region) تحمل بالفعل نسخة أصغر من مكدّس التطبيق (the application stack)
 - B. ينبغي أن تستخدم الخطة النسخ الاحتياطي والاستعادة (backup and restore) بدلًا من ذلك، لأنها أرخص استراتيجية متاحة (the cheapest strategy available)
 - C. ينبغي حفظ أدلة التشغيل على الورق (kept on paper) بدلًا من ذلك، لأن الويكي لا يُعتمد عليه أبدًا (never reliable) أثناء الحوادث (during incidents)
-- D. مسار التعافي (The recovery path) يعتمد على المنطقة نفسها التي فشلت، فلا يمكن تشغيله عند الحاجة (when needed)
+- D. مسار التعافي (The recovery path) يعتمد على المنطقة نفسها التي فشلت تمامًا، فلا يمكن تشغيله في اللحظة التي تلزم فيها (when needed)
 
 <details><summary>الإجابة</summary>
 
@@ -717,7 +717,7 @@ Strong answer, out loud, in order:
 **8. خلال مراجعة الجاهزية (readiness review) لضوابط البطاقات (Card Controls)، تجد مها تنبيه استدعاء (a paging alert) اسمه `CardControlsPodRestarted` دون دليل تشغيل (no runbook) ودون ربط بهدف مستوى خدمة (no link to an SLO). وفق قواعد مراجعة الجاهزية، ما الذي ينبغي أن يحدث؟**
 
 - A. أبقِه استدعاءً (Keep it as a page)، لأن أي إعادة تشغيل لحجيرة في خدمة جديدة تستحق نظرة بشرية ليلًا
-- B. اجعله تذكرة أو عنصرًا في لوحة متابعة (a ticket or dashboard item)، أو احذفه، لأنه لا يرتبط بأي SLO أو دليل تشغيل
+- B. اجعله تذكرة أو عنصرًا في لوحة متابعة، أو احذفه، لأنه لا يرتبط بأي هدف SLO أو دليل تشغيل (runbook)
 - C. أضف مهندسًا ثانيًا إلى جدول المناوبة (the rota) كي تُوزَّع الاستدعاءات الإضافية بإنصاف
 - D. أبقِه استدعاءً، لكن ارفع عتبته (raise its threshold) كي لا ينطلق إلا بعد ثلاث إعادات تشغيل في الساعة
 
@@ -732,7 +732,7 @@ Strong answer, out loud, in order:
 - A. هم محقّون: يمكن لتغييرات الإعدادات (configuration changes) تخطّي خط التسليم لأنها لا تحوي شيفرة تطبيق (no application code)
 - B. ادفعها ليلًا، حين تكون الحركة منخفضة (when traffic is low)، كي يلاحظ عدد أقل من العملاء أي مشكلة
 - C. اطلب من فريق الأمن الموافقة عليها بالبريد الإلكتروني، فهي تحلّ محلّ بيئة التجهيز (replaces staging) لتغييرات القواعد
-- D. عاملها كأي تغيير إنتاجي (any production change): مُراجَع، مُرقَّم الإصدار، مُرحَّل، وسهل العكس (reviewed, versioned, staged and easy to reverse)
+- D. عاملها كأي تغيير إنتاجي (any production change): مُراجَع، مُرقَّم الإصدار، مُرحَّل، وسهل العكس (easy to reverse)
 
 <details><summary>الإجابة</summary>
 
@@ -743,7 +743,7 @@ Strong answer, out loud, in order:
 **10. يخطّط يوسف لسحابة VPC الجديدة على أنها `10.0.0.0/16`. يقول فريق الشبكات إن مركز البيانات يستخدم `10.0.0.0/16` بالفعل، وإن نجم سيربط الاثنين برابط خاص (a private link). ما المشكلة؟**
 
 - A. يرفض مزوّدو السحابة (Cloud providers) إنشاء VPC في النطاق `10.0.0.0/8`، فلا يمكن تطبيق الخطة
-- B. النطاقات المتداخلة تكسر التوجيه (Overlapping ranges break routing)، لأن الموجّهات لا تستطيع معرفة أي جانب يملك العنوان (which side owns an address)
+- B. النطاقات المتداخلة تكسر التوجيه (Overlapping ranges break routing)، لأن الموجّهات لا تعرف أي جانب يملك العنوان
 - C. النطاق `/16` يحوي عناوين أقل من اللازم لعنقود Kubernetes مُدار (a managed Kubernetes cluster) عبر ثلاث مناطق توافر
 - D. لا مشكلة، لأن الرابط الخاص يترجم كل عنوان تلقائيًا (translates every address automatically)
 
@@ -768,7 +768,7 @@ Strong answer, out loud, in order:
 
 **12. يبدو تغيير من سطر واحد في ملف قيم Helm مشترك (a shared Helm values file) غير ضارّ في طلب السحب (pull request) لكنه يغيّر سلوك الإنتاج (production behaviour). ما الذي يساعد المراجعين على رؤية ما سيتلقاه العنقود فعلًا (what the cluster will actually receive)؟**
 
-- A. صيِّر ملفات التعريف (Render the manifests) في CI وانشر الفرق المُصيَّر (the rendered diff) في طلب السحب نفسه
+- A. صيِّر ملفات التعريف (Render the manifests) في CI وانشر الفرق المُصيَّر في طلب السحب نفسه
 - B. اشترط ثلاثة موافقين بدل واحد (three approvers instead of one) على كل طلب سحب في مستودع GitOps
 - C. دع Argo CD يطبّق التغيير على الإنتاج أولًا، ثم راجع عرض الفرق (its diff view) بعد ذلك
 - D. انقل ملف القيم إلى مستودع التطبيق (the application repository)، بجانب الشيفرة المصدرية للخدمة
@@ -781,7 +781,7 @@ Strong answer, out loud, in order:
 
 **13. يتلقى تصدير كشوف الحساب الداخلي (internal statements export) في نجم بضعة طلبات في الدقيقة (a few requests per minute). يرسل إليه إطلاق كناري (A canary) 1% من الحركة لعشر دقائق، فلا يرى أي أخطاء (zero errors) ويُرقّي (promotes). ما الخطأ في هذا التحليل؟**
 
-- A. وصل إلى الكناري عدد قليل جدًا من الطلبات في عشر دقائق (Too few requests) فلا يعني انعدام الأخطاء شيئًا
+- A. وصل إلى الكناري عدد قليل جدًا من الطلبات في عشر دقائق (Too few requests)، فلا يعني انعدام الأخطاء (zero errors) شيئًا يُعتد به
 - B. يجب أن يقارن الكناري مقاييسه بأرقام الأسبوع الماضي (last week's figures)، لا بالإصدار المستقر (the stable version)
 - C. لا تعمل إطلاقات الكناري إلا مع شبكة خدمات (a service mesh)، فلم يكن تقسيم الحركة (the traffic split) حقيقيًا أصلًا
 - D. لا شيء؛ انعدام الأخطاء في عشر دقائق يثبت أن الإصدار الجديد آمن للترقية (safe to promote)
@@ -823,7 +823,7 @@ Strong answer, out loud, in order:
 - A. نعم، لأن الملف لم يعد يظهر في أي مكان على الفرع الرئيسي للمستودع (the repository's main branch)
 - B. نعم، ما دام المستودع يبقى خاصًا (stays private) حتى طلب التوظيف التالي
 - C. لا؛ ينبغي أيضًا إعادة تسمية الملف كي لا تتعرّف عليه ماسحات الأسرار (secret scanners)
-- D. لا؛ لا يزال سجل Git (Git history) يحويه، فألغِ المفتاح وافحص المستودع قبل النشر (revoke the key and scan before publishing)
+- D. لا؛ لا يزال سجل Git (Git history) يحويه، فألغِ المفتاح وافحص المستودع قبل النشر (scan first)
 
 <details><summary>الإجابة</summary>
 
@@ -846,7 +846,7 @@ Strong answer, out loud, in order:
 
 **18. يتيح خلل في Mobile API لمهاجم أن يجعل الخادم يجلب أي عنوان URL يختاره (fetch any URL they choose). تقلق نورة بشأن بيانات الاعتماد السحابية المتاحة على العقدة (the cloud credentials available on the node). أي الضوابط تقلّل هذا الخطر؟**
 
-- A. اشترط نقطة نهاية البيانات الوصفية المحصّنة (the hardened metadata endpoint)، وأبقِ الأدوار ضيقة (keep roles narrow)، وامنع وصول الحجيرات إليها
+- A. اشترط نقطة نهاية البيانات الوصفية المحصّنة (the hardened metadata endpoint)، وأبقِ الأدوار ضيقة، وامنع وصول الحجيرات إليها
 - B. دوّر مفتاح وصول العقدة (Rotate the node's access key) كل 90 يومًا واحفظه في Kubernetes Secret
 - C. انقل الواجهة إلى شبكة فرعية عامة (a public subnet) كي لا يعود الوصول إلى نقطة نهاية البيانات الوصفية ممكنًا
 - D. فعّل المصادقة متعددة العوامل (MFA) لكل مهندس، لأن المهاجمين يحتاجون إلى MFA للوصول إلى نقطة نهاية البيانات الوصفية
@@ -862,7 +862,7 @@ Strong answer, out loud, in order:
 - A. احذف ConfigMap وأعِد إنشاءه كي يدفع Kubernetes القيم الجديدة إلى الحاويات العاملة (running containers)
 - B. انقل الإعداد إلى Secret، الذي يُعاد تحميله في الحاويات العاملة تلقائيًا (reloads automatically)
 - C. انتظر أكثر، لأن متغيرات البيئة (environment variables) تُحدَّث من ConfigMap كل بضع ساعات
-- D. دوّر الحجيرات مع كل تغيير في الإعدادات (Roll the pods on every config change)، مثلًا بتعليق توضيحي لمجموع اختباري لـConfigMap (a ConfigMap checksum annotation)
+- D. دوّر الحجيرات (Roll the pods) مع كل تغيير في الإعدادات، مثلًا بتعليق توضيحي لمجموع اختباري لـConfigMap
 
 <details><summary>الإجابة</summary>
 
@@ -874,7 +874,7 @@ Strong answer, out loud, in order:
 
 - A. طرح كل تغيير في السياسات مباشرةً في وضع الإنفاذ (enforce mode) كي تظهر الأخطاء بسرعة
 - B. السماح لكل فريق بتعطيل السياسات محليًا (disable policies locally) كلما حجبت أحد خطوط تسليمه
-- C. اختبارات في CI بمثال مسموح وآخر مرفوض (an allowed and a denied example) لكل قاعدة في السياسة
+- C. اختبارات في CI بمثال مسموح به وآخر مرفوض (allowed and denied) لكل قاعدة في السياسة المعتمدة
 - D. مراجعة كل السياسات مرة في السنة، ضمن التدقيق السنوي للبنك (the bank's annual audit)
 
 <details><summary>الإجابة</summary>
@@ -887,7 +887,7 @@ Strong answer, out loud, in order:
 
 - A. لا يستطيع `pull_request_target` سحب الشيفرة من النسخ المتفرّعة، فلا تعمل الاختبارات فعليًا أبدًا
 - B. تعمل الاختبارات على مشغّلات تستضيفها GitHub (GitHub-hosted runners)، مشتركة مع عملاء آخرين وبطيئة
-- C. تعمل شيفرة النسخة المتفرّعة غير المُراجَعة (The fork's unreviewed code) في سياق المستودع الأساسي (the base repository's context)، مع أسراره
+- C. تعمل شيفرة النسخة المتفرّعة غير المُراجَعة (The fork's unreviewed code) في سياق المستودع الأساسي، مع أسراره
 - D. يجب دائمًا دمج طلبات السحب من النسخ المتفرّعة أولًا واختبارها على `main` بعد ذلك
 
 <details><summary>الإجابة</summary>
@@ -901,7 +901,7 @@ Strong answer, out loud, in order:
 - A. لا شيء؛ ينبغي للقائد الخبير (an experienced commander) أن يصحّح الأخطاء (debug)، لأنه أعرف الناس بالنظام
 - B. يتوقف كل العمل (All work pauses) حتى ينتهي القائد من قراءة السجلات ويقرّر (finished reading the logs and decided)
 - C. يكتب مركز الاتصال (The contact centre) تحديثاته الخاصة للعملاء حتى تهدأ الأمور
-- D. يسلّم قائد الحادثة (The IC) التصحيح إلى قائد العمليات (the operations lead) ويعود إلى التنسيق (coordinating)
+- D. يسلّم قائد الحادثة (The IC) التصحيح إلى قائد العمليات (the operations lead) ويعود إلى التنسيق بين الفرق (coordinating)
 
 <details><summary>الإجابة</summary>
 
@@ -911,7 +911,7 @@ Strong answer, out loud, in order:
 
 **23. لخفض الإنفاق على النماذج (To cut model spend)، يقترح فريق التخزين المؤقت الدلالي (semantic caching) في بوابة النماذج اللغوية (LLM gateway) لمحادثة العملاء (customer chat) في نجم أسيست (Najm Assist)، بإعادة استخدام إجابات المطالبات المتشابهة (answers to similar prompts) عبر كل المستخدمين. ما الخطر الرئيسي؟**
 
-- A. قد يتلقى عميل إجابة مخزّنة مؤقتًا (a cached answer) مبنية من بيانات عميل آخر (another customer's data)
+- A. قد يتلقى عميل إجابة مخزّنة مؤقتًا (a cached answer) مبنية من بيانات عميل آخر دون علم أحد
 - B. يرفع التخزين المؤقت الدلالي دائمًا تكلفة الرموز (token cost)، لأن كل مطالبة تُعالَج مرتين
 - C. لا يمكن أن تقع ذاكرات التخزين المؤقت في بوابة، بل داخل منصة مزوّد النموذج (the model provider's platform) فقط
 - D. الإجابات المخزّنة مؤقتًا أبطأ من الاستدعاءات الجديدة، فيسوء الوقت حتى أول رمز (time to first token)
@@ -937,7 +937,7 @@ Strong answer, out loud, in order:
 
 **25. يشغّل يوسف `openssl s_client -connect api.najm.example:443` دون `-servername` فيرى شهادة لاسم مضيف مختلف (a different host name). لا يبلغ العملاء عن أي أخطاء TLS (no TLS errors). ما التفسير الأرجح؟**
 
-- A. انتهت صلاحية الشهادة على موازن الأحمال (the load balancer) ويجب تجديدها فورًا
+- A. انتهت صلاحية الشهادة على موازن الأحمال (the load balancer) ويجب تجديدها فورًا دون أي تأخير
 - B. يوجّه DNS `api.najm.example` إلى موازن الأحمال الخطأ لدى بعض المحلِّلات (some resolvers)
 - C. تقدّم حجيرات الخلفية (The backend pods) شهاداتها الموقّعة ذاتيًا (self-signed certificates) للعملاء
 - D. دون SNI، يعيد موازن الأحمال شهادته الافتراضية (its default certificate) لاسم آخر
@@ -950,10 +950,10 @@ Strong answer, out loud, in order:
 
 **26. ذات صباح، لا يستطيع العنقود بدء حجيرات جديدة، لأن سحب الصور الأساسية العامة (pulls of public base images) من Docker Hub يخضع لتحديد المعدل (being rate-limited). ما الذي يمنع هذا من حجب عمليات النشر مستقبلًا؟**
 
-- A. اضبط كل Deployment على `imagePullPolicy: Always` كي يُعاد محاولة السحب أكثر
-- B. استخدم الوسم `latest` للصور العامة، كي يكون لدى العنقود نسخة مخزّنة مؤقتًا دائمًا
-- C. قدّم الصور الأساسية العامة من ذاكرة سحب وسيطة أو مرآة (a pull-through cache or mirror) في سجل نجم الخاص
-- D. اطلب من كل فريق بناء الصور على حواسيبه المحمولة (build images on their laptops) ونسخها مباشرة إلى العقد (copy them directly onto the nodes)
+- A. اضبط كل Deployment على `imagePullPolicy: Always` كي يُعاد محاولة السحب أكثر (retried more often)
+- B. استخدم الوسم `latest` للصور العامة، كي يكون لدى العنقود نسخة مخزّنة مؤقتًا (a cached copy) دائمًا
+- C. قدّم الصور الأساسية العامة من ذاكرة سحب وسيطة أو مرآة (a pull-through cache or mirror) في سجل نجم الخاص (Najm's own registry)
+- D. اطلب من كل فريق بناء الصور على حواسيبه المحمولة ونسخها مباشرة إلى العقد (copy them onto the nodes)
 
 <details><summary>الإجابة</summary>
 
@@ -965,7 +965,7 @@ Strong answer, out loud, in order:
 
 - A. لا شيء؛ العَلَم `sensitive` يشفّر القيمة داخل ملف الحالة بمفتاح المزوّد (with the provider's key)
 - B. قد تبقى القيمة في الحالة نصًا صريحًا (in plain text)؛ العَلَم يخفي المخرجات فقط (only hides output)
-- C. يتجاهل OpenTofu العَلَم، ولا يدعم القيم الحساسة إلا في خدمات الحالة المستضافة (hosted state services)
+- C. يتجاهل OpenTofu العَلَم، ولا يدعم القيم الحساسة إلا في خدمات الحالة (hosted state services)
 - D. لا يمكن للمتغيرات الحساسة أن تحمل كلمات مرور، بل رموزًا وشهادات فقط (only tokens and certificates)
 
 <details><summary>الإجابة</summary>
@@ -977,7 +977,7 @@ Strong answer, out loud, in order:
 **28. في المستودع الأحادي (monorepo) لنجم، يضيف يوسف مرشّحات مسارات (path filters) كي لا يعمل خط تسليم كل خدمة إلا حين يتغيّر مجلدها الخاص. ما الذي يجب أن يتأكد منه؟**
 
 - A. أن تغييرًا في المكتبة المشتركة (the shared library) لا يزال يُطلق كل خدمة تعتمد عليها
-- B. أن تستثني المرشّحات مجلد المكتبة المشتركة، لأن لا فريق خدمة واحدًا يملكها
+- B. أن تستثني المرشّحات (the filters) مجلد المكتبة المشتركة (shared library)، لأن لا فريق خدمة واحدًا يملكها
 - C. أن كل طلب سحب لا يزال يشغّل مجموعة الاختبارات الشاملة كاملة (the full end-to-end suite)، كي لا يفوت شيء
 - D. أن كل خدمة تحتفظ بنسختها الخاصة من الشيفرة المشتركة، كي تبقى المرشّحات بسيطة
 
@@ -989,7 +989,7 @@ Strong answer, out loud, in order:
 
 **29. تُظهر لوحة زمن الاستجابة (A latency panel) في Grafana للمدفوعات ارتفاعًا مفاجئًا (a spike) في أبطأ دلو في المدرّج التكراري (the slowest histogram bucket). تريد مها فتح طلب بطيء حقيقي (one real slow request) من هناك بنقرة واحدة. ما الذي يجعل هذا ممكنًا؟**
 
-- A. النماذج الشاهدة (Exemplars)، التي ترفق معرّفات التتبّع (trace IDs) من طلبات حقيقية بدلاء المدرّج التكراري
+- A. النماذج الشاهدة (Exemplars)، التي ترفق معرّفات التتبّع من طلبات حقيقية بدلاء المدرّج التكراري
 - B. فاصل جمع أطول (A longer scrape interval)، كي يحتفظ Prometheus بعينات خام أكثر لكل سلسلة (per series)
 - C. وسم `customer_id` على مدرّج زمن الاستجابة، كي تكون لكل عميل سلسلة
 - D. تحويل اللوحة من p99 إلى المتوسط (the average)، الذي يسهل ربطه بالسجلات
@@ -1003,7 +1003,7 @@ Strong answer, out loud, in order:
 **30. يسأل حمد ما الذي سيحمي بيانات المدفوعات (Payments data) إن حصل مهاجم على صلاحيات مسؤول السحابة (cloud administrator rights) في حساب الإنتاج (the production account) وحذف كل شيء هناك. أي تصميم يجيبه؟**
 
 - A. نسخة احتياطية جاهزة متعددة مناطق التوافر (A multi-AZ standby)، لأنها في منطقة غير منطقة قاعدة البيانات الأساسية
-- B. نسخ احتياطية غير قابلة للتعديل في حساب منفصل (Immutable backups in a separate account)، بعيدًا عن متناول مسؤولي الإنتاج
+- B. نسخ احتياطية غير قابلة للتعديل (Immutable backups) في حساب منفصل، بعيدًا عن متناول مسؤولي الإنتاج
 - C. نسخة قراءة متماثلة عبر المناطق (A cross-region read replica) تنسخ كل كتابة خلال ثوانٍ
 - D. لقطات يومية (Daily snapshots) مخزّنة في الحساب نفسه، مع فترة احتفاظ أطول (a longer retention period)
 
@@ -1015,9 +1015,9 @@ Strong answer, out loud, in order:
 
 **31. لضوابط البطاقات (Card Controls)، تضبط مها هدف SLO للقراءة (the read SLO) عند 99.95% وهدف SLO للكتابة (the write SLO) عند 99.9%. لماذا يكون هدف القراءة هو الأشد؟**
 
-- A. القراءات أرخص في التقديم (cheaper to serve)، لذا لا يكلّف الهدف الأعلى البنك شيئًا إضافيًا على الإطلاق
+- A. القراءات أرخص في التقديم (cheaper to serve)، لذا لا يكلّف الهدف الأعلى (a higher target) البنك شيئًا إضافيًا
 - B. يعيد تطبيق الهاتف محاولة الكتابات تلقائيًا (retried automatically)، فلا تُرى إخفاقاتها أبدًا
-- C. قد توقف قراءة فاشلة أثناء تفويض البطاقة (during card authorisation) عملية شراء العميل عند الصندوق (at the till)
+- C. قد توقف قراءة فاشلة أثناء تفويض البطاقة (during card authorisation) عملية شراء العميل عند الصندوق
 - D. تشترط الجهات التنظيمية (Regulators) أن تحمل مسارات القراءة تسعة واحدة أكثر بالضبط من مسارات الكتابة
 
 <details><summary>الإجابة</summary>
@@ -1028,10 +1028,10 @@ Strong answer, out loud, in order:
 
 **32. في خريطة المسار إلى الإنتاج (path-to-production map) التي وضعها يوسف لخدمة جديدة مرحلة «النشر إلى بيئة التجهيز (Deploy to staging)» يكون الالتقاط الآلي فيها (whose automated catch) هو «يفحص طارق الحجيرات بعد كل نشر (Tariq checks the pods after each deploy)». ماذا تقول قاعدة نجم؟**
 
-- A. هذا مقبول، لأن مشكلات بيئة التجهيز (staging problems) لا تصل أبدًا إلى العملاء مباشرة
-- B. أزل المرحلة، لأن الفحص اليدوي (a manual check) يعني أنها لا تضيف قيمة إلى المسار
-- C. اطلب من طارق كتابة ما يفحصه، وأبقِ الخطوة اليدوية (the manual step) بشكل دائم
-- D. اجعلها عنصرًا في قائمة الأعمال المؤجلة (a backlog item)، له مالك وتاريخ (an owner and a date)، لأتمتة فحص طارق
+- A. هذا مقبول، لأن مشكلات بيئة التجهيز (staging problems) لا تصل أبدًا إلى العملاء مباشرة في الإنتاج
+- B. أزل المرحلة (Remove the stage)، لأن الفحص اليدوي (a manual check) يعني أنها لا تضيف قيمة إلى المسار
+- C. اطلب من طارق كتابة ما يفحصه (what he checks)، وأبقِ الخطوة اليدوية (the manual step) بشكل دائم
+- D. اجعلها عنصرًا في قائمة الأعمال المؤجلة (a backlog item)، له مالك وتاريخ، لأتمتة فحص طارق
 
 <details><summary>الإجابة</summary>
 
@@ -1043,8 +1043,8 @@ Strong answer, out loud, in order:
 
 - A. التخزين الكتلي (Block storage)، مع قرص افتراضي واحد (one virtual disk) مُلحَق بكل الأجهزة الافتراضية في الوقت نفسه
 - B. تخزين الكائنات (Object storage)، مركّبًا على كل جهاز افتراضي كأنه قرص محلي عادي (an ordinary local disk)
-- C. تخزين الملفات (File storage): نظام ملفات NFS أو SMB مشترك (a shared NFS or SMB file system) تركّبه أجهزة افتراضية كثيرة معًا
-- D. جدول في قاعدة بيانات PostgreSQL المُدارة، يخزّن كل ملف صفًّا (as a row)
+- C. تخزين الملفات (File storage): نظام ملفات NFS أو SMB مشترك تركّبه أجهزة افتراضية كثيرة معًا
+- D. جدول في قاعدة بيانات PostgreSQL المُدارة (managed database)، يخزّن كل ملف صفًّا واحدًا (as a row)
 
 <details><summary>الإجابة</summary>
 
@@ -1056,7 +1056,7 @@ Strong answer, out loud, in order:
 
 - A. لم يكن هناك متحكّم (No controller) مثل ReplicaSet يملك الحجيرة، فلم يُعِد إنشاءها شيء
 - B. حذفت الخدمة (The Service) الحجيرة لأنها لم تكن لها نقاط نهاية مطابقة (matching endpoints) ليلًا
-- C. كان ينبغي أن يعيد kubelet على عقدة سليمة (a healthy node) تشغيلها، فالعنقود معطوب
+- C. كان ينبغي أن يعيد kubelet على عقدة سليمة (a healthy node) تشغيلها، فالعنقود معطوب تمامًا وفي حالة سيئة
 - D. تنتهي صلاحية الحجيرات المُنشأة بـ `kubectl run` تلقائيًا (expire automatically) بعد اثنتي عشرة ساعة
 
 <details><summary>الإجابة</summary>
@@ -1068,7 +1068,7 @@ Strong answer, out loud, in order:
 **35. أثناء حادثة SEV1 (a SEV1)، وبموافقة قائد الحادثة (the incident commander's approval)، يرفع مهندس حجم مجمّع اتصالات المدفوعات (the Payments connection-pool size) يدويًا في الإنتاج. وفق سياسة الترقية (promotion policy) في نجم، ما الذي يجب أن يحدث بعد ذلك؟**
 
 - A. لا شيء أكثر؛ موافقة قائد الحادثة تجعل التغيير اليدوي (the hand change) دائمًا
-- B. اكتبه عائدًا إلى Git (Write it back to Git) خلال يوم عمل واحد وإلا فإن المزامنة التالية (the next sync) ستعيده بصمت
+- B. اكتبه عائدًا إلى Git خلال يوم عمل واحد وإلا فإن المزامنة التالية (the next sync) ستعيده بصمت
 - C. أطفئ الإصلاح الذاتي (self-heal) في تطبيق Argo CD للإنتاج حتى الإطلاق التالي
 - D. سجّله في مراجعة ما بعد الحادثة (the postmortem) فقط، لأن Git للتغييرات المخطّطة لا للحوادث
 
@@ -1083,7 +1083,7 @@ Strong answer, out loud, in order:
 - A. دائمًا؛ المضي قدمًا أسرع من التراجع لأنه يتخطى خط التسليم (skips the pipeline)
 - B. أبدًا؛ التراجع ممكن دائمًا ما دامت الصورة القديمة (the old image) لا تزال في السجل
 - C. فقط خلال نافذة التجميد (a freeze window)، حين يحجب تقويم التغييرات (the change calendar) كل تراجع
-- D. حين يكون التراجع مستحيلًا (When rollback is impossible)، كما هنا، أو يكون الإصلاح صغيرًا ومفهومًا جيدًا (small and well understood)
+- D. حين يكون التراجع مستحيلًا (When rollback is impossible)، كما هنا، أو يكون الإصلاح صغيرًا ومفهومًا جيدًا
 
 <details><summary>الإجابة</summary>
 
@@ -1094,7 +1094,7 @@ Strong answer, out loud, in order:
 **37. يفشل مجمّع عقد (A node pool)، فيتلقى هاتف المناوبة (the on-call phone) ثلاثين تنبيهًا منفصلًا، واحدًا لكل حجيرة متأثرة، إلى جانب تنبيه تعطّل العنقود (the cluster-down alert). أي ميزات Alertmanager تعالج هذا؟**
 
 - A. الإسكات (Silences)، مضبوطًا بشكل دائم لكل تنبيه على مستوى الحجيرة (pod-level alert) في العنقود
-- B. الكبح (Inhibition) أثناء انطلاق تنبيه تعطّل العنقود، إضافة إلى تجميع التنبيهات المترابطة (grouping of related alerts)
+- B. الكبح (Inhibition) أثناء انطلاق تنبيه تعطّل العنقود، إضافة إلى تجميع التنبيهات المترابطة
 - C. عتبة أعلى (A higher threshold) على كل تنبيه، كي لا ينطلق منها إلا واحد
 - D. توجيه كل تنبيه حجيرة إلى فريق الأمن بدل جدول المناوبة (the on-call rota)
 
@@ -1109,7 +1109,7 @@ Strong answer, out loud, in order:
 - A. النسخة الأساسية الوحيدة (The only primary instance) من قاعدة بيانات المدفوعات التي تخدم حركة حيّة (live traffic)
 - B. الحد الأدنى الدافئ (The warm floor) من نسخ نجم أسيست المستضافة ذاتيًا (self-hosted Najm Assist replicas) العاملة في ساعات العمل
 - C. بوابة النماذج اللغوية المشتركة (The shared LLM gateway)، التي تعتمد عليها حركة النماذج لكل فريق
-- D. مشغّلات CI والمهام الدُّفعية (CI runners and batch jobs) التي يمكنها ببساطة إعادة المحاولة إن استُعيدت عقدة (if a node is reclaimed)
+- D. مشغّلات CI والمهام الدُّفعية (batch jobs) التي يمكنها إعادة المحاولة إن استُعيدت عقدة
 
 <details><summary>الإجابة</summary>
 
@@ -1119,7 +1119,7 @@ Strong answer, out loud, in order:
 
 **39. تخبر خرّيجة (A graduate) سالمًا أنها تستمتع بتعريف أهداف SLO (defining SLOs)، وكتابة التنبيهات، وقيادة الحوادث، وإزالة العمل المتكرر بالأتمتة (automating away repetitive work). أي دور في خريطة أدوار المقرر (the course's role map) يناسبها أكثر؟**
 
-- A. مهندسة موثوقية المواقع (Site reliability engineer)، تملك أهداف SLO والحوادث وإزالة العمل الشاق المتكرر (removing toil)
+- A. مهندسة موثوقية المواقع (Site reliability engineer)، تملك أهداف SLO والحوادث وإزالة العمل الشاق (toil)
 - B. ممارسة FinOps (FinOps practitioner)، تعمل مع الإدارة المالية على التكلفة واقتصاديات الوحدة (unit economics)
 - C. مهندسة سحابة (Cloud engineer)، تملك مناطق الهبوط والحسابات وعمليات الترحيل (landing zones, accounts and migrations)
 - D. مهندسة DevOps (DevOps engineer)، تملك أدوات البناء وأتمتة الإطلاق (build tooling and release automation)
@@ -1146,9 +1146,9 @@ Strong answer, out loud, in order:
 **41. ينتقل يوسف من فريق المنصة (the platform team) إلى فريق المدفوعات (the payments squad). بعد ثلاثة أشهر لا يزال قادرًا على تغيير أسس الشبكة المشتركة (the shared network foundations). أي ممارسة فشلت؟**
 
 - A. المصادقة متعددة العوامل (MFA)، لأن عاملًا ثانيًا (a second factor) كان سيمنعه من استخدام الدور القديم
-- B. وصول كسر الزجاج (Break-glass access)، الذي كان ينبغي استخدامه لتغييرات الشبكة بدلًا من ذلك
+- B. وصول كسر الزجاج (Break-glass access)، الذي كان ينبغي استخدامه لتغييرات الشبكة (network changes) بدلًا من ذلك
 - C. التشفير أثناء التخزين (Encryption at rest)، لأن إعدادات الشبكة لا ينبغي أن تكون قابلة للقراءة
-- D. المنضمّ والمنتقل والمغادر (Joiner-mover-leaver): كان ينبغي إزالة الوصول القديم يوم انتقاله
+- D. المنضمّ والمنتقل والمغادر (Joiner-mover-leaver): ينبغي إزالة الوصول القديم يوم انتقاله
 
 <details><summary>الإجابة</summary>
 
@@ -1158,9 +1158,9 @@ Strong answer, out loud, in order:
 
 **42. يرتفع زمن الاستجابة p99 (p99 latency) لواجهة Mobile API أثناء الدفقات (during bursts) مع أن عقدها خاملة في معظمها. تُظهر المقاييس أن الحاويات تُخنق بشدة (being throttled heavily) مقابل حد المعالج (CPU limit) الخاص بها. ما الإصلاح المعقول الذي ينبغي تقييمه؟**
 
-- A. اخفض حد الذاكرة (the memory limit) كي تُقتل الحاوية ويُعاد تشغيلها أسرع
+- A. اخفض حد الذاكرة (the memory limit) كي تُقتل الحاوية ويُعاد تشغيلها أسرع (restarted sooner)
 - B. احذف مسبار الجاهزية (the readiness probe)، لأن المسابير تستهلك معالجًا تحتاجه الطلبات
-- C. ارفع حد المعالج أو أزله مع إبقاء طلبات المعالج مضبوطة (keeping CPU requests set)، ثم قِس (then measure)
+- C. ارفع حد المعالج أو أزله مع إبقاء طلبات المعالج مضبوطة (keeping CPU requests set)، ثم قِس
 - D. اضبط حد المعالج أدنى بكثير من الطلب كي توزَّع الحجيرات بشكل أكثر توازنًا
 
 <details><summary>الإجابة</summary>
@@ -1185,7 +1185,7 @@ Strong answer, out loud, in order:
 **44. يثق دور النشر للإنتاج (The production deploy role) بالرموز (tokens) التي يكون موضوعها (whose subject) هو `repo:najm-bank/mobile-api:environment:production`. ما الذي يجب ضبطه أيضًا كي لا يستطيع فرع ميزة (a feature branch) استخدام ذلك الدور؟**
 
 - A. لا شيء، لأن الموضوع يسمّي الفرع `main` ضمنيًا (implicitly)
-- B. قيّد البيئة `production` كي لا يستطيع النشر إليها إلا `main`
+- B. قيّد البيئة `production` كي لا يستطيع النشر إليها (deploy to it) إلا `main`
 - C. أضف مفتاح وصول طويل العمر (a long-lived access key) بوصفه بيانات اعتماد احتياطية في أسرار المستودع (repository secrets)
 - D. وسّع صلاحيات الدور (Broaden the role's permissions) كي يحصل فرع الميزة على نطاقه الخاص
 
@@ -1197,7 +1197,7 @@ Strong answer, out loud, in order:
 
 **45. أثناء التخفيف من بطء في المدفوعات (mitigating a Payments slowdown)، يرى الفريق عنوان IP مجهولًا (an unknown IP address) ينزّل كميات كبيرة من البيانات من حاوية تخزين (a storage bucket). ما الذي يتغيّر في الاستجابة (the response)؟**
 
-- A. استدعِ مركز العمليات الأمنية (SOC) التابع لجاسم، واحفظ الأدلة (preserve evidence) وتجنّب تنبيه المهاجم
+- A. استدعِ مركز العمليات الأمنية (SOC) التابع لجاسم، واحفظ الأدلة (preserve evidence) وتجنّب تنبيه المهاجم بأي إجراء ظاهر
 - B. احذف الحاوية فورًا كي لا يستطيع المهاجم تنزيل مزيد من البيانات
 - C. انشر عنوان IP الخاص بالمهاجم في التحديث التالي لصفحة حالة العملاء (customer status page)
 - D. واصل التعامل معها كحادثة موثوقية عادية (a normal reliability incident) واذكرها في مراجعة ما بعد الحادثة
@@ -1211,9 +1211,9 @@ Strong answer, out loud, in order:
 **46. يستدعي نجم أسيست (Najm Assist) نموذج مزوّد عبر اسم مستعار (an alias) ينقله المزوّد بصمت إلى إصدار نموذج أحدث (a newer model version). لماذا يعدّ سالم هذا مشكلة؟**
 
 - A. النماذج الأحدث تكلّف دائمًا أكثر لكل رمز (per token) من الإصدارات التي تحلّ محلها
-- B. إنه إطلاق غير مُراجَع (an unreviewed release)؛ ثبّت إصدارات النماذج (pin model versions) وأطلق أي تغيير بأسلوب الكناري (canary any change)
-- C. لا تستطيع البوابة التوجيه إلى الأسماء المستعارة، لذا يفشل الآن كل طلب
-- D. تتجاوز الأسماء المستعارة الميزانيات لكل فريق (per-team budgets)، فيتوقف تتبّع التكلفة
+- B. إنه إطلاق غير مُراجَع (an unreviewed release)؛ ثبّت إصدارات النماذج وأطلق التغيير بأسلوب الكناري
+- C. لا تستطيع البوابة (gateway) التوجيه إلى الأسماء المستعارة (aliases)، لذا يفشل الآن كل طلب يصل إليها
+- D. تتجاوز الأسماء المستعارة الميزانيات لكل فريق (per-team budgets)، فيتوقف تتبّع التكلفة (cost tracking)
 
 <details><summary>الإجابة</summary>
 
@@ -1223,10 +1223,10 @@ Strong answer, out loud, in order:
 
 **47. يجد يوسف المفتاح الخاص لـTLS (the TLS private key) الخاص بـMobile API على جهاز افتراضي بصلاحيات `-rw-r--r--` (644). ماذا ينبغي أن تكون، ولماذا؟**
 
-- A. 777، كي تستطيع الخدمة قراءته دائمًا، أيًّا كان المستخدم الذي تعمل به
+- A. 777، كي تستطيع الخدمة (the service) قراءته دائمًا، أيًّا كان المستخدم الذي تعمل به (whichever user)
 - B. 644 لا بأس بها، لأن الجذر (root) وحده يستطيع تسجيل الدخول إلى الجهاز الافتراضي على أي حال
 - C. 755، كي تستطيع الخدمة أيضًا تنفيذ الملف (execute the file) عند الحاجة
-- D. 600: وصول للمالك فقط (owner-only access)، لأن 644 تتيح لكل مستخدم محلي (every local user) قراءته
+- D. 600: وصول للمالك فقط (owner-only access)، لأن 644 تتيح لكل مستخدم محلي قراءته
 
 <details><summary>الإجابة</summary>
 
@@ -1238,7 +1238,7 @@ Strong answer, out loud, in order:
 
 - A. مسبار حيوية فاشل (A failing liveness probe)، أو حاوية تتجاوز حد ذاكرتها
 - B. عدم تطابق محدِّد الخدمة (A Service selector mismatch)، أو غياب قاعدة توزيع الطوبولوجيا (topology spread rule)
-- C. ملخّص صورة خاطئ أو مفقود (A wrong or missing image digest)، أو غياب صلاحية السحب من السجل (registry pull permission)
+- C. ملخّص صورة خاطئ أو مفقود (A wrong or missing image digest)، أو غياب صلاحية السحب من السجل
 - D. موسّع HPA عند حده الأقصى، أو ميزانية تعطيل حجيرات (PodDisruptionBudget) تحجب الطرح
 
 <details><summary>الإجابة</summary>
@@ -1251,7 +1251,7 @@ Strong answer, out loud, in order:
 
 - A. احذف الحاوية (Delete the bucket) ودع OpenTofu يُنشئ واحدة جديدة بالاسم نفسه (with the same name)
 - B. شغّل `state rm`، ثم عدّل ملف الحالة يدويًا لإضافة معرّف الحاوية (the bucket's ID)
-- C. كتلة `import` للحاوية، تُراجَع في الخطة (reviewed in the plan) كسائر التغييرات
+- C. كتلة `import` للحاوية (an import block)، تُراجَع في الخطة (reviewed in the plan) كسائر التغييرات
 - D. اتركها غير مُدارة، لأن الحاويات المبنية يدويًا لا يمكن أبدًا إخضاعها للبنية التحتية بوصفها شيفرة (IaC)
 
 <details><summary>الإجابة</summary>
@@ -1265,7 +1265,7 @@ Strong answer, out loud, in order:
 - A. التشغيلات على `main` مجانية على المشغّلات المستضافة (hosted runners)، فلن يوفّر إلغاؤها شيئًا
 - B. لا تسمح GitHub Actions بإلغاء تشغيل سير عمل أطلقه دفع (triggered by a push)
 - C. إلغاء تشغيلات `main` سيجعل خط التسليم أبطأ لطلبات السحب إجمالًا (overall)
-- D. يجب أن يبني كل إيداع على `main` أثره البرمجي الخاص ويسجّله (build and record its own artefact) لأجل الترقيات (promotions)
+- D. يجب أن يبني كل إيداع على `main` أثره البرمجي الخاص ويسجّله لأجل الترقيات (promotions)
 
 <details><summary>الإجابة</summary>
 
@@ -1276,7 +1276,7 @@ Strong answer, out loud, in order:
 **51. يضيف مطوّر سطر السجل (the log line) `Transfer failed for Ahmed Al-Kuwari acct 1234567890 after timeout`. ماذا ينبغي أن يطلب المراجع (the reviewer)؟**
 
 - A. أبقِه، لكن اخفضه إلى مستوى `debug` كي لا يظهر إلا في بيئة التطوير (in development)
-- B. حقولًا منظّمة للحدث والسبب ومعرّف التتبّع (Structured fields for event, reason and trace ID)؛ بلا اسم ولا رقم حساب
+- B. حقولًا منظّمة للحدث والسبب ومعرّف التتبّع (Structured fields)؛ بلا اسم ولا رقم حساب
 - C. أبقِ النص، لكن شفّر ملف السجل كاملًا على القرص (encrypt the whole log file on disk) في نهاية كل يوم
 - D. أزل السطر، لأن التحويلات الفاشلة (failed transfers) ينبغي ألا تُسجَّل في أي مكان أبدًا
 
@@ -1288,7 +1288,7 @@ Strong answer, out loud, in order:
 
 **52. لخدمة داخلية، يوقّع قطاع الأعمال على RTO قدره ساعة تقريبًا وRPO قدره بضع دقائق، ويريد أدنى تكلفة تحققهما (the lowest cost that meets them). أي استراتيجية للتعافي من الكوارث (DR strategy) تناسب أكثر؟**
 
-- A. الشعلة التجريبية (Pilot light): بيانات تُنسخ باستمرار (data replicated continuously)، وحد أدنى من البنية التحتية جاهز
+- A. الشعلة التجريبية (Pilot light): بيانات تُنسخ باستمرار، وحد أدنى من البنية التحتية جاهز
 - B. نشط-نشط متعدد المواقع (Multi-site active-active)، بسعة كاملة تخدم في المنطقتين
 - C. النسخ الاحتياطي والاستعادة فقط (Backup and restore only)، مع نسخ ليلية تُرسل إلى منطقة التعافي (the recovery region)
 - D. لا تعافي من الكوارث على الإطلاق، لأن تعدّد مناطق التوافر (multi-AZ) يحمي بالفعل من فقدان منطقة
@@ -1316,7 +1316,7 @@ Strong answer, out loud, in order:
 
 - A. `ignore_changes` على تلك السمة وحدها (that one attribute only)، مع تعليق يشرح السبب
 - B. طبّق الشيفرة كل ليلة (Apply the code every night) كي تعود المجموعة إلى القيمة المكتوبة في Git (the value written in Git)
-- C. أطفئ مهمة الانحراف لملف الحالة كله، لأنها لا تنتج إلا ضجيجًا (only produces noise)
+- C. أطفئ مهمة الانحراف (the drift job) لملف الحالة كله، لأنها لا تنتج إلا ضجيجًا (only produces noise)
 - D. عطّل الموسّع التلقائي (Disable the autoscaler) كي لا تختلف السعة أبدًا عن الشيفرة (never differs from the code)
 
 <details><summary>الإجابة</summary>
@@ -1340,7 +1340,7 @@ Strong answer, out loud, in order:
 
 **56. يكتشف فحص (A check) أن شهادة محوّل الأنظمة المصرفية الأساسية (the core banking adapter's certificate) تنتهي صلاحيتها بعد 14 يومًا. كيف ينبغي أن يُبلَّغ الناس بذلك؟**
 
-- A. استدعِ مهندس المناوبة (Page the on-call engineer) فورًا، في أي ساعة، حتى تُجدَّد
+- A. استدعِ مهندس المناوبة (Page the on-call engineer) فورًا، في أي ساعة، حتى تُجدَّد (until renewed)
 - B. لا ترسل شيئًا؛ التجديد مؤتمت (renewal is automated)، لذا تنبيهات انتهاء الصلاحية مجرد ضجيج
 - C. اعرضها على لوحة متابعة فقط (on a dashboard only)، دون إشعار أحد
 - D. افتح تذكرة (Open a ticket) للفريق المالك كي يجدّدها خلال أيام العمل (within working days)
@@ -1356,7 +1356,7 @@ Strong answer, out loud, in order:
 - A. جدول بيانات شهري (A monthly spreadsheet) من الإدارة المالية يُظهر إنفاق كل فريق بعد وقوعه (after the fact)
 - B. قاعدة تشترط أن يحصل كل طلب سحب للبنية التحتية على موافقة (a sign-off) من منى
 - C. مراجعة ربع سنوية لفاتورة السحابة (A quarterly review of the cloud bill) بحضور كل قادة الفرق ومدير تقنية المعلومات (the CIO)
-- D. تقدير تكلفة للخطة (A cost estimate of the plan) على طلب السحب، مع عتبة لمراجعة ثانية (a threshold for a second review)
+- D. تقدير تكلفة للخطة (A cost estimate of the plan) على طلب السحب، مع عتبة لمراجعة ثانية
 
 <details><summary>الإجابة</summary>
 
@@ -1367,7 +1367,7 @@ Strong answer, out loud, in order:
 **58. يستخدم خط تسليم البنية التحتية (infrastructure pipeline) في نجم دورًا سحابيًا قويًا واحدًا (one powerful cloud role) لكلٍّ من `tofu plan` على كل طلب سحب و`tofu apply` بعد الدمج. بماذا يوصي خط الأساس لخطوط التسليم (the pipeline baseline)؟**
 
 - A. أبقِ دورًا واحدًا، لكن دوّر بيانات اعتماده كل أسبوع للحد من التعرّض (to limit exposure)
-- B. أدوار منفصلة (Separate roles): للقراءة فقط للخطة (read-only for plan)، وللكتابة للتطبيق بعد الموافقة فقط (write for apply only after approval)
+- B. أدوار منفصلة (Separate roles): للقراءة فقط للخطة، وللكتابة للتطبيق بعد الموافقة فقط
 - C. امنح مهمة الخطة (the plan job) صلاحية كتابة أيضًا، كي تستطيع الخطط تحديث كل مورد
 - D. شغّل المهمتين من حاسوب مهندس المحمول (an engineer's laptop)، حيث الدور محمي أفضل (better protected)
 
@@ -1394,7 +1394,7 @@ Strong answer, out loud, in order:
 
 - A. أرسل الاثنتين إلى واجهة API المُدارة (the managed API) ذات الجودة الأفضل، ولا تحجب شيئًا (mask nothing)
 - B. دع كل فريق تطبيق يختار نموذجه الخاص ويستدعيه بمفتاحه الخاص (with its own key)
-- C. وجّه حسب فئة البيانات (Route by data class): البيانات السرية إلى النموذج المستضاف ذاتيًا داخل المنطقة (the in-region self-hosted model)
+- C. وجّه حسب فئة البيانات (Route by data class): البيانات السرية إلى النموذج المستضاف ذاتيًا داخل المنطقة
 - D. أرسل الاثنتين إلى النموذج المستضاف ذاتيًا، وأطفئ واجهة API المُدارة كليًا
 
 <details><summary>الإجابة</summary>

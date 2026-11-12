@@ -148,10 +148,10 @@ The AI Governance Committee adopts an **Adverse Impact Testing Standard** for al
 
 **1. Najm's CV tool does not use sex as an input, but shortlists women at 68% of the rate of men. Which concept best describes the legal risk?**
 
-- A. Direct discrimination
+- A. Direct discrimination, because the model uses sex as an input to the rating
 - B. Indirect discrimination / disparate impact
-- C. No risk, because sex is not an input
-- D. A data protection breach only
+- C. No risk to the bank, because sex is not an input to the model
+- D. A data protection breach only, with no discrimination issue to assess
 
 <details><summary>Answer</summary>
 
@@ -161,10 +161,10 @@ The AI Governance Committee adopts an **Adverse Impact Testing Standard** for al
 
 **2. Under NYC Local Law 144, what must an employer using an automated employment decision tool do?**
 
-- A. Obtain approval from the city before use
-- B. Ensure the tool's impact ratios are above 0.80
+- A. Obtain approval from the city before use, and renew that approval every year the tool is in service
+- B. Ensure the tool's impact ratios are above 0.80 for every category, and report the ratios to the city each quarter
 - C. Have an independent bias audit within one year before use, publish a summary of results, and notify candidates
-- D. Use the tool only for internal promotions
+- D. Use the tool only for internal promotions, and not for any external hiring or contractor selection
 
 <details><summary>Answer</summary>
 
@@ -175,9 +175,9 @@ The AI Governance Committee adopts an **Adverse Impact Testing Standard** for al
 **3. A US lender's model declines an applicant. The compliance team wants to send the standard reasons "insufficient income" and "credit history", although the main drivers were recent account behaviour and debt utilisation. What is the issue?**
 
 - A. Regulation B requires the specific principal reasons actually behind the decision, even for complex models
-- B. None; sample reasons are always acceptable
-- C. Adverse-action notices are optional for AI models
-- D. The lender must disclose the model's source code
+- B. None; sample reasons are always acceptable, whatever the model actually used to decide
+- C. Adverse-action notices are optional for AI models, as long as the applicant can phone the lender afterwards
+- D. The lender must disclose the model's source code to the applicant together with the notice
 
 <details><summary>Answer</summary>
 
@@ -187,9 +187,9 @@ The AI Governance Committee adopts an **Adverse Impact Testing Standard** for al
 
 **4. In *EEOC v. iTutorGroup* (settled 2023), what was the alleged problem?**
 
-- A. A chatbot gave wrong salary information
-- B. A model was trained on copyrighted CVs
-- C. A facial-analysis tool misidentified candidates' race
+- A. A chatbot gave wrong salary information to candidates during a recruitment campaign
+- B. A model was trained on copyrighted CVs that had been collected without the authors' permission
+- C. A facial-analysis tool misidentified candidates' race during recorded video interviews
 - D. Application software automatically rejected older applicants
 
 <details><summary>Answer</summary>
@@ -200,10 +200,10 @@ The AI Governance Committee adopts an **Adverse Impact Testing Standard** for al
 
 **5. Najm finds a disparity in its credit model driven by a district-of-residence feature. Which step is MOST important in deciding whether the disparity can be justified?**
 
-- A. Showing the model's overall accuracy is high
+- A. Showing the model's overall accuracy is high, and that it is higher than that of the system it replaced
 - B. Showing the feature is necessary for a legitimate aim and that no less discriminatory alternative achieves similar performance
 - C. Removing nationality from the training data
-- D. Asking the vendor to confirm the model is fair
+- D. Asking the vendor to confirm in writing that the model is fair, and keeping the confirmation on file
 
 <details><summary>Answer</summary>
 
@@ -345,10 +345,10 @@ Layla issues an **AI Intellectual Property Clearance Checklist**, required befor
 
 **1. Under the EU DSM Directive, a commercial company wants to mine publicly available online articles to train a model. What determines whether the Art. 4 exception is available?**
 
-- A. Whether the company is a research organisation
-- B. Whether the articles are older than five years
+- A. Whether the company is a research organisation or a cultural heritage institution under the Directive
+- B. Whether the articles are older than five years or were published before the Directive entered into force
 - C. Whether it has lawful access and the rights holder has not expressly reserved TDM use by appropriate, machine-readable means
-- D. Whether the model will be open source
+- D. Whether the model will be open source and its weights published for any user to download, together with the training data
 
 <details><summary>Answer</summary>
 
@@ -359,9 +359,9 @@ Layla issues an **AI Intellectual Property Clearance Checklist**, required befor
 **2. Najm's marketing team generated a campaign image entirely with an AI tool, with a one-line prompt and no edits. Under the US Copyright Office's approach, what is most likely?**
 
 - A. The image is likely not protected by copyright because it lacks human authorship
-- B. The tool provider owns copyright
-- C. Najm owns copyright because it paid for the tool
-- D. The prompt writer is the author of the image
+- B. The tool provider owns copyright, because its software produced the image from the prompt
+- C. Najm owns copyright because it paid for the tool and the licence terms assign outputs to the customer
+- D. The prompt writer is the author of the image, because the written prompt is a creative contribution
 
 <details><summary>Answer</summary>
 
@@ -384,10 +384,10 @@ Layla issues an **AI Intellectual Property Clearance Checklist**, required befor
 
 **4. A relationship manager pastes a client's confidential financial statements into a public consumer chatbot. Which legal concern is MOST directly engaged?**
 
-- A. Patent infringement
+- A. Patent infringement, because the staff member copied the bank's patented credit method
 - B. Loss of trade-secret and confidentiality protection, plus breach of client confidentiality duties
-- C. Moral rights of the chatbot provider
-- D. Trademark dilution
+- C. Moral rights of the chatbot provider, which must be asked to approve any use of its outputs by the bank's staff
+- D. Trademark dilution, because the bank's brand name appeared in the text that was pasted
 
 <details><summary>Answer</summary>
 
@@ -398,9 +398,9 @@ Layla issues an **AI Intellectual Property Clearance Checklist**, required befor
 **5. Omar proposes to use a model released under a community licence with an acceptable-use policy and conditions for very large services. Which statement is correct?**
 
 - A. It may be "open weight" but carries licence restrictions that must be checked against Najm's use
-- B. It is open source, so there are no restrictions
-- C. Model licences are unenforceable
-- D. Only the EU AI Act governs model use
+- B. It is open source, so there are no restrictions on how the bank may use it commercially
+- C. Model licences are unenforceable, so the bank can ignore any terms attached to the weights and use them as it likes
+- D. Only the EU AI Act governs model use, and licence terms are irrelevant to the bank
 
 <details><summary>Answer</summary>
 
@@ -575,9 +575,9 @@ Layla's team adds an **AI Customer-Facing Controls Standard** and extends the mo
 
 **2. Which statement about EU liability law for AI is correct at the time of writing?**
 
-- A. The AI Liability Directive is in force and the PLD excludes software
-- B. Only the AI Act creates liability for AI harm
-- C. Both directives were withdrawn
+- A. The AI Liability Directive is in force and the PLD excludes software, so claimants must prove fault in every case before a court
+- B. Only the AI Act creates liability for AI harm, and it does so through fines paid to the regulator
+- C. Both directives were withdrawn, so no EU-level liability rules apply to AI products at all
 - D. The new Product Liability Directive covers software including AI; the proposed AI Liability Directive was withdrawn
 
 <details><summary>Answer</summary>
@@ -591,7 +591,7 @@ Layla's team adds an **AI Customer-Facing Controls Standard** and extends the mo
 - A. Approve; AI is inherently objective
 - B. Approve with a small-print disclaimer
 - C. Reject unless the claim is substantiated by evidence, since unsubstantiated AI claims can be deceptive
-- D. Refer it to the data protection officer only
+- D. Refer it to the data protection officer only, and publish the claim once that officer has replied
 
 <details><summary>Answer</summary>
 
@@ -601,10 +601,10 @@ Layla's team adds an **AI Customer-Facing Controls Standard** and extends the mo
 
 **4. Under SR 11-7, what does "effective challenge" mean?**
 
-- A. Customers' right to contest model decisions
+- A. Customers' right to contest model decisions before an independent panel of the bank's own staff
 - B. Critical analysis of models by objective, informed parties with enough influence to make change happen
-- C. Penetration testing of model infrastructure
-- D. Annual external audit of the model inventory
+- C. Penetration testing of model infrastructure by an accredited security firm, repeated every quarter
+- D. Annual external audit of the model inventory, with the report filed with the board, the regulator and the auditors
 
 <details><summary>Answer</summary>
 

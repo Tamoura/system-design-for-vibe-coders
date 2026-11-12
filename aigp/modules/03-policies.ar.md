@@ -174,10 +174,10 @@ flowchart RL
 
 **1. يريد بنك نجم أن يبدأ حوكمة الذكاء الاصطناعي (AI governance) لكنه لا يعرف عدد أنظمة الذكاء الاصطناعي (AI systems) التي يستخدمها. ماذا ينبغي أن يفعل أولًا؟**
 
-- A. شراء منصة لرصد الذكاء الاصطناعي (AI monitoring platform)
+- A. شراء منصة لرصد الذكاء الاصطناعي (AI monitoring platform) تفحص الشبكة (network) بحثًا عن حركة النماذج وتبلغ عن الاستخدام بحسب الفريق (team)
 - B. بناء سجل لأنظمة الذكاء الاصطناعي (AI inventory)، يشمل الذكاء الاصطناعي (AI) المشترى والمدمج (bought and embedded)، وتصنيف كل نظام بحسب المخاطر
-- C. التكليف بتمرين اختبار الفريق الأحمر (red-team exercise) على روبوت المحادثة (chatbot)
-- D. كتابة معايير تقنية تفصيلية (detailed technical standards) لمصادقة النماذج (model validation)
+- C. التكليف بتمرين اختبار الفريق الأحمر (red-team exercise) على روبوت المحادثة (chatbot) للعملاء لاكتشاف ثغرات حقن الطلبات (prompt injection) وتسرب البيانات (data leak)
+- D. كتابة معايير تقنية تفصيلية (detailed technical standards) لمصادقة النماذج (model validation) وحدود الاختبار (testing thresholds) وقوالب التوثيق (documentation templates)
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -187,7 +187,7 @@ flowchart RL
 
 **2. أي وثيقة تتضمن عادةً تعليمات خطوة بخطوة (step-by-step instructions) لتسجيل (registration) حالة استخدام (use case) جديدة للذكاء الاصطناعي (AI)؟**
 
-- A. إجراء
+- A. إجراء (procedure)
 - B. سياسة الذكاء الاصطناعي (AI policy)
 - C. إرشاد (guideline)
 - D. بيان شهية المخاطر (risk appetite statement)
@@ -200,10 +200,10 @@ flowchart RL
 
 **3. تصرّف مساعد التسوق (shopping assistant) القائم على الذكاء الاصطناعي التوليدي (GenAI) لدى متجر تجزئة (retailer) تصرفًا جيدًا عند الإطلاق (launch)، لكن إجاباته تراجعت بعد أن حدّث مورد النموذج الأساسي (foundation-model vendor) نموذجه. أي ضابط (control) من ضوابط دورة الحياة (life-cycle controls) كان غائبًا بأوضح صورة؟**
 
-- A. دراسة جدوى (business case) في مرحلة التصميم (design stage)
-- B. مراجعة ترخيص البيانات (data licence review)
+- A. دراسة جدوى (business case) في مرحلة التصميم (design stage)، يوقّعها الراعي (sponsor) قبل صرف أي ميزانية (budget)
+- B. مراجعة ترخيص البيانات (data licence review)، تُنجز مرة واحدة قبل توقيع عقد المورّد (vendor's contract)
 - C. رصد تشغيلي (Operational monitoring) مع محفّزات (triggers) لتغييرات نماذج الموردين (vendor model changes)
-- D. سياسة ذكاء اصطناعي (AI policy) معتمدة من مجلس الإدارة (board)
+- D. سياسة ذكاء اصطناعي (AI policy) معتمدة من مجلس الإدارة (board of directors)، تنطبق على المورّد (vendor) تلقائيًا (automatically) عند نشرها (publication)
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -213,9 +213,9 @@ flowchart RL
 
 **4. ما الغرض الرئيسي من تاريخ انتهاء الصلاحية (expiry date) لاستثناء (exception) معتمد من السياسة (policy)؟**
 
-- A. الامتثال (compliance) لمادة محددة في EU AI Act بشأن الاستثناءات (exceptions)
-- B. السماح لمقدّم الطلب (requester) بتمديده تلقائيًا
-- C. تقليل عدد اجتماعات اللجنة (committee meetings)
+- A. الامتثال (compliance) لمادة محددة في EU AI Act بشأن الاستثناءات (exceptions) تتيح انحرافات مؤقتة لمقدّمي الأنظمة (providers) عالية المخاطر (high-risk)
+- B. السماح لمقدّم الطلب (requester) بتمديده تلقائيًا عندما يتأخر المشروع (project)، دون مراجعة إضافية (further review)
+- C. تقليل عدد اجتماعات اللجنة (committee meetings) باعتماد كل استثناء (exception) لمدة السنة كلها
 - D. ضمان أن تكون الانحرافات (deviations) مؤقتة وأن يُعاد البت فيها بدلًا من أن تصبح تغييرات صامتة ودائمة في السياسة (policy)
 
 <details><summary>الإجابة (Answer)</summary>
@@ -229,7 +229,7 @@ flowchart RL
 - A. ISO/IEC 42005
 - B. ISO/IEC 5338
 - C. ISO/IEC 38507
-- D. ISO/IEC 42006
+- D. ISO/IEC 5339
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -388,9 +388,9 @@ flowchart RL
 **1. تريد دانة استخدام بيانات خدمة القروض (loan-servicing data) المجمّعة على مدى عشر سنوات لتدريب (training) نموذج جديد للميل التسويقي (new marketing-propensity model). ما سؤال حوكمة البيانات (data governance question) الرئيسي؟**
 
 - A. ما إذا كان الغرض الجديد متوافقًا مع الغرض الأصلي (original purpose) وله أساس قانوني (lawful basis)
-- B. ما إذا كانت البيانات (data) مخزنة في السحابة (cloud)
-- C. ما إذا كان لدى علماء البيانات (data scientists) تراخيص البرمجيات (software licences) الصحيحة
-- D. ما إذا كان النموذج (model) سيكون أدق من النموذج القديم
+- B. ما إذا كانت البيانات (data) مخزنة في السحابة (cloud)، في منطقة تسمح بها سياسة السحابة (cloud policy) لدى البنك
+- C. ما إذا كان لدى علماء البيانات (data scientists) تراخيص البرمجيات (software licences) الصحيحة لأدوات التدريب (training tools) التي يستخدمونها
+- D. ما إذا كان النموذج (model) سيكون أدق (more accurate) من النموذج القديم بما يكفي لتبرير التغيير (change)
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -400,10 +400,10 @@ flowchart RL
 
 **2. بموجب EU AI Act، أي متطلب ينطبق على بيانات تدريب (training data) أنظمة الذكاء الاصطناعي (AI systems) عالية المخاطر (high-risk)؟**
 
-- A. يجب أن تكون جميع بيانات التدريب (training data) اصطناعية (synthetic)
-- B. يجب تخزين بيانات التدريب (training data) في الاتحاد الأوروبي (EU)
+- A. يجب أن تكون جميع بيانات التدريب (training data) اصطناعية (synthetic)، لأن البيانات الشخصية الحقيقية لا يجوز استخدامها في أي نظام عالي المخاطر (high-risk) بموجب القانون (Act)، أيًّا كانت الضمانات (safeguards) القائمة
+- B. يجب تخزين بيانات التدريب (training data) في الاتحاد الأوروبي (EU)، ولا يجوز أن يعالجها أي مقدّم (provider) خارج الاتحاد
 - C. ممارسات لحوكمة البيانات (data governance practices) تشمل الفحص بحثًا عن التحيّزات المحتملة (possible biases) وتدابير لاكتشافها ومنعها والتخفيف منها
-- D. يجب نشر بيانات التدريب (training data)
+- D. يجب نشر بيانات التدريب (training data) حتى يستطيع الجمهور (public) فحصها بحثًا عن الأخطاء والتحيّز (bias)، وعلى المقدّم (provider) الرد على كل طلب
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -413,9 +413,9 @@ flowchart RL
 
 **3. يقول فريق تسويق إن صور الويب (web images) "متاحة علنًا (publicly available)" ولذلك يمكن استخدامها بحرية للضبط الدقيق (fine-tuning) لنموذج صور (image model). ما أفضل رد؟**
 
-- A. الموافقة (Agree)، لأن كل ما هو على الإنترنت ملك عام (public domain)
-- B. استخدام الصور التي لا تحمل علامة مائية (watermark) فقط
-- C. استخدام الصور دون إخبار أحد
+- A. الموافقة (Agree)، لأن كل ما هو على الإنترنت ملك عام (public domain) ويمكن استخدامه في التدريب (training) دون إذن (permission or licence)
+- B. استخدام الصور التي لا تحمل علامة مائية (watermark) فقط (only)، لأن العلامة المائية هي الدليل الوحيد (the only sign) على ادعاء حق المؤلف (copyright)
+- C. استخدام الصور دون إخبار أحد (tell anyone)، حتى لا يستطيع أي صاحب حقوق (rights holder) طلب إزالتها
 - D. التحقق من حق المؤلف (copyright) وشروط الترخيص (licence terms) وأي انسحاب من التنقيب في النصوص والبيانات (text-and-data mining) قبل الاستخدام
 
 <details><summary>الإجابة (Answer)</summary>
@@ -637,10 +637,10 @@ flowchart RL
 
 **2. أي إجراء قد يجعل مُشغِّل (deployer) نظام ذكاء اصطناعي (AI system) عالي المخاطر (high-risk) مقدّمًا له بموجب EU AI Act؟**
 
-- A. تدريب (training) موظفيه على النظام
-- B. إبلاغ مقدّم النظام (provider) بحادث (incident)
+- A. تدريب (training) موظفيه على النظام قبل أن يبدؤوا باستخدامه
+- B. إبلاغ مقدّم النظام (provider) بحادث (incident) خلال المدة المتفق عليها
 - C. وضع اسمه أو علامته التجارية (name or trademark) على النظام
-- D. الاحتفاظ بسجلات النظام (keeping the system's logs)
+- D. الاحتفاظ بسجلات النظام (system's logs) للمدة التي يشترطها القانون
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -664,9 +664,9 @@ flowchart RL
 **4. حدّث مقدّم النموذج الأساسي (foundation-model provider) الذي يقف خلف مساعد الائتمان (credit copilot) في نجم نموذجه دون إشعار مباشر، فتغيّرت جودة المخرجات (outputs). أي بند تعاقدي كان سيساعد بصورة مباشرة أكثر من غيره؟**
 
 - A. الإخطار المسبق بالتغييرات الجوهرية (material changes) في النموذج (model) مع الحق في الاختبار (right to test) قبل سريانها
-- B. تعويض عن الملكية الفكرية (IP indemnity)
-- C. بند بشأن مواقع مكاتب المورد (vendor's office locations)
-- D. مدة سداد (payment term) أطول
+- B. تعويض عن الملكية الفكرية (IP indemnity) يغطي المطالبات المتعلقة ببيانات التدريب (training data) والمخرجات (outputs) التي ينتجها، حتى قيمة العقد (contract value)
+- C. بند بشأن مواقع مكاتب المورّد (vendor's office locations) ولغات موظفي الدعم (support staff) لديه
+- D. مدة سداد (payment term) أطول، حتى يستطيع البنك تأجيل الدفع للمورّد (vendor) إلى ما بعد الإطلاق (launch)، مع إعفاء من الفوائد (interest)
 
 <details><summary>الإجابة (Answer)</summary>
 

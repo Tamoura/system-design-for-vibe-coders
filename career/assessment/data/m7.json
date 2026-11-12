@@ -69,14 +69,14 @@
         "en": [
           "Target skills-based employers, use referrals, check eligibility first",
           "Pause the search and enrol in a degree so his applications qualify later",
-          "Apply to every posting anyway, since a strong portfolio beats any rule",
+          "Apply to every posting anyway, as a strong portfolio beats any rule",
           "Add several certifications to his CV to stand in for the missing degree"
         ],
         "ar": [
-          "يستهدف أصحاب العمل ذوي المعايير القائمة على المهارات (skills-based criteria)، ويعتمد على الإحالات (referrals)، ويتحقق من شروط الأهلية (eligibility rules) أولًا",
-          "يوقف البحث (search) ويلتحق بدراسة جامعية (degree) كي تصبح طلباته (applications) مؤهّلة لاحقًا",
-          "يتقدّم إلى كل إعلان وظيفي (posting) على أي حال، فمعرض الأعمال القوي (strong portfolio) يتغلّب على أي شرط",
-          "يضيف عدة شهادات مهنية (certifications) إلى سيرته الذاتية (CV) لتعوّض الشهادة الجامعية (degree) الناقصة"
+          "يستهدف أصحاب العمل ذوي معايير المهارات (skills-based criteria)، ويعتمد على الإحالات (referrals)، ويتحقق من شروط الأهلية أولًا",
+          "يوقف البحث (search) ويلتحق بدراسة جامعية (degree) كي تصبح طلباته (applications) مؤهّلة لاحقًا بعد التخرج",
+          "يتقدّم إلى كل إعلان وظيفي (posting) على أي حال، فمعرض الأعمال القوي (strong portfolio) يتغلّب على أي شرط مكتوب في الإعلان",
+          "يضيف عدة شهادات مهنية (certifications) إلى سيرته الذاتية (CV) لتعوّض الشهادة الجامعية (degree) الناقصة عنده"
         ]
       },
       "a": 0,
@@ -96,15 +96,15 @@
       "o": {
         "en": [
           "Submit it as it is, since passing tests are what reviewers check",
-          "Submit it with a note that AI wrote it, which meets the disclosure rule",
+          "Submit it with a note that AI wrote it, meeting the disclosure rule",
           "Disclose AI use and submit only code she has verified and can explain",
           "Have the agent comment the two modules in detail, then submit it all"
         ],
         "ar": [
-          "تسلّمه كما هو، فالاختبارات الناجحة (passing tests) هي ما يتحقق منه المراجعون (reviewers)",
-          "تسلّمه مع ملاحظة بأن الذكاء الاصطناعي (AI) كتبه، فهذا يفي بشرط الإفصاح (disclosure rule)",
-          "تفصح عن استخدام الذكاء الاصطناعي (disclose AI use) ولا تسلّم إلا شيفرة تحقّقت منها (verified) وتستطيع شرحها (explain)",
-          "تطلب من الوكيل (agent) شرح الوحدتين (modules) بتعليقات مفصّلة (comments)، ثم تسلّمه كله"
+          "تسلّمه كما هو، فالاختبارات الناجحة (passing tests) هي ما يتحقق منه المراجعون (reviewers) عادةً",
+          "تسلّمه مع ملاحظة بأن الذكاء الاصطناعي (AI) كتبه، فهذا يفي بشرط الإفصاح (disclosure rule) كاملًا",
+          "تفصح عن استخدام الذكاء الاصطناعي ولا تسلّم إلا شيفرة تحقّقت منها (verified) وتستطيع شرحها (explain)",
+          "تطلب من الوكيل (agent) شرح الوحدتين (modules) بتعليقات مفصّلة (comments)، ثم تسلّمه كله كما هو"
         ]
       },
       "a": 2,

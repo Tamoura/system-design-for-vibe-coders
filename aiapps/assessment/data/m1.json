@@ -14,13 +14,13 @@
           "Yes, because the model saves what the system prompt tells it to remember",
           "Yes, because the instruction makes the model keep a summary of each chat",
           "No, because the model keeps nothing between calls; the code must resend it",
-          "No, because a system prompt is read once per conversation, not on every call"
+          "No, because a system prompt is read once per conversation, not every call"
         ],
         "ar": [
           "نعم، لأن النموذج (model) يحفظ ما يطلب منه موجّه النظام (system prompt) تذكّره",
           "نعم، لأن التعليمة (instruction) تجعل النموذج (model) يحتفظ بملخّص (summary) لكل محادثة (chat)",
           "لا، لأن النموذج (model) لا يحتفظ بشيء بين الاستدعاءات (calls)، وعلى الشيفرة (code) أن تعيد إرساله",
-          "لا، لأن موجّه النظام (system prompt) يُقرأ مرة واحدة في المحادثة (conversation) لا في كل استدعاء (call)"
+          "لا، لأن موجّه النظام (system prompt) يُقرأ مرة واحدة في المحادثة لا في كل استدعاء"
         ]
       },
       "a": 2,
@@ -68,14 +68,14 @@
       "o": {
         "en": [
           "In the system prompt, as a rule the model must follow before asking to close a ticket",
-          "In the tool description, which tells the model exactly when it may call the tool",
-          "In the tool's JSON schema with `strict: true`, so every input is guaranteed valid",
+          "In the tool description, which tells the model exactly when it may call the tool and with what",
+          "In the tool's JSON schema with `strict: true`, so every input is guaranteed to be valid",
           "In `run_tools`, where your code checks who is asking before it runs that tool call"
         ],
         "ar": [
           "في موجّه النظام (system prompt)، قاعدةً يلتزم بها النموذج (model) قبل أن يطلب الإغلاق",
-          "في وصف الأداة (tool description)، الذي يخبر النموذج (model) متى يجوز له استدعاؤها",
-          "في مخطط الأداة (JSON schema) مع `strict: true`، فيُضمَن أن كل مُدخل (input) صالح",
+          "في وصف الأداة (tool description)، الذي يخبر النموذج (model) متى يجوز له استدعاؤها وبأي مُدخلات",
+          "في مخطط الأداة (JSON schema) مع `strict: true`، فيُضمَن أن كل مُدخل (input) صالح تمامًا",
           "في `run_tools`، حيث تتحقق شيفرتك (your code) ممن يطلب قبل أن تنفّذ الأداة (tool)"
         ]
       },

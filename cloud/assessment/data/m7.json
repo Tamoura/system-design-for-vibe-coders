@@ -12,7 +12,7 @@
       "o": {
         "en": [
           "It proves he can run production systems, so a portfolio adds little beside it",
-          "It rarely matters, because Gulf employers seldom name certifications in job adverts",
+          "It rarely matters, because Gulf employers seldom name certifications in adverts",
           "It is a signal that helps him pass the first filter; interviews test the real work",
           "It stays valid for life, so earning several early on is the most efficient plan"
         ],
@@ -95,7 +95,7 @@
       },
       "o": {
         "en": [
-          "Rollback: revert of the prod digest commit, timed at 4 minutes in staging, report linked",
+          "Rollback: revert of the prod digest commit, timed at 4 minutes in staging, with report",
           "Overseas-block flag: the switch exists in the flag service and is listed in the runbook",
           "Restore: point-in-time restore to a new instance in 22 minutes, 3 minutes of data lost",
           "Alerts: each burn-rate alert fired once in a staging test and links to its own runbook"

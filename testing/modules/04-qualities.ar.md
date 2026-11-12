@@ -305,10 +305,10 @@ E       assert 51 == 6
 
 **2. يشغّل سكربت بلال (Bilal's script) مئة مستخدم افتراضي (100 virtual users) على واجهة برمجة نجم في بيئة ما قبل الإنتاج (staging API)، ويرسل كل منهم طلبه التالي حين يصل الرد السابق (when the last reply arrives). تتجمّد الخدمة عشر ثوانٍ (freezes for ten seconds). ماذا يُسجَّل؟ ⁦(What is recorded?)⁩**
 
-- A. صورة عادلة (A fair picture)، لأن كل طلب أُرسل قد سُجّل (every request that was sent is recorded)
+- A. صورة عادلة (A fair picture)، لأن كل طلب أُرسل قد سُجّل (every request that was sent is recorded) في النتائج
 - B. بضع عيّنات بطيئة (A few slow samples)، ولا شيء للطلبات التي لم تُرسَل أصلًا (none for requests never sent)
 - C. آلاف الطلبات الفاشلة (Thousands of failed requests) التي ترفع p99 إلى عنان السماء (sky-high)
-- D. لا شيء، لأنه يتوقف عند أول رد بطيء (it aborts on the first slow reply)
+- D. لا شيء (Nothing)، لأنه يتوقف عند أول رد بطيء (it aborts on the first slow reply) يتلقاه
 
 <details><summary>الإجابة</summary>
 
@@ -331,7 +331,7 @@ E       assert 51 == 6
 
 **4. نقطة نهاية كشوف الحساب (A statements endpoint) سريعة في بيئة QA لكنها بطيئة في الإنتاج، حيث لدى العملاء آلاف التحويلات. تنفّذ استعلامًا واحدًا لكل صف (one query per row). أي اختبار يلتقط ذلك؟ ⁦(Which test catches this?)⁩**
 
-- A. اختبار توقيت يفشل إذا استغرقت نقطة النهاية أكثر من ثانية في QA (A timing test that fails if the endpoint takes over a second in QA)
+- A. اختبار توقيت يفشل إذا تجاوزت نقطة النهاية ثانية (A timing test that fails if the endpoint exceeds a second)
 - B. اختبار وحدة (A unit test) يفحص الصفوف المعادة (checks the returned rows)
 - C. اختبار يؤكد أن عدد الاستعلامات يبقى ثابتًا مع نمو حجم الصفحة (the query count stays flat as page size grows)
 - D. اختبار دخان (A smoke test) يرسل طلبًا واحدًا ويتوقع 200 (sends one request and expects a 200)
@@ -729,10 +729,10 @@ docker run --rm --network host -v "$PWD:/zap/wrk:rw" -t ghcr.io/zaproxy/zaproxy:
 
 **3. تُبلّغ Semgrep عن 40 نتيجة في مستودع قديم (a legacy repository)، منها اثنتان نمطان جديدان لحقن SQL (new SQL-injection patterns) في طلب الدمج هذا. ما السياسة المعقولة؟ ⁦(What is the sensible policy?)⁩**
 
-- A. امنع الدمج بسبب النتائج الجديدة عالية الثقة (Block on the new high-confidence findings)؛ وافتح تذاكر للباقي (ticket the rest)
-- B. امنع كل دمج حتى تُصلَح الأربعون كلها (until all 40 are fixed)
-- C. عطّل القاعدة (Disable the rule)، لأن النتائج القديمة تجعلها كثيرة الضجيج (make it noisy)
-- D. ادمج الآن ودع فحص DAST الليلي يلتقط المشكلات الحقيقية (catch real problems)
+- A. امنع الدمج بسبب النتائج الجديدة عالية الثقة (Block on the new high-confidence findings)؛ وافتح تذاكر للباقي
+- B. امنع كل دمج (Block every merge) حتى تُصلَح الأربعون كلها (until all 40 are fixed)
+- C. عطّل القاعدة (Disable the rule)، لأن النتائج القديمة (legacy findings) تجعلها كثيرة الضجيج جدًا (too noisy to read)
+- D. ادمج الآن (Merge now) ودع فحص DAST الليلي يلتقط المشكلات الحقيقية (catch real problems)
 
 <details><summary>الإجابة</summary>
 
@@ -755,10 +755,10 @@ docker run --rm --network host -v "$PWD:/zap/wrk:rw" -t ghcr.io/zaproxy/zaproxy:
 
 **5. يقترح زميل فحص ZAP نشطًا كاملًا (a full ZAP active scan) لبيئة ما قبل الإنتاج (staging environment) الخاصة بفريق آخر (another squad's) مساء الجمعة، «لأنها بيئة اختبار فقط» (because it is only staging). ما الذي يجب أن يحدث أولًا؟ ⁦(What must happen first?)⁩**
 
-- A. شغّله بشدة أقل كي لا يلاحظ أحد (at lower intensity so nobody notices)
-- B. احصل على إذن كتابي (Get written permission) واتفقوا على النطاق والنافذة (agree the scope and window)
+- A. شغّله بشدة أقل كي لا يلاحظ أحد (at lower intensity so nobody notices) الفحص
+- B. احصل على إذن كتابي (Get written permission) واتفقوا على النطاق والنافذة
 - C. شغّله من حاسوب شخصي كي لا تُنسب الحركة إلى فريق هندسة الجودة (not traced to QE)
-- D. أخبر الفريق عبر المحادثة بعد بدء الفحص (once the scan has started)
+- D. أخبر الفريق عبر المحادثة بعد أن بدأ الفحص فعلًا (once the scan has already started)
 
 <details><summary>الإجابة</summary>
 
@@ -1207,10 +1207,10 @@ def test_each_check_can_fail(name):                # a check that cannot fail pr
 
 **3. تبلّغ مهمة النسخ الاحتياطي الليلية (The nightly backup job) بالنجاح وحجم الملف 4 MB (the file is 4 MB). ما الذي يثبت أن النسخة قابلة للاستخدام؟ ⁦(What proves the backup is usable?)⁩**
 
-- A. حجم الملف يطابق نسخة الأمس (matches yesterday's backup)
-- B. تخرج مهمة النسخ برمز صفر (exits with code zero)
+- A. حجم الملف يطابق حجم نسخة الأمس (matches yesterday's backup size)
+- B. تخرج مهمة النسخ الاحتياطي (backup job) برمز صفر (exits with code zero) ولا سجل أخطاء (no error log)
 - C. يؤكد مزوّد التخزين (the storage provider) اكتمال الرفع (the upload finished)
-- D. استعادة نظيفة تطابق مجاميعها المصدر (A clean restore whose totals match the source)
+- D. استعادة نظيفة (A clean restore) تطابق مجاميعها المصدر (totals match the source)
 
 <details><summary>الإجابة</summary>
 

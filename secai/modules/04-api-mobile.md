@@ -206,10 +206,10 @@ Hands-on work runs only against your own code or a local lab such as OWASP crAPI
 
 **1. During an authorised test, Mariam logs in as test customer A and sends `PATCH /v2/cards/{cardId}/limits` with test customer B's card ID. The API changes B's limit. Which risk is this, and what is the fix?**
 
-- A. API2 Broken Authentication; make A log in again before any change
+- A. API2 Broken Authentication; make A log in again before any change to a card, and expire the session after five minutes
 - B. API1 BOLA; on the server, check on every request that the card belongs to the authenticated customer
-- C. API8 Security Misconfiguration; hide card IDs from the app's screens
-- D. API4 Unrestricted Resource Consumption; rate-limit the endpoint
+- C. API8 Security Misconfiguration; hide card IDs from the app's screens and from the URLs shown in the browser address bar
+- D. API4 Unrestricted Resource Consumption; rate-limit the endpoint to ten requests a minute per customer and alert on spikes
 
 <details><summary>Answer</summary>
 
@@ -219,7 +219,7 @@ Hands-on work runs only against your own code or a local lab such as OWASP crAPI
 
 **2. `GET /v2/customers/me` returns an internal `riskScore`, and `PATCH /v2/customers/me` accepts a `kycStatus` field. What is the best fix?**
 
-- A. Ask the mobile team not to display `riskScore`
+- A. Ask the mobile team not to display `riskScore` in the app, and remove the field from the screens of the staff portal while leaving it in the response itself
 - B. Encrypt the response body
 - C. Define allowlisted request and response schemas: reject unknown fields on input and return only public fields
 - D. Move the endpoint to `/v3/`
@@ -235,7 +235,7 @@ Hands-on work runs only against your own code or a local lab such as OWASP crAPI
 - A. Good: random IDs make BOLA impossible
 - B. Worth doing as defence in depth, but IDs leak through logs, links and other responses, so the server-side ownership check is still required
 - C. Pointless: UUIDs add no security at all
-- D. Use UUIDs and drop the ownership check to improve performance
+- D. Use UUIDs and drop the ownership check to improve performance, since IDs can no longer be guessed by customers or attackers and every lookup is then a single fast key read in the database
 
 <details><summary>Answer</summary>
 
@@ -246,7 +246,7 @@ Hands-on work runs only against your own code or a local lab such as OWASP crAPI
 **4. Najm's 2019 `/v1/` API is no longer used by the current app but still answers on the public gateway, without the newer access checks. Which risk is this, and what is the right response?**
 
 - A. API9 Improper Inventory Management: record it with an owner and a retirement date, block it at the gateway, and regularly compare served routes with documented ones
-- B. API10 Unsafe Consumption of APIs: validate its responses
+- B. API10 Unsafe Consumption of APIs: validate its responses against a schema, set timeouts on every call to it, and treat its data as untrusted input like any other third-party feed
 - C. Not a risk, because no current client calls it
 - D. API7 SSRF: add a URL allowlist
 
@@ -462,21 +462,21 @@ Hands-on work runs only against code you wrote, a local lab, or deliberately vul
 
 **2. In a local lab, two transfer requests sent at the same moment both succeed and leave the account overdrawn, although each request was checked. What is the cause, and the best fix?**
 
-- A. Credential stuffing; add multi-factor authentication
-- B. A race condition from check-then-act; make the check and the debit one atomic conditional update or locked transaction, and use idempotency keys
+- A. A race condition from check-then-act; make the check and the debit one atomic conditional update or locked transaction, and use idempotency keys
+- B. Credential stuffing; add multi-factor authentication for every transfer and block the IP addresses that sent the duplicate transfers during the incident window
 - C. Missing TLS; enforce HTTPS
 - D. A slow database; add more servers
 
 <details><summary>Answer</summary>
 
-**B.** Both requests read the same balance before either wrote. Atomic updates let the database enforce the invariant. D may even widen the race window. (🟡 Going deeper.)
+**A.** Both requests read the same balance before either wrote. Atomic updates let the database enforce the invariant. D may even widen the race window. (🟡 Going deeper.)
 
 </details>
 
 **3. Najm's login endpoint allows 10 failures per minute per IP address. Attackers spread a credential-stuffing run across tens of thousands of residential addresses. What change helps most?**
 
 - A. Lower the limit to 5 failures per minute per IP address
-- B. Return different errors for "unknown user" and "wrong password" so customers understand
+- B. Return different errors for "unknown user" and "wrong password" so customers understand what to fix, and show the number of attempts left
 - C. Block all foreign IP addresses
 - D. Add limits keyed on the targeted username and on overall failure rates, with step-up and breached-password checks
 
@@ -489,13 +489,13 @@ Hands-on work runs only against code you wrote, a local lab, or deliberately vul
 **4. Overnight, Najm's spending on verification texts triples, the share of codes entered collapses, and most messages go to countries where Najm has no customers. What is most likely happening, and what should the team do?**
 
 - A. A marketing campaign succeeded; buy more SMS credit
-- B. SMS pumping; restrict sending to served countries, limit per number, prefix and account, alert on spend and conversion, and move customers to in-app approval
+- B. A fault at the SMS provider; open a ticket and wait
 - C. A denial-of-service attack; put the site behind a CDN
-- D. A fault at the SMS provider; open a ticket and wait
+- D. SMS pumping; restrict sending to served countries, limit per number, prefix and account, alert on spend and conversion, and move customers to in-app approval
 
 <details><summary>Answer</summary>
 
-**B.** Rising spend, collapsing conversion and unserved destinations are the signature of SMS pumping. C misreads it: the bill, not availability, is the target. (🟢 The essentials; 🟡 Going deeper.)
+**D.** Rising spend, collapsing conversion and unserved destinations are the signature of SMS pumping. C misreads it: the bill, not availability, is the target. (🟢 The essentials; 🟡 Going deeper.)
 
 </details>
 
@@ -503,7 +503,7 @@ Hands-on work runs only against code you wrote, a local lab, or deliberately vul
 
 - A. LLM10 Unbounded Consumption; cap input size, output tokens and tool calls per turn, set per-customer daily token budgets, and alert on spend
 - B. LLM01 Prompt Injection; write a stronger system prompt
-- C. API9 Improper Inventory Management; document the endpoint
+- C. API9 Improper Inventory Management; document the endpoint, give it an owner, and list it in the API catalogue with its version and retirement date, so the security team can review it every quarter
 - D. LLM09 Misinformation; add a disclaimer
 
 <details><summary>Answer</summary>
@@ -721,7 +721,7 @@ Hands-on work runs only against apps you own or deliberately vulnerable training
 - A. Obfuscate the app so the check is harder to find
 - B. Add root detection so modified apps cannot run
 - C. Enforce the limit in the payments API, cumulatively across channels, and keep the app check only as an early, friendly message
-- D. Pin the certificate so scripts cannot reach the API
+- D. Pin the certificate so scripts cannot reach the API, and block requests from any device that is rooted, jailbroken or running an emulator
 
 <details><summary>Answer</summary>
 
@@ -732,7 +732,7 @@ Hands-on work runs only against apps you own or deliberately vulnerable training
 **2. A developer puts the LLM provider key in an `EXPO_PUBLIC_` environment variable "so it isn't in the code". What should happen?**
 
 - A. Nothing; environment variables are secret
-- B. Encrypt the key inside the app, with the decryption key also stored in the app
+- B. Encrypt the key inside the app, with the decryption key also stored in the app in a separate file, and obfuscate the code that reads it at build time
 - C. Treat the key as exposed if it shipped: rotate it, and route calls through Najm's API, which holds the key and applies per-customer limits
 - D. Split the key into several strings in the code
 
@@ -747,7 +747,7 @@ Hands-on work runs only against apps you own or deliberately vulnerable training
 - A. It makes the API safe from scripts
 - B. It protects against mis-issued or intercepting certificates, but a reverse engineer can remove it from their own copy, and it needs backup pins and a rotation plan
 - C. It replaces the need for TLS
-- D. It should pin a single leaf certificate with no backup, for maximum strength
+- D. It should pin a single leaf certificate with no backup pins, for maximum strength, because any extra pin would weaken the protection and should be avoided by design
 
 <details><summary>Answer</summary>
 
@@ -757,20 +757,20 @@ Hands-on work runs only against apps you own or deliberately vulnerable training
 
 **4. Najm's current biometric login shows the OS prompt and, on success, opens the accounts screen. What is the weakness, and the stronger design?**
 
-- A. There is no weakness; the OS prompt is secure
-- B. The server learns nothing and the result can be hooked; biometrics should instead unlock a hardware-bound key that signs a server challenge the server verifies
+- A. The server learns nothing and the result can be hooked; biometrics should instead unlock a hardware-bound key that signs a server challenge the server verifies
+- B. There is no weakness; the OS prompt is secure
 - C. Replace biometrics with SMS codes
 - D. Show the prompt twice
 
 <details><summary>Answer</summary>
 
-**B.** Binding biometrics to a key turns a local yes/no into proof the server can check. C is weaker, because SMS codes are exposed to SIM swap and interception. (🟡 Going deeper.)
+**A.** Binding biometrics to a key turns a local yes/no into proof the server can check. C is weaker, because SMS codes are exposed to SIM swap and interception. (🟡 Going deeper.)
 
 </details>
 
 **5. When a customer enrols a new phone, the server-verified Play Integrity verdict says the device fails integrity checks. What should Najm's server do?**
 
-- A. Ignore it, because attestation is unreliable
+- A. Ignore it, because attestation is unreliable and a rooted device is not necessarily a fraudulent one; judge the customer only on the transaction itself, by its amount
 - B. Let the app decide for itself
 - C. Treat it as a risk signal: allow low-risk features, require step-up or extra checks for high-risk actions, and log it with the other fraud signals
 - D. Block the customer permanently

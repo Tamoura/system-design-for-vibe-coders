@@ -236,7 +236,7 @@ Noura and Jassim publish the **Najm Bank Security Logging Standard v1** (signed 
 - A. A username containing a line break can forge fake log lines, so the value belongs in a structured, escaped field
 - B. PCI DSS forbids logging failed sign-ins
 - C. f-strings are slower than other formatting
-- D. Failed sign-ins should never be logged
+- D. Failed sign-ins should never be logged, because the log would then hold usernames that customers typed by mistake and those may include passwords
 
 <details><summary>Answer</summary>
 
@@ -246,7 +246,7 @@ Noura and Jassim publish the **Najm Bank Security Logging Standard v1** (signed 
 
 **3. The SIEM has received no events from the SME Portal for six hours, and no alerts have fired. What should Jassim's team conclude?**
 
-- A. The portal is quiet, so it is safe
+- A. The portal is quiet, so it is safe: no alerts means no attacks, and the team can use the time to catch up on other work during this period
 - B. Silence is itself a signal: a source-health check should alert, and the team should find out why the source stopped
 - C. The detections are well tuned
 - D. Nothing; quiet periods are normal
@@ -259,7 +259,7 @@ Noura and Jassim publish the **Najm Bank Security Logging Standard v1** (signed 
 
 **4. Which detection will stay useful longest against a group running credential stuffing against Najm Mobile?**
 
-- A. A blocklist of the 50 IP addresses seen yesterday
+- A. A blocklist of the 50 IP addresses seen yesterday, loaded into the firewall, refreshed every morning and reviewed each week by the SOC
 - B. A list of file hashes of their tools
 - C. A behaviour rule: many distinct accounts and a very low success rate from one network or device fingerprint in a short window
 - D. A rule matching the exact user-agent string they used
@@ -274,7 +274,7 @@ Noura and Jassim publish the **Najm Bank Security Logging Standard v1** (signed 
 
 - A. A penetration test; its output is a CVSS score
 - B. Purple teaming; its output is a list of logging and detection gaps to fix
-- C. A tabletop exercise; its output is a communications plan
+- C. A tabletop exercise; its output is a communications plan and a list of people to call at night
 - D. A bug bounty; its output is a payout
 
 <details><summary>Answer</summary>
@@ -488,7 +488,7 @@ After Thursday night, Jassim rewrites the runbook; Hamad approves it; it is rehe
 
 **1. At 21:55 Jassim confirms that a poisoned article in the fees collection is making Najm Assist show an external link. What is the best first containment step?**
 
-- A. Shut down the whole mobile app until the root cause is known
+- A. Shut down the whole mobile app and the web portal until the root cause is known, and tell customers to use a branch instead meanwhile
 - B. Switch off retrieval from the fees collection, then preserve the article, its edit history and the logs before deleting anything
 - C. Delete the article immediately and close the incident
 - D. Retrain the model so it ignores such instructions
@@ -501,7 +501,7 @@ After Thursday night, Jassim rewrites the runbook; Hamad approves it; it is rehe
 
 **2. At 09:00 on Monday, Sara confirms that personal data of Najm customers, including EU residents, was exposed. Not all facts are known yet. Under GDPR, what applies?**
 
-- A. Notify only once the investigation is complete, however long it takes
+- A. Notify only once the investigation is complete, however long it takes, so that the notification is accurate and the authority does not have to be told a second time after corrections
 - B. Notify the supervisory authority without undue delay and, where feasible, within 72 hours of becoming aware; information may be provided in phases
 - C. Nothing, because Najm is not headquartered in the EU
 - D. Notify only if card numbers were exposed
@@ -514,7 +514,7 @@ After Thursday night, Jassim rewrites the runbook; Hamad approves it; it is rehe
 
 **3. A compromised container in Najm's Kubernetes cluster is about to be replaced automatically. What should the technical lead do first?**
 
-- A. Let it be replaced, because a fresh container is clean
+- A. Let it be replaced, because a fresh container is clean and the orchestrator does it automatically within a minute
 - B. Isolate it, pause the replacement where possible, and capture its state and logs before it is destroyed
 - C. Delete the node immediately
 - D. Run an antivirus scan inside the container
@@ -530,7 +530,7 @@ After Thursday night, Jassim rewrites the runbook; Hamad approves it; it is rehe
 - A. None; the IC should do the most important analysis
 - B. Nobody is now running the response, so priorities, decisions and updates stall; analysis belongs with the technical lead
 - C. Packet captures are not useful in incidents
-- D. Only the CISO may read packet captures
+- D. Only the CISO may read packet captures, because they can contain customer data and every access must be approved in writing first
 
 <details><summary>Answer</summary>
 
@@ -762,10 +762,10 @@ Exceptions need an owner, compensating controls and an expiry of at most 90 days
 
 **1. Najm's scanners report two findings. X: CVSS 9.8 base, in an internal tool reachable only from an admin network, very low EPSS, not in KEV. Y: CVSS 7.5 base, in the internet-facing API gateway, in the CISA KEV catalogue. Which comes first?**
 
-- A. X, because its CVSS score is higher
+- A. X, because its CVSS score is higher and the scanner marked it as the more urgent one
 - B. Y, because it is known to be exploited and is exposed to the internet
-- C. Both together, in alphabetical order
-- D. Neither, until a penetration test confirms them
+- C. Both together, in alphabetical order of the system name, starting with the one the team knows best
+- D. Neither, until a penetration test confirms them and the change board has met on Thursday
 
 <details><summary>Answer</summary>
 
@@ -789,7 +789,7 @@ Exceptions need an owner, compensating controls and an expiry of at most 90 days
 **3. Which statement about `security.txt` is correct?**
 
 - A. It sits at `/.well-known/security.txt` and must include `Contact` and `Expires` fields
-- B. It lists the organisation's known vulnerabilities
+- B. It lists the organisation's known vulnerabilities, with their fix dates, for researchers to read, updated every month
 - C. It replaces a disclosure policy
 - D. It should be hidden from the public
 
@@ -815,7 +815,7 @@ Exceptions need an owner, compensating controls and an expiry of at most 90 days
 **5. One researcher makes Najm Assist write a rude poem about the bank. Another shows that text in a dispute form can make it call a tool on another customer's card. How should the VDP treat them?**
 
 - A. Both as critical security vulnerabilities
-- B. Both as out of scope, because AI behaviour is not security
+- B. Both as out of scope, because AI behaviour is not security and the model vendor is responsible for any wrong or harmful answer the assistant gives
 - C. The second as a security vulnerability with cross-customer impact; the first as a non-security quality report for the AI safety channel
 - D. The first as critical, because it harms the brand
 

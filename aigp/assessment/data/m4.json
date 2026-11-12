@@ -14,7 +14,7 @@
      "The account contract covers it, since the data comes from the same customer relationship",
      "Training is a separate purpose; it needs its own basis, such as legitimate interests",
      "Only fresh consent from every cardholder can make training on their transactions lawful",
-     "No basis is needed for training once all identifiers are pseudonymised before the run"
+     "No basis is needed once all identifiers are pseudonymised before the run"
     ],
     "ar": [
      "عقد الحساب (account contract) يغطيه، لأن البيانات (data) تأتي من علاقة العميل (customer relationship) نفسها",
@@ -41,7 +41,7 @@
     "en": [
      "Port the score and label, because portability covers all personal data Najm holds on her",
      "Refuse to disclose the score in any form, because Najm's model is a protected trade secret",
-     "Port nothing, because portability does not extend to data held in an AI scoring system",
+     "Port nothing, because portability does not cover data held in an AI scoring system",
      "Port only what she provided, because score and label are inferences covered by access"
     ],
     "ar": [
@@ -102,7 +102,7 @@
     ],
     "ar": [
      "لا يمكن أن تنطبق المادة 22 (Art. 22)، لأن مسؤول التوظيف (recruiter) يتخذ القرار النهائي (final decision) في كل تعيين (hire)",
-     "لا يمكن أن تنطبق المادة 22 (Art. 22)، لأن ترتيب المتقدمين (ranking applicants) تنميط (profiling) وليس قرارًا (decision) بحد ذاته",
+     "لا يمكن أن تنطبق المادة 22 (Art. 22)، لأن ترتيب المتقدمين (ranking applicants) تنميط (profiling) وليس قرارًا (decision) بحد ذاته (in itself)",
      "تنطبق المادة 22 (Art. 22) على الـ60% المخفيين (hidden 60%)، لأن رفضهم (their rejection) لا يراجعه أي إنسان أبدًا (no human ever reviews)",
      "المادة 22 (Art. 22) شأن المورد (vendor)، لأنه يوفّر النموذج (model) وبنك نجم مجرد مُشغِّل (deployer)"
     ]

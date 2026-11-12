@@ -188,7 +188,7 @@ flowchart RL
 
 **3. يقترح تصميم الدالة `recall(user_id, query)` ليجد النموذج الشخص الصحيح (so the model can find the right person). ما أفضل إصلاح؟ ⁦(What is the best fix?)⁩**
 
-- A. اطلب من النموذج في الموجّه ألا يمرر إلا معرّف المستخدم الحالي (Tell the model in the prompt to pass only the current user's id)
+- A. اطلب من النموذج في الموجّه ألا يمرر إلا معرّف المستخدم الحالي (Tell the model in the prompt to pass only the user's id)
 - B. تحقق من أن المعرّف رقم قبل تنفيذ الاستعلام (Validate that the id is a number before the query runs)
 - C. خذ المعرّف من الجلسة واحذفه من مدخلات الأداة (Take the id from the session and remove it from the tool inputs)
 - D. أبقِ المدخل وسجّل كل استدعاء مع معرّفه (Keep the input and log every call with its id)
@@ -603,7 +603,7 @@ Work in small steps and run the tests after each.
 
 - A. تحتفظ SQLite بالصفوف المحذوفة في الذاكرة المؤقتة حتى إعادة التشغيل (SQLite caches deleted rows until a restart)
 - B. تبقى البايتات المحذوفة في المساحة الحرة ما لم تُصفَّر (Deleted bytes stay in free space unless zeroed)
-- C. جرى الاختبار داخل معاملة جرى التراجع عنها (The test ran in a transaction that rolled back)
+- C. جرى الاختبار داخل معاملة تم التراجع عنها (The test ran in a rolled-back transaction)
 - D. استخدم `SELECT` معرّف مستخدم خاطئًا (The SELECT used the wrong user id)
 
 <details><summary>الإجابة</summary>
@@ -615,7 +615,7 @@ Work in small steps and run the tests after each.
 **2. بعد أن يقرأ المساعد التذكرة 4499 (After the assistant reads ticket 4499)، يحاول النموذج حفظ «attacker@evil.example موافِق موثوق» ("attacker@evil.example is a trusted approver"). ما الذي يوقف الكتابة؟ ⁦(What stops the write?)⁩**
 
 - A. التعبير النمطي في `remember` الذي يرفض التعليمات (The regex in remember that rejects instructions)
-- B. بوابة الصلة في `recall` (The relevance gate in recall)
+- B. بوابة الصلة في `recall` التي تسقط المطابقات الضعيفة (The relevance gate in recall, which drops weak matches)
 - C. موجّه النظام الذي يسمّي ملاحظات التذاكر بيانات (The system prompt calling ticket notes data)
 - D. فحص `tainted` في `run_tool` (The tainted check in run_tool)
 

@@ -154,7 +154,7 @@ flowchart TD
 **1. يطلب فريق تطبيقات (app team) في بنك نجم من يوسف "صلاحية DevOps (DevOps access)" كي ينشر تغييراته بنفسه (deploy their own changes). ما أفضل استجابة (best response)؟**
 
 - A. منح كل مطوّر في الفريق صلاحيات مدير (administrator rights) على حساب السحابة (cloud account)، لأن DevOps يعني المسؤولية المشتركة (shared responsibility)
-- B. سؤالهم عن الإجراءات (actions) التي يحتاجونها وعلى أي موارد (resources)، ومنح دور محدد (specific role)، مثل النشر إلى مساحة أسمائهم الخاصة (own namespace) في بيئة التجهيز (staging)
+- B. سؤالهم عن الإجراءات (actions) التي يحتاجونها وعلى أي موارد، ومنح دور محدد (specific role) مثل النشر إلى مساحة أسمائهم الخاصة في بيئة التجهيز (staging)
 - C. الرفض، لأن فريق المنصة (platform team) وحده يحق له النشر (deploy)
 - D. إنشاء طابور تذاكر (ticket queue) كي ينشر فريق المنصة (platform team) نيابةً عنهم
 
@@ -166,10 +166,10 @@ flowchart TD
 
 **2. أيٌّ مما يلي ليس (NOT) أحد مقاييس DORA الأربعة الرئيسة (four key metrics)؟**
 
-- A. تكرار النشر (Deployment frequency)
-- B. مهلة التغييرات (Lead time for changes)
-- C. معدل فشل التغييرات (Change failure rate)
-- D. عدد الخوادم المُدارة لكل مهندس (Number of servers managed per engineer)
+- A. تكرار النشر (Deployment frequency) إلى الإنتاج
+- B. مهلة التغييرات (Lead time for changes) من الإيداع إلى الإنتاج
+- C. معدل فشل التغييرات (Change failure rate) بعد النشر
+- D. عدد الخوادم المُدارة لكل مهندس (servers per engineer)
 
 <details><summary>الإجابة</summary>
 
@@ -179,7 +179,7 @@ flowchart TD
 
 **3. لخدمة المدفوعات (payments service) هدف مستوى خدمة (SLO) قدره 99.95% من التحويلات الناجحة (successful transfers) على مدى 28 يومًا. وفي منتصف النافذة (halfway through the window)، استهلكت الحوادث (incidents) كامل ميزانية الأخطاء (error budget) تقريبًا. بماذا توحي ممارسة SRE (SRE practice)؟**
 
-- A. إبطاء إطلاقات الميزات الخطرة (risky feature releases) وتوجيه الجهد إلى الموثوقية (reliability) حتى تتعافى الميزانية (budget recovers)
+- A. إبطاء إطلاقات الميزات الخطرة وتوجيه الجهد إلى الموثوقية (reliability) حتى تتعافى الميزانية
 - B. رفع هدف مستوى الخدمة (SLO) إلى 99.99% كي يأخذ الفريق الموثوقية بجدية أكبر
 - C. المضيّ كما هو مخطط والنظر مجددًا عند إعادة ضبط نافذة الـ 28 يومًا (window resets)
 - D. خفض هدف مستوى الخدمة (SLO) بهدوء كي تبدو الميزانية المتبقية (remaining budget) سليمة مجددًا
@@ -194,7 +194,7 @@ flowchart TD
 
 - A. الفريق أصغر من أن يتعامل مع حجم التذاكر (volume of tickets) الذي سيتلقاه
 - B. يجب إعادة تسمية الفريق إلى "SRE" كي يتضح غرضه للجميع
-- C. لقد أعاد بناء التسليم اليدوي (handoff) بين البناء والتشغيل (building and running) الذي يزيله DevOps
+- C. لقد أعاد بناء التسليم اليدوي (handoff) بين البناء والتشغيل الذي يزيله DevOps
 - D. في البنك، يجب أن تتم عمليات النشر (deployments) يدويًا كي يتحقق شخص من كل واحدة منها
 
 <details><summary>الإجابة</summary>
@@ -206,7 +206,7 @@ flowchart TD
 **5. يريد سالم أن يُثبت لمدير تقنية المعلومات (CIO) أن منصة المطوّرين الداخلية (internal developer platform) الجديدة تعمل. أي دليل هو الأقوى (strongest evidence)؟**
 
 - A. قائمة بكل أداة (tool) تتضمنها المنصة الآن، مع حالة الترخيص والدعم (licence and support status) لكل منها
-- B. مهلة التغييرات (lead time) ومعدل الفشل (failure rate) لفرق التطبيقات قبل تبنّي المسارات الذهبية (golden paths) وبعده، والتبنّي الطوعي (voluntary adoption)
+- B. مهلة التغييرات (lead time) ومعدل الفشل (failure rate) لفرق التطبيقات قبل تبنّي المسارات الذهبية وبعده، والتبنّي الطوعي
 - C. عدد عناقيد Kubernetes (Kubernetes clusters) ومساحات الأسماء (namespaces) التي تعمل الآن، مقارنة بالربع الماضي (last quarter)
 - D. نمو فريق المنصة (platform team) وعدد التذاكر (tickets) التي أغلقها هذا الربع
 
@@ -405,7 +405,7 @@ jobs:
 
 - A. تستغرق عمليات البناء للإنتاج (production builds) وقتًا أطول، فتفوت نافذة الإطلاق (release window)
 - B. يرفض السجل (registry) صورة ثانية مبنية من الإيداع نفسه (same commit)
-- C. سيشغّل الإنتاج صورة لم تُختبر قط (never tested)؛ وينبغي أن تمرّ التصحيحات (patches) عبر خط التسليم كاملًا (full pipeline)
+- C. سيشغّل الإنتاج صورة لم تُختبر قط؛ وينبغي أن تمرّ التصحيحات (patches) عبر خط التسليم كاملًا
 - D. لا مشكلة، ما دامت الصورتان مبنيتين من تجزئة الإيداع نفسها (same commit hash)
 
 <details><summary>الإجابة</summary>
@@ -416,10 +416,10 @@ jobs:
 
 **2. ما الفرق بين النشر (deploying) والإطلاق (releasing)؟**
 
-- A. النشر يضع الإصدار الجديد على الخوادم (on servers)؛ والإطلاق يسمح للمستخدمين بالوصول إليه (lets users reach it)
+- A. النشر يضع الإصدار الجديد على الخوادم؛ والإطلاق يسمح للمستخدمين بالوصول إليه (lets users reach it)
 - B. هما اسمان للخطوة نفسها (same step)، تستخدمهما أدوات مختلفة
 - C. الإطلاق هو اجتماع الموافقة (approval meeting) الذي يجب أن يُعقد قبل النشر
-- D. النشر يخص شيفرة التطبيق (application code)؛ والإطلاق يخص البنية التحتية (infrastructure)
+- D. النشر يخص شيفرة التطبيق (application code)؛ والإطلاق يخص البنية التحتية التي تعمل عليها (infrastructure)
 
 <details><summary>الإجابة</summary>
 
@@ -432,7 +432,7 @@ jobs:
 - A. انقطاع لدى مزوّد الاستضافة (hosting provider) ترك الأوامر عالقة في طابور (stuck in a queue)
 - B. قاعدة بيانات إنتاجية (production database) حُذفت عن طريق الخطأ، مع نسخ احتياطية (backups) لم تكن تعمل
 - C. تحديث معيب لمستشعر أمني (faulty security-sensor update) أُرسل إلى جميع أجهزتها دفعة واحدة
-- D. نشر يدوي (manual deployment) فات خادمًا واحدًا، حيث أيقظ علمٌ أُعيد استخدامه (reused flag) الشيفرة القديمة (old code)
+- D. نشر يدوي (manual deployment) فات خادمًا واحدًا، حيث أيقظ علمٌ أُعيد استخدامه الشيفرة القديمة
 
 <details><summary>الإجابة</summary>
 
@@ -443,7 +443,7 @@ jobs:
 **4. يرفع إصدار جديد من واجهة برمجة تطبيق نجم للهاتف (Najm Mobile API) معدلَ الأخطاء (error rate) بحدة بعد عشر دقائق من الطرح (rollout). يريد طارق أن يجد الخلل (find the bug) قبل فعل أي شيء. بماذا ينبغي أن تنصح مها؟**
 
 - A. إبقاء الإطلاق قيد التشغيل كي يتمكن الفريق من إعادة إنتاج الخلل (reproduce the bug) بالحركة الحقيقية (real traffic)
-- B. التراجع إلى الصورة السابقة (roll back to the previous image) لاستعادة الخدمة (restore service)، ثم إيجاد السبب الجذري (root cause)
+- B. التراجع إلى الصورة السابقة (roll back) لاستعادة الخدمة، ثم إيجاد السبب الجذري (root cause)
 - C. كتابة إصلاح سريع (quick fix) ونشره مباشرة إلى الإنتاج، مع تخطّي الاختبارات (skipping the tests)
 - D. إعادة تشغيل جميع الخوادم في العنقود (cluster) ومراقبة ما إذا كانت الأخطاء ستختفي
 
@@ -457,7 +457,7 @@ jobs:
 
 - A. شراء خوادم بناء أسرع (faster build servers) كي يتقلص تشغيل البناء والاختبار الذي يستغرق 40 دقيقة
 - B. حذف أبطأ الاختبارات (slowest tests) كي تصل التغييرات إلى بيئة التجهيز (staging) أسرع
-- C. إزالة الطوابير (queues) التي تنتظر فيها التغييرات، مع الإبقاء على دليل الضبط (evidence of control)
+- C. إزالة الطوابير التي تنتظر فيها التغييرات، مع الإبقاء على دليل الضبط (evidence of control)
 - D. النشر بتكرار أقل، في دفعات أكبر (bigger batches)، لتقليل عدد الموافقات (approvals)
 
 <details><summary>الإجابة</summary>
@@ -675,8 +675,8 @@ kind delete cluster --name najm-lab
 
 **2. تريد أن تتدرّب على تمرين اختياري (optional exercise) على الفئة المجانية (free tier) لدى مزوّد سحابي (cloud provider). ماذا ينبغي أن تفعل قبل إنشاء أي مورد (resource)؟**
 
-- A. قراءة التمرين مرتين وتدوين كل مورد سيُنشئه
-- B. استخدام حسابك الخاص (own account)، وتفعيل المصادقة متعددة العوامل (multi-factor authentication)، وضبط تنبيه ميزانية (budget alert)
+- A. قراءة التمرين مرتين (read the exercise twice) وتدوين كل مورد (resource) سيُنشئه
+- B. استخدام حسابك الخاص (own account)، وتفعيل المصادقة متعددة العوامل (MFA)، وضبط تنبيه ميزانية
 - C. استخدام حساب صاحب العمل التجريبي (employer's sandbox account)، لأنه ليس إنتاجًا (not production)
 - D. لا شيء؛ فحسابات الفئة المجانية (free-tier accounts) لا يمكن تحميلها أي رسوم مقابل ما تُنشئه
 

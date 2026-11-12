@@ -11,7 +11,7 @@
    },
    "o": {
     "en": [
-     "Rana ran three agents in parallel on separate branches and read each diff before merging",
+     "Rana ran three agents in parallel on separate branches and read each diff before she merged",
      "Dina had the agent build the change from her written spec, then read the diff and ran the tests",
      "Sami committed the change the agent wrote after reading its summary and skipping the diff",
      "Omar left an agent running overnight on a bounded task and reviewed its whole diff next morning"
@@ -20,7 +20,7 @@
      "رنا شغّلت ثلاثة وكلاء (agents) متوازين على فروع (branches) منفصلة، وقرأت فروقات (diff) كل فرع قبل الدمج (merge)",
      "دينا جعلت الوكيل يبني التغيير من مواصفتها (spec) المكتوبة، ثم قرأت الفروقات (diff) وشغّلت الاختبارات (tests)",
      "سامي أودع (commit) التغيير الذي كتبه الوكيل بعد قراءة ملخصه (summary) وتخطّي الفروقات (diff) كلها دون فتحها",
-     "عمر ترك وكيلًا يعمل طوال الليل (overnight) على مهمة محددة (bounded task) وراجع فروقاته (diff) كاملة صباحًا"
+     "عمر ترك وكيلًا يعمل طوال الليل (overnight) على مهمة محددة (bounded task) وراجع فروقاته (diff) كاملة صباح اليوم التالي"
     ]
    },
    "a": 2,
@@ -40,9 +40,9 @@
    "o": {
     "en": [
      "Mask the personal data first, then paste only the shape of the log line",
-     "Paste the line as it is, because the agent is on Najm's approved list",
+     "Paste the line as it is, because the agent is on Najm's approved list of tools",
      "Paste the line as it is and tell the agent to ignore the customer fields",
-     "Remove the name but keep the account number, since it is only a number"
+     "Remove the name but keep the account number, since it is only a number, not a name"
     ],
     "ar": [
      "تحجب (mask) البيانات الشخصية (personal data) أولًا، ثم تلصق شكل السطر (shape of the line) فقط",
@@ -98,12 +98,12 @@
      "Count the second agent as an independent reviewer and open the pull request",
      "Treat the review as a hint, then run the checks and read the diff herself",
      "Ask the second agent to run the tests too, and trust its report if they pass",
-     "Ask a third agent as well, and go ahead once two of the three agree"
+     "Ask a third agent as well, and go ahead once two of the three agents agree with each other"
     ],
     "ar": [
      "تعدّ الوكيل الثاني مراجعًا مستقلًا (independent reviewer) وتفتح طلب الدمج (pull request)",
      "تعدّ المراجعة تلميحًا (hint) ثم تشغّل الفحوص (checks) بنفسها وتقرأ الفروقات (diff)",
-     "تطلب من الوكيل الثاني تشغيل الاختبارات (tests) أيضًا وتثق بتقريره (report) إن نجحت",
+     "تطلب من الوكيل الثاني تشغيل الاختبارات (tests) أيضًا وتثق بتقريره (report) إن نجحت كلها",
      "تسأل وكيلًا ثالثًا (third agent) أيضًا وتمضي متى اتفق اثنان من الثلاثة (two of the three)"
     ]
    },

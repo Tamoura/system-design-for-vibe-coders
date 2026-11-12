@@ -40,14 +40,14 @@
       "o": {
         "en": [
           "That no tool was called and no card froze before confirmation",
-          "That card-1 shows as frozen once the confirmed turn has run",
-          "That the reply to the confirmed turn begins with “Done”",
+          "That card-1 shows as frozen once the confirmed turn has fully run",
+          "That the reply to the confirmed turn begins with the word “Done” as before",
           "That the first reply names card-1 and is worded as a clear question"
         ],
         "ar": [
           "ألّا يوجد استدعاء أداة (tool call) وألّا تُجمَّد بطاقة (card frozen) قبل ضغط التأكيد",
-          "أن تظهر البطاقة card-1 مجمَّدة (frozen) بعد تشغيل الدورة المؤكَّدة (confirmed turn)",
-          "أن يبدأ رد الدورة المؤكَّدة (confirmed turn) بكلمة «Done»",
+          "أن تظهر البطاقة card-1 مجمَّدة (frozen) بعد تشغيل الدورة المؤكَّدة (confirmed turn) بالكامل",
+          "أن يبدأ رد الدورة المؤكَّدة (confirmed turn) بكلمة «Done» كما كان قبل التعديل (before the refactor)",
           "أن يذكر الرد الأول البطاقة card-1 (names the card) وأن يُصاغ سؤالًا واضحًا (clear question)"
         ]
       },
@@ -95,13 +95,13 @@
       },
       "o": {
         "en": [
-          "In generation: tighten the system prompt about quoting figures",
+          "In generation: tighten the system prompt about how figures are quoted",
           "In retrieval: add labelled queries and track recall@k and MRR",
-          "In sampling: set the temperature to 0 and trust one clean run",
-          "In the golden set: drop the case until its answer is stable"
+          "In sampling: set the temperature to 0 and then trust a single clean run",
+          "In the golden set: drop the case from the set until its answer is stable"
         ],
         "ar": [
-          "في التوليد (generation): شدّد موجّه النظام (system prompt) بشأن نقل الأرقام (quoting figures)",
+          "في التوليد (generation): شدّد موجّه النظام (system prompt) بشأن نقل الأرقام (quoting figures) في الإجابات",
           "في الاسترجاع (retrieval): استعلامات موسومة (labelled queries) وتتبّع الاستدعاء (recall@k) وMRR",
           "في أخذ العيّنات (sampling): اضبط درجة الحرارة (temperature) على 0 واعتمد تشغيلًا نظيفًا واحدًا (one clean run)",
           "في المجموعة المرجعية (golden set): احذف الحالة (drop the case) حتى يستقر جوابها (answer is stable)"

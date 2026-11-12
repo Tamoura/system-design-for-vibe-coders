@@ -41,7 +41,7 @@
         "en": [
           "Downgrade it to Info, since Error should mean a human needs to look",
           "Raise the alert threshold so only groups over 2,000 events notify you",
-          "Keep it at Error, because logging more as errors means missing less",
+          "Keep it at Error, because logging more things as errors means missing less",
           "Mute tracker notifications and skim the dashboard once a week instead"
         ],
         "ar": [

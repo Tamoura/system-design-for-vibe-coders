@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="cloud-source" content="f57d38bbd2008c94">
+<meta name="cloud-source" content="e8648c503dde9742">
 <meta name="description" content="السحابة وDevOps من الصفر إلى الاحتراف: دورة مجانية ثنائية اللغة عن أساسيات Linux والسحابة، والحاويات وKubernetes، والبنية التحتية بوصفها شيفرة، والتكامل والتسليم المستمرين والإطلاقات الآمنة، وقابلية المراقبة وأهداف مستوى الخدمة، والحوادث، والتوسّع، وإدارة التكلفة (FinOps)، والبنية التحتية للذكاء الاصطناعي، مع اختبار في كل درس وامتحان تدريبي من 60 سؤالًا.">
 <title>السحابة وDevOps من الصفر إلى الاحتراف — الدورة كاملة</title>
 <style>
@@ -702,7 +702,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p><strong>1. يطلب فريق تطبيقات <bdi>(app team)</bdi> في بنك نجم من يوسف &quot;صلاحية DevOps <bdi>(DevOps access)</bdi>&quot; كي ينشر تغييراته بنفسه <bdi>(deploy their own changes)</bdi>. ما أفضل استجابة <bdi>(best response)</bdi>؟</strong></p>
 <ul>
 <li>A. منح كل مطوّر في الفريق صلاحيات مدير <bdi>(administrator rights)</bdi> على حساب السحابة <bdi>(cloud account)</bdi>، لأن DevOps يعني المسؤولية المشتركة <bdi>(shared responsibility)</bdi></li>
-<li>B. سؤالهم عن الإجراءات <bdi>(actions)</bdi> التي يحتاجونها وعلى أي موارد <bdi>(resources)</bdi>، ومنح دور محدد <bdi>(specific role)</bdi>، مثل النشر إلى مساحة أسمائهم الخاصة <bdi>(own namespace)</bdi> في بيئة التجهيز <bdi>(staging)</bdi></li>
+<li>B. سؤالهم عن الإجراءات <bdi>(actions)</bdi> التي يحتاجونها وعلى أي موارد، ومنح دور محدد <bdi>(specific role)</bdi> مثل النشر إلى مساحة أسمائهم الخاصة في بيئة التجهيز <bdi>(staging)</bdi></li>
 <li>C. الرفض، لأن فريق المنصة <bdi>(platform team)</bdi> وحده يحق له النشر <bdi>(deploy)</bdi></li>
 <li>D. إنشاء طابور تذاكر <bdi>(ticket queue)</bdi> كي ينشر فريق المنصة <bdi>(platform team)</bdi> نيابةً عنهم</li>
 </ul>
@@ -713,10 +713,10 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 
 <p><strong>2. أيٌّ مما يلي ليس <bdi>(NOT)</bdi> أحد مقاييس DORA الأربعة الرئيسة <bdi>(four key metrics)</bdi>؟</strong></p>
 <ul>
-<li>A. تكرار النشر <bdi>(Deployment frequency)</bdi></li>
-<li>B. مهلة التغييرات <bdi>(Lead time for changes)</bdi></li>
-<li>C. معدل فشل التغييرات <bdi>(Change failure rate)</bdi></li>
-<li>D. عدد الخوادم المُدارة لكل مهندس <bdi>(Number of servers managed per engineer)</bdi></li>
+<li>A. تكرار النشر <bdi>(Deployment frequency)</bdi> إلى الإنتاج</li>
+<li>B. مهلة التغييرات <bdi>(Lead time for changes)</bdi> من الإيداع إلى الإنتاج</li>
+<li>C. معدل فشل التغييرات <bdi>(Change failure rate)</bdi> بعد النشر</li>
+<li>D. عدد الخوادم المُدارة لكل مهندس <bdi>(servers per engineer)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -725,7 +725,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 
 <p><strong>3. لخدمة المدفوعات <bdi>(payments service)</bdi> هدف مستوى خدمة <bdi>(SLO)</bdi> قدره 99.95% من التحويلات الناجحة <bdi>(successful transfers)</bdi> على مدى 28 يومًا. وفي منتصف النافذة <bdi>(halfway through the window)</bdi>، استهلكت الحوادث <bdi>(incidents)</bdi> كامل ميزانية الأخطاء <bdi>(error budget)</bdi> تقريبًا. بماذا توحي ممارسة SRE <bdi>(SRE practice)</bdi>؟</strong></p>
 <ul>
-<li>A. إبطاء إطلاقات الميزات الخطرة <bdi>(risky feature releases)</bdi> وتوجيه الجهد إلى الموثوقية <bdi>(reliability)</bdi> حتى تتعافى الميزانية <bdi>(budget recovers)</bdi></li>
+<li>A. إبطاء إطلاقات الميزات الخطرة وتوجيه الجهد إلى الموثوقية <bdi>(reliability)</bdi> حتى تتعافى الميزانية</li>
 <li>B. رفع هدف مستوى الخدمة <bdi>(SLO)</bdi> إلى 99.99% كي يأخذ الفريق الموثوقية بجدية أكبر</li>
 <li>C. المضيّ كما هو مخطط والنظر مجددًا عند إعادة ضبط نافذة الـ 28 يومًا <bdi>(window resets)</bdi></li>
 <li>D. خفض هدف مستوى الخدمة <bdi>(SLO)</bdi> بهدوء كي تبدو الميزانية المتبقية <bdi>(remaining budget)</bdi> سليمة مجددًا</li>
@@ -739,7 +739,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. الفريق أصغر من أن يتعامل مع حجم التذاكر <bdi>(volume of tickets)</bdi> الذي سيتلقاه</li>
 <li>B. يجب إعادة تسمية الفريق إلى &quot;SRE&quot; كي يتضح غرضه للجميع</li>
-<li>C. لقد أعاد بناء التسليم اليدوي <bdi>(handoff)</bdi> بين البناء والتشغيل <bdi>(building and running)</bdi> الذي يزيله DevOps</li>
+<li>C. لقد أعاد بناء التسليم اليدوي <bdi>(handoff)</bdi> بين البناء والتشغيل الذي يزيله DevOps</li>
 <li>D. في البنك، يجب أن تتم عمليات النشر <bdi>(deployments)</bdi> يدويًا كي يتحقق شخص من كل واحدة منها</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -750,7 +750,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p><strong>5. يريد سالم أن يُثبت لمدير تقنية المعلومات <bdi>(CIO)</bdi> أن منصة المطوّرين الداخلية <bdi>(internal developer platform)</bdi> الجديدة تعمل. أي دليل هو الأقوى <bdi>(strongest evidence)</bdi>؟</strong></p>
 <ul>
 <li>A. قائمة بكل أداة <bdi>(tool)</bdi> تتضمنها المنصة الآن، مع حالة الترخيص والدعم <bdi>(licence and support status)</bdi> لكل منها</li>
-<li>B. مهلة التغييرات <bdi>(lead time)</bdi> ومعدل الفشل <bdi>(failure rate)</bdi> لفرق التطبيقات قبل تبنّي المسارات الذهبية <bdi>(golden paths)</bdi> وبعده، والتبنّي الطوعي <bdi>(voluntary adoption)</bdi></li>
+<li>B. مهلة التغييرات <bdi>(lead time)</bdi> ومعدل الفشل <bdi>(failure rate)</bdi> لفرق التطبيقات قبل تبنّي المسارات الذهبية وبعده، والتبنّي الطوعي</li>
 <li>C. عدد عناقيد Kubernetes <bdi>(Kubernetes clusters)</bdi> ومساحات الأسماء <bdi>(namespaces)</bdi> التي تعمل الآن، مقارنة بالربع الماضي <bdi>(last quarter)</bdi></li>
 <li>D. نمو فريق المنصة <bdi>(platform team)</bdi> وعدد التذاكر <bdi>(tickets)</bdi> التي أغلقها هذا الربع</li>
 </ul>
@@ -1108,7 +1108,7 @@ jobs:
 <ul>
 <li>A. تستغرق عمليات البناء للإنتاج <bdi>(production builds)</bdi> وقتًا أطول، فتفوت نافذة الإطلاق <bdi>(release window)</bdi></li>
 <li>B. يرفض السجل <bdi>(registry)</bdi> صورة ثانية مبنية من الإيداع نفسه <bdi>(same commit)</bdi></li>
-<li>C. سيشغّل الإنتاج صورة لم تُختبر قط <bdi>(never tested)</bdi>؛ وينبغي أن تمرّ التصحيحات <bdi>(patches)</bdi> عبر خط التسليم كاملًا <bdi>(full pipeline)</bdi></li>
+<li>C. سيشغّل الإنتاج صورة لم تُختبر قط؛ وينبغي أن تمرّ التصحيحات <bdi>(patches)</bdi> عبر خط التسليم كاملًا</li>
 <li>D. لا مشكلة، ما دامت الصورتان مبنيتين من تجزئة الإيداع نفسها <bdi>(same commit hash)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -1118,10 +1118,10 @@ jobs:
 
 <p><strong>2. ما الفرق بين النشر <bdi>(deploying)</bdi> والإطلاق <bdi>(releasing)</bdi>؟</strong></p>
 <ul>
-<li>A. النشر يضع الإصدار الجديد على الخوادم <bdi>(on servers)</bdi>؛ والإطلاق يسمح للمستخدمين بالوصول إليه <bdi>(lets users reach it)</bdi></li>
+<li>A. النشر يضع الإصدار الجديد على الخوادم؛ والإطلاق يسمح للمستخدمين بالوصول إليه <bdi>(lets users reach it)</bdi></li>
 <li>B. هما اسمان للخطوة نفسها <bdi>(same step)</bdi>، تستخدمهما أدوات مختلفة</li>
 <li>C. الإطلاق هو اجتماع الموافقة <bdi>(approval meeting)</bdi> الذي يجب أن يُعقد قبل النشر</li>
-<li>D. النشر يخص شيفرة التطبيق <bdi>(application code)</bdi>؛ والإطلاق يخص البنية التحتية <bdi>(infrastructure)</bdi></li>
+<li>D. النشر يخص شيفرة التطبيق <bdi>(application code)</bdi>؛ والإطلاق يخص البنية التحتية التي تعمل عليها <bdi>(infrastructure)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -1133,7 +1133,7 @@ jobs:
 <li>A. انقطاع لدى مزوّد الاستضافة <bdi>(hosting provider)</bdi> ترك الأوامر عالقة في طابور <bdi>(stuck in a queue)</bdi></li>
 <li>B. قاعدة بيانات إنتاجية <bdi>(production database)</bdi> حُذفت عن طريق الخطأ، مع نسخ احتياطية <bdi>(backups)</bdi> لم تكن تعمل</li>
 <li>C. تحديث معيب لمستشعر أمني <bdi>(faulty security-sensor update)</bdi> أُرسل إلى جميع أجهزتها دفعة واحدة</li>
-<li>D. نشر يدوي <bdi>(manual deployment)</bdi> فات خادمًا واحدًا، حيث أيقظ علمٌ أُعيد استخدامه <bdi>(reused flag)</bdi> الشيفرة القديمة <bdi>(old code)</bdi></li>
+<li>D. نشر يدوي <bdi>(manual deployment)</bdi> فات خادمًا واحدًا، حيث أيقظ علمٌ أُعيد استخدامه الشيفرة القديمة</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -1143,7 +1143,7 @@ jobs:
 <p><strong>4. يرفع إصدار جديد من واجهة برمجة تطبيق نجم للهاتف <bdi>(Najm Mobile API)</bdi> معدلَ الأخطاء <bdi>(error rate)</bdi> بحدة بعد عشر دقائق من الطرح <bdi>(rollout)</bdi>. يريد طارق أن يجد الخلل <bdi>(find the bug)</bdi> قبل فعل أي شيء. بماذا ينبغي أن تنصح مها؟</strong></p>
 <ul>
 <li>A. إبقاء الإطلاق قيد التشغيل كي يتمكن الفريق من إعادة إنتاج الخلل <bdi>(reproduce the bug)</bdi> بالحركة الحقيقية <bdi>(real traffic)</bdi></li>
-<li>B. التراجع إلى الصورة السابقة <bdi>(roll back to the previous image)</bdi> لاستعادة الخدمة <bdi>(restore service)</bdi>، ثم إيجاد السبب الجذري <bdi>(root cause)</bdi></li>
+<li>B. التراجع إلى الصورة السابقة <bdi>(roll back)</bdi> لاستعادة الخدمة، ثم إيجاد السبب الجذري <bdi>(root cause)</bdi></li>
 <li>C. كتابة إصلاح سريع <bdi>(quick fix)</bdi> ونشره مباشرة إلى الإنتاج، مع تخطّي الاختبارات <bdi>(skipping the tests)</bdi></li>
 <li>D. إعادة تشغيل جميع الخوادم في العنقود <bdi>(cluster)</bdi> ومراقبة ما إذا كانت الأخطاء ستختفي</li>
 </ul>
@@ -1156,7 +1156,7 @@ jobs:
 <ul>
 <li>A. شراء خوادم بناء أسرع <bdi>(faster build servers)</bdi> كي يتقلص تشغيل البناء والاختبار الذي يستغرق 40 دقيقة</li>
 <li>B. حذف أبطأ الاختبارات <bdi>(slowest tests)</bdi> كي تصل التغييرات إلى بيئة التجهيز <bdi>(staging)</bdi> أسرع</li>
-<li>C. إزالة الطوابير <bdi>(queues)</bdi> التي تنتظر فيها التغييرات، مع الإبقاء على دليل الضبط <bdi>(evidence of control)</bdi></li>
+<li>C. إزالة الطوابير التي تنتظر فيها التغييرات، مع الإبقاء على دليل الضبط <bdi>(evidence of control)</bdi></li>
 <li>D. النشر بتكرار أقل، في دفعات أكبر <bdi>(bigger batches)</bdi>، لتقليل عدد الموافقات <bdi>(approvals)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -1579,8 +1579,8 @@ kind delete cluster --name najm-lab
 
 <p><strong>2. تريد أن تتدرّب على تمرين اختياري <bdi>(optional exercise)</bdi> على الفئة المجانية <bdi>(free tier)</bdi> لدى مزوّد سحابي <bdi>(cloud provider)</bdi>. ماذا ينبغي أن تفعل قبل إنشاء أي مورد <bdi>(resource)</bdi>؟</strong></p>
 <ul>
-<li>A. قراءة التمرين مرتين وتدوين كل مورد سيُنشئه</li>
-<li>B. استخدام حسابك الخاص <bdi>(own account)</bdi>، وتفعيل المصادقة متعددة العوامل <bdi>(multi-factor authentication)</bdi>، وضبط تنبيه ميزانية <bdi>(budget alert)</bdi></li>
+<li>A. قراءة التمرين مرتين <bdi>(read the exercise twice)</bdi> وتدوين كل مورد <bdi>(resource)</bdi> سيُنشئه</li>
+<li>B. استخدام حسابك الخاص <bdi>(own account)</bdi>، وتفعيل المصادقة متعددة العوامل <bdi>(MFA)</bdi>، وضبط تنبيه ميزانية</li>
 <li>C. استخدام حساب صاحب العمل التجريبي <bdi>(employer&#39;s sandbox account)</bdi>، لأنه ليس إنتاجًا <bdi>(not production)</bdi></li>
 <li>D. لا شيء؛ فحسابات الفئة المجانية <bdi>(free-tier accounts)</bdi> لا يمكن تحميلها أي رسوم مقابل ما تُنشئه</li>
 </ul>
@@ -1980,10 +1980,10 @@ curl -sv https://api.najm.example/health -o /dev/null
 
 <p><strong>4. يعيد موازن الأحمال L7 <bdi>(L7 load balancer)</bdi> الواقع أمام واجهة برمجة تطبيق نجم للهاتف الرمز 504 Gateway Timeout. من أين ينبغي أن يبدأ التحقيق <bdi>(the investigation)</bdi>؟</strong></p>
 <ul>
-<li>A. سجلات DNS للواجهة <bdi>(DNS records for the API)</bdi></li>
-<li>B. شهادة TLS على موازن الأحمال <bdi>(TLS certificate on the load balancer)</bdi></li>
-<li>C. الخلفيات خلف موازن الأحمال <bdi>(backends behind the load balancer)</bdi>: سلامتها <bdi>(health)</bdi> وجاهزيتها <bdi>(readiness)</bdi> وأزمنة استجابتها <bdi>(response times)</bdi></li>
-<li>D. شبكة الهاتف المحمول لدى العميل <bdi>(customer&#39;s mobile network)</bdi></li>
+<li>A. سجلات DNS للواجهة <bdi>(DNS records for the API)</bdi> كما يراها العميل</li>
+<li>B. شهادة TLS على موازن الأحمال <bdi>(TLS certificate on the load balancer)</bdi> وتاريخ انتهائها</li>
+<li>C. الخلفيات خلف موازن الأحمال <bdi>(backends)</bdi>: سلامتها وجاهزيتها وأزمنة استجابتها</li>
+<li>D. شبكة الهاتف المحمول لدى العميل <bdi>(customer&#39;s mobile network)</bdi> أثناء تنقّله</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -1993,7 +1993,7 @@ curl -sv https://api.najm.example/health -o /dev/null
 <p><strong>5. يوقف Kubernetes حجيرة أثناء عملية نشر <bdi>(during a deploy)</bdi>. ماذا يحدث، وماذا يجب أن يفعل التطبيق؟</strong></p>
 <ul>
 <li>A. يرسل SIGKILL فورًا <bdi>(immediately)</bdi>، فلا يحظى التطبيق بفرصة للتنظيف <bdi>(clean up)</bdi></li>
-<li>B. يرسل SIGTERM، ثم SIGKILL بعد مهلة سماح <bdi>(grace period)</bdi>؛ وعلى التطبيق تصريف العمل الجاري <bdi>(drain in-flight work)</bdi> ثم الخروج</li>
+<li>B. يرسل SIGTERM، ثم SIGKILL بعد مهلة سماح <bdi>(grace period)</bdi>؛ وعلى التطبيق تصريف العمل الجاري ثم الخروج</li>
 <li>C. يرسل SIGHUP، وعلى التطبيق إعادة تحميل إعداداته <bdi>(reload its configuration)</bdi> ومواصلة الخدمة</li>
 <li>D. يحذف صورة الحاوية <bdi>(container image)</bdi>، فيجب على التطبيق أولًا حفظ حالته على القرص المحلي <bdi>(local disk)</bdi></li>
 </ul>
@@ -2398,9 +2398,9 @@ curl -sv https://api.najm.example/health -o /dev/null
 <section class="sec sec-quiz"><h2>✍️ اختبر نفسك <bdi>(Check yourself)</bdi></h2>
 <p><strong>1. تضع المسودة الأولى ليوسف جميع عقد Kubernetes وقاعدة البيانات في منطقة توافر واحدة <bdi>(one availability zone)</bdi>. ما الخطر الرئيسي <bdi>(the main risk)</bdi>؟</strong></p>
 <ul>
-<li>A. يفرض المزوّد رسومًا إضافية <bdi>(charges a premium)</bdi> على إبقاء كل مورد في منطقة توافر واحدة</li>
+<li>A. يفرض المزوّد رسومًا إضافية <bdi>(charges a premium)</bdi> على إبقاء كل مورد في منطقة توافر واحدة حتى لو لم يكن ذلك ضروريًا</li>
 <li>B. سيرى العملاء البعيدون عن المنطقة زمن استجابة أعلى <bdi>(higher latency)</bdi> في كل طلب</li>
-<li>C. فشل منطقة توافر واحدة <bdi>(one zone failure)</bdi> يُسقط الخدمة كلها، دون شيء يُتجاوَز إليه الفشل <bdi>(nothing to fail over to)</bdi></li>
+<li>C. فشل منطقة توافر واحدة يُسقط الخدمة كلها، دون شيء يُتجاوَز إليه الفشل <bdi>(nothing to fail over to)</bdi></li>
 <li>D. يرفض Kubernetes المُدار إنشاء عنقود <bdi>(create a cluster)</bdi> تتشارك عقده منطقة توافر واحدة</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -2435,7 +2435,7 @@ curl -sv https://api.najm.example/health -o /dev/null
 <p><strong>4. يجب أن تستدعي حجيرات التطبيق <bdi>(application pods)</bdi> في الشبكات الفرعية الخاصة <bdi>(private subnets)</bdi> واجهة برمجة تطبيقات خارجية لتقييم الاحتيال <bdi>(external fraud-scoring API)</bdi>، لكن يجب ألا تقبل أبدًا اتصالات من الإنترنت. ما الذي يحقق لها ذلك؟</strong></p>
 <ul>
 <li>A. نقل الحجيرات إلى شبكة فرعية عامة <bdi>(public subnet)</bdi></li>
-<li>B. بوابة NAT للحركة الصادرة <bdi>(NAT gateway for outbound traffic)</bdi></li>
+<li>B. بوابة NAT للحركة الصادرة <bdi>(NAT gateway)</bdi></li>
 <li>C. شبكة توصيل محتوى <bdi>(CDN)</bdi> أمام الحجيرات</li>
 <li>D. منح كل حجيرة عنوان IP عامًا <bdi>(public IP address)</bdi></li>
 </ul>
@@ -2778,7 +2778,7 @@ metadata:
 <li>A. مفتاح المسؤول نفسه، يُدوَّر كل 90 يومًا <bdi>(rotated every 90 days)</bdi> بواسطة مهمة مُجدوَلة <bdi>(a scheduled job)</bdi></li>
 <li>B. مفتاح وصول شخصي <bdi>(a personal access key)</bdi> من حساب سالم، لأن المصادقة متعددة العوامل مفعّلة فيه</li>
 <li>C. مفتاح بصلاحيات أقل <bdi>(fewer rights)</bdi>، محفوظ في سرّ مشفّر في خط التسليم <bdi>(an encrypted pipeline secret)</bdi></li>
-<li>D. اتحاد الهوية عبر OIDC الذي يُصدر بيانات اعتماد قصيرة العمر <bdi>(short-lived credentials)</bdi> لدور نشر ضيّق <bdi>(a narrow deploy role)</bdi></li>
+<li>D. اتحاد الهوية عبر OIDC الذي يُصدر بيانات اعتماد قصيرة العمر <bdi>(short-lived credentials)</bdi> لدور نشر ضيّق</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -2826,7 +2826,7 @@ metadata:
 <li>A. كلمة مرور مسؤول مشتركة <bdi>(a shared administrator password)</bdi>، مدوّنة في ويكي الفريق <bdi>(team wiki)</bdi> للطوارئ</li>
 <li>B. مفاتيح وصول مسؤول طويلة العمر <bdi>(long-lived administrator access keys)</bdi> مخزّنة على حاسوب كل مهندس</li>
 <li>C. إجراء موثّق <bdi>(a documented procedure)</bdi> لتعطيل المصادقة متعددة العوامل للجميع أثناء الحوادث</li>
-<li>D. بضعة حسابات كسر زجاج مُختبَرة <bdi>(tested break-glass accounts)</bdi> بمصادقة متعددة العوامل قوية وتنبيهات عند كل استخدام <bdi>(alerts on every use)</bdi></li>
+<li>D. بضعة حسابات كسر زجاج مُختبَرة <bdi>(tested accounts)</bdi> بمصادقة متعددة العوامل وتنبيهات عند كل استخدام</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -3216,7 +3216,7 @@ __pycache__/
 <p><strong>5. تسأل منى <bdi>(Mona)</bdi> من قسم المالية <bdi>(Finance)</bdi> لماذا يعيد فريق المنصة <bdi>(platform team)</bdi> بناء الصور شهريًا حتى حين لا تتغيّر شيفرة التطبيق <bdi>(application code)</bdi>. ما أفضل إجابة؟</strong></p>
 <ul>
 <li>A. كل إعادة بناء <bdi>(rebuild)</bdi> تضغط الطبقات <bdi>(compresses the layers)</bdi> أكثر، فتصغر الصور بمرور الوقت <bdi>(smaller over time)</bdi></li>
-<li>B. تُكتشف ثغرات جديدة <bdi>(new vulnerabilities)</bdi> في صور الأساس غير المتغيّرة؛ وإعادة البناء تلتقط الرقع <bdi>(pick up the patches)</bdi></li>
+<li>B. تُكتشف ثغرات جديدة <bdi>(new vulnerabilities)</bdi> في صور الأساس غير المتغيّرة؛ وإعادة البناء تلتقط الرقع <bdi>(patches)</bdi></li>
 <li>C. تحذف سجلات الحاويات <bdi>(container registries)</bdi> افتراضيًا أي صورة يزيد عمرها على شهر</li>
 <li>D. يرفض Kubernetes تشغيل الصور <bdi>(start images)</bdi> التي يزيد عمرها على شهر <bdi>(older than one month)</bdi></li>
 </ul>
@@ -3644,7 +3644,7 @@ kubectl -n mobile get events --sort-by=.lastTimestamp
 <ul>
 <li>A. أعاد kubelet على العقدة <bdi>(node)</bdi> تشغيل الحجيرة نفسها <bdi>(restarted the same pod)</bdi> بعد حذفها</li>
 <li>B. أعادت الخدمة <bdi>(Service)</bdi> إنشاء الحجيرة كي تحتفظ بنقطة نهاية <bdi>(endpoint)</bdi> واحدة على الأقل</li>
-<li>C. رأى متحكّم مجموعة النسخ <bdi>(ReplicaSet controller)</bdi> عددًا أقل من اللازم من الحجيرات فأنشأ بديلًا</li>
+<li>C. رأى متحكّم مجموعة النسخ <bdi>(ReplicaSet)</bdi> عددًا أقل من الحجيرات المطلوبة فأنشأ بديلًا</li>
 <li>D. استعاد etcd كائن الحجيرة المحذوف من أحدث نسخة احتياطية <bdi>(most recent backup)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -3654,10 +3654,10 @@ kubectl -n mobile get events --sort-by=.lastTimestamp
 
 <p><strong>2. ينشر فريق جديد خدمة. حجيراتها في حالة <code>Running</code> وجاهزة <bdi>(ready)</bdi>، لكن كل طلب إلى الخدمة <bdi>(Service)</bdi> تنتهي مهلته <bdi>(times out)</bdi>، وليس للخدمة نقاط نهاية <bdi>(endpoints)</bdi>. ما السبب الأرجح؟</strong></p>
 <ul>
-<li>A. محدِّد الخدمة <bdi>(Service selector)</bdi> لا يطابق ملصقات الحجيرات <bdi>(pod labels)</bdi></li>
-<li>B. بصمة الصورة <bdi>(image digest)</bdi> في قالب الحجيرة <bdi>(pod template)</bdi> خاطئة</li>
-<li>C. الحجيرات تتجاوز حدّ ذاكرتها <bdi>(memory limit)</bdi> باستمرار</li>
-<li>D. لم يجد المُجدوِل <bdi>(scheduler)</bdi> عقدة فيها متّسع <bdi>(node with room)</bdi></li>
+<li>A. محدِّد الخدمة <bdi>(Service selector)</bdi> لا يطابق ملصقات الحجيرات <bdi>(labels)</bdi></li>
+<li>B. بصمة الصورة <bdi>(image digest)</bdi> في قالب الحجيرة <bdi>(pod template)</bdi> خاطئة أو مفقودة</li>
+<li>C. الحجيرات تتجاوز حدّ ذاكرتها <bdi>(memory limit)</bdi> باستمرار بعد كل إعادة تشغيل</li>
+<li>D. لم يجد المُجدوِل <bdi>(scheduler)</bdi> عقدة فيها متّسع <bdi>(node with room)</bdi> للطلبات</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -3679,7 +3679,7 @@ kubectl -n mobile get events --sort-by=.lastTimestamp
 <p><strong>4. تلاحظ مها أن نسخ خدمة المدفوعات <bdi>(Payments replicas)</bdi> الثلاث كلها على عقد في منطقة التوافر <bdi>(availability zone)</bdi> نفسها. أي تغيير يعالج هذا بأكثر الطرق مباشرة؟</strong></p>
 <ul>
 <li>A. زِد النسخ <bdi>(replicas)</bdi> من 3 إلى 6 كي يقلّ أثر تعطّل منطقة واحدة <bdi>(single zone failure)</bdi></li>
-<li>B. أضف قيد توزيع طوبولوجيا حسب المنطقة <bdi>(zone topology spread constraint)</bdi>، مع مجمّعات عقد <bdi>(node pools)</bdi> في عدة مناطق</li>
+<li>B. أضف قيد توزيع طوبولوجيا حسب المنطقة، مع مجمّعات عقد <bdi>(node pools)</bdi> في عدة مناطق</li>
 <li>C. انقل المدفوعات إلى مساحة أسماء مخصّصة لها <bdi>(dedicated namespace)</bdi> بحصة منفصلة <bdi>(separate quota)</bdi></li>
 <li>D. غيّر نوع خدمة المدفوعات <bdi>(Payments Service type)</bdi> إلى <code>LoadBalancer</code> عبر المناطق <bdi>(across zones)</bdi></li>
 </ul>
@@ -4113,7 +4113,7 @@ helm rollback mobile-api 3 -n mobile
 <ul>
 <li>A. أزِل HPA وشغّل 40 نسخة ثابتة <bdi>(fixed replicas)</bdi> كي تكون السعة متاحة دائمًا</li>
 <li>B. ارفع حدود المعالج <bdi>(CPU limits)</bdi> للحجيرات كي تعالج كل حجيرة طلبات أكثر</li>
-<li>C. سقّف <code>maxReplicas</code> بحيث يبقى حاصل ضرب النسخ في حجم المجمّع <bdi>(replicas × pool size)</bdi> تحت الحد</li>
+<li>C. سقّف <code>maxReplicas</code> بحيث يبقى حاصل ضرب النسخ في حجم المجمّع <bdi>(pool size)</bdi> تحت الحد</li>
 <li>D. اجعل مجسّ الحيوية <bdi>(liveness probe)</bdi> يفحص قاعدة البيانات كي تُعاد تشغيل الحجيرات المعطوبة</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -4477,7 +4477,7 @@ tofu apply tfplan         # apply exactly the saved plan, nothing else
 <li>A. لا يستطيع Git تخزين ملفات أكبر من ميغابايت واحد <bdi>(larger than one megabyte)</bdi>، وملفات الحالة <bdi>(state files)</bdi> كثيرًا ما تتجاوز ذلك</li>
 <li>B. لا تُحتاج ملفات الحالة <bdi>(state files)</bdi> إلا أثناء التطبيق الأول <bdi>(first apply)</bdi></li>
 <li>C. ترفض المزوّدات <bdi>(providers)</bdi> العمل إذا كانت الحالة في مستودع <bdi>(repository)</bdi></li>
-<li>D. قد تحمل الحالة أسرارًا بنص صريح <bdi>(plain-text secrets)</bdi>، وقد تُفسدها عمليات الكتابة المتزامنة غير المقفلة <bdi>(unlocked concurrent writes)</bdi></li>
+<li>D. قد تحمل الحالة أسرارًا بنص صريح <bdi>(plain-text secrets)</bdi>، وقد تُفسدها عمليات الكتابة المتزامنة غير المقفلة</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -4486,10 +4486,10 @@ tofu apply tfplan         # apply exactly the saved plan, nothing else
 
 <p><strong>3. يشغّل خط تسليم <bdi>(pipeline)</bdi> الأمر <code>plan</code> عند فتح طلب سحب <bdi>(pull request)</bdi>. يُوافَق على طلب السحب ويُدمج بعد ثلاث ساعات، ثم يشغّل خط التسليم <code>apply</code> جديدًا <bdi>(fresh)</bdi> دون خطة محفوظة <bdi>(saved plan)</bdi>. ما الخطر؟</strong></p>
 <ul>
-<li>A. إنه يعيد التخطيط <bdi>(re-plans)</bdi> مقابل الشيفرة والواقع الحاليين <bdi>(current code and reality)</bdi>، لذا قد يطبّق تغييرات غير مُراجَعة <bdi>(unreviewed changes)</bdi></li>
+<li>A. إنه يعيد التخطيط <bdi>(re-plans)</bdi> مقابل الشيفرة والواقع الحاليين، لذا قد يطبّق تغييرات لم تُراجَع</li>
 <li>B. لا يوجد خطر <bdi>(no risk)</bdi>، لأن <code>apply</code> يكرّر دائمًا أحدث خطة <bdi>(most recent plan)</bdi> شغّلها خط التسليم <bdi>(pipeline)</bdi></li>
 <li>C. سيفشل التطبيق <bdi>(apply will fail)</bdi>، لأن كل خطة تنتهي صلاحيتها <bdi>(every plan expires)</bdi> بعد ساعة من تشغيل <code>plan</code></li>
-<li>D. سيُحذف ملف الحالة <bdi>(state file)</bdi></li>
+<li>D. سيُحذف ملف الحالة <bdi>(state file)</bdi> بالكامل من الواجهة الخلفية البعيدة <bdi>(remote backend)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -4500,7 +4500,7 @@ tofu apply tfplan         # apply exactly the saved plan, nothing else
 <ul>
 <li>A. صفحة ويكي <bdi>(wiki page)</bdi> تسرد الإعدادات الموصى بها <bdi>(recommended settings)</bdi>، مرتبطة من دليل الإعداد <bdi>(onboarding guide)</bdi> لكل فريق</li>
 <li>B. وحدة برمجية <bdi>(module)</bdi> تكشف كل وسيطات المزوّد <bdi>(every provider argument)</bdi> متغيّراتٍ كي تحظى الفرق بمرونة كاملة <bdi>(full flexibility)</bdi></li>
-<li>C. وحدة برمجية بواجهة صغيرة مُتحقَّق منها <bdi>(small validated interface)</bdi> وإعدادات الأمان مثبّتة داخلها <bdi>(safety settings fixed inside it)</bdi></li>
+<li>C. وحدة برمجية بواجهة صغيرة مُتحقَّق منها <bdi>(small validated interface)</bdi> وإعدادات الأمان مثبّتة داخلها</li>
 <li>D. منح كل فريق صلاحية المسؤول <bdi>(administrator access)</bdi> على وحدة التحكم السحابية <bdi>(cloud console)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -4790,7 +4790,7 @@ spec:
 <ul>
 <li>A. ليست مشكلة، لأن الالتزام نفسه <bdi>(same commit)</bdi> يُنتج دائمًا صورة مطابقة <bdi>(identical image)</bdi></li>
 <li>B. يجب ألّا يُعاد بناء صور الإنتاج إلا في نافذة الإطلاق المعتمدة <bdi>(approved release window)</bdi> في عطلة نهاية الأسبوع</li>
-<li>C. قد تسحب إعادة البناء <bdi>(rebuild)</bdi> صور أساس <bdi>(base images)</bdi> أو اعتماديات <bdi>(dependencies)</bdi> مختلفة: أثر برمجي غير مُختبَر <bdi>(untested artefact)</bdi></li>
+<li>C. قد تسحب إعادة البناء <bdi>(rebuild)</bdi> صور أساس أو اعتماديات مختلفة: أثر برمجي غير مُختبَر <bdi>(untested artefact)</bdi></li>
 <li>D. لا يمكن تخزين الصور المُعاد بناؤها <bdi>(Rebuilt images)</bdi> في السجل <bdi>(registry)</bdi> نفسه الذي فيه البناء الأصلي</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -4800,7 +4800,7 @@ spec:
 
 <p><strong>2. أيٌّ مما يلي أحد مبادئ OpenGitOps الأربعة <bdi>(four OpenGitOps principles)</bdi>؟</strong></p>
 <ul>
-<li>A. تسحب الوكلاء <bdi>(agents)</bdi> الحالة المرغوبة <bdi>(desired state)</bdi> آليًا وتوفّقها باستمرار <bdi>(continuously reconciled)</bdi></li>
+<li>A. تسحب الوكلاء <bdi>(agents)</bdi> الحالة المرغوبة <bdi>(desired state)</bdi> آليًا وتوفّقها باستمرار</li>
 <li>B. يجب أن تحمل خطوط التكامل المستمر <bdi>(CI pipelines)</bdi> بيانات اعتماد مسؤول العنقود <bdi>(cluster-admin credentials)</bdi></li>
 <li>C. يجب أن يكون لكل بيئة فرع Git خاص طويل العمر <bdi>(own long-lived Git branch)</bdi>، يُدمج بالترتيب</li>
 <li>D. يجب أن يوافق مجلس استشاري للتغيير <bdi>(change advisory board)</bdi> أولًا على كل نشر في الإنتاج <bdi>(production deployment)</bdi></li>
@@ -4815,7 +4815,7 @@ spec:
 <li>A. يسجّل Argo CD القيمة الجديدة <bdi>(new value)</bdi> في Git آليًا <bdi>(automatically)</bdi>، فلا حاجة إلى أي شيء آخر</li>
 <li>B. يحذف Argo CD كائن Deployment بالكامل <bdi>(deletes the Deployment entirely)</bdi></li>
 <li>C. يبقى التغيير إلى الأبد <bdi>(stays forever)</bdi> لأن Argo CD لا يراقب إلا Git <bdi>(only watches Git)</bdi></li>
-<li>D. يعيده Argo CD ليطابق Git <bdi>(reverts it to match Git)</bdi>؛ والتغيير المطلوب <bdi>(needed change)</bdi> يمرّ عبر طلب سحب <bdi>(pull request)</bdi></li>
+<li>D. يعيده Argo CD ليطابق Git؛ والتغيير المطلوب <bdi>(needed change)</bdi> يمرّ عبر طلب سحب <bdi>(pull request)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -4825,7 +4825,7 @@ spec:
 <p><strong>4. تسبّب ترقية واجهة برمجة تطبيق نجم للهاتف <bdi>(Najm Mobile API)</bdi> إلى الإنتاج أخطاءً. ما طريقة GitOps للتراجع <bdi>(GitOps way to roll back)</bdi>؟</strong></p>
 <ul>
 <li>A. شغّل <code>helm rollback</code> مباشرة على عنقود الإنتاج <bdi>(production cluster)</bdi>، ثم أخبر الفريق في المحادثة <bdi>(chat)</bdi></li>
-<li>B. ألغِ طلب سحب الترقية <bdi>(Revert the promotion pull request)</bdi> كي تعود البصمة السابقة <bdi>(previous digest)</bdi> وتُزامَن</li>
+<li>B. ألغِ طلب سحب الترقية <bdi>(Revert the promotion pull request)</bdi> كي تعود البصمة السابقة وتُزامَن</li>
 <li>C. أعد بناء الإصدار السابق من المصدر <bdi>(Rebuild the previous version from source)</bdi> وادفعه مجددًا تحت الوسم نفسه <bdi>(same tag)</bdi></li>
 <li>D. احذف فضاء الأسماء <bdi>(namespace)</bdi> وأعد نشر الإصدار القديم من حاسوب محمول <bdi>(laptop)</bdi></li>
 </ul>
@@ -4838,7 +4838,7 @@ spec:
 <ul>
 <li>A. لا تدعم أيّ واجهة تخزين خلفية بعيدة <bdi>(remote backend)</bdi> مساحات العمل، لذا يجب أن تبقى الحالة محلية <bdi>(local)</bdi></li>
 <li>B. تُجبر مساحات العمل كل البيئات على مشاركة ملف حالة واحد <bdi>(one state file)</bdi>، فيُقفلها كل تطبيق <bdi>(apply)</bdi> جميعًا</li>
-<li>C. البيئة المستهدفة <bdi>(target environment)</bdi> مخفية في إعداد سطر أوامر <bdi>(command-line setting)</bdi>، ما يسهّل التطبيق الخاطئ <bdi>(wrong applies)</bdi></li>
+<li>C. البيئة المستهدفة <bdi>(target environment)</bdi> مخفية في إعداد سطر أوامر، ما يسهّل التطبيق الخاطئ <bdi>(wrong applies)</bdi></li>
 <li>D. لا تعمل مساحات العمل إلا مع مزوّدات Kubernetes <bdi>(Kubernetes providers)</bdi>، لا مع قواعد البيانات أو الشبكات السحابية</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -5154,7 +5154,7 @@ spec:
 <li>A. اشتراط أن يفحص مهندس ثانٍ <bdi>(second engineer)</bdi> كل أمر ويؤكّده قبل تشغيله</li>
 <li>B. التوقّف عن استخدام أدلّة التشغيل المكتوبة <bdi>(written playbooks)</bdi> وترك المهندسين يقرّرون الخطوات أثناء العمليات <bdi>(during operations)</bdi></li>
 <li>C. نقل S3 نهائيًا إلى منطقة أخرى <bdi>(another region)</bdi> فيها خدمات معتمدة أقل</li>
-<li>D. تغيير الأداة <bdi>(Change the tool)</bdi> لتزيل السعة <bdi>(capacity)</bdi> ببطء، ولا تنزل أبدًا دون الحد الأدنى لنظام فرعي <bdi>(subsystem&#39;s minimum)</bdi></li>
+<li>D. تغيير الأداة <bdi>(Change the tool)</bdi> لتزيل السعة <bdi>(capacity)</bdi> ببطء، ولا تنزل أبدًا دون الحد الأدنى لنظام فرعي</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -5175,7 +5175,7 @@ spec:
 
 <p><strong>3. تشغّل مهمة الانحراف الليلية <bdi>(nightly drift job)</bdi> الأمر <code>tofu plan -detailed-exitcode</code> لحالة قاعدة بيانات المدفوعات <bdi>(Payments database state)</bdi> وتحصل على رمز الخروج <bdi>(exit code)</bdi> 2. ماذا يعني هذا، وما أول ما ينبغي للفريق فعله؟</strong></p>
 <ul>
-<li>A. انحراف <bdi>(Drift)</bdi> أو شيفرة مدموجة غير مطبَّقة <bdi>(unapplied merged code)</bdi>؛ تحقّق، ثم أرجِع أو تبنَّ <bdi>(revert or adopt)</bdi></li>
+<li>A. انحراف <bdi>(Drift)</bdi> أو شيفرة مدموجة غير مُطبَّقة؛ تحقّق، ثم أرجِع أو تبنَّ <bdi>(revert or adopt)</bdi></li>
 <li>B. فشلت الخطة بخطأ <bdi>(error)</bdi>، فأعد تشغيلها مع تفعيل تسجيل أكثر تفصيلًا <bdi>(more verbose logging)</bdi></li>
 <li>C. كل شيء متطابق <bdi>(everything matches)</bdi>، فلا حاجة إلى أي إجراء <bdi>(no action)</bdi> حتى تشغيل الغد <bdi>(tomorrow&#39;s run)</bdi></li>
 <li>D. شغّل <code>apply</code> فورًا <bdi>(immediately)</bdi> لتكتب فوق <bdi>(overwrite)</bdi> كل ما تغيّر في الواقع منذ التشغيل الأخير <bdi>(last run)</bdi></li>
@@ -5202,7 +5202,7 @@ spec:
 <li>A. تعطيل السياسة <bdi>(Disable the policy)</bdi> للجميع حتى ينتهي مشروع المورّد <bdi>(vendor project)</bdi> العام المقبل أو بعده</li>
 <li>B. منح فريق المورّد صلاحية المسؤول <bdi>(administrator access)</bdi> كي يتجاوزوا خط التسليم <bdi>(pipeline)</bdi></li>
 <li>C. إجراء التغيير يدويًا في وحدة التحكم <bdi>(console)</bdi> وتجاهل تنبيهات الانحراف <bdi>(drift alerts)</bdi> التي يسبّبها</li>
-<li>D. إضافة استثناء محصور <bdi>(scoped exception)</bdi> بمالك وسبب وتاريخ انتهاء <bdi>(owner, reason and expiry)</bdi> يفرضه البناء <bdi>(build)</bdi></li>
+<li>D. إضافة استثناء محصور <bdi>(scoped exception)</bdi> بمالك وسبب وتاريخ انتهاء، يفرضه البناء <bdi>(build)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9555,8 +9555,8 @@ Strong answer, out loud, in order:
 <p><strong>1. كل ليلة يعيد مهندس في فريق مها تشغيل مهمة مطابقة عالقة <bdi>(a stuck reconciliation job)</bdi> يدويًا <bdi>(by hand)</bdi>. يستغرق ذلك عشر دقائق، ويزداد العمل كلما انتقلت خدمات أكثر إلى السحابة <bdi>(as more services move to the cloud)</bdi>. كيف تصنّف ممارسة هندسة موثوقية المواقع <bdi>(SRE practice)</bdi> هذا العمل، وما الذي يترتب على ذلك؟</strong></p>
 <ul>
 <li>A. عمل تشغيلي عادي <bdi>(Normal operations work)</bdi> للمناوبة <bdi>(for on-call)</bdi>، لذا ينبغي ببساطة إضافته إلى دليل جدول المناوبة <bdi>(the rota handbook)</bdi></li>
-<li>B. عمل شاق متكرر <bdi>(Toil)</bdi>: عمل يدوي متكرر ينمو مع الحجم <bdi>(manual, repetitive work that grows with scale)</bdi>، يُحدّ ثم يُزال بالأتمتة <bdi>(to cap and then automate away)</bdi></li>
-<li>C. خطر أمني <bdi>(A security risk)</bdi> يجب أن يذهب إلى فريق نورة قبل فعل أي شيء آخر</li>
+<li>B. عمل شاق متكرر <bdi>(Toil)</bdi>: عمل يدوي ينمو مع الحجم، يُحدّ ثم يُزال بالأتمتة</li>
+<li>C. خطر أمني <bdi>(A security risk)</bdi> يجب أن يُرفع إلى فريق نورة <bdi>(Noura&#39;s team)</bdi> قبل فعل أي شيء آخر في الأمر</li>
 <li>D. عمل منتج <bdi>(Product work)</bdi>، لذا ينبغي لفريق التطبيق إضافته إلى خارطة طريق الميزات <bdi>(feature roadmap)</bdi> للعام القادم</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -9568,8 +9568,8 @@ Strong answer, out loud, in order:
 <ul>
 <li>A. TLS: ربما انتهت صلاحية الشهادة على المستمع <bdi>(the certificate on the listener has probably expired)</bdi> ويلزم تجديدها الآن</li>
 <li>B. DNS: مدة بقاء السجل <bdi>(the record&#39;s TTL)</bdi> طويلة جدًا، فلا يزال العملاء يحتفظون بإجابة قديمة مخزّنة مؤقتًا <bdi>(an old cached answer)</bdi></li>
-<li>C. التطبيق <bdi>(The application)</bdi>: خطأ 5xx في الحجيرات <bdi>(in the pods)</bdi> يغلق كل اتصال فورًا</li>
-<li>D. مسار الشبكة <bdi>(The network path)</bdi>: جدار حماية أو مجموعة أمان <bdi>(a firewall or security group)</bdi> تُسقط الحزم بصمت <bdi>(silently dropping the packets)</bdi></li>
+<li>C. التطبيق <bdi>(The application)</bdi>: خطأ 5xx في الحجيرات <bdi>(in the pods)</bdi> يغلق كل اتصال فورًا <bdi>(closing every connection)</bdi></li>
+<li>D. مسار الشبكة <bdi>(The network path)</bdi>: جدار حماية أو مجموعة أمان تُسقط الحزم بصمت <bdi>(silently dropping packets)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9579,7 +9579,7 @@ Strong answer, out loud, in order:
 <p><strong>3. يجب أن يُنزّل بناء <bdi>(build)</bdi> واجهة برمجة تطبيق نجم للهاتف <bdi>(Najm Mobile API)</bdi> حزمًا من فهرس حزم خاص <bdi>(a private package index)</bdi> يحتاج إلى بيانات اعتماد <bdi>(a credential)</bdi>. ما الطريقة الآمنة لإعطاء البناء بيانات الاعتماد هذه؟</strong></p>
 <ul>
 <li>A. ركّبها سرًّا للبناء <bdi>(Mount it as a build secret)</bdi> لخطوة <code>RUN</code> التي تحتاجها، فلا تحويها أي طبقة <bdi>(no layer has it)</bdi></li>
-<li>B. عيّنها بـ <code>ENV</code> في ملف Dockerfile كي يقرأها <code>pip</code> أثناء البناء</li>
+<li>B. عيّنها بـ <code>ENV</code> <bdi>(Set it with ENV)</bdi> في ملف Dockerfile كي يقرأها <code>pip</code> أثناء البناء</li>
 <li>C. انسخ ملف <code>pip.conf</code> إلى الداخل <bdi>(Copy a file in)</bdi>، ونفّذ التثبيت <bdi>(run the install)</bdi>، ثم احذف الملف في الخطوة التالية <bdi>(in the next step)</bdi></li>
 <li>D. ادمجها في الصورة الأساسية المعتمدة <bdi>(Bake it into the approved base image)</bdi> كي يعيد كل فريق استخدامها بسهولة <bdi>(so that every team can reuse it easily)</bdi></li>
 </ul>
@@ -9592,7 +9592,7 @@ Strong answer, out loud, in order:
 <ul>
 <li>A. غيّر أحدهم كل مورد في وحدة التحكم <bdi>(in the console)</bdi> ليلًا؛ تراجع عنها كلها دفعة واحدة بتطبيق جديد <bdi>(a fresh apply)</bdi></li>
 <li>B. ملف الحالة تالف <bdi>(The state file is corrupt)</bdi>؛ احذفه واستورد كل مورد من جديد <bdi>(import every resource again)</bdi> من سطر الأوامر</li>
-<li>C. جلب الأمر init مزوّدًا أحدث بقيم افتراضية متغيّرة <bdi>(a newer provider with changed defaults)</bdi>؛ ثبّت الإصدار وأودِع ملف القفل <bdi>(pin the version and commit the lock file)</bdi></li>
+<li>C. جلب الأمر init مزوّدًا أحدث بقيم افتراضية متغيّرة <bdi>(a newer provider with changed defaults)</bdi>؛ ثبّت الإصدار وأودِع ملف القفل</li>
 <li>D. الخطط ليست حتمية <bdi>(Plans are not deterministic)</bdi>، لذا أعِد تشغيل الخطة حتى لا تُظهر أي تغييرات قبل التطبيق</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -9604,7 +9604,7 @@ Strong answer, out loud, in order:
 <ul>
 <li>A. أن يُطلب من المطوّرين إعلان كل دمج <bdi>(announce each merge)</bdi> في محادثة الفريق وانتظار بعضهم بعضًا</li>
 <li>B. إعادة تشغيل خط التسليم <bdi>(Re-running the pipeline)</bdi> على <code>main</code> حتى ينجح، ثم الانتقال إلى التغيير التالي</li>
-<li>C. طابور دمج <bdi>(A merge queue)</bdi> يختبر كل طلب سحب فوق الطلبات التي تسبقه في الطابور <bdi>(on top of those queued ahead of it)</bdi> قبل الدمج</li>
+<li>C. طابور دمج <bdi>(A merge queue)</bdi> يختبر كل طلب سحب فوق الطلبات التي تسبقه <bdi>(queued ahead of it)</bdi> قبل الدمج</li>
 <li>D. فروع ميزات أطول عمرًا <bdi>(Longer-lived feature branches)</bdi>، كي يصل عدد أقل من عمليات الدمج إلى <code>main</code> كل يوم</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -9629,7 +9629,7 @@ Strong answer, out loud, in order:
 <li>A. لا شيء، لأن منطقة احتياطية دافئة <bdi>(a warm standby region)</bdi> تحمل بالفعل نسخة أصغر من مكدّس التطبيق <bdi>(the application stack)</bdi></li>
 <li>B. ينبغي أن تستخدم الخطة النسخ الاحتياطي والاستعادة <bdi>(backup and restore)</bdi> بدلًا من ذلك، لأنها أرخص استراتيجية متاحة <bdi>(the cheapest strategy available)</bdi></li>
 <li>C. ينبغي حفظ أدلة التشغيل على الورق <bdi>(kept on paper)</bdi> بدلًا من ذلك، لأن الويكي لا يُعتمد عليه أبدًا <bdi>(never reliable)</bdi> أثناء الحوادث <bdi>(during incidents)</bdi></li>
-<li>D. مسار التعافي <bdi>(The recovery path)</bdi> يعتمد على المنطقة نفسها التي فشلت، فلا يمكن تشغيله عند الحاجة <bdi>(when needed)</bdi></li>
+<li>D. مسار التعافي <bdi>(The recovery path)</bdi> يعتمد على المنطقة نفسها التي فشلت تمامًا، فلا يمكن تشغيله في اللحظة التي تلزم فيها <bdi>(when needed)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9639,7 +9639,7 @@ Strong answer, out loud, in order:
 <p><strong>8. خلال مراجعة الجاهزية <bdi>(readiness review)</bdi> لضوابط البطاقات <bdi>(Card Controls)</bdi>، تجد مها تنبيه استدعاء <bdi>(a paging alert)</bdi> اسمه <code>CardControlsPodRestarted</code> دون دليل تشغيل <bdi>(no runbook)</bdi> ودون ربط بهدف مستوى خدمة <bdi>(no link to an SLO)</bdi>. وفق قواعد مراجعة الجاهزية، ما الذي ينبغي أن يحدث؟</strong></p>
 <ul>
 <li>A. أبقِه استدعاءً <bdi>(Keep it as a page)</bdi>، لأن أي إعادة تشغيل لحجيرة في خدمة جديدة تستحق نظرة بشرية ليلًا</li>
-<li>B. اجعله تذكرة أو عنصرًا في لوحة متابعة <bdi>(a ticket or dashboard item)</bdi>، أو احذفه، لأنه لا يرتبط بأي SLO أو دليل تشغيل</li>
+<li>B. اجعله تذكرة أو عنصرًا في لوحة متابعة، أو احذفه، لأنه لا يرتبط بأي هدف SLO أو دليل تشغيل <bdi>(runbook)</bdi></li>
 <li>C. أضف مهندسًا ثانيًا إلى جدول المناوبة <bdi>(the rota)</bdi> كي تُوزَّع الاستدعاءات الإضافية بإنصاف</li>
 <li>D. أبقِه استدعاءً، لكن ارفع عتبته <bdi>(raise its threshold)</bdi> كي لا ينطلق إلا بعد ثلاث إعادات تشغيل في الساعة</li>
 </ul>
@@ -9653,7 +9653,7 @@ Strong answer, out loud, in order:
 <li>A. هم محقّون: يمكن لتغييرات الإعدادات <bdi>(configuration changes)</bdi> تخطّي خط التسليم لأنها لا تحوي شيفرة تطبيق <bdi>(no application code)</bdi></li>
 <li>B. ادفعها ليلًا، حين تكون الحركة منخفضة <bdi>(when traffic is low)</bdi>، كي يلاحظ عدد أقل من العملاء أي مشكلة</li>
 <li>C. اطلب من فريق الأمن الموافقة عليها بالبريد الإلكتروني، فهي تحلّ محلّ بيئة التجهيز <bdi>(replaces staging)</bdi> لتغييرات القواعد</li>
-<li>D. عاملها كأي تغيير إنتاجي <bdi>(any production change)</bdi>: مُراجَع، مُرقَّم الإصدار، مُرحَّل، وسهل العكس <bdi>(reviewed, versioned, staged and easy to reverse)</bdi></li>
+<li>D. عاملها كأي تغيير إنتاجي <bdi>(any production change)</bdi>: مُراجَع، مُرقَّم الإصدار، مُرحَّل، وسهل العكس <bdi>(easy to reverse)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9663,7 +9663,7 @@ Strong answer, out loud, in order:
 <p><strong>10. يخطّط يوسف لسحابة VPC الجديدة على أنها <code>10.0.0.0/16</code>. يقول فريق الشبكات إن مركز البيانات يستخدم <code>10.0.0.0/16</code> بالفعل، وإن نجم سيربط الاثنين برابط خاص <bdi>(a private link)</bdi>. ما المشكلة؟</strong></p>
 <ul>
 <li>A. يرفض مزوّدو السحابة <bdi>(Cloud providers)</bdi> إنشاء VPC في النطاق <code>10.0.0.0/8</code>، فلا يمكن تطبيق الخطة</li>
-<li>B. النطاقات المتداخلة تكسر التوجيه <bdi>(Overlapping ranges break routing)</bdi>، لأن الموجّهات لا تستطيع معرفة أي جانب يملك العنوان <bdi>(which side owns an address)</bdi></li>
+<li>B. النطاقات المتداخلة تكسر التوجيه <bdi>(Overlapping ranges break routing)</bdi>، لأن الموجّهات لا تعرف أي جانب يملك العنوان</li>
 <li>C. النطاق <code>/16</code> يحوي عناوين أقل من اللازم لعنقود Kubernetes مُدار <bdi>(a managed Kubernetes cluster)</bdi> عبر ثلاث مناطق توافر</li>
 <li>D. لا مشكلة، لأن الرابط الخاص يترجم كل عنوان تلقائيًا <bdi>(translates every address automatically)</bdi></li>
 </ul>
@@ -9686,7 +9686,7 @@ Strong answer, out loud, in order:
 
 <p><strong>12. يبدو تغيير من سطر واحد في ملف قيم Helm مشترك <bdi>(a shared Helm values file)</bdi> غير ضارّ في طلب السحب <bdi>(pull request)</bdi> لكنه يغيّر سلوك الإنتاج <bdi>(production behaviour)</bdi>. ما الذي يساعد المراجعين على رؤية ما سيتلقاه العنقود فعلًا <bdi>(what the cluster will actually receive)</bdi>؟</strong></p>
 <ul>
-<li>A. صيِّر ملفات التعريف <bdi>(Render the manifests)</bdi> في CI وانشر الفرق المُصيَّر <bdi>(the rendered diff)</bdi> في طلب السحب نفسه</li>
+<li>A. صيِّر ملفات التعريف <bdi>(Render the manifests)</bdi> في CI وانشر الفرق المُصيَّر في طلب السحب نفسه</li>
 <li>B. اشترط ثلاثة موافقين بدل واحد <bdi>(three approvers instead of one)</bdi> على كل طلب سحب في مستودع GitOps</li>
 <li>C. دع Argo CD يطبّق التغيير على الإنتاج أولًا، ثم راجع عرض الفرق <bdi>(its diff view)</bdi> بعد ذلك</li>
 <li>D. انقل ملف القيم إلى مستودع التطبيق <bdi>(the application repository)</bdi>، بجانب الشيفرة المصدرية للخدمة</li>
@@ -9698,7 +9698,7 @@ Strong answer, out loud, in order:
 
 <p><strong>13. يتلقى تصدير كشوف الحساب الداخلي <bdi>(internal statements export)</bdi> في نجم بضعة طلبات في الدقيقة <bdi>(a few requests per minute)</bdi>. يرسل إليه إطلاق كناري <bdi>(A canary)</bdi> 1% من الحركة لعشر دقائق، فلا يرى أي أخطاء <bdi>(zero errors)</bdi> ويُرقّي <bdi>(promotes)</bdi>. ما الخطأ في هذا التحليل؟</strong></p>
 <ul>
-<li>A. وصل إلى الكناري عدد قليل جدًا من الطلبات في عشر دقائق <bdi>(Too few requests)</bdi> فلا يعني انعدام الأخطاء شيئًا</li>
+<li>A. وصل إلى الكناري عدد قليل جدًا من الطلبات في عشر دقائق <bdi>(Too few requests)</bdi>، فلا يعني انعدام الأخطاء <bdi>(zero errors)</bdi> شيئًا يُعتد به</li>
 <li>B. يجب أن يقارن الكناري مقاييسه بأرقام الأسبوع الماضي <bdi>(last week&#39;s figures)</bdi>، لا بالإصدار المستقر <bdi>(the stable version)</bdi></li>
 <li>C. لا تعمل إطلاقات الكناري إلا مع شبكة خدمات <bdi>(a service mesh)</bdi>، فلم يكن تقسيم الحركة <bdi>(the traffic split)</bdi> حقيقيًا أصلًا</li>
 <li>D. لا شيء؛ انعدام الأخطاء في عشر دقائق يثبت أن الإصدار الجديد آمن للترقية <bdi>(safe to promote)</bdi></li>
@@ -9737,7 +9737,7 @@ Strong answer, out loud, in order:
 <li>A. نعم، لأن الملف لم يعد يظهر في أي مكان على الفرع الرئيسي للمستودع <bdi>(the repository&#39;s main branch)</bdi></li>
 <li>B. نعم، ما دام المستودع يبقى خاصًا <bdi>(stays private)</bdi> حتى طلب التوظيف التالي</li>
 <li>C. لا؛ ينبغي أيضًا إعادة تسمية الملف كي لا تتعرّف عليه ماسحات الأسرار <bdi>(secret scanners)</bdi></li>
-<li>D. لا؛ لا يزال سجل Git <bdi>(Git history)</bdi> يحويه، فألغِ المفتاح وافحص المستودع قبل النشر <bdi>(revoke the key and scan before publishing)</bdi></li>
+<li>D. لا؛ لا يزال سجل Git <bdi>(Git history)</bdi> يحويه، فألغِ المفتاح وافحص المستودع قبل النشر <bdi>(scan first)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9758,7 +9758,7 @@ Strong answer, out loud, in order:
 
 <p><strong>18. يتيح خلل في Mobile API لمهاجم أن يجعل الخادم يجلب أي عنوان URL يختاره <bdi>(fetch any URL they choose)</bdi>. تقلق نورة بشأن بيانات الاعتماد السحابية المتاحة على العقدة <bdi>(the cloud credentials available on the node)</bdi>. أي الضوابط تقلّل هذا الخطر؟</strong></p>
 <ul>
-<li>A. اشترط نقطة نهاية البيانات الوصفية المحصّنة <bdi>(the hardened metadata endpoint)</bdi>، وأبقِ الأدوار ضيقة <bdi>(keep roles narrow)</bdi>، وامنع وصول الحجيرات إليها</li>
+<li>A. اشترط نقطة نهاية البيانات الوصفية المحصّنة <bdi>(the hardened metadata endpoint)</bdi>، وأبقِ الأدوار ضيقة، وامنع وصول الحجيرات إليها</li>
 <li>B. دوّر مفتاح وصول العقدة <bdi>(Rotate the node&#39;s access key)</bdi> كل 90 يومًا واحفظه في Kubernetes Secret</li>
 <li>C. انقل الواجهة إلى شبكة فرعية عامة <bdi>(a public subnet)</bdi> كي لا يعود الوصول إلى نقطة نهاية البيانات الوصفية ممكنًا</li>
 <li>D. فعّل المصادقة متعددة العوامل <bdi>(MFA)</bdi> لكل مهندس، لأن المهاجمين يحتاجون إلى MFA للوصول إلى نقطة نهاية البيانات الوصفية</li>
@@ -9773,7 +9773,7 @@ Strong answer, out loud, in order:
 <li>A. احذف ConfigMap وأعِد إنشاءه كي يدفع Kubernetes القيم الجديدة إلى الحاويات العاملة <bdi>(running containers)</bdi></li>
 <li>B. انقل الإعداد إلى Secret، الذي يُعاد تحميله في الحاويات العاملة تلقائيًا <bdi>(reloads automatically)</bdi></li>
 <li>C. انتظر أكثر، لأن متغيرات البيئة <bdi>(environment variables)</bdi> تُحدَّث من ConfigMap كل بضع ساعات</li>
-<li>D. دوّر الحجيرات مع كل تغيير في الإعدادات <bdi>(Roll the pods on every config change)</bdi>، مثلًا بتعليق توضيحي لمجموع اختباري لـConfigMap <bdi>(a ConfigMap checksum annotation)</bdi></li>
+<li>D. دوّر الحجيرات <bdi>(Roll the pods)</bdi> مع كل تغيير في الإعدادات، مثلًا بتعليق توضيحي لمجموع اختباري لـConfigMap</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9784,7 +9784,7 @@ Strong answer, out loud, in order:
 <ul>
 <li>A. طرح كل تغيير في السياسات مباشرةً في وضع الإنفاذ <bdi>(enforce mode)</bdi> كي تظهر الأخطاء بسرعة</li>
 <li>B. السماح لكل فريق بتعطيل السياسات محليًا <bdi>(disable policies locally)</bdi> كلما حجبت أحد خطوط تسليمه</li>
-<li>C. اختبارات في CI بمثال مسموح وآخر مرفوض <bdi>(an allowed and a denied example)</bdi> لكل قاعدة في السياسة</li>
+<li>C. اختبارات في CI بمثال مسموح به وآخر مرفوض <bdi>(allowed and denied)</bdi> لكل قاعدة في السياسة المعتمدة</li>
 <li>D. مراجعة كل السياسات مرة في السنة، ضمن التدقيق السنوي للبنك <bdi>(the bank&#39;s annual audit)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -9796,7 +9796,7 @@ Strong answer, out loud, in order:
 <ul>
 <li>A. لا يستطيع <code>pull_request_target</code> سحب الشيفرة من النسخ المتفرّعة، فلا تعمل الاختبارات فعليًا أبدًا</li>
 <li>B. تعمل الاختبارات على مشغّلات تستضيفها GitHub <bdi>(GitHub-hosted runners)</bdi>، مشتركة مع عملاء آخرين وبطيئة</li>
-<li>C. تعمل شيفرة النسخة المتفرّعة غير المُراجَعة <bdi>(The fork&#39;s unreviewed code)</bdi> في سياق المستودع الأساسي <bdi>(the base repository&#39;s context)</bdi>، مع أسراره</li>
+<li>C. تعمل شيفرة النسخة المتفرّعة غير المُراجَعة <bdi>(The fork&#39;s unreviewed code)</bdi> في سياق المستودع الأساسي، مع أسراره</li>
 <li>D. يجب دائمًا دمج طلبات السحب من النسخ المتفرّعة أولًا واختبارها على <code>main</code> بعد ذلك</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -9809,7 +9809,7 @@ Strong answer, out loud, in order:
 <li>A. لا شيء؛ ينبغي للقائد الخبير <bdi>(an experienced commander)</bdi> أن يصحّح الأخطاء <bdi>(debug)</bdi>، لأنه أعرف الناس بالنظام</li>
 <li>B. يتوقف كل العمل <bdi>(All work pauses)</bdi> حتى ينتهي القائد من قراءة السجلات ويقرّر <bdi>(finished reading the logs and decided)</bdi></li>
 <li>C. يكتب مركز الاتصال <bdi>(The contact centre)</bdi> تحديثاته الخاصة للعملاء حتى تهدأ الأمور</li>
-<li>D. يسلّم قائد الحادثة <bdi>(The IC)</bdi> التصحيح إلى قائد العمليات <bdi>(the operations lead)</bdi> ويعود إلى التنسيق <bdi>(coordinating)</bdi></li>
+<li>D. يسلّم قائد الحادثة <bdi>(The IC)</bdi> التصحيح إلى قائد العمليات <bdi>(the operations lead)</bdi> ويعود إلى التنسيق بين الفرق <bdi>(coordinating)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9818,7 +9818,7 @@ Strong answer, out loud, in order:
 
 <p><strong>23. لخفض الإنفاق على النماذج <bdi>(To cut model spend)</bdi>، يقترح فريق التخزين المؤقت الدلالي <bdi>(semantic caching)</bdi> في بوابة النماذج اللغوية <bdi>(LLM gateway)</bdi> لمحادثة العملاء <bdi>(customer chat)</bdi> في نجم أسيست <bdi>(Najm Assist)</bdi>، بإعادة استخدام إجابات المطالبات المتشابهة <bdi>(answers to similar prompts)</bdi> عبر كل المستخدمين. ما الخطر الرئيسي؟</strong></p>
 <ul>
-<li>A. قد يتلقى عميل إجابة مخزّنة مؤقتًا <bdi>(a cached answer)</bdi> مبنية من بيانات عميل آخر <bdi>(another customer&#39;s data)</bdi></li>
+<li>A. قد يتلقى عميل إجابة مخزّنة مؤقتًا <bdi>(a cached answer)</bdi> مبنية من بيانات عميل آخر دون علم أحد</li>
 <li>B. يرفع التخزين المؤقت الدلالي دائمًا تكلفة الرموز <bdi>(token cost)</bdi>، لأن كل مطالبة تُعالَج مرتين</li>
 <li>C. لا يمكن أن تقع ذاكرات التخزين المؤقت في بوابة، بل داخل منصة مزوّد النموذج <bdi>(the model provider&#39;s platform)</bdi> فقط</li>
 <li>D. الإجابات المخزّنة مؤقتًا أبطأ من الاستدعاءات الجديدة، فيسوء الوقت حتى أول رمز <bdi>(time to first token)</bdi></li>
@@ -9842,7 +9842,7 @@ Strong answer, out loud, in order:
 
 <p><strong>25. يشغّل يوسف <code>openssl s_client -connect api.najm.example:443</code> دون <code>-servername</code> فيرى شهادة لاسم مضيف مختلف <bdi>(a different host name)</bdi>. لا يبلغ العملاء عن أي أخطاء TLS <bdi>(no TLS errors)</bdi>. ما التفسير الأرجح؟</strong></p>
 <ul>
-<li>A. انتهت صلاحية الشهادة على موازن الأحمال <bdi>(the load balancer)</bdi> ويجب تجديدها فورًا</li>
+<li>A. انتهت صلاحية الشهادة على موازن الأحمال <bdi>(the load balancer)</bdi> ويجب تجديدها فورًا دون أي تأخير</li>
 <li>B. يوجّه DNS <code>api.najm.example</code> إلى موازن الأحمال الخطأ لدى بعض المحلِّلات <bdi>(some resolvers)</bdi></li>
 <li>C. تقدّم حجيرات الخلفية <bdi>(The backend pods)</bdi> شهاداتها الموقّعة ذاتيًا <bdi>(self-signed certificates)</bdi> للعملاء</li>
 <li>D. دون SNI، يعيد موازن الأحمال شهادته الافتراضية <bdi>(its default certificate)</bdi> لاسم آخر</li>
@@ -9854,10 +9854,10 @@ Strong answer, out loud, in order:
 
 <p><strong>26. ذات صباح، لا يستطيع العنقود بدء حجيرات جديدة، لأن سحب الصور الأساسية العامة <bdi>(pulls of public base images)</bdi> من Docker Hub يخضع لتحديد المعدل <bdi>(being rate-limited)</bdi>. ما الذي يمنع هذا من حجب عمليات النشر مستقبلًا؟</strong></p>
 <ul>
-<li>A. اضبط كل Deployment على <code>imagePullPolicy: Always</code> كي يُعاد محاولة السحب أكثر</li>
-<li>B. استخدم الوسم <code>latest</code> للصور العامة، كي يكون لدى العنقود نسخة مخزّنة مؤقتًا دائمًا</li>
-<li>C. قدّم الصور الأساسية العامة من ذاكرة سحب وسيطة أو مرآة <bdi>(a pull-through cache or mirror)</bdi> في سجل نجم الخاص</li>
-<li>D. اطلب من كل فريق بناء الصور على حواسيبه المحمولة <bdi>(build images on their laptops)</bdi> ونسخها مباشرة إلى العقد <bdi>(copy them directly onto the nodes)</bdi></li>
+<li>A. اضبط كل Deployment على <code>imagePullPolicy: Always</code> كي يُعاد محاولة السحب أكثر <bdi>(retried more often)</bdi></li>
+<li>B. استخدم الوسم <code>latest</code> للصور العامة، كي يكون لدى العنقود نسخة مخزّنة مؤقتًا <bdi>(a cached copy)</bdi> دائمًا</li>
+<li>C. قدّم الصور الأساسية العامة من ذاكرة سحب وسيطة أو مرآة <bdi>(a pull-through cache or mirror)</bdi> في سجل نجم الخاص <bdi>(Najm&#39;s own registry)</bdi></li>
+<li>D. اطلب من كل فريق بناء الصور على حواسيبه المحمولة ونسخها مباشرة إلى العقد <bdi>(copy them onto the nodes)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9868,7 +9868,7 @@ Strong answer, out loud, in order:
 <ul>
 <li>A. لا شيء؛ العَلَم <code>sensitive</code> يشفّر القيمة داخل ملف الحالة بمفتاح المزوّد <bdi>(with the provider&#39;s key)</bdi></li>
 <li>B. قد تبقى القيمة في الحالة نصًا صريحًا <bdi>(in plain text)</bdi>؛ العَلَم يخفي المخرجات فقط <bdi>(only hides output)</bdi></li>
-<li>C. يتجاهل OpenTofu العَلَم، ولا يدعم القيم الحساسة إلا في خدمات الحالة المستضافة <bdi>(hosted state services)</bdi></li>
+<li>C. يتجاهل OpenTofu العَلَم، ولا يدعم القيم الحساسة إلا في خدمات الحالة <bdi>(hosted state services)</bdi></li>
 <li>D. لا يمكن للمتغيرات الحساسة أن تحمل كلمات مرور، بل رموزًا وشهادات فقط <bdi>(only tokens and certificates)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -9879,7 +9879,7 @@ Strong answer, out loud, in order:
 <p><strong>28. في المستودع الأحادي <bdi>(monorepo)</bdi> لنجم، يضيف يوسف مرشّحات مسارات <bdi>(path filters)</bdi> كي لا يعمل خط تسليم كل خدمة إلا حين يتغيّر مجلدها الخاص. ما الذي يجب أن يتأكد منه؟</strong></p>
 <ul>
 <li>A. أن تغييرًا في المكتبة المشتركة <bdi>(the shared library)</bdi> لا يزال يُطلق كل خدمة تعتمد عليها</li>
-<li>B. أن تستثني المرشّحات مجلد المكتبة المشتركة، لأن لا فريق خدمة واحدًا يملكها</li>
+<li>B. أن تستثني المرشّحات <bdi>(the filters)</bdi> مجلد المكتبة المشتركة <bdi>(shared library)</bdi>، لأن لا فريق خدمة واحدًا يملكها</li>
 <li>C. أن كل طلب سحب لا يزال يشغّل مجموعة الاختبارات الشاملة كاملة <bdi>(the full end-to-end suite)</bdi>، كي لا يفوت شيء</li>
 <li>D. أن كل خدمة تحتفظ بنسختها الخاصة من الشيفرة المشتركة، كي تبقى المرشّحات بسيطة</li>
 </ul>
@@ -9890,7 +9890,7 @@ Strong answer, out loud, in order:
 
 <p><strong>29. تُظهر لوحة زمن الاستجابة <bdi>(A latency panel)</bdi> في Grafana للمدفوعات ارتفاعًا مفاجئًا <bdi>(a spike)</bdi> في أبطأ دلو في المدرّج التكراري <bdi>(the slowest histogram bucket)</bdi>. تريد مها فتح طلب بطيء حقيقي <bdi>(one real slow request)</bdi> من هناك بنقرة واحدة. ما الذي يجعل هذا ممكنًا؟</strong></p>
 <ul>
-<li>A. النماذج الشاهدة <bdi>(Exemplars)</bdi>، التي ترفق معرّفات التتبّع <bdi>(trace IDs)</bdi> من طلبات حقيقية بدلاء المدرّج التكراري</li>
+<li>A. النماذج الشاهدة <bdi>(Exemplars)</bdi>، التي ترفق معرّفات التتبّع من طلبات حقيقية بدلاء المدرّج التكراري</li>
 <li>B. فاصل جمع أطول <bdi>(A longer scrape interval)</bdi>، كي يحتفظ Prometheus بعينات خام أكثر لكل سلسلة <bdi>(per series)</bdi></li>
 <li>C. وسم <code>customer_id</code> على مدرّج زمن الاستجابة، كي تكون لكل عميل سلسلة</li>
 <li>D. تحويل اللوحة من p99 إلى المتوسط <bdi>(the average)</bdi>، الذي يسهل ربطه بالسجلات</li>
@@ -9903,7 +9903,7 @@ Strong answer, out loud, in order:
 <p><strong>30. يسأل حمد ما الذي سيحمي بيانات المدفوعات <bdi>(Payments data)</bdi> إن حصل مهاجم على صلاحيات مسؤول السحابة <bdi>(cloud administrator rights)</bdi> في حساب الإنتاج <bdi>(the production account)</bdi> وحذف كل شيء هناك. أي تصميم يجيبه؟</strong></p>
 <ul>
 <li>A. نسخة احتياطية جاهزة متعددة مناطق التوافر <bdi>(A multi-AZ standby)</bdi>، لأنها في منطقة غير منطقة قاعدة البيانات الأساسية</li>
-<li>B. نسخ احتياطية غير قابلة للتعديل في حساب منفصل <bdi>(Immutable backups in a separate account)</bdi>، بعيدًا عن متناول مسؤولي الإنتاج</li>
+<li>B. نسخ احتياطية غير قابلة للتعديل <bdi>(Immutable backups)</bdi> في حساب منفصل، بعيدًا عن متناول مسؤولي الإنتاج</li>
 <li>C. نسخة قراءة متماثلة عبر المناطق <bdi>(A cross-region read replica)</bdi> تنسخ كل كتابة خلال ثوانٍ</li>
 <li>D. لقطات يومية <bdi>(Daily snapshots)</bdi> مخزّنة في الحساب نفسه، مع فترة احتفاظ أطول <bdi>(a longer retention period)</bdi></li>
 </ul>
@@ -9914,9 +9914,9 @@ Strong answer, out loud, in order:
 
 <p><strong>31. لضوابط البطاقات <bdi>(Card Controls)</bdi>، تضبط مها هدف SLO للقراءة <bdi>(the read SLO)</bdi> عند 99.95% وهدف SLO للكتابة <bdi>(the write SLO)</bdi> عند 99.9%. لماذا يكون هدف القراءة هو الأشد؟</strong></p>
 <ul>
-<li>A. القراءات أرخص في التقديم <bdi>(cheaper to serve)</bdi>، لذا لا يكلّف الهدف الأعلى البنك شيئًا إضافيًا على الإطلاق</li>
+<li>A. القراءات أرخص في التقديم <bdi>(cheaper to serve)</bdi>، لذا لا يكلّف الهدف الأعلى <bdi>(a higher target)</bdi> البنك شيئًا إضافيًا</li>
 <li>B. يعيد تطبيق الهاتف محاولة الكتابات تلقائيًا <bdi>(retried automatically)</bdi>، فلا تُرى إخفاقاتها أبدًا</li>
-<li>C. قد توقف قراءة فاشلة أثناء تفويض البطاقة <bdi>(during card authorisation)</bdi> عملية شراء العميل عند الصندوق <bdi>(at the till)</bdi></li>
+<li>C. قد توقف قراءة فاشلة أثناء تفويض البطاقة <bdi>(during card authorisation)</bdi> عملية شراء العميل عند الصندوق</li>
 <li>D. تشترط الجهات التنظيمية <bdi>(Regulators)</bdi> أن تحمل مسارات القراءة تسعة واحدة أكثر بالضبط من مسارات الكتابة</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -9926,10 +9926,10 @@ Strong answer, out loud, in order:
 
 <p><strong>32. في خريطة المسار إلى الإنتاج <bdi>(path-to-production map)</bdi> التي وضعها يوسف لخدمة جديدة مرحلة «النشر إلى بيئة التجهيز <bdi>(Deploy to staging)</bdi>» يكون الالتقاط الآلي فيها <bdi>(whose automated catch)</bdi> هو «يفحص طارق الحجيرات بعد كل نشر <bdi>(Tariq checks the pods after each deploy)</bdi>». ماذا تقول قاعدة نجم؟</strong></p>
 <ul>
-<li>A. هذا مقبول، لأن مشكلات بيئة التجهيز <bdi>(staging problems)</bdi> لا تصل أبدًا إلى العملاء مباشرة</li>
-<li>B. أزل المرحلة، لأن الفحص اليدوي <bdi>(a manual check)</bdi> يعني أنها لا تضيف قيمة إلى المسار</li>
-<li>C. اطلب من طارق كتابة ما يفحصه، وأبقِ الخطوة اليدوية <bdi>(the manual step)</bdi> بشكل دائم</li>
-<li>D. اجعلها عنصرًا في قائمة الأعمال المؤجلة <bdi>(a backlog item)</bdi>، له مالك وتاريخ <bdi>(an owner and a date)</bdi>، لأتمتة فحص طارق</li>
+<li>A. هذا مقبول، لأن مشكلات بيئة التجهيز <bdi>(staging problems)</bdi> لا تصل أبدًا إلى العملاء مباشرة في الإنتاج</li>
+<li>B. أزل المرحلة <bdi>(Remove the stage)</bdi>، لأن الفحص اليدوي <bdi>(a manual check)</bdi> يعني أنها لا تضيف قيمة إلى المسار</li>
+<li>C. اطلب من طارق كتابة ما يفحصه <bdi>(what he checks)</bdi>، وأبقِ الخطوة اليدوية <bdi>(the manual step)</bdi> بشكل دائم</li>
+<li>D. اجعلها عنصرًا في قائمة الأعمال المؤجلة <bdi>(a backlog item)</bdi>، له مالك وتاريخ، لأتمتة فحص طارق</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9940,8 +9940,8 @@ Strong answer, out loud, in order:
 <ul>
 <li>A. التخزين الكتلي <bdi>(Block storage)</bdi>، مع قرص افتراضي واحد <bdi>(one virtual disk)</bdi> مُلحَق بكل الأجهزة الافتراضية في الوقت نفسه</li>
 <li>B. تخزين الكائنات <bdi>(Object storage)</bdi>، مركّبًا على كل جهاز افتراضي كأنه قرص محلي عادي <bdi>(an ordinary local disk)</bdi></li>
-<li>C. تخزين الملفات <bdi>(File storage)</bdi>: نظام ملفات NFS أو SMB مشترك <bdi>(a shared NFS or SMB file system)</bdi> تركّبه أجهزة افتراضية كثيرة معًا</li>
-<li>D. جدول في قاعدة بيانات PostgreSQL المُدارة، يخزّن كل ملف صفًّا <bdi>(as a row)</bdi></li>
+<li>C. تخزين الملفات <bdi>(File storage)</bdi>: نظام ملفات NFS أو SMB مشترك تركّبه أجهزة افتراضية كثيرة معًا</li>
+<li>D. جدول في قاعدة بيانات PostgreSQL المُدارة <bdi>(managed database)</bdi>، يخزّن كل ملف صفًّا واحدًا <bdi>(as a row)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9952,7 +9952,7 @@ Strong answer, out loud, in order:
 <ul>
 <li>A. لم يكن هناك متحكّم <bdi>(No controller)</bdi> مثل ReplicaSet يملك الحجيرة، فلم يُعِد إنشاءها شيء</li>
 <li>B. حذفت الخدمة <bdi>(The Service)</bdi> الحجيرة لأنها لم تكن لها نقاط نهاية مطابقة <bdi>(matching endpoints)</bdi> ليلًا</li>
-<li>C. كان ينبغي أن يعيد kubelet على عقدة سليمة <bdi>(a healthy node)</bdi> تشغيلها، فالعنقود معطوب</li>
+<li>C. كان ينبغي أن يعيد kubelet على عقدة سليمة <bdi>(a healthy node)</bdi> تشغيلها، فالعنقود معطوب تمامًا وفي حالة سيئة</li>
 <li>D. تنتهي صلاحية الحجيرات المُنشأة بـ <code>kubectl run</code> تلقائيًا <bdi>(expire automatically)</bdi> بعد اثنتي عشرة ساعة</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -9963,7 +9963,7 @@ Strong answer, out loud, in order:
 <p><strong>35. أثناء حادثة SEV1 <bdi>(a SEV1)</bdi>، وبموافقة قائد الحادثة <bdi>(the incident commander&#39;s approval)</bdi>، يرفع مهندس حجم مجمّع اتصالات المدفوعات <bdi>(the Payments connection-pool size)</bdi> يدويًا في الإنتاج. وفق سياسة الترقية <bdi>(promotion policy)</bdi> في نجم، ما الذي يجب أن يحدث بعد ذلك؟</strong></p>
 <ul>
 <li>A. لا شيء أكثر؛ موافقة قائد الحادثة تجعل التغيير اليدوي <bdi>(the hand change)</bdi> دائمًا</li>
-<li>B. اكتبه عائدًا إلى Git <bdi>(Write it back to Git)</bdi> خلال يوم عمل واحد وإلا فإن المزامنة التالية <bdi>(the next sync)</bdi> ستعيده بصمت</li>
+<li>B. اكتبه عائدًا إلى Git خلال يوم عمل واحد وإلا فإن المزامنة التالية <bdi>(the next sync)</bdi> ستعيده بصمت</li>
 <li>C. أطفئ الإصلاح الذاتي <bdi>(self-heal)</bdi> في تطبيق Argo CD للإنتاج حتى الإطلاق التالي</li>
 <li>D. سجّله في مراجعة ما بعد الحادثة <bdi>(the postmortem)</bdi> فقط، لأن Git للتغييرات المخطّطة لا للحوادث</li>
 </ul>
@@ -9977,7 +9977,7 @@ Strong answer, out loud, in order:
 <li>A. دائمًا؛ المضي قدمًا أسرع من التراجع لأنه يتخطى خط التسليم <bdi>(skips the pipeline)</bdi></li>
 <li>B. أبدًا؛ التراجع ممكن دائمًا ما دامت الصورة القديمة <bdi>(the old image)</bdi> لا تزال في السجل</li>
 <li>C. فقط خلال نافذة التجميد <bdi>(a freeze window)</bdi>، حين يحجب تقويم التغييرات <bdi>(the change calendar)</bdi> كل تراجع</li>
-<li>D. حين يكون التراجع مستحيلًا <bdi>(When rollback is impossible)</bdi>، كما هنا، أو يكون الإصلاح صغيرًا ومفهومًا جيدًا <bdi>(small and well understood)</bdi></li>
+<li>D. حين يكون التراجع مستحيلًا <bdi>(When rollback is impossible)</bdi>، كما هنا، أو يكون الإصلاح صغيرًا ومفهومًا جيدًا</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9987,7 +9987,7 @@ Strong answer, out loud, in order:
 <p><strong>37. يفشل مجمّع عقد <bdi>(A node pool)</bdi>، فيتلقى هاتف المناوبة <bdi>(the on-call phone)</bdi> ثلاثين تنبيهًا منفصلًا، واحدًا لكل حجيرة متأثرة، إلى جانب تنبيه تعطّل العنقود <bdi>(the cluster-down alert)</bdi>. أي ميزات Alertmanager تعالج هذا؟</strong></p>
 <ul>
 <li>A. الإسكات <bdi>(Silences)</bdi>، مضبوطًا بشكل دائم لكل تنبيه على مستوى الحجيرة <bdi>(pod-level alert)</bdi> في العنقود</li>
-<li>B. الكبح <bdi>(Inhibition)</bdi> أثناء انطلاق تنبيه تعطّل العنقود، إضافة إلى تجميع التنبيهات المترابطة <bdi>(grouping of related alerts)</bdi></li>
+<li>B. الكبح <bdi>(Inhibition)</bdi> أثناء انطلاق تنبيه تعطّل العنقود، إضافة إلى تجميع التنبيهات المترابطة</li>
 <li>C. عتبة أعلى <bdi>(A higher threshold)</bdi> على كل تنبيه، كي لا ينطلق منها إلا واحد</li>
 <li>D. توجيه كل تنبيه حجيرة إلى فريق الأمن بدل جدول المناوبة <bdi>(the on-call rota)</bdi></li>
 </ul>
@@ -10001,7 +10001,7 @@ Strong answer, out loud, in order:
 <li>A. النسخة الأساسية الوحيدة <bdi>(The only primary instance)</bdi> من قاعدة بيانات المدفوعات التي تخدم حركة حيّة <bdi>(live traffic)</bdi></li>
 <li>B. الحد الأدنى الدافئ <bdi>(The warm floor)</bdi> من نسخ نجم أسيست المستضافة ذاتيًا <bdi>(self-hosted Najm Assist replicas)</bdi> العاملة في ساعات العمل</li>
 <li>C. بوابة النماذج اللغوية المشتركة <bdi>(The shared LLM gateway)</bdi>، التي تعتمد عليها حركة النماذج لكل فريق</li>
-<li>D. مشغّلات CI والمهام الدُّفعية <bdi>(CI runners and batch jobs)</bdi> التي يمكنها ببساطة إعادة المحاولة إن استُعيدت عقدة <bdi>(if a node is reclaimed)</bdi></li>
+<li>D. مشغّلات CI والمهام الدُّفعية <bdi>(batch jobs)</bdi> التي يمكنها إعادة المحاولة إن استُعيدت عقدة</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -10010,7 +10010,7 @@ Strong answer, out loud, in order:
 
 <p><strong>39. تخبر خرّيجة <bdi>(A graduate)</bdi> سالمًا أنها تستمتع بتعريف أهداف SLO <bdi>(defining SLOs)</bdi>، وكتابة التنبيهات، وقيادة الحوادث، وإزالة العمل المتكرر بالأتمتة <bdi>(automating away repetitive work)</bdi>. أي دور في خريطة أدوار المقرر <bdi>(the course&#39;s role map)</bdi> يناسبها أكثر؟</strong></p>
 <ul>
-<li>A. مهندسة موثوقية المواقع <bdi>(Site reliability engineer)</bdi>، تملك أهداف SLO والحوادث وإزالة العمل الشاق المتكرر <bdi>(removing toil)</bdi></li>
+<li>A. مهندسة موثوقية المواقع <bdi>(Site reliability engineer)</bdi>، تملك أهداف SLO والحوادث وإزالة العمل الشاق <bdi>(toil)</bdi></li>
 <li>B. ممارسة FinOps <bdi>(FinOps practitioner)</bdi>، تعمل مع الإدارة المالية على التكلفة واقتصاديات الوحدة <bdi>(unit economics)</bdi></li>
 <li>C. مهندسة سحابة <bdi>(Cloud engineer)</bdi>، تملك مناطق الهبوط والحسابات وعمليات الترحيل <bdi>(landing zones, accounts and migrations)</bdi></li>
 <li>D. مهندسة DevOps <bdi>(DevOps engineer)</bdi>، تملك أدوات البناء وأتمتة الإطلاق <bdi>(build tooling and release automation)</bdi></li>
@@ -10035,9 +10035,9 @@ Strong answer, out loud, in order:
 <p><strong>41. ينتقل يوسف من فريق المنصة <bdi>(the platform team)</bdi> إلى فريق المدفوعات <bdi>(the payments squad)</bdi>. بعد ثلاثة أشهر لا يزال قادرًا على تغيير أسس الشبكة المشتركة <bdi>(the shared network foundations)</bdi>. أي ممارسة فشلت؟</strong></p>
 <ul>
 <li>A. المصادقة متعددة العوامل <bdi>(MFA)</bdi>، لأن عاملًا ثانيًا <bdi>(a second factor)</bdi> كان سيمنعه من استخدام الدور القديم</li>
-<li>B. وصول كسر الزجاج <bdi>(Break-glass access)</bdi>، الذي كان ينبغي استخدامه لتغييرات الشبكة بدلًا من ذلك</li>
+<li>B. وصول كسر الزجاج <bdi>(Break-glass access)</bdi>، الذي كان ينبغي استخدامه لتغييرات الشبكة <bdi>(network changes)</bdi> بدلًا من ذلك</li>
 <li>C. التشفير أثناء التخزين <bdi>(Encryption at rest)</bdi>، لأن إعدادات الشبكة لا ينبغي أن تكون قابلة للقراءة</li>
-<li>D. المنضمّ والمنتقل والمغادر <bdi>(Joiner-mover-leaver)</bdi>: كان ينبغي إزالة الوصول القديم يوم انتقاله</li>
+<li>D. المنضمّ والمنتقل والمغادر <bdi>(Joiner-mover-leaver)</bdi>: ينبغي إزالة الوصول القديم يوم انتقاله</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -10046,9 +10046,9 @@ Strong answer, out loud, in order:
 
 <p><strong>42. يرتفع زمن الاستجابة p99 <bdi>(p99 latency)</bdi> لواجهة Mobile API أثناء الدفقات <bdi>(during bursts)</bdi> مع أن عقدها خاملة في معظمها. تُظهر المقاييس أن الحاويات تُخنق بشدة <bdi>(being throttled heavily)</bdi> مقابل حد المعالج <bdi>(CPU limit)</bdi> الخاص بها. ما الإصلاح المعقول الذي ينبغي تقييمه؟</strong></p>
 <ul>
-<li>A. اخفض حد الذاكرة <bdi>(the memory limit)</bdi> كي تُقتل الحاوية ويُعاد تشغيلها أسرع</li>
+<li>A. اخفض حد الذاكرة <bdi>(the memory limit)</bdi> كي تُقتل الحاوية ويُعاد تشغيلها أسرع <bdi>(restarted sooner)</bdi></li>
 <li>B. احذف مسبار الجاهزية <bdi>(the readiness probe)</bdi>، لأن المسابير تستهلك معالجًا تحتاجه الطلبات</li>
-<li>C. ارفع حد المعالج أو أزله مع إبقاء طلبات المعالج مضبوطة <bdi>(keeping CPU requests set)</bdi>، ثم قِس <bdi>(then measure)</bdi></li>
+<li>C. ارفع حد المعالج أو أزله مع إبقاء طلبات المعالج مضبوطة <bdi>(keeping CPU requests set)</bdi>، ثم قِس</li>
 <li>D. اضبط حد المعالج أدنى بكثير من الطلب كي توزَّع الحجيرات بشكل أكثر توازنًا</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -10071,7 +10071,7 @@ Strong answer, out loud, in order:
 <p><strong>44. يثق دور النشر للإنتاج <bdi>(The production deploy role)</bdi> بالرموز <bdi>(tokens)</bdi> التي يكون موضوعها <bdi>(whose subject)</bdi> هو <code>repo:najm-bank/mobile-api:environment:production</code>. ما الذي يجب ضبطه أيضًا كي لا يستطيع فرع ميزة <bdi>(a feature branch)</bdi> استخدام ذلك الدور؟</strong></p>
 <ul>
 <li>A. لا شيء، لأن الموضوع يسمّي الفرع <code>main</code> ضمنيًا <bdi>(implicitly)</bdi></li>
-<li>B. قيّد البيئة <code>production</code> كي لا يستطيع النشر إليها إلا <code>main</code></li>
+<li>B. قيّد البيئة <code>production</code> كي لا يستطيع النشر إليها <bdi>(deploy to it)</bdi> إلا <code>main</code></li>
 <li>C. أضف مفتاح وصول طويل العمر <bdi>(a long-lived access key)</bdi> بوصفه بيانات اعتماد احتياطية في أسرار المستودع <bdi>(repository secrets)</bdi></li>
 <li>D. وسّع صلاحيات الدور <bdi>(Broaden the role&#39;s permissions)</bdi> كي يحصل فرع الميزة على نطاقه الخاص</li>
 </ul>
@@ -10082,7 +10082,7 @@ Strong answer, out loud, in order:
 
 <p><strong>45. أثناء التخفيف من بطء في المدفوعات <bdi>(mitigating a Payments slowdown)</bdi>، يرى الفريق عنوان IP مجهولًا <bdi>(an unknown IP address)</bdi> ينزّل كميات كبيرة من البيانات من حاوية تخزين <bdi>(a storage bucket)</bdi>. ما الذي يتغيّر في الاستجابة <bdi>(the response)</bdi>؟</strong></p>
 <ul>
-<li>A. استدعِ مركز العمليات الأمنية <bdi>(SOC)</bdi> التابع لجاسم، واحفظ الأدلة <bdi>(preserve evidence)</bdi> وتجنّب تنبيه المهاجم</li>
+<li>A. استدعِ مركز العمليات الأمنية <bdi>(SOC)</bdi> التابع لجاسم، واحفظ الأدلة <bdi>(preserve evidence)</bdi> وتجنّب تنبيه المهاجم بأي إجراء ظاهر</li>
 <li>B. احذف الحاوية فورًا كي لا يستطيع المهاجم تنزيل مزيد من البيانات</li>
 <li>C. انشر عنوان IP الخاص بالمهاجم في التحديث التالي لصفحة حالة العملاء <bdi>(customer status page)</bdi></li>
 <li>D. واصل التعامل معها كحادثة موثوقية عادية <bdi>(a normal reliability incident)</bdi> واذكرها في مراجعة ما بعد الحادثة</li>
@@ -10095,9 +10095,9 @@ Strong answer, out loud, in order:
 <p><strong>46. يستدعي نجم أسيست <bdi>(Najm Assist)</bdi> نموذج مزوّد عبر اسم مستعار <bdi>(an alias)</bdi> ينقله المزوّد بصمت إلى إصدار نموذج أحدث <bdi>(a newer model version)</bdi>. لماذا يعدّ سالم هذا مشكلة؟</strong></p>
 <ul>
 <li>A. النماذج الأحدث تكلّف دائمًا أكثر لكل رمز <bdi>(per token)</bdi> من الإصدارات التي تحلّ محلها</li>
-<li>B. إنه إطلاق غير مُراجَع <bdi>(an unreviewed release)</bdi>؛ ثبّت إصدارات النماذج <bdi>(pin model versions)</bdi> وأطلق أي تغيير بأسلوب الكناري <bdi>(canary any change)</bdi></li>
-<li>C. لا تستطيع البوابة التوجيه إلى الأسماء المستعارة، لذا يفشل الآن كل طلب</li>
-<li>D. تتجاوز الأسماء المستعارة الميزانيات لكل فريق <bdi>(per-team budgets)</bdi>، فيتوقف تتبّع التكلفة</li>
+<li>B. إنه إطلاق غير مُراجَع <bdi>(an unreviewed release)</bdi>؛ ثبّت إصدارات النماذج وأطلق التغيير بأسلوب الكناري</li>
+<li>C. لا تستطيع البوابة <bdi>(gateway)</bdi> التوجيه إلى الأسماء المستعارة <bdi>(aliases)</bdi>، لذا يفشل الآن كل طلب يصل إليها</li>
+<li>D. تتجاوز الأسماء المستعارة الميزانيات لكل فريق <bdi>(per-team budgets)</bdi>، فيتوقف تتبّع التكلفة <bdi>(cost tracking)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -10106,10 +10106,10 @@ Strong answer, out loud, in order:
 
 <p><strong>47. يجد يوسف المفتاح الخاص لـTLS <bdi>(the TLS private key)</bdi> الخاص بـMobile API على جهاز افتراضي بصلاحيات <code>-rw-r--r--</code> <bdi>(644)</bdi>. ماذا ينبغي أن تكون، ولماذا؟</strong></p>
 <ul>
-<li>A. 777، كي تستطيع الخدمة قراءته دائمًا، أيًّا كان المستخدم الذي تعمل به</li>
+<li>A. 777، كي تستطيع الخدمة <bdi>(the service)</bdi> قراءته دائمًا، أيًّا كان المستخدم الذي تعمل به <bdi>(whichever user)</bdi></li>
 <li>B. 644 لا بأس بها، لأن الجذر <bdi>(root)</bdi> وحده يستطيع تسجيل الدخول إلى الجهاز الافتراضي على أي حال</li>
 <li>C. 755، كي تستطيع الخدمة أيضًا تنفيذ الملف <bdi>(execute the file)</bdi> عند الحاجة</li>
-<li>D. 600: وصول للمالك فقط <bdi>(owner-only access)</bdi>، لأن 644 تتيح لكل مستخدم محلي <bdi>(every local user)</bdi> قراءته</li>
+<li>D. 600: وصول للمالك فقط <bdi>(owner-only access)</bdi>، لأن 644 تتيح لكل مستخدم محلي قراءته</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -10120,7 +10120,7 @@ Strong answer, out loud, in order:
 <ul>
 <li>A. مسبار حيوية فاشل <bdi>(A failing liveness probe)</bdi>، أو حاوية تتجاوز حد ذاكرتها</li>
 <li>B. عدم تطابق محدِّد الخدمة <bdi>(A Service selector mismatch)</bdi>، أو غياب قاعدة توزيع الطوبولوجيا <bdi>(topology spread rule)</bdi></li>
-<li>C. ملخّص صورة خاطئ أو مفقود <bdi>(A wrong or missing image digest)</bdi>، أو غياب صلاحية السحب من السجل <bdi>(registry pull permission)</bdi></li>
+<li>C. ملخّص صورة خاطئ أو مفقود <bdi>(A wrong or missing image digest)</bdi>، أو غياب صلاحية السحب من السجل</li>
 <li>D. موسّع HPA عند حده الأقصى، أو ميزانية تعطيل حجيرات <bdi>(PodDisruptionBudget)</bdi> تحجب الطرح</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -10132,7 +10132,7 @@ Strong answer, out loud, in order:
 <ul>
 <li>A. احذف الحاوية <bdi>(Delete the bucket)</bdi> ودع OpenTofu يُنشئ واحدة جديدة بالاسم نفسه <bdi>(with the same name)</bdi></li>
 <li>B. شغّل <code>state rm</code>، ثم عدّل ملف الحالة يدويًا لإضافة معرّف الحاوية <bdi>(the bucket&#39;s ID)</bdi></li>
-<li>C. كتلة <code>import</code> للحاوية، تُراجَع في الخطة <bdi>(reviewed in the plan)</bdi> كسائر التغييرات</li>
+<li>C. كتلة <code>import</code> للحاوية <bdi>(an import block)</bdi>، تُراجَع في الخطة <bdi>(reviewed in the plan)</bdi> كسائر التغييرات</li>
 <li>D. اتركها غير مُدارة، لأن الحاويات المبنية يدويًا لا يمكن أبدًا إخضاعها للبنية التحتية بوصفها شيفرة <bdi>(IaC)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -10145,7 +10145,7 @@ Strong answer, out loud, in order:
 <li>A. التشغيلات على <code>main</code> مجانية على المشغّلات المستضافة <bdi>(hosted runners)</bdi>، فلن يوفّر إلغاؤها شيئًا</li>
 <li>B. لا تسمح GitHub Actions بإلغاء تشغيل سير عمل أطلقه دفع <bdi>(triggered by a push)</bdi></li>
 <li>C. إلغاء تشغيلات <code>main</code> سيجعل خط التسليم أبطأ لطلبات السحب إجمالًا <bdi>(overall)</bdi></li>
-<li>D. يجب أن يبني كل إيداع على <code>main</code> أثره البرمجي الخاص ويسجّله <bdi>(build and record its own artefact)</bdi> لأجل الترقيات <bdi>(promotions)</bdi></li>
+<li>D. يجب أن يبني كل إيداع على <code>main</code> أثره البرمجي الخاص ويسجّله لأجل الترقيات <bdi>(promotions)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -10155,7 +10155,7 @@ Strong answer, out loud, in order:
 <p><strong>51. يضيف مطوّر سطر السجل <bdi>(the log line)</bdi> <code>Transfer failed for Ahmed Al-Kuwari acct 1234567890 after timeout</code>. ماذا ينبغي أن يطلب المراجع <bdi>(the reviewer)</bdi>؟</strong></p>
 <ul>
 <li>A. أبقِه، لكن اخفضه إلى مستوى <code>debug</code> كي لا يظهر إلا في بيئة التطوير <bdi>(in development)</bdi></li>
-<li>B. حقولًا منظّمة للحدث والسبب ومعرّف التتبّع <bdi>(Structured fields for event, reason and trace ID)</bdi>؛ بلا اسم ولا رقم حساب</li>
+<li>B. حقولًا منظّمة للحدث والسبب ومعرّف التتبّع <bdi>(Structured fields)</bdi>؛ بلا اسم ولا رقم حساب</li>
 <li>C. أبقِ النص، لكن شفّر ملف السجل كاملًا على القرص <bdi>(encrypt the whole log file on disk)</bdi> في نهاية كل يوم</li>
 <li>D. أزل السطر، لأن التحويلات الفاشلة <bdi>(failed transfers)</bdi> ينبغي ألا تُسجَّل في أي مكان أبدًا</li>
 </ul>
@@ -10166,7 +10166,7 @@ Strong answer, out loud, in order:
 
 <p><strong>52. لخدمة داخلية، يوقّع قطاع الأعمال على RTO قدره ساعة تقريبًا وRPO قدره بضع دقائق، ويريد أدنى تكلفة تحققهما <bdi>(the lowest cost that meets them)</bdi>. أي استراتيجية للتعافي من الكوارث <bdi>(DR strategy)</bdi> تناسب أكثر؟</strong></p>
 <ul>
-<li>A. الشعلة التجريبية <bdi>(Pilot light)</bdi>: بيانات تُنسخ باستمرار <bdi>(data replicated continuously)</bdi>، وحد أدنى من البنية التحتية جاهز</li>
+<li>A. الشعلة التجريبية <bdi>(Pilot light)</bdi>: بيانات تُنسخ باستمرار، وحد أدنى من البنية التحتية جاهز</li>
 <li>B. نشط-نشط متعدد المواقع <bdi>(Multi-site active-active)</bdi>، بسعة كاملة تخدم في المنطقتين</li>
 <li>C. النسخ الاحتياطي والاستعادة فقط <bdi>(Backup and restore only)</bdi>، مع نسخ ليلية تُرسل إلى منطقة التعافي <bdi>(the recovery region)</bdi></li>
 <li>D. لا تعافي من الكوارث على الإطلاق، لأن تعدّد مناطق التوافر <bdi>(multi-AZ)</bdi> يحمي بالفعل من فقدان منطقة</li>
@@ -10192,7 +10192,7 @@ Strong answer, out loud, in order:
 <ul>
 <li>A. <code>ignore_changes</code> على تلك السمة وحدها <bdi>(that one attribute only)</bdi>، مع تعليق يشرح السبب</li>
 <li>B. طبّق الشيفرة كل ليلة <bdi>(Apply the code every night)</bdi> كي تعود المجموعة إلى القيمة المكتوبة في Git <bdi>(the value written in Git)</bdi></li>
-<li>C. أطفئ مهمة الانحراف لملف الحالة كله، لأنها لا تنتج إلا ضجيجًا <bdi>(only produces noise)</bdi></li>
+<li>C. أطفئ مهمة الانحراف <bdi>(the drift job)</bdi> لملف الحالة كله، لأنها لا تنتج إلا ضجيجًا <bdi>(only produces noise)</bdi></li>
 <li>D. عطّل الموسّع التلقائي <bdi>(Disable the autoscaler)</bdi> كي لا تختلف السعة أبدًا عن الشيفرة <bdi>(never differs from the code)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -10214,7 +10214,7 @@ Strong answer, out loud, in order:
 
 <p><strong>56. يكتشف فحص <bdi>(A check)</bdi> أن شهادة محوّل الأنظمة المصرفية الأساسية <bdi>(the core banking adapter&#39;s certificate)</bdi> تنتهي صلاحيتها بعد 14 يومًا. كيف ينبغي أن يُبلَّغ الناس بذلك؟</strong></p>
 <ul>
-<li>A. استدعِ مهندس المناوبة <bdi>(Page the on-call engineer)</bdi> فورًا، في أي ساعة، حتى تُجدَّد</li>
+<li>A. استدعِ مهندس المناوبة <bdi>(Page the on-call engineer)</bdi> فورًا، في أي ساعة، حتى تُجدَّد <bdi>(until renewed)</bdi></li>
 <li>B. لا ترسل شيئًا؛ التجديد مؤتمت <bdi>(renewal is automated)</bdi>، لذا تنبيهات انتهاء الصلاحية مجرد ضجيج</li>
 <li>C. اعرضها على لوحة متابعة فقط <bdi>(on a dashboard only)</bdi>، دون إشعار أحد</li>
 <li>D. افتح تذكرة <bdi>(Open a ticket)</bdi> للفريق المالك كي يجدّدها خلال أيام العمل <bdi>(within working days)</bdi></li>
@@ -10229,7 +10229,7 @@ Strong answer, out loud, in order:
 <li>A. جدول بيانات شهري <bdi>(A monthly spreadsheet)</bdi> من الإدارة المالية يُظهر إنفاق كل فريق بعد وقوعه <bdi>(after the fact)</bdi></li>
 <li>B. قاعدة تشترط أن يحصل كل طلب سحب للبنية التحتية على موافقة <bdi>(a sign-off)</bdi> من منى</li>
 <li>C. مراجعة ربع سنوية لفاتورة السحابة <bdi>(A quarterly review of the cloud bill)</bdi> بحضور كل قادة الفرق ومدير تقنية المعلومات <bdi>(the CIO)</bdi></li>
-<li>D. تقدير تكلفة للخطة <bdi>(A cost estimate of the plan)</bdi> على طلب السحب، مع عتبة لمراجعة ثانية <bdi>(a threshold for a second review)</bdi></li>
+<li>D. تقدير تكلفة للخطة <bdi>(A cost estimate of the plan)</bdi> على طلب السحب، مع عتبة لمراجعة ثانية</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -10239,7 +10239,7 @@ Strong answer, out loud, in order:
 <p><strong>58. يستخدم خط تسليم البنية التحتية <bdi>(infrastructure pipeline)</bdi> في نجم دورًا سحابيًا قويًا واحدًا <bdi>(one powerful cloud role)</bdi> لكلٍّ من <code>tofu plan</code> على كل طلب سحب و<code>tofu apply</code> بعد الدمج. بماذا يوصي خط الأساس لخطوط التسليم <bdi>(the pipeline baseline)</bdi>؟</strong></p>
 <ul>
 <li>A. أبقِ دورًا واحدًا، لكن دوّر بيانات اعتماده كل أسبوع للحد من التعرّض <bdi>(to limit exposure)</bdi></li>
-<li>B. أدوار منفصلة <bdi>(Separate roles)</bdi>: للقراءة فقط للخطة <bdi>(read-only for plan)</bdi>، وللكتابة للتطبيق بعد الموافقة فقط <bdi>(write for apply only after approval)</bdi></li>
+<li>B. أدوار منفصلة <bdi>(Separate roles)</bdi>: للقراءة فقط للخطة، وللكتابة للتطبيق بعد الموافقة فقط</li>
 <li>C. امنح مهمة الخطة <bdi>(the plan job)</bdi> صلاحية كتابة أيضًا، كي تستطيع الخطط تحديث كل مورد</li>
 <li>D. شغّل المهمتين من حاسوب مهندس المحمول <bdi>(an engineer&#39;s laptop)</bdi>، حيث الدور محمي أفضل <bdi>(better protected)</bdi></li>
 </ul>
@@ -10264,7 +10264,7 @@ Strong answer, out loud, in order:
 <ul>
 <li>A. أرسل الاثنتين إلى واجهة API المُدارة <bdi>(the managed API)</bdi> ذات الجودة الأفضل، ولا تحجب شيئًا <bdi>(mask nothing)</bdi></li>
 <li>B. دع كل فريق تطبيق يختار نموذجه الخاص ويستدعيه بمفتاحه الخاص <bdi>(with its own key)</bdi></li>
-<li>C. وجّه حسب فئة البيانات <bdi>(Route by data class)</bdi>: البيانات السرية إلى النموذج المستضاف ذاتيًا داخل المنطقة <bdi>(the in-region self-hosted model)</bdi></li>
+<li>C. وجّه حسب فئة البيانات <bdi>(Route by data class)</bdi>: البيانات السرية إلى النموذج المستضاف ذاتيًا داخل المنطقة</li>
 <li>D. أرسل الاثنتين إلى النموذج المستضاف ذاتيًا، وأطفئ واجهة API المُدارة كليًا</li>
 </ul>
 <details><summary>الإجابة</summary>

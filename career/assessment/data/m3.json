@@ -40,15 +40,15 @@
       "o": {
         "en": [
           "Commit his own .env file so the app has every value it needs",
-          "Add a longer section listing every library and its version",
+          "Add a section listing every library and version",
           "Send the classmate his keys privately and count it as a pass",
           "Add .env.example and test the steps on a clean machine"
         ],
         "ar": [
-          "أن يودِع (commit) ملف .env الخاص به حتى يجد التطبيق كل القيم التي يحتاجها",
-          "أن يضيف قسمًا أطول يسرد كل مكتبة (library) وإصدارها (version)",
-          "أن يرسل مفاتيحه (keys) إلى زميله سرًّا ويعدّ الاختبار ناجحًا (pass)",
-          "أن يضيف ملف .env.example ويختبر خطوات التشغيل (run steps) على جهاز نظيف (clean machine)"
+          "أن يودِع (commit) ملف .env الخاص به (his own .env file) حتى يجد التطبيق كل القيم (values) التي يحتاجها",
+          "أن يضيف قسمًا يسرد كل مكتبة (library) وإصدارها (version)، مهما طال",
+          "أن يرسل مفاتيحه (keys) إلى زميله سرًّا (privately) ويعدّ الاختبار ناجحًا (pass)",
+          "أن يضيف ملف .env.example ويختبر خطوات التشغيل على جهاز نظيف (clean machine)"
         ]
       },
       "a": 3,
@@ -73,7 +73,7 @@
           "Several weekend hackathons, collecting a certificate from each"
         ],
         "ar": [
-          "مشروع تطوعي (volunteer project) لجمعية خيرية (charity)، بنطاق مكتوب (written scope) وتسليم (handover)",
+          "مشروع تطوعي (volunteer project) لجمعية خيرية، بنطاق مكتوب وتسليم واضحين للطرفين",
           "مزيد من طلبات الدمج (pull requests) في مكتبات (libraries) يستخدمها أصلًا",
           "مسابقة على Kaggle ليُظهر قدرته على النمذجة (modelling) وفق مقياس واضح (clear metric)",
           "عدة هاكاثونات (hackathons) في عطلات نهاية الأسبوع، يجمع من كل منها شهادة (certificate)"

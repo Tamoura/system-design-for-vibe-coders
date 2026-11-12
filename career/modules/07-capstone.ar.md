@@ -333,7 +333,7 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 - A. كلاهما مهارة أساسية (baseline skills)، لأن كلًّا منهما يظهر في أكثر من ثلاثة من الإعلانات العشرة
 - B. Git مهارة أساسية (baseline skill) وDocker عامل تمييز (differentiator)، لذا يُثبت Git أولًا ثم Docker
 - C. كلاهما عامل تمييز (differentiators)، لأن أيًّا منهما لا يظهر في كل إعلان جمعه
-- D. Docker هو الأساس الحقيقي (the real baseline)، لأن الأدوات الأحدث تهم أصحاب العمل دائمًا أكثر من القديمة
+- D. Docker هو الأساس الحقيقي (the real baseline)، لأن الأدوات الأحدث تهم أصحاب العمل أكثر من القديمة
 
 <details><summary>الإجابة</summary>
 
@@ -356,10 +356,10 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 **3. تبدأ عائشة مقابلة الفرز مع مسؤول التوظيف (recruiter screen) لعمر بعبارة "حدثني عن نفسك" ⁦("Tell me about yourself.")⁩. أي إجابة تناسب شكل الدقيقة الواحدة الذي يقدمه الدرس (the lesson's 60-second shape) أكثر؟**
 
-- A. خرّيج (Graduate)؛ بنى ونشر واجهة برمجية للحجز (booking API) مع اختبارات (tests)؛ يريد عملًا في الواجهة الخلفية (backend work)؛ تجذبه دورات نجم التدريبية (Najm's rotations)
+- A. خرّيج (Graduate)؛ بنى ونشر واجهة برمجية للحجز (booking API) مع اختبارات؛ يريد عملًا في الواجهة الخلفية؛ تجذبه دورات نجم التدريبية (Najm's rotations)
 - B. استعراض لشهادته الجامعية (degree) مدته خمس دقائق، سنة بسنة، ينتهي بدرجات سنته الأخيرة (final-year grades) وسجله في المسابقات (contest record)
 - C. قائمة بالتقنيات الإحدى عشرة (eleven technologies) في سيرته الذاتية، كي تطابقه مع الإعلان (the advert) بسرعة
-- D. "كل شيء موجود في سيرتي الذاتية. هل هناك شيء محدد فيها تودّين أن أشرحه أكثر؟"
+- D. "كل شيء موجود في سيرتي الذاتية (my CV). هل هناك شيء محدد فيها تودّين أن أشرحه أكثر؟"
 
 <details><summary>الإجابة</summary>
 
@@ -369,9 +369,9 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 **4. كان مولّد التقارير (report generator) لدى محمد يعمل الأسبوع الماضي ويفشل اليوم. بينهما 30 إيداعًا صغيرًا (small commits)، واختبار واحد يعيد إنتاج الفشل (reproduces the failure). ما أسرع طريقة موثوقة (fastest reliable way) لإيجاد السبب؟**
 
-- A. قراءة كل فرق (diff) منذ الأسبوع الماضي من البداية، بالترتيب، حتى يبدو شيء مريبًا
-- B. التراجع عن (revert) الإيداعات الثلاثين كلها، ثم إعادة تطبيقها واحدًا تلو الآخر يدويًا وإعادة تشغيل التطبيق في كل مرة
-- C. تشغيل `git bisect` على الإيداعات الثلاثين، باستخدام الاختبار الفاشل (the failing test) لتعليم كل إيداع بأنه سليم أو معيب (good or bad)
+- A. قراءة كل فرق (diff) منذ الأسبوع الماضي من البداية (from the top)، بالترتيب، حتى يبدو شيء مريبًا (suspicious)
+- B. التراجع عن (revert) الإيداعات الثلاثين (30 commits) كلها، ثم إعادة تطبيقها واحدًا تلو الآخر يدويًا وإعادة تشغيل التطبيق في كل مرة
+- C. تشغيل `git bisect` على الإيداعات الثلاثين، باستخدام الاختبار الفاشل لتعليم كل إيداع بأنه سليم أو معيب (good or bad)
 - D. إعادة كتابة المولّد من الصفر (from scratch)، لأن تتبع السبب عبر السجل (history) سيستغرق وقتًا طويلًا
 
 <details><summary>الإجابة</summary>
@@ -382,10 +382,10 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 **5. لدى ريم تسعة مستودعات مثبّتة (pinned repositories): ستة واجبات دراسية (course assignments)، ودرسان تعليميان قديمان (old tutorials)، ومشروعها الختامي (capstone) في المرتبة السادسة من القائمة. سيقضي المراجع (a reviewer) نحو دقيقة على ملفها الشخصي (profile). ما الذي ينبغي أن تغيّره أولًا؟**
 
-- A. إضافة مزيد من المستودعات، كي يبدو ملفها الشخصي نشطًا وواسعًا (active and broad) قدر الإمكان للمراجعين
-- B. ملء مخطط المساهمات (contribution graph) بإيداعات صغيرة، كي يبدو الملف مشغولًا كل يوم
+- A. إضافة مزيد من المستودعات (more repositories)، كي يبدو ملفها الشخصي نشطًا وواسعًا قدر الإمكان للمراجعين الذين يتصفحونه
+- B. ملء مخطط المساهمات (contribution graph) بإيداعات صغيرة، كي يبدو الملف مشغولًا كل يوم أمام المراجعين
 - C. تثبيت أربعة إلى ستة مستودعات (pin four to six repositories)، المشروع الختامي أولًا، وإلغاء تثبيت الواجبات والدروس القديمة
-- D. جعل كل مستودع خاصًا (private) عدا المشروع الختامي، وحذف ملفات README من البقية
+- D. جعل كل مستودع خاصًا (private) عدا المشروع الختامي، وحذف ملفات README من البقية كلها
 
 <details><summary>الإجابة</summary>
 
@@ -395,9 +395,9 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 **6. في أسبوعه الأول في نجم، لا يعرف يوسف كم ينبغي أن يحاول وحده (try alone) قبل طلب المساعدة (asking for help). لم يخبره أحد. ماذا ينبغي أن يفعل؟**
 
-- A. أن يسأل سالم في أول اجتماع ثنائي (first 1:1) بينهما عن المدة التي يحاول فيها وحده قبل السؤال، لأن الفرق تختلف (teams differ)
+- A. أن يسأل سالم في أول اجتماع ثنائي (first 1:1) عن المدة التي يحاول فيها وحده قبل السؤال، لأن الفرق تختلف
 - B. ألا يسأل أبدًا خلال فترة التجربة (probation)، كي يبدو مستقلًا وكفؤًا (independent and capable) أمام الفريق
-- C. أن يسأل فورًا كلما فشل أي شيء، لأن كل دقيقة عالقًا (stuck) فيها وقت مهدر
+- C. أن يسأل فورًا (immediately) كلما فشل أي شيء، لأن كل دقيقة يقضيها عالقًا وقت مهدر
 - D. أن يراسل أكبر المهندسين خبرة (the most senior engineer) على انفراد في كل مرة، لأن كبار المهندسين يجيبون أسرع
 
 <details><summary>الإجابة</summary>
@@ -411,7 +411,7 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 - A. تدريب نموذج لغوي صغير خاص بها من الصفر (train her own small language model from scratch) على بيانات عامة، لإظهار معرفة عميقة بالنماذج
 - B. بناء منصة متعددة الوكلاء (multi-agent platform) بعشرة وكلاء متعاونين، لإظهار قدرتها على العمل بمستوى كبار المهندسين (senior level)
 - C. جمع شهادات (certificates) من خمسة أطر ذكاء اصطناعي (AI frameworks)، كي تطابق سيرتها الذاتية أكبر عدد ممكن من الإعلانات
-- D. ميزة RAG واحدة تستطيع شرحها (one RAG feature she can explain)، مع مجموعة مرجعية من 30 حالة (30-case golden set)، واختبارات حقن (injection tests)، وتكلفة لكل طلب (per-request cost)
+- D. ميزة RAG واحدة تستطيع شرحها، مع مجموعة مرجعية من 30 حالة (30-case golden set)، واختبارات حقن (injection tests)، وتكلفة لكل طلب
 
 <details><summary>الإجابة</summary>
 
@@ -421,10 +421,10 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 **8. يحتفظ يوسف بسيرة ذاتية أساسية واحدة (one base CV) لأدوار المنصات (platform roles). إعلان جديد لوظيفة منصات للخريجين يشدد على البنية التحتية كشيفرة (infrastructure as code) والمراقبة (monitoring). كيف ينبغي أن يكيّف سيرته الذاتية (tailor his CV) له؟**
 
-- A. إعادة بناء السيرة الذاتية كلها من الصفر حول هذا الإعلان، وإعادة كتابة كل قسم بكلمات صاحب العمل نفسها
-- B. قضاء نحو 15 دقيقة: عنوان رئيسي جديد (new headline)، ومشروع Terraform أولًا، واستبدال بندين أو ثلاثة (two or three bullets swapped) لتطابق الإعلان
-- C. إرسال السيرة الأساسية دون تغيير، لأن الوقت المصروف على التكييف أنفع لإرسال طلبات أكثر ذلك الأسبوع
-- D. إضافة كل أداة يذكرها الإعلان إلى سطر المهارات (skills line)، بما فيها أداتان لم يستخدمهما قط، كي يطابقه المحلّل الآلي (the parser)
+- A. إعادة بناء السيرة الذاتية كلها من الصفر (from scratch) حول هذا الإعلان، وإعادة كتابة كل قسم (every section) بكلمات صاحب العمل نفسها
+- B. قضاء نحو 15 دقيقة: عنوان رئيسي جديد (new headline)، ومشروع Terraform أولًا، واستبدال بندين أو ثلاثة لتطابق الإعلان
+- C. إرسال السيرة الأساسية (base CV) دون تغيير، لأن الوقت المصروف على التكييف (tailoring) أنفع لإرسال طلبات أكثر ذلك الأسبوع
+- D. إضافة كل أداة يذكرها الإعلان إلى سطر المهارات، بما فيها أداتان لم يستخدمهما قط، كي يطابقه المحلّل الآلي (the parser)
 
 <details><summary>الإجابة</summary>
 
@@ -434,9 +434,9 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 **9. في استعراض لمشروع (project walk-through)، يسأل طارق محمدًا: "ماذا ستفعل لو كان لتطبيقك مستخدمون أكثر بألف مرة؟" ⁦("What would you do if your app had a thousand times more users?")⁩ أي إجابة تُظهر التفكير بمنطق بيئة الإنتاج (production thinking) على مستوى المبتدئ؟**
 
-- A. قياس أين يذهب الوقت (measure where the time goes)، والأرجح أنه في الاستعلامات (queries)؛ وتجربة الفهارس (indexes) أو التخزين المؤقت (caching) قبل إضافة خوادم (adding servers)
-- B. نقل التطبيق كله إلى Kubernetes وتقسيمه إلى خدمات مصغّرة (microservices) قبل قياس أي شيء على الإطلاق
-- C. شراء أكبر خادم قاعدة بيانات (database server) يبيعه مزوّده، كي لا يكون الحِمل (load) مشكلة أبدًا
+- A. قياس أين يذهب الوقت، والأرجح أنه في الاستعلامات (queries)؛ وتجربة الفهارس (indexes) أو التخزين المؤقت (caching) قبل إضافة خوادم
+- B. نقل التطبيق كله إلى Kubernetes وتقسيمه إلى خدمات مصغّرة (microservices) قبل قياس أي شيء على الإطلاق، لأنها أحدث طريقة للتوسع (scaling)
+- C. شراء أكبر خادم قاعدة بيانات (database server) يبيعه مزوّده، كي لا يكون الحِمل (load) مشكلة أبدًا في المستقبل
 - D. إعادة كتابة التطبيق بلغة برمجة أسرع (faster programming language)، لأن سرعة اللغة هي التي تحدد قابلية التوسع (scale)
 
 <details><summary>الإجابة</summary>
@@ -447,10 +447,10 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 **10. بعد عشرين دقيقة من جولة البرمجة الحية (live-coding round)، تعلق هدى في كيفية التعامل مع ثلاث معاملات متكررة (repeated transactions) داخل نافذة زمنية واحدة (one time window). ماذا ينبغي أن تفعل؟**
 
-- A. أن تصمت وتواصل الكتابة (go quiet and keep typing)، كي لا يلاحظ المحاوِر (the interviewer) أنها عالقة
-- B. أن تحذف شيفرتها وتبدأ نهجًا مختلفًا أذكى (a different, cleverer approach) دون أن تقول لماذا
-- C. أن تخبر المحاوِر بأن المسألة غير عادلة (unfair) وتطلب الانتقال إلى سؤال آخر
-- D. أن تقول ما تفكر فيه (say what she is thinking)، وتجرّب مثالًا صغيرًا يدويًا (a small example by hand)، وتتقبل أي تلميح (hint) بشكل حسن
+- A. أن تصمت وتواصل الكتابة (go quiet and keep typing)، كي لا يلاحظ المحاوِر أنها عالقة (stuck) تمامًا في هذه المسألة
+- B. أن تحذف شيفرتها وتبدأ نهجًا مختلفًا أذكى (a different, cleverer approach) دون أن تقول لماذا تفعل ذلك
+- C. أن تخبر المحاوِر (the interviewer) بأن المسألة غير عادلة (unfair) وتطلب الانتقال إلى سؤال آخر فورًا
+- D. أن تقول ما تفكر فيه، وتجرّب مثالًا صغيرًا يدويًا (a small example by hand)، وتتقبل أي تلميح (hint)
 
 <details><summary>الإجابة</summary>
 
@@ -461,8 +461,8 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 **11. يُظهر متتبّع هدى (Huda's tracker) أربع جولات تقنية (technical rounds) في شهر، كلها تمارين SQL حية (live SQL exercises)، ولا دعوات إلى جولات نهائية (final-round invitations). وفقًا لجدول القمع (the funnel table)، ما الذي ينبغي أن تغيّره أولًا؟**
 
 - A. إعادة كتابة سيرتها الذاتية وقائمة الجهات المستهدفة (target list)، لأن المراحل المبكرة من بحثها (early stages of her search) تفشل
-- B. التدرّب على مقابلات SQL حية تجريبية مؤقّتة (timed live SQL mocks) بالصيغة نفسها تمامًا، ثم العودة إلى قائمة الفجوات (gap list)
-- C. إعادة التوجه نحو هندسة البرمجيات (retarget to software engineering)، حيث تظن أن المقابلات أسهل
+- B. التدرّب على مقابلات SQL حية مؤقّتة (timed live SQL mocks) بالصيغة نفسها، ثم العودة إلى قائمة الفجوات
+- C. إعادة التوجه نحو هندسة البرمجيات (retarget to software engineering)، حيث تظن أن المقابلات ستكون أسهل عليها
 - D. التوقف عن التقديم لمدة شهر وإنهاء مشروعين جديدين لمعرض الأعمال (portfolio projects) قبل المحاولة مجددًا
 
 <details><summary>الإجابة</summary>
@@ -475,7 +475,7 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 - A. نسخة مقلّدة من موقع بث موسيقي (music-streaming site clone) أعاد بناءها من دورة فيديو (video course)، بنظام ألوان خاص به
 - B. لوحة معلومات للطقس (weather dashboard) على واجهة برمجية عامة (public API)، بأيقونات متحركة وعرض توقعات لخمسة أيام
-- C. حجز الملاعب (pitch booking) لناديه القديم لكرة القدم، حيث قد يحجز قائدان آخر موعد متاح (the last slot) في الوقت نفسه
+- C. حجز الملاعب (pitch booking) لناديه القديم لكرة القدم، حيث قد يحجز قائدان آخر موعد متاح في الوقت نفسه
 - D. تطبيق قائمة مهام (to-do list app) بالسحب والإفلات (drag and drop)، وست سمات ألوان (colour themes)، وتصميم مصقول للهاتف (mobile layout)
 
 <details><summary>الإجابة</summary>
@@ -486,10 +486,10 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 **13. بعد ثلاثة أسابيع من لقاء مهني (meetup)، ردّ مهندس من سديم باي (Sadeem Pay) بحرارة على تحديث ريم الذي يضم رابطًا إلى نتائج تقييمها (evaluation results). والآن تعلن سديم باي عن وظيفة للمبتدئين (junior role). ما أفضل طلب إحالة (referral request)؟**
 
-- A. أن تطلب منه إخبار مدير التوظيف (hiring manager) بأنهما صديقان قديمان، كي يؤخذ طلبها بجدية أكبر
-- B. أن ترسل سيرتها الذاتية دون رسالة، واثقة بأنه سيفهم ما تريده أن يفعل بها
-- C. أن تطلب منه أن يؤكد للفريق أنها قوية في الواجهة الخلفية (backend work)، وهو ما لم يره
-- D. أن ترسل رابط الوظيفة وسيرتها الذاتية وملخصًا من سطرين لإعادة توجيهه (a two-line summary to forward)، وطريقة سهلة للرفض (an easy way to say no)
+- A. أن تطلب منه إخبار مدير التوظيف (hiring manager) بأنهما صديقان قديمان، كي يؤخذ طلبها بجدية أكبر من غيرها
+- B. أن ترسل سيرتها الذاتية (CV) دون رسالة، واثقة بأنه سيفهم ما تريده أن يفعل بها من تلقاء نفسه
+- C. أن تطلب منه أن يؤكد للفريق أنها قوية في الواجهة الخلفية (backend work)، وهو ما لم يره بنفسه
+- D. أن ترسل رابط الوظيفة وسيرتها الذاتية وملخصًا من سطرين لإعادة توجيهه (two-line summary)، وطريقة سهلة للرفض
 
 <details><summary>الإجابة</summary>
 
@@ -499,9 +499,9 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 **14. العرض المكتوب (written offer) من نجم لعمر مشروط بتصديق الشهادة (degree attestation) والتحقق من الخلفية (background check). ولديه أيضًا جولة نهائية (final round) لدى شركة اتصالات الأسبوع المقبل. ماذا ينبغي أن يفعل الآن؟**
 
-- A. أن يُبقي عملية شركة الاتصالات مفتوحة، وألا يستقيل أو يرفض حتى تُستوفى الشروط (the conditions clear)
-- B. أن يلغي الجولة النهائية (final round) لدى شركة الاتصالات اليوم، لأن العرض المكتوب (written offer) يعني أن الوظيفة صارت مؤكدة (the job is now certain)
-- C. أن يستقيل فورًا من وظيفته بدوام جزئي (part-time job)، كي يبدأ في نجم متى طلبوا
+- A. أن يُبقي عملية شركة الاتصالات مفتوحة، ولا يستقيل أو يرفض حتى تُستوفى الشروط (conditions)
+- B. أن يلغي الجولة النهائية (final round) لدى شركة الاتصالات اليوم، لأن العرض المكتوب يعني أن الوظيفة صارت مؤكدة
+- C. أن يستقيل فورًا من وظيفته بدوام جزئي (part-time job)، كي يبدأ في نجم متى طلبوا منه ذلك دون تأخير
 - D. أن يخبر شركة الاتصالات بأنه قبل عرضًا في مكان آخر (accepted elsewhere)، توفيرًا لوقت الجميع في هذه الأثناء
 
 <details><summary>الإجابة</summary>
@@ -513,9 +513,9 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 **15. في تمرين SQL (SQL exercise)، تطلب دانة من هدى أحدث معاملة (most recent transaction) لكل عميل. أي نهج صحيح؟**
 
 - A. `GROUP BY customer_id` مع `MAX(amount)`، لأن أكبر مبلغ (the largest amount) هو الأحدث عادةً
-- B. `ROW_NUMBER()` مقسّمًا حسب العميل (partitioned by customer)، ومرتبًا حسب الوقت تنازليًا (ordered by time descending)، مع الإبقاء على الصف 1 لكل عميل
+- B. `ROW_NUMBER()` مقسّمًا حسب العميل (partitioned by customer)، ومرتبًا حسب الوقت تنازليًا، مع الإبقاء على الصف 1 لكل عميل
 - C. `SELECT DISTINCT customer_id` من جدول المعاملات (transactions)، مرتبًا حسب وقت المعاملة تنازليًا
-- D. ترتيب الجدول كله حسب وقت المعاملة تنازليًا، ثم أخذ `LIMIT 1` للإجابة
+- D. ترتيب الجدول كله (the whole table) حسب وقت المعاملة تنازليًا، ثم أخذ `LIMIT 1` للإجابة
 
 <details><summary>الإجابة</summary>
 
@@ -525,10 +525,10 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 **16. في مراجعة الأسبوع السادس (six-week check-in)، يطلب خالد من يوسف أن يعرض ما أنتجه. ملاحظاته ومسوداته (notes and drafts) مبعثرة بين حاسوبه المحمول وهاتفه وبريده الإلكتروني، ولا يستطيع إيجاد معظمها. أي عادة من الدورة (habit from the course) تعالج هذا بأكثر شكل مباشر؟**
 
-- A. كتابة ملخص من الذاكرة (a summary from memory) في الليلة السابقة لكل مراجعة، كي يرى خالد أبرز النقاط (the highlights)
+- A. كتابة ملخص من الذاكرة (a summary from memory) في الليلة السابقة لكل مراجعة، كي يرى خالد أبرز النقاط
 - B. إرسال شهادات الدورات (course certificates) وساعات الدراسة (study hours) إلى خالد دليلًا على الجهد الذي بذله
-- C. ملف مسيرة مهنية واحد (one career folder) يضم كل المُخرجات (every artefact)، كلٌّ منها مسمى باسم الدرس، مثل `0.3-starting-audit`
-- D. حفظ الملاحظات في أي مكان متاح وجمعها في معرض أعمال (portfolio) واحد في نهاية الدورة
+- C. ملف مسيرة مهنية واحد (one career folder) يضم كل المُخرجات، كلٌّ منها مسمى باسم الدرس، مثل `0.3-starting-audit`
+- D. حفظ الملاحظات في أي مكان متاح (wherever is handy) وجمعها في معرض أعمال (portfolio) واحد في نهاية الدورة
 
 <details><summary>الإجابة</summary>
 
@@ -538,10 +538,10 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 **17. في جولة بيانات (data round)، تقول دانة: "انخفضت التسجيلات عبر الهاتف (mobile sign-ups) بنسبة 20% هذا الأسبوع. كيف ستحققين في ذلك؟" ⁦("Mobile sign-ups dropped 20% this week. How would you investigate?")⁩ ماذا ينبغي أن تقول هدى أولًا؟**
 
-- A. التحقق أولًا من أن التتبّع (tracking) ما زال يعمل، ثم التقسيم (segment) حسب المنصة والبلد وإصدار التطبيق (app version)
-- B. بناء نموذج للتنبؤ بالتسجيلات (a model to predict sign-ups) كي يرى الفريق العوامل التي تفسر الانخفاض
+- A. التحقق أولًا من أن التتبّع (tracking) ما زال يعمل، ثم التقسيم حسب المنصة والبلد وإصدار التطبيق (app version)
+- B. بناء نموذج للتنبؤ بالتسجيلات (a model to predict sign-ups) كي يرى الفريق العوامل التي تفسر الانخفاض (the drop)
 - C. إبلاغ المديرين بالانخفاض فورًا على أنه تراجع حقيقي في اهتمام العملاء (customer interest) هذا الأسبوع
-- D. إجراء اختبار A/B (A/B test) لصفحة تسجيل جديدة لاستعادة كل العملاء الذين توقفوا عن التسجيل
+- D. إجراء اختبار A/B (A/B test) لصفحة تسجيل جديدة لاستعادة كل العملاء الذين توقفوا عن التسجيل (sign up)
 
 <details><summary>الإجابة</summary>
 
@@ -552,9 +552,9 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 **18. يطلب محمد من وكيل (an agent) إصلاح خلل تحقق واحد (one validation bug). يُصلح الفرق (the diff) الخلل، و"يرتّب (tidies)" أيضًا خمسة ملفات لا علاقة لها بالأمر. ماذا ينبغي أن يفعل؟**
 
 - A. أن يدمج (merge) كل شيء، لأن الشيفرة الأكثر ترتيبًا أفضل، وملخص الوكيل (the agent's summary) يقول إن الاختبارات تنجح
-- B. أن يطلب من الوكيل ترتيب بقية المستودع (the repository) أيضًا، كي يكون الأسلوب (style) متسقًا
-- C. أن يدمجه، ثم يذكر التغييرات الإضافية في طلب الدمج (pull request) بعد دمجه
-- D. أن يُبقي على الإصلاح المطلوب فقط (the requested fix)، ويرفض التغييرات غير المطلوبة (unasked changes)، ويشغّل الاختبارات بنفسه
+- B. أن يطلب من الوكيل ترتيب بقية المستودع (the repository) أيضًا، كي يكون الأسلوب (style) متسقًا في كل مكان
+- C. أن يدمجه، ثم يذكر التغييرات الإضافية في طلب الدمج (pull request) بعد دمجه، وربما في اليوم التالي
+- D. أن يُبقي على الإصلاح المطلوب فقط، ويرفض التغييرات غير المطلوبة (unasked changes)، ويشغّل الاختبارات بنفسه
 
 <details><summary>الإجابة</summary>
 
@@ -565,8 +565,8 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 **19. تضم قائمة هدى المستهدفة (target list) 35 جهة عمل، وُجدت كلها على لوحة وظائف واحدة (one job board). ما التغيير الأكثر فائدة؟**
 
 - A. إضافة 100 جهة أخرى من اللوحة نفسها (the same board)، لأن القائمة الأكبر تعني فرصًا أكثر (more chances)
-- B. الإبقاء على القائمة وإرسال سيرتها الذاتية العامة (generic CV) إليها كلها هذا الأسبوع، توفيرًا لوقت التكييف (tailoring time)
-- C. المزج بين برامج الخريجين (graduate programmes) وصفحات الوظائف (careers pages) والإحالات (referrals)، بثلاث قنوات على الأقل (at least three channels)
+- B. الإبقاء على القائمة وإرسال سيرتها الذاتية العامة (generic CV) إليها كلها هذا الأسبوع، توفيرًا لوقت التكييف (tailoring time) ولبذل جهد أقل
+- C. المزج بين برامج الخريجين (graduate programmes) وصفحات الوظائف والإحالات (referrals)، بثلاث قنوات على الأقل
 - D. تضييق القائمة إلى العلامات الخمس الأشهر (best-known brands) فقط، لأنها توظف أكبر عدد من الخريجين
 
 <details><summary>الإجابة</summary>
@@ -577,10 +577,10 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 **20. يريد عمر أن يصل إلى المستوى المتوسط (mid-level). يقول السلّم الوظيفي (the ladder) إن أصحاب المستوى المتوسط "يفكّكون المشكلات الغامضة (break down ambiguous problems)"، لكنه لم يتلقَّ يومًا إلا تذاكر واضحة (clear tickets). ما أفضل خطوة تالية (next step)؟**
 
-- A. انتظار دورة الترقيات التالية (promotion cycle) على أمل أن يلاحظ خالد عدد التذاكر التي أغلقها
-- B. أن يطلب من خالد مشكلة صغيرة غامضة (a small, ambiguous problem)، ويكتب مذكرة تصميم (design note)، ثم يطلقها (ship) ويراقبها
-- C. الحصول على شهادة في المعمارية (architecture certificate) أولًا، كي يُظهر ملفه الشخصي أنه جاهز لأعمال التصميم
-- D. التطوع لكل تذكرة واضحة في قائمة المهام المتراكمة (the backlog)، لإثبات قدرته على تحمّل ضعف عبء العمل
+- A. انتظار دورة الترقيات التالية (promotion cycle) على أمل أن يلاحظ خالد عدد التذاكر (tickets) التي أغلقها
+- B. أن يطلب من خالد مشكلة صغيرة غامضة (a small, ambiguous problem)، ويكتب مذكرة تصميم، ثم يطلقها (ship) ويراقبها
+- C. الحصول على شهادة في المعمارية (architecture certificate) أولًا، كي يُظهر ملفه الشخصي (profile) أنه جاهز لأعمال التصميم
+- D. التطوع لكل تذكرة واضحة (clear ticket) في قائمة المهام المتراكمة (the backlog)، لإثبات قدرته على تحمّل ضعف عبء العمل
 
 <details><summary>الإجابة</summary>
 
@@ -590,10 +590,10 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 **21. يريد يوسف خبرة سحابية (cloud experience) لسيرته الذاتية، لكنه لا يستطيع تحمّل فاتورة سحابية كبيرة (a large cloud bill). أي خطة تناسب الدرس؟**
 
-- A. الانتظار حتى يدفع صاحب عمل تكلفة حسابه السحابي (cloud account) قبل أن يبني أي شيء على الإطلاق
-- B. بناء بيئات كبيرة (large environments) على حساب شخصي وحذفها عندما تصل الفاتورة
-- C. تخطي العمل التطبيقي (hands-on work) والاعتماد على شهادة سحابية (cloud certification) لإظهار المهارات بدلًا منه
-- D. استخدام الفئات المجانية (free tiers) أو أرصدة الطلاب (student credits) أو عنقود محلي (local cluster)، مع تنبيهات الميزانية (budget alerts) والهدم بعد الاستخدام (teardown)
+- A. الانتظار حتى يدفع صاحب عمل تكلفة حسابه السحابي (cloud account) قبل أن يبني أي شيء (anything) على الإطلاق
+- B. بناء بيئات كبيرة (large environments) على حساب شخصي (personal account) وحذفها عندما تصل الفاتورة (the bill)
+- C. تخطي العمل التطبيقي (hands-on work) والاعتماد على شهادة سحابية (cloud certification) لإظهار المهارات بدلًا منه تمامًا
+- D. استخدام الفئات المجانية (free tiers) أو أرصدة الطلاب أو عنقود محلي (local cluster)، مع تنبيهات الميزانية (budget alerts) والهدم بعد الاستخدام
 
 <details><summary>الإجابة</summary>
 
@@ -603,10 +603,10 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 **22. تقول قصة هدى عن مشروع جماعي (team project) "نحن (we)" في كل جملة. يسألها خالد: "ماذا فعلتِ أنتِ؟" ⁦("What did you do?")⁩ كيف ينبغي أن تصلح القصة؟**
 
-- A. أن تستخدم "نحن (we)" للسياق (context)، و"أنا (I)" لأفعالها هي (her own actions)، وأن تنسب إلى زملائها أجزاءهم (credit her teammates' parts)
+- A. أن تستخدم "نحن" للسياق (context)، و"أنا" لأفعالها هي (her own actions)، وأن تنسب إلى زملائها أجزاءهم (credit)
 - B. أن تحوّل كل "نحن (we)" إلى "أنا (I)"، بما في ذلك الأجزاء التي أنجزها زملاؤها فعلًا (her teammates actually did)
-- C. أن تواصل قول "نحن"، لأن الحديث عن نفسها يبدو تكبّرًا (sounds arrogant) في المقابلة
-- D. أن تستبدل القصة بإجابة افتراضية (hypothetical answer) عمّا ستفعله في المرة القادمة
+- C. أن تواصل قول "نحن (we)"، لأن الحديث عن نفسها يبدو تكبّرًا (sounds arrogant) في المقابلة
+- D. أن تستبدل القصة بإجابة افتراضية (hypothetical answer) عمّا ستفعله في المرة القادمة (next time)
 
 <details><summary>الإجابة</summary>
 
@@ -617,9 +617,9 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 **23. يستخدم مسار النشر التدريبي (practice deploy pipeline) لدى يوسف مفتاح المسؤول الشخصي (personal admin key) الخاص به، الذي يستطيع تغيير أي شيء في الحساب. ماذا ستطلب منه قائمة سالم لإعادة البناء (Salem's rebuild checklist)؟**
 
 - A. الإبقاء على مفتاح المسؤول، لكن تخزينه في ملف نصي (text file) خارج المستودع على حاسوبه المحمول
-- B. مشاركة مفتاح المسؤول مع صديق، كي يتمكن شخص آخر من النشر (deploy) إذا لم يكن متاحًا
-- C. منح مسار النشر دورًا خاصًا به (its own role) يستطيع نشر هذه الخدمة الواحدة (this one service) ولا شيء غيرها
-- D. إزالة مسار النشر والنشر يدويًا من وحدة التحكم (the console)، كي لا يلزم أي مفتاح
+- B. مشاركة مفتاح المسؤول (admin key) مع صديق، كي يتمكن شخص آخر من النشر (deploy) إذا لم يكن متاحًا في ذلك اليوم
+- C. منح مسار النشر دورًا خاصًا به (its own role) يستطيع نشر هذه الخدمة الواحدة (this one service) ولا شيء غيرها في الحساب
+- D. إزالة مسار النشر (pipeline) والنشر يدويًا من وحدة التحكم (the console)، كي لا يلزم أي مفتاح بعد ذلك
 
 <details><summary>الإجابة</summary>
 
@@ -629,10 +629,10 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 **24. يقول إعلان لدور للمبتدئين إن الفريق "يمتلك الخدمات من طرف إلى طرف، في بيئة الإنتاج، مع جدول مناوبات (owns services end to end, in production, with an on-call rota)". ما الذي تخبر به هذه الصياغة عمر على الأرجح؟**
 
-- A. أن الدور في الحقيقة دور لكبار المهندسين (a senior one)، لذا لا ينبغي للخريج التقديم عليه أصلًا
-- B. أن المبتدئين يُتوقع منهم أن يطلقوا أعمالهم ويشغّلوها (ship and operate their own work)، لا أن يكتبوها فقط
+- A. أن الدور في الحقيقة دور لكبار المهندسين (a senior one)، لذا لا ينبغي للخريج التقديم عليه أصلًا أو الاتصال بالشركة
+- B. أن المبتدئين يُتوقع منهم أن يطلقوا أعمالهم ويشغّلوها (ship and operate)، لا أن يكتبوها فقط
 - C. أن الفريق لا يستخدم أدوات البرمجة بالذكاء الاصطناعي (AI coding tools)، لذا سيكتب كل سطر بنفسه
-- D. أن الكلمات نص جاهز (boilerplate) من قالب (template)، لذا يمكن تجاهلها بأمان
+- D. أن الكلمات نص جاهز (boilerplate) من قالب (template)، لذا يمكن تجاهلها بأمان في كل مرة
 
 <details><summary>الإجابة</summary>
 
@@ -644,7 +644,7 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 - A. اختبار انحدار (regression test) للتقريب يفشل قبل الإصلاح وينجح بعده
 - B. تعليقًا في الشيفرة (code comment) يطلب من المراجعين التحقق من التقريب يدويًا حين يتسع وقتهم
-- C. ملاحظة في ملف README تقول إن خلل التقريب أُصلح ولا ينبغي أن يعود
+- C. ملاحظة في ملف README تقول إن خلل التقريب (rounding bug) أُصلح ولا ينبغي أن يعود أبدًا
 - D. لا شيء آخر، لأنه اختبره يدويًا (tested it manually) والمبلغ المسترد يبدو الآن صحيحًا على الشاشة
 
 <details><summary>الإجابة</summary>
@@ -655,10 +655,10 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 **26. عند نقطة التحقق في الأسبوع الثامن (week-8 checkpoint)، كان المشروع الختامي (capstone) لعمر منشورًا وحيًّا (live)، ووصل إلى جولات تقنية (technical rounds) لدى ثلاث جهات عمل. ماذا يقترح جدول نقاط التحقق (the checkpoint table)؟**
 
-- A. تغيير دوره المستهدف (target role)، لأنه لم يصله أي عرض بعد ثمانية أسابيع من البحث
-- B. إعادة بناء المشروع الختامي بإطار عمل أحدث (a newer framework) قبل أن يرسل أي طلبات أخرى
-- C. التوقف عن التقديم (stop applying) ريثما ينتظر نتائج الجولات التقنية الثلاث (the three technical rounds)
-- D. الإبقاء على الهدف (keep the target) وتحويل مزيد من ساعاته الأسبوعية (weekly hours) نحو التدرب على المقابلات (interview practice)
+- A. تغيير دوره المستهدف (target role)، لأنه لم يصله أي عرض بعد ثمانية أسابيع من البحث (searching)
+- B. إعادة بناء المشروع الختامي بإطار عمل أحدث (a newer framework) قبل أن يرسل أي طلبات أخرى للشركات
+- C. التوقف عن التقديم (stop applying) ريثما ينتظر نتائج الجولات التقنية الثلاث (the three technical rounds) من الشركات
+- D. الإبقاء على الهدف وتحويل مزيد من ساعاته الأسبوعية (weekly hours) نحو التدرب على المقابلات (interview practice)
 
 <details><summary>الإجابة</summary>
 
@@ -669,8 +669,8 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 **27. يقول التقرير المكتوب عن مشروع ريم (project write-up) إن ميزة البحث لديها "سريعة بشكل مذهل (blazing fast)". ماذا ينبغي أن تكتب بدلًا من ذلك؟**
 
 - A. "سريعة للغاية (extremely fast)، وأسرع من معظم التطبيقات المشابهة (similar apps) في السوق اليوم"
-- B. زمنًا مقيسًا (a measured time) مع شروطه (its conditions)، مثل حجم البيانات (data size) والجهاز (the machine)
-- C. لا شيء عن السرعة، لأن الأرقام في التقرير تستدعي أسئلة صعبة
+- B. زمنًا مقيسًا (a measured time) مع شروطه، مثل حجم البيانات (data size) والجهاز
+- C. لا شيء عن السرعة (speed)، لأن الأرقام في التقرير تستدعي أسئلة صعبة من المراجعين
 - D. "يستخدمها آلاف الناس كل يوم (used by thousands of people every day)، ويقولون جميعًا إنها سريعة جدًا"
 
 <details><summary>الإجابة</summary>
@@ -682,9 +682,9 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 **28. تضم قائمة عمر المستهدفة (target list) بنكًا وشركة ناشئة (a startup) وجهة حكومية للتحول الرقمي (government digital agency). لا تستخدم أي منها اختبارات فرز خوارزمية (algorithm screens)؛ واثنتان تكلّفان بمهام منزلية (take-home tasks). كيف ينبغي أن يستعد؟**
 
 - A. أن يحل بإصرار مئتي مسألة خوارزمية أخرى (grind two hundred more algorithm problems)، لأن كل جهة تستخدمها عاجلًا أم آجلًا
-- B. ألا يُعدّ شيئًا محددًا، لأن سجله في المسابقات (contest record) يُثبت بالفعل أنه يبرمج جيدًا
-- C. أن يضع حدًا للتدرب على الخوارزميات (cap algorithm practice) وينفّذ مشروعًا مؤقّتًا بأسلوب المهمة المنزلية (timed take-home-style project) مع README واختبارات
-- D. أن يطلب من كل جهة استبدال مهمتها المنزلية بجولة خوارزميات (algorithm round) تناسبه أكثر
+- B. ألا يُعدّ شيئًا محددًا (nothing specific)، لأن سجله في المسابقات (contest record) يُثبت بالفعل أنه يبرمج جيدًا
+- C. أن يضع حدًا للتدرب على الخوارزميات (cap algorithm practice) وينفّذ مشروعًا مؤقّتًا بأسلوب المهمة المنزلية مع README واختبارات
+- D. أن يطلب من كل جهة استبدال مهمتها المنزلية (take-home) بجولة خوارزميات (algorithm round) تناسبه أكثر
 
 <details><summary>الإجابة</summary>
 
@@ -707,10 +707,10 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 **30. يلصق محمد نص سيرته الذاتية المبنية على قالب مصمَّم (designer-template CV) في ملف نصي عادي (plain text file). مهاراته مفقودة، ومسمياته الوظيفية (job titles) تظهر بجوار تواريخ خاطئة. ماذا ينبغي أن يفعل؟**
 
-- A. أن ينتقل إلى تخطيط بعمود واحد ونص فقط (one-column, text-only layout)، ثم يعيد اختبار اللصق كنص عادي (plain-text paste test)
-- B. أن يُبقي على القالب (the template)، لأن مسؤولي التوظيف (recruiters) يرون دائمًا التصميم الأصلي (the original design) لا النص
+- A. أن ينتقل إلى تخطيط بعمود واحد ونص فقط (one-column)، ثم يعيد اختبار اللصق كنص عادي (plain-text paste test)
+- B. أن يُبقي على القالب (the template)، لأن مسؤولي التوظيف (recruiters) يرون دائمًا التصميم الأصلي (original design) لا النص
 - C. أن يضيف مهاراته مرة ثانية بنص أبيض صغير (small white text)، كي يجدها المحلّل الآلي (the parser)
-- D. أن يحوّل السيرة الذاتية إلى صورة (an image)، كي لا يتمكن أي محلّل من بعثرة تخطيطها
+- D. أن يحوّل السيرة الذاتية إلى صورة (an image)، كي لا يتمكن أي محلّل (parser) من بعثرة تخطيطها (layout)
 
 <details><summary>الإجابة</summary>
 
@@ -721,9 +721,9 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 **31. لدى عمر أسبوع واحد من وقت الدراسة على مسار البرمجيات (software path) الخاص به. أي خطة تترك أكبر قدر من الإثبات (the most proof) يستطيع صاحب العمل التحقق منه؟**
 
 - A. مشاهدة دورة لإطار عمل (framework course) مدتها اثنتا عشرة ساعة من أولها إلى آخرها وتدوين ملاحظات عن كل فيديو
-- B. القراءة عن خمسة أطر عمل جديدة (five new frameworks) كي يدرجها كلها في سيرته الذاتية بنهاية الأسبوع
-- C. إضافة تسجيل الدخول (login)، واختبار أن المستخدم A لا يرى حجوزات المستخدم B (user A cannot see user B's bookings)، ونشره، ثم توثيقه (document it)
-- D. حل خمسين مسألة خوارزمية أخرى، لأن عدد المسائل التي حلّها هو الرقم الوارد في سيرته الذاتية
+- B. القراءة عن خمسة أطر عمل جديدة (five new frameworks) كي يدرجها كلها في سيرته الذاتية (CV) بنهاية الأسبوع
+- C. إضافة تسجيل الدخول (login)، واختبار أن المستخدم A لا يرى حجوزات المستخدم B، ونشره، ثم توثيقه (document it)
+- D. حل خمسين مسألة خوارزمية أخرى (algorithm problems)، لأن عدد المسائل التي حلّها هو الرقم الوارد في سيرته الذاتية
 
 <details><summary>الإجابة</summary>
 
@@ -734,8 +734,8 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 **32. لدى محمد عرض من شركة ناشئة (startup offer)، ووجد رقمًا واحدًا للراتب على موقع قائم على مساهمات المستخدمين (crowd-sourced site). كيف ينبغي أن يحكم على عدالة المبلغ النقدي (whether the cash is fair)؟**
 
 - A. أن يثق بالرقم الواحد، لأن المواقع القائمة على مساهمات المستخدمين دقيقة لأدوار الخريجين (graduate roles)
-- B. أن يبني نطاقًا (a range) من مصادر عدة (several sources)، ثم يقارن العرض بالحد الأدنى لتكاليفه الفعلية (his real-cost floor)
-- C. أن يطلب من المؤسس (the founder) مطابقة أعلى رقم يجده على الإنترنت من أي بلد
+- B. أن يبني نطاقًا (a range) من مصادر عدة، ثم يقارن العرض بالحد الأدنى لتكاليفه الفعلية (his real-cost floor)
+- C. أن يطلب من المؤسس (the founder) مطابقة أعلى رقم يجده على الإنترنت من أي بلد في العالم
 - D. أن يقبل أي مبلغ يُعرض، لأن المنتقلين من مسارات مهنية أخرى (career-switchers) لا يحق لهم طرح أي أسئلة
 
 <details><summary>الإجابة</summary>
@@ -746,9 +746,9 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 **33. ينتهي التدريب العملي (internship) لهدى الذي امتد ثلاثة أشهر لدى شركة اتصالات الأسبوع المقبل. ما الذي سيجعله أكثر نفعًا في بحثها عن عمل؟**
 
-- A. أن تطلب من مديرها (her manager) أن يكون مرجعًا لها (a reference)، وأن تكتب عنه تقريرًا (write it up) يستبعد التفاصيل السرية (confidential details)
+- A. أن تطلب من مديرها أن يكون مرجعًا لها (a reference)، وأن تكتب عن التدريب مع استبعاد التفاصيل السرية (confidential details)
 - B. أن تنشر كل شيفرة تدريبها (all her internship code) على GitHub، لأنها كتبت كل سطر بنفسها
-- C. أن تدرجه في سيرتها الذاتية بمسمى "مهندسة بيانات (Data Engineer)"، لأنها أدّت عملًا هندسيًا
+- C. أن تدرجه في سيرتها الذاتية بمسمى "مهندسة بيانات (Data Engineer)"، لأنها أدّت عملًا هندسيًا فعلًا
 - D. أن تحذفه من سيرتها الذاتية (leave it off her CV)، لأن ثلاثة أشهر مدة أقصر بكثير من أن تُعدّ خبرة حقيقية (real experience)
 
 <details><summary>الإجابة</summary>
@@ -761,8 +761,8 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 - A. أن ترفض التقدير (refuse to estimate)، لأن أي رقم تعطيه دون بيانات حقيقية (real data) سيكون خاطئًا
 - B. أن تذكر رقمًا كبيرًا بثقة (quote a large figure confidently)، كي يبدو التصميم كله (the whole design) طموحًا بالقدر المناسب
-- C. أن تطلب من طارق أرقام الإنتاج الدقيقة (exact production figures) وتنتظر حتى يقدّمها كلها
-- D. أن تذكر افتراضات تقريبية بصوت عالٍ (state round assumptions out loud)، وتُجري حسابات بسيطة (simple sums)، وتقول ما تعنيه النتيجة (what the result implies)
+- C. أن تطلب من طارق أرقام الإنتاج الدقيقة (exact production figures) وتنتظر حتى يقدّمها كلها دون أن تقدّر شيئًا
+- D. أن تذكر افتراضات تقريبية بصوت عالٍ، وتُجري حسابات بسيطة (simple sums)، وتقول ما تعنيه النتيجة (what the result implies)
 
 <details><summary>الإجابة</summary>
 
@@ -774,7 +774,7 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 - A. "أضف تحويل العملات (currency conversion) إلى التطبيق وتأكد من أن كل شيء يعمل كما ينبغي في النهاية."
 - B. "أعد كتابة الواجهة الخلفية (backend) لدعم كل العملات، ثم حدّث أي اختبارات تبدأ بالفشل (tests that start failing)."
-- C. "قرّب إلى منزلتين عشريتين (round to 2 places)، وأعطِ خطأً عند غياب الأسعار (error on missing rates)، وأبقِ الاختبارات الحالية (existing tests)؛ وأرني حالات الاختبار (test cases) أولًا."
+- C. "قرّب إلى منزلتين عشريتين (round to 2 places)، وأعطِ خطأً عند غياب الأسعار، وأبقِ الاختبارات الحالية (existing tests)؛ وأرني حالات الاختبار أولًا."
 - D. "افعل ما تراه الأفضل بشأن العملات (whatever you think is best for currencies)، ثم أعطني ملخصًا قصيرًا (short summary) بعد ذلك."
 
 <details><summary>الإجابة</summary>
@@ -786,7 +786,7 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 **36. يسأل عمر هل ينبغي أن يتعلم ستة أطر عمل (six frameworks) كي يبدو قابلًا للتوظيف (employable) في كل عائلة أدوار (every role family). ماذا تقترح فكرة الشكل T (the T-shaped idea)؟**
 
 - A. تعلّم الستة كلها إلى مستوى أساسي (basic level)، لأن الاتساع عبر العائلات (breadth across families) هو ما يوظِّف المبتدئين
-- B. التعمق في عائلة أدوار واحدة أولًا (go deep in one role family first)، مع الاحتفاظ بمعرفة عملية (working knowledge) بالمجالات المجاورة لها
+- B. التعمق في عائلة أدوار واحدة أولًا (go deep in one role family first)، مع الاحتفاظ بمعرفة عملية بالمجالات المجاورة لها
 - C. تعلّم الخوارزميات (algorithms) فقط بعمق، لأن أطر العمل (frameworks) تتغير أسرع من أن تستحق التعلم
 - D. التقديم على كل العائلات (every family) دفعة واحدة بالسيرة الذاتية نفسها (the same CV)، ثم التخصص (specialise) بعد أول عرض
 
@@ -800,8 +800,8 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 - A. أن يقدّم على أي حال ويترك سؤال الجنسية (nationality question) فارغًا، على أمل ألا يُتحقق منه
 - B. أن يدفع لوكيل (an agent) يعده بمقعد مضمون (guaranteed place) في البرنامج مقابل رسوم
-- C. أن يستنتج أنه لا توجد جهة عمل (no employer) في ذلك البلد ستنظر في طلبه، ويتوقف عن البحث هناك
-- D. أن يحترم القاعدة (respect the rule) ويستهدف الأدوار المتاحة له؛ وأن يتحقق من القواعد في المصادر الرسمية (official sources)
+- C. أن يستنتج أنه لا توجد جهة عمل (no employer) في ذلك البلد ستنظر في طلبه، ويتوقف عن البحث هناك تمامًا
+- D. أن يحترم القاعدة (respect the rule) ويستهدف الأدوار المتاحة له؛ وأن يتحقق من القواعد في المصادر الرسمية
 
 <details><summary>الإجابة</summary>
 
@@ -811,9 +811,9 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 **38. بعد ثمانية عشر شهرًا في نجم، تتلقى هدى عرضًا خارجيًا (an outside offer) بزيادة صغيرة في الراتب (small pay rise). ما زالت تتعلم كل شهر، وأمامها مشكلة من المستوى التالي (a next-level problem) متاحة لها. ماذا يقترح الدرس؟**
 
-- A. قد يكون البقاء أحكم (staying may be wiser)، لأن الزيادة الصغيرة قد تكلّفها من التعلم أكثر مما تكسبها
+- A. قد يكون البقاء أحكم (staying may be wiser)، لأن زيادة صغيرة قد تكلّفها من التعلم أكثر مما تكسب
 - B. أن تغادر فورًا (leave at once)، لأن أي زيادة في الراتب (any pay rise) تفوق كل عامل آخر في مرحلتها
-- C. أن تقبل العرض، ثم تطلب من نجم مطابقته (match it) قبل أن تقرر أيهما تُبقي
+- C. أن تقبل العرض (accept the offer)، ثم تطلب من نجم مطابقته (match it) قبل أن تقرر أيهما تُبقي
 - D. أن تتوقف عن تعلم أشياء جديدة حاليًا، لأن العرض الخارجي (the outside offer) يُظهر أنها جاهزة بالفعل
 
 <details><summary>الإجابة</summary>
@@ -824,10 +824,10 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 **39. عند نقطة التحقق في الأسبوع الثامن (week-8 checkpoint)، يُظهر متتبّع ريم (tracker) ردودًا على كل طلب تقريبًا جاء بعد إحالة (a referral) أو محادثة (a conversation)، وعلى ما يكاد يكون لا شيء من طلباتها الباردة (cold ones). ما الذي ينبغي أن تغيّره؟**
 
-- A. أن تعيد كتابة سيرتها الذاتية، وتعيد الاستهداف (retarget)، وتبدأ مشروعًا جديدًا، كل ذلك هذا الأسبوع، لتسريع الأمور
-- B. أن تُبقي على هدفها (keep her target) وتنقل الساعات من الطلبات الباردة (cold applications) إلى محادثات الإحالة (referral conversations)
-- C. أن توقف كل بناء للعلاقات المهنية (networking)، لأن الطلبات الباردة هي القناة الوحيدة التي تتحكم فيها
-- D. أن تضاعف عدد الطلبات الباردة، لأن الكمّ (volume) سيأتي بالردود في النهاية
+- A. أن تعيد كتابة سيرتها الذاتية، وتعيد الاستهداف (retarget)، وتبدأ مشروعًا جديدًا (new project)، كل ذلك هذا الأسبوع، لتسريع الأمور (speed things up)
+- B. أن تُبقي على هدفها وتنقل الساعات من الطلبات الباردة (cold applications) إلى محادثات الإحالة (referral conversations)
+- C. أن توقف كل بناء للعلاقات المهنية (networking)، لأن الطلبات الباردة (cold applications) هي القناة الوحيدة التي تتحكم فيها
+- D. أن تضاعف عدد الطلبات الباردة (cold applications)، لأن الكمّ (volume) سيأتي بالردود في النهاية
 
 <details><summary>الإجابة</summary>
 
@@ -839,7 +839,7 @@ Next week's top three: SQL mock x2; data-modelling mock; book Sadeem Pay screen
 
 - A. فحص الموقع العام (public website) لشركة محلية لمعرفة نقاط الضعف (weaknesses) التي يستطيع إيجادها
 - B. قائمة بشهادات الأمن (security certifications) التي يخطط لنيلها، مضافة إلى ملفه على LinkedIn
-- C. نموذج تهديدات (a threat model) لمشروع يملكه، يكتبه بعد إنهاء المرحلة 1 من مسار المنصات (platform stage 1)
+- C. نموذج تهديدات (a threat model) لمشروع يملكه، يكتبه بعد إنهاء المرحلة الأولى من مسار المنصات
 - D. اختبار صفحة تسجيل الدخول لبنك (a bank's login page) برفق، ما دام لا شيء ينكسر أو يتباطأ بشكل ظاهر
 
 <details><summary>الإجابة</summary>

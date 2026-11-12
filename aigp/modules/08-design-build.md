@@ -161,10 +161,10 @@ Committee decision recorded for the copilot: *"Approved for design at Tier 2. Sc
 
 **1. Najm Bank's retail lending team proposes a machine-learning model to score EU loan applicants. What should the AI governance team do first?**
 
-- A. Commission a bias audit of the model's training data
+- A. Commission a bias audit of the model's training data and of the labels supplied by the vendor
 - B. Register the use case, establish its intended purpose and context, and classify its risk
-- C. Ask procurement to shortlist vendors
-- D. Draft the model card
+- C. Ask procurement to shortlist vendors and prepare a request for proposals for the credit tool
+- D. Draft the model card and publish it to the intranet page of the data science team, with a contact address
 
 <details><summary>Answer</summary>
 
@@ -189,8 +189,8 @@ Committee decision recorded for the copilot: *"Approved for design at Tier 2. Sc
 
 - A. The severity, scale and reversibility of potential harm to people, and how much human review occurs before outputs take effect
 - B. The system's cost
-- C. Whether the system uses deep learning or a simpler algorithm
-- D. Whether the vendor is ISO/IEC 42001 certified
+- C. Whether the system uses deep learning or a simpler algorithm, since deep learning is always the higher-risk option
+- D. Whether the vendor is ISO/IEC 42001 certified, and how recently the certificate was issued
 
 <details><summary>Answer</summary>
 
@@ -200,9 +200,9 @@ Committee decision recorded for the copilot: *"Approved for design at Tier 2. Sc
 
 **4. The fraud team wants an ML model to flag suspicious transfers. A risk analyst notes that a fixed rule set catches 95% of the same cases with full transparency. Under a proportionality analysis, what is the best response?**
 
-- A. Approve the ML model because AI is Najm's strategy
-- B. Approve the ML model because fraud detection is excluded from Annex III
-- C. Reject all AI for fraud detection
+- A. Approve the ML model because AI is Najm's strategy, and ask the sponsor to document the benefit after launch
+- B. Approve the ML model because fraud detection is excluded from Annex III, so no justification is needed from the sponsor
+- C. Reject all AI for fraud detection, and instruct the sponsor to withdraw every similar proposal in the bank
 - D. Record the rule-based alternative and require the sponsor to show the ML model's added benefit justifies its added risk and cost
 
 <details><summary>Answer</summary>
@@ -371,9 +371,9 @@ For Najm's copilot, Layla's team adds a critical design rule: **every financial 
 **1. Najm's underwriters must "review" every credit score, but they handle 300 cases a day, see only the score, and are measured on speed. What is the MAIN governance weakness?**
 
 - A. Human oversight is nominal: reviewers lack time, information and practical authority to challenge the output
-- B. The model should use SHAP instead of LIME
-- C. The model is not interpretable by design
-- D. The review should be human-on-the-loop instead
+- B. The model should use SHAP instead of LIME, because LIME explanations are not stable across runs of the same case
+- C. The model is not interpretable by design, so no explanation of any kind can be given to the reviewers
+- D. The review should be human-on-the-loop instead, where staff watch aggregate results and step in only on alerts
 
 <details><summary>Answer</summary>
 
@@ -383,10 +383,10 @@ For Najm's copilot, Layla's team adds a critical design rule: **every financial 
 
 **2. Which statement about SHAP is MOST accurate?**
 
-- A. It reveals the exact internal reasoning of a neural network
-- B. It is only usable with linear models
+- A. It reveals the exact internal reasoning of a neural network, so the weights themselves are no longer needed for audit
+- B. It is only usable with linear models, because it needs coefficients that can be read off directly
 - C. It assigns each feature a contribution to a specific prediction relative to a baseline, and these contributions can be ranked into reason codes
-- D. It guarantees the model is fair
+- D. It guarantees the model is fair, because every feature is given an equal contribution to each prediction
 
 <details><summary>Answer</summary>
 
@@ -410,9 +410,9 @@ For Najm's copilot, Layla's team adds a critical design rule: **every financial 
 **4. Najm's main concern with its CV-screening tool is that qualified candidates from one nationality are wrongly rejected more often than equally qualified candidates from others. Which fairness metric family best matches this harm?**
 
 - A. Error-rate parity, such as equal opportunity (equal true positive rates)
-- B. Demographic parity only
-- C. Overall accuracy
-- D. Calibration only
+- B. Demographic parity only, since it compares selection rates and ignores who was qualified
+- C. Overall accuracy, since a high average score shows that no group is disadvantaged
+- D. Calibration only, since it checks whether predicted risks match observed outcomes
 
 <details><summary>Answer</summary>
 
@@ -583,10 +583,10 @@ The Act allows SMEs, including start-ups, to provide these elements in a simplif
 
 **1. Najm develops a credit-scoring model in-house and uses it only for its own EU customers. It never sells it. Under the EU AI Act, Najm is:**
 
-- A. Only a deployer, because it does not sell the system
-- B. Neither, because internal tools are exempt
+- A. Only a deployer, because it does not sell the system to anyone outside the bank
+- B. Neither, because internal tools are exempt from the Act when no outside party uses them
 - C. Both provider (it puts the system into service under its own name) and deployer
-- D. An importer
+- D. An importer, because the vendor's software came from a company outside the Union
 
 <details><summary>Answer</summary>
 
@@ -596,9 +596,9 @@ The Act allows SMEs, including start-ups, to provide these elements in a simplif
 
 **2. Which document is specifically required by the EU AI Act for providers of high-risk AI systems before market placement?**
 
-- A. A datasheet for datasets in the Gebru et al. format
-- B. An ISO/IEC 42001 certificate
-- C. A system card published on the provider's website
+- A. A datasheet for datasets in the Gebru et al. format, completed for each training set
+- B. An ISO/IEC 42001 certificate issued to the provider by an accredited certification body
+- C. A system card published on the provider's website, describing the intended use and limits
 - D. Technical documentation with the content set out in Annex IV
 
 <details><summary>Answer</summary>
@@ -609,10 +609,10 @@ The Act allows SMEs, including start-ups, to provide these elements in a simplif
 
 **3. Najm deploys a vendor's high-risk CV-screening system, then retrains it substantially on its own data and markets it to affiliated companies under the Najm brand. What is the MOST likely consequence?**
 
-- A. Nothing changes; the original vendor remains the only provider
+- A. Nothing changes; the original vendor remains the only provider, whatever Najm adds to the system
 - B. Najm may be treated as the provider of the high-risk system, with provider obligations
-- C. Najm becomes a distributor
-- D. The system stops being high-risk
+- C. Najm becomes a distributor, with only the duty to check that the CE marking is present
+- D. The system stops being high-risk, because Najm has changed it for its own internal use
 
 <details><summary>Answer</summary>
 

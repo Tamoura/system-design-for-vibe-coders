@@ -661,7 +661,7 @@ def test_odd_recipient_text_is_a_clean_422_never_a_500(client, recipient):
 **3. اختبارات زميل (A teammate's tests) لدورة حياة التحويل (transfer lifecycle) تفحص فقط: مقبول (accepted)، ثم قيد المعالجة (processing)، ثم مسوّى (settled). أي ثغرة (gap) هي الأخطر على خدمة مدفوعات (payments service)؟**
 
 - A. لا تجرّب أبدًا انتقالًا مرفوضًا (a refused move)، مثل العكس مرتين (reversing twice)
-- B. تستخدم اختبارات مُحدَّدة بمعاملات (parametrised tests) بدلًا من دوال منفصلة (separate functions)
+- B. تستخدم اختبارات مُحدَّدة بمعاملات (parametrised tests) بدلًا من دوال منفصلة
 - C. لا تقيس الزمن الذي يستغرقه كل انتقال (how long each transition takes)
 - D. لا تفحص ما يعرضه التحويل المسوّى (what a settled transfer displays)
 
@@ -931,10 +931,10 @@ Severity:   S1 to S4, proposed by the tester
 
 **3. أغلق فريق طارق (Tariq's squad) تقرير «التحويلات معطوبة؟؟» ⁦(Transfers broken??)⁩ بعبارة «لا يمكن إعادة إنتاجه» (cannot reproduce). أي تغيير واحد في التقرير سيفيد أكثر؟**
 
-- A. إعطاء المبلغ بالضبط (the exact amount)، والرسمين المتوقع والفعلي (the expected and actual fees)، وأمر لإعادة الإنتاج (a repro command)
+- A. إعطاء المبلغ بالضبط (the exact amount)، والرسمين المتوقع والفعلي، وأمر لإعادة الإنتاج (a repro command)
 - B. إرفاق لقطة شاشة (screenshot) للشاشة الرئيسية وصفحة إعدادات الجهاز (device settings page)
 - C. رفعه إلى S1 (Raise it to S1) كي يعامله الفريق على أنه عاجل فورًا (straight away)
-- D. إضافة القسم كله في نسخة التذكرة (copy the whole department into the ticket) ليراه أشخاص أكثر (more people)
+- D. إضافة القسم كله إلى نسخة التذكرة (copy the whole department into the ticket) ليراه أشخاص أكثر بكثير (many more people) من دون أن يطلب أحد ذلك
 
 <details><summary>الإجابة</summary>
 

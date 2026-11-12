@@ -12,7 +12,7 @@
       "o": {
         "en": [
           "A new test whose expected Arabic line is the changed code's own output",
-          "The green check on the pull request once all 99 tests have passed",
+          "The green check on the pull request once all 99 tests have passed on the branch",
           "A test whose expected Arabic line is taken from the ticket's example",
           "The agent's summary, which explains every changed file in clear prose"
         ],
@@ -20,7 +20,7 @@
           "اختبار (test) جديد سطره العربي المتوقع (expected line) هو مخرجات (output) الشيفرة (code) المعدّلة نفسها",
           "العلامة الخضراء (green check) على طلب الدمج (pull request) بعد نجاح الاختبارات (tests) التسعة والتسعين كلها",
           "اختبار (test) سطره العربي المتوقع (expected line) مأخوذ من مثال التذكرة (ticket)",
-          "ملخص الوكيل (agent's summary) الذي يشرح كل ملف تغيّر (changed file) بلغة واضحة"
+          "ملخص الوكيل (agent's summary) الذي يشرح كل ملف تغيّر (changed file) بلغة واضحة وبإيجاز"
         ]
       },
       "a": 2,
@@ -67,7 +67,7 @@
       },
       "o": {
         "en": [
-          "Approve with comments, since the four examples are the ticket's acceptance test and all four match",
+          "Approve with comments, since the four examples are the ticket's acceptance test and all match",
           "Reread the pull request description to see what it claims about the edge cases and the tiers",
           "Ask the agent to write more tests for its own code and run them against the branch",
           "Vary amounts, tiers and flags, and check each fee against your own sums from the ticket's rules"
@@ -98,7 +98,7 @@
           "Approve with comments, because the two reviewers disagree and the suite is green",
           "Request changes and keep the blocker, since the damage does not depend on what the model saw",
           "Request changes, but rate the wrong fee a major, since the model did not see it at all",
-          "Run the model again with the ticket named, and request changes only if it then finds a problem"
+          "Run the model again with the ticket named, and request changes only if it finds a problem"
         ],
         "ar": [
           "تقرّ الطلب بملاحظات (approve with comments) لأن المراجعَين اختلفا والمجموعة (suite) خضراء",

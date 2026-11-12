@@ -307,8 +307,8 @@ models:
 
 - A. اطلب من المحلّلَين أن يبنيا تقاريرهما في أداة لوحات المعلومات نفسها (same dashboard tool) من الآن فصاعدًا
 - B. أضف اختبار `not_null` على `customer_id` في كلا الاستعلامين المحفوظين (saved queries)
-- C. عرّف منطق النشاط (activity logic) مرة واحدة في نموذج وسيط (intermediate model) واجعل كل طبقة عرض وكل تقرير يستدعيه بـ`ref()`
-- D. أرسل إلى فريق المالية رقم التجزئة بالبريد الإلكتروني كل شهر
+- C. عرّف منطق النشاط مرة واحدة في نموذج وسيط (intermediate model) واجعل كل تقرير يستدعيه بـ`ref()`
+- D. أرسل إلى فريق المالية (finance team) رقم التجزئة بالبريد الإلكتروني كل شهر (monthly)
 
 <details><summary>الإجابة</summary>
 
@@ -357,10 +357,10 @@ models:
 
 **5. يستغرق التكامل المستمر لطلبات السحب (pull-request CI) في نجم 90 دقيقة لأنه يعيد بناء المشروع كله مع كل تغيير. ما الطريقة القياسية في dbt لتسريعه (standard dbt way to speed it up)؟**
 
-- A. أزل الاختبارات من التكامل المستمر وشغّلها فقط في الإنتاج بعد كل دمج في `main`
-- B. حوّل كل نموذج إلى عرض (view) حتى لا يلزم تجسيد أي شيء في مخطط التكامل المستمر (CI schema)
-- C. استخدم الاختيار حسب الحالة (state selection): ابنِ النماذج المعدّلة وأبناءها فقط (only modified models and their children)، مع تأجيل الآباء غير المتغيّرين (deferring unchanged parents)
-- D. شغّل التكامل المستمر مرة في الأسبوع بدلًا من كل طلب سحب
+- A. أزل الاختبارات من التكامل المستمر (CI) وشغّلها فقط في الإنتاج (production) بعد كل دمج في `main`
+- B. حوّل كل نموذج إلى عرض (view) حتى لا يلزم تجسيد (materialise) أي شيء في مخطط التكامل المستمر (CI schema)
+- C. استخدم الاختيار حسب الحالة (state selection): ابنِ النماذج المعدّلة وأبناءها فقط، وأجّل الآباء غير المتغيّرين
+- D. شغّل التكامل المستمر مرة في الأسبوع (once a week) بدلًا من كل طلب سحب (pull request)
 
 <details><summary>الإجابة</summary>
 
@@ -606,7 +606,7 @@ where d = current_date - 1
 **1. كل مهمة في Airflow خضراء (every Airflow task is green)، لكن لوحة معلومات رئيس المخاطر (CRO dashboard) تُظهر انخفاض المتأخرات (arrears) بمقدار الثلث بين ليلة وضحاها لأن حقلًا في المصدر (source field) تغيّر نوعه وحُوّل إلى قيمة فارغة (cast to null). أي فحص كان سيلتقط ذلك في أبكر وقت (earliest)؟**
 
 - A. فحص يتأكد من أن لوحة معلومات رئيس المخاطر قد تحدّثت بنجاح (refreshed successfully) قبل 07:00
-- B. فحص للمخطط عند الاستيعاب (schema check at ingestion)، أو `not_null` على `days_past_due` بعد تحويل الأنواع (after the cast)
+- B. فحص للمخطط عند الاستيعاب (schema check)، أو `not_null` على `days_past_due` بعد تحويل الأنواع
 - C. سياسة إعادة محاولة (retry policy) أطول في Airflow مع محاولات أكثر لكل مهمة فاشلة
 - D. تدقيق دقة فصلي (quarterly accuracy audit) للقروض مقابل العقود الموقّعة (signed contracts)
 
@@ -918,9 +918,9 @@ flowchart TD
 **2. يُبنى `fct_card_authorisations` تزايديًا (incrementally) باستخدام `where authorised_at > (select max(authorised_at) from {{ this }})`. تصل بعض إعادات المحاولة من الأجهزة الطرفية (terminal retries) متأخرة يومين، حاملةً `authorised_at` الأصلي. ما الذي يحدث خطأً، وما الإصلاح؟**
 
 - A. لا شيء؛ فـdbt تتتبّع أي صفوف المصدر عالجها كل تشغيل تزايدي (incremental run) بالفعل
-- B. تُتخطّى الأحداث المتأخرة (late events are skipped)؛ أعد معالجة نافذة رجوع (lookback window)، مربوطة بمفتاح فريد (keyed on a unique key) حتى يُستبدَل التداخل (overlap is replaced)
+- B. تُتخطّى الأحداث المتأخرة (late events)؛ أعد معالجة نافذة رجوع (lookback) مربوطة بمفتاح فريد فيُستبدَل التداخل
 - C. سيكرّر النموذج كل صف متأخر في التشغيل التالي؛ غيّر الاستراتيجية إلى `append` لتجنّب ذلك
-- D. يجب تحويل النموذج إلى عرض (view)
+- D. يجب تحويل النموذج إلى عرض (view) بدل جدول تزايدي (incremental table)
 
 <details><summary>الإجابة</summary>
 
@@ -930,10 +930,10 @@ flowchart TD
 
 **3. أي اختيار لعمود التقسيم (partition column) هو الأفضل عادةً لجدول حقائق كبير لمعاملات البطاقات (card transactions fact table) تُصفّي معظم استعلاماته حسب نطاق تاريخ (date range)؟**
 
-- A. `card_id`
-- B. `merchant_category`
-- C. تاريخ المعاملة (the transaction date)
-- D. `transaction_id`
+- A. `card_id` معرّف البطاقة (card identifier)
+- B. `merchant_category` فئة التاجر (merchant category)
+- C. تاريخ المعاملة (the transaction date) نفسه
+- D. `transaction_id` معرّف المعاملة (transaction identifier)
 
 <details><summary>الإجابة</summary>
 

@@ -174,10 +174,10 @@ Draft Najm's AI exception procedure in under 400 words: who can request, what th
 
 **1. Najm Bank wants to start governing AI but does not know how many AI systems it uses. What should it do first?**
 
-- A. Buy an AI monitoring platform
+- A. Buy an AI monitoring platform that scans the network for model traffic and reports usage by team
 - B. Build an AI inventory, including bought and embedded AI, and classify each system by risk
-- C. Commission a red-team exercise on the chatbot
-- D. Write detailed technical standards for model validation
+- C. Commission a red-team exercise on the customer chatbot to find prompt-injection and data-leak weaknesses
+- D. Write detailed technical standards for model validation, testing thresholds and documentation templates
 
 <details><summary>Answer</summary>
 
@@ -200,10 +200,10 @@ Draft Najm's AI exception procedure in under 400 words: who can request, what th
 
 **3. A retailer's GenAI shopping assistant behaved well at launch but its answers degraded after the foundation-model vendor updated its model. Which life-cycle control was most clearly missing?**
 
-- A. A business case at the design stage
-- B. A data licence review
+- A. A business case at the design stage, signed by the sponsor before any budget is released
+- B. A data licence review, completed once before the vendor's contract is signed
 - C. Operational monitoring with triggers for vendor model changes
-- D. A board-approved AI policy
+- D. A board-approved AI policy, which applies to the vendor automatically when it is published
 
 <details><summary>Answer</summary>
 
@@ -213,9 +213,9 @@ Draft Najm's AI exception procedure in under 400 words: who can request, what th
 
 **4. What is the main purpose of an expiry date on an approved policy exception?**
 
-- A. To comply with a specific EU AI Act article on exceptions
-- B. To let the requester extend it automatically
-- C. To reduce the number of committee meetings
+- A. To comply with a specific EU AI Act article on exceptions that allows temporary deviations for providers of high-risk systems
+- B. To let the requester extend it automatically when the project runs late, without further review
+- C. To reduce the number of committee meetings by approving each exception for the whole year
 - D. To make sure deviations are temporary and are re-decided rather than becoming silent permanent policy changes
 
 <details><summary>Answer</summary>
@@ -229,7 +229,7 @@ Draft Najm's AI exception procedure in under 400 words: who can request, what th
 - A. ISO/IEC 42005
 - B. ISO/IEC 5338
 - C. ISO/IEC 38507
-- D. ISO/IEC 42006
+- D. ISO/IEC 5339
 
 <details><summary>Answer</summary>
 
@@ -388,9 +388,9 @@ The research reports already in the credit copilot's retrieval library may not b
 **1. Dana wants to use loan-servicing data collected over ten years to train a new marketing-propensity model. What is the key data governance question?**
 
 - A. Whether the new purpose is compatible with the original purpose and has a lawful basis
-- B. Whether the data is stored in the cloud
-- C. Whether the data scientists have the right software licences
-- D. Whether the model will be more accurate than the old one
+- B. Whether the data is stored in the cloud, in a region that the bank's cloud policy permits
+- C. Whether the data scientists have the right software licences for the training tools they use
+- D. Whether the model will be more accurate than the old one, enough to justify the change
 
 <details><summary>Answer</summary>
 
@@ -400,10 +400,10 @@ The research reports already in the credit copilot's retrieval library may not b
 
 **2. Under the EU AI Act, which requirement applies to training data for high-risk AI systems?**
 
-- A. All training data must be synthetic
-- B. Training data must be stored in the EU
+- A. All training data must be synthetic, because real personal data cannot be used for any high-risk system under the Act, whatever safeguards are in place
+- B. Training data must be stored in the EU, and may not be processed by any provider outside the Union
 - C. Data governance practices including examination for possible biases and measures to detect, prevent and mitigate them
-- D. Training data must be published
+- D. Training data must be published so that the public can check it for errors and for bias, and the provider must answer every request
 
 <details><summary>Answer</summary>
 
@@ -413,9 +413,9 @@ The research reports already in the credit copilot's retrieval library may not b
 
 **3. A marketing team says web images are "publicly available" and so can be used freely to fine-tune an image model. What is the best response?**
 
-- A. Agree, because anything online is in the public domain
-- B. Only use images with no watermark
-- C. Use the images but do not tell anyone
+- A. Agree, because anything online is in the public domain and can be used for training without permission
+- B. Only use images with no watermark, since a watermark is the only sign of a copyright claim
+- C. Use the images but do not tell anyone, so that no rights holder can ask for them to be removed
 - D. Check copyright, licence terms and any text-and-data-mining opt-outs before use
 
 <details><summary>Answer</summary>
@@ -637,10 +637,10 @@ HR wants to rename the CV tool "Najm TalentMatch", retrain it on Najm's own hiri
 
 **2. Which action could make a deployer of a high-risk AI system become its provider under the EU AI Act?**
 
-- A. Training its staff on the system
-- B. Reporting an incident to the provider
+- A. Training its staff on the system before they start to use it
+- B. Reporting an incident to the provider within the agreed period
 - C. Putting its own name or trademark on the system
-- D. Keeping the system's logs
+- D. Keeping the system's logs for the period the law requires
 
 <details><summary>Answer</summary>
 
@@ -664,9 +664,9 @@ HR wants to rename the CV tool "Najm TalentMatch", retrain it on Najm's own hiri
 **4. The foundation-model provider behind Najm's credit copilot updated its model without direct notice, and output quality changed. Which contract clause would most directly have helped?**
 
 - A. Advance notification of material model changes with a right to test before they take effect
-- B. An IP indemnity
-- C. A clause on the vendor's office locations
-- D. A longer payment term
+- B. An IP indemnity that covers claims about the training data and the outputs it produces, up to the contract value
+- C. A clause on the vendor's office locations and the languages of its support staff
+- D. A longer payment term, so that the bank can delay paying the vendor until after launch, with interest waived
 
 <details><summary>Answer</summary>
 

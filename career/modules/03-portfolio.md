@@ -194,10 +194,10 @@ Khalid's verdict: "Now I have six things to ask you, and you know the answers."
 
 **3. Huda is building a data capstone. Which "hard question" best fits the data role?**
 
-- A. "Which chart library makes my dashboard look the most modern to reviewers?"
-- B. "How many rows can my notebook load into memory before my laptop runs out?"
+- A. "Which chart library makes my dashboard look the most modern to reviewers on first sight?"
+- B. "How many rows can my notebook load into memory before my laptop runs out of memory?"
 - C. "Yesterday's file arrived twice and today's arrived late. What does my dashboard show?"
-- D. "Can I add a login page and user accounts to the dashboard before I apply?"
+- D. "Can I add a login page and user accounts to the dashboard before I apply for jobs?"
 
 <details><summary>Answer</summary>
 

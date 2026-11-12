@@ -233,7 +233,7 @@ ORDER BY depth, node;
 **1. يضيف فريق الأنظمة المصرفية الأساسية (core banking team) قيمة جديدة `D` ‏(خامل (dormant)) إلى `acct_status`. لم تُعَد تسمية أي عمود ولم يتغيّر أي نوع. كيف ينبغي أن تصنّف سياسة التغيير (change policy) في نجم هذا التغيير؟**
 
 - A. غير كاسر (non-breaking)، لأنه لم تُعَد تسمية أي عمود ولم يتغيّر أي نوع بيانات (data type)
-- B. تغيير كاسر دلالي (semantic breaking change) يحتاج إلى إشعار للمستهلكين في النسب (notice to consumers in lineage)
+- B. تغيير كاسر دلالي (semantic breaking change) يحتاج إلى إشعار رسمي للمستهلكين في النسب المتأثرة
 - C. تغيير في الحُبَيبية (grain change)، لذا يجب أن يُشحن بوصفه مجموعة بيانات جديدة (new dataset)
 - D. ليس مسألة حوكمة (not a governance matter)، لأن تطبيق المنتِج وحده (only the producer's application) يكتب في العمود
 
@@ -248,7 +248,7 @@ ORDER BY depth, node;
 - A. الحوكمة يقوم بها قسم تقنية المعلومات (IT department)؛ والإدارة تقوم بها فرق الأعمال (business teams)
 - B. الحوكمة هي أداة الفهرس (catalogue tool)؛ والإدارة هي كل شيء آخر يفعله فريق البيانات
 - C. هما اسمان للنشاط نفسه (two names for the same activity)، يستخدمهما مورّدون مختلفون (different vendors)
-- D. الحوكمة تحدّد حقوق اتخاذ القرار والمساءلة (decision rights and accountability)؛ والإدارة تؤدي العمل (does the work)
+- D. الحوكمة تحدّد حقوق اتخاذ القرار والمساءلة (decision rights and accountability)؛ والإدارة تؤدي العمل
 
 <details><summary>الإجابة</summary>
 
@@ -258,7 +258,7 @@ ORDER BY depth, node;
 
 **3. يجب على هدى أن تجد كل تقرير يتأثر بتغيير في `core.accounts.acct_status` قبل شحن التغيير. ما الذي يعطيها الإجابة الأكثر موثوقية (most reliable answer)؟**
 
-- A. النسب الحالي على مستوى العمود (current column-level lineage)، مع التجوال فيه نحو المصبّ (walked downstream) وربطه بسجلّ الملكية (ownership register)
+- A. النسب الحالي على مستوى العمود (current column-level lineage)، مع التجوال فيه نحو المصبّ وربطه بسجلّ الملكية
 - B. السؤال في قناة الدردشة الخاصة بفريق التحليلات (analytics team's chat channel) عمّن يستخدم جدول الحسابات
 - C. النسب على مستوى الجدول (table-level lineage) الذي يُظهر كل متجر وتقرير يقرأ `core.accounts`
 - D. مخطط النسب المفصّل (detailed lineage diagram) الذي رُسم خلال مراجعة المعمارية (architecture review) في العام الماضي
@@ -273,7 +273,7 @@ ORDER BY depth, node;
 
 - A. فهرسة كل جدول في مستودع البيانات أولًا (catalogue every table)، ثم تعيين المالكين بعد اكتمال الجرد (once the inventory is complete)
 - B. شراء أداة فهرس تجارية (commercial catalogue tool) وترك الاعتماد عليها ينمو من تلقاء نفسه (let adoption grow on its own)
-- C. البدء بعناصر البيانات الحرجة (critical data elements) وإعطاء كل منها مالكًا وتعريفًا ونسبًا وعقدًا واختبارات (owner, definition, lineage, contract and tests)
+- C. البدء بعناصر البيانات الحرجة (critical data elements) وإعطاء كل منها مالكًا وتعريفًا ونسبًا وعقدًا واختبارات
 - D. كتابة سياسة حوكمة كاملة (full governance policy)، واعتمادها في لجنة، وانتظار أن تتبناها الفرق
 
 <details><summary>الإجابة</summary>
@@ -285,7 +285,7 @@ ORDER BY depth, node;
 **5. ما الذي يتحقق منه عقد نموذج dbt المُنفَّذ (enforced dbt model contract)؟**
 
 - A. أن عدد صفوف النموذج (row count) يطابق جدول المصدر (source table) بعد كل تشغيل
-- B. أن النموذج يُرجع بالضبط الأعمدة وأنواع البيانات المعلنة (exactly the declared columns and data types)
+- B. أن النموذج يُرجع بالضبط الأعمدة وأنواع البيانات المعلنة (declared types)
 - C. أن مالك البيانات (data owner) المسمّى في `meta` قد اعتمد آخر تغيير
 - D. ألّا يكون في النموذج أي عمود موسوم بأنه بيانات شخصية (tagged as personal data)
 
@@ -506,8 +506,8 @@ flowchart RL
 **1. تستبدل هدى كل رقم هوية وطنية (national ID) بتجزئة MD5 غير مملّحة (unsalted MD5 hash) له وتصف الجدول بأنه "مجهّل (anonymised)". ما المشكلة الرئيسية؟**
 
 - A. مُخرَج MD5 ‏(MD5 output) أطول من أن يُخزَّن بكفاءة في عمود يُستخدم للربط (used for joins)
-- B. التجزئة تُلغي القدرة على ربط الجداول على العميل (join tables on the customer)
-- C. يمكن عكس التجزئات بتجزئة كل رقم هوية ممكن (hashing every possible ID)، لذا ليست البيانات مجهولة (not anonymous)
+- B. التجزئة تُلغي القدرة على ربط الجداول على العميل (join tables on the customer ID) تمامًا
+- C. يمكن عكس التجزئات بتجزئة كل رقم هوية ممكن (hashing every possible ID)، لذا ليست مجهولة
 - D. تجزئة البيانات الشخصية محظورة تمامًا (prohibited outright) بموجب اللائحة العامة لحماية البيانات (GDPR)
 
 <details><summary>الإجابة</summary>

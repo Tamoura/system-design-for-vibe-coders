@@ -19,7 +19,7 @@
     "ar": [
      "تحقّق من معرّف جلسة الدفع (Checkout session ID) في رابط النجاح (success URL) قبل ترقية خطة المؤسسة (upgrading the org's plan)",
      "رقِّ المؤسسة (upgrade the org) عندما ينقر المالك (owner) زر الترقية (Upgrade)، وتراجع عن ذلك إن فشل الدفع (payment fails)",
-     "رقِّ المؤسسة من الويب هوك بعد التحقق منه (verified webhook)، ولتكتفِ صفحة النجاح (success page) بعبارة \"جارٍ التأكيد ⁦(confirming…)⁩\"",
+     "رقِّ المؤسسة من الويب هوك بعد التحقق منه (verified webhook)، ولتكتفِ صفحة النجاح بعبارة \"جارٍ التأكيد ⁦(confirming…)⁩\"",
      "أبقِ الترقية (upgrade) في صفحة النجاح (success page)، وأضف مهمة ليلية (nightly job) تصلح أي حالات عدم تطابق (mismatches)"
     ]
    },
@@ -45,7 +45,7 @@
      "Turn on a feature flag for Acme's account that unlocks the higher plan limits"
     ],
     "ar": [
-     "أبقِ Acme على خطة Business (Business plan) مع استثناءات (overrides) لها سبب (reason) ومالك (owner) وتاريخ انتهاء (expiry date)",
+     "أبقِ Acme على خطة Business (Business plan) مع استثناءات (overrides) لها سبب (reason) ومالك (owner) وانتهاء (expiry)",
      "أنشئ خطة مخصصة (custom plan) باسم acme_enterprise في plans.ts، واربط بها سعر Stripe الجديد (new Stripe Price) الخاص بـAcme",
      "عدّل حدود خطة Business (Business plan limits) في plans.ts إلى 2,000 مراقِب (monitors) وفحص كل 15 ثانية (15-second checks)",
      "فعّل علم ميزة (feature flag) لحساب Acme (Acme's account) يفتح حدود الخطة الأعلى (higher plan limits)"
@@ -70,7 +70,7 @@
      "check:{monitorId}:{startedAt}, taken from the moment the check began to run",
      "A UUID generated when the job is enqueued and kept in the job's payload",
      "check:{monitorId}, enforced by a unique constraint on the usage events",
-     "check:{monitorId}:{scheduledAt}, enforced by a unique constraint"
+     "check:{monitorId}:{scheduledAt}, enforced by a unique constraint on usage events"
     ],
     "ar": [
      "check:{monitorId}:{startedAt}، مأخوذًا من لحظة بدء تشغيل الفحص (check start time)",

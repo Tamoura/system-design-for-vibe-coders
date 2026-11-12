@@ -179,7 +179,7 @@ Noura's team publishes **Najm Unified Control Set v1: AppSec and AI extract**. E
 - A. A NIST CSF 2.0 Target Profile
 - B. An ISO/IEC 27001 certificate from an accredited body, whose scope covers the SME Portal and API platform
 - C. The latest OWASP SAMM scores
-- D. A letter from the CISO confirming the SSDF is followed
+- D. A letter from the CISO confirming the SSDF is followed, signed by the CISO and dated within the last twelve months
 
 <details><summary>Answer</summary>
 
@@ -189,10 +189,10 @@ Noura's team publishes **Najm Unified Control Set v1: AppSec and AI extract**. E
 
 **2. Ali drafts a control: "Developers should write secure code." What is the best improvement?**
 
-- A. Add "and must follow OWASP guidance"
-- B. Map it to more frameworks so it answers more audit questions
+- A. Add "and must follow OWASP guidance" to the end of the sentence and attach the guidance document, then treat it as closed
+- B. Map it to more frameworks so it answers more audit questions, and list every clause it satisfies in the policy
 - C. Rewrite it as a scoped, owned, testable statement with an automated evidence source
-- D. Delete it, because secure coding cannot be governed
+- D. Delete it, because secure coding cannot be governed by policy and the standard is out of date now
 
 <details><summary>Answer</summary>
 
@@ -215,7 +215,7 @@ Noura's team publishes **Najm Unified Control Set v1: AppSec and AI extract**. E
 
 **4. Najm's SAMM baseline shows Threat Assessment at 1.0. Hamad asks for every practice to reach level 3 by year end. What is the best response?**
 
-- A. Agree, because level 3 everywhere is what auditors expect
+- A. Agree, because level 3 everywhere is what auditors expect and it gives one simple target for every team in the programme, easy to explain
 - B. Ask teams to re-rate themselves at 3
 - C. Drop SAMM, because maturity models are not useful
 - D. Propose risk-based targets per practice, raising Threat Assessment first, and pair scores with test outcomes
@@ -229,7 +229,7 @@ Noura's team publishes **Najm Unified Control Set v1: AppSec and AI extract**. E
 **5. Najm wants practices its engineering teams, including those fine-tuning models, can build into their pipelines. Which source fits best?**
 
 - A. NIST SSDF (SP 800-218), with SP 800-218A for generative AI model development
-- B. ISO/IEC 27001 Clause 9 on performance evaluation
+- B. ISO/IEC 27001 Clause 9 on performance evaluation, including internal audit and management review
 - C. The CSF Tiers
 - D. BSIMM, used as a mandatory checklist
 
@@ -422,7 +422,7 @@ Rule: Jassim, as incident commander, records the awareness time in the ticket, a
 
 **1. A stolen Najm laptop held a spreadsheet of EU customers' personal data. The disk was fully encrypted and the key was not with the device. Which statement is BEST?**
 
-- A. Every customer in the file must be told within 72 hours
+- A. Every customer in the file must be told within 72 hours, together with the supervisory authority and the card schemes, all at the same time
 - B. Nothing needs to be done, because the data was encrypted
 - C. The breach must be documented and assessed under Art. 33, but under Art. 34(3) individuals likely need not be told
 - D. Notify only if the theft becomes public
@@ -449,7 +449,7 @@ Rule: Jassim, as incident commander, records the awareness time in the ticket, a
 **3. Forty minutes into the SME Portal incident, what is Ali's most valuable contribution?**
 
 - A. Contain the exposure, preserve the logs, and give Jassim and Sara the facts: when it was found, which data and countries, encryption status, what the logs show
-- B. Decide no notification is needed because the users are business customers
+- B. Decide no notification is needed because the users are business customers and not individuals, and record that decision in the incident ticket without involving the DPO
 - C. Tell nobody until the full root cause is known
 - D. Clear the noisy export logs so the fix deploys cleanly
 
@@ -477,7 +477,7 @@ Rule: Jassim, as incident commander, records the awareness time in the ticket, a
 - A. It does not; logs are optional under the GDPR
 - B. Najm cannot show which records were taken, so it must treat every reachable record as possibly exposed
 - C. Logging less always reduces breach obligations
-- D. Regulators only look at the last 24 hours of logs
+- D. Regulators only look at the last 24 hours of logs, so older entries can be deleted at any time without a record or approval
 
 <details><summary>Answer</summary>
 
@@ -688,7 +688,7 @@ Each line of option B cites its risk-register entry: agent tool misuse, vulnerab
 
 **1. Last year's board slide said "12,481 vulnerabilities detected". What should replace it?**
 
-- A. The same number, with a target to double detection
+- A. The same number as last quarter, with a target to double detection next year, a list of the tools used, a note that the budget stays flat, and the names of the engineers who ran the scans
 - B. Every critical finding with its CVSS score
 - C. Top risks against appetite with their trend, three to five KRIs such as known exploited vulnerabilities past SLA, and the decisions needed
 - D. A screenshot of the scanner dashboard
@@ -703,7 +703,7 @@ Each line of option B cites its risk-register entry: agent tool misuse, vulnerab
 
 - A. Agree, because accountability motivates champions
 - B. Keep accountability with the team lead; the champion is a multiplier with protected time, training and recognition
-- C. Make the central AppSec team accountable instead
+- C. Make the central AppSec team accountable instead, since champions are volunteers and cannot be held responsible for results
 - D. Replace champions with another scanner
 
 <details><summary>Answer</summary>
@@ -715,7 +715,7 @@ Each line of option B cites its risk-register entry: agent tool misuse, vulnerab
 **3. Over a year, mean time to remediate high findings falls from 40 to 15 days, but open high findings past SLA double. What is the most likely explanation?**
 
 - A. Survivorship: the metric counts only closed findings, so quick fixes improved it while hard items aged
-- B. The scanner is broken
+- B. The scanner is broken: since the last upgrade it has stopped reporting new findings, so the backlog looks shorter than it is
 - C. Attackers have become more active
 - D. The SLA is too long
 
@@ -740,7 +740,7 @@ Each line of option B cites its risk-register entry: agent tool misuse, vulnerab
 
 **5. Which budget request gives the board the best basis for a decision?**
 
-- A. "Industry studies show fixes cost 100 times more in production, so we need more"
+- A. "Industry studies show fixes cost 100 times more in production, so we need more people, more tools and a bigger budget next year, approved now"
 - B. "Our peers spend more than we do"
 - C. Three options, each tied to named risks, with full cost, the metric that will move, what is retired and the residual risk accepted
 - D. A list of tools the team would like

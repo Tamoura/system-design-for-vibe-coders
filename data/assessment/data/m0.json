@@ -39,7 +39,7 @@
    },
    "o": {
     "en": [
-     "Rebuild recent days each run, placing taps by event time",
+     "Rebuild recent days on each run, placing taps by their event time",
      "Move the daily build to 23:00 so more taps arrive before it runs",
      "Count each tap on the day it arrived, so no tap is left uncounted",
      "Switch the whole flow to streaming so each tap counts on arrival"
@@ -70,7 +70,7 @@
      "Salem, as frequent jobs would raise the platform's cloud bill",
      "Lina, as analytics engineers own every metric a new report uses",
      "Sara, as the core banking tables hold customers' personal data",
-     "Tariq, as his team owns the source and its production load"
+     "Tariq, as his team owns the source system and its production load"
     ],
     "ar": [
      "سالم، لأن المهام المتكرّرة (frequent jobs) سترفع فاتورة السحابة (cloud bill) للمنصّة",

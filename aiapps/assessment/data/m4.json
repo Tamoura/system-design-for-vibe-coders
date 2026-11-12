@@ -40,13 +40,13 @@
       "o": {
         "en": [
           "Add BM25 and fuse its ranking with the vector ranking by reciprocal rank fusion",
-          "Add a reranker so the best few of the top 20 candidates are kept for the prompt",
-          "Tighten the prompt so the model answers only from the documents and cites their ids",
+          "Add a reranker so the best few of the top 20 candidates reach the prompt",
+          "Tighten the prompt so the model answers only from the documents and cites ids",
           "Split at headings and list items, add overlap and put the title in the chunk text"
         ],
         "ar": [
-          "إضافة BM25 ودمج ترتيبه مع ترتيب البحث المتجهي (vector search) بدمج الرتب التبادلي (reciprocal rank fusion, RRF)",
-          "إضافة مُعيد ترتيب (reranker) يُبقي الأفضل قليلًا من أعلى 20 مرشحًا (top 20 candidates) للموجّه (prompt)",
+          "إضافة BM25 ودمج ترتيبه مع ترتيب البحث المتجهي (vector search) بدمج الرتب التبادلي (RRF)",
+          "إضافة مُعيد ترتيب (reranker) يُبقي الأفضل من أعلى 20 مرشحًا (top 20 candidates) للموجّه",
           "تشديد الموجّه (prompt) ليجيب النموذج (model) من الوثائق المعطاة فقط ويستشهد (cites) بمعرّفاتها (ids)",
           "التقسيم عند العناوين (headings) والقوائم (lists) مع تداخل (overlap) ووضع العنوان في نص المقطع (chunk text)"
         ]
@@ -69,12 +69,12 @@
         "en": [
           "Try query rewriting or a real embedding model in the retriever and keep the labelled questions unchanged",
           "Reword the three labelled questions in the policies' own vocabulary and keep the retriever unchanged",
-          "Lower MIN_SIM until the three right chunks clear the vector gate and keep the labelled questions unchanged",
+          "Lower MIN_SIM until the three right chunks pass the vector gate and keep the labelled questions unchanged",
           "Add a reranker to reorder the top 20 candidates and keep the labelled questions and MIN_SIM unchanged"
         ],
         "ar": [
           "تجربة إعادة كتابة الاستعلام (query rewriting) أو تضمين حقيقي (real embedding) في المسترجِع مع إبقاء الأسئلة الموسومة كما هي",
-          "إعادة صياغة (rewording) الأسئلة الموسومة الثلاثة بمفردات السياسات نفسها (policies' own vocabulary) مع إبقاء المسترجِع كما هو",
+          "إعادة صياغة (rewording) الأسئلة الموسومة الثلاثة بمفردات السياسات نفسها مع إبقاء المسترجِع كما هو",
           "خفض `MIN_SIM` حتى تتجاوز المقاطع (chunks) الثلاثة الصحيحة بوابة المتجهات (vector gate) مع إبقاء الأسئلة الموسومة كما هي",
           "إضافة مُعيد ترتيب (reranker) لإعادة ترتيب أعلى 20 مرشحًا (top 20 candidates) مع إبقاء الأسئلة الموسومة و`MIN_SIM` كما هي"
         ]

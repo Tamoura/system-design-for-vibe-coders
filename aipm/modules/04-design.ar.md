@@ -179,7 +179,7 @@ flowchart TD
 - A. أتمتة الاثنين، لأن النموذج يتفوق على بطاقة التقييم (outperforms the scorecard)
 - B. إبقاء كل شيء يدويًا (manual) إلى أن يصبح النموذج مثاليًا (perfect)
 - C. أتمتة الموافقات داخل سياج نطاق (scope fence)، وتحويل حالات الرفض والحالات غير المؤكدة (declines and uncertain cases) إلى محللي الائتمان، وتشغيل وضع الظل (shadow mode) لجمع الأدلة
-- D. أتمتة حالات الرفض فقط، لأنها توفر أكبر قدر من وقت محللي الائتمان (underwriter time)
+- D. أتمتة حالات الرفض (declines) فقط، لأنها توفر أكبر قدر من وقت محللي الائتمان (underwriter time) وتُعدّ الأقل خطرًا إذا أخطأ النموذج في حالة حية (live case)
 
 <details><summary>الإجابة</summary>
 
@@ -189,14 +189,14 @@ flowchart TD
 
 **3. يوافق محللو الائتمان (underwriters) الذين يراجعون توصيات نموذج (model's recommendations) عليها في 99.8% من الحالات، ويقضون نحو عشر ثوانٍ لكل حالة. ما أفضل تفسير (best interpretation)؟**
 
-- A. النموذج ممتاز؛ أزيلوا المراجعين (remove the reviewers)
-- B. قد تكون المراجعة ختمًا مطاطيًا (rubber stamp)؛ افحص عينات من الحالات (sample-check cases) وامنح المراجعين مزيدًا من الوقت والأدلة وسهولة التجاوز (easy override) قبل استخلاص النتائج
+- A. قد تكون المراجعة ختمًا مطاطيًا (rubber stamp)؛ افحص عينات من الحالات (sample-check cases) وامنح المراجعين مزيدًا من الوقت والأدلة وسهولة التجاوز (easy override) قبل استخلاص النتائج
+- B. النموذج ممتاز ونسبة الاتفاق تثبت ذلك؛ أزيلوا المراجعين (remove the reviewers) واستخدموا وقت فريق الاكتتاب (underwriting team) في أعمال أخرى أعلى قيمة (more valuable work)
 - C. المراجعون كسالى (lazy) ويجب إعادة تدريبهم (retrained)
 - D. معدل التجاوز (override rate) لا علاقة له بجودة المنتج (product quality)
 
 <details><summary>الإجابة</summary>
 
-**B.** معدل الاتفاق المرتفع جدًا (very high agreement rate) مع أوقات مراجعة قصيرة جدًا علامة تحذير (warning sign) على تحيّز الأتمتة (automation bias). قد يعني أن النموذج ممتاز، لكنك لن تعرف إلا بعد أخذ العينات (after sampling). يقفز A إلى استنتاج (jumps to a conclusion)؛ ويلوم C الناس على مشكلة تصميم (design problem). (🟡 التعمق أكثر، Going deeper).
+**A.** معدل الاتفاق المرتفع جدًا (very high agreement rate) مع أوقات مراجعة قصيرة جدًا علامة تحذير (warning sign) على تحيّز الأتمتة (automation bias). قد يعني أن النموذج ممتاز، لكنك لن تعرف إلا بعد أخذ العينات (after sampling). يقفز B إلى استنتاج (jumps to a conclusion)؛ ويلوم C الناس على مشكلة تصميم (design problem). (🟡 التعمق أكثر، Going deeper).
 
 </details>
 
@@ -204,25 +204,25 @@ flowchart TD
 
 - A. الاقتراح، الصياغة، القرار، التنفيذ (Suggest, draft, decide, act)
 - B. البيانات، النموذج، الواجهة، المراقبة (Data, model, interface, monitoring)
-- C. جمع المعلومات، تحليل المعلومات، اختيار القرار، تنفيذ الإجراء (Information gathering, information analysis, decision selection, action implementation)
-- D. الاكتشاف، التعريف، التصميم، البناء (Discover, define, design, build)
+- C. الاكتشاف، التعريف، التصميم، البناء (Discover, define, design, build)
+- D. جمع المعلومات، تحليل المعلومات، اختيار القرار، تنفيذ الإجراء (Information gathering, information analysis, decision selection, action implementation)
 
 <details><summary>الإجابة</summary>
 
-**C.** يفصل نموذجهم لعام 2000 (their 2000 model) بين هذه الوظائف الأربع. أما الاقتراح والصياغة والقرار والتنفيذ (A) فهو السلّم العملي لهذا المقرر (this course's working ladder) لمهام المنتج، وليس وظائفهم الأربع. (🟡 التعمق أكثر، Going deeper).
+**D.** يفصل نموذجهم لعام 2000 (their 2000 model) بين هذه الوظائف الأربع. أما الاقتراح والصياغة والقرار والتنفيذ (A) فهو السلّم العملي لهذا المقرر (this course's working ladder) لمهام المنتج، وليس وظائفهم الأربع. (🟡 التعمق أكثر، Going deeper).
 
 </details>
 
 **5. تحذّر ورقة بينبريدج (Bainbridge) "Ironies of Automation" من أي أثر؟**
 
 - A. الأتمتة تخفض التكاليف دائمًا (always lowers costs)
-- B. عندما يُؤتمت العمل الروتيني (routine work)، يبقى للبشر أصعب الحالات (hardest cases) بينما يفقدون الممارسة والسياق (practice and context) اللازمين للتعامل معها
+- B. لا يمكن تطبيق الأتمتة (automation) على القرارات (decisions)، لأن الإنسان وحده هو من يمكن محاسبته (held accountable) على اختيار يغيّر ما يحدث لأموال العميل (customer's money)
 - C. المستخدمون لا يثقون أبدًا بالأنظمة المؤتمتة (automated systems)
-- D. لا يمكن تطبيق الأتمتة على القرارات (decisions)
+- D. عندما يُؤتمت العمل الروتيني (routine work)، يبقى للبشر أصعب الحالات (hardest cases) بينما يفقدون الممارسة والسياق (practice and context) اللازمين للتعامل معها
 
 <details><summary>الإجابة</summary>
 
-**B.** تلك هي المفارقة المحورية (central irony)، ولهذا يقترح الدرس إبقاء بعض العمل اليدوي للحفاظ على المهارة (skill retention) وإظهار طريقة عمل النظام (showing the system's working) للمراجعين. (🔴 نظرة الخبير، Expert view).
+**D.** تلك هي المفارقة المحورية (central irony)، ولهذا يقترح الدرس إبقاء بعض العمل اليدوي للحفاظ على المهارة (skill retention) وإظهار طريقة عمل النظام (showing the system's working) للمراجعين. (🔴 نظرة الخبير، Expert view).
 
 </details>
 
@@ -413,20 +413,20 @@ flowchart TD
 
 **1. يرفض مدير علاقة (RM) استخدام مساعد مذكرات الائتمان (Credit Memo Copilot) لأنه "سيتعيّن عليّ التحقق من كل رقم على أي حال (I'd have to check every number anyway)". أي تغيير تصميمي (design change) يعالج هذا بأكثر الطرق مباشرة؟**
 
-- A. إضافة لافتة (banner) تقول إن المساعد عالي الدقة (highly accurate)
-- B. ربط كل رقم بصفحته المصدرية (source page) بحيث يستغرق التحقق ثوانيَ
-- C. إزالة إمكانية تحرير المسودات (edit drafts)
-- D. عرض نسبة ثقة إجمالية واحدة (single overall confidence percentage) للمسودة
+- A. إضافة لافتة (banner) أعلى كل مسودة تقول إن المساعد عالي الدقة (highly accurate) في جميع الحالات
+- B. عرض نسبة ثقة إجمالية واحدة (single overall confidence percentage) للمسودة، أعلى القسم الأول (first section)
+- C. إزالة إمكانية تحرير المسودات (edit drafts) حتى يستخدم المديرون المخرجات كما وُلِّدت (as generated)
+- D. ربط كل رقم بصفحته المصدرية (source page) بحيث يستغرق التحقق ثوانيَ
 
 <details><summary>الإجابة</summary>
 
-**B.** هذه قلة ثقة (undertrust) تدفعها تكلفة التحقق (cost of checking). فالاستشهادات (citations) تجعل التحقق زهيد التكلفة، فيستطيع مدير العلاقة الاعتماد على المسودة حيث تكون مسندة (grounded). يحاول A رفع الثقة دون دليل (without evidence)؛ وD رقم واحد غير معايَر على الأرجح (likely uncalibrated) لا يخبر مدير العلاقة *أي* رقم يتحقق منه. (🟢 الأساسيات، The essentials؛ 🔴 نظرة الخبير، Expert view).
+**D.** هذه قلة ثقة (undertrust) تدفعها تكلفة التحقق (cost of checking). فالاستشهادات (citations) تجعل التحقق زهيد التكلفة، فيستطيع مدير العلاقة الاعتماد على المسودة حيث تكون مسندة (grounded). يحاول A رفع الثقة دون دليل (without evidence)؛ وB رقم واحد غير معايَر على الأرجح (likely uncalibrated) لا يخبر مدير العلاقة *أي* رقم يتحقق منه. (🟢 الأساسيات، The essentials؛ 🔴 نظرة الخبير، Expert view).
 
 </details>
 
 **2. ماذا تعني "الثقة المعايَرة (calibrated trust)"؟**
 
-- A. يثق المستخدمون بالذكاء الاصطناعي بأقصى قدر ممكن (as much as possible)
+- A. يثق المستخدمون بالذكاء الاصطناعي بأقصى قدر ممكن (as much as possible)، فيستخدمونه في كل مهمة ويقضون أقل وقت ممكن في التحقق منه لاحقًا (checking it afterwards)، ويعدّون ذلك ثقة سليمة (healthy trust) تمامًا
 - B. درجات النموذج (model's scores) معايَرة إحصائيًا (statistically calibrated)
 - C. يطابق اعتماد المستخدمين على النظام ما يستطيع النظام فعله فعلًا (what the system can actually do)، فيعتمدون عليه حين يصيب ويتحققون منه حيث يضعف (check it where it is weak)
 - D. يثق المستخدمون بالذكاء الاصطناعي فقط بعد دورة تدريبية (training course)
@@ -439,20 +439,20 @@ flowchart TD
 
 **3. لا يستطيع نجم أسيست (Najm Assist) العثور على إجابة عن رسم جديد (new fee) في مصادره المعتمدة (approved sources). ما أفضل سلوك (best behaviour)؟**
 
-- A. الإجابة من المعرفة العامة للنموذج (model's general knowledge) مع إخلاء مسؤولية (disclaimer)
-- B. القول إنه لا يستطيع الإجابة عن هذا، وعرض توصيل العميل بموظف بشري (human agent) مع نقل المحادثة (conversation carried over)
-- C. الطلب من العميل المحاولة لاحقًا (try again later)
-- D. الإجابة مع عرض درجة ثقة أدنى (lower confidence score)
+- A. الإجابة من المعرفة العامة للنموذج (model's general knowledge) مع إخلاء مسؤولية (disclaimer) يوضح أن الإجابة قد لا تعكس أحدث الرسوم (latest fees) المعلنة
+- B. الإجابة مع عرض درجة ثقة أدنى (lower confidence score) بجانبها، ليحكم العميل بنفسه إلى أي مدى يعتمد عليها (how far to rely on it)
+- C. الطلب من العميل المحاولة لاحقًا (try again later)، تحسبًا لأن تكون الرسوم الجديدة قد أضيفت إلى المصادر المعتمدة (approved sources) حينها، ثم إنهاء المحادثة
+- D. القول إنه لا يستطيع الإجابة عن هذا، وعرض توصيل العميل بموظف بشري (human agent) مع نقل المحادثة (conversation carried over)
 
 <details><summary>الإجابة</summary>
 
-**B.** الفشل اللبق (graceful failure): التعرّف على غياب الأساس (lack of grounds) وعرض مسار إلى من يعرف. أما A فهو نمط Air Canada (the Air Canada pattern): الإجابة غير المسندة (ungrounded answer) تُلزم البنك، أيًّا كان ما يقوله إخلاء المسؤولية. (🟡 التعمق أكثر، Going deeper؛ 🔴 نظرة الخبير، Expert view).
+**D.** الفشل اللبق (graceful failure): التعرّف على غياب الأساس (lack of grounds) وعرض مسار إلى من يعرف. أما A فهو نمط Air Canada (the Air Canada pattern): الإجابة غير المسندة (ungrounded answer) تُلزم البنك، أيًّا كان ما يقوله إخلاء المسؤولية. (🟡 التعمق أكثر، Going deeper؛ 🔴 نظرة الخبير، Expert view).
 
 </details>
 
 **4. توقف محللو الاحتيال (fraud analysts) عن قراءة التنبيهات الذكية (Smart Alerts) لأن معظمها إنذارات كاذبة (false alarms). أي عبارة هي الأدق؟**
 
-- A. إرهاق التنبيهات (alert fatigue) مشكلة في المستخدم ولا تحتاج إلا إلى إعادة التدريب (retraining only)
+- A. إرهاق التنبيهات (alert fatigue) لدى المحللين (analysts) مشكلة في المستخدم (a user problem) ولا تحتاج إلا إلى إعادة التدريب (retraining only)
 - B. تقليل الإنذارات الكاذبة لا تكلفة له (has no cost)
 - C. تقايض عتبة التنبيه (alert threshold) بين الاحتيال المفقود (missed fraud) والإنذارات الكاذبة، كما يؤثر تصميم التجاهل (dismissal design) في الإرهاق؛ وكلاهما قراران للمنتج يُتخذان مع فريق الاحتيال (fraud team)
 - D. إزالة كل التفسيرات من التنبيهات لتوفير مساحة الشاشة (screen space)
@@ -465,7 +465,7 @@ flowchart TD
 
 **5. وجد فريق بحثي أن إضافة مبرر طليق (fluent rationale) إلى كل توصية من توصيات النموذج جعلت المراجعين يقبلون مزيدًا من التوصيات، بما فيها الخاطئة. ماذا ينبغي أن يستخلص مدير المنتج (PM) من ذلك؟**
 
-- A. التفسيرات تحسّن القرارات دائمًا (always improve decisions)
+- A. التفسيرات (explanations) تحسّن القرارات دائمًا (always improve decisions) لدى المراجعين (reviewers)
 - B. إزالة كل التفسيرات (remove all explanations)
 - C. تفضيل التفسيرات التي تجعل التحقق سهلًا (make checking easy)، مثل الاستشهادات والأدلة (citations and evidence)، واختبار ما إذا كانت تساعد المستخدمين على اكتشاف الأخطاء، لا ما إذا كانوا يحبونها فحسب
 - D. عرض التفسيرات للمستخدمين الجدد فقط (new users)
@@ -640,7 +640,7 @@ sequenceDiagram
 
 **1. يقول عميل لنجم أسيست (Najm Assist) "أوقف بطاقتي (stop my card)". ماذا ينبغي أن يفعل المساعد أولًا (first)؟**
 
-- A. إلغاء البطاقة فورًا (cancel the card immediately) لحماية العميل
+- A. إلغاء البطاقة فورًا (cancel the card immediately) لحماية العميل، لأن طلب الإيقاف يشير إلى احتيال محتمل (possible fraud) والسرعة أهم من أي اعتبار آخر (speed matters most)، ثم إبلاغه بعد ذلك
 - B. استيضاح ما إذا كان العميل يريد تجميدًا مؤقتًا (temporary freeze) أم الإبلاغ عن فقدان البطاقة أو سرقتها (report the card lost or stolen)، ثم عرض معاينة (preview) للإجراء المختار
 - C. إخبار العميل بالاتصال بمركز الاتصال (contact centre)
 - D. تجميد البطاقة بصمت (freeze the card silently) وإبلاغه لاحقًا
@@ -655,21 +655,21 @@ sequenceDiagram
 
 - A. "لماذا فُرض عليّ هذا الرسم؟ ⁦(Why was I charged this fee?)⁩"
 - B. "لا أتعرّف على دفعة، ماذا أفعل؟ ⁦(I don't recognise a payment, what can I do?)⁩"
-- C. دفع فاتورة الكهرباء المحفوظة نفسها كل شهر (paying the same saved electricity bill every month)
-- D. "ما المستندات التي أحتاجها لتمويل الشركات الصغيرة؟ ⁦(What documents do I need for SME financing?)⁩"
+- C. "ما المستندات التي أحتاجها لتمويل الشركات الصغيرة (SME financing)؟ ⁦(What documents do I need for SME financing?)⁩"
+- D. دفع فاتورة الكهرباء المحفوظة نفسها كل شهر (paying the same saved electricity bill every month)
 
 <details><summary>الإجابة</summary>
 
-**C.** المهمة المتكررة والمنظَّمة (frequent, structured task) أسرع وأكثر أمانًا بزر أو مسار محفوظ (saved flow). أما الثلاث الأخرى فأسئلة متنوعة (varied questions) تفيد فيها المحادثة. (🟢 الأساسيات، The essentials).
+**D.** المهمة المتكررة والمنظَّمة (frequent, structured task) أسرع وأكثر أمانًا بزر أو مسار محفوظ (saved flow). أما الثلاث الأخرى فأسئلة متنوعة (varied questions) تفيد فيها المحادثة. (🟢 الأساسيات، The essentials).
 
 </details>
 
 **3. يقترح طارق وضع القاعدة "لا تغيّر أبدًا حدًا فوق 20,000 ريال قطري (never change a limit above QAR 20,000)" في موجّه المساعد (assistant's prompt). ما أفضل استجابة من منظور المنتج (best product response)؟**
 
-- A. القبول: الموجّه هو المكان الصحيح لقواعد العمل (business rules)
+- A. القبول: الموجّه هو المكان الصحيح لقواعد العمل (business rules)، لأن المساعد يقرؤه قبل كل محادثة (before every conversation) ويلتزم بما فيه التزامًا كاملًا
 - B. فرض الحد في نظام البطاقات (card system) الذي تستدعيه الأداة، والإبقاء على تعليمة الموجّه طبقةً إضافية فقط (extra layer)
-- C. إزالة الحد كي لا يشعر العملاء بالإحباط (frustrated)
-- D. الطلب من النموذج أن يتحقق مجددًا من مُخرجه (double-check its own output)
+- C. إزالة الحد كي لا يشعر العملاء بالإحباط (frustrated) حين يرفض المساعد طلبًا يرونه معقولًا (reasonable request)، ولو زادت مخاطر الاحتيال
+- D. الطلب من النموذج أن يتحقق مجددًا من مُخرجه (double-check its own output) مقابل القاعدة قبل أن يرسل الإجراء النهائي إلى نظام البطاقات (card system)
 
 <details><summary>الإجابة</summary>
 
@@ -695,7 +695,7 @@ sequenceDiagram
 - A. شخصية أكثر ودًّا (friendlier persona)
 - B. موجّه نظام أطول (longer system prompt)
 - C. الفصل بين القراءة والتصرف (separating reading from acting): بعد المحتوى غير الموثوق (untrusted content)، لا يُنفَّذ أي إجراء ذي عواقب دون معاينة منظَّمة جديدة وتأكيد، ولا يملك الوكيل إلا الأدوات التي تحتاجها المهمة
-- D. أوقات استجابة أسرع (faster response times)
+- D. أوقات استجابة أسرع (faster response times) (only a speed improvement of the interface)
 
 <details><summary>الإجابة</summary>
 

@@ -14,13 +14,13 @@
           "Turn on sticky sessions so each user always lands on the same instance",
           "Switch to an L4 load balancer, since it routes faster than an L7 one",
           "Make instances interchangeable: no session, counter or upload in one process",
-          "Give each instance its own in-memory cache so that its reads stay local and fast"
+          "Give each instance its own in-memory cache so reads stay local"
         ],
         "ar": [
-          "فعّل الجلسات اللاصقة (sticky sessions) كي يصل كل مستخدم دائمًا إلى النسخة (instance) نفسها",
-          "انتقل إلى موازن حِمل من الطبقة الرابعة (L4)، لأنه يوجّه أسرع من موازن الطبقة السابعة (L7)",
-          "اجعل النسخ (instances) قابلة للتبديل (interchangeable): لا جلسة (session) ولا عدّاد (counter) ولا ملف مرفوع (upload) يعيش في عملية (process) واحدة",
-          "امنح كل نسخة كاشًا خاصًا في الذاكرة (in-memory cache) كي تبقى قراءاتها محلية وسريعة"
+          "فعّل الجلسات اللاصقة (sticky sessions) كي يصل كل مستخدم دائمًا إلى النسخة (instance) نفسها دون غيرها من النسخ الأخرى المتاحة خلف الموازن",
+          "انتقل إلى موازن حِمل (load balancer) من الطبقة الرابعة (L4)، لأنه يوجّه أسرع من موازن الطبقة السابعة (L7)",
+          "اجعل النسخ (instances) قابلة للتبديل: لا جلسة (session) ولا عدّاد (counter) ولا ملف مرفوع (upload) في عملية (process) واحدة",
+          "امنح كل نسخة (instance) كاشًا خاصًا في الذاكرة (in-memory cache) كي تبقى قراءاتها محلية وسريعة جدًا"
         ]
       },
       "a": 2,
@@ -40,15 +40,15 @@
       "o": {
         "en": [
           "It is redelivered; the consumer must record \"sent\" atomically and skip if done",
-          "Nothing; a durable queue never delivers a job twice once a worker has claimed it",
+          "Nothing; a durable queue never delivers a job twice after a worker claims it",
           "The job is lost; add a cron that resends every email from the last hour",
           "The job goes to the dead-letter queue; replay it by hand each morning"
         ],
         "ar": [
           "تُعاد المهمة (redelivered)؛ فيجب على المستهلك (consumer) تسجيل «أُرسلت» ذرّيًا (atomically) وتخطّيها إن أُنجزت",
-          "لا شيء؛ فالطابور المتين (durable queue) لا يسلّم مهمة مرتين بعد أن يحجزها عامل (worker)",
-          "تضيع المهمة؛ فأضف مهمة مجدولة (cron) تعيد إرسال كل رسائل الساعة الأخيرة",
-          "تذهب المهمة إلى طابور الرسائل الميتة (dead-letter queue)؛ فأعد تشغيلها يدويًا كل صباح"
+          "لا شيء؛ فالطابور المتين (durable queue) لا يسلّم مهمة مرتين بعد أن يحجزها عامل (worker) واحد",
+          "تضيع المهمة (job)؛ فأضف مهمة مجدولة (cron) تعيد إرسال كل رسائل الساعة الأخيرة (last hour)",
+          "تذهب المهمة إلى طابور الرسائل الميتة (dead-letter queue)؛ فأعد تشغيلها يدويًا (by hand) كل صباح بعد مراجعة قائمة المهام العالقة"
         ]
       },
       "a": 0,

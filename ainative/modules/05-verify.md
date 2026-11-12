@@ -251,7 +251,7 @@ Use it in proportion: all of it for money modules, Parts 1 and 4 for a copy chan
 
 - A. A reworded help string for the quote command in the CLI tool
 - B. New wording for the English failure notification customers get
-- C. A docstring fix inside the najmkit documentation page
+- C. A docstring fix inside the najmkit documentation page for newcomers
 - D. A change to how the fee cap applies to express transfers
 
 <details><summary>Answer</summary>

@@ -160,10 +160,10 @@ Khalid lost his Sunday launch; v2 went live six weeks later with a clean file.
 
 **1. Najm Bank develops a credit-scoring model in-house and uses it to assess applicants at its Frankfurt branch. It never sells the model. What is Najm's role under the EU AI Act for this system?**
 
-- A. Deployer only, because it does not place the system on the market
+- A. Deployer only, because it does not place the system on the market or sell it to any outside customer
 - B. Provider and deployer, because it puts the system into service for its own use and uses it
-- C. Distributor, because it makes the system available internally
-- D. No role, because internal tools are out of scope
+- C. Distributor, because it makes the system available to its own staff and branches inside the bank
+- D. No role, because internal tools are out of scope of the Act when no outside party uses them
 
 <details><summary>Answer</summary>
 
@@ -173,10 +173,10 @@ Khalid lost his Sunday launch; v2 went live six weeks later with a clean file.
 
 **2. Which conformity assessment route applies to a high-risk AI system used to evaluate the creditworthiness of natural persons?**
 
-- A. Assessment by a notified body in every case
-- B. No conformity assessment; registration only
+- A. Assessment by a notified body in every case, before the system may be placed on the market
+- B. No conformity assessment; registration only, in the EU database, before the system is put into service by the provider
 - C. Internal control by the provider, based on its QMS and technical documentation
-- D. Certification to ISO/IEC 42001
+- D. Certification to ISO/IEC 42001, issued by an accredited body to the provider's management system
 
 <details><summary>Answer</summary>
 
@@ -186,8 +186,8 @@ Khalid lost his Sunday launch; v2 went live six weeks later with a clean file.
 
 **3. A data science team presents excellent test results and asks for release. The fairness threshold was lowered the week before, after the first results came in. What should the governance function do first?**
 
-- A. Approve, because the new threshold is met
-- B. Ask the vendor to re-run the tests
+- A. Approve, because the new threshold is met, and record the result in the release log
+- B. Ask the vendor to re-run the tests with the original threshold and send the full results to the validation team for sign-off, then decide
 - C. Reject the model permanently
 - D. Treat the threshold change as a governance decision: document why it changed, who approved it and whether the original criterion should apply
 
@@ -212,10 +212,10 @@ Khalid lost his Sunday launch; v2 went live six weeks later with a clean file.
 
 **5. Before signing off a high-risk credit-scoring system, which item is part of the *deployer's* readiness under the EU AI Act, rather than the provider's?**
 
-- A. Drawing up the EU declaration of conformity
-- B. Affixing the CE marking
+- A. Drawing up the EU declaration of conformity for each system and keeping it for ten years
+- B. Affixing the CE marking to the system or its documentation before it is first used
 - C. Completing a fundamental rights impact assessment before first use
-- D. Writing the Annex IV technical documentation
+- D. Writing the Annex IV technical documentation before the system is first placed on the market
 
 <details><summary>Answer</summary>
 
@@ -443,10 +443,10 @@ After the employer-field event, Layla and Omar rebuild the credit model's **moni
 
 **4. Najm only observes repayment outcomes for approved applicants. Which risk does this create for monitoring and retraining?**
 
-- A. Concept drift
+- A. Concept drift, as the relationship between inputs and outcomes changes over the months after release
 - B. A selective-labels feedback loop in which wrongly declined groups are never corrected
-- C. Automatic breach of GDPR Article 33
-- D. Loss of CE marking
+- C. Automatic breach of GDPR Article 33, which is triggered whenever approval rates differ between groups
+- D. Loss of CE marking, which follows automatically when a model's approval rate falls below its design target
 
 <details><summary>Answer</summary>
 
@@ -457,8 +457,8 @@ After the employer-field event, Layla and Omar rebuild the credit model's **moni
 **5. Which statement about the OECD AI Incidents Monitor is correct?**
 
 - A. It records AI incidents and hazards from public reporting, and governance teams use it to learn and to seed risk registers
-- B. It is the channel for reporting serious incidents under the EU AI Act
-- C. It certifies AI systems as safe
+- B. It is the channel for reporting serious incidents under the EU AI Act, and filing there meets the legal duty to notify authorities
+- C. It certifies AI systems as safe once their providers have submitted test reports
 - D. It replaces a firm's own incident log
 
 <details><summary>Answer</summary>
@@ -637,10 +637,10 @@ The AI Governance Committee adopts a **change classification matrix** for all ti
 
 **1. A provider documented, in its initial conformity assessment, a monthly retraining process with fixed features and automated acceptance tests. A retrain runs within those limits. Under the EU AI Act, this retrain is:**
 
-- A. A substantial modification requiring a new conformity assessment
-- B. Prohibited for high-risk systems
+- A. A substantial modification requiring a new conformity assessment, whatever the provider planned and documented at the start
+- B. Prohibited for high-risk systems, which must stay frozen once they have been placed on the market
 - C. Not a substantial modification, because the change was pre-determined and documented at the initial assessment
-- D. A matter only for the deployer
+- D. A matter only for the deployer, who must approve every update before it reaches users
 
 <details><summary>Answer</summary>
 
@@ -650,9 +650,9 @@ The AI Governance Committee adopts a **change classification matrix** for all ti
 
 **2. A bank licenses a general-purpose customer-service chatbot and reconfigures it to tell customers whether they will be approved for a personal loan. What is the most significant governance consequence under the EU AI Act?**
 
-- A. None; the bank remains a deployer of a limited-risk system
-- B. Only a GDPR DPIA is needed
-- C. The chatbot vendor becomes the deployer
+- A. None; the bank remains a deployer of a limited-risk system, whatever use it makes of the chatbot and whatever purpose it gives it
+- B. Only a GDPR DPIA is needed, because the AI Act does not apply to systems that the bank did not build itself
+- C. The chatbot vendor becomes the deployer, and the bank has no role under the Act at all
 - D. The bank may become the provider of a high-risk system, because it changed the intended purpose to credit assessment
 
 <details><summary>Answer</summary>
@@ -663,10 +663,10 @@ The AI Governance Committee adopts a **change classification matrix** for all ti
 
 **3. Which is the best reason to log the model version with every decision?**
 
-- A. It improves model accuracy
+- A. It improves model accuracy, because the logged cases are fed straight back into training
 - B. It allows any past decision to be reconstructed and explained for complaints, audits and regulators
-- C. It is required for CE marking to be visible
-- D. It replaces the need for monitoring
+- C. It is required for the CE marking to be visible to customers on the bank's website and in the app, as the Act demands
+- D. It replaces the need for monitoring, because every error can be found later in the stored records
 
 <details><summary>Answer</summary>
 
@@ -690,9 +690,9 @@ The AI Governance Committee adopts a **change classification matrix** for all ti
 **5. Which NIST AI RMF area most directly addresses safely phasing out AI systems?**
 
 - A. GOVERN 1.7, processes for decommissioning and phasing out AI systems safely
-- B. MAP 1.1, context is established
-- C. MEASURE 2.11, fairness evaluation
-- D. The Generative AI Profile only
+- B. MAP 1.1, context is established, covering intended purposes, users and legal setting
+- C. MEASURE 2.11, fairness evaluation, covering bias testing across the groups the system affects
+- D. The Generative AI Profile only, because retirement is not covered by the core functions
 
 <details><summary>Answer</summary>
 

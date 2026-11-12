@@ -146,40 +146,40 @@ On Thursday Faisal shows Khalid no demo. He shows where the five hours go, and w
 
 **1. Khalid asks Faisal to "put GenAI into lending this year". What should Faisal do first?**
 
-- A. Pick a large language model and build a memo-drafting demo to show momentum
-- B. Study how relationship managers and credit analysts do the lending work today, and find where time and errors concentrate
+- A. Study how relationship managers and credit analysts do the lending work today, and find where time and errors concentrate
+- B. Pick a large language model and build a memo-drafting demo to show momentum to Khalid and the leadership team before the quarter ends
 - C. Run a survey asking RMs which AI features they would like
 - D. Ask Layla for a risk tier for "GenAI in lending"
 
 <details><summary>Answer</summary>
 
-**B.** Discovery starts with the job and the workflow. The demo (A) is the tempting answer, but it answers "can the model write?", not "where does the work hurt?". Faisal's own demo solved the fastest step. Surveys about imagined features (C) give unreliable answers. Governance (D) needs a specific use case first. (🧭 Why it matters; 🟢 The essentials.)
+**A.** Discovery starts with the job and the workflow. The demo (B) is the tempting answer, but it answers "can the model write?", not "where does the work hurt?". Faisal's own demo solved the fastest step. Surveys about imagined features (C) give unreliable answers. Governance (D) needs a specific use case first. (🧭 Why it matters; 🟢 The essentials.)
 
 </details>
 
 **2. Which job statement is best written?**
 
 - A. "RMs want an AI assistant that drafts credit memos."
-- B. "When a client's review is due, I want a memo the committee accepts first time, so the facility is renewed before the client needs the funds."
-- C. "Improve RM productivity with GenAI."
-- D. "RMs need faster memo software."
+- B. "RMs need faster memo software."
+- C. "Improve relationship manager productivity with GenAI across the whole lending franchise, measured by the number of memos each manager completes every month."
+- D. "When a client's review is due, I want a memo the committee accepts first time, so the facility is renewed before the client needs the funds."
 
 <details><summary>Answer</summary>
 
-**B.** It has a situation, the progress wanted and the outcome, and it names no solution. A and D bake in a solution. C is a goal for the bank, not a job for a person. (🟢 The essentials.)
+**D.** It has a situation, the progress wanted and the outcome, and it names no solution. A and B bake in a solution. C is a goal for the bank, not a job for a person. (🟢 The essentials.)
 
 </details>
 
 **3. Two candidate steps both take about 30 minutes. Step X is extracting balance-sheet figures from PDFs, which an analyst can check against the source in about 3 minutes. Step Y is writing a risk assessment paragraph, which takes about 25 minutes to verify properly. Based on the step-level fit test, which is the stronger AI candidate?**
 
-- A. Y, because generative AI is best at writing
-- B. They are equal, because both take 30 minutes
-- C. X, because its output is much cheaper to check than to produce
-- D. Neither, because both involve financial data
+- A. Y, because generative AI is best at writing, and a risk paragraph is exactly that kind of task
+- B. They are equal, because both steps take about 30 minutes of an analyst's time to complete
+- C. Neither, because both involve financial data and so need a human to do the whole step
+- D. X, because its output is much cheaper to check than to produce
 
 <details><summary>Answer</summary>
 
-**C.** "Cheaper to check than to do" is the most useful single question. Y saves almost nothing once verification is counted. A is tempting because drafting is what GenAI demos show best. But the value depends on checking cost, not on the model's strength. (🟡 Going deeper.)
+**D.** "Cheaper to check than to do" is the most useful single question. Y saves almost nothing once verification is counted. A is tempting because drafting is what GenAI demos show best. But the value depends on checking cost, not on the model's strength. (🟡 Going deeper.)
 
 </details>
 
@@ -373,14 +373,14 @@ Weighted score = 0.40 × value + 0.35 × feasibility + 0.25 × risk. Faisal adds
 
 **1. Staff GenAI has strong enthusiasm across the bank but no business owner and no defined outcome. In Faisal's process, what happens to it?**
 
-- A. It gets a low score and stays on the list
-- B. It fails the knock-out gates and returns to discovery to find an owner and concrete jobs
-- C. It is built first because demand is high
-- D. It is scored on feasibility only
+- A. It fails the knock-out gates and returns to discovery to find an owner and concrete jobs
+- B. It gets a low score and stays on the list, so it can be revisited at the next scoring round
+- C. It is built first, because enthusiasm across the bank shows that demand is high and users are ready
+- D. It is scored on feasibility only, because the other criteria cannot be judged without an owner
 
 <details><summary>Answer</summary>
 
-**B.** Gates run before scoring. A missing owner and a missing measurable outcome are pass or fail conditions. A (keeping it on the list with a low score) is tempting, but it lets an unowned idea linger and soak up attention. (🟡 Going deeper; 🏛️ In practice.)
+**A.** Gates run before scoring. A missing owner and a missing measurable outcome are pass or fail conditions. B (keeping it on the list with a low score) is tempting, but it lets an unowned idea linger and soak up attention. (🟡 Going deeper; 🏛️ In practice.)
 
 </details>
 
@@ -400,32 +400,32 @@ Weighted score = 0.40 × value + 0.35 × feasibility + 0.25 × risk. Faisal adds
 **3. A business case says: 10,000 users × 2 hours saved a month × 100% adoption from launch. What is the most important challenge a PM should raise?**
 
 - A. The hours saved should be in minutes
-- B. The adoption assumption is almost certainly too high and should be conservative and tested
+- B. Nothing, business cases are always optimistic
 - C. The volume should be doubled for growth
-- D. Nothing, business cases are always optimistic
+- D. The adoption assumption is almost certainly too high and should be conservative and tested
 
 <details><summary>Answer</summary>
 
-**B.** Adoption is the factor most often overstated in AI business cases. Users may not trust, check or even open the tool. Use a conservative rate and test it with a pilot. (🟢 The essentials.)
+**D.** Adoption is the factor most often overstated in AI business cases. Users may not trust, check or even open the tool. Use a conservative rate and test it with a pilot. (🟢 The essentials.)
 
 </details>
 
 **4. Two use cases score 3.47 and 3.41. The 3.41 idea builds the document ingestion and evaluation harness that two later products need. What should the PM do?**
 
-- A. Pick 3.47 because it scored higher
-- B. Treat the scores as effectively tied and weigh the platform dependency explicitly in the decision
-- C. Re-weight until 3.41 wins
-- D. Average the two and build both
+- A. Treat the scores as effectively tied and weigh the platform dependency explicitly in the decision
+- B. Pick 3.47 because it scored higher, since the scoring process is meant to settle exactly this kind of choice
+- C. Re-weight the criteria until 3.41 wins, so the platform work is approved for the sake of the later products
+- D. Average the two scores and build both ideas together, splitting the team's capacity between them evenly
 
 <details><summary>Answer</summary>
 
-**B.** Small score gaps are noise, and platform effects are real value that stand-alone scores miss. C is gaming the scorecard. Show the dependency openly instead. (🟡 Going deeper; 🔴 Expert view.)
+**A.** Small score gaps are noise, and platform effects are real value that stand-alone scores miss. C is gaming the scorecard. Show the dependency openly instead. (🟡 Going deeper; 🔴 Expert view.)
 
 </details>
 
 **5. The risk team gives Najm Assist a poor risk score because "customer chatbots can say wrong things". What is the best PM response?**
 
-- A. Accept the score and drop the idea
+- A. Accept the score and drop the idea, because the risk team owns the decision and a chatbot that can say wrong things should not be built at this bank, whatever mitigation is proposed
 - B. Argue that chatbots are low risk
 - C. Define a mitigated design (answers only from approved content, hand-off to agents, internal pilot first), score that design, and add the mitigation cost to effort
 - D. Remove risk from the scorecard
@@ -604,19 +604,19 @@ Khalid pushes back on stopping the predictor: "We've spent six months on it." Ra
 **2. Which kill criterion is best written?**
 
 - A. "We will stop if the pilot is not promising."
-- B. "If fewer than 30% of pilot RMs use the pre-check on at least half their memos by 31 March, we stop and review the design."
+- B. Stop if the model is not state of the art on public leaderboards when the pilot ends, or if a competitor ships something similar first
 - C. "We will review results when the team feels ready."
-- D. "Stop if the model is not state of the art."
+- D. "If fewer than 30% of pilot RMs use the pre-check on at least half their memos by 31 March, we stop and review the design."
 
 <details><summary>Answer</summary>
 
-**B.** It has a metric, a threshold and a date. A and C cannot be tested and will bend to fit any result. D measures the model, not the product outcome. (🟡 Going deeper.)
+**D.** It has a metric, a threshold and a date. A and C cannot be tested and will bend to fit any result. B measures the model, not the product outcome. (🟡 Going deeper.)
 
 </details>
 
 **3. A six-month pilot model predicts SME limit increases with good accuracy, but no RM has changed an action because of it. The sponsor says, "We've invested too much to stop." What is the strongest response?**
 
-- A. Keep going and add more features
+- A. Keep going and add more features to the model, since a pilot with this much accuracy should eventually change what the relationship managers do
 - B. Improve the model's accuracy further
 - C. Stop the pilot, record the evidence and a reopening condition, and move the team to a higher-value queued item
 - D. Hand the model to a vendor
@@ -629,14 +629,14 @@ Khalid pushes back on stopping the predictor: "We've spent six months on it." Ra
 
 **4. Marketing wants GenAI to write personalised loan decline letters. What is the best design?**
 
-- A. Let the model generate the reasons from the application file
-- B. Keep the reasons deterministic, from the decision's reason codes and a reviewed template. Consider AI only for helping staff explain the letter
+- A. Keep the reasons deterministic, from the decision's reason codes and a reviewed template. Consider AI only for helping staff explain the letter
+- B. Let the model generate the reasons from the application file, and have a credit officer read and approve each letter before it is sent to the customer
 - C. Use GenAI but add a disclaimer
 - D. Send no reasons
 
 <details><summary>Answer</summary>
 
-**B.** Regulated reasons must be accurate, specific and repeatable, which fits a deterministic source and template. AI can help at the edge with a human in the loop. C is tempting, but a disclaimer does not make invented or paraphrased reasons acceptable. (🟡 Going deeper; 🏛️ In practice.)
+**A.** Regulated reasons must be accurate, specific and repeatable, which fits a deterministic source and template. AI can help at the edge with a human in the loop. C is tempting, but a disclaimer does not make invented or paraphrased reasons acceptable. (🟡 Going deeper; 🏛️ In practice.)
 
 </details>
 
@@ -645,7 +645,7 @@ Khalid pushes back on stopping the predictor: "We've spent six months on it." Ra
 - A. Only "did not work"
 - B. The evidence and a reopening condition, such as "revisit when statements arrive in machine-readable form or extraction quality improves on the same test set"
 - C. The names of the people who proposed it
-- D. Nothing, stopped ideas should not be recorded
+- D. Nothing, stopped ideas should not be recorded, because a record of failures discourages people from proposing ideas and clutters the backlog for the team that has to maintain it
 
 <details><summary>Answer</summary>
 

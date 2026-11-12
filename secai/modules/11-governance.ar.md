@@ -179,7 +179,7 @@ flowchart TD
 - A. ملف تعريفٍ مستهدف وفق NIST CSF 2.0 (A NIST CSF 2.0 Target Profile)
 - B. شهادة ISO/IEC 27001 من جهةٍ معتمدة (An ISO/IEC 27001 certificate from an accredited body)، يغطي نطاقها بوابة الشركات الصغيرة ومنصة واجهات البرمجة (whose scope covers the SME Portal and API platform)
 - C. أحدث درجات OWASP SAMM (The latest OWASP SAMM scores)
-- D. خطابٌ من رئيس أمن المعلومات (A letter from the CISO) يؤكّد اتّباع SSDF (confirming the SSDF is followed)
+- D. خطابٌ من رئيس أمن المعلومات (A letter from the CISO) يؤكّد اتّباع SSDF (confirming the SSDF is followed)، موقَّعٌ منه ومؤرّخٌ خلال الأشهر الاثني عشر الماضية (signed by the CISO and dated within the last twelve months) كحدٍّ أقصى (at most)
 
 <details><summary>الإجابة</summary>
 
@@ -189,10 +189,10 @@ flowchart TD
 
 **2. يصوغ علي ضابطًا (Ali drafts a control): «على المطوّرين أن يكتبوا شيفرةً آمنة» ⁦("Developers should write secure code.")⁩. ما أفضل تحسين (What is the best improvement)؟**
 
-- A. أضف «ويجب أن يتّبعوا إرشادات OWASP» ("and must follow OWASP guidance")
-- B. اربطه بمزيدٍ من الأطر (Map it to more frameworks) كي يجيب عن مزيدٍ من أسئلة التدقيق (so it answers more audit questions)
+- A. أضف «ويجب أن يتّبعوا إرشادات OWASP» ("and must follow OWASP guidance") إلى نهاية الجملة (to the end of the sentence) وأرفق وثيقة الإرشادات (attach the guidance document)، ثم اعتبر الأمر منتهيًا (then treat it as closed)
+- B. اربطه بمزيدٍ من الأطر (Map it to more frameworks) كي يجيب عن مزيدٍ من أسئلة التدقيق (so it answers more audit questions)، وأدرج كل بندٍ يستوفيه (list every clause it satisfies) في السياسة (in the policy)
 - C. أعد كتابته عبارةً محدّدة النطاق ولها مالكٌ وقابلةً للاختبار (Rewrite it as a scoped, owned, testable statement) مع مصدر أدلةٍ آلي (with an automated evidence source)
-- D. احذفه، لأن البرمجة الآمنة لا يمكن حوكمتها (Delete it, because secure coding cannot be governed)
+- D. احذفه، لأن البرمجة الآمنة لا يمكن حوكمتها بالسياسات (Delete it, because secure coding cannot be governed by policy) ولأن المعيار قديم الآن (and the standard is out of date now)
 
 <details><summary>الإجابة</summary>
 
@@ -215,7 +215,7 @@ flowchart TD
 
 **4. يُظهر خط الأساس لدى بنك نجم وفق SAMM (Najm's SAMM baseline shows) أن تقييم التهديدات (Threat Assessment) عند 1.0. ويطلب حمد (Hamad asks) أن تبلغ كل ممارسةٍ المستوى 3 (for every practice to reach level 3) بنهاية العام (by year end). ما أفضل ردّ (What is the best response)؟**
 
-- A. وافق، لأن المستوى 3 في كل مكان هو ما يتوقعه المدققون (Agree, because level 3 everywhere is what auditors expect)
+- A. وافق، لأن المستوى 3 في كل مكان هو ما يتوقعه المدققون (Agree, because level 3 everywhere is what auditors expect) وهو يعطي هدفًا واحدًا بسيطًا لكل فريق (it gives one simple target for every team) في البرنامج (in the programme)، ويسهل شرحه (easy to explain)
 - B. اطلب من الفرق أن تعيد تقييم نفسها عند 3 (Ask teams to re-rate themselves at 3)
 - C. تخلَّ عن SAMM، لأن نماذج النضج غير مفيدة (Drop SAMM, because maturity models are not useful)
 - D. اقترح أهدافًا قائمةً على المخاطر لكل ممارسة (Propose risk-based targets per practice)، مع رفع تقييم التهديدات أولًا (raising Threat Assessment first)، واقرن الدرجات بنتائج الاختبارات (and pair scores with test outcomes)
@@ -229,7 +229,7 @@ flowchart TD
 **5. يريد بنك نجم ممارساتٍ (Najm wants practices) تستطيع فرقه الهندسية (its engineering teams)، ومنها الفرق التي تُجري الضبط الدقيق للنماذج (including those fine-tuning models)، أن تبنيها في خطوط الإنتاج لديها (can build into their pipelines). أي مصدرٍ هو الأنسب (Which source fits best)؟**
 
 - A. NIST SSDF، أي SP 800-218، مع SP 800-218A لتطوير نماذج الذكاء الاصطناعي التوليدي (with SP 800-218A for generative AI model development)
-- B. البند 9 من ISO/IEC 27001 بشأن تقييم الأداء (ISO/IEC 27001 Clause 9 on performance evaluation)
+- B. البند 9 من ISO/IEC 27001 بشأن تقييم الأداء (ISO/IEC 27001 Clause 9 on performance evaluation)، بما فيه التدقيق الداخلي ومراجعة الإدارة (including internal audit and management review)
 - C. مستويات CSF (The CSF Tiers)
 - D. BSIMM، مُستخدَمًا بوصفه قائمةَ تحققٍ إلزامية (used as a mandatory checklist)
 
@@ -422,7 +422,7 @@ def due_times(incident_aware_at: datetime,
 
 **1. سُرق حاسوبٌ محمول لبنك نجم (A stolen Najm laptop) كان يحوي جدول بياناتٍ (held a spreadsheet) فيه بياناتٌ شخصية لعملاء من الاتحاد الأوروبي (of EU customers' personal data). وكان القرص مشفّرًا بالكامل (The disk was fully encrypted)، ولم يكن المفتاح مع الجهاز (and the key was not with the device). أي عبارةٍ هي الأفضل (Which statement is BEST)؟**
 
-- A. يجب إبلاغ كل عميلٍ في الملف خلال 72 ساعة (Every customer in the file must be told within 72 hours)
+- A. يجب إبلاغ كل عميلٍ في الملف خلال 72 ساعة (Every customer in the file must be told within 72 hours)، مع السلطة الرقابية المعنية (together with the supervisory authority) وشبكات البطاقات (and the card schemes)، في الوقت نفسه (all at the same time)
 - B. لا يلزم فعل شيء، لأن البيانات كانت مشفّرة (Nothing needs to be done, because the data was encrypted)
 - C. يجب توثيق الخرق وتقييمه بموجب المادة 33 (The breach must be documented and assessed under Art. 33)، لكن بموجب المادة 34(3) يُرجَّح ألّا يلزم إبلاغ الأفراد (but under Art. 34(3) individuals likely need not be told)
 - D. أخطِر فقط إذا أصبحت السرقة علنية (Notify only if the theft becomes public)
@@ -449,7 +449,7 @@ def due_times(incident_aware_at: datetime,
 **3. بعد أربعين دقيقةً من بدء حادثة بوابة الشركات الصغيرة (Forty minutes into the SME Portal incident)، ما أثمن إسهامٍ يقدّمه علي (what is Ali's most valuable contribution)؟**
 
 - A. احتوِ التعرّض (Contain the exposure)، واحفظ السجلات (preserve the logs)، وزوّد جاسم وسارة بالوقائع (and give Jassim and Sara the facts): متى اكتُشف (when it was found)، وأي بياناتٍ ودول (which data and countries)، وحالة التشفير (encryption status)، وما تُظهره السجلات (what the logs show)
-- B. قرّر أنه لا حاجة إلى إخطار (Decide no notification is needed) لأن المستخدمين عملاء من الشركات (because the users are business customers)
+- B. قرّر أنه لا حاجة إلى إخطار (Decide no notification is needed) لأن المستخدمين عملاء من الشركات (because the users are business customers) لا أفراد (and not individuals)، وسجّل هذا القرار في تذكرة الحادثة (record that decision in the incident ticket) فورًا (immediately) دون إشراك مسؤولة حماية البيانات (without involving the DPO)
 - C. لا تُبلغ أحدًا حتى يُعرف السبب الجذري كاملًا (Tell nobody until the full root cause is known)
 - D. امسح سجلات التصدير المزدحمة (Clear the noisy export logs) كي يُنشر الإصلاح بسلاسة (so the fix deploys cleanly)
 
@@ -477,7 +477,7 @@ def due_times(incident_aware_at: datetime,
 - A. لا يهمّ؛ فالسجلات اختيارية بموجب GDPR (It does not; logs are optional under the GDPR)
 - B. لا يستطيع بنك نجم أن يُظهر أي سجلات البيانات أُخذت (Najm cannot show which records were taken)، ولذا يجب عليه أن يعامل كل سجلّ بياناتٍ أمكن الوصول إليه (so it must treat every reachable record) على أنه ربما كُشف (as possibly exposed)
 - C. تقليل التسجيل يقلّل دائمًا التزامات الخرق (Logging less always reduces breach obligations)
-- D. لا تنظر الجهات التنظيمية إلا في سجلات آخر 24 ساعة (Regulators only look at the last 24 hours of logs)
+- D. لا تنظر الجهات التنظيمية إلا في سجلات آخر 24 ساعة (Regulators only look at the last 24 hours of logs)، ولذا يمكن حذف الإدخالات الأقدم في أي وقت (older entries can be deleted at any time) دون أي توثيق أو موافقة (without a record or approval)، ودون إبلاغ أحد (and without telling anyone)
 
 <details><summary>الإجابة</summary>
 
@@ -688,7 +688,7 @@ GROUP BY team, severity;
 
 **1. كُتب على شريحة مجلس الإدارة في العام الماضي (Last year's board slide said) «تم رصد 12,481 ثغرة» ("12,481 vulnerabilities detected"). ما الذي ينبغي أن يحلّ محلّها (What should replace it)؟**
 
-- A. الرقم نفسه، مع هدفٍ لمضاعفة الرصد (The same number, with a target to double detection)
+- A. الرقم نفسه كما في الربع الماضي (The same number as last quarter)، مع هدفٍ لمضاعفة الرصد في العام القادم (with a target to double detection next year)، وقائمة بالأدوات المستخدمة (a list of the tools used)، وملاحظة بأن الميزانية تبقى ثابتة (a note that the budget stays flat)، وأسماء المهندسين الذين نفّذوا الفحوص (the names of the engineers who ran the scans)
 - B. كل نتيجةٍ حرجة مع درجتها في CVSS (Every critical finding with its CVSS score)
 - C. أبرز المخاطر مقابل شهية المخاطر مع اتجاهها (Top risks against appetite with their trend)، ومن ثلاثة إلى خمسة مؤشرات مخاطر رئيسية (three to five KRIs) مثل الثغرات المعروفة المستغَلة المتجاوزة لاتفاقية مستوى الخدمة (such as known exploited vulnerabilities past SLA)، والقرارات المطلوبة (and the decisions needed)
 - D. لقطة شاشةٍ للوحة معلومات الماسح (A screenshot of the scanner dashboard)
@@ -703,7 +703,7 @@ GROUP BY team, severity;
 
 - A. وافق، لأن المساءلة تحفّز السفراء (Agree, because accountability motivates champions)
 - B. أبقِ المسؤولية على قائد الفريق (Keep accountability with the team lead)؛ فالسفير مضاعِفٌ للقدرات (the champion is a multiplier) له وقتٌ محمي وتدريبٌ وتقدير (with protected time, training and recognition)
-- C. اجعل فريق أمن التطبيقات المركزي مسؤولًا بدلًا من ذلك (Make the central AppSec team accountable instead)
+- C. اجعل فريق أمن التطبيقات المركزي مسؤولًا بدلًا من ذلك (Make the central AppSec team accountable instead)، لأن السفراء متطوعون (since champions are volunteers) ولا يمكن محاسبتهم على النتائج (cannot be held responsible for results)
 - D. استبدل السفراء بماسحٍ آخر (Replace champions with another scanner)
 
 <details><summary>الإجابة</summary>
@@ -715,7 +715,7 @@ GROUP BY team, severity;
 **3. على مدار عام (Over a year)، ينخفض متوسط زمن معالجة النتائج عالية الخطورة (mean time to remediate high findings falls) من 40 إلى 15 يومًا (from 40 to 15 days)، لكن النتائج عالية الخطورة المفتوحة (but open high findings) المتجاوزة لاتفاقية مستوى الخدمة (past SLA) تتضاعف (double). ما التفسير الأرجح (What is the most likely explanation)؟**
 
 - A. تحيّز البقاء (Survivorship): فالمقياس لا يحسب إلا النتائج المغلقة (the metric counts only closed findings)، ولذا حسّنته الإصلاحات السريعة (so quick fixes improved it) بينما تقادمت البنود الصعبة (while hard items aged)
-- B. الماسح معطّل (The scanner is broken)
+- B. الماسح معطّل (The scanner is broken): فمنذ آخر ترقية توقّف عن الإبلاغ عن نتائج جديدة (since the last upgrade it has stopped reporting new findings)، ولذا تبدو قائمة الأعمال المتراكمة أقصر مما هي عليه (so the backlog looks shorter than it is)
 - C. أصبح المهاجمون أكثر نشاطًا (Attackers have become more active)
 - D. اتفاقية مستوى الخدمة طويلة جدًا (The SLA is too long)
 
@@ -740,7 +740,7 @@ GROUP BY team, severity;
 
 **5. أي طلب ميزانيةٍ يمنح مجلس الإدارة أفضل أساسٍ لاتخاذ القرار (Which budget request gives the board the best basis for a decision)؟**
 
-- A. «تُظهر دراسات القطاع أن الإصلاحات تكلّف مئة ضعفٍ في الإنتاج، ولذا نحتاج إلى المزيد» ("Industry studies show fixes cost 100 times more in production, so we need more")
+- A. «تُظهر دراسات القطاع أن الإصلاحات تكلّف مئة ضعفٍ في الإنتاج، ولذا نحتاج إلى مزيدٍ من الأشخاص والأدوات وميزانية أكبر في العام القادم، تُعتمد الآن» ("Industry studies show fixes cost 100 times more in production, so we need more people, more tools and a bigger budget next year, approved now")
 - B. «نظراؤنا ينفقون أكثر مما ننفق» ("Our peers spend more than we do")
 - C. ثلاثة خيارات (Three options)، كلٌّ منها مرتبطٌ بمخاطر مسمّاة (each tied to named risks)، مع التكلفة الكاملة (with full cost)، والمقياس الذي سيتحرك (the metric that will move)، وما سيُستغنى عنه (what is retired)، والمخاطر المتبقية المقبولة (and the residual risk accepted)
 - D. قائمةٌ بالأدوات التي يرغب فيها الفريق (A list of tools the team would like)

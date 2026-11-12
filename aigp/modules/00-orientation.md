@@ -152,10 +152,10 @@ Layla's first artefact is a one-page **AI Governance Charter**, approved by the 
 
 **1. Which statement best describes AI governance?**
 
-- A. The set of ethical values an organisation publishes about AI
-- B. The legal team's review of AI contracts
+- A. The set of ethical values an organisation publishes about AI, together with the principles its leaders say they follow
+- B. The legal team's review of AI contracts, vendor terms and regulatory filings before purchase
 - C. The people, rules, processes and evidence an organisation uses to direct and control AI across its life cycle
-- D. The data science team's model validation process
+- D. The data science team's model validation process, including testing, sign-off and periodic re-testing
 
 <details><summary>Answer</summary>
 
@@ -165,9 +165,9 @@ Layla's first artefact is a one-page **AI Governance Charter**, approved by the 
 
 **2. Najm Bank's CEO asks Layla whether the bank is "compliant with AI". What should Layla do FIRST?**
 
-- A. Buy an AI compliance software tool
+- A. Buy an AI compliance software tool that tracks regulations and sends alerts to the legal team
 - B. Establish what AI systems the bank uses, who owns them and what they are used for
-- C. Ask the data science team to retrain all models for fairness
+- C. Ask the data science team to retrain all models for fairness, then publish the test results
 - D. Tell the board the bank is compliant because no Qatari law bans AI
 
 <details><summary>Answer</summary>
@@ -179,9 +179,9 @@ Layla's first artefact is a one-page **AI Governance Charter**, approved by the 
 **3. In the three lines model, where does Najm's Head of AI Governance usually sit?**
 
 - A. Second line, setting policy and challenging the business
-- B. First line, because she owns the AI systems
-- C. Third line, giving independent assurance to the board
-- D. Outside the model, because AI is a technology topic
+- B. First line, because she owns the AI systems and manages their day-to-day risk
+- C. Third line, giving independent assurance to the board and the audit committee
+- D. Outside the model, because AI is a technology topic that IT already covers
 
 <details><summary>Answer</summary>
 
@@ -435,9 +435,9 @@ Layla gives Omar and Sara two study plans and lets them choose. Both map directl
 
 **3. What is the main significance of the v2.1 shift from "AI model" to "AI system" in Domains III and IV?**
 
-- A. Models no longer need to be tested
-- B. The exam now focuses on hardware
-- C. Only generative AI is now in scope
+- A. Models no longer need to be tested before they go into production at all
+- B. The exam now focuses on hardware, chips and data-centre design rather than on governance
+- C. Only generative AI is now in scope, and other kinds of systems are no longer examined in any domain
 - D. Governance must cover the whole system, including data pipelines, interfaces, human oversight and context of use
 
 <details><summary>Answer</summary>
@@ -448,10 +448,10 @@ Layla gives Omar and Sara two study plans and lets them choose. Both map directl
 
 **4. An insurer in France plans to deploy a vendor's AI tool to set individual premiums. The vendor offers no documentation. Before looking at the answer options, which set of facts should a candidate extract FIRST from this scenario?**
 
-- A. The vendor's market share and the tool's price
+- A. The vendor's market share, the tool's price, the length of the contract and the vendor's brand reputation
 - B. The jurisdiction, the insurer's role, the impact of the use, the life-cycle stage and the problem
-- C. The programming language and the model architecture
-- D. The number of employees at the insurer
+- C. The programming language, the model architecture, the cloud region and the size of the training cluster
+- D. The number of employees at the insurer, the age of the company and the size of its head office
 
 <details><summary>Answer</summary>
 
@@ -635,9 +635,9 @@ Layla presents the inventory to the AI Governance Committee with a short decisio
 **1. What is the PRIMARY purpose of an AI inventory?**
 
 - A. To give the organisation a complete, owned view of its AI systems so it can prioritise assessment and controls
-- B. To show the board how innovative the organisation is
-- C. To replace the need for impact assessments
-- D. To satisfy a requirement that every AI system be registered with a regulator
+- B. To show the board how innovative the organisation is compared with its peers and competitors in the banking sector
+- C. To replace the need for impact assessments, since the inventory already records every risk and control
+- D. To satisfy a requirement that every AI system be registered with a financial regulator before it is first used
 
 <details><summary>Answer</summary>
 
@@ -647,9 +647,9 @@ Layla presents the inventory to the AI Governance Committee with a short decisio
 
 **2. Layla asks department heads "Do you use AI?" and most say no. Which discovery step would MOST improve completeness?**
 
-- A. Accept the answers and record the data science team's models only
-- B. Hire an external firm to certify that no other AI exists
-- C. Ban all software with AI features until owners declare them
+- A. Accept the answers as given and record only the data science team's models in the inventory
+- B. Hire an external firm to certify that no other AI exists anywhere in the bank's business lines
+- C. Ban all software with AI features until the owners declare them and the committee approves each one
 - D. Ask which decisions use a score, ranking, prediction or generated text, and cross-check contracts, existing registers and network logs
 
 <details><summary>Answer</summary>
@@ -673,9 +673,9 @@ Layla presents the inventory to the AI Governance Committee with a short decisio
 
 **4. A bank's inventory rates an email-routing tool that uses a deep neural network as "high risk" and its logistic-regression credit scorecard as "low risk" because "it is only statistics". What is the main flaw?**
 
-- A. Deep neural networks are always low risk
+- A. Deep neural networks are always low risk, because they are tested more heavily than other models
 - B. Risk should be rated by use and impact on people, not by technical sophistication
-- C. Logistic regression cannot be AI under any definition
+- C. Logistic regression cannot be AI under any definition, because it is a standard statistical method
 - D. Inventories should not include risk ratings
 
 <details><summary>Answer</summary>
@@ -686,9 +686,9 @@ Layla presents the inventory to the AI Governance Committee with a short decisio
 
 **5. Proxy logs show relationship managers pasting client financial statements into a free public chatbot. What is the BEST first governance response?**
 
-- A. Ignore it, since the outputs are reviewed by humans
-- B. Dismiss the staff involved
-- C. Block all internet access for relationship managers
+- A. Ignore it, since the outputs are reviewed by humans before anything is sent to a client
+- B. Dismiss the staff involved and report the matter to the regulator as a serious breach
+- C. Block all internet access for relationship managers until a new AI policy has been approved by the board
 - D. Record it in the inventory with an owner, issue an interim acceptable-use rule, and offer an approved tool with proper contract terms
 
 <details><summary>Answer</summary>

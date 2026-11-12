@@ -103,7 +103,7 @@
     "ar": [
      "اختلاق (fabrication)؛ اشتراط أن يستشهد كل ادعاء (claim) بصفحة، ورصد أي ادعاء بلا مصدر (flag any claim without one)",
      "عدم أمانة للمصدر (unfaithfulness to the source)؛ جعل الشيفرة (code) تستخرج الأرقام وتحسبها (extract and calculate)",
-     "معرفة قديمة (outdated knowledge)؛ استرجاع أحدث القوائم المالية (latest statements) وقت الطلب (at request time) بدلًا من ذلك",
+     "معرفة قديمة (outdated knowledge)؛ استرجاع أحدث القوائم المالية (latest statements) وقت الطلب (at request time) بدلًا من ذلك (instead)",
      "عدم حتمية (non-determinism)؛ خفض درجة الحرارة (temperature) حتى تذكر كل مسودة (every draft) رقمًا واحدًا"
     ]
    },

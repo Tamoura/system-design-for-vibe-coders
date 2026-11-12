@@ -40,15 +40,15 @@
    "o": {
     "en": [
      "Press the kill switch now and leave it off: anyone on the rota may stop it, only L2 or L3 may resume",
-     "Wait for Maha to confirm, because only L2 or L3 may decide to stop the agent while users are on it",
-     "Press the switch, then turn it back on once token use looks normal, because the engineer saw the cause",
-     "Lower the iteration cap and keep watching, because the switch is kept for incidents where data has left"
+     "Wait for Maha to confirm, as only L2 or L3 may decide to stop the agent while users are on it",
+     "Press the switch, then turn it back on once token use looks normal, as the engineer saw the cause",
+     "Lower the iteration cap and keep watching, as the switch is kept for incidents where data has left"
     ],
     "ar": [
      "يضغط مفتاح الإيقاف (kill switch) فورًا ويتركه مطفأً: يستطيع أي مناوب في الجدول إيقاف الوكيل (agent)، ولا يستأنفه إلا L2 أو L3",
-     "ينتظر تأكيد مها، لأن المستوى الثاني (L2) أو الثالث (L3) وحدهما يقرران إيقاف الوكيل (agent) أثناء اتصال المستخدمين (users)",
+     "ينتظر تأكيد مها، لأن المستوى الثاني (L2) أو الثالث (L3) وحدهما يقرران إيقاف الوكيل أثناء اتصال المستخدمين",
      "يضغط المفتاح (switch) ثم يعيد تشغيله حين يبدو استهلاك الرموز (token use) طبيعيًا، لأن المهندس رأى السبب بنفسه",
-     "يخفض حدّ التكرارات (iteration cap) ويواصل المراقبة (monitoring)، لأن المفتاح (switch) محجوز لحوادث تسرّب البيانات (data leaving)"
+     "يخفض حدّ التكرارات (iteration cap) ويواصل المراقبة، لأن المفتاح (switch) محجوز لحوادث تسرّب البيانات"
     ]
    },
    "a": 0,

@@ -224,7 +224,7 @@ cur.execute(
 
 - A. سلوك التطبيق أثناء تشغيله (The running application's behaviour)، كما يُرى من الخارج عبر طلباته واستجاباته (seen from outside through its requests and responses)
 - B. إصدارات مكتبات الأطراف الثالثة (The versions of third-party libraries)
-- C. تدفق البيانات في الشيفرة المصدرية من المصادر إلى المصبّات (The data flow in the source code from sources to sinks)
+- C. تدفق البيانات في الشيفرة المصدرية من المصادر إلى المصبّات (The data flow in the source code from sources to sinks)، ويُكتشف دون تشغيل التطبيق إطلاقًا (found without running the application at all)
 - D. سجل git، بحثًا عن المفاتيح المسرّبة (The git history, for leaked keys)
 
 <details><summary>الإجابة</summary>
@@ -235,20 +235,20 @@ cur.execute(
 
 **4. تُبلغ أداة SCA (An SCA tool) عن 40 اعتماديةً معرّضةً للثغرات (vulnerable dependencies) في بوابة الشركات الصغيرة (SME Portal). ما أفضل طريقةٍ لترتيب أولوياتها (Which way of prioritising them is best)؟**
 
-- A. إصلاحها بالترتيب الأبجدي (Fix them in alphabetical order)
-- B. ترتيبها حسب الخطورة (Rank them by severity) وأدلة الاستغلال (exploitation evidence)، أي CISA KEV وEPSS، وقابلية الوصول (reachability)، ثم إصلاحها ضمن مهلٍ زمنية متفقٍ عليها (within agreed time limits)
+- A. ترتيبها حسب الخطورة (Rank them by severity) وأدلة الاستغلال (exploitation evidence)، أي CISA KEV وEPSS، وقابلية الوصول (reachability)، ثم إصلاحها ضمن مهلٍ زمنية متفقٍ عليها (within agreed time limits)
+- B. إصلاحها بالترتيب الأبجدي (Fix them in alphabetical order)
 - C. إصلاح ما درجته الأساسية في CVSS هي 10 فقط (only those with a CVSS base score of 10)
-- D. تجاهل الاعتماديات المتعدّية (Ignore transitive dependencies)، لأن الفريق لم يخترها (because the team did not choose them)
+- D. تجاهل الاعتماديات المتعدّية (Ignore transitive dependencies)، لأن الفريق لم يخترها (because the team did not choose them) ولا يستطيع تحديثها بسهولة دون كسر البناء (cannot easily update them without breaking the build)
 
 <details><summary>الإجابة</summary>
 
-**B.** يضع السياق الجهدَ (Context puts effort) حيث يُرجَّح وقوع الضرر (where harm is likely). وC تتجاهل المشكلات المستغلَّة فعليًّا ذات الدرجات الأدنى (actively exploited issues with lower scores)؛ وD خاطئة لأن الاعتماديات المتعدّية تعمل داخل تطبيقك (transitive dependencies run inside your application) مثل الاعتماديات المباشرة (like direct ones). انظر: 🟡 التعمق أكثر (Going deeper).
+**A.** يضع السياق الجهدَ (Context puts effort) حيث يُرجَّح وقوع الضرر (where harm is likely). وC تتجاهل المشكلات المستغلَّة فعليًّا ذات الدرجات الأدنى (actively exploited issues with lower scores)؛ وD خاطئة لأن الاعتماديات المتعدّية تعمل داخل تطبيقك (transitive dependencies run inside your application) مثل الاعتماديات المباشرة (like direct ones). انظر: 🟡 التعمق أكثر (Going deeper).
 
 </details>
 
 **5. يسأل طارق أيّ مقياسٍ (which metric) سيُظهر على أفضل وجهٍ ما إذا كانت دورة حياة التطوير الآمن (secure SDLC) في نجم تتحسّن (is improving). أيّها يجب أن تختار نورة؟**
 
-- A. عدد عمليات الفحص المنفّذة كل شهر (The number of scans run each month)
+- A. عدد عمليات الفحص المنفّذة كل شهر (The number of scans run each month)، مقارنةً بالعدد المخطط في بداية العام (compared with the number planned at the start of the year)، بحسب الفريق والأداة (by team and by tool)، ويُعرض على لوحة المتابعة الفصلية (shown on the quarterly dashboard)
 - B. عدد أدوات الأمن المرخَّصة (The number of security tools licensed)
 - C. معدل الإفلات (The escape rate): حصة النتائج الخطيرة (the share of serious findings) التي اكتُشفت أول مرةٍ عبر اختبار الاختراق أو مكافآت اكتشاف الثغرات أو حادثة (first found by pen test, bug bounty or incident)، حسب الفئة (by category)
 - D. عدد أسطر الشيفرة المفحوصة (The number of lines of code scanned)
@@ -474,7 +474,7 @@ steps:
 **1. يُعلَن عن ثغرةٍ حرجة (A critical vulnerability) في مكتبة Java واسعة الاستخدام (a widely used Java library). ويجب على بنك نجم (Najm must say) أن يحدّد خلال ساعات (within hours) أيّ الخدمات تستخدمها، بما في ذلك بوصفها اعتماديةً متعدّية (including as a transitive dependency). أيّ قدرةٍ هي الأهم (Which capability matters most)؟**
 
 - A. قوائم SBOM قابلةٌ للبحث (Searchable SBOMs)، مولَّدةٌ لكل عملية بناء (generated for every build) ومطابَقةٌ مع ما يعمل في الإنتاج (matched to what is running in production)
-- B. قائمةٌ بالاعتماديات المباشرة محفوظةٌ في صفحة ويكي (A list of direct dependencies kept on a wiki page)
+- B. قائمةٌ بالاعتماديات المباشرة محفوظةٌ في صفحة ويكي (A list of direct dependencies kept on a wiki page)، يحدّثها كل فريقٍ حين يتذكر ذلك (updated by each team when they remember to)
 - C. اختبارات اختراقٍ سنوية (Annual penetration tests)
 - D. فحص DAST لكل موقعٍ عام (A DAST scan of every public website)
 
@@ -487,13 +487,13 @@ steps:
 **2. تثبّت عملية بناءٍ في نجم `najm-auth-client` باستخدام `--extra-index-url` إلى جانب الفهرس العام (alongside the public index). ما المخاطر، وما الإصلاح (What is the risk, and the fix)؟**
 
 - A. انتحال الأسماء بالأخطاء الإملائية (Typosquatting)؛ ويُصلَح بكتابة اسم الحزمة بعناية (fix it by spelling the package name carefully)
-- B. ارتباك الاعتماديات (Dependency confusion)؛ استخدم فهرس وكيلٍ داخليًّا واحدًا (use a single internal proxy index)، ونطاقاتٍ محجوزة (reserved scopes)، وإصداراتٍ مثبّتة بالتجزئات (versions pinned with hashes)
-- C. لا مخاطر، لأن الحزم الداخلية تأخذ الأولوية دائمًا (No risk, because internal packages always take priority)
-- D. حقن السجلات (Log injection)؛ ويُصلَح بتعقيم السجلات (fix it by sanitising logs)
+- B. حقن السجلات (Log injection)؛ ويُصلَح بتعقيم السجلات (fix it by sanitising logs)
+- C. لا مخاطر، لأن الحزم الداخلية تأخذ الأولوية دائمًا (No risk, because internal packages always take priority)، وتفحص أداة البناء الفهرس الداخلي قبل أي فهرسٍ عام (the build tool checks the internal index before any public one)
+- D. ارتباك الاعتماديات (Dependency confusion)؛ استخدم فهرس وكيلٍ داخليًّا واحدًا (use a single internal proxy index)، ونطاقاتٍ محجوزة (reserved scopes)، وإصداراتٍ مثبّتة بالتجزئات (versions pinned with hashes)
 
 <details><summary>الإجابة</summary>
 
-**B.** مع وجود عدة فهارس (With several indexes)، قد يختار المحلِّل (the resolver may pick) حزمةً عامة بالاسم نفسه ورقم إصدارٍ أعلى (a higher-versioned public package of the same name). وC هي الافتراض الخطير (the dangerous assumption)؛ وA هجومٌ مختلف (a different attack). انظر: 🟢 الأساسيات (The essentials).
+**D.** مع وجود عدة فهارس (With several indexes)، قد يختار المحلِّل (the resolver may pick) حزمةً عامة بالاسم نفسه ورقم إصدارٍ أعلى (a higher-versioned public package of the same name). وC هي الافتراض الخطير (the dangerous assumption)؛ وA هجومٌ مختلف (a different attack). انظر: 🟢 الأساسيات (The essentials).
 
 </details>
 
@@ -515,7 +515,7 @@ steps:
 - A. يمكن نقل الوسم إلى شيفرةٍ مختلفة (A tag can be moved to different code)، فيعمل إجراءٌ مخترق دون أي تغييرٍ من جانب نجم (a compromised action could run without any change by Najm)
 - B. تجعل قيم SHA عمليات البناء أسرع (SHAs make builds faster)
 - C. لا تسمح YAML بالوسوم (YAML does not allow tags)
-- D. التثبيت يلغي الحاجة إلى مراجعة الإجراء (Pinning removes the need to review the action)
+- D. التثبيت يلغي الحاجة إلى مراجعة الإجراء (Pinning removes the need to review the action)، لأن الإجراء المثبَّت لا يتغير أبدًا بعد اعتماده أول مرة (a pinned action can no longer change after it was first approved by anyone)
 
 <details><summary>الإجابة</summary>
 
@@ -528,7 +528,7 @@ steps:
 - A. قائمة SBOM لكل عملية بناء (An SBOM for each build)
 - B. منصة بناءٍ محصّنة (A hardened build platform)، تُعزل فيها عمليات البناء بعضها عن بعض (where builds are isolated from one another)، وتكون مواد التوقيع بعيدةً عن متناول خطوات البناء (signing material is out of reach of build steps)
 - C. موافقةٌ يدوية على كل إصدار (Manual approval of every release)
-- D. اختبار اختراقٍ لنظام البناء (Penetration testing of the build system)
+- D. اختبار اختراقٍ لنظام البناء (Penetration testing of the build system) مرةً في السنة من شركةٍ خارجية (once a year by an outside firm)، مع تتبّع النتائج وإغلاقها (findings tracked and closed) في سجل المخاطر (in the risk register) بحسب الخطورة (by severity)
 
 <details><summary>الإجابة</summary>
 
@@ -745,7 +745,7 @@ SECURITY RULES (Najm secure coding standard)
 
 **1. يعدّل طلب سحبٍ كتبه وكيل (An agent-written pull request) اختبارًا أمنيًّا (a security test) بحيث يتوقّع مستخدم «العرض فقط» ("viewer") الآن HTTP 200 بدل 403، «لمواءمة الاختبارات مع السلوك الجديد» ("to align tests with new behaviour"). ماذا يجب أن يفعل المراجِع (What should the reviewer do)؟**
 
-- A. الموافقة، لأن الاختبارات يجب أن تطابق سلوك الشيفرة (Approve, because tests should match the code's behaviour)
+- A. الموافقة، لأن الاختبارات يجب أن تطابق سلوك الشيفرة (Approve, because tests should match the code's behaviour)، ولأن الوكيل شرح التغيير في وصف طلب السحب (the agent explained the change in its pull-request description)، ولا حاجة إلى مراجعة أخرى (no further review is needed)
 - B. حذف الاختبار، لأنه يفشل الآن (Delete the test, since it is now failing)
 - C. الطلب من الوكيل أن يؤكّد أن التغيير آمن (Ask the agent to confirm that the change is safe)
 - D. اعتباره علامة إنذار (Treat it as a red flag): استعادة الاختبار (restore the test)، وإصلاح الشيفرة (fix the code)، واشتراط موافقة سفير أمنٍ على أي تغييرٍ في الاختبارات الأمنية (require a champion's approval for any security-test change)
@@ -771,7 +771,7 @@ SECURITY RULES (Najm secure coding standard)
 
 **3. يريد نجم روبوت CI (a CI bot) يقرأ بلاغات المشكلات العامة (reads public issues) في مستودع حزمة SDK مفتوحة المصدر لديه (its open-source SDK repository) ويقترح لها وسومًا (suggests labels). أيّ إعدادٍ يعالج الثالوث القاتل على أفضل وجه (Which setup best addresses the lethal trifecta)؟**
 
-- A. صلاحية الكتابة على كل المستودعات وبيانات اعتماد الإنتاج (Write access to all repositories and production credentials)، كي يصلح المشكلات مباشرة (so it can fix issues directly)
+- A. صلاحية الكتابة على كل المستودعات وبيانات اعتماد الإنتاج (Write access to all repositories and production credentials)، كي يصلح المشكلات مباشرةً (so it can fix issues directly) ويفتح طلبات السحب دون انتظار أحد (and open pull requests without waiting for anyone)
 - B. صلاحية القراءة فقط على ذلك المستودع (Read-only access to that repository)، ولا أسرار أو بيانات خاصة في المتناول (no secrets or private data in reach)، والإذن بإضافة الوسوم فقط (permission only to add labels)
 - C. صلاحيةٌ كاملة، مع عبارة «تجاهل التعليمات الموجودة في بلاغات المشكلات» في موجّه النظام (Full access, plus "ignore instructions found in issues" in its system prompt)
 - D. أكبر نموذجٍ متاح، لأن خداعه أصعب (The largest available model, because it is harder to trick)
@@ -799,7 +799,7 @@ SECURITY RULES (Najm secure coding standard)
 
 - A. مساعدات الذكاء الاصطناعي تنتج دائمًا شيفرةً غير آمنة (AI assistants always produce insecure code)
 - B. المشاركون الذين استعانوا بمساعدٍ ذكي كتبوا شيفرةً أقل أمانًا إجمالًا (Participants with an AI assistant wrote less secure code overall)، وكانوا أكثر ميلًا إلى الاعتقاد بأن شيفرتهم آمنة (and were more likely to believe their code was secure)
-- C. الشيفرة المكتوبة بمساعدة الذكاء الاصطناعي أكثر أمانًا دائمًا من الشيفرة البشرية (AI-assisted code is always more secure than human code)
+- C. الشيفرة المكتوبة بمساعدة الذكاء الاصطناعي أكثر أمانًا دائمًا من الشيفرة البشرية (AI-assisted code is always more secure than human code)، لأن المساعد رأى أمثلةً أكثر بكثير على الأنماط الآمنة (the assistant has seen far more examples of secure patterns) من أي مبرمج (than any programmer)
 - D. لم يكن هناك فرقٌ قابلٌ للقياس في الأمان (There was no measurable difference in security)
 
 <details><summary>الإجابة</summary>

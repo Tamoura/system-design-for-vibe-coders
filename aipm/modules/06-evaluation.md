@@ -180,20 +180,20 @@ All cases are labelled by credit officers (Arabic speakers for the Arabic slice)
 
 **1. Smart Alerts' new model raises fewer alerts than the old one, and customers complain less. Dana reports that it catches 60 of 100 frauds, where the old model caught 85. Which statement is correct?**
 
-- A. Precision fell and recall rose
-- B. Recall fell from 85% to 60%; precision may have risen, and whether the trade is acceptable depends on the cost of missed fraud against the cost of false alerts
-- C. The new model is better because customers complain less
+- A. Recall fell from 85% to 60%; precision may have risen, and whether the trade is acceptable depends on the cost of missed fraud against the cost of false alerts
+- B. Precision fell and recall rose
+- C. The new model is better because customers complain less, and fewer alerts also mean the fraud team has less work to do each day and can focus on the most serious cases
 - D. Accuracy is the right metric to settle the question
 
 <details><summary>Answer</summary>
 
-**B.** Recall (share of real fraud caught) fell; fewer alerts usually means higher precision. Choosing between them is a business decision about error costs. C looks at one side only; D fails because fraud is rare. (🟢 The essentials.)
+**A.** Recall (share of real fraud caught) fell; fewer alerts usually means higher precision. Choosing between them is a business decision about error costs. C looks at one side only; D fails because fraud is rare. (🟢 The essentials.)
 
 </details>
 
 **2. Faisal reports that version 2 of the copilot prompt scored 91% on a 100-case golden set, against 89% for version 1, and proposes shipping it as "clearly better". What is the best response?**
 
-- A. Agree, because any improvement should ship
+- A. Agree, because any improvement should ship, since waiting for a larger difference would delay value to the relationship managers and cost the bank money in the meantime for no clear reason
 - B. Reject version 2, because the golden set is too small to use at all
 - C. Point out that a 2-point difference on 100 cases is within the noise, and ask for the per-slice results, the critical-failure count and a larger or repeated comparison
 - D. Switch to a public benchmark to settle it
@@ -206,14 +206,14 @@ All cases are labelled by credit officers (Arabic speakers for the Arabic slice)
 
 **3. Which golden set is BEST for the Credit Memo Copilot?**
 
-- A. The 200 most recent memos, labelled by the engineers who wrote the prompt
-- B. A versioned set sliced by language, document quality, missing data and exposure size, labelled by credit officers, with a held-out portion
+- A. A versioned set sliced by language, document quality, missing data and exposure size, labelled by credit officers, with a held-out portion
+- B. The 200 most recent memos, labelled by the engineers who wrote the prompt
 - C. A public financial question-answering benchmark
-- D. Ten excellent memos chosen by the business owner
+- D. Ten excellent memos chosen by the business owner, because they show the standard the whole credit team wants the copilot to reach every time
 
 <details><summary>Answer</summary>
 
-**B.** It covers hard slices, uses domain experts and protects release decisions with a held-out set. A has the wrong labellers; D is a demo, not an eval. (🟢 The essentials; 🏛️ In practice.)
+**A.** It covers hard slices, uses domain experts and protects release decisions with a held-out set. B has the wrong labellers; D is a demo, not an eval. (🟢 The essentials; 🏛️ In practice.)
 
 </details>
 
@@ -233,7 +233,7 @@ All cases are labelled by credit officers (Arabic speakers for the Arabic slice)
 **5. Why does the eval plan mark "fabricated financial figure" as a critical failure with zero tolerance, instead of folding it into the average?**
 
 - A. Because critical failures are easier to measure
-- B. Because regulators require zero errors in all AI systems
+- B. Because regulators require zero errors in all AI systems, so any fabricated figure is a breach that the bank must report to the central bank
 - C. Because averages are always wrong
 - D. Because some failures are severe enough that a release improving the average but adding one of them should still be blocked
 
@@ -440,7 +440,7 @@ Before the agent features of Najm Assist go to pilot, Faisal, Hessa and Dana pro
 
 - A. Both prompts are good
 - B. The judge is not discriminating between good and bad outputs and must be redesigned and calibrated against expert labels
-- C. The broken prompt should ship because the difference is small
+- C. The broken prompt should ship because the difference is small and the cost of delaying a release to redesign the judge is high
 - D. The judge needs a larger model and nothing else
 
 <details><summary>Answer</summary>
@@ -451,14 +451,14 @@ Before the agent features of Najm Assist go to pilot, Faisal, Hessa and Dana pro
 
 **2. In a pairwise comparison, a judge prefers whichever memo is shown first in 70% of cases, regardless of content. Which bias is this, and what is the standard mitigation?**
 
-- A. Verbosity bias; shorten both answers
-- B. Self-preference bias; use the same model family
-- C. Position bias; run each pair in both orders and count only consistent verdicts
-- D. Automation bias; add more human reviewers
+- A. Verbosity bias; shorten both answers so that neither memo looks more thorough than the other
+- B. Self-preference bias; use the same model family for the judge and for the memos being compared
+- C. Automation bias; add more human reviewers to check each of the judge's verdicts afterwards
+- D. Position bias; run each pair in both orders and count only consistent verdicts
 
 <details><summary>Answer</summary>
 
-**C.** Preferring an answer because of where it appears is position bias. Swapping the order and keeping only consistent results is the standard counter. B describes a different bias, and using the same model family would make self-preference worse. (🟢 The essentials.)
+**D.** Preferring an answer because of where it appears is position bias. Swapping the order and keeping only consistent results is the standard counter. B describes a different bias, and using the same model family would make self-preference worse. (🟢 The essentials.)
 
 </details>
 
@@ -466,7 +466,7 @@ Before the agent features of Najm Assist go to pilot, Faisal, Hessa and Dana pro
 
 - A. Average their scores and continue
 - B. Use only the stricter reviewer
-- C. Replace both with an LLM judge
+- C. Replace both with an LLM judge, because a model applies the same rule to every memo and removes the disagreement between reviewers completely
 - D. Examine the disagreements, clarify the rubric with anchored examples, and escalate any underlying policy question to the business owner
 
 <details><summary>Answer</summary>
@@ -490,10 +490,10 @@ Before the agent features of Najm Assist go to pilot, Faisal, Hessa and Dana pro
 
 **5. After a red-team week, the team fixes the prompt that let testers make Najm Assist promise a fee waiver. What else MUST happen for the fix to last?**
 
-- A. Nothing; the fix is done
-- B. Publish the red-team report internally
+- A. Nothing; the fix is done once the prompt change has been tested and the wording of the answer has been corrected
+- B. Publish the red-team report internally so that other teams can learn what the testers found and why it worked
 - C. Add the successful attacks to an adversarial test set that is re-run on every release
-- D. Schedule another red-team week in a year
+- D. Schedule another red-team week in a year, to check whether new attacks have appeared since this one
 
 <details><summary>Answer</summary>
 
@@ -664,10 +664,10 @@ Faisal rewrites his launch proposal as the **Credit Memo Copilot Rollout and Exp
 
 **1. Najm Assist's new version shows a 12% rise in chats "resolved without a human" in its first two weeks. Which additional result would MOST change your view of whether it is better?**
 
-- A. Faster average response time
-- B. More customers clicking thumbs up
+- A. Faster average response time, measured across all chats in the first two weeks of the new version
+- B. More customers clicking thumbs up at the end of the chat, compared with the previous version
 - C. A rise in customers contacting the bank again about the same issue within seven days
-- D. Lower cost per chat
+- D. Lower cost per chat, calculated from model usage and the share of chats that needed no agent time
 
 <details><summary>Answer</summary>
 
@@ -716,7 +716,7 @@ Faisal rewrites his launch proposal as the **Credit Memo Copilot Rollout and Exp
 
 **5. The vendor behind the copilot's model announces a new version with "improved reasoning" and will retire the current one next quarter. What should Faisal do?**
 
-- A. Switch immediately, because the vendor says it is better
+- A. Switch immediately, because the vendor says it is better and the current version will be retired next quarter anyway
 - B. Keep the old version indefinitely
 - C. Treat it as a new release: re-run the offline evals, then shadow and canary before moving full traffic
 - D. Run only a public benchmark comparison

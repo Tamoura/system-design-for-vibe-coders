@@ -226,7 +226,7 @@ One commit per step, tests green after each. A refactor step never changes behav
 
 - A. لم يتغير شيء (Nothing changed)، لأن المجموعة الخضراء (a green suite) تثبت أن السلوك هو نفسه
 - B. لم يتغير إلا ما تؤكده الاختبارات الـ99 (what the 99 tests assert)، ولا يؤكد أي منها شيئًا عن دفتر الأستاذ (none assert anything on the ledger)
-- C. كان الوكيل حذرًا (The agent was careful)، لأن عمليات الترتيب (tidy-ups) في المشاريع المختبرة (tested projects) نادرًا ما تفشل
+- C. كان الوكيل حذرًا (The agent was careful)، لأن عمليات الترتيب (tidy-ups) في المشاريع المختبرة (tested projects) نادرًا ما تفشل في الواقع (rarely fail in practice)
 - D. الترتيب آمن (The tidy is safe)، شريطة أن يقول الوكيل إنه حافظ على السلوك (preserved behaviour)
 
 <details><summary>الإجابة</summary>
@@ -263,7 +263,7 @@ One commit per step, tests green after each. A refactor step never changes behav
 
 **4. يلخّص وكيل ملاحظات ترقية najmkit (the najmkit upgrade notes) بعبارة «سبع إعادات تسمية ولا تغييرات أخرى» ("seven renames, no other changes"). ما الخطوة التالية السليمة؟ ⁦(What is the sound next move?)⁩**
 
-- A. اقبله (Accept it)، لأن إعادة التسمية هي العمل كله (renames are the whole job) وتلتقط المجموعة الاختبارية الباقي (the suite catches the rest)
+- A. اقبله (Accept it)، لأن إعادة التسمية هي العمل كله (renames are the whole job) وتلتقط المجموعة الاختبارية الباقي (the suite catches the rest) تمامًا (fully)
 - B. اطلب من الوكيل تأكيد الملخص (confirm the summary)، ثم رحِّل مواضع الاستدعاء كلها (migrate all of the call sites)
 - C. اقرأ العنوان الأول (the first heading) وثق بجدول إعادة التسمية الذي يليه (the rename table)
 - D. اقرأ الملاحظات بحثًا عن تغييرات السلوك (behaviour changes)، وشغّل مع التحذيرات بوصفها أخطاء (warnings as errors)، وثبّت المخرجات (pin output)
@@ -522,7 +522,7 @@ Time spent:      (you / the agent)
 
 **1. تنجح اختبارات دفتر الأستاذ العشرون لديك (Your twenty ledger tests) على إعادة هيكلتك (pass on your refactor)، لكن المُقيِّم يقول إنها لا تصف دفتر الأستاذ الأصلي (do not describe the original ledger). لماذا؟ ⁦(Why?)⁩**
 
-- A. الاختبارات بطيئة جدًا (too slow)، فانتهت مهلة المُقيِّم (timed out) قبل أن يكمل
+- A. الاختبارات بطيئة جدًا (too slow)، فانتهت مهلة المُقيِّم (timed out) قبل أن يكمل عمله بالكامل
 - B. الاختبارات تؤكد القليل جدًا (assert too little)، فلا يرى المُقيِّم قيمًا حقيقية (no real values)
 - C. تحتاج الاختبارات إلى الصنف الجديد `Ledger` أو إلى `conftest.py` معدَّل (an edited)
 - D. تشترك الاختبارات في ملف مع نقطة الفصل (share a file with the seam)، ويرفض المُقيِّم تشغيله (refuses to run)
@@ -537,7 +537,7 @@ Time spent:      (you / the agent)
 
 - A. اكتب اختبارًا لكل سلوك مسمّى (a test for each named behaviour)، مشغِّلًا الأصل لترى قيمته (running the original to see its value)
 - B. انسخ الاختبارات الخفية (hidden tests) من العدّة (the kit)، لأنها لا بد أن تلتقط كل عيب
-- C. احذف اختبارات حتى يعمل الفحص أسرع (Delete tests)، فكلما قلّت الاختبارات قلّ ما يُشغَّل (fewer tests mean less to run)
+- C. احذف اختبارات حتى يعمل الفحص أسرع (Delete tests)، فكلما قلّت الاختبارات قلّ ما يُشغَّل (fewer tests mean less to run) وتنتهي المهمة أسرع (the task ends sooner, and the report looks cleaner)
 - D. اطلب من الوكيل أكبر عدد ممكن من الاختبارات (as many tests as possible) واحتفظ بما ينجح منها (keep whichever pass)
 
 <details><summary>الإجابة</summary>
@@ -549,7 +549,7 @@ Time spent:      (you / the agent)
 **3. بعد ترحيل إعادة تسمية فقط (a rename-only migration) يرفع `audit.emit` الخطأ `TypeError` عند تمرير `Money`. أي إصلاح يُبقي كل سطر تدقيق كما كان؟ ⁦(Which fix keeps every audit line as before?)⁩**
 
 - A. مرِّر `float(amount.amount)`، وهو الرقم دون نص العملة (without the currency text)
-- B. مرِّر `amount.amount`، وهو `Decimal` أصلًا ولذلك دقيق (so is exact)
+- B. مرِّر `amount.amount`، وهو `Decimal` أصلًا ولذلك دقيق (so is exact) تمامًا (fully)
 - C. مرِّر `str(amount.amount)`، وهو نص أكثر ترتيبًا دون العملة (a tidier string without the currency)
 - D. مرِّر `str(amount)`، لأن الإصدار 1 كتب `str()` للكائن (of the object)
 

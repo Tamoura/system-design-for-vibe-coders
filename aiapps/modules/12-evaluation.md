@@ -197,10 +197,10 @@ Hind's questions now have answers. Is it right? Category scores with an interval
 
 **1. A prompt change lifts the classifier from 83% to 87%. The two newly passing cases are tickets the change pasted into the prompt as examples. What do you conclude?**
 
-- A. The change worked, so keep it and raise the floor
+- A. The change worked, so keep it and raise the pass floor
 - B. The gain is void, so remove the examples and rerun
-- C. The set is too small, so double the repetitions
-- D. The examples carry correct labels, so they are fine
+- C. The set is too small, so double the repetitions each run
+- D. The examples carry correct labels, so they are fine to keep
 
 <details><summary>Answer</summary>
 
@@ -249,8 +249,8 @@ Hind's questions now have answers. Is it right? Category scores with an interval
 
 **5. A pull request changes a tool description and also edits the baseline so CI turns green. What should review do?**
 
-- A. Accept it, since a green check means the change is safe
-- B. Accept it if the overall score rose by at least a point
+- A. Accept it, as a green check means that the change is safe
+- B. Accept it if the overall score rose by a point
 - C. Reject the baseline edit; re-baseline in its own commit
 - D. Ask for three repeats of every case first
 
@@ -634,10 +634,10 @@ Plan first; one file at a time; run the tests after each step.
 
 **4. Critical case P11 fails in the baseline and now; nothing else changed. What does the gate do?**
 
-- A. Exits 1, because a critical case is failing
+- A. Exits 1, because a critical case is failing now
 - B. Exits 0, with a note about an open defect
 - C. Exits 2, because the eval is not trustworthy
-- D. Quarantines the case until the end date
+- D. Quarantines the case until the review end date
 
 <details><summary>Answer</summary>
 

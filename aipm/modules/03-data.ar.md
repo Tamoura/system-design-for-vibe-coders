@@ -149,36 +149,36 @@ flowchart TD
 
 **1. يبلّغ فيصل أن لدى نجم «ثماني سنوات ومئات الآلاف من الصفوف (eight years and hundreds of thousands of rows)» من بيانات إقراض الشركات الصغيرة والمتوسطة (SME lending data). ما الخطوة التالية الأكثر فائدة (most useful next step)؟**
 
-- A. بدء تدريب النموذج (model training)، لأن الحجم (volume) كافٍ بوضوح
-- B. السؤال عن عدد الصفوف التي تطابق المنتج والفئة المستهدفين (target product and population)، وعدد ما لديه وسوم نتيجة موثوقة (reliable outcome labels)، وأي الحقول متاحة وقت القرار (available at decision time)
-- C. شراء بيانات خارجية عن الشركات الصغيرة (external SME data) من باب الاحتياط
-- D. سؤال المورّد (vendor) عن بنية النموذج (model architecture) الأفضل في التعامل مع مجموعات البيانات الكبيرة (large datasets)
+- A. بدء تدريب النموذج (model training) فورًا، لأن حجم الصفوف (volume) كافٍ بوضوح وقد انتظر الفريق طويلًا بما يكفي للحصول على البيانات (waited long enough)
+- B. سؤال المورّد (vendor) عن بنية النموذج (model architecture) الأفضل في التعامل مع مجموعات البيانات الكبيرة (large datasets)، وعن المدة اللازمة لتدريبه (how long it would take to train)، وعن الكلفة المتوقعة (expected cost) لكل مرحلة
+- C. شراء بيانات خارجية عن الشركات الصغيرة (external SME data) من باب الاحتياط، حتى يرى النموذج شركات أكثر مما يغطيه سجل نجم نفسه (Najm's own history)
+- D. السؤال عن عدد الصفوف التي تطابق المنتج والفئة المستهدفين (target product and population)، وعدد ما لديه وسوم نتيجة موثوقة (reliable outcome labels)، وأي الحقول متاحة وقت القرار
 
 <details><summary>الإجابة</summary>
 
-**B.** الحجم ليس جاهزية (Volume is not readiness): اسأل عن الصلة (relevance)، والوسوم (labels)، والتمثيل (representativeness)، والإتاحة وقت القرار (availability at decision time). وخيار C سابق لأوانه (premature) قبل أن تعرف الفجوات (gaps). (🧭 لماذا يهم (Why it matters)؛ 🟢 الأساسيات (The essentials).)
+**D.** الحجم ليس جاهزية (Volume is not readiness): اسأل عن الصلة (relevance)، والوسوم (labels)، والتمثيل (representativeness)، والإتاحة وقت القرار (availability at decision time). وخيار C سابق لأوانه (premature) قبل أن تعرف الفجوات (gaps). (🧭 لماذا يهم (Why it matters)؛ 🟢 الأساسيات (The essentials).)
 
 </details>
 
 **2. نموذج ائتمان (credit model) يؤدي أداءً ممتازًا جدًا في الاختبار (testing). أكثر مدخلاته قدرة على التنبؤ (most predictive input) حقلٌ يكمله محللو الائتمان (credit analysts) بعد الموافقة على القرض (after a loan is approved). ما المشكلة؟**
 
-- A. انحراف بين التدريب والتشغيل (Training-serving skew) سببه مدخلات عملاء فوضوية (messy customer input)
-- B. انحياز اختيار (Selection bias) بسبب غياب المتقدمين المرفوضين (missing declined applicants)
-- C. تسرّب الوسم (Label leakage): الحقل لن يكون موجودًا حين يُبتّ في طلب جديد (new application is decided)
-- D. ضعف حداثة البيانات (Poor data timeliness)
+- A. انحراف بين التدريب والتشغيل (Training-serving skew) سببه مدخلات عملاء فوضوية (messy customer input) تختلف بين ملفات التدريب والاستخدام الحي (live use)
+- B. انحياز اختيار (Selection bias) بسبب غياب المتقدمين المرفوضين (missing declined applicants) الذين لا يظهرون أبدًا في سجل السداد (repayment history)
+- C. ضعف حداثة البيانات (Poor data timeliness)، لأن حقل المحللين يُحدَّث ببطء شديد لا يتيح للنموذج الاستفادة منه (too slowly for the model)
+- D. تسرّب الوسم (Label leakage): الحقل لن يكون موجودًا حين يُبتّ في طلب جديد (new application is decided)
 
 <details><summary>الإجابة</summary>
 
-**C.** الحقل المسجّل بعد القرار (recorded after the decision) يحمل معلومات لن تتوفر للنموذج وقت القرار، لذا تبالغ نتائج الاختبار في تقدير الأداء الحقيقي (overstate real performance). والانحراف (Skew) (A) يتعلق باختلاف بيانات وقت التشغيل (runtime data) في شكلها عن بيانات التدريب (training data)، لا بمعلومات من المستقبل (information from the future). (🟡 التعمق أكثر (Going deeper).)
+**D.** الحقل المسجّل بعد القرار (recorded after the decision) يحمل معلومات لن تتوفر للنموذج وقت القرار، لذا تبالغ نتائج الاختبار في تقدير الأداء الحقيقي (overstate real performance). والانحراف (Skew) (A) يتعلق باختلاف بيانات وقت التشغيل (runtime data) في شكلها عن بيانات التدريب (training data)، لا بمعلومات من المستقبل (information from the future). (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
 **3. في مساعد مذكرات الائتمان (Credit Memo Copilot)، أي مسألة جاهزية (readiness issue) تخص منتج ذكاء اصطناعي توليدي قائمًا على الاسترجاع (retrieval-based GenAI product) لا نموذجًا تنبؤيًا (predictive model)؟**
 
-- A. هل توجد وسوم نتيجة (outcome labels) للقروض السابقة
+- A. هل توجد وسوم نتيجة (outcome labels) للقروض السابقة التي وُوفق عليها وسُدّدت أو أُعيدت جدولتها أو شُطبت (approved, repaid, restructured or written off)، وهل هي موثوقة
 - B. هل يحترم الاسترجاع (retrieval) صلاحيات الوصول إلى المستندات (document access permissions) نفسها المعمول بها في النظام المصدر (source system)
-- C. هل تتضمن بيانات التدريب (training data) المتقدمين المرفوضين (declined applicants)
-- D. هل ميزات النموذج (model's features) متاحة وقت القرار (available at decision time)
+- C. هل تتضمن بيانات التدريب (training data) المتقدمين المرفوضين (declined applicants) إلى جانب المقبولين، لتجنب انحياز الاختيار (selection bias) في تقدير المخاطر
+- D. هل ميزات النموذج (model's features) كلها متاحة وقت اتخاذ قرار الإقراض (at the moment the lending decision is made)، وليس بعد صدوره بأيام أو أسابيع
 
 <details><summary>الإجابة</summary>
 
@@ -201,10 +201,10 @@ flowchart TD
 
 **5. لماذا يوصي الدرس ببناء مجموعة مرجعية (golden set) من الحالات الحقيقية بإجابات متّفق عليها قبل بناء المنتج؟**
 
-- A. لأن قانون الاتحاد الأوروبي للذكاء الاصطناعي (EU AI Act) يشترطها لجميع الأنظمة
+- A. لأن قانون الاتحاد الأوروبي للذكاء الاصطناعي (EU AI Act) يشترطها لجميع الأنظمة التي يعرضها البنك على العملاء أو يستخدمها مع موظفيه (staff)، مهما كان خطرها صغيرًا
 - B. لأنها تغني عن الحاجة إلى بيانات التدريب (training data)
 - C. لأنه من دونها لا يستطيع الفريق معرفة هل تعمل أي نسخة (whether any version works)، وبناؤها يكشف الخلاف حول معنى «جيد (good)»
-- D. لأنها تتيح للفريق تخطّي أبحاث المستخدمين (user research)
+- D. لأنها تتيح للفريق (the team) تخطّي أبحاث المستخدمين (user research) والبدء بالبناء (start building)
 
 <details><summary>الإجابة</summary>
 
@@ -373,27 +373,27 @@ flowchart RL
 
 **1. تتعلّم التنبيهات الذكية (Smart Alerts) فقط من ردود العملاء على التنبيهات التي تطلقها. بعد ستة أشهر صارت ترصد أنماط الاحتيال المعروفة (known fraud patterns) جيدًا لكنها تفوّت الجديدة (misses new ones). ما السبب الأرجح (most likely cause)؟**
 
-- A. النموذج صغير جدًا (too small)
-- B. حلقة تغذية راجعة متدهورة (degenerate feedback loop): المعاملات التي لم ترصدها أبدًا (never flagged) لا تنتج وسومًا أبدًا
-- C. العملاء يقدّمون تغذية راجعة أكثر من اللازم (too much feedback)
-- D. تسرّب الوسم (Label leakage) من حقول ما بعد القرار (post-decision fields)
+- A. حلقة تغذية راجعة متدهورة (degenerate feedback loop): المعاملات التي لم ترصدها أبدًا (never flagged) لا تنتج وسومًا أبدًا
+- B. النموذج صغير جدًا (too small) فلا يستوعب أنماط الاحتيال الكثيرة التي تظهر عبر ملايين المعاملات (millions of transactions)
+- C. العملاء يقدّمون تغذية راجعة أكثر من اللازم (too much feedback)، فيفرط النموذج في التكيف مع أكثر المستجيبين نشاطًا (most active responders)
+- D. تسرّب الوسم (Label leakage) من حقول ما بعد القرار (post-decision fields) التي لم يكن ينبغي تدريب النموذج عليها أصلًا
 
 <details><summary>الإجابة</summary>
 
-**B.** حين يقرّر المنتج أي الحالات تُوسم، لا يتعلّم إلا ما يراه أصلًا (what it already sees). والعلاج عينة محجوزة (holdout sample) من المعاملات غير المرصودة (unflagged transactions) إضافةً إلى وسوم مستقلة (independent labels). أما D فمشكلة من الدرس 3.1، لا مشكلة حلقة (loop problem). (🟡 التعمق أكثر (Going deeper)، «حلقات التغذية الراجعة المتدهورة (Degenerate feedback loops)».)
+**A.** حين يقرّر المنتج أي الحالات تُوسم، لا يتعلّم إلا ما يراه أصلًا (what it already sees). والعلاج عينة محجوزة (holdout sample) من المعاملات غير المرصودة (unflagged transactions) إضافةً إلى وسوم مستقلة (independent labels). أما D فمشكلة من الدرس 3.1، لا مشكلة حلقة (loop problem). (🟡 التعمق أكثر (Going deeper)، «حلقات التغذية الراجعة المتدهورة (Degenerate feedback loops)».)
 
 </details>
 
 **2. يعدّل مديرو العلاقات نحو 40% من مسودات مساعد مذكرات الائتمان (Credit Memo Copilot). ما أفضل طريقة لتحويل ذلك إلى تعلّم مفيد (useful learning)؟**
 
-- A. معاملة كل قسم معدَّل على أنه خطأ نموذج (model error) وإعادة التدريب شهريًا (retrain monthly)
+- A. معاملة كل قسم معدَّل على أنه خطأ نموذج (model error)، وإعادة التدريب شهريًا (retrain monthly)، وإبلاغ اللجنة (committee) بمعدل التعديل كل ربع سنة (each quarter) دون أي مراجعة للأسباب
 - B. تجاهل التعديلات لأنها مجرد أسلوب شخصي (personal style)
-- C. ربط بيانات التعديل بأداة اختيار أسباب قصيرة (short reason picker) ومراجعة أسبوعية بالعينة (weekly sampled review)، ثم إصلاح الأنماط في المجموعة المعرفية (corpus) أو الموجّه (prompt) أو القالب (template)
-- D. إزالة إمكانية التعديل حتى تصبح الإشارة أنظف (signal is cleaner)
+- C. إزالة إمكانية التعديل حتى تصبح الإشارة أنظف (signal is cleaner)
+- D. ربط بيانات التعديل بأداة اختيار أسباب قصيرة (short reason picker) ومراجعة أسبوعية بالعينة (weekly sampled review)، ثم إصلاح الأنماط في المجموعة المعرفية (corpus) أو الموجّه أو القالب
 
 <details><summary>الإجابة</summary>
 
-**C.** الإشارات الضمنية (Implicit signals) ملتبسة. وجمعها مع أسباب صريحة (explicit reasons) وتحليل أخطاء بشري (human error analysis) يحوّلها إلى أنماط قابلة للتنفيذ (actionable patterns). خيار A يعامل الأسلوب على أنه خطأ ويفترض أن إعادة التدريب (retraining) هي الإصلاح. وفي معظم منتجات الذكاء الاصطناعي التوليدي يكمن الإصلاح في الأجزاء التي يتحكم فيها الفريق (parts the team controls). (🟢 الأساسيات (The essentials)؛ 🟡 «أين يحدث التعلّم فعلًا (Where learning actually happens)».)
+**D.** الإشارات الضمنية (Implicit signals) ملتبسة. وجمعها مع أسباب صريحة (explicit reasons) وتحليل أخطاء بشري (human error analysis) يحوّلها إلى أنماط قابلة للتنفيذ (actionable patterns). خيار A يعامل الأسلوب على أنه خطأ ويفترض أن إعادة التدريب (retraining) هي الإصلاح. وفي معظم منتجات الذكاء الاصطناعي التوليدي يكمن الإصلاح في الأجزاء التي يتحكم فيها الفريق (parts the team controls). (🟢 الأساسيات (The essentials)؛ 🟡 «أين يحدث التعلّم فعلًا (Where learning actually happens)».)
 
 </details>
 
@@ -415,7 +415,7 @@ flowchart RL
 - A. الإبلاغ عن الدقة (accuracy) فقط للقرارات المعروفة نتائجها (outcomes are known)، وإظهار نسبة ما لم يُوسم بعد (share not yet labelled)، مع استخدام مؤشرات مبكرة بديلة (early proxies) موسومة بوضوح على أنها بديلة
 - B. افتراض أن القرارات غير الموسومة كانت صحيحة (were correct)
 - C. الانتظار سنة قبل الإبلاغ عن أي شيء
-- D. استخدام درجات رضا العملاء (customer satisfaction scores) بدلًا من السداد
+- D. استخدام درجات رضا العملاء (customer satisfaction scores) بدلًا من السداد (instead of repayment outcomes for the loan book)
 
 <details><summary>الإجابة</summary>
 
@@ -425,14 +425,14 @@ flowchart RL
 
 **5. يقترح طارق إعادة تدريب نموذج موجّه للعملاء (customer-facing model) تلقائيًا كل ليلة على تغذية المستخدمين الراجعة من اليوم السابق. ما المخاوف الرئيسية من منظور المنتج (main product concern)؟**
 
-- A. إعادة التدريب الليلية (Nightly retraining) دائمًا مكلفة جدًا
-- B. سيتغيّر السلوك بصمت وبكثرة (silently and often)، مما يقوّض الثقة وقابلية التتبّع (trust and traceability)، ويفتح الباب لتغذية راجعة مسمَّمة عمدًا (deliberately poisoned feedback)
+- A. سيتغيّر السلوك بصمت وبكثرة (silently and often)، مما يقوّض الثقة وقابلية التتبّع (trust and traceability)، ويفتح الباب لتغذية مسمَّمة عمدًا (poisoned feedback)
+- B. إعادة التدريب الليلية (Nightly retraining) دائمًا مكلفة جدًا
 - C. بيانات التغذية الراجعة (Feedback data) ليست مفيدة للتدريب أبدًا
-- D. تكسر القاعدة التي تقضي بألا تُحدَّث النماذج إلا مرة في السنة (once a year)
+- D. تكسر القاعدة (rule) التي تقضي بألا تُحدَّث النماذج (models) إلا مرة في السنة (once a year)، وهي قاعدة تضعها سياسة مخاطر النماذج (model risk policy) في البنك (the bank) لكل النماذج الإنتاجية (production models)
 
 <details><summary>الإجابة</summary>
 
-**B.** «حدّث وتكيّف بحذر (Update and adapt cautiously)»: غيّر في إصدارات مقيَّمة ذات أرقام نسخ (evaluated, versioned releases) مع إبلاغ (notification) وإمكانية تراجع (rollback)؛ فالتغذية الراجعة غير المرشّحة (unfiltered feedback) يمكن التلاعب بها (manipulated). خيار D قاعدة مختلقة (invented rule). (🔴 نظرة الخبير (Expert view)، «حدّث بحذر (Update cautiously)».)
+**A.** «حدّث وتكيّف بحذر (Update and adapt cautiously)»: غيّر في إصدارات مقيَّمة ذات أرقام نسخ (evaluated, versioned releases) مع إبلاغ (notification) وإمكانية تراجع (rollback)؛ فالتغذية الراجعة غير المرشّحة (unfiltered feedback) يمكن التلاعب بها (manipulated). خيار D قاعدة مختلقة (invented rule). (🔴 نظرة الخبير (Expert view)، «حدّث بحذر (Update cautiously)».)
 
 </details>
 
@@ -596,9 +596,9 @@ flowchart TD
 
 **1. يعرض مورّد (vendor) إجراء ضبط دقيق (fine-tune) لنموذج على النصوص الكاملة لمحادثات عملاء نجم أسيست (Najm Assist's full customer transcripts). ما الذي يجب أن يثبته فيصل أولًا؟**
 
-- A. هل سيحقق النموذج المضبوط درجات أعلى على المقاييس المعيارية العامة (public benchmarks)
-- B. هل أُعلن هذا الاستخدام (declared) وله أساس قانوني (legal basis)، وما الذي يسمح به عقد المورّد (vendor contract)، وهل يستطيع البنك احترام طلبات المحو (erasure requests) بعد ذلك
-- C. هل ضغط العملاء «أوافق (accept)» على الشروط والأحكام (terms and conditions) في التطبيق
+- A. هل سيحقق النموذج المضبوط درجات أعلى على المقاييس المعيارية العامة (public benchmarks) مقارنة بالنموذج الأساسي (base model) الذي يستخدمه البنك اليوم، بعد إنفاق ميزانية كبيرة على التدريب (training budget)
+- B. هل أُعلن هذا الاستخدام (declared) وله أساس قانوني (legal basis)، وما الذي يسمح به عقد المورّد (vendor contract)، وهل يستطيع البنك احترام طلبات المحو (erasure requests)
+- C. هل ضغط العملاء «أوافق (accept)» على الشروط والأحكام (terms and conditions) في التطبيق (in the app) حين نزّلوه أول مرة (first downloaded)
 - D. هل النصوص باللغة الإنجليزية (in English)
 
 <details><summary>الإجابة</summary>
@@ -609,14 +609,14 @@ flowchart TD
 
 **2. يريد التسويق (Marketing) إرسال عرض قرض شخصي (personal-loan offer) إلى العملاء الذين سألوا نجم أسيست عن الرسوم المدرسية (school fees). أي فحص يفشل فيه هذا الاستخدام بأوضح صورة (most clearly fail)؟**
 
-- A. دقة البيانات (Data accuracy)
-- B. اختبار المفاجأة وتحديد الغرض (The surprise test and purpose limitation): شارك العملاء المعلومات للحصول على إجابة، لا ليُستهدفوا (not to be targeted)
-- C. تحديد مدة التخزين (Storage limitation)
-- D. الأمن (Security)
+- A. اختبار المفاجأة وتحديد الغرض (The surprise test and purpose limitation): شارك العملاء المعلومات للحصول على إجابة، لا ليُستهدفوا (not to be targeted)
+- B. دقة البيانات (Data accuracy): هل كانت إجابات رسوم المدارس التي قدّمها نجم أسيست صحيحة
+- C. تحديد مدة التخزين (Storage limitation): هل حُفظت النصوص مدة أطول مما تسمح به فترة الاحتفاظ المعلنة (stated retention period) بموجب سياسة البنك، وهل حُذفت بعدها فعلًا (actually deleted afterwards)
+- D. الأمن (Security): هل النصوص محمية من الوصول غير المصرح به (unauthorised access) داخل البنك
 
 <details><summary>الإجابة</summary>
 
-**B.** سيتفاجأ عميل معقول (reasonable customer)، والغرض يختلف عن الغرض الذي جُمعت البيانات من أجله (collected for). كما أنه يضر بالثقة في المساعد (damages trust in the assistant). (🟡 «هل يجوز لنا إعادة استخدام هذه البيانات (May we reuse this data)»؛ 🔴 «الثقة مقياس منتج (Trust is a product metric)».)
+**A.** سيتفاجأ عميل معقول (reasonable customer)، والغرض يختلف عن الغرض الذي جُمعت البيانات من أجله (collected for). كما أنه يضر بالثقة في المساعد (damages trust in the assistant). (🟡 «هل يجوز لنا إعادة استخدام هذه البيانات (May we reuse this data)»؛ 🔴 «الثقة مقياس منتج (Trust is a product metric)».)
 
 </details>
 
@@ -637,12 +637,12 @@ flowchart TD
 
 - A. الموافقة (Consent) مطلوبة دائمًا لمعالجة الذكاء الاصطناعي (AI processing)
 - B. ينبغي لمدير المنتج أن يختار الأساس القانوني ويبلغ مسؤول حماية البيانات (DPO)
-- C. الموافقة أساس واحد من عدة أسس (one of several bases)، وكثيرًا ما لا تكون الأنسب في علاقة مصرفية (banking relationship)؛ يقرّر مسؤول حماية البيانات، بناءً على وصف دقيق للأغراض (precise description of purposes) من مدير المنتج
-- D. لا حاجة إلى أساس قانوني إن بقيت البيانات داخل البنك (stays inside the bank)
+- C. لا حاجة إلى أساس قانوني إن بقيت البيانات داخل البنك (stays inside the bank)
+- D. الموافقة أساس واحد من عدة أسس (one of several bases)، وكثيرًا ما لا تكون الأنسب في علاقة مصرفية (banking relationship)؛ يقرّر مسؤول حماية البيانات، بناءً على وصف دقيق للأغراض (precise description of purposes) من مدير المنتج
 
 <details><summary>الإجابة</summary>
 
-**C.** كثيرًا ما يلائم العقد (Contract) أو المصالح المشروعة (legitimate interests) تقديم الخدمة (service delivery) أكثر من الموافقة الهشّة (fragile consent). مسؤول حماية البيانات يقرّر؛ ومدير المنتج يقدّم الأغراض. خيار B يعكس الأدوار (reverses the roles). (🟢 «الأساس القانوني: الموافقة ليست الخيار الافتراضي (Legal basis: consent is not the default)».)
+**D.** كثيرًا ما يلائم العقد (Contract) أو المصالح المشروعة (legitimate interests) تقديم الخدمة (service delivery) أكثر من الموافقة الهشّة (fragile consent). مسؤول حماية البيانات يقرّر؛ ومدير المنتج يقدّم الأغراض. خيار B يعكس الأدوار (reverses the roles). (🟢 «الأساس القانوني: الموافقة ليست الخيار الافتراضي (Legal basis: consent is not the default)».)
 
 </details>
 
@@ -650,12 +650,12 @@ flowchart TD
 
 - A. في قاعدة بيانات العملاء (customer database) فقط
 - B. في الموجّه (prompt) الذي يكتبه المستخدم فقط
-- C. في الموجّه، والمستندات المسترجَعة (retrieved documents)، والمخرجات (outputs)، والسجلات (logs)، وبيانات التغذية الراجعة (feedback data)، ومجموعات التقييم (evaluation sets)
-- D. لا مكان، إن لم يدرّب مورّد النموذج (model vendor) عليها
+- C. لا مكان، إن لم يدرّب مورّد النموذج (model vendor) عليها
+- D. في الموجّه، والمستندات المسترجَعة (retrieved documents)، والمخرجات (outputs)، والسجلات (logs)، وبيانات التغذية الراجعة (feedback data)، ومجموعات التقييم (evaluation sets)
 
 <details><summary>الإجابة</summary>
 
-**C.** كلٌّ منها يحتوي بيانات شخصية ويحتاج إلى قواعد احتفاظ وحذف (retention and deletion rules). خيار D يخلط بين تدريب المورّد (vendor training) ومعالجة نجم الخاصة (Najm's own processing). (🟢 «البيانات الشخصية موجودة في كل مكان في منتجات الذكاء الاصطناعي (Personal data is everywhere in AI products)».)
+**D.** كلٌّ منها يحتوي بيانات شخصية ويحتاج إلى قواعد احتفاظ وحذف (retention and deletion rules). خيار C يخلط بين تدريب المورّد (vendor training) ومعالجة نجم الخاصة (Najm's own processing). (🟢 «البيانات الشخصية موجودة في كل مكان في منتجات الذكاء الاصطناعي (Personal data is everywhere in AI products)».)
 
 </details>
 

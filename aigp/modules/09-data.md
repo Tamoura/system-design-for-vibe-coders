@@ -150,10 +150,10 @@ Standing rule adopted by the committee: *"No dataset may be used to train, fine-
 
 **3. A vendor offers Najm "fully anonymous" synthetic applicant data. What should governance require FIRST?**
 
-- A. Nothing; synthetic data is outside the GDPR
+- A. Nothing; synthetic data is outside the GDPR, so no check on the source data or on the generation method is needed before use
 - B. A lower price
 - C. Evidence of the vendor's rights in the source data and a re-identification risk assessment, plus a fidelity and bias review
-- D. That Najm publish the data
+- D. That Najm publish the data, together with the generation method, so that the public can test it for privacy leaks
 
 <details><summary>Answer</summary>
 
@@ -176,10 +176,10 @@ Standing rule adopted by the committee: *"No dataset may be used to train, fine-
 
 **5. According to EDPB Opinion 28/2024, an AI model trained on personal data:**
 
-- A. Is always anonymous because it only stores parameters
+- A. Is always anonymous because it only stores parameters, so it can be shared and reused without any further assessment
 - B. Is never anonymous
 - C. Cannot be assumed to be anonymous; anonymity must be assessed case by case, including the likelihood of extracting personal data from it
-- D. Is anonymous if the provider says so in its terms
+- D. Is anonymous if the provider says so in its terms of use, and the bank has no duty to check that claim itself
 
 <details><summary>Answer</summary>
 
@@ -336,10 +336,10 @@ Describe it carefully: it is **not** a general licence to collect sensitive data
 
 **1. Najm's credit model was trained only on applicants the old policy approved. Which problem does this MOST directly describe?**
 
-- A. Aggregation bias
+- A. Aggregation bias, where one model is fitted to groups that have different relationships between inputs and outcomes
 - B. Selection bias (the reject-inference problem): outcomes are missing for applicants the old policy declined
-- C. Model extraction
-- D. Label noise from annotators
+- C. Model extraction, where an outsider rebuilds a copy of the model by querying it many times
+- D. Label noise from annotators who apply the labelling guidelines inconsistently from one case to the next
 
 <details><summary>Answer</summary>
 
@@ -362,9 +362,9 @@ Describe it carefully: it is **not** a general licence to collect sensitive data
 
 **3. Dana removes "sex" from the credit model's inputs, but approval rates for women remain much lower. What is the MOST likely explanation?**
 
-- A. The model is perfectly fair and women are riskier
-- B. SHAP values are wrong
-- C. Removing a feature always increases bias
+- A. The model is perfectly fair and women are simply riskier borrowers, so no further action is needed
+- B. SHAP values are wrong, because they cannot show the effect of a feature that was removed from the model
+- C. Removing a feature always increases bias, so the team should add sex back to the inputs of the model
 - D. Other features act as proxies for sex, and historical bias may be in the labels
 
 <details><summary>Answer</summary>
@@ -375,10 +375,10 @@ Describe it carefully: it is **not** a general licence to collect sensitive data
 
 **4. Which is an example of an in-processing bias mitigation?**
 
-- A. Reweighting training examples from under-represented groups
+- A. Reweighting training examples from under-represented groups before the model is trained on them
 - B. Adding a fairness constraint or penalty to the model's training objective
-- C. Setting different score thresholds per group after training
-- D. Collecting more data from young applicants
+- C. Setting different score thresholds per group after training, so that approval rates are brought into line
+- D. Collecting more data from young applicants and repeating the training run with the larger sample
 
 <details><summary>Answer</summary>
 
@@ -388,10 +388,10 @@ Describe it carefully: it is **not** a general licence to collect sensitive data
 
 **5. For a labelling project to build the copilot's evaluation set, which control MOST improves label quality?**
 
-- A. Written guidance with worked examples and edge cases, qualified annotators, and measuring inter-annotator agreement with adjudication
-- B. Using the cheapest crowd platform available
-- C. Letting each annotator define "good memo" for themselves
-- D. Labelling only the easy cases
+- A. Written guidance with worked examples and edge cases, qualified annotators, and agreement measured between them
+- B. Using the cheapest crowd platform available, with a single pass and no checks on annotator quality, agreement or the clarity of the instructions given to them
+- C. Letting each annotator define "good memo" for themselves, so that labels reflect a wide range of views
+- D. Labelling only the easy cases, and leaving the borderline memos out of the training and test sets
 
 <details><summary>Answer</summary>
 
@@ -568,10 +568,10 @@ Good red-teams are **diverse** (security, domain, language, affected-community p
 
 **1. Najm's credit model reports 94% accuracy on a test set where 6% of applicants defaulted. What is the BEST response?**
 
-- A. Approve it; 94% is excellent
-- B. Ask the team to raise accuracy to 99%
+- A. Approve it; 94% is excellent for a default model, and further metrics such as precision, recall or calibration would only delay the launch without changing the decision
+- B. Ask the team to raise accuracy to 99% before the model is reviewed again by the validation unit
 - C. Ask for precision, recall, AUC and calibration, overall and by group, because a model predicting "no default" for everyone would also score 94%
-- D. Replace the test set with the training set
+- D. Replace the test set with the training set, so that the reported accuracy is measured on more data
 
 <details><summary>Answer</summary>
 
@@ -581,9 +581,9 @@ Good red-teams are **diverse** (security, domain, language, affected-community p
 
 **2. In the worked example, Group A's approval rate is 54% and Group B's is 36%, while true positive rates are about equal. Which statement is correct?**
 
-- A. Both demographic parity and equal opportunity are satisfied
-- B. No fairness metric can be computed without SHAP values
-- C. Equal opportunity fails but demographic parity holds
+- A. Both demographic parity and equal opportunity are satisfied, so no remediation work is required
+- B. No fairness metric can be computed without SHAP values, so the team must first build an explainer
+- C. Equal opportunity fails but demographic parity holds, and the gap is wider than the four-fifths rule allows
 - D. Demographic parity fails (ratio ≈ 0.67) but equal opportunity is approximately satisfied
 
 <details><summary>Answer</summary>
@@ -595,8 +595,8 @@ Good red-teams are **diverse** (security, domain, language, affected-community p
 **3. A credit model's training data includes a "sent to collections" flag that is only set after a customer defaults. The model scores superbly in testing and poorly in production. What is the MOST likely cause?**
 
 - A. Data leakage
-- B. Aggregation bias
-- C. Model extraction
+- B. Aggregation bias, mixing different groups in one model
+- C. Model extraction, copying the model by querying it
 - D. Too few red-team scenarios
 
 <details><summary>Answer</summary>
@@ -607,10 +607,10 @@ Good red-teams are **diverse** (security, domain, language, affected-community p
 
 **4. Under model risk management guidance such as SR 11-7, what does "effective challenge" require?**
 
-- A. That the development team re-runs its own tests
+- A. That the development team re-runs its own tests and reports the results to the project manager
 - B. Critical review by objective, competent parties with enough influence to get limitations addressed
-- C. That the vendor certifies its own model
-- D. A single annual meeting of the board
+- C. That the vendor certifies its own model and shares the certificate with the bank's procurement team
+- D. A single annual meeting of the board, at which the model owner presents the year's incidents
 
 <details><summary>Answer</summary>
 

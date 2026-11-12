@@ -172,7 +172,7 @@ Retired from the headline: *drafts generated* and *average thumbs rating* (now d
 
 **2. Which is the best North Star for Credit Memo Copilot?**
 
-- A. Number of drafts generated per week
+- A. Number of drafts generated per week across all relationship managers using the tool in every region
 - B. Weekly active RMs
 - C. Share of memos submitted on time and not returned for rework
 - D. Average thumbs rating on drafts
@@ -185,14 +185,14 @@ Retired from the headline: *drafts generated* and *average thumbs rating* (now d
 
 **3. A reliance-matrix sample shows that 18% of drafts RMs accepted with no edits failed the quality rubric, up from 7% last quarter. What does this most likely indicate?**
 
-- A. Under-reliance: RMs are rewriting good drafts
-- B. Over-reliance: RMs are accepting drafts they should have corrected
-- C. The rubric is too strict
-- D. Adoption is falling
+- A. Under-reliance: RMs are rewriting good drafts and so wasting time that the copilot should save
+- B. Adoption is falling, because fewer RMs now open the copilot before starting their memos each week
+- C. The rubric is too strict, because it now fails drafts that experienced RMs would accept as good
+- D. Over-reliance: RMs are accepting drafts they should have corrected
 
 <details><summary>Answer</summary>
 
-**B.** Bad outputs accepted unchanged is the over-reliance cell. It calls for a look at UX friction, training and seeded-error audits. Under-reliance (A) is good drafts being heavily rewritten. (🔴 Expert view.)
+**D.** Bad outputs accepted unchanged is the over-reliance cell. It calls for a look at UX friction, training and seeded-error audits. Under-reliance (A) is good drafts being heavily rewritten. (🔴 Expert view.)
 
 </details>
 
@@ -211,7 +211,7 @@ Retired from the headline: *drafts generated* and *average thumbs rating* (now d
 
 **5. Memo cycle time fell 20% in the quarter the copilot launched. Credit review also hired two analysts that quarter. What is the most defensible way to attribute the gain?**
 
-- A. Credit the copilot, since it launched in the same quarter
+- A. Credit the copilot, since it launched in the same quarter and cycle time fell right afterwards across the bank
 - B. Compare teams using the copilot with a holdout or not-yet-rolled-out group over the same period
 - C. Survey RMs on whether they feel faster
 - D. Divide the gain equally between the two causes
@@ -399,23 +399,23 @@ Decision rule agreed with Khalid: *"A change that lowers the model bill but rais
 
 **1. Model A costs a tenth as much per token as Model B. On Najm Assist, Model A resolves 50% of conversations and Model B resolves 65%, with unresolved ones going to human agents. Which statement is most accurate?**
 
-- A. Model A is cheaper, because it costs a tenth as much per token
-- B. You cannot tell without adding handoff costs and dividing by resolution rate
+- A. You cannot tell without adding handoff costs and dividing by resolution rate
+- B. Model A is cheaper, because it costs a tenth as much per token
 - C. Model B is always cheaper, because it resolves more
-- D. Cost does not matter if quality differs
+- D. Cost does not matter if quality differs, because customers care about the quality of the answer, not the price per token
 
 <details><summary>Answer</summary>
 
-**B.** Compare cost per resolved conversation: model cost plus handoff cost, divided by resolution rate. In the lesson's illustration the cheap model was about twice as expensive per resolution, but that depends on handoff cost (see exercise 🟡). C overstates it. (🟡 Going deeper.)
+**A.** Compare cost per resolved conversation: model cost plus handoff cost, divided by resolution rate. In the lesson's illustration the cheap model was about twice as expensive per resolution, but that depends on handoff cost (see exercise 🟡). C overstates it. (🟡 Going deeper.)
 
 </details>
 
 **2. For Credit Memo Copilot, which factor most determines whether the business case holds?**
 
-- A. The per-token price of the drafting model
+- A. The per-token price of the drafting model, multiplied by the number of tokens in a typical memo
 - B. Adoption by RMs and the time actually saved per memo
-- C. Whether prompt caching is enabled
-- D. The number of drafts generated
+- C. Whether prompt caching is enabled for the long credit documents that are sent with every request
+- D. The number of drafts generated each week, counted across every relationship manager and team
 
 <details><summary>Answer</summary>
 
@@ -451,14 +451,14 @@ Decision rule agreed with Khalid: *"A change that lowers the model bill but rais
 
 **5. Najm Assist's average cost per agent task is on target, but finance reports occasional very large bills. What should the team add?**
 
-- A. A switch to the smallest model for all tasks
-- B. p95 cost reporting and a per-task spend cap that ends in a graceful handoff
-- C. Removing agent features
-- D. A monthly budget review only
+- A. p95 cost reporting and a per-task spend cap that ends in a graceful handoff
+- B. A switch to the smallest model for all tasks, whatever the effect on the quality of the answers
+- C. Removing agent features from the product until cost per task falls further below the target
+- D. A monthly budget review only, run by finance with the product team once the bills have arrived
 
 <details><summary>Answer</summary>
 
-**B.** Agent costs have long tails from loops and retries. Percentiles expose them and caps limit them, with a handoff so the customer is not stranded. A may lower quality and raise handoffs. (🟡 Going deeper.)
+**A.** Agent costs have long tails from loops and retries. Percentiles expose them and caps limit them, with a handoff so the customer is not stranded. B may lower quality and raise handoffs. (🟡 Going deeper.)
 
 </details>
 
@@ -633,14 +633,14 @@ After the fee incident, Rania asks each product to publish a **monitoring plan a
 
 **1. Najm Assist gave customers an outdated fee for three weeks while latency, error rate and containment all looked healthy. Which monitor would most directly have caught it?**
 
-- A. A tighter p95 latency threshold
-- B. A source-freshness check linking policy page changes to re-indexing and a targeted re-test
+- A. A tighter p95 latency threshold, with alerts that notify the on-call engineer whenever response time rises above it
+- B. Monthly PSI on customer age
 - C. A higher containment target
-- D. Monthly PSI on customer age
+- D. A source-freshness check linking policy page changes to re-indexing and a targeted re-test
 
 <details><summary>Answer</summary>
 
-**B.** This was knowledge drift. Linking content changes to re-indexing and re-testing catches it at the source. Health metrics (A) cannot see wrong answers, and a containment target (C) might even reward the error. (🟡 Going deeper.)
+**D.** This was knowledge drift. Linking content changes to re-indexing and re-testing catches it at the source. Health metrics (A) cannot see wrong answers, and a containment target (C) might even reward the error. (🟡 Going deeper.)
 
 </details>
 
@@ -660,19 +660,19 @@ After the fee incident, Rania asks each product to publish a **monitoring plan a
 **3. SME Instant Finance defaults take months to appear. What is the best way to monitor model performance in the meantime?**
 
 - A. Wait for the annual validation
-- B. Track leading proxies such as early arrears and override rate alongside input and score drift, and later check that the proxies predicted defaults
+- B. Retrain every week on all available data
 - C. Use customer satisfaction scores
-- D. Retrain every week on all available data
+- D. Track leading proxies such as early arrears and override rate alongside input and score drift, and later check that the proxies predicted defaults
 
 <details><summary>Answer</summary>
 
-**B.** Proxies plus drift checks give early warning, and validating proxies against real outcomes keeps them honest. D ignores label delay and validation requirements for credit models. (🟡 Going deeper.)
+**D.** Proxies plus drift checks give early warning, and validating proxies against real outcomes keeps them honest. B ignores label delay and validation requirements for credit models. (🟡 Going deeper.)
 
 </details>
 
 **4. The team fixes a recurring misunderstanding of an Arabic phrasing by changing the prompt. What must happen before the change reaches all customers?**
 
-- A. Nothing; prompt changes are low risk
+- A. Nothing; prompt changes are low risk because a prompt is only text and can be edited back by the team at any time
 - B. Add the failing cases to the golden set, run the full set for regressions, and release through a staged rollout
 - C. Ask the vendor to confirm the fix
 - D. Retrain the model

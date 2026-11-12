@@ -190,9 +190,9 @@ quality_gate: {recall_at_3: "agreed target on 40 questions", refusal_tests: 5}
 
 **2. One chunk is ranked 2 by the vector search and missing from BM25. Another is ranked 4 by both. With k = 60, which scores higher?**
 
-- A. The first, because rank 2 always beats rank 4 in a single list
+- A. The first, as rank 2 always beats rank 4 in one list
 - B. They tie, because k = 60 flattens the ranks away
-- C. The first, because vector ranks count for more than BM25 ranks
+- C. The first, as vector ranks far outweigh BM25 ranks
 - D. The second, because two lists agree and their points add
 
 <details><summary>Answer</summary>
@@ -629,7 +629,7 @@ Do not tune MIN_SIM or edit the questions to make a number look better.
 
 **1. For "How long does a new laptop request take?" the log shows only `laptop-requests#0` and the answer quotes the portal sentence. Why?**
 
-- A. The index went stale after the policy was re-ingested
+- A. The index went stale after the policy page was re-ingested into the store
 - B. `MIN_SIM` is too low, so unrelated noise got through
 - C. The chunk holding the answer shares no word with the question
 - D. The model ignored the 5-business-days sentence

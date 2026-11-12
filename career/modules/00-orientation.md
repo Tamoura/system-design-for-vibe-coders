@@ -400,10 +400,10 @@ Dana's note in the margin: "Good choice for this market. Your modelling backgrou
 
 **2. Which interview topic is tested for data roles almost regardless of employer?**
 
-- A. SQL
-- B. Kubernetes administration
-- C. Mobile app design
-- D. Capture-the-flag challenges
+- A. SQL queries, including joins and grouping
+- B. Kubernetes administration and cluster upgrades
+- C. Mobile app screen design and navigation
+- D. Capture-the-flag challenges in web security
 
 <details><summary>Answer</summary>
 

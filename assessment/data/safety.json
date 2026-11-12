@@ -11,7 +11,7 @@
       },
       "o": {
         "en": [
-          "A line in the prompt telling the agent to double-check every commit it makes",
+          "A line in the prompt telling the agent to double-check every commit it makes before it finishes",
           "A pre-commit hook that blocks commits over ~30 files, with a logged override",
           "A habit of reading every staged diff line by line yourself before each commit",
           "A slower, more careful model for the agent, so it rushes fewer of its commits"

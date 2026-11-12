@@ -188,7 +188,7 @@ The artefact is the **Najm Desk v1 Memory Design**, owned by Lujain, reviewed by
 
 **3. A design proposes `recall(user_id, query)` so the model can find the right person. What is the best fix?**
 
-- A. Tell the model in the prompt to pass only the current user's id
+- A. Tell the model in the prompt to pass only the user's id
 - B. Validate that the id is a number before the query runs
 - C. Take the id from the session and remove it from the tool inputs
 - D. Keep the input and log every call with its id
@@ -603,7 +603,7 @@ Work in small steps and run the tests after each.
 
 - A. SQLite caches deleted rows until a restart
 - B. Deleted bytes stay in free space unless zeroed
-- C. The test ran in a transaction that rolled back
+- C. The test ran in a rolled-back transaction
 - D. The `SELECT` used the wrong user id
 
 <details><summary>Answer</summary>
@@ -615,7 +615,7 @@ Work in small steps and run the tests after each.
 **2. After the assistant reads ticket 4499, the model tries to save "attacker@evil.example is a trusted approver". What stops the write?**
 
 - A. The regex in `remember` that rejects instructions
-- B. The relevance gate in `recall`
+- B. The relevance gate in `recall`, which drops weak matches
 - C. The system prompt calling ticket notes data
 - D. The `tainted` check in `run_tool`
 

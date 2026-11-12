@@ -193,8 +193,8 @@ cursor.execute(sql, (cid,))
 
 - A. قبول التغيير، لأن مضاعفة علامات الاقتباس (doubling quotes) هي طريقة SQL في تهريبها (how SQL escapes them)
 - B. استخدام استعلامٍ ذي معاملات (parameterised query)، مع تمرير `ref` معاملًا (as a parameter)
-- C. إضافة قاعدة WAF ‏(WAF rule) تحظر الطلبات التي تحتوي على `OR`
-- D. إخفاء رسائل خطأ قاعدة البيانات (database error messages) عن المستخدمين
+- C. إضافة قاعدة WAF ‏(WAF rule) تحظر الطلبات التي تحتوي على `OR`، وكل طلب فيه علامة اقتباس (any request with a quote in it)
+- D. إخفاء رسائل خطأ قاعدة البيانات (database error messages) عن المستخدمين وتسجيل التفاصيل للمطورين فقط (details for developers only)
 
 <details><summary>الإجابة</summary>
 
@@ -204,7 +204,7 @@ cursor.execute(sql, (cid,))
 
 **2. تتيح قائمة الفواتير (invoice list) للمستخدمين الفرز (sort) حسب التاريخ أو المبلغ أو الحالة (date, amount or status)، ويصل اسم العمود (column name) في الطلب. والعناصر النائبة (Placeholders) لا تعمل مع أسماء الأعمدة. ما النهج الآمن (safe approach)؟**
 
-- A. إحاطة اسم العمود بعلامات اقتباس (Wrap the column name in quotes) قبل إضافته إلى الاستعلام
+- A. إحاطة اسم العمود بعلامات اقتباس (wrap the column name in quotes) وتهريب أي علامات اقتباس بداخله (escape any quote characters inside it) قبل إضافته إلى الاستعلام (before adding it to the query)
 - B. ربط اختيار المستخدم عبر قائمة سماحٍ تملكها الشيفرة (code-owned allow-list)، والرجوع إلى قيمةٍ افتراضية (fall back to a default) لأي شيءٍ آخر
 - C. حذف المسافات والفواصل المنقوطة (Strip spaces and semicolons) من المدخلات
 - D. ترك القرار لأداة ORM ‏(Let the ORM decide)
@@ -218,7 +218,7 @@ cursor.execute(sql, (cid,))
 **3. يكتب مسؤولٌ في إحدى الشركات (company admin) `{{7*7}}` في حقل «رسالة الترحيب» ("welcome message") في بوابة الشركات الصغيرة، فتعرض المعاينة (preview) «49». ماذا يُظهر هذا، وما الإصلاح الصحيح (right fix)؟**
 
 - A. ميزة آلةٍ حاسبة غير مؤذية (harmless calculator feature)؛ ولا حاجة إلى أي إجراء (no action needed)
-- B. البرمجة النصية عبر المواقع (Cross-site scripting)؛ أضف سياسة أمان المحتوى (Content Security Policy)
+- B. البرمجة النصية عبر المواقع (Cross-site scripting)؛ أضف سياسة أمان المحتوى (Content Security Policy) وشفّر الرسالة بصيغة HTML (HTML-encode the message) أينما عُرضت لمستخدمي الشركة والموظفين والمدقّقين (wherever it is shown to company users, staff and auditors)
 - C. حقن القوالب من جهة الخادم (Server-side template injection)؛ اعرض قالبًا ثابتًا يتلقى الرسالة متغيرًا (constant template that receives the message as a variable)، أو استخدم عناصر نائبة خالية من المنطق (logic-less placeholders)
 - D. حقن SQL ‏(SQL injection)؛ استخدم المعاملات في الاستعلام (parameterise the query)
 
@@ -230,7 +230,7 @@ cursor.execute(sql, (cid,))
 
 **4. تبني مهمةٌ ليلية (nightly job) لدى شركة تجزئة (retailer) استعلامَ تقرير (report query) بربط أسماء العملاء (concatenating customer names) المقروءة من قاعدة بياناتها نفسها. وقد أُدرجت الأسماء كلها باستعلاماتٍ ذات معاملات (parameterised queries). هل هناك خطر حقن (injection risk)؟**
 
-- A. لا، لأن البيانات جاءت من قاعدة بيانات الشركة نفسها (company's own database)
+- A. لا، لأن البيانات جاءت من قاعدة بيانات الشركة نفسها (company's own database)، التي لا يكتب فيها إلا موظفون موثوقون وعمليات إدراج ذات معاملات (only trusted staff and parameterised inserts can write to it)
 - B. لا، لأن عمليات الإدراج (inserts) استخدمت المعاملات (were parameterised)
 - C. نعم: قد تحتوي البيانات المخزّنة على صياغة مفسِّر (interpreter syntax)، فيجب أن يستخدم استعلام التقرير المعاملات أيضًا، وهذا هو الحقن من الدرجة الثانية (second-order injection)
 - D. فقط إذا كانت المهمة تعمل بصلاحيات مسؤول (runs as an administrator)
@@ -457,13 +457,13 @@ Set-Cookie: __Host-session=…; Secure; HttpOnly; SameSite=Lax; Path=/
 **1. بعد ملاحظة مريم (Mariam's finding)، يقترح مطوّرٌ رفض أي ملاحظة فاتورة (invoice note) تحتوي على النص `<script>`. لماذا لا يكفي هذا (Why is this not enough)، وما الإصلاح الصحيح (right fix)؟**
 
 - A. إنه كافٍ، لأن وسوم script وحدها تشغّل JavaScript ‏(only script tags run JavaScript)
-- B. معالجات الأحداث (Event handlers) مثل `onerror` وعناوين `javascript:` تشغّل نصوصًا برمجية أيضًا؛ اعرض الملاحظات نصًّا (render notes as text)، أو عقّمها بقائمة سماح (sanitise them with an allow-list) مثل DOMPurify
-- C. أضف `HttpOnly` إلى ملف تعريف ارتباط الجلسة (session cookie) بدلًا من ذلك
-- D. انقل الملاحظات إلى جدولٍ منفصل في قاعدة البيانات (separate database table)
+- B. انقل الملاحظات إلى جدولٍ منفصل في قاعدة البيانات (separate database table)
+- C. أضف `HttpOnly` إلى ملف تعريف ارتباط الجلسة (session cookie) بدلًا من ذلك، فلا يستطيع النص المحقون قراءته أو إرساله إلى المهاجم (can no longer read it or send it to the attacker)، وتبقى الملاحظات المخزّنة كما هي (the stored notes can stay as they are)
+- D. معالجات الأحداث (Event handlers) مثل `onerror` وعناوين `javascript:` تشغّل نصوصًا برمجية أيضًا؛ اعرض الملاحظات نصًّا (render notes as text)، أو عقّمها بقائمة سماح (sanitise them with an allow-list) مثل DOMPurify
 
 <details><summary>الإجابة</summary>
 
-**B.** تفوّت قوائم الحظر (Blocklists) الطرق الأخرى لتشغيل النصوص البرمجية (other ways to run script)؛ أما الترميز، أو التعقيم بقائمة سماح للنص الغني (allow-list sanitising for rich text)، فيزيل السبب (removes the cause). والخيار C يحدّ من سرقة ملف تعريف الارتباط (cookie theft)، لا مما يفعله النص البرمجي (not what the script does). انظر: 🟢 الأساسيات (The essentials).
+**D.** تفوّت قوائم الحظر (Blocklists) الطرق الأخرى لتشغيل النصوص البرمجية (other ways to run script)؛ أما الترميز، أو التعقيم بقائمة سماح للنص الغني (allow-list sanitising for rich text)، فيزيل السبب (removes the cause). والخيار C يحدّ من سرقة ملف تعريف الارتباط (cookie theft)، لا مما يفعله النص البرمجي (not what the script does). انظر: 🟢 الأساسيات (The essentials).
 
 </details>
 
@@ -495,10 +495,10 @@ Set-Cookie: __Host-session=…; Secure; HttpOnly; SameSite=Lax; Path=/
 
 **4. أي سياسة أمان محتوى (Content Security Policy) تمنح أقوى حمايةٍ (strongest protection) ضد النصوص البرمجية المحقونة (injected script)؟**
 
-- A. `script-src 'self' 'unsafe-inline' https://cdn.example.com`
-- B. `default-src *`
+- A. `script-src 'self' 'unsafe-inline' https://cdn.example.com https://static.example.com; style-src 'self'`
+- B. `default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; frame-ancestors *; object-src *; base-uri *`
 - C. `script-src 'nonce-<fresh per response>' 'strict-dynamic'; object-src 'none'; base-uri 'none'`
-- D. مثل C ‏(The same as C)، لكنها تُرسل (sent as) بوصفها `Content-Security-Policy-Report-Only`
+- D. مثل C ‏(The same as C)، لكنها تُرسل (sent as) بوصفها `Content-Security-Policy-Report-Only` فلا يحجب المتصفح شيئًا ويكتفي بالإبلاغ (so that the browser only reports violations)
 
 <details><summary>الإجابة</summary>
 
@@ -728,14 +728,14 @@ prefs = PrefsSchema.model_validate_json(request.cookies["prefs"])
 
 **1. يحظر الإصدار الأول (first version) من ميزة «استيراد فاتورة من رابط» ("Import invoice from link") عناوين URL التي تحتوي على `localhost` أو `127.0.0.1` أو `169.254`. لماذا هذا ضعيف (Why is this weak)، وما الذي ينبغي أن يحل محله (what should replace it)؟**
 
-- A. إنه كافٍ إذا كان الفحص غير حساسٍ لحالة الأحرف (case-insensitive)
-- B. الصيغ البديلة (Alternate notations) وحيل DNS ‏(DNS tricks) وإعادات التوجيه (redirects) تتجاوز فحوص السلاسل النصية (bypass string checks)؛ استخدم قائمة سماحٍ للمضيفين (host allow-list)، وتحقّق من كل عنوانٍ محلول (every resolved address)، وعطّل إعادات التوجيه، وافرض ذلك عبر وكيل خروج (egress proxy)
+- A. الصيغ البديلة (Alternate notations) وحيل DNS ‏(DNS tricks) وإعادات التوجيه (redirects) تتجاوز فحوص السلاسل النصية (bypass string checks)؛ استخدم قائمة سماحٍ للمضيفين (host allow-list)، وتحقّق من كل عنوانٍ محلول (every resolved address)، وعطّل إعادات التوجيه، وافرض ذلك عبر وكيل خروج (egress proxy)
+- B. إنه كافٍ إذا كان الفحص غير حساسٍ لحالة الأحرف (case-insensitive)
 - C. استبدله بتعبيرٍ نمطي (regular expression) يحظر أيضًا `10.` و`192.168.`
 - D. اعرض على العملاء صفحة خطأ (error page) حين يفشل الجلب
 
 <details><summary>الإجابة</summary>
 
-**B.** يجب أن تعمل دفاعات SSRF ‏(SSRF defences) على الوجهة المحلولة (resolved destination) وفي طبقة الشبكة (network layer)؛ أما C فلا يزال قائمة حظرٍ نصية (string blocklist). انظر: 🟡 التعمق أكثر (Going deeper).
+**A.** يجب أن تعمل دفاعات SSRF ‏(SSRF defences) على الوجهة المحلولة (resolved destination) وفي طبقة الشبكة (network layer)؛ أما C فلا يزال قائمة حظرٍ نصية (string blocklist). انظر: 🟡 التعمق أكثر (Going deeper).
 
 </details>
 
@@ -744,7 +744,7 @@ prefs = PrefsSchema.model_validate_json(request.cookies["prefs"])
 - A. سياسة كلمات مرور أطول (longer password policy) والمصادقة متعددة العوامل (MFA) للموظفين
 - B. اشتراط IMDSv2 ‏(Requiring IMDSv2)، ومنح كل حمل عمل (workload) دورًا بأقل الصلاحيات (least-privilege role)، وحظر حركة المرور الصادرة إلى النطاقات الداخلية (outbound traffic to internal ranges) عبر وكيل خروج (egress proxy)
 - C. تفعيل رسائل الخطأ المفصّلة (verbose error messages) لأغراض التصحيح (debugging)
-- D. تشفير حاويات التخزين (storage buckets) بمفتاحٍ يديره العميل (customer-managed key)
+- D. تشفير حاويات التخزين (storage buckets) بمفتاحٍ يديره العميل (customer-managed key) وتدوير ذلك المفتاح كل عام (rotating that key every year)، حتى لا تُستخدم بيانات الاعتماد المسروقة في قراءة البيانات (stolen credentials cannot be used to read the data)
 
 <details><summary>الإجابة</summary>
 
@@ -756,7 +756,7 @@ prefs = PrefsSchema.model_validate_json(request.cookies["prefs"])
 
 - A. التحقق أيضًا من أن اسم الملف (file name) لا يحتوي على `<script>`
 - B. التحقق من النوع الحقيقي للمحتوى (content's real type)، وإعادة التسمية بمفتاحٍ عشوائي (random key)، والتخزين في حاوية تخزينٍ خاصة خارج جذر الويب (private bucket outside the web root)، والتقديم من نطاقٍ منفصل (separate domain) مع `Content-Disposition: attachment` و`nosniff`
-- C. إضافة الفحص بمكافحة الفيروسات (antivirus scanning) وإبقاء كل شيءٍ آخر كما هو
+- C. إضافة الفحص بمكافحة الفيروسات (antivirus scanning)، وإبقاء فحصي الامتداد ونوع المحتوى (keep the extension and Content-Type checks)، وترك مجلد الرفع حيث هو مع إضافة بادئة عشوائية إلى كل اسم ملف (a random prefix to each file name)، وتسجيل كل عملية رفع ليراجعها فريق الأمن أسبوعيًا (log every upload for the security team to review each week)
 - D. حصر الرفوعات في 5 ميغابايت (Limit uploads to 5 MB)
 
 <details><summary>الإجابة</summary>
@@ -767,20 +767,20 @@ prefs = PrefsSchema.model_validate_json(request.cookies["prefs"])
 
 **4. يستدعي معالج تنزيل (download handler) الدالة `os.path.join("/srv/invoices", name)` بعد رفض أي `name` يحتوي على `../`. ويقدّم مختبِرٌ (tester) القيمة `/etc/passwd` فيتلقى الملف. ماذا حدث، وما أفضل إصلاح (best fix)؟**
 
-- A. تجاوز المختبِر المرشِّح بالترميز (bypassed the filter with encoding)؛ أضف فك ترميز URL ‏(URL decoding)
-- B. تتجاهل `os.path.join` المسار الأساسي (discards the base) حين يكون الجزء الثاني مطلقًا (absolute)؛ ابحث عن الفواتير بمعرّفٍ محصور في الشركة (ID scoped to the company)، أو حوّل إلى الصيغة القانونية وتحقّق من الاحتواء (canonicalise and check containment)
+- A. تتجاهل `os.path.join` المسار الأساسي (discards the base) حين يكون الجزء الثاني مطلقًا (absolute)؛ ابحث عن الفواتير بمعرّفٍ محصور في الشركة (ID scoped to the company)، أو حوّل إلى الصيغة القانونية وتحقّق من الاحتواء (canonicalise and check containment)
+- B. تجاوز المختبِر المرشِّح بحيل الترميز مثل الترميز المزدوج لـ URL (encoding tricks such as double URL encoding)؛ أضف فك ترميز URL (URL decoding) قبل الفحص (before the check) وارفض أي اسم يحتوي على علامة النسبة المئوية أو شرطة مائلة عكسية (reject any name with a percent sign or a backslash)
 - C. صلاحيات الملفات على الخادم (server's file permissions) خاطئة؛ وهذه ليست مشكلةً في الشيفرة (not a code issue)
 - D. أضف `/etc/` إلى قائمة الحظر (blocklist)
 
 <details><summary>الإجابة</summary>
 
-**B.** يعيد المسار المطلق (An absolute path) ضبط عملية الدمج (resets the join)، فلم يرَ مرشِّح السلاسل النصية (string filter) أي مشكلة. والبحث بالمعرّف (ID lookup) يفرض التحكم في الوصول (access control) أيضًا؛ أما D فيوسّع قائمة الحظر فحسب (just extends a blocklist). انظر: 🟢 الأساسيات (The essentials).
+**A.** يعيد المسار المطلق (An absolute path) ضبط عملية الدمج (resets the join)، فلم يرَ مرشِّح السلاسل النصية (string filter) أي مشكلة. والبحث بالمعرّف (ID lookup) يفرض التحكم في الوصول (access control) أيضًا؛ أما D فيوسّع قائمة الحظر فحسب (just extends a blocklist). انظر: 🟢 الأساسيات (The essentials).
 
 </details>
 
 **5. يريد فريق دانة تجربة نموذجٍ واعد لكشف الاحتيال (promising fraud model) منشورٍ على منصة نماذج عامة (public model hub) بوصفه نقطة حفظٍ مبنية على pickle ‏(pickle-based checkpoint). ما الذي ينبغي أن تشترطه قاعدة بنك نجم (Najm Bank's rule)؟**
 
-- A. تحميله أولًا على الحاسوب المحمول لعالِم بيانات (data scientist's laptop) لمعرفة ما إذا كان يعمل
+- A. تحميله أولًا على الحاسوب المحمول لعالِم بيانات (data scientist's laptop) لمعرفة ما إذا كان يعمل لفريق العمل كله (works for the whole team)، ثم نقله إلى العنقود المشترك (shared cluster) حين تبدو مقاييس الاحتيال جيدة (once the fraud metrics look good)
 - B. تفضيل نسخة safetensors ‏(safetensors version)؛ وإلا فلا يُحمَّل إلا في بيئةٍ معزولة (isolated sandbox) بعد الفحص والمراجعة (after scanning and review)، ثم يُضاف إلى السجل الداخلي (internal registry)
 - C. الوثوق به إذا كان عدد مرات تنزيله كبيرًا (many downloads)
 - D. تغيير امتداد الملف (Rename the file extension) إلى `.safetensors`

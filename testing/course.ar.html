@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="testing-source" content="947324f57d26e4b3">
+<meta name="testing-source" content="1ebe31977b78af87">
 <meta name="description" content="اختبار البرمجيات من الصفر إلى الاحتراف في عصر الذكاء الاصطناعي: دورة مجانية ثنائية اللغة عن تصميم الاختبارات، واختبارات الوحدة والتكامل وواجهات البرمجة والاختبار الشامل، واختبار الأداء والأمان والموثوقية والبيانات، وCI/CD، والاختبار الاستكشافي وBDD، والتحقق من الشيفرة المولَّدة بالذكاء الاصطناعي، ومساعدي الاختبار بالذكاء الاصطناعي، واختبار تطبيقات النماذج اللغوية وRAG والوكلاء، مع اختبار في كل درس وامتحان تدريبي من 60 سؤالًا.">
 <title>اختبار البرمجيات من الصفر إلى الاحتراف في عصر الذكاء الاصطناعي — الدورة كاملة</title>
 <style>
@@ -815,7 +815,7 @@ def test_silence_is_admitted():
 
 <p><strong>4. يشغّل فريق 5,000 اختبار آلي <bdi>(automated tests)</bdi> وتنجح كلها. ماذا يستطيع أن يدّعي بأمانة <bdi>(honestly claim)</bdi>؟</strong></p>
 <ul>
-<li>A. لم يبقَ أي عيب، لأن 5,000 اختبار مستقل نجحت</li>
+<li>A. لم يبقَ أي عيب <bdi>(no defect remains)</bdi>، لأن 5,000 اختبار مستقل نجحت <bdi>(5,000 independent tests passed)</bdi></li>
 <li>B. لا مخاطرة في الإصدار <bdi>(the release carries no risk)</bdi>، لأن شيئًا لم يفشل في الاختبار</li>
 <li>C. أصبح كل متطلب مُثبَتًا صحته <bdi>(proven correct)</bdi> بواسطة المجموعة</li>
 <li>D. لم تظهر أي حالات فشل في الحالات التي شُغِّلت <bdi>(no failures appeared in the cases run)</bdi>؛ أما الحالات الأخرى فغير مختبَرة <bdi>(other cases are untested)</bdi></li>
@@ -827,10 +827,10 @@ def test_silence_is_admitted():
 
 <p><strong>5. يفتتح نجم أسيست <bdi>(Najm Assist)</bdi> إجاباته <bdi>(answers)</bdi> بطرق مختلفة في تشغيلات مختلفة <bdi>(different runs)</bdi>، مع أن الحقائق متطابقة <bdi>(the facts match)</bdi>. أي اختبار هو الأنسب <bdi>(most appropriate)</bdi>؟</strong></p>
 <ul>
-<li>A. مقارنة نص الإجابة كاملًا بنص مخزَّن <bdi>(a stored string)</bdi>، كلمةً بكلمة</li>
+<li>A. مقارنة نص الإجابة كاملًا <bdi>(the full answer text)</bdi> بنص مخزَّن <bdi>(a stored string)</bdi>، كلمةً بكلمة <bdi>(word for word)</bdi></li>
 <li>B. التأكيد أن الحقيقة الأساسية <bdi>(the key fact)</bdi> تظهر وأن وثيقة الحدود <bdi>(limits document)</bdi> مذكورة مصدرًا</li>
-<li>C. تشغيله مرة واحدة وحفظ المخرجات لقطةً <bdi>(a snapshot)</bdi> للمقارنة لاحقًا</li>
-<li>D. التأكيد فقط أن الإجابة ليست فارغة <bdi>(not empty)</bdi>، أيًّا كان ما تقوله</li>
+<li>C. تشغيله مرة واحدة <bdi>(run it once)</bdi> وحفظ المخرجات لقطةً <bdi>(a snapshot)</bdi> للمقارنة لاحقًا <bdi>(to compare later)</bdi></li>
+<li>D. التأكيد فقط أن الإجابة ليست فارغة <bdi>(not empty)</bdi>، أيًّا كان ما يقوله النموذج <bdi>(whatever the model says)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -1190,10 +1190,10 @@ def test_every_half_cent_fee_rounds_up(amount, expected):
 
 <p><strong>5. أُصلح عيب الحد <bdi>(The limit bug)</bdi>. أي اختبار انحدار هو الأقوى؟</strong></p>
 <ul>
-<li>A. التأكيد أن <code>check_transfer</code> يمكن استدعاؤها دون خطأ</li>
+<li>A. التأكيد أن <code>check_transfer</code> يمكن استدعاؤها دون خطأ <bdi>(without an error)</bdi></li>
 <li>B. التأكيد أن 1,000 تمر وأن 1,000.01 تفشل عند إرسال 49,000 اليوم <bdi>(49,000 sent today)</bdi></li>
 <li>C. التأكيد أن تغطية الأسطر <bdi>(line coverage)</bdi> لـ<code>check_transfer</code> لم تنخفض</li>
-<li>D. التأكيد أن تحويل 10 QAR يُقبل في يوم جديد</li>
+<li>D. التأكيد أن تحويل 10 QAR يُقبل في يوم جديد <bdi>(accepted on a new day)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -1607,7 +1607,7 @@ def test_international_fee_rounds_half_a_cent_up():
 <ul>
 <li>A. نسخة من عملاء الإنتاج في الشهر الماضي <bdi>(last month&#39;s production customers)</bdi></li>
 <li>B. كشوف حسابات حقيقية تُلصق في مساعد لإخفاء هويتها <bdi>(anonymise them)</bdi></li>
-<li>C. تفاصيل بضعة عملاء، تُستخدم لهذه الجلسة فقط</li>
+<li>C. تفاصيل بضعة عملاء، تُستخدم لهذه الجلسة فقط <bdi>(this session only)</bdi></li>
 <li>D. حسابات اصطناعية <bdi>(Synthetic accounts)</bdi> تُولَّد لهذا الغرض</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -1618,9 +1618,9 @@ def test_international_fee_rounds_half_a_cent_up():
 <p><strong>4. يعطي مساعدٌ <bdi>(An assistant)</bdi> ندى <bdi>(Nada)</bdi> اختبارًا ينجح على العيّنة النظيفة. ماذا عليها أن تفعل قبل أن تسلّمه <bdi>(before she submits it)</bdi>؟</strong></p>
 <ul>
 <li>A. أن تُظهر فشله <bdi>(show it failing)</bdi> حين يكون عيب ذو صلة مفعّلًا <bdi>(a relevant bug is on)</bdi>، وأن تشرحه</li>
-<li>B. أن تشغّله مرتين إضافيتين لتتأكد من أنه ينجح في كل مرة <bdi>(passes every time)</bdi></li>
-<li>C. أن تطلب من المساعد <bdi>(the assistant)</bdi> تأكيد أن الاختبار صحيح</li>
-<li>D. أن تتحقق من أنه يرفع نسبة التغطية <bdi>(coverage percentage)</bdi> للوحدة التي يستهدفها</li>
+<li>B. أن تشغّله مرتين إضافيتين <bdi>(twice more)</bdi> لتتأكد من أنه ينجح في كل مرة <bdi>(passes every time)</bdi></li>
+<li>C. أن تطلب من المساعد <bdi>(the assistant)</bdi> تأكيد أن الاختبار صحيح <bdi>(the test is correct)</bdi> وكامل</li>
+<li>D. أن تتحقق من أنه يرفع نسبة التغطية <bdi>(coverage percentage)</bdi> للوحدة التي يستهدفها <bdi>(the module it targets)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -2478,7 +2478,7 @@ def test_odd_recipient_text_is_a_clean_422_never_a_500(client, recipient):
 <p><strong>3. اختبارات زميل <bdi>(A teammate&#39;s tests)</bdi> لدورة حياة التحويل <bdi>(transfer lifecycle)</bdi> تفحص فقط: مقبول <bdi>(accepted)</bdi>، ثم قيد المعالجة <bdi>(processing)</bdi>، ثم مسوّى <bdi>(settled)</bdi>. أي ثغرة <bdi>(gap)</bdi> هي الأخطر على خدمة مدفوعات <bdi>(payments service)</bdi>؟</strong></p>
 <ul>
 <li>A. لا تجرّب أبدًا انتقالًا مرفوضًا <bdi>(a refused move)</bdi>، مثل العكس مرتين <bdi>(reversing twice)</bdi></li>
-<li>B. تستخدم اختبارات مُحدَّدة بمعاملات <bdi>(parametrised tests)</bdi> بدلًا من دوال منفصلة <bdi>(separate functions)</bdi></li>
+<li>B. تستخدم اختبارات مُحدَّدة بمعاملات <bdi>(parametrised tests)</bdi> بدلًا من دوال منفصلة</li>
 <li>C. لا تقيس الزمن الذي يستغرقه كل انتقال <bdi>(how long each transition takes)</bdi></li>
 <li>D. لا تفحص ما يعرضه التحويل المسوّى <bdi>(what a settled transfer displays)</bdi></li>
 </ul>
@@ -2825,10 +2825,10 @@ Severity:   S1 to S4, proposed by the tester
 
 <p><strong>3. أغلق فريق طارق <bdi>(Tariq&#39;s squad)</bdi> تقرير «التحويلات معطوبة؟؟» <bdi>⁦(Transfers broken??)⁩</bdi> بعبارة «لا يمكن إعادة إنتاجه» <bdi>(cannot reproduce)</bdi>. أي تغيير واحد في التقرير سيفيد أكثر؟</strong></p>
 <ul>
-<li>A. إعطاء المبلغ بالضبط <bdi>(the exact amount)</bdi>، والرسمين المتوقع والفعلي <bdi>(the expected and actual fees)</bdi>، وأمر لإعادة الإنتاج <bdi>(a repro command)</bdi></li>
+<li>A. إعطاء المبلغ بالضبط <bdi>(the exact amount)</bdi>، والرسمين المتوقع والفعلي، وأمر لإعادة الإنتاج <bdi>(a repro command)</bdi></li>
 <li>B. إرفاق لقطة شاشة <bdi>(screenshot)</bdi> للشاشة الرئيسية وصفحة إعدادات الجهاز <bdi>(device settings page)</bdi></li>
 <li>C. رفعه إلى S1 <bdi>(Raise it to S1)</bdi> كي يعامله الفريق على أنه عاجل فورًا <bdi>(straight away)</bdi></li>
-<li>D. إضافة القسم كله في نسخة التذكرة <bdi>(copy the whole department into the ticket)</bdi> ليراه أشخاص أكثر <bdi>(more people)</bdi></li>
+<li>D. إضافة القسم كله إلى نسخة التذكرة <bdi>(copy the whole department into the ticket)</bdi> ليراه أشخاص أكثر بكثير <bdi>(many more people)</bdi> من دون أن يطلب أحد ذلك</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -3377,10 +3377,10 @@ it(&quot;rejects fractions and negatives instead of guessing&quot;, () =&gt; {
 
 <p><strong>5. يقرأ اختبار الحقل <code>svc._sent_today</code>. وبعد إعادة تسمية غير ضارة <bdi>(a harmless rename)</bdi> تفشل تسعة اختبارات. أي رائحة <bdi>(smell)</bdi> هذه؟</strong></p>
 <ul>
-<li>A. اختبار بلا تأكيد <bdi>(An assertion-free test)</bdi></li>
-<li>B. حالة متغيرة مشتركة <bdi>(Shared mutable state)</bdi> بين اختبارات كثيرة</li>
+<li>A. اختبار بلا تأكيد <bdi>(An assertion-free test)</bdi> يشغّل الشيفرة ولا يفحص شيئًا</li>
+<li>B. حالة متغيرة مشتركة <bdi>(Shared mutable state)</bdi> بين اختبارات كثيرة <bdi>(across many tests)</bdi> في ملف واحد <bdi>(in one file)</bdi></li>
 <li>C. اختبار التفاصيل الخاصة بالصنف <bdi>(Testing private details of the class)</bdi></li>
-<li>D. منطق داخل جسم الاختبار <bdi>(Logic inside the test body)</bdi></li>
+<li>D. منطق داخل جسم الاختبار <bdi>(Logic inside the test body)</bdi>، مثل الحلقات والفروع <bdi>(loops and branches)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -3927,9 +3927,9 @@ def test_the_in_memory_service_survives_a_double_submit(monkeypatch):
 <p><strong>1. تنجح اختبارات المستودع <bdi>(Repository tests)</bdi> على SQLite في الذاكرة، لكن أعمدة المال تسيء التصرف في قاعدة بيانات PostgreSQL للتجهيز <bdi>(staging)</bdi>. ما السبب الأرجح؟</strong></p>
 <ul>
 <li>A. SQLite أبطأ من PostgreSQL على جداول المال الكبيرة <bdi>(on large tables of money)</bdi></li>
-<li>B. لا تستطيع SQLite العمل داخل معاملة قاعدة بيانات <bdi>(database transaction)</bdi> أصلًا</li>
-<li>C. أخفى التنميط المرن في SQLite <bdi>(SQLite&#39;s loose typing)</bdi> عدم تطابق في النوع أو الدقة <bdi>(a type or precision mismatch)</bdi></li>
-<li>D. تتجاهل PostgreSQL قيود <code>CHECK</code> افتراضيًا <bdi>(by default)</bdi></li>
+<li>B. لا تستطيع SQLite العمل داخل معاملة قاعدة بيانات <bdi>(database transaction)</bdi> أصلًا، حتى في الاختبارات <bdi>(even for tests)</bdi></li>
+<li>C. أخفى التنميط المرن في SQLite <bdi>(SQLite&#39;s loose typing)</bdi> عدم تطابق في النوع أو الدقة</li>
+<li>D. تتجاهل PostgreSQL قيود <code>CHECK</code> <bdi>(CHECK constraints)</bdi> افتراضيًا <bdi>(by default)</bdi>، فلا تعمل أبدًا <bdi>(never fire)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -3962,10 +3962,10 @@ def test_the_in_memory_service_survives_a_double_submit(monkeypatch):
 
 <p><strong>4. تثبّت الشيفرة المختبَرة التغييرات <bdi>(commits)</bdi>، فيترك التراجع لكل اختبار <bdi>(rollback-per-test)</bdi> صفوفًا للاختبارات اللاحقة. ماذا يفعل الفريق؟</strong></p>
 <ul>
-<li>A. إبقاء التراجع وتشغيل الاختبارات بترتيب ثابت <bdi>(in a fixed order)</bdi></li>
+<li>A. إبقاء التراجع <bdi>(rollback)</bdi> وتشغيل الاختبارات بترتيب ثابت <bdi>(in a fixed order)</bdi> دائمًا</li>
 <li>B. حذف الجداول أو تفريغها بعد كل اختبار <bdi>(Delete or truncate the tables after each test)</bdi></li>
-<li>C. مشاركة مجموعة صفوف واحدة بين كل الاختبارات <bdi>(Share one set of rows)</bdi></li>
-<li>D. تحويل كل اختبار إلى اتصال محاكى <bdi>(a mocked connection)</bdi></li>
+<li>C. مشاركة مجموعة صفوف واحدة <bdi>(Share one set of rows)</bdi> بين كل الاختبارات التي تلمس الجدول <bdi>(that touch the table)</bdi></li>
+<li>D. تحويل كل اختبار إلى اتصال محاكى <bdi>(a mocked connection)</bdi> بقاعدة البيانات <bdi>(to the database)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -3974,10 +3974,10 @@ def test_the_in_memory_service_survives_a_double_submit(monkeypatch):
 
 <p><strong>5. يُظهر اختبار تداخل مفروض <bdi>(forced-interleaving test)</bdi> تحويلين أُنشئا من مفتاح واحد لخاصية عدم التكرار <bdi>(one idempotency key)</bdi>. ما الاستجابة الصحيحة؟</strong></p>
 <ul>
-<li>A. إضافة إعادة محاولة في جانب العميل <bdi>(client-side retry)</bdi> بتأخير أطول</li>
-<li>B. تقليل عدد الخيوط في الاختبار <bdi>(Reduce the thread count)</bdi></li>
+<li>A. إضافة إعادة محاولة في جانب العميل <bdi>(client-side retry)</bdi> بتأخير أطول بين المحاولات <bdi>(between attempts)</bdi></li>
+<li>B. تقليل عدد الخيوط <bdi>(Reduce the thread count)</bdi> في الاختبار حتى يصطدم أقل <bdi>(so it hits less often)</bdi></li>
 <li>C. جعل حجز المفتاح ذريًا مع الإبقاء على الاختبار <bdi>(Make claiming the key atomic, and keep the test)</bdi></li>
-<li>D. حذف الاختبار، لأن الحركة الحقيقية نادرًا ما تكون بهذا التزامن <bdi>(rarely that concurrent)</bdi></li>
+<li>D. حذف الاختبار <bdi>(Delete the test)</bdi>، لأن الحركة الحقيقية نادرًا ما تكون بهذا التزامن <bdi>(rarely that concurrent)</bdi> في الإنتاج</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -4491,10 +4491,10 @@ PASSED test_rr.py::test_fails_on_the_first_attempt_only
 <section class="sec sec-quiz"><h2>✍️ اختبر نفسك <bdi>(Check yourself)</bdi></h2>
 <p><strong>1. يرفع طلب دمج <bdi>(pull request)</bdi> تغطية <code>check_transfer</code> من 83% إلى 100% بـ72 اختبارًا لا تؤكد إلا <code>result is not None</code>. ماذا يخبرك هذا الرقم؟</strong></p>
 <ul>
-<li>A. صارت الدالة محمية جيدًا من عيوب الحدود <bdi>(protected against boundary bugs)</bdi></li>
+<li>A. صارت الدالة محمية جيدًا من عيوب الحدود <bdi>(protected against boundary bugs)</bdi> بعد هذه الاختبارات <bdi>(these tests)</bdi></li>
 <li>B. نُفِّذ كل سطر، لكن لا شيء يبيّن أن السلوك فُحص <bdi>(nothing shows behaviour was checked)</bdi></li>
-<li>C. الاختبارات بطيئة وينبغي حذفها <bdi>(slow and should be removed)</bdi></li>
-<li>D. تغطية الفروع <bdi>(Branch coverage)</bdi> 100% أيضًا، فالمجموعة قوية</li>
+<li>C. الاختبارات بطيئة <bdi>(The tests are slow)</bdi> وينبغي حذفها <bdi>(should be removed)</bdi> لتسريع البناء</li>
+<li>D. تغطية الفروع <bdi>(Branch coverage)</bdi> 100% أيضًا، فالمجموعة قوية بما يكفي <bdi>(strong enough)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -4515,9 +4515,9 @@ PASSED test_rr.py::test_fails_on_the_first_attempt_only
 
 <p><strong>3. يجتاز اختبار مرجع النتيجة المتوقعة <bdi>(oracle test)</bdi> المكتوب بـ Hypothesis على <code>fee</code> مئة مثال بخانتين عشريتين <bdi>(100 two-decimal examples)</bdi> تحت <code>float_fee</code>. ما الخطوة التالية الأفضل؟</strong></p>
 <ul>
-<li>A. الاستنتاج أن عيب الفاصلة العائمة غير ضار للمبالغ ذات الخانتين العشريتين <bdi>(harmless)</bdi></li>
-<li>B. حذف الخاصية، لأن الأمثلة تغطيها أصلًا <bdi>(examples already cover it)</bdi></li>
-<li>C. تشغيله مرة أخرى وقبول نتيجة خضراء ثانية <bdi>(accept a second green result)</bdi></li>
+<li>A. الاستنتاج أن عيب الفاصلة العائمة غير ضار <bdi>(harmless)</bdi> للمبالغ ذات الخانتين العشريتين <bdi>(two-decimal amounts)</bdi></li>
+<li>B. حذف الخاصية <bdi>(Delete the property)</bdi>، لأن الأمثلة تغطيها أصلًا <bdi>(examples already cover it)</bdi> بالكامل</li>
+<li>C. تشغيله مرة أخرى وقبول نتيجة خضراء ثانية <bdi>(accept a second green result)</bdi> دليلًا</li>
 <li>D. توجيه المولِّد نحو المبالغ الصحيحة، حيث تقع التعادلات <bdi>(Aim the generator at whole amounts)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -4539,10 +4539,10 @@ PASSED test_rr.py::test_fails_on_the_first_attempt_only
 
 <p><strong>5. يفشل اختبار في نحو تشغيلة من كل ثلاث؛ ويعيد خط التكامل والتسليم المستمرين <bdi>(pipeline)</bdi> محاولة الإخفاقات مرتين ويعرض «نجح» <bdi>(passed)</bdi>. ما السياسة الصحيحة؟</strong></p>
 <ul>
-<li>A. إبقاء إعادات المحاولة، لأن الخط الأخضر <bdi>(a green pipeline)</bdi> يعني ألّا مشكلة حقيقية <bdi>(no real problem)</bdi></li>
-<li>B. حذف الاختبار، لأن الاختبارات غير المستقرة بلا قيمة <bdi>(have no value)</bdi></li>
-<li>C. رفع عدد إعادات المحاولة حتى لا يفشل أبدًا <bdi>(until it never fails)</bdi></li>
-<li>D. الإبلاغ عن إعادات المحاولة وحجر الاختبار بمالك وموعد نهائي <bdi>(Report the retries and quarantine the test with an owner and deadline)</bdi></li>
+<li>A. إبقاء إعادات المحاولة <bdi>(Keep the retries)</bdi>، لأن الخط الأخضر <bdi>(a green pipeline)</bdi> يعني ألّا مشكلة حقيقية <bdi>(no real problem)</bdi></li>
+<li>B. حذف الاختبار <bdi>(Delete the test)</bdi>، لأن الاختبارات غير المستقرة بلا قيمة <bdi>(flaky tests have no value)</bdi></li>
+<li>C. رفع عدد إعادات المحاولة <bdi>(Raise the retry count)</bdi> حتى لا يفشل أبدًا <bdi>(until it never fails)</bdi></li>
+<li>D. الإبلاغ عن إعادات المحاولة وحجر الاختبار بمالك وموعد نهائي <bdi>(Report the retries and quarantine the test)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -6449,10 +6449,10 @@ E       assert 51 == 6
 
 <p><strong>2. يشغّل سكربت بلال <bdi>(Bilal&#39;s script)</bdi> مئة مستخدم افتراضي <bdi>(100 virtual users)</bdi> على واجهة برمجة نجم في بيئة ما قبل الإنتاج <bdi>(staging API)</bdi>، ويرسل كل منهم طلبه التالي حين يصل الرد السابق <bdi>(when the last reply arrives)</bdi>. تتجمّد الخدمة عشر ثوانٍ <bdi>(freezes for ten seconds)</bdi>. ماذا يُسجَّل؟ <bdi>⁦(What is recorded?)⁩</bdi></strong></p>
 <ul>
-<li>A. صورة عادلة <bdi>(A fair picture)</bdi>، لأن كل طلب أُرسل قد سُجّل <bdi>(every request that was sent is recorded)</bdi></li>
+<li>A. صورة عادلة <bdi>(A fair picture)</bdi>، لأن كل طلب أُرسل قد سُجّل <bdi>(every request that was sent is recorded)</bdi> في النتائج</li>
 <li>B. بضع عيّنات بطيئة <bdi>(A few slow samples)</bdi>، ولا شيء للطلبات التي لم تُرسَل أصلًا <bdi>(none for requests never sent)</bdi></li>
 <li>C. آلاف الطلبات الفاشلة <bdi>(Thousands of failed requests)</bdi> التي ترفع p99 إلى عنان السماء <bdi>(sky-high)</bdi></li>
-<li>D. لا شيء، لأنه يتوقف عند أول رد بطيء <bdi>(it aborts on the first slow reply)</bdi></li>
+<li>D. لا شيء <bdi>(Nothing)</bdi>، لأنه يتوقف عند أول رد بطيء <bdi>(it aborts on the first slow reply)</bdi> يتلقاه</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -6473,7 +6473,7 @@ E       assert 51 == 6
 
 <p><strong>4. نقطة نهاية كشوف الحساب <bdi>(A statements endpoint)</bdi> سريعة في بيئة QA لكنها بطيئة في الإنتاج، حيث لدى العملاء آلاف التحويلات. تنفّذ استعلامًا واحدًا لكل صف <bdi>(one query per row)</bdi>. أي اختبار يلتقط ذلك؟ <bdi>⁦(Which test catches this?)⁩</bdi></strong></p>
 <ul>
-<li>A. اختبار توقيت يفشل إذا استغرقت نقطة النهاية أكثر من ثانية في QA <bdi>(A timing test that fails if the endpoint takes over a second in QA)</bdi></li>
+<li>A. اختبار توقيت يفشل إذا تجاوزت نقطة النهاية ثانية <bdi>(A timing test that fails if the endpoint exceeds a second)</bdi></li>
 <li>B. اختبار وحدة <bdi>(A unit test)</bdi> يفحص الصفوف المعادة <bdi>(checks the returned rows)</bdi></li>
 <li>C. اختبار يؤكد أن عدد الاستعلامات يبقى ثابتًا مع نمو حجم الصفحة <bdi>(the query count stays flat as page size grows)</bdi></li>
 <li>D. اختبار دخان <bdi>(A smoke test)</bdi> يرسل طلبًا واحدًا ويتوقع 200 <bdi>(sends one request and expects a 200)</bdi></li>
@@ -6915,10 +6915,10 @@ Ran 1 rule on 1 file: 1 finding.
 
 <p><strong>3. تُبلّغ Semgrep عن 40 نتيجة في مستودع قديم <bdi>(a legacy repository)</bdi>، منها اثنتان نمطان جديدان لحقن SQL <bdi>(new SQL-injection patterns)</bdi> في طلب الدمج هذا. ما السياسة المعقولة؟ <bdi>⁦(What is the sensible policy?)⁩</bdi></strong></p>
 <ul>
-<li>A. امنع الدمج بسبب النتائج الجديدة عالية الثقة <bdi>(Block on the new high-confidence findings)</bdi>؛ وافتح تذاكر للباقي <bdi>(ticket the rest)</bdi></li>
-<li>B. امنع كل دمج حتى تُصلَح الأربعون كلها <bdi>(until all 40 are fixed)</bdi></li>
-<li>C. عطّل القاعدة <bdi>(Disable the rule)</bdi>، لأن النتائج القديمة تجعلها كثيرة الضجيج <bdi>(make it noisy)</bdi></li>
-<li>D. ادمج الآن ودع فحص DAST الليلي يلتقط المشكلات الحقيقية <bdi>(catch real problems)</bdi></li>
+<li>A. امنع الدمج بسبب النتائج الجديدة عالية الثقة <bdi>(Block on the new high-confidence findings)</bdi>؛ وافتح تذاكر للباقي</li>
+<li>B. امنع كل دمج <bdi>(Block every merge)</bdi> حتى تُصلَح الأربعون كلها <bdi>(until all 40 are fixed)</bdi></li>
+<li>C. عطّل القاعدة <bdi>(Disable the rule)</bdi>، لأن النتائج القديمة <bdi>(legacy findings)</bdi> تجعلها كثيرة الضجيج جدًا <bdi>(too noisy to read)</bdi></li>
+<li>D. ادمج الآن <bdi>(Merge now)</bdi> ودع فحص DAST الليلي يلتقط المشكلات الحقيقية <bdi>(catch real problems)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -6939,10 +6939,10 @@ Ran 1 rule on 1 file: 1 finding.
 
 <p><strong>5. يقترح زميل فحص ZAP نشطًا كاملًا <bdi>(a full ZAP active scan)</bdi> لبيئة ما قبل الإنتاج <bdi>(staging environment)</bdi> الخاصة بفريق آخر <bdi>(another squad&#39;s)</bdi> مساء الجمعة، «لأنها بيئة اختبار فقط» <bdi>(because it is only staging)</bdi>. ما الذي يجب أن يحدث أولًا؟ <bdi>⁦(What must happen first?)⁩</bdi></strong></p>
 <ul>
-<li>A. شغّله بشدة أقل كي لا يلاحظ أحد <bdi>(at lower intensity so nobody notices)</bdi></li>
-<li>B. احصل على إذن كتابي <bdi>(Get written permission)</bdi> واتفقوا على النطاق والنافذة <bdi>(agree the scope and window)</bdi></li>
+<li>A. شغّله بشدة أقل كي لا يلاحظ أحد <bdi>(at lower intensity so nobody notices)</bdi> الفحص</li>
+<li>B. احصل على إذن كتابي <bdi>(Get written permission)</bdi> واتفقوا على النطاق والنافذة</li>
 <li>C. شغّله من حاسوب شخصي كي لا تُنسب الحركة إلى فريق هندسة الجودة <bdi>(not traced to QE)</bdi></li>
-<li>D. أخبر الفريق عبر المحادثة بعد بدء الفحص <bdi>(once the scan has started)</bdi></li>
+<li>D. أخبر الفريق عبر المحادثة بعد أن بدأ الفحص فعلًا <bdi>(once the scan has already started)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -7434,10 +7434,10 @@ def test_each_check_can_fail(name):                # a check that cannot fail pr
 
 <p><strong>3. تبلّغ مهمة النسخ الاحتياطي الليلية <bdi>(The nightly backup job)</bdi> بالنجاح وحجم الملف 4 MB <bdi>(the file is 4 MB)</bdi>. ما الذي يثبت أن النسخة قابلة للاستخدام؟ <bdi>⁦(What proves the backup is usable?)⁩</bdi></strong></p>
 <ul>
-<li>A. حجم الملف يطابق نسخة الأمس <bdi>(matches yesterday&#39;s backup)</bdi></li>
-<li>B. تخرج مهمة النسخ برمز صفر <bdi>(exits with code zero)</bdi></li>
+<li>A. حجم الملف يطابق حجم نسخة الأمس <bdi>(matches yesterday&#39;s backup size)</bdi></li>
+<li>B. تخرج مهمة النسخ الاحتياطي <bdi>(backup job)</bdi> برمز صفر <bdi>(exits with code zero)</bdi> ولا سجل أخطاء <bdi>(no error log)</bdi></li>
 <li>C. يؤكد مزوّد التخزين <bdi>(the storage provider)</bdi> اكتمال الرفع <bdi>(the upload finished)</bdi></li>
-<li>D. استعادة نظيفة تطابق مجاميعها المصدر <bdi>(A clean restore whose totals match the source)</bdi></li>
+<li>D. استعادة نظيفة <bdi>(A clean restore)</bdi> تطابق مجاميعها المصدر <bdi>(totals match the source)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -7803,8 +7803,8 @@ def requirement(request, record_property):
 
 <p><strong>2. للإصدار 2026.09 تغطية أسطر <bdi>(line coverage)</bdi> بنسبة 90% وقد اجتاز بوابته <bdi>(passes its gate)</bdi>، ومع ذلك تصل تحويلات مكررة <bdi>(duplicate transfers)</bdi> إلى العملاء. ما أفضل قراءة لذلك؟</strong></p>
 <ul>
-<li>A. أداة التغطية معطوبة <bdi>(The coverage tool is broken)</bdi> وتحتاج إلى استبدال</li>
-<li>B. يجب أن تبلغ التغطية 95% قبل الوثوق بالبوابة <bdi>(before the gate is trusted)</bdi></li>
+<li>A. أداة التغطية معطوبة <bdi>(The coverage tool is broken)</bdi> وتحتاج إلى استبدال <bdi>(needs replacing)</bdi></li>
+<li>B. يجب أن تبلغ التغطية 95% <bdi>(Coverage must reach 95%)</bdi> قبل الوثوق بالبوابة <bdi>(before the gate is trusted)</bdi></li>
 <li>C. لم يكتب الفريق اختبارات وحدة كافية <bdi>(The team did not write enough unit tests)</bdi></li>
 <li>D. التغطية تُظهر ما شُغِّل لا ما فُحِص <bdi>(Coverage shows what ran, not what was checked)</bdi></li>
 </ul>
@@ -7815,8 +7815,8 @@ def requirement(request, record_property):
 
 <p><strong>3. لدى فريق الهاتف <bdi>(The mobile squad)</bdi> 40 اختبار وحدة <bdi>(unit tests)</bdi> و15 اختبار واجهة برمجة <bdi>(API tests)</bdi> و600 اختبار واجهة مستخدم <bdi>(UI tests)</bdi>. يستغرق خط التكامل والتسليم المستمرين <bdi>(The pipeline)</bdi> 55 دقيقة ويفشل عشوائيًا <bdi>(fails randomly)</bdi>. ما أفضل خطوة أولى؟</strong></p>
 <ul>
-<li>A. نقل فحوص القواعد التي لا تحتاج إلى شاشة إلى مستوى اختبارات واجهة البرمجة <bdi>(Move the rule checks that need no screen down to API tests)</bdi></li>
-<li>B. إضافة عمال تنفيذ أكثر <bdi>(more workers)</bdi> ليكتمل 600 اختبار واجهة أسرع بكثير</li>
+<li>A. نقل فحوص القواعد التي لا تحتاج إلى شاشة إلى مستوى اختبارات واجهة البرمجة <bdi>(API tests)</bdi></li>
+<li>B. إضافة عمال تنفيذ أكثر <bdi>(more workers)</bdi> ليكتمل 600 اختبار واجهة <bdi>(UI tests)</bdi> أسرع بكثير <bdi>(much sooner)</bdi></li>
 <li>C. إعادة تشغيل اختبارات الواجهة الفاشلة تلقائيًا حتى يخضر البناء <bdi>(Rerun failed UI tests automatically)</bdi></li>
 <li>D. حذف أقدم اختبارات الواجهة للوصول إلى رقم مستدير <bdi>(Delete the oldest UI tests to reach a round number)</bdi></li>
 </ul>
@@ -8277,7 +8277,7 @@ test(&#39;a synthetic customer can send 1.00 QAR&#39;, async ({ page }) =&gt; {
 <ul>
 <li>A. تختلف التجزئات من عملية إلى أخرى <bdi>(Hashes differ per process)</bdi>، فقد يعمل اختبار مرتين أو لا يعمل أبدًا</li>
 <li>B. قد يكون الباقي سالبًا <bdi>(The remainder can be negative)</bdi>، فلا تحصل بعض الاختبارات على شريحة</li>
-<li>C. تتكدس الاختبارات البطيئة كلها في شريحة واحدة <bdi>(Slow tests all pile into one shard)</bdi>، فتطول تلك المهمة كثيرًا</li>
+<li>C. تتكدس الاختبارات البطيئة في شريحة واحدة <bdi>(Slow tests pile into one shard)</bdi>، فتطول تلك المهمة</li>
 <li>D. التجزئة المدمجة بطيئة جدًا <bdi>(far too slow)</bdi> على مجموعة كبيرة</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -8311,8 +8311,8 @@ test(&#39;a synthetic customer can send 1.00 QAR&#39;, async ({ page }) =&gt; {
 
 <p><strong>5. اختبار الدخان الوحيد في بوابة النشر <bdi>(A deploy gate&#39;s only smoke test)</bdi> هو <code>GET /health</code> الذي يعيد 200. لماذا قد ينجح بينما فشل الإصدار؟</strong></p>
 <ul>
-<li>A. قد تظل النسخة القديمة تخدم <bdi>(the old version may still be serving)</bdi>، لذا افحص البناء أيضًا <bdi>(check the build too)</bdi></li>
-<li>B. لا تعيد نقاط الصحة <bdi>(Health endpoints)</bdi> 200 أبدًا أثناء تشغيل النشر</li>
+<li>A. قد تظل النسخة القديمة تخدم <bdi>(the old version may still be serving)</bdi>، لذا افحص البناء أيضًا</li>
+<li>B. لا تعيد نقاط الصحة <bdi>(Health endpoints)</bdi> 200 أبدًا <bdi>(never return 200)</bdi> أثناء تشغيل النشر</li>
 <li>C. يجب أن تستعلم اختبارات الدخان دائمًا عن قاعدة البيانات مباشرة <bdi>(query the database directly)</bdi></li>
 <li>D. اختبار دخان واحد بطيء جدًا دائمًا ليعمل بوابة <bdi>(always too slow to work as a gate)</bdi></li>
 </ul>
@@ -9119,7 +9119,7 @@ def fee(amount, currency: str, kind: str) -&gt; Decimal:
 <li>A. الحزمة آمنة <bdi>(The package is safe)</bdi> لأنها فُحصت <bdi>(because it was scanned)</bdi></li>
 <li>B. الحزمة على الفهرس الرسمي <bdi>(The package is on the official index)</bdi>، فهي أصلية <bdi>(so it is genuine)</bdi></li>
 <li>C. فقط أنه لا توجد نشرة أمنية معروفة <bdi>(Only that no advisory is known)</bdi>؛ ويلزم فحص أصلها <bdi>(its origin needs checking)</bdi></li>
-<li>D. لا مشكلة هناك <bdi>(Nothing is wrong)</bdi>، فقد نجح البناء <bdi>(since the build passed)</bdi> ولم يُرفع أي تنبيه <bdi>(and no alert was raised)</bdi></li>
+<li>D. لا مشكلة هناك <bdi>(Nothing is wrong)</bdi>، فقد نجح البناء <bdi>(since the build passed)</bdi> ولم يُرفع تنبيه</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -11463,7 +11463,7 @@ PSI 0.123; identical data 0.000
 <li>A. قائمة أطول من توجيهات الهجوم مجمعة من مصادر عامة <bdi>(A longer list of attack prompts, collected from public sources)</bdi></li>
 <li>B. نسخة من محادثات عملاء حقيقيين لتبدو الهجمات واقعية <bdi>(A copy of real customers&#39; chats, so that the attacks look realistic)</bdi></li>
 <li>C. وصول إلى الإنتاج لتطابق الهجمات ما يراه العملاء <bdi>(Production access, so that the attacks match what customers see)</bdi></li>
-<li>D. تفويض مكتوب وقواعد اشتباك تسمّي هدف بيئة ضمان الجودة <bdi>(Written authorisation and rules of engagement naming the QA target)</bdi></li>
+<li>D. تفويض مكتوب <bdi>(Written authorisation)</bdi> وقواعد اشتباك <bdi>(rules of engagement)</bdi> تسمّي هدف بيئة ضمان الجودة</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -11496,7 +11496,7 @@ PSI 0.123; identical data 0.000
 
 <p><strong>4. هذا الأسبوع بلغ مؤشر استقرار التوزيع <bdi>(Population Stability Index)</bdi> على مزيج المصدر الأول 0.12 <bdi>(on the top-source mix is 0.12)</bdi>، وارتفعت حصة «لا مصدر» إلى ثلاثة أضعافها <bdi>(the &quot;no source&quot; share has tripled)</bdi>. ما أحكم إجراء؟ <bdi>⁦(What is the most sensible action?)⁩</bdi></strong></p>
 <ul>
-<li>A. تراجع عن النموذج فورًا قبل أن ينظر أحد في الأسئلة <bdi>(Roll the model back at once, before anyone has looked at the questions)</bdi></li>
+<li>A. تراجع عن النموذج فورًا قبل أن ينظر أحد في الأسئلة التي فاتته <bdi>(Roll the model back at once, before anyone has looked at the questions it missed)</bdi></li>
 <li>B. اقرأ الأسئلة غير المجابة لتجد موضوعًا جديدًا أو وثيقة ناقصة <bdi>(Read the unanswered questions to find a new topic or missing document)</bdi></li>
 <li>C. تجاهله، لأن أي قيمة PSI دون 1 تُعدّ مقبولة <bdi>(Ignore it, because any PSI value below 1 is considered acceptable)</bdi></li>
 <li>D. ارفع درجة الحرارة ليغطي النموذج مواضيع أكثر <bdi>(Raise the temperature so that the model can cover more topics)</bdi></li>
@@ -12516,7 +12516,7 @@ NAJM_BUGS=float_fee pytest tests/test_interview_review.py    # 1 failed, 1 passe
 <li>A. المجموعة المرجعية <bdi>(golden set)</bdi> مرة أخرى، عشر تشغيلات إضافية عند درجة حرارة <bdi>(temperature)</bdi> 0.8 لتسوية ضجيج أخذ العينات بالمتوسط <bdi>(average out sampling noise)</bdi></li>
 <li>B. الاستدعاء <bdi>(Recall@k)</bdi> والدقة <bdi>(precision@k)</bdi> ومتوسط الرتبة المتبادلة <bdi>(MRR)</bdi> على استعلامات الاسترجاع الموسومة <bdi>(labelled retrieval queries)</bdi></li>
 <li>C. مؤشر استقرار المجتمع الإحصائي <bdi>(population stability index)</bdi> على مزيج مواضيع <bdi>(topic mix)</bdi> أسئلة العملاء في الأسبوع الماضي <bdi>(last week)</bdi></li>
-<li>D. اختبارات الفريق الأحمر <bdi>(red-team tests)</bdi> التي تزرع وثيقة مسمومة <bdi>(poisoned document)</bdi> في الفهرس <bdi>(index)</bdi></li>
+<li>D. اختبارات الفريق الأحمر <bdi>(red-team tests)</bdi> التي تزرع وثيقة مسمومة <bdi>(poisoned document)</bdi> في فهرس السياسات <bdi>(policy index)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -12585,7 +12585,7 @@ NAJM_BUGS=float_fee pytest tests/test_interview_review.py    # 1 failed, 1 passe
 
 <p><strong>14. يزعم مورّدان <bdi>(vendors)</bdi> أن مساعد الذكاء الاصطناعي <bdi>(AI assistant)</bdi> لدى كلٍّ منهما يكتب اختبارات «عالية الجودة» <bdi>(&quot;high quality&quot;)</bdi>، ويستطيع بلال تشغيل المساعدين كليهما على نظام الدورة النموذجي <bdi>(course&#39;s sample system)</bdi>. كيف ينبغي أن يقارن بينهما <bdi>(compare them)</bdi>؟</strong></p>
 <ul>
-<li>A. اختيار المساعد <bdi>(assistant)</bdi> الذي تُبلغ مجموعته المولَّدة <bdi>(generated suite)</bdi> عن تغطية أسطر وفروع أعلى <bdi>(higher line and branch coverage)</bdi></li>
+<li>A. اختيار المساعد <bdi>(assistant)</bdi> الذي تُبلغ مجموعته المولَّدة <bdi>(generated suite)</bdi> عن تغطية أعلى <bdi>(higher coverage)</bdi></li>
 <li>B. اختيار المساعد <bdi>(assistant)</bdi> الذي يولّد اختبارات أكثر <bdi>(generates more tests)</bdi> في الوقت نفسه <bdi>(same amount of time)</bdi></li>
 <li>C. مطالبة كل مساعد <bdi>(assistant)</bdi> بتقييم اختباراته بنفسه <bdi>(grade its own tests)</bdi> ثم اختيار الدرجة الأعلى <bdi>(higher score)</bdi></li>
 <li>D. تشغيل كل مجموعة مرة لكل عيب مزروع <bdi>(seeded bug)</bdi> مفعَّلٍ وحده <bdi>(switched on alone)</bdi>، وعدّ العيوب المكتشفة <bdi>(bugs caught)</bdi></li>
@@ -12695,7 +12695,7 @@ NAJM_BUGS=float_fee pytest tests/test_interview_review.py    # 1 failed, 1 passe
 <ul>
 <li>A. الانتظار <bdi>(wait)</bdi>، لأن 1,600 طلب لا تزال قليلة جدًا <bdi>(still too few)</bdi> على الحَكَم <bdi>(judge)</bdi> كي يقرر أي شيء</li>
 <li>B. ترقية الإصدار <bdi>(promote)</bdi>، لأن p95 البالغ 330 مللي ثانية أعلى قليلًا فقط من 310 للنسخة المستقرة <bdi>(the stable 310 ms)</bdi></li>
-<li>C. ترقية الإصدار <bdi>(promote)</bdi>، لأن 8 أخطاء عدد صغير جدًا <bdi>(very small count)</bdi> بالأرقام المطلقة <bdi>(in absolute terms)</bdi></li>
+<li>C. ترقية الإصدار <bdi>(promote)</bdi>، لأن 8 أخطاء عدد صغير جدًا <bdi>(very small count)</bdi> بالأرقام المطلقة <bdi>(in absolute terms)</bdi> لا نسبةً <bdi>(not a rate)</bdi></li>
 <li>D. التراجع <bdi>(roll back)</bdi>، لأن معدل الأخطاء أعلى بكثير من معدل النسخة المستقرة <bdi>(stable error rate)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -12707,7 +12707,7 @@ NAJM_BUGS=float_fee pytest tests/test_interview_review.py    # 1 failed, 1 passe
 <ul>
 <li>A. تقرير تكلفة <bdi>(cost report)</bdi> يُظهر التوفير لكل 1,000 سؤال <bdi>(saving per 1,000 questions)</bdi>، ما دامت الدقة <bdi>(accuracy)</bdi> متساوية</li>
 <li>B. مقارنة حالة بحالة <bdi>(per-case comparison)</bdi> تسرد كل حالة كانت تنجح سابقًا وتفشل الآن <bdi>(passed before and fails now)</bdi></li>
-<li>C. عشر تشغيلات إضافية <bdi>(ten more runs)</bdi> للإصدار الجديد وحده <bdi>(the new version alone)</bdi>، لتأكيد أن نتيجته 18 مستقرة <bdi>(stable)</bdi></li>
+<li>C. عشر تشغيلات إضافية <bdi>(ten more runs)</bdi> للإصدار الجديد وحده <bdi>(the new version alone)</bdi>، لتأكيد أن نتيجته 18 مستقرة فعلًا <bdi>(really stable)</bdi></li>
 <li>D. درجة ROUGE بين الإجابات القديمة والجديدة <bdi>(old and new answers)</bdi>، لإظهار أنها متشابهة <bdi>(that they are similar)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -12765,7 +12765,7 @@ NAJM_BUGS=float_fee pytest tests/test_interview_review.py    # 1 failed, 1 passe
 
 <p><strong>29. تطلب بوابة <bdi>(gate)</bdi> بلال درجة طفرات <bdi>(mutation score)</bdi> بنسبة 80% على الشيفرة المالية المتغيّرة <bdi>(changed money code)</bdi>. تسجّل وحدة رسوم جديدة 94%، وتنجو ست طفرات <bdi>(six mutants survive)</bdi> ولم ينظر فيها أحد بعد <bdi>(nobody has looked at them yet)</bdi>. يطلب طارق 100% قبل الدمج <bdi>(before merge)</bdi>. ماذا ينبغي أن يوصي راشد؟</strong></p>
 <ul>
-<li>A. إضافة اختبار لكل طفرة ناجية <bdi>(survivor)</bdi> حتى تبلغ الدرجة 100%، مهما كان الاختبار مصطنعًا <bdi>(however artificial it is)</bdi></li>
+<li>A. إضافة اختبار لكل طفرة ناجية <bdi>(survivor)</bdi> حتى تبلغ الدرجة 100%، مهما كان مصطنعًا <bdi>(artificial)</bdi></li>
 <li>B. رفع البوابة إلى 100% على كل الشيفرة المالية <bdi>(all money code)</bdi>، كي لا يمكن الجدال في الدرجة <bdi>(cannot be argued)</bdi></li>
 <li>C. وسم الناجيات الست كلها <bdi>(all six survivors)</bdi> بأنها طفرات مكافئة <bdi>(equivalent mutants)</bdi>، ليُظهر التقرير 100%</li>
 <li>D. إبقاء بوابة <bdi>(gate)</bdi> 80%، وترك إنسان يفرز <bdi>(triage)</bdi> كل طفرة ناجية على أنها ثغرة <bdi>(gap)</bdi> أو مكافئة <bdi>(equivalent)</bdi></li>
@@ -12778,7 +12778,7 @@ NAJM_BUGS=float_fee pytest tests/test_interview_review.py    # 1 failed, 1 passe
 <p><strong>30. تُبقي نجم إصدارات التطبيق القديمة <bdi>(old app versions)</bdi> تعمل لشهور <bdi>(for months)</bdi>. يجعل فريق طارق <bdi>(Tariq&#39;s squad)</bdi> الحقل <code>kind</code> حقلًا إلزاميًا <bdi>(required field)</bdi> في <code>POST /transfers</code> ويحدّث وثيقة OpenAPI <bdi>(OpenAPI document)</bdi>. ينجح كل اختبار حالي <bdi>(every current test)</bdi> وتشغيل Schemathesis الليلي <bdi>(nightly run)</bdi>. بعد أسبوعين <bdi>(two weeks later)</bdi> يرى العملاء على أقدم تطبيق <bdi>(the oldest app)</bdi> أخطاء <bdi>(errors)</bdi>. أي اختبار كان سيلتقط ذلك قبل الإصدار <bdi>(before release)</bdi>؟</strong></p>
 <ul>
 <li>A. تشغيل Schemathesis ليلي <bdi>(nightly run)</bdi> بقيمة أكبر <bdi>(larger value)</bdi> للخيار <code>--max-examples</code></li>
-<li>B. مخطط استجابة صارم <bdi>(strict response schema)</bdi>، مع <code>additionalProperties: false</code>، لكل تحويل <bdi>(every transfer)</bdi></li>
+<li>B. مخطط استجابة صارم <bdi>(strict response schema)</bdi>، مع <code>additionalProperties: false</code></li>
 <li>C. طلب محفوظ من التطبيق القديم <bdi>(a saved request from the old app)</bdi>، بلا <code>kind</code>، يجب أن يظل يعيد 201</li>
 <li>D. مصفوفة تفويض <bdi>(authorisation matrix)</bdi> بصف واحد <bdi>(one row)</bdi> لكل مسار <bdi>(each route)</bdi> ولكل دور <bdi>(each role)</bdi></li>
 </ul>
@@ -12789,7 +12789,7 @@ NAJM_BUGS=float_fee pytest tests/test_interview_review.py    # 1 failed, 1 passe
 
 <p><strong>31. يريد فريق طارق <bdi>(Tariq&#39;s squad)</bdi> إطلاق تدفق التحويل الجديد <bdi>(new transfer flow)</bdi> في تطبيق نجم للهاتف <bdi>(Najm Mobile)</bdi> لكل مستخدمي أندرويد <bdi>(every Android user)</bdi> دفعة واحدة <bdi>(at once)</bdi>. يقول: «إن تعطّل شيء <bdi>(if it breaks)</bdi> تراجعنا عنه <bdi>(we roll back)</bdi> كما نفعل مع تطبيق الويب <bdi>(the web app)</bdi>». ماذا ينبغي أن تشترطه بوابة الإصدار <bdi>(release gate)</bdi> لدى أمل <bdi>(Amal)</bdi> بدلًا من ذلك؟</strong></p>
 <ul>
-<li>A. خطة تراجع عبر المتجر <bdi>(store rollback plan)</bdi>، لأن كلا المتجرين يستطيع سحب البناء <bdi>(withdraw a build)</bdi> خلال دقائق قليلة <bdi>(within a few minutes)</bdi></li>
+<li>A. خطة تراجع عبر المتجر <bdi>(store rollback plan)</bdi>، لأن كلا المتجرين يستطيع سحب البناء <bdi>(withdraw a build)</bdi> خلال دقائق</li>
 <li>B. إطلاق مرحلي <bdi>(staged rollout)</bdi> بنسب 1% ثم 5% ثم 20% ثم 100%، مع قاعدة إيقاف <bdi>(halt rule)</bdi> ومفتاح إيقاف عن بُعد <bdi>(remote kill switch)</bdi></li>
 <li>C. تشغيلان إضافيان لاختبار الانحدار <bdi>(extra regression runs)</bdi> على المحاكيات <bdi>(emulators)</bdi>، لأنها تعطي نتائج الأجهزة نفسها <bdi>(same results as devices)</bdi></li>
 <li>D. تجربة بيتا <bdi>(beta)</bdi> لأسبوع على أحدث هاتف <bdi>(newest phone)</bdi>، ثم إصدار كامل <bdi>(full release)</bdi> إن لم يُبلَّغ عن انهيار <bdi>(no crash is reported)</bdi></li>
@@ -12970,7 +12970,7 @@ NAJM_BUGS=float_fee pytest tests/test_interview_review.py    # 1 failed, 1 passe
 <p><strong>46. يرفض فحص التكامل المستمر <bdi>(continuous integration, CI)</bdi> لدى بلال أي أسطر مضافة <bdi>(added lines)</bdi> من <code>pytest.mark.skip</code> في <code>tests/</code>. ويسمح الفريق الآن لوكيل الإصلاح <bdi>(healer agent)</bdi> في Playwright بإصلاح اختبارات المتصفح الفاشلة <bdi>(failing browser tests)</bdi> في <code>e2e/</code>. وفي طلب سحب واحد <bdi>(pull request)</bdi> من هذا الوكيل تتحول أربعة اختبارات حمراء <bdi>(red tests)</bdi> إلى خضراء <bdi>(green)</bdi> ويمرّ الفحص <bdi>(the check passes)</bdi>. ماذا ينبغي أن يغيّر بلال <bdi>(What should Bilal change)</bdi>؟</strong></p>
 <ul>
 <li>A. توسيع <bdi>(extend)</bdi> فحص التخطي <bdi>(skip check)</bdi> ليشمل <code>test.skip</code> و<code>test.fixme</code>، ومراجعة تعديلات وكيل الإصلاح <bdi>(review healer edits)</bdi></li>
-<li>B. إيقاف وكيل الإصلاح <bdi>(switch the healer off)</bdi>، لأن أداة الذكاء الاصطناعي <bdi>(AI tool)</bdi> يجب ألا تلمس ملف اختبار <bdi>(test file)</bdi> أبدًا</li>
+<li>B. إيقاف وكيل الإصلاح <bdi>(switch the healer off)</bdi>، لأن أداة الذكاء الاصطناعي <bdi>(AI tool)</bdi> يجب ألا يُسمح لها بلمس ملف اختبار <bdi>(test file)</bdi> أبدًا</li>
 <li>C. مطالبة وكيل الإصلاح <bdi>(the healer)</bdi> بإرفاق لقطة شاشة <bdi>(screenshot)</bdi> لكل صفحة مُصلَحة <bdi>(repaired page)</bdi> بطلب السحب <bdi>(its pull request)</bdi></li>
 <li>D. رفع عدد المحاولات المعادة <bdi>(retries)</bdi> في إعدادات Playwright <bdi>(Playwright config)</bdi> حتى تبقى الاختبارات المُصلَحة خضراء <bdi>(stay green)</bdi></li>
 </ul>
@@ -13019,7 +13019,7 @@ NAJM_BUGS=float_fee pytest tests/test_interview_review.py    # 1 failed, 1 passe
 <ul>
 <li>A. أخذ التأكيد <bdi>(confirmation)</bdi> من إشارة في التطبيق <bdi>(app signal)</bdi>، مثل زر <bdi>(button)</bdi>، لا من الكلمات <bdi>(words)</bdi> أبدًا</li>
 <li>B. إلزام النموذج <bdi>(the model)</bdi> برؤية كلمة &quot;confirm&quot; مرتين قبل أن يستدعي الأداة <bdi>(calls the tool)</bdi></li>
-<li>C. إضافة نموذج حَكَم <bdi>(judge model)</bdi> يقيّم ما إذا كان العميل يبدو واثقًا بما يكفي <bdi>(sounds certain enough)</bdi></li>
+<li>C. إضافة نموذج حَكَم <bdi>(judge model)</bdi> يقيّم ما إذا كان العميل يبدو واثقًا بما يكفي <bdi>(sounds certain enough)</bdi> للتجميد <bdi>(to freeze)</bdi></li>
 <li>D. إضافة سطر إلى توجيه النظام <bdi>(system prompt)</bdi> يقول ألا تُجمَّد بطاقة بناءً على أول رسالة <bdi>(a first message)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>

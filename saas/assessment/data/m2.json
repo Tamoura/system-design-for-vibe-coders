@@ -13,7 +13,7 @@
     "en": [
      "A read replica in another zone streams every change from the primary",
      "A nightly pg_dump is also copied to a bucket in a second region",
-     "PITR is on, and a restore drill has been rehearsed and timed",
+     "Point-in-time recovery is on, and a restore drill has been rehearsed and timed",
      "Every table uses soft delete, so any removed row can be undone"
     ],
     "ar": [
@@ -70,13 +70,13 @@
      "Add a B-tree index on monitor.name so the ILIKE query stops scanning",
      "Add a tsvector column with a GIN index and query websearch_to_tsquery",
      "Run Elasticsearch and index each monitor from the save request handler",
-     "Use pg_trgm with a GIN trigram index and rank by similarity score"
+     "Use pg_trgm with a GIN trigram index, and rank matches by similarity score"
     ],
     "ar": [
      "أضف فهرس B-tree (B-tree index) على monitor.name كي يتوقف استعلام ILIKE (ILIKE query) عن المسح (scanning)",
      "أضف عمود tsvector (tsvector column) مع فهرس GIN (GIN index)، واستعلم عبر websearch_to_tsquery",
      "شغّل Elasticsearch، وفهرس (index) كل مراقِب (monitor) من معالج طلب الحفظ (save request handler)",
-     "استخدم pg_trgm مع فهرس ثلاثيات GIN (GIN trigram index)، ورتّب النتائج حسب درجة التشابه (similarity score)"
+     "استخدم pg_trgm مع فهرس ثلاثيات GIN (GIN trigram index)، ورتّب حسب درجة التشابه (similarity score)"
     ]
    },
    "a": 3,
@@ -96,7 +96,7 @@
    "o": {
     "en": [
      "The pooler carries app.current_org over from one request into the next",
-     "The cache key has no org in it, so one org's list is served to all",
+     "The cache key has no org in it, so one org’s list is served to all orgs",
      "The RLS policy lacks WITH CHECK, so reads across orgs are not filtered",
      "A handler loads the monitors by id alone instead of through the org"
     ],

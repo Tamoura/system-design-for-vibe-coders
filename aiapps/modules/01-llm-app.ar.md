@@ -590,7 +590,7 @@ gets one user message holding three tool_results.
 - A. لا؛ شيفرتك تنفّذها، أو ترفض تنفيذها (your code runs it, or refuses to)
 - B. نعم؛ نفّذتها واجهة البرمجة قبل الرد (ran it before replying)
 - C. لا؛ تنفّذها خوادم Anthropic (servers) بمجرد أن ترسل نتيجة
-- D. نعم؛ تنفّذها حزمة التطوير (SDK) للأدوات التي عرّفتها (declared)
+- D. نعم؛ تنفّذها حزمة التطوير (SDK) تلقائيًا للأدوات التي عرّفتها أنت (declared)
 
 <details><summary>الإجابة</summary>
 

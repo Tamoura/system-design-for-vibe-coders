@@ -211,7 +211,7 @@ The clinic's rule: no pull request without a filled checklist, and no "the agent
 
 - A. Correct it a third time, using the same words but in capitals so it notices.
 - B. Rewind everything done today and begin the whole ticket again from scratch.
-- C. Ask the agent to apologise and to promise to be more careful next time.
+- C. Ask the agent to apologise and to promise to be more careful from now on.
 - D. Change the approach: split the step, start fresh or add a missing fact.
 
 <details><summary>Answer</summary>
@@ -223,7 +223,7 @@ The clinic's rule: no pull request without a filled checklist, and no "the agent
 **3. Lujain says `Esc` `Esc` makes commits unnecessary, because she can rewind anything. What is the right reply?**
 
 - A. No: Bash changes and outside edits are not tracked, and git is the save point.
-- B. Yes: checkpoints keep every change for a year, whichever tool made the change.
+- B. Yes: checkpoints keep every change for a year, whichever tool made that change.
 - C. Yes, as long as the agent only edits files and never runs a shell command at all.
 - D. No: checkpoints cover only the main branch and are deleted every night at midnight.
 

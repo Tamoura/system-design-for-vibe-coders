@@ -258,9 +258,9 @@ Copy `testing/sample` and use the venv from lesson 0.3 (`pytest-cov` is already 
 
 **2. Release 2026.09 has 90% line coverage and passes its gate, yet duplicate transfers reach customers. What is the best reading?**
 
-- A. The coverage tool is broken and needs replacing
+- A. The coverage tool is broken and needs to be replaced
 - B. Coverage must reach 95% before the gate is trusted
-- C. The team did not write enough unit tests
+- C. The team did not write enough unit tests for the code
 - D. Coverage shows what ran, not what was checked
 
 <details><summary>Answer</summary>
@@ -272,9 +272,9 @@ Copy `testing/sample` and use the venv from lesson 0.3 (`pytest-cov` is already 
 **3. The mobile squad has 40 unit tests, 15 API tests and 600 UI tests. The pipeline takes 55 minutes and fails randomly. What is the best first move?**
 
 - A. Move the rule checks that need no screen down to API tests
-- B. Add more workers so the 600 UI tests finish much sooner
+- B. Add more workers so that the 600 UI tests finish much sooner
 - C. Rerun failed UI tests automatically until the build is green
-- D. Delete the oldest UI tests to reach a round number
+- D. Delete the oldest UI tests in the suite to reach a round number
 
 <details><summary>Answer</summary>
 
@@ -634,7 +634,7 @@ Copy `testing/sample` and run `pip install pytest-xdist`.
 
 - A. Hashes differ per process, so a test may run twice or never
 - B. The remainder can be negative, so some tests get no shard
-- C. Slow tests all pile into one shard, so that job runs far longer
+- C. Slow tests pile into one shard, so that job runs longer
 - D. The built-in hash is far too slow for a large suite
 
 <details><summary>Answer</summary>
@@ -672,9 +672,9 @@ Copy `testing/sample` and run `pip install pytest-xdist`.
 **5. A deploy gate's only smoke test is `GET /health` returning 200. Why can it pass while the release has failed?**
 
 - A. The old version may still be serving, so check the build too
-- B. Health endpoints never return 200 while a deploy is running
+- B. Health endpoints never return 200 while a deploy is still running
 - C. Smoke tests must always query the database directly themselves
-- D. A single smoke test is always too slow to work as a gate
+- D. A single smoke test is always too slow to work as a release gate
 
 <details><summary>Answer</summary>
 

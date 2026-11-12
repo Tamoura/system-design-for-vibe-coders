@@ -146,10 +146,10 @@ Committee decision recorded: *"Chat logs are excluded from credit-model training
 
 **1. Najm Bank wants to reuse customer-service chatbot transcripts to train its retail credit-scoring model. Under the GDPR, what is the FIRST analysis Sara should require?**
 
-- A. A check that the transcripts are stored in the EU
+- A. A check that the transcripts are stored in the EU and that access to them is limited to the support team
 - B. An assessment of whether the new purpose is compatible with the purpose for which the transcripts were collected
-- C. A bias audit by an independent auditor
-- D. Confirmation that the model will be more accurate with the transcripts
+- C. A bias audit by an independent auditor, covering the training set and the outputs for each customer group
+- D. Confirmation that the model will be more accurate with the transcripts than with the data now used for training, based on a pilot
 
 <details><summary>Answer</summary>
 
@@ -159,10 +159,10 @@ Committee decision recorded: *"Chat logs are excluded from credit-model training
 
 **2. According to EDPB Opinion 28/2024, when can an AI model trained on personal data be considered anonymous?**
 
-- A. Always, because model parameters are not records about individuals
-- B. Never, because training data always leaves traces
+- A. Always, because model parameters are not records about individuals and so can never reveal anything about them, however the model is queried or attacked
+- B. Never, because training data always leaves traces in the model that a determined attacker can recover
 - C. When the likelihood of extracting personal data about training subjects, directly or through queries, is insignificant, assessed case by case
-- D. Only when the training data was fully anonymised in advance
+- D. Only when the training data was fully anonymised in advance and the anonymisation was certified by a regulator
 
 <details><summary>Answer</summary>
 
@@ -185,9 +185,9 @@ Committee decision recorded: *"Chat logs are excluded from credit-model training
 
 **4. Which of the following is the necessity step of a legitimate interests assessment for training a fraud model?**
 
-- A. Showing the fraud-prevention interest is lawful and clearly articulated
-- B. Obtaining the DPO's signature
-- C. Weighing customers' reasonable expectations against the bank's interest
+- A. Showing the fraud-prevention interest is lawful, clearly articulated and real rather than speculative, with evidence of past losses at peer banks
+- B. Obtaining the DPO's signature on the assessment and filing it with the data protection regulator
+- C. Weighing customers' reasonable expectations against the bank's interest and recording how the balance was struck
 - D. Showing the processing is needed for that interest and that less intrusive means, such as fewer features or synthetic data, would not achieve it
 
 <details><summary>Answer</summary>
@@ -198,10 +198,10 @@ Committee decision recorded: *"Chat logs are excluded from credit-model training
 
 **5. Which privacy principle is MOST directly engaged by a membership-inference attack against Najm's credit model?**
 
-- A. Purpose limitation
-- B. Storage limitation
+- A. Purpose limitation and fairness
+- B. Storage limitation and fairness
 - C. Integrity and confidentiality
-- D. Accuracy
+- D. Accuracy of the data
 
 <details><summary>Answer</summary>
 
@@ -384,9 +384,9 @@ The AI Governance Committee approves a redesign of the retail credit decision fl
 **2. What did the CJEU decide in *SCHUFA* (C-634/21)?**
 
 - A. The automated calculation of a credit score is a "decision" under Art. 22 where a lender draws strongly on it to decide on a contract
-- B. Credit bureaus may not calculate scores without explicit consent
-- C. Banks must disclose their scoring algorithms' source code
-- D. Profiling is prohibited under the GDPR
+- B. Credit bureaus may not calculate scores without explicit consent from each individual
+- C. Banks must disclose their scoring algorithms' source code on request to any applicant
+- D. Profiling is prohibited under the GDPR in every case, including credit scoring and fraud screening, even where the individual has agreed and received a full explanation
 
 <details><summary>Answer</summary>
 
@@ -396,9 +396,9 @@ The AI Governance Committee approves a redesign of the retail credit decision fl
 
 **3. Najm's loan officers approve or decline in the reviewed band, and monitoring shows they follow the model's recommendation 99.8% of the time with an average review time of 20 seconds. What should Layla conclude?**
 
-- A. The process is compliant because a human signs off
-- B. The officers should be removed and the process fully automated
-- C. The model is highly accurate, so no action is needed
+- A. The process is compliant because a human signs off every decision, whatever time the officers spend reviewing it or how often they change the model's result
+- B. The officers should be removed and the process fully automated, since the model is more consistent than they are
+- C. The model is highly accurate on the test set, so no action is needed on the review process
 - D. The review may not be meaningful, so the decisions risk being treated as solely automated; investigate and strengthen oversight
 
 <details><summary>Answer</summary>
@@ -423,9 +423,9 @@ The AI Governance Committee approves a redesign of the retail credit decision fl
 **5. A former customer asks Najm to erase her data from its AI. The data protection team has documented, with extraction tests, that the credit model is anonymous. No legal retention duty applies. What is the most proportionate response?**
 
 - A. Delete her data from source systems and training sets and add her to the exclusion list for future retraining
-- B. Refuse, because models cannot be changed
-- C. Retrain the model from scratch immediately
-- D. Delete the model
+- B. Refuse, because models cannot be changed once they have been trained and put into service, and her data would only be reviewed at the next scheduled model release
+- C. Retrain the model from scratch immediately, before any other system holding her data is checked
+- D. Delete the model and every backup of it, whether or not it still holds her data
 
 <details><summary>Answer</summary>
 
@@ -611,9 +611,9 @@ Layla's team produces the **Integrated AI Impact Assessment (IAIA) template**, f
 
 **2. Najm, as deployer, will use a high-risk credit-scoring system for EU customers. Which is correct?**
 
-- A. Only a DPIA is needed, because the GDPR covers everything
-- B. Only a FRIA is needed, because the AI Act replaces the GDPR for AI
-- C. Neither is needed if the provider has a CE marking
+- A. Only a DPIA is needed, because the GDPR covers everything and the AI Act adds nothing for this system, whatever its use
+- B. Only a FRIA is needed, because the AI Act replaces the GDPR for AI systems that carry a CE marking
+- C. Neither is needed if the provider has a CE marking and has published its technical documentation
 - D. Both are relevant: a DPIA under the GDPR and a FRIA under the AI Act, with the FRIA complementing the DPIA
 
 <details><summary>Answer</summary>
@@ -638,9 +638,9 @@ Layla's team produces the **Integrated AI Impact Assessment (IAIA) template**, f
 **4. Najm's Dubai hiring team sits in the DIFC and will use AI to screen applicants. Which instrument most specifically addresses processing through autonomous and semi-autonomous systems there?**
 
 - A. DIFC Data Protection Law, Regulation 10
-- B. UAE Federal Decree-Law No. 45 of 2021
-- C. Qatar PDPPL
-- D. China PIPL
+- B. UAE Federal Decree-Law No. 45 of 2021 on personal data protection
+- C. Qatar PDPPL, Law No. 13 of 2016
+- D. China PIPL, in force since 2021
 
 <details><summary>Answer</summary>
 

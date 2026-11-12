@@ -693,8 +693,8 @@ Plan first, implement in small steps, run the tests after each step.
 
 - A. تعمل بصورة طبيعية (It runs normally)، لأن `getcwd` تقرأ الحالة فقط (only reads state)
 - B. تُرفض عقدة الاستدعاء (A call node is refused) ويحصل النموذج على خطأ
-- C. تعمل داخل بيئة معزولة (a sandbox) وتعيد اسم المجلد (the folder name)
-- D. تُستبدل بصمت بالصفر ويستمر الجمع (quietly replaced by 0)
+- C. تعمل داخل بيئة معزولة (a sandbox) وتعيد اسم المجلد الحالي (the current folder name)
+- D. تُستبدل بصمت بالصفر ويستمر الجمع من دونها (quietly replaced by 0 and the sum carries on without it)
 
 <details><summary>الإجابة</summary>
 

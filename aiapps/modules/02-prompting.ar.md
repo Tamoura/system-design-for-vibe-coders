@@ -251,7 +251,7 @@ Staff can request a new laptop through the IT Service Desk portal under Hardware
 - A. ترجمة الأسئلة العربية إلى الإنجليزية قبل الاستدعاء
 - B. رفع `effort` ليستدلّ النموذج بشأن لغة المستخدم (the user's language)
 - C. إضافة قاعدة للغة (a language rule) ثم اختبارها على حالات عربية (Arabic cases)
-- D. إضافة مثال عربي واحد وترك التعليمات كما هي (leave the instructions alone)
+- D. إضافة مثال عربي واحد فقط وترك التعليمات كما هي تمامًا (leave the instructions alone)
 
 <details><summary>الإجابة</summary>
 
@@ -276,7 +276,7 @@ Staff can request a new laptop through the IT Service Desk portal under Hardware
 
 - A. الأمثلة الواقعة بعد التعليمات تُحتسب أقل من القواعد (count less than the rules)
 - B. ثمانية أمثلة قليلة جدًا لتعليم التسميات (too few to teach the labels)
-- C. التسمية الأولى في القائمة تفوز كلما تردد النموذج (whenever the model is unsure)
+- C. التسمية الأولى في القائمة تفوز كلما تردد النموذج في الاختيار (when the model is unsure)
 - D. الأمثلة المنحازة (skewed examples) تدفعه نحو التسمية الأكثر عرضًا (most-shown label)
 
 <details><summary>الإجابة</summary>
@@ -631,10 +631,10 @@ Plan first; wait for my approval before writing.
 
 **1. يسجل موجّه 100% على تذاكر التطوير العشرين التي ضُبط عليها (the 20 dev tickets it was tuned on). ماذا ينبغي أن تفعل أولًا (what should you do first)؟**
 
-- A. إعادة تشغيل التطوير ثلاث مرات للتأكد من استقرار الـ100%
+- A. إعادة تشغيل التطوير (dev) ثلاث مرات للتأكد من استقرار نسبة الـ100%
 - B. تشغيل المجموعة المحجوبة (held-out set) ومقارنتها بدرجات التطوير
 - C. رفع عتبة البوابة (gate threshold) إلى 100% لتثبيتها
-- D. التحول إلى نموذج أرخص ومقارنة الدرجات
+- D. التحول إلى نموذج أرخص (cheaper model) ومقارنة الدرجات
 
 <details><summary>الإجابة</summary>
 

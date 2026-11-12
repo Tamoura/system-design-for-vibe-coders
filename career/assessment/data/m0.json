@@ -40,13 +40,13 @@
       "o": {
         "en": [
           "A small LLM feature with an evaluation set and documented failure cases",
-          "A polished chatbot demo with a slick interface and many prompt templates",
+          "A polished chatbot demo with a slick interface and prompt templates",
           "A notebook training a churn model on public data, with high accuracy scores",
           "An online prompt-engineering certificate and a list of AI tools she has used"
         ],
         "ar": [
-          "ميزة صغيرة مبنية على نموذج لغوي كبير (LLM feature) مع مجموعة تقييم (evaluation set) وحالات إخفاق موثّقة (documented failure cases)",
-          "عرض تجريبي مصقول لروبوت محادثة (chatbot demo) بواجهة أنيقة (slick interface) وقوالب أوامر كثيرة (prompt templates)",
+          "ميزة صغيرة مبنية على نموذج لغوي كبير (LLM feature) مع مجموعة تقييم وحالات إخفاق موثّقة (documented failure cases)",
+          "عرض تجريبي مصقول لروبوت محادثة (chatbot demo) بواجهة أنيقة (slick interface) وقوالب أوامر (prompt templates)",
           "دفتر ملاحظات (notebook) يدرّب نموذجًا للتنبؤ بتسرّب العملاء (churn model) على بيانات عامة (public data) بدقة عالية (high accuracy)",
           "شهادة إلكترونية في هندسة الأوامر (prompt-engineering certificate) وقائمة بأدوات الذكاء الاصطناعي (AI tools) التي استخدمتها"
         ]
@@ -95,14 +95,14 @@
       },
       "o": {
         "en": [
-          "His gap is algorithms depth; he should solve more contest problems first",
+          "His gap is algorithms depth; he should solve more contest problems",
           "His gap is shipping proof; he should deploy a small tested API with CI",
           "His gap is tool breadth; he should list every tool from the ads on his CV",
           "His gap is formal credentials; he should start a master's before applying"
         ],
         "ar": [
-          "فجوته في عمق الخوارزميات (algorithms depth)؛ عليه أن يحلّ مزيدًا من مسائل المسابقات (contest problems) أولًا",
-          "فجوته في إثبات القدرة على التسليم (proof of shipping)؛ عليه نشر واجهة برمجية صغيرة مختبَرة (small tested API) مع تكامل مستمر (CI)",
+          "فجوته في عمق الخوارزميات (algorithms depth)؛ عليه أن يحلّ مزيدًا من مسائل المسابقات (contest problems)",
+          "فجوته في إثبات القدرة على التسليم (proof of shipping)؛ عليه نشر واجهة برمجية صغيرة مختبَرة مع تكامل مستمر (CI)",
           "فجوته في اتساع الأدوات (tool breadth)؛ عليه إدراج كل أداة وردت في الإعلانات في سيرته الذاتية (CV)",
           "فجوته في المؤهلات الرسمية (formal credentials)؛ عليه بدء درجة الماجستير (master's) قبل التقديم"
         ]

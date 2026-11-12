@@ -11,15 +11,15 @@
       },
       "o": {
         "en": [
-          "Open the prompt with a shouted \"NEVER guess!!!\" so that the model stops inventing new rules",
+          "Open the prompt with a shouted \"NEVER guess!!!\" so the model stops inventing rules",
           "Name the documents as the only source and add a HANDOFF: reply for when they are silent",
-          "Lower the temperature so that the model keeps to the likeliest wording of the policy",
+          "Lower the temperature so the model keeps to the likeliest wording of the policy",
           "Add \"think step by step\" and a demand for accuracy so that the model checks itself"
         ],
         "ar": [
-          "ابدأ الموجّه (prompt) بعبارة صارخة «لا تخمّن أبدًا» ⁦(NEVER guess!!!)⁩، كي يكفّ النموذج (model) عن اختلاق القواعد",
+          "ابدأ الموجّه (prompt) بعبارة صارخة «لا تخمّن أبدًا» ⁦(NEVER guess!!!)⁩، كي يكفّ النموذج عن اختلاق القواعد",
           "اجعل الوثائق (documents) المصدر الوحيد (only source)، وأضف ردّ `HANDOFF:` مخرجًا (way out) حين تسكت عن السؤال",
-          "اخفض درجة الحرارة (temperature)، كي يلتزم النموذج (model) بأرجح صياغة (likeliest wording) في السياسة (policy)",
+          "اخفض درجة الحرارة (temperature)، كي يلتزم النموذج بأرجح صياغة (likeliest wording) في السياسة",
           "أضف «فكّر خطوة بخطوة» (think step by step) مع طلب الدقة (accuracy)، كي يراجع النموذج (model) إجابته بنفسه"
         ]
       },
@@ -68,13 +68,13 @@
       "o": {
         "en": [
           "The system prompt text was the same on both days, so an edit to it is not the cause",
-          "The text may still have changed, because the version records only the file name",
-          "Nothing reliable, because the version is a label typed by hand and can lag the text",
+          "The text may still have changed, because the version records only the file name, not its content",
+          "Nothing reliable, because the version is a label typed by hand and can lag behind the text",
           "Yara's report must be mistaken, since a given version always produces the same answers"
         ],
         "ar": [
           "أن نص موجّه النظام (system prompt) كان واحدًا في اليومين، فليس تعديله هو السبب (cause)",
-          "أن النص ربما تغيّر مع ذلك، لأن الإصدار (version) لا يسجّل سوى اسم الملف (file name)",
+          "أن النص ربما تغيّر مع ذلك، لأن الإصدار (version) لا يسجّل سوى اسم الملف (file name) لا محتواه",
           "لا شيء يُعتمد عليه، لأن الإصدار (version) وسم يكتبه الناس يدويًا (typed by hand) وقد يتأخر عن النص",
           "أن تقرير يارا خاطئ، لأن الإصدار الواحد للموجّه (prompt version) يعطي الإجابات نفسها (same answers) دائمًا"
         ]
@@ -95,16 +95,16 @@
       },
       "o": {
         "en": [
-          "Merge it as it stands, because PROMPT_VERSION is unchanged and so is the behaviour",
+          "Merge it as it stands, because PROMPT_VERSION is unchanged and so is the behaviour of the app",
           "Merge it, then let a week of staff feedback in the pilot show whether it is good enough",
           "Merge it once the gate has passed on the new model, and let MODEL changes trigger it",
-          "Merge it once the provider's published benchmarks show that the cheaper tier suits classification"
+          "Merge it once the provider's published benchmarks show the cheaper tier suits classification"
         ],
         "ar": [
-          "ادمجه كما هو (as it stands)، لأن `PROMPT_VERSION` لم يتغير ولا يتغير السلوك (behaviour) معه",
-          "ادمجه ثم دع أسبوعًا من ملاحظات الموظفين (staff feedback) في التجربة التشغيلية (pilot) يبيّن كفايته",
+          "ادمجه كما هو (as it stands)، لأن `PROMPT_VERSION` لم يتغير ولا يتغير السلوك (behaviour) معه عمليًا أبدًا",
+          "ادمجه ثم دع أسبوعًا من ملاحظات الموظفين (staff feedback) في التجربة التشغيلية (pilot) يبيّن كفايته للعمل",
           "ادمجه متى نجحت بوابة التقييم (eval gate) على النموذج (model) الجديد، واجعل تغييرات `MODEL` تشغّلها",
-          "ادمجه متى أظهرت المقاييس المنشورة (published benchmarks) لدى المزوّد أن الفئة الأرخص (cheaper tier) تناسب التصنيف (classification)"
+          "ادمجه متى أظهرت المقاييس المنشورة (published benchmarks) أن الفئة الأرخص (cheaper tier) تناسب التصنيف (classification)"
         ]
       },
       "a": 2,

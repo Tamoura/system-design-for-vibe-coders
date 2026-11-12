@@ -206,10 +206,10 @@ Two-user test:   tests/authz/cards_limits.spec.ts (passing)
 
 **1. خلال اختبارٍ مصرَّح به (During an authorised test)، تسجّل مريم الدخول بوصفها عميلة الاختبار A ‏(test customer A) وترسل `PATCH /v2/cards/{cardId}/limits` مع معرّف بطاقة عميل الاختبار B ‏(test customer B's card ID). فتغيّر الواجهة حدّ B. أيّ خطرٍ هذا، وما الإصلاح (Which risk is this, and what is the fix)؟**
 
-- A. API2 خلل المصادقة (Broken Authentication)؛ أجبِر A على تسجيل الدخول مجددًا (make A log in again) قبل أي تغيير
+- A. API2 خلل المصادقة (Broken Authentication)؛ أجبِر A على تسجيل الدخول مجددًا (make A log in again) قبل أي تغيير على البطاقة (before any change to a card)، وأنهِ الجلسة بعد خمس دقائق (expire the session after five minutes)
 - B. API1 BOLA؛ افحص على الخادم (on the server)، في كل طلب (on every request)، أن البطاقة تعود إلى العميل المصادَق عليه (the card belongs to the authenticated customer)
-- C. API8 سوء الإعداد الأمني (Security Misconfiguration)؛ أخفِ معرّفات البطاقات عن شاشات التطبيق (hide card IDs from the app's screens)
-- D. API4 الاستهلاك غير المقيَّد للموارد (Unrestricted Resource Consumption)؛ طبّق حدًّا للمعدّل على نقطة النهاية (rate-limit the endpoint)
+- C. API8 سوء الإعداد الأمني (Security Misconfiguration)؛ أخفِ معرّفات البطاقات عن شاشات التطبيق (hide card IDs from the app's screens) وعن العناوين الظاهرة في شريط المتصفح (from the URLs shown in the browser address bar)
+- D. API4 الاستهلاك غير المقيَّد للموارد (Unrestricted Resource Consumption)؛ طبّق حدًّا للمعدّل على نقطة النهاية (rate-limit the endpoint) بعشرة طلبات في الدقيقة لكل عميل (ten requests a minute per customer) وأطلق تنبيهًا عند الارتفاعات (alert on spikes)
 
 <details><summary>الإجابة</summary>
 
@@ -219,7 +219,7 @@ Two-user test:   tests/authz/cards_limits.spec.ts (passing)
 
 **2. تعيد `GET /v2/customers/me` الحقل الداخلي (internal) `riskScore`، وتقبل `PATCH /v2/customers/me` حقل `kycStatus`. ما أفضل إصلاح (What is the best fix)؟**
 
-- A. الطلب من فريق تطبيقات الهاتف (Ask the mobile team) ألّا يعرض (not to display) `riskScore`
+- A. الطلب من فريق تطبيقات الهاتف (Ask the mobile team) ألّا يعرض (not to display) `riskScore` في التطبيق (in the app)، وإزالة الحقل من شاشات بوابة الموظفين (remove the field from the screens of the staff portal) مع إبقائه في الاستجابة نفسها (while leaving it in the response itself)
 - B. تشفير جسم الاستجابة (Encrypt the response body)
 - C. تعريف مخططات طلبٍ واستجابةٍ مدرجة في قائمة سماح (allowlisted request and response schemas): رفض الحقول غير المعروفة في المدخلات (reject unknown fields on input) وعدم إعادة سوى الحقول العامة (return only public fields)
 - D. نقل نقطة النهاية (Move the endpoint) إلى `/v3/`
@@ -235,7 +235,7 @@ Two-user test:   tests/authz/cards_limits.spec.ts (passing)
 - A. جيد: المعرّفات العشوائية تجعل BOLA مستحيلًا (random IDs make BOLA impossible)
 - B. يستحق التنفيذ (Worth doing) بوصفه دفاعًا متعدد الطبقات (defence in depth)، لكن المعرّفات تتسرّب عبر السجلات والروابط والاستجابات الأخرى (leak through logs, links and other responses)، لذا يظل فحص الملكية من جهة الخادم مطلوبًا (the server-side ownership check is still required)
 - C. لا جدوى منه (Pointless): معرّفات UUID لا تضيف أي أمانٍ على الإطلاق (add no security at all)
-- D. استخدام UUID والتخلي عن فحص الملكية (drop the ownership check) لتحسين الأداء (to improve performance)
+- D. استخدام UUID والتخلي عن فحص الملكية (drop the ownership check) لتحسين الأداء (to improve performance)، لأن المعرّفات لم يعد ممكنًا تخمينها من العملاء أو المهاجمين (IDs can no longer be guessed by customers or attackers) ويصبح كل بحثٍ قراءةً واحدة سريعة للمفتاح في قاعدة البيانات (every lookup is then a single fast key read in the database)
 
 <details><summary>الإجابة</summary>
 
@@ -246,7 +246,7 @@ Two-user test:   tests/authz/cards_limits.spec.ts (passing)
 **4. لم يعد التطبيق الحالي (the current app) يستخدم واجهة `/v1/` التي أصدرها بنك نجم عام 2019 ‏(Najm's 2019 API)، لكنها لا تزال تجيب على البوابة العامة (still answers on the public gateway)، من دون فحوص الوصول الأحدث (without the newer access checks). أيّ خطرٍ هذا، وما الاستجابة الصحيحة (what is the right response)؟**
 
 - A. API9 سوء إدارة الجرد (Improper Inventory Management): سجّلها بمالكٍ وتاريخ إيقاف (record it with an owner and a retirement date)، واحظرها في البوابة (block it at the gateway)، وقارن بانتظام المسارات المخدومة بالموثّقة (regularly compare served routes with documented ones)
-- B. API10 الاستهلاك غير الآمن لواجهات البرمجة (Unsafe Consumption of APIs): تحقّق من استجاباتها (validate its responses)
+- B. API10 الاستهلاك غير الآمن لواجهات البرمجة (Unsafe Consumption of APIs): تحقّق من استجاباتها مقابل مخطط (validate its responses against a schema)، وحدّد مهلات لكل استدعاء إليها (set timeouts on every call to it)، وعامل بياناتها بوصفها مدخلاتٍ غير موثوقة (treat its data as untrusted input) كأي مصدر بياناتٍ خارجي آخر (like any other third-party feed)
 - C. ليست خطرًا (Not a risk)، لأنه لا يوجد عميلٌ حالي يستدعيها (no current client calls it)
 - D. API7 SSRF: أضف قائمة سماحٍ لعناوين URL ‏(URL allowlist)
 
@@ -462,21 +462,21 @@ flowchart RL
 
 **2. في مختبرٍ محلي (In a local lab)، ينجح طلبا تحويلٍ أُرسلا في اللحظة نفسها (sent at the same moment) ويتركان الحساب مكشوفًا (leave the account overdrawn)، مع أن كل طلبٍ قد فُحص (each request was checked). ما السبب، وما أفضل إصلاح (What is the cause, and the best fix)؟**
 
-- A. حشو بيانات الاعتماد (Credential stuffing)؛ أضف المصادقة متعددة العوامل (multi-factor authentication)
-- B. حالة تسابقٍ ناتجة عن «افحص ثم نفّذ» (A race condition from check-then-act)؛ اجعل الفحص والخصم تحديثًا شرطيًا ذريًا واحدًا أو معاملةً مقفلة (one atomic conditional update or locked transaction)، واستخدم مفاتيح منع التكرار (idempotency keys)
+- A. حالة تسابقٍ ناتجة عن «افحص ثم نفّذ» (A race condition from check-then-act)؛ اجعل الفحص والخصم تحديثًا شرطيًا ذريًا واحدًا أو معاملةً مقفلة (one atomic conditional update or locked transaction)، واستخدم مفاتيح منع التكرار (idempotency keys)
+- B. حشو بيانات الاعتماد (Credential stuffing)؛ أضف المصادقة متعددة العوامل (multi-factor authentication) لكل تحويل (for every transfer) واحظر عناوين IP التي أرسلت التحويلات المكررة (block the IP addresses that sent the duplicate transfers) خلال نافذة الحادثة (during the incident window)
 - C. غياب TLS ‏(Missing TLS)؛ افرض HTTPS ‏(enforce HTTPS)
 - D. قاعدة بياناتٍ بطيئة (A slow database)؛ أضف المزيد من الخوادم (add more servers)
 
 <details><summary>الإجابة</summary>
 
-**B.** قرأ الطلبان الرصيدَ نفسه قبل أن يكتب أيٌّ منهما (Both requests read the same balance before either wrote). وتتيح التحديثات الذرّية لقاعدة البيانات فرضَ الثابت (Atomic updates let the database enforce the invariant). بل قد يوسّع الخيار D نافذة التسابق (may even widen the race window). انظر: 🟡 التعمق أكثر (Going deeper).
+**A.** قرأ الطلبان الرصيدَ نفسه قبل أن يكتب أيٌّ منهما (Both requests read the same balance before either wrote). وتتيح التحديثات الذرّية لقاعدة البيانات فرضَ الثابت (Atomic updates let the database enforce the invariant). بل قد يوسّع الخيار D نافذة التسابق (may even widen the race window). انظر: 🟡 التعمق أكثر (Going deeper).
 
 </details>
 
 **3. تسمح نقطة نهاية تسجيل الدخول في بنك نجم (Najm's login endpoint) بـ 10 إخفاقاتٍ في الدقيقة لكل عنوان IP ‏(10 failures per minute per IP address). ويوزّع المهاجمون عملية حشو بيانات اعتماد (a credential-stuffing run) على عشرات الآلاف من العناوين السكنية (tens of thousands of residential addresses). أيّ تغييرٍ يساعد أكثر من غيره (What change helps most)؟**
 
 - A. خفض الحدّ إلى 5 إخفاقاتٍ في الدقيقة لكل عنوان IP ‏(Lower the limit)
-- B. إعادة أخطاءٍ مختلفة لحالتي «مستخدم غير معروف» و«كلمة مرور خاطئة» ("unknown user" and "wrong password") كي يفهم العملاء (so customers understand)
+- B. إعادة أخطاءٍ مختلفة لحالتي «مستخدم غير معروف» و«كلمة مرور خاطئة» ("unknown user" and "wrong password") كي يفهم العملاء ما يجب إصلاحه (so customers understand what to fix)، وإظهار عدد المحاولات المتبقية (show the number of attempts left)
 - C. حظر كل عناوين IP الأجنبية (Block all foreign IP addresses)
 - D. إضافة حدودٍ مربوطة باسم المستخدم المستهدَف وبمعدّلات الإخفاق الإجمالية (keyed on the targeted username and on overall failure rates)، مع المصادقة المعزَّزة وفحوص كلمات المرور المخترقة (step-up and breached-password checks)
 
@@ -489,13 +489,13 @@ flowchart RL
 **4. بين ليلةٍ وضحاها (Overnight)، يتضاعف إنفاق بنك نجم على رسائل التحقق ثلاث مرات (spending on verification texts triples)، وتنهار نسبة الرموز المُدخَلة (the share of codes entered collapses)، وتذهب معظم الرسائل إلى بلدانٍ ليس لبنك نجم عملاء فيها (countries where Najm has no customers). ما الذي يحدث على الأرجح، وماذا ينبغي أن يفعل الفريق (What is most likely happening, and what should the team do)؟**
 
 - A. نجحت حملةٌ تسويقية (A marketing campaign succeeded)؛ اشترِ رصيدًا إضافيًا للرسائل النصية (buy more SMS credit)
-- B. ضخّ الرسائل النصية (SMS pumping)؛ احصر الإرسال في البلدان المخدومة (restrict sending to served countries)، وحدّد الإرسال لكل رقمٍ وبادئةٍ وحساب (limit per number, prefix and account)، وأطلق تنبيهاتٍ على الإنفاق ومعدّل التحويل (alert on spend and conversion)، وانقل العملاء إلى الموافقة داخل التطبيق (move customers to in-app approval)
+- B. عطلٌ لدى مزوّد الرسائل النصية (A fault at the SMS provider)؛ افتح تذكرةً وانتظر (open a ticket and wait)
 - C. هجوم حجب خدمة (A denial-of-service attack)؛ ضع الموقع خلف شبكة توصيل محتوى (put the site behind a CDN)
-- D. عطلٌ لدى مزوّد الرسائل النصية (A fault at the SMS provider)؛ افتح تذكرةً وانتظر (open a ticket and wait)
+- D. ضخّ الرسائل النصية (SMS pumping)؛ احصر الإرسال في البلدان المخدومة (restrict sending to served countries)، وحدّد الإرسال لكل رقمٍ وبادئةٍ وحساب (limit per number, prefix and account)، وأطلق تنبيهاتٍ على الإنفاق ومعدّل التحويل (alert on spend and conversion)، وانقل العملاء إلى الموافقة داخل التطبيق (move customers to in-app approval)
 
 <details><summary>الإجابة</summary>
 
-**B.** ارتفاع الإنفاق، وانهيار معدّل التحويل، والوجهات غير المخدومة (Rising spend, collapsing conversion and unserved destinations) هي البصمة المميزة لضخّ الرسائل النصية (the signature of SMS pumping). أما C فيسيء قراءة الوضع (misreads it): فالفاتورة هي الهدف، لا التوافر (the bill, not availability, is the target). انظر: 🟢 الأساسيات (The essentials)؛ و🟡 التعمق أكثر (Going deeper).
+**D.** ارتفاع الإنفاق، وانهيار معدّل التحويل، والوجهات غير المخدومة (Rising spend, collapsing conversion and unserved destinations) هي البصمة المميزة لضخّ الرسائل النصية (the signature of SMS pumping). أما C فيسيء قراءة الوضع (misreads it): فالفاتورة هي الهدف، لا التوافر (the bill, not availability, is the target). انظر: 🟢 الأساسيات (The essentials)؛ و🟡 التعمق أكثر (Going deeper).
 
 </details>
 
@@ -503,7 +503,7 @@ flowchart RL
 
 - A. LLM10 الاستهلاك غير المحدود (Unbounded Consumption)؛ ضع سقفًا لحجم المدخلات ورموز المخرجات واستدعاءات الأدوات لكل دور (cap input size, output tokens and tool calls per turn)، واضبط ميزانيات رموزٍ يومية لكل عميل (per-customer daily token budgets)، وأطلق تنبيهاتٍ على الإنفاق (alert on spend)
 - B. LLM01 حقن الموجّهات (Prompt Injection)؛ اكتب موجّه نظامٍ أقوى (write a stronger system prompt)
-- C. API9 سوء إدارة الجرد (Improper Inventory Management)؛ وثّق نقطة النهاية (document the endpoint)
+- C. API9 سوء إدارة الجرد (Improper Inventory Management)؛ وثّق نقطة النهاية (document the endpoint)، وأسند إليها مالكًا (give it an owner)، وأدرجها في فهرس واجهات البرمجة (list it in the API catalogue) مع إصدارها وتاريخ إيقافها (with its version and retirement date)، كي يراجعها فريق الأمن كل ربع سنة (so the security team can review it every quarter)
 - D. LLM09 المعلومات المضلِّلة (Misinformation)؛ أضف إخلاء مسؤولية (add a disclaimer)
 
 <details><summary>الإجابة</summary>
@@ -721,7 +721,7 @@ flowchart TD
 - A. تعمية التطبيق (Obfuscate the app) ليصعب العثور على الفحص (so the check is harder to find)
 - B. إضافة كشف صلاحيات الجذر (Add root detection) حتى لا تعمل التطبيقات المعدَّلة (so modified apps cannot run)
 - C. فرض الحدّ في واجهة المدفوعات (Enforce the limit in the payments API)، تراكميًا عبر القنوات (cumulatively across channels)، والإبقاء على فحص التطبيق فقط رسالةً ودّية مبكرة (only as an early, friendly message)
-- D. تثبيت الشهادة (Pin the certificate) حتى لا تصل النصوص البرمجية إلى الواجهة (so scripts cannot reach the API)
+- D. تثبيت الشهادة (Pin the certificate) حتى لا تصل النصوص البرمجية إلى الواجهة (so scripts cannot reach the API)، وحظر الطلبات من أي جهاز مفتوح الصلاحيات أو يعمل بمحاكٍ (block requests from any device that is rooted, jailbroken or running an emulator)
 
 <details><summary>الإجابة</summary>
 
@@ -732,7 +732,7 @@ flowchart TD
 **2. يضع مطوّرٌ مفتاح مزوّد النموذج اللغوي الكبير (the LLM provider key) في متغير بيئة (environment variable) من نوع `EXPO_PUBLIC_` «حتى لا يكون في الشيفرة» ("so it isn't in the code"). ماذا ينبغي أن يحدث (What should happen)؟**
 
 - A. لا شيء (Nothing)؛ فمتغيرات البيئة سرّية (environment variables are secret)
-- B. تشفير المفتاح داخل التطبيق (Encrypt the key inside the app)، مع تخزين مفتاح فكّ التشفير في التطبيق أيضًا (with the decryption key also stored in the app)
+- B. تشفير المفتاح داخل التطبيق (Encrypt the key inside the app)، مع تخزين مفتاح فكّ التشفير في التطبيق أيضًا في ملف منفصل (also stored in the app in a separate file)، وتعمية الشيفرة التي تقرؤه (obfuscate the code that reads it) أثناء البناء (at build time) ليصعب على المهاجم استخراجه (so the attacker cannot extract it easily)
 - C. معاملة المفتاح بوصفه مكشوفًا إن كان قد شُحن (Treat the key as exposed if it shipped): دوّره (rotate it)، ومرّر الاستدعاءات عبر واجهة بنك نجم (route calls through Najm's API)، التي تحتفظ بالمفتاح وتطبّق حدودًا لكل عميل (holds the key and applies per-customer limits)
 - D. تقسيم المفتاح إلى عدة سلاسل نصية في الشيفرة (Split the key into several strings in the code)
 
@@ -747,7 +747,7 @@ flowchart TD
 - A. يجعل الواجهة آمنةً من النصوص البرمجية (It makes the API safe from scripts)
 - B. يحمي من الشهادات الصادرة خطأً أو المعترِضة (mis-issued or intercepting certificates)، لكن المهندس العكسي يستطيع إزالته من نسخته الخاصة (a reverse engineer can remove it from their own copy)، ويحتاج إلى تثبيتاتٍ احتياطية وخطة تدوير (backup pins and a rotation plan)
 - C. يُغني عن الحاجة إلى TLS ‏(It replaces the need for TLS)
-- D. ينبغي أن يثبّت شهادةً طرفية واحدة من دون نسخةٍ احتياطية (pin a single leaf certificate with no backup)، لتحقيق أقصى قوة (for maximum strength)
+- D. ينبغي أن يثبّت شهادةً طرفية واحدة (pin a single leaf certificate) من دون دبابيس احتياطية (with no backup pins)، لتحقيق أقصى قوة (for maximum strength)، لأن أي دبوس إضافي يُضعف الحماية (any extra pin would weaken the protection) ويجب تجنّبه بحكم التصميم (should be avoided by design)
 
 <details><summary>الإجابة</summary>
 
@@ -757,20 +757,20 @@ flowchart TD
 
 **4. يعرض تسجيل الدخول الحالي بالقياسات الحيوية في بنك نجم (Najm's current biometric login) طلبَ نظام التشغيل (the OS prompt)، وعند النجاح يفتح شاشة الحسابات (opens the accounts screen). ما نقطة الضعف، وما التصميم الأقوى (What is the weakness, and the stronger design)؟**
 
-- A. لا توجد نقطة ضعف (There is no weakness)؛ فطلب نظام التشغيل آمن (the OS prompt is secure)
-- B. لا يعرف الخادم شيئًا (The server learns nothing) ويمكن اعتراض النتيجة (the result can be hooked)؛ وينبغي بدلًا من ذلك أن تفتح القياسات الحيوية مفتاحًا مربوطًا بالعتاد (unlock a hardware-bound key) يوقّع تحدّيًا من الخادم يتحقق منه الخادم (signs a server challenge the server verifies)
+- A. لا يعرف الخادم شيئًا (The server learns nothing) ويمكن اعتراض النتيجة (the result can be hooked)؛ وينبغي بدلًا من ذلك أن تفتح القياسات الحيوية مفتاحًا مربوطًا بالعتاد (unlock a hardware-bound key) يوقّع تحدّيًا من الخادم يتحقق منه الخادم (signs a server challenge the server verifies)
+- B. لا توجد نقطة ضعف (There is no weakness)؛ فطلب نظام التشغيل آمن (the OS prompt is secure)
 - C. استبدال القياسات الحيوية برموز الرسائل النصية (Replace biometrics with SMS codes)
 - D. عرض الطلب مرتين (Show the prompt twice)
 
 <details><summary>الإجابة</summary>
 
-**B.** ربط القياسات الحيوية بمفتاح (Binding biometrics to a key) يحوّل جواب نعم أو لا المحلي (a local yes/no) إلى إثباتٍ يستطيع الخادم فحصه (proof the server can check). أما C فأضعف (weaker)، لأن رموز الرسائل النصية معرّضة لتبديل شريحة SIM والاعتراض (SMS codes are exposed to SIM swap and interception). انظر: 🟡 التعمق أكثر (Going deeper).
+**A.** ربط القياسات الحيوية بمفتاح (Binding biometrics to a key) يحوّل جواب نعم أو لا المحلي (a local yes/no) إلى إثباتٍ يستطيع الخادم فحصه (proof the server can check). أما C فأضعف (weaker)، لأن رموز الرسائل النصية معرّضة لتبديل شريحة SIM والاعتراض (SMS codes are exposed to SIM swap and interception). انظر: 🟡 التعمق أكثر (Going deeper).
 
 </details>
 
 **5. حين يسجّل عميلٌ هاتفًا جديدًا (When a customer enrols a new phone)، يقول حكم Play Integrity الذي تحقق منه الخادم (the server-verified Play Integrity verdict) إن الجهاز يفشل في فحوص السلامة (fails integrity checks). ماذا ينبغي أن يفعل خادم بنك نجم (What should Najm's server do)؟**
 
-- A. تجاهله (Ignore it)، لأن الإثبات غير موثوق (attestation is unreliable)
+- A. تجاهله (Ignore it)، لأن الإثبات غير موثوق (attestation is unreliable) وليس كل جهازٍ مفتوح الصلاحيات جهازَ احتيال (a rooted device is not necessarily a fraudulent one)؛ واحكم على العميل بالمعاملة نفسها فقط (judge the customer only on the transaction itself)، بحسب مبلغها (by its amount) وليس بحالة جهازه (not by the state of his device)
 - B. ترك التطبيق يقرر بنفسه (Let the app decide for itself)
 - C. معاملته إشارةَ مخاطر (Treat it as a risk signal): السماح بالميزات منخفضة المخاطر (allow low-risk features)، واشتراط المصادقة المعزَّزة أو فحوصٍ إضافية للإجراءات عالية المخاطر (require step-up or extra checks for high-risk actions)، وتسجيله مع إشارات الاحتيال الأخرى (log it with the other fraud signals)
 - D. حظر العميل نهائيًا (Block the customer permanently)

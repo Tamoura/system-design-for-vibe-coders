@@ -168,10 +168,10 @@ flowchart TD
 
 **1. أي عنصر من تعريف EU AI Act يميّز نظام الذكاء الاصطناعي (AI system) عن البرمجيات التقليدية (traditional software) بأوضح صورة؟**
 
-- A. أنه يعمل على آلة
-- B. أنه يتكيّف بعد النشر (deployment)
+- A. أنه يعمل على آلة (machine)، مثل خادم (server) أو حاسوب محمول (laptop) أو هاتف، ولذلك يُعد معالجة آلية
+- B. أنه يتكيّف بعد النشر (deployment) بالتعلّم من بيانات جديدة (new data)، وهو ما يجب أن يقدر عليه كل نظام ذكاء اصطناعي
 - C. أنه يستدل (infers) من مدخلاته (its inputs) على كيفية توليد المخرجات (outputs)
-- D. أنه تبيعه شركة تقنية (technology company)
+- D. أنه تبيعه شركة تقنية (technology company) بترخيص (licence) يسمّي المنتج ذكاءً اصطناعيًا (artificial intelligence)
 
 <details><summary>الإجابة (answer)</summary>
 
@@ -182,9 +182,9 @@ flowchart TD
 **2. يسترجع المساعد الذكي لمذكرات الائتمان (credit memo copilot) في بنك نجم مستندات العميل ويمرّرها إلى نموذج لغوي كبير (large language model) لدى طرف ثالث (third party) لكتابة مسودة (draft) مذكرة. ما اسم هذا الأسلوب؟**
 
 - A. التوليد المعزّز بالاسترجاع (RAG)
-- B. التعلّم المعزَّز (Reinforcement learning)
+- B. التعلّم المعزَّز (Reinforcement learning) من تقييمات موظفي الائتمان
 - C. الضبط الدقيق (fine-tuning)
-- D. التجميع غير الموجَّه (Unsupervised clustering)
+- D. التجميع غير الموجَّه (Unsupervised clustering) لمستندات العميل
 
 <details><summary>الإجابة (answer)</summary>
 
@@ -194,10 +194,10 @@ flowchart TD
 
 **3. يلاحظ مدير علاقة أن مسودة (draft) المساعد الذكي (copilot) تتضمن نسبة خدمة دين (debt-service ratio) معقولة لكنها مختلَقة. ما أفضل وصف لهذا الإخفاق؟**
 
-- A. اختراق بيانات (data breach)
+- A. اختراق بيانات (data breach)، لأن معلومات العميل انكشفت لطرف غير مصرّح له (unauthorised party) خارج البنك
 - B. التلفيق (confabulation)، وهو خاصية معروفة للنماذج (models) التوليدية تتطلب ضوابط (controls) تحقق
-- C. انجراف النموذج (Model drift) بسبب تغيّر أسعار الفائدة (interest rates)
-- D. حقن طلبات (prompt injection) من جانب العميل
+- C. انجراف النموذج (model drift) بسبب تغيّر أسعار الفائدة (interest rates)، مما غيّر النمط الذي تعلّمه سابقًا
+- D. حقن طلبات (prompt injection) من جانب العميل (client)، الذي وضع تعليمات خفية في المستندات التي قدّمها
 
 <details><summary>الإجابة (answer)</summary>
 
@@ -207,8 +207,8 @@ flowchart TD
 
 **4. يخطط بنك نجم للسماح لروبوت المحادثة (chatbot) بإيقاف البطاقات (card blocks) وتغيير العناوين بنفسه. من منظور الحوكمة (governance)، ما الذي يتغير أكثر من غيره؟**
 
-- A. لا شيء، لأنه يستخدم النموذج اللغوي (language model) نفسه
-- B. لم يعد مضطرًا للإفصاح عن أنه ذكاء اصطناعي (AI)
+- A. لا شيء (nothing)، لأنه يستخدم النموذج اللغوي (language model) نفسه
+- B. لم يعد مضطرًا للإفصاح (disclose) عن أنه ذكاء اصطناعي (AI)
 - C. يجب الآن تصنيفه ممارسةً محظورة (prohibited practice)
 - D. يصبح النظام (system) وكيلًا (agent) يتصرف، فتصبح الصلاحيات (permissions) وحدود الإجراءات (action limits) والمصادقة (authentication) والتسجيل (logging) وضوابط الإيقاف البشرية (human stop controls) أساسية
 
@@ -383,10 +383,10 @@ flowchart TD
 
 **1. بموجب NIST AI RMF، النموذج (model) الذي يُلحق ضررًا منهجيًا بالمتقدمين (applicants) من جنسية واحدة مثال على الضرر (harm) بأي فئة؟**
 
-- A. المنظومة (ecosystem)
-- B. عمليات المؤسسة
-- C. الناس، على مستوى المجموعة أو المجتمع المحلي
-- D. البيئة
+- A. المنظومة (ecosystem) من شركاء ومورّدين وجهات رقابية
+- B. عمليات المؤسسة (operations) وسمعتها في السوق
+- C. الناس، على مستوى المجموعة أو المجتمع المحلي (community)
+- D. البيئة (environment)، بما فيها استهلاك الطاقة والمياه
 
 <details><summary>الإجابة (answer)</summary>
 
@@ -397,9 +397,9 @@ flowchart TD
 **2. تحذف دانة الجنس من مدخلات نموذج الائتمان (credit model). ويقول خالد إن النموذج (model) صار عادلًا (fair) الآن. ما أفضل رد؟**
 
 - A. اختبار النتائج (outcome testing) عبر المجموعات، لأن سمات أخرى (other features) قد تعمل بدائلَ (proxies) عن الجنس
-- B. الموافقة (Agree)، لأن النموذج (model) لم يعد يرى الجنس
-- C. إعادة إضافة الجنس لزيادة الدقة
-- D. التوقف عن استخدام النموذج (model) كليًا
+- B. الموافقة (Agree)، لأن النموذج (model) لم يعد يرى الجنس (gender) ولذلك لا يستطيع معاملة المتقدمين (applicants) معاملة مختلفة بحسب الجنس (by gender)
+- C. إعادة إضافة الجنس (gender) لزيادة الدقة (accuracy) ثم إبلاغ اللجنة (Committee) بالمكسب (gain) في الدقة (accuracy gain)
+- D. التوقف عن استخدام النموذج (model) كليًا إلى أن يبني فريق علم البيانات (data science team) نموذجًا أعدل (fairer model) من الصفر
 
 <details><summary>الإجابة (answer)</summary>
 
@@ -409,9 +409,9 @@ flowchart TD
 
 **3. أداة ذكاء اصطناعي توليدي (GenAI tool) تنتج صورًا تُظهر "صاحب عمل ناجح" شبه حصريًا في صورة شبان. ما نوع الضرر (harm) في المقام الأول؟**
 
-- A. ضرر توزيعي (Allocative harm)
-- B. ضرر أمني (Security harm)
-- C. ضرر بالمنظومة (Harm to an ecosystem)
+- A. ضرر توزيعي (Allocative harm)، حيث تُحجب الفرص (opportunities) أو الموارد (resources) عن مجموعة (group)
+- B. ضرر أمني (Security harm)، حيث يستغل مهاجم (attacker) النظام (system) للحصول على وصول (access)
+- C. ضرر بالمنظومة (Ecosystem harm)، حيث يمتد الضرر إلى الشركاء (partners) والمورّدين (suppliers)
 - D. ضرر تمثيلي (Representational harm)
 
 <details><summary>الإجابة (answer)</summary>
@@ -422,10 +422,10 @@ flowchart TD
 
 **4. أظهر نقاش COMPAS أن درجة خطر كانت معايَرة (calibrated) بشكل متشابه عبر المجموعات لكنها ذات معدلات إيجابيات كاذبة مختلفة. ما الدرس الحوكمي الرئيسي؟**
 
-- A. المعايرة (calibration) هي دائمًا مقياس العدالة (fairness metric) الصحيح
+- A. المعايرة (calibration) هي دائمًا مقياس العدالة (fairness metric) الصحيح، فلا يحتاج اختيار المقياس إلى مزيد من النقاش
 - B. قد تتعارض مقاييس العدالة (fairness metrics)، لذا يجب أن يكون الاختيار قرارًا صريحًا موثّقًا يتخذه أشخاص خاضعون للمساءلة (accountable) في سياقه
-- C. لا ينبغي استخدام أدوات (tools) تقييم الخطر في أي مكان
-- D. معدلات الإيجابيات الكاذبة (false-positive rates) لا تهم إذا كان النموذج (model) معايَرًا (calibrated)
+- C. لا ينبغي استخدام أدوات (tools) تقييم الخطر في أي مكان، لا في منظومة العدالة (justice system) ولا في قرارات الائتمان (credit decisions)
+- D. معدلات الإيجابيات الكاذبة (false-positive rates) لا تهم إذا كان النموذج (model) معايَرًا (calibrated)، لأن المعايرة تضمن أصلًا معاملة متساوية بين المجموعات (groups)
 
 <details><summary>الإجابة (answer)</summary>
 
@@ -435,8 +435,8 @@ flowchart TD
 
 **5. يصنّف سجل الأضرار (harm register) في بنك نجم ضررًا لنموذج (model) الاحتيال بأنه "مرتفع" للعملاء لكن "منخفض" للبنك. بموجب قواعد ليلى، ماذا يجب أن يحدث؟**
 
-- A. يمكن لمالك النظام (System owner) قبول الضرر (harm) لأن شدته (its severity) على البنك منخفضة
-- B. يجب حذف الضرر (harm) من السجل (inventory)
+- A. يمكن لمالك النظام (System owner) قبول الضرر (harm) لأن شدته (its severity) على البنك (bank) منخفضة، ما دام المالك (owner) يوقّع السجل (register)
+- B. يجب حذف الضرر (harm) من السجل (register) لأن الشدة على الناس (people severity) مسألة منفصلة عن مخاطر البنك (bank risk) نفسه
 - C. لا يمكن قبول الضرر (harm) دون موافقة اللجنة (without Committee approval)، لأن شدته (its severity) على الناس مرتفعة
 - D. يجب إيقاف النموذج (model) فورًا
 
@@ -626,7 +626,7 @@ flowchart RL
 - A. صالح وموثوق (valid and reliable)
 - B. قابل للتفسير وقابل للفهم (explainable and interpretable)
 - C. عادل، مع إدارة التحيّز الضار (fair, with harmful bias managed)
-- D. مربح وكفء
+- D. مربح وكفء (profitable and efficient)
 
 <details><summary>الإجابة (answer)</summary>
 
@@ -636,10 +636,10 @@ flowchart RL
 
 **3. في تجربة أولية (pilot)، وافق مكتتبو (underwriters) بنك نجم على نموذج الائتمان (credit model) في كل حالة محالة تقريبًا، ومنها حالات كان الملف يناقضه فيها. ما أفضل استجابة حوكمية؟**
 
-- A. إلغاء المراجعة البشرية (human review)، لأنها لا تضيف شيئًا
-- B. اعتبار معدل الموافقة (approval) المرتفع دليلًا على دقة النموذج (model)
+- A. إلغاء المراجعة البشرية (human review)، لأنها (review) لا تضيف شيئًا (adds nothing to the decision)
+- B. اعتبار معدل الموافقة (approval) المرتفع (high) دليلًا على دقة النموذج (model)
 - C. إعادة تصميم الإشراف (oversight): التدريب (training) على حدود النموذج (model)، وعرض الأسباب مع كل درجة، ورصد معدلات التجاوز (override rates)، وحماية صلاحية المراجعين في الاختلاف
-- D. استبدال النموذج (model) بآخر أكثر تعقيدًا
+- D. استبدال النموذج (model) بآخر أكثر تعقيدًا (more complex) بدلًا منه (replace)
 
 <details><summary>الإجابة (answer)</summary>
 
@@ -649,10 +649,10 @@ flowchart RL
 
 **4. يرى الرئيس التنفيذي للمعلومات (Chief Information Officer) في بنك نجم أن ضوابط تقنية المعلومات (IT controls) القائمة كافية للذكاء الاصطناعي (AI). أي رد يعكس الممارسة الجيدة على أفضل وجه؟**
 
-- A. استبدال كل الضوابط (controls) القائمة بإطار جديد (new framework) خاص بالذكاء الاصطناعي (AI) وحده
+- A. استبدال كل الضوابط (controls) القائمة (existing) في البنك (bank) بإطار جديد (new framework) خاص بالذكاء الاصطناعي (AI) وحده (alone)
 - B. توسيع ضوابط (controls) الخصوصية (privacy) والأمن ومخاطر النماذج (model risk) والمشتريات (procurement) القائمة، وإضافة ضوابط خاصة بالذكاء الاصطناعي (AI) حيث تتطلبها سماته
-- C. الموافقة (Agree)، لأن الذكاء الاصطناعي (AI) مجرد برمجيات
-- D. تأجيل أي حوكمة للذكاء الاصطناعي (AI) حتى يسري قانون شامل للذكاء الاصطناعي في قطر
+- C. الموافقة (Agree)، لأن الذكاء الاصطناعي (AI) مجرد برمجيات (software) عادية ولا يحتاج إلى ضوابط (controls) إضافية
+- D. تأجيل أي حوكمة (governance) للذكاء الاصطناعي (AI) حتى يسري قانون شامل (comprehensive law) للذكاء الاصطناعي في قطر (Qatar)
 
 <details><summary>الإجابة (answer)</summary>
 
@@ -663,9 +663,9 @@ flowchart RL
 **5. بموجب EU AI Act، ما الذي يجب أن يمكّن الإشرافُ البشري (human oversight) على نظام ذكاء اصطناعي عالي المخاطر (high-risk AI system) الأشخاصَ المكلفين به من فعله؟**
 
 - A. فهم قدرات النظام (system) وحدوده، والبقاء واعين بتحيّز الأتمتة (automation bias)، وتفسير المخرجات (outputs) تفسيرًا صحيحًا، وتقرير عدم استخدام النظام أو تجاوزه أو إيقافه
-- B. اعتماد كل مخرج (output) دون تأخير
-- C. إعادة تدريب (retrain) النموذج (model) بأنفسهم عندما يخطئ
-- D. ضمان ألا يخطئ النظام (system) أبدًا
+- B. اعتماد كل مخرج (output) دون تأخير (delay)
+- C. إعادة تدريب (retrain) النموذج (model) بأنفسهم (by themselves) عندما يخطئ (errs)
+- D. ضمان (guarantee) ألا يخطئ النظام (system) أبدًا (never) في أي حالة (in any case)
 
 <details><summary>الإجابة (answer)</summary>
 

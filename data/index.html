@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="data-source" content="2dc9f89d1267da77">
+<meta name="data-source" content="f16ce9df140ce7ab">
 <meta name="description" content="Data Engineering &amp; Analytics: Zero to Hero — a free, bilingual course: SQL and modelling, pipelines and streaming, dbt and data quality, trusted metrics and experiments, ML and LLM data in production, and data governance, with a quiz in every lesson and a 60-question practice exam.">
 <title>Data Engineering &amp; Analytics: Zero to Hero</title>
 <style>
@@ -9898,7 +9898,7 @@ where rn = 1;
 <section class="sec sec-quiz"><h2>✍️ Practice exam</h2>
 <p><strong>1. The retail director asks Kareem for &quot;a dashboard of customer churn&quot; by next week. What should he do first?</strong></p>
 <ul>
-<li>A. Build a quick draft dashboard from the customer 360 mart so retail has something to react to</li>
+<li>A. Build a quick draft dashboard from the customer 360 mart for retail to react to</li>
 <li>B. Ask Dana to start a churn model, since churn is a predictive question for data science</li>
 <li>C. Ask which decision the dashboard will change and how retail defines &quot;churn&quot; before building</li>
 <li>D. Export every customer column to a spreadsheet so retail can explore churn themselves</li>
@@ -9922,7 +9922,7 @@ where rn = 1;
 
 <p><strong>3. The retail dashboard has been late three mornings in a row. Each hop of its data flow sheet has a written freshness budget. Where should Huda look first?</strong></p>
 <ul>
-<li>A. At the BI tool&#39;s cache and refresh settings, where users first notice the delay</li>
+<li>A. At the BI tool&#39;s cache and refresh settings, where users see it</li>
 <li>B. At the dashboard&#39;s query, rewriting it so it runs faster against the mart</li>
 <li>C. At the warehouse bill, to see whether paying for more compute would help</li>
 <li>D. At the hop budgets, to find which upstream step finished later than its budget</li>
@@ -10007,7 +10007,7 @@ where rn = 1;
 <p><strong>10. Core banking reuses customer numbers after an account has been closed for ten years. Why does <code>dim_customer</code> carry its own surrogate key?</strong></p>
 <ul>
 <li>A. It stays stable when business keys change or are reused, and allows versions</li>
-<li>B. Surrogate keys hide identity, so the dimension counts as anonymous under the GDPR</li>
+<li>B. Surrogate keys hide identity, so the dimension is anonymous under the GDPR</li>
 <li>C. Natural keys cannot be indexed, so joins on them are always slow at scale</li>
 <li>D. It lets the fact table skip the date dimension and join on customer alone</li>
 </ul>
@@ -10018,7 +10018,7 @@ where rn = 1;
 
 <p><strong>11. Huda partitions the raw card table by hour and by merchant. Queries become slower, not faster. What happened?</strong></p>
 <ul>
-<li>A. Partitioning always slows queries, so lake tables should never be partitioned</li>
+<li>A. Partitioning always slows queries, so never partition lake tables</li>
 <li>B. Parquet files cannot be partitioned by more than one column at a time</li>
 <li>C. Too many small files; partition by date instead and compact them regularly</li>
 <li>D. The partitions must be stored as CSV so that engines can open them faster</li>
@@ -10054,7 +10054,7 @@ where rn = 1;
 
 <p><strong>14. The branch codes table has about 40 rows and changes a few times a year. Which load pattern fits?</strong></p>
 <ul>
-<li>A. Log-based CDC with Debezium, since it captures every change in commit order</li>
+<li>A. Log-based CDC with Debezium, since it captures every change in order</li>
 <li>B. An incremental load on <code>updated_at</code> with a 30-minute overlap window</li>
 <li>C. A streaming consumer with an idempotent sink keyed on branch code</li>
 <li>D. A full load on each run, replacing the previous copy and catching deletes</li>
@@ -10068,7 +10068,7 @@ where rn = 1;
 <ul>
 <li>A. Leave raw as received evidence and correct the currency code in staging</li>
 <li>B. Update raw, because every later layer will then inherit the correction</li>
-<li>C. Delete the bad rows from raw and re-extract the whole table from the source</li>
+<li>C. Delete the bad rows from raw and re-extract the table from the source</li>
 <li>D. Update raw, keeping a screenshot of the old values as evidence</li>
 </ul>
 <details><summary>Answer</summary>
@@ -10081,7 +10081,7 @@ where rn = 1;
 <li>A. Nothing, since maintainers test incremental modes against every source</li>
 <li>B. Writing every extractor by hand in Python instead of using connectors</li>
 <li>C. A test that it really catches updates and deletes from this source</li>
-<li>D. Full loads only, since connectors cannot do incremental sync</li>
+<li>D. Full loads only, since connectors cannot do any incremental sync at all</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10091,7 +10091,7 @@ where rn = 1;
 <p><strong>17. A dbt test fails inside an Airflow DAG. The task retries three times with a five-minute backoff, so the alert arrives twenty minutes late. What should change?</strong></p>
 <ul>
 <li>A. Retry only transient errors and fail fast when a data test fails</li>
-<li>B. Increase retries to five, so the test has more chances to pass</li>
+<li>B. Increase retries to five, so the test has more chances of passing in the end</li>
 <li>C. Remove the tests from the DAG so that failures stop delaying the run</li>
 <li>D. Lower the backoff to ten seconds so that the three retries finish sooner</li>
 </ul>
@@ -10104,8 +10104,8 @@ where rn = 1;
 <ul>
 <li>A. Turn off retries for the whole DAG so that nothing can ever run twice</li>
 <li>B. Record an idempotency key per report and date; skip it if one exists</li>
-<li>C. Put the email step inside the same database transaction as the load</li>
-<li>D. Ask finance to ignore the second email whenever two arrive in a day</li>
+<li>C. Put the email step inside the same database transaction as the load job itself</li>
+<li>D. Ask finance to ignore the second email whenever two arrive on the same day</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10114,8 +10114,8 @@ where rn = 1;
 
 <p><strong>19. Rebuilding <code>customer_360</code> in place takes 25 minutes, and dashboards opened during the rebuild show half-built numbers. What should Lina do?</strong></p>
 <ul>
-<li>A. Rebuild at night and just hope nobody opens a dashboard then</li>
-<li>B. Add more retries so the rebuild finishes in fewer minutes</li>
+<li>A. Rebuild it overnight and just hope that nobody opens a dashboard then</li>
+<li>B. Add more retries and a longer timeout so the rebuild finishes sooner</li>
 <li>C. Build a new table, test it, then swap it into place atomically</li>
 <li>D. Ask users to refresh twice whenever the numbers look odd to them</li>
 </ul>
@@ -10126,9 +10126,9 @@ where rn = 1;
 
 <p><strong>20. In Airflow, a daily run has the data interval for 14 September. When does it normally run, and for which data?</strong></p>
 <ul>
-<li>A. At 00:00 on 14 September, loading the data of 13 September</li>
+<li>A. At midnight on 14 September, loading all the data of 13 September</li>
 <li>B. Whenever triggered, loading whatever arrived since the previous run</li>
-<li>C. During 14 September, loading data up to the moment it starts</li>
+<li>C. During 14 September, loading data up to the moment the run starts</li>
 <li>D. After the interval ends, early on 15 September, for 14 September</li>
 </ul>
 <details><summary>Answer</summary>
@@ -10163,9 +10163,9 @@ where rn = 1;
 <p><strong>23. The Najm Mobile team wants app &quot;visits&quot;: a customer&#39;s events grouped together until 30 minutes pass with no activity. Which window fits?</strong></p>
 <ul>
 <li>A. Session windows that close after a 30-minute gap</li>
-<li>B. Tumbling windows, each a fixed 30 minutes long</li>
+<li>B. Tumbling windows, each of a fixed 30-minute length</li>
 <li>C. Sliding windows of 30 minutes, advancing every minute</li>
-<li>D. Processing-time windows sized to a typical visit</li>
+<li>D. Processing-time windows sized to a usual visit length</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10211,8 +10211,8 @@ where rn = 1;
 <p><strong>27. Each day a few hundred out of millions of Najm Mobile events arrive with a malformed <code>app_version</code>. They feed a product-usage dashboard. How should the quality check respond?</strong></p>
 <ul>
 <li>A. Fail the whole load every day until the mobile team fixes every event</li>
-<li>B. Ignore the bad rows silently, since a few hundred won&#39;t move totals</li>
-<li>C. Block publishing and page on-call for each single malformed event</li>
+<li>B. Ignore the bad rows silently, since a few hundred won&#39;t move the totals</li>
+<li>C. Block publishing and page on-call for each single malformed event received</li>
 <li>D. Quarantine bad rows, publish the rest and report the bad-row count</li>
 </ul>
 <details><summary>Answer</summary>
@@ -10259,9 +10259,9 @@ where rn = 1;
 <p><strong>31. Fifty tiles on the executive dashboard each aggregate the billion-row transactions fact by day and branch. The dashboard is slow and expensive. What should Lina do?</strong></p>
 <ul>
 <li>A. Give the BI tool a much larger warehouse so every tile loads faster</li>
-<li>B. Cache every tile for a month so the warehouse is rarely queried</li>
+<li>B. Cache every tile for a month so the warehouse is rarely queried at all</li>
 <li>C. Build an aggregate mart at day × branch and point the tiles at it</li>
-<li>D. Switch each tile to <code>select *</code> so the BI tool aggregates locally</li>
+<li>D. Switch each tile to <code>select *</code> so that the BI tool aggregates locally</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10355,7 +10355,7 @@ where rn = 1;
 <p><strong>39. The cards team halves the minimum detectable effect of a planned test from 2 points to 1 point. Roughly how does the required sample change?</strong></p>
 <ul>
 <li>A. About the same, since the baseline rate has not changed</li>
-<li>B. About double, because the effect is now half as large</li>
+<li>B. About double, since the effect is now only half as large</li>
 <li>C. About half, since a smaller effect is easier to measure</li>
 <li>D. About four times, since n grows with (1 ÷ MDE) squared</li>
 </ul>
@@ -10415,7 +10415,7 @@ where rn = 1;
 <p><strong>44. For Smart Alerts, the cost-minimising threshold produces about 4,000 alerts a day. Fraud operations can review about 1,500. What should Dana take to the business?</strong></p>
 <ul>
 <li>A. Options and costs: raise the threshold, add staff, or a second-stage rule</li>
-<li>B. The cost-minimising threshold anyway, since it is the mathematically optimal one</li>
+<li>B. The cost-minimising threshold, as the mathematically optimal one</li>
 <li>C. The default threshold of 0.5, which balances both kinds of error</li>
 <li>D. A switch to accuracy as the metric, so that fewer alerts are produced</li>
 </ul>
@@ -10438,9 +10438,9 @@ where rn = 1;
 
 <p><strong>46. A new scam makes transactions that used to look safe turn out to be fraud. The distribution of the model&#39;s inputs has barely changed. What kind of drift is this?</strong></p>
 <ul>
-<li>A. Data drift: the inputs have moved away from the training data</li>
+<li>A. Data drift: the inputs have moved far away from the training data</li>
 <li>B. An upstream data break caused by a schema change in the source feed</li>
-<li>C. Label drift only, which a threshold change will fully correct</li>
+<li>C. Label drift only, which a threshold change will fully correct for us</li>
 <li>D. Concept drift: the same inputs now lead to a different outcome</li>
 </ul>
 <details><summary>Answer</summary>
@@ -10452,7 +10452,7 @@ where rn = 1;
 <ul>
 <li>A. Delete their chunks and vectors too; derived vectors are personal data</li>
 <li>B. Leave the vectors; embeddings are only numbers, not personal data</li>
-<li>C. Re-embed the whole corpus with a new model so the old vectors disappear</li>
+<li>C. Re-embed the whole corpus with a new model so old vectors disappear</li>
 <li>D. Mark their chunks as not current so that they rank lower in search</li>
 </ul>
 <details><summary>Answer</summary>
@@ -10462,10 +10462,10 @@ where rn = 1;
 
 <p><strong>48. Fixed 500-character chunks split the loan-to-value table in the SME policy, so rows end up separated from their headers and answers mix up the limits. What should Huda change?</strong></p>
 <ul>
-<li>A. Increase the overlap between fixed-size chunks to 400 characters</li>
+<li>A. Increase the overlap between fixed-size chunks to 400 characters each</li>
 <li>B. Chunk by structure, keeping each table whole with its heading path</li>
 <li>C. Switch to a larger embedding model that can understand broken tables</li>
-<li>D. Strip all tables out of the policy documents before indexing</li>
+<li>D. Strip all the tables out of the policy documents before indexing them</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10477,7 +10477,7 @@ where rn = 1;
 <li>A. The right chunk is still found but ranked lower; check the re-ranker</li>
 <li>B. The right chunk has dropped out of the top five for most questions</li>
 <li>C. Nothing that affects users, because MRR never changes the answers</li>
-<li>D. The golden set is too small, so both numbers should be ignored entirely</li>
+<li>D. The golden set is too small, so both numbers should be ignored</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10537,7 +10537,7 @@ where rn = 1;
 <li>A. Partition by event date so that expiry simply drops old partitions</li>
 <li>B. Keep everything, since deleting history breaks reproducibility</li>
 <li>C. Run the <code>DELETE</code> once a year instead of monthly, to save compute</li>
-<li>D. Move expired rows into a sandbox schema rather than deleting them all</li>
+<li>D. Move expired rows to a sandbox schema instead of deleting them</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10582,9 +10582,9 @@ where rn = 1;
 
 <p><strong>58. In December, a regulator asks Najm to resend the June credit-risk extract exactly as filed. The mart&#39;s June rows have since been corrected by late repayments. What should Faisal send?</strong></p>
 <ul>
-<li>A. A re-run of June from today&#39;s mart, since it is now the most accurate</li>
+<li>A. A re-run of June from today&#39;s mart, as it is now the most accurate</li>
 <li>B. A rebuild of June from raw with today&#39;s code, sent as the original</li>
-<li>C. An explanation that June can no longer be reproduced after corrections</li>
+<li>C. An explanation that June cannot be reproduced after corrections</li>
 <li>D. The frozen, versioned June extract, with corrections as restatements</li>
 </ul>
 <details><summary>Answer</summary>
@@ -10595,9 +10595,9 @@ where rn = 1;
 <p><strong>59. A repayment arrives with a value date six days ago. The credit-risk mart has a three-day lookback window, and month-end is in two days. What should the team do?</strong></p>
 <ul>
 <li>A. Nothing; the next incremental run corrects it like any late repayment</li>
-<li>B. Ignore it, since a few days of DPD difference never changes risk figures</li>
+<li>B. Ignore it, since a few days of DPD never change risk figures</li>
 <li>C. Run a logged backfill for the affected days before the month-end freeze</li>
-<li>D. Widen the lookback permanently to the longest delay ever seen in the data</li>
+<li>D. Widen the lookback permanently to the longest delay ever seen</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10607,7 +10607,7 @@ where rn = 1;
 <p><strong>60. A candidate gets a 48-hour take-home: a small dataset and one business question. Which submission scores best on Najm&#39;s interview scorecard?</strong></p>
 <ul>
 <li>A. Tested models, a README with assumptions, and a reconciliation check</li>
-<li>B. A polished dashboard with many charts but no written explanation at all</li>
+<li>B. A polished dashboard with many charts but no written explanation</li>
 <li>C. A complex ML model with the highest accuracy on the given data</li>
 <li>D. A long list of every tool used, with no tests and no README</li>
 </ul>

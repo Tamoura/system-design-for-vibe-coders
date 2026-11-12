@@ -198,9 +198,9 @@ None of these needs the real API.
 **3. Najm Desk must label each new ticket with one of six categories and send it to the right queue. Which design fits best?**
 
 - A. A workflow: classify once, then route with plain code
-- B. A multi-agent team with a supervisor and three workers
+- B. A multi-agent team with a supervisor and three worker agents
 - C. An autonomous agent that decides its own tools and steps
-- D. A chatbot that asks the requester to pick a category
+- D. A chatbot that asks the requester to pick a category first
 
 <details><summary>Answer</summary>
 
@@ -930,8 +930,8 @@ The tests in `labkit/tests/test_m00_flawed_chat.py` prove each flaw against the 
 
 **3. Your `CLAUDE.md` says "run the tests after every edit", yet the agent sometimes skips them. What is the most reliable fix?**
 
-- A. Rewrite the rule in capital letters at the top
-- B. Repeat the same rule at the end of the file too
+- A. Rewrite the rule in capitals at the top
+- B. Repeat the rule at the end of the file too
 - C. Switch to a larger model for every session
 - D. Add a hook that runs the tests after each edit
 
@@ -957,9 +957,9 @@ The tests in `labkit/tests/test_m00_flawed_chat.py` prove each flaw against the 
 **5. Hind asks how you know Najm Desk answers policy questions correctly. You say Claude Code wrote tests and they pass. What is missing?**
 
 - A. Nothing, since passing tests prove the answers are correct
-- B. A longer `CLAUDE.md` with many more rules in it
+- B. A longer `CLAUDE.md` with many more rules in it for the agent
 - C. A real-model eval on a golden set of questions
-- D. A second Claude Code review of the same passing tests
+- D. A second Claude Code review of the same passing tests before every merge
 
 <details><summary>Answer</summary>
 

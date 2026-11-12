@@ -234,7 +234,7 @@ Total minutes: 0
 **1. تضيف خطتك (Your plan) الممر (the corridor) `QAR-BDT` قبل الجدول `STD-C`، فيصير اختبار قديم أحمر (an old test goes red). ماذا يخبرك ذلك؟ ⁦(What does that tell you?)⁩**
 
 - A. الاختبار القديم غير مستقر (The old test is flaky)، فأعد تشغيله (so rerun it)
-- B. يجب إضافة الممرات بالترتيب الأبجدي (Corridors must be added in alphabetical order)
+- B. يجب إضافة الممرات بالترتيب الأبجدي (Corridors must be added in alphabetical order) في الملف (in the file)
 - C. الممر يسمّي جدولًا غير موجود بعد (The corridor names a schedule that does not exist yet)
 - D. عدّل الوكيل اختبارًا قديمًا أيضًا (The agent also edited an old test)
 
@@ -246,7 +246,7 @@ Total minutes: 0
 
 **2. تحسب اختبارات الوكيل (The agent's STD-C tests) لـ`STD-C` كل رسم متوقع (each expected fee) باستدعاء `quote_fee`، ثم تؤكد (assert) أن `quote_fee` يُرجعه. وتنجح كلها. ماذا يبيّن ذلك؟ ⁦(What does that show?)⁩**
 
-- A. الرسوم تطابق التذكرة، لأن الاختبار والشيفرة متفقان (The fees match the ticket, because test and code agree)
+- A. الرسوم تطابق التذكرة، لأن الاختبار والشيفرة متفقان (The fees match the ticket, because test and code agree) تمامًا (fully)
 - B. لا شيء عن الرسوم، لأن تلك الاختبارات لا يمكن أن تفشل (Nothing about the fees, because those tests cannot fail)
 - C. الجدول مُختبَر جيدًا، لأن كل شريحة مغطاة (The schedule is well tested, because every tier is covered)
 - D. مشكلة أسلوب فقط، لأن الاختبارات متكررة (Only a style problem, because the tests are repetitive)
@@ -285,7 +285,7 @@ Total minutes: 0
 
 **5. تجتاز لجين كل فحص مطلوب، لكنها في العرض التوضيحي (at the demo) لا تستطيع أن تقول لندى لماذا يسري السقف (the cap bites) عند 10,000.00 لا عند 7,000.00. ماذا يبيّن هذا؟ ⁦(What does this show?)⁩**
 
-- A. المُقيِّم معطوب، فالنجاح ينبغي أن يعني الفهم (The grader is broken, since a pass should mean understanding)
+- A. المُقيِّم معطوب، فالنجاح ينبغي أن يعني الفهم (The grader is broken, since a pass should mean understanding) قبل الدمج (before the merge)
 - B. سؤال ندى غير منصف، فالاختبارات تثبت السقف (Nada's question was unfair, since the tests prove the cap)
 - C. المُقيِّم لا يرى الفهم؛ وأنت من يُسأل عن كل سطر (The grader cannot see understanding; you answer for every line)
 - D. احتاجت لجين إلى شرح أطول من الوكيل (Lujain needed a longer explanation from the agent)
@@ -403,7 +403,7 @@ Retake on:               (not before two weeks; aim to beat my own tag score, no
 - A. bisect محق (Bisect is right)، فلا بد أن إيداع سلسلة التوثيق قد كسر شيئًا بطريقة غير مباشرة (must have broken something indirectly)؛ وعليها أن تدرس فروقاته بعناية (study its diff closely).
 - B. لم يكن ملف الاختبار موجودًا في الإيداعات الأقدم (did not exist at older commits)، فأخفق كل تشغيل؛ وينبغي أن يبقى غير متتبَّع (untracked) وأن يُجرَّب أولًا على الطرفين (tried on both ends first).
 - C. إيداع يقتصر على سلسلة التوثيق لا يمكن أن يغيّر السلوك (cannot change behaviour)، فإن bisect غير موثوق هنا (unreliable)، وعليها أن تراجع `git log -p` يدويًا (by hand) بدلًا من ذلك.
-- D. اختير الإيداع السليم خطأً (the good commit was chosen wrongly)، فعليها أن تحدد إيداعًا أقدم على أنه سليم (mark an older commit as good) وأن تبدأ bisect كله من جديد (start the whole bisect again).
+- D. اختير الإيداع السليم خطأً (the good commit was chosen wrongly)، فعليها أن تحدد إيداعًا أقدم على أنه سليم (mark an older commit as good) وأن تبدأ bisect من جديد (start again).
 
 <details><summary>الإجابة</summary>
 
@@ -480,7 +480,7 @@ Retake on:               (not before two weeks; aim to beat my own tag score, no
 
 - A. أُرسل اليوم مسبقًا 1,800.00 ريال قطري (already sent today 1,800.00 QAR)، وتحويل جديد 50.00 ريال قطري (new transfer 50.00 QAR)، والمتوقع تنبيه (a warning expected).
 - B. أُرسل اليوم مسبقًا 1,700.00 ريال قطري (already sent today 1,700.00 QAR)، وتحويل جديد 100.00 ريال قطري (new transfer 100.00 QAR)، والمتوقع تنبيه (a warning expected).
-- C. أُرسل اليوم مسبقًا 1,000.00 ريال قطري (already sent today 1,000.00 QAR)، وتحويل جديد 100.00 ريال قطري (new transfer 100.00 QAR)، والمتوقع عدم وجود تنبيه (no warning expected).
+- C. أُرسل اليوم مسبقًا 1,000.00 ريال قطري (already sent today 1,000.00 QAR)، وتحويل جديد 100.00 ريال قطري (new transfer 100.00 QAR)، والمتوقع عدم التنبيه (no warning).
 - D. لم يُرسل شيء اليوم بعد (nothing sent today yet)، وتحويل جديد 500.00 ريال قطري (new transfer 500.00 QAR)، والمتوقع عدم وجود تنبيه (no warning expected).
 
 <details><summary>الإجابة</summary>
@@ -519,7 +519,7 @@ Retake on:               (not before two weeks; aim to beat my own tag score, no
 
 - A. يوافق (approves)، لأن CI نصّب الحزمة والاختبارات تنجح (installed the package and the tests pass)، فهي إذن موجودة وتعمل (evidently exists and works).
 - B. يطلب تغييرات (requests changes): أسقط الحزمة (drop the package) واستخدم التقريب الذي توفره `remit.money` أصلًا (the rounding that remit.money already provides).
-- C. يطلب تغييرات (requests changes): انسخ شيفرة الحزمة المصدرية إلى المستودع (copy the package's source into the repository)، كي لا يجلبها CI مرة أخرى (never fetches it again).
+- C. يطلب تغييرات (requests changes): انسخ شيفرة الحزمة المصدرية إلى المستودع (copy the package's source into the repository).
 - D. يوافق (approves) متى ثُبِّت الإصدار في المتطلبات (the version is pinned)، كي يبقى البناء قابلًا للتكرار (the build stays reproducible).
 
 <details><summary>الإجابة</summary>
@@ -650,7 +650,7 @@ Retake on:               (not before two weeks; aim to beat my own tag score, no
 - A. تشغيل `git reflog` وإيجاد الإيداع المفقود (the lost commit) وإنشاء فرع (branch) يشير إليه (points at it)
 - B. إعادة ضبط الفرع (reset the branch) إلى `origin/main` وإعادة العمل، لأن الإيداعات غير المدفوعة (unpushed commits) ضاعت (are gone)
 - C. طلب إعادة كتابة الإيداعين (the two commits) من الوكيل (agent) مما يتذكره من الجلسة (remembers of the session)
-- D. استخدام `/rewind`، لأن نقطة الاستعادة (checkpoint) تتراجع عن كل ما فعله الوكيل في الصدفة (in the shell)
+- D. استخدام `/rewind`، لأن نقطة الاستعادة (checkpoint) تتراجع عن كل ما فعله الوكيل في الصدفة (in the shell) وفي الملفات (and in the files)
 
 <details><summary>الإجابة</summary>
 
@@ -1157,7 +1157,7 @@ Retake on:               (not before two weeks; aim to beat my own tag score, no
 - A. التقاط `ValueError` والسماح بالأمر (allow the command)، لأن رسالة الإيداع (a commit message) لا يمكن أن تكون خطرة (dangerous)
 - B. قراءة الأسطر المحيطة بالـ heredoc ومعاملة متنه نصًّا (treat its body as text)، مع الاستمرار في حجب ما يعجز عن تحليله (keep blocking what it cannot parse)
 - C. السماح بكل أمر يبدأ بـ `git commit` (every command that begins with git commit)، حتى لا تُحجب الإيداعات (commits) أبدًا بعد اليوم (never blocked again)
-- D. إبقاء الخطاف كما هو (keep the hook as it is) وطلب كتابة رسائل الإيداع من المهندسين (ask engineers to write commit messages) بـ `-m` بدلًا من ذلك (instead)
+- D. إبقاء الخطاف كما هو (keep the hook as it is) وطلب كتابة رسائل الإيداع من المهندسين (ask engineers to write commit messages) بـ `-m`
 
 <details><summary>الإجابة</summary>
 
@@ -1167,7 +1167,7 @@ Retake on:               (not before two weeks; aim to beat my own tag score, no
 
 **60. تريد ندى أن يعرف وكيل (agent) كل مهندس اصطلاحات الاختبار (test conventions) في `tests/conftest.py`، وهي ساعة ثابتة (fixed clock) ومعرّفات متسلسلة (sequential ids)، لكن فقط أثناء عمله على الاختبارات، حتى لا تدفع جلسات `src/` كلفتها (do not pay for them). أي إعداد يناسب؟ ⁦(Which setup fits?)⁩**
 
-- A. سطر في `CLAUDE.md` الجذر (root)، موسوم بـ `IMPORTANT` ليطبّقه الوكيل (so that the agent applies it)
+- A. سطر في `CLAUDE.md` الجذر (root)، موسوم بـ `IMPORTANT` ليطبّقه الوكيل (so that the agent applies it) في كل جلسة (in every session)
 - B. ملف قواعد (a rules file) تحت `.claude/rules/` تطابق ترويسته (frontmatter) `paths:` المسار `tests/**`
 - C. استيراد `@tests/conftest.py` في `CLAUDE.md` الجذر (the root CLAUDE.md)، فيكون الملف في المتناول دائمًا (always at hand)
 - D. سطر في `CLAUDE.local.md` على كل جهاز (on each machine)، لا يُحمَّل إلا حين تُفتح الاختبارات (loads only when tests are open)

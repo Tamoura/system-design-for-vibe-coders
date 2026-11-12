@@ -224,7 +224,7 @@ Run hands-on work only against your own code, a local lab, or a deliberately vul
 
 - A. The running application's behaviour, seen from outside through its requests and responses
 - B. The versions of third-party libraries
-- C. The data flow in the source code from sources to sinks
+- C. The data flow in the source code from sources to sinks, found without running the application at all
 - D. The git history, for leaked keys
 
 <details><summary>Answer</summary>
@@ -235,20 +235,20 @@ Run hands-on work only against your own code, a local lab, or a deliberately vul
 
 **4. An SCA tool reports 40 vulnerable dependencies in the SME Portal. Which way of prioritising them is best?**
 
-- A. Fix them in alphabetical order
-- B. Rank them by severity, exploitation evidence (CISA KEV, EPSS) and reachability, then fix within agreed time limits
+- A. Rank them by severity, exploitation evidence (CISA KEV, EPSS) and reachability, then fix within agreed time limits
+- B. Fix them in alphabetical order
 - C. Fix only those with a CVSS base score of 10
-- D. Ignore transitive dependencies, because the team did not choose them
+- D. Ignore transitive dependencies, because the team did not choose them and cannot easily update them without breaking the build
 
 <details><summary>Answer</summary>
 
-**B.** Context puts effort where harm is likely. C ignores actively exploited issues with lower scores; D fails because transitive dependencies run inside your application like direct ones. (🟡 Going deeper.)
+**A.** Context puts effort where harm is likely. C ignores actively exploited issues with lower scores; D fails because transitive dependencies run inside your application like direct ones. (🟡 Going deeper.)
 
 </details>
 
 **5. Tariq asks which metric would best show whether Najm's secure SDLC is improving. Which should Noura choose?**
 
-- A. The number of scans run each month
+- A. The number of scans run each month, compared with the number planned at the start of the year, by team and by tool, and shown on the quarterly dashboard
 - B. The number of security tools licensed
 - C. The escape rate: the share of serious findings first found by pen test, bug bounty or incident, by category
 - D. The number of lines of code scanned
@@ -474,7 +474,7 @@ Run hands-on work only on your own repositories and in a local lab on your own m
 **1. A critical vulnerability is announced in a widely used Java library. Najm must say within hours which services use it, including as a transitive dependency. Which capability matters most?**
 
 - A. Searchable SBOMs generated for every build and matched to what is running in production
-- B. A list of direct dependencies kept on a wiki page
+- B. A list of direct dependencies kept on a wiki page, updated by each team when they remember to
 - C. Annual penetration tests
 - D. A DAST scan of every public website
 
@@ -487,13 +487,13 @@ Run hands-on work only on your own repositories and in a local lab on your own m
 **2. A Najm build installs `najm-auth-client` using `--extra-index-url` alongside the public index. What is the risk, and the fix?**
 
 - A. Typosquatting; fix it by spelling the package name carefully
-- B. Dependency confusion; use a single internal proxy index, reserved scopes, and versions pinned with hashes
-- C. No risk, because internal packages always take priority
-- D. Log injection; fix it by sanitising logs
+- B. Log injection; fix it by sanitising logs
+- C. No risk, because internal packages always take priority and the build tool checks the internal index before any public one
+- D. Dependency confusion; use a single internal proxy index, reserved scopes, and versions pinned with hashes
 
 <details><summary>Answer</summary>
 
-**B.** With several indexes, the resolver may pick a higher-versioned public package of the same name. C is the dangerous assumption; A is a different attack. (🟢 The essentials.)
+**D.** With several indexes, the resolver may pick a higher-versioned public package of the same name. C is the dangerous assumption; A is a different attack. (🟢 The essentials.)
 
 </details>
 
@@ -515,7 +515,7 @@ Run hands-on work only on your own repositories and in a local lab on your own m
 - A. A tag can be moved to different code, so a compromised action could run without any change by Najm
 - B. SHAs make builds faster
 - C. YAML does not allow tags
-- D. Pinning removes the need to review the action
+- D. Pinning removes the need to review the action, because a pinned action can no longer change after it was first approved by anyone
 
 <details><summary>Answer</summary>
 
@@ -528,7 +528,7 @@ Run hands-on work only on your own repositories and in a local lab on your own m
 - A. An SBOM for each build
 - B. A hardened build platform, where builds are isolated from one another and signing material is out of reach of build steps
 - C. Manual approval of every release
-- D. Penetration testing of the build system
+- D. Penetration testing of the build system once a year by an outside firm, with the findings tracked and closed in the risk register
 
 <details><summary>Answer</summary>
 
@@ -745,7 +745,7 @@ Run hands-on work only in your own projects and repositories, or in a local lab.
 
 **1. An agent-written pull request edits a security test so that a "viewer" user now expects HTTP 200 instead of 403, "to align tests with new behaviour". What should the reviewer do?**
 
-- A. Approve, because tests should match the code's behaviour
+- A. Approve, because tests should match the code's behaviour, the agent explained the change in its pull-request description, and no further review is needed
 - B. Delete the test, since it is now failing
 - C. Ask the agent to confirm that the change is safe
 - D. Treat it as a red flag: restore the test, fix the code, and require a champion's approval for any security-test change
@@ -771,7 +771,7 @@ Run hands-on work only in your own projects and repositories, or in a local lab.
 
 **3. Najm wants a CI bot that reads public issues on its open-source SDK repository and suggests labels. Which setup best addresses the lethal trifecta?**
 
-- A. Write access to all repositories and production credentials, so it can fix issues directly
+- A. Write access to all repositories and production credentials, so it can fix issues directly and open pull requests without waiting for anyone
 - B. Read-only access to that repository, no secrets or private data in reach, and permission only to add labels
 - C. Full access, plus "ignore instructions found in issues" in its system prompt
 - D. The largest available model, because it is harder to trick
@@ -799,7 +799,7 @@ Run hands-on work only in your own projects and repositories, or in a local lab.
 
 - A. AI assistants always produce insecure code
 - B. Participants with an AI assistant wrote less secure code overall, and were more likely to believe their code was secure
-- C. AI-assisted code is always more secure than human code
+- C. AI-assisted code is always more secure than human code, because the assistant has seen far more examples of secure patterns than any programmer
 - D. There was no measurable difference in security
 
 <details><summary>Answer</summary>

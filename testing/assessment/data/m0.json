@@ -11,15 +11,15 @@
    },
    "o": {
     "en": [
-     "Running `fee()` once on that amount and pasting what it returns",
+     "Running `fee()` once on that amount and pasting the result",
      "Working it out by hand from the published fee rule, before any run",
-     "Reusing the code's own arithmetic inside the test so the two agree",
-     "Asking the coding agent that wrote `fee()` for the expected number"
+     "Reusing the code's own arithmetic in the test so both agree",
+     "Asking the coding agent that wrote `fee()` for the number"
     ],
     "ar": [
-     "تشغيل `fee()` مرة واحدة على هذا المبلغ ولصق القيمة المعادة (the returned value) في الاختبار (the test)",
+     "تشغيل `fee()` مرة واحدة ولصق ما تعيده (what it returns) في الاختبار (the test)",
      "حسابها يدويًا (working it out by hand) من قاعدة الرسوم المنشورة (published fee rule) قبل أي تشغيل",
-     "إعادة استخدام حساب الشيفرة نفسه (the code's own arithmetic) داخل الاختبار ليتفق الاثنان (so the two agree)",
+     "إعادة استخدام حساب الشيفرة نفسه (the code's own arithmetic) في الاختبار ليتفق الاثنان",
      "سؤال وكيل البرمجة (coding agent) الذي كتب `fee()` عن الرقم المتوقع (the expected number)"
     ]
    },
@@ -41,11 +41,11 @@
     "en": [
      "A second engineer's review of every changed line of code before the merge",
      "More unit tests of the new fee and limit rules, run on every single commit",
-     "A load test of the new version in the staging environment at salary-day volumes",
+     "A load test of the new version in staging at salary-day volumes",
      "Release verification that every server runs one version, with staged rollout"
     ],
     "ar": [
-     "مراجعة مهندس ثانٍ (a second engineer's review) لكل سطر تغيّر في الشيفرة (every changed line)، قبل الدمج (before the merge)",
+     "مراجعة مهندس ثانٍ (a second engineer's review) لكل سطر تغيّر في الشيفرة قبل الدمج",
      "المزيد من اختبارات الوحدة (unit tests) لقواعد الرسوم والحدود الجديدة، تُشغَّل مع كل بناء (every build)",
      "اختبار حِمل (load test) للإصدار الجديد في بيئة التجهيز (staging)، بأحجام يوم الراتب (salary-day volumes)",
      "التحقق من الإصدار (release verification) بأن كل الخوادم تشغّل نسخة واحدة، مع إطلاق مرحلي (staged rollout)"
@@ -95,13 +95,13 @@
    },
    "o": {
     "en": [
-     "Add a unit test of `value_date()` at 16:30, since every escape gets a test",
-     "Ask whoever changed the setting to take more care with settings in future",
+     "Add a unit test of `value_date()` at 16:30 for this escape, since every escaped defect gets a test",
+     "Ask whoever changed the setting to take more care with deployment settings in future",
      "Validate the zone as the service starts, and alert if it is not Qatar time",
-     "Note the fix on the escaped-defect card, since the code itself was right"
+     "Note the fix on the escaped-defect card and close it, since the code itself was right"
     ],
     "ar": [
-     "إضافة اختبار وحدة (unit test) لـ `value_date()` عند 16:30، لأن كل تسرّب يحصل على اختبار (every escape gets a test)",
+     "إضافة اختبار وحدة (unit test) لـ `value_date()` عند 16:30، لأن كل تسرّب يحصل على اختبار",
      "مطالبة من غيّر الإعداد بمزيد من العناية (take more care) بالإعدادات (settings) في الإصدارات القادمة",
      "التحقق من المنطقة الزمنية (validate the zone) عند بدء التشغيل، والتنبيه (alert) إن لم تكن بتوقيت قطر (Qatar time)",
      "تدوين الإصلاح في بطاقة العيب المتسرّب (escaped-defect card) لأن الشيفرة نفسها كانت صحيحة (the code was right)"

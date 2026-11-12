@@ -40,8 +40,8 @@
    "o": {
     "en": [
      "Keep transfer state on the server; confirm only if verified, unexpired, same customer and device",
-     "Change the app so that it cannot call confirm until the OTP screen has reported a successful check",
-     "Move the confirm step to a new, undocumented path so that scripts outside the app cannot find it",
+     "Change the app so it cannot call confirm until the OTP screen has reported a successful check",
+     "Move the confirm step to a new, undocumented path so scripts outside the app cannot find it",
      "Add a per-customer rate limit on confirm so that skipping the OTP step cannot be done at scale"
     ],
     "ar": [

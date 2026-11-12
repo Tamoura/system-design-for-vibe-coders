@@ -251,7 +251,7 @@ The artefact is **Najm Desk prompt v1**: `prompts/najm_desk_v1.txt` plus the che
 - A. Translate Arabic questions into English before the call
 - B. Raise `effort` so the model reasons about the user's language
 - C. Add a language rule, then test it on Arabic cases
-- D. Add one Arabic example and leave the instructions alone
+- D. Add one Arabic example only and leave the instructions alone
 
 <details><summary>Answer</summary>
 
@@ -274,9 +274,9 @@ The artefact is **Najm Desk prompt v1**: `prompts/najm_desk_v1.txt` plus the che
 
 **3. Lujain's classifier prompt has six `security` examples and two `other` examples, and unrelated tickets now come back as `security`. What is the likeliest cause?**
 
-- A. Examples after the instructions count less than the rules
+- A. Examples after the instructions count less than rules
 - B. Eight examples are too few to teach the labels
-- C. The first listed label wins whenever the model is unsure
+- C. The first listed label wins when the model is unsure
 - D. The skewed examples push it towards the most-shown label
 
 <details><summary>Answer</summary>
@@ -631,7 +631,7 @@ Plan first; wait for my approval before writing.
 
 **1. A prompt scores 100% on the 20 dev tickets it was tuned on. What should you do first?**
 
-- A. Re-run dev three times to confirm the 100% is stable
+- A. Re-run dev three times to confirm 100% is stable
 - B. Run the held-out set and compare it with dev scores
 - C. Raise the gate threshold to 100% to lock it in
 - D. Switch to a cheaper model and compare the scores

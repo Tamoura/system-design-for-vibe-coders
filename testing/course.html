@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="testing-source" content="947324f57d26e4b3">
+<meta name="testing-source" content="1ebe31977b78af87">
 <meta name="description" content="Software Testing: Zero to Hero in the AI Era — a free, bilingual course: test design, unit, integration, API and end-to-end testing, performance, security, reliability and data testing, CI/CD, exploratory testing and BDD, verifying AI-generated code, AI testing assistants, and testing LLM apps, RAG and agents, with a quiz in every lesson and a 60-question practice exam.">
 <title>Software Testing: Zero to Hero in the AI Era — Complete Course</title>
 <style>
@@ -830,7 +830,7 @@ def test_silence_is_admitted():
 <li>A. Compare the full answer text with a stored string, word for word</li>
 <li>B. Assert the key fact appears and the limits document is cited</li>
 <li>C. Run it once and save the output as a snapshot to compare later</li>
-<li>D. Assert only that the answer is not empty, whatever it says</li>
+<li>D. Assert only that the answer is not empty, whatever the model says</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -1581,7 +1581,7 @@ def test_international_fee_rounds_half_a_cent_up():
 <section class="sec sec-quiz"><h2>✍️ Check yourself</h2>
 <p><strong>1. Nada switches on <code>float_fee</code> and the starter suite still shows 24 passed. What does this tell her?</strong></p>
 <ul>
-<li>A. The fee code is correct, because the suite is green</li>
+<li>A. The fee code is fine: the suite is green</li>
 <li>B. The suite has no test that can see this bug</li>
 <li>C. The bug switch does not work</li>
 <li>D. The suite needs more tests of every kind</li>
@@ -1618,8 +1618,8 @@ def test_international_fee_rounds_half_a_cent_up():
 <p><strong>4. An assistant gives Nada a test that passes on the clean sample. What must she do before she submits it?</strong></p>
 <ul>
 <li>A. Show it failing when a relevant bug is on, and explain it</li>
-<li>B. Run it twice more to confirm that it passes every time</li>
-<li>C. Ask the assistant to confirm that the test is correct</li>
+<li>B. Run it twice more to confirm that it passes every single time</li>
+<li>C. Ask the assistant to confirm that the test is correct and complete</li>
 <li>D. Check that it raises the coverage percentage of the module it targets</li>
 </ul>
 <details><summary>Answer</summary>
@@ -2011,7 +2011,7 @@ for seed in range(1, 5):
 <li>A. The expected values came from the code, a circular oracle</li>
 <li>B. Passing so quickly means the tests were not run properly</li>
 <li>C. A type checker would certainly have rejected the code</li>
-<li>D. Parametrised tests are always weaker than separate test functions</li>
+<li>D. Parametrised tests are weaker than separate functions</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -2478,7 +2478,7 @@ def test_odd_recipient_text_is_a_clean_422_never_a_500(client, recipient):
 <p><strong>3. A teammate&#39;s tests for the transfer lifecycle check only accepted, then processing, then settled. Which gap is most dangerous for a payments service?</strong></p>
 <ul>
 <li>A. They never try a refused move, such as reversing twice</li>
-<li>B. They use parametrised tests rather than separate functions</li>
+<li>B. They use parametrised tests, not separate functions</li>
 <li>C. They do not time how long each transition takes</li>
 <li>D. They do not check what a settled transfer displays</li>
 </ul>
@@ -2826,9 +2826,9 @@ Severity:   S1 to S4, proposed by the tester
 <p><strong>3. Tariq&#39;s squad closed &quot;Transfers broken??&quot; as &quot;cannot reproduce&quot;. Which single change to the report would help most?</strong></p>
 <ul>
 <li>A. Give the exact amount, the expected and actual fees, and a repro command</li>
-<li>B. Attach a screenshot of the app&#39;s home screen and the device settings page</li>
-<li>C. Raise it to S1 so the squad treats it as urgent straight away</li>
-<li>D. Copy the whole department into the ticket so many more people see it</li>
+<li>B. Attach a screenshot of the app&#39;s home screen and the device&#39;s settings page</li>
+<li>C. Raise it to S1 so the squad treats it as urgent and drops everything else now</li>
+<li>D. Copy the whole department into the ticket so that many more people will see it, unasked</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -3377,10 +3377,10 @@ it(&quot;rejects fractions and negatives instead of guessing&quot;, () =&gt; {
 
 <p><strong>5. A test reads <code>svc._sent_today</code>. After a harmless rename, nine tests fail. Which smell?</strong></p>
 <ul>
-<li>A. An assertion-free test</li>
-<li>B. Shared mutable state across many tests</li>
+<li>A. An assertion-free test that runs the code but checks nothing</li>
+<li>B. Shared mutable state across many tests in one file</li>
 <li>C. Testing private details of the class</li>
-<li>D. Logic inside the test body</li>
+<li>D. Logic inside the test body, such as loops and branches</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -3927,9 +3927,9 @@ def test_the_in_memory_service_survives_a_double_submit(monkeypatch):
 <p><strong>1. Repository tests pass on in-memory SQLite, yet money columns misbehave on the PostgreSQL staging database. Most likely cause?</strong></p>
 <ul>
 <li>A. SQLite is slower than PostgreSQL on large tables of money</li>
-<li>B. SQLite cannot run inside a database transaction at all</li>
+<li>B. SQLite cannot run inside a database transaction at all, even for tests</li>
 <li>C. SQLite&#39;s loose typing hid a type or precision mismatch</li>
-<li>D. PostgreSQL ignores <code>CHECK</code> constraints by default</li>
+<li>D. PostgreSQL ignores <code>CHECK</code> constraints by default, so they never fire</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -3964,8 +3964,8 @@ def test_the_in_memory_service_survives_a_double_submit(monkeypatch):
 <ul>
 <li>A. Keep rollback and run the tests in a fixed order</li>
 <li>B. Delete or truncate the tables after each test</li>
-<li>C. Share one set of rows between all the tests</li>
-<li>D. Switch every test to a mocked connection</li>
+<li>C. Share one set of rows between all the tests that touch the table</li>
+<li>D. Switch every test to a mocked connection to the database</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -3974,8 +3974,8 @@ def test_the_in_memory_service_survives_a_double_submit(monkeypatch):
 
 <p><strong>5. A forced-interleaving test shows two transfers created from one idempotency key. Right response?</strong></p>
 <ul>
-<li>A. Add a client-side retry with a longer delay</li>
-<li>B. Reduce the thread count in the test</li>
+<li>A. Add a client-side retry with a longer delay between attempts</li>
+<li>B. Reduce the thread count in the test so it hits less often</li>
 <li>C. Make claiming the key atomic, and keep the test</li>
 <li>D. Delete the test, since real traffic is rarely that concurrent</li>
 </ul>
@@ -4493,8 +4493,8 @@ PASSED test_rr.py::test_fails_on_the_first_attempt_only
 <ul>
 <li>A. The function is now properly protected against boundary bugs</li>
 <li>B. Every line ran, but nothing shows behaviour was checked</li>
-<li>C. The tests are slow and should be removed</li>
-<li>D. Branch coverage is 100% too, so the suite is strong</li>
+<li>C. The tests are slow and should be removed to speed up the build</li>
+<li>D. Branch coverage is 100% too, so the suite is strong enough</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -4506,7 +4506,7 @@ PASSED test_rr.py::test_fails_on_the_first_attempt_only
 <li>A. mutmut has a bug here, so the mutant should be ignored</li>
 <li>B. The mutant is equivalent, so no test could ever detect it</li>
 <li>C. No test hits the limit exactly, so a boundary test is missing</li>
-<li>D. The function is already correct for totals at exactly the limit</li>
+<li>D. The function is already right for totals at the limit</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -4516,8 +4516,8 @@ PASSED test_rr.py::test_fails_on_the_first_attempt_only
 <p><strong>3. A Hypothesis oracle test on <code>fee</code> passes 100 two-decimal examples under <code>float_fee</code>. What is the best next step?</strong></p>
 <ul>
 <li>A. Conclude the float bug is harmless for two-decimal amounts</li>
-<li>B. Delete the property, since examples already cover it</li>
-<li>C. Run it once more and accept a second green result</li>
+<li>B. Delete the property, since the examples already cover it fully</li>
+<li>C. Run it once more and accept a second green result as proof</li>
 <li>D. Aim the generator at whole amounts, where ties occur</li>
 </ul>
 <details><summary>Answer</summary>
@@ -4540,8 +4540,8 @@ PASSED test_rr.py::test_fails_on_the_first_attempt_only
 <p><strong>5. A test fails about one run in three; the pipeline retries failures twice and shows &quot;passed&quot;. What is the right policy?</strong></p>
 <ul>
 <li>A. Keep the retries, since a green pipeline means there is no real problem</li>
-<li>B. Delete the test, because flaky tests have no value</li>
-<li>C. Raise the retry count until it never fails</li>
+<li>B. Delete the test, because flaky tests have no value at all to the team</li>
+<li>C. Raise the retry count until the test never fails in any pipeline run</li>
 <li>D. Report the retries and quarantine the test with an owner and deadline</li>
 </ul>
 <details><summary>Answer</summary>
@@ -6019,7 +6019,7 @@ print(f&quot;{len(every)} combinations, {len(chosen)} pairwise cases&quot;)
 <ul>
 <li>A. The retry reuses the same idempotency key</li>
 <li>B. The retry button has an accessible name</li>
-<li>C. The app restarts quickly and cleanly after a crash</li>
+<li>C. The app restarts cleanly after a crash</li>
 <li>D. The retry works in dark mode</li>
 </ul>
 <details><summary>Answer</summary>
@@ -6452,7 +6452,7 @@ E       assert 51 == 6
 <li>A. A fair picture, because every request that was sent is recorded</li>
 <li>B. A few slow samples, and none for requests never sent</li>
 <li>C. Thousands of failed requests that push the p99 sky-high</li>
-<li>D. Nothing, because it aborts on the first slow reply</li>
+<li>D. Nothing, because it aborts on the first slow reply it gets</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -6473,7 +6473,7 @@ E       assert 51 == 6
 
 <p><strong>4. A statements endpoint is fast in QA but slow in production, where customers have thousands of transfers. It runs one query per row. Which test catches this?</strong></p>
 <ul>
-<li>A. A timing test that fails if the endpoint takes over a second in QA</li>
+<li>A. A timing test that fails if the endpoint exceeds a second</li>
 <li>B. A unit test that checks the returned rows</li>
 <li>C. A test that the query count stays flat as page size grows</li>
 <li>D. A smoke test that sends one request and expects a 200</li>
@@ -6916,9 +6916,9 @@ Ran 1 rule on 1 file: 1 finding.
 <p><strong>3. Semgrep flags 40 findings in a legacy repository, 2 of them new SQL-injection patterns in this pull request. What is the sensible policy?</strong></p>
 <ul>
 <li>A. Block on the new high-confidence findings; ticket the rest</li>
-<li>B. Block every merge until all 40 are fixed</li>
-<li>C. Disable the rule, since legacy findings make it noisy</li>
-<li>D. Merge now and let the nightly DAST scan catch real problems</li>
+<li>B. Block every merge until all 40 findings are fixed, new or old</li>
+<li>C. Disable the rule, since legacy findings make it too noisy to read</li>
+<li>D. Merge now and let the nightly DAST scan catch the real problems</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -6939,10 +6939,10 @@ Ran 1 rule on 1 file: 1 finding.
 
 <p><strong>5. A colleague suggests a full ZAP active scan of another squad&#39;s staging environment on Friday evening, &quot;because it is only staging&quot;. What must happen first?</strong></p>
 <ul>
-<li>A. Run it at lower intensity so nobody notices</li>
+<li>A. Run it at lower intensity so that nobody notices the scan</li>
 <li>B. Get written permission, and agree the scope and window</li>
 <li>C. Run it from a personal laptop so the traffic is not traced to QE</li>
-<li>D. Tell the squad by chat once the scan has started</li>
+<li>D. Tell the squad by chat once the scan has already started</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -7434,8 +7434,8 @@ def test_each_check_can_fail(name):                # a check that cannot fail pr
 
 <p><strong>3. The nightly backup job reports success and the file is 4 MB. What proves the backup is usable?</strong></p>
 <ul>
-<li>A. The file size matches yesterday&#39;s backup</li>
-<li>B. The backup job exits with code zero</li>
+<li>A. The file size matches the size of yesterday&#39;s backup</li>
+<li>B. The backup job exits with code zero and no error log</li>
 <li>C. The storage provider confirms the upload finished</li>
 <li>D. A clean restore whose totals match the source</li>
 </ul>
@@ -7803,9 +7803,9 @@ def requirement(request, record_property):
 
 <p><strong>2. Release 2026.09 has 90% line coverage and passes its gate, yet duplicate transfers reach customers. What is the best reading?</strong></p>
 <ul>
-<li>A. The coverage tool is broken and needs replacing</li>
+<li>A. The coverage tool is broken and needs to be replaced</li>
 <li>B. Coverage must reach 95% before the gate is trusted</li>
-<li>C. The team did not write enough unit tests</li>
+<li>C. The team did not write enough unit tests for the code</li>
 <li>D. Coverage shows what ran, not what was checked</li>
 </ul>
 <details><summary>Answer</summary>
@@ -7816,9 +7816,9 @@ def requirement(request, record_property):
 <p><strong>3. The mobile squad has 40 unit tests, 15 API tests and 600 UI tests. The pipeline takes 55 minutes and fails randomly. What is the best first move?</strong></p>
 <ul>
 <li>A. Move the rule checks that need no screen down to API tests</li>
-<li>B. Add more workers so the 600 UI tests finish much sooner</li>
+<li>B. Add more workers so that the 600 UI tests finish much sooner</li>
 <li>C. Rerun failed UI tests automatically until the build is green</li>
-<li>D. Delete the oldest UI tests to reach a round number</li>
+<li>D. Delete the oldest UI tests in the suite to reach a round number</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -8277,7 +8277,7 @@ test(&#39;a synthetic customer can send 1.00 QAR&#39;, async ({ page }) =&gt; {
 <ul>
 <li>A. Hashes differ per process, so a test may run twice or never</li>
 <li>B. The remainder can be negative, so some tests get no shard</li>
-<li>C. Slow tests all pile into one shard, so that job runs far longer</li>
+<li>C. Slow tests pile into one shard, so that job runs longer</li>
 <li>D. The built-in hash is far too slow for a large suite</li>
 </ul>
 <details><summary>Answer</summary>
@@ -8312,9 +8312,9 @@ test(&#39;a synthetic customer can send 1.00 QAR&#39;, async ({ page }) =&gt; {
 <p><strong>5. A deploy gate&#39;s only smoke test is <code>GET /health</code> returning 200. Why can it pass while the release has failed?</strong></p>
 <ul>
 <li>A. The old version may still be serving, so check the build too</li>
-<li>B. Health endpoints never return 200 while a deploy is running</li>
+<li>B. Health endpoints never return 200 while a deploy is still running</li>
 <li>C. Smoke tests must always query the database directly themselves</li>
-<li>D. A single smoke test is always too slow to work as a gate</li>
+<li>D. A single smoke test is always too slow to work as a release gate</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -9119,7 +9119,7 @@ def fee(amount, currency: str, kind: str) -&gt; Decimal:
 <li>A. The package is safe because it was scanned</li>
 <li>B. The package is on the official index, so it is genuine</li>
 <li>C. Only that no advisory is known; its origin needs checking</li>
-<li>D. Nothing is wrong, since the build passed and no alert was raised</li>
+<li>D. Nothing is wrong, since the build passed with no alert</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -9619,7 +9619,7 @@ jobs:
 <li>A. A shell command edited it, so add a CI check on test diffs</li>
 <li>B. The hook ran too late, so move it to the <code>Stop</code> event</li>
 <li>C. Skipped tests are not edits, so allow them by policy</li>
-<li>D. The hook is working as designed, so the skip can be ignored</li>
+<li>D. The hook works as designed, so the skip can be ignored</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10551,7 +10551,7 @@ tests:
 
 <p><strong>3. A prompt change lifts the overall pass rate from 75% to 79%, but out_of_scope falls from 4 of 5 to 3 of 5. What should the gate do?</strong></p>
 <ul>
-<li>A. Pass, because the overall rate rose and one case is noise</li>
+<li>A. Pass: the overall rate rose and one case is noise</li>
 <li>B. Pass, and retest after the next release</li>
 <li>C. Fail only if the overall rate drops below 70%</li>
 <li>D. Fail on the category and show the case that flipped</li>
@@ -11008,7 +11008,7 @@ done
 <p><strong>2. A reviewer worries that Alice&#39;s question about &quot;Bob&#39;s statement&quot; could leak data. Where must the access check sit?</strong></p>
 <ul>
 <li>A. After generation, by masking any numbers in the reply</li>
-<li>B. In the system prompt, by telling the model to keep data private</li>
+<li>B. In the prompt, by telling the model to keep data private</li>
 <li>C. Before ranking, so the search sees only permitted documents</li>
 <li>D. In the interface, by hiding source ids from the customer</li>
 </ul>
@@ -11460,9 +11460,9 @@ PSI 0.123; identical data 0.000
 <section class="sec sec-quiz"><h2>✍️ Check yourself</h2>
 <p><strong>1. Mariam wants to run automated attack tools on Najm Assist. What must be in place first?</strong></p>
 <ul>
-<li>A. A longer list of attack prompts, collected from public sources</li>
-<li>B. A copy of real customers&#39; chats, so that the attacks look realistic</li>
-<li>C. Production access, so that the attacks match what customers see</li>
+<li>A. A much longer list of attack prompts, collected from public sources</li>
+<li>B. A copy of real customers&#39; chats, so that the attacks look more realistic</li>
+<li>C. Production access, so that the attacks match what customers see there</li>
 <li>D. Written authorisation and rules of engagement naming the QA target</li>
 </ul>
 <details><summary>Answer</summary>
@@ -11496,10 +11496,10 @@ PSI 0.123; identical data 0.000
 
 <p><strong>4. This week the Population Stability Index on the top-source mix is 0.12, and the &quot;no source&quot; share has tripled. What is the most sensible action?</strong></p>
 <ul>
-<li>A. Roll the model back at once, before anyone has looked at the questions</li>
+<li>A. Roll the model back at once, before anyone has looked at the questions it missed</li>
 <li>B. Read the unanswered questions to find a new topic or missing document</li>
-<li>C. Ignore it, because any PSI value below 1 is considered acceptable</li>
-<li>D. Raise the temperature so that the model can cover more topics</li>
+<li>C. Ignore it, because any PSI value below 1 is considered acceptable in practice</li>
+<li>D. Raise the temperature so that the model can cover more topics in its answers</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -11508,7 +11508,7 @@ PSI 0.123; identical data 0.000
 
 <p><strong>5. A customer complaint shows Assist quoted the wrong cut-off. What makes the follow-up a good regression test?</strong></p>
 <ul>
-<li>A. Fix the prompt, then record the change and the cause in the incident ticket</li>
+<li>A. Fix the prompt, then record the change and cause in the ticket</li>
 <li>B. Add a case that already passes, so the dashboard stays green</li>
 <li>C. Paste the customer&#39;s chat verbatim into the public repository</li>
 <li>D. Reproduce it, add a case that fails, fix it, and watch the case pass</li>
@@ -12516,7 +12516,7 @@ NAJM_BUGS=float_fee pytest tests/test_interview_review.py    # 1 failed, 1 passe
 <li>A. The golden set again, ten more runs at temperature 0.8 to average out sampling noise</li>
 <li>B. Recall@k, precision@k and MRR on the labelled retrieval queries</li>
 <li>C. The population stability index on last week&#39;s topic mix of customer questions</li>
-<li>D. The red-team tests that plant a poisoned document in the index</li>
+<li>D. The red-team tests that plant a poisoned document in the policy index</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -12585,7 +12585,7 @@ NAJM_BUGS=float_fee pytest tests/test_interview_review.py    # 1 failed, 1 passe
 
 <p><strong>14. Two vendors each claim their AI assistant writes &quot;high quality&quot; tests, and Bilal can run both against the course&#39;s sample system. How should he compare them?</strong></p>
 <ul>
-<li>A. Pick the assistant whose generated suite reports the higher line and branch coverage</li>
+<li>A. Pick the assistant whose generated suite reports the higher coverage</li>
 <li>B. Pick the assistant that generates more tests in the same amount of time</li>
 <li>C. Ask each assistant to grade its own tests and pick the higher score</li>
 <li>D. Run each suite once per seeded bug, switched on alone, and count the bugs caught</li>
@@ -12695,7 +12695,7 @@ NAJM_BUGS=float_fee pytest tests/test_interview_review.py    # 1 failed, 1 passe
 <ul>
 <li>A. Wait, because 1,600 requests is still too few for the judge to decide anything</li>
 <li>B. Promote, because the p95 of 330 ms is only a little above the stable 310 ms</li>
-<li>C. Promote, because 8 errors is only a very small count in absolute terms</li>
+<li>C. Promote, because 8 errors is only a very small count, not a rate, in absolute terms</li>
 <li>D. Roll back, because the error rate is too far above the stable error rate</li>
 </ul>
 <details><summary>Answer</summary>
@@ -12707,7 +12707,7 @@ NAJM_BUGS=float_fee pytest tests/test_interview_review.py    # 1 failed, 1 passe
 <ul>
 <li>A. A cost report showing the saving per 1,000 questions, since accuracy is equal</li>
 <li>B. A per-case comparison listing every case that passed before and fails now</li>
-<li>C. Ten more runs of the new version alone, to confirm that its 18 is stable</li>
+<li>C. Ten more runs of the new version alone, to confirm that its 18 is really stable</li>
 <li>D. A ROUGE score between the old and new answers, to show that they are similar</li>
 </ul>
 <details><summary>Answer</summary>
@@ -12765,7 +12765,7 @@ NAJM_BUGS=float_fee pytest tests/test_interview_review.py    # 1 failed, 1 passe
 
 <p><strong>29. Bilal&#39;s gate asks for an 80% mutation score on changed money code. A new fee module scores 94%, six mutants survive and nobody has looked at them yet. Tariq asks for 100% before merge. What should Rashid recommend?</strong></p>
 <ul>
-<li>A. Add a test for each survivor until the score reaches 100%, however artificial it is</li>
+<li>A. Add a test for each survivor until the score hits 100%, however artificial</li>
 <li>B. Raise the gate to 100% on all money code, so that the score cannot be argued</li>
 <li>C. Mark all six survivors as equivalent mutants, so that the report shows 100%</li>
 <li>D. Keep the 80% gate, and let a human triage each survivor as a gap or equivalent</li>
@@ -12778,7 +12778,7 @@ NAJM_BUGS=float_fee pytest tests/test_interview_review.py    # 1 failed, 1 passe
 <p><strong>30. Najm keeps old app versions working for months. Tariq&#39;s squad makes <code>kind</code> a required field of <code>POST /transfers</code> and updates the OpenAPI document. Every current test and the nightly Schemathesis run pass. Two weeks later, customers on the oldest app see errors. Which test would have caught this before release?</strong></p>
 <ul>
 <li>A. A nightly Schemathesis run with a larger value for <code>--max-examples</code></li>
-<li>B. A strict response schema, with <code>additionalProperties: false</code>, for every transfer</li>
+<li>B. A strict response schema with <code>additionalProperties: false</code></li>
 <li>C. A saved request from the old app, without <code>kind</code>, that must still return 201</li>
 <li>D. An authorisation matrix with one row for each route and each role</li>
 </ul>
@@ -12789,9 +12789,9 @@ NAJM_BUGS=float_fee pytest tests/test_interview_review.py    # 1 failed, 1 passe
 
 <p><strong>31. Tariq&#39;s squad wants to release Najm Mobile&#39;s new transfer flow to every Android user at once. &quot;If it breaks, we roll back like the web app,&quot; he says. What should Amal&#39;s release gate require instead?</strong></p>
 <ul>
-<li>A. A store rollback plan, since both stores can withdraw a build within a few minutes</li>
+<li>A. A store rollback plan, since both stores can withdraw a build within minutes</li>
 <li>B. A staged rollout of 1%, 5%, 20% and 100%, with a halt rule and a remote kill switch</li>
-<li>C. Two extra regression runs on emulators, because they give the same results as devices</li>
+<li>C. Two extra regression runs on emulators, as they match real devices</li>
 <li>D. A one-week beta on the newest phone, then a full release if no crash is reported</li>
 </ul>
 <details><summary>Answer</summary>
@@ -12826,7 +12826,7 @@ NAJM_BUGS=float_fee pytest tests/test_interview_review.py    # 1 failed, 1 passe
 <p><strong>34. Nada writes a test asserting that the international fee is always between 10.00 and 100.00, and runs it on 1,000 random amounts. With <code>float_fee</code> switched on it still passes. What does this show?</strong></p>
 <ul>
 <li>A. A range check is a partial oracle, so it needs exact hand-worked fees beside it</li>
-<li>B. The sample was too small, since a run of 100,000 random amounts would have caught it</li>
+<li>B. The sample was too small, since 100,000 random amounts would have caught it</li>
 <li>C. Range assertions are invalid, because they do not come from a requirement</li>
 <li>D. The test is sound, because a fee of 10.81 is within the published limits</li>
 </ul>
@@ -12970,7 +12970,7 @@ NAJM_BUGS=float_fee pytest tests/test_interview_review.py    # 1 failed, 1 passe
 <p><strong>46. Bilal&#39;s CI rejects added <code>pytest.mark.skip</code> lines in <code>tests/</code>. The team now lets Playwright&#39;s healer agent repair failing browser tests in <code>e2e/</code>. One healer pull request turns four red tests green and the check passes. What should Bilal change?</strong></p>
 <ul>
 <li>A. Extend the skip check to <code>test.skip</code> and <code>test.fixme</code>, and review healer edits</li>
-<li>B. Switch the healer off, since an AI tool should never touch a test file</li>
+<li>B. Switch the healer off, since an AI tool should never be allowed to touch a test file</li>
 <li>C. Ask the healer to attach a screenshot of each repaired page to its pull request</li>
 <li>D. Raise the retries in the Playwright config so that the repaired tests stay green</li>
 </ul>
@@ -13019,7 +13019,7 @@ NAJM_BUGS=float_fee pytest tests/test_interview_review.py    # 1 failed, 1 passe
 <ul>
 <li>A. Take confirmation from an app signal, such as a button, never from words</li>
 <li>B. Require the model to see the word &quot;confirm&quot; twice before it calls the tool</li>
-<li>C. Add a judge model that rates whether the customer sounds certain enough</li>
+<li>C. Add a judge model that rates whether the customer sounds certain enough to freeze</li>
 <li>D. Add a system prompt line saying never to freeze a card on a first message</li>
 </ul>
 <details><summary>Answer</summary>

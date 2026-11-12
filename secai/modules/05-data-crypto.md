@@ -201,7 +201,7 @@ Ali turns his review into the bank's **Cryptography Standard for Builders (v1, e
 **1. Ali proposes storing SME Portal passwords as SHA-256 with a random per-user salt: "Salted, so it's fine." What is the best response?**
 
 - A. Accept it, because salting solves the problem
-- B. Encrypt passwords with AES-GCM so support can recover forgotten ones
+- B. Encrypt passwords with AES-GCM so support can recover forgotten ones, with the key held in a vault that only the support lead and the audit team can open
 - C. Use Argon2id (or scrypt or bcrypt): the salt defeats precomputed tables, but SHA-256 is still fast enough for large-scale guessing after a leak
 - D. Hash the password twice with SHA-256
 
@@ -215,7 +215,7 @@ Ali turns his review into the bank's **Cryptography Standard for Builders (v1, e
 
 - A. A disk stolen from the provider's data centre
 - B. A SQL injection in a reporting endpoint, or an administrator querying the table, returning readable national IDs
-- C. An attacker who has taken over the one service that is allowed to decrypt national IDs
+- C. An attacker who has taken over the one service that is allowed to decrypt national IDs and can ask it to decrypt any record
 - D. A decommissioned drive being resold
 
 <details><summary>Answer</summary>
@@ -226,7 +226,7 @@ Ali turns his review into the bank's **Cryptography Standard for Builders (v1, e
 
 **3. A call to the e-invoicing partner's test environment fails certificate validation. Which fix is right?**
 
-- A. Set `verify=False` in test only, behind an environment variable
+- A. Set `verify=False` in test only, behind an environment variable, and add a comment so the setting is removed before release
 - B. Use plain HTTP for the test integration
 - C. Trust the partner's test CA certificate in the test environment, keep verification on, and leave production unchanged
 - D. Disable hostname checking but keep chain validation
@@ -239,7 +239,7 @@ Ali turns his review into the bank's **Cryptography Standard for Builders (v1, e
 
 **4. Which statement about envelope encryption is TRUE?**
 
-- A. The app keeps the master key in its configuration to decrypt quickly
+- A. The app keeps the master key in its configuration file to decrypt quickly, reads it once at start-up, holds it in memory, and reloads it whenever the file on disk changes
 - B. It is a TLS feature for securing connections
 - C. It removes the need for database access control
 - D. Data keys are wrapped by a master key that stays in the KMS, so each decryption is an access-checked, logged call, and rotating the master key needs no bulk re-encryption
@@ -253,7 +253,7 @@ Ali turns his review into the bank's **Cryptography Standard for Builders (v1, e
 **5. Hamad, the CISO, asks what Najm Bank should do about post-quantum cryptography this year. What is the best answer?**
 
 - A. Nothing until large quantum computers exist
-- B. Replace AES-256 everywhere with a post-quantum algorithm now
+- B. Replace AES-256 everywhere with a post-quantum algorithm now, re-encrypt every stored record this quarter, and drop TLS 1.3 in favour of a custom quantum-safe transport for all channels
 - C. Build a cryptographic inventory, design for crypto-agility, prioritise long-lived confidential data, and adopt FIPS 203, 204 and 205 through platforms and libraries as they support them
 - D. Design a Najm-specific post-quantum algorithm
 
@@ -453,10 +453,10 @@ Forbidden everywhere: secrets in source code, images, mobile or web bundles, tic
 
 **1. A developer realises they pushed a live payment-partner API key to an internal repository three days ago, and has already force-pushed to remove the commit. What should happen first?**
 
-- A. Nothing more: the commit is gone
+- A. Nothing more: the commit is gone, because the branch was deleted and the pull request was never merged at all
 - B. Revoke or rotate the key now, then check the partner's usage logs for the exposure window
-- C. Rewrite the history of every branch, then decide
-- D. Open a ticket for the next sprint
+- C. Rewrite the history of every branch and force-push, then decide whether the key needs to be rotated at all
+- D. Open a ticket for the next sprint and ask the developer to remove the key from the file when convenient
 
 <details><summary>Answer</summary>
 
@@ -468,7 +468,7 @@ Forbidden everywhere: secrets in source code, images, mobile or web bundles, tic
 
 - A. Stronger obfuscation
 - B. Ask customers not to inspect the app
-- C. Store the key in the device's secure storage after first launch
+- C. Store the key in the device's secure storage after first launch, fetched once from a Najm server that checks the app version and the device model before sending it
 - D. Move the provider call to Najm's backend, which holds the key, authenticates the customer and applies rate limits and spending caps; rotate the extracted key
 
 <details><summary>Answer</summary>
@@ -482,7 +482,7 @@ Forbidden everywhere: secrets in source code, images, mobile or web bundles, tic
 - A. Rotate the key once a year
 - B. Base64-encode the key in the variable
 - C. OIDC federation: each job gets a short-lived token that the cloud exchanges for credentials, for a role that trusts only this repository and branch
-- D. Commit the key to the repository so it is versioned
+- D. Commit the key to the private repository so it is versioned and reviewed, and restrict read access to the pipeline team, the release manager and the on-call engineers
 
 <details><summary>Answer</summary>
 
@@ -493,7 +493,7 @@ Forbidden everywhere: secrets in source code, images, mobile or web bundles, tic
 **4. Which statement about Kubernetes Secrets is TRUE by default in upstream Kubernetes?**
 
 - A. Values are base64-encoded, stored unencrypted in etcd unless encryption at rest is configured, and readable by anyone who can create pods in the namespace
-- B. Values are strongly encrypted with a per-cluster key
+- B. Values are strongly encrypted with a per-cluster key that the cloud provider rotates, so only the API server and the controllers can ever read them in clear text
 - C. Only cluster administrators can ever read them
 - D. They rotate automatically every 24 hours
 
@@ -506,13 +506,13 @@ Forbidden everywhere: secrets in source code, images, mobile or web bundles, tic
 **5. A developer proposes putting the fee-service API key into Najm Assist's system prompt "so the model can call the tool". Why is this wrong?**
 
 - A. System prompts have a length limit
-- B. Assume the system prompt can be extracted (OWASP LLM07) or the model steered by prompt injection; credentials belong in the server-side tool layer, bound to the customer's session
+- B. Models refuse to use keys
 - C. It is fine if the prompt says "never reveal this key"
-- D. Models refuse to use keys
+- D. Assume the system prompt can be extracted (OWASP LLM07) or the model steered by prompt injection; credentials belong in the server-side tool layer, bound to the customer's session
 
 <details><summary>Answer</summary>
 
-**B.** A prompt is not a secure store. C relies on the model obeying, which prompt injection defeats. (🔴 Expert view.)
+**D.** A prompt is not a secure store. C relies on the model obeying, which prompt injection defeats. (🔴 Expert view.)
 
 </details>
 
@@ -743,7 +743,7 @@ After the erasure request, Sara and Noura publish the **Najm Assist personal-dat
 **5. Rania wants Najm Assist to help customers dispute card transactions. Which design best applies data minimisation?**
 
 - A. Send only the disputed transaction's fields, with card numbers and IBANs replaced by placeholders, and let the server-side tool layer use real values when it files the dispute
-- B. Send the model the customer's full profile and twelve months of transactions for context
+- B. Send the model the customer's full profile and twelve months of transactions for context, so it can explain the fee, suggest other products that suit her better and tailor the offer
 - C. Send everything, but tell the model in the system prompt not to reveal it
 - D. Ask the customer to paste their card number into the chat for accuracy
 

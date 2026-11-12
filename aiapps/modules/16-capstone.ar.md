@@ -445,7 +445,7 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 
 **1. يرفع الإصدار v5 من موجّه لجين (Lujain's prompt v5) نتيجة 10 تذاكر محجوبة (10 held-out tickets) من 80% إلى 90%، ويُبقي نتيجة تذاكر التطوير العشرين (20 dev tickets) عند 90%. تقول لهند (Hind): «الإصدار v5 أفضل بعشر نقاط» (v5 is ten points better). ما أدق ردّ يقدمه فهد (Fahad)؟ ⁦(What is Fahad's most accurate reply?)⁩**
 
-- A. أوافق (Agree): المجموعة المحجوبة (held-out) هي المجموعة غير المنحازة (the unbiased set)، فمكسب عشر نقاط يظل مكسب عشر نقاط (a gain of ten points is a gain of ten points)
+- A. أوافق (Agree): المجموعة المحجوبة (held-out) هي المجموعة غير المنحازة (the unbiased set)، فمكسب عشر نقاط يظل عشر نقاط (ten points gained are ten points) كما هو مسجَّل في التقرير
 - B. أخالف (Disagree): التذكرة الواحدة هنا تساوي عشر نقاط (one ticket is ten points here)، فقارن أولًا بين التذاكر التي أُصلحت والتي تعطلت (compare fixed and broken tickets first)
 - C. أخالف (Disagree): تذاكر التطوير وحدها (only the dev tickets) هي القادرة على قياس تحسّن الموجّه (measure a prompt improvement)
 - D. أوافق (Agree)، بعد أن تعيد تشغيل المجموعة المحجوبة (re-runs held-out) حتى تتوقف الدرجة عن التحرك (the score stops moving)
@@ -523,7 +523,7 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 
 **7. تعلّم بوابة (gate) نجم ديسك (Najm Desk) المحادثة بأنها ملوَّثة (tainted) بعد أي نتيجة من `search_policies`، وبعد ذلك ترفض `add_comment` حتى على تذكرة المستخدم نفسه (the user's own ticket). يشتكي الموظفون (Staff complain). يضم فهرس السياسات (policy index) صفحات منشورة ومراجَعة (reviewed, published pages) إضافةً إلى مجلد الوارد (inbox folder) فيه مسودات غير مراجَعة (unreviewed drafts)، وتحمل التذاكر تعليقات من مرسلين خارجيين (outside senders). ماذا ينبغي أن تغيّر لجين (Lujain)؟ ⁦(What should Lujain change?)⁩**
 
-- A. عطّل (switch off) طبقة التلوّث (taint layer) عن `add_comment`، لأن فحصي النطاق والمالك (scope and owner checks) يغطيانه أصلًا (already cover it)
+- A. عطّل (switch off) طبقة التلوّث (taint layer) عن `add_comment`، لأن فحصي النطاق والمالك (scope and owner checks) يغطيانه أصلًا (already cover it) تمامًا
 - B. دع النموذج يحكم في كل محادثة (in each chat) هل بدا النص الذي قرأه مريبًا (looked suspicious)، وارفع الحظر (lift the block) إن قال لا
 - C. انقل القاعدة (the rule) إلى موجّه النظام (system prompt) ليرفض النموذج الكتابة (refuses a write) فقط حين يحكم أن النص خطِر (risky)
 - D. تتبّع التلوّث لكل مصدر (taint per source)، فتُبقي الصفحات المراجَعة المحادثة نظيفة (clean) بينما تظل التعليقات والمسودات تلوّثها (still taint it)
@@ -536,9 +536,9 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 
 **8. كتبت يارا (Yara) رقم التذكرة 4471، وأخبرها نجم ديسك (Najm Desk) أنها مغلقة (closed)، مع أن TicketHub يُظهرها قيد التنفيذ (in progress). يُظهر التتبّع (trace) بصيغة JSONL أن النموذج أرسل `ticket_id` بالقيمة "4417"، وفيه رقمان تبادلا موضعيهما (a transposed digit)، وأن TicketHub أعاد تذكرة مختلفة مغلقة (a different, closed ticket). أي تغيير كان سيمنع الإجابة الخاطئة بصورة موثوقة؟ ⁦(Which change would reliably have stopped the wrong answer?)⁩**
 
-- A. اضبط `strict: true` على الأداة (tool) لتطابق الوسائط المخطط (schema) دائمًا (arguments always match the schema)
+- A. اضبط `strict: true` على الأداة (tool) لتطابق الوسائط المخطط المعلن (schema) دائمًا (arguments always match the declared schema)
 - B. سجّل حقولًا أكثر في كل حدث (log more fields on every event) ليكتشف المراجعون الخطأ في وقت أبكر (spot a slip sooner) خلال المراجعة (in a review)
-- C. اطلب من النموذج في الوصف (in the description) أن ينسخ أرقام التذاكر كما كُتبت تمامًا (exactly as typed)
+- C. اطلب من النموذج في الوصف (in the description) أن ينسخ أرقام التذاكر كما كُتبت تمامًا (exactly as they were typed)
 - D. تحقق في الشيفرة (in code) من أن المعرّف الذي يرسله النموذج يظهر أيضًا في رسالة المستخدم (the user's message)
 
 <details><summary>الإجابة</summary>
@@ -565,7 +565,7 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 - A. خزّن كل مفتاح (store each key) مع تجزئة لجسم الطلب (a hash of the request body)، وارفض مفتاحًا يعود (refuse a key that returns) بسؤال مختلف (a different question)
 - B. احتفظ بالمفاتيح في مخزن تتشاركه كل النسخ (a store that all replicas share)، ومرّر المفتاح نفسه إلى TicketHub (send the same key on)
 - C. ارفع مهلة البوابة (gateway timeout) فوق أبطأ إجابة للنموذج (the model's slowest answer) حتى لا تُرسل أي إعادة محاولة أبدًا (no retry is ever sent)
-- D. ابحث في TicketHub عن تذكرة بالعنوان نفسه (a ticket with the same title) قبل أن تنشئ الخدمة تذكرة جديدة (creates a new one)
+- D. ابحث في TicketHub عن تذكرة قائمة بالعنوان نفسه (an existing ticket with the same title) قبل أن تنشئ الخدمة تذكرة جديدة (creates a new one)
 
 <details><summary>الإجابة</summary>
 
@@ -578,7 +578,7 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 - A. ارفع حدّ التكرارات (iteration cap) أكثر لتتمكن التشغيلات الدائرة في حلقات (looping runs) من الانتهاء والتوقف من تلقاء نفسها (on their own)
 - B. أطفئ `model_calls` (switch off)، ثم ابحث عن السبب (find the cause) وراجع حدّ القاطع (the breaker limit) قياسًا إلى ساعة ذروة اعتيادية (a normal peak hour)
 - C. تراجع (roll back) إلى بصمة الصورة السابقة (previous image digest)، لأن الإصدار هو السبب المعتاد (the usual cause) لقفزة التكلفة (a cost spike)
-- D. قل للوكيل (agent) في المحادثة أن يتوقف عن الدوران (stop looping)، ثم راقب هل ينخفض عدد الرموز (token count) خلال الساعة التالية (over the next hour)
+- D. قل للوكيل (agent) في المحادثة أن يتوقف عن الدوران (stop looping)، ثم راقب هل ينخفض عدد الرموز (token count) خلال الساعة التالية بالكامل (in the next hour)
 
 <details><summary>الإجابة</summary>
 
@@ -602,7 +602,7 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 **13. تضم المجموعة الأولية المكوّنة من 30 سيناريو (30-scenario seed set) لدى لجين (Lujain) 27 سؤالًا مهذبًا بالإنجليزية عن السياسات (27 polite English policy questions) على المساعد أن يجيب عنها، وسؤالين بالعربية (two Arabic ones) وطلبًا واحدًا خارج النطاق (one out-of-scope request). تتركز مخاوف نورة (Noura) في حقن الموجّه (prompt injection) وتذاكر الآخرين (other people's tickets) والأسرار الملصقة (pasted secrets). أي تغيير يجعل المجموعة أكثر فائدة؟ ⁦(Which change makes the set most useful?)⁩**
 
 - A. أضف ثلاثين سؤالًا عاديًا أخرى (thirty more ordinary questions) لتصير المجموعة كبيرة بما يكفي للوثوق بها (large enough to trust)
-- B. استبدل معظم الأسئلة العادية (swap most of the ordinary questions) بحالات هجوم (attack cases)، لأن مخاوف نورة الثلاثة (Noura's three worries) هي المخاطر الحقيقية (the real risks)
+- B. استبدل معظم الأسئلة العادية (swap most ordinary questions) بحالات هجوم (attack cases)، لأن مخاوف نورة الثلاثة (Noura's three worries) هي المخاطر الحقيقية (the real risks) في هذا النظام
 - C. شدِّد كل صف (tighten each row) ليحدّد صياغة الردّ المتوقعة بدقة (the exact reply wording expected)، فتُطابَق التشغيلات تطابقًا تامًا (runs can be matched exactly)
 - D. أعد التوازن ليصير نحو النصف عاديًا (Rebalance to about half ordinary) وبعضه بالعربية (some Arabic)، وربعه عدائيًا (a quarter adversarial)، وربعه خارج النطاق (a quarter out of scope)
 
@@ -653,10 +653,10 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 
 **17. تسأل يارا نجم ديسك (Najm Desk): «ما تقدّم التذكرة 4471؟» ⁦(What is the progress on ticket 4471?)⁩ فيجيب من المعرفة العامة (general knowledge) ولا يستدعي (calls) `get_ticket_status` أبدًا، وهي أداة يقول وصفها (description): ⁦"Gets ticket info."⁩ أي تغيير هو أفضل إصلاح أول (best first fix)؟**
 
-- A. إضافة `strict: true` إلى التعريف (definition) كي يُجبَر النموذج (model) على استدعاء الأداة (call the tool)
-- B. إضافة أداة ثانية (second tool) هي `fetch_ticket_info` لمنح النموذج طريقة أخرى للمطابقة (match)
+- A. إضافة `strict: true` إلى التعريف (definition) كي يُجبَر النموذج (model) على استدعاء الأداة (call the tool) دائمًا
+- B. إضافة أداة ثانية (second tool) هي `fetch_ticket_info` لمنح النموذج طريقة أخرى للمطابقة (match) مع التذكرة
 - C. إعادة كتابة الوصف (description) ليذكر ما تفعله الأداة (what it does)، ومتى تُستدعى، ومتى لا تُستدعى
-- D. رفع `max_tokens` ليكون للنموذج مجال أوسع (more room) لاتخاذ قرار استدعاء الأداة (call the tool)
+- D. رفع `max_tokens` ليكون للنموذج مجال أوسع (more room) لاتخاذ قرار استدعاء الأداة أو عدمه (whether to call the tool)
 
 <details><summary>الإجابة</summary>
 
@@ -705,10 +705,10 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 
 **21. يصل رد (reply) من نجم ديسك (Najm Desk) وقد ضُبط `stop_reason` على `refusal` من دون نص يُعرض (no text to show)، فتظهر في نافذة محادثة (chat window) يارا فقاعة فارغة (blank bubble). ماذا ينبغي أن يفعل التطبيق (application)؟**
 
-- A. إعادة إرسال الطلب (resend) بموجّه معاد الصياغة (reworded prompt) حتى يعطي النموذج إجابة
+- A. إعادة إرسال الطلب (resend) بموجّه معاد الصياغة (reworded prompt) حتى يعطي النموذج إجابة ما
 - B. إخبار المستخدم بوضوح (tell the user plainly) وتسجيل تفاصيل التوقف (stop details) للفريق
-- C. رفع `max_tokens`، لأن غياب الرد (a missing reply) يعني أنه قُطع (it was cut off)
-- D. معاملته كما يُعامل `end_turn` وعرض الرد (show the reply) كما عاد (as it came back)
+- C. رفع `max_tokens`، لأن غياب الرد (a missing reply) يعني أنه قُطع (it was cut off) في منتصفه (midway)
+- D. معاملته كما يُعامل `end_turn` وعرض الرد (show the reply) كما عاد تمامًا (exactly as it came back)
 
 <details><summary>الإجابة</summary>
 
@@ -771,7 +771,7 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 **26. يستدعي روبوت الدعم (support bot) لدى شركة لوجستية (logistics company) دالة (function) اسمها `get_shipment` كتبها فريقه الخاص. الآن يريد فريق المالية (finance team) أن يستخدم وكيله (agent) المستقل عملية البحث (lookup) نفسها، ويريدها مهندس في Claude Code، وسيتولى فريق الشحن (shipping team) الذي يملك البيانات صيانة التكامل (integration). ما أفضل تصميم (best design)؟**
 
 - A. نسخ الدالة (copy the function) إلى وكيل المالية (finance agent) وإضافة نسخة (a copy) إلى Claude Code
-- B. إبقاء الدالة العادية (plain function) وانتظار أن يحتاج عميل (client) ثالث إلى البحث نفسه (same lookup)
+- B. إبقاء الدالة العادية (plain function) وانتظار أن يحتاج عميل (client) ثالث إلى البحث نفسه (same lookup) في المستقبل
 - C. إتاحة روبوت الدعم (support bot) كواجهة برمجة (API) يستطيع العميلان الآخران (two clients) استدعاءها
 - D. أن يصدر فريق الشحن خادم بروتوكول سياق النموذج (Model Context Protocol, MCP) واحدًا ويتصل به كل مضيف (host)
 
@@ -809,7 +809,7 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 
 **29. يضيف Claude Code الدالة `trim()` إلى سكربت الدردشة (chat script) في نجم ديسك (Najm Desk) مع أربعة اختبارات جديدة (four new tests). تنجح كلها، ويقول ملخصه (summary) إنها تغطي السلوك (behaviour). يسأل فهد كيف تعرف أن هذه الاختبارات الأربعة ستكتشف خللًا (bug). ماذا تفعل؟**
 
-- A. تطلب من Claude Code أن يؤكد في ملخصه (summary) أن الاختبارات ذات معنى (meaningful)
+- A. تطلب من Claude Code أن يؤكد في ملخصه (summary) أن الاختبارات ذات معنى حقيقي (meaningful)
 - B. تشغّل المجموعة (suite) ثلاث مرات إضافية لاستبعاد النتائج المتقلبة (flaky results)
 - C. تكسر الميزة عمدًا (break the feature on purpose) وتتأكد من فشل اختبار واحد على الأقل
 - D. تتحقق من أن الاختبارات كُتبت قبل الكود (written before the code)
@@ -1070,9 +1070,9 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 **49. تُنهي حلقة نجم ديسك (Najm Desk loop) لدى لجين (Lujain) التشغيل (run) فور أن يعيد النموذج `end_turn` وتعرض نصه. تسأل يارا (Yara): «هل حُلّت التذكرتان 4471 و4472؟» ⁦(Are tickets 4471 and 4472 resolved?)⁩ فيقول الرد فقط: «التذكرة 4471 حُلّت.» ⁦(Ticket 4471 is resolved.)⁩ وكان كلا البحثين (both lookups) ممكنًا. أي تغيير يلتقط هذا قبل أن يراه المستخدم؟ ⁦(Which change catches this before the user sees it?)⁩**
 
 - A. إضافة استدعاء تأمل ذاتي (reflection call) يطلب من النموذج تأكيد (confirm) أن إجابته كاملة (its answer is complete)
-- B. رفع حدّ الخطوات (step cap) ليتوفر للنموذج مجال كافٍ لإنهاء البحث الثاني (room to finish the second lookup)
+- B. رفع حدّ الخطوات (step cap) ليتوفر للنموذج مجال كافٍ لإنهاء البحث الثاني (room to finish the second lookup) بنفسه
 - C. التحقق في الشيفرة (check in code) من ظهور كل رقم تذكرة (every ticket number) في الهدف في الإجابة (the answer)
-- D. إضافة السطر «أجب عن كل جزء من السؤال» (answer every part of the question) إلى موجّه النظام (system prompt)
+- D. إضافة السطر «أجب عن كل جزء من السؤال» (answer every part of the question) إلى موجّه النظام (system prompt) في كل تشغيل (for every run)
 
 <details><summary>الإجابة</summary>
 
@@ -1121,9 +1121,9 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 
 **53. في محادثة فرز (triage chat) من 30 رسالة (30-message) عن مشكلة VPN، يبدأ نجم ديسك (Najm Desk) باقتراح خطوات سبقت تجربتها (steps that were already tried) وينسى أنه ينتظر فريق الشبكات (waiting for Networks). تقترح لجين (Lujain) حفظ كل دور (every turn) في المخزن طويل المدى (long-term store) واستدعاءه (recalling it) في كل دور. ويريد فهد (Fahad) تصميمًا يمكن لاختبار (a test) أن يفحصه دون استدعاء نموذج (without calling a model). ما التصميم الأفضل؟ ⁦(What is the better design?)⁩**
 
-- A. دمج الأدوار الأقدم (older turns) في ملخص يكتبه النموذج (model-written summary) وإعادة إرساله في كل دور (each turn)
-- B. مطالبة النموذج بإعادة ذكر الخطوات المجرَّبة (restate the steps already tried) في نهاية كل رد (each reply)
-- C. إضافة قاعدة إلى موجّه النظام (system-prompt rule): لا تكرر خطوة جُرّبت من قبل (never repeat a step that was already tried)
+- A. دمج الأدوار الأقدم (older turns) في ملخص يكتبه النموذج (model-written summary) وإعادة إرساله مع كل دور جديد (with each turn)
+- B. مطالبة النموذج بإعادة ذكر الخطوات المجرَّبة سابقًا (restate the steps already tried) في نهاية كل رد يقدمه (it gives)
+- C. إضافة قاعدة إلى موجّه النظام (system-prompt rule): لا تكرر خطوة جُرّبت من قبل (never repeat a step that was already tried by the agent)
 - D. الاحتفاظ بكائن حالة (state object) تحدّثه الشيفرة (code updates) في كل خطوة وتضعه في كل موجّه (every prompt)
 
 <details><summary>الإجابة</summary>

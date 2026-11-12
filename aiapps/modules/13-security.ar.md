@@ -361,8 +361,8 @@ Plan first; small steps; run the tests after each.
 
 - A. موجّه نظام أكثر صرامة (A stricter system prompt)
 - B. بوابة أدوات بلا أداة بريد (A tool gate with no email tool)
-- C. مصنِّف يقيّم كل صفحة (A classifier scoring each page)
-- D. تحذير للموظفين من المسودات (A staff warning about drafts)
+- C. مصنِّف يقيّم الصفحات (A classifier scoring pages)
+- D. تحذير للموظفين من مخاطر المسودات (A staff warning about drafts)
 
 <details><summary>الإجابة</summary>
 
@@ -385,9 +385,9 @@ Plan first; small steps; run the tests after each.
 
 **3. يأمر تعليق تذكرة باستدعاء `add_comment` على تذكرة ريان نفسه بعد أن قرأته المحادثة (A ticket comment orders add_comment on Rayan's own ticket after the chat read it). أي طبقة ترفض؟ ⁦(Which layer refuses?)⁩**
 
-- A. فحص المالك، لأن التذكرة ليست تذكرته (Owner check, as the ticket is not his)
-- B. النطاق، لأنه يفتقر إلى حقوق التعليق (Scope, as he lacks comment rights)
-- C. الموافقة، لأن التعليقات تحتاج إلى شخص (Approval, as comments need a person)
+- A. فحص المالك، لأن التذكرة ليست تذكرته هو (Owner check, as the ticket is not his own)
+- B. النطاق، لأنه لا يملك حق التعليق هنا (Scope, as he lacks the right to comment)
+- C. الموافقة، لأن كل تعليق يحتاج إلى شخص (Approval, as every comment needs a person)
 - D. التلوث، لأن المحادثة قرأت نص الآخرين (Taint, as the chat read others' text)
 
 <details><summary>الإجابة</summary>
@@ -411,9 +411,9 @@ Plan first; small steps; run the tests after each.
 
 **5. تفشل الهجمات العشر كلها دون اتصال والحواجز مفعّلة (All ten offline attacks fail with guards on)، وتصف لجين الوكيل بأنه محصّن ضد الحقن (injection-proof). ما الذي تدعمه الأدلة؟ ⁦(What does the evidence support?)⁩**
 
-- A. عشر هجمات تُظهر أن النموذج يقاوم الحقن (Ten attacks show the model resists injection)
+- A. عشر هجمات تُظهر أن النموذج يقاوم الحقن (Ten attacks show that the model resists injection)
 - B. البوابة توقف هذه العشر أمام نموذج مبرمج مسبقًا (The gate stops these ten against a scripted model)
-- C. نموذج حقيقي يطيع العشر كلها والحواجز مطفأة (A real model obeys all ten with guards off)
+- C. نموذج حقيقي يطيع العشر كلها حين تكون الحواجز مطفأة تمامًا (A real model obeys all ten when the guards are off)
 - D. الأقنعة ستلتقط أي صياغة بديلة لها (The masks would catch any paraphrase of them)
 
 <details><summary>الإجابة</summary>

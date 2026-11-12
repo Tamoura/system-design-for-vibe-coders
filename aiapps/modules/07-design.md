@@ -604,7 +604,7 @@ Plan first; small steps; tests after each.
 - A. To let the customer watch a wrong answer get caught
 - B. To show the failure rate is low enough to skip the pilot
 - C. To prove the model never makes mistakes on policy questions
-- D. To avoid writing acceptance criteria for the pilot
+- D. To avoid writing the acceptance criteria for the pilot
 
 <details><summary>Answer</summary>
 

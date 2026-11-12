@@ -158,23 +158,23 @@ flowchart RL
 
 **1. تقول مواصفات فيصل «يجب أن ينتج المساعد مذكرات ائتمان دقيقة ⁦(The copilot shall produce accurate credit memos.)⁩». ما أفضل تحسين؟ ⁦(What is the best improvement?)⁩**
 
-- A. تغيير «دقيقة (accurate)» إلى «عالية الدقة (highly accurate)»
-- B. إضافة أمثلة سلوك (behaviour examples)، ومعيار قابل للقياس للأخطاء الواقعية حسب الخطورة (measurable bar for factual errors by severity)، وتقييم (eval) يتحقق من الأرقام مقابل المستندات المصدرية (source documents)
-- C. الطلب من دانة اختيار أدق نموذج متاح (most accurate model available)
-- D. إضافة سطر يقول إن مدير العلاقة (RM) مسؤول عن الدقة (responsible for accuracy)
+- A. إضافة أمثلة سلوك (behaviour examples)، ومعيار قابل للقياس للأخطاء الواقعية حسب الخطورة (measurable bar for factual errors by severity)، وتقييم (eval) يتحقق من الأرقام مقابل المستندات المصدرية
+- B. تغيير «دقيقة (accurate)» إلى «عالية الدقة (highly accurate)»
+- C. الطلب من دانة اختيار أدق نموذج متاح (most accurate model available) مع التأكد من أنه يحقق أفضل نتيجة في المقاييس المعيارية العامة (public benchmarks) للمستندات المالية
+- D. إضافة سطر يقول إن مدير العلاقة (RM) مسؤول عن الدقة (responsible for accuracy) في كل مذكرة (memo) يوقّعها، ثم الاكتفاء بذلك في المواصفات (specification) دون أي معيار آخر (other bar) أو حد مكتوب للأخطاء الجسيمة (severe errors) في المذكرات
 
 <details><summary>الإجابة</summary>
 
-**B.** الأمثلة والمعايير والتقييم (Examples, bars and an eval) تجعل «دقيقة (accurate)» قابلة للاختبار (testable). أما D فيصف دور الإنسان (human's role)، وهو ينتمي إلى المواصفات، لكنه لا يحدد ما يجب أن يحققه النظام (what the system must achieve). (🟢 الأساسيات (The essentials)؛ 🟡 التعمق أكثر (Going deeper).)
+**A.** الأمثلة والمعايير والتقييم (Examples, bars and an eval) تجعل «دقيقة (accurate)» قابلة للاختبار (testable). أما D فيصف دور الإنسان (human's role)، وهو ينتمي إلى المواصفات، لكنه لا يحدد ما يجب أن يحققه النظام (what the system must achieve). (🟢 الأساسيات (The essentials)؛ 🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
 **2. أي بند ينتمي إلى قائمة «ممنوع أبدًا» (must-never list) بدلًا من التعبير عنه بمعيار نسبة مئوية (percentage bar)؟**
 
-- A. يجب أن تكون المذكرات أقل من 1,500 كلمة (under 1,500 words)
-- B. يجب أن يرد نجم أسيست (Najm Assist) بلغة العميل المختارة (customer's chosen language)
+- A. يجب أن تكون المذكرات أقل من 1,500 كلمة (under 1,500 words) حتى يقرأها أعضاء اللجنة (committee members) في جلسة واحدة
+- B. يجب أن يرد نجم أسيست (Najm Assist) بلغة العميل المختارة (customer's chosen language)، عربية أو إنجليزية، في كل الحالات تقريبًا
 - C. يجب ألا يَعِد نجم أسيست (Najm Assist) بإعفاء من رسوم (fee waiver) لم يوافق عليه البنك
-- D. يجب أن تكون المسودات (drafts) جاهزة خلال 90 ثانية
+- D. يجب أن تكون المسودات (drafts) جاهزة خلال 90 ثانية لما لا يقل عن 95% من الطلبات (95% of requests) في ساعات العمل
 
 <details><summary>الإجابة</summary>
 
@@ -199,25 +199,25 @@ flowchart RL
 
 - A. لا شيء؛ مكاسب المقاييس المعيارية (benchmark gains) تعني أن المنتج سيتحسن
 - B. تحديث الصفحة التسويقية (marketing page)
-- C. تشغيل مجموعة التقييمات الكاملة (full eval suite)، بما فيها حالات «ممنوع أبدًا» والانحدار (must-never and regression cases)، على الإصدار الجديد قبل أن يصل إلى المستخدمين
-- D. سؤال المستخدمين عمّا إذا لاحظوا فرقًا بعد التحويل (after switching)
+- C. سؤال المستخدمين (asking users) عمّا إذا (whether) لاحظوا (notice) فرقًا (difference) بعد التحويل (after switching)
+- D. تشغيل مجموعة التقييمات الكاملة (full eval suite)، بما فيها حالات «ممنوع أبدًا» والانحدار (must-never and regression cases)، على الإصدار الجديد قبل أن يصل إلى المستخدمين
 
 <details><summary>الإجابة</summary>
 
-**C.** تغيير النموذج محفّز لإعادة التقييم (re-evaluation trigger)؛ وقد تكسر متوسطات المقاييس المعيارية العامة الأفضل مع ذلك حالة «ممنوع أبدًا» (must-never case) على بياناتك. أما D فيعرّض المستخدمين للتراجعات (regressions). (🔴 نظرة الخبير (Expert view).)
+**D.** تغيير النموذج محفّز لإعادة التقييم (re-evaluation trigger)؛ وقد تكسر متوسطات المقاييس المعيارية العامة الأفضل مع ذلك حالة «ممنوع أبدًا» (must-never case) على بياناتك. أما C فيعرّض المستخدمين للتراجعات (regressions). (🔴 نظرة الخبير (Expert view).)
 
 </details>
 
 **5. ما المصدر الأول الأنسب لمعيار الجودة (quality bar) لميزة ذكاء اصطناعي جديدة؟**
 
 - A. أعلى نتيجة أعلنها أي مورّد (any vendor)
-- B. أداء العملية الحالية (current process)، معدَّلًا وفق مستوى المخاطر (risk tier) وما سيتحمله المستخدمون (what users will tolerate)
+- B. أيًّا كان ما يحققه النموذج في أول اختبار (first test)، لأن ذلك يُظهر ما تستطيع التقنية فعله حقًا اليوم (what the technology can really do) دون أي تعديل أو مقارنة بالعملية القائمة (current process)
 - C. 100% في كل بُعد (every dimension)
-- D. أيًّا كان ما يحققه النموذج في أول اختبار (first test)
+- D. أداء العملية الحالية (current process)، معدَّلًا وفق مستوى المخاطر (risk tier) وما سيتحمله المستخدمون (what users will tolerate)
 
 <details><summary>الإجابة</summary>
 
-**B.** تبدأ المعايير من خط الأساس الأمين (honest baseline) للعملية الحالية، ثم تعكس المخاطر وتحمّل المستخدمين (risk and user tolerance). أما D فيعكس المنطق (reverses the logic): يجب أن يحكم المعيار على النموذج، لا أن يحدده النموذج. (🟡 التعمق أكثر (Going deeper).)
+**D.** تبدأ المعايير من خط الأساس الأمين (honest baseline) للعملية الحالية، ثم تعكس المخاطر وتحمّل المستخدمين (risk and user tolerance). أما B فيعكس المنطق (reverses the logic): يجب أن يحكم المعيار على النموذج، لا أن يحدده النموذج. (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
@@ -382,7 +382,7 @@ flowchart TD
 - A. وضع الظل (Shadow mode)
 - B. ساحر أوز (Wizard of Oz)
 - C. الشريحة الرفيعة (Thin slice)
-- D. تجربة محدودة كاملة (Full pilot)
+- D. تجربة تجريبية كاملة (Full pilot) مع العملاء
 
 <details><summary>الإجابة</summary>
 
@@ -395,7 +395,7 @@ flowchart TD
 - A. العدد 15 فردي (odd number)
 - B. الأسئلة أنظف وأكثر نمطية من مدخلات العملاء الحقيقية (real customer inputs)، لذا فالجودة على التوزيع الحقيقي (real distribution) مجهولة
 - C. النماذج الأولية بالموجّه لا تستطيع قياس التكلفة (measure cost)
-- D. كان عليه استخدام اختبار ساحر أوز (Wizard of Oz test) بدلًا منه
+- D. كان عليه استخدام اختبار ساحر أوز (Wizard of Oz test) بدلًا منه، لأن إنسانًا يؤدي دور المساعد سيُظهر أسئلة العملاء الحقيقية (real customer questions) دون أي حاجة إلى كتابة موجّه
 
 <details><summary>الإجابة</summary>
 
@@ -406,13 +406,13 @@ flowchart TD
 **3. لا يستطيع فريق طارق أن يقول ما إذا كان المساعد قادرًا على بلوغ معيار الجودة المستهدف (target quality bar). ما أفضل استجابة تخطيطية؟ ⁦(What is the best planning response?)⁩**
 
 - A. الإصرار على موعد تسليم ثابت (firm delivery date) وإلزام الفريق به
-- B. إزالة معيار الجودة كي يمكن الوفاء بالموعد
-- C. إجراء تجربة استكشافية محددة المدة (time-boxed spike) بسؤال محدد ومعيار إيقاف (kill criterion)، والاتفاق على منتج احتياطي أصغر (smaller fallback product) إن لم يكن الهدف قابلًا للبلوغ
-- D. الانتظار حتى يصدر نموذج أفضل (better model)
+- B. إزالة معيار الجودة (remove the quality bar) كي يمكن الوفاء بالموعد (the date)، والاتفاق على تحسين الجودة في إصدار لاحق (later release) بعد إطلاق المنتج وتوفر بيانات استخدام حقيقية (real usage data)، وتحميل الفريق مسؤولية أي تأخير في المستقبل
+- C. الانتظار حتى يصدر نموذج أفضل (better model)
+- D. إجراء تجربة استكشافية محددة المدة (time-boxed spike) بسؤال محدد ومعيار إيقاف (kill criterion)، والاتفاق على منتج احتياطي أصغر (smaller fallback product) إن لم يكن الهدف قابلًا للبلوغ
 
 <details><summary>الإجابة</summary>
 
-**C.** الجودة غير المؤكدة (Uncertain quality) تُعالَج بالتجارب الاستكشافية والنطاقات التقديرية ونطاق احتياطي (spikes, ranges and a fallback scope). أما A (موعد ثابت لنتيجة مجهولة) فيستدعي تقديرات مختلقة (invented estimates)؛ وB يتخلص من المتطلب الذي يجعل المنتج آمنًا (makes the product safe). (🟡 التعمق أكثر (Going deeper).)
+**D.** الجودة غير المؤكدة (Uncertain quality) تُعالَج بالتجارب الاستكشافية والنطاقات التقديرية ونطاق احتياطي (spikes, ranges and a fallback scope). أما A (موعد ثابت لنتيجة مجهولة) فيستدعي تقديرات مختلقة (invented estimates)؛ وB يتخلص من المتطلب الذي يجعل المنتج آمنًا (makes the product safe). (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
@@ -420,7 +420,7 @@ flowchart TD
 
 - A. وضع الظل (Shadow mode): تقييم الطلبات الحية بينما يقرر موظفو الائتمان (credit officers) كالمعتاد، ثم مقارنة القرارات والنتائج اللاحقة (later outcomes)
 - B. نموذج مرئي بمخرجات مكتوبة سلفًا (scripted mock-up) يُعرض على موظفي الائتمان
-- C. عرض توضيحي لمجلس الإدارة على عشر فواتير مختارة (ten selected invoices)
+- C. عرض توضيحي لمجلس الإدارة على عشر فواتير مختارة (ten selected invoices chosen in advance)
 - D. الإطلاق لـ5% من العملاء ومراقبة الشكاوى (monitor complaints)
 
 <details><summary>الإجابة</summary>
@@ -630,7 +630,7 @@ flowchart RL
 
 **1. يغيّر مهندس جملة واحدة في موجّه النظام (system prompt) لنجم أسيست (Najm Assist) ليجعله «أكثر دفئًا (warmer)». ما الذي كان يجب أن يحدث قبل أن يصل التغيير إلى العملاء؟ ⁦(What should have happened before the change reached customers?)⁩**
 
-- A. لا شيء؛ تغييرات النبرة منخفضة المخاطر (tone changes are low risk)
+- A. لا شيء؛ تغييرات النبرة منخفضة المخاطر (tone changes are low risk) لأن صياغة جملة واحدة لا يمكن أن تؤثر في ما يستطيع المساعد فعله (what the assistant is able to do)، ولذلك لا حاجة إلى أي إجراء قبل نشر التغيير (no action needed before release)
 - B. قيد في السجل (registry entry) مع مالك، ومجموعة تقييمات انحدار ناجحة (passing regression eval suite) تشمل حالات «ممنوع أبدًا» (must-never cases)، وإطلاق مرحلي (staged rollout)
 - C. كان يجب اختيار نموذج جديد (new model)
 - D. استبيان للعملاء عن النبرة (customer survey about tone)
@@ -643,7 +643,7 @@ flowchart RL
 
 **2. أي ضابط يمنع بأكبر قدر من الموثوقية أن يجمّد نجم أسيست (Najm Assist) بطاقة العميل الخطأ (wrong customer's card)، حتى لو جرى التلاعب بالنموذج (model is manipulated)؟**
 
-- A. سطر في موجّه النظام يقول «تصرّف فقط نيابةً عن العميل المسجّل دخوله (only act for the logged-in customer)»
+- A. سطر في موجّه النظام يقول «تصرّف فقط نيابةً عن العميل المسجّل دخوله (only act for the logged-in customer)»، يتكرر في بداية كل محادثة ونهايتها (start and end of every conversation) لتأكيد القاعدة على النموذج
 - B. نموذج أكبر وأكثر قدرة (larger, more capable model)
 - C. تحقق التطبيق من جلسة العميل وأذوناته (customer's session and permissions) قبل تشغيل الأداة، إضافةً إلى تأكيد داخل التطبيق (in-app confirmation)
 - D. تاريخ محادثة أطول في السياق (longer conversation history)
@@ -656,20 +656,20 @@ flowchart RL
 
 **3. ماذا يعني الحد الأدنى من الصلاحيات (least privilege) عند تصميم أدوات المساعد؟ ⁦(What does least privilege mean when designing an assistant's tools?)⁩**
 
-- A. منح المساعد كل أداة قد يحتاجها على الإطلاق، لتجنب التسليم إلى موظف بشري (avoid hand-overs)
-- B. منح أصغر مجموعة من الأدوات والأذونات الضيقة (smallest set of narrow tools and permissions) التي تحتاجها المهمة، مع حدود يفرضها التطبيق
-- C. السماح بأدوات القراءة فقط، دون أدوات الكتابة أبدًا (only read tools, never write tools)
-- D. ترك العملاء يختارون الأدوات التي يستخدمها المساعد
+- A. منح أصغر مجموعة من الأدوات والأذونات الضيقة (smallest set of narrow tools and permissions) التي تحتاجها المهمة، مع حدود يفرضها التطبيق
+- B. منح المساعد كل أداة قد يحتاجها على الإطلاق، لتجنب التسليم إلى موظف بشري (avoid hand-overs) والإبقاء على سير كل محادثة مع العميل دون انقطاع (keep each conversation moving)، وهذا يرفع رضا العملاء ويقلل الأعباء
+- C. السماح بأدوات القراءة فقط، دون أدوات الكتابة أبدًا (only read tools, never write tools)، حتى لا يتمكن المساعد من تغيير حد أو بطاقة أو حساب (a limit, a card or an account) لأي عميل في أي وقت
+- D. ترك العملاء يختارون الأدوات التي يستخدمها المساعد (tools the assistant uses)، ليقرر كل شخص مقدار الصلاحيات التي يمنحها له، دون أي قيود مسبقة
 
 <details><summary>الإجابة</summary>
 
-**B.** الحد الأدنى من الصلاحيات يضيّق مجموعة الأدوات ونطاق كل أداة معًا (both the tool set and each tool's scope). أما C فمتشدد أكثر من اللازم: أداة كتابة محدودة جيدًا (well-limited write tool) مثل «تجميد البطاقة (freeze card)» مع تأكيد مناسبة. (🟡 التعمق أكثر (Going deeper).)
+**A.** الحد الأدنى من الصلاحيات يضيّق مجموعة الأدوات ونطاق كل أداة معًا (both the tool set and each tool's scope). أما C فمتشدد أكثر من اللازم: أداة كتابة محدودة جيدًا (well-limited write tool) مثل «تجميد البطاقة (freeze card)» مع تأكيد مناسبة. (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
 **4. يريد فيصل إضافة تاريخ المعاملات الكامل لسنتين (full two-year transaction history) لكل عميل إلى كل طلب لنجم أسيست (Najm Assist) «كي يكون لديه كل ما قد يحتاجه (so it has everything it might need)». ما أفضل رد؟ ⁦(What is the best response?)⁩**
 
-- A. الموافقة، لأن مزيدًا من السياق يحسّن الإجابات دائمًا (more context always improves answers)
+- A. الموافقة (Agree)، لأن مزيدًا من السياق (more context) يحسّن الإجابات (answers) دائمًا (more context always improves answers)
 - B. الموافقة، ولكن للعملاء الناطقين بالعربية فقط
 - C. تحديد ميزانية سياق (context budget): تضمين البيانات التي تحتاجها المهمة فقط، عند استدعاء أداة ذات صلة (relevant tool)، للتحكم في التعرض للخصوصية والتكلفة وزمن الاستجابة (privacy exposure, cost and latency)
 - D. إزالة كل بيانات العملاء من المساعد
@@ -682,14 +682,14 @@ flowchart RL
 
 **5. يُصدر مزوّد النموذج (model provider) إصدارًا جديدًا. الموجّهات لم تتغير. أي عبارة صحيحة؟ ⁦(Which statement is correct?)⁩**
 
-- A. لا حاجة إلى تقييم لأن الموجّهات هي نفسها (prompts are the same)
-- B. يجب معاملة الترقية (upgrade) كتغيير في كل موجّه يعمل عليها، مع تشغيل مجموعة الانحدار (regression suite) قبل الإطلاق (rollout)
+- A. يجب معاملة الترقية (upgrade) كتغيير في كل موجّه يعمل عليها، مع تشغيل مجموعة الانحدار (regression suite) قبل الإطلاق (rollout)
+- B. لا حاجة إلى تقييم لأن الموجّهات هي نفسها (prompts are the same)
 - C. التكلفة وحدها هي ما يحتاج إلى فحص
-- D. يجب إعادة كتابة الموجّهات من الصفر (from scratch) لكل نموذج جديد
+- D. يجب إعادة كتابة الموجّهات من الصفر (from scratch) لكل نموذج جديد، لأن الموجّهات لا تنتقل أبدًا بين إصدارات عائلة النماذج نفسها (versions of the same model family)، حتى مع تغييرات طفيفة
 
 <details><summary>الإجابة</summary>
 
-**B.** الموجّه المضبوط لنموذج ما قد يتصرف بشكل مختلف على نموذج آخر (behave differently on another). أعد تشغيل التقييمات (rerun the evals)، ثم أطلق على مراحل. أما D فرد فعل مبالغ فيه (overreacts): التقييمات تخبرك ما إذا كانت أي إعادة كتابة لازمة (whether any rewrite is needed). (🔴 نظرة الخبير (Expert view).)
+**A.** الموجّه المضبوط لنموذج ما قد يتصرف بشكل مختلف على نموذج آخر (behave differently on another). أعد تشغيل التقييمات (rerun the evals)، ثم أطلق على مراحل. أما D فرد فعل مبالغ فيه (overreacts): التقييمات تخبرك ما إذا كانت أي إعادة كتابة لازمة (whether any rewrite is needed). (🔴 نظرة الخبير (Expert view).)
 
 </details>
 

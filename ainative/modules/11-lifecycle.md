@@ -482,7 +482,7 @@ One thing I will do differently:
 
 - A. Each path and known code name it cites in backticks exists
 - B. Every figure it quotes agrees with the constants in the code
-- C. It is complete enough to be merged without a human review
+- C. It is complete enough to be merged without any human review
 - D. The decision that it records has been shown to be a sound one
 
 <details><summary>Answer</summary>
@@ -495,8 +495,8 @@ One thing I will do differently:
 
 - A. Use the record's time and wording for that row
 - B. Keep the row, because 10:15 is only a minute off
-- C. Drop E3 from the timeline since it is disputed
-- D. Ask the assistant to explain the discrepancy
+- C. Drop E3 from the timeline since it is disputed between sources
+- D. Ask the assistant to explain the discrepancy to her
 
 <details><summary>Answer</summary>
 
@@ -507,7 +507,7 @@ One thing I will do differently:
 **3. Your critic says "the quote lifetime of five minutes is too long". `fx.py` defines 60 seconds. What do you do?**
 
 - A. The critic is right in spirit, so shorten the quote lifetime
-- B. The critic is unreliable, so drop the critic step
+- B. The critic is unreliable, so drop the critic step from the record
 - C. Nothing, since an objection needs no evidence to be recorded
 - D. The critic misread a number: record it and reject it
 

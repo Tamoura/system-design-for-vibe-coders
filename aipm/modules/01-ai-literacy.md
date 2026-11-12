@@ -163,23 +163,23 @@ Rania's rule for the card: *"If you cannot fill in 'cost of an error', you are n
 
 **3. The Credit Memo Copilot always extracts figures, checks ratios, then drafts sections in the same order. A vendor pitches an "autonomous agent" for it. What is the strongest product response?**
 
-- A. Accept, because agents are more advanced than workflows
-- B. Reject all use of LLMs for credit memos
-- C. Prefer a fixed LLM workflow, because the steps do not vary and a workflow is more predictable and easier to test
-- D. Replace the copilot with a classic ML classifier
+- A. Accept, because agents are more advanced than workflows and will cope better with unexpected cases
+- B. Reject all use of LLMs for credit memos, because credit documents are too sensitive and no generative model can be trusted with them
+- C. Replace the copilot with a classic ML classifier that scores each section of the credit memo
+- D. Prefer a fixed LLM workflow, because the steps do not vary and a workflow is more predictable and easier to test
 
 <details><summary>Answer</summary>
 
-**C.** Use an agent only when the path varies case by case. Here it does not, so a workflow gives the same value with less unpredictability. A confuses sophistication with fit. (🟡 Going deeper, workflows versus agents.)
+**D.** Use an agent only when the path varies case by case. Here it does not, so a workflow gives the same value with less unpredictability. A confuses sophistication with fit. (🟡 Going deeper, workflows versus agents.)
 
 </details>
 
 **4. Smart Alerts must score millions of card transactions in real time at very low cost per transaction. A team proposes an LLM to review every transaction. What is the main product objection?**
 
-- A. LLMs cannot read numbers
+- A. LLMs cannot read numbers, so transaction amounts and balances would be misread by the model
 - B. For this volume and latency, a specialised ML model is faster and far cheaper per decision, and an LLM can be kept for explaining alerts to customers
-- C. Fraud detection is prohibited under the EU AI Act
-- D. LLMs cannot be used in Arabic
+- C. Fraud detection is prohibited under the EU AI Act, so the team would need a regulator's approval first
+- D. LLMs cannot be used in Arabic, so the bank would need to build a separate fraud model for every language its customers speak before launching anything
 
 <details><summary>Answer</summary>
 
@@ -189,10 +189,10 @@ Rania's rule for the card: *"If you cannot fill in 'cost of an error', you are n
 
 **5. Which statement about the Model Context Protocol (MCP) is accurate?**
 
-- A. It is a training method that makes models more accurate
+- A. It is a training method that makes models more accurate on specialised tasks
 - B. It is an open standard, introduced by Anthropic in 2024, for connecting models to tools and data sources
-- C. It is a regulation governing AI agents in the EU
-- D. It is a metric for measuring hallucination
+- C. It is a regulation governing how AI agents may act on behalf of customers in the EU
+- D. It is a metric for measuring hallucination rates in model answers, reported as the share of unsupported claims per hundred answers
 
 <details><summary>Answer</summary>
 
@@ -357,14 +357,14 @@ Rania's note at the bottom: *"Every high-severity row needs a design response we
 
 **1. A fraud model is 99% accurate on a dataset where 0.1% of transactions are fraud. What should the PM ask next?**
 
-- A. Nothing; 99% accuracy is excellent
-- B. What are its precision and recall, and what does each type of error cost?
-- C. Whether the model uses deep learning
-- D. Whether accuracy could reach 99.9%
+- A. What are its precision and recall, and what does each type of error cost?
+- B. Nothing; 99% accuracy is excellent, so the model can go to the approval committee now
+- C. Whether the model uses deep learning or a simpler method such as logistic regression
+- D. Whether accuracy could reach 99.9% if the team collects more labelled training data
 
 <details><summary>Answer</summary>
 
-**B.** With rare events, a model that never flags anything scores 99.9% accuracy. Precision and recall show how many alerts are real and how much fraud is caught. D is tempting, but it chases the misleading metric. (🟡 Going deeper, errors.)
+**A.** With rare events, a model that never flags anything scores 99.9% accuracy. Precision and recall show how many alerts are real and how much fraud is caught. D is tempting, but it chases the misleading metric. (🟡 Going deeper, errors.)
 
 </details>
 
@@ -396,10 +396,10 @@ Rania's note at the bottom: *"Every high-severity row needs a design response we
 
 **4. Najm Assist's phase-2 agent completes a dispute in eight steps. Each step succeeds about 95% of the time in testing. What is the best product conclusion?**
 
-- A. The agent is 95% reliable end to end
+- A. The agent is 95% reliable end to end, because each step passes its test most of the time
 - B. End-to-end success is likely much lower, so add checkpoints, customer confirmation before filing and a recovery path
-- C. Agents should never be used for disputes
-- D. Increase the context window to fix it
+- C. Agents should never be used for disputes, because customers expect a person to handle every complaint that involves their money
+- D. Increase the context window to fix it, so the agent can remember all eight steps at once
 
 <details><summary>Answer</summary>
 
@@ -585,23 +585,23 @@ The team's quick view across the portfolio:
 
 **1. Najm Assist keeps quoting a card fee that changed last month. What is the most appropriate fix?**
 
-- A. Fine-tune the model on the new fee schedule
-- B. Retrieve the current fee schedule at request time and have the model answer from it with a citation
-- C. Increase the temperature
-- D. Train a new language model from scratch
+- A. Retrieve the current fee schedule at request time and have the model answer from it with a citation
+- B. Fine-tune the model on the new fee schedule so it learns the changed fee and answers without any lookup
+- C. Increase the temperature so the model varies its answers and sometimes gives the newer fee instead of the old one
+- D. Train a new language model from scratch on all of the bank's documents, including the latest fee schedule
 
 <details><summary>Answer</summary>
 
-**B.** Facts that change belong in retrieval, where updating the document updates the answer. A is tempting but would need retraining at every fee change and still gives no citation. (🟢 The essentials; 🟡 gap diagnosis.)
+**A.** Facts that change belong in retrieval, where updating the document updates the answer. B is tempting but would need retraining at every fee change and still gives no citation. (🟢 The essentials; 🟡 gap diagnosis.)
 
 </details>
 
 **2. Faisal proposes fine-tuning on ten years of past credit memos so the copilot "knows our credit policy". What is the strongest objection?**
 
-- A. Fine-tuning is illegal for banks
+- A. Fine-tuning is illegal for banks, because regulators do not allow customer-related documents to be used for training a model, even inside the bank's own environment
 - B. Past memos embed superseded policy, facts in weights go stale and cannot be cited, and every policy change would need retraining
-- C. Fine-tuning always makes models less accurate
-- D. Ten years of data is too little for any model
+- C. Fine-tuning always makes models less accurate on the tasks they were not trained for
+- D. Ten years of data is too little for any model to learn credit policy from
 
 <details><summary>Answer</summary>
 
@@ -611,10 +611,10 @@ The team's quick view across the portfolio:
 
 **3. Testing shows the Staff GenAI assistant gives correct answers, but in the wrong structure and far too long, even after several prompt revisions. Which next step fits the build ladder?**
 
-- A. Add more documents to retrieval
-- B. Train a model from scratch
+- A. Add many more documents to retrieval, so the model has more examples of the right structure and length in front of it
+- B. Train a model from scratch on the bank's own credit memos
 - C. Refine examples in the prompt further, and consider fine-tuning if it still plateaus, since this is a behaviour gap
-- D. Buy a second vendor product
+- D. Buy a second vendor product that offers a built-in memo template
 
 <details><summary>Answer</summary>
 
@@ -624,27 +624,27 @@ The team's quick view across the portfolio:
 
 **4. A Staff GenAI user in Retail Marketing receives an answer quoting a confidential corporate credit file. Where should this have been prevented?**
 
-- A. In the system prompt, by telling the model not to reveal confidential data
-- B. At retrieval, by enforcing the user's access rights before passages reach the model
-- C. By lowering the temperature
-- D. By fine-tuning the model on public data only
+- A. In the system prompt, by telling the model not to reveal confidential data to users outside the credit team
+- B. By fine-tuning the model on public data only, so that it never sees confidential credit files
+- C. By lowering the temperature so the model is less likely to repeat any sensitive passages
+- D. At retrieval, by enforcing the user's access rights before passages reach the model
 
 <details><summary>Answer</summary>
 
-**B.** Permissions must be enforced at retrieval. A prompt instruction (A) is not a security control and can be bypassed or ignored. (🟡 Going deeper, inside RAG; ⚠️ traps.)
+**D.** Permissions must be enforced at retrieval. A prompt instruction (A) is not a security control and can be bypassed or ignored. (🟡 Going deeper, inside RAG; ⚠️ traps.)
 
 </details>
 
 **5. Which asset best protects Najm's AI products when a vendor retires the model they depend on?**
 
-- A. A longer contract with the current vendor
-- B. A strong evaluation suite with golden sets, plus a thin layer between the application and any one vendor's API
-- C. A fine-tuned copy of the retired model
-- D. Avoiding AI products altogether
+- A. A strong evaluation suite with golden sets, plus a thin layer between the application and any one vendor's API
+- B. A longer contract with the current vendor, with a written commitment to keep the model available for several more years
+- C. A fine-tuned copy of the retired model, kept in storage for later
+- D. Avoiding AI products altogether until the vendor market becomes more stable
 
 <details><summary>Answer</summary>
 
-**B.** Owned evaluations and an abstraction layer turn a model switch into a measured decision. C keeps you tied to the retired base model and still needs revalidation. (🔴 Expert view, design for model change.)
+**A.** Owned evaluations and an abstraction layer turn a model switch into a measured decision. C keeps you tied to the retired base model and still needs revalidation. (🔴 Expert view, design for model change.)
 
 </details>
 

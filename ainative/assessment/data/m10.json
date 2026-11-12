@@ -11,13 +11,13 @@
       },
       "o": {
         "en": [
-          "She reads far less, because each agent reports what it changed and why",
+          "She reads far less, because each agent reports what it changed and why it did so",
           "She merges more easily, because separate worktrees stop the branches conflicting",
           "She waits far less for the agents, because their work overlaps in time",
           "She can skip the integration check, because each branch passed its own tests"
         ],
         "ar": [
-          "تقرأ أقل بكثير، لأن كل وكيل (agent) يكتب تقريرًا (report) بما غيّره ولماذا",
+          "تقرأ أقل بكثير، لأن كل وكيل (agent) يكتب تقريرًا (report) بما غيّره ولماذا فعل ذلك",
           "يسهل عليها الدمج (merge)، لأن أشجار العمل (worktrees) المنفصلة تمنع تعارض الفروع (branches)",
           "تنتظر الوكلاء (agents) وقتًا أقل بكثير، لأن عملهم يجري في الوقت نفسه لا بالتتابع",
           "تستطيع تخطي فحص التكامل (integration check)، لأن كل فرع (branch) اجتاز اختباراته (tests) وحده"
@@ -48,7 +48,7 @@
           "تدمجه (merge)، ثم تعيد تشغيل اختباراته (tests) والأمر على S1 الحقيقية، لأنها لم تعمل إلا أمام بديل (stub)",
           "تدمجه (merge) كما هو، لأن اختباراته (tests) نجحت أمام عقد (contract) S1، وقد دُمجت S1 فعلًا في `main`",
           "تدمجه (merge) إذا لم يُبلغ git عن تعارض (conflict)، فالدمج النظيف يثبت أن الجزأين متفقان",
-          "تدمجه (merge) وتعيد تشغيل اختبارات (tests) S1 وحدها، فهي الشيفرة (code) التي تغيّرت، وقد اختُبرت S3 من قبل"
+          "تدمجه (merge) وتعيد تشغيل اختبارات (tests) S1 وحدها، فهي الشيفرة التي تغيّرت وقد اختُبرت S3 من قبل"
         ]
       },
       "a": 0,
@@ -98,7 +98,7 @@
           "The branch is safe to merge, since it is in scope and green either way",
           "The tests pass without the feature, so they prove nothing; send the branch back",
           "The agent changed files outside its brief, so she should reject the branch",
-          "The tests are fine, and she only needs to read the `limits.py` diff slowly, as it is money logic"
+          "The tests are fine, and she only needs to read the `limits.py` diff slowly"
         ],
         "ar": [
           "الفرع آمن للدمج (merge)، فهو داخل النطاق (in scope) وأخضر في الحالتين",

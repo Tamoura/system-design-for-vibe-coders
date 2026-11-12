@@ -309,7 +309,7 @@ Work in a copy of `testing/sample`.
 - A. A fair picture, because every request that was sent is recorded
 - B. A few slow samples, and none for requests never sent
 - C. Thousands of failed requests that push the p99 sky-high
-- D. Nothing, because it aborts on the first slow reply
+- D. Nothing, because it aborts on the first slow reply it gets
 
 <details><summary>Answer</summary>
 
@@ -332,7 +332,7 @@ Work in a copy of `testing/sample`.
 
 **4. A statements endpoint is fast in QA but slow in production, where customers have thousands of transfers. It runs one query per row. Which test catches this?**
 
-- A. A timing test that fails if the endpoint takes over a second in QA
+- A. A timing test that fails if the endpoint exceeds a second
 - B. A unit test that checks the returned rows
 - C. A test that the query count stays flat as page size grows
 - D. A smoke test that sends one request and expects a 200
@@ -731,9 +731,9 @@ Use only your own copy of `testing/sample`.
 **3. Semgrep flags 40 findings in a legacy repository, 2 of them new SQL-injection patterns in this pull request. What is the sensible policy?**
 
 - A. Block on the new high-confidence findings; ticket the rest
-- B. Block every merge until all 40 are fixed
-- C. Disable the rule, since legacy findings make it noisy
-- D. Merge now and let the nightly DAST scan catch real problems
+- B. Block every merge until all 40 findings are fixed, new or old
+- C. Disable the rule, since legacy findings make it too noisy to read
+- D. Merge now and let the nightly DAST scan catch the real problems
 
 <details><summary>Answer</summary>
 
@@ -756,10 +756,10 @@ Use only your own copy of `testing/sample`.
 
 **5. A colleague suggests a full ZAP active scan of another squad's staging environment on Friday evening, "because it is only staging". What must happen first?**
 
-- A. Run it at lower intensity so nobody notices
+- A. Run it at lower intensity so that nobody notices the scan
 - B. Get written permission, and agree the scope and window
 - C. Run it from a personal laptop so the traffic is not traced to QE
-- D. Tell the squad by chat once the scan has started
+- D. Tell the squad by chat once the scan has already started
 
 <details><summary>Answer</summary>
 
@@ -1208,8 +1208,8 @@ Work in a copy of `testing/sample`.
 
 **3. The nightly backup job reports success and the file is 4 MB. What proves the backup is usable?**
 
-- A. The file size matches yesterday's backup
-- B. The backup job exits with code zero
+- A. The file size matches the size of yesterday's backup
+- B. The backup job exits with code zero and no error log
 - C. The storage provider confirms the upload finished
 - D. A clean restore whose totals match the source
 

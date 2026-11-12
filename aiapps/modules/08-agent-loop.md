@@ -205,9 +205,9 @@ The artefact is the **Loop card** for the Najm Desk ticket-and-colleague route, 
 **2. A reply has `stop_reason: "max_tokens"` and ends in a `tool_use` whose input stops mid-value. What should the loop do?**
 
 - A. Stop without running it; raise the limit or hand off
-- B. Run the tool with the partial input and see what happens
+- B. Run the tool with the partial input anyway
 - C. Repair the JSON in code, then run the tool
-- D. Send the reply back unchanged so the model finishes it
+- D. Send the reply back so the model finishes it
 
 <details><summary>Answer</summary>
 
@@ -231,7 +231,7 @@ The artefact is the **Loop card** for the Najm Desk ticket-and-colleague route, 
 **4. Najm Desk adds a "review your answer" call to every run. The eval score is unchanged and cost per run is up by a third. What does the lesson suggest?**
 
 - A. Run the review on a larger model, for every run
-- B. Run the review twice, so more mistakes get caught
+- B. Run the review twice, so that more mistakes get caught
 - C. Keep it, because an extra check can only help
 - D. Keep it only where a code check can supply feedback
 
@@ -243,10 +243,10 @@ The artefact is the **Loop card** for the Najm Desk ticket-and-colleague route, 
 
 **5. Hind wants an agent that edits a folder of runbooks and runs a script in a sandbox. Lujain starts writing file and shell tools for her own loop. What should she consider first?**
 
-- A. The beta tool runner, so she need not write the loop
+- A. The beta tool runner, so she writes no loop
 - B. A higher step cap, so the edits can finish
 - C. The Claude Agent SDK, whose harness already has them
-- D. A forced `tool_choice`, so every step calls a tool
+- D. A forced `tool_choice`, so each step calls a tool
 
 <details><summary>Answer</summary>
 
@@ -617,7 +617,7 @@ Plan first; move one module at a time; run the tests after each move.
 
 - A. The deadline is checked between steps only
 - B. The mock ignores the `TIMEOUT_S` setting
-- C. The SDK raised the timeout to fit the call
+- C. The SDK raised the timeout to fit it
 - D. The deadline counts tokens, not seconds
 
 <details><summary>Answer</summary>

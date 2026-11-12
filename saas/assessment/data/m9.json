@@ -73,7 +73,7 @@
      "Raise the Slack client's timeout so slow calls can finish before the transaction ends"
     ],
     "ar": [
-     "كتابة incident.opened في صندوق الصادر (outbox) ضمن المعاملة نفسها (same transaction)، وترك المستهلكين يتفاعلون (consumers react)",
+     "كتابة incident.opened في صندوق الصادر (outbox) ضمن المعاملة نفسها، وترك المستهلكين (consumers) يتفاعلون",
      "إحاطة استدعاء Slack (Slack call) بـ try/catch كي يُسجَّل الفشل (failure is logged) ويمضي الإيداع (commit) رغم ذلك",
      "الإيداع (commit) أولًا، ثم إجراء الاستدعاءات الأربعة نفسها (same four calls) واحدًا بعد الآخر من المعالج نفسه (same handler)",
      "رفع مهلة عميل Slack (Slack client's timeout) كي تكتمل الاستدعاءات البطيئة (slow calls) قبل انتهاء المعاملة (transaction)"

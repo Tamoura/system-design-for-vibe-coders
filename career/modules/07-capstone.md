@@ -333,7 +333,7 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 - A. Both are baseline skills, because each of them appears in more than three of the ten ads
 - B. Git is a baseline skill and Docker a differentiator, so he proves Git first and Docker second
 - C. Both are differentiators, since neither of them appears in every single ad he collected
-- D. Docker is the real baseline, because newer tools always matter more to employers than old ones
+- D. Docker is the real baseline, because newer tools matter more to employers than old ones
 
 <details><summary>Answer</summary>
 
@@ -357,7 +357,7 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 **3. Aisha opens Omar's recruiter screen with "Tell me about yourself." Which answer fits the lesson's 60-second shape best?**
 
 - A. Graduate; built and deployed a booking API with tests; wants backend work; drawn by Najm's rotations
-- B. A five-minute walk through his degree, year by year, ending with his final-year grades and contest record
+- B. A five-minute walk through his degree, year by year, ending with his final-year grades
 - C. A list of the eleven technologies on his CV, so that she can match him to the advert quickly
 - D. "It's all on my CV. Is there anything specific on it that you would like me to explain further?"
 
@@ -370,9 +370,9 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 **4. Mohammed's report generator worked last week and fails today. There are 30 small commits in between, and one test reproduces the failure. What is the fastest reliable way to find the cause?**
 
 - A. Read every diff since last week from the top, in order, until something looks suspicious
-- B. Revert all 30 commits, then re-apply them one at a time by hand and rerun the app each time
+- B. Revert all 30 commits, then re-apply them one by one by hand and rerun the app each time
 - C. Run `git bisect` over the 30 commits, using the failing test to mark each commit good or bad
-- D. Rewrite the generator from scratch, since tracing the cause through history would take too long
+- D. Rewrite the generator from scratch, since tracing the cause through history takes too long
 
 <details><summary>Answer</summary>
 
@@ -382,10 +382,10 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 
 **5. Reem has nine pinned repositories: six course assignments, two old tutorials and, sixth in the list, her capstone. A reviewer will spend about a minute on her profile. What should she change first?**
 
-- A. Add more repositories, so that her profile looks as active and broad as possible to reviewers
+- A. Add more repositories, so that her profile looks as active and broad as possible
 - B. Fill the contribution graph with small commits, so the profile looks busy every day
 - C. Pin four to six repositories, capstone first, and unpin the coursework and old tutorials
-- D. Make every repository private except the capstone, and delete the README files from the rest
+- D. Make every repository private but the capstone, and delete the READMEs from the rest
 
 <details><summary>Answer</summary>
 
@@ -447,8 +447,8 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 
 **10. Twenty minutes into a live-coding round, Huda is stuck on how to handle three repeated transactions inside one time window. What should she do?**
 
-- A. Go quiet and keep typing, so the interviewer does not notice that she is stuck
-- B. Delete her code and start a different, cleverer approach without saying why
+- A. Go quiet and keep typing, so the interviewer does not notice that she is stuck at all
+- B. Delete her code and start a different, cleverer approach without saying why she is doing it
 - C. Tell the interviewer the problem is unfair and ask to move on to another question
 - D. Say what she is thinking, try a small example by hand, and take any hint well
 
@@ -460,9 +460,9 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 
 **11. Huda's tracker shows four technical rounds in a month, all live SQL exercises, and no final-round invitations. According to the funnel table, what should she change first?**
 
-- A. Rewrite her CV and target list, since the early stages of her search are failing
+- A. Rewrite her CV and target list, since the early stages of her search are clearly failing
 - B. Practise timed live SQL mocks in that exact format, then go back to her gap list
-- C. Retarget to software engineering, where she suspects interviews will be easier
+- C. Retarget to software engineering, where she suspects the interviews will be easier for her
 - D. Stop applying for a month and finish two new portfolio projects before trying again
 
 <details><summary>Answer</summary>
@@ -473,10 +473,10 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 
 **12. Mohammed must choose one capstone for a full-stack role. Which idea is strongest as proof?**
 
-- A. A music-streaming site clone rebuilt from a video course, with his own colour scheme
-- B. A weather dashboard on a public API, with animated icons and a five-day forecast view
+- A. A music-streaming site clone rebuilt from a video course, with his own colour scheme added
+- B. A weather dashboard on a public API, with animated icons and a five-day forecast view added
 - C. Pitch booking for his old football club, where two captains could grab the last slot
-- D. A to-do list app with drag and drop, six colour themes and a polished mobile layout
+- D. A to-do list app with drag and drop, six colour themes and a polished mobile layout view
 
 <details><summary>Answer</summary>
 
@@ -500,9 +500,9 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 **14. Najm's written offer to Omar is conditional on degree attestation and a background check. He also has a final round at a telecom next week. What should he do now?**
 
 - A. Keep the telecom process open and don't resign or decline until the conditions clear
-- B. Cancel the telecom final today, because a written offer means the job is now certain
-- C. Resign from his part-time job at once, so that he can start at Najm whenever they ask
-- D. Tell the telecom he has accepted elsewhere, to save everyone's time in the meantime
+- B. Cancel the telecom final today, because a written offer means that the job is now certain
+- C. Resign from his part-time job at once, so that he can start at Najm whenever they ask him
+- D. Tell the telecom that he has accepted elsewhere, to save everyone's time in the meantime
 
 <details><summary>Answer</summary>
 
@@ -512,7 +512,7 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 
 **15. In a SQL exercise, Dana asks Huda for each customer's most recent transaction. Which approach is correct?**
 
-- A. `GROUP BY customer_id` with `MAX(amount)`, since the largest amount is usually the latest one
+- A. `GROUP BY customer_id` with `MAX(amount)`, since the largest amount is usually the latest
 - B. `ROW_NUMBER()` partitioned by customer, ordered by time descending, keeping row 1 of each
 - C. `SELECT DISTINCT customer_id` from transactions, ordered by transaction time descending
 - D. Order the whole table by transaction time descending, then take `LIMIT 1` for the answer
@@ -525,10 +525,10 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 
 **16. At his six-week check-in, Khalid asks Yousef to show what he has produced. His notes and drafts are scattered across his laptop, phone and email, and he cannot find most of them. Which habit from the course fixes this most directly?**
 
-- A. Writing a summary from memory the night before each check-in, so Khalid sees the highlights
-- B. Sending Khalid his course certificates and study hours as evidence of the effort he has put in
+- A. Writing a summary from memory the night before each check-in so Khalid sees the highlights
+- B. Sending Khalid his course certificates and study hours as evidence of his effort
 - C. One career folder holding every artefact, each named by lesson, such as `0.3-starting-audit`
-- D. Keeping notes wherever is handy and collecting them into one portfolio at the end of the course
+- D. Keeping notes wherever is handy and collecting them into one portfolio at the end
 
 <details><summary>Answer</summary>
 
@@ -551,7 +551,7 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 
 **18. Mohammed asks an agent to fix one validation bug. The diff fixes it and also "tidies" five unrelated files. What should he do?**
 
-- A. Merge it all, since tidier code is better and the agent's summary says tests pass
+- A. Merge it all, since tidier code is better and the agent's summary says that tests pass
 - B. Ask the agent to tidy the rest of the repository too, so that the style is consistent
 - C. Merge it, then mention the extra changes in the pull request after it has been merged
 - D. Keep only the requested fix, reject the unasked changes, and run the tests himself
@@ -579,8 +579,8 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 
 - A. Wait for the next promotion cycle and hope Khalid notices how many tickets he closed
 - B. Ask Khalid for a small, ambiguous problem, write a design note, then ship and watch it
-- C. Earn an architecture certificate first, so his profile shows he is ready for design work
-- D. Volunteer for every clear ticket in the backlog, to prove he can handle twice the workload
+- C. Earn an architecture certificate first, so his profile shows he is ready for design
+- D. Volunteer for every clear ticket in the backlog to prove he can take twice the work
 
 <details><summary>Answer</summary>
 
@@ -643,8 +643,8 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 **25. Omar fixes a bug where refunds were rounded the wrong way. What should he add before opening the pull request?**
 
 - A. A regression test for the rounding that fails before the fix and passes after it
-- B. A code comment asking reviewers to check the rounding by hand when they have time
-- C. A note in the README saying the rounding bug is fixed and should not come back
+- B. A code comment asking reviewers to check the rounding by hand when they find some time
+- C. A note in the README saying that the rounding bug is fixed and should not come back
 - D. Nothing more, since he tested it manually and the refund now looks right on screen
 
 <details><summary>Answer</summary>
@@ -696,7 +696,7 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 
 - A. Ask her buddy to share his production credentials, so she can deploy the change herself
 - B. Bundle the next ten changes into one release, so she only has to wait for approval once
-- C. Complain in the team channel that the approval process is outdated bureaucracy
+- C. Complain in the team channel that the approval process is outdated bureaucracy for new hires
 - D. Learn why segregation of duties exists, follow it, and suggest improvements later
 
 <details><summary>Answer</summary>
@@ -708,8 +708,8 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 **30. Mohammed pastes the text of his designer-template CV into a plain text file. His skills are missing and his job titles appear next to the wrong dates. What should he do?**
 
 - A. Move to a one-column, text-only layout, then run the plain-text paste test again
-- B. Keep the template, since recruiters always see the original design, not the text
-- C. Add his skills a second time in small white text, so the parser finds them
+- B. Keep the template, since recruiters always see the original design, not the plain text
+- C. Add his skills a second time in small white text, so that the parser finds them as well
 - D. Convert the CV into an image, so that its layout cannot be scrambled by any parser
 
 <details><summary>Answer</summary>
@@ -720,10 +720,10 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 
 **31. Omar has one week of study time on his software path. Which plan leaves the most proof an employer could check?**
 
-- A. Watch a twelve-hour framework course from start to finish and take notes on every video
-- B. Read about five new frameworks so he can list them all on his CV by the end of the week
+- A. Watch a twelve-hour framework course start to finish and take notes on each video
+- B. Read about five new frameworks so he can list all of them on his CV by Friday
 - C. Add login, test that user A cannot see user B's bookings, deploy it, then document it
-- D. Solve fifty more algorithm problems, since his problem count is the number on his CV
+- D. Solve fifty more algorithm problems, since his problem count is what goes on his CV
 
 <details><summary>Answer</summary>
 
@@ -773,7 +773,7 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 **35. Reem wants an agent to add a currency-conversion step to her expense app. Which request keeps her in charge?**
 
 - A. "Add currency conversion to the app and make sure everything works properly at the end."
-- B. "Rewrite the backend to support every currency, and then update any tests that start failing."
+- B. "Rewrite the backend to support every currency, and then update any tests that fail."
 - C. "Round to 2 places, error on missing rates, keep existing tests; show me test cases first."
 - D. "Do whatever you think is best for currencies, then give me a short summary afterwards."
 

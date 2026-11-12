@@ -14,13 +14,13 @@
           "The fault is in the edge or cache layer, so look at the CDN or proxy next",
           "The bug is in the deployed code, so roll back the latest release first",
           "The users' browsers are at fault, so ask them to clear their local cache",
-          "The origin is healthy, so the incident is resolved and the page can be closed"
+          "The origin is healthy, so the incident is over and you can close it"
         ],
         "ar": [
           "الخلل في طبقة الحافة أو الكاش (edge / cache layer)، فانظر بعدها في الـCDN أو الوسيط (proxy)",
-          "الخطأ في الكود المنشور (deployed code)، فتراجع (roll back) عن آخر إصدار أولًا",
-          "متصفحات المستخدمين هي السبب، فاطلب منهم مسح الكاش المحلي (local cache)",
-          "الخادم الأصلي (origin) سليم، فالحادث (incident) محلول ويمكن إغلاق التنبيه"
+          "الخطأ في الكود المنشور (deployed code)، فتراجع (roll back) عن آخر إصدار (release) أولًا",
+          "متصفحات المستخدمين (browsers) هي السبب، فاطلب منهم مسح الكاش المحلي (local cache) وإعادة التحميل",
+          "الخادم الأصلي (origin) سليم، فالحادث (incident) محلول ويمكن إغلاق التنبيه (page) الآن"
         ]
       },
       "a": 0,
@@ -75,8 +75,8 @@
         "ar": [
           "شبكة روبوتات (botnet) تهاجم من تلك العناوين القليلة، فاحجبها في جدار الحماية (firewall)",
           "المحدِّد يعتمد على عنوان IP للمقبس (socket IP)، وهو عنوان حافة (edge) للـCDN يتشاركه مستخدمون كثيرون",
-          "الحدّ صارم جدًا ليوم انتشار، فارفعه من 100 إلى 1,000",
-          "نشرٌ (deploy) مسح عدّادات Redis، فاختلطت ميزانية كل مستخدم"
+          "الحدّ (limit) صارم جدًا ليوم انتشار واسع، فارفعه من 100 إلى 1,000 لتمرّ الحركة (traffic) الكبيرة دون حجب",
+          "نشرٌ (deploy) جديد مسح عدّادات Redis (counters)، فاختلطت ميزانية (budget) كل مستخدم"
         ]
       },
       "a": 1,
@@ -95,16 +95,16 @@
       },
       "o": {
         "en": [
-          "The provider is still degraded; wait until its status page shows full recovery",
+          "The provider is still degraded; wait for its status page to clear",
           "There are too few workers; add more of them so the backlog drains faster",
           "The queue lost jobs; replay everything from the provider's logs by hand",
           "Unbounded instant retries made a storm; add backoff, jitter and a breaker"
         ],
         "ar": [
-          "المزوّد ما زال متدهورًا؛ انتظر حتى تُظهر صفحة حالته (status page) التعافي الكامل",
-          "العمّال (workers) قليلون؛ أضف المزيد منهم كي يُصرَّف التراكم (backlog) أسرع",
-          "الطابور (queue) أضاع مهامّ؛ أعد تشغيل كل شيء من سجلّات المزوّد يدويًا",
-          "إعادات المحاولة (retries) الفورية غير المحدودة صنعت عاصفة؛ أضف تراجعًا (backoff) وتذبذبًا (jitter) وقاطع دارة (circuit breaker)"
+          "المزوّد (provider) ما زال متدهورًا (degraded)؛ انتظر حتى تُظهر صفحة حالته (status page) التعافي الكامل ثم أعد الاتصال به",
+          "العمّال (workers) قليلون؛ أضف المزيد منهم (more workers) كي يُصرَّف التراكم (backlog) أسرع بكثير",
+          "الطابور (queue) أضاع مهامّ (jobs)؛ أعد تشغيل كل شيء من سجلّات المزوّد (provider logs) يدويًا",
+          "إعادات المحاولة (retries) الفورية غير المحدودة صنعت عاصفة؛ أضف تراجعًا (backoff) وارتعاشًا (jitter) وقاطعًا (breaker)"
         ]
       },
       "a": 3,

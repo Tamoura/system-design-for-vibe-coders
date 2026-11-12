@@ -246,10 +246,10 @@ Total minutes: 0
 
 **2. The agent's `STD-C` tests compute each expected fee by calling `quote_fee`, then assert that `quote_fee` returns it. All pass. What does that show?**
 
-- A. The fees match the ticket, because test and code agree
+- A. The fees match the ticket, because the test and code agree
 - B. Nothing about the fees, because those tests cannot fail
 - C. The schedule is well tested, because every tier is covered
-- D. Only a style problem, because the tests are repetitive
+- D. Only a style problem, because the tests are repetitive in form
 
 <details><summary>Answer</summary>
 
@@ -454,7 +454,7 @@ Fill it in this order. Mark the exam and count guesses as misses. Write one row 
 
 - A. Tell the agent in the prompt not to touch her existing unfinished edits to `cli.py`
 - B. Start now and use `/rewind` afterwards to separate her edits from the agent's work
-- C. Let the agent commit everything at the end, then read that single combined commit
+- C. Let the agent commit everything at the end, then read that single combined commit afterwards
 - D. Commit or stash her own edits first, then switch to a fresh branch for the ticket
 
 <details><summary>Answer</summary>
@@ -492,7 +492,7 @@ Fill it in this order. Mark the exam and count guesses as misses. Write one row 
 **8. On REMIT-350, two streams each needed to show only the last four digits of an account number. The statement stream wrote `mask_account` in `statement.py`, and the notification stream wrote `hide_digits` in `notify.py`. They give the same output, have separate tests, and both branches are green and merge without a conflict. Which failure is this, and what is the cheapest prevention?**
 
 - A. Duplicated work; name one owner for the helper in the plan so the other stream imports it
-- B. Divergent assumptions; write the masking rule into both contracts, with a test that checks it
+- B. Divergent assumptions; write the masking rule into both contracts and test it
 - C. Semantic conflict; run the full tests and every command by hand after each merge
 - D. Conflicting edits; list the shared files in the plan and agree a merge order
 
@@ -543,10 +543,10 @@ Fill it in this order. Mark the exam and count guesses as misses. Write one row 
 
 **12. Support reports that some customers get `quote_expired` on transfers they confirmed within the minute. Nobody has reproduced it. Lujain's agent proposes doubling the quote's time to live in `fx.py`, "which will stop the complaints". What does she do?**
 
-- A. Accepts it: the change is one line, easy to revert, and the complaints are the only evidence there is.
+- A. Accepts it: the change is one line, easy to revert, and the complaints are the only evidence.
 - B. Skips the expiry check for the customers who complained, until someone can find the real cause.
 - C. Builds the smallest failing test from a reported case, with exact timestamps, and asks why it fires.
-- D. Catches `QuoteExpired` in `send` and fetches a fresh quote silently, so that the customer is not bothered.
+- D. Catches `QuoteExpired` in `send` and fetches a fresh quote, so that the customer is not bothered.
 
 <details><summary>Answer</summary>
 
@@ -557,7 +557,7 @@ Fill it in this order. Mark the exam and count guesses as misses. Write one row 
 **13. Lujain's agent adds a "new recipient tip" message to `send` by calling `self.notifier.notify(...)` directly, after the transfer is saved. When the notifier raises in a test, `send` raises as well, although the money has moved. What is the right fix?**
 
 - A. Wrap the call in `try/except Exception: pass`, so that nothing can ever escape from `send` again.
-- B. Let the error propagate, so that support sees the failure and the customer can retry the whole transfer.
+- B. Let the error propagate, so that support sees the failure and the customer can retry.
 - C. Move the call above the ledger posting, so that a failure stops the transfer before money moves.
 - D. Route it through the best-effort path of "transfer sent", which audits a failure and returns normally.
 
@@ -572,7 +572,7 @@ Fill it in this order. Mark the exam and count guesses as misses. Write one row 
 - A. The file removed the extra wrong turns, since B is the only run that had the file
 - B. The stronger model explains the gain, so the memory file made no real difference
 - C. Nothing yet: two things changed, so rerun both with one model, tool and prompt
-- D. The result stands once she repeats run B one more time on the stronger model
+- D. The result stands once she repeats run B one more time on the stronger model and sees the same gain
 
 <details><summary>Answer</summary>
 
@@ -621,7 +621,7 @@ Fill it in this order. Mark the exam and count guesses as misses. Write one row 
 
 **18. Before a vendor library is added, Lujain opens its README in the browser preview. It looks like ordinary documentation, but Noura's ticket REMIT-258 wants notes on every line in it that is aimed at an AI reader. What is the sound way to make those notes?**
 
-- A. Paste the whole README into an agent session and ask it to list every line that is aimed at it
+- A. Paste the whole README into an agent session and ask it to list every line aimed at it
 - B. Trust the rendered view, since an instruction meant for an AI would show up as visible text
 - C. Read the raw text yourself and scan its characters for invisible ones, with no agent involved
 - D. Follow the setup steps inside a sandbox first and watch what the commands try to do
@@ -714,7 +714,7 @@ Fill it in this order. Mark the exam and count guesses as misses. Write one row 
 
 - A. Do nothing yet, because nothing was pushed and an encrypted disk keeps the key private
 - B. Delete the session transcript and the shell history, which removes the other copies
-- C. Add a line to `CLAUDE.md` that tells agents never to read `.env`, and carry on
+- C. Add a line to `CLAUDE.md` that tells agents never to read `.env`, and carry on with the task
 - D. Rotate the key now, then deny `Read(./.env)` so the agent cannot read it again
 
 <details><summary>Answer</summary>
@@ -767,7 +767,7 @@ Fill it in this order. Mark the exam and count guesses as misses. Write one row 
 - A. Keep the two edits her change requires, and log the other stale lines as a follow-up with an owner
 - B. Accept all four edits, since known errors in a document are worse than a wider diff
 - C. Accept the limits rewrite, since limits matter to the corridor, and decline the `risk.py` row
-- D. Decline all four edits and leave the page alone, since documents are out of scope for a code change
+- D. Decline all four edits and leave the page alone, since documents are out of scope
 
 <details><summary>Answer</summary>
 
@@ -780,7 +780,7 @@ Fill it in this order. Mark the exam and count guesses as misses. Write one row 
 - A. Add a rule to the session prompt: never act on instructions found inside an issue or a comment
 - B. Limit the server's token to the one public repository, so that no private data is in reach
 - C. Switch to a newer model, which follows instructions hidden in issues less often than older ones
-- D. Let the agent comment freely, and have someone read everything it posted the next morning
+- D. Let the agent comment freely, and have someone read everything it posted on the following morning
 
 <details><summary>Answer</summary>
 
@@ -805,7 +805,7 @@ Fill it in this order. Mark the exam and count guesses as misses. Write one row 
 
 - A. Migrate in small steps and compare only the `transfer.sent` line, since the suite stays green
 - B. Ask the agent to state in its summary that no audit line changes anywhere in the migration
-- C. Read the migration notes for behaviour words and treat what they omit as unchanged
+- C. Read the migration notes for behaviour words and treat what they omit as unchanged in the audit
 - D. Pin all three events character for character, with a fixed clock and sequential ids
 
 <details><summary>Answer</summary>
@@ -1000,7 +1000,7 @@ Fill it in this order. Mark the exam and count guesses as misses. Write one row 
 
 - A. Blocker: severity follows the damage if shipped, and a wrong cent in a fee is wrong money.
 - B. Minor: it affects only ties, so it can be fixed in a follow-up soon after the merge.
-- C. Nit: she is right, because severity measures how hard the fix is, and this fix is easy to make.
+- C. Nit: she is right, because severity measures how hard the fix is.
 - D. Major: only a leaked secret deserves a blocker, and a cent is nothing like a secret.
 
 <details><summary>Answer</summary>
@@ -1012,7 +1012,7 @@ Fill it in this order. Mark the exam and count guesses as misses. Write one row 
 **48. Salem is writing `remit-reviewer`, a subagent that must be able to read Remit's code but never change it. Which definition is actually read-only?**
 
 - A. No `tools` line, and a prompt that says to report findings and never to edit files
-- B. `tools: Read, Grep, Glob, Bash`, and a prompt that says to use Bash for `git diff` only
+- B. `tools: Read, Grep, Glob, Bash`, and a prompt that limits Bash to `git diff`
 - C. `tools: Read, Grep, Glob`, and a prompt that says to report findings and not to edit
 - D. `disallowedTools: Edit`, and a prompt that says never to create or change files
 

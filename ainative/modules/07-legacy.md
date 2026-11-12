@@ -523,7 +523,7 @@ Time spent:      (you / the agent)
 **1. Your twenty ledger tests pass on your refactor, but the grader says they do not describe the original ledger. Why?**
 
 - A. The tests are too slow, so the grader timed out before it finished
-- B. The tests assert too little, so the grader sees no real values
+- B. The tests assert too little, so the grader sees no real values at all
 - C. The tests need the new `Ledger` class or an edited `conftest.py`
 - D. The tests share a file with the seam, which the grader refuses to run
 
@@ -550,7 +550,7 @@ Time spent:      (you / the agent)
 
 - A. Pass `float(amount.amount)`, which is the number without the currency text
 - B. Pass `amount.amount`, which is already a `Decimal` and so is exact
-- C. Pass `str(amount.amount)`, a tidier string without the currency
+- C. Pass `str(amount.amount)`, a tidier string without the currency text
 - D. Pass `str(amount)`, because version 1 wrote `str()` of the object
 
 <details><summary>Answer</summary>

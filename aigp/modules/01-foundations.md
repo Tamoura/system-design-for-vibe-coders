@@ -168,10 +168,10 @@ Applied to the inventory: credit scoring (supervised ML, AI, high impact); Najm 
 
 **1. Which element of the EU AI Act definition MOST clearly distinguishes an AI system from conventional software?**
 
-- A. It runs on a machine
-- B. It adapts after deployment
+- A. It runs on a machine, such as a server, a laptop or a phone, so it counts as automated processing
+- B. It adapts after deployment by learning from new data, which every AI system must be able to do
 - C. It infers from its input how to generate outputs
-- D. It is sold by a technology company
+- D. It is sold by a technology company under a licence that names the product as artificial intelligence
 
 <details><summary>Answer</summary>
 
@@ -182,9 +182,9 @@ Applied to the inventory: credit scoring (supervised ML, AI, high impact); Najm 
 **2. Najm's credit memo copilot retrieves client documents and passes them to a third-party LLM to draft a memo. What is this technique called?**
 
 - A. Retrieval-augmented generation
-- B. Reinforcement learning
+- B. Reinforcement learning from the credit officers' ratings
 - C. Fine-tuning
-- D. Unsupervised clustering
+- D. Unsupervised clustering of the client's documents
 
 <details><summary>Answer</summary>
 
@@ -194,10 +194,10 @@ Applied to the inventory: credit scoring (supervised ML, AI, high impact); Najm 
 
 **3. A relationship manager notices that the copilot's draft includes a plausible but invented debt-service ratio. What is the BEST description of this failure?**
 
-- A. A data breach
+- A. A data breach, because client information was exposed to an unauthorised party outside the bank
 - B. Confabulation, a known property of generative models that requires verification controls
-- C. Model drift caused by changing interest rates
-- D. Prompt injection by the client
+- C. Model drift caused by changing interest rates, which has altered the pattern the model learned earlier
+- D. Prompt injection by the client, who has placed hidden instructions in the documents they submitted
 
 <details><summary>Answer</summary>
 
@@ -383,10 +383,10 @@ Rules: every harm has an owner and an action; a "people" severity of High cannot
 
 **1. Under the NIST AI RMF, a model that systematically disadvantages applicants from one nationality is an example of harm to which category?**
 
-- A. An ecosystem
-- B. An organisation's operations
+- A. An ecosystem of partners, suppliers and regulators
+- B. An organisation's operations and reputation in the market
 - C. People, at the group or community level
-- D. The environment
+- D. The environment, including energy and water use
 
 <details><summary>Answer</summary>
 
@@ -397,9 +397,9 @@ Rules: every harm has an owner and an action; a "people" severity of High cannot
 **2. Dana removes gender from the credit model's inputs. Khalid says the model is now fair. What is the BEST response?**
 
 - A. Test outcomes across groups, because other features can act as proxies for gender
-- B. Agree, because the model can no longer see gender
-- C. Add gender back to increase accuracy
-- D. Stop using the model entirely
+- B. Agree, because the model can no longer see gender and so cannot treat applicants differently by gender
+- C. Add gender back to increase accuracy, then report the accuracy gain to the Committee
+- D. Stop using the model entirely until the data science team builds a fairer model from scratch
 
 <details><summary>Answer</summary>
 
@@ -409,9 +409,9 @@ Rules: every harm has an owner and an action; a "people" severity of High cannot
 
 **3. A GenAI tool produces images that show "a successful business owner" almost only as young men. What type of harm is this primarily?**
 
-- A. Allocative harm
-- B. Security harm
-- C. Ecosystem harm
+- A. Allocative harm, where opportunities or resources are withheld from a group
+- B. Security harm, where an attacker exploits the system to gain access
+- C. Ecosystem harm, where damage spreads to partners and suppliers
 - D. Representational harm
 
 <details><summary>Answer</summary>
@@ -422,10 +422,10 @@ Rules: every harm has an owner and an action; a "people" severity of High cannot
 
 **4. The COMPAS debate showed that a risk score was similarly calibrated across groups yet had different false-positive rates. What is the main governance lesson?**
 
-- A. Calibration is always the correct fairness metric
+- A. Calibration is always the correct fairness metric, so the choice of metric needs no further discussion
 - B. Fairness metrics can conflict, so the choice must be an explicit, documented decision by accountable people in context
-- C. Risk tools should never be used anywhere
-- D. False-positive rates do not matter if a model is calibrated
+- C. Risk tools should never be used anywhere in the justice system or in credit decisions
+- D. False-positive rates do not matter if a model is calibrated, because calibration already guarantees equal treatment across groups
 
 <details><summary>Answer</summary>
 
@@ -435,8 +435,8 @@ Rules: every harm has an owner and an action; a "people" severity of High cannot
 
 **5. Najm's harm register rates a fraud-model harm as "High" for customers but "Low" for the bank. Under Layla's rules, what should happen?**
 
-- A. The harm can be accepted by the system owner because the bank's severity is low
-- B. The harm should be removed from the register
+- A. The harm can be accepted by the system owner because the bank's severity is low, as long as the owner signs the register
+- B. The harm should be removed from the register because people severity is a separate matter from the bank's own risk
 - C. The harm cannot be accepted without Committee approval, because people severity is High
 - D. The model must be switched off immediately
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="aiapps-source" content="b286693b3927f9b4">
+<meta name="aiapps-source" content="5ddf0c3362bcac84">
 <meta name="description" content="بناء تطبيقات الذكاء الاصطناعي والوكلاء من الصفر إلى الاحتراف: دورة مجانية ثنائية اللغة عن كيف تعمل تطبيقات النماذج اللغوية، والموجّهات والأدوات وRAG، وسير العمل، والمتطلبات والتصميم مع العميل، والوكلاء بذاكرة وMCP وفرق متعددة الوكلاء، والتقييم، والأمان والحوكمة، والنشر والتشغيل والتسليم، مع Claude Code شريكًا في البناء واختبار في كل درس وامتحان تدريبي من 60 سؤالًا.">
 <title>بناء تطبيقات الذكاء الاصطناعي والوكلاء من الصفر إلى الاحتراف — الدورة كاملة</title>
 <style>
@@ -843,7 +843,7 @@ Done for the week: lab runs offline, checkpoint answered, deliverable committed,
 <li>A. سير عمل <bdi>(workflow)</bdi>: يصنّف مرة واحدة، ثم يوجّه <bdi>(route)</bdi> بشيفرة عادية</li>
 <li>B. فريق تعدد وكلاء <bdi>(multi-agent team)</bdi> بمشرف <bdi>(supervisor)</bdi> وثلاثة عمّال <bdi>(workers)</bdi></li>
 <li>C. وكيل مستقل <bdi>(autonomous agent)</bdi> يقرر أدواته وخطواته بنفسه <bdi>(decides its own tools and steps)</bdi></li>
-<li>D. روبوت دردشة <bdi>(chatbot)</bdi> يطلب من مقدّم الطلب <bdi>(requester)</bdi> اختيار فئة</li>
+<li>D. روبوت دردشة <bdi>(chatbot)</bdi> يطلب من مقدّم الطلب <bdi>(requester)</bdi> اختيار فئة أولًا</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -1716,9 +1716,9 @@ if __name__ == &quot;__main__&quot;:
 
 <p><strong>3. يقول <code>CLAUDE.md</code> الخاص بك «شغّل الاختبارات بعد كل تعديل» <bdi>(&quot;run the tests after every edit&quot;)</bdi>، ومع ذلك يتخطاها الوكيل <bdi>(agent)</bdi> أحيانًا. ما أوثق حل <bdi>(most reliable fix)</bdi>؟</strong></p>
 <ul>
-<li>A. أعد كتابة القاعدة بأحرف كبيرة في الأعلى</li>
-<li>B. كرّر القاعدة نفسها في نهاية الملف أيضًا</li>
-<li>C. انتقل إلى نموذج أكبر في كل جلسة</li>
+<li>A. أعد كتابة القاعدة بأحرف كبيرة <bdi>(capital letters)</bdi> في أعلى الملف</li>
+<li>B. كرّر القاعدة نفسها <bdi>(same rule)</bdi> في نهاية الملف أيضًا</li>
+<li>C. انتقل إلى نموذج أكبر <bdi>(larger model)</bdi> في كل جلسة</li>
 <li>D. أضف خطافًا <bdi>(hook)</bdi> يشغّل الاختبارات بعد كل تعديل</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -1741,9 +1741,9 @@ if __name__ == &quot;__main__&quot;:
 <p><strong>5. تسألك هند كيف تعرف أن نجم ديسك <bdi>(Najm Desk)</bdi> يجيب عن أسئلة السياسات <bdi>(policy questions)</bdi> إجابة صحيحة. فتقول إن Claude Code كتب اختبارات وهي تنجح. ما الذي ينقص؟</strong></p>
 <ul>
 <li>A. لا شيء، لأن الاختبارات الناجحة <bdi>(passing tests)</bdi> تثبت صحة الإجابات</li>
-<li>B. <code>CLAUDE.md</code> أطول وفيه قواعد أكثر بكثير</li>
+<li>B. <code>CLAUDE.md</code> أطول <bdi>(a longer file)</bdi> وفيه قواعد أكثر بكثير <bdi>(many more rules)</bdi> للوكيل</li>
 <li>C. تقييم على نموذج حقيقي <bdi>(real-model eval)</bdi> فوق مجموعة ذهبية من الأسئلة <bdi>(golden set of questions)</bdi></li>
-<li>D. مراجعة ثانية من Claude Code <bdi>(a second Claude Code review)</bdi> للاختبارات الناجحة نفسها</li>
+<li>D. مراجعة ثانية من Claude Code <bdi>(a second Claude Code review)</bdi> للاختبارات الناجحة نفسها قبل كل دمج <bdi>(before every merge)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -2434,7 +2434,7 @@ gets one user message holding three tool_results.
 <li>A. لا؛ شيفرتك تنفّذها، أو ترفض تنفيذها <bdi>(your code runs it, or refuses to)</bdi></li>
 <li>B. نعم؛ نفّذتها واجهة البرمجة قبل الرد <bdi>(ran it before replying)</bdi></li>
 <li>C. لا؛ تنفّذها خوادم Anthropic <bdi>(servers)</bdi> بمجرد أن ترسل نتيجة</li>
-<li>D. نعم؛ تنفّذها حزمة التطوير <bdi>(SDK)</bdi> للأدوات التي عرّفتها <bdi>(declared)</bdi></li>
+<li>D. نعم؛ تنفّذها حزمة التطوير <bdi>(SDK)</bdi> تلقائيًا للأدوات التي عرّفتها أنت <bdi>(declared)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -2812,7 +2812,7 @@ Staff can request a new laptop through the IT Service Desk portal under Hardware
 <li>A. ترجمة الأسئلة العربية إلى الإنجليزية قبل الاستدعاء</li>
 <li>B. رفع <code>effort</code> ليستدلّ النموذج بشأن لغة المستخدم <bdi>(the user&#39;s language)</bdi></li>
 <li>C. إضافة قاعدة للغة <bdi>(a language rule)</bdi> ثم اختبارها على حالات عربية <bdi>(Arabic cases)</bdi></li>
-<li>D. إضافة مثال عربي واحد وترك التعليمات كما هي <bdi>(leave the instructions alone)</bdi></li>
+<li>D. إضافة مثال عربي واحد فقط وترك التعليمات كما هي تمامًا <bdi>(leave the instructions alone)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -2835,7 +2835,7 @@ Staff can request a new laptop through the IT Service Desk portal under Hardware
 <ul>
 <li>A. الأمثلة الواقعة بعد التعليمات تُحتسب أقل من القواعد <bdi>(count less than the rules)</bdi></li>
 <li>B. ثمانية أمثلة قليلة جدًا لتعليم التسميات <bdi>(too few to teach the labels)</bdi></li>
-<li>C. التسمية الأولى في القائمة تفوز كلما تردد النموذج <bdi>(whenever the model is unsure)</bdi></li>
+<li>C. التسمية الأولى في القائمة تفوز كلما تردد النموذج في الاختيار <bdi>(when the model is unsure)</bdi></li>
 <li>D. الأمثلة المنحازة <bdi>(skewed examples)</bdi> تدفعه نحو التسمية الأكثر عرضًا <bdi>(most-shown label)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -3185,10 +3185,10 @@ Plan first; wait for my approval before writing.
 <section class="sec sec-quiz"><h2>✍️ اختبر نفسك <bdi>(Check yourself)</bdi></h2>
 <p><strong>1. يسجل موجّه 100% على تذاكر التطوير العشرين التي ضُبط عليها <bdi>(the 20 dev tickets it was tuned on)</bdi>. ماذا ينبغي أن تفعل أولًا <bdi>(what should you do first)</bdi>؟</strong></p>
 <ul>
-<li>A. إعادة تشغيل التطوير ثلاث مرات للتأكد من استقرار الـ100%</li>
+<li>A. إعادة تشغيل التطوير <bdi>(dev)</bdi> ثلاث مرات للتأكد من استقرار نسبة الـ100%</li>
 <li>B. تشغيل المجموعة المحجوبة <bdi>(held-out set)</bdi> ومقارنتها بدرجات التطوير</li>
 <li>C. رفع عتبة البوابة <bdi>(gate threshold)</bdi> إلى 100% لتثبيتها</li>
-<li>D. التحول إلى نموذج أرخص ومقارنة الدرجات</li>
+<li>D. التحول إلى نموذج أرخص <bdi>(cheaper model)</bdi> ومقارنة الدرجات</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -3968,8 +3968,8 @@ Plan first, implement in small steps, run the tests after each step.
 <ul>
 <li>A. تعمل بصورة طبيعية <bdi>(It runs normally)</bdi>، لأن <code>getcwd</code> تقرأ الحالة فقط <bdi>(only reads state)</bdi></li>
 <li>B. تُرفض عقدة الاستدعاء <bdi>(A call node is refused)</bdi> ويحصل النموذج على خطأ</li>
-<li>C. تعمل داخل بيئة معزولة <bdi>(a sandbox)</bdi> وتعيد اسم المجلد <bdi>(the folder name)</bdi></li>
-<li>D. تُستبدل بصمت بالصفر ويستمر الجمع <bdi>(quietly replaced by 0)</bdi></li>
+<li>C. تعمل داخل بيئة معزولة <bdi>(a sandbox)</bdi> وتعيد اسم المجلد الحالي <bdi>(the current folder name)</bdi></li>
+<li>D. تُستبدل بصمت بالصفر ويستمر الجمع من دونها <bdi>(quietly replaced by 0 and the sum carries on without it)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -4297,9 +4297,9 @@ quality_gate: {recall_at_3: &quot;agreed target on 40 questions&quot;, refusal_t
 
 <p><strong>2. قطعة رتبتها 2 في بحث المتجهات <bdi>(vector search)</bdi> وغائبة عن BM25، وقطعة أخرى رتبتها 4 في كليهما. عند k = 60، أيهما تحصل على درجة أعلى <bdi>(which scores higher)</bdi>؟</strong></p>
 <ul>
-<li>A. الأولى، لأن الرتبة 2 تتفوق دائمًا على الرتبة 4 في قائمة واحدة <bdi>(in a single list)</bdi></li>
+<li>A. الأولى، لأن الرتبة 2 تتفوق دائمًا على الرتبة 4 في القائمة الواحدة نفسها <bdi>(in one list)</bdi></li>
 <li>B. يتعادلان، لأن k = 60 تسطّح الرتب <bdi>(flattens the ranks away)</bdi></li>
-<li>C. الأولى، لأن رتب المتجهات <bdi>(vector ranks)</bdi> تُحتسب أكثر من رتب BM25 <bdi>(count for more)</bdi></li>
+<li>C. الأولى، لأن رتب المتجهات <bdi>(vector ranks)</bdi> تفوق رتب BM25 بكثير <bdi>(far outweigh BM25 ranks)</bdi></li>
 <li>D. الثانية، لأن قائمتين تتفقان وتتجمع نقاطهما <bdi>(two lists agree and their points add)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -4731,7 +4731,7 @@ Do not tune MIN_SIM or edit the questions to make a number look better.
 <section class="sec sec-quiz"><h2>✍️ اختبر نفسك <bdi>(Check yourself)</bdi></h2>
 <p><strong>1. عند السؤال «كم يستغرق طلب حاسوب محمول جديد؟» <bdi>⁦(How long does a new laptop request take?)⁩</bdi> لا يُظهر السجل إلا <code>laptop-requests#0</code> وتقتبس الإجابة جملة البوابة الإلكترونية <bdi>(the portal sentence)</bdi>. لماذا؟</strong></p>
 <ul>
-<li>A. أصبح الفهرس قديمًا <bdi>(went stale)</bdi> بعد إعادة استيعاب السياسة <bdi>(re-ingested)</bdi></li>
+<li>A. أصبح الفهرس قديمًا <bdi>(went stale)</bdi> بعد إعادة استيعاب <bdi>(re-ingested)</bdi> صفحة السياسة إلى المخزن <bdi>(into the store)</bdi></li>
 <li>B. <code>MIN_SIM</code> منخفضة جدًا <bdi>(too low)</bdi>، فمرّ ضجيج غير مرتبط <bdi>(unrelated noise)</bdi></li>
 <li>C. القطعة الحاملة للإجابة <bdi>(the chunk holding the answer)</bdi> لا تشترك في أي كلمة مع السؤال</li>
 <li>D. تجاهل النموذج جملة الأيام الخمسة <bdi>(the 5-business-days sentence)</bdi></li>
@@ -5099,7 +5099,7 @@ print(loop(6, 600, 450, 150))    # (10350, 900)
 <li>A. وكيل <bdi>(An agent)</bdi> بأربع أدوات يختار ترتيبه بنفسه <bdi>(picks its own order)</bdi></li>
 <li>B. سير عمل ثابت <bdi>(A fixed workflow)</bdi> مع بوابة تفحص مخرج كل خطوة <bdi>(a gate checking each step&#39;s output)</bdi></li>
 <li>C. نموذج مشرف <bdi>(A supervisor model)</bdi> يستدعي وكلاء عاملين عند الطلب <bdi>(hires worker agents on demand)</bdi></li>
-<li>D. منسِّق <bdi>(An orchestrator)</bdi> يبتكر المهام الفرعية لكل إشعار <bdi>(invents the subtasks for each notice)</bdi></li>
+<li>D. منسِّق <bdi>(An orchestrator)</bdi> يبتكر المهام الفرعية لكل إشعار وارد جديد <bdi>(invents subtasks for each notice)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -5147,7 +5147,7 @@ print(loop(6, 600, 450, 150))    # (10350, 900)
 <li>A. كل تكرار يعيد إرسال السجل المتنامي كله <bdi>(resends the whole growing history)</bdi></li>
 <li>B. استدعاءات الأدوات <bdi>(Tool calls)</bdi> أغلى لكل رمز من استدعاءات السلسلة</li>
 <li>C. الحلقات تعمل دائمًا على نموذج أكبر <bdi>(a bigger model)</bdi> من السلاسل</li>
-<li>D. إدخال السلسلة يُخزَّن مؤقتًا تلقائيًا <bdi>(cached automatically)</bdi> ولا يُحسب</li>
+<li>D. إدخال السلسلة يُخزَّن مؤقتًا <bdi>(cached)</bdi> ولا يُحسب أبدًا ضمن تكلفة الفاتورة الشهرية</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -5518,8 +5518,8 @@ Implement in small steps; run the tests after each.
 
 <p><strong>2. تلفّ لجين <bdi>(Lujain)</bdi> كل <code>run_notice</code> داخل <code>async with sem</code>. مع <code>WIDTH=4</code> وثلاثين إشعارًا يتعلّق التشغيل <bdi>(the run hangs)</bdi>. لماذا؟ <bdi>⁦(Why?)⁩</bdi></strong></p>
 <ul>
-<li>A. أُنشئ السيمافور في حلقة أحداث خاطئة <bdi>(the wrong event loop)</bdi></li>
-<li>B. لا يمكن الجمع بين <code>gather</code> وسيمافور <bdi>(cannot be combined with a semaphore)</bdi></li>
+<li>A. وُضع السيمافور في حلقة أحداث خاطئة <bdi>(the wrong event loop)</bdi></li>
+<li>B. لا يمكن الجمع بين <code>gather</code> وسيمافور <bdi>(semaphore)</bdi> في الشيفرة نفسها <bdi>(cannot be combined)</bdi></li>
 <li>C. تحجز حزمة التطوير <bdi>(The SDK)</bdi> خانة واحدة لإعادات محاولتها</li>
 <li>D. أربعة إشعارات تمسك كل الخانات وتنتظر المزيد <bdi>(hold every slot and wait for more)</bdi></li>
 </ul>
@@ -5542,7 +5542,7 @@ Implement in small steps; run the tests after each.
 
 <p><strong>4. ترفض البوابة 2 ملخصًا يحوي الرقم 30 وهو غير موجود في الإشعار. ماذا يحدث بعد ذلك؟ <bdi>⁦(What happens next?)⁩</bdi></strong></p>
 <ul>
-<li>A. يحذف خط المعالجة الرقم بالشيفرة ويواصل <bdi>(deletes the number in code and carries on)</bdi></li>
+<li>A. يحذف خط المعالجة الرقم بالشيفرة ويواصل بقية الإشعار <bdi>(deletes the number in code and carries on with the rest)</bdi></li>
 <li>B. يقرر المدقِّقون <bdi>(The fact-checkers decide)</bdi> هل الرقم مقبول</li>
 <li>C. يذهب الإشعار مباشرة إلى شخص <bdi>(straight to a person)</bdi> دون استدعاءات إضافية</li>
 <li>D. يُطلَع النموذج على المشكلة ويعيد المحاولة مرة واحدة، ثم يتوقف <bdi>(retries once, then stops)</bdi></li>
@@ -7045,7 +7045,7 @@ Plan first; small steps; tests after each.
 <li>A. ليشاهد العميل التقاط إجابة خاطئة <bdi>(watch a wrong answer get caught)</bdi></li>
 <li>B. ليُظهر أن معدل الإخفاق منخفض بما يكفي لتخطي التجربة التشغيلية <bdi>(skip the pilot)</bdi></li>
 <li>C. ليثبت أن النموذج لا يخطئ أبدًا في أسئلة السياسات <bdi>(never makes mistakes on policy questions)</bdi></li>
-<li>D. لتفادي كتابة معايير القبول <bdi>(acceptance criteria)</bdi> للتجربة التشغيلية</li>
+<li>D. لتفادي كتابة معايير القبول <bdi>(acceptance criteria)</bdi> للتجربة التشغيلية بأكملها</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -7493,9 +7493,9 @@ Plan first; small steps; tests after each.
 <p><strong>2. يحمل رد <code>stop_reason: &quot;max_tokens&quot;</code> وينتهي بكتلة <code>tool_use</code> يتوقف مدخلها في منتصف قيمة <bdi>(whose input stops mid-value)</bdi>. ماذا ينبغي أن تفعل الحلقة؟ <bdi>⁦(What should the loop do?)⁩</bdi></strong></p>
 <ul>
 <li>A. توقف دون تنفيذها <bdi>(Stop without running it)</bdi>؛ وارفع الحدّ أو سلّم إلى شخص <bdi>(raise the limit or hand off)</bdi></li>
-<li>B. نفّذ الأداة بالمدخل الجزئي <bdi>(Run the tool with the partial input)</bdi> وانظر ماذا يحدث <bdi>(see what happens)</bdi></li>
+<li>B. نفّذ الأداة بالمدخل الجزئي <bdi>(Run the tool with the partial input)</bdi> على أي حال وانظر ماذا يحدث فعلًا <bdi>(anyway)</bdi></li>
 <li>C. أصلح JSON في الشيفرة <bdi>(Repair the JSON in code)</bdi> ثم نفّذ الأداة <bdi>(then run the tool)</bdi></li>
-<li>D. أعد الرد دون تغيير <bdi>(Send the reply back unchanged)</bdi> ليكمله النموذج <bdi>(so the model finishes it)</bdi></li>
+<li>D. أعد الرد دون تغيير ليكمله النموذج <bdi>(Send the reply back so the model finishes it)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -7517,7 +7517,7 @@ Plan first; small steps; tests after each.
 <p><strong>4. تضيف نجم ديسك <bdi>(Najm Desk)</bdi> استدعاء «راجع إجابتك» <bdi>(review your answer)</bdi> إلى كل تشغيل. درجة التقييم <bdi>(The eval score)</bdi> لم تتغير، وكلفة التشغيل <bdi>(cost per run)</bdi> ارتفعت بمقدار الثلث <bdi>(up by a third)</bdi>. ماذا يقترح الدرس؟ <bdi>⁦(What does the lesson suggest?)⁩</bdi></strong></p>
 <ul>
 <li>A. شغّل المراجعة على نموذج أكبر <bdi>(on a larger model)</bdi> في كل تشغيل <bdi>(for every run)</bdi></li>
-<li>B. شغّل المراجعة مرتين <bdi>(Run the review twice)</bdi> ليُلتقط مزيد من الأخطاء <bdi>(so more mistakes get caught)</bdi></li>
+<li>B. شغّل المراجعة مرتين <bdi>(Run the review twice)</bdi> ليُلتقط مزيد من الأخطاء بالفعل <bdi>(so that more mistakes get caught)</bdi></li>
 <li>C. أبقِها لأن فحصًا إضافيًا لا يمكن إلا أن يفيد <bdi>(an extra check can only help)</bdi></li>
 <li>D. أبقِها <bdi>(Keep it)</bdi> فقط حيث يستطيع فحص في الشيفرة <bdi>(a code check)</bdi> تقديم تغذية راجعة <bdi>(supply feedback)</bdi></li>
 </ul>
@@ -7528,10 +7528,10 @@ Plan first; small steps; tests after each.
 
 <p><strong>5. تريد هند وكيلًا يعدّل مجلدًا من أدلة التشغيل <bdi>(a folder of runbooks)</bdi> وينفّذ سكربتًا في صندوق رملي <bdi>(a script in a sandbox)</bdi>. تبدأ لجين بكتابة أدوات ملفات وصدفة <bdi>(file and shell tools)</bdi> لحلقتها الخاصة. ما الذي ينبغي أن تنظر فيه أولًا؟ <bdi>⁦(What should she consider first?)⁩</bdi></strong></p>
 <ul>
-<li>A. مشغّل الأدوات التجريبي <bdi>(The beta tool runner)</bdi> كي لا تكتب الحلقة <bdi>(so she need not write the loop)</bdi></li>
+<li>A. مشغّل الأدوات التجريبي <bdi>(The beta tool runner)</bdi> كي لا تكتب الحلقة <bdi>(so she writes no loop)</bdi></li>
 <li>B. حدّ خطوات أعلى <bdi>(A higher step cap)</bdi> كي تنتهي التعديلات <bdi>(so the edits can finish)</bdi></li>
 <li>C. Claude Agent SDK الذي يضم إطار تشغيله <bdi>(whose harness)</bdi> هذه الأدوات أصلًا <bdi>(already has them)</bdi></li>
-<li>D. <code>tool_choice</code> إجباري <bdi>(A forced tool_choice)</bdi> كي تستدعي كل خطوة أداة <bdi>(so every step calls a tool)</bdi></li>
+<li>D. <code>tool_choice</code> إجباري <bdi>(A forced tool_choice)</bdi> كي تستدعي كل خطوة أداة <bdi>(so each step calls a tool)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -7942,7 +7942,7 @@ Plan first; move one module at a time; run the tests after each move.
 <ul>
 <li>A. يُفحص الأجل بين الخطوات فقط <bdi>(The deadline is checked between steps only)</bdi></li>
 <li>B. تتجاهل النسخة المحاكاة <bdi>(The mock)</bdi> إعداد <code>TIMEOUT_S</code></li>
-<li>C. رفعت حزمة التطوير المهلة لتلائم الاستدعاء <bdi>(The SDK raised the timeout to fit the call)</bdi></li>
+<li>C. رفعت حزمة التطوير المهلة لتلائم الاستدعاء <bdi>(The SDK raised the timeout to fit it)</bdi></li>
 <li>D. يعدّ الأجل الرموز لا الثواني <bdi>(The deadline counts tokens, not seconds)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -8323,7 +8323,7 @@ Plan first; move one module at a time; run the tests after each move.
 
 <p><strong>3. يقترح تصميم الدالة <code>recall(user_id, query)</code> ليجد النموذج الشخص الصحيح <bdi>(so the model can find the right person)</bdi>. ما أفضل إصلاح؟ <bdi>⁦(What is the best fix?)⁩</bdi></strong></p>
 <ul>
-<li>A. اطلب من النموذج في الموجّه ألا يمرر إلا معرّف المستخدم الحالي <bdi>(Tell the model in the prompt to pass only the current user&#39;s id)</bdi></li>
+<li>A. اطلب من النموذج في الموجّه ألا يمرر إلا معرّف المستخدم الحالي <bdi>(Tell the model in the prompt to pass only the user&#39;s id)</bdi></li>
 <li>B. تحقق من أن المعرّف رقم قبل تنفيذ الاستعلام <bdi>(Validate that the id is a number before the query runs)</bdi></li>
 <li>C. خذ المعرّف من الجلسة واحذفه من مدخلات الأداة <bdi>(Take the id from the session and remove it from the tool inputs)</bdi></li>
 <li>D. أبقِ المدخل وسجّل كل استدعاء مع معرّفه <bdi>(Keep the input and log every call with its id)</bdi></li>
@@ -8730,7 +8730,7 @@ Work in small steps and run the tests after each.
 <ul>
 <li>A. تحتفظ SQLite بالصفوف المحذوفة في الذاكرة المؤقتة حتى إعادة التشغيل <bdi>(SQLite caches deleted rows until a restart)</bdi></li>
 <li>B. تبقى البايتات المحذوفة في المساحة الحرة ما لم تُصفَّر <bdi>(Deleted bytes stay in free space unless zeroed)</bdi></li>
-<li>C. جرى الاختبار داخل معاملة جرى التراجع عنها <bdi>(The test ran in a transaction that rolled back)</bdi></li>
+<li>C. جرى الاختبار داخل معاملة تم التراجع عنها <bdi>(The test ran in a rolled-back transaction)</bdi></li>
 <li>D. استخدم <code>SELECT</code> معرّف مستخدم خاطئًا <bdi>(The SELECT used the wrong user id)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -8741,7 +8741,7 @@ Work in small steps and run the tests after each.
 <p><strong>2. بعد أن يقرأ المساعد التذكرة 4499 <bdi>(After the assistant reads ticket 4499)</bdi>، يحاول النموذج حفظ «<a href="mailto:attacker@evil.example">attacker@evil.example</a> موافِق موثوق» (&quot;<a href="mailto:attacker@evil.example">attacker@evil.example</a> is a trusted approver&quot;). ما الذي يوقف الكتابة؟ <bdi>⁦(What stops the write?)⁩</bdi></strong></p>
 <ul>
 <li>A. التعبير النمطي في <code>remember</code> الذي يرفض التعليمات <bdi>(The regex in remember that rejects instructions)</bdi></li>
-<li>B. بوابة الصلة في <code>recall</code> <bdi>(The relevance gate in recall)</bdi></li>
+<li>B. بوابة الصلة في <code>recall</code> التي تسقط المطابقات الضعيفة <bdi>(The relevance gate in recall, which drops weak matches)</bdi></li>
 <li>C. موجّه النظام الذي يسمّي ملاحظات التذاكر بيانات <bdi>(The system prompt calling ticket notes data)</bdi></li>
 <li>D. فحص <code>tainted</code> في <code>run_tool</code> <bdi>(The tainted check in run_tool)</bdi></li>
 </ul>
@@ -9524,7 +9524,7 @@ Plan first; implement in small steps; run the tests after each.
 <p><strong>3. مع منح نطاق الكتابة <bdi>(the write scope granted)</bdi> تطلب تذكرة مسمومة <code>create_ticket</code> ويكتب ريان <bdi>(Rayan)</bdi> «y» دون أن يقرأ <bdi>(unread)</bdi>. ماذا يحدث بعد ذلك؟ <bdi>⁦(What follows?)⁩</bdi></strong></p>
 <ul>
 <li>A. يمنعه المخطط، لأن التحقق من الصحة يحكم على النية أيضًا <bdi>(validation also judges intent)</bdi></li>
-<li>B. يمنعه فحص النطاق، لأن النص المسموم يفتقر إلى النطاق <bdi>(the poisoned text lacks the scope)</bdi></li>
+<li>B. يمنعه فحص النطاق، لأن النص المسموم يفتقر إلى النطاق المطلوب <bdi>(the poisoned text lacks the needed scope)</bdi></li>
 <li>C. يرفضه الخادم، لأن العنوان يبدو مكررًا <bdi>(the title looks like a duplicate)</bdi></li>
 <li>D. تُسجَّل التذكرة، لأن الاستدعاء صالح ووافق عليه شخص <bdi>(the call is valid and a person approved it)</bdi></li>
 </ul>
@@ -10346,9 +10346,9 @@ One file at a time; run the tests after each step.
 <section class="sec sec-quiz"><h2>✍️ اختبر نفسك <bdi>(Check yourself)</bdi></h2>
 <p><strong>1. ينتهي تشغيل بالسبب <code>contract</code> بعد 3 استدعاءات؛ ولم يعمل الكاتب قط <bdi>(the writer never ran)</bdi>. ماذا حدث؟ <bdi>⁦(What happened?)⁩</bdi></strong></p>
 <ul>
-<li>A. رفض المراجع مسودتين وبلغ حدّ الجولات <bdi>(The reviewer rejected two drafts and hit the round cap)</bdi></li>
+<li>A. رفض المراجع مسودتين وبلغ حدّ الجولات <bdi>(The reviewer rejected two drafts and hit the cap)</bdi></li>
 <li>B. فشل اقتباس الباحث في فحص الإسناد مرتين <bdi>(The researcher&#39;s quote failed the grounding check twice)</bdi></li>
-<li>C. نفدت ميزانية رموز الفريق قبل أن يبدأ الكاتب <bdi>(The team&#39;s token budget ran out before the writer began)</bdi></li>
+<li>C. نفدت ميزانية رموز الفريق قبل أن يبدأ الكاتب <bdi>(The team&#39;s token budget ended before the writer began)</bdi></li>
 <li>D. طلب الكاتب أداة لم تُمنح له <bdi>(The writer asked for a tool it was not given)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -10359,7 +10359,7 @@ One file at a time; run the tests after each step.
 <p><strong>2. مع <code>TEAM_TOKEN_BUDGET=300</code>، يتوقف تشغيل بعد 389 رمزًا. هل هذا خلل؟ <bdi>⁦(Is that a bug?)⁩</bdi></strong></p>
 <ul>
 <li>A. لا: تُفحص قبل الاستدعاء، فقد يتجاوزها استدعاء واحد <bdi>(No: it is checked before a call, so one call can cross it)</bdi></li>
-<li>B. نعم: ينبغي فحصها بعد الاستدعاء لميزانية دقيقة <bdi>(Yes: it should be checked after the call, for an exact budget)</bdi></li>
+<li>B. نعم: ينبغي فحصها بعد الاستدعاء للحصول على ميزانية دقيقة تمامًا <bdi>(Yes: check it after the call, for an exact budget)</bdi></li>
 <li>C. نعم: تتجاهل SDK الميزانيات التي يضعها التطبيق <bdi>(Yes: the SDK ignores budgets set by the application)</bdi></li>
 <li>D. لا: تعدّ الميزانية رموز الإخراج وحدها لا الإدخال <bdi>(No: the budget counts only output tokens, not input)</bdi></li>
 </ul>
@@ -10382,7 +10382,7 @@ One file at a time; run the tests after each step.
 
 <p><strong>4. يطلب الكاتب المبرمج، وقد أُعطي بلا أدوات <bdi>(The scripted writer, given no tools)</bdi>، الأداة <code>search_policies</code>. ماذا يحدث؟ <bdi>⁦(What happens?)⁩</bdi></strong></p>
 <ul>
-<li>A. يوقف التشغيل كله ويسلّمه إلى شخص <bdi>(Stops the whole run and hands it to a person)</bdi></li>
+<li>A. يوقف التشغيل كله ويسلّم الحالة إلى شخص <bdi>(Stops the whole run and hands the case over to a person)</bdi></li>
 <li>B. ينفّذ البحث على أي حال، فالمُرسِل مشترك <bdi>(Runs the search anyway, as the dispatcher is shared)</bdi></li>
 <li>C. يرفض بنتيجة خطأ؛ ويتابع الكاتب <bdi>(Refuses with an error result; the writer goes on)</bdi></li>
 <li>D. لا يرسل <code>tool_result</code>، وترفض الواجهة ذلك <bdi>(Sends no tool_result, which the API rejects)</bdi></li>
@@ -10740,10 +10740,10 @@ def make_judge(client, model: str = JUDGE_MODEL):
 <section class="sec sec-quiz"><h2>✍️ اختبر نفسك <bdi>(Check yourself)</bdi></h2>
 <p><strong>1. يرفع تغيير في الموجّه <bdi>(A prompt change)</bdi> المصنِّف من 83% إلى 87% <bdi>(lifts the classifier from 83% to 87%)</bdi>. والحالتان اللتان نجحتا حديثًا هما تذكرتان لصقهما التغيير في الموجّه أمثلةً <bdi>(The two newly passing cases are tickets the change pasted into the prompt as examples)</bdi>. ماذا تستنتج؟ <bdi>⁦(What do you conclude?)⁩</bdi></strong></p>
 <ul>
-<li>A. نجح التغيير، فأبقِه وارفع الحد الأدنى <bdi>(The change worked, so keep it and raise the floor)</bdi></li>
+<li>A. نجح التغيير، فأبقِه وارفع الحد الأدنى للنجاح <bdi>(The change worked, so keep it and raise the pass floor)</bdi></li>
 <li>B. المكسب باطل، فأزل الأمثلة وأعد التشغيل <bdi>(The gain is void, so remove the examples and rerun)</bdi></li>
-<li>C. المجموعة صغيرة جدًا، فضاعف التكرارات <bdi>(The set is too small, so double the repetitions)</bdi></li>
-<li>D. الأمثلة تحمل تسميات صحيحة، فلا بأس بها <bdi>(The examples carry correct labels, so they are fine)</bdi></li>
+<li>C. المجموعة صغيرة جدًا، فضاعف التكرارات في كل تشغيل <bdi>(The set is too small, so double the repetitions each run)</bdi></li>
+<li>D. الأمثلة تحمل تسميات صحيحة، فلا بأس بإبقائها <bdi>(The examples carry correct labels, so they are fine to keep)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -10788,8 +10788,8 @@ def make_judge(client, model: str = JUDGE_MODEL):
 
 <p><strong>5. يغيّر طلب سحب <bdi>(A pull request)</bdi> وصف أداة <bdi>(changes a tool description)</bdi> ويعدّل أيضًا خط الأساس <bdi>(and also edits the baseline)</bdi> ليتحول التكامل المستمر إلى الأخضر <bdi>(so CI turns green)</bdi>. ماذا ينبغي أن تفعل المراجعة؟ <bdi>⁦(What should review do?)⁩</bdi></strong></p>
 <ul>
-<li>A. اقبله، فالفحص الأخضر يعني أن التغيير آمن <bdi>(Accept it, since a green check means the change is safe)</bdi></li>
-<li>B. اقبله إن ارتفعت الدرجة العامة نقطة على الأقل <bdi>(Accept it if the overall score rose by at least a point)</bdi></li>
+<li>A. اقبله، فالفحص الأخضر يعني أن التغيير آمن <bdi>(Accept it, as a green check means that the change is safe)</bdi></li>
+<li>B. اقبله إن ارتفعت الدرجة العامة بنقطة واحدة على الأقل مقارنةً بخط الأساس <bdi>(Accept it if the overall score rose by a point)</bdi></li>
 <li>C. ارفض تعديل خط الأساس، وأعد خط الأساس في إيداعه الخاص <bdi>(Reject the baseline edit; re-baseline in its own commit)</bdi></li>
 <li>D. اطلب ثلاثة تكرارات لكل حالة أولًا <bdi>(Ask for three repeats of every case first)</bdi></li>
 </ul>
@@ -11195,10 +11195,10 @@ Plan first; one file at a time; run the tests after each step.
 
 <p><strong>4. الحالة الحرجة P11 تفشل <bdi>(Critical case P11 fails)</bdi> في خط الأساس والآن <bdi>(in the baseline and now)</bdi>؛ ولم يتغير شيء آخر <bdi>(nothing else changed)</bdi>. ماذا تفعل البوابة؟ <bdi>⁦(What does the gate do?)⁩</bdi></strong></p>
 <ul>
-<li>A. تخرج بالرمز 1، لأن حالة حرجة تفشل <bdi>(Exits 1, because a critical case is failing)</bdi></li>
+<li>A. تخرج بالرمز 1، لأن حالة حرجة تفشل الآن <bdi>(Exits 1, because a critical case is failing now)</bdi></li>
 <li>B. تخرج بالرمز 0، مع ملاحظة عن عيب مفتوح <bdi>(Exits 0, with a note about an open defect)</bdi></li>
 <li>C. تخرج بالرمز 2، لأن التقييم غير جدير بالثقة <bdi>(Exits 2, because the eval is not trustworthy)</bdi></li>
-<li>D. تحجر الحالة حتى تاريخ الانتهاء <bdi>(Quarantines the case until the end date)</bdi></li>
+<li>D. تحجر الحالة حتى تاريخ انتهاء المراجعة <bdi>(Quarantines the case until the review end date)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -11592,8 +11592,8 @@ Plan first; small steps; run the tests after each.
 <ul>
 <li>A. موجّه نظام أكثر صرامة <bdi>(A stricter system prompt)</bdi></li>
 <li>B. بوابة أدوات بلا أداة بريد <bdi>(A tool gate with no email tool)</bdi></li>
-<li>C. مصنِّف يقيّم كل صفحة <bdi>(A classifier scoring each page)</bdi></li>
-<li>D. تحذير للموظفين من المسودات <bdi>(A staff warning about drafts)</bdi></li>
+<li>C. مصنِّف يقيّم الصفحات <bdi>(A classifier scoring pages)</bdi></li>
+<li>D. تحذير للموظفين من مخاطر المسودات <bdi>(A staff warning about drafts)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -11614,9 +11614,9 @@ Plan first; small steps; run the tests after each.
 
 <p><strong>3. يأمر تعليق تذكرة باستدعاء <code>add_comment</code> على تذكرة ريان نفسه بعد أن قرأته المحادثة <bdi>(A ticket comment orders add_comment on Rayan&#39;s own ticket after the chat read it)</bdi>. أي طبقة ترفض؟ <bdi>⁦(Which layer refuses?)⁩</bdi></strong></p>
 <ul>
-<li>A. فحص المالك، لأن التذكرة ليست تذكرته <bdi>(Owner check, as the ticket is not his)</bdi></li>
-<li>B. النطاق، لأنه يفتقر إلى حقوق التعليق <bdi>(Scope, as he lacks comment rights)</bdi></li>
-<li>C. الموافقة، لأن التعليقات تحتاج إلى شخص <bdi>(Approval, as comments need a person)</bdi></li>
+<li>A. فحص المالك، لأن التذكرة ليست تذكرته هو <bdi>(Owner check, as the ticket is not his own)</bdi></li>
+<li>B. النطاق، لأنه لا يملك حق التعليق هنا <bdi>(Scope, as he lacks the right to comment)</bdi></li>
+<li>C. الموافقة، لأن كل تعليق يحتاج إلى شخص <bdi>(Approval, as every comment needs a person)</bdi></li>
 <li>D. التلوث، لأن المحادثة قرأت نص الآخرين <bdi>(Taint, as the chat read others&#39; text)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -11638,9 +11638,9 @@ Plan first; small steps; run the tests after each.
 
 <p><strong>5. تفشل الهجمات العشر كلها دون اتصال والحواجز مفعّلة <bdi>(All ten offline attacks fail with guards on)</bdi>، وتصف لجين الوكيل بأنه محصّن ضد الحقن <bdi>(injection-proof)</bdi>. ما الذي تدعمه الأدلة؟ <bdi>⁦(What does the evidence support?)⁩</bdi></strong></p>
 <ul>
-<li>A. عشر هجمات تُظهر أن النموذج يقاوم الحقن <bdi>(Ten attacks show the model resists injection)</bdi></li>
+<li>A. عشر هجمات تُظهر أن النموذج يقاوم الحقن <bdi>(Ten attacks show that the model resists injection)</bdi></li>
 <li>B. البوابة توقف هذه العشر أمام نموذج مبرمج مسبقًا <bdi>(The gate stops these ten against a scripted model)</bdi></li>
-<li>C. نموذج حقيقي يطيع العشر كلها والحواجز مطفأة <bdi>(A real model obeys all ten with guards off)</bdi></li>
+<li>C. نموذج حقيقي يطيع العشر كلها حين تكون الحواجز مطفأة تمامًا <bdi>(A real model obeys all ten when the guards are off)</bdi></li>
 <li>D. الأقنعة ستلتقط أي صياغة بديلة لها <bdi>(The masks would catch any paraphrase of them)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -12452,10 +12452,10 @@ Do not: build images, add dependencies or touch other modules. Plan first; one f
 <section class="sec sec-quiz"><h2>✍️ اختبر نفسك <bdi>(Check yourself)</bdi></h2>
 <p><strong>1. تشغّل بيئة ما قبل الإنتاج <bdi>(Staging)</bdi> وبيئة الإنتاج <bdi>(production)</bdi> بصمة الصورة نفسها <bdi>(the same image digest)</bdi> لكنهما تجيبان بشكل مختلف <bdi>(answer differently)</bdi>. ماذا تفحص أولًا؟ <bdi>⁦(What do you check first?)⁩</bdi></strong></p>
 <ul>
-<li>A. هل تغيّر وسم صورة الأساس <bdi>(Whether the base image tag changed)</bdi></li>
+<li>A. هل تغيّر وسم صورة الأساس منذ آخر بناء <bdi>(Whether the base image tag changed since the last build)</bdi></li>
 <li>B. هل تختلف متغيرات البيئة <bdi>(Whether the environment variables differ)</bdi></li>
-<li>C. هل في Dockerfile عدة مراحل <bdi>(Whether the Dockerfile has several stages)</bdi></li>
-<li>D. هل تعمل الحاوية بمستخدم غير جذري <bdi>(Whether the container runs as non-root)</bdi></li>
+<li>C. هل في Dockerfile عدة مراحل بناء <bdi>(Whether the Dockerfile has several build stages)</bdi></li>
+<li>D. هل تعمل الحاوية بمستخدم غير جذري <bdi>(Whether the container runs as a non-root user)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -12962,9 +12962,9 @@ Acceptance: pytest passes; report.py exits 1 on a breached SLO. No new dependenc
 <p><strong>4. ميزانية الخطأ <bdi>(The error budget)</bdi> لهدف نجاح المهمة 90% <bdi>(the 90% task-success SLO)</bdi> أُنفق نصفها بعد يومين من نافذة 28 يومًا <bdi>(half spent two days into a 28-day window)</bdi>. ماذا تفعل؟ <bdi>⁦(What do you do?)⁩</bdi></strong></p>
 <ul>
 <li>A. خفّف الهدف إلى 85% ليبدو الاحتراق أصغر <bdi>(Loosen the SLO to 85% so the burn looks smaller)</bdi></li>
-<li>B. واصل الشحن لأن نصف الميزانية باقٍ <bdi>(Keep shipping, because half the budget is left)</bdi></li>
+<li>B. واصل الشحن لأن نصف الميزانية لا يزال باقيًا <bdi>(Keep shipping, because half the budget is still left)</bdi></li>
 <li>C. أوقف الإصدارات ثم حقّق أو تراجع <bdi>(Pause releases, then investigate or roll back)</bdi></li>
-<li>D. انتظر انتهاء النافذة قبل التصرف <bdi>(Wait for the window to end before acting)</bdi></li>
+<li>D. انتظر انتهاء النافذة كلها قبل التصرف بشأنه <bdi>(Wait for the whole window to end before acting on it)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -13380,10 +13380,10 @@ Do not weaken a test. Run the tests after each step.
 
 <p><strong>5. يريد الدعم أرقام الموظفين معرّفات للمحادثات، للبحث في محادثات شخص ما <bdi>(Support wants employee numbers as conversation ids, to search a person&#39;s chats)</bdi>. لماذا لا؟ <bdi>⁦(Why not?)⁩</bdi></strong></p>
 <ul>
-<li>A. الأرقام تُفهرَس ببطء في معظم مخازن التتبّع <bdi>(Numbers index slowly in most trace stores)</bdi></li>
+<li>A. الأرقام تُفهرَس ببطء شديد جدًا في معظم مخازن التتبّع <bdi>(Numbers index slowly in trace stores)</bdi></li>
 <li>B. المعرّف ينشر البيانات الشخصية إلى كل امتداد <bdi>(The id spreads personal data to every span)</bdi></li>
-<li>C. أرقام الموظفين أقصر من أن تبقى فريدة <bdi>(Employee numbers are too short to stay unique)</bdi></li>
-<li>D. الدعم يبحث بالفعل برقم التذكرة <bdi>(Support already searches by ticket number)</bdi></li>
+<li>C. أرقام الموظفين أقصر من أن تبقى فريدة <bdi>(Staff numbers are too short to stay unique)</bdi></li>
+<li>D. الدعم يبحث بالفعل برقم التذكرة <bdi>(Support already uses the ticket number)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -13748,7 +13748,7 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 <ul>
 <li>A. المسودات تحتاج دائمًا إلى موافقتين <bdi>(Drafts always need two approvals)</bdi></li>
 <li>B. يُظهر ما قيل لا ما يحتفظ به TicketHub <bdi>(It shows what was said, not what TicketHub holds)</bdi></li>
-<li>C. لا يستطيع المشغِّل قراءة الردود المكتوبة بالعربية <bdi>(The runner cannot read replies written in Arabic)</bdi></li>
+<li>C. لا يستطيع المشغِّل قراءة الردود المكتوبة بالعربية <bdi>(The runner cannot read replies in Arabic)</bdi></li>
 <li>D. يُنجح المشغِّل أي صف يحصل على رد <bdi>(The runner passes any row that gets a reply)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -13759,8 +13759,8 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 <p><strong>2. يفشل صف وتطلب هند أن يُمرَّر مع ملاحظات <bdi>(A row fails and Hind asks to pass it with comments)</bdi>. ماذا تقول قواعد النص؟ <bdi>⁦(What do the script&#39;s rules say?)⁩</bdi></strong></p>
 <ul>
 <li>A. مرّره الآن وسجّل الملاحظة في قائمة الأعمال المتراكمة <bdi>(Pass it now and log the comment for the backlog)</bdi></li>
-<li>B. أعد تشغيله حتى ينجح ثم سجّل ذلك <bdi>(Re-run it until it passes, then record that)</bdi></li>
-<li>C. احذف الصف من النص قبل الاجتماع <bdi>(Drop the row from the script before the meeting)</bdi></li>
+<li>B. أعد تشغيله حتى ينجح ثم سجّل أنه نجح <bdi>(Re-run it until it passes, then record that it passed)</bdi></li>
+<li>C. احذف الصف من النص قبل اجتماع المراجعة <bdi>(Drop the row from the script before the review meeting)</bdi></li>
 <li>D. أعطه درجة خطورة، ثم أصلحه أو أعفِه <bdi>(Give it a severity, then fix it or waive it)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -13771,9 +13771,9 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 <p><strong>3. بعد ستة أسابيع من الإطلاق يبقى إشعار تقاعد نموذج في صندوق بريد مطوّر غادر <bdi>(Six weeks after go-live a model retirement notice sits in a departed builder&#39;s mailbox)</bdi>. أي خطوة تسليم تمنع ذلك؟ <bdi>⁦(Which handover step prevents this?)⁩</bdi></strong></p>
 <ul>
 <li>A. تسمية مالك للإشعارات في نموذج الدعم <bdi>(Naming a notice owner in the support model)</bdi></li>
-<li>B. فترة رعاية مكثفة أطول للتجربة التشغيلية <bdi>(A longer hypercare period for the pilot)</bdi></li>
+<li>B. فترة رعاية مكثفة أطول للتجربة التشغيلية كلها <bdi>(A longer hypercare period for the whole pilot)</bdi></li>
 <li>C. تدريب موظفي المكتب على حدود النموذج <bdi>(Training desk staff on the limits of the model)</bdi></li>
-<li>D. جلسة اختبار قبول ثانية للصفوف العربية <bdi>(A second UAT session for the Arabic rows)</bdi></li>
+<li>D. جلسة اختبار قبول ثانية لصفوف الاختبار العربية <bdi>(A second UAT session for the Arabic test rows)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -13782,10 +13782,10 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 
 <p><strong>4. انخفض وسيط زمن الرد الأول من 3 ساعات و40 دقيقة إلى ساعة و10 دقائق، لكن الرقم الجديد يقيس أول رد في الدردشة، وخط الأساس يقيس ملاحظة الفرز <bdi>(Median first response fell from 3 h 40 min to 1 h 10 min, but the new figure times the first chat reply, the baseline the triage note)</bdi>. ماذا تفعل؟ <bdi>⁦(What do you do?)⁩</bdi></strong></p>
 <ul>
-<li>A. انشره، فالاتجاه صحيح <bdi>(Publish it, since the direction is right)</bdi></li>
-<li>B. خذ متوسط التعريفين في رقم واحد <bdi>(Average the two definitions into one figure)</bdi></li>
+<li>A. انشره، فالاتجاه صحيح <bdi>(Publish it, as the direction is right)</bdi></li>
+<li>B. خذ متوسط التعريفين في رقم واحد <bdi>(Average the two figures into one)</bdi></li>
 <li>C. أعد القياس لكليهما بتعريف واحد أولًا <bdi>(Re-measure both on one definition first)</bdi></li>
-<li>D. أبلغ بمعدل الاحتواء فقط بدلًا من ذلك <bdi>(Report only the contained rate instead)</bdi></li>
+<li>D. أبلغ بمعدل الاحتواء <bdi>(contained rate)</bdi> وحده بدلًا من ذلك الرقم المنشور <bdi>(Report the contained rate only)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -13794,9 +13794,9 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 
 <p><strong>5. يقول موظف مكتب أقدم إن نجم ديسك يخطئ كثيرًا ويرفض المسودات <bdi>(A senior desk agent says Najm Desk is wrong too often and refuses drafts)</bdi>. ما أفضل استجابة؟ <bdi>⁦(What is the best response?)⁩</bdi></strong></p>
 <ul>
-<li>A. اجعل المسودات إلزامية للمكتب كله <bdi>(Make drafts mandatory for the whole desk)</bdi></li>
+<li>A. اجعل المسودات إلزامية للمكتب كله هذا الشهر <bdi>(Make drafts mandatory for the whole desk this month)</bdi></li>
 <li>B. ادعُه إلى كسره، ثم أرِه الإصلاح <bdi>(Invite them to break it, then show the fix)</bdi></li>
-<li>C. اطلب من سفير التبنّي تجاهل الملاحظات <bdi>(Ask the champion to ignore the feedback)</bdi></li>
+<li>C. اطلب من سفير التبنّي تجاهل الملاحظات حاليًا <bdi>(Ask the champion to ignore the feedback for now)</bdi></li>
 <li>D. انتظر تقرير الفوائد الشهري ليحسم الأمر <bdi>(Wait for the monthly benefits report to settle it)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -14470,7 +14470,7 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 <section class="sec sec-quiz"><h2>✍️ الامتحان التدريبي <bdi>(Practice exam)</bdi></h2>
 <p><strong>1. يرفع الإصدار v5 من موجّه لجين <bdi>(Lujain&#39;s prompt v5)</bdi> نتيجة 10 تذاكر محجوبة <bdi>(10 held-out tickets)</bdi> من 80% إلى 90%، ويُبقي نتيجة تذاكر التطوير العشرين <bdi>(20 dev tickets)</bdi> عند 90%. تقول لهند <bdi>(Hind)</bdi>: «الإصدار v5 أفضل بعشر نقاط» <bdi>(v5 is ten points better)</bdi>. ما أدق ردّ يقدمه فهد <bdi>(Fahad)</bdi>؟ <bdi>⁦(What is Fahad&#39;s most accurate reply?)⁩</bdi></strong></p>
 <ul>
-<li>A. أوافق <bdi>(Agree)</bdi>: المجموعة المحجوبة <bdi>(held-out)</bdi> هي المجموعة غير المنحازة <bdi>(the unbiased set)</bdi>، فمكسب عشر نقاط يظل مكسب عشر نقاط <bdi>(a gain of ten points is a gain of ten points)</bdi></li>
+<li>A. أوافق <bdi>(Agree)</bdi>: المجموعة المحجوبة <bdi>(held-out)</bdi> هي المجموعة غير المنحازة <bdi>(the unbiased set)</bdi>، فمكسب عشر نقاط يظل عشر نقاط <bdi>(ten points gained are ten points)</bdi> كما هو مسجَّل في التقرير</li>
 <li>B. أخالف <bdi>(Disagree)</bdi>: التذكرة الواحدة هنا تساوي عشر نقاط <bdi>(one ticket is ten points here)</bdi>، فقارن أولًا بين التذاكر التي أُصلحت والتي تعطلت <bdi>(compare fixed and broken tickets first)</bdi></li>
 <li>C. أخالف <bdi>(Disagree)</bdi>: تذاكر التطوير وحدها <bdi>(only the dev tickets)</bdi> هي القادرة على قياس تحسّن الموجّه <bdi>(measure a prompt improvement)</bdi></li>
 <li>D. أوافق <bdi>(Agree)</bdi>، بعد أن تعيد تشغيل المجموعة المحجوبة <bdi>(re-runs held-out)</bdi> حتى تتوقف الدرجة عن التحرك <bdi>(the score stops moving)</bdi></li>
@@ -14542,7 +14542,7 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 
 <p><strong>7. تعلّم بوابة <bdi>(gate)</bdi> نجم ديسك <bdi>(Najm Desk)</bdi> المحادثة بأنها ملوَّثة <bdi>(tainted)</bdi> بعد أي نتيجة من <code>search_policies</code>، وبعد ذلك ترفض <code>add_comment</code> حتى على تذكرة المستخدم نفسه <bdi>(the user&#39;s own ticket)</bdi>. يشتكي الموظفون <bdi>(Staff complain)</bdi>. يضم فهرس السياسات <bdi>(policy index)</bdi> صفحات منشورة ومراجَعة <bdi>(reviewed, published pages)</bdi> إضافةً إلى مجلد الوارد <bdi>(inbox folder)</bdi> فيه مسودات غير مراجَعة <bdi>(unreviewed drafts)</bdi>، وتحمل التذاكر تعليقات من مرسلين خارجيين <bdi>(outside senders)</bdi>. ماذا ينبغي أن تغيّر لجين <bdi>(Lujain)</bdi>؟ <bdi>⁦(What should Lujain change?)⁩</bdi></strong></p>
 <ul>
-<li>A. عطّل <bdi>(switch off)</bdi> طبقة التلوّث <bdi>(taint layer)</bdi> عن <code>add_comment</code>، لأن فحصي النطاق والمالك <bdi>(scope and owner checks)</bdi> يغطيانه أصلًا <bdi>(already cover it)</bdi></li>
+<li>A. عطّل <bdi>(switch off)</bdi> طبقة التلوّث <bdi>(taint layer)</bdi> عن <code>add_comment</code>، لأن فحصي النطاق والمالك <bdi>(scope and owner checks)</bdi> يغطيانه أصلًا <bdi>(already cover it)</bdi> تمامًا</li>
 <li>B. دع النموذج يحكم في كل محادثة <bdi>(in each chat)</bdi> هل بدا النص الذي قرأه مريبًا <bdi>(looked suspicious)</bdi>، وارفع الحظر <bdi>(lift the block)</bdi> إن قال لا</li>
 <li>C. انقل القاعدة <bdi>(the rule)</bdi> إلى موجّه النظام <bdi>(system prompt)</bdi> ليرفض النموذج الكتابة <bdi>(refuses a write)</bdi> فقط حين يحكم أن النص خطِر <bdi>(risky)</bdi></li>
 <li>D. تتبّع التلوّث لكل مصدر <bdi>(taint per source)</bdi>، فتُبقي الصفحات المراجَعة المحادثة نظيفة <bdi>(clean)</bdi> بينما تظل التعليقات والمسودات تلوّثها <bdi>(still taint it)</bdi></li>
@@ -14554,9 +14554,9 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 
 <p><strong>8. كتبت يارا <bdi>(Yara)</bdi> رقم التذكرة 4471، وأخبرها نجم ديسك <bdi>(Najm Desk)</bdi> أنها مغلقة <bdi>(closed)</bdi>، مع أن TicketHub يُظهرها قيد التنفيذ <bdi>(in progress)</bdi>. يُظهر التتبّع <bdi>(trace)</bdi> بصيغة JSONL أن النموذج أرسل <code>ticket_id</code> بالقيمة &quot;4417&quot;، وفيه رقمان تبادلا موضعيهما <bdi>(a transposed digit)</bdi>، وأن TicketHub أعاد تذكرة مختلفة مغلقة <bdi>(a different, closed ticket)</bdi>. أي تغيير كان سيمنع الإجابة الخاطئة بصورة موثوقة؟ <bdi>⁦(Which change would reliably have stopped the wrong answer?)⁩</bdi></strong></p>
 <ul>
-<li>A. اضبط <code>strict: true</code> على الأداة <bdi>(tool)</bdi> لتطابق الوسائط المخطط <bdi>(schema)</bdi> دائمًا <bdi>(arguments always match the schema)</bdi></li>
+<li>A. اضبط <code>strict: true</code> على الأداة <bdi>(tool)</bdi> لتطابق الوسائط المخطط المعلن <bdi>(schema)</bdi> دائمًا <bdi>(arguments always match the declared schema)</bdi></li>
 <li>B. سجّل حقولًا أكثر في كل حدث <bdi>(log more fields on every event)</bdi> ليكتشف المراجعون الخطأ في وقت أبكر <bdi>(spot a slip sooner)</bdi> خلال المراجعة <bdi>(in a review)</bdi></li>
-<li>C. اطلب من النموذج في الوصف <bdi>(in the description)</bdi> أن ينسخ أرقام التذاكر كما كُتبت تمامًا <bdi>(exactly as typed)</bdi></li>
+<li>C. اطلب من النموذج في الوصف <bdi>(in the description)</bdi> أن ينسخ أرقام التذاكر كما كُتبت تمامًا <bdi>(exactly as they were typed)</bdi></li>
 <li>D. تحقق في الشيفرة <bdi>(in code)</bdi> من أن المعرّف الذي يرسله النموذج يظهر أيضًا في رسالة المستخدم <bdi>(the user&#39;s message)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -14581,7 +14581,7 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 <li>A. خزّن كل مفتاح <bdi>(store each key)</bdi> مع تجزئة لجسم الطلب <bdi>(a hash of the request body)</bdi>، وارفض مفتاحًا يعود <bdi>(refuse a key that returns)</bdi> بسؤال مختلف <bdi>(a different question)</bdi></li>
 <li>B. احتفظ بالمفاتيح في مخزن تتشاركه كل النسخ <bdi>(a store that all replicas share)</bdi>، ومرّر المفتاح نفسه إلى TicketHub <bdi>(send the same key on)</bdi></li>
 <li>C. ارفع مهلة البوابة <bdi>(gateway timeout)</bdi> فوق أبطأ إجابة للنموذج <bdi>(the model&#39;s slowest answer)</bdi> حتى لا تُرسل أي إعادة محاولة أبدًا <bdi>(no retry is ever sent)</bdi></li>
-<li>D. ابحث في TicketHub عن تذكرة بالعنوان نفسه <bdi>(a ticket with the same title)</bdi> قبل أن تنشئ الخدمة تذكرة جديدة <bdi>(creates a new one)</bdi></li>
+<li>D. ابحث في TicketHub عن تذكرة قائمة بالعنوان نفسه <bdi>(an existing ticket with the same title)</bdi> قبل أن تنشئ الخدمة تذكرة جديدة <bdi>(creates a new one)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -14593,7 +14593,7 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 <li>A. ارفع حدّ التكرارات <bdi>(iteration cap)</bdi> أكثر لتتمكن التشغيلات الدائرة في حلقات <bdi>(looping runs)</bdi> من الانتهاء والتوقف من تلقاء نفسها <bdi>(on their own)</bdi></li>
 <li>B. أطفئ <code>model_calls</code> <bdi>(switch off)</bdi>، ثم ابحث عن السبب <bdi>(find the cause)</bdi> وراجع حدّ القاطع <bdi>(the breaker limit)</bdi> قياسًا إلى ساعة ذروة اعتيادية <bdi>(a normal peak hour)</bdi></li>
 <li>C. تراجع <bdi>(roll back)</bdi> إلى بصمة الصورة السابقة <bdi>(previous image digest)</bdi>، لأن الإصدار هو السبب المعتاد <bdi>(the usual cause)</bdi> لقفزة التكلفة <bdi>(a cost spike)</bdi></li>
-<li>D. قل للوكيل <bdi>(agent)</bdi> في المحادثة أن يتوقف عن الدوران <bdi>(stop looping)</bdi>، ثم راقب هل ينخفض عدد الرموز <bdi>(token count)</bdi> خلال الساعة التالية <bdi>(over the next hour)</bdi></li>
+<li>D. قل للوكيل <bdi>(agent)</bdi> في المحادثة أن يتوقف عن الدوران <bdi>(stop looping)</bdi>، ثم راقب هل ينخفض عدد الرموز <bdi>(token count)</bdi> خلال الساعة التالية بالكامل <bdi>(in the next hour)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -14615,7 +14615,7 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 <p><strong>13. تضم المجموعة الأولية المكوّنة من 30 سيناريو <bdi>(30-scenario seed set)</bdi> لدى لجين <bdi>(Lujain)</bdi> 27 سؤالًا مهذبًا بالإنجليزية عن السياسات <bdi>(27 polite English policy questions)</bdi> على المساعد أن يجيب عنها، وسؤالين بالعربية <bdi>(two Arabic ones)</bdi> وطلبًا واحدًا خارج النطاق <bdi>(one out-of-scope request)</bdi>. تتركز مخاوف نورة <bdi>(Noura)</bdi> في حقن الموجّه <bdi>(prompt injection)</bdi> وتذاكر الآخرين <bdi>(other people&#39;s tickets)</bdi> والأسرار الملصقة <bdi>(pasted secrets)</bdi>. أي تغيير يجعل المجموعة أكثر فائدة؟ <bdi>⁦(Which change makes the set most useful?)⁩</bdi></strong></p>
 <ul>
 <li>A. أضف ثلاثين سؤالًا عاديًا أخرى <bdi>(thirty more ordinary questions)</bdi> لتصير المجموعة كبيرة بما يكفي للوثوق بها <bdi>(large enough to trust)</bdi></li>
-<li>B. استبدل معظم الأسئلة العادية <bdi>(swap most of the ordinary questions)</bdi> بحالات هجوم <bdi>(attack cases)</bdi>، لأن مخاوف نورة الثلاثة <bdi>(Noura&#39;s three worries)</bdi> هي المخاطر الحقيقية <bdi>(the real risks)</bdi></li>
+<li>B. استبدل معظم الأسئلة العادية <bdi>(swap most ordinary questions)</bdi> بحالات هجوم <bdi>(attack cases)</bdi>، لأن مخاوف نورة الثلاثة <bdi>(Noura&#39;s three worries)</bdi> هي المخاطر الحقيقية <bdi>(the real risks)</bdi> في هذا النظام</li>
 <li>C. شدِّد كل صف <bdi>(tighten each row)</bdi> ليحدّد صياغة الردّ المتوقعة بدقة <bdi>(the exact reply wording expected)</bdi>، فتُطابَق التشغيلات تطابقًا تامًا <bdi>(runs can be matched exactly)</bdi></li>
 <li>D. أعد التوازن ليصير نحو النصف عاديًا <bdi>(Rebalance to about half ordinary)</bdi> وبعضه بالعربية <bdi>(some Arabic)</bdi>، وربعه عدائيًا <bdi>(a quarter adversarial)</bdi>، وربعه خارج النطاق <bdi>(a quarter out of scope)</bdi></li>
 </ul>
@@ -14662,10 +14662,10 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 
 <p><strong>17. تسأل يارا نجم ديسك <bdi>(Najm Desk)</bdi>: «ما تقدّم التذكرة 4471؟» <bdi>⁦(What is the progress on ticket 4471?)⁩</bdi> فيجيب من المعرفة العامة <bdi>(general knowledge)</bdi> ولا يستدعي <bdi>(calls)</bdi> <code>get_ticket_status</code> أبدًا، وهي أداة يقول وصفها <bdi>(description)</bdi>: ⁦&quot;Gets ticket info.&quot;⁩ أي تغيير هو أفضل إصلاح أول <bdi>(best first fix)</bdi>؟</strong></p>
 <ul>
-<li>A. إضافة <code>strict: true</code> إلى التعريف <bdi>(definition)</bdi> كي يُجبَر النموذج <bdi>(model)</bdi> على استدعاء الأداة <bdi>(call the tool)</bdi></li>
-<li>B. إضافة أداة ثانية <bdi>(second tool)</bdi> هي <code>fetch_ticket_info</code> لمنح النموذج طريقة أخرى للمطابقة <bdi>(match)</bdi></li>
+<li>A. إضافة <code>strict: true</code> إلى التعريف <bdi>(definition)</bdi> كي يُجبَر النموذج <bdi>(model)</bdi> على استدعاء الأداة <bdi>(call the tool)</bdi> دائمًا</li>
+<li>B. إضافة أداة ثانية <bdi>(second tool)</bdi> هي <code>fetch_ticket_info</code> لمنح النموذج طريقة أخرى للمطابقة <bdi>(match)</bdi> مع التذكرة</li>
 <li>C. إعادة كتابة الوصف <bdi>(description)</bdi> ليذكر ما تفعله الأداة <bdi>(what it does)</bdi>، ومتى تُستدعى، ومتى لا تُستدعى</li>
-<li>D. رفع <code>max_tokens</code> ليكون للنموذج مجال أوسع <bdi>(more room)</bdi> لاتخاذ قرار استدعاء الأداة <bdi>(call the tool)</bdi></li>
+<li>D. رفع <code>max_tokens</code> ليكون للنموذج مجال أوسع <bdi>(more room)</bdi> لاتخاذ قرار استدعاء الأداة أو عدمه <bdi>(whether to call the tool)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -14710,10 +14710,10 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 
 <p><strong>21. يصل رد <bdi>(reply)</bdi> من نجم ديسك <bdi>(Najm Desk)</bdi> وقد ضُبط <code>stop_reason</code> على <code>refusal</code> من دون نص يُعرض <bdi>(no text to show)</bdi>، فتظهر في نافذة محادثة <bdi>(chat window)</bdi> يارا فقاعة فارغة <bdi>(blank bubble)</bdi>. ماذا ينبغي أن يفعل التطبيق <bdi>(application)</bdi>؟</strong></p>
 <ul>
-<li>A. إعادة إرسال الطلب <bdi>(resend)</bdi> بموجّه معاد الصياغة <bdi>(reworded prompt)</bdi> حتى يعطي النموذج إجابة</li>
+<li>A. إعادة إرسال الطلب <bdi>(resend)</bdi> بموجّه معاد الصياغة <bdi>(reworded prompt)</bdi> حتى يعطي النموذج إجابة ما</li>
 <li>B. إخبار المستخدم بوضوح <bdi>(tell the user plainly)</bdi> وتسجيل تفاصيل التوقف <bdi>(stop details)</bdi> للفريق</li>
-<li>C. رفع <code>max_tokens</code>، لأن غياب الرد <bdi>(a missing reply)</bdi> يعني أنه قُطع <bdi>(it was cut off)</bdi></li>
-<li>D. معاملته كما يُعامل <code>end_turn</code> وعرض الرد <bdi>(show the reply)</bdi> كما عاد <bdi>(as it came back)</bdi></li>
+<li>C. رفع <code>max_tokens</code>، لأن غياب الرد <bdi>(a missing reply)</bdi> يعني أنه قُطع <bdi>(it was cut off)</bdi> في منتصفه <bdi>(midway)</bdi></li>
+<li>D. معاملته كما يُعامل <code>end_turn</code> وعرض الرد <bdi>(show the reply)</bdi> كما عاد تمامًا <bdi>(exactly as it came back)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -14771,7 +14771,7 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 <p><strong>26. يستدعي روبوت الدعم <bdi>(support bot)</bdi> لدى شركة لوجستية <bdi>(logistics company)</bdi> دالة <bdi>(function)</bdi> اسمها <code>get_shipment</code> كتبها فريقه الخاص. الآن يريد فريق المالية <bdi>(finance team)</bdi> أن يستخدم وكيله <bdi>(agent)</bdi> المستقل عملية البحث <bdi>(lookup)</bdi> نفسها، ويريدها مهندس في Claude Code، وسيتولى فريق الشحن <bdi>(shipping team)</bdi> الذي يملك البيانات صيانة التكامل <bdi>(integration)</bdi>. ما أفضل تصميم <bdi>(best design)</bdi>؟</strong></p>
 <ul>
 <li>A. نسخ الدالة <bdi>(copy the function)</bdi> إلى وكيل المالية <bdi>(finance agent)</bdi> وإضافة نسخة <bdi>(a copy)</bdi> إلى Claude Code</li>
-<li>B. إبقاء الدالة العادية <bdi>(plain function)</bdi> وانتظار أن يحتاج عميل <bdi>(client)</bdi> ثالث إلى البحث نفسه <bdi>(same lookup)</bdi></li>
+<li>B. إبقاء الدالة العادية <bdi>(plain function)</bdi> وانتظار أن يحتاج عميل <bdi>(client)</bdi> ثالث إلى البحث نفسه <bdi>(same lookup)</bdi> في المستقبل</li>
 <li>C. إتاحة روبوت الدعم <bdi>(support bot)</bdi> كواجهة برمجة <bdi>(API)</bdi> يستطيع العميلان الآخران <bdi>(two clients)</bdi> استدعاءها</li>
 <li>D. أن يصدر فريق الشحن خادم بروتوكول سياق النموذج <bdi>(Model Context Protocol, MCP)</bdi> واحدًا ويتصل به كل مضيف <bdi>(host)</bdi></li>
 </ul>
@@ -14806,7 +14806,7 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 
 <p><strong>29. يضيف Claude Code الدالة <code>trim()</code> إلى سكربت الدردشة <bdi>(chat script)</bdi> في نجم ديسك <bdi>(Najm Desk)</bdi> مع أربعة اختبارات جديدة <bdi>(four new tests)</bdi>. تنجح كلها، ويقول ملخصه <bdi>(summary)</bdi> إنها تغطي السلوك <bdi>(behaviour)</bdi>. يسأل فهد كيف تعرف أن هذه الاختبارات الأربعة ستكتشف خللًا <bdi>(bug)</bdi>. ماذا تفعل؟</strong></p>
 <ul>
-<li>A. تطلب من Claude Code أن يؤكد في ملخصه <bdi>(summary)</bdi> أن الاختبارات ذات معنى <bdi>(meaningful)</bdi></li>
+<li>A. تطلب من Claude Code أن يؤكد في ملخصه <bdi>(summary)</bdi> أن الاختبارات ذات معنى حقيقي <bdi>(meaningful)</bdi></li>
 <li>B. تشغّل المجموعة <bdi>(suite)</bdi> ثلاث مرات إضافية لاستبعاد النتائج المتقلبة <bdi>(flaky results)</bdi></li>
 <li>C. تكسر الميزة عمدًا <bdi>(break the feature on purpose)</bdi> وتتأكد من فشل اختبار واحد على الأقل</li>
 <li>D. تتحقق من أن الاختبارات كُتبت قبل الكود <bdi>(written before the code)</bdi></li>
@@ -15047,9 +15047,9 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 <p><strong>49. تُنهي حلقة نجم ديسك <bdi>(Najm Desk loop)</bdi> لدى لجين <bdi>(Lujain)</bdi> التشغيل <bdi>(run)</bdi> فور أن يعيد النموذج <code>end_turn</code> وتعرض نصه. تسأل يارا <bdi>(Yara)</bdi>: «هل حُلّت التذكرتان 4471 و4472؟» <bdi>⁦(Are tickets 4471 and 4472 resolved?)⁩</bdi> فيقول الرد فقط: «التذكرة 4471 حُلّت.» <bdi>⁦(Ticket 4471 is resolved.)⁩</bdi> وكان كلا البحثين <bdi>(both lookups)</bdi> ممكنًا. أي تغيير يلتقط هذا قبل أن يراه المستخدم؟ <bdi>⁦(Which change catches this before the user sees it?)⁩</bdi></strong></p>
 <ul>
 <li>A. إضافة استدعاء تأمل ذاتي <bdi>(reflection call)</bdi> يطلب من النموذج تأكيد <bdi>(confirm)</bdi> أن إجابته كاملة <bdi>(its answer is complete)</bdi></li>
-<li>B. رفع حدّ الخطوات <bdi>(step cap)</bdi> ليتوفر للنموذج مجال كافٍ لإنهاء البحث الثاني <bdi>(room to finish the second lookup)</bdi></li>
+<li>B. رفع حدّ الخطوات <bdi>(step cap)</bdi> ليتوفر للنموذج مجال كافٍ لإنهاء البحث الثاني <bdi>(room to finish the second lookup)</bdi> بنفسه</li>
 <li>C. التحقق في الشيفرة <bdi>(check in code)</bdi> من ظهور كل رقم تذكرة <bdi>(every ticket number)</bdi> في الهدف في الإجابة <bdi>(the answer)</bdi></li>
-<li>D. إضافة السطر «أجب عن كل جزء من السؤال» <bdi>(answer every part of the question)</bdi> إلى موجّه النظام <bdi>(system prompt)</bdi></li>
+<li>D. إضافة السطر «أجب عن كل جزء من السؤال» <bdi>(answer every part of the question)</bdi> إلى موجّه النظام <bdi>(system prompt)</bdi> في كل تشغيل <bdi>(for every run)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -15094,9 +15094,9 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 
 <p><strong>53. في محادثة فرز <bdi>(triage chat)</bdi> من 30 رسالة <bdi>(30-message)</bdi> عن مشكلة VPN، يبدأ نجم ديسك <bdi>(Najm Desk)</bdi> باقتراح خطوات سبقت تجربتها <bdi>(steps that were already tried)</bdi> وينسى أنه ينتظر فريق الشبكات <bdi>(waiting for Networks)</bdi>. تقترح لجين <bdi>(Lujain)</bdi> حفظ كل دور <bdi>(every turn)</bdi> في المخزن طويل المدى <bdi>(long-term store)</bdi> واستدعاءه <bdi>(recalling it)</bdi> في كل دور. ويريد فهد <bdi>(Fahad)</bdi> تصميمًا يمكن لاختبار <bdi>(a test)</bdi> أن يفحصه دون استدعاء نموذج <bdi>(without calling a model)</bdi>. ما التصميم الأفضل؟ <bdi>⁦(What is the better design?)⁩</bdi></strong></p>
 <ul>
-<li>A. دمج الأدوار الأقدم <bdi>(older turns)</bdi> في ملخص يكتبه النموذج <bdi>(model-written summary)</bdi> وإعادة إرساله في كل دور <bdi>(each turn)</bdi></li>
-<li>B. مطالبة النموذج بإعادة ذكر الخطوات المجرَّبة <bdi>(restate the steps already tried)</bdi> في نهاية كل رد <bdi>(each reply)</bdi></li>
-<li>C. إضافة قاعدة إلى موجّه النظام <bdi>(system-prompt rule)</bdi>: لا تكرر خطوة جُرّبت من قبل <bdi>(never repeat a step that was already tried)</bdi></li>
+<li>A. دمج الأدوار الأقدم <bdi>(older turns)</bdi> في ملخص يكتبه النموذج <bdi>(model-written summary)</bdi> وإعادة إرساله مع كل دور جديد <bdi>(with each turn)</bdi></li>
+<li>B. مطالبة النموذج بإعادة ذكر الخطوات المجرَّبة سابقًا <bdi>(restate the steps already tried)</bdi> في نهاية كل رد يقدمه <bdi>(it gives)</bdi></li>
+<li>C. إضافة قاعدة إلى موجّه النظام <bdi>(system-prompt rule)</bdi>: لا تكرر خطوة جُرّبت من قبل <bdi>(never repeat a step that was already tried by the agent)</bdi></li>
 <li>D. الاحتفاظ بكائن حالة <bdi>(state object)</bdi> تحدّثه الشيفرة <bdi>(code updates)</bdi> في كل خطوة وتضعه في كل موجّه <bdi>(every prompt)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>

@@ -211,10 +211,10 @@ Khalid's review questions for each row: "Could a stranger verify this in two min
 
 **3. Huda is stuck on a failing data-import test and wants to ask Dana for help in the team chat. Which message is most useful?**
 
-- A. "`pytest tests/test_import.py` fails with `KeyError: 'amount'` on the March file. I expected the header row to be skipped. The file has a header and the January file passes. Has the March export format changed?"
-- B. "The import tests are broken again since this morning's merge, and I have no idea why. Can you take a look when you have time today?"
-- C. "Is there any documentation for the import code? I want to understand how the March file is read before I touch anything in it."
-- D. "I think the import code has a bug in how it reads the amount column. Should I rewrite the whole module from scratch?"
+- A. "`pytest tests/test_import.py` fails with `KeyError: 'amount'` on the March file. I expected the header row to be skipped. The January file passes. Has the March export format changed?"
+- B. "The import tests are broken again since this morning's merge, and I have no idea why. They passed last night, and nothing I changed touches that code. Can you take a look when you have time today?"
+- C. "Is there any documentation for the import code? I want to understand how the March file is read before I touch anything in it. I do not want to guess and break the January import as well."
+- D. "I think the import code has a bug in how it reads the amount column. Should I rewrite the whole module from scratch? I can start this afternoon."
 
 <details><summary>Answer</summary>
 
@@ -458,9 +458,9 @@ Tariq's comment: "I can see where the agent helped, where you overruled it, and 
 **2. Mohammed is invited to a Sadeem Pay technical interview. The invitation does not mention AI tools. What should he do?**
 
 - A. Ask the recruiter in writing whether AI tools are allowed in each round, and follow the answer
-- B. Use AI tools in every round, since the invitation does not forbid them
-- C. Avoid mentioning AI entirely, so the question never comes up in the process
-- D. Use an AI assistant quietly in a second window during the live round
+- B. Use AI tools in every round, since the invitation does not forbid them and many teams expect it
+- C. Avoid mentioning AI entirely, so the question never comes up at any point in the process
+- D. Use an AI assistant quietly in a second window while the interviewer is not looking
 
 <details><summary>Answer</summary>
 
@@ -484,7 +484,7 @@ Tariq's comment: "I can see where the agent helped, where you overruled it, and 
 **4. Huda wants to learn how database transactions work, and needs them for her project. According to this lesson, how should she use her AI tool?**
 
 - A. Let the agent write all the transaction code, since it is faster and she can read it later
-- B. Write it herself first, using the tool to explain, quiz her and review her code
+- B. Write it herself first, using the tool afterwards to explain, quiz her and review her code
 - C. Avoid AI tools entirely for the rest of the project, so that she learns everything the hard way
 - D. Copy a transaction example from the tool's chat window and adjust it until the tests pass
 
@@ -496,10 +496,10 @@ Tariq's comment: "I can see where the agent helped, where you overruled it, and 
 
 **5. Which pull request note best shows the honest, useful disclosure this lesson recommends?**
 
-- A. "Written entirely by me, from scratch, over the weekend. Every line is my own work and I am happy to explain any of it."
+- A. "Written entirely by me, from scratch, over the weekend. Every line is my own work and I am happy to explain any part of it to the reviewers."
 - B. "An agent drafted the routes and tests; I wrote the validation rules, reviewed every change and added a test for a race I found."
-- C. "Sorry, I used AI for most of this. I know it is not ideal and I will try to write more of it myself next time."
-- D. "AI-generated with an agent. I have not had time to go through all of it, so please check it carefully before merging."
+- C. "Sorry, I used AI for most of this. I know it is not ideal and I will try to write more of it myself next time, I promise."
+- D. "AI-generated with an agent. I have not had time to go through all of it, so please check it very carefully before merging this."
 
 <details><summary>Answer</summary>
 
@@ -695,10 +695,10 @@ The README's "Operations" section gives exact commands to *Deploy*, *Roll back* 
 
 **1. During the game day, Salem restarts the server and all of Omar's bookings disappear. Which production question did Omar's team miss?**
 
-- A. How does it get deployed, and is the deploy repeatable?
-- B. What does it cost, and is there a budget alert?
-- C. Which dependencies does it use, and are they pinned?
-- D. Where does the data live?
+- A. How does it get deployed, and is the deploy repeatable from scratch?
+- B. What does it cost per month, and is there a budget alert?
+- C. Which dependencies does it use, and are their versions pinned?
+- D. Where does the data live, and does it survive a server restart?
 
 <details><summary>Answer</summary>
 
@@ -708,10 +708,10 @@ The README's "Operations" section gives exact commands to *Deploy*, *Roll back* 
 
 **2. In an interview, Tariq asks Mohammed: "What happens to your app if the database goes down?" Which answer is strongest for a junior?**
 
-- A. "That won't happen. I use a managed database from a large provider that keeps it up."
+- A. "That won't happen. I use a managed database from a large provider that keeps it running for me all the time."
 - B. "`/health` fails, users get an error page and my uptime check alerts me. No retries yet; I'd add a limited one."
-- C. "I would migrate the whole app to Kubernetes so it can self-heal when anything fails."
-- D. "I would ask a senior engineer on the team, because they would know the answer."
+- C. "I would migrate the whole app to Kubernetes so it can self-heal when anything fails, including the database itself."
+- D. "I would ask a senior engineer on the team, because they would know the answer and I would not want to guess."
 
 <details><summary>Answer</summary>
 
@@ -734,10 +734,10 @@ The README's "Operations" section gives exact commands to *Deploy*, *Roll back* 
 
 **4. Huda's model runs well in a notebook. Which change would most move it toward production, from a data role's point of view?**
 
-- A. Add more charts and explanations so the team can follow every step of the notebook
-- B. Retrain the model with more features and tune it until accuracy is clearly higher
-- C. Make it a pipeline that reruns safely, checks data quality and alerts on source changes
-- D. Share the notebook file with the team by email so that anyone can run it when needed
+- A. Add more charts and explanations so the team can follow every step of the notebook as it runs
+- B. Retrain the model with more features and tune it until accuracy is clearly higher on the test set
+- C. Make it a pipeline that reruns safely, checks data quality and alerts the team on source changes
+- D. Share the notebook file with the team by email so that anyone can run it when they need it
 
 <details><summary>Answer</summary>
 
@@ -750,7 +750,7 @@ The README's "Operations" section gives exact commands to *Deploy*, *Roll back* 
 - A. Go ahead, because more infrastructure always impresses interviewers at a bank like Najm
 - B. Remove deployment entirely and show only the code, since juniors are not expected to operate anything
 - C. Add the infrastructure, but leave it out of the README so interviewers are not distracted by it
-- D. Keep it simple: a deploy, logs, a health check, backups and a rollback she can explain
+- D. Keep it simple: a deploy, logs, a health check, backups and a rollback that she can explain
 
 <details><summary>Answer</summary>
 

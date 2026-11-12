@@ -41,7 +41,7 @@
     "en": [
      "Najm's role, duties and data rights need review, because Najm changes the model",
      "Nothing changes for Najm, because the vendor still owns the base model",
-     "Confabulation stops being a risk, because the model will learn Najm's real figures",
+     "Confabulation stops being a risk, as the model will learn Najm's real figures",
      "Governance gets lighter, because there is no retrieval index left to control"
     ],
     "ar": [
@@ -69,7 +69,7 @@
     "en": [
      "Drift: economic conditions have moved away from the original training data",
      "Representational harm: the model reinforces a stereotype about the group",
-     "Confabulation: the model invents patterns wherever its data is too thin",
+     "Confabulation: the model invents patterns where its data is too thin",
      "A feedback loop: declined people never show repayment, so bias deepens"
     ],
     "ar": [

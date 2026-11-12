@@ -691,10 +691,10 @@ Plan first, implement in small steps, run the tests after each step.
 
 **3. The model sends `__import__('os').getcwd()` to the ast-based calculator. What happens?**
 
-- A. It runs normally, because `getcwd` only reads state
+- A. It runs normally, because `getcwd` only reads the state
 - B. A call node is refused and the model gets an error
-- C. It runs inside a sandbox and returns the folder name
-- D. It is quietly replaced by 0 and the sum continues
+- C. It runs in a sandbox and returns the current folder name
+- D. It is quietly replaced by 0 and the sum carries on without it
 
 <details><summary>Answer</summary>
 

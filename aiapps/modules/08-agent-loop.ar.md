@@ -205,9 +205,9 @@ flowchart TD
 **2. يحمل رد `stop_reason: "max_tokens"` وينتهي بكتلة `tool_use` يتوقف مدخلها في منتصف قيمة (whose input stops mid-value). ماذا ينبغي أن تفعل الحلقة؟ ⁦(What should the loop do?)⁩**
 
 - A. توقف دون تنفيذها (Stop without running it)؛ وارفع الحدّ أو سلّم إلى شخص (raise the limit or hand off)
-- B. نفّذ الأداة بالمدخل الجزئي (Run the tool with the partial input) وانظر ماذا يحدث (see what happens)
+- B. نفّذ الأداة بالمدخل الجزئي (Run the tool with the partial input) على أي حال وانظر ماذا يحدث فعلًا (anyway)
 - C. أصلح JSON في الشيفرة (Repair the JSON in code) ثم نفّذ الأداة (then run the tool)
-- D. أعد الرد دون تغيير (Send the reply back unchanged) ليكمله النموذج (so the model finishes it)
+- D. أعد الرد دون تغيير ليكمله النموذج (Send the reply back so the model finishes it)
 
 <details><summary>الإجابة</summary>
 
@@ -231,7 +231,7 @@ flowchart TD
 **4. تضيف نجم ديسك (Najm Desk) استدعاء «راجع إجابتك» (review your answer) إلى كل تشغيل. درجة التقييم (The eval score) لم تتغير، وكلفة التشغيل (cost per run) ارتفعت بمقدار الثلث (up by a third). ماذا يقترح الدرس؟ ⁦(What does the lesson suggest?)⁩**
 
 - A. شغّل المراجعة على نموذج أكبر (on a larger model) في كل تشغيل (for every run)
-- B. شغّل المراجعة مرتين (Run the review twice) ليُلتقط مزيد من الأخطاء (so more mistakes get caught)
+- B. شغّل المراجعة مرتين (Run the review twice) ليُلتقط مزيد من الأخطاء بالفعل (so that more mistakes get caught)
 - C. أبقِها لأن فحصًا إضافيًا لا يمكن إلا أن يفيد (an extra check can only help)
 - D. أبقِها (Keep it) فقط حيث يستطيع فحص في الشيفرة (a code check) تقديم تغذية راجعة (supply feedback)
 
@@ -243,10 +243,10 @@ flowchart TD
 
 **5. تريد هند وكيلًا يعدّل مجلدًا من أدلة التشغيل (a folder of runbooks) وينفّذ سكربتًا في صندوق رملي (a script in a sandbox). تبدأ لجين بكتابة أدوات ملفات وصدفة (file and shell tools) لحلقتها الخاصة. ما الذي ينبغي أن تنظر فيه أولًا؟ ⁦(What should she consider first?)⁩**
 
-- A. مشغّل الأدوات التجريبي (The beta tool runner) كي لا تكتب الحلقة (so she need not write the loop)
+- A. مشغّل الأدوات التجريبي (The beta tool runner) كي لا تكتب الحلقة (so she writes no loop)
 - B. حدّ خطوات أعلى (A higher step cap) كي تنتهي التعديلات (so the edits can finish)
 - C. Claude Agent SDK الذي يضم إطار تشغيله (whose harness) هذه الأدوات أصلًا (already has them)
-- D. `tool_choice` إجباري (A forced tool_choice) كي تستدعي كل خطوة أداة (so every step calls a tool)
+- D. `tool_choice` إجباري (A forced tool_choice) كي تستدعي كل خطوة أداة (so each step calls a tool)
 
 <details><summary>الإجابة</summary>
 
@@ -617,7 +617,7 @@ Plan first; move one module at a time; run the tests after each move.
 
 - A. يُفحص الأجل بين الخطوات فقط (The deadline is checked between steps only)
 - B. تتجاهل النسخة المحاكاة (The mock) إعداد `TIMEOUT_S`
-- C. رفعت حزمة التطوير المهلة لتلائم الاستدعاء (The SDK raised the timeout to fit the call)
+- C. رفعت حزمة التطوير المهلة لتلائم الاستدعاء (The SDK raised the timeout to fit it)
 - D. يعدّ الأجل الرموز لا الثواني (The deadline counts tokens, not seconds)
 
 <details><summary>الإجابة</summary>

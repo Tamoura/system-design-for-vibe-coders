@@ -175,7 +175,7 @@ This v1 card is read-only; write steps (a new ticket, an unlock) add their own c
 - A. An agent with four tools that picks its own order
 - B. A fixed workflow with a gate checking each step's output
 - C. A supervisor model that hires worker agents on demand
-- D. An orchestrator that invents the subtasks for each notice
+- D. An orchestrator that invents subtasks for each notice
 
 <details><summary>Answer</summary>
 
@@ -227,7 +227,7 @@ This v1 card is read-only; write steps (a new ticket, an unlock) add their own c
 - A. Every iteration resends the whole growing history
 - B. Tool calls cost more per token than chain calls
 - C. Loops always run on a bigger model than chains
-- D. Chain input is cached automatically and not counted
+- D. Chain input is cached and never counted
 
 <details><summary>Answer</summary>
 
@@ -594,9 +594,9 @@ Implement in small steps; run the tests after each.
 
 **2. Lujain wraps all of `run_notice` in `async with sem`. With `WIDTH=4` and thirty notices, the run hangs. Why?**
 
-- A. The semaphore was created in the wrong event loop
+- A. The semaphore sits in the wrong event loop
 - B. `gather` cannot be combined with a semaphore
-- C. The SDK reserves one slot for its own retries
+- C. The SDK reserves a slot for its own retries
 - D. Four notices hold every slot and wait for more
 
 <details><summary>Answer</summary>
@@ -620,7 +620,7 @@ Implement in small steps; run the tests after each.
 
 **4. Gate 2 rejects a summary containing the number 30, which is not in the notice. What happens next?**
 
-- A. The pipeline deletes the number in code and carries on
+- A. The pipeline deletes the number in code and carries on with the rest
 - B. The fact-checkers decide whether the number is acceptable
 - C. The notice goes straight to a person with no more calls
 - D. The model is shown the problem and retries once, then stops

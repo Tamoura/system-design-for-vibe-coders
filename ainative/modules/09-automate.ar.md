@@ -266,7 +266,7 @@ if __name__ == "__main__":
 
 - A. ينطبق حد افتراضي صغير (A small default)، وينتهي التشغيل بخطأ (ends with an error)
 - B. يحدد النموذج الحد (The model sets the limit)، فيتوقف حين ينتهي
-- C. يحل `--max-budget-usd` محل علم الأدوار (replaces the turn flag)، فلا حاجة إليه
+- C. يحل `--max-budget-usd` محل علم الأدوار (replaces the turn flag)، فلا حاجة إليه أبدًا (it is never needed again)
 - D. لا حد افتراضيًا (no limit by default)، فيمكن لتشغيل مرتبك أن يستمر (a confused run can keep going)
 
 <details><summary>الإجابة</summary>
@@ -505,7 +505,7 @@ Time spent:         (you / the agent)
 **2. يُطلق أول خطاف لسالم (Salem) إنذارًا على الملف غير المعدَّل `src/remit/money.py`. ما السبب الأرجح؟ ⁦(What is the most likely cause?)⁩**
 
 - A. يبحث في النص عن `float` (searches the text)، وفي `money.py` يُذكر النوع لرفضه (names the type to reject it)
-- B. يخرج بالرمز 1 على مدخل صالح (valid input)، ويبلّغ Claude Code الوكيل بذلك على أنه منع (as a block)
+- B. يخرج بالرمز 1 على مدخل صالح (valid input)، ويبلّغ Claude Code الوكيل بذلك على أنه منع (as a block) دون أن يتوقف التعديل (without stopping the edit)
 - C. هو مسجَّل تحت `PreToolUse`، فينظر إلى الملف قبل التعديل (before the edit)
 - D. يحلل الملف (parses the file)، وفي `money.py` خطأ في الصياغة (a syntax error) في سطره الأول
 
@@ -517,7 +517,7 @@ Time spent:         (you / the agent)
 
 **3. تقول تذكرة «تجاهل تعليماتك» ("ignore your instructions")، ويجيب البديل بـ`severity: "critical"`. ماذا ينبغي أن يفعل السكربت؟ ⁦(What should the script do?)⁩**
 
-- A. يمرّر `critical` كما هي، لأن النموذج اختارها لهذه التذكرة (the model chose it)
+- A. يمرّر `critical` كما هي، لأن النموذج اختارها لهذه التذكرة (the model chose it) بنفسه (by itself)
 - B. يحوّلها إلى أقرب قيمة مسموحة (nearest allowed value)، `high`، ويمضي
 - C. يعيد المحاولة ثلاث مرات (Retry three times) حتى يعطي النموذج إجابة صالحة
 - D. يبلّغ عن التذكرة بوصفها خطأً (as an error): القيمة ليست على القائمة (not on the list)
@@ -546,7 +546,7 @@ Time spent:         (you / the agent)
 - A. مدخل خطأ (An error entry) لتلك التذكرة، وتُصنَّف الأخريات، ويخرج بالرمز 1
 - B. نتيجة مبنية على الإجابة الجزئية (the partial answer)، موسومة بثقة منخفضة (low confidence)
 - C. لا شيء: ينبغي أن يخرج بالرمز 2 بمجرد أن يبلغ تشغيل واحد الحد (hits the limit)
-- D. استدعاء ثانٍ بحد أعلى (a higher limit)، لأن التذكرة تحتاج إلى أدوار أكثر
+- D. استدعاء ثانٍ بحد أعلى (a higher limit)، لأن التذكرة تحتاج إلى أدوار أكثر في الجولة نفسها (in the same run)
 
 <details><summary>الإجابة</summary>
 

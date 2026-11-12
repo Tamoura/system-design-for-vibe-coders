@@ -67,7 +67,7 @@
       },
       "o": {
         "en": [
-          "Store defaulted loans and total loans per branch, and divide after aggregating",
+          "Store defaulted loans and total loans per branch, and divide after aggregating them",
           "Average the branch percentages, since an average makes a ratio safe to roll up",
           "Mark the rate semi-additive, so it is summed across regions but never months",
           "Keep the percentages and make the branch dimension Type 2 so months reproduce"

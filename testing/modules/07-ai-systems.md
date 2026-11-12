@@ -387,7 +387,7 @@ Use a scratch copy of `testing/sample`. No paid API is needed.
 
 **3. A prompt change lifts the overall pass rate from 75% to 79%, but out_of_scope falls from 4 of 5 to 3 of 5. What should the gate do?**
 
-- A. Pass, because the overall rate rose and one case is noise
+- A. Pass: the overall rate rose and one case is noise
 - B. Pass, and retest after the next release
 - C. Fail only if the overall rate drops below 70%
 - D. Fail on the category and show the case that flipped
@@ -794,7 +794,7 @@ Use a scratch copy of `testing/sample`.
 **2. A reviewer worries that Alice's question about "Bob's statement" could leak data. Where must the access check sit?**
 
 - A. After generation, by masking any numbers in the reply
-- B. In the system prompt, by telling the model to keep data private
+- B. In the prompt, by telling the model to keep data private
 - C. Before ranking, so the search sees only permitted documents
 - D. In the interface, by hiding source ids from the customer
 
@@ -1149,9 +1149,9 @@ Use a scratch copy of `testing/sample` with the lesson 7.1 files. Attack only th
 
 **1. Mariam wants to run automated attack tools on Najm Assist. What must be in place first?**
 
-- A. A longer list of attack prompts, collected from public sources
-- B. A copy of real customers' chats, so that the attacks look realistic
-- C. Production access, so that the attacks match what customers see
+- A. A much longer list of attack prompts, collected from public sources
+- B. A copy of real customers' chats, so that the attacks look more realistic
+- C. Production access, so that the attacks match what customers see there
 - D. Written authorisation and rules of engagement naming the QA target
 
 <details><summary>Answer</summary>
@@ -1188,10 +1188,10 @@ Use a scratch copy of `testing/sample` with the lesson 7.1 files. Attack only th
 
 **4. This week the Population Stability Index on the top-source mix is 0.12, and the "no source" share has tripled. What is the most sensible action?**
 
-- A. Roll the model back at once, before anyone has looked at the questions
+- A. Roll the model back at once, before anyone has looked at the questions it missed
 - B. Read the unanswered questions to find a new topic or missing document
-- C. Ignore it, because any PSI value below 1 is considered acceptable
-- D. Raise the temperature so that the model can cover more topics
+- C. Ignore it, because any PSI value below 1 is considered acceptable in practice
+- D. Raise the temperature so that the model can cover more topics in its answers
 
 <details><summary>Answer</summary>
 
@@ -1201,7 +1201,7 @@ Use a scratch copy of `testing/sample` with the lesson 7.1 files. Attack only th
 
 **5. A customer complaint shows Assist quoted the wrong cut-off. What makes the follow-up a good regression test?**
 
-- A. Fix the prompt, then record the change and the cause in the incident ticket
+- A. Fix the prompt, then record the change and cause in the ticket
 - B. Add a case that already passes, so the dashboard stays green
 - C. Paste the customer's chat verbatim into the public repository
 - D. Reproduce it, add a case that fails, fix it, and watch the case pass

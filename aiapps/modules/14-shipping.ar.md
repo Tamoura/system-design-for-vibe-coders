@@ -307,10 +307,10 @@ Do not: build images, add dependencies or touch other modules. Plan first; one f
 
 **1. تشغّل بيئة ما قبل الإنتاج (Staging) وبيئة الإنتاج (production) بصمة الصورة نفسها (the same image digest) لكنهما تجيبان بشكل مختلف (answer differently). ماذا تفحص أولًا؟ ⁦(What do you check first?)⁩**
 
-- A. هل تغيّر وسم صورة الأساس (Whether the base image tag changed)
+- A. هل تغيّر وسم صورة الأساس منذ آخر بناء (Whether the base image tag changed since the last build)
 - B. هل تختلف متغيرات البيئة (Whether the environment variables differ)
-- C. هل في Dockerfile عدة مراحل (Whether the Dockerfile has several stages)
-- D. هل تعمل الحاوية بمستخدم غير جذري (Whether the container runs as non-root)
+- C. هل في Dockerfile عدة مراحل بناء (Whether the Dockerfile has several build stages)
+- D. هل تعمل الحاوية بمستخدم غير جذري (Whether the container runs as a non-root user)
 
 <details><summary>الإجابة</summary>
 
@@ -715,9 +715,9 @@ Acceptance: pytest passes; report.py exits 1 on a breached SLO. No new dependenc
 **4. ميزانية الخطأ (The error budget) لهدف نجاح المهمة 90% (the 90% task-success SLO) أُنفق نصفها بعد يومين من نافذة 28 يومًا (half spent two days into a 28-day window). ماذا تفعل؟ ⁦(What do you do?)⁩**
 
 - A. خفّف الهدف إلى 85% ليبدو الاحتراق أصغر (Loosen the SLO to 85% so the burn looks smaller)
-- B. واصل الشحن لأن نصف الميزانية باقٍ (Keep shipping, because half the budget is left)
+- B. واصل الشحن لأن نصف الميزانية لا يزال باقيًا (Keep shipping, because half the budget is still left)
 - C. أوقف الإصدارات ثم حقّق أو تراجع (Pause releases, then investigate or roll back)
-- D. انتظر انتهاء النافذة قبل التصرف (Wait for the window to end before acting)
+- D. انتظر انتهاء النافذة كلها قبل التصرف بشأنه (Wait for the whole window to end before acting on it)
 
 <details><summary>الإجابة</summary>
 

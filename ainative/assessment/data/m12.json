@@ -13,13 +13,13 @@
         "en": [
           "Which engineer started the session, so that person can be coached on safer prompting habits",
           "What the agent was allowed to do, who approved it and which check should have stopped it, so that one control can be changed",
-          "Which line of `CLAUDE.md` the agent ignored, so that the memory file can be made stricter and the agent warned off the next time",
+          "Which line of `CLAUDE.md` the agent ignored, so that the memory file can be made stricter",
           "Which prompt wording led to the deletion, so that a better prompt can be written and reused from now on"
         ],
         "ar": [
           "أي مهندس بدأ الجلسة (session)، ليُدرَّب على كتابة الموجّهات (prompts) بأمان أكبر في عمله",
           "ما كان مسموحًا للوكيل (agent) بفعله، ومن وافق عليه، وأي فحص (check) كان ينبغي أن يوقفه، ليُغيَّر ضابط (control) واحد",
-          "أي سطر في `CLAUDE.md` تجاهله الوكيل (agent)، ليُصاغ ملف الذاكرة (memory file) بصرامة أكبر ويُحذَّر الوكيل من تكرار ذلك مستقبلًا",
+          "أي سطر في `CLAUDE.md` تجاهله الوكيل (agent)، ليُصاغ ملف الذاكرة (memory file) بصرامة أكبر",
           "أي صياغة للموجّه (prompt) أدت إلى الحذف، ليحل محلها موجّه أفضل من الآن فصاعدًا"
         ]
       },
@@ -68,13 +68,13 @@
       "o": {
         "en": [
           "Median hours from a pull request being opened to its first review, taken from the pull-request history, per week",
-          "Median hours from a pull request being opened to its first review, over whichever pull requests the person computing it picks",
+          "Median hours from a pull request being opened to its first review, over whichever ones the person picks",
           "Number of review comments written on each pull request before it is approved, counted for every week",
           "Share of pull requests that reviewers say were reviewed quickly, asked in a survey every quarter"
         ],
         "ar": [
           "وسيط (median) الساعات من فتح طلب الدمج (pull request) حتى أول مراجعة (first review) له، مأخوذًا من سجل طلبات الدمج (pull-request history)، أسبوعيًا",
-          "وسيط (median) الساعات من فتح طلب الدمج (pull request) حتى أول مراجعة (first review) له، على أي مجموعة من طلبات الدمج يختارها الشخص الذي يحسبه بنفسه عادةً",
+          "وسيط (median) الساعات من فتح طلب الدمج (pull request) حتى أول مراجعة (first review) له، على أي مجموعة من طلبات الدمج يختارها الشخص الذي يحسبه",
           "عدد تعليقات المراجعة (review comments) المكتوبة على كل طلب دمج (pull request) قبل الموافقة عليه، محسوبًا لكل أسبوع (week) على حدة",
           "نسبة طلبات الدمج (pull requests) التي يقول المراجعون إنها روجعت بسرعة، تُسأل عنها في استبيان (survey) يُجرى كل ربع سنة (quarter)"
         ]
@@ -95,13 +95,13 @@
       },
       "o": {
         "en": [
-          "Copy Payments Platform's playbook across and swap in this team's name, tools and owners, so that the full document is ready by Friday as the manager asked",
+          "Copy Payments Platform's playbook across and swap in this team's name, tools and owners, so the document is ready by Friday",
           "Have an assistant fill in a generic policy template, then edit it until it suits the team",
           "Write a one-page working agreement now, log what goes wrong with the agents for a month, and turn the repeat mistakes into playbook rules",
           "Give them a `CONTRIBUTING.md` and a good `CLAUDE.md`, and tell the manager a written agreement is overkill for a team this new"
         ],
         "ar": [
-          "انسخوا دليل منصة المدفوعات (Payments Platform) العملي (playbook) وبدّلوا اسم الفريق وأدواته ومالكيه، ليكون المستند الكامل جاهزًا قبل يوم الجمعة كما طلب المدير",
+          "انسخوا دليل منصة المدفوعات (Payments Platform) العملي (playbook) وبدّلوا اسم الفريق وأدواته ومالكيه، ليكون المستند الكامل جاهزًا قبل يوم الجمعة",
           "كلّفوا مساعدًا (assistant) بملء قالب سياسة عامة (generic policy template) ثم عدّلوه ليناسب الفريق كله",
           "اكتبوا اتفاقية عمل (working agreement) من صفحة واحدة الآن، وسجّلوا أخطاء الوكلاء (agents) شهرًا، وحوّلوا المتكرر منها إلى قواعد في الدليل العملي (playbook)",
           "أعطوهم ملف `CONTRIBUTING.md` وملف `CLAUDE.md` جيدًا فقط، وأخبروا المدير بأن الاتفاقية المكتوبة مبالغة لفريق بهذه الحداثة"

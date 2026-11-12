@@ -146,40 +146,40 @@ flowchart TD
 
 **1. يطلب خالد من فيصل «وضع الذكاء الاصطناعي التوليدي في الإقراض هذا العام (put GenAI into lending this year)». ما الذي يجب أن يفعله فيصل أولًا؟**
 
-- A. اختيار نموذج لغوي كبير (large language model) وبناء عرض توضيحي لصياغة المذكرات (memo-drafting demo) لإظهار الزخم (show momentum)
-- B. دراسة كيف يؤدي مديرو العلاقات (relationship managers) ومحللو الائتمان (credit analysts) عمل الإقراض اليوم، والعثور على مواضع تركّز الوقت والأخطاء (where time and errors concentrate)
-- C. إجراء استبيان (survey) يسأل مديري العلاقات عن ميزات الذكاء الاصطناعي (AI features) التي يرغبون فيها
-- D. طلب مستوى مخاطر (risk tier) من ليلى لـ«الذكاء الاصطناعي التوليدي في الإقراض (GenAI in lending)»
+- A. دراسة كيف يؤدي مديرو العلاقات (relationship managers) ومحللو الائتمان (credit analysts) عمل الإقراض اليوم، وتحديد مواضع تركّز الوقت والأخطاء (where time and errors concentrate)
+- B. اختيار نموذج لغوي كبير (large language model) وبناء عرض توضيحي لصياغة المذكرات (memo-drafting demo) لإظهار الزخم (show momentum) أمام خالد وفريق القيادة قبل نهاية الربع (before the quarter ends)
+- C. إجراء استبيان (survey) يسأل مديري العلاقات عن ميزات الذكاء الاصطناعي (AI features) التي يرغبون فيها، ثم ترتيب الطلبات حسب عدد الأصوات (number of votes)
+- D. طلب مستوى مخاطر (risk tier) من ليلى لـ«الذكاء الاصطناعي التوليدي في الإقراض (GenAI in lending)» قبل أن يدرس أحد سير العمل الفعلي
 
 <details><summary>الإجابة</summary>
 
-**B.** يبدأ الاكتشاف (Discovery) من المهمة وسير العمل (job and the workflow). العرض التوضيحي (A) هو الإجابة المغرية (tempting answer)، لكنه يجيب عن «هل يستطيع النموذج أن يكتب؟ ⁦(can the model write?)⁩»، لا عن «أين يؤلم العمل؟ ⁦(where does the work hurt?)⁩». فعرض فيصل نفسه حلّ أسرع خطوة (fastest step). والاستبيانات عن ميزات متخيَّلة (imagined features) (C) تعطي إجابات غير موثوقة (unreliable answers). والحوكمة (Governance) (D) تحتاج إلى حالة استخدام محددة (specific use case) أولًا. (🧭 لماذا يهم (Why it matters)؛ 🟢 الأساسيات (The essentials).)
+**A.** يبدأ الاكتشاف (Discovery) من المهمة وسير العمل (job and the workflow). العرض التوضيحي (B) هو الإجابة المغرية (tempting answer)، لكنه يجيب عن «هل يستطيع النموذج أن يكتب؟ ⁦(can the model write?)⁩»، لا عن «أين يؤلم العمل؟ ⁦(where does the work hurt?)⁩». فعرض فيصل نفسه حلّ أسرع خطوة (fastest step). والاستبيانات عن ميزات متخيَّلة (imagined features) (C) تعطي إجابات غير موثوقة (unreliable answers). والحوكمة (Governance) (D) تحتاج إلى حالة استخدام محددة (specific use case) أولًا. (🧭 لماذا يهم (Why it matters)؛ 🟢 الأساسيات (The essentials).)
 
 </details>
 
 **2. أي بيان مهمة (job statement) مكتوب بأفضل صورة؟**
 
 - A. «يريد مديرو العلاقات مساعدًا بالذكاء الاصطناعي يصوغ مذكرات الائتمان. ⁦(RMs want an AI assistant that drafts credit memos.)⁩»
-- B. «عندما تحين مراجعة عميل، أريد مذكرة تقبلها اللجنة من المرة الأولى، حتى يُجدَّد التسهيل قبل أن يحتاج العميل إلى الأموال. ⁦(When a client's review is due, I want a memo the committee accepts first time, so the facility is renewed before the client needs the funds.)⁩»
+- B. «يحتاج مديرو العلاقات إلى برنامج أسرع للمذكرات. ⁦(RMs need faster memo software.)⁩»
 - C. «تحسين إنتاجية مديري العلاقات بالذكاء الاصطناعي التوليدي. ⁦(Improve RM productivity with GenAI.)⁩»
-- D. «يحتاج مديرو العلاقات إلى برنامج أسرع للمذكرات. ⁦(RMs need faster memo software.)⁩»
+- D. «عندما تحين مراجعة عميل، أريد مذكرة تقبلها اللجنة من المرة الأولى، حتى يُجدَّد التسهيل قبل أن يحتاج العميل إلى الأموال. ⁦(When a client's review is due, I want a memo the committee accepts first time, so the facility is renewed before the client needs the funds.)⁩»
 
 <details><summary>الإجابة</summary>
 
-**B.** فيه موقف (situation)، والتقدّم المطلوب (progress wanted)، والنتيجة (outcome)، ولا يسمّي أي حل (names no solution). أما A وD فيُدمجان حلًا مسبقًا (bake in a solution). وC هدف للبنك (goal for the bank)، لا مهمة لشخص (job for a person). (🟢 الأساسيات (The essentials).)
+**D.** فيه موقف (situation)، والتقدّم المطلوب (progress wanted)، والنتيجة (outcome)، ولا يسمّي أي حل (names no solution). أما A وB فيُدمجان حلًا مسبقًا (bake in a solution). وC هدف للبنك (goal for the bank)، لا مهمة لشخص (job for a person). (🟢 الأساسيات (The essentials).)
 
 </details>
 
 **3. خطوتان مرشحتان (candidate steps) تستغرق كل منهما نحو 30 دقيقة. الخطوة X هي استخراج أرقام الميزانية العمومية (balance-sheet figures) من ملفات PDF، ويستطيع المحلل التحقق منها مقابل المصدر (check against the source) في نحو 3 دقائق. والخطوة Y هي كتابة فقرة تقييم مخاطر (risk assessment paragraph)، ويستغرق التحقق منها كما يجب (verify properly) نحو 25 دقيقة. بناءً على اختبار الملاءمة على مستوى الخطوة (step-level fit test)، أيهما المرشح الأقوى للذكاء الاصطناعي (stronger AI candidate)؟**
 
-- A. Y، لأن الذكاء الاصطناعي التوليدي (generative AI) هو الأفضل في الكتابة
-- B. هما متساويتان، لأن كلتيهما تستغرق 30 دقيقة
-- C. X، لأن التحقق من مخرجاتها أرخص بكثير من إنتاجها (much cheaper to check than to produce)
-- D. لا هذه ولا تلك، لأن كلتيهما تتضمن بيانات مالية (financial data)
+- A. Y، لأن الذكاء الاصطناعي التوليدي (generative AI) هو الأفضل في الكتابة، وفقرة المخاطر هي هذا النوع من المهام تمامًا (exactly that kind of task)
+- B. هما متساويتان، لأن كلتا الخطوتين تستغرق نحو 30 دقيقة (30 minutes) من وقت المحلل لإنجازها
+- C. لا هذه ولا تلك، لأن كلتيهما تتضمن بيانات مالية (financial data) ولذلك تحتاج إلى إنسان ينجز الخطوة كلها
+- D. X، لأن التحقق من مخرجاتها أرخص بكثير من إنتاجها (much cheaper to check than to produce)
 
 <details><summary>الإجابة</summary>
 
-**C.** «التحقق أرخص من الأداء (Cheaper to check than to do)» هو السؤال المنفرد الأكثر فائدة (most useful single question). فالخطوة Y لا توفّر شيئًا تقريبًا بعد احتساب التحقق (verification). والخيار A مغرٍ لأن الصياغة (drafting) هي أفضل ما تُظهره العروض التوضيحية للذكاء الاصطناعي التوليدي (GenAI demos). لكن القيمة (value) تعتمد على تكلفة التحقق (checking cost)، لا على قوة النموذج (model's strength). (🟡 التعمق أكثر (Going deeper).)
+**D.** «التحقق أرخص من الأداء (Cheaper to check than to do)» هو السؤال المنفرد الأكثر فائدة (most useful single question). فالخطوة Y لا توفّر شيئًا تقريبًا بعد احتساب التحقق (verification). والخيار A مغرٍ لأن الصياغة (drafting) هي أفضل ما تُظهره العروض التوضيحية للذكاء الاصطناعي التوليدي (GenAI demos). لكن القيمة (value) تعتمد على تكلفة التحقق (checking cost)، لا على قوة النموذج (model's strength). (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
@@ -201,7 +201,7 @@ flowchart TD
 - A. بناء ذكاء اصطناعي يعيد كتابة المذكرات لتلبي السياستين معًا
 - B. رفع تعارض السياسات (policy conflict) إلى مالك السياسة (policy owner) وإصلاحه قبل تصميم دعم بالذكاء الاصطناعي (AI support) لتلك الخطوة
 - C. تجاهله، لأنه ليس مشكلة ذكاء اصطناعي (AI problem)
-- D. الضبط الدقيق (Fine-tune) لنموذج على المذكرات المعادة (returned memos)
+- D. الضبط الدقيق (Fine-tune) لنموذج على المذكرات المعادة (returned memos) حتى يتعلم تجنب أسباب الإعادة المعتادة (usual reasons for return) في الطلبات القادمة
 
 <details><summary>الإجابة</summary>
 
@@ -373,14 +373,14 @@ flowchart RL
 
 **1. يحظى مساعد الموظفين التوليدي (Staff GenAI) بحماس قوي في أنحاء البنك، لكن لا مالك أعمال (business owner) له ولا نتيجة معرّفة (defined outcome). في عملية فيصل، ماذا يحدث له؟**
 
-- A. يحصل على درجة منخفضة (low score) ويبقى في القائمة
-- B. يفشل في بوابات الإقصاء (knock-out gates) ويعود إلى الاكتشاف (returns to discovery) للعثور على مالك ومهام محددة (concrete jobs)
-- C. يُبنى أولًا لأن الطلب مرتفع (demand is high)
-- D. يُقيَّم على الجدوى التقنية (feasibility) فقط
+- A. يفشل في بوابات الإقصاء (knock-out gates) ويعود إلى الاكتشاف (returns to discovery) للعثور على مالك ومهام محددة (concrete jobs)
+- B. يحصل على درجة منخفضة (low score) ويبقى في القائمة، ليُعاد النظر فيه في جولة التقييم التالية (next scoring round) عندما يتوفر مالك ومخرجات قابلة للقياس
+- C. يُبنى أولًا لأن الطلب مرتفع (demand is high)، فالحماس في أنحاء البنك يدل على أن المستخدمين جاهزون (users are ready) وأن الإدارة تدعم الفكرة
+- D. يُقيَّم على الجدوى التقنية (feasibility) فقط (only)، لأن بقية المعايير (criteria) لا يمكن الحكم عليها دون مالك للفكرة (owner) ودون نتيجة محددة يمكن قياسها (measurable outcome)
 
 <details><summary>الإجابة</summary>
 
-**B.** البوابات تُنفَّذ قبل التقييم (Gates run before scoring). غياب المالك وغياب النتيجة القابلة للقياس (measurable outcome) شرطا نجاح أو رسوب (pass or fail conditions). الخيار A (إبقاؤه في القائمة بدرجة منخفضة) مغرٍ، لكنه يترك فكرة بلا مالك (unowned idea) عالقة تمتص الاهتمام (soak up attention). (🟡 التعمق أكثر (Going deeper)؛ 🏛️ عمليًا (In practice).)
+**A.** البوابات تُنفَّذ قبل التقييم (Gates run before scoring). غياب المالك وغياب النتيجة القابلة للقياس (measurable outcome) شرطا نجاح أو رسوب (pass or fail conditions). الخيار B (إبقاؤه في القائمة بدرجة منخفضة) مغرٍ، لكنه يترك فكرة بلا مالك (unowned idea) عالقة تمتص الاهتمام (soak up attention). (🟡 التعمق أكثر (Going deeper)؛ 🏛️ عمليًا (In practice).)
 
 </details>
 
@@ -399,27 +399,27 @@ flowchart RL
 
 **3. تقول دراسة جدوى (business case): 10,000 مستخدم × ساعتان موفَّرتان شهريًا × 100% تبنٍّ منذ الإطلاق (100% adoption from launch). ما أهم اعتراض (most important challenge) يجب أن يطرحه مدير المنتج (PM)؟**
 
-- A. يجب أن تكون الساعات الموفَّرة بالدقائق
-- B. افتراض التبنّي (adoption assumption) مرتفع جدًا على الأرجح ويجب أن يكون متحفظًا ومختبرًا (conservative and tested)
-- C. يجب مضاعفة الحجم (volume) لمراعاة النمو (growth)
-- D. لا شيء، فدراسات الجدوى متفائلة دائمًا (always optimistic)
+- A. يجب أن تكون الساعات الموفَّرة (hours saved) بالدقائق (minutes)، لأن الأرقام الكبيرة (large numbers) تقلل الثقة في دراسة الجدوى (business case) أمام لجنة المراجعة
+- B. لا شيء، فدراسات الجدوى متفائلة دائمًا (always optimistic)
+- C. يجب مضاعفة الحجم (volume) لمراعاة النمو (growth) المتوقع في عدد المستخدمين خلال السنة الأولى
+- D. افتراض التبنّي (adoption assumption) مرتفع جدًا على الأرجح ويجب أن يكون متحفظًا ومختبرًا (conservative and tested)
 
 <details><summary>الإجابة</summary>
 
-**B.** التبنّي (Adoption) هو العامل الأكثر مبالغة (most often overstated) في دراسات جدوى الذكاء الاصطناعي (AI business cases). فقد لا يثق المستخدمون بالأداة أو لا يتحققون منها أو حتى لا يفتحونها. استخدم معدلًا متحفظًا (conservative rate) واختبره بتجربة تشغيلية (pilot). (🟢 الأساسيات (The essentials).)
+**D.** التبنّي (Adoption) هو العامل الأكثر مبالغة (most often overstated) في دراسات جدوى الذكاء الاصطناعي (AI business cases). فقد لا يثق المستخدمون بالأداة أو لا يتحققون منها أو حتى لا يفتحونها. استخدم معدلًا متحفظًا (conservative rate) واختبره بتجربة تشغيلية (pilot). (🟢 الأساسيات (The essentials).)
 
 </details>
 
 **4. حالتا استخدام تحصلان على 3.47 و3.41. الفكرة ذات 3.41 تبني استيعاب المستندات (document ingestion) وإطار التقييم (evaluation harness) اللذين يحتاجهما منتجان لاحقان. ماذا يجب أن يفعل مدير المنتج (PM)؟**
 
-- A. اختيار 3.47 لأنها حصلت على درجة أعلى
-- B. معاملة الدرجتين على أنهما متعادلتان فعليًا (effectively tied) ووزن اعتمادية المنصة (platform dependency) صراحة في القرار
-- C. إعادة الترجيح (Re-weight) حتى تفوز 3.41
-- D. حساب متوسط الاثنتين وبناء كلتيهما
+- A. معاملة الدرجتين على أنهما متعادلتان فعليًا (effectively tied) ووزن اعتمادية المنصة (platform dependency) صراحة في القرار
+- B. اختيار 3.47 لأنها حصلت على درجة أعلى (higher score)، فعملية التقييم (scoring process) وُضعت لحسم مثل هذا الاختيار بين الفكرتين (settle this choice)
+- C. إعادة الترجيح (Re-weight) لمعايير التقييم حتى تفوز 3.41، لكي تُعتمد أعمال المنصة من أجل المنتجات اللاحقة (later products)
+- D. حساب متوسط الدرجتين (average) وبناء الفكرتين معًا، مع توزيع طاقة الفريق بينهما بالتساوي (capacity evenly) على مدى الربع القادم
 
 <details><summary>الإجابة</summary>
 
-**B.** الفروق الصغيرة في الدرجات ضجيج (noise)، وتأثيرات المنصة (platform effects) قيمة حقيقية تفوتها الدرجات المستقلة (stand-alone scores). الخيار C تلاعب ببطاقة التقييم (gaming the scorecard). أظهر الاعتمادية (dependency) علنًا بدلًا من ذلك. (🟡 التعمق أكثر (Going deeper)؛ 🔴 نظرة الخبير (Expert view).)
+**A.** الفروق الصغيرة في الدرجات ضجيج (noise)، وتأثيرات المنصة (platform effects) قيمة حقيقية تفوتها الدرجات المستقلة (stand-alone scores). الخيار C تلاعب ببطاقة التقييم (gaming the scorecard). أظهر الاعتمادية (dependency) علنًا بدلًا من ذلك. (🟡 التعمق أكثر (Going deeper)؛ 🔴 نظرة الخبير (Expert view).)
 
 </details>
 
@@ -591,8 +591,8 @@ flowchart TD
 **1. يطلب فريق التحصيل (collections team) «نموذج ذكاء اصطناعي لاكتشاف إيداعات الرواتب (an AI model to detect salary deposits)». قيود الرواتب تحمل رمز رواتب (payroll code) وتصل بنمط منتظم (regular pattern). ماذا يجب أن يوصي به فيصل أولًا؟**
 
 - A. تدريب مصنِّف (Train a classifier) على كل المعاملات
-- B. استخدام نموذج لغوي كبير (LLM) لقراءة أوصاف المعاملات (transaction descriptions)
-- C. كتابة قواعد على رمز الرواتب والمبلغ ونمط التاريخ (payroll code, amount and date pattern)، والنظر في الذكاء الاصطناعي فقط للحالات التي تُغفلها القواعد (cases rules miss)
+- B. استخدام نموذج لغوي كبير (LLM) لقراءة أوصاف المعاملات (transaction descriptions) وتصنيف كل معاملة على أنها راتب أو غير راتب (salary or not) في كل مرة تصل فيها دفعة جديدة
+- C. كتابة قواعد على رمز الرواتب والمبلغ ونمط التاريخ (payroll code, amount and date pattern)، والنظر في الذكاء الاصطناعي فقط للحالات التي تُغفلها القواعد
 - D. رفض الطلب لأن التحصيل حساس (collections is sensitive)
 
 <details><summary>الإجابة</summary>
@@ -604,19 +604,19 @@ flowchart TD
 **2. أي معيار إيقاف (kill criterion) مكتوب بأفضل صورة؟**
 
 - A. «سنتوقف إذا لم تكن التجربة التشغيلية واعدة. ⁦(We will stop if the pilot is not promising.)⁩»
-- B. «إذا استخدم أقل من 30% من مديري العلاقات في التجربة التحقق المسبق على نصف مذكراتهم على الأقل بحلول 31 مارس، نتوقف ونراجع التصميم. ⁦(If fewer than 30% of pilot RMs use the pre-check on at least half their memos by 31 March, we stop and review the design.)⁩»
+- B. «توقف إذا لم يكن النموذج من أحدث طراز. ⁦(Stop if the model is not state of the art.)⁩»
 - C. «سنراجع النتائج عندما يشعر الفريق بأنه مستعد. ⁦(We will review results when the team feels ready.)⁩»
-- D. «توقف إذا لم يكن النموذج من أحدث طراز. ⁦(Stop if the model is not state of the art.)⁩»
+- D. «إذا استخدم أقل من 30% من مديري العلاقات في التجربة التحقق المسبق على نصف مذكراتهم على الأقل بحلول 31 مارس، نتوقف ونراجع التصميم. ⁦(If fewer than 30% of pilot RMs use the pre-check on at least half their memos by 31 March, we stop and review the design.)⁩»
 
 <details><summary>الإجابة</summary>
 
-**B.** فيه مقياس (metric) وعتبة (threshold) وتاريخ (date). أما A وC فلا يمكن اختبارهما وسينحنيان ليناسبا أي نتيجة. والخيار D يقيس النموذج (measures the model)، لا نتيجة المنتج (product outcome). (🟡 التعمق أكثر (Going deeper).)
+**D.** فيه مقياس (metric) وعتبة (threshold) وتاريخ (date). أما A وC فلا يمكن اختبارهما وسينحنيان ليناسبا أي نتيجة. والخيار B يقيس النموذج (measures the model)، لا نتيجة المنتج (product outcome). (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
 **3. نموذج في تجربة تشغيلية لستة أشهر (six-month pilot model) يتنبأ بزيادات الحد للشركات الصغيرة والمتوسطة (SME limit increases) بدقة جيدة، لكن لم يغيّر أي مدير علاقة إجراءً بسببه. يقول الراعي (sponsor): «لقد استثمرنا أكثر من أن نتوقف. ⁦(We've invested too much to stop.)⁩» ما أقوى استجابة (strongest response)؟**
 
-- A. الاستمرار وإضافة مزيد من الميزات (add more features)
+- A. الاستمرار وإضافة مزيد من الميزات (add more features) إلى النموذج، لأن تجربة بهذه الدقة ستغيّر في النهاية (eventually) ما يفعله مديرو العلاقات (relationship managers)
 - B. تحسين دقة النموذج (model's accuracy) أكثر
 - C. إيقاف التجربة التشغيلية، وتدوين الأدلة وشرط إعادة الفتح (reopening condition)، ونقل الفريق إلى عنصر أعلى قيمة في الدور (higher-value queued item)
 - D. تسليم النموذج إلى مورّد (vendor)
@@ -629,14 +629,14 @@ flowchart TD
 
 **4. يريد التسويق (Marketing) ذكاءً اصطناعيًا توليديًا (GenAI) يكتب خطابات رفض قروض مخصّصة (personalised loan decline letters). ما أفضل تصميم (best design)؟**
 
-- A. ترك النموذج يولّد الأسباب من ملف الطلب (application file)
-- B. إبقاء الأسباب حتمية (deterministic)، من رموز أسباب القرار (decision's reason codes) وقالب مُراجَع (reviewed template). والنظر في الذكاء الاصطناعي فقط لمساعدة الموظفين على شرح الخطاب (helping staff explain the letter)
+- A. إبقاء الأسباب حتمية (deterministic)، من رموز أسباب القرار وقالب مُراجَع (reviewed template). والنظر في الذكاء الاصطناعي فقط لمساعدة الموظفين على شرح الخطاب
+- B. ترك النموذج يولّد الأسباب من ملف الطلب (application file)، ثم يقرأ موظف ائتمان (credit officer) كل خطاب ويعتمده قبل إرساله إلى العميل (before it is sent) بأي صورة
 - C. استخدام الذكاء الاصطناعي التوليدي مع إضافة إخلاء مسؤولية (disclaimer)
 - D. عدم إرسال أي أسباب
 
 <details><summary>الإجابة</summary>
 
-**B.** يجب أن تكون الأسباب الخاضعة للتنظيم (Regulated reasons) دقيقة ومحددة وقابلة للتكرار (accurate, specific and repeatable)، وهذا يلائم مصدرًا حتميًا وقالبًا (deterministic source and template). ويمكن للذكاء الاصطناعي أن يساعد عند الأطراف (at the edge) مع إنسان في الحلقة (human in the loop). الخيار C مغرٍ، لكن إخلاء المسؤولية (disclaimer) لا يجعل الأسباب المخترعة أو المعاد صياغتها (invented or paraphrased reasons) مقبولة. (🟡 التعمق أكثر (Going deeper)؛ 🏛️ عمليًا (In practice).)
+**A.** يجب أن تكون الأسباب الخاضعة للتنظيم (Regulated reasons) دقيقة ومحددة وقابلة للتكرار (accurate, specific and repeatable)، وهذا يلائم مصدرًا حتميًا وقالبًا (deterministic source and template). ويمكن للذكاء الاصطناعي أن يساعد عند الأطراف (at the edge) مع إنسان في الحلقة (human in the loop). الخيار C مغرٍ، لكن إخلاء المسؤولية (disclaimer) لا يجعل الأسباب المخترعة أو المعاد صياغتها (invented or paraphrased reasons) مقبولة. (🟡 التعمق أكثر (Going deeper)؛ 🏛️ عمليًا (In practice).)
 
 </details>
 

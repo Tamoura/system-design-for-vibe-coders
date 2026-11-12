@@ -221,7 +221,7 @@ flowchart TD
 **4. في أثناء اختبارٍ مصرَّحٍ به (authorised test)، تلاحظ مريم أن قيمة ملف تعريف ارتباط الجلسة (session cookie value) هي نفسها قبل تسجيل الدخول وبعده (same before and after login). ما الخطر (risk)، وما الإصلاح (fix)؟**
 
 - A. تثبيت الجلسة (session fixation)؛ أصدِر معرّف جلسةٍ جديدًا (new session ID) عند تسجيل الدخول وعند كل تغييرٍ في الصلاحيات (every privilege change)
-- B. البرمجة النصية عبر المواقع (cross-site scripting, XSS)؛ أضِف سياسة أمان المحتوى (Content Security Policy)
+- B. البرمجة النصية عبر المواقع (cross-site scripting, XSS)؛ أضِف سياسة أمان المحتوى (Content Security Policy) وشفّر كل نص يدخله المستخدم عند عرضه (encode all user-supplied text on output)
 - C. حشو بيانات الاعتماد (credential stuffing)؛ أضِف اختبار CAPTCHA
 - D. لا خطر (no risk)، ما دام ملف تعريف الارتباط (cookie) `HttpOnly`
 
@@ -233,14 +233,14 @@ flowchart TD
 
 **5. يريد فريق طارق أن يغيّر العملاء رقم هاتفهم المسجَّل (registered phone number) في تطبيق نجم للهاتف (Najm Mobile) بنقرةٍ واحدة (one tap)، لتقليل مكالمات مركز الاتصال (contact-centre calls). بماذا ينبغي أن يوصي فريق نورة؟ ⁦(What should Noura's team recommend?)⁩**
 
-- A. السماح بذلك (allow it)، لأن العميل مسجِّلٌ دخوله أصلًا (already signed in)
-- B. السماح بذلك مع مصادقةٍ تصعيدية بعاملٍ قويٍّ قائم (step-up using an existing strong factor)، وإشعارٍ إلى الرقم القديم (notification to the old number)، وتعليقٍ (hold) قبل أن يتمكن الرقم الجديد من تفويض المستفيدين أو تغييرات الحدود (authorise payees or limit changes)
+- A. السماح بذلك مع مصادقةٍ تصعيدية بعاملٍ قويٍّ قائم (step-up using an existing strong factor)، وإشعارٍ إلى الرقم القديم (notification to the old number)، وتعليقٍ (hold) قبل أن يتمكن الرقم الجديد من تفويض المستفيدين أو تغييرات الحدود (authorise payees or limit changes)
+- B. السماح بذلك (allow it)، لأن العميل مسجِّلٌ دخوله أصلًا (already signed in)
 - C. إزالة تغيير الهاتف من التطبيق (remove phone changes from the app) واشتراط زيارة الفرع على الجميع (require a branch visit for everyone)
 - D. السماح بذلك (allow it)، مع رمز SMS يُرسَل إلى الرقم الجديد (SMS code sent to the new number)
 
 <details><summary>الإجابة</summary>
 
-**B.** يتحكم رقم الهاتف في كل رمزٍ وتنبيهٍ لاحق (every later code and alert)، لذا فإن تغييره خطوةٌ كلاسيكية في الاستيلاء على الحساب (classic takeover step). والمصادقة التصعيدية (step-up) وإشعار القناة القديمة (old-channel notification) وفترة التهدئة (cooling-off period) تُبقي التغيير مريحًا لكن صعب الاستغلال (convenient but hard to abuse). أمّا D فلا يُثبت إلا التحكم في الرقم الجديد (control of the new number)، وهو ما يملكه المهاجم؛ وC تصحيحٌ مفرط (over-corrects). انظر: 🟡 التعمق أكثر (Going deeper)؛ 🏛️ عمليًا (In practice).
+**A.** يتحكم رقم الهاتف في كل رمزٍ وتنبيهٍ لاحق (every later code and alert)، لذا فإن تغييره خطوةٌ كلاسيكية في الاستيلاء على الحساب (classic takeover step). والمصادقة التصعيدية (step-up) وإشعار القناة القديمة (old-channel notification) وفترة التهدئة (cooling-off period) تُبقي التغيير مريحًا لكن صعب الاستغلال (convenient but hard to abuse). أمّا D فلا يُثبت إلا التحكم في الرقم الجديد (control of the new number)، وهو ما يملكه المهاجم؛ وC تصحيحٌ مفرط (over-corrects). انظر: 🟡 التعمق أكثر (Going deeper)؛ 🏛️ عمليًا (In practice).
 
 </details>
 
@@ -474,7 +474,7 @@ def verify_access_token(token: str) -> dict:
 
 - A. فحص مطالبة الجمهور `aud` (audience claim)
 - B. خوارزمية توقيعٍ أقوى (stronger signing algorithm)
-- C. تشفير حمولة الرمز (encryption of the token payload)
+- C. تشفير حمولة الرمز (encryption of the token payload) كي لا يقرأ العملاء مطالباته (so clients cannot read its claims)
 - D. عمرٌ أطول للرمز (longer token lifetime)
 
 <details><summary>الإجابة</summary>
@@ -486,7 +486,7 @@ def verify_access_token(token: str) -> dict:
 **2. أيّ تدفقٍ (flow) ينبغي أن يستخدمه تطبيق نجم للهاتف (Najm Mobile) لتسجيل دخول العملاء والحصول على الرموز المميزة (obtain tokens)؟**
 
 - A. المنح الضمني (implicit grant)، لأن تطبيقات الهاتف المحمول لا تستطيع حفظ الأسرار (cannot keep secrets)
-- B. منح كلمة مرور مالك المورد (resource owner password grant)، كي تبقى شاشة تسجيل الدخول داخل التطبيق (login screen stays inside the app)
+- B. منح كلمة مرور مالك المورد (resource owner password grant)، كي تبقى شاشة تسجيل الدخول داخل التطبيق (login screen stays inside the app) ولا يرى المستخدم نافذة متصفح (the user never sees a browser window)
 - C. تدفق رمز التفويض مع PKCE (authorization code flow with PKCE) عبر متصفح النظام (system browser)، مع إعادة توجيه HTTPS مُطالَب بها (claimed HTTPS redirect)
 - D. بيانات اعتماد العميل (client credentials)، مع سرٍّ مضمَّن في التطبيق (secret embedded in the app)
 
@@ -498,14 +498,14 @@ def verify_access_token(token: str) -> dict:
 
 **3. في مراجعة شيفرة (code review)، يجد علي `jwt.decode(token, key, algorithms=[jwt.get_unverified_header(token)["alg"]])`. لماذا هو خطير؟ ⁦(Why is it dangerous?)⁩**
 
-- A. إنه بطيء (slow)، لأنه يحلّل الترويسة مرتين (parses the header twice)
-- B. يختار الرمز خوارزمية التحقق الخاصة به (the token chooses its own verification algorithm)، مما يفتح الباب أمام هجمات `alg: none` والخلط بين الخوارزميات (algorithm-confusion attacks)
+- A. يختار الرمز خوارزمية التحقق الخاصة به (the token chooses its own verification algorithm)، مما يفتح الباب أمام هجمات `alg: none` والخلط بين الخوارزميات (algorithm-confusion attacks)
+- B. إنه بطيء (slow)، لأنه يحلّل الترويسة مرتين (parses the header twice)
 - C. لا يفحص عمر الرمز (token's lifetime)
-- D. الترويسات مشفّرة (headers are encrypted) ولا يمكن قراءتها قبل التحقق (before verification)
+- D. الترويسات مشفّرة (headers are encrypted) ولا يمكن قراءتها قبل التحقق (before verification)، لذا يفشل الاستدعاء بخطأ مع كل رمزٍ صالح (the call fails with an error for every token that is valid)، حتى الرموز التي أصدرتها نجم نفسها (even tokens Najm issued itself)
 
 <details><summary>الإجابة</summary>
 
-**B.** يجب أن تأتي الخوارزمية من إعداداتك (from your configuration)، لا من مُدخلٍ يتحكم فيه المهاجم أبدًا (never from input the attacker controls). أمّا C فليس العيب الجوهري (not the core flaw)، إذ يفحص PyJWT قيمة `exp` حين تكون موجودة، وإن كان ينبغي لك أيضًا أن تشترطها (you should also require it)، وD خاطئ: الترويسات مرمّزةٌ فقط (only encoded). انظر: 🟡 التعمق أكثر (Going deeper).
+**A.** يجب أن تأتي الخوارزمية من إعداداتك (from your configuration)، لا من مُدخلٍ يتحكم فيه المهاجم أبدًا (never from input the attacker controls). أمّا C فليس العيب الجوهري (not the core flaw)، إذ يفحص PyJWT قيمة `exp` حين تكون موجودة، وإن كان ينبغي لك أيضًا أن تشترطها (you should also require it)، وD خاطئ: الترويسات مرمّزةٌ فقط (only encoded). انظر: 🟡 التعمق أكثر (Going deeper).
 
 </details>
 
@@ -514,7 +514,7 @@ def verify_access_token(token: str) -> dict:
 - A. عبر مطالبة `email`، لأنها مقروءةٌ للبشر (human-readable)
 - B. عبر الاسم المعروض للمستخدم (user's display name)
 - C. عبر الزوج (pair) `iss` + `sub`، مع الربط بحسابٍ قائم فقط بعد أن يسجّل المستخدم الدخول إلى كليهما (signs in to both)
-- D. عبر الحساب الذي كان نشطًا في الآونة الأخيرة (most recently active)
+- D. عبر الحساب الذي كان نشطًا في الآونة الأخيرة (most recently active)، لأنه الحساب الذي يرجَّح أن يريده المستخدم (the one the user is likely to want)
 
 <details><summary>الإجابة</summary>
 
@@ -779,7 +779,7 @@ flowchart TD
 
 **1. في أثناء اختبارٍ مصرَّحٍ به (authorised test)، تغيّر مريم `/api/invoices/10233/pdf` إلى `/api/invoices/10234/pdf` وتنزّل فاتورة شركةٍ أخرى (downloads another company's invoice). أيّ إصلاحٍ يعالج السبب الجذري (root cause)؟**
 
-- A. استبدال أرقام الفواتير المتسلسلة (sequential invoice numbers) بمعرّفات UUID عشوائية (random UUIDs)
+- A. استبدال أرقام الفواتير المتسلسلة (sequential invoice numbers) بمعرّفات UUID عشوائية (random UUIDs) لأن المهاجمين لا يستطيعون تخمينها (attackers cannot guess them)، مع الاستمرار في تقديم أي فاتورة يوردها المستدعي معرّفها (keep serving any invoice whose UUID the caller supplies)
 - B. تحميل الفاتورة مرشَّحةً حسب الشركة المأخوذة من جلسة المستخدم (filtered by the company from the user's session)، والرفض افتراضيًّا (deny by default)، وفحص السياسة المركزية (central policy) قبل إعادتها
 - C. إخفاء أرقام الفواتير في واجهة المستخدم (user interface)
 - D. إضافة تحديد المعدّل (rate limiting) إلى نقطة نهاية الفواتير (invoice endpoint)
@@ -805,7 +805,7 @@ flowchart TD
 
 **3. يحفظ `PATCH /api/users/me` القيمة `{"displayName": "Ali", "role": "owner"}`، فيصبح علي مالكًا (Owner). ما الإصلاح الأفضل (BEST fix)؟**
 
-- A. جعل حقل الدور للقراءة فقط في واجهة المستخدم (read-only in the user interface)
+- A. جعل حقل الدور للقراءة فقط في واجهة المستخدم (read-only in the user interface) وإخفاؤه من نموذج الملف الشخصي (hide it from the profile form) عن الجميع عدا المسؤولين (everyone except administrators)
 - B. إزالة عمود `role` من قاعدة البيانات (remove the role column from the database)
 - C. التحقق من الطلبات مقابل قائمة سماحٍ صريحة بالحقول التي يجوز لكل دور تعديلها (explicit allowlist of fields each role may edit)، ورفض أي شيءٍ آخر (reject anything else)
 - D. تسجيل التغيير ومراجعته شهريًّا (log the change and review it monthly)
@@ -831,7 +831,7 @@ flowchart TD
 
 **5. لدى نجم أسيست (Najm Assist) أداة `get_transactions(account_id)`، ويوفّر النموذج `account_id` من المحادثة (from the conversation). ما الذي يجب أن تفعله الأداة؟ ⁦(What must the tool do?)⁩**
 
-- A. الوثوق بالنموذج (trust the model)، لأن موجّه النظام (system prompt) يطلب منه ألّا يستخدم إلا حسابات العميل (use only the customer's accounts)
+- A. الوثوق بالنموذج (trust the model)، لأن موجّه النظام (system prompt) يطلب منه ألّا يستخدم إلا حسابات العميل (use only the customer's accounts) وقد التزم النموذج بهذه القاعدة في الاختبارات (followed that rule in testing)
 - B. التحقق من أن الحساب يخص العميل المحدَّد بالجلسة أو الرمز المميز (customer identified by the session or token) قبل إعادة أي شيء (before returning anything)
 - C. إعادة البيانات مع إخفاء رقم الحساب (mask the account number)
 - D. مطالبة النموذج بتأكيد معرّف الحساب مرتين (confirm the account ID twice)

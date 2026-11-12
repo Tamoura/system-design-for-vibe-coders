@@ -69,7 +69,7 @@
         "en": [
           "`history` builds `since` at midnight UTC, so early transfers drop out; use the Qatar day's start, then run `pytest -q`.",
           "The date handling in `history` is wrong; fix it properly, and run `pytest -q` before you tell me that it is all done.",
-          "Say exactly what you got wrong, apologise for it, and promise to check every date against the ticket from now on, always.",
+          "Say exactly what you got wrong, apologise, and promise to check every date against the ticket",
           "Undo everything done so far and give the whole ticket to a fresh session, with the same prompt as before."
         ],
         "ar": [
@@ -98,10 +98,10 @@
           "The 80% line is under-tested, so she should add totals a cent under and exactly at 80% through `send` too.",
           "The breakages are applied to the running program and cannot reach a fake, so these misses do not really count.",
           "The text is made inside `render`, which her fake skips; check its output against the approved text, typed out, in both languages.",
-          "Her tests should build the expected text by calling `render` themselves, so that the expected and actual text can never disagree."
+          "Her tests should build the expected text by calling `render` themselves, so that the two can never disagree"
         ],
         "ar": [
-          "خط 80% (the 80% line) ناقص الاختبار (under-tested)، فعليها إضافة اختبارات لمجموع أقل منه بسنت واحد وآخر عنده تمامًا (exactly at 80%) عبر `send`.",
+          "خط 80% (the 80% line) ناقص الاختبار (under-tested)، فعليها إضافة اختبارات لمجموع أقل منه بسنت واحد وآخر عنده تمامًا عبر `send`.",
           "تُطبَّق الأعطال (breakages) على البرنامج الجاري تشغيله ولا تصل إلى مُخطِر وهمي (fake)، فلا تُحتسب هذه الإخفاقات (misses) فعلًا.",
           "النص يُنتَج داخل `render` الذي يتجاوزه المُخطِر الوهمي (fake)، فعليها مقارنة مخرجاته بالنص المعتمد (approved text) مكتوبًا كاملًا باللغتين.",
           "ينبغي أن تبني اختباراتها النص المتوقع (expected text) باستدعاء `render` بنفسها، فيتطابق المتوقع والفعلي (expected and actual) دائمًا."

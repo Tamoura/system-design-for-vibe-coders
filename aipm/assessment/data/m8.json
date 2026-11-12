@@ -20,7 +20,7 @@
      "تحتاج إشارات الصحة (health signals) إلى عتبات أضيق (tighter thresholds)، كالتنبيه عند ارتفاعات أصغر في زمن الاستجابة (latency)",
      "إنها تتتبع الخدمة لا الإجابات (the service, not the answers)، فيبقى الانجراف الصامت في الجودة (silent drift in quality) غير مرئي (goes unseen)",
      "التكلفة لكل مهمة (cost per task) أهم بعد الإطلاق (after launch)، فينبغي أن تحل محل إشارات الصحة (health signals)",
-     "يُظهر الاحتواء (containment) هل تنجح المحادثات (chats succeed)، فإضافته تكمل الصورة (complete the picture)"
+     "يُظهر الاحتواء (containment) هل (whether) تنجح المحادثات (chats succeed)، فإضافته (adding it) تكمل الصورة (complete the picture)"
     ]
    },
    "a": 1,

@@ -45,7 +45,7 @@
      "Purge the exposed list from every store first, then decide whether anyone has to be told about it"
     ],
     "ar": [
-     "أبلغ Acme دون تأخير غير مبرر (without undue delay)، لأن أمام Acme مهلة 72 ساعة لإبلاغ سلطتها الرقابية (its supervisory authority)",
+     "أبلغ Acme دون تأخير (without undue delay)، لأن أمام Acme مهلة 72 ساعة لإبلاغ سلطتها الرقابية (supervisory authority)",
      "أبلغ السلطة الرقابية (supervisory authority) مباشرةً خلال 72 ساعة، لأن الاختراق (breach) وقع لدى Beacon",
      "أبلغ Acme خلال 72 ساعة، لأنها المهلة (deadline) التي يمنحها GDPR للمعالج (processor) كي يبلّغ عن الاختراق (breach)",
      "احذف القائمة المكشوفة (exposed list) من كل مخزن (every store) أولًا، ثم قرّر هل يجب إبلاغ أحد (anyone) بالأمر"
@@ -74,7 +74,7 @@
     ],
     "ar": [
      "لا شيء آخر، لأن المخطط الصالح (valid schema) والتتبعات السليمة (clean traces) تُظهر أن النموذج الجديد (new model) يعمل",
-     "مجموعة تقييم (eval set) من حوادث مجهولة الهوية (anonymised incidents) في CI، تفشل إذا وُصفت حادثة مفتوحة (open incident) بأنها \"حُلّت\" (resolved)",
+     "مجموعة تقييم (eval set) من حوادث مجهولة الهوية (anonymised incidents) في CI، تفشل إذا وُصفت حادثة مفتوحة بأنها \"حُلّت\"",
      "أسبوع من التتبع في الإنتاج (production tracing)، مع التراجع (rollback) إذا ساء معدل الأخطاء (error rate) أو زمن الاستجابة (latency)",
      "مخطط zod أكثر صرامة (stricter zod schema)، بحدود للطول (length limits) وحقل إلزامي (required field) لكل قسم (section)"
     ]

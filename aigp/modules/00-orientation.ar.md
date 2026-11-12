@@ -152,10 +152,10 @@ flowchart RL
 
 **1. أي عبارة تصف حوكمة الذكاء الاصطناعي (AI governance) على أفضل وجه؟**
 
-- A. مجموعة القيم الأخلاقية التي تنشرها المؤسسة بشأن الذكاء الاصطناعي (AI)
-- B. مراجعة الفريق القانوني (legal team) لعقود (contracts) الذكاء الاصطناعي (AI)
+- A. مجموعة القيم الأخلاقية (ethical values) التي تنشرها المؤسسة بشأن الذكاء الاصطناعي (AI)، إلى جانب المبادئ (principles) التي يعلن قادتها أنهم يلتزمون بها في عملهم اليومي
+- B. مراجعة الفريق القانوني (legal team) لعقود (contracts) الذكاء الاصطناعي (AI) وشروط المورّدين (vendor terms) والإيداعات التنظيمية (regulatory filings) قبل الشراء
 - C. الأشخاص والقواعد والعمليات (processes) والأدلة (evidence) التي تستخدمها المؤسسة لتوجيه (direct) الذكاء الاصطناعي (AI) والتحكم فيه عبر دورة حياته (its life cycle)
-- D. عملية التحقق من النماذج (model validation process) لدى فريق علم البيانات (data science team)
+- D. عملية التحقق من النماذج (model validation process) لدى فريق علم البيانات (data science team)، وتشمل الاختبار (testing) والاعتماد (sign-off) وإعادة الاختبار الدورية
 
 <details><summary>الإجابة (answer)</summary>
 
@@ -165,9 +165,9 @@ flowchart RL
 
 **2. يسأل الرئيس التنفيذي (CEO) لبنك نجم ليلى عمّا إذا كان البنك "ممتثلًا للذكاء الاصطناعي (compliant with AI)". ماذا يجب أن تفعل ليلى أولًا؟**
 
-- A. شراء أداة برمجية للامتثال (compliance software tool) في مجال الذكاء الاصطناعي (AI)
+- A. شراء أداة برمجية للامتثال (compliance software tool) في مجال الذكاء الاصطناعي (AI) تتتبّع اللوائح وترسل تنبيهات (alerts) إلى الفريق القانوني (legal team)
 - B. تحديد أنظمة الذكاء الاصطناعي (AI systems) التي يستخدمها البنك، ومن يملكها، وفيمَ تُستخدم
-- C. الطلب من فريق علم البيانات (data science team) إعادة تدريب (retrain) جميع النماذج (models) من أجل العدالة (fairness)
+- C. الطلب من فريق علم البيانات (data science team) إعادة تدريب (retrain) جميع النماذج (models) من أجل العدالة (fairness) ثم نشر نتائج الاختبار (test results)
 - D. إخبار مجلس الإدارة (board) بأن البنك ممتثل (compliant) لأنه لا يوجد قانون قطري يحظر الذكاء الاصطناعي (AI)
 
 <details><summary>الإجابة (answer)</summary>
@@ -179,9 +179,9 @@ flowchart RL
 **3. في نموذج الخطوط الثلاثة (three lines model)، أين تقع عادةً رئيسة حوكمة الذكاء الاصطناعي (Head of AI Governance) في بنك نجم؟**
 
 - A. الخط الثاني (second line)، حيث تضع السياسة (policy) وتراجع الأعمال وتتحداها
-- B. الخط الأول (first line)، لأنها تملك أنظمة الذكاء الاصطناعي (AI systems)
-- C. الخط الثالث (third line)، حيث تقدّم ضمانًا مستقلًا (independent assurance) لمجلس الإدارة (board)
-- D. خارج النموذج (model)، لأن الذكاء الاصطناعي (AI) موضوع تقني
+- B. الخط الأول (first line)، لأنها تملك أنظمة الذكاء الاصطناعي (AI systems) وتدير مخاطرها اليومية
+- C. الخط الثالث (third line)، حيث تقدّم ضمانًا مستقلًا (independent assurance) لمجلس الإدارة (board) ولجنة التدقيق
+- D. خارج النموذج (model)، لأن الذكاء الاصطناعي (AI) موضوع تقني تغطيه تقنية المعلومات أصلًا
 
 <details><summary>الإجابة (answer)</summary>
 
@@ -204,10 +204,10 @@ flowchart RL
 
 **5. ينشر متجر تجزئة (retailer) روبوت محادثة (chatbot) على موقعه اشتراه من مورّد (vendor). يخبر الروبوت أحد العملاء بأنه يستحق استردادًا لا يستحقه. استنادًا إلى المنطق الوارد في *Moffatt v. Air Canada*، من الأرجح أن يُحمَّل المسؤولية (liability) أمام العميل؟**
 
-- A. روبوت المحادثة (chatbot) نفسه، بوصفه مصدر التصريح
+- A. روبوت المحادثة (chatbot) نفسه (the chatbot itself)، بوصفه مصدر التصريح (statement)
 - B. المورّد (vendor) وحده، لأنه بنى روبوت المحادثة (chatbot)
 - C. متجر التجزئة (retailer) الذي نشر روبوت المحادثة (chatbot) على موقعه
-- D. لا أحد، لأن المخرجات (outputs) وُلّدت آليًا
+- D. لا أحد (no one)، لأن المخرجات (outputs) وُلّدت آليًا (automatically)
 
 <details><summary>الإجابة (answer)</summary>
 
@@ -435,9 +435,9 @@ flowchart RL
 
 **3. ما الدلالة الرئيسية لتحوّل الإصدار 2.1 (v2.1) من "نموذج الذكاء الاصطناعي (AI model)" إلى "نظام الذكاء الاصطناعي (AI system)" في المجالين (Domains) III وIV؟**
 
-- A. لم تعد النماذج (models) بحاجة إلى اختبار
-- B. صار الامتحان (exam) يركّز على العتاد (hardware)
-- C. صار الذكاء الاصطناعي التوليدي (GenAI) وحده ضمن النطاق (Scope)
+- A. لم تعد النماذج (models) بحاجة إلى اختبار (testing) قبل دخولها بيئة الإنتاج (production) على الإطلاق، لا في البنك (bank) ولا لدى المورّدين (vendors)
+- B. صار الامتحان (exam) يركّز على العتاد (hardware) والشرائح (chips) ومراكز البيانات (data centres) بدلًا من الحوكمة (governance)
+- C. صار الذكاء الاصطناعي التوليدي (GenAI) وحده ضمن النطاق (scope)، ولم تعد الأنظمة الأخرى (other systems) تُمتحن في أي مجال (domain) من المجالات
 - D. يجب أن تغطي الحوكمة (governance) النظام (system) كله، بما فيه خطوط معالجة البيانات (data pipelines) والواجهات (interfaces) والإشراف البشري (human oversight) وسياق الاستخدام (context of use)
 
 <details><summary>الإجابة (answer)</summary>
@@ -448,10 +448,10 @@ flowchart RL
 
 **4. تخطط شركة تأمين (insurer) في فرنسا لنشر (deployment) أداة ذكاء اصطناعي (AI tool) من مورّد لتحديد أقساط التأمين الفردية (individual premiums). لا يقدّم المورّد (vendor) أي وثائق. قبل النظر في خيارات الإجابة (answer)، ما مجموعة الحقائق التي يجب أن يستخلصها المرشح (candidate) أولًا من هذا السيناريو (scenario)؟**
 
-- A. الحصة السوقية (market share) للمورّد (vendor) وسعر الأداة
+- A. الحصة السوقية (market share) للمورّد (vendor)، وسعر الأداة، ومدة العقد (contract)، وسمعة علامة المورّد التجارية (brand reputation)
 - B. الولاية القضائية (jurisdiction)، ودور شركة التأمين، وأثر الاستخدام، ومرحلة دورة الحياة (life-cycle stage)، والمشكلة
-- C. لغة البرمجة (programming language) وبنية النموذج (model architecture)
-- D. عدد موظفي شركة التأمين
+- C. لغة البرمجة (programming language)، وبنية النموذج (model architecture)، ومنطقة السحابة (cloud region)، وحجم عنقود التدريب (training cluster)
+- D. عدد موظفي شركة التأمين (insurer)، وعمر الشركة، وحجم مقرّها الرئيسي (head office) في بلد التشغيل
 
 <details><summary>الإجابة (answer)</summary>
 
@@ -635,9 +635,9 @@ flowchart RL
 **1. ما الغرض (purpose) الأساسي من سجل أنظمة الذكاء الاصطناعي (AI inventory)؟**
 
 - A. منح المؤسسة رؤية كاملة ومحددة الملكية (ownership) لأنظمة الذكاء الاصطناعي (AI systems) لديها حتى تتمكن من ترتيب أولويات التقييم (assessment) والضوابط (controls)
-- B. إظهار مدى ابتكار المؤسسة لمجلس الإدارة (board)
-- C. إلغاء الحاجة إلى تقييمات الأثر (impact assessments)
-- D. الوفاء بمتطلب يقضي بتسجيل كل نظام ذكاء اصطناعي (AI system) لدى جهة رقابية (regulator)
+- B. إظهار مدى ابتكار المؤسسة لمجلس الإدارة (board) مقارنةً بنظرائها ومنافسيها (competitors) في القطاع (sector)، وإبراز سبقها التقني (technical lead) أمام المساهمين (shareholders) والعملاء (customers)
+- C. إلغاء الحاجة إلى تقييمات الأثر (impact assessments)، لأن السجل (inventory) يسجّل أصلًا كل مخاطر (risks) وضوابط (controls) المؤسسة
+- D. الوفاء بمتطلب يقضي بتسجيل كل نظام ذكاء اصطناعي (AI system) لدى جهة رقابية (regulator) قبل البدء باستخدامه
 
 <details><summary>الإجابة (answer)</summary>
 
@@ -647,9 +647,9 @@ flowchart RL
 
 **2. تسأل ليلى رؤساء الأقسام (department heads) "هل تستخدمون الذكاء الاصطناعي (AI)؟" فيجيب معظمهم بالنفي. أي خطوة اكتشاف (discovery step) من شأنها أن تحسّن الاكتمال أكثر من غيرها؟**
 
-- A. قبول الإجابات وتسجيل نماذج فريق علم البيانات (data science team) فقط
-- B. التعاقد مع شركة خارجية لتشهد بعدم وجود أي ذكاء اصطناعي (AI) آخر
-- C. حظر جميع البرمجيات التي فيها ميزات ذكاء اصطناعي (AI features) إلى أن يُصرّح بها مالكوها (owners)
+- A. قبول الإجابات (answers) كما وردت وتسجيل نماذج (models) فريق علم البيانات (data science team) فقط في السجل (inventory) دون غيرها
+- B. التعاقد مع شركة خارجية (external firm) لتشهد (certify) بعدم وجود أي ذكاء اصطناعي (AI) آخر في أي خط أعمال (business line) من خطوط البنك
+- C. حظر جميع البرمجيات (software) التي فيها ميزات ذكاء اصطناعي (AI features) إلى أن يُصرّح بها مالكوها (owners) وتعتمد اللجنة (committee) كل واحدة منها
 - D. السؤال عن القرارات (decisions) التي تستخدم درجة أو ترتيبًا (ranking) أو تنبؤًا (prediction) أو نصًا مولَّدًا (generated text)، ومطابقة ذلك مع العقود (contracts) والسجلات القائمة (existing registers) وسجلات الشبكة (network logs)
 
 <details><summary>الإجابة (answer)</summary>
@@ -660,10 +660,10 @@ flowchart RL
 
 **3. بموجب EU AI Act، أي أنظمة بنك نجم يقع في مجال عالي المخاطر (high-risk area) مدرج في الملحق III (Annex III)؟**
 
-- A. نموذج كشف الاحتيال (fraud detection)
-- B. استخدام الموظفين (staff use) لأدوات الذكاء الاصطناعي التوليدي العامة (public GenAI tools) لصياغة رسائل البريد الإلكتروني
+- A. نموذج (model) كشف الاحتيال (fraud detection)
+- B. استخدام الموظفين (staff use) لأدوات الذكاء الاصطناعي التوليدي العامة (public GenAI tools) لصياغة رسائل البريد الإلكتروني (emails)
 - C. أداة فرز السير الذاتية (CV-screening tool) المستخدمة في التوظيف (recruitment)
-- D. لا شيء، لأن المقر الرئيسي (headquarters) لبنك نجم خارج الاتحاد الأوروبي (EU)
+- D. لا شيء (none)، لأن المقر الرئيسي (headquarters) لبنك نجم خارج الاتحاد الأوروبي (EU)
 
 <details><summary>الإجابة (answer)</summary>
 
@@ -673,9 +673,9 @@ flowchart RL
 
 **4. يصنّف سجل أحد البنوك أداة لتوجيه البريد الإلكتروني (email-routing tool) تستخدم شبكة عصبية عميقة (deep neural network) على أنها "عالية المخاطر (high-risk)"، ويصنّف بطاقة تقييم الجدارة الائتمانية (credit scorecard) القائمة على الانحدار اللوجستي (logistic regression) على أنها "منخفضة المخاطر (low-risk)" لأنها "مجرد إحصاء". ما العيب الرئيسي؟**
 
-- A. الشبكات العصبية العميقة (Deep neural networks) منخفضة المخاطر (low-risk) دائمًا
+- A. الشبكات العصبية العميقة (Deep neural networks) منخفضة المخاطر (low-risk) دائمًا، لأنها تُختبر (tested) أكثر من النماذج الأخرى
 - B. يجب تصنيف (rating) المخاطر (risk) حسب الاستخدام والأثر (use and impact) على الناس، لا حسب التطور التقني
-- C. لا يمكن أن يكون الانحدار اللوجستي (logistic regression) ذكاءً اصطناعيًا (AI) وفق أي تعريف
+- C. لا يمكن أن يكون الانحدار اللوجستي (logistic regression) ذكاءً اصطناعيًا (AI) وفق أي تعريف، لأنه أسلوب إحصائي (statistical method) معياري
 - D. يجب ألا تتضمن السجلات (inventories) تصنيفات للمخاطر (risk ratings)
 
 <details><summary>الإجابة (answer)</summary>
@@ -686,9 +686,9 @@ flowchart RL
 
 **5. تُظهر سجلات الوكيل الشبكي (proxy logs) أن مديري العلاقات (relationship managers) يلصقون القوائم المالية للعملاء (client financial statements) في روبوت محادثة عام (public chatbot) مجاني. ما أفضل استجابة أولى من منظور الحوكمة (governance)؟**
 
-- A. تجاهل الأمر، لأن البشر يراجعون المخرجات (outputs)
-- B. فصل الموظفين (staff) المعنيين
-- C. حظر كل وصول إلى الإنترنت لمديري العلاقات (relationship managers)
+- A. تجاهل الأمر (ignore it)، لأن البشر (humans) يراجعون المخرجات (outputs) قبل إرسال أي شيء إلى العميل (client)
+- B. فصل الموظفين (staff) المعنيين وإبلاغ الجهة الرقابية (regulator) بالأمر بوصفه مخالفة جسيمة (serious breach)
+- C. حظر كل وصول إلى الإنترنت (internet access) لمديري العلاقات (relationship managers) إلى أن يعتمد مجلس الإدارة (board) سياسة جديدة للذكاء الاصطناعي (AI policy)
 - D. تسجيله في السجل (inventory) مع مالك (owner)، وإصدار قاعدة مؤقتة للاستخدام المقبول (interim acceptable-use rule)، وتقديم أداة معتمدة (approved tool) بشروط تعاقدية سليمة (proper contract terms)
 
 <details><summary>الإجابة (answer)</summary>

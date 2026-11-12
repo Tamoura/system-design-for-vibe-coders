@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="data-source" content="2dc9f89d1267da77">
+<meta name="data-source" content="f16ce9df140ce7ab">
 <meta name="description" content="هندسة البيانات والتحليلات من الصفر إلى الاحتراف: دورة مجانية ثنائية اللغة عن SQL والنمذجة، وخطوط البيانات والتدفق، وdbt وجودة البيانات، والمقاييس الموثوقة والتجارب، وبيانات تعلّم الآلة والنماذج اللغوية في الإنتاج، وحوكمة البيانات، مع اختبار في كل درس وامتحان تدريبي من 60 سؤالًا.">
 <title>هندسة البيانات والتحليلات من الصفر إلى الاحتراف — الدورة كاملة</title>
 <style>
@@ -749,9 +749,9 @@ WHERE t.initiated_by = &#39;customer&#39;
 
 <p><strong>4. يغيّر فريق التطبيق <bdi>(app team)</bdi> اسم الحدث <code>card_freeze</code> إلى <code>card_freeze_tap</code>. يستمر خط البيانات <bdi>(pipeline)</bdi> في العمل، لكن لوحة معلومات «تجميد البطاقات» <bdi>(card freezes)</bdi> تهبط إلى الصفر <bdi>(drops to zero)</bdi>. أين انكسرت السلسلة <bdi>(where did the chain break)</bdi>؟</strong></p>
 <ul>
-<li>A. في إعدادات الرسم البياني <bdi>(chart settings)</bdi> في أداة ذكاء الأعمال <bdi>(BI tool)</bdi>، لأن هناك يظهر الصفر أولًا لقطاع العمل</li>
+<li>A. في إعدادات الرسم البياني <bdi>(chart settings)</bdi> في أداة ذكاء الأعمال <bdi>(BI tool)</bdi>، لأن هناك يظهر الصفر أولًا</li>
 <li>B. في نموذج عالم البيانات <bdi>(data scientist&#39;s model)</bdi>، الذي دُرّب على اسم الحدث القديم <bdi>(old event name)</bdi></li>
-<li>C. عند نقطة التسليم من المنتِج إلى المنصة <bdi>(producer-to-platform hand-off)</bdi>، التي لم يغطّها أيّ اتفاق <bdi>(no agreement covered)</bdi></li>
+<li>C. عند نقطة التسليم من المنتِج إلى المنصة <bdi>(producer-to-platform hand-off)</bdi>، التي لم يغطّها أيّ اتفاق</li>
 <li>D. في صيغة التخزين <bdi>(storage format)</bdi> في مستودع البيانات <bdi>(warehouse)</bdi>، التي لا تستطيع حمل اسمَي حدث للإجراء نفسه</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -1087,9 +1087,9 @@ ORDER BY 1;
 <p><strong>3. تحتاج لوحة معلومات التجزئة <bdi>(retail dashboard)</bdi> لدى نجم أرقام الأمس بحلول 08:00، ويجب أن تقيّم التنبيهات الذكية <bdi>(Smart Alerts)</bdi> كل تفويض بطاقة <bdi>(card authorisation)</bdi> في غضون لحظات. أيّ تصميم يناسب <bdi>(which design fits)</bdi>؟</strong></p>
 <ul>
 <li>A. المعالجة المتدفقة <bdi>(Streaming)</bdi> للاثنين، لأن الوقت الحقيقي أفضل دائمًا <bdi>(real-time is always better)</bdi></li>
-<li>B. دفعة ليلية <bdi>(Nightly batch)</bdi> للاثنين، لأنها أرخص <bdi>(cheaper)</bdi></li>
+<li>B. دفعة ليلية <bdi>(Nightly batch)</bdi> للاثنين معًا، لأنها أرخص وأبسط <bdi>(cheaper)</bdi></li>
 <li>C. التنبيهات الذكية <bdi>(Smart Alerts)</bdi> بالدفعي <bdi>(in batch)</bdi>؛ ولوحة المعلومات بالمتدفق <bdi>(in streaming)</bdi></li>
-<li>D. الدفعي للوحة المعلومات <bdi>(Batch for the dashboard)</bdi>؛ والمتدفق للتنبيهات الذكية <bdi>(streaming for Smart Alerts)</bdi></li>
+<li>D. الدفعي للوحة المعلومات <bdi>(Batch for the dashboard)</bdi>؛ والمتدفق للتنبيهات الذكية</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -1996,9 +1996,9 @@ Checks       : grain unique OK; debit total reconciles to GL report within 0.1%,
 <section class="sec sec-quiz"><h2>✍️ اختبر نفسك <bdi>(Check yourself)</bdi></h2>
 <p><strong>1. تربط هدى <code>customers</code> → <code>accounts</code> → <code>transactions</code> وتشغّل <code>SELECT COUNT(*)</code> لعدّ العملاء النشطين <bdi>(active customers)</bdi>. فتأتي النتيجة أعلى بنحو 35 مرة مما توقّعه كريم. ما السبب الأرجح <bdi>(most likely cause)</bdi>؟</strong></p>
 <ul>
-<li>A. إحصاءات المخطِّط <bdi>(planner&#39;s statistics)</bdi> قديمة <bdi>(out of date)</bdi></li>
-<li>B. يتجاهل <code>COUNT(*)</code> الصفوف التي فيها قيم فارغة <bdi>(rows with nulls)</bdi></li>
-<li>C. حُبَيبيته <bdi>(grain)</bdi> هي صف واحد لكل معاملة <bdi>(one row per transaction)</bdi>، لا لكل عميل <bdi>(not per customer)</bdi></li>
+<li>A. إحصاءات المخطِّط <bdi>(planner&#39;s statistics)</bdi> المستخدمة في الاستعلام قديمة <bdi>(out of date)</bdi></li>
+<li>B. يتجاهل <code>COUNT(*)</code> الصفوف التي فيها قيم فارغة <bdi>(rows with nulls)</bdi> عند العدّ</li>
+<li>C. حُبَيبيته <bdi>(grain)</bdi> هي صف واحد لكل معاملة، لا لكل عميل <bdi>(not per customer)</bdi></li>
 <li>D. كان ينبغي أن يكون <code>JOIN</code> ربطًا من نوع <code>CROSS JOIN</code> للاحتفاظ بكل عميل <bdi>(to keep every customer)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -2020,9 +2020,9 @@ Checks       : grain unique OK; debit total reconciles to GL report within 0.1%,
 
 <p><strong>3. يريد كريم إدراج كل عملاء الأفراد <bdi>(every retail customer)</bdi>، مع صفر لمن لم ينفقوا شيئًا في سبتمبر. يحتوي استعلام <code>LEFT JOIN</code> لدى هدى على <code>WHERE t.txn_ts &gt;= &#39;2026-09-01&#39;</code>، والعملاء ذوو الإنفاق الصفري <bdi>(zero-spend customers)</bdi> مفقودون. لماذا؟</strong></p>
 <ul>
-<li>A. يُسقط <code>LEFT JOIN</code> الصفوف غير المتطابقة <bdi>(unmatched rows)</bdi> كلما تلاه <code>GROUP BY</code></li>
-<li>B. للصفوف غير المتطابقة <bdi>(unmatched rows)</bdi> قيمة <code>txn_ts</code> من نوع <code>NULL</code>، لذا يُسقطها اختبار <code>WHERE</code> <bdi>(the WHERE test drops them)</bdi></li>
-<li>C. يجب أن يُغلّف <code>COALESCE</code> القيمة <code>t.txn_ts</code> قبل الربط، وإلا أفسدت القيم الفارغة المجموع <bdi>(the nulls break the sum)</bdi></li>
+<li>A. يُسقط <code>LEFT JOIN</code> الصفوف غير المتطابقة <bdi>(unmatched rows)</bdi> كلما تلاه <code>GROUP BY</code> <bdi>(the aggregation)</bdi> في الاستعلام</li>
+<li>B. للصفوف غير المتطابقة <bdi>(unmatched rows)</bdi> قيمة <code>txn_ts</code> من نوع <code>NULL</code>، لذا يُسقطها اختبار <code>WHERE</code></li>
+<li>C. يجب أن يُغلّف <code>COALESCE</code> القيمة <code>t.txn_ts</code> قبل الربط، وإلا أفسدت القيم الفارغة المجموع</li>
 <li>D. يحتاج مرشّح التاريخ <bdi>(date filter)</bdi> إلى <code>HAVING</code> بدل <code>WHERE</code>، لأنه يعمل بعد التجميع <bdi>(after grouping)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -2821,8 +2821,8 @@ GROUP BY channel;
 <p><strong>3. تعطّلت مهمة ليلية <bdi>(nightly job)</bdi> تكتب ملفات Parquet إلى تخزين الكائنات <bdi>(object storage)</bdi> في منتصفها، فرأى المحلّلون يومًا محمّلًا نصفه <bdi>(half-loaded day)</bdi>. أي تقنية مصمّمة لمنع ذلك؟</strong></p>
 <ul>
 <li>A. عنقود حوسبة أكبر <bdi>(larger compute cluster)</bdi>، كي تنتهي المهمة قبل أن تتعطّل</li>
-<li>B. صيغة جداول مفتوحة <bdi>(open table format)</bdi> ذات التزامات لقطات ذرّية <bdi>(atomic snapshot commits)</bdi></li>
-<li>C. تحويل الملفات إلى ORC ‏<bdi>(converting the files to ORC)</bdi></li>
+<li>B. صيغة جداول مفتوحة <bdi>(open table format)</bdi> ذات التزامات ذرّية <bdi>(atomic commits)</bdi></li>
+<li>C. تحويل كل الملفات إلى صيغة ORC ‏<bdi>(converting the files to ORC)</bdi></li>
 <li>D. التقسيم حسب الساعة بدلًا من اليوم <bdi>(partitioning by hour instead of by day)</bdi>، كي يضيع أقل</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -2844,10 +2844,10 @@ GROUP BY channel;
 
 <p><strong>5. شركة تقنية مالية صغيرة <bdi>(small fintech)</bdi> لديها ثلاثة مهندسين و50 غيغابايت من البيانات تسأل هل تحتاج إلى مستودع بحيري <bdi>(lakehouse)</bdi>. باتّباع ترتيب القرار في الدرس <bdi>(lesson&#39;s decision order)</bdi>، ما الذي ينبغي أن تنظر فيه أولًا؟</strong></p>
 <ul>
-<li>A. أي مورّد أطلق أحدث ميزات المستودع البحيري <bdi>(newest lakehouse features)</bdi> هذا العام</li>
-<li>B. حِمل عملها <bdi>(workload)</bdi>: الاستعلامات <bdi>(queries)</bdi>، والحجم <bdi>(volume)</bdi>، والحداثة <bdi>(freshness)</bdi>، والمستخدمون <bdi>(users)</bdi></li>
+<li>A. أي مورّد أطلق أحدث ميزات المستودع البحيري <bdi>(newest features)</bdi> هذا العام</li>
+<li>B. حِمل عملها <bdi>(workload)</bdi>: الاستعلامات والحجم والحداثة <bdi>(queries, volume, freshness)</bdi></li>
 <li>C. هل يتوقّع منافسوها ومستثمروها <bdi>(competitors and investors)</bdi> استخدام Iceberg</li>
-<li>D. كم قسمًا <bdi>(partitions)</bdi> يمكن تقسيم بياناتها إليه</li>
+<li>D. كم قسمًا <bdi>(partitions)</bdi> يمكن تقسيم بياناتها إليه في أقصى حد <bdi>(maximum)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -3159,7 +3159,7 @@ WHERE rn = 1
 <li>A. لا شيء يسوء، لأن PostgreSQL يجعل الصفوف الملتزَمة مرئية بترتيب الطوابع الزمنية <bdi>(timestamp order)</bdi></li>
 <li>B. تُحمَّل الصفوف مرتين؛ أصلِحه بتحويل الجدول كله إلى تحميل كامل ليلي <bdi>(nightly full load)</bdi></li>
 <li>C. تسبب الصفوف خطأ مفتاح أساسي <bdi>(primary-key error)</bdi> في التشغيل التالي؛ أصلِحه بإسقاط المفتاح</li>
-<li>D. تُتخطّى الصفوف إلى الأبد <bdi>(skipped for ever)</bdi>؛ داخِل النافذة وادمج <bdi>(overlap the window and merge)</bdi>، أو استخدم CDC</li>
+<li>D. تُتخطّى الصفوف إلى الأبد <bdi>(skipped for ever)</bdi> لأنها تصل متأخرة؛ داخِل النافذة وادمج، أو استخدم CDC</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -3495,10 +3495,10 @@ Approved by:      Faisal
 <section class="sec sec-quiz"><h2>✍️ اختبر نفسك <bdi>(Check yourself)</bdi></h2>
 <p><strong>1. أدرجت مهمة هدى يومًا من المعاملات، والتزمت <bdi>(committed)</bdi>، ثم فقدت اتصالها قبل أن يتلقى Airflow النجاح <bdi>(received success)</bdi>. أعاد Airflow المحاولة <bdi>(retried)</bdi>، فتضاعف مجموع اليوم <bdi>(day&#39;s total doubled)</bdi>. ما أفضل إصلاح؟</strong></p>
 <ul>
-<li>A. أوقف إعادة المحاولة لتلك المهمة <bdi>(turn off retries)</bdi> حتى لا تعمل مرة ثانية أبدًا</li>
-<li>B. احذف ذلك اليوم وأعد إدراجه في معاملة واحدة <bdi>(in one transaction)</bdi>، لفترة البيانات <bdi>(data interval)</bdi> في Airflow</li>
-<li>C. أضف مهمة تنظيف شهرية <bdi>(monthly clean-up job)</bdi> تزيل الصفوف المكررة من طبقة التهيئة</li>
-<li>D. زِد مهلة المهمة الزمنية <bdi>(task&#39;s timeout)</bdi> ليكون للاتصال وقت أطول للتعافي</li>
+<li>A. أوقف إعادة المحاولة لتلك المهمة <bdi>(turn off retries)</bdi> حتى لا تعمل مرتين أبدًا <bdi>(ever again)</bdi></li>
+<li>B. احذف ذلك اليوم وأعد إدراجه في معاملة واحدة <bdi>(in one transaction)</bdi>، لفترة البيانات في Airflow</li>
+<li>C. أضف مهمة تنظيف شهرية <bdi>(monthly clean-up job)</bdi> تزيل الصفوف المكررة من طبقة التهيئة <bdi>(staging)</bdi></li>
+<li>D. زِد مهلة المهمة الزمنية <bdi>(task&#39;s timeout)</bdi> ليكون للاتصال وقت أطول للتعافي <bdi>(to recover)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -3918,9 +3918,9 @@ GROUP BY card_id, window_start, window_end;
 
 <p><strong>4. تفقد طرفية بطاقات <bdi>(card terminal)</bdi> اتصالها وترسل 40 تفويضًا متأخرة ثلاث دقائق. وتعدّ خاصية الاحتيال <bdi>(fraud feature)</bdi> التفويضات لكل بطاقة في كل نافذة مدتها 5 دقائق <bdi>(per 5-minute window)</bdi>. أي نهج يضعها في النوافذ الصحيحة <bdi>(right windows)</bdi>؟</strong></p>
 <ul>
-<li>A. العدّ حسب وقت المعالجة <bdi>(processing time)</bdi>، لتعكس الأعداد متى علم نجم بها</li>
-<li>B. إسقاط كل حدث يصل بغير ترتيب <bdi>(out of order)</bdi> لإبقاء النوافذ نظيفة</li>
-<li>C. العدّ حسب وقت الحدث <bdi>(event time)</bdi>، مع علامة مائية مختارة ومعالجة صريحة للمتأخر <bdi>(explicit late handling)</bdi></li>
+<li>A. العدّ حسب وقت المعالجة <bdi>(processing time)</bdi>، لتعكس الأعداد متى علم نجم بها <bdi>(when Najm learned)</bdi></li>
+<li>B. إسقاط كل حدث يصل بغير ترتيب <bdi>(out of order)</bdi> لإبقاء النوافذ نظيفة <bdi>(clean windows)</bdi></li>
+<li>C. العدّ حسب وقت الحدث <bdi>(event time)</bdi>، مع علامة مائية مختارة ومعالجة صريحة للمتأخر</li>
 <li>D. زيادة مدة احتفاظ الموضوع <bdi>(topic&#39;s retention period)</bdi> لتُحفظ الأحداث المتأخرة أطول</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -4351,8 +4351,8 @@ from {{ source(&#39;core_banking&#39;, &#39;customers&#39;) }}
 <ul>
 <li>A. اطلب من المحلّلَين أن يبنيا تقاريرهما في أداة لوحات المعلومات نفسها <bdi>(same dashboard tool)</bdi> من الآن فصاعدًا</li>
 <li>B. أضف اختبار <code>not_null</code> على <code>customer_id</code> في كلا الاستعلامين المحفوظين <bdi>(saved queries)</bdi></li>
-<li>C. عرّف منطق النشاط <bdi>(activity logic)</bdi> مرة واحدة في نموذج وسيط <bdi>(intermediate model)</bdi> واجعل كل طبقة عرض وكل تقرير يستدعيه بـ<code>ref()</code></li>
-<li>D. أرسل إلى فريق المالية رقم التجزئة بالبريد الإلكتروني كل شهر</li>
+<li>C. عرّف منطق النشاط مرة واحدة في نموذج وسيط <bdi>(intermediate model)</bdi> واجعل كل تقرير يستدعيه بـ<code>ref()</code></li>
+<li>D. أرسل إلى فريق المالية <bdi>(finance team)</bdi> رقم التجزئة بالبريد الإلكتروني كل شهر <bdi>(monthly)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -4397,10 +4397,10 @@ from {{ source(&#39;core_banking&#39;, &#39;customers&#39;) }}
 
 <p><strong>5. يستغرق التكامل المستمر لطلبات السحب <bdi>(pull-request CI)</bdi> في نجم 90 دقيقة لأنه يعيد بناء المشروع كله مع كل تغيير. ما الطريقة القياسية في dbt لتسريعه <bdi>(standard dbt way to speed it up)</bdi>؟</strong></p>
 <ul>
-<li>A. أزل الاختبارات من التكامل المستمر وشغّلها فقط في الإنتاج بعد كل دمج في <code>main</code></li>
-<li>B. حوّل كل نموذج إلى عرض <bdi>(view)</bdi> حتى لا يلزم تجسيد أي شيء في مخطط التكامل المستمر <bdi>(CI schema)</bdi></li>
-<li>C. استخدم الاختيار حسب الحالة <bdi>(state selection)</bdi>: ابنِ النماذج المعدّلة وأبناءها فقط <bdi>(only modified models and their children)</bdi>، مع تأجيل الآباء غير المتغيّرين <bdi>(deferring unchanged parents)</bdi></li>
-<li>D. شغّل التكامل المستمر مرة في الأسبوع بدلًا من كل طلب سحب</li>
+<li>A. أزل الاختبارات من التكامل المستمر <bdi>(CI)</bdi> وشغّلها فقط في الإنتاج <bdi>(production)</bdi> بعد كل دمج في <code>main</code></li>
+<li>B. حوّل كل نموذج إلى عرض <bdi>(view)</bdi> حتى لا يلزم تجسيد <bdi>(materialise)</bdi> أي شيء في مخطط التكامل المستمر <bdi>(CI schema)</bdi></li>
+<li>C. استخدم الاختيار حسب الحالة <bdi>(state selection)</bdi>: ابنِ النماذج المعدّلة وأبناءها فقط، وأجّل الآباء غير المتغيّرين</li>
+<li>D. شغّل التكامل المستمر مرة في الأسبوع <bdi>(once a week)</bdi> بدلًا من كل طلب سحب <bdi>(pull request)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -4790,7 +4790,7 @@ where d = current_date - 1
 <p><strong>1. كل مهمة في Airflow خضراء <bdi>(every Airflow task is green)</bdi>، لكن لوحة معلومات رئيس المخاطر <bdi>(CRO dashboard)</bdi> تُظهر انخفاض المتأخرات <bdi>(arrears)</bdi> بمقدار الثلث بين ليلة وضحاها لأن حقلًا في المصدر <bdi>(source field)</bdi> تغيّر نوعه وحُوّل إلى قيمة فارغة <bdi>(cast to null)</bdi>. أي فحص كان سيلتقط ذلك في أبكر وقت <bdi>(earliest)</bdi>؟</strong></p>
 <ul>
 <li>A. فحص يتأكد من أن لوحة معلومات رئيس المخاطر قد تحدّثت بنجاح <bdi>(refreshed successfully)</bdi> قبل 07:00</li>
-<li>B. فحص للمخطط عند الاستيعاب <bdi>(schema check at ingestion)</bdi>، أو <code>not_null</code> على <code>days_past_due</code> بعد تحويل الأنواع <bdi>(after the cast)</bdi></li>
+<li>B. فحص للمخطط عند الاستيعاب <bdi>(schema check)</bdi>، أو <code>not_null</code> على <code>days_past_due</code> بعد تحويل الأنواع</li>
 <li>C. سياسة إعادة محاولة <bdi>(retry policy)</bdi> أطول في Airflow مع محاولات أكثر لكل مهمة فاشلة</li>
 <li>D. تدقيق دقة فصلي <bdi>(quarterly accuracy audit)</bdi> للقروض مقابل العقود الموقّعة <bdi>(signed contracts)</bdi></li>
 </ul>
@@ -5172,9 +5172,9 @@ group by account_id;
 <p><strong>2. يُبنى <code>fct_card_authorisations</code> تزايديًا <bdi>(incrementally)</bdi> باستخدام <code>where authorised_at &gt; (select max(authorised_at) from {{ this }})</code>. تصل بعض إعادات المحاولة من الأجهزة الطرفية <bdi>(terminal retries)</bdi> متأخرة يومين، حاملةً <code>authorised_at</code> الأصلي. ما الذي يحدث خطأً، وما الإصلاح؟</strong></p>
 <ul>
 <li>A. لا شيء؛ فـdbt تتتبّع أي صفوف المصدر عالجها كل تشغيل تزايدي <bdi>(incremental run)</bdi> بالفعل</li>
-<li>B. تُتخطّى الأحداث المتأخرة <bdi>(late events are skipped)</bdi>؛ أعد معالجة نافذة رجوع <bdi>(lookback window)</bdi>، مربوطة بمفتاح فريد <bdi>(keyed on a unique key)</bdi> حتى يُستبدَل التداخل <bdi>(overlap is replaced)</bdi></li>
+<li>B. تُتخطّى الأحداث المتأخرة <bdi>(late events)</bdi>؛ أعد معالجة نافذة رجوع <bdi>(lookback)</bdi> مربوطة بمفتاح فريد فيُستبدَل التداخل</li>
 <li>C. سيكرّر النموذج كل صف متأخر في التشغيل التالي؛ غيّر الاستراتيجية إلى <code>append</code> لتجنّب ذلك</li>
-<li>D. يجب تحويل النموذج إلى عرض <bdi>(view)</bdi></li>
+<li>D. يجب تحويل النموذج إلى عرض <bdi>(view)</bdi> بدل جدول تزايدي <bdi>(incremental table)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -5183,10 +5183,10 @@ group by account_id;
 
 <p><strong>3. أي اختيار لعمود التقسيم <bdi>(partition column)</bdi> هو الأفضل عادةً لجدول حقائق كبير لمعاملات البطاقات <bdi>(card transactions fact table)</bdi> تُصفّي معظم استعلاماته حسب نطاق تاريخ <bdi>(date range)</bdi>؟</strong></p>
 <ul>
-<li>A. <code>card_id</code></li>
-<li>B. <code>merchant_category</code></li>
-<li>C. تاريخ المعاملة <bdi>(the transaction date)</bdi></li>
-<li>D. <code>transaction_id</code></li>
+<li>A. <code>card_id</code> معرّف البطاقة <bdi>(card identifier)</bdi></li>
+<li>B. <code>merchant_category</code> فئة التاجر <bdi>(merchant category)</bdi></li>
+<li>C. تاريخ المعاملة <bdi>(the transaction date)</bdi> نفسه</li>
+<li>D. <code>transaction_id</code> معرّف المعاملة <bdi>(transaction identifier)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -5570,7 +5570,7 @@ metrics:
 <section class="sec sec-quiz"><h2>✍️ اختبر نفسك <bdi>(Check yourself)</bdi></h2>
 <p><strong>1. تُبلغ التجزئة <bdi>(Retail)</bdi> عن 412,000 عميل نشط <bdi>(active customers)</bdi> وتُبلغ المالية <bdi>(finance)</bdi> عن 365,000. وكلا الاستعلامين يعمل دون أخطاء على مستودع البيانات <bdi>(warehouse)</bdi> نفسه. ما أفضل خطوة أولى <bdi>(best first step)</bdi>؟</strong></p>
 <ul>
-<li>A. الاتفاق على تعريف مكتوب واحد <bdi>(one written definition)</bdi> مع مالك مسمّى <bdi>(named owner)</bdi>، ثم حسابه في مكان واحد <bdi>(one place)</bdi></li>
+<li>A. الاتفاق على تعريف مكتوب واحد <bdi>(one written definition)</bdi> مع مالك مسمّى، ثم حسابه في مكان واحد</li>
 <li>B. استخدام الرقم الأعلى <bdi>(higher number)</bdi>، لأنه يلتقط أنواعًا أكثر من النشاط <bdi>(more kinds of activity)</bdi></li>
 <li>C. حساب متوسط الرقمين <bdi>(average the two figures)</bdi> كي لا يُفضَّل رقم أي فريق</li>
 <li>D. إعادة بناء مستودع البيانات <bdi>(rebuild the warehouse)</bdi>، لأن وجود رقمين يعني أن البيانات تالفة <bdi>(data is corrupted)</bdi></li>
@@ -5582,9 +5582,9 @@ metrics:
 
 <p><strong>2. تجمع هدى 30 عددًا يوميًا للعملاء النشطين <bdi>(daily active-customer counts)</bdi> لتُبلغ عن الرقم الشهري <bdi>(monthly figure)</bdi>. ما الخطأ؟</strong></p>
 <ul>
-<li>A. لا خطأ، ما دامت حسابات الموظفين والاختبار <bdi>(staff and test accounts)</bdi> قد استُثنيت كل يوم</li>
-<li>B. كان عليها أن تحسب متوسط الأعداد اليومية <bdi>(averaged the daily counts)</bdi> بدل جمعها</li>
-<li>C. أعداد القيم المميّزة غير قابلة للجمع <bdi>(distinct counts are non-additive)</bdi>؛ أعد حساب العدد المميّز على مدى الشهر <bdi>(recompute the distinct count over the month)</bdi></li>
+<li>A. لا خطأ، ما دامت حسابات الموظفين والاختبار <bdi>(staff and test accounts)</bdi> قد استُثنيت كل يوم <bdi>(every day)</bdi></li>
+<li>B. كان عليها أن تحسب متوسط الأعداد اليومية <bdi>(averaged the daily counts)</bdi> بدل جمعها معًا <bdi>(summing)</bdi></li>
+<li>C. أعداد القيم المميّزة غير قابلة للجمع <bdi>(non-additive)</bdi>؛ أعد حساب العدد المميّز على مدى الشهر</li>
 <li>D. كان عليها أن تأخذ وسيط الأعداد اليومية <bdi>(median of the daily counts)</bdi> لإزالة القيم الشاذة <bdi>(outliers)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -5594,10 +5594,10 @@ metrics:
 
 <p><strong>3. في الفرع X يستخدم 80 من أصل 100 عميل الخدمات المصرفية الرقمية <bdi>(digital banking)</bdi>؛ وفي الفرع Y يستخدمها 4,000 من أصل 10,000. ما معدّل التبنّي الرقمي المجمّع <bdi>(combined digital adoption rate)</bdi>؟</strong></p>
 <ul>
-<li>A. 60%، أي المتوسط البسيط <bdi>(simple average)</bdi> لمعدّلي الفرعين</li>
-<li>B. لا يمكن حسابه دون بيانات على مستوى العميل <bdi>(customer-level data)</bdi></li>
-<li>C. 80%، أي معدّل الفرع الأفضل أداءً <bdi>(best-performing branch)</bdi></li>
-<li>D. نحو 40.4%: إجمالي الرقميين على إجمالي العملاء <bdi>(total digital over total customers)</bdi></li>
+<li>A. 60%، أي المتوسط البسيط <bdi>(simple average)</bdi> لمعدّلي الفرعين معًا</li>
+<li>B. لا يمكن حسابه دون بيانات على مستوى العميل <bdi>(customer-level data)</bdi> أبدًا</li>
+<li>C. 80%، أي معدّل الفرع الأفضل أداءً <bdi>(best-performing branch)</bdi> وحده</li>
+<li>D. نحو 40.4%: إجمالي الرقميين على إجمالي العملاء <bdi>(total over total)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -5607,7 +5607,7 @@ metrics:
 <p><strong>4. أي عبارة تصف الطبقة الدلالية <bdi>(semantic layer)</bdi> على أفضل وجه؟</strong></p>
 <ul>
 <li>A. سمة ألوان وقالب تخطيط <bdi>(colour theme and layout template)</bdi> تتشاركهما لوحات معلومات أداة ذكاء أعمال <bdi>(BI tool)</bdi></li>
-<li>B. شيفرة مشتركة <bdi>(shared code)</bdi> تعرّف المقادير والأبعاد وعمليات الربط والمقاييس <bdi>(measures, dimensions, joins and metrics)</bdi> لكل أداة</li>
+<li>B. شيفرة مشتركة <bdi>(shared code)</bdi> تعرّف المقادير والأبعاد وعمليات الربط والمقاييس لكل أداة</li>
 <li>C. الطبقة الخام <bdi>(raw layer)</bdi> في مستودع البيانات، حيث تصل بيانات المصدر قبل التنظيف <bdi>(before cleaning)</bdi></li>
 <li>D. نسخة من مستودع البيانات محفوظة في منطقة أخرى للتعافي من الكوارث <bdi>(disaster recovery)</bdi></li>
 </ul>
@@ -5618,9 +5618,9 @@ metrics:
 
 <p><strong>5. تكافئ نجم الفروع على &quot;العملاء النشطين&quot; <bdi>(active customers)</bdi>، حيث يُحتسب تسجيل الدخول <bdi>(login)</bdi> نشاطًا. ترتفع عمليات تسجيل الدخول بحدّة لكن المعاملات <bdi>(transactions)</bdi> لا ترتفع. بماذا ينبغي أن توصي لينا؟</strong></p>
 <ul>
-<li>A. إزالة تسجيلات الدخول من التعريف بهدوء <bdi>(quietly)</bdi>، كي يتوقف التلاعب <bdi>(gaming)</bdi> بحلول الأسبوع القادم</li>
+<li>A. إزالة تسجيلات الدخول من التعريف بهدوء <bdi>(quietly)</bdi>، كي يتوقف التلاعب <bdi>(gaming)</bdi> بحلول الأسبوع القادم <bdi>(next week)</bdi> تمامًا</li>
 <li>B. التوقف عن قياس العملاء النشطين، لأن أي مقياس يُكافأ عليه سيُتلاعب به <bdi>(will be gamed)</bdi></li>
-<li>C. إضافة مقياس حماية <bdi>(guardrail)</bdi> ومقياس جودة أكثر صرامة <bdi>(stricter quality metric)</bdi>، ووضع إصدار لأي تغيير في التعريف <bdi>(version any definition change)</bdi></li>
+<li>C. إضافة مقياس حماية <bdi>(guardrail)</bdi> ومقياس جودة أكثر صرامة، ووضع إصدار لأي تغيير في التعريف <bdi>(versioning)</bdi></li>
 <li>D. رفع الهدف <bdi>(raise the target)</bdi> بحيث يتعيّن على الفروع أن تدفع المعاملات أيضًا للوصول إليه</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -5931,9 +5931,9 @@ metrics:
 
 <p><strong>2. أيّ مخطط يتيح للقرّاء على أفضل وجه مقارنة إنفاق البطاقات <bdi>(card spend)</bdi> عبر 12 منطقة في أسبوع واحد؟</strong></p>
 <ul>
-<li>A. مخطط شريطي أفقي مرتّب يبدأ من الصفر <bdi>(sorted horizontal bar chart starting at zero)</bdi></li>
-<li>B. مخطط دائري <bdi>(pie chart)</bdi> من 12 شريحة، موسوم بالنسب المئوية</li>
-<li>C. مخطط أعمدة ثلاثي الأبعاد <bdi>(3D column chart)</bdi> بلون مختلف لكل منطقة</li>
+<li>A. مخطط شريطي أفقي مرتّب يبدأ من الصفر <bdi>(sorted horizontal bar chart)</bdi></li>
+<li>B. مخطط دائري <bdi>(pie chart)</bdi> من 12 شريحة، موسوم بالنسب المئوية <bdi>(percent labels)</bdi></li>
+<li>C. مخطط أعمدة ثلاثي الأبعاد <bdi>(3D column chart)</bdi> بلون مختلف لكل منطقة <bdi>(a colour per region)</bdi></li>
 <li>D. مخطط حلقي <bdi>(donut chart)</bdi> مع مفتاح ألوان <bdi>(colour legend)</bdi> للمناطق</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -5943,10 +5943,10 @@ metrics:
 
 <p><strong>3. مخطط شريطي للتبنّي الرقمي الشهري <bdi>(monthly digital adoption)</bdi> له محور صادي <bdi>(y-axis)</bdi> يمتد من 95% إلى 100%. ما المشكلة؟</strong></p>
 <ul>
-<li>A. لا مشكلة؛ فالمحور الضيّق يجعل التغيّرات الصغيرة أسهل رؤيةً، وهذا يساعد القارئ</li>
-<li>B. طول الشريط يرمّز القيمة <bdi>(bar length encodes value)</bdi>، لذا يبالغ المحور المبتور <bdi>(truncated axis)</bdi> في الفروق</li>
-<li>C. ينبغي أن يمتد المحور من 0% إلى 200% لترك مساحة للملصقات <bdi>(labels)</bdi></li>
-<li>D. ينبغي عرض النسب المئوية في جدول، وعدم رسمها في مخطط أبدًا</li>
+<li>A. لا مشكلة؛ فالمحور الضيّق <bdi>(narrow axis)</bdi> يجعل التغيّرات الصغيرة <bdi>(small changes)</bdi> أسهل رؤيةً، وهذا يساعد القارئ <bdi>(the reader)</bdi></li>
+<li>B. طول الشريط يرمّز القيمة <bdi>(bar length encodes value)</bdi>، لذا يبالغ المحور المبتور في الفروق</li>
+<li>C. ينبغي أن يمتد المحور من 0% إلى 200% لترك مساحة للملصقات <bdi>(labels)</bdi> عليه</li>
+<li>D. ينبغي عرض النسب المئوية في جدول <bdi>(table)</bdi>، وعدم رسمها في مخطط أبدًا</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -5955,9 +5955,9 @@ metrics:
 
 <p><strong>4. انخفض إنفاق بطاقات المنشآت الصغيرة والمتوسطة <bdi>(SME card spend)</bdi> 6% هذا الأسبوع. وخلال العام الماضي، تراوحت التغيّرات الأسبوعية خارج رمضان والعيد بين −4% و+5%. ماذا ينبغي أن تفعل ملاحظة الاثنين <bdi>(Monday note)</bdi>؟</strong></p>
 <ul>
-<li>A. تجاهله، لأن كل رقم أسبوعي يتحرك والقصص عن الضجيج <bdi>(stories about noise)</bdi> تقوّض الثقة</li>
-<li>B. الإبلاغ عن الرقم وحده، دون سياق <bdi>(without context)</bdi>، كي لا يتحيّز القارئ</li>
-<li>C. التنبيه إليه بوصفه غير معتاد <bdi>(flag it as unusual)</bdi>، مع التفصيل <bdi>(breakdown)</bdi>، والسبب المرجّح <bdi>(likely cause)</bdi>، ودرجة اليقين <bdi>(confidence)</bdi>، وإجراء <bdi>(action)</bdi></li>
+<li>A. تجاهله، لأن كل رقم أسبوعي يتحرك والقصص عن الضجيج <bdi>(stories about noise)</bdi> تقوّض الثقة بالتقرير كله وبمن أعدّه</li>
+<li>B. الإبلاغ عن الرقم وحده، دون سياق <bdi>(without context)</bdi>، كي لا يتحيّز القارئ إلى تفسير</li>
+<li>C. التنبيه إليه بوصفه غير معتاد <bdi>(flag it as unusual)</bdi>، مع التفصيل والسبب المرجّح ودرجة اليقين</li>
 <li>D. انتظار ثلاثة أسابيع أخرى من البيانات قبل ذكره، للتأكد من أنه اتجاه <bdi>(trend)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -5967,9 +5967,9 @@ metrics:
 
 <p><strong>5. ينبغي أن يرى الرؤساء الإقليميون <bdi>(regional heads)</bdi> منطقتهم فقط في التجزئة الأسبوعية <bdi>(Retail Weekly)</bdi>. أين ينبغي فرض ذلك <bdi>(enforced)</bdi>؟</strong></p>
 <ul>
-<li>A. في مرشّح لوحة معلومات <bdi>(dashboard filter)</bdi> مضبوط مسبقًا على منطقة كل رئيس إقليمي</li>
+<li>A. في مرشّح لوحة معلومات <bdi>(dashboard filter)</bdi> مضبوط مسبقًا على منطقة كل رئيس إقليمي <bdi>(regional head)</bdi></li>
 <li>B. بأن يُطلب من الرؤساء الإقليميين كتابيًا <bdi>(in writing)</bdi> ألّا يغيّروا مرشّح المنطقة</li>
-<li>C. بأمن مستوى الصف <bdi>(row-level security)</bdi> في مستودع البيانات، مرتبطًا بهوية المشاهد <bdi>(viewer&#39;s identity)</bdi></li>
+<li>C. بأمن مستوى الصف <bdi>(row-level security)</bdi> في مستودع البيانات، مرتبطًا بهوية المشاهد</li>
 <li>D. في نسخة منفصلة من لوحة المعلومات لكل منطقة، لكلٍّ منها استعلاماتها المنسوخة <bdi>(copied queries)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -6215,10 +6215,10 @@ print(round(stat, 1), p)              # 14.4, p about 0.00015
 <section class="sec sec-quiz"><h2>✍️ اختبر نفسك <bdi>(Check yourself)</bdi></h2>
 <p><strong>1. في اليوم الثالث من اختبار مخطط له لأربعة أسابيع، يُظهر ارتفاع التفعيل <bdi>(activation lift)</bdi> قيمة p = 0.03. وقد فحص الفريق النتائج كل يوم. بماذا ينبغي أن تنصح دانة؟</strong></p>
 <ul>
-<li>A. إبقاؤه قيد التشغيل حتى حجم العينة وتاريخ الانتهاء المخطط لهما <bdi>(planned sample size and end date)</bdi></li>
-<li>B. الإطلاق الآن <bdi>(ship now)</bdi>، لأن p أقل من 0.05 والنتيجة دالّة <bdi>(significant)</bdi></li>
-<li>C. إعادة بدء الاختبار بعينة أصغر <bdi>(smaller sample)</bdi> كي ينتهي أسرع</li>
-<li>D. خفض alpha إلى 0.01 وإيقاف الاختبار إذا نزلت p تحتها غدًا</li>
+<li>A. إبقاؤه قيد التشغيل حتى حجم العينة وتاريخ الانتهاء المخطط لهما <bdi>(planned sample size)</bdi></li>
+<li>B. الإطلاق الآن <bdi>(ship now)</bdi>، لأن p أقل من 0.05 والنتيجة دالّة إحصائيًا <bdi>(significant)</bdi></li>
+<li>C. إعادة بدء الاختبار بعينة أصغر <bdi>(smaller sample)</bdi> كي ينتهي أسرع وبكلفة أقل</li>
+<li>D. خفض alpha إلى 0.01 وإيقاف الاختبار إذا نزلت p تحتها غدًا <bdi>(tomorrow)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -6545,7 +6545,7 @@ def train(train_df, valid_df, features, cfg, snapshot_id, git_sha):
 <p><strong>1. يحقق نموذج الاحتيال الجديد لهدى <bdi>(Huda&#39;s new fraud model)</bdi> نتائج أفضل بكثير دون اتصال <bdi>(offline)</bdi> من نموذج الإنتاج. إحدى الخصائص هي إجمالي عدد اعتراضات الاحتيال للعميل <bdi>(the customer&#39;s total number of fraud chargebacks)</bdi>، محسوبًا على جدول الاعتراضات بكامله. ما التفسير الأرجح؟ <bdi>(⁦What is the most likely explanation?⁩)</bdi></strong></p>
 <ul>
 <li>A. الخوارزمية الجديدة تلتقط تفاعلات بين الخصائص <bdi>(feature interactions)</bdi> فاتت النموذج القديم</li>
-<li>B. التسرّب <bdi>(Leakage)</bdi>: الاعتراضات تلي الاحتيال، لذا تحمل الخاصية التسمية <bdi>(the feature carries the label)</bdi></li>
+<li>B. التسرّب <bdi>(Leakage)</bdi>: الاعتراضات تلي الاحتيال، لذا تحمل الخاصية التسمية نفسها</li>
 <li>C. مجموعة الاختبار <bdi>(test set)</bdi> صغيرة جدًا، فعيّنة محظوظة <bdi>(a lucky sample)</bdi> ضخّمت النتيجة</li>
 <li>D. النموذج يعاني من نقص المواءمة <bdi>(underfitting)</bdi> لبيانات التدريب</li>
 </ul>
@@ -6559,7 +6559,7 @@ def train(train_df, valid_df, features, cfg, snapshot_id, git_sha):
 <li>A. عشوائيًا <bdi>(Randomly)</bdi>، بنسبة 70/15/15، مع الخلط <bdi>(shuffled)</bdi> بحيث تُمثَّل كل فترة في كل مجموعة</li>
 <li>B. حسب معرّف العميل <bdi>(By customer id)</bdi>، بحيث لا يظهر أي عميل في مجموعتين <bdi>(no customer appears in two sets)</bdi></li>
 <li>C. عشوائيًا <bdi>(Randomly)</bdi>، خمس مرات ببذور مختلفة <bdi>(different seeds)</bdi>، مع حساب متوسط النتائج <bdi>(averaging the results)</bdi></li>
-<li>D. حسب الزمن <bdi>(By time)</bdi>: درّب على الفترات الأقدم، واختبر على الأحدث، مطروحًا منها التسميات غير الناضجة <bdi>(minus immature labels)</bdi></li>
+<li>D. حسب الزمن <bdi>(By time)</bdi>: درّب على الفترات الأقدم، واختبر على الأحدث، مطروحًا منها التسميات غير الناضجة</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -6568,7 +6568,7 @@ def train(train_df, valid_df, features, cfg, snapshot_id, git_sha):
 
 <p><strong>3. تطلب جهة التحقق من النماذج <bdi>(Model validation)</bdi> من الفريق إعادة بناء نموذج التنبيهات الذكية للعام الماضي. إيداع git <bdi>(git commit)</bdi> معروف، لكن جداول التهيئة <bdi>(staging tables)</bdi> استُبدلت مرات عديدة منذ ذلك الحين. ما الذي كان ناقصًا في سجلّ التشغيل؟ <bdi>(⁦What was missing from the run record?⁩)</bdi></strong></p>
 <ul>
-<li>A. لقطة بيانات مثبّتة <bdi>(A pinned data snapshot)</bdi>، مثل معرّف لقطة Iceberg <bdi>(Iceberg snapshot id)</bdi></li>
+<li>A. لقطة بيانات مثبّتة <bdi>(pinned data snapshot)</bdi>، مثل معرّف لقطة Iceberg في الكتالوج</li>
 <li>B. حجم العنقود <bdi>(cluster size)</bdi> ونوع المثيل <bdi>(instance type)</bdi> المستخدمان في التدريب</li>
 <li>C. تصدير PDF للدفتر <bdi>(PDF export of the notebook)</bdi> مع مُخرَجات خلاياه <bdi>(cell outputs)</bdi></li>
 <li>D. المعاملات الفائقة <bdi>(hyperparameters)</bdi> والبذرة العشوائية <bdi>(random seed)</bdi>، ولا شيء غيرهما</li>
@@ -6582,7 +6582,7 @@ def train(train_df, valid_df, features, cfg, snapshot_id, git_sha):
 <ul>
 <li>A. انجراف المفهوم <bdi>(Concept drift)</bdi>؛ أعد التدريب كل شهر على أحدث المعاملات المسمّاة <bdi>(latest labelled transactions)</bdi></li>
 <li>B. نقص المواءمة <bdi>(Underfitting)</bdi>؛ أضف مزيدًا من الخصائص واستخدم نموذجًا أكثر مرونة <bdi>(a more flexible model)</bdi></li>
-<li>C. انحراف التدريب عن التقديم <bdi>(Training-serving skew)</bdi>؛ تعريف واحد مشترك <bdi>(one shared definition)</bdi>، في مخزن خصائص <bdi>(feature store)</bdi> مثلًا</li>
+<li>C. انحراف التدريب عن التقديم <bdi>(Training-serving skew)</bdi>؛ تعريف واحد مشترك للخاصية، في مخزن خصائص <bdi>(feature store)</bdi> مثلًا</li>
 <li>D. عدم توازن الفئات <bdi>(Class imbalance)</bdi>؛ قلّل عينات المعاملات السليمة <bdi>(down-sample genuine transactions)</bdi> وأعد المعايرة</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -6593,7 +6593,7 @@ def train(train_df, valid_df, features, cfg, snapshot_id, git_sha):
 <p><strong>5. يريد فريق كريم نموذج ميل <bdi>(propensity model)</bdi> يقيّم جميع العملاء في تشغيل دفعي ليلي واحد <bdi>(one nightly batch run)</bdi> من المستودع. تقترح هدى نشر مخزن خصائص <bdi>(feature store)</bdi> أولًا. ماذا ينبغي أن يقول فيصل؟ <bdi>(⁦What should Faisal say?⁩)</bdi></strong></p>
 <ul>
 <li>A. نعم: المخزن من اليوم الأول يتجنّب ترحيلًا مؤلمًا لاحقًا <bdi>(a painful migration later)</bdi></li>
-<li>B. ليس بعد <bdi>(Not yet)</bdi>: جداول dbt الصحيحة زمنيًا <bdi>(point-in-time dbt tables)</bdi> تكفي حتى تصبح الخصائص مشتركة أو حية <bdi>(shared or live)</bdi></li>
+<li>B. ليس بعد <bdi>(Not yet)</bdi>: جداول dbt الصحيحة زمنيًا تكفي حتى تصبح الخصائص مشتركة أو حية <bdi>(shared or live)</bdi></li>
 <li>C. لا، لأن مخازن الخصائص <bdi>(feature stores)</bdi> لا تعمل إلا مع البيانات المتدفقة <bdi>(streaming data)</bdi></li>
 <li>D. نعم، لأن مخزن الخصائص <bdi>(feature store)</bdi> يدير تعريف التسمية <bdi>(label definition)</bdi> نيابة عنك أيضًا</li>
 </ul>
@@ -6884,7 +6884,7 @@ def psi(baseline, current, bins=10, eps=1e-6):
 <ul>
 <li>A. الدقة الإجمالية على مجموعة التدريب <bdi>(Accuracy on the training set)</bdi> أيضًا، للتأكد من أن النموذج لم يفرط في المواءمة <bdi>(has not overfitted)</bdi></li>
 <li>B. ROC-AUC وحده، لأنه لا يعتمد على العتبة المختارة <bdi>(the threshold chosen)</bdi></li>
-<li>C. الدقة والاستدعاء عند العتبة المقترحة <bdi>(at the proposed threshold)</bdi>، وPR-AUC، ومقارنة بالإصدار 3 <bdi>(a comparison with v3)</bdi></li>
+<li>C. الدقة والاستدعاء عند العتبة المقترحة، وPR-AUC، ومقارنة بالإصدار 3 <bdi>(a comparison with v3)</bdi></li>
 <li>D. عدد الخصائص <bdi>(The number of features)</bdi>، للحكم على ما إذا كان النموذج معقدًا أكثر من اللازم <bdi>(too complex)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -6906,10 +6906,10 @@ def psi(baseline, current, bins=10, eps=1e-6):
 
 <p><strong>3. ماذا تخبر الفريقَ قيمةُ PSI البالغة 0.3 <bdi>(a PSI of 0.3)</bdi> على الخاصية <code>merchant_category</code>، مقيسةً مقابل خط أساس التدريب <bdi>(measured against the training baseline)</bdi>؟ <bdi>(⁦What does it tell the team?⁩)</bdi></strong></p>
 <ul>
-<li>A. انخفضت دقة النموذج <bdi>(precision)</bdi> على المعاملات ذات تلك الخاصية بنحو 30%</li>
-<li>B. سيكون النموذج أقل دقة بنحو 30% حتى يُعاد تدريبه</li>
-<li>C. لا شيء، لأن PSI لا معنى له إلا لدرجات النموذج <bdi>(model scores)</bdi>، لا للمُدخلات <bdi>(inputs)</bdi></li>
-<li>D. إزاحة كبيرة عن خط الأساس <bdi>(A substantial shift from baseline)</bdi> وفق القواعد التقريبية الشائعة؛ ابحث عمّا تحرّك <bdi>(find what moved)</bdi></li>
+<li>A. انخفضت دقة النموذج <bdi>(precision)</bdi> على المعاملات ذات تلك الخاصية بنحو 30% <bdi>(about 30%)</bdi></li>
+<li>B. سيكون النموذج أقل دقة بنحو 30% <bdi>(30% less accurate)</bdi> حتى يُعاد تدريبه</li>
+<li>C. لا شيء، لأن PSI لا معنى له إلا لدرجات النموذج <bdi>(model scores)</bdi>، ولا يصلح للمُدخلات <bdi>(inputs)</bdi> الفردية</li>
+<li>D. إزاحة كبيرة عن خط الأساس <bdi>(shift from baseline)</bdi> وفق القواعد التقريبية الشائعة؛ ابحث عمّا تحرّك</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -7232,7 +7232,7 @@ def mrr(results, golden):
 <li>A. أخبر النموذج اللغوي في الموجّه <bdi>(in the prompt)</bdi> بأن يفضّل أحدث مستند يُعطى له <bdi>(prefer the most recent document)</bdi></li>
 <li>B. استرجع مقاطع أكثر <bdi>(more chunks)</bdi>، حتى تكون النسخة السارية <bdi>(the current version)</bdi> في مكان ما من السياق <bdi>(the context)</bdi></li>
 <li>C. انتقل إلى نموذج تضمين أكبر <bdi>(a larger embedding model)</bdi> يفهم النسخ بشكل أفضل</li>
-<li>D. وسِم المقاطع المُستبدَلة بأنها غير سارية عند الاستيعاب <bdi>(not current at ingestion)</bdi> ورشّح على تلك العلامة <bdi>(that flag)</bdi></li>
+<li>D. وسِم المقاطع المُستبدَلة بأنها غير سارية عند الاستيعاب ورشّح على تلك العلامة <bdi>(flag)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -7267,7 +7267,7 @@ def mrr(results, golden):
 <ul>
 <li>A. مزيد من الاختبار اليدوي <bdi>(manual testing)</bdi> من المطوّر <bdi>(the developer)</bdi> قبل كل إصدار <bdi>(before each release)</bdi>، بأسئلة أكثر</li>
 <li>B. قاعدة تمنع تغيير نموذج التضمين <bdi>(embedding model)</bdi> أبدًا بعد أن يصبح الفهرس حيًا <bdi>(once the index is live)</bdi></li>
-<li>C. مجموعة ذهبية مرقّمة النسخ <bdi>(A versioned golden set)</bdi>، تُقيَّم عند كل تغيير مقابل آخر إصدار <bdi>(scored on every change against the last release)</bdi></li>
+<li>C. مجموعة ذهبية مرقّمة النسخ <bdi>(versioned golden set)</bdi>، تُقيَّم عند كل تغيير مقابل آخر إصدار <bdi>(last release)</bdi></li>
 <li>D. فهرس متّجهي أكبر بإعدادات HNSW أعلى <bdi>(higher HNSW settings)</bdi>، حتى لا ينخفض الاستدعاء <bdi>(so recall cannot fall)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -7629,7 +7629,7 @@ ORDER BY depth, node;
 <p><strong>1. يضيف فريق الأنظمة المصرفية الأساسية <bdi>(core banking team)</bdi> قيمة جديدة <code>D</code> ‏(خامل <bdi>(dormant)</bdi>) إلى <code>acct_status</code>. لم تُعَد تسمية أي عمود ولم يتغيّر أي نوع. كيف ينبغي أن تصنّف سياسة التغيير <bdi>(change policy)</bdi> في نجم هذا التغيير؟</strong></p>
 <ul>
 <li>A. غير كاسر <bdi>(non-breaking)</bdi>، لأنه لم تُعَد تسمية أي عمود ولم يتغيّر أي نوع بيانات <bdi>(data type)</bdi></li>
-<li>B. تغيير كاسر دلالي <bdi>(semantic breaking change)</bdi> يحتاج إلى إشعار للمستهلكين في النسب <bdi>(notice to consumers in lineage)</bdi></li>
+<li>B. تغيير كاسر دلالي <bdi>(semantic breaking change)</bdi> يحتاج إلى إشعار رسمي للمستهلكين في النسب المتأثرة</li>
 <li>C. تغيير في الحُبَيبية <bdi>(grain change)</bdi>، لذا يجب أن يُشحن بوصفه مجموعة بيانات جديدة <bdi>(new dataset)</bdi></li>
 <li>D. ليس مسألة حوكمة <bdi>(not a governance matter)</bdi>، لأن تطبيق المنتِج وحده <bdi>(only the producer&#39;s application)</bdi> يكتب في العمود</li>
 </ul>
@@ -7643,7 +7643,7 @@ ORDER BY depth, node;
 <li>A. الحوكمة يقوم بها قسم تقنية المعلومات <bdi>(IT department)</bdi>؛ والإدارة تقوم بها فرق الأعمال <bdi>(business teams)</bdi></li>
 <li>B. الحوكمة هي أداة الفهرس <bdi>(catalogue tool)</bdi>؛ والإدارة هي كل شيء آخر يفعله فريق البيانات</li>
 <li>C. هما اسمان للنشاط نفسه <bdi>(two names for the same activity)</bdi>، يستخدمهما مورّدون مختلفون <bdi>(different vendors)</bdi></li>
-<li>D. الحوكمة تحدّد حقوق اتخاذ القرار والمساءلة <bdi>(decision rights and accountability)</bdi>؛ والإدارة تؤدي العمل <bdi>(does the work)</bdi></li>
+<li>D. الحوكمة تحدّد حقوق اتخاذ القرار والمساءلة <bdi>(decision rights and accountability)</bdi>؛ والإدارة تؤدي العمل</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -7652,7 +7652,7 @@ ORDER BY depth, node;
 
 <p><strong>3. يجب على هدى أن تجد كل تقرير يتأثر بتغيير في <code>core.accounts.acct_status</code> قبل شحن التغيير. ما الذي يعطيها الإجابة الأكثر موثوقية <bdi>(most reliable answer)</bdi>؟</strong></p>
 <ul>
-<li>A. النسب الحالي على مستوى العمود <bdi>(current column-level lineage)</bdi>، مع التجوال فيه نحو المصبّ <bdi>(walked downstream)</bdi> وربطه بسجلّ الملكية <bdi>(ownership register)</bdi></li>
+<li>A. النسب الحالي على مستوى العمود <bdi>(current column-level lineage)</bdi>، مع التجوال فيه نحو المصبّ وربطه بسجلّ الملكية</li>
 <li>B. السؤال في قناة الدردشة الخاصة بفريق التحليلات <bdi>(analytics team&#39;s chat channel)</bdi> عمّن يستخدم جدول الحسابات</li>
 <li>C. النسب على مستوى الجدول <bdi>(table-level lineage)</bdi> الذي يُظهر كل متجر وتقرير يقرأ <code>core.accounts</code></li>
 <li>D. مخطط النسب المفصّل <bdi>(detailed lineage diagram)</bdi> الذي رُسم خلال مراجعة المعمارية <bdi>(architecture review)</bdi> في العام الماضي</li>
@@ -7666,7 +7666,7 @@ ORDER BY depth, node;
 <ul>
 <li>A. فهرسة كل جدول في مستودع البيانات أولًا <bdi>(catalogue every table)</bdi>، ثم تعيين المالكين بعد اكتمال الجرد <bdi>(once the inventory is complete)</bdi></li>
 <li>B. شراء أداة فهرس تجارية <bdi>(commercial catalogue tool)</bdi> وترك الاعتماد عليها ينمو من تلقاء نفسه <bdi>(let adoption grow on its own)</bdi></li>
-<li>C. البدء بعناصر البيانات الحرجة <bdi>(critical data elements)</bdi> وإعطاء كل منها مالكًا وتعريفًا ونسبًا وعقدًا واختبارات <bdi>(owner, definition, lineage, contract and tests)</bdi></li>
+<li>C. البدء بعناصر البيانات الحرجة <bdi>(critical data elements)</bdi> وإعطاء كل منها مالكًا وتعريفًا ونسبًا وعقدًا واختبارات</li>
 <li>D. كتابة سياسة حوكمة كاملة <bdi>(full governance policy)</bdi>، واعتمادها في لجنة، وانتظار أن تتبناها الفرق</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -7677,7 +7677,7 @@ ORDER BY depth, node;
 <p><strong>5. ما الذي يتحقق منه عقد نموذج dbt المُنفَّذ <bdi>(enforced dbt model contract)</bdi>؟</strong></p>
 <ul>
 <li>A. أن عدد صفوف النموذج <bdi>(row count)</bdi> يطابق جدول المصدر <bdi>(source table)</bdi> بعد كل تشغيل</li>
-<li>B. أن النموذج يُرجع بالضبط الأعمدة وأنواع البيانات المعلنة <bdi>(exactly the declared columns and data types)</bdi></li>
+<li>B. أن النموذج يُرجع بالضبط الأعمدة وأنواع البيانات المعلنة <bdi>(declared types)</bdi></li>
 <li>C. أن مالك البيانات <bdi>(data owner)</bdi> المسمّى في <code>meta</code> قد اعتمد آخر تغيير</li>
 <li>D. ألّا يكون في النموذج أي عمود موسوم بأنه بيانات شخصية <bdi>(tagged as personal data)</bdi></li>
 </ul>
@@ -8062,8 +8062,8 @@ FROM marts.customer_360;
 <p><strong>1. تستبدل هدى كل رقم هوية وطنية <bdi>(national ID)</bdi> بتجزئة MD5 غير مملّحة <bdi>(unsalted MD5 hash)</bdi> له وتصف الجدول بأنه &quot;مجهّل <bdi>(anonymised)</bdi>&quot;. ما المشكلة الرئيسية؟</strong></p>
 <ul>
 <li>A. مُخرَج MD5 ‏<bdi>(MD5 output)</bdi> أطول من أن يُخزَّن بكفاءة في عمود يُستخدم للربط <bdi>(used for joins)</bdi></li>
-<li>B. التجزئة تُلغي القدرة على ربط الجداول على العميل <bdi>(join tables on the customer)</bdi></li>
-<li>C. يمكن عكس التجزئات بتجزئة كل رقم هوية ممكن <bdi>(hashing every possible ID)</bdi>، لذا ليست البيانات مجهولة <bdi>(not anonymous)</bdi></li>
+<li>B. التجزئة تُلغي القدرة على ربط الجداول على العميل <bdi>(join tables on the customer ID)</bdi> تمامًا</li>
+<li>C. يمكن عكس التجزئات بتجزئة كل رقم هوية ممكن <bdi>(hashing every possible ID)</bdi>، لذا ليست مجهولة</li>
 <li>D. تجزئة البيانات الشخصية محظورة تمامًا <bdi>(prohibited outright)</bdi> بموجب اللائحة العامة لحماية البيانات <bdi>(GDPR)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -9514,9 +9514,9 @@ where rn = 1;
 <section class="sec sec-quiz"><h2>✍️ الامتحان التدريبي <bdi>(Practice exam)</bdi></h2>
 <p><strong>1. يطلب مدير التجزئة <bdi>(retail director)</bdi> من كريم «لوحة معلومات لتسرّب العملاء» <bdi>(&quot;a dashboard of customer churn&quot;)</bdi> بحلول الأسبوع القادم. ما الذي ينبغي أن يفعله أولًا؟</strong></p>
 <ul>
-<li>A. أن يبني مسودة سريعة للوحة المعلومات <bdi>(quick draft dashboard)</bdi> من متجر بيانات الرؤية الشاملة للعميل <bdi>(customer 360 mart)</bdi> ليكون لدى التجزئة شيء تتفاعل معه</li>
-<li>B. أن يطلب من دانة البدء بنموذج للتسرّب <bdi>(churn model)</bdi>، لأن التسرّب سؤال تنبّئي <bdi>(predictive question)</bdi> يخص علم البيانات <bdi>(data science)</bdi></li>
-<li>C. أن يسأل أيّ قرار ستغيّره لوحة المعلومات <bdi>(which decision the dashboard will change)</bdi> وكيف تعرّف التجزئة «التسرّب» <bdi>(&quot;churn&quot;)</bdi> قبل البناء</li>
+<li>A. أن يبني مسودة سريعة للوحة المعلومات <bdi>(quick draft dashboard)</bdi> من متجر الرؤية الشاملة للعميل <bdi>(customer 360 mart)</bdi> لتتفاعل معها</li>
+<li>B. أن يطلب من دانة البدء بنموذج للتسرّب <bdi>(churn model)</bdi>، لأن التسرّب سؤال تنبّئي <bdi>(predictive question)</bdi> لعلم البيانات <bdi>(data science)</bdi></li>
+<li>C. أن يسأل أيّ قرار ستغيّره لوحة المعلومات <bdi>(which decision the dashboard will change)</bdi> وكيف تعرّف التجزئة «التسرّب» قبل البناء فعلًا</li>
 <li>D. أن يصدّر كل أعمدة العملاء <bdi>(every customer column)</bdi> إلى جدول بيانات <bdi>(spreadsheet)</bdi> لتستكشف التجزئة التسرّب بنفسها</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -9526,10 +9526,10 @@ where rn = 1;
 
 <p><strong>2. بعض هواتف تطبيق نجم للهاتف <bdi>(Najm Mobile)</bdi> تبقى غير متصلة طوال الليل <bdi>(offline overnight)</bdi> وترسل نقرات الأمس <bdi>(yesterday&#39;s taps)</bdi> في الصباح. ومتجر بيانات استخدام الخصائص اليومي <bdi>(daily feature-usage mart)</bdi> يُبنى مرة واحدة عند 07:00 ولا يُعاد بناؤه أبدًا، فلا تظهر تلك النقرات قط. ما الذي يصلح هذا؟</strong></p>
 <ul>
-<li>A. إعادة بناء نافذة قصيرة من الأيام الأخيرة <bdi>(a short window of recent days)</bdi> في كل تشغيل، بالاعتماد على وقت وقوع الأحداث <bdi>(keyed on when events happened)</bdi></li>
-<li>B. نقل بناء متجر البيانات إلى 23:00 لكي تكون أحداث اليوم كله قد وصلت قبل أن يبدأ</li>
-<li>C. الطلب من فريق الهاتف <bdi>(mobile team)</bdi> أن يتخلّص من أي حدث أقدم من ساعة واحدة قبل إرساله</li>
-<li>D. تجميع لوحة المعلومات حسب وقت الوصول <bdi>(arrival time)</bdi> بدلًا من ذلك، لكي يقع كل حدث في يوم ما</li>
+<li>A. إعادة بناء نافذة قصيرة من الأيام الأخيرة <bdi>(recent days)</bdi> في كل تشغيل، بحسب وقت وقوع الأحداث لا وصولها</li>
+<li>B. نقل بناء المتجر إلى 23:00 <bdi>(the 23:00 build)</bdi> لكي تكون أحداث اليوم كله قد وصلت قبل أن يبدأ البناء</li>
+<li>C. الطلب من فريق الهاتف <bdi>(mobile team)</bdi> أن يتخلّص من أي حدث أقدم من ساعة واحدة <bdi>(one hour)</bdi> قبل إرساله</li>
+<li>D. تجميع لوحة المعلومات حسب وقت الوصول <bdi>(arrival time)</bdi> بدلًا من ذلك، لكي يقع كل حدث في يوم ما من الأيام</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9538,10 +9538,10 @@ where rn = 1;
 
 <p><strong>3. تأخّرت لوحة معلومات التجزئة <bdi>(retail dashboard)</bdi> ثلاثة صباحات متتالية. ولكل قفزة <bdi>(hop)</bdi> في ورقة تدفق بياناتها <bdi>(data flow sheet)</bdi> ميزانية حداثة مكتوبة <bdi>(written freshness budget)</bdi>. أين ينبغي أن تنظر هدى أولًا؟</strong></p>
 <ul>
-<li>A. في ذاكرة التخزين المؤقت <bdi>(cache)</bdi> لأداة ذكاء الأعمال <bdi>(BI tool)</bdi> وإعدادات التحديث <bdi>(refresh settings)</bdi>، حيث يلاحظ المستخدمون التأخير أولًا</li>
+<li>A. في ذاكرة التخزين المؤقت <bdi>(cache)</bdi> وإعدادات التحديث <bdi>(refresh)</bdi> في أداة ذكاء الأعمال، حيث يلاحظ المستخدمون التأخير</li>
 <li>B. في استعلام لوحة المعلومات <bdi>(dashboard&#39;s query)</bdi>، بإعادة كتابته ليعمل أسرع على متجر البيانات <bdi>(mart)</bdi></li>
 <li>C. في فاتورة مستودع البيانات <bdi>(warehouse bill)</bdi>، لترى هل سيفيد الدفع مقابل قدرة حوسبة أكبر <bdi>(more compute)</bdi></li>
-<li>D. في ميزانيات القفزات <bdi>(hop budgets)</bdi>، لتجد أي خطوة سابقة <bdi>(upstream step)</bdi> انتهت بعد ميزانيتها</li>
+<li>D. في ميزانيات القفزات <bdi>(hop budgets)</bdi> المكتوبة، لتجد أي خطوة سابقة <bdi>(upstream step)</bdi> انتهت بعد موعد ميزانيتها المحدد</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9550,10 +9550,10 @@ where rn = 1;
 
 <p><strong>4. تريد هدى أن تتدرّب على dbt باستخدام نسخة من بيانات عملاء حقيقية <bdi>(real customer data)</bdi> من تدريبها السابق، «لأنها واقعية» <bdi>(&quot;because it is realistic&quot;)</bdi>. بماذا تنصح هذه الدورة؟</strong></p>
 <ul>
-<li>A. لا بأس بمجرد أن تزيل الأسماء <bdi>(removes the names)</bdi>، لأن الأعمدة المتبقية ليست بيانات شخصية <bdi>(personal data)</bdi></li>
-<li>B. استخدام بيانات اصطناعية أو مفتوحة <bdi>(synthetic or open data)</bdi>؛ فبيانات العملاء الحقيقية تحتاج إلى غرض وأساس قانوني <bdi>(a purpose and legal basis)</bdi></li>
-<li>C. لا بأس ما دام المستودع <bdi>(repository)</bdi> يبقى خاصًا على حاسوبها المحمول ولا يُدفع <bdi>(pushed)</bdi> أبدًا</li>
-<li>D. أن تطلب من فريق تقنية المعلومات <bdi>(IT team)</bdi> لدى صاحب العمل السابق أن يرسل لها مستخرَجًا حديثًا <bdi>(fresh, up-to-date extract)</bdi></li>
+<li>A. لا بأس بمجرد أن تزيل الأسماء <bdi>(removes the names)</bdi>، لأن الأعمدة المتبقية ليست بيانات شخصية <bdi>(personal data)</bdi> في ذاتها</li>
+<li>B. استخدام بيانات اصطناعية أو مفتوحة <bdi>(synthetic or open data)</bdi>؛ فالبيانات الحقيقية تحتاج إلى غرض وأساس قانوني</li>
+<li>C. لا بأس ما دام المستودع <bdi>(repository)</bdi> يبقى خاصًا على حاسوبها المحمول <bdi>(her own laptop)</bdi> ولا يُدفع أبدًا</li>
+<li>D. أن تطلب من فريق تقنية المعلومات <bdi>(IT team)</bdi> لدى صاحب العمل السابق أن يرسل لها مستخرَجًا حديثًا <bdi>(fresh extract)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9562,10 +9562,10 @@ where rn = 1;
 
 <p><strong>5. يطلب كريم إجمالي خصومات سبتمبر لكل عميل <bdi>(total September debits per customer)</bdi>. تُرشِّح هدى باستخدام <code>WHERE txn_ts BETWEEN &#39;2026-09-01&#39; AND &#39;2026-09-30&#39;</code> على عمود من نوع <code>timestamptz</code>. ما الخطأ؟</strong></p>
 <ul>
-<li>A. إنه يُسقط كل ما بعد منتصف ليل يوم 30 <bdi>(after midnight on the 30th)</bdi> ولا يسمّي منطقة زمنية <bdi>(names no time zone)</bdi></li>
+<li>A. إنه يُسقط كل ما بعد منتصف ليل 30 <bdi>(after midnight on the 30th)</bdi> ولا يحدد أي منطقة زمنية معيّنة</li>
 <li>B. إن BETWEEN يستثني الطرفين كليهما <bdi>(excludes both end points)</bdi>، فيضيع يوما 1 و30 سبتمبر بالكامل</li>
 <li>C. لا يمكن استخدام BETWEEN على أعمدة timestamptz، بل على التواريخ البسيطة <bdi>(plain dates)</bdi> فقط</li>
-<li>D. لا خطأ، ما دام هناك فهرس <bdi>(index)</bdi> على <code>txn_ts</code> للمسح <bdi>(for the scan)</bdi></li>
+<li>D. لا خطأ، ما دام هناك فهرس <bdi>(index)</bdi> على <code>txn_ts</code> يساعد المسح <bdi>(for the scan)</bdi> على أن يكون سريعًا</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9611,9 +9611,9 @@ where rn = 1;
 <p><strong>9. يخزّن متجر بيانات مخاطر الائتمان <bdi>(credit-risk mart)</bdi> قيمة <code>npl_ratio</code> محسوبة مسبقًا <bdi>(precomputed)</bdi> لكل فرع لكل يوم. وتريد إدارة المخاطر <bdi>(Risk)</bdi> الآن النسبة لكل منطقة <bdi>(each region)</bdi>. ما الذي ينبغي أن يوفّره النموذج؟</strong></p>
 <ul>
 <li>A. حساب متوسط نسب الفروع <bdi>(average the branch ratios)</bdi>، مع إعطاء كل فرع وزنًا متساويًا <bdi>(equal weight)</bdi></li>
-<li>B. جمع نسب الفروع <bdi>(sum the branch ratios)</bdi>، لأن النسب تُجمَع عبر الفروع</li>
-<li>C. أخذ أعلى نسبة فرع <bdi>(the highest branch ratio)</bdi>، من باب الحيطة <bdi>(to be prudent)</bdi> في تقارير المخاطر الإقليمية</li>
-<li>D. تخزين البسط والمقام <bdi>(numerator and denominator)</bdi>، وجمع كل منهما، ثم قسمة المجموعين <bdi>(divide the sums)</bdi></li>
+<li>B. جمع نسب الفروع <bdi>(sum the branch ratios)</bdi>، لأن النسب تُجمَع عبر الفروع <bdi>(across branches)</bdi></li>
+<li>C. أخذ أعلى نسبة فرع <bdi>(the highest branch ratio)</bdi>، من باب الحيطة في تقارير المخاطر الإقليمية</li>
+<li>D. تخزين البسط والمقام <bdi>(numerator and denominator)</bdi>، وجمع كل منهما، ثم القسمة بعد التجميع</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9622,9 +9622,9 @@ where rn = 1;
 
 <p><strong>10. يعيد نظام الخدمات المصرفية الأساسية <bdi>(core banking)</bdi> استخدام أرقام العملاء <bdi>(reuses customer numbers)</bdi> بعد إغلاق الحساب بعشر سنوات. لماذا يحمل <code>dim_customer</code> مفتاحه البديل الخاص <bdi>(its own surrogate key)</bdi>؟</strong></p>
 <ul>
-<li>A. لأنه يبقى ثابتًا حين تتغيّر مفاتيح الأعمال <bdi>(business keys)</bdi> أو يُعاد استخدامها، ويسمح بالإصدارات <bdi>(allows versions)</bdi></li>
-<li>B. لأن المفاتيح البديلة تُخفي الهوية <bdi>(hide identity)</bdi>، فيُعدّ البُعد مجهول الهوية <bdi>(anonymous)</bdi> بموجب اللائحة العامة لحماية البيانات <bdi>(GDPR)</bdi></li>
-<li>C. لأن المفاتيح الطبيعية <bdi>(natural keys)</bdi> لا يمكن فهرستها، فتكون عمليات الربط <bdi>(joins)</bdi> عليها بطيئة دائمًا على نطاق واسع</li>
+<li>A. لأنه يبقى ثابتًا حين تتغيّر مفاتيح الأعمال <bdi>(business keys)</bdi> أو يُعاد استخدامها، ويسمح بإصدارات متعددة <bdi>(versions)</bdi> للصف</li>
+<li>B. لأن المفاتيح البديلة تُخفي الهوية <bdi>(hide identity)</bdi>، فيصير البُعد مجهول الهوية <bdi>(anonymous)</bdi> بموجب اللائحة <bdi>(GDPR)</bdi></li>
+<li>C. لأن المفاتيح الطبيعية <bdi>(natural keys)</bdi> لا يمكن فهرستها، فتبقى عمليات الربط <bdi>(joins)</bdi> عليها بطيئة دائمًا</li>
 <li>D. لأنه يتيح لجدول الحقائق <bdi>(fact table)</bdi> تخطّي بُعد التاريخ <bdi>(date dimension)</bdi> والربط على العميل وحده</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -9634,9 +9634,9 @@ where rn = 1;
 
 <p><strong>11. تقسّم هدى جدول البطاقات الخام <bdi>(raw card table)</bdi> حسب الساعة وحسب التاجر <bdi>(by hour and by merchant)</bdi>. فتصبح الاستعلامات أبطأ لا أسرع. ما الذي حدث؟</strong></p>
 <ul>
-<li>A. التقسيم <bdi>(partitioning)</bdi> يُبطئ الاستعلامات دائمًا، لذا لا ينبغي تقسيم جداول بحيرة البيانات <bdi>(lake tables)</bdi> أبدًا</li>
-<li>B. لا يمكن تقسيم ملفات Parquet حسب أكثر من عمود واحد في المرة الواحدة</li>
-<li>C. ملفات صغيرة كثيرة جدًا <bdi>(too many small files)</bdi>؛ قسِّم حسب التاريخ <bdi>(by date)</bdi> بدلًا من ذلك وادمجها بانتظام <bdi>(compact them regularly)</bdi></li>
+<li>A. التقسيم <bdi>(partitioning)</bdi> يُبطئ الاستعلامات دائمًا، لذا لا يُقسَّم أي جدول في البحيرة <bdi>(lake)</bdi></li>
+<li>B. لا يمكن تقسيم ملفات Parquet حسب أكثر من عمود واحد <bdi>(more than one column)</bdi> في المرة الواحدة</li>
+<li>C. ملفات صغيرة كثيرة جدًا <bdi>(too many small files)</bdi>؛ قسِّم حسب التاريخ بدلًا من ذلك وادمجها بانتظام</li>
 <li>D. يجب تخزين الأقسام <bdi>(partitions)</bdi> بصيغة CSV لكي تفتحها المحرّكات <bdi>(engines)</bdi> أسرع</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -9647,7 +9647,7 @@ where rn = 1;
 <p><strong>12. يعرض طارق على كريم نسخة قراءة متماثلة <bdi>(read replica)</bdi> من قاعدة بيانات الأنظمة المصرفية الأساسية <bdi>(core banking database)</bdi> لتحليل اتجاه للمعاملات على ثلاث سنوات <bdi>(three-year trend analysis)</bdi>. ماذا ينبغي أن يقول فيصل؟</strong></p>
 <ul>
 <li>A. مثالية، لأن النسخة المتماثلة <bdi>(replica)</bdi> نسخة عمودية <bdi>(columnar copy)</bdi> مبنية للمسوح التحليلية <bdi>(analytical scans)</bdi></li>
-<li>B. لا بأس بها للتقارير الصغيرة، لكن المخزن الصفّي <bdi>(row store)</bdi> غير مناسب للمسوح متعددة السنوات <bdi>(multi-year scans)</bdi></li>
+<li>B. لا بأس بها للتقارير الصغيرة <bdi>(small reports)</bdi>، لكن المخزن الصفّي <bdi>(row store)</bdi> غير مناسب للمسوح متعددة السنوات</li>
 <li>C. غير مقبولة أبدًا، لأن النسخ المتماثلة تتأخّر عن النسخة الأساسية <bdi>(lag the primary)</bdi> بعدة أيام</li>
 <li>D. مثالية، لأن النسخة المتماثلة تقبل أيضًا كتابات المحلّلين <bdi>(analysts&#39; writes)</bdi> والجداول المؤقتة <bdi>(temp tables)</bdi></li>
 </ul>
@@ -9659,8 +9659,8 @@ where rn = 1;
 <p><strong>13. تحتاج مهام تدريب Spark لدى دانة <bdi>(Dana&#39;s Spark training jobs)</bdi> ومتاجر SQL لدى لينا <bdi>(Lina&#39;s SQL marts)</bdi> كلتاهما إلى سجلّ البطاقات الخام نفسه <bdi>(the same raw card history)</bdi>، ولا يريد فيصل أي نسخ إضافية <bdi>(no extra copies)</bdi>. ما المناسب؟</strong></p>
 <ul>
 <li>A. تصديرات CSV ليلية <bdi>(nightly CSV exports)</bdi> للسجل، مجلّد لكل محرّك <bdi>(one folder for each engine)</bdi></li>
-<li>B. صيغة جداول مفتوحة <bdi>(open table format)</bdi> مثل Apache Iceberg فوق نسخة Parquet واحدة</li>
-<li>C. الاحتفاظ بالسجل الخام <bdi>(raw history)</bdi> فقط في قاعدة البيانات الرئيسية لنظام الخدمات المصرفية الأساسية <bdi>(core banking primary database)</bdi></li>
+<li>B. صيغة جداول مفتوحة <bdi>(open table format)</bdi> مثل Apache Iceberg فوق نسخة Parquet واحدة مشتركة</li>
+<li>C. الاحتفاظ بالسجل الخام <bdi>(raw history)</bdi> في قاعدة البيانات الرئيسية للخدمات المصرفية الأساسية <bdi>(core banking)</bdi> فقط</li>
 <li>D. نسخة مستودع بيانات <bdi>(warehouse copy)</bdi> لمستخدمي Spark ونسخة ثانية منفصلة لمستخدمي SQL</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -9670,10 +9670,10 @@ where rn = 1;
 
 <p><strong>14. يحتوي جدول رموز الفروع <bdi>(branch codes table)</bdi> على نحو 40 صفًّا ويتغيّر بضع مرات في السنة. أي نمط تحميل <bdi>(load pattern)</bdi> يناسبه؟</strong></p>
 <ul>
-<li>A. التقاط تغيّر البيانات المعتمد على السجل <bdi>(log-based CDC)</bdi> باستخدام Debezium، لأنه يلتقط كل تغيير بترتيب الإيداع <bdi>(commit order)</bdi></li>
+<li>A. التقاط تغيّر البيانات المعتمد على السجل <bdi>(log-based CDC)</bdi> باستخدام Debezium، لأنه يلتقط كل تغيير بالترتيب</li>
 <li>B. تحميل تزايدي <bdi>(incremental load)</bdi> على <code>updated_at</code> مع نافذة تداخل <bdi>(overlap window)</bdi> مدتها 30 دقيقة</li>
 <li>C. مستهلك متدفق <bdi>(streaming consumer)</bdi> مع وجهة متساوية الأثر <bdi>(idempotent sink)</bdi> مفتاحها رمز الفرع</li>
-<li>D. تحميل كامل <bdi>(full load)</bdi> في كل تشغيل، يستبدل النسخة السابقة ويلتقط عمليات الحذف <bdi>(catching deletes)</bdi></li>
+<li>D. تحميل كامل <bdi>(full load)</bdi> في كل تشغيل، يستبدل النسخة السابقة بالكامل ويلتقط عمليات الحذف <bdi>(catching deletes)</bdi> من المصدر</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9682,10 +9682,10 @@ where rn = 1;
 
 <p><strong>15. تلاحظ هدى رمز عملة خاطئًا <bdi>(wrong currency code)</bdi> في بعض صفوف <code>raw.core_transactions</code>. وتريد تشغيل <code>UPDATE</code> على الطبقة الخام <bdi>(raw)</bdi> لإصلاحها. ما الذي ينبغي أن تفعله بدلًا من ذلك؟</strong></p>
 <ul>
-<li>A. أن تترك الطبقة الخام دليلًا كما استُلم <bdi>(received evidence)</bdi> وتصحّح رمز العملة في التهيئة <bdi>(in staging)</bdi></li>
-<li>B. أن تحدّث الطبقة الخام، لأن كل طبقة لاحقة <bdi>(every later layer)</bdi> سترث التصحيح حينئذٍ</li>
-<li>C. أن تحذف الصفوف السيئة من الطبقة الخام وتعيد استخراج الجدول كاملًا <bdi>(re-extract the whole table)</bdi> من المصدر</li>
-<li>D. أن تحدّث الطبقة الخام، مع الاحتفاظ بلقطة شاشة <bdi>(screenshot)</bdi> للقيم القديمة كدليل</li>
+<li>A. أن تترك الطبقة الخام دليلًا كما استُلم <bdi>(received evidence)</bdi> وتصحّح رمز العملة <bdi>(currency code)</bdi> في طبقة التهيئة</li>
+<li>B. أن تحدّث الطبقة الخام <bdi>(update raw)</bdi>، لأن كل طبقة لاحقة <bdi>(every later layer)</bdi> سترث التصحيح <bdi>(the fix)</bdi></li>
+<li>C. أن تحذف الصفوف السيئة من الطبقة الخام وتعيد استخراج الجدول <bdi>(re-extract)</bdi> من المصدر</li>
+<li>D. أن تحدّث الطبقة الخام، مع الاحتفاظ بلقطة شاشة <bdi>(screenshot)</bdi> للقيم القديمة <bdi>(old values)</bdi> كدليل</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9695,9 +9695,9 @@ where rn = 1;
 <p><strong>16. يريد كريم سحب بيانات إدارة علاقات العملاء <bdi>(CRM data)</bdi> بموصّل مفتوح المصدر <bdi>(open-source connector)</bdi> يقول توثيقه «المزامنة التزايدية مدعومة» <bdi>(&quot;incremental sync supported&quot;)</bdi>. ما الذي ينبغي أن يطلبه فيصل؟</strong></p>
 <ul>
 <li>A. لا شيء، لأن المشرفين <bdi>(maintainers)</bdi> يختبرون الأنماط التزايدية <bdi>(incremental modes)</bdi> على كل مصدر</li>
-<li>B. كتابة كل مستخرِج <bdi>(extractor)</bdi> يدويًا بلغة Python بدلًا من استخدام الموصّلات</li>
-<li>C. اختبارًا يثبت أنه يلتقط فعلًا التحديثات وعمليات الحذف <bdi>(updates and deletes)</bdi> من هذا المصدر</li>
-<li>D. التحميلات الكاملة فقط <bdi>(full loads only)</bdi>، لأن الموصّلات لا تستطيع المزامنة التزايدية</li>
+<li>B. كتابة كل مستخرِج <bdi>(extractor)</bdi> يدويًا بلغة Python بدلًا من استخدام الموصّلات <bdi>(connectors)</bdi> الجاهزة</li>
+<li>C. اختبارًا يثبت أنه يلتقط فعلًا التحديثات والحذف <bdi>(updates and deletes)</bdi></li>
+<li>D. التحميلات الكاملة فقط <bdi>(full loads only)</bdi>، لأن الموصّلات لا تستطيع المزامنة التزايدية <bdi>(incremental sync)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9706,10 +9706,10 @@ where rn = 1;
 
 <p><strong>17. يفشل اختبار dbt <bdi>(dbt test)</bdi> داخل رسم بياني موجّه غير دوري <bdi>(DAG)</bdi> في Airflow. وتُعاد المهمة <bdi>(task)</bdi> ثلاث مرات بتأخير تراجعي <bdi>(backoff)</bdi> مدته خمس دقائق، فيصل التنبيه <bdi>(alert)</bdi> متأخرًا عشرين دقيقة. ما الذي ينبغي تغييره؟</strong></p>
 <ul>
-<li>A. إعادة المحاولة للأخطاء العابرة فقط <bdi>(transient errors)</bdi> والفشل السريع <bdi>(fail fast)</bdi> حين يفشل اختبار بيانات <bdi>(data test)</bdi></li>
-<li>B. زيادة إعادات المحاولة <bdi>(retries)</bdi> إلى خمس، ليحظى الاختبار بفرص أكثر للنجاح</li>
-<li>C. إزالة الاختبارات من الرسم البياني الموجّه لكي تتوقف الإخفاقات عن تأخير التشغيل <bdi>(delaying the run)</bdi></li>
-<li>D. خفض التأخير التراجعي إلى عشر ثوانٍ لكي تنتهي إعادات المحاولة الثلاث أسرع</li>
+<li>A. إعادة المحاولة للأخطاء العابرة فقط <bdi>(transient)</bdi> والفشل السريع <bdi>(fail fast)</bdi></li>
+<li>B. زيادة إعادات المحاولة <bdi>(retries)</bdi> إلى خمس، ليحظى اختبار البيانات بفرص أكثر للنجاح <bdi>(more chances)</bdi></li>
+<li>C. إزالة الاختبارات من الرسم البياني الموجّه <bdi>(DAG)</bdi> لكي تتوقف الإخفاقات عن تأخير التشغيل <bdi>(delaying the run)</bdi></li>
+<li>D. خفض التأخير التراجعي <bdi>(backoff)</bdi> إلى عشر ثوانٍ لكي تنتهي إعادات المحاولة الثلاث <bdi>(three retries)</bdi> أسرع</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9718,10 +9718,10 @@ where rn = 1;
 
 <p><strong>18. ترسل مهمة <bdi>(task)</bdi> في رسم بياني موجّه غير دوري <bdi>(DAG)</bdi> مستخرَج المخاطر اليومي <bdi>(daily risk extract)</bdi> بالبريد الإلكتروني إلى المالية <bdi>(finance)</bdi>. فأرسلته إعادة محاولة بعد انتهاء مهلة <bdi>(timeout)</bdi> مرتين. ما الإصلاح؟</strong></p>
 <ul>
-<li>A. إيقاف إعادات المحاولة <bdi>(retries)</bdi> للرسم البياني كله لكي لا يعمل أي شيء مرتين أبدًا</li>
-<li>B. تسجيل مفتاح تساوي أثر <bdi>(idempotency key)</bdi> لكل تقرير وتاريخ؛ وتخطّيه إن كان موجودًا</li>
+<li>A. إيقاف إعادات المحاولة <bdi>(retries)</bdi> للرسم البياني كله لكي لا يعمل أي شيء مرتين أبدًا في أي خطوة</li>
+<li>B. تسجيل مفتاح تساوي أثر <bdi>(idempotency key)</bdi> لكل تقرير وتاريخ؛ وتخطّيه إن وُجد</li>
 <li>C. وضع خطوة البريد الإلكتروني داخل معاملة قاعدة البيانات <bdi>(database transaction)</bdi> نفسها التي فيها التحميل</li>
-<li>D. الطلب من المالية تجاهل البريد الثاني كلما وصل بريدان في يوم واحد</li>
+<li>D. الطلب من المالية <bdi>(finance)</bdi> تجاهل البريد الإلكتروني الثاني كلما وصل بريدان في يوم واحد</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9732,7 +9732,7 @@ where rn = 1;
 <ul>
 <li>A. إعادة البناء ليلًا <bdi>(rebuild at night)</bdi> والاكتفاء بالأمل ألّا يفتح أحد لوحة معلومات حينها</li>
 <li>B. إضافة المزيد من إعادات المحاولة <bdi>(retries)</bdi> لكي تنتهي إعادة البناء في دقائق أقل</li>
-<li>C. بناء جدول جديد واختباره، ثم تبديله في مكانه تبديلًا ذرّيًا <bdi>(swap it into place atomically)</bdi></li>
+<li>C. بناء جدول جديد واختباره، ثم تبديله ذرّيًا <bdi>(swap atomically)</bdi></li>
 <li>D. الطلب من المستخدمين التحديث مرتين <bdi>(refresh twice)</bdi> كلما بدت لهم الأرقام غريبة</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -9743,9 +9743,9 @@ where rn = 1;
 <p><strong>20. في Airflow، لتشغيل يومي <bdi>(daily run)</bdi> فترة بيانات <bdi>(data interval)</bdi> هي 14 سبتمبر. متى يعمل عادةً، ولأي بيانات؟</strong></p>
 <ul>
 <li>A. عند 00:00 من 14 سبتمبر، محمّلًا بيانات 13 سبتمبر <bdi>(loading the data of 13 September)</bdi></li>
-<li>B. كلما شُغِّل <bdi>(whenever triggered)</bdi>، محمّلًا كل ما وصل منذ التشغيل السابق</li>
+<li>B. كلما شُغِّل <bdi>(whenever triggered)</bdi>، محمّلًا كل ما وصل منذ التشغيل السابق إلى لحظة بدء التشغيل</li>
 <li>C. أثناء 14 سبتمبر، محمّلًا البيانات حتى لحظة بدئه <bdi>(up to the moment it starts)</bdi></li>
-<li>D. بعد انتهاء الفترة <bdi>(after the interval ends)</bdi>، في وقت مبكر من 15 سبتمبر، لبيانات 14 سبتمبر</li>
+<li>D. بعد انتهاء الفترة <bdi>(after the interval)</bdi>، في 15 سبتمبر، لبيانات 14 سبتمبر</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9754,10 +9754,10 @@ where rn = 1;
 
 <p><strong>21. لموضوع تفويضات البطاقات <bdi>(card authorisations topic)</bdi> ستة أقسام <bdi>(six partitions)</bdi> ومجموعة مستهلكين <bdi>(consumer group)</bdi> من ستة أعضاء. ولتقليص التأخّر <bdi>(to cut lag)</bdi>، يضيف الفريق أربعة مستهلكين آخرين إلى المجموعة. ماذا يحدث؟</strong></p>
 <ul>
-<li>A. ينخفض التأخّر <bdi>(lag drops)</bdi>، لأن عشرة مستهلكين يقرؤون أسرع من ستة على أي موضوع</li>
-<li>B. يبقى المستهلكون الأربعة الإضافيون خاملين <bdi>(sit idle)</bdi>؛ أضِف أقسامًا أو سرِّع المعالجة <bdi>(speed up processing)</bdi></li>
+<li>A. ينخفض التأخّر <bdi>(lag drops)</bdi>، لأن عشرة مستهلكين يقرؤون أسرع من ستة على أي موضوع <bdi>(topic)</bdi></li>
+<li>B. يبقى المستهلكون الأربعة الإضافيون خاملين <bdi>(sit idle)</bdi>؛ أضِف أقسامًا أو سرِّع المعالجة</li>
 <li>C. يرفض Kafka المستهلكين الإضافيين ويوقف المجموعة <bdi>(halts the group)</bdi> حتى يتدخّل مسؤول <bdi>(an admin)</bdi></li>
-<li>D. يُعالَج كل حدث الآن مرتين، مرة بمستهلك قديم ومرة بمستهلك جديد</li>
+<li>D. يُعالَج كل حدث الآن مرتين <bdi>(processed twice)</bdi>، مرة بمستهلك قديم ومرة بمستهلك جديد</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9766,10 +9766,10 @@ where rn = 1;
 
 <p><strong>22. كان مستهلك خصائص التنبيهات الذكية <bdi>(Smart Alerts feature consumer)</bdi> متوقفًا تسعة أيام. ومدة الاحتفاظ <bdi>(retention)</bdi> في الموضوع سبعة أيام. ما الوضع؟</strong></p>
 <ul>
-<li>A. لم يضِع شيء، لأن Kafka يحتفظ بالأحداث حتى تقرأها كل مجموعة <bdi>(every group)</bdi></li>
-<li>B. يستأنف المستهلك من الإزاحة المُودَعة <bdi>(committed offset)</bdi> وكل الأحداث سليمة</li>
-<li>C. يوقف Kafka كل المنتجين <bdi>(producers)</bdi> على الموضوع مؤقتًا ما دامت أي مجموعة مستهلكين متوقفة</li>
-<li>D. حُذفت الأحداث التي تجاوزت مدة الاحتفاظ ذات الأيام السبعة <bdi>(seven-day retention)</bdi>؛ أعِد البناء من الأرشيف الخام <bdi>(raw archive)</bdi></li>
+<li>A. لم يضِع شيء، لأن Kafka يحتفظ بالأحداث حتى تقرأها كل مجموعة <bdi>(every group)</bdi> منها</li>
+<li>B. يستأنف المستهلك من الإزاحة المُودَعة <bdi>(committed offset)</bdi> وكل الأحداث سليمة <bdi>(intact)</bdi></li>
+<li>C. يوقف Kafka كل المنتجين <bdi>(producers)</bdi> على الموضوع مؤقتًا ما دامت أي مجموعة مستهلكين <bdi>(consumer group)</bdi> متوقفة عن العمل</li>
+<li>D. حُذفت الأحداث التي تجاوزت مدة الاحتفاظ <bdi>(seven-day retention)</bdi>؛ أعِد البناء من الأرشيف الخام <bdi>(raw archive)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9778,9 +9778,9 @@ where rn = 1;
 
 <p><strong>23. يريد فريق تطبيق نجم للهاتف <bdi>(Najm Mobile)</bdi> «زيارات» التطبيق <bdi>(app &quot;visits&quot;)</bdi>: أحداث العميل مجمّعة معًا حتى تمرّ 30 دقيقة بلا نشاط <bdi>(with no activity)</bdi>. أي نافذة <bdi>(window)</bdi> تناسب؟</strong></p>
 <ul>
-<li>A. نوافذ الجلسات <bdi>(session windows)</bdi> التي تُغلق بعد فجوة <bdi>(gap)</bdi> مدتها 30 دقيقة</li>
+<li>A. نوافذ الجلسات <bdi>(session windows)</bdi> التي تُغلق بعد فجوة <bdi>(gap)</bdi> من 30 دقيقة</li>
 <li>B. النوافذ المتعاقبة <bdi>(tumbling windows)</bdi>، كلٌّ منها بطول ثابت قدره 30 دقيقة</li>
-<li>C. النوافذ المنزلقة <bdi>(sliding windows)</bdi> بطول 30 دقيقة، تتقدّم كل دقيقة</li>
+<li>C. النوافذ المنزلقة <bdi>(sliding windows)</bdi> بطول 30 دقيقة، تتقدّم خطوة كل دقيقة واحدة</li>
 <li>D. نوافذ وقت المعالجة <bdi>(processing-time windows)</bdi> بحجم زيارة نموذجية <bdi>(typical visit)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -9790,10 +9790,10 @@ where rn = 1;
 
 <p><strong>24. يقرأ نموذج لينا باستخدام <code>from analytics.stg_core__accounts</code>. وهو يعمل في بيئة الإنتاج <bdi>(production)</bdi>، لكن بناءات التكامل المستمر <bdi>(CI builds)</bdi> تفشل والنموذج مفقود من النسب <bdi>(missing from lineage)</bdi>. ما الإصلاح؟</strong></p>
 <ul>
-<li>A. منح مستخدم التكامل المستمر <bdi>(CI user)</bdi> صلاحية القراءة على مخطط التحليلات في الإنتاج <bdi>(production analytics schema)</bdi></li>
-<li>B. إعادة تسمية مخطط التكامل المستمر <bdi>(CI schema)</bdi> ليطابق الإنتاج تمامًا</li>
-<li>C. استخدام <code>ref(&#39;stg_core__accounts&#39;)</code> لكي يحلّ dbt البيئة <bdi>(resolves the environment)</bdi></li>
-<li>D. تجسيد النموذج كعرض <bdi>(materialise the model as a view)</bdi> لكي يتوقف الاسم المكتوب حرفيًا <bdi>(hard-coded name)</bdi> عن أن يكون مهمًا</li>
+<li>A. منح مستخدم التكامل المستمر <bdi>(CI user)</bdi> صلاحية القراءة على مخطط التحليلات في الإنتاج <bdi>(production schema)</bdi></li>
+<li>B. إعادة تسمية مخطط التكامل المستمر <bdi>(CI schema)</bdi> ليطابق مخطط الإنتاج <bdi>(production schema)</bdi> تمامًا <bdi>(exactly)</bdi>، كي يتطابق الاسمان <bdi>(names match exactly)</bdi></li>
+<li>C. استخدام <code>ref(&#39;stg_core__accounts&#39;)</code> لكي يحلّ dbt البيئة المناسبة تلقائيًا في كل مرة <bdi>(resolves the environment)</bdi></li>
+<li>D. تجسيد النموذج كعرض <bdi>(materialise as a view)</bdi> لكي يتوقف الاسم المكتوب حرفيًا <bdi>(hard-coded name)</bdi> عن أن يكون مهمًا <bdi>(matter)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9802,10 +9802,10 @@ where rn = 1;
 
 <p><strong>25. يربط نموذج التهيئة <bdi>(staging model)</bdi> لدى هدى الحسابات الأساسية <bdi>(core accounts)</bdi> بجهات اتصال إدارة علاقات العملاء <bdi>(CRM contacts)</bdi> ويحسب علامة «عميل نشط» <bdi>(&quot;active customer&quot; flag)</bdi>. ماذا ينبغي أن تقول لينا في المراجعة <bdi>(in review)</bdi>؟</strong></p>
 <ul>
-<li>A. لا بأس، لأن التهيئة هي أول مكان يمكن فيه دمج المصادر المنظّفة <bdi>(cleaned sources)</bdi></li>
-<li>B. انقلي كل شيء إلى متجر البيانات <bdi>(mart)</bdi> لكي يمكن تخطّي التهيئة بالكامل</li>
-<li>C. أبقي التهيئة واحدًا لواحد <bdi>(one-to-one)</bdi>؛ وانقلي عمليات الربط ومنطق الأعمال <bdi>(joins and business logic)</bdi> إلى نماذج لاحقة</li>
-<li>D. لا بأس، ما دام للنموذج اختبارا unique وnot_null على مفتاحه</li>
+<li>A. لا بأس، لأن التهيئة <bdi>(staging)</bdi> هي أول مكان يمكن فيه دمج المصادر بعد تنظيفها <bdi>(cleaned sources)</bdi> كما هي</li>
+<li>B. انقلي كل شيء إلى متجر البيانات <bdi>(mart)</bdi> لكي يمكن تخطّي طبقة التهيئة بالكامل</li>
+<li>C. أبقي التهيئة واحدًا لواحد <bdi>(one-to-one)</bdi>؛ وانقلي عمليات الربط ومنطق الأعمال <bdi>(joins)</bdi> إلى نماذج لاحقة</li>
+<li>D. لا بأس، ما دام للنموذج اختبارا unique وnot_null على مفتاحه <bdi>(its key)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9814,8 +9814,8 @@ where rn = 1;
 
 <p><strong>26. تريد لينا التحقق من حدود شرائح أيام التأخّر عن السداد <bdi>(DPD bucket boundaries)</bdi> (0 و30 و31 و90 و91 يومًا) قبل وجود أي بيانات قروض حقيقية <bdi>(real loan data)</bdi>. ماذا ينبغي أن تكتب؟</strong></p>
 <ul>
-<li>A. اختبار وحدة في dbt <bdi>(dbt unit test)</bdi> بصفوف مُدخلات مبنية يدويًا <bdi>(hand-built input rows)</bdi> عند كل حد</li>
-<li>B. اختبار بيانات not_null <bdi>(not_null data test)</bdi> على عمود الشريحة في الإنتاج</li>
+<li>A. اختبار وحدة في dbt <bdi>(unit test)</bdi> بصفوف مُدخلات مبنية يدويًا عند كل حد <bdi>(boundary)</bdi></li>
+<li>B. اختبار بيانات not_null <bdi>(data test)</bdi> على عمود الشريحة <bdi>(bucket column)</bdi> في الإنتاج</li>
 <li>C. فحص حداثة <bdi>(freshness check)</bdi> على المصدر الذي يغذّي جدول الأقساط <bdi>(instalments table)</bdi></li>
 <li>D. عقد نموذج <bdi>(model contract)</bdi> يثبّت نوع بيانات عمود الشريحة <bdi>(data type)</bdi></li>
 </ul>
@@ -9829,7 +9829,7 @@ where rn = 1;
 <li>A. إفشال التحميل كله <bdi>(fail the whole load)</bdi> كل يوم حتى يصلح فريق الهاتف كل حدث</li>
 <li>B. تجاهل الصفوف السيئة بصمت <bdi>(silently)</bdi>، لأن بضع مئات لن تحرّك الإجماليات</li>
 <li>C. منع النشر <bdi>(block publishing)</bdi> واستدعاء المناوب <bdi>(page on-call)</bdi> لكل حدث مشوّه منفرد</li>
-<li>D. عزل الصفوف السيئة <bdi>(quarantine bad rows)</bdi>، ونشر البقية، والإبلاغ عن عدد الصفوف السيئة <bdi>(bad-row count)</bdi></li>
+<li>D. عزل الصفوف السيئة <bdi>(quarantine)</bdi> ونشر البقية والإبلاغ عن عددها</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9838,9 +9838,9 @@ where rn = 1;
 
 <p><strong>28. يربط اختبار المطابقة <bdi>(reconciliation test)</bdi> لدى هدى إجماليات متجر البيانات اليومية <bdi>(daily mart totals)</bdi> بإجماليات التحكم في دفتر الأستاذ <bdi>(ledger control totals)</bdi> ربطًا داخليًا <bdi>(inner-joins)</bdi>. وفي يوم فشلت فيه تغذية دفتر الأستاذ <bdi>(ledger feed)</bdi>، نجح الاختبار. لماذا، وما الإصلاح؟</strong></p>
 <ul>
-<li>A. سلوك صحيح <bdi>(correct behaviour)</bdi>، لأن الأيام التي لا بيانات فيها من دفتر الأستاذ لا يمكن مطابقتها</li>
-<li>B. اختفى الطرف المفقود في الربط <bdi>(the missing side vanished in the join)</bdi>؛ استخدم ربطًا خارجيًا يساريًا أو كاملًا <bdi>(left or full outer join)</bdi></li>
-<li>C. إضافة اختبار not_null على إجمالي متجر البيانات لالتقاط الأيام المفقودة</li>
+<li>A. سلوك صحيح <bdi>(correct behaviour)</bdi>، لأن الأيام التي لا توجد فيها بيانات من دفتر الأستاذ <bdi>(ledger data)</bdi> لا يمكن مطابقتها <bdi>(reconciled)</bdi></li>
+<li>B. اختفى الطرف المفقود في الربط <bdi>(the missing side vanished)</bdi>؛ استخدم ربطًا خارجيًا <bdi>(outer join)</bdi> يساريًا أو كاملًا</li>
+<li>C. إضافة اختبار not_null على إجمالي متجر البيانات <bdi>(mart total)</bdi> لالتقاط الأيام المفقودة</li>
 <li>D. رفع حدّ التسامح <bdi>(raise the tolerance)</bdi> لكي لا تُفشل الفجوات في تلك الأيام الاختبارَ بعد الآن</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -9850,10 +9850,10 @@ where rn = 1;
 
 <p><strong>29. ترسل أداة قابلية رصد البيانات <bdi>(data observability tool)</bdi> لدى نجم نحو 300 تنبيه أسبوعيًا إلى قناة مشتركة <bdi>(shared channel)</bdi>. ومرّ خرق حداثة حقيقي <bdi>(real freshness breach)</bdi> في متجر بيانات مخاطر الائتمان <bdi>(credit-risk mart)</bdi> دون أن يلاحظه أحد. ما الذي ينبغي تغييره؟</strong></p>
 <ul>
-<li>A. إضافة مراقِبات <bdi>(monitors)</bdi> على كل عمود في كل جدول لكي تبرز الخروق الحقيقية</li>
-<li>B. إيقاف كل المراقِبات والاعتماد على اختبارات dbt وحدها من الآن فصاعدًا</li>
-<li>C. إرسال كل تنبيه بالبريد الإلكتروني إلى فريق البيانات كله إضافة إلى القناة</li>
-<li>D. مراقبة الجداول الحرجة <bdi>(critical tables)</bdi>، وإعطاء كل تنبيه مالكًا <bdi>(an owner)</bdi>، وضبط المراقِبات المزعجة <bdi>(tune noisy ones)</bdi></li>
+<li>A. إضافة مراقِبات <bdi>(monitors)</bdi> على كل عمود في كل جدول لكي تبرز الخروق الحقيقية <bdi>(real breaches)</bdi></li>
+<li>B. إيقاف كل المراقِبات <bdi>(monitors)</bdi> والاعتماد على اختبارات dbt وحدها من الآن فصاعدًا</li>
+<li>C. إرسال كل تنبيه <bdi>(alert)</bdi> بالبريد الإلكتروني إلى فريق البيانات كله إضافة إلى القناة <bdi>(channel)</bdi></li>
+<li>D. مراقبة الجداول الحرجة <bdi>(critical tables)</bdi>، وإعطاء كل تنبيه مالكًا، وضبط المراقِبات المزعجة</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9862,10 +9862,10 @@ where rn = 1;
 
 <p><strong>30. الجدول <code>fct_transactions</code> مقسّم حسب التاريخ <bdi>(partitioned by date)</bdi>. ومعظم الاستعلامات تُرشِّح شهرًا واحدًا و<code>account_id</code> واحدًا، ومع ذلك يقرأ كل منها كل كتلة <bdi>(every block)</bdi> في ذلك الشهر. ما الذي يفيد أكثر؟</strong></p>
 <ul>
-<li>A. إعادة تقسيم الجدول كله حسب <code>account_id</code> بدلًا من التاريخ</li>
-<li>B. الفرز أو التجميع العنقودي <bdi>(sort or cluster)</bdi> حسب <code>account_id</code> لكي تتمكّن إحصاءات الكتل <bdi>(block statistics)</bdi> من تخطّي البيانات</li>
-<li>C. إضافة <code>distinct</code> إلى الاستعلامات لكي يقرأ المحرّك صفوفًا مكرّرة أقل</li>
-<li>D. تحويل الجدول إلى CSV، الذي تستطيع المحرّكات مسحه كتلة كتلة <bdi>(block by block)</bdi></li>
+<li>A. إعادة تقسيم الجدول كله <bdi>(repartition)</bdi> حسب <code>account_id</code> بدلًا من التاريخ <bdi>(date)</bdi></li>
+<li>B. الفرز أو التجميع العنقودي <bdi>(sort or cluster)</bdi> حسب <code>account_id</code> لتتخطّى إحصاءات الكتل البيانات</li>
+<li>C. إضافة <code>distinct</code> إلى الاستعلامات لكي يقرأ المحرّكُ صفوفًا مكرّرة <bdi>(duplicate rows)</bdi> أقل من المعتاد</li>
+<li>D. تحويل الجدول إلى CSV <bdi>(CSV format)</bdi>، الذي تستطيع المحرّكات مسحه كتلة كتلة</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9874,10 +9874,10 @@ where rn = 1;
 
 <p><strong>31. خمسون مربّعًا <bdi>(fifty tiles)</bdi> في لوحة المعلومات التنفيذية <bdi>(executive dashboard)</bdi> يجمّع كلٌّ منها جدول حقائق المعاملات ذا المليار صف <bdi>(billion-row transactions fact)</bdi> حسب اليوم والفرع <bdi>(by day and branch)</bdi>. ولوحة المعلومات بطيئة ومكلفة. ما الذي ينبغي أن تفعله لينا؟</strong></p>
 <ul>
-<li>A. إعطاء أداة ذكاء الأعمال <bdi>(BI tool)</bdi> مستودع بيانات أكبر بكثير <bdi>(a much larger warehouse)</bdi> لكي يُحمَّل كل مربّع أسرع</li>
-<li>B. تخزين كل مربّع مؤقتًا لمدة شهر <bdi>(cache every tile for a month)</bdi> لكي نادرًا ما يُستعلَم مستودع البيانات</li>
-<li>C. بناء متجر بيانات تجميعي <bdi>(aggregate mart)</bdi> بحُبَيبية اليوم × الفرع <bdi>(day × branch)</bdi> وتوجيه المربّعات إليه</li>
-<li>D. تحويل كل مربّع إلى <code>select *</code> لكي تجمّع أداة ذكاء الأعمال البيانات محليًا <bdi>(aggregates locally)</bdi></li>
+<li>A. إعطاء أداة ذكاء الأعمال <bdi>(BI tool)</bdi> مستودع بيانات أكبر بكثير لكي يُحمَّل كل مربّع أسرع</li>
+<li>B. تخزين كل مربّع مؤقتًا لمدة شهر <bdi>(cache for a month)</bdi> لكي نادرًا ما يُستعلَم مستودع البيانات</li>
+<li>C. بناء متجر تجميعي <bdi>(aggregate mart)</bdi> بحُبَيبية اليوم × الفرع وتوجيه المربّعات إليه</li>
+<li>D. تحويل كل مربّع إلى <code>select *</code> لكي تجمّع أداة ذكاء الأعمال البيانات محليًا <bdi>(locally)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9886,8 +9886,8 @@ where rn = 1;
 
 <p><strong>32. نموذج dbt تزايدي <bdi>(incremental dbt model)</bdi> بنافذة استرجاع <bdi>(lookback)</bdi> مدتها ثلاثة أيام يعمل منذ ثمانية أشهر. تغيّر منطقه <bdi>(its logic)</bdi> الشهر الماضي، والآن تختلف إجمالياته عن إعادة البناء الكاملة <bdi>(a full rebuild)</bdi>. ما الذي ينبغي أن يفعله الفريق؟</strong></p>
 <ul>
-<li>A. تشغيل تحديث كامل <bdi>(full refresh)</bdi> كلما تغيّر المنطق، وعلى جدول زمني منتظم <bdi>(on a regular schedule)</bdi></li>
-<li>B. توسيع نافذة الاسترجاع إلى ثمانية أشهر لكي يعيد كل تشغيل بناء السجل كله <bdi>(all history)</bdi></li>
+<li>A. تشغيل تحديث كامل <bdi>(full refresh)</bdi> كلما تغيّر المنطق، وعلى جدول زمني منتظم <bdi>(schedule)</bdi></li>
+<li>B. توسيع نافذة الاسترجاع <bdi>(lookback window)</bdi> إلى ثمانية أشهر لكي يعيد كل تشغيل بناء السجل كله <bdi>(all history)</bdi></li>
 <li>C. تحويل الاستراتيجية إلى الإلحاق <bdi>(append)</bdi> لكي لا تُمسّ الصفوف القديمة أبدًا</li>
 <li>D. إزالة المفتاح الفريد <bdi>(unique key)</bdi> لكي تُحفظ الصفوف المُعاد معالجتها كإصدارات جديدة</li>
 </ul>
@@ -9935,9 +9935,9 @@ where rn = 1;
 <p><strong>36. يريد كريم عرض إنفاق البطاقات الأسبوعي <bdi>(weekly card spend)</bdi> والشكاوى الأسبوعية <bdi>(weekly complaints)</bdi> على مدى 52 أسبوعًا، لمناقشة هل يتحرّكان معًا. أي رسم بياني هو الأكثر أمانة <bdi>(most honest)</bdi>؟</strong></p>
 <ul>
 <li>A. رسم بياني واحد بمحورين صاديّين <bdi>(two y-axes)</bdi>، بمقياس يجعل الخطّين يتطابقان بوضوح</li>
-<li>B. رسم دائري <bdi>(pie chart)</bdi> لكل ربع سنة يعرض حصّتي الإنفاق والشكاوى</li>
+<li>B. رسم دائري <bdi>(pie chart)</bdi> لكل ربع سنة يعرض حصّتي الإنفاق والشكاوى <bdi>(spend and complaints)</bdi></li>
 <li>C. رسم مساحي ثلاثي الأبعاد <bdi>(3D area chart)</bdi> يكدّس الإنفاق الأسبوعي فوق الشكاوى</li>
-<li>D. رسمان خطّيان متحاذيان <bdi>(two aligned line charts)</bdi>، أو رسم انتشار <bdi>(scatter plot)</bdi> للإنفاق مقابل الشكاوى</li>
+<li>D. رسمان خطّيان متحاذيان <bdi>(aligned charts)</bdi>، أو رسم انتشار <bdi>(scatter plot)</bdi> للمتغيّرين</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9947,8 +9947,8 @@ where rn = 1;
 <p><strong>37. ارتفع متوسط رصيد عملاء نجم الحاليين <bdi>(average balance of current customers)</bdi> ستة أشهر. وفي الفترة نفسها، أغلق كثير من العملاء ذوي الأرصدة المنخفضة <bdi>(low-balance customers)</bdi> حساباتهم. كيف ينبغي أن يقرأ كريم ذلك؟</strong></p>
 <ul>
 <li>A. العملاء يدّخرون أكثر، لذا ينبغي أن يحتفي فريق التجزئة بالاتجاه <bdi>(celebrate the trend)</bdi></li>
-<li>B. ربما هو انحياز البقاء <bdi>(survivorship)</bdi>؛ اعرض حجم المجتمع <bdi>(population size)</bdi> ومنظور الأفواج <bdi>(cohort view)</bdi></li>
-<li>C. الأرصدة شبه جمعية <bdi>(semi-additive)</bdi>، لذا لا يمكن حساب متوسطها أبدًا</li>
+<li>B. ربما هو انحياز البقاء <bdi>(survivorship)</bdi>؛ اعرض حجم المجتمع ومنظور الأفواج <bdi>(cohort view)</bdi></li>
+<li>C. الأرصدة شبه جمعية <bdi>(semi-additive)</bdi>، لذا لا يمكن حساب متوسطها <bdi>(averaged)</bdi> أبدًا</li>
 <li>D. إنها مفارقة سيمبسون <bdi>(Simpson&#39;s paradox)</bdi>، التي لا يحلّها إلا اختبار عشوائي <bdi>(randomised test)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -9958,10 +9958,10 @@ where rn = 1;
 
 <p><strong>38. لا يُظهر المقياس الأساسي <bdi>(primary metric)</bdi> في اختبار A/B <bdi>(A/B test)</bdi> أي أثر دال <bdi>(significant effect)</bdi>. ومن بين اثنتي عشرة شريحة <bdi>(twelve segments)</bdi>، يُظهر عملاء المنشآت الصغيرة والمتوسطة على Android ارتفاعًا <bdi>(a lift)</bdi> بقيمة p = 0.02. بماذا ينبغي أن تنصح دانة؟</strong></p>
 <ul>
-<li>A. معاملة نتيجة الشريحة <bdi>(segment result)</bdi> كفرضية <bdi>(hypothesis)</bdi> لاختبار جديد مخطّط له <bdi>(a new, planned test)</bdi></li>
+<li>A. معاملة نتيجة الشريحة كفرضية <bdi>(hypothesis)</bdi> لاختبار جديد مخطّط له <bdi>(planned test)</bdi></li>
 <li>B. إطلاق التغيير لمستخدمي Android من المنشآت الصغيرة والمتوسطة فقط، لأن p أقل من 0.05</li>
-<li>C. الإبلاغ عن فوز الشريحة كالنتيجة الرئيسية للتجربة <bdi>(headline result)</bdi></li>
-<li>D. خفض ألفا <bdi>(lower alpha)</bdi> للشرائح الإحدى عشرة الأخرى وإعادة التحليل</li>
+<li>C. الإبلاغ عن فوز الشريحة <bdi>(segment win)</bdi> كالنتيجة الرئيسية للتجربة <bdi>(headline result)</bdi></li>
+<li>D. خفض ألفا <bdi>(lower alpha)</bdi> للشرائح الإحدى عشرة الأخرى وإعادة التحليل <bdi>(re-run)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9970,10 +9970,10 @@ where rn = 1;
 
 <p><strong>39. يخفض فريق البطاقات أدنى أثر قابل للرصد <bdi>(minimum detectable effect)</bdi> في اختبار مخطّط له إلى النصف، من نقطتين إلى نقطة واحدة. كيف يتغيّر حجم العيّنة المطلوب <bdi>(required sample)</bdi> تقريبًا؟</strong></p>
 <ul>
-<li>A. يبقى نفسه تقريبًا، لأن المعدّل الأساسي <bdi>(baseline rate)</bdi> لم يتغيّر</li>
-<li>B. يتضاعف تقريبًا <bdi>(about double)</bdi>، لأن الأثر صار نصف حجمه</li>
-<li>C. ينخفض إلى النصف تقريبًا، لأن الأثر الأصغر أسهل في القياس</li>
-<li>D. يصبح أربعة أضعاف تقريبًا <bdi>(about four times)</bdi>، لأن n ينمو مع مربّع <bdi>(1 ÷ MDE)</bdi></li>
+<li>A. يبقى نفسه تقريبًا <bdi>(about the same)</bdi>، لأن المعدّل الأساسي <bdi>(baseline rate)</bdi> لم يتغيّر في شيء</li>
+<li>B. يتضاعف تقريبًا <bdi>(about double)</bdi>، لأن الأثر صار الآن نصف حجمه فقط من قبل ذلك</li>
+<li>C. ينخفض إلى النصف تقريبًا <bdi>(about half)</bdi>، لأن الأثر الأصغر أسهل في القياس عادة وبشكل عام</li>
+<li>D. أربعة أضعاف تقريبًا <bdi>(about four times)</bdi>، لأن n ينمو مع <bdi>(1 ÷ MDE)</bdi> تربيعًا</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9982,10 +9982,10 @@ where rn = 1;
 
 <p><strong>40. يختار نجم أسوأ عشرة فروع أداءً <bdi>(ten worst-performing branches)</bdi> في الشهر الماضي لبرنامج توجيه <bdi>(coaching programme)</bdi>. وفي الشهر التالي، تتحسّن الفروع العشرة كلها. ما الذي يمكن أن يستنتجه كريم؟</strong></p>
 <ul>
-<li>A. نجح البرنامج، لأن كل فرع خضع للتوجيه تحسّن</li>
-<li>B. فشل البرنامج، لأن التحسّن كان أصغر من أن يُعتدّ به</li>
-<li>C. قد يكون جزء منه ارتدادًا نحو المتوسط <bdi>(regression to the mean)</bdi>؛ قارِن بمجموعة ضابطة <bdi>(control group)</bdi></li>
-<li>D. إنه أثر الجِدّة <bdi>(novelty effect)</bdi> الذي سيتلاشى بعد شهر آخر</li>
+<li>A. نجح البرنامج <bdi>(the programme worked)</bdi>، لأن كل فرع خضع للتوجيه تحسّن</li>
+<li>B. فشل البرنامج <bdi>(the programme failed)</bdi>، لأن التحسّن كان أصغر من أن يُعتدّ به <bdi>(too small)</bdi></li>
+<li>C. قد يكون بعضه ارتدادًا نحو المتوسط <bdi>(regression to the mean)</bdi>؛ قارِن بمجموعة ضابطة</li>
+<li>D. إنه أثر الجِدّة <bdi>(novelty effect)</bdi> الذي سيتلاشى بعد شهر آخر من الآن</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9994,10 +9994,10 @@ where rn = 1;
 
 <p><strong>41. تُوائم هدى <code>StandardScaler</code> على مجموعة البيانات كاملة <bdi>(fits on the full dataset)</bdi>، ثم تقسّمها إلى مجموعات تدريب وتحقّق واختبار <bdi>(train, validation and test sets)</bdi>. ما المشكلة؟</strong></p>
 <ul>
-<li>A. لا مشكلة، لأن التحجيم <bdi>(scaling)</bdi> لا يغيّر ترتيب القيم</li>
-<li>B. لا مشكلة، ما دام التقسيم زمنيًا <bdi>(by time)</bdi> لا عشوائيًا</li>
-<li>C. مشكلة فقط لنماذج الأشجار <bdi>(tree models)</bdi>، التي لا تحتاج إلى التحجيم أصلًا</li>
-<li>D. تتسرّب معلومات الاختبار <bdi>(test information leaks)</bdi>؛ وائِم داخل خط معالجة <bdi>(Pipeline)</bdi> على صفوف التدريب <bdi>(training rows)</bdi></li>
+<li>A. لا مشكلة <bdi>(no problem)</bdi>، لأن التحجيم <bdi>(scaling)</bdi> لا يغيّر ترتيب القيم نفسها</li>
+<li>B. لا مشكلة <bdi>(no problem)</bdi>، ما دام التقسيم زمنيًا <bdi>(by time)</bdi> لا عشوائيًا <bdi>(random)</bdi></li>
+<li>C. مشكلة فقط لنماذج الأشجار <bdi>(tree models)</bdi>، التي لا تحتاج أصلًا إلى التحجيم <bdi>(scaling)</bdi> ولا إلى المعايرة</li>
+<li>D. تتسرّب معلومات الاختبار <bdi>(test leaks)</bdi>؛ وائِم داخل خط معالجة <bdi>(Pipeline)</bdi> على صفوف التدريب</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -10007,7 +10007,7 @@ where rn = 1;
 <p><strong>42. تتضمّن مجموعة تدريب الاحتيال <bdi>(fraud training set)</bdi> لدى دانة آخر ثلاثة أسابيع من المعاملات، وكلها موسومة «حقيقية» <bdi>(&quot;genuine&quot;)</bdi> لأنه لم يصل أي استرداد مدفوعات <bdi>(chargeback)</bdi> بعد. ما الذي ينبغي أن تفعله؟</strong></p>
 <ul>
 <li>A. الإبقاء عليها، لأن البيانات الحديثة تعكس أنماط الاحتيال الحالية <bdi>(current fraud patterns)</bdi> على أفضل وجه</li>
-<li>B. وسمها كلها احتيالًا لموازنة الفئات <bdi>(balance the classes)</bdi> في مجموعة التدريب</li>
+<li>B. وسمها كلها احتيالًا <bdi>(label them all as fraud)</bdi> لموازنة الفئات <bdi>(balance the classes)</bdi> في مجموعة التدريب</li>
 <li>C. استبعاد الصفوف الأحدث من نافذة نضج الاسترداد المتفق عليها <bdi>(agreed chargeback maturity window)</bdi></li>
 <li>D. الإبقاء عليها بوزن مضاعف <bdi>(double weight)</bdi> للتأكيد على السلوك الحديث</li>
 </ul>
@@ -10018,10 +10018,10 @@ where rn = 1;
 
 <p><strong>43. تُحسَب الخاصية <bdi>(feature)</bdi> <code>account_age_days</code> بوصفها تاريخ اليوم ناقص تاريخ فتح الحساب <bdi>(opening date)</bdi>، ثم تُربط بمعاملات 2024 للتدريب. ما الخطأ؟</strong></p>
 <ul>
-<li>A. لا شيء، لأن عمر الحساب <bdi>(account age)</bdi> يزداد فقط ولا يمكن أن يسرّب شيئًا</li>
-<li>B. تسرّب زمني <bdi>(temporal leakage)</bdi>؛ احسب العمر كما كان في تاريخ كل معاملة <bdi>(as of each transaction&#39;s date)</bdi></li>
-<li>C. لا شيء، ما دامت مجموعة الاختبار <bdi>(test set)</bdi> مقسّمة عشوائيًا حسب الصف</li>
-<li>D. يسبّب انحرافًا بين التدريب والتقديم <bdi>(training-serving skew)</bdi>، سيستوعبه نموذج أكبر</li>
+<li>A. لا شيء، لأن عمر الحساب <bdi>(account age)</bdi> يزداد فقط ولا يمكن أن يسرّب شيئًا <bdi>(leak anything)</bdi></li>
+<li>B. تسرّب زمني <bdi>(temporal leakage)</bdi>؛ احسب العمر كما كان في تاريخ كل معاملة <bdi>(as-of date)</bdi></li>
+<li>C. لا شيء، ما دامت مجموعة الاختبار <bdi>(test set)</bdi> مقسّمة عشوائيًا <bdi>(at random)</bdi> حسب الصف</li>
+<li>D. يسبّب انحرافًا بين التدريب والتقديم <bdi>(training-serving skew)</bdi>، سيستوعبه نموذج أكبر <bdi>(larger model)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -10031,9 +10031,9 @@ where rn = 1;
 <p><strong>44. في التنبيهات الذكية <bdi>(Smart Alerts)</bdi>، تُنتج العتبة التي تقلّل التكلفة إلى الحد الأدنى <bdi>(cost-minimising threshold)</bdi> نحو 4,000 تنبيه يوميًا. وتستطيع عمليات الاحتيال <bdi>(fraud operations)</bdi> مراجعة نحو 1,500. ما الذي ينبغي أن تعرضه دانة على الأعمال <bdi>(the business)</bdi>؟</strong></p>
 <ul>
 <li>A. الخيارات والتكاليف <bdi>(options and costs)</bdi>: رفع العتبة، أو إضافة موظفين، أو قاعدة مرحلة ثانية <bdi>(second-stage rule)</bdi></li>
-<li>B. العتبة التي تقلّل التكلفة على أي حال، لأنها المثلى رياضيًا <bdi>(mathematically optimal)</bdi></li>
+<li>B. العتبة التي تقلّل التكلفة <bdi>(cost-minimising)</bdi> على أي حال، لأنها المثلى رياضيًا <bdi>(optimal)</bdi></li>
 <li>C. العتبة الافتراضية 0.5 <bdi>(default threshold)</bdi>، التي توازن بين نوعي الخطأ <bdi>(both kinds of error)</bdi></li>
-<li>D. التحوّل إلى الدقة <bdi>(accuracy)</bdi> كمقياس، لكي تُنتَج تنبيهات أقل</li>
+<li>D. التحوّل إلى الدقة <bdi>(accuracy)</bdi> كمقياس، لكي تُنتَج تنبيهات أقل <bdi>(fewer alerts)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -10042,9 +10042,9 @@ where rn = 1;
 
 <p><strong>45. تريد إدارة مخاطر الائتمان <bdi>(Credit Risk)</bdi> استخدام درجة النموذج <bdi>(model&#39;s score)</bdi> مباشرةً كاحتمال تعثّر <bdi>(probability of default)</bdi> في حساب الخسارة المتوقعة <bdi>(expected-loss calculation)</bdi>. وقد دُرِّب النموذج على بيانات مخفّضة العيّنات <bdi>(down-sampled data)</bdi>. ما المطلوب؟</strong></p>
 <ul>
-<li>A. لا شيء، لأن النموذج الذي يرتّب جيدًا <bdi>(ranks well)</bdi> يعطي دائمًا احتمالات جيدة</li>
+<li>A. لا شيء، لأن النموذج الذي يرتّب جيدًا <bdi>(ranks well)</bdi> يعطي دائمًا احتمالات جيدة <bdi>(good probabilities)</bdi></li>
 <li>B. استبدال النموذج بقواعد <bdi>(rules)</bdi>، لأن درجات تعلّم الآلة <bdi>(ML scores)</bdi> ليست احتمالات أبدًا</li>
-<li>C. التحقق من المعايرة <bdi>(calibration)</bdi> بمنحنى الموثوقية <bdi>(reliability curve)</bdi>، وإعادة معايرة الدرجات <bdi>(re-calibrate the scores)</bdi></li>
+<li>C. التحقق من المعايرة <bdi>(calibration)</bdi> بمنحنى الموثوقية، وإعادة معايرة الدرجات <bdi>(re-calibrate)</bdi></li>
 <li>D. ضرب كل درجة في معدّل تخفيض العيّنات <bdi>(down-sampling rate)</bdi>، ثم الإطلاق دون فحوص</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -10055,9 +10055,9 @@ where rn = 1;
 <p><strong>46. تجعل عملية احتيال جديدة <bdi>(a new scam)</bdi> معاملاتٍ كانت تبدو آمنة تتّضح أنها احتيال. ولم يتغيّر توزيع مُدخلات النموذج <bdi>(distribution of the model&#39;s inputs)</bdi> إلا قليلًا. أي نوع من الانجراف <bdi>(drift)</bdi> هذا؟</strong></p>
 <ul>
 <li>A. انجراف البيانات <bdi>(data drift)</bdi>: ابتعدت المُدخلات عن بيانات التدريب</li>
-<li>B. عطل في البيانات السابقة <bdi>(upstream data break)</bdi> سببه تغيير في المخطط <bdi>(schema change)</bdi> في تغذية المصدر</li>
+<li>B. عطل في البيانات السابقة <bdi>(upstream data break)</bdi> سببه تغيير في المخطط <bdi>(schema change)</bdi> بالتغذية</li>
 <li>C. انجراف الوسوم فقط <bdi>(label drift only)</bdi>، الذي يصحّحه تغيير العتبة بالكامل</li>
-<li>D. انجراف المفهوم <bdi>(concept drift)</bdi>: المُدخلات نفسها تؤدي الآن إلى نتيجة مختلفة</li>
+<li>D. انجراف المفهوم <bdi>(concept drift)</bdi>: المُدخلات نفسها بنتيجة مختلفة</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -10066,10 +10066,10 @@ where rn = 1;
 
 <p><strong>47. مُحيت البيانات الشخصية <bdi>(personal data)</bdi> لأحد العملاء من الأنظمة المصرفية الأساسية <bdi>(core banking)</bdi>. وبعض مذكرات الائتمان <bdi>(credit memos)</bdi> الخاصة به موجودة كمقاطع مع تضميناتها <bdi>(chunks with embeddings)</bdi> في فهرس pgvector لدى مساعد مذكرات الائتمان <bdi>(Credit Memo Copilot)</bdi>. ما الذي ينبغي أن يحدث؟</strong></p>
 <ul>
-<li>A. حذف مقاطعه ومتّجهاته <bdi>(chunks and vectors)</bdi> أيضًا؛ فالمتّجهات المشتقّة <bdi>(derived vectors)</bdi> بيانات شخصية</li>
-<li>B. ترك المتّجهات؛ فالتضمينات <bdi>(embeddings)</bdi> مجرد أرقام لا بيانات شخصية</li>
-<li>C. إعادة تضمين المجموعة كلها <bdi>(re-embed the whole corpus)</bdi> بنموذج جديد لكي تختفي المتّجهات القديمة</li>
-<li>D. وسم مقاطعه بأنها غير سارية <bdi>(not current)</bdi> لكي تُرتَّب أدنى في البحث</li>
+<li>A. حذف مقاطعه ومتّجهاته <bdi>(chunks and vectors)</bdi> أيضًا؛ فالمتّجهات المشتقّة بيانات شخصية بحد ذاتها</li>
+<li>B. ترك المتّجهات؛ فالتضمينات <bdi>(embeddings)</bdi> مجرد أرقام لا بيانات شخصية <bdi>(personal data)</bdi> فيها</li>
+<li>C. إعادة تضمين المجموعة كلها <bdi>(re-embed)</bdi> بنموذج جديد لكي تختفي المتّجهات القديمة</li>
+<li>D. وسم مقاطعه بأنها غير سارية <bdi>(not current)</bdi> لكي تُرتَّب أدنى في البحث <bdi>(search ranking)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -10078,10 +10078,10 @@ where rn = 1;
 
 <p><strong>48. تقسم المقاطع الثابتة ذات الـ500 حرف <bdi>(fixed 500-character chunks)</bdi> جدول نسبة القرض إلى القيمة <bdi>(loan-to-value table)</bdi> في سياسة المنشآت الصغيرة والمتوسطة <bdi>(SME policy)</bdi>، فتنفصل الصفوف عن عناوينها <bdi>(separated from their headers)</bdi> وتخلط الإجابات بين الحدود <bdi>(mix up the limits)</bdi>. ما الذي ينبغي أن تغيّره هدى؟</strong></p>
 <ul>
-<li>A. زيادة التداخل <bdi>(overlap)</bdi> بين المقاطع ثابتة الحجم إلى 400 حرف</li>
-<li>B. التقطيع حسب البنية <bdi>(chunk by structure)</bdi>، مع إبقاء كل جدول كاملًا مع مسار عناوينه <bdi>(heading path)</bdi></li>
+<li>A. زيادة التداخل <bdi>(overlap)</bdi> بين المقاطع ثابتة الحجم <bdi>(fixed-size chunks)</bdi> إلى 400 حرف</li>
+<li>B. التقطيع حسب البنية <bdi>(chunk by structure)</bdi>، مع إبقاء كل جدول كاملًا</li>
 <li>C. التحوّل إلى نموذج تضمين أكبر <bdi>(larger embedding model)</bdi> يستطيع فهم الجداول المكسورة</li>
-<li>D. نزع كل الجداول من وثائق السياسات قبل الفهرسة <bdi>(before indexing)</bdi></li>
+<li>D. نزع كل الجداول من وثائق السياسات <bdi>(policy documents)</bdi> قبل الفهرسة <bdi>(indexing)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -10090,10 +10090,10 @@ where rn = 1;
 
 <p><strong>49. بعد تغيير في الاسترجاع <bdi>(retrieval)</bdi> لدى المساعد <bdi>(the copilot)</bdi>، يبقى recall@5 على المجموعة الذهبية <bdi>(golden set)</bdi> عند 0.95 لكن متوسط الرتبة العكسية <bdi>(MRR)</bdi> ينخفض من 0.8 إلى 0.4. ماذا يخبر هذا الفريق؟</strong></p>
 <ul>
-<li>A. ما زال المقطع الصحيح يُعثر عليه لكنه مرتّب أدنى <bdi>(ranked lower)</bdi>؛ افحص مُعيد الترتيب <bdi>(the re-ranker)</bdi></li>
-<li>B. خرج المقطع الصحيح من الخمسة الأوائل <bdi>(top five)</bdi> لمعظم الأسئلة</li>
-<li>C. لا شيء يؤثّر في المستخدمين، لأن MRR لا يغيّر الإجابات أبدًا</li>
-<li>D. المجموعة الذهبية أصغر من اللازم، لذا ينبغي تجاهل الرقمين كليهما تمامًا</li>
+<li>A. ما زال المقطع الصحيح يُعثر عليه لكنه مرتّب أدنى <bdi>(ranked lower)</bdi>؛ افحص مُعيد الترتيب <bdi>(re-ranker)</bdi></li>
+<li>B. خرج المقطع الصحيح من الخمسة الأوائل <bdi>(top five)</bdi> لمعظم الأسئلة <bdi>(most questions)</bdi></li>
+<li>C. لا شيء يؤثّر في المستخدمين، لأن MRR لا يغيّر الإجابات <bdi>(answers)</bdi> أبدًا</li>
+<li>D. المجموعة الذهبية <bdi>(golden set)</bdi> أصغر من اللازم، لذا ينبغي تجاهل الرقمين</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -10102,9 +10102,9 @@ where rn = 1;
 
 <p><strong>50. يريد فريق التسويق <bdi>(marketing team)</bdi> استخدام بيانات الرؤية الشاملة للعميل <bdi>(customer 360 data)</bdi> لحملة جديدة <bdi>(a new campaign)</bdi>. وفق حوكمة نجم <bdi>(Najm&#39;s governance)</bdi>، من المساءَل <bdi>(accountable)</bdi> عن اعتماد هذا الاستخدام الجديد؟</strong></p>
 <ul>
-<li>A. القيّم على البيانات <bdi>(the steward)</bdi>، كريم، الذي يجيب عن الأسئلة اليومية حول المعنى <bdi>(meaning)</bdi></li>
-<li>B. مالك البيانات <bdi>(the data owner)</bdi>، رئيس الخدمات المصرفية للأفراد <bdi>(Head of Retail Banking)</bdi>، مع استشارة سارة (مسؤولة حماية البيانات <bdi>(DPO)</bdi>)</li>
-<li>C. المالك التقني <bdi>(the technical owner)</bdi>، لينا، التي تشغّل خط البيانات <bdi>(pipeline)</bdi> واختباراته</li>
+<li>A. القيّم على البيانات <bdi>(the steward)</bdi>، كريم، الذي يجيب عن الأسئلة اليومية حول معنى البيانات وتعريفها <bdi>(data meaning)</bdi></li>
+<li>B. مالك البيانات <bdi>(data owner)</bdi>، رئيس الخدمات المصرفية للأفراد، مع استشارة سارة (مسؤولة حماية البيانات <bdi>(DPO)</bdi>)</li>
+<li>C. المالك التقني <bdi>(the technical owner)</bdi>، لينا، التي تشغّل خط البيانات <bdi>(pipeline)</bdi> واختباراته كلها</li>
 <li>D. أيًّا كان من فريق البيانات بنى أحدث نسخة من متجر البيانات <bdi>(mart)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -10114,10 +10114,10 @@ where rn = 1;
 
 <p><strong>51. تتلقّى المالية <bdi>(finance)</bdi> مستخرَجًا أسبوعيًا <bdi>(weekly extract)</bdi> ينتجه سكربت Python خارج dbt. ولا يظهر في رسم النسب <bdi>(lineage graph)</bdi> لدى نجم. كيف ينبغي سدّ هذه الفجوة؟</strong></p>
 <ul>
-<li>A. لا يمكن سدّها؛ فالنسب لا يغطّي إلا النماذج المبنية في dbt</li>
-<li>B. رسمه على مخطط البنية <bdi>(architecture diagram)</bdi> في جلسة المراجعة السنوية التالية <bdi>(annual review session)</bdi></li>
-<li>C. الطلب من المالية التوقف عن استخدام المستخرَجات التي لا يُظهرها النسب</li>
-<li>D. التصريح به بوصفه نقطة استهلاك مُعلَنة <bdi>(declare it as an exposure)</bdi> أو إطلاق أحداث OpenLineage <bdi>(emit OpenLineage events)</bdi> من السكربت</li>
+<li>A. لا يمكن سدّها؛ فالنسب <bdi>(lineage)</bdi> لا يغطّي إلا النماذج المبنية في dbt</li>
+<li>B. رسمه على مخطط البنية <bdi>(architecture diagram)</bdi> في جلسة المراجعة السنوية التالية</li>
+<li>C. الطلب من المالية <bdi>(finance)</bdi> التوقف عن استخدام المستخرَجات التي لا يُظهرها النسب</li>
+<li>D. التصريح به كنقطة استهلاك <bdi>(exposure)</bdi> أو إطلاق أحداث OpenLineage من السكربت</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -10129,7 +10129,7 @@ where rn = 1;
 <li>A. بريد تذكير شهري <bdi>(monthly reminder email)</bdi> يُرسل إلى كل مهندس تحليلات <bdi>(analytics engineer)</bdi></li>
 <li>B. إضافة القاعدة إلى وثيقة سياسة الحوكمة <bdi>(governance policy document)</bdi> مرة أخرى</li>
 <li>C. فحص في التكامل المستمر <bdi>(CI check)</bdi> على <code>manifest.json</code> يفشل في غياب <code>meta.data_owner</code></li>
-<li>D. الطلب من فريق الفهرس <bdi>(catalogue team)</bdi> ملء المالكين المفقودين بعد كل إصدار <bdi>(release)</bdi></li>
+<li>D. الطلب من فريق الفهرس <bdi>(catalogue team)</bdi> ملء المالكين المفقودين <bdi>(missing owners)</bdi> بعد كل إصدار <bdi>(release)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -10140,7 +10140,7 @@ where rn = 1;
 <ul>
 <li>A. نعم، لأن الملف المُصدَر لا يتضمّن أسماء ولا أرقام هويات وطنية <bdi>(national IDs)</bdi></li>
 <li>B. نعم، لأن مفتاح العميل <bdi>(customer key)</bdi> استُبدل بتجزئة بمفتاح <bdi>(keyed hash)</bdi></li>
-<li>C. لا؛ فالمجموعات الصغيرة <bdi>(small groups)</bdi> يمكن أن تكشف هوية الأشخاص، لذا عمِّمها أو احجبها <bdi>(generalise or suppress them)</bdi></li>
+<li>C. لا؛ فالمجموعات الصغيرة <bdi>(small groups)</bdi> تكشف الهويات، لذا عمِّمها أو احجبها</li>
 <li>D. غير آمن فقط إذا تضمّن الإصدار أيضًا بيانات من الفئات الخاصة <bdi>(special-category data)</bdi></li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -10150,9 +10150,9 @@ where rn = 1;
 
 <p><strong>54. يجب حذف أحداث تطبيق نجم للهاتف <bdi>(Najm Mobile)</bdi> الخام بعد 13 شهرًا. وتشغيل <code>DELETE</code> على مليارات الصفوف كل شهر بطيء ويقفل الجدول <bdi>(locks the table)</bdi>. ما التصميم الأفضل؟</strong></p>
 <ul>
-<li>A. التقسيم حسب تاريخ الحدث <bdi>(partition by event date)</bdi> لكي يصبح انتهاء الصلاحية <bdi>(expiry)</bdi> مجرد إسقاط للأقسام القديمة <bdi>(drops old partitions)</bdi></li>
-<li>B. الاحتفاظ بكل شيء، لأن حذف السجل يكسر قابلية إعادة الإنتاج <bdi>(reproducibility)</bdi></li>
-<li>C. تشغيل <code>DELETE</code> مرة في السنة بدلًا من كل شهر، لتوفير الحوسبة <bdi>(compute)</bdi></li>
+<li>A. التقسيم حسب تاريخ الحدث <bdi>(partition by event date)</bdi> لكي يصبح انتهاء الصلاحية مجرد إسقاط للأقسام القديمة</li>
+<li>B. الاحتفاظ بكل شيء <bdi>(keep everything)</bdi>، لأن حذف السجل يكسر قابلية إعادة الإنتاج <bdi>(reproducibility)</bdi></li>
+<li>C. تشغيل <code>DELETE</code> مرة في السنة <bdi>(once a year)</bdi> بدلًا من كل شهر، لتوفير الحوسبة <bdi>(compute)</bdi></li>
 <li>D. نقل الصفوف المنتهية الصلاحية إلى مخطط تجريبي <bdi>(sandbox schema)</bdi> بدلًا من حذفها كلها</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -10164,8 +10164,8 @@ where rn = 1;
 <ul>
 <li>A. لا شيء، لأن النص الحر <bdi>(free text)</bdi> ليس بيانات شخصية منظّمة <bdi>(structured personal data)</bdi> بموجب القانون</li>
 <li>B. تجزئة نص الرسالة كله <bdi>(hash the whole message text)</bdi> لكي يظل المحلّلون قادرين على تجميع المحادثات</li>
-<li>C. تحميل السجلّات دون تغيير والاعتماد على تدريب المحلّلين <bdi>(analysts&#39; training)</bdi> كي لا يقرؤوا المحادثات الفردية</li>
-<li>D. اكتشاف معلومات التعريف الشخصية وتنقيحها <bdi>(detect and redact PII)</bdi> قبل التحميل؛ وتقييد الوصول، والاحتفاظ بالسجلّات الخام لمدة قصيرة</li>
+<li>C. تحميل السجلّات دون تغيير والاعتماد على تدريب المحلّلين <bdi>(analysts&#39; training)</bdi> كي لا يقرؤوا المحادثات الفردية أبدًا</li>
+<li>D. اكتشاف معلومات التعريف الشخصية وتنقيحها <bdi>(detect and redact PII)</bdi> قبل التحميل؛ وتقييد الوصول والاحتفاظ بالخام</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -10174,7 +10174,7 @@ where rn = 1;
 
 <p><strong>56. عرضٌ <bdi>(a view)</bdi> فوق <code>marts.loan_book</code> يملكه حساب خدمة dbt <bdi>(dbt service account)</bdi>، الذي يملك أيضًا الجدول الأساسي <bdi>(base table)</bdi> ولا يخضع لسياسته. للجدول الأساسي أمان على مستوى الصفوف <bdi>(row-level security)</bdi> حسب الدولة، لكن المحلّلين الذين يستعلمون العرض يرون كل الدول. لماذا؟</strong></p>
 <ul>
-<li>A. لا ينطبق الأمان على مستوى الصفوف أبدًا على الجداول التي بناها dbt في مخطط متاجر البيانات <bdi>(marts schema)</bdi></li>
+<li>A. لا ينطبق الأمان على مستوى الصفوف <bdi>(row-level security)</bdi> أبدًا على الجداول التي بناها dbt في مخطط متاجر البيانات <bdi>(marts schema)</bdi></li>
 <li>B. يعمل العرض بصلاحيات مالكه <bdi>(its owner&#39;s rights)</bdi>؛ استخدم <code>security_invoker</code> أو رشِّح داخله</li>
 <li>C. تنسخ العروض بيانات الجدول الأساسي، فتضيع سياسات صفوفه <bdi>(row policies)</bdi> في الطريق</li>
 <li>D. لا ينطبق RLS إلا على أول استعلام في كل جلسة، لا على الاستعلامات اللاحقة</li>
@@ -10186,9 +10186,9 @@ where rn = 1;
 
 <p><strong>57. ما زالت هدى تحمل الدور <code>pii_reader</code> من مشروع انتهى قبل 18 شهرًا. ما الضابط <bdi>(control)</bdi> الذي كان سيزيله؟</strong></p>
 <ul>
-<li>A. لا حاجة لأي ضابط، فهي ما زالت في فريق البيانات وقد تحتاج إليه مرة أخرى</li>
-<li>B. منح محدودة المدة <bdi>(time-limited grants)</bdi> لـ <code>pii_reader</code> وإعادة تصديق الوصول ربع السنوية <bdi>(quarterly access recertification)</bdi></li>
-<li>C. إخراجها من فريق البيانات لكي تُسحب كل الأدوار دفعة واحدة <bdi>(every role is revoked at once)</bdi></li>
+<li>A. لا حاجة لأي ضابط <bdi>(no control)</bdi>، فهي ما زالت في فريق البيانات وقد تحتاج إليه مرة أخرى</li>
+<li>B. منح محدودة المدة <bdi>(time-limited grants)</bdi> لـ <code>pii_reader</code> وإعادة تصديق ربع سنوية للوصول</li>
+<li>C. إخراجها من فريق البيانات <bdi>(data team)</bdi> لكي تُسحب كل الأدوار دفعة واحدة <bdi>(every role is revoked at once)</bdi></li>
 <li>D. إعادة تسمية الدور كل عام <bdi>(renaming the role each year)</bdi> لكي لا يعود حاملوه يعرفون ما يمنحه</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -10198,10 +10198,10 @@ where rn = 1;
 
 <p><strong>58. في ديسمبر، تطلب جهة تنظيمية <bdi>(a regulator)</bdi> من نجم إعادة إرسال مستخرَج مخاطر الائتمان لشهر يونيو <bdi>(June credit-risk extract)</bdi> تمامًا كما قُدِّم <bdi>(exactly as filed)</bdi>. وقد صُحِّحت صفوف يونيو في متجر البيانات منذ ذلك الحين بسبب سدادات متأخرة <bdi>(late repayments)</bdi>. ما الذي ينبغي أن يرسله فيصل؟</strong></p>
 <ul>
-<li>A. إعادة تشغيل يونيو من متجر بيانات اليوم، لأنه الآن الأدق</li>
-<li>B. إعادة بناء يونيو من الطبقة الخام <bdi>(from raw)</bdi> بشيفرة اليوم <bdi>(today&#39;s code)</bdi>، مُرسَلًا على أنه الأصل</li>
-<li>C. تفسيرًا بأن يونيو لم يعد ممكنًا إعادة إنتاجه بعد التصحيحات</li>
-<li>D. مستخرَج يونيو المُجمَّد ذا الإصدار <bdi>(frozen, versioned)</bdi>، مع التصحيحات كإعادات بيان <bdi>(restatements)</bdi></li>
+<li>A. إعادة تشغيل يونيو <bdi>(re-run of June)</bdi> من متجر بيانات اليوم، لأنه الآن الأدق</li>
+<li>B. إعادة بناء يونيو من الطبقة الخام <bdi>(rebuilt from raw)</bdi> بشيفرة اليوم <bdi>(today&#39;s code)</bdi>، كأنه الأصل</li>
+<li>C. تفسيرًا <bdi>(an explanation)</bdi> بأن يونيو لم يعد ممكنًا إعادة إنتاجه بعد التصحيحات</li>
+<li>D. مستخرَج يونيو المُجمَّد ذا الإصدار <bdi>(frozen)</bdi>، مع التصحيحات كإعادات بيان <bdi>(restatements)</bdi> لاحقة بعده</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -10210,10 +10210,10 @@ where rn = 1;
 
 <p><strong>59. يصل سداد <bdi>(a repayment)</bdi> بتاريخ قيمة <bdi>(value date)</bdi> قبل ستة أيام. ولمتجر بيانات مخاطر الائتمان نافذة استرجاع <bdi>(lookback window)</bdi> مدتها ثلاثة أيام، ونهاية الشهر <bdi>(month-end)</bdi> بعد يومين. ما الذي ينبغي أن يفعله الفريق؟</strong></p>
 <ul>
-<li>A. لا شيء؛ فالتشغيل التزايدي التالي <bdi>(next incremental run)</bdi> يصحّحه مثل أي سداد متأخر</li>
+<li>A. لا شيء؛ فالتشغيل التزايدي التالي <bdi>(next incremental run)</bdi> يصحّحه مثل أي سداد متأخر <bdi>(late repayment)</bdi></li>
 <li>B. تجاهله، لأن بضعة أيام من فرق أيام التأخّر عن السداد <bdi>(DPD)</bdi> لا تغيّر أرقام المخاطر أبدًا</li>
 <li>C. تشغيل إعادة تعبئة مُسجَّلة <bdi>(logged backfill)</bdi> للأيام المتأثرة قبل تجميد نهاية الشهر <bdi>(month-end freeze)</bdi></li>
-<li>D. توسيع نافذة الاسترجاع دائمًا إلى أطول تأخير شوهد في البيانات على الإطلاق</li>
+<li>D. توسيع نافذة الاسترجاع <bdi>(lookback)</bdi> دائمًا إلى أطول تأخير شوهد <bdi>(longest delay)</bdi> في البيانات</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -10222,9 +10222,9 @@ where rn = 1;
 
 <p><strong>60. يحصل مرشّح <bdi>(a candidate)</bdi> على مهمة منزلية مدتها 48 ساعة <bdi>(48-hour take-home)</bdi>: مجموعة بيانات صغيرة وسؤال أعمال واحد <bdi>(one business question)</bdi>. أي تسليم <bdi>(submission)</bdi> يحصل على أعلى درجة في بطاقة تقييم المقابلات <bdi>(interview scorecard)</bdi> لدى نجم؟</strong></p>
 <ul>
-<li>A. نماذج مُختبَرة <bdi>(tested models)</bdi>، وملف README بالافتراضات <bdi>(assumptions)</bdi>، وفحص مطابقة <bdi>(reconciliation check)</bdi></li>
-<li>B. لوحة معلومات مصقولة <bdi>(polished dashboard)</bdi> فيها رسوم بيانية كثيرة لكن بلا أي شرح مكتوب</li>
-<li>C. نموذج تعلّم آلة معقّد <bdi>(complex ML model)</bdi> بأعلى دقة <bdi>(highest accuracy)</bdi> على البيانات المعطاة</li>
+<li>A. نماذج مُختبَرة <bdi>(tested models)</bdi>، وملف README بالافتراضات، وفحص مطابقة <bdi>(reconciliation)</bdi> بين المصدر والنتيجة</li>
+<li>B. لوحة معلومات مصقولة <bdi>(polished dashboard)</bdi> فيها رسوم كثيرة لكن بلا أي شرح مكتوب</li>
+<li>C. نموذج تعلّم آلة معقّد <bdi>(complex ML model)</bdi> بأعلى دقة <bdi>(highest accuracy)</bdi> على البيانات المعطاة <bdi>(given data)</bdi></li>
 <li>D. قائمة طويلة بكل أداة مستخدمة، بلا اختبارات وبلا README</li>
 </ul>
 <details><summary>الإجابة</summary>

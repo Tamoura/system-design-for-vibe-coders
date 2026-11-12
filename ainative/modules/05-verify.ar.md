@@ -213,7 +213,7 @@ flowchart TD
 - A. يتحقق من أن النصوص الجديدة تبدو معقولة (look sensible)، ثم يعتمد طلب الدمج (approve the pull request)
 - B. يقابل كل توقّع متغيّر (each changed expectation) والحارس (the guard) بالتذكرة (against the ticket)
 - C. يشغّل المجموعة الاختبارية كاملة مرة أخرى (Run the full suite again) ليتأكد من ثبات النتيجة الخضراء (the green result is stable)
-- D. يسأل الوكيل عن مدى ثقته (how confident it is) في التوقعات الجديدة (the new expectations)
+- D. يسأل الوكيل عن مدى ثقته (how confident it is) في التوقعات الجديدة (the new expectations) ويكتفي بجوابه (and settles for its answer)
 
 <details><summary>الإجابة</summary>
 
@@ -262,7 +262,7 @@ flowchart TD
 
 **5. يعيد نموذج ثانٍ (A second model) سبع ملاحظات (seven findings) على فرعك. تؤكد اثنتين، وتجد ثلاثًا خاطئة، ولا تستطيع الحكم على اثنتين. ماذا تفعل؟ ⁦(What do you do?)⁩**
 
-- A. ثق بالنتيجة كلها (Trust the whole result)، لأن نموذجًا مختلفًا لا يشاركك نقاطك العمياء (shares no blind spots)
+- A. ثق بالنتيجة كلها (Trust the whole result)، لأن نموذجًا مختلفًا لا يشاركك نقاطك العمياء (shares no blind spots) في هذه الحالة (in this case)
 - B. أبقِ الاثنتين اللتين أكدتهما، وتحقق من الباقي أو أسقطه (check or drop the rest)، وتحمّل الحكم (own the verdict)
 - C. أصلح الملاحظات السبع كلها (Fix all seven findings) كي تعود المراجعة التالية نظيفة (comes back clean)
 - D. اطرح المراجعة (Discard the review)، لأن ثلاث ملاحظات خاطئة تثبت أنها بلا فائدة (prove it is useless)
@@ -539,7 +539,7 @@ Time spent:      (you / the agent)
 - A. أضفها إلى مراجعتك، لأن النموذج الثاني يرى ما فاتك (sees what you missed)
 - B. افحص الشيفرة أو شغِّلها، ولا تضفها إلا إن استطعت تأكيدها (confirm it)
 - C. تجاهلها، لأن مراجعتك أنت وحدها تُحتسب في الحكم (only your own pass counts)
-- D. اسأل النموذج نفسه هل هو متأكد (if it is sure)، وأضفها إن قال نعم
+- D. اسأل النموذج نفسه هل هو متأكد (if it is sure)، وأضفها إن قال نعم بلا تحقق
 
 <details><summary>الإجابة</summary>
 

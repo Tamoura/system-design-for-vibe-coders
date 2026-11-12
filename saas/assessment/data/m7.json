@@ -102,7 +102,7 @@
         ],
         "ar": [
           "انتقل إلى لقطات كل ساعة (hourly snapshots)، وأرفق رسائل نجاح النسخ الاحتياطي (backup-success emails) لعام كامل كدليل (evidence)",
-          "فعّل الاستعادة إلى نقطة زمنية (point-in-time recovery)، ثم قِس زمن استعادة فعلية (time a restore) في بيئة مؤقتة (scratch environment)",
+          "فعّل الاستعادة إلى نقطة زمنية (point-in-time recovery)، ثم قِس زمن استعادة فعلية في بيئة مؤقتة (scratch environment)",
           "اكتب دليل تعافٍ (recovery runbook) من توثيق المزوّد (provider's docs)، وقدّر منه زمن الاستعادة (RTO)",
           "انسخ كل تفريغ ليلي (nightly dump) إلى حاوية تخزين ثانية (second bucket) في الحساب نفسه (same account) والمنطقة نفسها (same region)"
         ]

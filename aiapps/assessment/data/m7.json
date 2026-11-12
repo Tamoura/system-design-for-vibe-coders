@@ -42,12 +42,12 @@
     "en": [
      "The model is now accurate enough to let unlock requests run unapproved",
      "The gate works well, because the approvers and the model agree so often",
-     "The approvers are rushing, so show them the model's confidence on each request",
+     "The approvers are rushing, so show the model's confidence on each request",
      "The approvers are not truly checking, so show the evidence and limit volume"
     ],
     "ar": [
      "النموذج (model) صار دقيقًا بما يكفي لتعمل طلبات إلغاء القفل (unlock requests) دون موافقة",
-     "البوابة (gate) تعمل جيدًا، لأن المعتمِدين (approvers) والنموذج (model) يتفقون كثيرًا في قراراتهم",
+     "البوابة (gate) تعمل جيدًا، لأن المعتمِدين (approvers) والنموذج يتفقون كثيرًا",
      "المعتمِدون (approvers) يتعجّلون، فأظهِر لهم ثقة النموذج (model's confidence) مع كل طلب",
      "المعتمِدون (approvers) لا يفحصون فعلًا، فأظهِر لهم الدليل (evidence) وحدّد حجم عملهم (volume)"
     ]
@@ -69,14 +69,14 @@
    "o": {
     "en": [
      "Run a time-boxed spike on Arabic retrieval, then set the range from it",
-     "Quote one number with a large buffer for any weak Arabic recall",
+     "Quote one number with a large safety buffer to cover any weak Arabic recall",
      "Quote the best case and learn about Arabic recall once the pilot is running",
      "Test Arabic wording on paper cards with Yara's agents, then set the range from that"
     ],
     "ar": [
      "تجري تجربة استكشافية مقيّدة بوقت (time-boxed spike) على الاسترجاع العربي ثم تحدد المدى (range) من نتيجتها",
-     "تذكر رقمًا واحدًا (one number) مع هامش كبير (large buffer) يمتص أي ضعف في الاستدعاء العربي (Arabic recall)",
-     "تذكر أفضل حالة (best case) وتعرف أمر الاستدعاء العربي (Arabic recall) حين تعمل التجربة التشغيلية (pilot)",
+     "تذكر رقمًا واحدًا (one number) مع هامش كبير (large buffer) يمتص أي ضعف في الاستدعاء العربي (Arabic recall) المحتمل",
+     "تذكر أفضل حالة (best case) وتعرف أمر الاستدعاء العربي (Arabic recall) حين تعمل التجربة التشغيلية (pilot) فعلًا",
      "تختبر الصياغة العربية (Arabic wording) على بطاقات ورقية (paper cards) مع موظفي يارا (Yara's agents) ثم تحدد المدى (range) من ذلك"
     ]
    },
@@ -96,13 +96,13 @@
    },
    "o": {
     "en": [
-     "That answers are accurate, since D1 returned the right policy text",
-     "That the model never invents sources, since D6 was caught by the gate",
+     "That answers are accurate, since D1 returned the right policy text from the file",
+     "That the model never invents sources, since D6 was caught by the citation gate",
      "That the wiring and guards work, since D3 and D7 passed their checks",
      "That the router copes with real staff sentences, since all seven were routed"
     ],
     "ar": [
-     "أن الإجابات دقيقة (answers are accurate)، لأن D1 أعاد نص السياسة (policy text) الصحيح",
+     "أن الإجابات دقيقة (answers are accurate)، لأن D1 أعاد نص السياسة (policy text) الصحيح كاملًا",
      "أن النموذج (model) لا يختلق مصادر (invents sources)، لأن بوابة الاستشهاد (citation gate) ضبطت D6",
      "أن الربط (wiring) والحواجز (guards) تعمل كما صُمّمت، لأن السيناريوهين D3 وD7 اجتازا فحصيهما",
      "أن الموجِّه (router) يتعامل مع جمل الموظفين الحقيقية (real staff sentences)، لأن السيناريوهات السبعة وُجّهت"

@@ -20,7 +20,7 @@
           "سليمة، إذا صاغ الوكيل (agent) المواصفة (spec) من الفروقات (diff) وقرأتها لجين كاملة قبل الإيداع (commit)",
           "سليمة متى حمل كل معيار (criterion) معرّفًا (id) مثل `AC1`؛ فالناقص هو الترقيم وحده",
           "غير سليمة: مواصفة (spec) تُكتب من الفروقات (diff) تسجّل ما فعله الوكيل (agent)، فلا يُحكَم بها على الشيفرة (code)",
-          "غير سليمة: المواصفة (spec) من شأن حصة بصفتها مالكة المنتج (product owner)، فعلى لجين أن تنتظر نسختها (version) منها أولًا"
+          "غير سليمة: المواصفة (spec) من شأن حصة بصفتها مالكة المنتج (product owner)، فعلى لجين أن تنتظر نسختها أولًا"
         ]
       },
       "a": 2,
@@ -40,13 +40,13 @@
       "o": {
         "en": [
           "Add a tie case whose raw fee is exactly 5.005",
-          "Add a tie case whose raw fee is exactly 5.035",
+          "Add a tie case whose raw fee is exactly 5.035, in the same fee tier",
           "Repeat the 5.015 case for every other fee tier, so each tier has its own tie test to rely on",
           "Ask the agent which rounding rule its code uses, then record the answer as a spec decision"
         ],
         "ar": [
           "أضف حالة تعادل (tie) رسمها الخام (raw fee) يساوي 5.005 تمامًا",
-          "أضف حالة تعادل (tie) رسمها الخام (raw fee) يساوي 5.035 تمامًا",
+          "أضف حالة تعادل (tie) رسمها الخام (raw fee) يساوي 5.035 تمامًا، في الشريحة (tier) نفسها",
           "كرّر حالة 5.015 لكل شريحة رسوم (fee tier) أخرى، ليكون لكل شريحة اختبار تعادل (tie test) خاص بها وحدها",
           "اسأل الوكيل (agent) عن قاعدة التقريب (rounding rule) التي تستعملها شيفرته، ثم سجّل جوابه قرارًا في المواصفة (spec)"
         ]
@@ -67,13 +67,13 @@
       },
       "o": {
         "en": [
-          "Dismiss it, because a green suite already shows that the service cannot fail on a template lookup",
+          "Dismiss it, because a green suite already shows the service cannot fail on a template lookup",
           "Wrap the lookup in a `try` block so that it falls back to the old `transfer_sent` template",
           "Add a test that sends a `QAR-BDT` transfer and checks the English message it produces",
           "Add a test that every id the service can choose exists in `notify.TEMPLATES`, in both languages"
         ],
         "ar": [
-          "ارفضه، لأن مجموعة اختبارات (test suite) خضراء (green) تثبت أصلًا أن الخدمة لا تفشل في اختيار القالب (template)",
+          "ارفضه، لأن مجموعة اختبارات (test suite) خضراء (green) تثبت أن الخدمة لا تفشل في اختيار القالب (template)",
           "لُفّ البحث في كتلة `try` تتراجع (fall back) عند الفشل إلى القالب (template) القديم `transfer_sent`",
           "أضف اختبارًا (test) يرسل تحويلًا (transfer) إلى `QAR-BDT` ويفحص الرسالة (message) الإنجليزية الناتجة",
           "أضف اختبارًا (test) يثبت أن كل معرّف (id) تستطيع الخدمة (service) اختياره موجود في `notify.TEMPLATES` باللغتين"

@@ -750,7 +750,7 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 - A. The golden set again, ten more runs at temperature 0.8 to average out sampling noise
 - B. Recall@k, precision@k and MRR on the labelled retrieval queries
 - C. The population stability index on last week's topic mix of customer questions
-- D. The red-team tests that plant a poisoned document in the index
+- D. The red-team tests that plant a poisoned document in the policy index
 
 <details><summary>Answer</summary>
 
@@ -825,7 +825,7 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 
 **14. Two vendors each claim their AI assistant writes "high quality" tests, and Bilal can run both against the course's sample system. How should he compare them?**
 
-- A. Pick the assistant whose generated suite reports the higher line and branch coverage
+- A. Pick the assistant whose generated suite reports the higher coverage
 - B. Pick the assistant that generates more tests in the same amount of time
 - C. Ask each assistant to grade its own tests and pick the higher score
 - D. Run each suite once per seeded bug, switched on alone, and count the bugs caught
@@ -944,7 +944,7 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 
 - A. Wait, because 1,600 requests is still too few for the judge to decide anything
 - B. Promote, because the p95 of 330 ms is only a little above the stable 310 ms
-- C. Promote, because 8 errors is only a very small count in absolute terms
+- C. Promote, because 8 errors is only a very small count, not a rate, in absolute terms
 - D. Roll back, because the error rate is too far above the stable error rate
 
 <details><summary>Answer</summary>
@@ -957,7 +957,7 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 
 - A. A cost report showing the saving per 1,000 questions, since accuracy is equal
 - B. A per-case comparison listing every case that passed before and fails now
-- C. Ten more runs of the new version alone, to confirm that its 18 is stable
+- C. Ten more runs of the new version alone, to confirm that its 18 is really stable
 - D. A ROUGE score between the old and new answers, to show that they are similar
 
 <details><summary>Answer</summary>
@@ -1020,7 +1020,7 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 
 **29. Bilal's gate asks for an 80% mutation score on changed money code. A new fee module scores 94%, six mutants survive and nobody has looked at them yet. Tariq asks for 100% before merge. What should Rashid recommend?**
 
-- A. Add a test for each survivor until the score reaches 100%, however artificial it is
+- A. Add a test for each survivor until the score hits 100%, however artificial
 - B. Raise the gate to 100% on all money code, so that the score cannot be argued
 - C. Mark all six survivors as equivalent mutants, so that the report shows 100%
 - D. Keep the 80% gate, and let a human triage each survivor as a gap or equivalent
@@ -1034,7 +1034,7 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 **30. Najm keeps old app versions working for months. Tariq's squad makes `kind` a required field of `POST /transfers` and updates the OpenAPI document. Every current test and the nightly Schemathesis run pass. Two weeks later, customers on the oldest app see errors. Which test would have caught this before release?**
 
 - A. A nightly Schemathesis run with a larger value for `--max-examples`
-- B. A strict response schema, with `additionalProperties: false`, for every transfer
+- B. A strict response schema with `additionalProperties: false`
 - C. A saved request from the old app, without `kind`, that must still return 201
 - D. An authorisation matrix with one row for each route and each role
 
@@ -1046,9 +1046,9 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 
 **31. Tariq's squad wants to release Najm Mobile's new transfer flow to every Android user at once. "If it breaks, we roll back like the web app," he says. What should Amal's release gate require instead?**
 
-- A. A store rollback plan, since both stores can withdraw a build within a few minutes
+- A. A store rollback plan, since both stores can withdraw a build within minutes
 - B. A staged rollout of 1%, 5%, 20% and 100%, with a halt rule and a remote kill switch
-- C. Two extra regression runs on emulators, because they give the same results as devices
+- C. Two extra regression runs on emulators, as they match real devices
 - D. A one-week beta on the newest phone, then a full release if no crash is reported
 
 <details><summary>Answer</summary>
@@ -1086,7 +1086,7 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 **34. Nada writes a test asserting that the international fee is always between 10.00 and 100.00, and runs it on 1,000 random amounts. With `float_fee` switched on it still passes. What does this show?**
 
 - A. A range check is a partial oracle, so it needs exact hand-worked fees beside it
-- B. The sample was too small, since a run of 100,000 random amounts would have caught it
+- B. The sample was too small, since 100,000 random amounts would have caught it
 - C. Range assertions are invalid, because they do not come from a requirement
 - D. The test is sound, because a fee of 10.81 is within the published limits
 
@@ -1242,7 +1242,7 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 **46. Bilal's CI rejects added `pytest.mark.skip` lines in `tests/`. The team now lets Playwright's healer agent repair failing browser tests in `e2e/`. One healer pull request turns four red tests green and the check passes. What should Bilal change?**
 
 - A. Extend the skip check to `test.skip` and `test.fixme`, and review healer edits
-- B. Switch the healer off, since an AI tool should never touch a test file
+- B. Switch the healer off, since an AI tool should never be allowed to touch a test file
 - C. Ask the healer to attach a screenshot of each repaired page to its pull request
 - D. Raise the retries in the Playwright config so that the repaired tests stay green
 
@@ -1295,7 +1295,7 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 
 - A. Take confirmation from an app signal, such as a button, never from words
 - B. Require the model to see the word "confirm" twice before it calls the tool
-- C. Add a judge model that rates whether the customer sounds certain enough
+- C. Add a judge model that rates whether the customer sounds certain enough to freeze
 - D. Add a system prompt line saying never to freeze a card on a first message
 
 <details><summary>Answer</summary>

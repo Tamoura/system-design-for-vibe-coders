@@ -96,7 +96,7 @@
    "o": {
     "en": [
      "The QAR 1 tolerance is too loose and should be tightened to zero",
-     "The inner join drops the day with no ledger row, so none fails",
+     "The inner join drops the day with no ledger row, so no test fails",
      "Singular tests cannot read ref() models, so the check never ran",
      "A missing day needs a volume monitor, since tests cannot detect it"
     ],

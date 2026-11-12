@@ -42,13 +42,13 @@
           "The number of new tables catalogued each quarter, to show that adoption grows",
           "Attendance at governance committees, to show that data owners are engaged",
           "How many staff completed governance training in the last twelve months",
-          "Tier-1 coverage of owners and contracts, and time to answer impact questions"
+          "Tier-1 coverage of owners and contracts, and the time to answer impact questions"
         ],
         "ar": [
           "عدد الجداول الجديدة المُفهرَسة (tables catalogued) كل فصل، لإثبات نمو الاعتماد (adoption)",
           "نسبة الحضور في لجان الحوكمة (governance committees)، لإثبات انخراط مالكي البيانات (data owners)",
           "عدد الموظفين الذين أتمّوا تدريب الحوكمة (governance training) في الأشهر الاثني عشر الماضية",
-          "تغطية المستوى الأول (tier-1 coverage) بالمالكين والعقود (owners and contracts)، وزمن الإجابة عن أسئلة الأثر (impact questions)"
+          "تغطية المستوى الأول (tier-1 coverage) بالمالكين والعقود، وزمن الإجابة عن أسئلة الأثر (impact)"
         ]
       },
       "a": 3,
@@ -103,7 +103,7 @@
         "ar": [
           "يصفه بأنه مجهول الهوية (anonymous)، لأن الجامعة لن تحصل أبدًا على مفتاح التجزئة (hashing key)",
           "يُشفّر الملف (encrypt) قبل إرساله، لأن التشفير (encryption) يجعل المستخرج مجهول الهوية",
-          "يعامله كبيانات شخصية (personal data): يُعمّم (generalise)، ويفحص إخفاء الهوية k (k-anonymity)، وينظّف الملاحظات (cleans notes)، ويستشير سارة (asks Sara)",
+          "يعامله كبيانات شخصية (personal data): يُعمّم، ويفحص إخفاء الهوية k، وينظّف الملاحظات، ويستشير سارة",
           "يحذف عمود التجزئة المفتاحية (keyed-hash column) أيضًا، فبلا مُعرِّفات (identifiers) يصبح مجهول الهوية"
         ]
       },

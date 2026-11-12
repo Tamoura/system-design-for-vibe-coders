@@ -40,12 +40,12 @@
       "o": {
         "en": [
           "An idempotent load, so a rerun cannot duplicate any rows",
-          "An hourly schedule, so each run is smaller and fails less",
+          "An hourly schedule, so runs are smaller and fail less",
           "A move into a notebook, so she can rerun cells by hand",
           "A new dashboard, so business users spot doubled figures"
         ],
         "ar": [
-          "تحميل متساوي القوى (idempotent load)، فلا تستطيع إعادة التشغيل (rerun) تكرار أيّ صفوف (rows)",
+          "تحميل متساوي القوى (idempotent load)، فلا تستطيع إعادة التشغيل تكرار أيّ صفوف",
           "جدولة كل ساعة (hourly schedule)، فيصغر كل تشغيل (run) ويقلّ تعطّله",
           "نقل العمل إلى دفتر ملاحظات (notebook)، فتعيد تشغيل الخلايا (cells) يدويًا",
           "لوحة معلومات جديدة (dashboard)، فيلاحظ مستخدمو الأعمال (business users) الأرقام المضاعفة"
@@ -68,13 +68,13 @@
       "o": {
         "en": [
           "Keep it, since the pipeline only runs in his personal account",
-          "Keep it, but add a README note saying the role is too broad",
+          "Keep it, but add a README note that the role is too broad",
           "Swap the role for his own long-lived personal key for deploys",
           "Narrow the role to deploying this service and nothing else"
         ],
         "ar": [
           "يُبقيه كما هو، لأن خط النشر (pipeline) يعمل في حسابه الشخصي (personal account) فقط",
-          "يُبقيه، لكن يضيف ملاحظة في ملف README تقول إن الدور واسع جدًا (too broad)",
+          "يُبقيه، لكن يضيف ملاحظة في ملف README تفيد بأن الدور واسع (too broad)",
           "يستبدل بالدور مفتاحه الشخصي طويل العمر (long-lived personal key) لعمليات النشر (deploys)",
           "يضيّق الدور (narrow the role) ليستطيع نشر هذه الخدمة (service) فقط ولا شيء غيرها"
         ]
@@ -95,13 +95,13 @@
       },
       "o": {
         "en": [
-          "He skipped the variant rows, so the backend core was never covered",
+          "He skipped the variant rows, so no backend core was covered",
           "He marked rows done once he read the lessons, without any proof",
           "He did too little algorithm practice, so his problem-solving is weak",
           "He left Work with AI to the end, when it belonged first in the order"
         ],
         "ar": [
-          "تخطّى صفوف المتغيّرات (variant rows)، فلم يُغطَّ جوهر الواجهة الخلفية (backend core) قط",
+          "تخطّى صفوف المتغيّرات (variant rows)، فلم يُغطَّ جوهر الواجهة الخلفية (backend core)",
           "علّم الصفوف مكتملة (Done) بمجرّد قراءة الدروس، دون أيّ إثبات (proof)",
           "مارس حلّ الخوارزميات (algorithm practice) قليلًا، فبقيت مهارة حلّ المشكلات (problem-solving) ضعيفة",
           "أجّل مرحلة العمل مع الذكاء الاصطناعي (Work with AI) إلى النهاية، وكان مكانها الأول في الترتيب"

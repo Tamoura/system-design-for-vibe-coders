@@ -164,13 +164,13 @@ flowchart TD
 **1. تقول مسودة فيصل: «استراتيجيتنا للذكاء الاصطناعي أن نصبح أكثر البنوك تمكينًا بالذكاء الاصطناعي في الخليج بحلول 2027 (Our AI strategy is to become the most AI-enabled bank in the Gulf by 2027).» باستخدام إطار Rumelt (Rumelt's framework)، ما المشكلة الرئيسية فيها؟**
 
 - A. لا تسمّي مورّدًا محددًا (specific vendor)
-- B. إنها هدف لا استراتيجية (a goal, not a strategy): ليس فيها تشخيص للتحدي (diagnosis of the challenge) ولا سياسة موجِّهة (guiding policy) تستبعد خيارات
+- B. ينبغي أن تقول «الذكاء الاصطناعي التوليدي (GenAI)» بدلًا من «الذكاء الاصطناعي (AI)»، لأن المصطلح الأدق يجعل الاستراتيجية أوضح أمام مجلس الإدارة (board) وأكثر قبولًا لدى الجهات التنظيمية (regulators)، وهو ما يمنحها ثقلًا أكبر عند العرض
 - C. الأفق الزمني (time horizon) قصير جدًا
-- D. ينبغي أن تقول «الذكاء الاصطناعي التوليدي (GenAI)» بدلًا من «الذكاء الاصطناعي (AI)»
+- D. إنها هدف لا استراتيجية (a goal, not a strategy): ليس فيها تشخيص للتحدي (diagnosis of the challenge) ولا سياسة موجِّهة (guiding policy) تستبعد خيارات
 
 <details><summary>الإجابة</summary>
 
-**B.** يعدّ Rumelt الخلط بين الأهداف والاستراتيجية (mistaking goals for strategy) علامة على الاستراتيجية السيئة (bad strategy). الاستراتيجية الجيدة تبدأ بتشخيص (diagnosis) وتضع سياسة موجِّهة (guiding policy) تتخذ خيارات. قد يكون الأفق الزمني (time horizon) (C) قابلًا للنقاش، لكنه ليس العيب الجوهري (core flaw). (🟢 الأساسيات (The essentials).)
+**D.** يعدّ Rumelt الخلط بين الأهداف والاستراتيجية (mistaking goals for strategy) علامة على الاستراتيجية السيئة (bad strategy). الاستراتيجية الجيدة تبدأ بتشخيص (diagnosis) وتضع سياسة موجِّهة (guiding policy) تتخذ خيارات. قد يكون الأفق الزمني (time horizon) (C) قابلًا للنقاش، لكنه ليس العيب الجوهري (core flaw). (🟢 الأساسيات (The essentials).)
 
 </details>
 
@@ -192,7 +192,7 @@ flowchart TD
 - A. هل البيانات موسومة بالنتائج (outcome-labelled)، بحيث تُظهر ما حدث فعلًا (what actually happened)؟
 - B. هل البيانات مخزّنة في السحابة (stored in the cloud)؟
 - C. هل جُمعت البيانات خلال العام الأخير (in the last year)؟
-- D. هل البيانات بأكثر من لغة (more than one language)؟
+- D. هل البيانات بأكثر من لغة (more than one language) في الحقل النصي لكل سجل (in the same text field of each record)؟
 
 <details><summary>الإجابة</summary>
 
@@ -202,27 +202,27 @@ flowchart TD
 
 **4. في القوى السبع (7 Powers) عند Helmer، لماذا لا تكفي عبارة «نموذجنا الائتماني أدق من نماذج المنافسين (our credit model is more accurate than competitors')» لادعاء القوة (claim power)؟**
 
-- A. الدقة (accuracy) ليست منفعة (benefit)
-- B. تحتاج القوة إلى منفعة وحاجز معًا (both a benefit and a barrier)، والدقة وحدها لا تمنع المنافسين من مجاراتها (matching it)
-- C. اقتصاديات الشبكة (network economies) وحدها تُعدّ قوة في الذكاء الاصطناعي
-- D. لا يمكن للبنوك أن تملك قوة لأنها خاضعة للتنظيم (regulated)
+- A. تحتاج القوة إلى منفعة وحاجز معًا (both a benefit and a barrier)، والدقة وحدها لا تمنع المنافسين من مجاراتها (matching it)
+- B. الدقة (accuracy) ليست منفعة (benefit)، لأن العملاء لا يرون الفرق بين نموذجَي ائتمان ولا يقدّرونه (cannot see or value the difference)، ولا ينتبهون إليه عند اختيار البنك
+- C. اقتصاديات الشبكة (network economies) وحدها تُعدّ قوة في الذكاء الاصطناعي، لأن القوى الست الأخرى تحتاج إلى أصول مادية ومصانع (physical assets and factories)، ولا مكان لها هنا
+- D. لا يمكن للبنوك أن تملك قوة لأنها خاضعة للتنظيم (regulated)، ولأن كل منافس يجب أن يلتزم بالقواعد نفسها (same rules)، فلا يبقى أي حاجز يحمي أحدها
 
 <details><summary>الإجابة</summary>
 
-**B.** الدقة الأعلى (higher accuracy) منفعة؛ ومن دون حاجز (barrier) مثل المورد المحتكَر (cornered resource) أو قوة العمليات (process power)، يستطيع المنافسون سدّ الفجوة (close the gap). وC خاطئ: اقتصاديات الشبكة (network economies) نادرة في ذكاء البنوك الاصطناعي (bank AI). (🟡 التعمق أكثر (Going deeper).)
+**A.** الدقة الأعلى (higher accuracy) منفعة؛ ومن دون حاجز (barrier) مثل المورد المحتكَر (cornered resource) أو قوة العمليات (process power)، يستطيع المنافسون سدّ الفجوة (close the gap). وC خاطئ: اقتصاديات الشبكة (network economies) نادرة في ذكاء البنوك الاصطناعي (bank AI). (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
 **5. يقرّر نجم مقدار الاستثمار في مساعد الموظفين التوليدي (Staff GenAI)، وهو مساعد داخلي عام (general internal assistant). ومورّدو حزم الإنتاجية (productivity-suite vendors) يدمجون أصلًا مساعدات قادرة في منتجاتهم. أيّ دور محفظة وموقف (portfolio role and posture) هما الأنسب؟**
 
-- A. التمايز (Differentiate): ابنِ مساعدًا مخصصًا ونموذجًا مملوكًا (custom assistant and a proprietary model)
-- B. السلعة (Commodity): اشترِ القدرة المدمجة (bundled capability) واستثمر فقط في ربط مصادر المعرفة الخاصة بالبنك (bank-specific knowledge sources)
+- A. التمايز (Differentiate): ابنِ مساعدًا مخصصًا ونموذجًا مملوكًا (custom assistant and a proprietary model)، حتى يملك بنك نجم كل طبقة من طبقات المنظومة (every layer of the stack) ويتحكم في تكلفتها وتطورها
+- B. التوقف (Stop): المساعدات الداخلية (internal assistants) بلا قيمة
 - C. التكافؤ (Parity): ابنِ من الصفر (build from scratch) لمجاراة ميزات المورّدين
-- D. التوقف (Stop): المساعدات الداخلية (internal assistants) بلا قيمة
+- D. السلعة (Commodity): اشترِ القدرة المدمجة (bundled capability) واستثمر فقط في ربط مصادر المعرفة الخاصة بالبنك (bank-specific knowledge sources)
 
 <details><summary>الإجابة</summary>
 
-**B.** المكوّن الذي يبيعه آخرون جيدًا سلعة (commodity): اشترِه وأضف ما لا يستطيعه إلا نجم. A ينافس منتجات مدمجة (bundled products)؛ وD يتجاهل قيمة إنتاجية حقيقية (real productivity value). (🔴 نظرة الخبير (Expert view).)
+**D.** المكوّن الذي يبيعه آخرون جيدًا سلعة (commodity): اشترِه وأضف ما لا يستطيعه إلا نجم. A ينافس منتجات مدمجة (bundled products)؛ وB يتجاهل قيمة إنتاجية حقيقية (real productivity value). (🔴 نظرة الخبير (Expert view).)
 
 </details>
 
@@ -404,7 +404,7 @@ flowchart TD
 
 **1. يطلب خالد من فيصل «الموعد الذي سيصبح فيه المساعد دقيقًا بنسبة 95% في مذكرات الشركات (the date when the copilot will be 95% accurate on corporate memos)». ولا يوجد بعد أي تقييم على ملفات الشركات (no evaluation on corporate files). ما أفضل رد؟**
 
-- A. أعطِ موعدًا بعد فصل واحد (one quarter out)، للحفاظ على ثقة خالد
+- A. أعطِ موعدًا بعد فصل واحد (one quarter out)، للحفاظ على ثقة خالد (Khalid's confidence) وإظهار التزام الفريق بالهدف أمام مجلس إدارة البنك (the bank's board)، ثم عدّل الخطة عند ظهور المشكلات (problems)
 - B. ارفض إعطاء أي مواعيد حتى يكتمل المنتج (until the product is finished)
 - C. التزم بموعد لنتيجة اختبار جدوى سريع (feasibility spike result) على ملفات الشركات، ثم قدّم نطاقًا للجودة (quality range) وخطة تسليم (delivery plan) مبنيين عليها
 - D. عِد بـ 95% وقلّص النطاق لاحقًا (reduce scope later) إن لزم
@@ -417,10 +417,10 @@ flowchart TD
 
 **2. أيّ عنصر في بطاقة الرهان (bet card) يحمي الفريق مباشرةً أكثر من غيره من تفكير التكلفة الغارقة (sunk-cost thinking)؟**
 
-- A. الفرضية (The hypothesis)
+- A. الفرضية (The hypothesis) التي يختبرها الفريق، مكتوبةً بوضوح في بطاقة الرهان وقابلةً للفحص (testable)
 - B. معيار الإيقاف المتفق عليه قبل بدء العمل (The kill criterion agreed before work starts)
-- C. حجم الرهان (The size of the bet)
-- D. النتيجة (The outcome)
+- C. حجم الرهان (The size of the bet)، أي الميزانية وعدد الأشخاص الذين سيُخصَّصون له (budget and people assigned to it)
+- D. النتيجة (The outcome) التي يريد الفريق بلوغها، مصاغةً بمقياس يمكن ملاحظته (measurable outcome)
 
 <details><summary>الإجابة</summary>
 
@@ -433,7 +433,7 @@ flowchart TD
 - A. تجاوزت القدرة قاعدة الثلاثة (passed the rule of three) وينبغي أن تصبح منصة مشتركة (shared platform)، مثل بوابة نماذج (model gateway)
 - B. ينبغي أن يعيّن كل فريق مدير مورّدين خاصًا به (vendor manager)
 - C. ينبغي أن يتوقف البنك عن استخدام النماذج اللغوية الكبيرة (LLMs)
-- D. كان ينبغي بناء المنصة قبل وجود أي منتج (before any product existed)
+- D. كان ينبغي بناء المنصة قبل وجود أي منتج (before any product existed) (the platform should have been built first)
 
 <details><summary>الإجابة</summary>
 
@@ -443,7 +443,7 @@ flowchart TD
 
 **4. يُصدر مورّد نموذجًا جديدًا أرخص ويحقق درجات أعلى في المعايير المرجعية العامة (public benchmarks). ما الذي ينبغي أن يفعله نجم أولًا وفق دليل تغيير النموذج (model-change playbook)؟**
 
-- A. تحويل كل المنتجات فورًا (switch all products immediately)، لأن المعايير المرجعية تُظهر أنه أفضل
+- A. تحويل كل المنتجات فورًا (switch all products immediately)، لأن المعايير المرجعية تُظهر أنه أفضل، ولأن السعر الأقل سيخفض أيضًا فاتورة البنك الشهرية لكل منتج (monthly bill for every product)، مهما كانت النتائج الداخلية
 - B. تجاهله حتى يُسحب النموذج الحالي (current model is retired)
 - C. تشغيل مجموعة التقييم الخاصة بنجم (Najm's own eval suite) على المرشح (candidate)، ومقارنة الجودة بحسب القسم واللغة، والتكلفة وزمن الاستجابة (cost and latency)، مع النموذج الحالي
 - D. مطالبة المورّد بضمان مكتوب للجودة (written guarantee of quality)
@@ -457,7 +457,7 @@ flowchart TD
 **5. يقترح طارق سلسلة معقدة من خمسة موجّهات (complex chain of five prompts) للالتفاف على أخطاء الحساب (arithmetic errors) في النموذج الحالي عند ملخصات النسب. أيّ خيار يعكس مبدأ «الطبقات الدائمة (durable layers)» على أفضل وجه؟**
 
 - A. ابنِ سلسلة الموجّهات الخمسة (five-prompt chain)، لأنها تحل مشكلة اليوم
-- B. انتظر نموذجًا مستقبليًا يصلح الحساب (future model to fix arithmetic) قبل إطلاق أي شيء
+- B. انتظر نموذجًا مستقبليًا يصلح الحساب (future model to fix arithmetic) قبل إطلاق أي شيء، لأن سلسلة الموجّهات ستُعاد بناؤها على أي حال عندما يتحسن النموذج (when the model improves)، ولا فائدة من الاستثمار في حل مؤقت يزول قريبًا (soon obsolete)
 - C. اجعل النموذج يستدعي أداة حساب (call a calculation tool) للنسب، واستثمر الجهد الموفَّر في مجموعات التقييم والتكامل مع سير العمل (evaluation sets and workflow integration)
 - D. أزل النسب من المذكرات نهائيًا (permanently)
 
@@ -656,14 +656,14 @@ flowchart TD
 
 **1. مساعد مذكرات الائتمان (Credit Memo Copilot) جاهز، لكن الإطلاق (launch) متعطّل لأن كلًّا من دانة وخالد وليلى يقول إن شخصًا آخر يجب أن يعتمد معيار الجودة (approve the quality bar). ما الحل الأكثر فاعلية (most effective fix)؟**
 
-- A. أن يُطلب من الرئيس التنفيذي (CEO) اعتماد معيار الجودة (quality bar)
-- B. كتابة سجل حقوق اتخاذ القرار (decision-rights register): مدير المنتج (PM) مساءَل عن معيار الجودة، ودانة منفّذة (responsible)، وليلى وخبراء المجال (domain experts) مستشارون (consulted)
+- A. كتابة سجل حقوق اتخاذ القرار (decision-rights register): مدير المنتج (PM) مساءَل عن معيار الجودة، ودانة منفّذة (responsible)، وليلى وخبراء المجال (domain experts) مستشارون
+- B. أن يُطلب من الرئيس التنفيذي (CEO) اعتماد معيار الجودة (quality bar)، لأن القادة الثلاثة (the three leaders) مختلفون ولا يستطيع كسر الجمود بينهم (deadlock between them) إلا أرفع مسؤول تنفيذي (senior executive) في البنك كله
 - C. جعل ليلى مساءَلة عن جميع قرارات الذكاء الاصطناعي (all AI decisions)
 - D. الإطلاق دون معيار جودة (without a quality bar) والقياس لاحقًا (measure later)
 
 <details><summary>الإجابة</summary>
 
-**B.** التعطّل فجوة في الملكية (ownership gap). ويحلّه مالك مساءَل واحد (One accountable owner) مع استشارة الأشخاص المناسبين. أما C فتخلط بين دور الحوكمة (governance's role) (الحدود والمراجعة (limits and review)) وملكية المنتج (product ownership). وD تتخطى معيار الجودة كليًا (skips the quality bar entirely). (🟡 التعمق أكثر (Going deeper).)
+**A.** التعطّل فجوة في الملكية (ownership gap). ويحلّه مالك مساءَل واحد (One accountable owner) مع استشارة الأشخاص المناسبين. أما C فتخلط بين دور الحوكمة (governance's role) (الحدود والمراجعة (limits and review)) وملكية المنتج (product ownership). وD تتخطى معيار الجودة كليًا (skips the quality bar entirely). (🟡 التعمق أكثر (Going deeper).)
 
 </details>
 
@@ -671,7 +671,7 @@ flowchart TD
 
 - A. قانون كونواي (Conway's law): الأنظمة تعكس هياكل التواصل (communication structures) في المؤسسة التي تبنيها
 - B. نموذج كانو (The Kano model)
-- C. عدم تطابق نسبة العينة (Sample ratio mismatch)
+- C. عدم تطابق نسبة العينة (Sample ratio mismatch) في التجارب (in A/B experiments)
 - D. قاعدة الثلاثة (The rule of three)
 
 <details><summary>الإجابة</summary>
@@ -696,20 +696,20 @@ flowchart TD
 **4. أي عبارة تصف على أفضل وجه ما يملكه مدير منتج الذكاء الاصطناعي (AI product manager) حصرًا (uniquely owns)؟**
 
 - A. اختيار الخوارزمية (choice of algorithm) وبنية النموذج (model architecture)
-- B. المشكلة (problem)، والنتيجة (outcome)، ومعيار الجودة (quality bar)، وسقف التكلفة (cost envelope)، والمفاضلات بين الجودة والتكلفة والسرعة والمخاطر (trade-offs between quality, cost, speed and risk)
+- B. خطوط البيانات (data pipelines) وجودة البيانات (data quality)
 - C. فئة المخاطر (risk tier) والتصنيف التنظيمي (regulatory classification)
-- D. خطوط البيانات (data pipelines) وجودة البيانات (data quality)
+- D. المشكلة (problem)، والنتيجة (outcome)، ومعيار الجودة (quality bar)، وسقف التكلفة (cost envelope)، والمفاضلات بين الجودة والتكلفة والسرعة والمخاطر (trade-offs between quality, cost, speed and risk)
 
 <details><summary>الإجابة</summary>
 
-**B.** يملك مدير المنتج (PM) معنى «جيد بما يكفي ("good enough")» والمفاضلات (trade-offs). فاختيار النموذج (Model choice) (A) يقع لدى الهندسة (engineering)، وفئة المخاطر (risk tier) (C) لدى الحوكمة (governance)، وخطوط البيانات (pipelines) (D) لدى هندسة البيانات (data engineering)، مع استشارة مدير المنتج في كلٍّ منها. (🟢 الأساسيات (The essentials).)
+**D.** يملك مدير المنتج (PM) معنى «جيد بما يكفي ("good enough")» والمفاضلات (trade-offs). فاختيار النموذج (Model choice) (A) يقع لدى الهندسة (engineering)، وفئة المخاطر (risk tier) (C) لدى الحوكمة (governance)، وخطوط البيانات (pipelines) (B) لدى هندسة البيانات (data engineering)، مع استشارة مدير المنتج في كلٍّ منها. (🟢 الأساسيات (The essentials).)
 
 </details>
 
 **5. تريد مجموعة التوجيه (steering group) في نجم تقليل عدد التجارب (pilots) التي لا تصل أبدًا إلى الإنتاج (production). أي قاعدة هي الأرجح أن تساعد؟**
 
-- A. إلزام كل تجربة بعرض توضيحي أمام مجلس الإدارة (demo to the board)
-- B. عدم اعتماد التجربة إلا إذا كان لها مالك أعمال مسمّى (named business owner)، وميزانية لتكاليف التشغيل (run-cost budget)، وخطة تكامل (integration plan)، وفئة مخاطر مبدئية (provisional risk tier)
+- A. إلزام كل تجربة بعرض توضيحي أمام مجلس الإدارة (demo to the board) قبل أن تبدأ، حتى يرى التنفيذيون (executives) الفكرة تعمل ويوافقوا عليها (see the idea working)، وبهذا يقل عدد التجارب العالقة (stalled pilots)
+- B. عدم اعتماد التجربة إلا إذا كان لها مالك أعمال مسمّى (named business owner)، وميزانية لتكاليف التشغيل (run-cost budget)، وخطة تكامل (integration plan)، وفئة مخاطر مبدئية
 - C. مضاعفة ميزانية مختبر الذكاء الاصطناعي (AI Lab's budget)
 - D. حظر التجارب (Ban pilots) وبناء منتجات كاملة فقط (full products)
 
@@ -874,65 +874,65 @@ flowchart RL
 **1. يقول فيصل: «الذكاء الاصطناعي المسؤول في التمويل الفوري للشركات الصغيرة (SME Instant Finance) مهمة ليلى؛ وستراجعه قبل التشغيل الفعلي (before go-live)». ما أفضل تصحيح (best correction)؟**
 
 - A. هو محق؛ ينبغي أن يركز فريق المنتج (product team) على الميزات (features)
-- B. الحوكمة (Governance) تحدد الفئة والحدود والمراجعة (tier, limits and review)؛ وعلى مدير المنتج (PM) أن يبني الضوابط داخل المنتج (build the controls into the product) وينتج الأدلة (produce the evidence)، بدءًا من الاكتشاف (starting in discovery)
+- B. الذكاء الاصطناعي المسؤول لا ينطبق إلا بعد الإطلاق (after launch)
 - C. ينبغي أن تكتب الشؤون القانونية (Legal) متطلبات المنتج (product requirements) بدلًا من ذلك
-- D. الذكاء الاصطناعي المسؤول لا ينطبق إلا بعد الإطلاق (after launch)
+- D. الحوكمة (Governance) تحدد الفئة والحدود والمراجعة (tier, limits and review)؛ وعلى مدير المنتج (PM) أن يبني الضوابط داخل المنتج (build the controls into the product) وينتج الأدلة (produce the evidence)، بدءًا من الاكتشاف (starting in discovery)
 
 <details><summary>الإجابة</summary>
 
-**B.** الحوكمة تحدد الحدود وتعتمد (defines limits and approves)؛ وفريق المنتج يصمم الضوابط (designs controls) ويقدّم الأدلة (supplies evidence). والانتظار حتى التشغيل الفعلي (go-live) (A) يجعل التغييرات مكلفة (expensive). (🟢 الأساسيات (The essentials).)
+**D.** الحوكمة تحدد الحدود وتعتمد (defines limits and approves)؛ وفريق المنتج يصمم الضوابط (designs controls) ويقدّم الأدلة (supplies evidence). والانتظار حتى التشغيل الفعلي (go-live) (A) يجعل التغييرات مكلفة (expensive). (🟢 الأساسيات (The essentials).)
 
 </details>
 
 **2. الدقة الإجمالية للموافقات (overall approval accuracy) في التمويل الفوري للشركات الصغيرة (SME Instant Finance) قوية. أي خطوة هي الأرجح أن تكشف مجموعةً يؤدي فيها المنتج أداءً سيئًا (performs badly)؟**
 
-- A. زيادة حجم مجموعة الاختبار الإجمالية (overall test set)
-- B. تقييم الشرائح (Slice evaluation) حسب القطاع والمنطقة وعمر المنشأة ونوع العميل (sector, region, business age and customer type)
-- C. التحوّل إلى نموذج أكبر (larger model)
-- D. طلب نتائج المقارنة المعيارية (benchmark results) من المورّد (vendor)
+- A. زيادة حجم مجموعة الاختبار الإجمالية (overall test set) حتى يصبح المتوسط أكثر دقة (more precise) في تقدير الأداء العام
+- B. طلب (asking) نتائج المقارنة المعيارية (benchmark results) من المورّد (vendor) في مهام مشابهة لقرار الإقراض (similar to the lending decision)
+- C. التحوّل إلى نموذج أكبر (larger model) دُرّب على نطاق أوسع من بيانات الأعمال (wider range of business data)، مما يحسّن الأداء لجميع الفئات
+- D. تقييم الشرائح (Slice evaluation) حسب القطاع والمنطقة وعمر المنشأة ونوع العميل (sector, region, business age and customer type)
 
 <details><summary>الإجابة</summary>
 
-**B.** المتوسطات تخفي إخفاقات المجموعات الفرعية (subgroup failures)؛ وتقييم الشرائح (slice evaluation) يُظهرها. أما مجموعة الاختبار الإجمالية الأكبر (A) فقد تظل تخفي الفجوة نفسها في متوسطها (in its average). (🟡 التعمق أكثر (Going deeper)، الرافعة 5 (lever 5).)
+**D.** المتوسطات تخفي إخفاقات المجموعات الفرعية (subgroup failures)؛ وتقييم الشرائح (slice evaluation) يُظهرها. أما مجموعة الاختبار الإجمالية الأكبر (A) فقد تظل تخفي الفجوة نفسها في متوسطها (in its average). (🟡 التعمق أكثر (Going deeper)، الرافعة 5 (lever 5).)
 
 </details>
 
 **3. يؤكد مراجعٌ (reviewer) 99% من الموافقات المبدئية (pre-approvals) في التمويل الفوري للشركات الصغيرة، ويقضي بضع ثوانٍ على كلٍّ منها. ماذا يشير هذا بشأن الإشراف البشري (human oversight)؟**
 
-- A. النموذج ممتاز، إذن الإشراف يعمل (oversight is working)
-- B. قد يكون الإشراف شكليًا (nominal)؛ وعلى الفريق فحص زمن المراجعة (review time)، والمعلومات المعروضة (information shown)، وصلاحية المراجع وتدريبه (reviewer's authority and training)
+- A. النموذج ممتاز، إذن الإشراف يعمل (oversight is working) كما هو مقصود، ولا حاجة إلى أي فحوص إضافية لهذه الحالات (no further checks are required)، ويمكن للمراجعين (reviewers) الانتقال إلى مهام أخرى بثقة (confidently)
+- B. لا شيء؛ فمعدلات الموافقة (approval rates) لا علاقة لها بالإشراف
 - C. ينبغي إزالة المراجع لتوفير التكلفة (save cost)
-- D. لا شيء؛ فمعدلات الموافقة (approval rates) لا علاقة لها بالإشراف
+- D. قد يكون الإشراف شكليًا (nominal)؛ وعلى الفريق فحص زمن المراجعة (review time)، والمعلومات المعروضة (information shown)، وصلاحية المراجع وتدريبه (reviewer's authority and training)
 
 <details><summary>الإجابة</summary>
 
-**B.** الإشراف الحقيقي (Meaningful oversight) يحتاج إلى المعلومات والوقت والكفاءة والصلاحية (information, time, competence and authority)؛ والموافقة شبه الكاملة في ثوانٍ (near-total agreement in seconds) تشير إلى انحياز الأتمتة (automation bias). أما A فتفترض النتيجة مسبقًا (assumes the conclusion). (🟡 التعمق أكثر (Going deeper)، الرافعة 3 (lever 3).)
+**D.** الإشراف الحقيقي (Meaningful oversight) يحتاج إلى المعلومات والوقت والكفاءة والصلاحية (information, time, competence and authority)؛ والموافقة شبه الكاملة في ثوانٍ (near-total agreement in seconds) تشير إلى انحياز الأتمتة (automation bias). أما A فتفترض النتيجة مسبقًا (assumes the conclusion). (🟡 التعمق أكثر (Going deeper)، الرافعة 3 (lever 3).)
 
 </details>
 
 **4. بموجب المادة 22 من اللائحة العامة لحماية البيانات (GDPR Art. 22)، أي تصميم يدعم على أفضل وجه الضمانات (safeguards) لعميل تأثّر بقرار آلي حصرًا (solely automated decision) ذي آثار مهمة (significant effects)؟**
 
 - A. رابط لسياسة الخصوصية (privacy policy link) في تذييل التطبيق (app footer)
-- B. مسار ظاهر (visible route) لطلب مراجعة بشرية (human review)، والتعبير عن رأيه (express their view)، والاعتراض على القرار (contest the decision)، يُعرض حيث يُبلَّغ بالقرار (where the decision is communicated)
+- B. تقرير إنصاف شهري (monthly fairness report) لمجلس الإدارة (board)
 - C. بطاقة نموذج أطول (longer model card)
-- D. تقرير إنصاف شهري (monthly fairness report) لمجلس الإدارة (board)
+- D. مسار ظاهر (visible route) لطلب مراجعة بشرية (human review)، والتعبير عن رأيه (express their view)، والاعتراض على القرار (contest the decision)، يُعرض حيث يُبلَّغ بالقرار (where the decision is communicated)
 
 <details><summary>الإجابة</summary>
 
-**B.** تشمل ضمانات المادة 22 (Art. 22 safeguards) الحصول على تدخل بشري (obtaining human intervention)، والتعبير عن الرأي (expressing one's view)، والاعتراض على القرار (contesting the decision). أما C وD فوثائق داخلية (internal documents) لا تساعد الفرد (the individual). (🟢 الأساسيات (The essentials)؛ 🟡 الرافعة 4 (lever 4).)
+**D.** تشمل ضمانات المادة 22 (Art. 22 safeguards) الحصول على تدخل بشري (obtaining human intervention)، والتعبير عن الرأي (expressing one's view)، والاعتراض على القرار (contesting the decision). أما C وB فوثائق داخلية (internal documents) لا تساعد الفرد (the individual). (🟢 الأساسيات (The essentials)؛ 🟡 الرافعة 4 (lever 4).)
 
 </details>
 
 **5. يشتري نجم نموذج خدمة عملاء (customer-service model) من مورّد (vendor) لديه توثيق قوي للذكاء الاصطناعي المسؤول (strong responsible-AI documentation). ويتضرر عميل من إجابة خاطئة (wrong answer). من المساءَل (accountable) عن استخدام نجم للنموذج؟**
 
-- A. المورّد وحده (The vendor alone)
-- B. نجم، مع أن عقده مع المورّد ينبغي أن يغطي استخدام البيانات (data use)، وإشعارات التغيير (change notices)، والإخطار بالحوادث (incident notification)
-- C. لا أحد، لأن الإجابة ولّدها الذكاء الاصطناعي (generated by AI)
-- D. العميل، الذي اختار استخدام المساعد (chose to use the assistant)
+- A. نجم، مع أن عقده مع المورّد ينبغي أن يغطي استخدام البيانات (data use)، وإشعارات التغيير (change notices)، والإخطار بالحوادث (incident notification)
+- B. المورّد وحده (The vendor alone)، لأنه بنى النموذج وتوثيقه يُظهر ممارسة قوية للذكاء الاصطناعي المسؤول (responsible-AI practice) وفق معاييره الخاصة وتدقيقاته المستقلة (independent audits)
+- C. لا أحد، لأن الإجابة ولّدها الذكاء الاصطناعي (generated by AI) ولم يقرر أي شخص ما قيل للعميل (no person decided)، فلا يوجد من يتحمل المسؤولية هنا
+- D. العميل (The customer)، الذي اختار استخدام المساعد (chose to use the assistant) وكان عليه أن يتحقق من الإجابة قبل أن يتصرف بناءً عليها
 
 <details><summary>الإجابة</summary>
 
-**B.** شراء نموذج (Buying a model) لا ينقل المساءلة عن استخدامه (transfer accountability for its use)؛ وتُظهر قضية إير كندا (Air Canada) أن «الذكاء الاصطناعي قال ذلك ("the AI said it")» ليس دفاعًا (no defence). والعقود (Contracts) تدير مخاطر المورّد (vendor risk) لكنها لا تزيل مسؤولية نجم (Najm's responsibility). (🔴 نظرة الخبير (Expert view)؛ 🧭 لماذا يهم (Why it matters).)
+**A.** شراء نموذج (Buying a model) لا ينقل المساءلة عن استخدامه (transfer accountability for its use)؛ وتُظهر قضية إير كندا (Air Canada) أن «الذكاء الاصطناعي قال ذلك ("the AI said it")» ليس دفاعًا (no defence). والعقود (Contracts) تدير مخاطر المورّد (vendor risk) لكنها لا تزيل مسؤولية نجم (Najm's responsibility). (🔴 نظرة الخبير (Expert view)؛ 🧭 لماذا يهم (Why it matters).)
 
 </details>
 

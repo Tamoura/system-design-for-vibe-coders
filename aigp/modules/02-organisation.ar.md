@@ -172,10 +172,10 @@ flowchart TD
 
 **1. اعتمد مجلس إدارة بنك نجم مبادئ الذكاء الاصطناعي (AI principles). أي خطوة تحوّل مبدأ (principle) "العدالة (fairness)" إلى حوكمة (governance) على أفضل وجه؟**
 
-- A. نشر المبادئ (Publishing principles) على الموقع الإلكتروني (website) للبنك
+- A. نشر المبادئ (principles) على الموقع الإلكتروني (website) للبنك وفي التقرير السنوي (annual report)، مع بيان يوقّعه رئيس المجلس (chair)
 - B. تحديد مقياس (metric) للعدالة (fairness)، ونطاق تحمّل (tolerance band)، ومالك (owner) يبلّغ لجنة حوكمة الذكاء الاصطناعي (AI Governance Committee) بالتجاوزات (breaches)
-- C. مطالبة علماء البيانات (data scientists) "بمراعاة العدالة (fairness)"
-- D. إضافة كلمة "عادل" إلى اسم كل نموذج (model) في السجل (inventory)
+- C. مطالبة علماء البيانات (data scientists) "بمراعاة العدالة (fairness)" وبرفع أي مخاوف (concerns) إلى مديرهم المباشر (line manager) متى رأوها، دون أي مقياس (metric) أو حد (limit) محدد، وبما يترك التقدير لكل فريق (team) بمفرده (alone)
+- D. إضافة كلمة "عادل" إلى اسم كل نموذج (model) في السجل (inventory) وإلى عنوان كل مشروع (project) في خطة التسليم (delivery plan) ومحضر الاجتماعات (meeting minutes)
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -185,10 +185,10 @@ flowchart TD
 
 **2. أي عبارة تصف الفرق بين شهية المخاطر (risk appetite) وتحمّل المخاطر (risk tolerance) على أفضل وجه؟**
 
-- A. يحدد علماء البيانات (data scientists) الشهية (appetite)؛ ويحدد مجلس الإدارة (board) التحمّل
-- B. هما مترادفان يُستخدمان بالتبادل في NIST AI RMF
+- A. يحدد علماء البيانات (data scientists) الشهية (appetite)؛ ويحدد مجلس الإدارة (board) التحمّل (tolerance)، ويعتمده مرة في السنة لجميع النماذج معًا
+- B. هما مترادفان (synonyms) يُستخدمان بالتبادل في NIST AI RMF، الذي يعرّفهما معًا بأنهما أقصى خسارة (maximum loss) تتحملها المؤسسة
 - C. الشهية (appetite) هي المقدار والنوع العامّان للمخاطر التي ستقبلها المؤسسة؛ والتحمّل (tolerance) هو الحدود القابلة للقياس (measurable) التي تُظهر هل هي داخل تلك الشهية
-- D. التحمّل هو أقصى قدر من المخاطر تستطيع المؤسسة استيعابه قبل أن تنهار
+- D. التحمّل (tolerance) هو أقصى قدر من المخاطر تستطيع المؤسسة استيعابه قبل أن تنهار؛ والشهية (appetite) هي مقدار المخاطر الذي تحمّلته فعلًا، ويُحدَّد كلاهما مرة واحدة في بداية المشروع (project)
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -213,7 +213,7 @@ flowchart TD
 
 - A. مورّد الذكاء الاصطناعي (AI vendor)
 - B. فريق علوم البيانات (data science team) الذي بنى النموذج (model)
-- C. لا أحد، لأن القرار آلي
+- C. لا أحد، لأن القرار آلي (automated)
 - D. هيئة الحوكمة (مجلس الإدارة (board))
 
 <details><summary>الإجابة (Answer)</summary>
@@ -224,9 +224,9 @@ flowchart TD
 
 **5. يقول فريق النماذج (model team) في بنك نجم إن تفسير قرارات نموذج الائتمان (credit model) الجديد سيكلّف نقطتين من الدقة (accuracy). والمبادئ (principles) تقدّر الدقة وقابلية التفسير (explainability) كلتيهما. ما أفضل استجابة حوكمية (governance response)؟**
 
-- A. اختيار النموذج الأدق (most accurate model) دائمًا؛ فقابلية التفسير (explainability) اختيارية
-- B. ترك فريق علوم البيانات (data science team) يقرر بشكل غير رسمي
-- C. التخلي عن النموذج (model)
+- A. اختيار النموذج الأدق (most accurate model) دائمًا، فقابلية التفسير (explainability) اختيارية ويمكن إضافتها لاحقًا إن طلبتها الجهة الرقابية (regulator)، فلا حاجة إلى تسجيل أي مفاضلة (trade-off)
+- B. ترك فريق علوم البيانات (data science team) يقرر بشكل غير رسمي، لأنه يفهم النموذج (model) أفضل من أي لجنة (committee)
+- C. التخلي عن النموذج (model) وإعادة بدء المشروع (project) بتقنية أبسط (simpler technique)
 - D. توثيق المفاضلة (trade-off) وتطبيق القاعدة الافتراضية (default) المعلنة للبنك أو إحالتها إلى صاحب القرار المسؤول (accountable decision-maker)، مع تسجيل القرار
 
 <details><summary>الإجابة (Answer)</summary>
@@ -414,9 +414,9 @@ flowchart TD
 **1. أعطى روبوت المحادثة (chatbot) في بنك نجم العملاء معلومات خاطئة عن الرسوم. أي دور (role) ينبغي أن يكون مسؤولًا (accountable) عن نتائج روبوت المحادثة؟**
 
 - A. مالك العمل (business owner) لعملية خدمة العملاء (customer service)
-- B. عالم البيانات (data scientist) الذي أجرى الضبط الدقيق (fine-tuning) للنموذج (model)
-- C. مورّد النموذج اللغوي الأساسي (vendor of the underlying language model)
-- D. التدقيق الداخلي (internal audit)
+- B. عالم البيانات (data scientist) الذي أجرى الضبط الدقيق (fine-tuning) للنموذج (model) وكتب وثائقه (documentation)
+- C. مورّد النموذج اللغوي الأساسي (vendor of the underlying language model) ومنصة استضافته (hosting platform)
+- D. التدقيق الداخلي (internal audit)، بوصفه الوظيفة المستقلة (independent function) التي تراجع الضوابط (controls)
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -426,10 +426,10 @@ flowchart TD
 
 **2. في نموذج الخطوط الثلاثة (three lines model)، ما الدور (role) الأساسي للتدقيق الداخلي (internal audit) في حوكمة الذكاء الاصطناعي (AI governance)؟**
 
-- A. بناء نماذج الذكاء الاصطناعي (AI models) واعتمادها
+- A. بناء نماذج الذكاء الاصطناعي (AI models) واعتمادها (approval) قبل دخولها حيز الاستخدام (use)
 - B. تقديم تأكيد مستقل وموضوعي (independent and objective assurance) لهيئة الحوكمة (governing body)
-- C. كتابة سياسة الذكاء الاصطناعي (AI policy) للمؤسسة
-- D. إدارة الرصد اليومي (day-to-day monitoring) لأداء النماذج (model performance)
+- C. كتابة سياسة الذكاء الاصطناعي (AI policy) للمؤسسة (organisation) وإبقاؤها محدّثة (up to date)
+- D. إدارة الرصد اليومي (day-to-day monitoring of models) لأداء النماذج (model performance) والإبلاغ عن الانجراف (drift)
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -439,10 +439,10 @@ flowchart TD
 
 **3. مصفوفة RACI (RACI matrix) لإطلاق (launch) نظام ذكاء اصطناعي (AI system) عالي المخاطر (high-risk) تُدرج كلًّا من رئيس إقراض الأفراد (Head of Retail Lending) ورئيسة حوكمة الذكاء الاصطناعي (Head of AI Governance) بصفة "A". ما المشكلة؟**
 
-- A. لا مشكلة؛ فالمساءلة المشتركة (Shared accountability) أكثر أمانًا
-- B. ينبغي أن تكون رئيسة حوكمة الذكاء الاصطناعي (Head of AI Governance) "I"
+- A. لا مشكلة؛ فالمساءلة المشتركة (shared accountability) أكثر أمانًا لأن عدة أشخاص يُسألون حينئذٍ عن النتيجة (result)
+- B. ينبغي أن تكون رئيسة حوكمة الذكاء الاصطناعي (Head of AI Governance) "I" في كل نشاط، فتُبلَّغ دون أن تُسأل أبدًا
 - C. ينبغي أن يكون هناك طرف مسؤول (accountable) واحد بالضبط لكل نشاط، وإلا أصبحت الملكية (ownership) غامضة
-- D. لا أحد بصفة "C"
+- D. لا أحد بصفة "C"، فلا يُستشار أحد (consulted) قبل اتخاذ القرارات (decisions)
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -452,10 +452,10 @@ flowchart TD
 
 **4. بموجب EU AI Act، ما الذي يجب أن يفعله مُشغِّل (deployer) نظام ذكاء اصطناعي (AI system) عالي المخاطر (high-risk) بشأن الإشراف البشري (human oversight)؟**
 
-- A. لا شيء؛ فالإشراف (oversight) واجب على مقدّم النظام (provider) وحده
+- A. لا شيء؛ فالإشراف (oversight) واجب على مقدّم النظام (provider) وحده، فلا يلتزم المشغّلون (deployers) بإسناده إلى أحد
 - B. إسناد الإشراف (oversight) إلى أشخاص طبيعيين (natural persons) يملكون الكفاءة والتدريب والصلاحية اللازمة (necessary competence, training and authority)
-- C. تعيين مدقق خارجي (external auditor) للإشراف (oversight) على النظام
-- D. تسجيل كل مشرف لدى مكتب الذكاء الاصطناعي (AI Office)
+- C. تعيين مدقق خارجي (external auditor) للإشراف على النظام (system) ورفع تقرير إلى المجلس (board) كل ربع سنة، فلا حاجة إلى تدريب الموظفين ولا إلى صلاحية أو كفاءة (competence) محددة
+- D. تسجيل كل مشرف (overseer) لدى مكتب الذكاء الاصطناعي (AI Office) قبل أول استخدام للنظام، وتجديد القيد كل سنة
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -465,10 +465,10 @@ flowchart TD
 
 **5. لدى شركة تجزئة (retailer)، يعتقد فريق مخاطر الذكاء الاصطناعي (AI risk) في الخط الثاني (second line) أن نموذج توصيات (recommendation model) يتجاوز حد تحمّل العدالة المعتمد (approved fairness tolerance). ويخالفه مالك المنتج (product owner) في الخط الأول (first line) ويريد إبقاءه قيد التشغيل (operation). ماذا يجب أن يحدث؟**
 
-- A. يقرر مالك المنتج (product owner) لأنه المسؤول (because they are accountable)
-- B. يحسم فريق علوم البيانات (data science team) الخلاف
+- A. يقرر مالك المنتج (product owner) لأنه المسؤول (because they are accountable for the outcome)
+- B. يحسم فريق علوم البيانات (data science team) الخلاف (the dispute)
 - C. يُصعَّد الخلاف عبر المسار المحدد إلى لجنة حوكمة الذكاء الاصطناعي (AI Governance Committee)، مع إجراء مؤقت (interim action) وفق ما تحدده سياسة التصعيد (escalation policy)
-- D. يسجّل الخط الثاني (second line) قلقه بهدوء ولا يتخذ أي إجراء آخر
+- D. يسجّل الخط الثاني (second line) قلقه (concern) بهدوء (quietly) ولا يتخذ أي إجراء آخر
 
 <details><summary>الإجابة (Answer)</summary>
 
@@ -632,7 +632,7 @@ flowchart TD
 **2. منذ أي تاريخ يسري واجب الإلمام بالذكاء الاصطناعي (AI literacy) في EU AI Act؟**
 
 - A. 1 أغسطس 2024
-- B. 2 أغسطس 2027
+- B. 2 فبراير 2027
 - C. 2 أغسطس 2026
 - D. 2 فبراير 2025
 
@@ -658,8 +658,8 @@ flowchart TD
 **4. تُبلغ مؤسسة عن إتمام 100% لتعلّمها الإلكتروني السنوي في الذكاء الاصطناعي (AI). ما نقطة الضعف الرئيسية في الاعتماد على ذلك دليلًا (evidence) على الإلمام بالذكاء الاصطناعي (AI literacy)؟**
 
 - A. الإتمام (completion) يُظهر الحضور (attendance)، لا ما إذا كان الناس قادرين على أداء أدوارهم (their roles) المتعلقة بالذكاء الاصطناعي (AI) بأمان
-- B. يشترط EU AI Act شهادة (certificate) من جهة معتمدة
-- C. التعلّم الإلكتروني (e-learning) محظور بموجب EU AI Act
+- B. يشترط EU AI Act شهادة (certificate) من جهة معتمدة (accredited body)
+- C. التعلّم الإلكتروني (e-learning) محظور (prohibited) بموجب EU AI Act
 - D. يجب إبلاغ مكتب الذكاء الاصطناعي (AI Office) بمعدلات الإتمام (Completion rates)
 
 <details><summary>الإجابة (Answer)</summary>
@@ -670,10 +670,10 @@ flowchart TD
 
 **5. لاحظ مهندسان مبتدئان أن أداة مورّد (vendor) بدت تُلحق ضررًا ببعض المرشحين (candidates) لكنهما لم يبلّغا عن ذلك لأنه ليس مشروعهما. ما أفضل علاج حوكمي طويل الأمد؟**
 
-- A. معاقبة المهندسَين (engineers)
+- A. معاقبة المهندسين (engineers) الذين أثاروا المخاوف (concern)، وتذكير الجميع بأن القرارات (decisions) من اختصاص الإدارة (management)
 - B. إنشاء قنوات واضحة ومحمية (clear, protected channels) لإثارة مخاوف الذكاء الاصطناعي (AI)، والإعلان عنها، وإغلاق الحلقة (close the loop) مع المبلِّغين (reporters)، وتعزيز التحدث عن المخاوف (speaking up) عبر سلوك القيادة (leadership behaviour) والحوافز (Incentives)
-- C. منع المهندسين (engineers) من الاطلاع على أنظمة الفرق الأخرى
-- D. مطالبة المورّد (vendor) بتدقيق نفسه
+- C. منع المهندسين (engineers) من الاطلاع على أنظمة الفرق الأخرى، حتى لا تصل المخاوف إلا إلى مالكي (owners) كل نظام
+- D. مطالبة المورّد (vendor) بتدقيق نفسه (audit itself) وإرسال النتائج إلى لجنة حوكمة الذكاء الاصطناعي (AI governance committee) لاجتماعها القادم
 
 <details><summary>الإجابة (Answer)</summary>
 

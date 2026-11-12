@@ -13,14 +13,14 @@
     "en": [
      "An agent, because one message triggers several model calls in sequence",
      "A workflow, because the code fixes the paths and the model works inside them",
-     "An agent, because the model, not the code, decides which of the three paths runs",
-     "A workflow, but only when the paths run at the same time, not one after another"
+     "An agent, because the model, not the code, picks which of three paths runs",
+     "A workflow, but only if the paths run at the same time, not in sequence"
     ],
     "ar": [
      "وكيل (agent)، لأن الرسالة الواحدة تُطلق عدة استدعاءات للنموذج (model calls) بالتتابع",
      "سير عمل (workflow)، لأن الشيفرة (code) تحدد المسارات (paths) كلها والنموذج يعمل داخلها",
-     "وكيل (agent)، لأن النموذج (model) لا الشيفرة (code) هو من يقرر أي مسار من الثلاثة سيعمل",
-     "سير عمل (workflow)، لكن فقط إذا عملت المسارات (paths) في الوقت نفسه لا الواحد تلو الآخر"
+     "وكيل (agent)، لأن النموذج (model) لا الشيفرة (code) هو من يقرر أي مسار من الثلاثة",
+     "سير عمل (workflow)، لكن فقط إذا عملت المسارات (paths) معًا لا الواحد تلو الآخر"
     ]
    },
    "a": 1,
@@ -40,14 +40,14 @@
    "o": {
     "en": [
      "A check that the output is not empty, so step two always has something to read",
-     "A second model call that scores the extraction's confidence and passes scores above seven",
+     "A second model call that scores confidence and passes scores above seven",
      "A rule that sends every extraction to a person before step two is allowed to start",
      "Code that checks the JSON against the schema and finds each amount in the invoice text"
     ],
     "ar": [
      "فحص يتأكد أن المخرجات (output) غير فارغة، فتجد الخطوة الثانية ما تقرؤه دائمًا",
-     "استدعاء ثانٍ للنموذج (model call) يقيّم ثقة الاستخراج (confidence) ويمرّر ما فوق سبع درجات",
-     "قاعدة ترسل كل استخراج (extraction) إلى شخص (person) قبل أن يُسمح للخطوة الثانية بالبدء",
+     "استدعاء ثانٍ للنموذج (model call) يقيّم الثقة (confidence) ويمرّر ما فوق سبع درجات",
+     "قاعدة ترسل كل استخراج (extraction) إلى شخص (person) قبل أن تبدأ الخطوة الثانية",
      "شيفرة (code) تفحص ملف JSON مقابل المخطط (schema) وتجد كل مبلغ في نص الفاتورة (invoice)"
     ]
    },
@@ -68,13 +68,13 @@
    "o": {
     "en": [
      "`needs_review`, because one claim is unsupported, whatever else stays unrun",
-     "`partial`, because one check could not run, so the report has a gap in it",
-     "`failed`, because one fact-check gave up before it could return a verdict",
-     "`ok`, because most claims are supported and the missing check can be ignored"
+     "`partial`, because one check could not run, so the report has a gap in its coverage",
+     "`failed`, because one fact-check gave up before it could return any verdict at all",
+     "`ok`, because most claims are supported and the missing check can safely be ignored"
     ],
     "ar": [
      "`needs_review`، لأن ادعاءً واحدًا غير مدعوم (unsupported) مهما بقي غير مفحوص",
-     "`partial`، لأن فحصًا واحدًا (check) لم يعمل، فيبقى في التقرير فراغ (gap)",
+     "`partial`، لأن فحصًا واحدًا (check) لم يعمل، فيبقى في التقرير فراغ (gap) في التغطية",
      "`failed`، لأن أحد الفحوص (fact-checks) استسلم قبل أن يُرجع حكمًا (verdict) نهائيًا",
      "`ok`، لأن معظم الادعاءات (claims) مدعومة ويمكن تجاهل الفحص المفقود (missing check)"
     ]

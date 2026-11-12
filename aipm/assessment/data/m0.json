@@ -11,16 +11,16 @@
    },
    "o": {
     "en": [
-     "Usability risk",
-     "Feasibility risk",
-     "Value risk",
-     "Business viability risk"
+     "Usability risk: people cannot work out how to use it",
+     "Feasibility risk: the model cannot reach the quality needed",
+     "Value risk: people will not choose to use it, because they do not trust the output enough",
+     "Business viability risk: the product cannot pay for itself"
     ],
     "ar": [
-     "مخاطرة سهولة الاستخدام (Usability risk)",
-     "مخاطرة الجدوى التقنية (Feasibility risk)",
-     "مخاطرة القيمة (Value risk)",
-     "مخاطرة الجدوى التجارية (Business viability risk)"
+     "مخاطرة سهولة الاستخدام (Usability risk): لا يعرف الناس كيف يستخدمونه",
+     "مخاطرة الجدوى التقنية (Feasibility risk): لا يبلغ النموذج الجودة المطلوبة",
+     "مخاطرة القيمة (Value risk): لن يختار الناس استخدامه، لأنهم لا يثقون بالمخرجات بما يكفي",
+     "مخاطرة الجدوى التجارية (Business viability risk): لا يستطيع المنتج تغطية تكلفته"
     ]
    },
    "a": 2,
@@ -39,13 +39,13 @@
    },
    "o": {
     "en": [
-     "Stale context data: give each source an owner and an update process",
+     "Stale context data: give each source an owner and an update process, so fees stay current",
      "Outdated training data: switch to a newer model trained on recent data",
      "Temperature set too high: lower it so that answers become consistent",
      "Too little feedback data: add answer ratings so the model learns the fee"
     ],
     "ar": [
-     "بيانات سياق قديمة (stale context data): عيّن لكل مصدر مالكًا (owner) وعملية تحديث (update process)",
+     "بيانات سياق قديمة (stale context data): عيّن لكل مصدر مالكًا (owner) وعملية تحديث (update process)، حتى تبقى الرسوم محدّثة (fees stay current)",
      "بيانات تدريب قديمة (outdated training data): انتقل إلى نموذج أحدث (newer model) مدرَّب على بيانات حديثة (recent data)",
      "درجة حرارة مرتفعة جدًا (temperature set too high): اخفضها لتصبح الإجابات متسقة (answers become consistent)",
      "بيانات تغذية راجعة قليلة (too little feedback data): أضف تقييمات للإجابات (answer ratings) ليتعلم النموذج الرسوم (model learns the fee)"
@@ -101,7 +101,7 @@
      "Neither: raise the overall target to 98% and keep tuning until one passes"
     ],
     "ar": [
-     "النسخة الأولى (Version A): فالمعدل الإجمالي الأعلى (higher overall rate) هو ما يقيسه معيار الجودة الذي اتُّفق عليه (agreed quality bar)",
+     "النسخة الأولى (Version A): فالمعدل الإجمالي الأعلى (higher overall rate) هو ما يقيسه (measures) معيار الجودة الذي اتُّفق عليه (agreed quality bar)",
      "النسخة الثانية (Version B): فأخطاء مبالغ الرسوم (fee-amount errors) هي الأخطر (most severe) وتحتاج معيارًا أشد صرامة (stricter bar)",
      "النسخة الأولى (Version A)، مع تنبيه (notice) يطلب من العملاء التحقق مرتين (double-check) من كل رقم رسوم (fee figure)",
      "ولا واحدة منهما (neither): ارفع الهدف الإجمالي (overall target) إلى 98% وواصل الضبط (keep tuning) حتى تنجح إحداهما"

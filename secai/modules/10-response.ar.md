@@ -236,7 +236,7 @@ level: high
 - A. اسم مستخدمٍ يحتوي على فاصل سطر (A username containing a line break) يستطيع تزوير أسطر سجلٍّ مزيّفة (can forge fake log lines)، ولذا فمكان القيمة حقلٌ مُهيكَل ومُهرَّب (so the value belongs in a structured, escaped field)
 - B. يحظر معيار PCI DSS تسجيل محاولات الدخول الفاشلة (PCI DSS forbids logging failed sign-ins)
 - C. سلاسل f-strings أبطأ من طرق التنسيق الأخرى (f-strings are slower than other formatting)
-- D. يجب ألّا تُسجَّل محاولات الدخول الفاشلة أبدًا (Failed sign-ins should never be logged)
+- D. يجب ألّا تُسجَّل محاولات الدخول الفاشلة أبدًا (Failed sign-ins should never be logged)، لأن السجل سيحتوي حينها على أسماء مستخدمين كتبها العملاء بالخطأ (usernames that customers typed by mistake) وقد تتضمن كلمات مرور (and those may include passwords)
 
 <details><summary>الإجابة</summary>
 
@@ -246,7 +246,7 @@ level: high
 
 **3. لم تتلقَّ منصة SIEM أي أحداثٍ من بوابة الشركات الصغيرة منذ ست ساعات (The SIEM has received no events from the SME Portal for six hours)، ولم ينطلق أي تنبيه (and no alerts have fired). ما الذي ينبغي أن يستنتجه فريق جاسم (What should Jassim's team conclude)؟**
 
-- A. البوابة هادئة، إذن فهي آمنة (The portal is quiet, so it is safe)
+- A. البوابة هادئة، إذن فهي آمنة (The portal is quiet, so it is safe): لا تنبيهات تعني لا هجمات (no alerts means no attacks)، ويستطيع الفريق استغلال الوقت لإنجاز أعمال أخرى متأخرة (use the time to catch up on other work) في هذه الفترة (during this period)
 - B. الصمت بحدّ ذاته إشارة (Silence is itself a signal): ينبغي أن يُطلق فحص سلامة المصادر تنبيهًا (a source-health check should alert)، وأن يكتشف الفريق سبب توقّف المصدر (and the team should find out why the source stopped)
 - C. قواعد الرصد مضبوطةٌ جيدًا (The detections are well tuned)
 - D. لا شيء؛ ففترات الهدوء طبيعية (Nothing; quiet periods are normal)
@@ -259,7 +259,7 @@ level: high
 
 **4. أيّ قاعدة رصدٍ ستبقى مفيدةً أطول مدة (Which detection will stay useful longest) في مواجهة مجموعةٍ تنفّذ حشو بيانات الاعتماد على تطبيق نجم للهاتف (against a group running credential stuffing against Najm Mobile)؟**
 
-- A. قائمة حجبٍ لعناوين IP الخمسين التي شوهدت أمس (A blocklist of the 50 IP addresses seen yesterday)
+- A. قائمة حجبٍ لعناوين IP الخمسين التي شوهدت أمس (A blocklist of the 50 IP addresses seen yesterday)، تُحمَّل في جدار الحماية (loaded into the firewall) وتُحدَّث كل صباح (refreshed every morning) ويراجعها مركز العمليات الأمنية كل أسبوع (reviewed each week by the SOC) بحسب الحاجة (as needed)
 - B. قائمةٌ بقيم تجزئة ملفات أدواتهم (A list of file hashes of their tools)
 - C. قاعدةٌ سلوكية (A behaviour rule): حساباتٌ متمايزة كثيرة ومعدّل نجاحٍ منخفضٌ جدًا (many distinct accounts and a very low success rate) من شبكةٍ واحدة أو بصمة جهازٍ واحدة (from one network or device fingerprint) في نافذةٍ زمنية قصيرة (in a short window)
 - D. قاعدةٌ تطابق سلسلة وكيل المستخدم التي استخدموها بالضبط (A rule matching the exact user-agent string they used)
@@ -274,7 +274,7 @@ level: high
 
 - A. اختبار اختراق (A penetration test)؛ وناتجه درجة CVSS (its output is a CVSS score)
 - B. عمل الفريق البنفسجي (Purple teaming)؛ وناتجه قائمةٌ بفجوات التسجيل والرصد الواجب إصلاحها (its output is a list of logging and detection gaps to fix)
-- C. تمرين محاكاةٍ نظرية (A tabletop exercise)؛ وناتجه خطة اتصالات (its output is a communications plan)
+- C. تمرين محاكاةٍ نظرية (A tabletop exercise)؛ وناتجه خطة اتصالات (its output is a communications plan) وقائمة بمن يُتَّصل بهم ليلًا (and a list of people to call at night) في الطوارئ (in emergencies)
 - D. برنامج مكافآت ثغرات (A bug bounty)؛ وناتجه دفعةٌ مالية (its output is a payout)
 
 <details><summary>الإجابة</summary>
@@ -488,7 +488,7 @@ def retrieve(query, session):
 
 **1. في الساعة 21:55 (At 21:55)، يؤكد جاسم أن مقالًا مسمومًا في مجموعة الرسوم (a poisoned article in the fees collection) يجعل نجم أسيست يعرض رابطًا خارجيًا (is making Najm Assist show an external link). ما أفضل خطوة احتواءٍ أولى (What is the best first containment step)؟**
 
-- A. إيقاف تطبيق الهاتف بالكامل حتى يُعرف السبب الجذري (Shut down the whole mobile app until the root cause is known)
+- A. إيقاف تطبيق الهاتف وبوابة الويب بالكامل حتى يُعرف السبب الجذري (Shut down the whole mobile app and the web portal until the root cause is known)، وإخبار العملاء بأن يستخدموا الفرع بدلًا من ذلك (tell customers to use a branch instead) في الأثناء (meanwhile) إلى أن يعود التطبيق (until the app is back)
 - B. إطفاء الاسترجاع من مجموعة الرسوم (Switch off retrieval from the fees collection)، ثم حفظ المقال وسجل تعديلاته والسجلات (then preserve the article, its edit history and the logs) قبل حذف أي شيء (before deleting anything)
 - C. حذف المقال فورًا وإغلاق الحادثة (Delete the article immediately and close the incident)
 - D. إعادة تدريب النموذج كي يتجاهل مثل هذه التعليمات (Retrain the model so it ignores such instructions)
@@ -501,7 +501,7 @@ def retrieve(query, session):
 
 **2. في الساعة 09:00 يوم الاثنين (At 09:00 on Monday)، تؤكد سارة أن بياناتٍ شخصية لعملاء نجم، بمن فيهم مقيمون في الاتحاد الأوروبي (personal data of Najm customers, including EU residents)، قد كُشفت (was exposed). ولم تُعرف كل الوقائع بعد (Not all facts are known yet). ما الذي ينطبق بموجب اللائحة العامة لحماية البيانات (Under GDPR, what applies)؟**
 
-- A. الإخطار فقط بعد اكتمال التحقيق، مهما طال (Notify only once the investigation is complete, however long it takes)
+- A. الإخطار فقط بعد اكتمال التحقيق، مهما طال (Notify only once the investigation is complete, however long it takes)، كي يكون الإخطار دقيقًا (so that the notification is accurate) ولا تُبلَّغ الجهة مرةً ثانية بعد التصحيح (the authority does not have to be told a second time after corrections)
 - B. إخطار السلطة الرقابية دون تأخيرٍ لا مبرّر له (Notify the supervisory authority without undue delay)، وخلال 72 ساعة من العلم حيثما أمكن (and, where feasible, within 72 hours of becoming aware)؛ ويجوز تقديم المعلومات على مراحل (information may be provided in phases)
 - C. لا شيء (Nothing)، لأن المقر الرئيسي لنجم ليس في الاتحاد الأوروبي (because Najm is not headquartered in the EU)
 - D. الإخطار فقط إذا كُشفت أرقام البطاقات (Notify only if card numbers were exposed)
@@ -514,7 +514,7 @@ def retrieve(query, session):
 
 **3. حاويةٌ مخترقة في عنقود Kubernetes لدى نجم (A compromised container in Najm's Kubernetes cluster) على وشك أن تُستبدل آليًا (is about to be replaced automatically). ماذا ينبغي أن يفعل القائد التقني أولًا (What should the technical lead do first)؟**
 
-- A. يتركها تُستبدل، لأن الحاوية الجديدة نظيفة (Let it be replaced, because a fresh container is clean)
+- A. يتركها تُستبدل، لأن الحاوية الجديدة نظيفة (Let it be replaced, because a fresh container is clean) ويفعل المنسّق ذلك تلقائيًا خلال دقيقة (and the orchestrator does it automatically within a minute) من تلقاء نفسه (on its own)
 - B. يعزلها (Isolate it)، ويوقف الاستبدال مؤقتًا حيثما أمكن (pause the replacement where possible)، ويلتقط حالتها وسجلاتها قبل إتلافها (and capture its state and logs before it is destroyed)
 - C. يحذف العقدة فورًا (Delete the node immediately)
 - D. يشغّل فحصًا بمضاد الفيروسات داخل الحاوية (Run an antivirus scan inside the container)
@@ -530,7 +530,7 @@ def retrieve(query, session):
 - A. لا مشكلة؛ فينبغي أن يقوم قائد الحادثة بأهم تحليل (None; the IC should do the most important analysis)
 - B. لم يعد أحدٌ يدير الاستجابة الآن (Nobody is now running the response)، فتتعطّل الأولويات والقرارات والتحديثات (so priorities, decisions and updates stall)؛ والتحليل من شأن القائد التقني (analysis belongs with the technical lead)
 - C. التقاطات الحزم غير مفيدة في الحوادث (Packet captures are not useful in incidents)
-- D. لا يجوز إلا لكبير مسؤولي أمن المعلومات (Only the CISO) قراءة التقاطات الحزم (may read packet captures)
+- D. لا يجوز إلا لكبير مسؤولي أمن المعلومات (Only the CISO) قراءة التقاطات الحزم (may read packet captures)، لأنها قد تحتوي بيانات عملاء (they can contain customer data) ويجب الموافقة على كل وصولٍ كتابيًا أولًا (every access must be approved in writing first) قبل فتح الملف (before the file is opened)
 
 <details><summary>الإجابة</summary>
 
@@ -762,10 +762,10 @@ Canonical: https://najmbank.example/.well-known/security.txt
 
 **1. تُبلغ ماسحات نجم عن نتيجتين (Najm's scanners report two findings). X: درجة CVSS الأساسية 9.8 (CVSS 9.8 base)، في أداةٍ داخلية لا يمكن بلوغها إلا من شبكةٍ إدارية (in an internal tool reachable only from an admin network)، ودرجة EPSS منخفضة جدًا (very low EPSS)، وليست في KEV (not in KEV). Y: درجة CVSS الأساسية 7.5 (CVSS 7.5 base)، في بوابة واجهات البرمجة المكشوفة للإنترنت (in the internet-facing API gateway)، ومُدرجة في كتالوج CISA KEV (in the CISA KEV catalogue). أيّهما يأتي أولًا (Which comes first)؟**
 
-- A. X، لأن درجة CVSS الخاصة بها أعلى (X, because its CVSS score is higher)
+- A. X، لأن درجة CVSS الخاصة بها أعلى (X, because its CVSS score is higher) وقد وسمها الماسح بأنها الأعجل (and the scanner marked it as the more urgent one)
 - B. Y، لأنها معروفٌ استغلالها ومكشوفةٌ للإنترنت (Y, because it is known to be exploited and is exposed to the internet)
-- C. كلتاهما معًا، بالترتيب الأبجدي (Both together, in alphabetical order)
-- D. لا هذه ولا تلك، حتى يؤكدهما اختبار اختراق (Neither, until a penetration test confirms them)
+- C. كلتاهما معًا، بالترتيب الأبجدي لاسم النظام (Both together, in alphabetical order of the system name)، بدءًا بما يعرفه الفريق أكثر (starting with the one the team knows best)
+- D. لا هذه ولا تلك، حتى يؤكدهما اختبار اختراق (Neither, until a penetration test confirms them) ويجتمع مجلس التغيير يوم الخميس (and the change board has met on Thursday)
 
 <details><summary>الإجابة</summary>
 
@@ -789,7 +789,7 @@ Canonical: https://najmbank.example/.well-known/security.txt
 **3. أيّ عبارةٍ عن `security.txt` صحيحة (Which statement about security.txt is correct)؟**
 
 - A. يقع في المسار `/.well-known/security.txt` (It sits at /.well-known/security.txt) ويجب أن يتضمن الحقلين `Contact` و`Expires` (and must include Contact and Expires fields)
-- B. يُدرج الثغرات المعروفة لدى المؤسسة (It lists the organisation's known vulnerabilities)
+- B. يُدرج الثغرات المعروفة لدى المؤسسة (It lists the organisation's known vulnerabilities) مع مواعيد إصلاحها (with their fix dates)، ليقرأها الباحثون (for researchers to read)، ويحدّثه الفريق كل شهر (updated by the team every month)
 - C. يحلّ محلّ سياسة الإفصاح (It replaces a disclosure policy)
 - D. ينبغي إخفاؤه عن العامة (It should be hidden from the public)
 
@@ -815,7 +815,7 @@ Canonical: https://najmbank.example/.well-known/security.txt
 **5. يجعل أحد الباحثين نجم أسيست يكتب قصيدةً وقحة عن البنك (One researcher makes Najm Assist write a rude poem about the bank). ويُظهر آخر (Another shows) أن نصًا في نموذج اعتراض (that text in a dispute form) يمكن أن يجعله يستدعي أداةً على بطاقة عميلٍ آخر (can make it call a tool on another customer's card). كيف ينبغي أن تعاملهما سياسة الإفصاح (How should the VDP treat them)؟**
 
 - A. كلاهما ثغرتان أمنيتان حرجتان (Both as critical security vulnerabilities)
-- B. كلاهما خارج النطاق (Both as out of scope)، لأن سلوك الذكاء الاصطناعي ليس من الأمن (because AI behaviour is not security)
+- B. كلاهما خارج النطاق (Both as out of scope)، لأن سلوك الذكاء الاصطناعي ليس من الأمن (because AI behaviour is not security) ومورّد النموذج مسؤول عن أي إجابةٍ خاطئة أو ضارة (the model vendor is responsible for any wrong or harmful answer) يقدّمها المساعد (the assistant gives)، وإن تكرّرت (even if repeated)
 - C. الثاني ثغرةٌ أمنية بأثرٍ يمتد بين العملاء (The second as a security vulnerability with cross-customer impact)؛ والأول بلاغ جودةٍ غير أمني لقناة سلامة الذكاء الاصطناعي (the first as a non-security quality report for the AI safety channel)
 - D. الأول حرج، لأنه يضرّ بالعلامة التجارية (The first as critical, because it harms the brand)
 

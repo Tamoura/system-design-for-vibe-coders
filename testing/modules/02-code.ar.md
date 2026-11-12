@@ -466,10 +466,10 @@ it("rejects fractions and negatives instead of guessing", () => {
 
 **5. يقرأ اختبار الحقل `svc._sent_today`. وبعد إعادة تسمية غير ضارة (a harmless rename) تفشل تسعة اختبارات. أي رائحة (smell) هذه؟**
 
-- A. اختبار بلا تأكيد (An assertion-free test)
-- B. حالة متغيرة مشتركة (Shared mutable state) بين اختبارات كثيرة
+- A. اختبار بلا تأكيد (An assertion-free test) يشغّل الشيفرة ولا يفحص شيئًا
+- B. حالة متغيرة مشتركة (Shared mutable state) بين اختبارات كثيرة (across many tests) في ملف واحد (in one file)
 - C. اختبار التفاصيل الخاصة بالصنف (Testing private details of the class)
-- D. منطق داخل جسم الاختبار (Logic inside the test body)
+- D. منطق داخل جسم الاختبار (Logic inside the test body)، مثل الحلقات والفروع (loops and branches)
 
 <details><summary>الإجابة</summary>
 
@@ -1024,9 +1024,9 @@ E       assert [True, True] == [False, True]
 **1. تنجح اختبارات المستودع (Repository tests) على SQLite في الذاكرة، لكن أعمدة المال تسيء التصرف في قاعدة بيانات PostgreSQL للتجهيز (staging). ما السبب الأرجح؟**
 
 - A. SQLite أبطأ من PostgreSQL على جداول المال الكبيرة (on large tables of money)
-- B. لا تستطيع SQLite العمل داخل معاملة قاعدة بيانات (database transaction) أصلًا
-- C. أخفى التنميط المرن في SQLite (SQLite's loose typing) عدم تطابق في النوع أو الدقة (a type or precision mismatch)
-- D. تتجاهل PostgreSQL قيود `CHECK` افتراضيًا (by default)
+- B. لا تستطيع SQLite العمل داخل معاملة قاعدة بيانات (database transaction) أصلًا، حتى في الاختبارات (even for tests)
+- C. أخفى التنميط المرن في SQLite (SQLite's loose typing) عدم تطابق في النوع أو الدقة
+- D. تتجاهل PostgreSQL قيود `CHECK` (CHECK constraints) افتراضيًا (by default)، فلا تعمل أبدًا (never fire)
 
 <details><summary>الإجابة</summary>
 
@@ -1062,10 +1062,10 @@ E       assert [True, True] == [False, True]
 
 **4. تثبّت الشيفرة المختبَرة التغييرات (commits)، فيترك التراجع لكل اختبار (rollback-per-test) صفوفًا للاختبارات اللاحقة. ماذا يفعل الفريق؟**
 
-- A. إبقاء التراجع وتشغيل الاختبارات بترتيب ثابت (in a fixed order)
+- A. إبقاء التراجع (rollback) وتشغيل الاختبارات بترتيب ثابت (in a fixed order) دائمًا
 - B. حذف الجداول أو تفريغها بعد كل اختبار (Delete or truncate the tables after each test)
-- C. مشاركة مجموعة صفوف واحدة بين كل الاختبارات (Share one set of rows)
-- D. تحويل كل اختبار إلى اتصال محاكى (a mocked connection)
+- C. مشاركة مجموعة صفوف واحدة (Share one set of rows) بين كل الاختبارات التي تلمس الجدول (that touch the table)
+- D. تحويل كل اختبار إلى اتصال محاكى (a mocked connection) بقاعدة البيانات (to the database)
 
 <details><summary>الإجابة</summary>
 
@@ -1075,10 +1075,10 @@ E       assert [True, True] == [False, True]
 
 **5. يُظهر اختبار تداخل مفروض (forced-interleaving test) تحويلين أُنشئا من مفتاح واحد لخاصية عدم التكرار (one idempotency key). ما الاستجابة الصحيحة؟**
 
-- A. إضافة إعادة محاولة في جانب العميل (client-side retry) بتأخير أطول
-- B. تقليل عدد الخيوط في الاختبار (Reduce the thread count)
+- A. إضافة إعادة محاولة في جانب العميل (client-side retry) بتأخير أطول بين المحاولات (between attempts)
+- B. تقليل عدد الخيوط (Reduce the thread count) في الاختبار حتى يصطدم أقل (so it hits less often)
 - C. جعل حجز المفتاح ذريًا مع الإبقاء على الاختبار (Make claiming the key atomic, and keep the test)
-- D. حذف الاختبار، لأن الحركة الحقيقية نادرًا ما تكون بهذا التزامن (rarely that concurrent)
+- D. حذف الاختبار (Delete the test)، لأن الحركة الحقيقية نادرًا ما تكون بهذا التزامن (rarely that concurrent) في الإنتاج
 
 <details><summary>الإجابة</summary>
 
@@ -1508,10 +1508,10 @@ PASSED test_rr.py::test_fails_on_the_first_attempt_only
 
 **1. يرفع طلب دمج (pull request) تغطية `check_transfer` من 83% إلى 100% بـ72 اختبارًا لا تؤكد إلا `result is not None`. ماذا يخبرك هذا الرقم؟**
 
-- A. صارت الدالة محمية جيدًا من عيوب الحدود (protected against boundary bugs)
+- A. صارت الدالة محمية جيدًا من عيوب الحدود (protected against boundary bugs) بعد هذه الاختبارات (these tests)
 - B. نُفِّذ كل سطر، لكن لا شيء يبيّن أن السلوك فُحص (nothing shows behaviour was checked)
-- C. الاختبارات بطيئة وينبغي حذفها (slow and should be removed)
-- D. تغطية الفروع (Branch coverage) 100% أيضًا، فالمجموعة قوية
+- C. الاختبارات بطيئة (The tests are slow) وينبغي حذفها (should be removed) لتسريع البناء
+- D. تغطية الفروع (Branch coverage) 100% أيضًا، فالمجموعة قوية بما يكفي (strong enough)
 
 <details><summary>الإجابة</summary>
 
@@ -1534,9 +1534,9 @@ PASSED test_rr.py::test_fails_on_the_first_attempt_only
 
 **3. يجتاز اختبار مرجع النتيجة المتوقعة (oracle test) المكتوب بـ Hypothesis على `fee` مئة مثال بخانتين عشريتين (100 two-decimal examples) تحت `float_fee`. ما الخطوة التالية الأفضل؟**
 
-- A. الاستنتاج أن عيب الفاصلة العائمة غير ضار للمبالغ ذات الخانتين العشريتين (harmless)
-- B. حذف الخاصية، لأن الأمثلة تغطيها أصلًا (examples already cover it)
-- C. تشغيله مرة أخرى وقبول نتيجة خضراء ثانية (accept a second green result)
+- A. الاستنتاج أن عيب الفاصلة العائمة غير ضار (harmless) للمبالغ ذات الخانتين العشريتين (two-decimal amounts)
+- B. حذف الخاصية (Delete the property)، لأن الأمثلة تغطيها أصلًا (examples already cover it) بالكامل
+- C. تشغيله مرة أخرى وقبول نتيجة خضراء ثانية (accept a second green result) دليلًا
 - D. توجيه المولِّد نحو المبالغ الصحيحة، حيث تقع التعادلات (Aim the generator at whole amounts)
 
 <details><summary>الإجابة</summary>
@@ -1560,10 +1560,10 @@ PASSED test_rr.py::test_fails_on_the_first_attempt_only
 
 **5. يفشل اختبار في نحو تشغيلة من كل ثلاث؛ ويعيد خط التكامل والتسليم المستمرين (pipeline) محاولة الإخفاقات مرتين ويعرض «نجح» (passed). ما السياسة الصحيحة؟**
 
-- A. إبقاء إعادات المحاولة، لأن الخط الأخضر (a green pipeline) يعني ألّا مشكلة حقيقية (no real problem)
-- B. حذف الاختبار، لأن الاختبارات غير المستقرة بلا قيمة (have no value)
-- C. رفع عدد إعادات المحاولة حتى لا يفشل أبدًا (until it never fails)
-- D. الإبلاغ عن إعادات المحاولة وحجر الاختبار بمالك وموعد نهائي (Report the retries and quarantine the test with an owner and deadline)
+- A. إبقاء إعادات المحاولة (Keep the retries)، لأن الخط الأخضر (a green pipeline) يعني ألّا مشكلة حقيقية (no real problem)
+- B. حذف الاختبار (Delete the test)، لأن الاختبارات غير المستقرة بلا قيمة (flaky tests have no value)
+- C. رفع عدد إعادات المحاولة (Raise the retry count) حتى لا يفشل أبدًا (until it never fails)
+- D. الإبلاغ عن إعادات المحاولة وحجر الاختبار بمالك وموعد نهائي (Report the retries and quarantine the test)
 
 <details><summary>الإجابة</summary>
 

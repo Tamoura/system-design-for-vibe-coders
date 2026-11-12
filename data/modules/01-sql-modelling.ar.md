@@ -295,9 +295,9 @@ Checks       : grain unique OK; debit total reconciles to GL report within 0.1%,
 
 **1. تربط هدى `customers` → `accounts` → `transactions` وتشغّل `SELECT COUNT(*)` لعدّ العملاء النشطين (active customers). فتأتي النتيجة أعلى بنحو 35 مرة مما توقّعه كريم. ما السبب الأرجح (most likely cause)؟**
 
-- A. إحصاءات المخطِّط (planner's statistics) قديمة (out of date)
-- B. يتجاهل `COUNT(*)` الصفوف التي فيها قيم فارغة (rows with nulls)
-- C. حُبَيبيته (grain) هي صف واحد لكل معاملة (one row per transaction)، لا لكل عميل (not per customer)
+- A. إحصاءات المخطِّط (planner's statistics) المستخدمة في الاستعلام قديمة (out of date)
+- B. يتجاهل `COUNT(*)` الصفوف التي فيها قيم فارغة (rows with nulls) عند العدّ
+- C. حُبَيبيته (grain) هي صف واحد لكل معاملة، لا لكل عميل (not per customer)
 - D. كان ينبغي أن يكون `JOIN` ربطًا من نوع `CROSS JOIN` للاحتفاظ بكل عميل (to keep every customer)
 
 <details><summary>الإجابة</summary>
@@ -321,9 +321,9 @@ Checks       : grain unique OK; debit total reconciles to GL report within 0.1%,
 
 **3. يريد كريم إدراج كل عملاء الأفراد (every retail customer)، مع صفر لمن لم ينفقوا شيئًا في سبتمبر. يحتوي استعلام `LEFT JOIN` لدى هدى على `WHERE t.txn_ts >= '2026-09-01'`، والعملاء ذوو الإنفاق الصفري (zero-spend customers) مفقودون. لماذا؟**
 
-- A. يُسقط `LEFT JOIN` الصفوف غير المتطابقة (unmatched rows) كلما تلاه `GROUP BY`
-- B. للصفوف غير المتطابقة (unmatched rows) قيمة `txn_ts` من نوع `NULL`، لذا يُسقطها اختبار `WHERE` (the WHERE test drops them)
-- C. يجب أن يُغلّف `COALESCE` القيمة `t.txn_ts` قبل الربط، وإلا أفسدت القيم الفارغة المجموع (the nulls break the sum)
+- A. يُسقط `LEFT JOIN` الصفوف غير المتطابقة (unmatched rows) كلما تلاه `GROUP BY` (the aggregation) في الاستعلام
+- B. للصفوف غير المتطابقة (unmatched rows) قيمة `txn_ts` من نوع `NULL`، لذا يُسقطها اختبار `WHERE`
+- C. يجب أن يُغلّف `COALESCE` القيمة `t.txn_ts` قبل الربط، وإلا أفسدت القيم الفارغة المجموع
 - D. يحتاج مرشّح التاريخ (date filter) إلى `HAVING` بدل `WHERE`، لأنه يعمل بعد التجميع (after grouping)
 
 <details><summary>الإجابة</summary>
@@ -849,8 +849,8 @@ flowchart RL
 **3. تعطّلت مهمة ليلية (nightly job) تكتب ملفات Parquet إلى تخزين الكائنات (object storage) في منتصفها، فرأى المحلّلون يومًا محمّلًا نصفه (half-loaded day). أي تقنية مصمّمة لمنع ذلك؟**
 
 - A. عنقود حوسبة أكبر (larger compute cluster)، كي تنتهي المهمة قبل أن تتعطّل
-- B. صيغة جداول مفتوحة (open table format) ذات التزامات لقطات ذرّية (atomic snapshot commits)
-- C. تحويل الملفات إلى ORC ‏(converting the files to ORC)
+- B. صيغة جداول مفتوحة (open table format) ذات التزامات ذرّية (atomic commits)
+- C. تحويل كل الملفات إلى صيغة ORC ‏(converting the files to ORC)
 - D. التقسيم حسب الساعة بدلًا من اليوم (partitioning by hour instead of by day)، كي يضيع أقل
 
 <details><summary>الإجابة</summary>
@@ -874,10 +874,10 @@ flowchart RL
 
 **5. شركة تقنية مالية صغيرة (small fintech) لديها ثلاثة مهندسين و50 غيغابايت من البيانات تسأل هل تحتاج إلى مستودع بحيري (lakehouse). باتّباع ترتيب القرار في الدرس (lesson's decision order)، ما الذي ينبغي أن تنظر فيه أولًا؟**
 
-- A. أي مورّد أطلق أحدث ميزات المستودع البحيري (newest lakehouse features) هذا العام
-- B. حِمل عملها (workload): الاستعلامات (queries)، والحجم (volume)، والحداثة (freshness)، والمستخدمون (users)
+- A. أي مورّد أطلق أحدث ميزات المستودع البحيري (newest features) هذا العام
+- B. حِمل عملها (workload): الاستعلامات والحجم والحداثة (queries, volume, freshness)
 - C. هل يتوقّع منافسوها ومستثمروها (competitors and investors) استخدام Iceberg
-- D. كم قسمًا (partitions) يمكن تقسيم بياناتها إليه
+- D. كم قسمًا (partitions) يمكن تقسيم بياناتها إليه في أقصى حد (maximum)
 
 <details><summary>الإجابة</summary>
 

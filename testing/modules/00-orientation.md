@@ -266,7 +266,7 @@ Every Najm feature starts with a **quality profile**: one page saying what "work
 - A. Compare the full answer text with a stored string, word for word
 - B. Assert the key fact appears and the limits document is cited
 - C. Run it once and save the output as a snapshot to compare later
-- D. Assert only that the answer is not empty, whatever it says
+- D. Assert only that the answer is not empty, whatever the model says
 
 <details><summary>Answer</summary>
 
@@ -806,7 +806,7 @@ Every new QE completes the **week-one checklist** with Rashid, setup first. This
 
 **1. Nada switches on `float_fee` and the starter suite still shows 24 passed. What does this tell her?**
 
-- A. The fee code is correct, because the suite is green
+- A. The fee code is fine: the suite is green
 - B. The suite has no test that can see this bug
 - C. The bug switch does not work
 - D. The suite needs more tests of every kind
@@ -846,8 +846,8 @@ Every new QE completes the **week-one checklist** with Rashid, setup first. This
 **4. An assistant gives Nada a test that passes on the clean sample. What must she do before she submits it?**
 
 - A. Show it failing when a relevant bug is on, and explain it
-- B. Run it twice more to confirm that it passes every time
-- C. Ask the assistant to confirm that the test is correct
+- B. Run it twice more to confirm that it passes every single time
+- C. Ask the assistant to confirm that the test is correct and complete
 - D. Check that it raises the coverage percentage of the module it targets
 
 <details><summary>Answer</summary>
