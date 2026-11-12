@@ -569,7 +569,7 @@ This is why Yusuf's contract (11.2) must secure instructions, log access, change
 - The **GPAI Code of Practice** (published July 2025) is a voluntary way to show compliance, with chapters on transparency, copyright, and safety and security.
 - **Art. 50 transparency:** tell people they are talking to an AI; mark synthetic content in a machine-readable way; disclose **deepfakes**; notify people exposed to **emotion recognition or biometric categorisation**. **Art. 4 AI literacy** applies to every provider and deployer.
 - Enforcement: the **AI Office** (GPAI models), national **market-surveillance authorities** (AI systems), the **AI Board**, and a **scientific panel**. Maximum fines are **€35m/7%**, **€15m/3%** and **€7.5m/1%**.
-- Timeline: in force 1 Aug 2024; prohibitions and literacy 2 Feb 2025; GPAI and governance 2 Aug 2025; most rules including Annex III 2 Aug 2026; Annex I products 2 Aug 2027. The Nov 2025 **Digital Omnibus** proposal may shift high-risk dates, so **check the current status**.
+- Timeline: in force 1 Aug 2024; prohibitions and literacy 2 Feb 2025; GPAI and governance 2 Aug 2025; most rules including Annex III 2 Aug 2026; Annex I products 2 Aug 2027. The Digital Omnibus on AI, reported as adopted in 2026 (Regulation (EU) 2026/1744), is reported to move the high-risk dates later, so **check the current text**. The dates above are those of the original Act.
 
 ## 🧭 Why it matters
 
@@ -673,14 +673,14 @@ Anyone can **complain** to a market-surveillance authority (Art. 85), and whistl
 | 2 Aug 2030 | High-risk systems intended for use by public authorities that were on the market before 2 Aug 2026 must comply |
 | 31 Dec 2030 | AI components of certain large-scale EU IT systems (Annex X) |
 
-**The Digital Omnibus proposal (check the current status).** On 19 November 2025 the Commission proposed a "Digital Omnibus" package that would amend the AI Act, among other laws. As proposed and reported at the time, it would:
+**The Digital Omnibus on AI (check the current text).** On 19 November 2025 the Commission proposed a "Digital Omnibus" package to amend the AI Act, among other laws. The proposal would have:
 - link the application of the high-risk rules to the availability of harmonised standards and other support tools, with backstop dates later than August 2026 for Annex III and later than August 2027 for Annex I;
 - recast the AI-literacy duty so that member states and the Commission promote literacy, rather than every provider and deployer being directly obliged to ensure it;
 - extend some SME simplifications to small mid-cap companies;
 - widen the legal basis for processing special-category data to detect and correct bias;
 - adjust some registration requirements and centralise more oversight in the AI Office.
 
-A proposal is not law until the Parliament and Council agree it, and its content can change. **At the time of writing (2026), check the current status on EUR-Lex before relying on any date.** The AIGP exam tests the Act as adopted, so learn the original dates.
+**Reported status, last checked 12 November 2026.** Web-search summaries (not the act itself, which we could not open) report that the Digital Omnibus on AI was adopted as Regulation (EU) 2026/1744, published in the Official Journal on 24 July 2026 and in force from 27 July 2026. The same reports say it moves the Annex III high-risk obligations to 2 December 2027, moves Annex I high-risk obligations to 2 August 2028, and adds new prohibited practices that apply from 2 December 2026. Reports disagree on whether Art. 50 dates changed and on how the AI-literacy duty is now worded. These points are reported, not verified, and this course has not been reviewed by a named legal expert. **Read the act on EUR-Lex before relying on any date.** The dates in the table above are those of the original Regulation (EU) 2024/1689 and are no longer the current position for the items reported as moved. The AIGP exam content may still follow the original dates; check the current exam guidance.
 
 Good programmes build to the adopted timeline and design controls (inventory, classification, literacy, logging, oversight) that are sound whatever the final dates turn out to be.
 
@@ -695,7 +695,7 @@ Good programmes build to the adopted timeline and design controls (inventory, cl
 | **EU AI Act** — Art. 4 | AI literacy for staff and others operating AI on the organisation's behalf; all providers and deployers; from 2 Feb 2025 | Applies regardless of risk tier |
 | **EU AI Act** — Arts 99–101 | Fines up to €35m/7%, €15m/3%, €7.5m/1%; "whichever is higher", but "whichever is lower" for SMEs; GPAI fines by the Commission | Match the fine tier to the breach |
 | **EU AI Act** — Art. 113 | Phased application dates from 2 Feb 2025 to 2 Aug 2027 | The date questions are near-certain |
-| **EU Digital Omnibus** (proposal, Nov 2025) | Proposed amendments, including linking high-risk dates to standards availability | Not law unless adopted; check the current status |
+| **EU Digital Omnibus on AI** (reported as Reg. (EU) 2026/1744) | Reported to amend the AI Act, including later high-risk dates | Reported, not verified here; read the act |
 
 ## 🏛️ In practice at Najm Bank
 
@@ -710,7 +710,7 @@ Layla brings a **GenAI and transparency decision record** to the AI Governance C
 | AI "customer" video | Publish? | Only with a clear AI-generated label; better still, a real customer, because a fake testimonial may mislead consumers whatever the label | Art. 50(4); 5.3 | Marketing, Sara |
 | Market commentary | AI-drafted articles? | Only after review by a named editor | Art. 50(4) | Head of Research |
 | Literacy | Meeting Art. 4? | Role-based training since Q1 2025; completion tracked | Art. 4; 2.3 | Layla |
-| Regulatory watch | Omnibus | Monthly check; no plan relaxed until changes are law | Art. 113 | Layla |
+| Regulatory watch | Omnibus | Monthly check; verify the Omnibus text before changing any plan | Art. 113 | Layla |
 
 ## 🛠️ Exercises
 
@@ -730,7 +730,7 @@ Layla brings a **GenAI and transparency decision record** to the AI Governance C
 - **Assuming open-source means exempt from everything.** Open-source GPAI providers still need the copyright policy and training summary, and systemic-risk models get no exemption.
 - **Reading fines backwards.** "Whichever is higher" for most companies; "whichever is lower" for SMEs. €35m/7% is only for prohibited practices.
 - **Confusing the dates.** Prohibitions and literacy: 2 Feb 2025. GPAI: 2 Aug 2025. Annex III high-risk and Art. 50: 2 Aug 2026. Annex I: 2 Aug 2027.
-- **Treating the Digital Omnibus as law.** It is a proposal. On the exam, answer from the Act as adopted unless the question says otherwise.
+- **Treating reports about the Digital Omnibus as verified text.** Reports say it was adopted, but we did not open the official text. On the exam, answer from the original Act unless the question says otherwise.
 
 ## 🧾 Recap
 
@@ -739,7 +739,7 @@ Layla brings a **GenAI and transparency decision record** to the AI Governance C
 - Art. 50 requires AI-interaction disclosure, machine-readable marking of synthetic content, deepfake and public-interest text disclosure, and notices for emotion recognition and biometric categorisation. Art. 4 requires AI literacy from everyone.
 - The AI Office enforces GPAI rules; national market-surveillance authorities (financial supervisors for banks) enforce system rules; the AI Board coordinates; a scientific panel advises.
 - Fines reach €35m/7%, €15m/3% and €7.5m/1%. Sandboxes and real-world testing support innovation.
-- Application runs from 2 Feb 2025 to 2 Aug 2027. The Digital Omnibus proposal may shift high-risk dates; check its current status.
+- Application runs from 2 Feb 2025 to 2 Aug 2027. The Digital Omnibus on AI is reported to shift high-risk dates; read the current text.
 
 ## ✍️ Check yourself
 
@@ -813,4 +813,4 @@ Layla brings a **GenAI and transparency decision record** to the AI Governance C
 - Regulation (EU) 2024/1689 (Artificial Intelligence Act), Chapters V (GPAI models), IV (transparency), VII (governance), XII (penalties) and Art. 113: https://eur-lex.europa.eu/eli/reg/2024/1689/oj
 - European Commission, European AI Office: https://digital-strategy.ec.europa.eu/en/policies/ai-office
 - European Commission, regulatory framework for AI (GPAI Code of Practice, GPAI guidelines, training-content summary template, implementation timeline): https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai
-- EUR-Lex, for the current status of the Digital Omnibus proposal: https://eur-lex.europa.eu/
+- EUR-Lex, to read the current text of the Digital Omnibus on AI: https://eur-lex.europa.eu/

@@ -1,8 +1,8 @@
 # AI Governance: Zero to Hero
 
-**Govern AI before it governs you. A free, bilingual course that takes you from zero to confident AI governance professional, aligned to the IAPP AIGP Body of Knowledge v2.1.**
+**Govern AI before it governs you. A free, bilingual course that takes you from zero to confident AI governance professional. It covers the AIGP Body of Knowledge v2.1 (independent course; not affiliated with IAPP).**
 
-> **An independent course.** It is not affiliated with, endorsed by or produced by the IAPP, and it does not reproduce IAPP exam questions. It is aligned to the public AIGP Body of Knowledge (version 2.1, effective 2 February 2026). Nothing here is legal advice: laws and guidance change, so check the official sources before you rely on them.
+> **An independent course.** It is not affiliated with, endorsed by or produced by the IAPP, and it does not reproduce IAPP exam questions. It covers the topics of the public AIGP Body of Knowledge (version 2.1, effective 2 February 2026). Nothing here is legal advice: laws and guidance change, so check the official sources before you rely on them.
 
 ## What this is
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Course Library — Build with AI · Run AI in Production · SaaS Building Blocks</title>
+<title>Course Library — AI-era engineering, security and governance</title>
 <style>
 :root{
   --bg:#f6f5f1; --panel:#ffffff; --ink:#1d2128; --muted:#5c6470; --line:#e5e1d9;
@@ -98,6 +98,32 @@ body{margin:0;background:var(--bg);color:var(--ink);
   display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;}
 .foot a{color:var(--accent);}
 .foot .notice{flex-basis:100%;margin:.4rem 0 0;max-width:80ch;}
+
+.en,.ar{}
+html:not([lang="ar"]) .ar{display:none!important;}
+html[lang="ar"] .en{display:none!important;}
+html[lang="ar"] body{font-family:"Segoe UI",Tahoma,"Noto Naskh Arabic",Arial,sans-serif;}
+html[lang="ar"] .course::before{inset:0 0 0 auto;}
+html[lang="ar"] .go{align-self:flex-start;}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;}
+.langs{display:flex;gap:.3rem;}
+.langs button{font:inherit;font-size:.8rem;font-weight:700;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:.3rem .9rem;cursor:pointer;}
+.langs button[aria-pressed="true"]{background:var(--ink);color:var(--bg);}
+.hero h1 small{display:block;font-size:.4em;letter-spacing:0;color:var(--muted);font-weight:400;margin-top:.5rem;}
+.school{margin:0 0 2.6rem;}
+.school .rule{margin-top:0;}
+.rule h2{margin:0;font:inherit;letter-spacing:inherit;text-transform:inherit;}
+html[lang="ar"] .rule,html[lang="ar"] .brand{letter-spacing:0;}
+.paths{list-style:none;margin:0 0 2rem;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem;}
+.paths li{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:.8rem 1rem;font-size:.95rem;}
+.paths a{color:var(--accent);font-weight:700;}
+.notebox{color:var(--muted);font-size:.88rem;margin:0 0 2rem;max-width:75ch;}
+.badges{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.8rem;}
+.badge{font-size:.7rem;font-weight:700;border-radius:6px;padding:.15rem .5rem;border:1px solid var(--line);color:var(--muted);}
+.badge.flag{color:var(--c);border-color:var(--c);}
+.badge.level{color:var(--ink);}
+.course .badges,.course .meta{position:relative;}
+@media (max-width:680px){.paths{grid-template-columns:1fr;}.wrap{padding-left:1rem;padding-right:1rem;}}
 @media (max-width:680px){.courses{grid-template-columns:1fr;}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;}html{scroll-behavior:auto;}}
 </style>
@@ -106,138 +132,207 @@ body{margin:0;background:var(--bg);color:var(--ink);
 <div class="wrap">
 
   <header class="hero">
-    <div class="brand">Tamoura · Course Library</div>
-    <h1><span class="b">Build</span> with AI.<br><span class="r">Run</span> AI in production.</h1>
-    <p>Courses for the whole job: shipping software with AI agents as your builder, operating AI agents as governed systems in production, and learning the building blocks every SaaS shares. Practical, grounded in real systems, and free to read.</p>
+    <div class="topbar"><div class="brand">Tamoura · <span class="en">Course Library</span><span class="ar">مكتبة الدورات (Course Library)</span></div><div class="langs" role="group" aria-label="Language / اللغة"><button type="button" data-set-lang="en" aria-pressed="true">English</button><button type="button" data-set-lang="ar" aria-pressed="false">العربية</button></div></div>
+    <h1><span class="en"><span class="b">Build</span>, <span class="r">secure</span> and govern in the AI era.</span><span class="ar"><span class="b">ابنِ</span> و<span class="r">أمّن</span> و<span class="r">احكم</span> في عصر الذكاء الاصطناعي.<br><small>(Build, secure and govern in the AI era)</small></span></h1>
+    <p><span class="en">Courses for the whole job: building software with AI agents, securing and governing AI systems, running platforms and data, and learning the building blocks every SaaS shares. Practical, grounded in real systems, and free to read.</span><span class="ar">دورات للمهمة كاملة (courses for the whole job): بناء البرمجيات مع وكلاء الذكاء الاصطناعي (AI agents)، وتأمين أنظمة الذكاء الاصطناعي وحوكمتها (governance)، وتشغيل المنصات والبيانات (platforms and data)، وتعلّم المكوّنات التي تشترك فيها كل أنظمة SaaS. عملية ومبنية على أنظمة حقيقية ومجانية للقراءة.</span></p>
   </header>
 
-  <div class="rule">Courses</div>
+  <div class="rule"><h2><span class="en">Where to start</span><span class="ar">من أين تبدأ (Where to start)</span></h2></div>
+  <ul class="paths">
+    <li><span class="en"><b>I build with AI:</b> <a href="ainative/">ainative</a>, then <a href="aiapps/">aiapps</a>.</span><span class="ar"><b>أبني بالذكاء الاصطناعي (I build with AI):</b> <a href="ainative/" data-ar="ainative/index.ar.html">ainative</a> ثم <a href="aiapps/" data-ar="aiapps/index.ar.html">aiapps</a>.</span></li>
+    <li><span class="en"><b>I secure AI systems:</b> <a href="secai/">secai</a>.</span><span class="ar"><b>أؤمّن أنظمة الذكاء الاصطناعي (I secure AI systems):</b> <a href="secai/" data-ar="secai/index.ar.html">secai</a>.</span></li>
+    <li><span class="en"><b>I govern or manage AI:</b> <a href="aigp/">aigp</a>, <a href="aipm/">aipm</a>.</span><span class="ar"><b>أحكم الذكاء الاصطناعي أو أديره (I govern or manage AI):</b> <a href="aigp/" data-ar="aigp/index.ar.html">aigp</a> و<a href="aipm/" data-ar="aipm/index.ar.html">aipm</a>.</span></li>
+    <li><span class="en"><b>I run platforms and data:</b> <a href="cloud/">cloud</a>, <a href="data/">data</a>, <a href="testing/">testing</a>.</span><span class="ar"><b>أدير المنصات والبيانات (I run platforms and data):</b> <a href="cloud/" data-ar="cloud/index.ar.html">cloud</a> و<a href="data/" data-ar="data/index.ar.html">data</a> و<a href="testing/" data-ar="testing/index.ar.html">testing</a>.</span></li>
+  </ul>
 
-  <!-- ── To add a course: copy one <article class="course …"> block, set its trailer
-       (videos/renders/<slug>.mp4 + .jpg, from scripts/build-videos.mjs), verb, title
-       link, description, tags and meta, and pick a theme class (e.g. "build", "run", "learn"). ── -->
+  <div class="notebox"><span class="en">Levels and school placement are proposed (100 Foundation, 200 Practitioner, 300 Advanced, 400 Lead). Today’s courses sit at 100–200. Every course is drafted with AI and has not yet been reviewed by a subject expert.</span><span class="ar">المستويات وتوزيع المدارس مقترحة (100 تأسيسي Foundation، 200 ممارس Practitioner، 300 متقدم Advanced، 400 قيادي Lead). دورات اليوم عند 100–200. كل دورة أُعدّت بالذكاء الاصطناعي ولم يراجعها خبير في الموضوع بعدُ (not yet expert-reviewed).</span></div>
+
+  <section class="school" id="school-ai" aria-labelledby="h-ai">
+  <div class="rule"><h2 id="h-ai"><span class="en">AI Engineering</span><span class="ar">هندسة الذكاء الاصطناعي (AI Engineering)</span></h2></div>
   <div class="courses">
 
-    <article class="course career">
-      <video class="trailer" controls preload="none" playsinline poster="videos/renders/career.jpg" aria-label="From Graduate to Hired — course trailer"><source src="videos/renders/career.mp4" type="video/mp4"></video>
-      <span class="verb">Get hired</span>
-      <h2><a class="open" href="career/">From Graduate to Hired</a></h2>
-      <p>For computer science, data science and computer engineering graduates: what employers check for now that AI writes routine code, which role fits you, a study path through this whole library, a portfolio that proves the job, a CV and outreach that get answered, today's interviews, offers, and your first 90 days.</p>
-      <div class="tags"><span class="tag">CS · data · computer engineering grads</span><span class="tag">Role paths</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
-      <div class="meta"><span><b>8</b>modules</span><span><b>24</b>lessons</span><span><b>129</b>resources &amp; templates</span><span><b>155</b>practice questions</span></div>
-      <span class="go">Open course →</span>
-    </article>
-
-    <article class="course build">
-      <video class="trailer" controls preload="none" playsinline poster="videos/renders/vibe.jpg" aria-label="System Design for Vibe Coders — course trailer"><source src="videos/renders/vibe.mp4" type="video/mp4"></video>
-      <span class="verb">Build with AI</span>
-      <h2><a class="open" href="vibe/">System Design for Vibe Coders</a></h2>
-      <p>Production engineering for people who build with AI agents — including non-coders. Every lesson opens with a real outage, teaches the principle, then shows exactly what to ask your agent and how to verify it without reading code.</p>
-      <div class="tags"><span class="tag">Non-coders welcome</span><span class="tag">Incident-driven</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
-      <div class="meta"><span><b>13</b>modules</span><span><b>69</b>lessons</span><span><b>56</b>assessment questions</span><span><b>PDF</b>+ EPUB</span></div>
-      <span class="go">Open course →</span>
-    </article>
-
-    <article class="course learn">
-      <video class="trailer" controls preload="none" playsinline poster="videos/renders/saas.jpg" aria-label="SaaS Building Blocks — course trailer"><source src="videos/renders/saas.mp4" type="video/mp4"></video>
-      <span class="verb">Learn the building blocks</span>
-      <h2><a class="open" href="saas/">SaaS Building Blocks</a></h2>
-      <p>Every SaaS is the same app wearing a different product. Learn the ~25 components they all share — auth, orgs, billing, jobs, webhooks, SSO, audit logs — from beginner to advanced, and study the best open-source repos for each one.</p>
-      <div class="tags"><span class="tag">Junior developers</span><span class="tag">Beginner → Advanced</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span><span class="tag">v2</span></div>
-      <div class="meta"><span><b>10</b>modules</span><span><b>31</b>lessons</span><span><b>220+</b>repos</span><span><b>155</b>quiz questions</span></div>
-      <span class="go">Open course →</span>
-    </article>
-
-    <article class="course govern">
-      <video class="trailer" controls preload="none" playsinline poster="videos/renders/aigp.jpg" aria-label="AI Governance: Zero to Hero — course trailer"><source src="videos/renders/aigp.mp4" type="video/mp4"></video>
-      <span class="verb">Govern AI</span>
-      <h2><a class="open" href="aigp/">AI Governance: Zero to Hero</a></h2>
-      <p>What AI is and why it needs governance; the laws and frameworks that apply — GDPR, the EU AI Act, NIST AI RMF, ISO/IEC 42001; and how to govern AI from first idea to retirement. Aligned to the IAPP AIGP Body of Knowledge v2.1, built around one Gulf bank, with a 100-question mock exam.</p>
-      <div class="tags"><span class="tag">Legal · risk · product · data</span><span class="tag">Covers the AIGP BoK v2.1 · independent</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
-      <div class="meta"><span><b>13</b>modules</span><span><b>40</b>lessons</span><span><b>58</b>laws &amp; frameworks</span><span><b>295</b>practice questions</span></div>
-      <span class="go">Open course →</span>
-    </article>
-
-    <article class="course product">
-      <video class="trailer" controls preload="none" playsinline poster="videos/renders/aipm.jpg" aria-label="AI Product Management: Zero to Hero — course trailer"><source src="videos/renders/aipm.mp4" type="video/mp4"></video>
-      <span class="verb">Ship AI</span>
-      <h2><a class="open" href="aipm/">AI Product Management: Zero to Hero</a></h2>
-      <p>What AI can and cannot do; finding problems worth solving with it; designing AI experiences people trust; specs, evals and experiments; launching, pricing and proving value; strategy and leading AI teams. Built around one Gulf bank's AI product team, with a 60-question practice exam.</p>
-      <div class="tags"><span class="tag">Product · design · business · engineering</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
-      <div class="meta"><span><b>11</b>modules</span><span><b>34</b>lessons</span><span><b>176</b>tools &amp; frameworks</span><span><b>225</b>practice questions</span></div>
-      <span class="go">Open course →</span>
-    </article>
-
-    <article class="course secure">
-      <video class="trailer" controls preload="none" playsinline poster="videos/renders/secai.jpg" aria-label="Secure AI &amp; Application Security: Zero to Hero — course trailer"><source src="videos/renders/secai.mp4" type="video/mp4"></video>
-      <span class="verb">Secure AI</span>
-      <h2><a class="open" href="secai/">Secure AI &amp; Application Security: Zero to Hero</a></h2>
-      <p>How attackers think and get in; threat modelling; web, API, identity and cloud security; crypto, secrets and the software supply chain; prompt injection, data and model attacks, and securing LLM apps and agents; detection, response and running a security programme. Built around one Gulf bank's security team, with a 60-question practice exam.</p>
-      <div class="tags"><span class="tag">Developers · architects · security · AI teams</span><span class="tag">OWASP · MITRE · NIST</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
-      <div class="meta"><span><b>13</b>modules</span><span><b>40</b>lessons</span><span><b>224</b>controls &amp; tools</span><span><b>255</b>practice questions</span></div>
-      <span class="go">Open course →</span>
-    </article>
-
-    <article class="course data">
-      <video class="trailer" controls preload="none" playsinline poster="videos/renders/data.jpg" aria-label="Data Engineering &amp; Analytics: Zero to Hero — course trailer"><source src="videos/renders/data.mp4" type="video/mp4"></video>
-      <span class="verb">Build with data</span>
-      <h2><a class="open" href="data/">Data Engineering &amp; Analytics: Zero to Hero</a></h2>
-      <p>SQL and data modelling; warehouses, lakes and lakehouses; batch and streaming pipelines; dbt, data quality and contracts; metrics, dashboards and experiments people trust; ML and LLM data in production; and governance, privacy and security. Runnable on a laptop, built around one Gulf bank's data team, with a 60-question practice exam.</p>
-      <div class="tags"><span class="tag">Data · analytics · ML</span><span class="tag">Laptop labs</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
-      <div class="meta"><span><b>8</b>modules</span><span><b>24</b>lessons</span><span><b>141</b>tools &amp; patterns</span><span><b>175</b>practice questions</span></div>
-      <span class="go">Open course →</span>
-    </article>
-
-    <article class="course cloud">
-      <video class="trailer" controls preload="none" playsinline poster="videos/renders/cloud.jpg" aria-label="Cloud &amp; DevOps: Zero to Hero — course trailer"><source src="videos/renders/cloud.mp4" type="video/mp4"></video>
-      <span class="verb">Ship and operate</span>
-      <h2><a class="open" href="cloud/">Cloud &amp; DevOps: Zero to Hero</a></h2>
-      <p>Linux, networks and the cloud; containers and Kubernetes; infrastructure as code and GitOps; CI/CD and safe releases; observability, SLOs, on-call and incidents; scaling, disaster recovery, cost and AI workloads. Cloud-neutral and hands-on, built around one Gulf bank's platform team, with a 60-question practice exam.</p>
-      <div class="tags"><span class="tag">Cloud · platform · SRE</span><span class="tag">Cloud-neutral</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
-      <div class="meta"><span><b>8</b>modules</span><span><b>24</b>lessons</span><span><b>132</b>tools &amp; practices</span><span><b>175</b>practice questions</span></div>
-      <span class="go">Open course →</span>
-    </article>
-
-    <article class="course testing">
-      <video class="trailer" controls preload="none" playsinline poster="videos/renders/testing.jpg" aria-label="Software Testing: Zero to Hero in the AI Era — course trailer"><source src="videos/renders/testing.mp4" type="video/mp4"></video>
-      <span class="verb">Test and verify</span>
-      <h2><a class="open" href="testing/">Software Testing: Zero to Hero in the AI Era</a></h2>
-      <p>Test design, unit, integration, API and end-to-end testing; performance, security, reliability and data; CI/CD and exploratory testing — then the AI era: verifying code an AI wrote, using AI as a testing assistant, and testing LLM apps, RAG and agents. Hands-on with free tools and one shared sample system, built around one Gulf bank's quality team, with a 60-question practice exam.</p>
-      <div class="tags"><span class="tag">QA · SDET · quality engineering</span><span class="tag">Testing AI systems</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
-      <div class="meta"><span><b>9</b>modules</span><span><b>27</b>lessons</span><span><b>139</b>tools &amp; techniques</span><span><b>190</b>practice questions</span></div>
-      <span class="go">Open course →</span>
-    </article>
-
-    <article class="course aiapps">
-      <video class="trailer" controls preload="none" playsinline poster="videos/renders/aiapps.jpg" aria-label="Building AI Applications &amp; Agents: Zero to Hero — course trailer"><source src="videos/renders/aiapps.mp4" type="video/mp4"></video>
-      <span class="verb">Build and ship agents</span>
-      <h2><a class="open" href="aiapps/">Building AI Applications &amp; Agents: Zero to Hero</a></h2>
-      <p>How LLM applications really work; prompts, tools and RAG; then the whole delivery job — discovery and requirements, designing with a customer, scope and proposals — and agents with memory, MCP and multi-agent teams, evals and CI gates, security and governance, deployment, cost, operations and handover. Built with Claude Code as your build partner; every lab runs offline for free and unchanged against the real API, around one Gulf bank's IT Service Desk, with a 60-question practice exam.</p>
-      <div class="tags"><span class="tag">Agents · LLM apps · delivery</span><span class="tag">Requirements to production</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
-      <div class="meta"><span><b>17</b>modules</span><span><b>35</b>lessons</span><span><b>159</b>tools &amp; patterns</span><span><b>230</b>practice questions</span></div>
-      <span class="go">Open course →</span>
-    </article>
-
-    <article class="course ainative">
+    <article class="course ainative" data-course="ainative" data-school="ai" data-level="200" data-status="ai-drafted">
       <video class="trailer" controls preload="none" playsinline poster="videos/renders/ainative.jpg" aria-label="A Practical Guide to Becoming an AI-Native Engineer — course trailer"><source src="videos/renders/ainative.mp4" type="video/mp4"></video>
-      <span class="verb">Work AI-native</span>
-      <h2><a class="open" href="ainative/">A Practical Guide to Becoming an AI-Native Engineer</a></h2>
-      <p>What strong engineers do differently with an AI agent in the loop: context first, specs before delegating, small verified steps, evidence over fluency, and automation that keeps your skills sharp. Graded offline labs on one shared Python codebase, with Claude Code as the worked example — context engineering, the daily loop, verifying and reviewing AI-written code, debugging, legacy code, security, hooks, skills and subagents, parallel agents, team playbooks — with a 60-question practice exam.</p>
-      <div class="tags"><span class="tag">Engineers who code · AI coding agents</span><span class="tag">Graded offline labs</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
-      <div class="meta"><span><b>15</b>modules</span><span><b>31</b>lessons</span><span><b>108</b>tools &amp; patterns</span><span><b>210</b>practice questions</span></div>
-      <span class="go">Open course →</span>
+      <span class="verb"><span class="en">Work AI-native</span><span class="ar">اعمل بأسلوب الذكاء الاصطناعي (Work AI-native)</span></span>
+      <h2><a class="open" href="ainative/" data-ar="ainative/index.ar.html"><span class="en">A Practical Guide to Becoming an AI-Native Engineer</span><span class="ar">دليل عملي لتصبح مهندسًا أصيلًا في الذكاء الاصطناعي (A Practical Guide to Becoming an AI-Native Engineer)</span></a></h2>
+      <p><span class="en">What strong engineers do differently with an AI agent in the loop: context first, specs before delegating, small verified steps, evidence over fluency, and automation that keeps your skills sharp. Graded offline labs on one shared Python codebase, with Claude Code as the worked example — context engineering, the daily loop, verifying and reviewing AI-written code, debugging, legacy code, security, hooks, skills and subagents, parallel agents, team playbooks — with a 60-question practice exam.</span><span class="ar">ما يفعله المهندسون الأقوياء بوكيل ذكاء اصطناعي في الحلقة: السياق أولًا، والمواصفات قبل التفويض، وخطوات صغيرة موثّقة، والدليل قبل الطلاقة، مع مختبرات مصحّحة بلا اتصال (graded offline labs) وClaude Code مثالًا تطبيقيًا.</span></p>
+      <div class="badges"><span class="badge flag"><span class="en">Flagship (proposed)</span><span class="ar">دورة رائدة (Flagship) مقترحة</span></span><span class="badge level" data-level="200"><span class="en">Level 200 (proposed)</span><span class="ar">المستوى (Level) 200 (مقترح)</span></span><span class="badge status" data-status="ai-drafted"><span class="en">AI-drafted, not yet expert-reviewed</span><span class="ar">مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد (AI-drafted, not yet expert-reviewed)</span></span></div>
+      <div class="tags en"><span class="tag">Engineers who code · AI coding agents</span><span class="tag">Graded offline labs</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
+      <div class="meta"><span><b>15</b><span class="en">modules</span><span class="ar">وحدات (modules)</span></span><span><b>31</b><span class="en">lessons</span><span class="ar">دروس (lessons)</span></span><span><b>108</b><span class="en">tools &amp; patterns</span><span class="ar">أدوات وأنماط (tools &amp; patterns)</span></span><span><b>210</b><span class="en">practice questions</span><span class="ar">أسئلة تدريب (practice questions)</span></span></div>
+      <span class="go"><span class="en">Open course →</span><span class="ar">افتح الدورة ←</span></span>
     </article>
 
-    <div class="more"><span class="plus">+</span> More courses coming — this shelf grows.</div>
+    <article class="course aiapps" data-course="aiapps" data-school="ai" data-level="100-200" data-status="ai-drafted">
+      <video class="trailer" controls preload="none" playsinline poster="videos/renders/aiapps.jpg" aria-label="Building AI Applications &amp; Agents: Zero to Hero — course trailer"><source src="videos/renders/aiapps.mp4" type="video/mp4"></video>
+      <span class="verb"><span class="en">Build and ship agents</span><span class="ar">ابنِ وأطلق الوكلاء (Build and ship agents)</span></span>
+      <h2><a class="open" href="aiapps/" data-ar="aiapps/index.ar.html"><span class="en">Building AI Applications &amp; Agents: Zero to Hero</span><span class="ar">بناء تطبيقات الذكاء الاصطناعي والوكلاء (Building AI Applications & Agents): من الصفر إلى الاحتراف</span></a></h2>
+      <p><span class="en">How LLM applications really work; prompts, tools and RAG; then the whole delivery job — discovery and requirements, designing with a customer, scope and proposals — and agents with memory, MCP and multi-agent teams, evals and CI gates, security and governance, deployment, cost, operations and handover. Built with Claude Code as your build partner; every lab runs offline for free and unchanged against the real API, around one Gulf bank's IT Service Desk, with a 60-question practice exam.</span><span class="ar">كيف تعمل تطبيقات النماذج اللغوية فعليًا؛ التعليمات والأدوات وRAG؛ ثم مهمة التسليم كاملة من المتطلبات إلى الإنتاج، والوكلاء بذاكرة وMCP وفرق متعددة الوكلاء، والتقييمات وبوابات CI، والأمن والحوكمة والنشر والتكلفة والتشغيل والتسليم.</span></p>
+      <div class="badges"><span class="badge level" data-level="100-200"><span class="en">Level 100-200 (proposed)</span><span class="ar">المستوى (Level) 100-200 (مقترح)</span></span><span class="badge status" data-status="ai-drafted"><span class="en">AI-drafted, not yet expert-reviewed</span><span class="ar">مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد (AI-drafted, not yet expert-reviewed)</span></span></div>
+      <div class="tags en"><span class="tag">Agents · LLM apps · delivery</span><span class="tag">Requirements to production</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
+      <div class="meta"><span><b>17</b><span class="en">modules</span><span class="ar">وحدات (modules)</span></span><span><b>35</b><span class="en">lessons</span><span class="ar">دروس (lessons)</span></span><span><b>159</b><span class="en">tools &amp; patterns</span><span class="ar">أدوات وأنماط (tools &amp; patterns)</span></span><span><b>230</b><span class="en">practice questions</span><span class="ar">أسئلة تدريب (practice questions)</span></span></div>
+      <span class="go"><span class="en">Open course →</span><span class="ar">افتح الدورة ←</span></span>
+    </article>
 
   </div>
+  </section>
+
+  <section class="school" id="school-security" aria-labelledby="h-security">
+  <div class="rule"><h2 id="h-security"><span class="en">Security</span><span class="ar">الأمن (Security)</span></h2></div>
+  <div class="courses">
+
+    <article class="course secure" data-course="secai" data-school="security" data-level="100-200" data-status="ai-drafted">
+      <video class="trailer" controls preload="none" playsinline poster="videos/renders/secai.jpg" aria-label="Secure AI &amp; Application Security: Zero to Hero — course trailer"><source src="videos/renders/secai.mp4" type="video/mp4"></video>
+      <span class="verb"><span class="en">Secure AI</span><span class="ar">أمّن الذكاء الاصطناعي (Secure AI)</span></span>
+      <h2><a class="open" href="secai/" data-ar="secai/index.ar.html"><span class="en">Secure AI &amp; Application Security: Zero to Hero</span><span class="ar">أمن الذكاء الاصطناعي والتطبيقات (Secure AI & Application Security): من الصفر إلى الاحتراف</span></a></h2>
+      <p><span class="en">How attackers think and get in; threat modelling; web, API, identity and cloud security; crypto, secrets and the software supply chain; prompt injection, data and model attacks, and securing LLM apps and agents; detection, response and running a security programme. Built around one Gulf bank's security team, with a 60-question practice exam.</span><span class="ar">كيف يفكّر المهاجمون ويدخلون، ونمذجة التهديدات (threat modelling)، وأمن الويب والواجهات (API) والهوية والسحابة، والتشفير والأسرار وسلسلة توريد البرمجيات، وحقن التعليمات (prompt injection) وهجمات البيانات والنماذج وتأمين تطبيقات النماذج اللغوية والوكلاء، والكشف والاستجابة.</span></p>
+      <div class="badges"><span class="badge flag"><span class="en">Flagship (proposed)</span><span class="ar">دورة رائدة (Flagship) مقترحة</span></span><span class="badge level" data-level="100-200"><span class="en">Level 100-200 (proposed)</span><span class="ar">المستوى (Level) 100-200 (مقترح)</span></span><span class="badge status" data-status="ai-drafted"><span class="en">AI-drafted, not yet expert-reviewed</span><span class="ar">مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد (AI-drafted, not yet expert-reviewed)</span></span></div>
+      <div class="tags en"><span class="tag">Developers · architects · security · AI teams</span><span class="tag">OWASP · MITRE · NIST</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
+      <div class="meta"><span><b>13</b><span class="en">modules</span><span class="ar">وحدات (modules)</span></span><span><b>40</b><span class="en">lessons</span><span class="ar">دروس (lessons)</span></span><span><b>224</b><span class="en">controls &amp; tools</span><span class="ar">ضوابط وأدوات (controls &amp; tools)</span></span><span><b>255</b><span class="en">practice questions</span><span class="ar">أسئلة تدريب (practice questions)</span></span></div>
+      <span class="go"><span class="en">Open course →</span><span class="ar">افتح الدورة ←</span></span>
+    </article>
+
+  </div>
+  </section>
+
+  <section class="school" id="school-gov" aria-labelledby="h-gov">
+  <div class="rule"><h2 id="h-gov"><span class="en">Governance, Risk and Product</span><span class="ar">الحوكمة والمخاطر والمنتج (Governance, Risk and Product)</span></h2></div>
+  <div class="courses">
+
+    <article class="course govern" data-course="aigp" data-school="gov" data-level="100-200" data-status="ai-drafted">
+      <video class="trailer" controls preload="none" playsinline poster="videos/renders/aigp.jpg" aria-label="AI Governance: Zero to Hero — course trailer"><source src="videos/renders/aigp.mp4" type="video/mp4"></video>
+      <span class="verb"><span class="en">Govern AI</span><span class="ar">حوكمة الذكاء الاصطناعي (Govern AI)</span></span>
+      <h2><a class="open" href="aigp/" data-ar="aigp/index.ar.html"><span class="en">AI Governance: Zero to Hero</span><span class="ar">حوكمة الذكاء الاصطناعي (AI Governance): من الصفر إلى الاحتراف</span></a></h2>
+      <p><span class="en">What AI is and why it needs governance; the laws and frameworks that apply — GDPR, the EU AI Act, NIST AI RMF, ISO/IEC 42001; and how to govern AI from first idea to retirement. Covers the AIGP Body of Knowledge v2.1 (independent course; not affiliated with IAPP). Built around one Gulf bank, with a 100-question mock exam.</span><span class="ar">ما الذكاء الاصطناعي ولماذا يحتاج إلى حوكمة (governance)، والقوانين والأطر المنطبقة مثل GDPR وقانون الاتحاد الأوروبي للذكاء الاصطناعي (EU AI Act) وNIST AI RMF وISO/IEC 42001، وكيف تحكم الذكاء الاصطناعي من الفكرة إلى التقاعد. يغطي مجال المعرفة AIGP Body of Knowledge v2.1 (دورة مستقلة غير تابعة لـ IAPP — independent course; not affiliated with IAPP)، مع اختبار تجريبي من 100 سؤال (mock exam).</span></p>
+      <div class="badges"><span class="badge flag"><span class="en">Flagship (proposed)</span><span class="ar">دورة رائدة (Flagship) مقترحة</span></span><span class="badge level" data-level="100-200"><span class="en">Level 100-200 (proposed)</span><span class="ar">المستوى (Level) 100-200 (مقترح)</span></span><span class="badge status" data-status="ai-drafted"><span class="en">AI-drafted, not yet expert-reviewed</span><span class="ar">مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد (AI-drafted, not yet expert-reviewed)</span></span></div>
+      <div class="tags en"><span class="tag">Legal · risk · product · data</span><span class="tag">Covers the AIGP BoK v2.1 · independent</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
+      <div class="meta"><span><b>13</b><span class="en">modules</span><span class="ar">وحدات (modules)</span></span><span><b>40</b><span class="en">lessons</span><span class="ar">دروس (lessons)</span></span><span><b>58</b><span class="en">laws &amp; frameworks</span><span class="ar">قوانين وأطر (laws &amp; frameworks)</span></span><span><b>295</b><span class="en">practice questions</span><span class="ar">أسئلة تدريب (practice questions)</span></span></div>
+      <span class="go"><span class="en">Open course →</span><span class="ar">افتح الدورة ←</span></span>
+    </article>
+
+    <article class="course product" data-course="aipm" data-school="gov" data-level="100-200" data-status="ai-drafted">
+      <video class="trailer" controls preload="none" playsinline poster="videos/renders/aipm.jpg" aria-label="AI Product Management: Zero to Hero — course trailer"><source src="videos/renders/aipm.mp4" type="video/mp4"></video>
+      <span class="verb"><span class="en">Ship AI</span><span class="ar">أطلق منتجات الذكاء الاصطناعي (Ship AI)</span></span>
+      <h2><a class="open" href="aipm/" data-ar="aipm/index.ar.html"><span class="en">AI Product Management: Zero to Hero</span><span class="ar">إدارة منتجات الذكاء الاصطناعي (AI Product Management): من الصفر إلى الاحتراف</span></a></h2>
+      <p><span class="en">What AI can and cannot do; finding problems worth solving with it; designing AI experiences people trust; specs, evals and experiments; launching, pricing and proving value; strategy and leading AI teams. Built around one Gulf bank's AI product team, with a 60-question practice exam.</span><span class="ar">ما يستطيعه الذكاء الاصطناعي وما لا يستطيعه، واختيار المشكلات الجديرة بالحل، وتصميم تجارب يثق بها الناس، والمواصفات والتقييمات (evals) والتجارب، والإطلاق والتسعير وإثبات القيمة، والاستراتيجية وقيادة الفرق.</span></p>
+      <div class="badges"><span class="badge level" data-level="100-200"><span class="en">Level 100-200 (proposed)</span><span class="ar">المستوى (Level) 100-200 (مقترح)</span></span><span class="badge status" data-status="ai-drafted"><span class="en">AI-drafted, not yet expert-reviewed</span><span class="ar">مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد (AI-drafted, not yet expert-reviewed)</span></span></div>
+      <div class="tags en"><span class="tag">Product · design · business · engineering</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
+      <div class="meta"><span><b>11</b><span class="en">modules</span><span class="ar">وحدات (modules)</span></span><span><b>34</b><span class="en">lessons</span><span class="ar">دروس (lessons)</span></span><span><b>176</b><span class="en">tools &amp; frameworks</span><span class="ar">أدوات وأطر (tools &amp; frameworks)</span></span><span><b>225</b><span class="en">practice questions</span><span class="ar">أسئلة تدريب (practice questions)</span></span></div>
+      <span class="go"><span class="en">Open course →</span><span class="ar">افتح الدورة ←</span></span>
+    </article>
+
+  </div>
+  </section>
+
+  <section class="school" id="school-platform" aria-labelledby="h-platform">
+  <div class="rule"><h2 id="h-platform"><span class="en">Platform and Data</span><span class="ar">المنصات والبيانات (Platform and Data)</span></h2></div>
+  <div class="courses">
+
+    <article class="course cloud" data-course="cloud" data-school="platform" data-level="100-200" data-status="ai-drafted">
+      <video class="trailer" controls preload="none" playsinline poster="videos/renders/cloud.jpg" aria-label="Cloud &amp; DevOps: Zero to Hero — course trailer"><source src="videos/renders/cloud.mp4" type="video/mp4"></video>
+      <span class="verb"><span class="en">Ship and operate</span><span class="ar">أطلق وشغّل (Ship and operate)</span></span>
+      <h2><a class="open" href="cloud/" data-ar="cloud/index.ar.html"><span class="en">Cloud &amp; DevOps: Zero to Hero</span><span class="ar">السحابة وDevOps (Cloud & DevOps): من الصفر إلى الاحتراف</span></a></h2>
+      <p><span class="en">Linux, networks and the cloud; containers and Kubernetes; infrastructure as code and GitOps; CI/CD and safe releases; observability, SLOs, on-call and incidents; scaling, disaster recovery, cost and AI workloads. Cloud-neutral and hands-on, built around one Gulf bank's platform team, with a 60-question practice exam.</span><span class="ar">لينكس والشبكات والسحابة، والحاويات (containers) وKubernetes، والبنية كشيفرة (infrastructure as code)، وCI/CD والإصدارات الآمنة، والمراقبة (observability) وأهداف مستوى الخدمة (SLOs) والمناوبة والحوادث، والتوسّع والتعافي من الكوارث والتكلفة وأحمال الذكاء الاصطناعي.</span></p>
+      <div class="badges"><span class="badge level" data-level="100-200"><span class="en">Level 100-200 (proposed)</span><span class="ar">المستوى (Level) 100-200 (مقترح)</span></span><span class="badge status" data-status="ai-drafted"><span class="en">AI-drafted, not yet expert-reviewed</span><span class="ar">مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد (AI-drafted, not yet expert-reviewed)</span></span></div>
+      <div class="tags en"><span class="tag">Cloud · platform · SRE</span><span class="tag">Cloud-neutral</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
+      <div class="meta"><span><b>8</b><span class="en">modules</span><span class="ar">وحدات (modules)</span></span><span><b>24</b><span class="en">lessons</span><span class="ar">دروس (lessons)</span></span><span><b>132</b><span class="en">tools &amp; practices</span><span class="ar">أدوات وممارسات (tools &amp; practices)</span></span><span><b>175</b><span class="en">practice questions</span><span class="ar">أسئلة تدريب (practice questions)</span></span></div>
+      <span class="go"><span class="en">Open course →</span><span class="ar">افتح الدورة ←</span></span>
+    </article>
+
+    <article class="course data" data-course="data" data-school="platform" data-level="100-200" data-status="ai-drafted">
+      <video class="trailer" controls preload="none" playsinline poster="videos/renders/data.jpg" aria-label="Data Engineering &amp; Analytics: Zero to Hero — course trailer"><source src="videos/renders/data.mp4" type="video/mp4"></video>
+      <span class="verb"><span class="en">Build with data</span><span class="ar">ابنِ بالبيانات (Build with data)</span></span>
+      <h2><a class="open" href="data/" data-ar="data/index.ar.html"><span class="en">Data Engineering &amp; Analytics: Zero to Hero</span><span class="ar">هندسة البيانات والتحليلات (Data Engineering & Analytics): من الصفر إلى الاحتراف</span></a></h2>
+      <p><span class="en">SQL and data modelling; warehouses, lakes and lakehouses; batch and streaming pipelines; dbt, data quality and contracts; metrics, dashboards and experiments people trust; ML and LLM data in production; and governance, privacy and security. Runnable on a laptop, built around one Gulf bank's data team, with a 60-question practice exam.</span><span class="ar">SQL ونمذجة البيانات، ومستودعات البيانات وبحيراتها (warehouses, lakes)، وخطوط المعالجة الدفعية والمتدفقة (pipelines)، وجودة البيانات والعقود، والمقاييس ولوحات المتابعة، وبيانات تعلّم الآلة والنماذج اللغوية في الإنتاج، والحوكمة والخصوصية والأمن.</span></p>
+      <div class="badges"><span class="badge level" data-level="100-200"><span class="en">Level 100-200 (proposed)</span><span class="ar">المستوى (Level) 100-200 (مقترح)</span></span><span class="badge status" data-status="ai-drafted"><span class="en">AI-drafted, not yet expert-reviewed</span><span class="ar">مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد (AI-drafted, not yet expert-reviewed)</span></span></div>
+      <div class="tags en"><span class="tag">Data · analytics · ML</span><span class="tag">Laptop labs</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
+      <div class="meta"><span><b>8</b><span class="en">modules</span><span class="ar">وحدات (modules)</span></span><span><b>24</b><span class="en">lessons</span><span class="ar">دروس (lessons)</span></span><span><b>141</b><span class="en">tools &amp; patterns</span><span class="ar">أدوات وأنماط (tools &amp; patterns)</span></span><span><b>175</b><span class="en">practice questions</span><span class="ar">أسئلة تدريب (practice questions)</span></span></div>
+      <span class="go"><span class="en">Open course →</span><span class="ar">افتح الدورة ←</span></span>
+    </article>
+
+    <article class="course testing" data-course="testing" data-school="platform" data-level="100-200" data-status="ai-drafted">
+      <video class="trailer" controls preload="none" playsinline poster="videos/renders/testing.jpg" aria-label="Software Testing: Zero to Hero in the AI Era — course trailer"><source src="videos/renders/testing.mp4" type="video/mp4"></video>
+      <span class="verb"><span class="en">Test and verify</span><span class="ar">اختبر وتحقّق (Test and verify)</span></span>
+      <h2><a class="open" href="testing/" data-ar="testing/index.ar.html"><span class="en">Software Testing: Zero to Hero in the AI Era</span><span class="ar">اختبار البرمجيات (Software Testing): من الصفر إلى الاحتراف في عصر الذكاء الاصطناعي</span></a></h2>
+      <p><span class="en">Test design, unit, integration, API and end-to-end testing; performance, security, reliability and data; CI/CD and exploratory testing — then the AI era: verifying code an AI wrote, using AI as a testing assistant, and testing LLM apps, RAG and agents. Hands-on with free tools and one shared sample system, built around one Gulf bank's quality team, with a 60-question practice exam.</span><span class="ar">تصميم الاختبارات، واختبارات الوحدة والتكامل والواجهات (API) والشاملة (end-to-end)، والأداء والأمن والموثوقية والبيانات، ثم عصر الذكاء الاصطناعي: التحقق من شيفرة كتبها الذكاء الاصطناعي، واستخدامه مساعدًا في الاختبار، واختبار تطبيقات النماذج اللغوية وRAG والوكلاء.</span></p>
+      <div class="badges"><span class="badge level" data-level="100-200"><span class="en">Level 100-200 (proposed)</span><span class="ar">المستوى (Level) 100-200 (مقترح)</span></span><span class="badge status" data-status="ai-drafted"><span class="en">AI-drafted, not yet expert-reviewed</span><span class="ar">مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد (AI-drafted, not yet expert-reviewed)</span></span></div>
+      <div class="tags en"><span class="tag">QA · SDET · quality engineering</span><span class="tag">Testing AI systems</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
+      <div class="meta"><span><b>9</b><span class="en">modules</span><span class="ar">وحدات (modules)</span></span><span><b>27</b><span class="en">lessons</span><span class="ar">دروس (lessons)</span></span><span><b>139</b><span class="en">tools &amp; techniques</span><span class="ar">أدوات وتقنيات (tools &amp; techniques)</span></span><span><b>190</b><span class="en">practice questions</span><span class="ar">أسئلة تدريب (practice questions)</span></span></div>
+      <span class="go"><span class="en">Open course →</span><span class="ar">افتح الدورة ←</span></span>
+    </article>
+
+    <article class="course learn" data-course="saas" data-school="platform" data-level="100-200" data-status="ai-drafted">
+      <video class="trailer" controls preload="none" playsinline poster="videos/renders/saas.jpg" aria-label="SaaS Building Blocks — course trailer"><source src="videos/renders/saas.mp4" type="video/mp4"></video>
+      <span class="verb"><span class="en">Learn the building blocks</span><span class="ar">تعلّم المكوّنات (Learn the building blocks)</span></span>
+      <h2><a class="open" href="saas/" data-ar="saas/index.ar.html"><span class="en">SaaS Building Blocks</span><span class="ar">مكوّنات بناء SaaS (SaaS Building Blocks)</span></a></h2>
+      <p><span class="en">Every SaaS is the same app wearing a different product. Learn the ~25 components they all share — auth, orgs, billing, jobs, webhooks, SSO, audit logs — from beginner to advanced, and study the best open-source repos for each one.</span><span class="ar">كل SaaS هو التطبيق نفسه بمنتج مختلف. تعلّم نحو 25 مكوّنًا (components) مشتركة، مثل المصادقة (auth) والمؤسسات (orgs) والفوترة (billing) وسجلات التدقيق (audit logs)، من المبتدئ إلى المتقدم.</span></p>
+      <div class="badges"><span class="badge level" data-level="100-200"><span class="en">Level 100-200 (proposed)</span><span class="ar">المستوى (Level) 100-200 (مقترح)</span></span><span class="badge status" data-status="ai-drafted"><span class="en">AI-drafted, not yet expert-reviewed</span><span class="ar">مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد (AI-drafted, not yet expert-reviewed)</span></span></div>
+      <div class="tags en"><span class="tag">Junior developers</span><span class="tag">Beginner → Advanced</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span><span class="tag">v2</span></div>
+      <div class="meta"><span><b>10</b><span class="en">modules</span><span class="ar">وحدات (modules)</span></span><span><b>31</b><span class="en">lessons</span><span class="ar">دروس (lessons)</span></span><span><b>220+</b><span class="en">repos</span><span class="ar">مستودعات (repos)</span></span><span><b>155</b><span class="en">quiz questions</span><span class="ar">أسئلة اختبار (quiz questions)</span></span></div>
+      <span class="go"><span class="en">Open course →</span><span class="ar">افتح الدورة ←</span></span>
+    </article>
+
+    <article class="course build" data-course="vibe" data-school="platform" data-level="100-200" data-status="ai-drafted">
+      <video class="trailer" controls preload="none" playsinline poster="videos/renders/vibe.jpg" aria-label="System Design for Vibe Coders — course trailer"><source src="videos/renders/vibe.mp4" type="video/mp4"></video>
+      <span class="verb"><span class="en">Build with AI</span><span class="ar">ابنِ بالذكاء الاصطناعي (Build with AI)</span></span>
+      <h2><a class="open" href="vibe/" data-ar="vibe/index.ar.html"><span class="en">System Design for Vibe Coders</span><span class="ar">تصميم الأنظمة لمبرمجي الفايب (System Design for Vibe Coders)</span></a></h2>
+      <p><span class="en">Production engineering for people who build with AI agents — including non-coders. Every lesson opens with a real outage, teaches the principle, then shows exactly what to ask your agent and how to verify it without reading code.</span><span class="ar">هندسة الإنتاج (production engineering) لمن يبنون مع وكلاء الذكاء الاصطناعي (AI agents)، ومنهم غير المبرمجين. يبدأ كل درس بعطل حقيقي (real outage)، ثم المبدأ، ثم ما تطلبه من وكيلك وكيف تتحقق منه دون قراءة الشيفرة.</span></p>
+      <div class="badges"><span class="badge level" data-level="100-200"><span class="en">Level 100-200 (proposed)</span><span class="ar">المستوى (Level) 100-200 (مقترح)</span></span><span class="badge status" data-status="ai-drafted"><span class="en">AI-drafted, not yet expert-reviewed</span><span class="ar">مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد (AI-drafted, not yet expert-reviewed)</span></span></div>
+      <div class="tags en"><span class="tag">Non-coders welcome</span><span class="tag">Incident-driven</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
+      <div class="meta"><span><b>13</b><span class="en">modules</span><span class="ar">وحدات (modules)</span></span><span><b>69</b><span class="en">lessons</span><span class="ar">دروس (lessons)</span></span><span><b>56</b><span class="en">assessment questions</span><span class="ar">أسئلة تقييم (assessment questions)</span></span><span><b>PDF</b>+ EPUB</span></div>
+      <span class="go"><span class="en">Open course →</span><span class="ar">افتح الدورة ←</span></span>
+    </article>
+
+  </div>
+  </section>
+
+  <section class="school" id="school-early" aria-labelledby="h-early">
+  <div class="rule"><h2 id="h-early"><span class="en">Early Talent</span><span class="ar">المواهب الناشئة (Early Talent)</span></h2></div>
+  <div class="courses">
+
+    <article class="course career" data-course="career" data-school="early" data-level="100" data-status="ai-drafted">
+      <video class="trailer" controls preload="none" playsinline poster="videos/renders/career.jpg" aria-label="From Graduate to Hired — course trailer"><source src="videos/renders/career.mp4" type="video/mp4"></video>
+      <span class="verb"><span class="en">Get hired</span><span class="ar">احصل على وظيفة (Get hired)</span></span>
+      <h2><a class="open" href="career/" data-ar="career/index.ar.html"><span class="en">From Graduate to Hired</span><span class="ar">من خرّيج إلى موظّف (From Graduate to Hired)</span></a></h2>
+      <p><span class="en">For computer science, data science and computer engineering graduates: what employers check for now that AI writes routine code, which role fits you, a study path through this whole library, a portfolio that proves the job, a CV and outreach that get answered, today's interviews, offers, and your first 90 days.</span><span class="ar">لخرّيجي علوم الحاسب وعلوم البيانات وهندسة الحاسب: ما يتحقق منه أصحاب العمل، والدور المناسب لك، ومسار دراسة عبر المكتبة، ومحفظة أعمال (portfolio)، وسيرة ذاتية، ومقابلات اليوم، والعروض، وأول 90 يومًا.</span></p>
+      <div class="badges"><span class="badge level" data-level="100"><span class="en">Level 100 (proposed)</span><span class="ar">المستوى (Level) 100 (مقترح)</span></span><span class="badge status" data-status="ai-drafted"><span class="en">AI-drafted, not yet expert-reviewed</span><span class="ar">مسودّة بالذكاء الاصطناعي، لم يراجعها خبير بعد (AI-drafted, not yet expert-reviewed)</span></span></div>
+      <div class="tags en"><span class="tag">CS · data · computer engineering grads</span><span class="tag">Role paths</span><span class="tag">Self-assessment</span><span class="tag">EN · العربية</span></div>
+      <div class="meta"><span><b>8</b><span class="en">modules</span><span class="ar">وحدات (modules)</span></span><span><b>24</b><span class="en">lessons</span><span class="ar">دروس (lessons)</span></span><span><b>129</b><span class="en">resources &amp; templates</span><span class="ar">موارد وقوالب (resources)</span></span><span><b>155</b><span class="en">practice questions</span><span class="ar">أسئلة تدريب (practice questions)</span></span></div>
+      <span class="go"><span class="en">Open course →</span><span class="ar">افتح الدورة ←</span></span>
+    </article>
+
+    <div class="more"><span class="plus">+</span> <span class="en">More courses coming — this shelf grows.</span><span class="ar">المزيد من الدورات قادم — هذا الرف ينمو. (More courses coming)</span></div>
+  </div>
+  </section>
 
   <div class="foot">
-    <span>Free to read · share the link. Source: <a href="https://github.com/Tamoura">github.com/Tamoura</a></span>
+    <span class="en">Free to read · share the link. Source: <a href="https://github.com/Tamoura">github.com/Tamoura</a></span><span class="ar">مجاني للقراءة · شارك الرابط (free to read).</span>
     <span>Course Library · 2026</span>
-    <p class="notice">Status: drafted with AI; not yet reviewed by a subject expert. Educational material, not legal, financial, security or employment advice. Independent: not affiliated with or endorsed by any certification body or vendor named here; trademarks belong to their owners. <a href="about/">How these courses are made</a> · <a href="https://github.com/Tamoura/system-design-for-vibe-coders/issues/new?template=report-a-problem.yml&amp;title=%5Blibrary%5D%20" rel="noopener">Report a problem</a></p>
+    <p class="notice en">Status: drafted with AI; not yet reviewed by a subject expert. Educational material, not legal, financial, security or employment advice. Independent: not affiliated with or endorsed by any certification body or vendor named here; trademarks belong to their owners. <a href="about/">How these courses are made</a> · <a href="https://github.com/Tamoura/system-design-for-vibe-coders/issues/new?template=report-a-problem.yml&amp;title=%5Blibrary%5D%20" rel="noopener">Report a problem</a></p>
+    <p class="notice ar" lang="ar" dir="rtl">الحالة <bdi>(status)</bdi>: مسودّة أُعدّت بالذكاء الاصطناعي <bdi>(drafted with AI)</bdi>، ولم يراجعها بعدُ خبير في الموضوع <bdi>(subject expert)</bdi>. مادة تعليمية <bdi>(educational material)</bdi>، وليست استشارة قانونية أو مالية أو أمنية أو مهنية <bdi>(legal, financial, security or employment advice)</bdi>. مستقلة <bdi>(independent)</bdi>: غير تابعة لأي جهة شهادات <bdi>(certification body)</bdi> أو مورّد <bdi>(vendor)</bdi> مذكور هنا ولا معتمدة منها، والعلامات التجارية <bdi>(trademarks)</bdi> ملك أصحابها. <a href="about/index.ar.html">كيف تُصنع هذه الدورات <bdi>(How these courses are made)</bdi></a> · <a href="https://github.com/Tamoura/system-design-for-vibe-coders/issues/new?template=report-a-problem.yml&amp;title=%5Blibrary%5D%20" rel="noopener">أبلغ عن مشكلة <bdi>(Report a problem)</bdi></a></p>
   </div>
 
 </div>
+<script>
+(function(){
+  var d=document.documentElement;
+  function set(l){
+    d.lang=l;d.dir=l==='ar'?'rtl':'ltr';
+    var b=document.querySelectorAll('[data-set-lang]');
+    for(var i=0;i<b.length;i++)b[i].setAttribute('aria-pressed',b[i].getAttribute('data-set-lang')===l?'true':'false');
+    var a=document.querySelectorAll('a[data-ar]');
+    for(var j=0;j<a.length;j++){
+      if(!a[j].getAttribute('data-en'))a[j].setAttribute('data-en',a[j].getAttribute('href'));
+      a[j].setAttribute('href',l==='ar'?a[j].getAttribute('data-ar'):a[j].getAttribute('data-en'));
+    }
+    try{localStorage.setItem('lang',l);}catch(e){}
+  }
+  var b=document.querySelectorAll('[data-set-lang]');
+  for(var i=0;i<b.length;i++)b[i].addEventListener('click',function(){set(this.getAttribute('data-set-lang'));});
+  var l='en';
+  try{l=localStorage.getItem('lang')||'en';}catch(e){}
+  if(location.hash==='#ar')l='ar';else if(location.hash==='#en')l='en';
+  if(l==='ar')set('ar');
+})();
+</script>
 </body>
 </html>

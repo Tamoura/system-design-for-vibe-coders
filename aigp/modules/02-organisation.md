@@ -516,7 +516,7 @@ Key points to remember:
 - **Whom:** staff, plus "other persons" acting on the organisation's behalf, such as contractors and service providers operating its AI.
 - **When:** from 2 February 2025, alongside the prohibited practices.
 - **How much:** "sufficient" and "to their best extent", judged in context. There is no mandated curriculum or certificate in the Act. The European Commission has published questions and answers on AI literacy; at the time of writing that guidance indicates that no specific certification is required and that organisations can keep internal records of their measures. Check the current guidance.
-- **Status:** the Commission's November 2025 "Digital Omnibus" proposal included changes to how the AI-literacy duty is framed. At the time of writing (2026) check whether any amendment has been adopted; the exam tests the Act as adopted.
+- **Status:** the Commission's November 2025 "Digital Omnibus" proposal included changes to how the AI-literacy duty is framed. Reports say it was adopted as Regulation (EU) 2026/1744 (last checked 12 November 2026), but sources differ on the final wording of Art. 4 and we have not read the official text. Check EUR-Lex; the exam may still test the original Act.
 
 **Beyond the EU.** Other instruments point the same way. **ISO/IEC 42001** requires the organisation to determine the competence needed by people doing work that affects AI performance, ensure they are competent through education, training or experience, and make people aware of the AI policy and their contribution (its competence and awareness clauses). The **NIST AI RMF** Govern function expects personnel and partners to receive AI risk management training so they can perform their duties. For deployers of high-risk systems, **EU AI Act Art. 26** adds a specific requirement that people assigned to human oversight have the necessary competence, training and authority.
 
@@ -609,7 +609,7 @@ A regulator asks Najm's Frankfurt branch how it complies with the EU AI Act's AI
 
 ## 🧾 Recap
 - AI literacy is the knowledge and understanding needed to use and oversee AI in an informed way and to understand its risks and harms.
-- EU AI Act Art. 4 has applied since 2 February 2025 to providers and deployers; it is proportionate to people's background and context, with no fixed curriculum. Check the status of the Digital Omnibus proposal.
+- EU AI Act Art. 4 has applied since 2 February 2025 to providers and deployers; it is proportionate to people's background and context, with no fixed curriculum. The Digital Omnibus is reported to have changed it; read the current text.
 - Build role-based training, tie it to system access, refresh it on change and measure behaviour.
 - Human overseers need specific training on limitations, automation bias and overriding.
 - Culture (incentives, psychological safety, tone from the top) and protected speak-up channels make the rest work.
