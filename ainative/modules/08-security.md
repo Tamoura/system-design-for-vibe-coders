@@ -236,10 +236,10 @@ Weak entry: "Risk: the agent might do something bad. Control: be careful." Stron
 
 **2. `Bash(git push *)` is denied, yet an agent ran `git -C . push`. What does this show?**
 
-- A. Deny rules cover only the first command of a compound line, not later ones
+- A. Deny rules cover only the first command of a compound line
 - B. Deny rules are checked after allow rules, so an allow rule always wins
 - C. Rules match text; add a hook, a scoped token or branch protection
-- D. The settings file was not committed, so the rule was never applied here
+- D. The settings file was not committed, so the rule was never applied
 
 <details><summary>Answer</summary>
 
@@ -252,7 +252,7 @@ Weak entry: "Risk: the agent might do something bad. Control: be careful." Stron
 - A. Rewrite history to remove it, which makes the key safe again
 - B. Delete the file in a new commit and tell the team to ignore it
 - C. Wait for tonight's CI secret scan to flag the key before acting
-- D. Rotate the key now, then clean the code and decide about the history
+- D. Rotate the key now, then clean the code and decide on history
 
 <details><summary>Answer</summary>
 
@@ -275,9 +275,9 @@ Weak entry: "Risk: the agent might do something bad. Control: be careful." Stron
 
 **5. Salem (platform engineering) wants an unattended refactor with `--dangerously-skip-permissions`. Which setup fits the documentation?**
 
-- A. His laptop, with every deny rule kept in place and his files backed up
-- B. A shared build server with network access to the package registry
-- C. A container with no internet access and no real credentials
+- A. His laptop, with every deny rule kept in place
+- B. A shared build server with network access to the registry
+- C. A container with no internet and no real credentials
 - D. His laptop in auto mode first, switching to bypass once it behaves
 
 <details><summary>Answer</summary>

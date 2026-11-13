@@ -275,7 +275,7 @@ $ git branch rescue 'HEAD@{1}'     # a branch at the lost commit; it deletes not
 
 **5. يريد سالم (Salem)، من هندسة المنصات (platform engineering)، إعادة هيكلة بلا إشراف (an unattended refactor) باستخدام `--dangerously-skip-permissions`. أي إعداد يوافق الوثائق؟ ⁦(Which setup fits the documentation?)⁩**
 
-- A. حاسوبه المحمول (His laptop)، مع إبقاء كل قواعد المنع (every deny rule) في مكانها ونسخ ملفاته احتياطيًا
+- A. حاسوبه المحمول (His laptop)، مع إبقاء كل قواعد المنع (every deny rule) في مكانها
 - B. خادم بناء مشترك (A shared build server) له وصول شبكي إلى سجل الحزم (the package registry) وإلى الإنترنت
 - C. حاوية (a container) بلا إنترنت وبلا بيانات اعتماد حقيقية (no real credentials)
 - D. حاسوبه المحمول في وضع auto أولًا (auto mode first)، ثم التحويل إلى التجاوز (switching to bypass) متى استقام سلوكه
