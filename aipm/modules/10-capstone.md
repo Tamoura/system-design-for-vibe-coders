@@ -155,9 +155,9 @@ Rania's comment: *"Auditors will ask about rows 3 and 7, Khalid about row 8. Row
 **1. Najm Assist's grounding score on fee questions is 92% against a 95% launch bar. Error analysis shows most misses are about one type of international transfer fee. What should Faisal do?**
 
 - A. Launch as planned and fix the issue in the next release
-- B. Lower the bar to 90% because the rest of the results are strong
-- C. Remove that fee type from the assistant's scope, route those questions to a person, and launch the rest if all other bars are met
-- D. Cancel the launch and restart discovery
+- B. Lower the bar to 90% for the whole assistant, because the rest of the results are strong and the gap is small
+- C. Take that fee type out of scope, route those questions to a person, and launch the rest if all other bars are met
+- D. Cancel the launch and restart discovery from the beginning, because the failure shows the team misread what customers need
 
 <details><summary>Answer</summary>
 
@@ -167,23 +167,23 @@ Rania's comment: *"Auditors will ask about rows 3 and 7, Khalid about row 8. Row
 
 **2. Which North Star metric best fits Najm Assist?**
 
-- A. Share of chats that never reach a human agent
-- B. Number of messages sent to the assistant per month
-- C. Customer needs resolved in the app without a repeat contact within seven days
-- D. Average model cost per conversation
+- A. Customer needs resolved in the app, with no repeat contact in seven days
+- B. Number of messages sent to the assistant each month, counted across all customers and channels
+- C. Share of chats that never reach a human agent, measured over the month after launch
+- D. Average model cost per conversation, counted across every chat the assistant handles
 
 <details><summary>Answer</summary>
 
-**C.** It measures real value and cannot be raised by hiding the human option. Containment (A) can rise while service gets worse. B and D are inputs, not outcomes. (🔴 Expert view: Grow.)
+**A.** It measures real value and cannot be raised by hiding the human option. Containment (C) can rise while service gets worse. B and D are inputs, not outcomes. (🔴 Expert view: Grow.)
 
 </details>
 
 **3. Why does the automation map set card freeze at "act with confirmation" at launch, but dispute opening at "draft"?**
 
-- A. Card freeze uses a cheaper model
+- A. Card freeze uses a cheaper model, so its running cost at launch is lower than the cost of opening disputes
 - B. Card freeze is frequent, urgent and easily reversible; disputes start a regulated process with money and deadlines at stake
-- C. Disputes cannot be done through an API
-- D. Customers prefer to write disputes themselves
+- C. Disputes cannot be done through an API, so the assistant can only prepare a draft for the agent to send
+- D. Customers prefer to write disputes themselves, so the assistant only drafts them and never acts
 
 <details><summary>Answer</summary>
 
@@ -193,23 +193,23 @@ Rania's comment: *"Auditors will ask about rows 3 and 7, Khalid about row 8. Row
 
 **4. In the A/B test, the treatment group shows 18% fewer calls to the contact centre but a rise in complaints mentioning the assistant, a pre-agreed guardrail metric. What is the right next step?**
 
-- A. Expand to 100% because the cost saving is large
-- B. Pause the expansion and investigate the complaints before deciding
-- C. Remove complaints from the guardrail list
-- D. Switch to a cheaper model to increase the saving
+- A. Expand to 100% because the cost saving is large and the headline number is clearly better
+- B. Switch to a cheaper model to increase the saving, then run the same test again next month
+- C. Remove complaints from the guardrail list, since the change affects only a small group of users
+- D. Pause the expansion and investigate the complaints before deciding
 
 <details><summary>Answer</summary>
 
-**B.** Guardrail metrics can stop a rollout on their own, however good the headline (Kohavi, Tang and Xu). A and C defeat their purpose. (🟡 Going deeper: Evaluate; 🔴 Expert view.)
+**D.** Guardrail metrics can stop a rollout on their own, however good the headline (Kohavi, Tang and Xu). A and C defeat their purpose. (🟡 Going deeper: Evaluate; 🔴 Expert view.)
 
 </details>
 
 **5. Faisal's cost-per-task model shows the model calls cost a few cents per conversation, while each handoff to a human costs many times more. What does this imply for growth priorities?**
 
-- A. Switching to a cheaper model is the main lever
+- A. Switching to a cheaper model is the main lever, because model calls are the part of the bill the team controls most directly
 - B. Improving resolution on the most common jobs, which reduces handoffs, is likely the biggest lever
 - C. Removing the "talk to a person" option will cut cost safely
-- D. Cost does not matter once the product has launched
+- D. Cost does not matter once the product has launched, because the team can adjust it later
 
 <details><summary>Answer</summary>
 
@@ -390,22 +390,22 @@ And Faisal's **one-page portfolio case study**, rewritten with Rania to meet the
 **1. In an interview, Faisal is asked to "design an AI assistant for relationship managers preparing for client meetings". What is the best way to begin?**
 
 - A. Describe the retrieval pipeline and which model to use
-- B. Clarify who the RM is, what they do to prepare today and where the pain is, then check whether AI is the right tool
-- C. Quote the context window size of the latest models
-- D. Propose a pricing model for the assistant
+- B. Quote the context window size of the latest models and explain how that size limits how much client material the assistant can read
+- C. Propose a pricing model for the assistant, with a price per seat and a rough view of the margin
+- D. Clarify who the RM is, what they do to prepare today and where the pain is, then check whether AI is the right tool
 
 <details><summary>Answer</summary>
 
-**B.** Strong answers start with the user and the job, then question whether AI fits. Leading with architecture (A) is the classic trap Rania stopped in the mock interview. Quoting today's numbers (C) is fragile and off the point. (🟢 The essentials: the answer structure.)
+**D.** Strong answers start with the user and the job, then question whether AI fits. Leading with architecture (A) is the classic trap Rania stopped in the mock interview. Quoting today's numbers (B) is fragile and off the point. (🟢 The essentials: the answer structure.)
 
 </details>
 
 **2. Asked "how would you know our banking assistant is good?", which answer best shows AI PM skill?**
 
-- A. "We'd check customer ratings after launch."
-- B. "We'd use the best model on the public leaderboards."
+- A. "We'd track customer ratings after launch and investigate any month in which the average score falls."
+- B. "We'd choose the model that ranks highest on the public leaderboards and re-check the ranking each quarter."
 - C. "A golden set of real tasks sliced by job and language, with error analysis; an LLM judge calibrated against humans plus red-teaming; then a staged rollout with an agreed criterion and guardrail metrics."
-- D. "Engineering would run unit tests."
+- D. "Engineering would run a full set of unit tests on each release and block any build that fails them."
 
 <details><summary>Answer</summary>
 
@@ -415,10 +415,10 @@ And Faisal's **one-page portfolio case study**, rewritten with Rania to meet the
 
 **3. Faisal wants to publish a portfolio case study about Najm Assist. Which approach is right?**
 
-- A. Include the internal dashboard screenshots to prove the results
-- B. Describe the decision, evidence, trade-off and result at a level of detail the bank accepts, state his own role precisely, and remove numbers he is not allowed to share
-- C. Say "I built Najm Assist" to keep it short
-- D. Include only the parts that went well
+- A. Include the internal dashboard screenshots to prove the results, and add a line explaining how the team measured them for readers who want to check the numbers
+- B. Describe the decision, evidence and result at a level of detail the bank accepts, state his own role precisely, and remove numbers he may not share
+- C. Say "I built Najm Assist" to keep the story short
+- D. Include only the parts that went well, so the case study stays short and reads as a clear success story
 
 <details><summary>Answer</summary>
 
@@ -428,23 +428,23 @@ And Faisal's **one-page portfolio case study**, rewritten with Rania to meet the
 
 **4. A job advert asks for a PM to own "model access, eval tooling and guardrails used by all product teams". Which role shape is this?**
 
-- A. AI feature PM
-- B. AI-native product PM
-- C. AI platform PM
-- D. Data/ML PM
+- A. AI platform PM, who builds shared tools that other teams use
+- B. AI-native product PM, who owns a customer-facing AI product
+- C. AI feature PM, who adds AI to one team's existing journey
+- D. Data/ML PM, who owns datasets and training pipelines for models
 
 <details><summary>Answer</summary>
 
-**C.** An internal platform that other teams build on is a platform role, probed on developer experience, reuse and built-in governance. An AI-native product PM (B) owns a customer-facing product whose core value is AI. (🟢 The essentials: role shapes.)
+**A.** An internal platform that other teams build on is a platform role, probed on developer experience, reuse and built-in governance. An AI-native product PM (B) owns a customer-facing product whose core value is AI. (🟢 The essentials: role shapes.)
 
 </details>
 
 **5. A new, cheaper model is released. What should an AI PM following a sustainable learning cadence do?**
 
-- A. Switch production to it immediately to save cost
-- B. Ignore it until competitors adopt it
-- C. Run the product's own eval suite against it and decide based on quality, cost and risk for the product's tasks
-- D. Rely on its public benchmark scores
+- A. Switch production to it immediately to save cost, since a cheaper model from the same vendor is likely to behave much the same
+- B. Ignore it until competitors adopt it, so the team never pays for a model that others have not yet proven
+- C. Run the product's own eval suite on it, then decide on quality, cost and risk
+- D. Rely on its public benchmark scores, since those compare it with older models on the same tasks
 
 <details><summary>Answer</summary>
 

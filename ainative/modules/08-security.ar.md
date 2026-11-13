@@ -236,10 +236,10 @@ $ git branch rescue 'HEAD@{1}'     # a branch at the lost commit; it deletes not
 
 **2. `Bash(git push *)` ممنوع بقاعدة (is denied)، ومع ذلك نفّذ وكيل `git -C . push`. ماذا يُظهر ذلك؟ ⁦(What does this show?)⁩**
 
-- A. قواعد المنع تغطي الأمر الأول فقط من السطر المركّب (only the first command of a compound line)
-- B. تُفحص قواعد المنع بعد قواعد السماح (checked after allow rules)، فانتصرت قاعدة السماح (the allow rule won)
-- C. القواعد تطابق النص (Rules match text)؛ فأضف خطافًا (a hook) أو رمزًا محدود النطاق (a scoped token) أو حماية للفرع (branch protection)
-- D. لم يُودَع ملف الإعدادات (was not committed)، فلم تُطبَّق القاعدة قط (never applied)
+- A. قواعد المنع تغطي الأمر الأول فقط من السطر المركّب (only the first command of a compound line)، ولا تفحص ما يليه
+- B. تُفحص قواعد المنع بعد قواعد السماح (checked after allow rules)، فتنتصر قاعدة السماح دائمًا (an allow rule always wins)
+- C. القواعد تطابق النص (Rules match text)؛ فأضف خطافًا (a hook) أو رمزًا محدود النطاق أو حماية للفرع
+- D. لم يُودَع ملف الإعدادات (was not committed) في المستودع، فلم تُطبَّق القاعدة قط (never applied) في أي جلسة
 
 <details><summary>الإجابة</summary>
 
@@ -252,7 +252,7 @@ $ git branch rescue 'HEAD@{1}'     # a branch at the lost commit; it deletes not
 - A. أعد كتابة التاريخ لإزالته (Rewrite history)، فيصير المفتاح آمنًا من جديد (makes the key safe again)
 - B. احذف الملف في إيداع جديد (Delete the file in a new commit) واطلب من الفريق تجاهله (tell the team to ignore it)
 - C. انتظر فحص الأسرار في التكامل المستمر الليلة (tonight's CI secret scan) ليشير إلى المفتاح قبل أن تتصرف
-- D. دوّر المفتاح الآن (Rotate the key now)، ثم نظّف الشيفرة وقرّر بشأن التاريخ (decide on history)
+- D. دوّر المفتاح الآن (Rotate the key now)، ثم نظّف الشيفرة (clean the code) وقرّر بشأن التاريخ (decide on history) بعد ذلك
 
 <details><summary>الإجابة</summary>
 
@@ -262,10 +262,10 @@ $ git branch rescue 'HEAD@{1}'     # a branch at the lost commit; it deletes not
 
 **4. يقترح وكيل `pip install fastcsv-helpers` ويُحَلّ الاسم على الفهرس (the name resolves on the index). ماذا تستنتج؟ ⁦(What do you conclude?)⁩**
 
-- A. الحزمة آمنة، لأن الفهرس لا يسرد إلا حزمًا جرى فحصها (only packages that were checked)
+- A. الحزمة آمنة (It is safe)، لأن الفهرس لا يسرد إلا حزمًا جرى فحصها (checked packages)
 - B. لا شيء بعد (Nothing yet): يقرر شخص (a person decides) مستعينًا بقائمة السماح (allow-list) وملف القفل (lockfile)
-- C. الحزمة آمنة إن لم يُظهر سجل التثبيت أخطاء أو تحذيرات (no errors or warnings)
-- D. اخترعها النموذج (invented by the model)، فتجاهل الاقتراح
+- C. الحزمة آمنة (It is safe) إن لم يُظهر سجل التثبيت (the install log) أخطاء أو تحذيرات (errors or warnings)
+- D. اخترعها النموذج (invented by the model)، فتجاهل الاقتراح ولا تبحث عن الاسم
 
 <details><summary>الإجابة</summary>
 
@@ -275,9 +275,9 @@ $ git branch rescue 'HEAD@{1}'     # a branch at the lost commit; it deletes not
 
 **5. يريد سالم (Salem)، من هندسة المنصات (platform engineering)، إعادة هيكلة بلا إشراف (an unattended refactor) باستخدام `--dangerously-skip-permissions`. أي إعداد يوافق الوثائق؟ ⁦(Which setup fits the documentation?)⁩**
 
-- A. حاسوبه المحمول (His laptop)، مع إبقاء كل قواعد المنع (every deny rule kept in place)
-- B. خادم بناء مشترك (A shared build server) له وصول شبكي إلى السجل (the registry)
-- C. حاوية بلا إنترنت وبلا بيانات اعتماد حقيقية (a container with no internet and no real credentials)
+- A. حاسوبه المحمول (His laptop)، مع إبقاء كل قواعد المنع (every deny rule) في مكانها
+- B. خادم بناء مشترك (A shared build server) له وصول شبكي إلى سجل الحزم (the package registry) وإلى الإنترنت
+- C. حاوية (a container) بلا إنترنت وبلا بيانات اعتماد حقيقية (no real credentials)
 - D. حاسوبه المحمول في وضع auto أولًا (auto mode first)، ثم التحويل إلى التجاوز (switching to bypass) متى استقام سلوكه
 
 <details><summary>الإجابة</summary>
@@ -610,8 +610,8 @@ Time spent:         (you / the agent)
 **2. مدخل الخطاف هو النص `not json`. ماذا ينبغي أن يفعل الحارس؟ ⁦(What should a guard do?)⁩**
 
 - A. يخرج بالرمز 0 (Exit 0)، لأنه لا يوجد أمر قد يكون خطرًا (no command that could be dangerous)
-- B. يخرج بالرمز 2 مع سبب (Exit 2 with a reason)، لأن الخروج 1 كان سيدع النداء يعمل (exit 1 would let the call run)
-- C. ينهار مع تتبّع للمكدس (Crash with a traceback)، ليسهل ملاحظة الفشل
+- B. يخرج بالرمز 2 مع سبب (Exit 2 with a reason)، لأن الخروج 1 يدع النداء يعمل
+- C. ينهار مع تتبّع للمكدس (Crash with a traceback)، ليسهل ملاحظة الفشل (the failure is easy to notice)
 - D. يطبع تحذيرًا ويخرج بالرمز 1 (Print a warning and exit 1)، ليقرر المستخدم
 
 <details><summary>الإجابة</summary>
@@ -622,23 +622,23 @@ Time spent:         (you / the agent)
 
 **3. الشرط `if "rm -rf" in command` يحجب `git commit -m "docs: why rm -rf is blocked"`. ما الإصلاح؟ ⁦(What is the fix?)⁩**
 
-- A. أضف `git commit` إلى قائمة أوامر مسموحة دائمًا (always allowed)
-- B. ابحث عن `rm -rf` في بداية سطر الأوامر فقط (only at the very start)
-- C. قسّم السطر إلى رموز (Tokenise the line)، وابحث عن كل برنامج، واحكم على البرنامج وخياراته (judge the program and its flags)
-- D. حوِّل الأمر إلى أحرف صغيرة (Lower-case the command) لتُقارَن التهجئات باتساق (compared consistently)
+- A. قسّم السطر إلى رموز (Tokenise the line)، وابحث عن كل برنامج، واحكم على البرنامج وخياراته (judge the program and its flags)
+- B. ابحث عن `rm -rf` في بداية سطر الأوامر فقط (only at the very start of the command line)، وتجاهل ما بعدها
+- C. أضف `git commit` إلى قائمة أوامر مسموحة دائمًا (always allowed)، حتى لا يُحجب مرة أخرى
+- D. حوِّل الأمر إلى أحرف صغيرة (Lower-case the command) لتُقارَن التهجئات (spellings) باتساق (compared consistently)
 
 <details><summary>الإجابة</summary>
 
-**C.** الرسالة ليست أمرًا (A message is not a command)؛ والنص المقتبس يبقى رمزًا واحدًا (quoted text stays one token). فالسماح الدائم بـ`git commit` سيمرّر `git commit && rm -rf x`. 🟡 احكم على الشكل (Judge the shape).
+**A.** الرسالة ليست أمرًا (A message is not a command)؛ والنص المقتبس يبقى رمزًا واحدًا (quoted text stays one token). فالسماح الدائم بـ`git commit` سيمرّر `git commit && rm -rf x`. 🟡 احكم على الشكل (Judge the shape).
 
 </details>
 
 **4. تحوي قائمة السماح `colourlib`؛ ويضيف فرع `colorlib==1.2.3`. ماذا ينبغي أن يفعل الفحص؟ ⁦(What should the check do?)⁩**
 
-- A. يُبلغ عنها (Flag it)، لأن التطبيع (normalising) لا يطوي إلا حالة الأحرف والفواصل (case and separators)
-- B. يقبلها (Accept it)، لأن تطبيع الأسماء يعامل التهجئتين على أنهما متساويتان
-- C. يقبلها إن بدا الإصدار إصدارًا حديثًا من المكتبة (a recent release)
-- D. يبلغ عنها فقط إن غابت أيضًا عن ملف القفل (the lockfile)
+- A. يُبلغ عنها (Flag it)، لأن التطبيع (normalising) لا يطوي إلا حالة الأحرف والفواصل
+- B. يقبلها (Accept it)، لأن تطبيع الأسماء (normalising names) يعامل التهجئتين على أنهما متساويتان في كل حال
+- C. يقبلها (Accept it) إن بدا الإصدار إصدارًا حديثًا من المكتبة (a recent release)، وكان رقمه مألوفًا
+- D. يبلغ عنها (Flag it) فقط إن غابت أيضًا عن ملف القفل (the lockfile)
 
 <details><summary>الإجابة</summary>
 
@@ -648,10 +648,10 @@ Time spent:         (you / the agent)
 
 **5. ينتهي `ailab grade m08` بـ`PASSED`. ماذا تستطيع أن تستنتج؟ ⁦(What can you conclude?)⁩**
 
-- A. إعدادك آمن (Your setup is safe)، لأن المُقيِّم جرّب كل أمر خطر
-- B. حمّل Claude Code الإعدادات، لأن الملف حُلّل بوصفه JSON صالحًا (parsed as valid JSON)
-- C. البيئة المعزولة مفعّلة (The sandbox is on)، لأن الحارس حجب الأوامر التجريبية
-- D. ملفاتك تسلك سلوكًا صحيحًا على عينات المُقيِّم (behave on the grader's samples)، ولا شيء أكثر
+- A. إعدادك آمن (Your setup is safe)، لأن المُقيِّم جرّب كل أمر خطر (every dangerous command)
+- B. حمّل Claude Code الإعدادات (loaded the settings)، لأن الملف حُلّل بوصفه JSON صالحًا
+- C. البيئة المعزولة مفعّلة (The sandbox is on)، لأن الحارس حجب الأوامر التجريبية (the sample commands)
+- D. ملفاتك سليمة على عينات المُقيِّم (the grader's samples) ولا شيء أكثر
 
 <details><summary>الإجابة</summary>
 

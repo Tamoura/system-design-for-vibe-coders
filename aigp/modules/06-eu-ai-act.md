@@ -222,7 +222,7 @@ She adds one clause to Najm's AI policy:
 **1. Najm Bank is headquartered in Doha. Its data-science team built a credit-scoring model that the Frankfurt branch uses to decide loan applications from EU residents. What is Najm's position under the EU AI Act?**
 
 - A. Out of scope, because the model was developed and hosted outside the EU
-- B. Provider and deployer of a high-risk AI system
+- B. Both provider and deployer of a high-risk AI system
 - C. Importer, because it brought a non-EU system into the EU
 - D. Deployer only, because it never sold the model
 
@@ -234,10 +234,10 @@ She adds one clause to Najm's AI policy:
 
 **2. Which of the following is a prohibited practice under Article 5?**
 
-- A. A customer chatbot that does not state it is an AI
+- A. A customer chatbot that does not tell users it is an AI system
 - B. A model evaluating the creditworthiness of individual loan applicants
 - C. A system inferring call-centre agents' emotions from their voices to manage performance
-- D. A model detecting fraudulent card transactions
+- D. A model detecting fraudulent card transactions for review
 
 <details><summary>Answer</summary>
 
@@ -248,9 +248,9 @@ She adds one clause to Najm's AI policy:
 **3. A provider wants to rely on the Article 6(3) derogation because its Annex III system performs only a preparatory task. In which situation can it NOT do so?**
 
 - A. The system performs profiling of natural persons
-- B. The system is sold only to SMEs
-- C. The system was developed outside the EU
-- D. The system is used alongside human review
+- B. The system is sold only to small and medium-sized firms
+- C. The system was developed and trained outside the EU
+- D. The system is used alongside a final human review step
 
 <details><summary>Answer</summary>
 
@@ -273,10 +273,10 @@ She adds one clause to Najm's AI policy:
 
 **5. Which of the following falls OUTSIDE the scope of the EU AI Act?**
 
-- A. A non-EU provider whose AI system's output is used in the EU
+- A. A provider based outside the EU whose AI system's output is used in the EU
 - B. An open-source AI system placed on the market as a high-risk system
-- C. A person in Berlin using an AI image generator to make birthday cards for family
-- D. An EU importer of a non-EU vendor's AI system
+- C. A person in Berlin using an AI image generator for family birthday cards
+- D. An EU importer bringing a non-EU vendor's AI system onto the market
 
 <details><summary>Answer</summary>
 
@@ -487,9 +487,9 @@ This is why Yusuf's contract (11.2) must secure instructions, log access, change
 
 **1. Which of the following is NOT one of the Articles 9–15 requirements for high-risk AI systems?**
 
-- A. A risk management system
-- B. Data and data governance
-- C. Human oversight
+- A. A risk management system across the life cycle
+- B. Data and data governance of the datasets used
+- C. Human oversight designed into the system
 - D. A fundamental rights impact assessment
 
 <details><summary>Answer</summary>
@@ -500,10 +500,10 @@ This is why Yusuf's contract (11.2) must secure instructions, log access, change
 
 **2. Najm buys a credit-scoring system from an EU vendor that has completed its conformity assessment, to evaluate EU retail loan applicants. Before first use, what must Najm do in addition to its other deployer duties?**
 
-- A. Nothing further; the vendor's conformity assessment covers everything
+- A. Nothing further; the vendor's completed conformity assessment covers all the duties
 - B. Carry out a FRIA and notify the market-surveillance authority of the results
-- C. Obtain a notified-body certificate for its own use
-- D. Register as the provider in the EU database
+- C. Obtain its own notified-body certificate before using the system at all
+- D. Register Najm as the provider of this system in the EU database before first use
 
 <details><summary>Answer</summary>
 
@@ -526,9 +526,9 @@ This is why Yusuf's contract (11.2) must secure instructions, log access, change
 
 **4. A provider learns that its high-risk system's malfunction is reasonably likely to have caused serious harm to a person's health. Under the general rule, what is the latest it may report to the market-surveillance authority?**
 
-- A. 72 hours after becoming aware
-- B. 15 days after becoming aware
-- C. 30 days after becoming aware
+- A. Within 72 hours of becoming aware of the incident
+- B. Within 15 days of becoming aware of the incident
+- C. Within 30 days of becoming aware of the incident
 - D. In the next annual post-market monitoring report
 
 <details><summary>Answer</summary>
@@ -539,10 +539,10 @@ This is why Yusuf's contract (11.2) must secure instructions, log access, change
 
 **5. An applicant at Najm's Frankfurt branch is refused a loan after the high-risk credit model scored her poorly and an officer confirmed the decision. What is she entitled to under Article 86, and from whom?**
 
-- A. The model's source code and training data, from the provider
-- B. Nothing, because a human confirmed the decision
+- A. The model's source code, model weights and full training data, from the provider
+- B. Nothing at all, because a human officer reviewed and confirmed the final decision
 - C. A clear and meaningful explanation of the AI's role and the main elements of the decision, from Najm as deployer
-- D. The full technical documentation, from the market-surveillance authority
+- D. The complete technical documentation of the system and its logs, from the market-surveillance authority
 
 <details><summary>Answer</summary>
 
@@ -771,10 +771,10 @@ Layla brings a **GenAI and transparency decision record** to the AI Governance C
 
 **3. Najm builds its customer chatbot on a third-party large language model and deploys it on its website for EU customers. The digital team wants to remove the statement that users are talking to an AI. What does the AI Act require?**
 
-- A. Nothing, because the chatbot is not high-risk
-- B. The LLM company must add the disclosure, because it is the GPAI model provider
-- C. Najm, as provider of the chatbot system, must ensure users are informed they are interacting with an AI, unless that is obvious from the context
-- D. Disclosure is needed only if the chatbot generates deepfakes
+- A. Nothing, because the chatbot is not a high-risk AI system and so carries no disclosure duty at all
+- B. The LLM company must add the disclosure, because it is the provider of the GPAI model
+- C. Najm, as chatbot provider, must tell users they are dealing with an AI, unless obvious from context
+- D. Disclosure is needed only if the chatbot generates deepfake content such as images, audio or video
 
 <details><summary>Answer</summary>
 
@@ -798,7 +798,7 @@ Layla brings a **GenAI and transparency decision record** to the AI Governance C
 **5. Which obligations have applied since 2 February 2025?**
 
 - A. GPAI model obligations and the penalties regime
-- B. Prohibited practices and the AI-literacy duty
+- B. The prohibited practices and the AI-literacy duty
 - C. Annex III high-risk obligations and Art. 50 transparency
 - D. High-risk obligations for AI in Annex I regulated products
 
