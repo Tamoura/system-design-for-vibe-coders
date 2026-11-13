@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>الذكاء الاصطناعي الوكيلي في QDB — دليل التشغيل في بيئة الإنتاج</title>
+<title>الذكاء الاصطناعي الوكيلي — دليل التشغيل في بيئة الإنتاج</title>
 <style>
 :root {
   --bg: #faf9f6; --panel: #ffffff; --ink: #1f2430; --muted: #5c6470;
@@ -205,12 +205,12 @@ main [id]{scroll-margin-top:calc(var(--agx-bar-h,44px) + 12px)}
 <header class="doc-header">
   <a class="lang-link" href="production-playbook.html" hreflang="en" lang="en">English</a>
   <span class="badge">دليل التشغيل · تحديث يوليو 2026</span>
-  <h1>الذكاء الاصطناعي الوكيلي في QDB — دليل التشغيل في بيئة الإنتاج</h1>
+  <h1>الذكاء الاصطناعي الوكيلي — دليل التشغيل في بيئة الإنتاج</h1>
   <p>تشغيل الوكلاء موظفين رقميين في بنك خاضع للتنظيم</p>
 </header>
 <h1 id="running-ai-agents-in-production-in-a-regulated-bank">تشغيل وكلاء (agents) الذكاء الاصطناعي (AI) في بيئة الإنتاج (production) داخل بنك خاضع للتنظيم (regulated bank)<a class="anchor" href="#running-ai-agents-in-production-in-a-regulated-bank" aria-label="رابط إلى القسم">#</a></h1>
-<p><strong>دليل تشغيل (playbook) لبنك قطر للتنمية (QDB): الوكلاء (agents) بوصفهم موظفين رقميين (digital employees) — كيف تبنيهم، وتؤمّنهم، وتربطهم، وتحكمهم، وتقيّمهم، وتضع لهم الحواجز الوقائية (guardrails)، وترصدهم، وتدير إصداراتهم.</strong></p>
-<p>هذه الوثيقة هي دليل التشغيل (playbook) الذي يقف خلف التنفيذ المرجعي (reference implementation) <code>qdb-agent-framework</code> في هذا المستودع (repo). يشرح كل قسم المبدأ، والممارسة المعتمدة في القطاع (industry-standard practice)، وكيف يطبّقه الإطار (framework) اليوم (مع الإشارة إلى الملفات)، وما الذي بقي إنجازه قبل النشر الفعلي في بيئة الإنتاج (production deployment) ضمن بيئة خاضعة للتنظيم (regulated environment).</p>
+<p><strong>دليل تشغيل (playbook) لمؤسستك: الوكلاء (agents) بوصفهم موظفين رقميين (digital employees) — كيف تبنيهم، وتؤمّنهم، وتربطهم، وتحكمهم، وتقيّمهم، وتضع لهم الحواجز الوقائية (guardrails)، وترصدهم، وتدير إصداراتهم.</strong></p>
+<p>هذه الوثيقة هي دليل التشغيل (playbook) الذي يقف خلف التنفيذ المرجعي (reference implementation) <code>agent-framework</code> في هذا المستودع (repo). يشرح كل قسم المبدأ، والممارسة المعتمدة في القطاع (industry-standard practice)، وكيف يطبّقه الإطار (framework) اليوم (مع الإشارة إلى الملفات)، وما الذي بقي إنجازه قبل النشر الفعلي في بيئة الإنتاج (production deployment) ضمن بيئة خاضعة للتنظيم (regulated environment).</p>
 <hr>
 <h2 id="1-the-operating-model-agents-as-digital-employees">1. نموذج التشغيل (operating model): الوكلاء (agents) بوصفهم موظفين رقميين (digital employees)<a class="anchor" href="#1-the-operating-model-agents-as-digital-employees" aria-label="رابط إلى القسم">#</a></h2>
 <p>الإطار الذي طرحه الرئيس التنفيذي (the CEO&#39;s framing) — &quot;الوكلاء (agents) بوصفهم موظفين/مستشارين&quot; — هو النموذج الذهني (mental model) الصحيح تمامًا لمؤسسة خاضعة للتنظيم (regulated institution)، لأن كل ما يعرف البنك أصلًا كيف يفعله مع <em>الأشخاص</em> ينتقل إلى الوكلاء:</p>
@@ -306,7 +306,7 @@ main [id]{scroll-margin-top:calc(var(--agx-bar-h,44px) + 12px)}
 <h3 id="32-least-privilege-via-tool-allowlists">3.2 أقل صلاحية (least privilege) عبر القوائم المسموحة للأدوات (tool allowlists)<a class="anchor" href="#32-least-privilege-via-tool-allowlists" aria-label="رابط إلى القسم">#</a></h3>
 <p>هذه أكثر ضوابط (controls) الرقابة فاعلية على الإطلاق. لا يستطيع الوكيل (agent) فعليًا استدعاء أداة (tool call) ليست في قائمته المسموحة (allowlist) — ويُفرض ذلك في الشيفرة (code) لا في الـprompt:</p>
 <ul>
-<li><code>allowed_tools</code> / <code>denied_tools</code> في كل سياسة (policy) (انظر <code>policies/it-operations.yaml</code>، الذي يمنع <code>qdb.data.query_core_banking</code> عن وكيل (agent) تقنية المعلومات (IT)).</li>
+<li><code>allowed_tools</code> / <code>denied_tools</code> في كل سياسة (policy) (انظر <code>policies/it-operations.yaml</code>، الذي يمنع <code>data.query_core_banking</code> عن وكيل (agent) تقنية المعلومات (IT)).</li>
 <li>يحلّ سجلّ الأدوات (tool registry) (<code>src/core/tool-registry.ts</code>) الاستدعاءات فقط مقابل سياسة الوكيل (agent policy)؛ ويصرّح البيان (manifest) (<code>src/core/tool-manifest.ts</code>) بـ<code>operationType</code> لكل أداة (READ/MUTATE) وبأقصى تصنيف للبيانات (maximum data classification) مسموح به.</li>
 <li>تعامل مع قائمة الأدوات (tool list) كأنها وثيقة مراجعة وصول (access-review artifact): إعادة اعتماد ربع سنوية (quarterly recertification) من الفريق المالك (owner team)، تمامًا مثل مراجعة وصول المستخدمين (user access review).</li>
 </ul>

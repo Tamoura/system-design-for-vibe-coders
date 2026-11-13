@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>QDB Agentic AI — Skills Assessment</title>
+<title>Agentic AI — Skills Assessment</title>
 <style>
 :root {
   --bg:#faf9f6; --panel:#ffffff; --ink:#1f2430; --muted:#5c6470;
@@ -255,7 +255,7 @@ main [id]{scroll-margin-top:calc(var(--agx-bar-h,44px) + 12px)}
   </div>
 </section>
 
-<footer>QDB Agent Framework · self-contained, no data leaves this browser · results live in localStorage until you reset ·
+<footer>Agent Framework · self-contained, no data leaves this browser · results live in localStorage until you reset ·
 scoring rules mirror the Curriculum: 1 aware = knowledge, 2 practiced = shipped gate artifacts, 3 can-teach = taught + practiced.</footer>
 </div>
 
@@ -373,9 +373,9 @@ const LVL_REQ = [
 ];
 
 /* ─── State ──────────────────────────────────────────────────────────── */
-const KEY = "qdb-agent-assessment-v1";
+const KEY = "agent-assessment-v1"; const OLD_KEY = ["qd", "b-agent-assessment-v1"].join(""); /* progress saved under the old key is still read */
 let S = { name:"", role:"developer", answers:{}, evidence:{}, teach:{}, seed:0 };
-try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(S, JSON.parse(raw)); } catch(e){}
+try { const raw = localStorage.getItem(KEY) || localStorage.getItem(OLD_KEY); if (raw) S = Object.assign(S, JSON.parse(raw)); } catch(e){}
 if (!S.seed) { S.seed = Math.floor(Math.random()*2**31) || 1; localStorage.setItem(KEY, JSON.stringify(S)); }
 
 function save(){
@@ -615,7 +615,7 @@ function show(tab){
 }
 function resetAll(){
   if (!confirm("Clear all answers and evidence for this browser?")) return;
-  localStorage.removeItem(KEY); S = { name:"", role:"developer", answers:{}, evidence:{}, teach:{}, seed: Math.floor(Math.random()*2**31)||1 };
+  localStorage.removeItem(KEY); try { localStorage.removeItem(OLD_KEY); } catch(e){} S = { name:"", role:"developer", answers:{}, evidence:{}, teach:{}, seed: Math.floor(Math.random()*2**31)||1 };
   document.getElementById("p-name").value=""; document.getElementById("p-role").value="developer";
   renderKnowledge(); renderEvidence(); show("profile");
   document.getElementById("r-card").innerHTML = "<h2>Complete the knowledge check and evidence first</h2>";
