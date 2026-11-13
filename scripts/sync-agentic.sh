@@ -2,13 +2,18 @@
 # Sync the agentic course into this library's /agentic/ folder.
 #
 # The agentic course's CANONICAL source is the separate AI-agents repo
-# (qdb-agent-framework/docs). This library only hosts a published COPY under
+# (its framework folder, docs/). This library only hosts a published COPY under
 # /agentic/. Run this after updating the agentic curriculum so the published
 # site stays current.
 #
+# After the copy and the BLOCKED-text guard, two scripts run on the copied pages, in this order:
+#   1. scripts/agentic-neutral.mjs  removes the name of the real organisation the pages were written
+#                                   for (explicit rules, English and Arabic; fails if any mention is left)
+#   2. scripts/agentic-nav.mjs      adds the site navigation
+#
 # Usage:
-#   1. In the AI-agents repo:  cd qdb-agent-framework && npm run docs:html
-#   2. Here:  AGENTIC_DOCS=/path/to/AI-agents/qdb-agent-framework/docs ./scripts/sync-agentic.sh
+#   1. In the AI-agents repo:  cd <framework folder> && npm run docs:html
+#   2. Here:  AGENTIC_DOCS=/path/to/AI-agents/<framework folder>/docs ./scripts/sync-agentic.sh
 #      (AGENTIC_DOCS defaults to a sibling checkout: ../AI-agents/qdb-agent-framework/docs)
 #   3. Review `git diff agentic/`, then commit and push to publish.
 set -euo pipefail
@@ -77,6 +82,8 @@ if [ "$found" -ne 0 ]; then
   echo "       rebuild there, then run this sync again. The previous agentic/ pages have been put back." >&2
   exit 1
 fi
+# Remove the real organisation's name from the copied pages (stops the sync if a mention is left).
+node "$(dirname "$0")/agentic-neutral.mjs"
 # The copied pages have no site navigation of their own; add it (top bar, module-level
 # contents, mobile drawer). Idempotent, so it is safe to run after every sync.
 node "$(dirname "$0")/agentic-nav.mjs"

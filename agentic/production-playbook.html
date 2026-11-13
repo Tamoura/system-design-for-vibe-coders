@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>QDB Agentic AI — Production Playbook</title>
+<title>Agentic AI — Production Playbook</title>
 <style>
 :root {
   --bg: #faf9f6; --panel: #ffffff; --ink: #1f2430; --muted: #5c6470;
@@ -205,12 +205,12 @@ main [id]{scroll-margin-top:calc(var(--agx-bar-h,44px) + 12px)}
 <header class="doc-header">
   <a class="lang-link" href="production-playbook.ar.html" hreflang="ar" lang="ar">العربية</a>
   <span class="badge">Playbook · updated July 2026</span>
-  <h1>QDB Agentic AI — Production Playbook</h1>
+  <h1>Agentic AI — Production Playbook</h1>
   <p>Running agents as digital employees in a regulated bank</p>
 </header>
 <h1 id="running-ai-agents-in-production-in-a-regulated-bank">Running AI Agents in Production in a Regulated Bank<a class="anchor" href="#running-ai-agents-in-production-in-a-regulated-bank" aria-label="link to section">#</a></h1>
-<p><strong>A playbook for QDB: agents as digital employees — how to build, secure, connect, govern, evaluate, guardrail, observe, and version them.</strong></p>
-<p>This document is the operating manual behind the <code>qdb-agent-framework</code> reference implementation in this repository. Each section explains the principle, the industry-standard practice, how the framework implements it today (with file references), and what remains to be done before true production deployment in a regulated environment.</p>
+<p><strong>A playbook for your organisation: agents as digital employees — how to build, secure, connect, govern, evaluate, guardrail, observe, and version them.</strong></p>
+<p>This document is the operating manual behind the <code>agent-framework</code> reference implementation in this repository. Each section explains the principle, the industry-standard practice, how the framework implements it today (with file references), and what remains to be done before true production deployment in a regulated environment.</p>
 <hr>
 <h2 id="1-the-operating-model-agents-as-digital-employees">1. The Operating Model: Agents as Digital Employees<a class="anchor" href="#1-the-operating-model-agents-as-digital-employees" aria-label="link to section">#</a></h2>
 <p>The CEO&#39;s framing — &quot;agents as employees/consultants&quot; — is exactly the right mental model for a regulated institution, because everything a bank already knows how to do with <em>people</em> transfers to agents:</p>
@@ -306,7 +306,7 @@ main [id]{scroll-margin-top:calc(var(--agx-bar-h,44px) + 12px)}
 <h3 id="32-least-privilege-via-tool-allowlists">3.2 Least privilege via tool allowlists<a class="anchor" href="#32-least-privilege-via-tool-allowlists" aria-label="link to section">#</a></h3>
 <p>The single most effective control. An agent physically cannot call a tool that is not on its allowlist — enforced in code, not in the prompt:</p>
 <ul>
-<li><code>allowed_tools</code> / <code>denied_tools</code> in every policy (see <code>policies/it-operations.yaml</code>, which denies <code>qdb.data.query_core_banking</code> to the IT agent).</li>
+<li><code>allowed_tools</code> / <code>denied_tools</code> in every policy (see <code>policies/it-operations.yaml</code>, which denies <code>data.query_core_banking</code> to the IT agent).</li>
 <li>The tool registry (<code>src/core/tool-registry.ts</code>) resolves calls only against the agent&#39;s policy; the manifest (<code>src/core/tool-manifest.ts</code>) declares each tool&#39;s <code>operationType</code> (READ/MUTATE) and maximum data classification.</li>
 <li>Treat the tool list like an access-review artifact: quarterly recertification by the owner team, same as user access review.</li>
 </ul>

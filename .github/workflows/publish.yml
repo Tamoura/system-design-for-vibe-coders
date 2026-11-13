@@ -71,6 +71,9 @@ jobs:
       - name: Verify the AI-native engineer course output matches its markdown
         run: if [ -f ainative/index.html ]; then npm run ainative:check; else echo "ainative course not built yet — skipped"; fi
 
+      - name: Verify the agentic pages carry no organisation name
+        run: node scripts/agentic-neutral.mjs --check
+
       - name: Verify the agentic pages carry the site navigation
         run: node scripts/agentic-nav.mjs --check
 

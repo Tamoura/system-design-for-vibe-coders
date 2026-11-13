@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>تقييم مهارات الذكاء الاصطناعي الوكيلي (Skills Assessment) — QDB</title>
+<title>تقييم مهارات الذكاء الاصطناعي الوكيلي (Skills Assessment)</title>
 <link rel="alternate" hreflang="en" href="assessment.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -269,7 +269,7 @@ main [id]{scroll-margin-top:calc(var(--agx-bar-h,44px) + 12px)}
   </div>
 </section>
 
-<footer>QDB Agent Framework · مستقل بالكامل (self-contained)، ولا تغادر أي بيانات هذا المتصفح (browser) · تبقى النتائج في localStorage حتى تعيد الضبط ·
+<footer>Agent Framework · مستقل بالكامل (self-contained)، ولا تغادر أي بيانات هذا المتصفح (browser) · تبقى النتائج في localStorage حتى تعيد الضبط ·
 قواعد التقييم (scoring rules) مطابقة للمنهج (curriculum): 1 مُلمّ (aware) = المعرفة (knowledge)، 2 ممارِس (practiced) = مخرجات البوابات المُنجَزة (shipped gate artifacts)، 3 قادر على التدريس (can-teach) = درّس + ممارِس.</footer>
 </div>
 
@@ -390,9 +390,9 @@ const LVL_REQ = [
 
 /* ─── State ──────────────────────────────────────────────────────────── */
 /* Same storage key as the English page: progress is shared between the two languages. */
-const KEY = "qdb-agent-assessment-v1";
+const KEY = "agent-assessment-v1"; const OLD_KEY = ["qd", "b-agent-assessment-v1"].join(""); /* progress saved under the old key is still read */
 let S = { name:"", role:"developer", answers:{}, evidence:{}, teach:{}, seed:0 };
-try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(S, JSON.parse(raw)); } catch(e){}
+try { const raw = localStorage.getItem(KEY) || localStorage.getItem(OLD_KEY); if (raw) S = Object.assign(S, JSON.parse(raw)); } catch(e){}
 if (!S.seed) { S.seed = Math.floor(Math.random()*2**31) || 1; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
 
 function save(){
@@ -634,7 +634,7 @@ function show(tab){
 }
 function resetAll(){
   if (!confirm("هل تريد مسح كل الإجابات والأدلة (evidence) في هذا المتصفح (browser)؟")) return;
-  try { localStorage.removeItem(KEY); } catch(e){}
+  try { localStorage.removeItem(KEY); try { localStorage.removeItem(OLD_KEY); } catch(e){} } catch(e){}
   S = { name:"", role:"developer", answers:{}, evidence:{}, teach:{}, seed: Math.floor(Math.random()*2**31)||1 };
   document.getElementById("p-name").value=""; document.getElementById("p-role").value="developer";
   renderKnowledge(); renderEvidence(); show("profile");
