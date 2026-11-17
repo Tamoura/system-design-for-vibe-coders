@@ -161,7 +161,7 @@ Then she books thirty minutes with Rashid. Her question list has seven items, in
 - A. Arriving with no draft, so the lawyer can start from a blank page and give an unbiased view of everything.
 - B. Arriving with a request for a written guarantee that the business will never face any dispute at all.
 - C. Arriving with a list of every law in the world that might ever apply to any kind of software.
-- D. Arriving with the draft, a product description, the inventory and a few specific questions to ask.
+- D. Arriving with the draft, a product description, the inventory and specific questions.
 
 <details><summary>Answer</summary>
 
@@ -506,7 +506,7 @@ Her notes to the chain of salons are short and true: "Tick was built by me with 
 
 - A. Nothing, because paying the invoice transfers all rights in the work in every country.
 - B. Redraw the logo with an AI tool and avoid mentioning Sam in any future material.
-- C. Ask for a short written agreement saying who owns the logo or how Tick may use it.
+- C. Ask Sam for a short written agreement saying who owns the logo, or how Tick may use it in future.
 - D. Wait and see whether Sam objects, and deal with the question only if he does.
 
 <details><summary>Answer</summary>

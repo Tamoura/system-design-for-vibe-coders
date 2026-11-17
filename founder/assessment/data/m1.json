@@ -70,13 +70,13 @@
           "Ask a second AI tool the same question and keep the figure if both answers agree",
           "Keep the figure, but label it approximate and note that an AI assistant produced it",
           "Ask the assistant for its source and keep the figure if it names a title and a publisher",
-          "Mark it unverified, find the original report, and check its date and who it measured"
+          "Mark it unverified, find the original report, and check its date and who it measured, before using it"
         ],
         "ar": [
           "اسأل أداة ذكاء اصطناعي ثانية السؤال نفسه واحتفظ بالرقم إن اتفقت الإجابتان",
           "احتفظ بالرقم، لكن صِفه بأنه تقريبي ودوّن أن مساعد ذكاء اصطناعي هو من أنتجه",
           "اطلب من المساعد مصدره، واحتفظ بالرقم إن ذكر عنوانًا واسم ناشر معروف",
-          "ضعه في خانة غير المتحقَّق منه، وابحث عن التقرير الأصلي، وافحص تاريخه ونطاقه"
+          "ضعه في خانة غير المتحقَّق منه، وابحث عن التقرير الأصلي، وافحص تاريخه ونطاقه قبل استعماله"
         ]
       },
       "a": 3,
@@ -96,13 +96,13 @@
       "o": {
         "en": [
           "Go, because sixty waitlist emails show far more interest than the threshold asked for in total",
-          "Change the offer, because two of twelve is in the change band and anonymous emails are weak",
+          "Change the offer: two of twelve is in the change band and anonymous emails are weak",
           "Stop, because the threshold was missed and a sample this small cannot support continuing at all",
           "Treat the test as passed, after lowering the threshold to two of twelve to match the result"
         ],
         "ar": [
           "المضيّ قدمًا، لأن ستين بريدًا في قائمة الانتظار يدل على اهتمام أكبر بكثير مما طلبته العتبة",
-          "تعديل العرض، لأن اثنين من اثني عشر يقعان في نطاق التعديل ورسائل البريد المجهولة دليل ضعيف",
+          "تعديل العرض: اثنان من اثني عشر في نطاق التعديل والبريد المجهول ضعيف",
           "التوقف، لأن العتبة لم تُبلَغ ولأن عينة بهذا الصغر لا تسوّغ المواصلة أصلًا في هذه الحال",
           "اعتبار الاختبار ناجحًا، بعد خفض العتبة إلى اثنين من اثني عشر لتوافق النتيجة"
         ]

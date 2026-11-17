@@ -14,13 +14,13 @@
           "Replying to customer complaints in her name, without a review step",
           "Issuing a credit to a customer who reports missed reminders",
           "Deleting a customer's data after they send an email asking for it",
-          "Tagging and routing incoming messages to the right support folder"
+          "Tagging incoming messages and routing them to support"
         ],
         "ar": [
           "الرد على شكاوى العملاء باسمها، دون خطوة مراجعة",
           "منح رصيد تعويضي لعميل يشكو من تذكيرات فاتته",
           "حذف بيانات عميل بعد أن يرسل رسالة يطلب فيها ذلك",
-          "وسم الرسائل الواردة وتوجيهها إلى المجلد المناسب"
+          "وسم الرسائل الواردة وتوجيهها للدعم"
         ]
       },
       "a": 3,
@@ -39,13 +39,13 @@
       },
       "o": {
         "en": [
-          "It tells her once the threshold is passed but does not stop spending",
+          "It tells her once the threshold is passed but does not stop spending or block charges",
           "It stops the sending as soon as the bill passes the threshold she set",
           "It refunds the extra charges after the loop has been found and fixed",
           "It warns her before the first extra message in the loop is ever sent"
         ],
         "ar": [
-          "ينبّهها بعد تجاوز العتبة لكنه لا يوقف الإنفاق نفسه",
+          "ينبّهها بعد تجاوز العتبة لكنه لا يوقف الإنفاق ولا يمنع الرسوم",
           "يوقف الإرسال فور أن تتجاوز الفاتورة العتبة التي ضبطتها",
           "يردّ لها الرسوم الزائدة بعد اكتشاف الحلقة وإصلاحها",
           "يحذّرها قبل إرسال أول رسالة زائدة في الحلقة أصلًا"

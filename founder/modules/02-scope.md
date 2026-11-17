@@ -153,7 +153,7 @@ She asked the agent to remove the loyalty and referral features and to list ever
 **1. Layla's agent added a loyalty-points page that nobody asked for. Which action best fits this lesson?**
 
 - A. Keep it in the app, since it is already built and leaving it costs nothing more.
-- B. Put it on the kill list with a return condition, remove it, and check it is gone.
+- B. Kill-list it with a return condition, remove it, and check it is gone.
 - C. Hide the menu link so Nadia never sees it, and leave the code in the project for now.
 - D. Ask Nadia whether she likes it, and keep it if she says it looks quite nice to her.
 
@@ -191,7 +191,7 @@ She asked the agent to remove the loyalty and referral features and to list ever
 
 **4. Which item should NOT be put on a kill list, according to the "what not to cut" guidance?**
 
-- A. A "stop reminders" path for the customer's own clients.
+- A. A "stop reminders" path for the customer's own clients, so they can opt out.
 - B. A charts dashboard for a product with no customers yet.
 - C. A referral-code system that was proposed by the agent.
 - D. A tutor mode, which is meant for a different type of customer.
@@ -205,7 +205,7 @@ She asked the agent to remove the loyalty and referral features and to list ever
 **5. Layla can check every promise of Tick with real data in an afternoon, but if a bug appears in a part the agent built that she cannot read, she loses a day. Which test does this fail?**
 
 - A. The one-afternoon check of promises.
-- B. The one-Saturday support test.
+- B. The one-Saturday test of support for users.
 - C. The kill-list return test.
 - D. The four-pile sort of features.
 
@@ -384,7 +384,7 @@ Mona read the table and asked one question: "Which row would hurt most if the ve
 - A. Use the price she remembers, since vendors rarely change their prices at all.
 - B. Use the cheapest price that any review of the vendor happens to mention.
 - C. Leave the costs out of the plan until a paying customer actually asks about them.
-- D. Read the pricing page that day, note the date and unit, and compute for her use.
+- D. Read the pricing page that day, note the date and unit, and compute.
 
 <details><summary>Answer</summary>
 
@@ -395,7 +395,7 @@ Mona read the table and asked one question: "Which row would hurt most if the ve
 **4. Why does the lesson count a part written by an agent as "build" in the table?**
 
 - A. Because agent-written code is always of lower quality than vendor-written code.
-- B. Because Layla owns its failures and upkeep, however quick it was to generate.
+- B. Because Layla owns its failures and upkeep, however quick it was to generate in the first place.
 - C. Because vendors never use coding agents when they write their own software.
 - D. Because the table has no room for a category other than build, buy or borrow.
 
@@ -563,7 +563,7 @@ The brief's report-back line paid off the next day. The agent listed a changed f
 
 - A. Tell Nadia it is ready to use, since the agent has confirmed that it is complete.
 - B. Ask the agent to confirm its claim a second time, so that it is double-checked.
-- C. Run her acceptance checks on awkward test records, and record what she sees.
+- C. Run her acceptance checks on awkward records, and record what she sees.
 - D. Wait a week or two to see whether any of the customers complains about it.
 
 <details><summary>Answer</summary>
@@ -600,7 +600,7 @@ The brief's report-back line paid off the next day. The agent listed a changed f
 
 **4. Why write acceptance checks before the build?**
 
-- A. So that you decide what "works" means for the customer, not what code does.
+- A. So that you decide what "works" means for the customer, not the code.
 - B. So that the agent can edit them later, to match whatever its code outputs.
 - C. So that the checks run faster later, once the agent has finished building.
 - D. So that you can skip the 30-minute check after the agent has finished a task.

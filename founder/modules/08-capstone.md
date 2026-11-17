@@ -156,7 +156,7 @@ On day 30 she wrote a one-page review and built the next month's plan from the r
 
 - A. To record the final business plan, written once and then left unchanged for a year
 - B. To impress an outside reader by showing every file she has ever made in one place
-- C. To hold one dated artefact per step, each with a note on what it rests on
+- C. To hold one dated artefact for each step, each with a note saying what it rests on
 - D. To replace the product's own documentation with a single long summary of everything
 
 <details><summary>Answer</summary>
@@ -183,7 +183,7 @@ On day 30 she wrote a one-page review and built the next month's plan from the r
 - A. Look again at the price page and the support policy to see what could be better
 - B. Four of the next five new salons reach the first result in one session, with notes on the fifth
 - C. Spend more time each week on customer conversations than on building features
-- D. Improve onboarding so that new salons have a smoother and friendlier first session over the coming weeks
+- D. Improve onboarding so that new salons have a smoother and friendlier first session
 
 <details><summary>Answer</summary>
 

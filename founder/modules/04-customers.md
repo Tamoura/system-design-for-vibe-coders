@@ -189,7 +189,7 @@ Mona's comment was brief: "Now you can see where the next ten are. Which circle 
 
 **5. Layla's weekly counts show many names added but few conversations. Which action best fits the lesson?**
 
-- A. Name the drop-out point, then spend the week contacting people already on the list
+- A. Name the drop-out point, then spend the week contacting the people already on the list
 - B. Convert the percentage of names to conversations into a forecast for next quarter
 - C. Add fifty more names so the ratio improves
 - D. Stop counting, since the numbers are too small to mean anything
@@ -417,7 +417,7 @@ Owner B said she already used reminders in her booking tool and did not need Tic
 
 - A. Let it join without saying so, since the transcript helps only her afterwards
 - B. Use it only when she guesses that the other person will not mind it
-- C. Say it is there, ask first, and check recording rules where you both live
+- C. Say it is there, ask first, and check recording rules
 - D. Keep quiet about it, because telling people makes the whole call awkward
 
 <details><summary>Answer</summary>
@@ -605,7 +605,7 @@ Layla called Owner C on the third day, using her stalled-customer script: "What 
 
 **3. Layla lists the steps between "yes" and the first reminder. Which should she cut or delay first?**
 
-- A. Choosing a plan and inviting staff, since neither is needed first
+- A. Choosing a plan and inviting staff, since neither is needed first to see a first result
 - B. Creating the account, since it is the first step on the path
 - C. Connecting the calendar, since customers find it the hardest step
 - D. Sending the reminder, since it may fail on the first attempt

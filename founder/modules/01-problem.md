@@ -139,7 +139,7 @@ She wrote her kill condition: "If I cannot find three owners besides Nadia who l
 **1. Layla describes Tick as "an AI app that reminds clients about appointments". Mona asks her to restate it as a problem. Which version is best?**
 
 - A. Small businesses need smarter, more automated communication with their customers.
-- B. Salon owners lose chair time when clients forget, and text reminders by hand at night.
+- B. Salon owners lose chair time when clients forget, and text reminders by hand at night after closing.
 - C. Clients forget things, so an AI tool that sends reminders at the right time would help them.
 - D. Appointment reminders are a growing category, so Tick is well placed to serve many salons.
 
@@ -164,7 +164,7 @@ She wrote her kill condition: "If I cannot find three owners besides Nadia who l
 
 **3. A candidate problem happens to a customer about once every two years but is serious when it does. For a solo founder with a small business in mind, what is the main concern?**
 
-- A. Low frequency makes it hard to meet customers often or be remembered by them.
+- A. Low frequency makes it hard to meet customers often or be remembered.
 - B. A serious problem is always too complicated for a solo founder to understand.
 - C. Customers with infrequent problems never pay for anything, whatever the pain is.
 - D. Infrequent problems cannot be reached through interviews, so no evidence is possible.
@@ -435,7 +435,7 @@ Mona's comment on the log was short: "Which of these is a fact and which is you?
 
 - A. Start recording without telling anyone, since a summary will be more accurate.
 - B. Avoid reading the summary and trust it, since the tool is more careful than she is.
-- C. Ask first, check the tool's storage terms, and compare its summary with her notes.
+- C. Ask first, check the tool's storage terms, and compare its summary with her own notes afterwards.
 - D. Record only the first interview, and reuse that summary for all of the later ones.
 
 <details><summary>Answer</summary>
@@ -639,7 +639,7 @@ Mona's rule of thumb for the claims table: "If you cannot say where it came from
 
 - A. As interview evidence, since the tool was built from many realistic salon conversations.
 - B. As a replacement for her real interviews, saving her time on the first round.
-- C. As rehearsal material for testing questions, but not as evidence of what customers do.
+- C. As rehearsal material for testing questions, but not as evidence of what customers actually do.
 - D. As survey data, which she can report as ten respondents in her pitch.
 
 <details><summary>Answer</summary>
@@ -666,7 +666,7 @@ Mona's rule of thumb for the claims table: "If you cannot say where it came from
 - A. Treat it as correct, because competitors rarely change their prices over a year.
 - B. Ask the assistant to repeat the number until the answers match each time.
 - C. Email the competitor posing as a customer to learn their discounts and offers.
-- D. Open the vendor's pricing page, note the price and date, and recheck later.
+- D. Open the vendor's pricing page, note price and date, recheck later.
 
 <details><summary>Answer</summary>
 
@@ -853,7 +853,7 @@ Result after two weeks (illustrative): of the twelve, two paid the deposit, thre
 ## ✍️ Check yourself
 **1. Layla's landing page gets two hundred visits from a post in a general social media group and thirty email sign-ups. What does this show?**
 
-- A. Weak interest from mixed visitors; the right prospects acting would be stronger.
+- A. Weak interest from mixed visitors; the right prospects actually acting would be much stronger.
 - B. Strong demand, since thirty sign-ups out of two hundred is a good conversion rate.
 - C. That Tick is ready to launch, since people have already signed up in numbers.
 - D. That advertising works, so Layla should spend more on the same post straight away.
@@ -867,7 +867,7 @@ Result after two weeks (illustrative): of the twelve, two paid the deposit, thre
 **2. Before launching the smoke test, which step matters most for an honest result?**
 
 - A. Making the page as polished as possible so visitors take it seriously.
-- B. Writing the go, change and stop thresholds as numbers before any results exist.
+- B. Writing the go, change and stop thresholds as numbers before results.
 - C. Choosing the most flattering audience so that the first results look encouraging.
 - D. Telling every prospect the product is finished so they feel safe committing.
 
@@ -881,7 +881,7 @@ Result after two weeks (illustrative): of the twelve, two paid the deposit, thre
 
 - A. Add it, because small claims like this are normal marketing in every industry.
 - B. Add "Trusted by 20 salons" instead, since a smaller number is less likely to be noticed.
-- C. Leave it out and say honestly that Tick is starting a pilot with a few salons.
+- C. Leave it out and say honestly that Tick is starting a pilot with a few salons, so nothing is overstated.
 - D. Keep the claim until someone challenges it, then remove it quietly.
 
 <details><summary>Answer</summary>
@@ -894,7 +894,7 @@ Result after two weeks (illustrative): of the twelve, two paid the deposit, thre
 
 - A. Collect card details in a simple form on her own site, so she controls the process.
 - B. Avoid stating a refund policy, so that customers are not encouraged to ask for refunds.
-- C. Write terms and a refund line, use a hosted payment page, and ask a local professional.
+- C. Write terms and a refund line, use hosted payment, ask a local professional.
 - D. Take payment only after the product is finished, and call the deposit a "sign-up fee".
 
 <details><summary>Answer</summary>
@@ -908,7 +908,7 @@ Result after two weeks (illustrative): of the twelve, two paid the deposit, thre
 - A. Declare success, since one person was interested enough to book a call.
 - B. Stop immediately and delete the idea, because only one person acted on it.
 - C. Lower the go threshold to one, since it matches what actually happened.
-- D. Treat it as "change": ask why others held back, and adjust one variable.
+- D. Treat it as "change": ask why others held back, adjust one variable.
 
 <details><summary>Answer</summary>
 

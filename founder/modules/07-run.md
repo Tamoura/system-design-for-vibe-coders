@@ -376,7 +376,7 @@ Finally she added a line to the agent's standing instructions: "Do not add a ser
 
 **3. Which lock-in kind is reduced by keeping vendor calls behind one small function of your own?**
 
-- A. Code lock-in, because swapping the vendor then touches one place, not the whole product.
+- A. Code lock-in, because swapping vendors touches one place, not the whole product.
 - B. Identity lock-in, because customers can sign in with a different login method afterwards.
 - C. Price lock-in, because the vendor is then unable to change what it charges for the service.
 - D. Data lock-in, because the vendor stops holding any information about your customers.
@@ -551,7 +551,7 @@ Then the drill. Mona opened the pack and, in 30 minutes, tried to find six items
 
 - A. Choosing a longer password for every account, since the problem was a weak password in any case.
 - B. Running more ads, so that more customers would have noticed the missing reminders quickly.
-- C. Keeping the recovery codes and a second route in a place that does not depend on the phone.
+- C. Keeping recovery codes and a second route somewhere that does not depend on the phone.
 - D. Telling every customer her personal mobile number so they could contact her during any absence.
 
 <details><summary>Answer</summary>
@@ -588,7 +588,7 @@ Then the drill. Mona opened the pack and, in 30 minutes, tried to find six items
 
 **4. In the drill, Mona finds five of six items. What is the right response?**
 
-- A. Fix the gap in the pack, record the result and the date, and schedule the next drill.
+- A. Fix the missing item in the pack, record the result and the date, and schedule the next drill.
 - B. Conclude that Mona is the wrong helper and look for someone who can find all six.
 - C. Skip future drills, because five out of six shows that the pack is good enough already.
 - D. Give Mona the full founder login so that she can find the sixth item herself next time.

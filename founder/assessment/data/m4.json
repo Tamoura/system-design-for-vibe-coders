@@ -45,7 +45,7 @@
           "Accept it only for addresses in countries where she has heard that unsolicited messages are generally tolerated"
         ],
         "ar": [
-          "ترفضه، وتكتب بنفسها رسائل قصيرة لأشخاص مسمّين لها سبب لمراسلتهم، وتتابع مرة واحدة ثم تتوقف",
+          "ترفضه، وتكتب لأشخاص مسمّين لها سبب لمراسلتهم، وتتابع مرة واحدة",
           "تقبله، لكنها تقلّص القائمة إلى الخمسين عنوانًا الأكثر وعدًا وتُبقي في كل رسالة التفصيل الودّي المختلق",
           "تقبله، وتضيف إلى كل رسالة سطرًا واضحًا لإلغاء الاشتراك ليبقى باقي النص كما صيغ أصلًا",
           "تقبله فقط للعناوين في بلدان سمعت أن الرسائل غير المطلوبة فيها مسموح بها عمومًا"
@@ -70,7 +70,7 @@
           "Send the full welcome email covering every setting, then wait for her to reply with any questions she has",
           "Ask the coding agent for a twelve-step setup wizard, so that nothing is missing from her first session with Tick",
           "Extend the trial to a month, so that she has more time to find her way around the product on her own",
-          "Agree the first result in writing, set it up with her on a short call with one client, then check by Thursday"
+          "Agree the first result in writing, set it up with her on a short call with one client, then check the result by Thursday"
         ],
         "ar": [
           "ترسل بريد الترحيب الكامل الذي يشرح كل الإعدادات، ثم تنتظر ردّها بأي أسئلة لديها",
