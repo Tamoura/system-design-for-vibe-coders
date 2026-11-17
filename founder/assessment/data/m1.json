@@ -1,0 +1,135 @@
+{
+  "area": "m1",
+  "questions": [
+    {
+      "id": "m1-1",
+      "level": 1,
+      "lesson": "1.1",
+      "q": {
+        "en": "A founder is choosing between four candidate problems. Using the lesson's three properties (reach, pain, frequency), which one should she pick first?",
+        "ar": "تختار مؤسِّسة بين أربع مشكلات مرشّحة. وفق خصائص الدرس الثلاث (الوصول والألم والتكرار)، أيّها تختار أولًا؟"
+      },
+      "o": {
+        "en": [
+          "Phone owners who find notifications annoying: it happens daily, but she cannot name a single place to find them",
+          "Estate lawyers in a once-a-decade dispute: the pain is severe, and she happens to know two of them personally",
+          "Freelance translators who chase late invoices: a trade group has forty, and each can tell last month's story",
+          "Office workers choosing where to eat lunch: it happens every day, and nobody has ever tried to fix it at all"
+        ],
+        "ar": [
+          "أصحاب الهواتف الذين تزعجهم الإشعارات: يحدث ذلك يوميًا، لكنها لا تعرف مكانًا واحدًا تجدهم فيه",
+          "محامو التركات في نزاع يقع مرة كل عقد: الألم شديد، وتصادف أنها تعرف اثنين منهم شخصيًا",
+          "مترجمون مستقلون يطاردون فواتير متأخرة: في مجموعة مهنية أربعون منهم، ولكلٍّ قصة الشهر الماضي",
+          "موظفو المكاتب الذين يختارون مكان الغداء: يحدث كل يوم، ولم يحاول أحد منهم حلّه على الإطلاق"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "The translators are the only candidate that scores acceptably on all three: she can reach them, they can describe a recent costly story, and it recurs. The others each fail at least one property: no reach, too rare, or no one coping with it.",
+        "ar": "المترجمون هم المرشّح الوحيد الذي يحقق نتيجة مقبولة في الخصائص الثلاث: تستطيع الوصول إليهم، ولديهم قصة حديثة مكلفة يمكنهم وصفها، والمشكلة تتكرر. أما البقية فيخفق كلٌّ منها في خاصية واحدة على الأقل: لا وصول، أو ندرة شديدة، أو لا أحد يحاول التعامل معها."
+      }
+    },
+    {
+      "id": "m1-2",
+      "level": 2,
+      "lesson": "1.2",
+      "q": {
+        "en": "After an interview with a salon owner, you have four notes. Which one is the strongest evidence that the problem is real, by the lesson's rules?",
+        "ar": "بعد مقابلة مع صاحبة صالون، لديك أربع ملاحظات. أيّها أقوى دليلًا على أن المشكلة حقيقية وفق قواعد الدرس؟"
+      },
+      "o": {
+        "en": [
+          "She described last Thursday, when two clients no-showed and she phoned others to refill the slots",
+          "She called the idea great and said she would definitely pay for a tool like this once it is ready",
+          "She said she usually checks her bookings every morning and thinks reminders could well reduce no-shows",
+          "She suggested a loyalty-points screen and said it is what her clients would really want most"
+        ],
+        "ar": [
+          "وصفت يوم الخميس الماضي حين غابت عميلتان وقضت العصر تتصل بأخريات لملء الموعدين",
+          "وصفت الفكرة بأنها رائعة وقالت إنها ستدفع حتمًا ثمن أداة كهذه حين تصبح جاهزة",
+          "قالت إنها تراجع حجوزاتها عادةً كل صباح وتعتقد أن التذكيرات قد تقلّل الغياب فعلًا",
+          "اقترحت شاشة لنقاط الولاء وقالت إنها أكثر ما يريده عميلاتها حقًا في الصالون"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "A specific past event with a cost and a workaround is a fact. A compliment, a future promise, a generality and a feature idea are all cheap noise: note them, but do not count them as evidence.",
+        "ar": "الحدث الماضي المحدد الذي له كلفة وطريقة تعامل هو واقعة. أما المجاملة والوعد المستقبلي والتعميم وفكرة الميزة فكلها ضجيج رخيص: دوّنها، لكن لا تحسبها دليلًا."
+      }
+    },
+    {
+      "id": "m1-3",
+      "level": 2,
+      "lesson": "1.3",
+      "q": {
+        "en": "An AI assistant tells you the salon-software market will grow by a stated percentage by 2030. You want to put the figure in your plan. What does the lesson say to do first?",
+        "ar": "يخبرك مساعد ذكاء اصطناعي بأن سوق برمجيات الصالونات سينمو بنسبة محددة بحلول 2030، وتريد وضع الرقم في خطتك. ماذا يقول الدرس أن تفعل أولًا؟"
+      },
+      "o": {
+        "en": [
+          "Ask a second AI tool the same question and keep the figure if both answers agree",
+          "Keep the figure, but label it approximate and note that an AI assistant produced it",
+          "Ask the assistant for its source and keep the figure if it names a title and a publisher",
+          "Mark it unverified, find the original report, and check its date and who it measured"
+        ],
+        "ar": [
+          "اسأل أداة ذكاء اصطناعي ثانية السؤال نفسه واحتفظ بالرقم إن اتفقت الإجابتان",
+          "احتفظ بالرقم، لكن صِفه بأنه تقريبي ودوّن أن مساعد ذكاء اصطناعي هو من أنتجه",
+          "اطلب من المساعد مصدره، واحتفظ بالرقم إن ذكر عنوانًا واسم ناشر معروف",
+          "ضعه في خانة غير المتحقَّق منه، وابحث عن التقرير الأصلي، وافحص تاريخه ونطاقه"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Numbers are high risk. Agreement between models is not verification, a label does not make a figure true, and a title the model names may itself be invented. Trace the claim to the original page, then check its date and scope.",
+        "ar": "الأرقام عالية الخطورة. اتفاق النماذج ليس تحققًا، والوصف بأنه تقريبي لا يجعل الرقم صحيحًا، وقد يكون العنوان الذي يذكره النموذج مختلقًا هو الآخر. تتبَّع الادعاء حتى الصفحة الأصلية، ثم افحص تاريخها ونطاقها."
+      }
+    },
+    {
+      "id": "m1-4",
+      "level": 3,
+      "lesson": "1.4",
+      "q": {
+        "en": "Before launch, a founder wrote: go if three of twelve invited owners book a call or reserve a pilot spot, change the offer if one or two do, stop if none do. After two weeks, two of the twelve booked a call, and sixty anonymous people joined the waitlist. What does the lesson's method say to do?",
+        "ar": "قبل الإطلاق كتبت مؤسِّسة: المضيّ قدمًا إن حجز ثلاثة من اثني عشر مالكًا مدعوًّا مكالمة أو مكانًا تجريبيًا، وتعديل العرض إن فعل ذلك واحد أو اثنان، والتوقف إن لم يفعل أحد. بعد أسبوعين حجز اثنان من الاثني عشر مكالمة، وانضم ستون شخصًا مجهولًا إلى قائمة الانتظار. ماذا تقول طريقة الدرس أن تفعل؟"
+      },
+      "o": {
+        "en": [
+          "Go, because sixty waitlist emails show far more interest than the threshold asked for in total",
+          "Change the offer, because two of twelve is in the change band and anonymous emails are weak",
+          "Stop, because the threshold was missed and a sample this small cannot support continuing at all",
+          "Treat the test as passed, after lowering the threshold to two of twelve to match the result"
+        ],
+        "ar": [
+          "المضيّ قدمًا، لأن ستين بريدًا في قائمة الانتظار يدل على اهتمام أكبر بكثير مما طلبته العتبة",
+          "تعديل العرض، لأن اثنين من اثني عشر يقعان في نطاق التعديل ورسائل البريد المجهولة دليل ضعيف",
+          "التوقف، لأن العتبة لم تُبلَغ ولأن عينة بهذا الصغر لا تسوّغ المواصلة أصلًا في هذه الحال",
+          "اعتبار الاختبار ناجحًا، بعد خفض العتبة إلى اثنين من اثني عشر لتوافق النتيجة"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Thresholds are set before the data and applied as written: two of twelve is in the change band. Anonymous waitlist emails are weak evidence compared with booked calls, and moving the target to fit the result defeats the purpose of setting it first.",
+        "ar": "تُحدَّد العتبات قبل ظهور البيانات وتُطبَّق كما كُتبت: اثنان من اثني عشر يقعان في نطاق التعديل. ورسائل قائمة الانتظار المجهولة دليل ضعيف مقارنةً بالمكالمات المحجوزة، وتحريك الهدف ليلائم النتيجة يُبطل الغاية من تحديده مسبقًا."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m1-e1",
+      "lesson": "1.2",
+      "text": {
+        "en": "I have written a seven-to-ten question interview script with a consent opening and no product mention before the close, and saved it in my project folder.",
+        "ar": "كتبتُ نص مقابلة من سبعة إلى عشرة أسئلة بافتتاح يطلب الموافقة ودون ذكر المنتج قبل الختام، وحفظتُه في مجلد مشروعي."
+      }
+    },
+    {
+      "id": "m1-e2",
+      "lesson": "1.4",
+      "text": {
+        "en": "I have saved a one-page smoke-test brief with the hypothesis, the offer, the action I will measure, and go, change and stop thresholds written as numbers before any page went live.",
+        "ar": "حفظتُ موجزًا من صفحة واحدة لاختبار الدخان (smoke test) يضم الفرضية والعرض والإجراء الذي سأقيسه، وعتبات المضيّ والتعديل والتوقف مكتوبة أرقامًا قبل نشر أي صفحة."
+      }
+    }
+  ]
+}

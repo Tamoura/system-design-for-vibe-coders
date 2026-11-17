@@ -1,0 +1,135 @@
+{
+  "area": "m0",
+  "questions": [
+    {
+      "id": "m0-1",
+      "level": 1,
+      "lesson": "0.1",
+      "q": {
+        "en": "A non-technical founder directs an AI agent to build a working app over a weekend, and ten friends call it amazing. Which next move fits the lesson's rule that cheap to build is not cheap to be wrong?",
+        "ar": "وجّهت مؤسِّسة غير تقنية وكيل ذكاء اصطناعي لبناء تطبيق يعمل خلال عطلة نهاية أسبوع، وقال عشرة من أصدقائها إنه رائع. أي خطوة تالية تنسجم مع قاعدة الدرس أن البناء الرخيص لا يعني أن الخطأ رخيص؟"
+      },
+      "o": {
+        "en": [
+          "Add the features the friends mention, since their praise shows there is demand",
+          "Ask three non-friends whether they have the problem and have tried to fix it",
+          "Plan a public launch while the excitement lasts, since the build is already finished",
+          "Copy a competitor's price onto the page and see whether anyone objects to it"
+        ],
+        "ar": [
+          "تضيف الميزات التي يذكرها الأصدقاء، لأن مديحهم يدل على وجود طلب فعلي",
+          "تسأل ثلاثة أشخاص ليسوا أصدقاء هل يعانون من المشكلة وحاولوا حلّها",
+          "تخطط لإطلاق علني ما دام الحماس قائمًا، لأن البناء انتهى فعلًا",
+          "تنسخ سعر منافس إلى الصفحة وتنتظر لترى هل سيعترض عليه أحد"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "A demo proves the software runs, and friends' praise is politeness rather than purchase intent. What protects you is learning speed: evidence from real people who have the problem. The other moves build, launch or price before anyone has shown the problem is real.",
+        "ar": "العرض التجريبي يثبت أن البرنامج يعمل، ومديح الأصدقاء مجاملة لا قرار شراء. وما يحميك هو سرعة التعلّم: أدلة من أناس حقيقيين يعانون من المشكلة. أما الخيارات الأخرى فتبني أو تُطلق أو تسعّر قبل أن يُثبت أحد أن المشكلة حقيقية."
+      }
+    },
+    {
+      "id": "m0-2",
+      "level": 2,
+      "lesson": "0.1",
+      "q": {
+        "en": "After a month, a founder's dated log has eleven items in the \"built\" column and one in the \"learned\" column. What does the lesson say this pattern suggests?",
+        "ar": "بعد شهر، في سجل مؤسِّس مؤرَّخ أحد عشر بندًا في عمود «بنيتُ» وبند واحد في عمود «تعلّمتُ». ماذا يقول الدرس عن دلالة هذا النمط؟"
+      },
+      "o": {
+        "en": [
+          "Drift: features are growing while uncertainty about who pays and why is not shrinking",
+          "Healthy progress, since the number of items built is the best measure of a business",
+          "A sign the founder should keep the log but build faster so the learned column fills up",
+          "A sign the log is the wrong tool, since real learning does not fit in a column"
+        ],
+        "ar": [
+          "انجراف: الميزات تتزايد بينما لا تتناقص الشكوك حول من يدفع ولماذا",
+          "تقدّم سليم، لأن عدد البنود المبنية هو أفضل مقياس للعمل التجاري",
+          "إشارة إلى أن عليه إبقاء السجل لكن البناء بسرعة أكبر حتى يمتلئ عمود التعلّم",
+          "إشارة إلى أن السجل أداة غير مناسبة، لأن التعلّم الحقيقي لا يُختصر في عمود"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Progress in a business is a reduction in uncertainty, and conversations, pre-sales and usage reduce it, not features. If only the built list grows, the founder is drifting. Building faster cannot fill the learned column, because that comes from real people.",
+        "ar": "التقدّم في العمل التجاري هو تقلّص الشكوك، والذي يقلّصها هو المحادثات والبيع المسبق والاستخدام، لا الميزات. فإذا نما قسم البناء وحده فالمؤسِّس منجرف. والبناء الأسرع لا يملأ عمود التعلّم، لأنه يأتي من الناس الحقيقيين."
+      }
+    },
+    {
+      "id": "m0-3",
+      "level": 2,
+      "lesson": "0.2",
+      "q": {
+        "en": "A founder has a forty-line to-do list: logo, social media account, company name, ten customer interviews, payments, investor outreach. According to the map, how should she choose what to do next?",
+        "ar": "عند مؤسِّسة قائمة مهام من أربعين سطرًا: شعار، حساب على وسائل التواصل، اسم للشركة، عشر مقابلات مع عملاء، مدفوعات، تواصل مع مستثمرين. كيف تختار ما تفعله تاليًا بحسب الخريطة؟"
+      },
+      "o": {
+        "en": [
+          "Start with the tasks that feel most like visible progress, then move to the harder ones",
+          "Start with the tasks that take least time, so the list shrinks quickly and morale stays up",
+          "Pick the task tied to the earliest step still lacking its proof, and defer later ones",
+          "Pick the tasks an investor would be likely to ask about first, then work backwards"
+        ],
+        "ar": [
+          "تبدأ بالمهام التي تبدو أكثر تقدّمًا ظاهرًا، ثم تنتقل إلى الأصعب منها",
+          "تبدأ بالمهام الأقصر وقتًا، فتتقلص القائمة بسرعة ويبقى الحماس مرتفعًا",
+          "تختار مهمة أبكر خطوة ما زال ينقصها ناتجها، وتؤجّل ما بعدها من المهام",
+          "تختار المهام التي يرجَّح أن يسأل عنها مستثمر أولًا، ثم تعمل عكسيًا"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "The steps run in order of cost and risk, so the earliest step with a missing artefact comes first and later-step tasks wait. Choosing by comfort or speed puts a logo ahead of the question that could end the venture, and investors are not the test of the current step.",
+        "ar": "الخطوات مرتَّبة بحسب الكلفة والخطر، فتأتي أبكر خطوة ينقصها ناتجها أولًا وتنتظر مهام الخطوات اللاحقة. أما الاختيار بحسب الراحة أو السرعة فيقدّم الشعار على السؤال الذي قد يُنهي المشروع، والمستثمرون ليسوا اختبار الخطوة الحالية."
+      }
+    },
+    {
+      "id": "m0-4",
+      "level": 3,
+      "lesson": "0.3",
+      "q": {
+        "en": "An AI-drafted privacy notice says \"data is deleted immediately on request\" and \"we never share data\", but the product has no deletion feature and uses a text-message provider that receives phone numbers. What does the lesson's workflow say to do?",
+        "ar": "يقول إشعار خصوصية صاغه الذكاء الاصطناعي «تُحذف البيانات فورًا عند الطلب» و«لا نشارك البيانات أبدًا»، لكن المنتج بلا ميزة حذف ويستعمل مزوّد رسائل نصية يتلقى أرقام الهواتف. ماذا يقول أسلوب العمل في الدرس أن تفعل؟"
+      },
+      "o": {
+        "en": [
+          "Publish it, since the draft was written from true facts and a fluent text can be trusted",
+          "Keep the draft but add a general disclaimer saying nothing in it is legal advice",
+          "Replace it with another business's published notice, since theirs has presumably been checked",
+          "Mark each promise, check it against the product, and ask a professional about the draft"
+        ],
+        "ar": [
+          "تنشره، لأن المسودة كُتبت من وقائع صحيحة والنص السلس يمكن الوثوق به",
+          "تُبقي المسودة وتضيف تنويهًا عامًّا بأن ما فيها ليس نصيحة قانونية",
+          "تستبدل به إشعارًا منشورًا لعمل تجاري آخر، لأنه يُفترض أنه جرى تدقيقه",
+          "تضع علامة على كل وعد وتقارنه بالمنتج، وتعرض المسودة على محترف مؤهل"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Fluent text can promise things the product does not do. The workflow is to mark every promise or cited rule, check each against what the product really does, take the draft and questions to a qualified professional, and publish only what you can keep. A disclaimer or a copied notice fixes none of the false promises.",
+        "ar": "النص السلس قد يعد بما لا يفعله المنتج. وأسلوب العمل هو أن تضع علامة على كل وعد أو قاعدة مذكورة، وتتحقق من كل منها بما يفعله المنتج حقًّا، وتحمل المسودة والأسئلة إلى محترف مؤهل، ولا تنشر إلا ما تستطيع الوفاء به. والتنويه أو الإشعار المنسوخ لا يصلح أيًّا من الوعود الكاذبة."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m0-e1",
+      "lesson": "0.1",
+      "text": {
+        "en": "I have written a one-page \"still hard\" list for my own idea with at least five rows, each with a test question and a named owner, and saved it in a folder I can open.",
+        "ar": "كتبتُ لفكرتي قائمة «ما زال صعبًا» من صفحة واحدة فيها خمسة صفوف على الأقل، لكل صف سؤال اختبار ومسؤول مسمّى، وحفظتُها في مجلد أستطيع فتحه."
+      }
+    },
+    {
+      "id": "m0-e2",
+      "lesson": "0.2",
+      "text": {
+        "en": "I have drawn my journey map with all eight steps, marked the step I am on, and written the missing artefact beside each step.",
+        "ar": "رسمتُ خريطة رحلتي بالخطوات الثماني كلها، وعلّمتُ الخطوة التي أنا فيها، وكتبتُ الناتج الناقص بجانب كل خطوة."
+      }
+    }
+  ]
+}

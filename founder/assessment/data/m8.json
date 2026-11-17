@@ -1,0 +1,135 @@
+{
+ "area": "m8",
+ "questions": [
+  {
+   "id": "m8-1",
+   "level": 1,
+   "lesson": "8.1",
+   "q": {
+    "en": "Layla's pricing sheet is dated last month, but it rests only on her own calculations and one test with friendly prospects. How does the readiness table rate the Price step?",
+    "ar": "ورقة التسعير عند ليلى مؤرَّخة بالشهر الماضي، لكنها تستند إلى حساباتها وحدها واختبار واحد مع عملاء محتملين مقرَّبين. كيف يقيّم جدول الجاهزية خطوة Price؟"
+   },
+   "o": {
+    "en": [
+     "Green, because the artefact exists and carries a recent date",
+     "Red, because a price resting on opinion is the same as a missing one",
+     "Amber, because it exists but rests mostly on her opinion",
+     "Unrated, because a price cannot be judged without a professional"
+    ],
+    "ar": [
+     "أخضر، لأن المخرَج موجود وعليه تاريخ حديث",
+     "أحمر، لأن سعرًا يستند إلى الرأي مثل سعر غير موجود",
+     "برتقالي، لأنه موجود لكنه يستند في معظمه إلى رأيها",
+     "غير مقيَّم، لأن السعر لا يُحكم عليه دون مختص"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Green needs real people or real checks behind the artefact, and red is for a missing or contradicting one. An existing artefact that rests mostly on your own opinion is amber at best.",
+    "ar": "الأخضر يحتاج أشخاصًا حقيقيين أو فحوصًا حقيقية وراء المخرَج، والأحمر للمخرَج الناقص أو المناقض. أما المخرَج الموجود الذي يستند في معظمه إلى رأيك فهو برتقالي في أحسن الأحوال."
+   }
+  },
+  {
+   "id": "m8-2",
+   "level": 2,
+   "lesson": "8.1",
+   "q": {
+    "en": "Omar has about twelve hours a week, including support and his day job. His weak steps are Protect and Run. Which 30-day plan follows the lesson's rules?",
+    "ar": "عند عمر نحو اثنتي عشرة ساعة أسبوعيًا، تشمل الدعم وعمله الأساسي. وخطواته الأضعف هي Protect وRun. أي خطة لثلاثين يومًا توافق قواعد الدرس؟"
+   },
+   "o": {
+    "en": [
+     "Three countable outcomes, about eight planned hours a week, and a real-person or real-check task every week",
+     "Five outcomes across all eight steps, planned at the full twelve hours so that no step is left out",
+     "Three outcomes, all new features, planned at the full twelve hours with the rule written on day 30",
+     "Two outcomes on his favourite step, about eight planned hours, with the review set for day 45"
+    ],
+    "ar": [
+     "ثلاث نتائج قابلة للعدّ، ونحو ثماني ساعات مخطَّطة أسبوعيًا، ومهمة مع شخص حقيقي أو فحص حقيقي في كل أسبوع",
+     "خمس نتائج على الخطوات الثماني كلها، مخطَّطة على الاثنتي عشرة ساعة كاملة كي لا تُترك خطوة",
+     "ثلاث نتائج كلها ميزات جديدة، مخطَّطة على الاثنتي عشرة ساعة كاملة مع كتابة القاعدة في اليوم الثلاثين",
+     "نتيجتان على خطوته المفضلة، ونحو ثماني ساعات مخطَّطة، مع تحديد المراجعة في اليوم الخامس والأربعين"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "The rules are at most three countable outcomes, plan to about two thirds of real hours, a real-person or real-check task every week, aimed at the weakest steps, and a decision rule on day 1. Each other plan breaks at least two of these.",
+    "ar": "القواعد: ثلاث نتائج قابلة للعدّ على الأكثر، وتخطيط بنحو ثلثي الساعات الفعلية، ومهمة كل أسبوع مع شخص حقيقي أو فحص حقيقي، موجَّهة إلى الخطوات الأضعف، وقاعدة قرار تُكتب في اليوم الأول. وكل خطة أخرى تخالف اثنتين من هذه على الأقل."
+   }
+  },
+  {
+   "id": "m8-3",
+   "level": 2,
+   "lesson": "8.2",
+   "q": {
+    "en": "Sara finishes the forty-question practice exam and most of her wrong answers fall in the modules on money and on protecting the business. What should she do next?",
+    "ar": "أنهت سارة الامتحان التدريبي ذا الأربعين سؤالًا، ومعظم إجاباتها الخاطئة في وحدتي المال وحماية المشروع. ماذا تفعل بعد ذلك؟"
+   },
+   "o": {
+    "en": [
+     "Treat the score as a forecast of how the venture will do and adjust her plans to it",
+     "Retake the exam until the answers feel familiar, then move on to the next course",
+     "Reread only the lessons she got wrong, and skip the explanations of questions she got right",
+     "Read every explanation, then reread the lessons behind her wrong answers before moving on"
+    ],
+    "ar": [
+     "تعدّ الدرجة توقعًا لأداء مشروعها وتعدّل خططها بحسبها",
+     "تعيد الامتحان حتى تصير الإجابات مألوفة، ثم تنتقل إلى الدورة التالية",
+     "تعيد قراءة الدروس التي أخطأت فيها وحدها، وتتجاوز شروح الأسئلة التي أصابت فيها",
+     "تقرأ كل الشروح، ثم تعيد قراءة الدروس وراء إجاباتها الخاطئة أولًا"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "The exam is practice, not a certificate, and a score predicts nothing about a business. Wrong answers choose the lessons to reread, and the explanations of right answers still matter because the wrong options are real common mistakes.",
+    "ar": "الامتحان تدريب لا شهادة، والدرجة لا تتنبأ بشيء عن المشروع. الإجابات الخاطئة تحدد الدروس التي تُعاد قراءتها، وشروح الإجابات الصحيحة تبقى مهمة لأن الخيارات الخاطئة أخطاء شائعة حقيقية."
+   }
+  },
+  {
+   "id": "m8-4",
+   "level": 3,
+   "lesson": "8.1",
+   "q": {
+    "en": "A possible funder sends Layla a term sheet and asks for a reply this week. Her venture file has two red rows. What does the capstone lesson advise?",
+    "ar": "أرسلت جهة تمويل محتملة إلى ليلى ورقة شروط (term sheet) وطلبت ردًّا هذا الأسبوع. وفي ملف مشروعها صفّان أحمران. بماذا ينصح درس التتويج؟"
+   },
+   "o": {
+    "en": [
+     "Ask an AI tool to compare the terms with typical deals, and reply if they look similar to them",
+     "Bring the term sheet, file and written questions to a qualified professional first",
+     "Turn the two red rows amber with fresh wording, so the file looks stronger when it is shared",
+     "Reply quickly with the file as it stands, since the funder will explain each term later"
+    ],
+    "ar": [
+     "تطلب من أداة ذكاء اصطناعي مقارنة الشروط بصفقات معتادة، وتردّ إن بدت متشابهة",
+     "تحمل ورقة الشروط وملف المشروع وأسئلة مكتوبة إلى مختص مؤهَّل أولًا",
+     "تحوّل الصفّين الأحمرين إلى برتقاليين بصياغة جديدة، ليبدو الملف أقوى حين يُشارك",
+     "تردّ سريعًا بالملف كما هو، لأن الجهة ستشرح كل شرط في المكالمة التالية"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "A term sheet can bind a founder for years, and the course teaches concepts, not advice, so the next step is a qualified professional with the term sheet, the file and ranked questions. An AI summary is not a substitute, and smoothing the ratings to look better is exactly what the lesson warns against.",
+    "ar": "قد تُلزم ورقة الشروط المؤسِّس سنوات، والدورة تعلّم المفاهيم لا النصيحة، فالخطوة التالية مختص مؤهَّل مع ورقة الشروط والملف وأسئلة مرتّبة. وملخص الذكاء الاصطناعي لا يغني عنه، وتجميل التقديرات ليبدو الملف أقوى هو ما يحذّر منه الدرس."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m8-e1",
+   "lesson": "8.1",
+   "text": {
+    "en": "I have created a venture file folder with eight labelled sections, each holding a dated artefact with a \"based on\" note or the word \"missing\", and a backup copy on a different drive.",
+    "ar": "أنشأتُ مجلد ملف المشروع بثمانية أقسام معنونة، يضم كل منها مخرَجًا مؤرَّخًا مع ملاحظة «يستند إلى» أو كلمة «ناقص»، ولي نسخة احتياطية على قرص آخر."
+   }
+  },
+  {
+   "id": "m8-e2",
+   "lesson": "8.1",
+   "text": {
+    "en": "I have saved a 30-day plan with at most three countable outcomes and a continue, change or stop rule dated day 1, and put the day-30 review in my calendar.",
+    "ar": "حفظتُ خطة لثلاثين يومًا بثلاث نتائج قابلة للعدّ على الأكثر وقاعدة «أكمل أو غيّر أو توقف» مؤرَّخة باليوم الأول، ووضعتُ مراجعة اليوم الثلاثين في تقويمي."
+   }
+  }
+ ]
+}

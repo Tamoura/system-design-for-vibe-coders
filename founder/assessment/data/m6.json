@@ -1,0 +1,135 @@
+{
+  "area": "m6",
+  "questions": [
+    {
+      "id": "m6-1",
+      "level": 1,
+      "lesson": "6.1",
+      "q": {
+        "en": "Tick's pricing page says \"cancel any time\", but today a cancellation means emailing Layla, who processes it by hand within a week. What does the lesson's promise inventory say to do?",
+        "ar": "تقول صفحة الأسعار في تيك \"ألغِ في أي وقت\"، لكن الإلغاء اليوم يعني مراسلة ليلى التي تعالجه يدويًا خلال أسبوع. ماذا يقول جرد الوعود في الدرس أن تفعل؟"
+      },
+      "o": {
+        "en": [
+          "Leave it as it is, because only the terms page counts as a promise in a dispute",
+          "Log it as a promise, then change either the cancellation flow or the sentence",
+          "Delete the line from the pricing page, because marketing copy is not a promise",
+          "Ask the AI tool to soften the wording while the cancellation process stays the same"
+        ],
+        "ar": [
+          "تركها كما هي، لأن صفحة الشروط وحدها تُعدّ وعدًا عند النزاع",
+          "تسجيلها وعدًا، ثم تغيير مسار الإلغاء أو تغيير الجملة",
+          "حذف السطر من صفحة الأسعار، لأن النص التسويقي ليس وعدًا",
+          "أن تطلب من الأداة تليين الصياغة مع بقاء إجراء الإلغاء كما هو"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "A promise is anything a customer can reasonably rely on, and a pricing line counts. Each promise is matched to what makes it true, then either the product or the sentence changes, with a dated record. Leaving it keeps a promise the product does not keep, and softer wording over the same process does not make it true.",
+        "ar": "الوعد هو كل ما يستطيع العميل أن يعتمد عليه بوجه معقول، وسطر في صفحة الأسعار يدخل في ذلك. يُطابَق كل وعد بما يجعله صحيحًا، ثم يتغير المنتج أو تتغير الجملة مع سجل مؤرَّخ. أما تركه فيُبقي وعدًا لا يفي به المنتج، وتليين الصياغة فوق الإجراء نفسه لا يجعله صحيحًا."
+      }
+    },
+    {
+      "id": "m6-2",
+      "level": 2,
+      "lesson": "6.2",
+      "q": {
+        "en": "Tick's reminder feature asks a model to write friendlier wording. A salon's free-text note field often holds health details. Which design follows the lesson's approach to what may be sent?",
+        "ar": "تطلب ميزة التذكير في تيك من نموذج أن يكتب صياغة ألطف. وكثيرًا ما يحوي حقل الملاحظات الحرة عند الصالون تفاصيل صحية. أي تصميم يتبع نهج الدرس فيما يجوز إرساله؟"
+      },
+      "o": {
+        "en": [
+          "Send the whole record, so the model has full context and writes better wording",
+          "Send the record with surname and phone masked, but keep the note for context",
+          "Send the whole record and add an instruction telling the model not to remember it",
+          "Send only the first name, time and service, and keep the note out of the model call"
+        ],
+        "ar": [
+          "إرسال السجل كاملًا، ليكون لدى النموذج سياق تام فيكتب صياغة أفضل",
+          "إرسال السجل مع إخفاء اللقب ورقم الهاتف، مع إبقاء الملاحظة للسياق",
+          "إرسال السجل كاملًا مع تعليمة تطلب من النموذج ألّا يتذكره",
+          "إرسال الاسم الأول والموعد والخدمة فقط، وإبقاء الملاحظة خارج النموذج"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "The first question is whether the data is needed: a reminder needs a first name, a time and a service. Health details are a special kind of data and stay out of prompts unless chosen on purpose with advice. Masking some fields still sends the note, and an instruction in the prompt does not control what the vendor stores.",
+        "ar": "السؤال الأول هو: هل البيانات لازمة؟ والتذكير يحتاج اسمًا أول وموعدًا وخدمة. والتفاصيل الصحية نوع خاص من البيانات، وتبقى خارج الأوامر ما لم يُقرَّر إرسالها عن قصد وبنصيحة. إخفاء بعض الحقول ما زال يرسل الملاحظة، والتعليمة داخل الأمر لا تتحكم فيما يخزّنه المورّد."
+      }
+    },
+    {
+      "id": "m6-3",
+      "level": 2,
+      "lesson": "6.3",
+      "q": {
+        "en": "A prospective customer asks Layla whether Tick owns all of its code, most of which an AI agent wrote. Which answer fits the lesson's advice to say what you can show?",
+        "ar": "يسأل عميل محتمل ليلى إن كانت تيك تملك كل شيفرتها، وقد كتب معظمَها وكيلُ ذكاء اصطناعي. أي إجابة تناسب نصيحة الدرس بأن تقول ما تستطيع إثباته؟"
+      },
+      "o": {
+        "en": [
+          "We built it with AI tools and open-source parts under their licences, and keep a register",
+          "Yes, every line is ours outright, because we paid for the tools, the freelancers and the licences",
+          "Ownership of AI-written code is unsettled, so we decline to say how the product was built",
+          "Yes, the tool's terms give us the output, so nobody else can have any rights in it"
+        ],
+        "ar": [
+          "بنيناه بأدوات ذكاء اصطناعي ومكوّنات مفتوحة المصدر وفق رخصها، ونحتفظ بسجل",
+          "نعم، كل سطر فيه ملك لنا تمامًا، لأننا دفعنا ثمن الأدوات والمستقلين والرخص",
+          "ملكية الشيفرة التي يكتبها الذكاء الاصطناعي غير محسومة، فنمتنع عن بيان كيف بُني المنتج",
+          "نعم، فشروط الأداة تمنحنا المخرجات، فلا يمكن أن يكون لأحد غيرنا أي حق فيها"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Never promise \"we own everything\" unless a lawyer helped make that true; say what you can show, and keep the register behind it. Paying is not ownership, and a tool's terms do not settle what the law says. Refusing to answer is also unhelpful, since larger customers do ask and expect an honest answer.",
+        "ar": "لا تَعِد بأن \"كل شيء ملك لنا\" ما لم يساعدك محامٍ على جعل ذلك صحيحًا؛ قل ما تستطيع إثباته، وأبقِ السجل خلف كلامك. الدفع لا يعني الملكية، وشروط الأداة لا تحسم ما يقوله القانون. والامتناع عن الجواب غير مفيد أيضًا، فالعملاء الكبار يسألون ويتوقعون جوابًا صادقًا."
+      }
+    },
+    {
+      "id": "m6-4",
+      "level": 3,
+      "lesson": "6.2",
+      "q": {
+        "en": "A teammate wants to use customers' support messages from Tick's logs to fine-tune a model \"to improve the product\". The terms say nothing about this. What does the lesson suggest?",
+        "ar": "يريد زميل استعمال رسائل الدعم من سجلات تيك لضبط نموذج \"لتحسين المنتج\". والشروط لا تقول شيئًا عن ذلك. ماذا يقترح الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Go ahead, since logs are the company's own operational records and are already stored",
+          "Go ahead once names are removed, and mention it in a later update of the terms",
+          "Hold off, decide in writing first, and tell customers their data is not used this way",
+          "Go ahead for now, and delete the affected logs if any customer objects later"
+        ],
+        "ar": [
+          "المضيّ في ذلك، لأن السجلات سجلات تشغيل تخص الشركة وهي مخزَّنة لديها أصلًا",
+          "المضيّ في ذلك بعد حذف أسماء العملاء، مع ذكره في تحديث لاحق لصفحة الشروط",
+          "التريّث وكتابة قرار أولًا، وإبلاغ العملاء بأن بياناتهم لا تُستعمل هكذا",
+          "المضيّ في ذلك حاليًا، وحذف السجلات المعنية إن اعترض أي عميل بعد ذلك"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Training on customer data is a separate use that needs its own decision: is it declared, allowed by the customer agreement, and reversible? When the answer is \"not yet decided\", the safe default is no, and telling customers so. Starting first and fixing later cannot be undone once data has shaped a model.",
+        "ar": "التدريب على بيانات العملاء استعمال مستقل يحتاج قرارًا خاصًا به: هل هو معلَن، وهل تسمح به اتفاقية العميل، وهل يمكن التراجع عنه؟ وحين يكون الجواب \"لم يُقرَّر بعد\" فالأصل الآمن هو الامتناع وإبلاغ العملاء بذلك. أما البدء أولًا والتصحيح لاحقًا فلا يُتراجع عنه متى شكّلت البيانات النموذج."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m6-e1",
+      "lesson": "6.2",
+      "text": {
+        "en": "I have drawn a data-flow map for my product, one row per kind of customer data with where it comes from, where it goes, why and how long it is kept, and saved it in my founder folder.",
+        "ar": "رسمتُ خريطة تدفق البيانات (data-flow map) لمنتجي، في كل صف نوع من بيانات العملاء مع مصدره ووجهته وسببه ومدة الاحتفاظ به، وحفظتُها في مجلد المؤسس."
+      }
+    },
+    {
+      "id": "m6-e2",
+      "lesson": "6.3",
+      "text": {
+        "en": "I have written an ownership register for my product, listing each important item, who made it and what gives me the right to use it, and saved it in my founder folder with a list of questions for a lawyer.",
+        "ar": "كتبتُ سجل ملكية (ownership register) لمنتجي، يسرد كل قطعة مهمة ومن صنعها وما يعطيني حق استعمالها، وحفظتُه في مجلد المؤسس مع قائمة أسئلة لمحامٍ."
+      }
+    }
+  ]
+}

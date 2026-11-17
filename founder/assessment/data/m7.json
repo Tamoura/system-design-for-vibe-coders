@@ -1,0 +1,135 @@
+{
+  "area": "m7",
+  "questions": [
+    {
+      "id": "m7-1",
+      "level": 1,
+      "lesson": "7.1",
+      "q": {
+        "en": "Layla is sorting her recurring tasks into the lesson's four groups. Which task is the best candidate for an AI agent acting alone inside a written limit, with Layla reviewing a log?",
+        "ar": "تصنّف ليلى مهامها المتكررة في المجموعات الأربع التي يعرضها الدرس. أيّ مهمة هي أنسب مرشّحة لوكيل ذكاء اصطناعي يعمل وحده ضمن حدّ مكتوب، مع مراجعة ليلى للسجل؟"
+      },
+      "o": {
+        "en": [
+          "Replying to customer complaints in her name, without a review step",
+          "Issuing a credit to a customer who reports missed reminders",
+          "Deleting a customer's data after they send an email asking for it",
+          "Tagging and routing incoming messages to the right support folder"
+        ],
+        "ar": [
+          "الرد على شكاوى العملاء باسمها، دون خطوة مراجعة",
+          "منح رصيد تعويضي لعميل يشكو من تذكيرات فاتته",
+          "حذف بيانات عميل بعد أن يرسل رسالة يطلب فيها ذلك",
+          "وسم الرسائل الواردة وتوجيهها إلى المجلد المناسب"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Tagging and routing can be undone, affects little if it goes wrong and neither speaks for her nor moves money, so it fits acting within limits. The other three speak for her, move money or delete data, which cannot be undone, so they stay with her or at drafts she approves.",
+        "ar": "الوسم والتوجيه يمكن التراجع عنهما، وضررهما محدود إن أخطأ الوكيل، ولا يتحدثان باسمها ولا يحرّكان مالًا، فيناسبان العمل ضمن حدود. أما الثلاث الأخرى فتتحدث باسمها أو تحرّك المال أو تحذف بيانات لا رجعة فيها، فتبقى عندها أو في مسودات توافق عليها."
+      }
+    },
+    {
+      "id": "m7-2",
+      "level": 2,
+      "lesson": "7.2",
+      "q": {
+        "en": "Tick's message vendor bills per message. Layla set a budget alert at twice last month's bill, and nothing else. A bug starts sending messages in a loop overnight. What does the lesson say the alert does here?",
+        "ar": "يحاسب مزوّد الرسائل لدى Tick على كل رسالة. ضبطت ليلى تنبيه ميزانية عند ضعف فاتورة الشهر الماضي، ولا شيء غيره. بدأ خطأ برمجي يرسل الرسائل في حلقة طوال الليل. ماذا يفعل التنبيه هنا بحسب الدرس؟"
+      },
+      "o": {
+        "en": [
+          "It tells her once the threshold is passed but does not stop spending",
+          "It stops the sending as soon as the bill passes the threshold she set",
+          "It refunds the extra charges after the loop has been found and fixed",
+          "It warns her before the first extra message in the loop is ever sent"
+        ],
+        "ar": [
+          "ينبّهها بعد تجاوز العتبة لكنه لا يوقف الإنفاق نفسه",
+          "يوقف الإرسال فور أن تتجاوز الفاتورة العتبة التي ضبطتها",
+          "يردّ لها الرسوم الزائدة بعد اكتشاف الحلقة وإصلاحها",
+          "يحذّرها قبل إرسال أول رسالة زائدة في الحلقة أصلًا"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "An alert tells you; a cap stops the spend, and many vendors only offer alerts. So she needs to know which one she has, and set a hard limit where the vendor offers it. Neither kind of control refunds charges or predicts the loop.",
+        "ar": "التنبيه يخبرك، أما الحدّ الأقصى فيوقف الإنفاق، وكثير من المزوّدين يقدّمون التنبيه وحده. لذا عليها أن تعرف أيّهما لديها، وأن تضبط حدًّا صارمًا حيث يتيحه المزوّد. ولا يردّ أيٌّ من النوعين الرسوم ولا يتنبأ بالحلقة."
+      }
+    },
+    {
+      "id": "m7-3",
+      "level": 2,
+      "lesson": "7.3",
+      "q": {
+        "en": "Layla is choosing what to give a trusted friend who will watch the business during her two-week absence. Which setup follows the lesson?",
+        "ar": "تختار ليلى ما تمنحه لصديق موثوق سيراقب العمل خلال غيابها أسبوعين. أيّ إعداد يتّفق مع الدرس؟"
+      },
+      "o": {
+        "en": [
+          "The handover pack with the master password written on its last page",
+          "Her own logins for every key account, so nothing is ever blocked",
+          "The handover pack plus payout rights, so urgent refunds are not delayed",
+          "The handover pack, rights to pause and read, and payouts left with her"
+        ],
+        "ar": [
+          "حزمة التسليم وكلمة المرور الرئيسية مكتوبة في صفحتها الأخيرة",
+          "بيانات دخولها الشخصية لكل حساب مهم، حتى لا يتعطل شيء أبدًا",
+          "حزمة التسليم مع صلاحية الدفع، حتى لا تتأخر المبالغ المستردة العاجلة",
+          "حزمة التسليم وصلاحيتا الإيقاف والقراءة، وتبقى المدفوعات عندها"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "The pack holds no secrets, the helper gets pause and read rights, and money movement stays with the founder. A pause is safer than a fix by someone who does not understand the system. The master password never goes in the pack, and no one shares logins.",
+        "ar": "الحزمة لا تحوي أسرارًا، ويحصل المساعد على صلاحيتي الإيقاف المؤقت والقراءة، وتبقى حركة المال عند المؤسِّسة. والإيقاف المؤقت أأمن من إصلاح يجريه من لا يفهم النظام. ولا توضع كلمة المرور الرئيسية في الحزمة، ولا يُتشارك أي حساب."
+      }
+    },
+    {
+      "id": "m7-4",
+      "level": 3,
+      "lesson": "7.1",
+      "q": {
+        "en": "An agent reads incoming customer emails and also has a button to export the customer list. A message arrives with a hidden line telling the agent to send the list to an outside address. Which fix does the lesson favour?",
+        "ar": "وكيل يقرأ رسائل العملاء الواردة، ولديه أيضًا زر لتصدير قائمة العملاء. وصلت رسالة فيها سطر مخبّأ يأمر الوكيل بإرسال القائمة إلى عنوان خارجي. أيّ حلٍّ يفضّله الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Add a line to its brief telling it to ignore instructions found inside emails",
+          "Split the jobs: the agent reading outside text gets no export or money powers",
+          "Ask the agent to double-check each message before it acts on the contents",
+          "Keep the setup as it is but read the action log monthly instead of weekly"
+        ],
+        "ar": [
+          "إضافة سطر إلى تكليفه يطلب منه تجاهل أي تعليمات ترد داخل الرسائل",
+          "فصل المهام: الوكيل القارئ لنص خارجي لا يملك تصديرًا ولا تحريك مال",
+          "أن تطلب منه مراجعة كل رسالة مرة ثانية قبل أن يتصرف بناءً على محتواها",
+          "إبقاء الإعداد كما هو ومراجعة سجل الإجراءات شهريًّا بدل أسبوعيًّا"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Text from outside can contain instructions and an agent can be fooled, so the safe design is that an agent reading it holds no powers that would hurt if it were fooled. A line in the brief, a second look by the same agent or a slower review does not remove the power itself.",
+        "ar": "النص القادم من الخارج قد يحمل تعليمات، والوكيل قد يُخدع، فالتصميم الآمن أن لا يملك الوكيل القارئ له صلاحيات تضرّ لو خُدع. أما سطر في التكليف، أو نظرة ثانية من الوكيل نفسه، أو مراجعة أبطأ، فلا يزيل الصلاحية ذاتها."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m7-e1",
+      "lesson": "7.2",
+      "text": {
+        "en": "I have written a vendor register with one row for every service my company pays or depends on, each with a billing owner, a renewal date and an exit route, and saved it where I can open it.",
+        "ar": "كتبتُ سجل موردين بصف لكل خدمة تدفع لها شركتي أو تعتمد عليها، في كل صف مالك الفوترة وتاريخ التجديد ومسار الخروج، وحفظتُه في مكان أستطيع فتحه."
+      }
+    },
+    {
+      "id": "m7-e2",
+      "lesson": "7.3",
+      "text": {
+        "en": "I have written a handover pack with no secrets in it, given it to one trusted person, and recorded the date and result of a 30-minute drill in which they found six named items.",
+        "ar": "كتبتُ حزمة تسليم لا تحوي أي أسرار، وسلّمتُها لشخص واحد موثوق، ودوّنتُ تاريخ تمرين مدته ثلاثون دقيقة ونتيجته، وجد فيه ستة عناصر محددة."
+      }
+    }
+  ]
+}

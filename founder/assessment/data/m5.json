@@ -1,0 +1,135 @@
+{
+ "area": "m5",
+ "questions": [
+  {
+   "id": "m5-1",
+   "level": 1,
+   "lesson": "5.1",
+   "q": {
+    "en": "A founder plans one launch day: a new reminder format, a new price page and an email to everyone on her list. Which step does the lesson put on the last rung of the ladder?",
+    "ar": "تخطط مؤسِّسة ليوم إطلاق واحد: صيغة تذكير جديدة، وصفحة أسعار جديدة، ورسالة بريد إلى كل من في قائمتها. أيّ خطوة يضعها الدرس في آخر درجة من السلّم؟"
+   },
+   "o": {
+    "en": [
+     "The reminder format, because it is the largest change to her code",
+     "The email to the whole list, since a sent message cannot be recalled",
+     "The price page, because customers decide whether to buy from it",
+     "Her own test run with fake clients, since it needs real appointments"
+    ],
+    "ar": [
+     "صيغة التذكير، لأنها أكبر تغيير في شيفرة المنتج كله",
+     "الرسالة إلى القائمة كلها، لأن الرسالة المرسلة لا يمكن استرجاعها",
+     "صفحة الأسعار، لأن العملاء يقررون الشراء بناءً على ما فيها",
+     "تجربتها الخاصة بعملاء وهميين، لأنها تحتاج إلى مواعيد حقيقية"
+    ]
+   },
+   "a": 1,
+   "why": {
+    "en": "The steps that are hard or impossible to reverse, such as a message to everyone or a public announcement, go last and go small first. A code change can be switched off or rolled back, and the test run with fake clients is rung 0, the first rung.",
+    "ar": "الخطوات التي يصعب عكسها أو يستحيل، كرسالة إلى الجميع أو إعلان علني، تأتي أخيرًا وتبدأ صغيرة. أما تغيير الشيفرة فيمكن إيقافه أو الرجوع عنه، والتجربة بعملاء وهميين هي الدرجة 0، أي الدرجة الأولى."
+   }
+  },
+  {
+   "id": "m5-2",
+   "level": 2,
+   "lesson": "5.2",
+   "q": {
+    "en": "A founder's support assistant passed her ten test messages last month. Her AI tool vendor has now moved her to a newer model, with the instructions and help text unchanged. What should she do before it answers customers again?",
+    "ar": "اجتاز مساعد الدعم عند مؤسِّسة رسائل الاختبار العشر الشهر الماضي. وقد نقلها مزوّد أداة الذكاء الاصطناعي الآن إلى نموذج أحدث، مع بقاء التعليمات ونص المساعدة كما هما. ماذا تفعل قبل أن يردّ على العملاء من جديد؟"
+   },
+   "o": {
+    "en": [
+     "Keep going, since last month's pass still applies to the same instructions",
+     "Read the next few live replies and switch it off only if one looks wrong",
+     "Ask the assistant to confirm that it still follows the support policy",
+     "Rerun the ten test messages and score every reply against the policy"
+    ],
+    "ar": [
+     "تواصل العمل، لأن نجاح الشهر الماضي ما زال ينطبق على التعليمات نفسها",
+     "تقرأ الردود الحية التالية وتوقفه فقط إن بدا أحدها خاطئًا",
+     "تطلب من المساعد أن يؤكد أنه ما زال يتبع سياسة الدعم",
+     "تعيد تشغيل رسائل الاختبار العشر وتقيّم كل رد وفق السياسة"
+    ]
+   },
+   "a": 3,
+   "why": {
+    "en": "Models and tools change, so a policy that passed before may not pass now; the test set is rerun after any change to the instructions, the help text or the tool. Waiting for a live failure lets a customer find it, and the assistant's own confirmation is not a test.",
+    "ar": "النماذج والأدوات تتغير، فقد لا تنجح اليوم سياسة نجحت من قبل؛ لذا تُعاد مجموعة الاختبار بعد أي تغيير في التعليمات أو نص المساعدة أو الأداة. وانتظار إخفاق حي يجعل العميل هو من يكتشفه، وتأكيد المساعد لنفسه ليس اختبارًا."
+   }
+  },
+  {
+   "id": "m5-3",
+   "level": 2,
+   "lesson": "5.3",
+   "q": {
+    "en": "Layla told her customers in a first message that she would write again by 18:00. At 18:00 she has nothing new to report. What does the lesson say to do?",
+    "ar": "أخبرت ليلى عملاءها في الرسالة الأولى أنها ستكتب مجددًا قبل الساعة 18:00. وعند 18:00 لا جديد لديها. ما الذي يقوله الدرس أن تفعله؟"
+   },
+   "o": {
+    "en": [
+     "Send a short update on time that says nothing has changed yet",
+     "Wait until she has real news, so that the update is worth reading",
+     "Move the promise to the next morning and tell only those who ask",
+     "Post a line on her status page and leave the customers' inboxes alone"
+    ],
+    "ar": [
+     "ترسل في الموعد تحديثًا قصيرًا تقول فيه إنه لم يتغير شيء بعد",
+     "تنتظر حتى يصير لديها خبر حقيقي، ليكون التحديث جديرًا بالقراءة",
+     "تؤجل الوعد إلى صباح اليوم التالي وتخبر من يسأل فقط",
+     "تنشر سطرًا في صفحة الحالة وتترك صناديق بريد العملاء كما هي"
+    ]
+   },
+   "a": 0,
+   "why": {
+    "en": "The update promise is kept even when the update is \"no change\": a customer who knows when the next message will come stops checking and stops worrying. Silence past the promised time feels like hiding, whatever the reason.",
+    "ar": "يُوفى بوعد التحديث حتى لو كان التحديث «لا تغيير»: فالعميل الذي يعرف متى تصله الرسالة التالية يكفّ عن المتابعة والقلق. أما الصمت بعد الموعد المعلن فيبدو إخفاءً، أيًّا كان السبب."
+   }
+  },
+  {
+   "id": "m5-4",
+   "level": 3,
+   "lesson": "5.1",
+   "q": {
+    "en": "Her builder says a new release stores appointment times in a different shape, and the old code cannot read that shape. How should she plan the release?",
+    "ar": "يقول مطوّرها إن إصدارًا جديدًا يخزّن أوقات المواعيد بصيغة مختلفة، وإن الشيفرة القديمة لا تستطيع قراءة هذه الصيغة. كيف تخطط للإصدار؟"
+   },
+   "o": {
+    "en": [
+     "As reversible, since the previous version is kept on the hosting platform",
+     "As reversible, since a feature flag can hide the new screens if needed",
+     "As irreversible: release small, with a restored backup and a person watching",
+     "As low risk, since her agent says the change is small and well tested"
+    ],
+    "ar": [
+     "على أنه قابل للتراجع، لأن النسخة السابقة محفوظة على منصة الاستضافة",
+     "على أنه قابل للتراجع، لأن علم الميزة يستطيع إخفاء الشاشات الجديدة عند الحاجة",
+     "على أنه لا رجعة فيه: إطلاق صغير مع نسخة احتياطية مجرَّبة وشخص يراقب",
+     "على أنه منخفض الخطر، لأن وكيلها يقول إن التغيير صغير ومُختبَر جيدًا"
+    ]
+   },
+   "a": 2,
+   "why": {
+    "en": "Going back to old code breaks reminders in a new way if the data has already changed shape, so the release is treated as irreversible: kept small, with a tested backup and a human watching. A flag or a kept version does not undo data already written, and the agent's reassurance is not a check.",
+    "ar": "الرجوع إلى الشيفرة القديمة يعطّل التذكيرات بطريقة جديدة إذا كانت البيانات قد غيّرت صيغتها فعلًا، لذا يُعامل الإصدار على أنه لا رجعة فيه: يُبقى صغيرًا مع نسخة احتياطية مجرَّبة وشخص يراقب. والعلم أو النسخة المحفوظة لا يلغيان بيانات كُتبت بالفعل، وطمأنة الوكيل ليست فحصًا."
+   }
+  }
+ ],
+ "evidence": [
+  {
+   "id": "m5-e1",
+   "lesson": "5.1",
+   "text": {
+    "en": "I have written a launch checklist with at least four rungs, every cell filled including a stop rule I can check, and run the undo for the first rung on a test copy, with a dated note of how many minutes it took.",
+    "ar": "كتبتُ قائمة فحص إطلاق بأربع درجات على الأقل، وملأتُ كل خاناتها بما فيها قاعدة إيقاف أستطيع التحقق منها، وشغّلتُ التراجع للدرجة الأولى على نسخة تجريبية، مع ملاحظة مؤرَّخة بعدد الدقائق التي استغرقها."
+   }
+  },
+  {
+   "id": "m5-e2",
+   "lesson": "5.3",
+   "text": {
+    "en": "I have saved a severity table with three levels and first-message times, and a five-part first-message template, in my support policy file.",
+    "ar": "حفظتُ جدول خطورة بثلاثة مستويات وأوقات الرسالة الأولى، وقالب رسالة أولى من خمسة أجزاء، في ملف سياسة الدعم الخاص بي."
+   }
+  }
+ ]
+}
