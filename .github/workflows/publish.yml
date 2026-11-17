@@ -97,6 +97,9 @@ jobs:
       - name: Check for banned names, exam-pass promises and landing links to agentic/
         run: python scripts/qa/claims_lint.py
 
+      - name: Check the landing and about counts match academy/catalogue.json
+        run: python scripts/qa/site_counts.py
+
       - name: Test that the self-assessment group views do not run injected content
         run: npm run test:assess
 

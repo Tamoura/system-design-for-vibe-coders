@@ -9,8 +9,9 @@ library. CI runs them with Python 3.11 in `.github/workflows/publish.yml`, and e
 | Answer-cue audit | `npm run qa:cues` | Scores content-free strategies on every multiple-choice instrument (see below). | A score rises above the baseline, or a new instrument is too easy to guess. |
 | Arabic rules | `npm run qa:arabic` | The owner's three standing rules for Arabic text (see below). | A violation that is not in the baseline. |
 | Claims lint | `npm run qa:claims` | Looks for wording the library must not publish (see below). | Any hit. There is no baseline. |
+| Site counts | `npm run qa:counts` | Compares the landing cards and about pages with `academy/catalogue.json` (see below). | Any count differs. |
 
-`npm run qa` runs all four, keeps going after a failure and prints a summary. Each script also runs on its own:
+`npm run qa` runs all five, keeps going after a failure and prints a summary. Each script also runs on its own:
 `python3 scripts/qa/<name>.py`. Exit status 0 means pass, 1 means fail, 2 means the check could not run.
 
 Two other tools live here:
@@ -94,6 +95,17 @@ and `scripts/qa/` (these checks). It fails on:
 Lines are compared after HTML tags, Markdown emphasis and Arabic diacritics are removed, so `pass the **AIGP**` and
 `pass the <strong>AIGP</strong>` are caught. A hit in a generated page (`COURSE.md`, `index.html`, `course.html`)
 goes away when its source is fixed and the course is rebuilt.
+
+## Site counts (`site_counts.py`)
+
+`academy/catalogue.json` is the one source for how many courses, modules and lessons the library has. The check fails
+when a hand-written page disagrees with it:
+
+- a `landing.html` course card whose first two numbers (modules, lessons) differ from the catalogue, a card for a
+  course the catalogue does not list, or a catalogue course with no card;
+- `about/index.html` or `about/index.ar.html` not stating the catalogue's course count and total lesson count.
+
+When a course gains or loses a lesson, change the catalogue first, then the pages, and run the check.
 
 ## Updating a baseline
 

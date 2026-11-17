@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Run the four content checks in scripts/qa/ one after another and summarise.
+"""Run the content checks in scripts/qa/ one after another and summarise.
 
 Every check runs even when an earlier one fails, so one run shows everything that needs fixing.
 
 usage: python3 scripts/qa/run_all.py        (or: npm run qa)
-exit status: 0 when all four pass, 1 otherwise.
+exit status: 0 when all pass, 1 otherwise.
 """
 from __future__ import annotations
 
@@ -19,6 +19,7 @@ CHECKS = [
     ("Answer-cue audit", "quiz_cues.py"),
     ("Arabic rules", "arabic_rules.py"),
     ("Claims lint", "claims_lint.py"),
+    ("Site counts", "site_counts.py"),
 ]
 
 

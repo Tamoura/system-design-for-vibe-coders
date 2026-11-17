@@ -373,7 +373,7 @@ Work in a copy of `testing/sample`.
 ## ⚡ In 60 seconds
 - Testers add what scanners cannot: **abuse cases**, **authorisation matrices** (who may do what to whose data), hostile and generated input, and a regression test for every vulnerability.
 - **SAST** reads code, **SCA** reads dependencies, **DAST** attacks a running app, **fuzzing** feeds generated input; each sees something different.
-- The best hour is an authorisation test: broken access control is first in the OWASP Top 10 (2021 edition).
+- The best hour is an authorisation test: broken access control is first in the OWASP Top 10 (2025 edition, as in 2021).
 - Scanners give leads, not verdicts: block on new, high-confidence findings; triage the rest.
 - Biggest trap: "the scanner was green, so it is secure".
 - Scope and written permission first; here, attack only the sample system, on your own machine.
@@ -387,20 +387,20 @@ Nada runs the OWASP ZAP baseline scan on the Transfers API and reports "no findi
 
 **What testers add.** Developers ask how a feature should work; attackers ask how to make it misbehave. Testers write the second list as **abuse cases** ("as Bob I change the id in the URL", "as a script I replay a captured transfer"), turn each into a test that must fail safely, and keep it as a regression test. They also own what no scanner can produce: the expected answer for every role and object.
 
-**The OWASP Top 10 as a source of test ideas.** The OWASP Top 10 is a widely used list of web risks. These are the 2021 names; a newer edition may be current when you read this, so check owasp.org and keep the method: one test idea per category.
+**The OWASP Top 10 as a source of test ideas.** The OWASP Top 10 is a widely used list of web risks. These are the 2025 edition's names; editions change, so check owasp.org and keep the method: one test idea per category.
 
-| Category | A test idea on Transfers |
+| Category (2025) | A test idea on Transfers |
 |---|---|
-| A01 Broken Access Control | Bob reads Alice's transfer or sends from `acc-1`; change every id in every URL |
-| A02 Cryptographic Failures | Reachable over plain HTTP? Tokens or account numbers in logs and error text? |
-| A03 Injection | Quotes, markup and oversize strings in every field; SQL built from strings |
-| A04 Insecure Design | Replay a captured request; race two identical ones; split a limit-busting transfer |
-| A05 Security Misconfiguration | Debug pages, default credentials, open API docs in production, missing headers |
-| A06 Vulnerable and Outdated Components | Dependency scan on every build; does a package an AI suggested really exist? |
-| A07 Identification and Authentication Failures | Expired, forged and wrong-audience tokens; rate limits on login |
-| A08 Software and Data Integrity Failures | Tampered tokens, unsigned artefacts and updates |
-| A09 Security Logging and Monitoring Failures | A refused transfer leaves an audit record, without the token in it |
-| A10 Server-Side Request Forgery | Any feature that fetches a user-supplied URL (none in the sample) |
+| A01 Broken Access Control | Bob reads Alice's transfer or sends from `acc-1`; change every id in every URL; any feature that fetches a user-supplied URL (SSRF, now part of this category; none in the sample) |
+| A02 Security Misconfiguration | Debug pages, default credentials, open API docs in production, missing headers |
+| A03 Software Supply Chain Failures | Dependency scan on every build; does a package an AI suggested really exist? |
+| A04 Cryptographic Failures | Reachable over plain HTTP? Tokens or account numbers in logs and error text? |
+| A05 Injection | Quotes, markup and oversize strings in every field; SQL built from strings |
+| A06 Insecure Design | Replay a captured request; race two identical ones; split a limit-busting transfer |
+| A07 Authentication Failures | Expired, forged and wrong-audience tokens; rate limits on login |
+| A08 Software or Data Integrity Failures | Tampered tokens, unsigned artefacts and updates |
+| A09 Security Logging and Alerting Failures | A refused transfer leaves an audit record, without the token in it |
+| A10 Mishandling of Exceptional Conditions | Make the limit or ownership check throw (a timeout, a missing field): the transfer must be refused, not let through, and the error must not leak stack traces or data |
 
 **Two checklists.** The **OWASP Application Security Verification Standard (ASVS)** lists security requirements at three verification levels: use it to decide what "secure enough" means. The **OWASP Web Security Testing Guide (WSTG)** describes how to test each area, from authentication to business logic: use it to design tests.
 

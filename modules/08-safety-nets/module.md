@@ -717,7 +717,7 @@ Finish: *"Commit with the message `08-4-supply-chain-gate`."*
 ## 📚 References & further wandering
 
 - **The left-pad incident** (Mar 2016) — Quartz's "How one programmer broke the internet…" and npm's response post; the eleven lines themselves are worth a look.
-- **OWASP Top 10: A06 Vulnerable and Outdated Components** (owasp.org) — the supply-chain risk in the industry-standard checklist (revisited in 5.6).
+- **OWASP Top 10: A03 Software Supply Chain Failures (2025)** (owasp.org) — the supply-chain risk in the industry-standard checklist; it extends the 2021 edition's A06 Vulnerable and Outdated Components (revisited in 5.6).
 - **npm audit** / **GitHub Dependabot** docs — the free audit tools this lesson wires into CI.
 - **SLSA framework** (slsa.dev) — the current model for build/supply-chain integrity, including why you pin by digest not tag.
 - Uber 2016 (5.7) and the **personal-Mac CI** incident (our bank) — what happens when untrusted code meets standing credentials.
