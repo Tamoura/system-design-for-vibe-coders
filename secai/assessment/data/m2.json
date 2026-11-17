@@ -7,7 +7,7 @@
    "lesson": "2.1",
    "q": {
     "en": "New developers ask Noura why SQL injection, OS command injection and server-side template injection fall under one secure-coding standard, SC-02. What root cause do the three share?",
-    "ar": "يسأل مطوّرون جدد (new developers) نورة عن سبب وقوع حقن SQL (SQL injection) وحقن أوامر نظام التشغيل وحقن القوالب من جهة الخادم تحت معيار برمجةٍ آمنة واحد، هو SC-02. ما السبب الجذري المشترك بين الثلاثة؟"
+    "ar": "يسأل مطوّرون جدد نورة عن سبب وقوع حقن SQL وحقن أوامر نظام التشغيل وحقن القوالب من جهة الخادم تحت معيار برمجةٍ آمنة واحد، هو SC-02. ما السبب الجذري المشترك بين الثلاثة؟"
    },
    "o": {
     "en": [
@@ -17,16 +17,16 @@
      "Services run with more rights than they need, so a crafted input can do serious harm"
     ],
     "ar": [
-     "تقبل حقول الإدخال (input fields) أحرفًا خاصة (special characters) كان ينبغي أن ترفضها قاعدةٌ صارمة للتحقق من المدخلات",
-     "تُدمَج المدخلات غير الموثوقة (untrusted input) في النص الذي ينفّذه المفسِّر، فتستطيع تغيير ما يُنفَّذ",
-     "تكشف رسائل الخطأ (error messages) للمهاجمين ما يكفي عن الواجهة الخلفية لصياغة مدخلاتٍ تنجح",
-     "تعمل الخدمات بصلاحياتٍ تفوق حاجتها، فتستطيع المدخلات المصمَّمة إحداث ضررٍ جسيم (serious harm)"
+     "تقبل حقول الإدخال أحرفًا خاصة كان ينبغي أن ترفضها قاعدةٌ صارمة للتحقق من المدخلات",
+     "تُدمَج المدخلات غير الموثوقة في النص الذي ينفّذه المفسِّر، فتستطيع تغيير ما يُنفَّذ",
+     "تكشف رسائل الخطأ للمهاجمين ما يكفي عن الواجهة الخلفية لصياغة مدخلاتٍ تنجح",
+     "تعمل الخدمات بصلاحياتٍ تفوق حاجتها، فتستطيع المدخلات المصمَّمة إحداث ضررٍ جسيم"
     ]
    },
    "a": 1,
    "why": {
     "en": "All three let input reach an interpreter as part of a command, so one rule fixes them: keep code and data apart, with parameters, argument lists and template variables. Strict validation is the tempting answer, but it is only a second layer: real values such as O'Brien contain \"dangerous\" characters, and filters can be bypassed with encodings.",
-    "ar": "تسمح الثلاثة كلها بوصول المدخلات إلى مفسِّر بوصفها جزءًا من أمر، فتصلحها قاعدةٌ واحدة (one rule): افصل الشيفرة عن البيانات، بالمعاملات (parameters) وقوائم الوسائط (argument lists) ومتغيرات القوالب (template variables). أما التحقق الصارم (strict validation) فهو الإجابة المغرية، لكنه طبقةٌ ثانية فقط: فالقيم الحقيقية مثل O'Brien تحتوي على أحرفٍ توصف بأنها خطِرة (dangerous characters)، ويمكن تجاوز المرشِّحات بالترميزات."
+    "ar": "تسمح الثلاثة كلها بوصول المدخلات إلى مفسِّر بوصفها جزءًا من أمر، فتصلحها قاعدةٌ واحدة: افصل الشيفرة عن البيانات، بالمعاملات وقوائم الوسائط ومتغيرات القوالب. أما التحقق الصارم فهو الإجابة المغرية، لكنه طبقةٌ ثانية فقط: فالقيم الحقيقية مثل O'Brien تحتوي على أحرفٍ توصف بأنها خطِرة، ويمكن تجاوز المرشِّحات بالترميزات."
    }
   },
   {
@@ -46,15 +46,15 @@
     ],
     "ar": [
      "ترميز قيمة الموقع بترميز HTML قبل وضعها داخل السمة href للرابط",
-     "رفض أي قيمةٍ محفوظة للموقع تحتوي على النص <script> (the text <script>)، أيًّا كانت حالة الأحرف",
-     "ضبط ملف تعريف ارتباط الجلسة (session cookie) على HttpOnly، كي لا يقرأه النص البرمجي المنفَّذ من الرابط",
-     "قصر روابط المواقع المحفوظة على المخطط https:، مع التحقق قبل العرض (before rendering)"
+     "رفض أي قيمةٍ محفوظة للموقع تحتوي على النص <script>، أيًّا كانت حالة الأحرف",
+     "ضبط ملف تعريف ارتباط الجلسة على HttpOnly، كي لا يقرأه النص البرمجي المنفَّذ من الرابط",
+     "قصر روابط المواقع المحفوظة على المخطط https:، مع التحقق قبل العرض"
     ]
    },
    "a": 3,
    "why": {
     "en": "A URL is its own context: rule XSS-2 allow-lists user-supplied URLs to https: before rendering, so a javascript: link is rejected. HTML-encoding is the tempting answer, but the templates already do it and the proof still ran, because encoding leaves the javascript: scheme intact.",
-    "ar": "عنوان URL سياقٌ قائمٌ بذاته: فالقاعدة XSS-2 (rule XSS-2) تقصر عناوين URL التي يقدّمها المستخدم (user-supplied URLs) على https: قبل العرض (before rendering)، فيُرفَض رابط javascript: ‏. أما الترميز بـ HTML (HTML-encoding) فهو الإجابة المغرية، لكن القوالب تجريه أصلًا ومع ذلك عمل الدليل، لأن الترميز يترك المخطط javascript: كما هو."
+    "ar": "عنوان URL سياقٌ قائمٌ بذاته: فالقاعدة XSS-2 تقصر عناوين URL التي يقدّمها المستخدم على https: قبل العرض، فيُرفَض رابط javascript: ‏. أما الترميز بـ HTML فهو الإجابة المغرية، لكن القوالب تجريه أصلًا ومع ذلك عمل الدليل، لأن الترميز يترك المخطط javascript: كما هو."
    }
   },
   {
@@ -63,7 +63,7 @@
    "lesson": "2.3",
    "q": {
     "en": "Tariq's team adds webhooks to the SME Portal: when an invoice is approved, the portal POSTs a notice to a URL each customer chooses. Customers may name any host, so a partner allow-list is impossible. Which design best stops the feature being aimed at Najm's internal network?",
-    "ar": "يضيف فريق طارق خطافات الويب (webhooks) إلى بوابة الشركات الصغيرة (SME Portal): فحين تُعتمد فاتورة، ترسل البوابة إشعارًا بطلب POST إلى عنوان URL يختاره كل عميل. ويحق للعملاء تسمية أي مضيف، فتستحيل قائمة سماحٍ للشركاء. أيّ تصميمٍ يمنع على أفضل وجه توجيه الميزة نحو الشبكة الداخلية لبنك نجم؟"
+    "ar": "يضيف فريق طارق خطافات الويب (webhooks) إلى بوابة الشركات الصغيرة: فحين تُعتمد فاتورة، ترسل البوابة إشعارًا بطلب POST إلى عنوان URL يختاره كل عميل. ويحق للعملاء تسمية أي مضيف، فتستحيل قائمة سماحٍ للشركاء. أيّ تصميمٍ يمنع على أفضل وجه توجيه الميزة نحو الشبكة الداخلية لبنك نجم؟"
    },
    "o": {
     "en": [
@@ -73,16 +73,16 @@
      "Require HTTPS endpoints with valid certificates, and sign every payload so customers can verify it"
     ],
     "ar": [
-     "الإرسال من عاملٍ معزول عبر وكيل خروج (egress proxy) يحظر النطاقات الخاصة (private ranges) ونطاقات الاسترجاع (loopback) والنطاقات المحلية للرابط (link-local ranges)",
-     "قبول عناوين URL على نطاق الشركة الموثَّق للعميل فقط، مع فحصها مرةً واحدة (checked once) عند حفظ الخطاف",
-     "رفض عناوين URL التي يحتوي نصها على localhost أو 127.0.0.1 أو 169.254، ثم الإرسال (then send) من خوادم الواجهة البرمجية",
-     "اشتراط نقاط نهاية HTTPS (HTTPS endpoints) بشهاداتٍ صالحة (valid certificates)، وتوقيع كل حمولة كي يتحقق منها العملاء"
+     "الإرسال من عاملٍ معزول عبر وكيل خروج يحظر النطاقات الخاصة ونطاقات الاسترجاع والنطاقات المحلية للرابط",
+     "قبول عناوين URL على نطاق الشركة الموثَّق للعميل فقط، مع فحصها مرةً واحدة عند حفظ الخطاف",
+     "رفض عناوين URL التي يحتوي نصها على localhost أو 127.0.0.1 أو 169.254، ثم الإرسال من خوادم الواجهة البرمجية",
+     "اشتراط نقاط نهاية HTTPS بشهاداتٍ صالحة، وتوقيع كل حمولة كي يتحقق منها العملاء"
     ]
    },
    "a": 0,
    "why": {
     "en": "Webhooks are SSRF by design, so the destination must be enforced at the network layer: an isolated worker behind an egress proxy that blocks private, loopback and link-local addresses, with replies never shown to the customer. A verified company domain is tempting, but a name checked once can later resolve to an internal address; HTTPS and signed payloads are needed too, yet neither limits where the server sends.",
-    "ar": "خطافات الويب (webhooks) هي SSRF بطبيعة تصميمها، لذا يجب فرض الوجهة في طبقة الشبكة: عاملٌ معزول خلف وكيل خروج (egress proxy) يحظر العناوين الخاصة وعناوين الاسترجاع والعناوين المحلية للرابط، ولا تُعرض الردود على العميل أبدًا. أما نطاق الشركة الموثَّق فخيارٌ مغرٍ (tempting)، لكن الاسم الذي فُحص مرةً واحدة قد يُحَلّ لاحقًا إلى عنوانٍ داخلي؛ وHTTPS والحمولات الموقَّعة (signed payloads) مطلوبةٌ أيضًا، لكن أيًّا منها لا يقيّد وجهة إرسال الخادم."
+    "ar": "خطافات الويب هي SSRF بطبيعة تصميمها، لذا يجب فرض الوجهة في طبقة الشبكة: عاملٌ معزول خلف وكيل خروج (egress proxy) يحظر العناوين الخاصة وعناوين الاسترجاع والعناوين المحلية للرابط، ولا تُعرض الردود على العميل أبدًا. أما نطاق الشركة الموثَّق فخيارٌ مغرٍ، لكن الاسم الذي فُحص مرةً واحدة قد يُحَلّ لاحقًا إلى عنوانٍ داخلي؛ وHTTPS والحمولات الموقَّعة مطلوبةٌ أيضًا، لكن أيًّا منها لا يقيّد وجهة إرسال الخادم."
    }
   },
   {
@@ -91,7 +91,7 @@
    "lesson": "2.2",
    "q": {
     "en": "In an authorised test, Mariam shows that a page planted on a compromised marketing.najm.example can make a logged-in user's browser submit the SME Portal form that changes an invoice's payment terms. The session cookie is SameSite=Strict, and CORS allows only the portal's own origin. What explains this, and what closes it?",
-    "ar": "في اختبارٍ مصرَّح به، تُظهر مريم أن صفحةً مزروعة على النطاق marketing.najm.example بعد اختراقه (compromised) تستطيع جعل متصفح مستخدمٍ مسجِّلٍ دخوله يرسل نموذج بوابة الشركات الصغيرة الذي يغيّر شروط الدفع لفاتورة. وملف تعريف ارتباط الجلسة (session cookie) مضبوطٌ على SameSite=Strict، ولا تسمح سياسة CORS (CORS policy) إلا بمصدر البوابة نفسها. ما الذي يفسّر ذلك، وما الذي يغلقه؟"
+    "ar": "في اختبارٍ مصرَّح به، تُظهر مريم أن صفحةً مزروعة على النطاق marketing.najm.example بعد اختراقه تستطيع جعل متصفح مستخدمٍ مسجِّلٍ دخوله يرسل نموذج بوابة الشركات الصغيرة الذي يغيّر شروط الدفع لفاتورة. وملف تعريف ارتباط الجلسة مضبوطٌ على SameSite=Strict، ولا تسمح سياسة CORS إلا بمصدر البوابة نفسها. ما الذي يفسّر ذلك، وما الذي يغلقه؟"
    },
    "o": {
     "en": [
@@ -102,15 +102,15 @@
     ],
     "ar": [
      "لم تُطبَّق القيمة Strict؛ فأضف البادئة __Host- كي لا تستطيع النطاقات الفرعية إرسال ملف تعريف الارتباط",
-     "كان على CORS أن يوقفه؛ فطبّق سياسة CORS (CORS policy) على إرسال النماذج (form posts) كما على استدعاءات الواجهة البرمجية (API calls)",
+     "كان على CORS أن يوقفه؛ فطبّق سياسة CORS على إرسال النماذج كما على استدعاءات الواجهة البرمجية",
      "تقارن SameSite المواقع لا المصادر؛ فاشترط رمزًا مضادًا لتزوير الطلبات ومطابقةً تامة لترويسة Origin",
-     "افتقر ملف تعريف الارتباط إلى HttpOnly، فقرأته الصفحة المزروعة؛ فاضبط HttpOnly على ملف تعريف ارتباط الجلسة (session cookie)"
+     "افتقر ملف تعريف الارتباط إلى HttpOnly، فقرأته الصفحة المزروعة؛ فاضبط HttpOnly على ملف تعريف ارتباط الجلسة"
     ]
    },
    "a": 2,
    "why": {
     "en": "SameSite works per site (scheme plus registrable domain), so marketing.najm.example is the same site as portal.najm.example and the Strict cookie is still sent; a CSRF token that the other origin cannot read, plus an exact Origin check, closes the gap, as rule CSRF-1 requires. The __Host- prefix is tempting, but it only stops sibling subdomains overwriting the cookie, not the browser sending it.",
-    "ar": "تعمل SameSite على مستوى الموقع (per site)، أي المخطط مع النطاق القابل للتسجيل، فيكون marketing.najm.example الموقعَ نفسه الذي ينتمي إليه portal.najm.example، ويُرسَل ملف تعريف الارتباط ذو القيمة Strict رغم ذلك (still sent)؛ ويغلق الثغرةَ رمزٌ مضاد لتزوير الطلبات لا يستطيع المصدر الآخر قراءته، مع فحصٍ تام لترويسة Origin، كما تشترط القاعدة CSRF-1 (rule CSRF-1). أما البادئة __Host- فخيارٌ مغرٍ (tempting)، لكنها لا تمنع إلا كتابة النطاقات الفرعية الشقيقة فوق ملف تعريف الارتباط، لا إرسالَ المتصفح له."
+    "ar": "تعمل SameSite على مستوى الموقع، أي المخطط مع النطاق القابل للتسجيل، فيكون marketing.najm.example الموقعَ نفسه الذي ينتمي إليه portal.najm.example، ويُرسَل ملف تعريف الارتباط ذو القيمة Strict رغم ذلك؛ ويغلق الثغرةَ رمزٌ مضاد لتزوير الطلبات لا يستطيع المصدر الآخر قراءته، مع فحصٍ تام لترويسة Origin، كما تشترط القاعدة CSRF-1. أما البادئة __Host- فخيارٌ مغرٍ، لكنها لا تمنع إلا كتابة النطاقات الفرعية الشقيقة فوق ملف تعريف الارتباط، لا إرسالَ المتصفح له."
    }
   }
  ],
@@ -128,7 +128,7 @@
    "lesson": "2.3",
    "text": {
     "en": "I have implemented an upload validation stage locally, with tests that reject a renamed HTML file, an SVG and an archive entry named ../evil.txt, and mapped every upload risk to a control with an owner",
-    "ar": "نفّذتُ مرحلة التحقق من الرفوعات محليًا، مع اختباراتٍ ترفض ملف HTML معادًا تسميته وملف SVG ومُدخلَ أرشيف باسم ../evil.txt، وربطتُ كل خطرٍ من مخاطر الرفع بضابطٍ له مالك"
+    "ar": "نفّذتُ مرحلة التحقق من الرفوعات محليًا، مع اختباراتٍ ترفض ملف HTML معادًا تسميته وملف SVG ومُدخلَ أرشيف باسم../evil.txt، وربطتُ كل خطرٍ من مخاطر الرفع بضابطٍ له مالك"
    }
   }
  ]

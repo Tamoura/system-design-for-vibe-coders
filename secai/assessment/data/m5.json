@@ -7,7 +7,7 @@
    "lesson": "5.1",
    "q": {
     "en": "The SME Portal must store each company's payout IBAN and read it back in clear whenever Najm Bank makes a payment. Which approach fits this job?",
-    "ar": "يجب أن تخزّن بوابة الشركات الصغيرة (SME Portal) رقم IBAN المخصَّص لصرف المدفوعات لكل شركة، وأن تقرأه بنصٍّ صريح كلما أجرى بنك نجم (Najm Bank) دفعةً. فأيّ نهجٍ يناسب هذه المهمة؟"
+    "ar": "يجب أن تخزّن بوابة الشركات الصغيرة رقم IBAN المخصَّص لصرف المدفوعات لكل شركة، وأن تقرأه بنصٍّ صريح كلما أجرى بنك نجم دفعةً. فأيّ نهجٍ يناسب هذه المهمة؟"
    },
    "o": {
     "en": [
@@ -17,16 +17,16 @@
      "Store it as it is and rely on the database's default storage encryption"
     ],
     "ar": [
-     "تجزئته بـ Argon2id (Hash it with Argon2id)، حتى لا يكشف الجدول المسرَّب أيّ أرقام IBAN صالحةٍ للاستخدام",
-     "تشفيره بـ AES-GCM تحت مفتاح بيانات (data key) يغلّفه مفتاحٌ رئيسي في خدمة إدارة المفاتيح",
+     "تجزئته بـ Argon2id، حتى لا يكشف الجدول المسرَّب أيّ أرقام IBAN صالحةٍ للاستخدام",
+     "تشفيره بـ AES-GCM تحت مفتاح بيانات يغلّفه مفتاحٌ رئيسي في خدمة إدارة المفاتيح",
      "تشفيره بـ AES-GCM تحت مفتاحٍ محفوظ في ملف إعدادات الخدمة",
-     "تخزينه كما هو، والاعتماد على تشفير التخزين الافتراضي في قاعدة البيانات (database)"
+     "تخزينه كما هو، والاعتماد على تشفير التخزين الافتراضي في قاعدة البيانات"
     ]
    },
    "a": 1,
    "why": {
     "en": "An IBAN must be read back, so it is encrypted, not hashed, and envelope encryption keeps the master key in the KMS, where every decryption is policy-checked and logged. A key in the config file is tempting, but a key next to the data is a password taped to the safe.",
-    "ar": "يجب قراءة رقم IBAN لاحقًا، ولذلك يُشفَّر ولا يُجزَّأ، ويُبقي التشفير المغلَّف (envelope encryption) المفتاحَ الرئيسي (master key) داخل خدمة إدارة المفاتيح (KMS)، حيث تخضع كل عملية فك تشفير (every decryption) لفحص السياسة وتُسجَّل. والمفتاح في ملف الإعدادات خيارٌ مغرٍ، لكن المفتاح المجاور للبيانات كلمة مرورٍ ملصقة على الخزنة."
+    "ar": "يجب قراءة رقم IBAN لاحقًا، ولذلك يُشفَّر ولا يُجزَّأ، ويُبقي التشفير المغلَّف (envelope encryption) المفتاحَ الرئيسي داخل خدمة إدارة المفاتيح (KMS)، حيث تخضع كل عملية فك تشفير لفحص السياسة وتُسجَّل. والمفتاح في ملف الإعدادات خيارٌ مغرٍ، لكن المفتاح المجاور للبيانات كلمة مرورٍ ملصقة على الخزنة."
    }
   },
   {
@@ -35,7 +35,7 @@
    "lesson": "5.2",
    "q": {
     "en": "A Najm Assist developer starts using an AI coding agent with shell access on a laptop. The project folder holds a .env file with a live fee-service key, and the developer's cloud credentials sit in the home directory. Which setup best protects these secrets?",
-    "ar": "يبدأ مطوّرٌ في نجم أسيست باستخدام وكيل برمجةٍ بالذكاء الاصطناعي (AI coding agent) يملك وصولًا إلى الصدفة (shell access) على حاسوبٍ محمول. ويحوي مجلد المشروع (project folder) ملف `.env` فيه مفتاحٌ حيّ لخدمة الرسوم، وتقبع بيانات الاعتماد السحابية للمطوّر (cloud credentials) في دليله المنزلي (home directory). فأيّ إعدادٍ يحمي هذه الأسرار على أفضل وجه؟"
+    "ar": "يبدأ مطوّرٌ في نجم أسيست باستخدام وكيل برمجةٍ بالذكاء الاصطناعي يملك وصولًا إلى الصدفة على حاسوبٍ محمول. ويحوي مجلد المشروع ملف `.env` فيه مفتاحٌ حيّ لخدمة الرسوم، وتقبع بيانات الاعتماد السحابية للمطوّر في دليله المنزلي. فأيّ إعدادٍ يحمي هذه الأسرار على أفضل وجه؟"
    },
    "o": {
     "en": [
@@ -45,10 +45,10 @@
      "Deny it secret files, give it scoped short-lived tokens, keep production keys off the laptop"
     ],
     "ar": [
-     "إضافة قاعدةٍ إلى تعليمات الوكيل (agent's instructions) تمنعه من قراءة أيّ قيمٍ سرية أو طباعتها أو نسخها",
+     "إضافة قاعدةٍ إلى تعليمات الوكيل تمنعه من قراءة أيّ قيمٍ سرية أو طباعتها أو نسخها",
      "ترك الملفات في مكانها، والاعتماد على ماسح الأسرار في CI لالتقاط أيّ مفتاحٍ ينسخه",
-     "ترميز قيم ملف `.env` بصيغة Base64 (Base64-encode the values) حتى لا يعود الوكيل قادرًا على التعرّف عليها بوصفها مفاتيح",
-     "منعه من ملفات الأسرار، ومنحه رموزًا محصورة قصيرة العمر، وإبعاد مفاتيح الإنتاج (production keys) عن الحاسوب"
+     "ترميز قيم ملف `.env` بصيغة Base64 حتى لا يعود الوكيل قادرًا على التعرّف عليها بوصفها مفاتيح",
+     "منعه من ملفات الأسرار، ومنحه رموزًا محصورة قصيرة العمر، وإبعاد مفاتيح الإنتاج عن الحاسوب"
     ]
    },
    "a": 3,
@@ -74,15 +74,15 @@
     ],
     "ar": [
      "تسجيل الحقول المدرجة في قائمة السماح فقط، كمرجع العميل والقصد، مع إبقاء المرشّح احتياطًا",
-     "قبول الخطة، لأن مرشّح الأنماط يلتقط بصورةٍ موثوقة (reliably catches) الحقول المقيَّدة (Restricted fields) الأكثر أهمية",
-     "نقل تسجيل الطلبات الكاملة (whole-request logging) إلى مستوى التصحيح (debug level)، حتى لا يعمل إلا حين يكون التصحيح مُفعَّلًا",
-     "نقل السجلات إلى تخزينٍ مشفّر (encrypted storage)، حتى تبقى الطلبات الكاملة محميةً بالكامل أثناء التخزين"
+     "قبول الخطة، لأن مرشّح الأنماط يلتقط بصورةٍ موثوقة الحقول المقيَّدة الأكثر أهمية",
+     "نقل تسجيل الطلبات الكاملة إلى مستوى التصحيح، حتى لا يعمل إلا حين يكون التصحيح مُفعَّلًا",
+     "نقل السجلات إلى تخزينٍ مشفّر، حتى تبقى الطلبات الكاملة محميةً بالكامل أثناء التخزين"
     ]
    },
    "a": 0,
    "why": {
     "en": "Logging by allowlist is the main control: whole requests carry Authorization headers and chat text, and a redaction filter is only a safety net, because patterns miss names, addresses, free text and numbers in Arabic-Indic digits. Accepting the filter is tempting, but it treats the safety net as the control, and debug-level capture of whole requests outlives the bug.",
-    "ar": "التسجيل وفق قائمة سماح هو الضابط الرئيسي: فالطلبات الكاملة (whole requests) تحمل ترويسات `Authorization` ونص المحادثة (chat text)، ومرشّح التنقيح ليس إلا شبكة أمان، لأن الأنماط تفوّت (patterns miss) الأسماء والعناوين والنص الحر والأرقامَ المكتوبة بالأرقام العربية المشرقية (Arabic-Indic digits). وقبول المرشّح مغرٍ (tempting)، لكنه يجعل شبكة الأمان هي الضابط، والتقاط الطلبات الكاملة على مستوى التصحيح يعيش أطول من الخلل نفسه."
+    "ar": "التسجيل وفق قائمة سماح هو الضابط الرئيسي: فالطلبات الكاملة تحمل ترويسات `Authorization` ونص المحادثة، ومرشّح التنقيح ليس إلا شبكة أمان، لأن الأنماط تفوّت الأسماء والعناوين والنص الحر والأرقامَ المكتوبة بالأرقام العربية المشرقية. وقبول المرشّح مغرٍ، لكنه يجعل شبكة الأمان هي الضابط، والتقاط الطلبات الكاملة على مستوى التصحيح يعيش أطول من الخلل نفسه."
    }
   },
   {
@@ -91,7 +91,7 @@
    "lesson": "5.3",
    "q": {
     "en": "Najm's marketing team wants to share Najm Assist usage data on SME owners with an analytics partner. Names, national IDs and phone numbers are removed; birth date, nationality, employer and city stay, and the file is labelled \"anonymised\". Sara asks the security team for its view. What is the best judgement?",
-    "ar": "يريد فريق التسويق في بنك نجم مشاركة بيانات استخدام نجم أسيست الخاصة بأصحاب الشركات الصغيرة (SME owners) مع شريكٍ للتحليلات. وقد أُزيلت الأسماء وأرقام الهوية الوطنية وأرقام الهواتف؛ وبقي تاريخ الميلاد والجنسية وجهة العمل والمدينة، ووُسم الملف بأنه «مجهول الهوية» (\"anonymised\"). وتطلب سارة رأي فريق الأمن. فما أفضل حكمٍ هنا؟"
+    "ar": "يريد فريق التسويق في بنك نجم مشاركة بيانات استخدام نجم أسيست الخاصة بأصحاب الشركات الصغيرة مع شريكٍ للتحليلات. وقد أُزيلت الأسماء وأرقام الهوية الوطنية وأرقام الهواتف؛ وبقي تاريخ الميلاد والجنسية وجهة العمل والمدينة، ووُسم الملف بأنه «مجهول الهوية». وتطلب سارة رأي فريق الأمن. فما أفضل حكمٍ هنا؟"
    },
    "o": {
     "en": [
@@ -101,16 +101,16 @@
      "It is anonymous once each customer ID is replaced with a keyed HMAC pseudonym"
     ],
     "ar": [
-     "هي بياناتٌ مجهولة الهوية (anonymous)، لأن كل معرّفٍ مباشر أُزيل من الملف",
-     "تصبح مجهولة الهوية (becomes anonymous) بعد تحويل تاريخ الميلاد إلى فئةٍ عمرية قبل الإرسال (before sending)",
+     "هي بياناتٌ مجهولة الهوية، لأن كل معرّفٍ مباشر أُزيل من الملف",
+     "تصبح مجهولة الهوية بعد تحويل تاريخ الميلاد إلى فئةٍ عمرية قبل الإرسال",
      "ما زالت بياناتٍ شخصية، فتُشارَك أرقامٌ مجمَّعة بحدٍّ أدنى لحجم المجموعات",
-     "تصبح مجهولة الهوية (becomes anonymous) بعد استبدال كل معرّف عميل باسمٍ مستعار بمفتاح عبر HMAC"
+     "تصبح مجهولة الهوية بعد استبدال كل معرّف عميل باسمٍ مستعار بمفتاح عبر HMAC"
     ]
    },
    "a": 2,
    "why": {
     "en": "Birth date, nationality, employer and city are quasi-identifiers that can single people out, especially in small populations, so the data is still personal data; the practical step is aggregate reporting with minimum group sizes. Removing direct identifiers is tempting, but it does not make a dataset anonymous, and coarsening birth date alone still leaves nationality, employer and city.",
-    "ar": "تاريخ الميلاد والجنسية وجهة العمل والمدينة أشباه معرّفات (quasi-identifiers) تكفي لتمييز الأشخاص، ولا سيما في المجتمعات الصغيرة، فتبقى البيانات شخصية؛ والخطوة العملية هي التقارير المجمَّعة بحدٍّ أدنى لحجم المجموعات. وإزالة المعرّفات المباشرة مغرية، لكنها لا تجعل مجموعة البيانات مجهولة الهوية، وتحويل تاريخ الميلاد وحده إلى فئة يُبقي الجنسية وجهة العمل والمدينة."
+    "ar": "تاريخ الميلاد والجنسية وجهة العمل والمدينة أشباه معرّفات تكفي لتمييز الأشخاص، ولا سيما في المجتمعات الصغيرة، فتبقى البيانات شخصية؛ والخطوة العملية هي التقارير المجمَّعة بحدٍّ أدنى لحجم المجموعات. وإزالة المعرّفات المباشرة مغرية، لكنها لا تجعل مجموعة البيانات مجهولة الهوية، وتحويل تاريخ الميلاد وحده إلى فئة يُبقي الجنسية وجهة العمل والمدينة."
    }
   }
  ],
@@ -128,7 +128,7 @@
    "lesson": "5.2",
    "text": {
     "en": "I have added a secret scanner to my own repository as a pre-commit hook and a CI step, confirmed that it blocks a planted fake key, and triaged every finding in the full history",
-    "ar": "أضفتُ ماسحًا للأسرار إلى مستودعي الخاص خطافًا قبل الإيداع (pre-commit hook) وخطوةً في CI (CI step)، وتأكّدتُ من أنه يحظر مفتاحًا مزيّفًا مزروعًا، وفرزتُ كل اكتشافٍ في السجل التاريخي الكامل"
+    "ar": "أضفتُ ماسحًا للأسرار إلى مستودعي الخاص خطافًا قبل الإيداع وخطوةً في CI، وتأكّدتُ من أنه يحظر مفتاحًا مزيّفًا مزروعًا، وفرزتُ كل اكتشافٍ في السجل التاريخي الكامل"
    }
   }
  ]

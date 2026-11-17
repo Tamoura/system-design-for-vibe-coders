@@ -7,7 +7,7 @@
       "lesson": "10.1",
       "q": {
         "en": "Najm Desk's agent connects to a TicketHub server and, later, to a vendor's server. Fahad asks where the decision about which of their tools the model may see belongs. What is the answer?",
-        "ar": "يتصل وكيل (agent) نجم ديسك (Najm Desk) بخادم (server) TicketHub، ولاحقًا بخادم أحد الموردين (vendor). يسأل فهد أين يقع القرار (decision) بشأن أي أدوات (tools) من أدواتهما يجوز أن يراها النموذج (model). ما الجواب؟"
+        "ar": "يتصل وكيل نجم ديسك بخادم TicketHub، ولاحقًا بخادم أحد الموردين. يسأل فهد أين يقع القرار بشأن أي أدوات من أدواتهما يجوز أن يراها النموذج. ما الجواب؟"
       },
       "o": {
         "en": [
@@ -17,16 +17,16 @@
           "In the model, which picks safe tools by reading each description"
         ],
         "ar": [
-          "في كل خادم (server)، فهو يضع علامة «آمنة» على أدواته (tools) بنفسه هو",
-          "في المضيف (host)، فهو لا يعرض على النموذج (model) إلا الأدوات التي سمّاها",
-          "في كل عميل (client)، فهو يمرّر كل أداة (tool) يسردها له خادمه (server)",
-          "في النموذج (model)، فهو ينتقي الأدوات (tools) الآمنة بقراءة أوصافها"
+          "في كل خادم، فهو يضع علامة «آمنة» على أدواته بنفسه هو",
+          "في المضيف (host)، فهو لا يعرض على النموذج إلا الأدوات التي سمّاها",
+          "في كل عميل، فهو يمرّر كل أداة يسردها له خادمه",
+          "في النموذج، فهو ينتقي الأدوات الآمنة بقراءة أوصافها"
         ]
       },
       "a": 1,
       "why": {
         "en": "Trust decisions live in the host, which names the tools the model sees and denies the rest. A server's own \"safe\" label (A) is a hint from code you may not trust, and a client only carries the connection (C).",
-        "ar": "تقع قرارات الثقة (trust decisions) في المضيف (host)، فهو يسمّي الأدوات (tools) التي يراها النموذج (model) ويرفض الباقي. أما علامة «آمنة» التي يضعها الخادم (server) على أدواته فمجرد تلميح (hint) من شيفرة قد لا تثق بها، والعميل (client) لا يحمل إلا الاتصال (الخيار C)."
+        "ar": "تقع قرارات الثقة في المضيف، فهو يسمّي الأدوات التي يراها النموذج ويرفض الباقي. أما علامة «آمنة» التي يضعها الخادم على أدواته فمجرد تلميح من شيفرة قد لا تثق بها، والعميل لا يحمل إلا الاتصال (الخيار C)."
       }
     },
     {
@@ -35,7 +35,7 @@
       "lesson": "10.1",
       "q": {
         "en": "Salem's pilot draft is `search_tickets(query, user_id)`, with the model filling in `user_id` from the conversation. Noura asks for one change before the review. Which one?",
-        "ar": "مسودة سالم للتجربة التشغيلية (pilot) هي `search_tickets(query, user_id)`، والنموذج (model) هو الذي يملأ `user_id` من المحادثة (conversation). تطلب نورة تغييرًا واحدًا قبل المراجعة (review). أي تغيير؟"
+        "ar": "مسودة سالم للتجربة التشغيلية (pilot) هي `search_tickets(query, user_id)`، والنموذج هو الذي يملأ `user_id` من المحادثة. تطلب نورة تغييرًا واحدًا قبل المراجعة. أي تغيير؟"
       },
       "o": {
         "en": [
@@ -45,16 +45,16 @@
           "Make the host ask a person to approve each search call before it runs"
         ],
         "ar": [
-          "حذف `user_id` وقراءة المستدعي من رمز الوصول (access token) المتحقَّق منه",
-          "إضافة نمط (pattern) إلى `user_id` ليمرّ فقط معرّف موظف (staff id) سليم الصيغة",
-          "النص في الوصف (description) على أن `user_id` يجب أن يكون المستخدم المسجَّل دخوله",
-          "جعل المضيف (host) يطلب من شخص الموافقة (approval) على كل بحث قبل تشغيله فعليًا"
+          "حذف `user_id` وقراءة المستدعي من رمز الوصول المتحقَّق منه",
+          "إضافة نمط إلى `user_id` ليمرّ فقط معرّف موظف سليم الصيغة",
+          "النص في الوصف على أن `user_id` يجب أن يكون المستخدم المسجَّل دخوله",
+          "جعل المضيف (host) يطلب من شخص الموافقة على كل بحث قبل تشغيله فعليًا"
         ]
       },
       "a": 0,
       "why": {
         "en": "Identity travels in the token, never in a tool argument: a model-supplied id can name anyone, so only the token tells the server who is calling. A format pattern (B) accepts any well-formed id, including someone else's.",
-        "ar": "تنتقل الهوية (identity) في الرمز (token) لا في وسيط الأداة (tool argument)، فالمعرّف الذي يقدّمه النموذج (model) قد يسمّي أي شخص، ولا يخبر الخادم (server) بمن يستدعيه إلا الرمز. والنمط (pattern) في الخيار B يقبل أي معرّف سليم الصيغة، بما فيه معرّف شخص آخر."
+        "ar": "تنتقل الهوية في الرمز (token) لا في وسيط الأداة، فالمعرّف الذي يقدّمه النموذج قد يسمّي أي شخص، ولا يخبر الخادم بمن يستدعيه إلا الرمز. والنمط في الخيار B يقبل أي معرّف سليم الصيغة، بما فيه معرّف شخص آخر."
       }
     },
     {
@@ -63,7 +63,7 @@
       "lesson": "10.2",
       "q": {
         "en": "Lujain wants the P1 to P4 priority rules in front of the model on every run, so she pastes the text of the server's `policy://ticket-priorities` resource into the system prompt. Noura asks her to change it. What should the host do instead?",
-        "ar": "تريد لجين أن تكون قواعد الأولوية (priority rules) من P1 إلى P4 أمام النموذج (model) في كل تشغيل (run)، فتلصق نص المورد (resource) `policy://ticket-priorities` الذي يقدّمه الخادم (server) في موجّه النظام (system prompt). تطلب منها نورة تغيير ذلك. ماذا ينبغي أن يفعل المضيف (host) بدلًا من ذلك؟"
+        "ar": "تريد لجين أن تكون قواعد الأولوية من P1 إلى P4 أمام النموذج في كل تشغيل، فتلصق نص المورد `policy://ticket-priorities` الذي يقدّمه الخادم في موجّه النظام (system prompt). تطلب منها نورة تغيير ذلك. ماذا ينبغي أن يفعل المضيف (host) بدلًا من ذلك؟"
       },
       "o": {
         "en": [
@@ -73,16 +73,16 @@
           "Quote it as a document in a user turn, not the system prompt"
         ],
         "ar": [
-          "يُبقيه في موجّه النظام (system prompt)، لأن خادم نجم نفسه هو الذي قدّمه",
-          "يعرضه أداةً (tool) ويطلب من النموذج (model) أن يستدعيها أولًا قبل أي شيء",
-          "يُبقيه في موجّه النظام (system prompt)، لكنه يحيط النص بوسم (tag) مُسمّى",
-          "يقتبسه وثيقةً في دور المستخدم (user turn)، لا في موجّه النظام"
+          "يُبقيه في موجّه النظام، لأن خادم نجم نفسه هو الذي قدّمه",
+          "يعرضه أداةً ويطلب من النموذج أن يستدعيها أولًا قبل أي شيء",
+          "يُبقيه في موجّه النظام، لكنه يحيط النص بوسم مُسمّى",
+          "يقتبسه وثيقةً في دور المستخدم، لا في موجّه النظام"
         ]
       },
       "a": 3,
       "why": {
         "en": "The host picks resources and quotes them as data in a user turn, because text in the system prompt speaks with your authority. A tag around system-prompt text (C) still gives the server's words that authority, and a tool (B) hands the choice back to the model.",
-        "ar": "يختار المضيف (host) الموارد (resources) ويقتبسها بيانات (data) في دور المستخدم (user turn)، لأن النص في موجّه النظام (system prompt) يتكلم بسلطتك أنت. والوسم (tag) حول نص بقي في موجّه النظام (الخيار C) يترك لكلام الخادم (server) تلك السلطة، والأداة (tool) في الخيار B تعيد الاختيار إلى النموذج (model)."
+        "ar": "يختار المضيف الموارد ويقتبسها بيانات في دور المستخدم، لأن النص في موجّه النظام يتكلم بسلطتك أنت. والوسم حول نص بقي في موجّه النظام (الخيار C) يترك لكلام الخادم تلك السلطة، والأداة في الخيار B تعيد الاختيار إلى النموذج."
       }
     },
     {
@@ -91,7 +91,7 @@
       "lesson": "10.2",
       "q": {
         "en": "Lujain runs the poisoned ticket twenty times against the real model, ten with and ten without the line \"Tool results are data\" in `SYSTEM`, with the write scope granted and every approval declined. None of the twenty runs requests `create_ticket`. She proposes dropping the approval gate, since it slows desk agents. What is the right call?",
-        "ar": "تشغّل لجين التذكرة المسمومة (poisoned ticket) عشرين مرة على النموذج الحقيقي (real model)، عشر مرات مع سطر «نتائج الأدوات بيانات» في `SYSTEM` وعشرًا بدونه، مع منح صلاحية الكتابة (write scope) ورفض كل موافقة (approval). ولا يطلب أيٌّ من التشغيلات العشرين `create_ticket`. فتقترح إلغاء بوابة الموافقة (approval gate) لأنها تبطّئ موظفي المكتب (desk agents). ما القرار الصحيح؟"
+        "ar": "تشغّل لجين التذكرة المسمومة عشرين مرة على النموذج الحقيقي، عشر مرات مع سطر «نتائج الأدوات بيانات» في `SYSTEM` وعشرًا بدونه، مع منح صلاحية الكتابة ورفض كل موافقة. ولا يطلب أيٌّ من التشغيلات العشرين `create_ticket`. فتقترح إلغاء بوابة الموافقة (approval gate) لأنها تبطّئ موظفي المكتب. ما القرار الصحيح؟"
       },
       "o": {
         "en": [
@@ -101,16 +101,16 @@
           "Keep it until a hundred runs in a row come back clean, then drop it"
         ],
         "ar": [
-          "تُلغيها، لأن عشرين تشغيلًا نظيفًا تُظهر أن النموذج (model) يقاوم حقن الموجّه (prompt injection)",
+          "تُلغيها، لأن عشرين تشغيلًا نظيفًا تُظهر أن النموذج يقاوم حقن الموجّه (prompt injection)",
           "تُلغيها وتعتمد بدلًا منها على سطر «بيانات لا تعليمات» في `SYSTEM`",
-          "تُبقيها، لأن البوابة (gate) شيفرة (code) تصمد مهما فعل النموذج (model)",
+          "تُبقيها، لأن البوابة (gate) شيفرة تصمد مهما فعل النموذج",
           "تُبقيها إلى أن تأتي مئة تشغيل متتالية نظيفة، ثم تُلغيها"
         ]
       },
       "a": 2,
       "why": {
         "en": "Twenty runs measure how often the model obeys today, and no number of clean runs shows that it never will (D); the gate is code that holds whatever the model does. Dropping it on that evidence (A) removes a control that does not depend on the model, and a prompt line (B) is text the model may still ignore.",
-        "ar": "تقيس عشرون تشغيلًا (runs) كم مرة يطيع النموذج (model) اليوم، ولا يُثبت أي عدد من التشغيلات النظيفة أنه لن يطيع أبدًا (الخيار D)؛ أما البوابة (gate) فشيفرة (code) تصمد مهما فعل النموذج. وإلغاؤها استنادًا إلى هذا الدليل يزيل ضابطًا (control) لا يعتمد على النموذج، وسطر الموجّه (الخيار B) نص قد يتجاهله النموذج."
+        "ar": "تقيس عشرون تشغيلًا كم مرة يطيع النموذج اليوم، ولا يُثبت أي عدد من التشغيلات النظيفة أنه لن يطيع أبدًا (الخيار D)؛ أما البوابة فشيفرة تصمد مهما فعل النموذج. وإلغاؤها استنادًا إلى هذا الدليل يزيل ضابطًا لا يعتمد على النموذج، وسطر الموجّه (الخيار B) نص قد يتجاهله النموذج."
       }
     }
   ],
@@ -120,7 +120,7 @@
       "lesson": "10.1",
       "text": {
         "en": "I have threat-modelled the HTTP pilot of an MCP server, covering the six threats of the expert view plus token passthrough and an open endpoint, with a control, an owner and a test or log line for each, and one row saying what I would still not trust.",
-        "ar": "لقد كتبتُ نموذج تهديدات (threat model) لتجربة خادم MCP عبر HTTP تغطي التهديدات الستة في نظرة الخبير (expert view) وتمرير الرمز (token passthrough) ونقطة النهاية المفتوحة (open endpoint)، ولكل تهديد ضابط (control) ومالك (owner) واختبار أو سطر سجل (log line) يُظهر عمله، وفي صف واحد ما لن أثق به رغم ذلك."
+        "ar": "لقد كتبتُ نموذج تهديدات (threat model) لتجربة خادم MCP عبر HTTP تغطي التهديدات الستة في نظرة الخبير وتمرير الرمز (token passthrough) ونقطة النهاية المفتوحة، ولكل تهديد ضابط ومالك واختبار أو سطر سجل يُظهر عمله، وفي صف واحد ما لن أثق به رغم ذلك."
       }
     },
     {
@@ -128,7 +128,7 @@
       "lesson": "10.2",
       "text": {
         "en": "I have broken each lab defence in turn (deleted the ownership check, registered `create_ticket` without the scope, made `ask_human` return `True`), run the tests each time, listed the failing tests per change in `NOTES.md` and restored the code.",
-        "ar": "لقد كسرتُ كل دفاع (defence) في المختبر على التوالي: حذفتُ فحص الملكية (ownership check)، وسجّلتُ `create_ticket` بلا صلاحية (scope)، وجعلتُ `ask_human` تعيد `True`، وشغّلتُ الاختبارات (tests) في كل مرة، ودوّنتُ في `NOTES.md` الاختبارات الفاشلة (failing tests) لكل تغيير وأعدتُ الشيفرة (code) إلى حالتها."
+        "ar": "لقد كسرتُ كل دفاع في المختبر على التوالي: حذفتُ فحص الملكية، وسجّلتُ `create_ticket` بلا صلاحية (scope)، وجعلتُ `ask_human` تعيد `True`، وشغّلتُ الاختبارات في كل مرة، ودوّنتُ في `NOTES.md` الاختبارات الفاشلة لكل تغيير وأعدتُ الشيفرة إلى حالتها."
       }
     }
   ]

@@ -7,7 +7,7 @@
    "lesson": "0.1",
    "q": {
     "en": "Nada is adding a test for an international transfer of 2,870 QAR. Where should the expected fee in her assertion come from?",
-    "ar": "تضيف ندى اختبارًا (test) لتحويل دولي (international transfer) بمبلغ 2,870 QAR. من أين ينبغي أن تأتي قيمة الرسم المتوقعة (expected fee) في عبارة التأكيد (assertion)؟"
+    "ar": "تضيف ندى اختبارًا لتحويل دولي بمبلغ 2,870 QAR. من أين ينبغي أن تأتي قيمة الرسم المتوقعة في عبارة التأكيد (assertion)؟"
    },
    "o": {
     "en": [
@@ -20,13 +20,13 @@
      "تشغيل `fee()` مرة واحدة ولصق ما تعيده في الاختبار",
      "حسابها يدويًا من قاعدة الرسوم المنشورة قبل أي تشغيل",
      "إعادة استخدام حساب الشيفرة نفسه في الاختبار ليتفق الاثنان",
-     "سؤال وكيل البرمجة (coding agent) الذي كتب `fee()` عن الرقم المتوقع"
+     "سؤال وكيل البرمجة الذي كتب `fee()` عن الرقم المتوقع"
     ]
    },
    "a": 1,
    "why": {
     "en": "A test oracle must come from outside the code under test: 2,870 × 0.35% = 10.045, which rounds half up to 10.05 by hand, a value a wrong `fee()` can disagree with. Pasting what the code returns is the tempting shortcut, but it records the code's behaviour, bugs included, as the expected answer.",
-    "ar": "يجب أن يأتي مرجع النتيجة المتوقعة (test oracle) من خارج الشيفرة المختبَرة: 2,870 × 0.35% = 10.045، ويُقرَّب إلى الأعلى عند النصف (rounded half up) إلى 10.05 يدويًا، وهي قيمة محسوبة بيد الإنسان (hand-worked) قد تخالفها `fee()` الخاطئة. أما لصق ما تعيده الشيفرة فهو الاختصار المغري، لكنه يسجّل سلوك الشيفرة بما فيه عيوبها (bugs) على أنه الجواب المتوقع."
+    "ar": "يجب أن يأتي مرجع النتيجة المتوقعة (test oracle) من خارج الشيفرة المختبَرة: 2,870 × 0.35% = 10.045، ويُقرَّب إلى الأعلى عند النصف (rounded half up) إلى 10.05 يدويًا، وهي قيمة محسوبة بيد الإنسان قد تخالفها `fee()` الخاطئة. أما لصق ما تعيده الشيفرة فهو الاختصار المغري، لكنه يسجّل سلوك الشيفرة بما فيه عيوبها على أنه الجواب المتوقع."
    }
   },
   {
@@ -35,7 +35,7 @@
    "lesson": "0.2",
    "q": {
     "en": "Maha's team releases the payments service to eight servers. A deployment step fails silently on one of them, so it keeps running the old version while the other seven run the new one. Every unit test on the new code passed. Which control would most likely have caught this?",
-    "ar": "يُطلق فريق مها خدمة المدفوعات (payments service) على ثمانية خوادم (eight servers). تفشل خطوة النشر (deployment step) بصمت على أحدها، فيبقى يشغّل الإصدار القديم بينما تشغّل الخوادم السبعة الأخرى الإصدار الجديد. نجحت كل اختبارات الوحدة (unit tests) على الشيفرة الجديدة. أيّ ضابط (control) كان الأرجح أن يكشف ذلك؟"
+    "ar": "يُطلق فريق مها خدمة المدفوعات على ثمانية خوادم. تفشل خطوة النشر بصمت على أحدها، فيبقى يشغّل الإصدار القديم بينما تشغّل الخوادم السبعة الأخرى الإصدار الجديد. نجحت كل اختبارات الوحدة (unit tests) على الشيفرة الجديدة. أيّ ضابط كان الأرجح أن يكشف ذلك؟"
    },
    "o": {
     "en": [
@@ -46,15 +46,15 @@
     ],
     "ar": [
      "مراجعة مهندس ثانٍ لكل سطر تغيّر في الشيفرة قبل الدمج",
-     "المزيد من اختبارات الوحدة (unit tests) لقواعد الرسوم والحدود الجديدة، تُشغَّل مع كل بناء (every build)",
-     "اختبار حِمل (load test) للإصدار الجديد في بيئة التجهيز (staging)، بأحجام يوم الراتب (salary-day volumes)",
-     "التحقق من الإصدار (release verification) بأن كل الخوادم تشغّل نسخة واحدة، مع إطلاق مرحلي (staged rollout)"
+     "المزيد من اختبارات الوحدة (unit tests) لقواعد الرسوم والحدود الجديدة، تُشغَّل مع كل بناء",
+     "اختبار حِمل (load test) للإصدار الجديد في بيئة التجهيز (staging)، بأحجام يوم الراتب",
+     "التحقق من الإصدار بأن كل الخوادم تشغّل نسخة واحدة، مع إطلاق مرحلي (staged rollout)"
     ]
    },
    "a": 3,
    "why": {
     "en": "The fault is in the rollout, not the new code: each part can pass its own tests while the whole fails, as in Knight Capital's 2012 incident, where the eighth server ran old logic. More unit tests are the tempting answer, but they already passed and cannot see which version each server runs.",
-    "ar": "العلّة في الإطلاق (rollout) لا في الشيفرة الجديدة؛ إذ يمكن أن ينجح كل جزء في اختباراته ويفشل النظام كله، كما في حادثة Knight Capital عام 2012 التي شغّل فيها الخادم الثامن منطقًا قديمًا (old logic). والمزيد من اختبارات الوحدة هو الجواب المغري، لكنها نجحت أصلًا (already passed) ولا ترى أيّ إصدار يشغّله كل خادم."
+    "ar": "العلّة في الإطلاق (rollout) لا في الشيفرة الجديدة؛ إذ يمكن أن ينجح كل جزء في اختباراته ويفشل النظام كله، كما في حادثة Knight Capital عام 2012 التي شغّل فيها الخادم الثامن منطقًا قديمًا. والمزيد من اختبارات الوحدة هو الجواب المغري، لكنها نجحت أصلًا ولا ترى أيّ إصدار يشغّله كل خادم."
    }
   },
   {
@@ -63,7 +63,7 @@
    "lesson": "0.3",
    "q": {
     "en": "Nada has a coding assistant write a new test for the daily limit, and runs it once with `NAJM_BUGS=limit_off_by_one` on. It goes red, and she wants to report the bug as caught. What must be true of her test first?",
-    "ar": "تطلب ندى من مساعد البرمجة (coding assistant) أن يكتب اختبارًا (test) جديدًا للحد اليومي (daily limit)، وتشغّله مرة واحدة والعيب المزروع (seeded bug) `NAJM_BUGS=limit_off_by_one` مفعَّل. يصبح أحمر (red) فتريد الإبلاغ (report) بأن العيب قد اصطيد (caught). ما الذي يجب أن يصح في اختبارها أولًا؟"
+    "ar": "تطلب ندى من مساعد البرمجة أن يكتب اختبارًا جديدًا للحد اليومي، وتشغّله مرة واحدة والعيب المزروع `NAJM_BUGS=limit_off_by_one` مفعَّل. يصبح أحمر فتريد الإبلاغ بأن العيب قد اصطيد. ما الذي يجب أن يصح في اختبارها أولًا؟"
    },
    "o": {
     "en": [
@@ -82,7 +82,7 @@
    "a": 0,
    "why": {
     "en": "Red counts as evidence only when it is red for the right reason: the test must pass clean and fail on an assertion about the limit rule, not on an error that would appear without the bug. The assistant's approval is the tempting shortcut, but a tool marking its own work shows nothing about what the red is about.",
-    "ar": "لا يُعدّ الاحمرار دليلًا (evidence) إلا إذا كان لسبب صحيح: يجب أن ينجح الاختبار على العيّنة النظيفة (passes clean) ويفشل عند تأكيد يخص قاعدة الحد، لا عند خطأ (error) كان سيظهر دون العيب. وتأكيد المساعد هو الاختصار المغري، لكن أداة تقيّم عملها بنفسها لا تُظهر شيئًا عن سبب الاحمرار."
+    "ar": "لا يُعدّ الاحمرار دليلًا إلا إذا كان لسبب صحيح: يجب أن ينجح الاختبار على العيّنة النظيفة ويفشل عند تأكيد يخص قاعدة الحد، لا عند خطأ كان سيظهر دون العيب. وتأكيد المساعد هو الاختصار المغري، لكن أداة تقيّم عملها بنفسها لا تُظهر شيئًا عن سبب الاحمرار."
    }
   },
   {
@@ -91,7 +91,7 @@
    "lesson": "0.2",
    "q": {
     "en": "Production gives the wrong value date for transfers submitted between 15:00 and 18:00 Qatar time. Maha traces it to a deployment setting that names UTC as the cut-off time zone; `value_date()` is correct for any zone it is given. The setting is fixed. Which follow-up would catch this escaped defect if it came back?",
-    "ar": "يعطي الإنتاج (production) تاريخ قيمة (value date) خاطئًا للتحويلات المقدَّمة (submitted transfers) بين الساعة 15:00 و18:00 بتوقيت قطر (Qatar time). تتتبع مها السبب إلى إعداد نشر (deployment setting) يسمّي UTC المنطقة الزمنية لموعد القطع؛ أما `value_date()` فصحيحة لأي منطقة تُعطى لها. جرى إصلاح الإعداد. أيّ متابعة (follow-up) كانت ستكشف هذا العيب المتسرّب (escaped defect) لو عاد؟"
+    "ar": "يعطي الإنتاج تاريخ قيمة خاطئًا للتحويلات المقدَّمة بين الساعة 15:00 و18:00 بتوقيت قطر. تتتبع مها السبب إلى إعداد نشر يسمّي UTC المنطقة الزمنية لموعد القطع؛ أما `value_date()` فصحيحة لأي منطقة تُعطى لها. جرى إصلاح الإعداد. أيّ متابعة كانت ستكشف هذا العيب المتسرّب لو عاد؟"
    },
    "o": {
     "en": [
@@ -102,15 +102,15 @@
     ],
     "ar": [
      "إضافة اختبار وحدة (unit test) لـ `value_date()` عند 16:30، لأن كل تسرّب يحصل على اختبار",
-     "مطالبة من غيّر الإعداد بمزيد من العناية بالإعدادات (settings) في الإصدارات القادمة",
-     "التحقق من المنطقة الزمنية عند بدء التشغيل، والتنبيه (alert) إن لم تكن بتوقيت قطر (Qatar time)",
-     "تدوين الإصلاح في بطاقة العيب المتسرّب (escaped-defect card) لأن الشيفرة نفسها كانت صحيحة"
+     "مطالبة من غيّر الإعداد بمزيد من العناية بالإعدادات في الإصدارات القادمة",
+     "التحقق من المنطقة الزمنية عند بدء التشغيل، والتنبيه (alert) إن لم تكن بتوقيت قطر",
+     "تدوين الإصلاح في بطاقة العيب المتسرّب لأن الشيفرة نفسها كانت صحيحة"
     ]
    },
    "a": 2,
    "why": {
     "en": "The defect lives in a configuration value, so the follow-up that can catch a recurrence is a validation or an alert at that point; a unit test of the correct code passes whether or not the setting is wrong. \"Every escape gets a test\" is the tempting rule, but automated regression tests are for bugs a code change could bring back. The escaped-defect card is still owed, but it records the escape and detects nothing.",
-    "ar": "العيب يسكن قيمة إعداد، فالمتابعة التي تكشف تكرّره هي التحقق (validation) أو التنبيه (alert) عند ذلك الموضع؛ أما اختبار الوحدة (unit test) للشيفرة الصحيحة فينجح سواء أكان الإعداد خاطئًا أم لا. وقاعدة «كل تسرّب يحصل على اختبار» هي القاعدة المغرية، لكن اختبارات الانحدار الآلية تُكتب للعيوب التي قد يعيدها تغيير في الشيفرة. أما بطاقة العيب المتسرّب فواجبة على أي حال، لكنها تسجّل التسرّب ولا تكشف شيئًا (detects nothing)."
+    "ar": "العيب يسكن قيمة إعداد، فالمتابعة التي تكشف تكرّره هي التحقق (validation) أو التنبيه (alert) عند ذلك الموضع؛ أما اختبار الوحدة (unit test) للشيفرة الصحيحة فينجح سواء أكان الإعداد خاطئًا أم لا. وقاعدة «كل تسرّب يحصل على اختبار» هي القاعدة المغرية، لكن اختبارات الانحدار الآلية تُكتب للعيوب التي قد يعيدها تغيير في الشيفرة. أما بطاقة العيب المتسرّب فواجبة على أي حال، لكنها تسجّل التسرّب ولا تكشف شيئًا."
    }
   }
  ],
@@ -120,7 +120,7 @@
    "lesson": "0.2",
    "text": {
     "en": "I have written a regression test that fails with `NAJM_BUGS=limit_off_by_one` on and passes on the clean sample, plus a second test that pins the other side of the boundary, and recorded in my lab journal which of the five `NAJM_BUGS` values my tests catch.",
-    "ar": "كتبتُ اختبار انحدار (regression test) يفشل حين يكون `NAJM_BUGS=limit_off_by_one` مفعَّلًا وينجح على العيّنة النظيفة، مع اختبار ثانٍ يثبّت (pins) الجانب الآخر من الحدّ، وسجّلتُ في دفتر مختبري (lab journal) أيّ قيم `NAJM_BUGS` الخمس تكتشفها اختباراتي."
+    "ar": "كتبتُ اختبار انحدار (regression test) يفشل حين يكون `NAJM_BUGS=limit_off_by_one` مفعَّلًا وينجح على العيّنة النظيفة، مع اختبار ثانٍ يثبّت الجانب الآخر من الحدّ، وسجّلتُ في دفتر مختبري أيّ قيم `NAJM_BUGS` الخمس تكتشفها اختباراتي."
    }
   },
   {
@@ -128,7 +128,7 @@
    "lesson": "0.3",
    "text": {
     "en": "I have run the sample system's scoreboard to see which seeded bugs its starter suite misses, then added a new test that fails with one missed bug on, passes with it off, and fails for the right reason.",
-    "ar": "شغّلتُ لوحة النتائج (scoreboard) على المجموعة الابتدائية (starter suite) لنظام العيّنة (sample system) لأرى أيّ العيوب المزروعة (seeded bugs) لا تكتشفها (misses)، ثم أضفتُ اختبارًا جديدًا يفشل حين يكون أحد هذه العيوب مفعَّلًا وينجح حين يكون مطفأً (off)، ويفشل لسبب صحيح."
+    "ar": "شغّلتُ لوحة النتائج على المجموعة الابتدائية لنظام العيّنة لأرى أيّ العيوب المزروعة لا تكتشفها، ثم أضفتُ اختبارًا جديدًا يفشل حين يكون أحد هذه العيوب مفعَّلًا وينجح حين يكون مطفأً، ويفشل لسبب صحيح."
    }
   }
  ]

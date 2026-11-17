@@ -7,7 +7,7 @@
    "lesson": "8.1",
    "q": {
     "en": "Tariq wants to handle prompt injection in Najm Assist the way Najm handled SQL injection: find the LLM equivalent of parameterised queries and apply it everywhere. What should Noura tell him?",
-    "ar": "يريد طارق أن يتعامل مع حقن الموجّهات (prompt injection) في نجم أسيست (Najm Assist) كما تعامل بنك نجم (Najm Bank) مع حقن SQL (SQL injection): أي أن يجد ما يقابل الاستعلامات المُعلَمة في النماذج اللغوية الكبيرة (LLM) ويطبّقه في كل مكان. بماذا يجب أن تجيبه نورة؟"
+    "ar": "يريد طارق أن يتعامل مع حقن الموجّهات (prompt injection) في نجم أسيست كما تعامل بنك نجم مع حقن SQL: أي أن يجد ما يقابل الاستعلامات المُعلَمة في النماذج اللغوية الكبيرة (LLM) ويطبّقه في كل مكان. بماذا يجب أن تجيبه نورة؟"
    },
    "o": {
     "en": [
@@ -17,7 +17,7 @@
      "A newer model is that equivalent: it is trained to ignore instructions inside retrieved data"
     ],
     "ar": [
-     "موجّه النظام هو ذلك المقابل: فهو يقدّم قواعد نجم (Najm's rules) على أي نصٍّ يقرؤه النموذج",
+     "موجّه النظام هو ذلك المقابل: فهو يقدّم قواعد نجم على أي نصٍّ يقرؤه النموذج",
      "مرشّح الحقن هو ذلك المقابل: فهو يزيل التعليمات قبل أن يصل النص إلى النموذج",
      "لا شيء يمثّل ذلك المقابل حتى الآن: فالنموذج يقرأ التعليمات والبيانات في تيارٍ نصيٍّ واحد",
      "النموذج الأحدث هو ذلك المقابل: فهو مدرَّبٌ على تجاهل التعليمات داخل البيانات المسترجَعة"
@@ -26,7 +26,7 @@
    "a": 2,
    "why": {
     "en": "SQL injection was fixed by separating code from data, but an LLM reads instructions and data in one channel and has no such separation at the time of writing, so anything it reads can steer it. The system prompt is the tempting answer, but its rules are requests to a component that can be persuaded, not controls.",
-    "ar": "عولج حقن SQL (SQL injection) بفصل الشيفرة عن البيانات، أما النموذج اللغوي الكبير (LLM) فيقرأ التعليمات والبيانات في قناةٍ واحدة، ولا يملك فصلًا مماثلًا حتى وقت كتابة هذا النص، فكل ما يقرؤه يمكن أن يوجّهه. أما موجّه النظام فهو الإجابة المغرية، لكن قواعده طلباتٌ لا ضوابط موجّهةٌ إلى مكوّنٍ يمكن إقناعه."
+    "ar": "عولج حقن SQL بفصل الشيفرة عن البيانات، أما النموذج اللغوي الكبير فيقرأ التعليمات والبيانات في قناةٍ واحدة، ولا يملك فصلًا مماثلًا حتى وقت كتابة هذا النص، فكل ما يقرؤه يمكن أن يوجّهه. أما موجّه النظام فهو الإجابة المغرية، لكن قواعده طلباتٌ لا ضوابط موجّهةٌ إلى مكوّنٍ يمكن إقناعه."
    }
   },
   {
@@ -35,7 +35,7 @@
    "lesson": "8.2",
    "q": {
     "en": "In a test build, Najm Assist's 'unfreeze card' tool checks in code that the card belongs to the session customer. Before it runs, the app shows a confirmation message written by the model, with a Confirm button. Mariam's team shows that a hijacked model can name one of the customer's cards in the message while the tool call unfreezes another. What is the right fix?",
-    "ar": "في نسخةٍ تجريبية من نجم أسيست (Najm Assist)، تتحقّق أداة «إلغاء تجميد البطاقة» في الشيفرة من أن البطاقة تخصّ عميل الجلسة. وقبل تشغيلها، يعرض التطبيق رسالة تأكيدٍ يكتبها النموذج مع زرّ «تأكيد». ويُثبت فريق مريم (Mariam's team) أن النموذج المختطَف يستطيع أن يذكر في الرسالة إحدى بطاقات العميل بينما يُلغي استدعاءُ الأداة تجميدَ بطاقةٍ أخرى (unfreezes another). ما الإصلاح الصحيح؟"
+    "ar": "في نسخةٍ تجريبية من نجم أسيست، تتحقّق أداة «إلغاء تجميد البطاقة» في الشيفرة من أن البطاقة تخصّ عميل الجلسة. وقبل تشغيلها، يعرض التطبيق رسالة تأكيدٍ يكتبها النموذج مع زرّ «تأكيد». ويُثبت فريق مريم أن النموذج المختطَف يستطيع أن يذكر في الرسالة إحدى بطاقات العميل بينما يُلغي استدعاءُ الأداة تجميدَ بطاقةٍ أخرى. ما الإصلاح الصحيح؟"
    },
    "o": {
     "en": [
@@ -45,7 +45,7 @@
      "Drop the confirmation, since the ownership check in code already limits the tool to the customer's cards"
     ],
     "ar": [
-     "بناء التأكيد من وسائط الأداة الحقيقية بقالبٍ ثابت، وإضافة مصادقةٍ معزّزة بالقياسات الحيوية (biometric step-up)",
+     "بناء التأكيد من وسائط الأداة الحقيقية بقالبٍ ثابت، وإضافة مصادقةٍ معزّزة بالقياسات الحيوية",
      "إضافة قاعدةٍ إلى موجّه النظام تقضي بأن يطابق نصُّ التأكيد دائمًا وسائطَ استدعاء الأداة",
      "تشغيل مصنّفٍ لرصد الحقن على نص التأكيد الذي يكتبه النموذج قبل أن يعرضه التطبيق على العميل",
      "إلغاء التأكيد، لأن فحص الملكية في الشيفرة يقصر الأداة أصلًا على بطاقات العميل"
@@ -54,7 +54,7 @@
    "a": 0,
    "why": {
     "en": "A confirmation counts only if the model cannot write it, so the app must render it from the real tool arguments with a fixed template, and unfreezing a card is risk-increasing, so it also needs biometric step-up. The system-prompt rule is tempting, but it is a request to the very model the attacker is steering, and the ownership check passes here because both cards are the customer's.",
-    "ar": "لا يُعتدّ بالتأكيد إلا إذا عجز النموذج عن كتابته، لذا يجب أن يعرضه التطبيق من وسائط الأداة الحقيقية بقالبٍ ثابت؛ وإلغاء تجميد البطاقة إجراءٌ يرفع المخاطر (risk-increasing)، فيحتاج أيضًا إلى مصادقةٍ معزّزة بالقياسات الحيوية (biometric step-up). أما قاعدة موجّه النظام فمغرية (tempting)، لكنها طلبٌ إلى النموذج نفسه الذي يوجّهه المهاجم، وفحص الملكية ينجح هنا لأن البطاقتين كلتيهما للعميل."
+    "ar": "لا يُعتدّ بالتأكيد إلا إذا عجز النموذج عن كتابته، لذا يجب أن يعرضه التطبيق من وسائط الأداة الحقيقية بقالبٍ ثابت؛ وإلغاء تجميد البطاقة إجراءٌ يرفع المخاطر، فيحتاج أيضًا إلى مصادقةٍ معزّزة بالقياسات الحيوية. أما قاعدة موجّه النظام فمغرية، لكنها طلبٌ إلى النموذج نفسه الذي يوجّهه المهاجم، وفحص الملكية ينجح هنا لأن البطاقتين كلتيهما للعميل."
    }
   },
   {
@@ -63,7 +63,7 @@
    "lesson": "8.3",
    "q": {
     "en": "Dana fine-tunes the model behind Najm Assist on de-identified, deduplicated chat transcripts. The memorisation canary test passes, and fee answers are more accurate than before. She proposes releasing it next week. What must happen first?",
-    "ar": "تُجري دانة ضبطًا دقيقًا (fine-tunes) للنموذج الذي يقف خلف نجم أسيست على نصوص محادثاتٍ منزوعة الهوية ومُزالة التكرار. وينجح اختبار الكناري للحفظ، وتصبح إجابات الرسوم (fee answers) أدقّ من قبل. وتقترح إطلاقه الأسبوع المقبل. ما الذي يجب أن يحدث أولًا؟"
+    "ar": "تُجري دانة ضبطًا دقيقًا للنموذج الذي يقف خلف نجم أسيست على نصوص محادثاتٍ منزوعة الهوية ومُزالة التكرار. وينجح اختبار الكناري للحفظ، وتصبح إجابات الرسوم أدقّ من قبل. وتقترح إطلاقه الأسبوع المقبل. ما الذي يجب أن يحدث أولًا؟"
    },
    "o": {
     "en": [
@@ -73,16 +73,16 @@
      "Re-run the full safety and prompt-injection test suite, since tuning can weaken refusals"
     ],
     "ar": [
-     "لا شيء إضافي (Nothing more): فالبيانات الحميدة منزوعة الهوية لا يمكن أن تُضعف تدريب السلامة (safety training) في النموذج الأساسي",
+     "لا شيء إضافي: فالبيانات الحميدة منزوعة الهوية لا يمكن أن تُضعف تدريب السلامة في النموذج الأساسي",
      "إعادة التدريب بالخصوصية التفاضلية، لأن نجاح اختبار الكناري لا يُثبت انعدام التسريب",
      "توسيع تقييم الدقة ليشمل مزيدًا من أسئلة الرسوم، لأن الدقة هي ما يغيّره الضبط",
-     "إعادة تشغيل (Re-run) مجموعة اختبارات السلامة وحقن الموجّهات كاملةً، لأن الضبط (tuning) قد يُضعف الرفض"
+     "إعادة تشغيل مجموعة اختبارات السلامة وحقن الموجّهات كاملةً، لأن الضبط قد يُضعف الرفض"
     ]
    },
    "a": 3,
    "why": {
     "en": "Qi and colleagues (2023) showed that fine-tuning can degrade a model's safety alignment, to a lesser degree even on benign data, so Najm re-runs the full safety and injection suite after every fine-tune, not only accuracy tests. Assuming benign data is harmless is the tempting shortcut, but that is exactly what the research contradicts.",
-    "ar": "أظهر Qi وزملاؤه عام 2023 أن الضبط الدقيق (fine-tuning) يمكن أن يُضعف مواءمة السلامة في النموذج، حتى بالبيانات الحميدة وإن بدرجةٍ أقل، لذا يعيد بنك نجم (Najm Bank) تشغيل مجموعة اختبارات السلامة والحقن كاملةً بعد كل ضبطٍ دقيق، لا اختبارات الدقة وحدها. أما افتراض أن البيانات الحميدة غير ضارة فهو الاختصار المغري، لكنه بالضبط ما تنقضه الأبحاث."
+    "ar": "أظهر Qi وزملاؤه عام 2023 أن الضبط الدقيق يمكن أن يُضعف مواءمة السلامة في النموذج، حتى بالبيانات الحميدة وإن بدرجةٍ أقل، لذا يعيد بنك نجم تشغيل مجموعة اختبارات السلامة والحقن كاملةً بعد كل ضبطٍ دقيق، لا اختبارات الدقة وحدها. أما افتراض أن البيانات الحميدة غير ضارة فهو الاختصار المغري، لكنه بالضبط ما تنقضه الأبحاث."
    }
   },
   {
@@ -91,7 +91,7 @@
    "lesson": "8.3",
    "q": {
     "en": "Jassim's SOC watches Smart Alerts for signs of probing, such as near-threshold clusters and decline-then-modify sequences. Najm's payment API already answers held payments with a generic \"held for review\" message. This month the near-threshold rule fires on a new card product: fraud suddenly sits just below the alert score. Yet holds and declines stayed at their usual level, and no decline-then-modify sequence fired on any product beforehand. What should Dana and Jassim investigate first?",
-    "ar": "يراقب مركز العمليات الأمنية لدى جاسم (Jassim's SOC) التنبيهاتِ الذكية (Smart Alerts) بحثًا عن علامات السبر، مثل تجمّعات قرب العتبة (near-threshold clusters) وتسلسلات الرفض ثم التعديل (decline-then-modify sequences). وتردّ واجهة الدفع في بنك نجم أصلًا على المدفوعات المحتجزة (held payments) برسالةٍ عامة هي «قيد المراجعة». وهذا الشهر تنطلق قاعدة القرب من العتبة على منتج بطاقاتٍ جديد: فالاحتيال يقع فجأةً تحت درجة التنبيه مباشرةً. ومع ذلك بقيت حالات الاحتجاز والرفض عند مستواها المعتاد، ولم تنطلق قبله أي قاعدةٍ لتسلسل الرفض ثم التعديل على أي منتج. ما الذي يجب أن تحقّق فيه دانة وجاسم أولًا؟"
+    "ar": "يراقب مركز العمليات الأمنية لدى جاسم التنبيهاتِ الذكية بحثًا عن علامات السبر، مثل تجمّعات قرب العتبة وتسلسلات الرفض ثم التعديل. وتردّ واجهة الدفع في بنك نجم أصلًا على المدفوعات المحتجزة برسالةٍ عامة هي «قيد المراجعة». وهذا الشهر تنطلق قاعدة القرب من العتبة على منتج بطاقاتٍ جديد: فالاحتيال يقع فجأةً تحت درجة التنبيه مباشرةً. ومع ذلك بقيت حالات الاحتجاز والرفض عند مستواها المعتاد، ولم تنطلق قبله أي قاعدةٍ لتسلسل الرفض ثم التعديل على أي منتج. ما الذي يجب أن تحقّق فيه دانة وجاسم أولًا؟"
    },
    "o": {
     "en": [
@@ -103,14 +103,14 @@
     "ar": [
      "تهرّبٌ بالسبر فاتَ القواعد: خفِّض عتبة التنبيه لذلك المنتج الجديد",
      "نسخةٌ من النموذج تُستخدم دون اتصال: افحص من وصل إلى سجلّ النماذج وملفاته",
-     "تسميم التسميات (Label poisoning) على يد العصابة: راجع تسميات التأكيد المستخدمة في أحدث إعادة تدريب",
-     "انحرافٌ عادي (Ordinary drift) في منتجٍ جديد: أعِد تدريب التنبيهات الذكية على أحدث حالات الاحتيال المؤكَّدة"
+     "تسميم التسميات على يد العصابة: راجع تسميات التأكيد المستخدمة في أحدث إعادة تدريب",
+     "انحرافٌ عادي في منتجٍ جديد: أعِد تدريب التنبيهات الذكية على أحدث حالات الاحتيال المؤكَّدة"
     ]
    },
    "a": 1,
    "why": {
     "en": "Fraud sitting just under the score means the ring knows the model's boundary; with decision-only replies and no probing, it most likely learned it from a copy, and stealing model files is the most direct form of extraction, so the registry's access logs come first. Lowering the threshold is tempting, but it treats this as ordinary probing, and a copy is a private lab where the ring can simply re-tune its payments.",
-    "ar": "وقوع الاحتيال تحت الدرجة مباشرةً يعني أن العصابة تعرف حدّ قرار النموذج؛ ومع ردودٍ لا تكشف إلا القرار (decision-only replies) ودون سبر، فالأرجح أنها تعلّمته من نسخة، وسرقة ملفات النموذج أكثر صور الاستخراج مباشرةً، لذا تأتي سجلّات الوصول (access logs) إلى سجلّ النماذج أولًا. أما خفض العتبة فمغرٍ (tempting)، لكنه يعامل الأمر كسبرٍ عادي (ordinary probing)، والنسخة مختبرٌ خاص تستطيع فيه العصابة ببساطة إعادة ضبط مدفوعاتها."
+    "ar": "وقوع الاحتيال تحت الدرجة مباشرةً يعني أن العصابة تعرف حدّ قرار النموذج؛ ومع ردودٍ لا تكشف إلا القرار ودون سبر، فالأرجح أنها تعلّمته من نسخة، وسرقة ملفات النموذج أكثر صور الاستخراج مباشرةً، لذا تأتي سجلّات الوصول إلى سجلّ النماذج أولًا. أما خفض العتبة فمغرٍ، لكنه يعامل الأمر كسبرٍ عادي، والنسخة مختبرٌ خاص تستطيع فيه العصابة ببساطة إعادة ضبط مدفوعاتها."
    }
   }
  ],
@@ -120,7 +120,7 @@
    "lesson": "8.1",
    "text": {
     "en": "I have drawn a data-flow diagram for an LLM feature I own or a small local lab app, answered the five questions, given every arrow that crosses a trust boundary a named threat with an OWASP ID and an ATLAS technique, and stated whether the lethal trifecta is present",
-    "ar": "رسمتُ مخطط تدفّق البيانات لميزة نموذجٍ لغوي كبير أملكها (an LLM feature I own) أو لتطبيق مختبرٍ محلي صغير، وأجبتُ عن الأسئلة الخمسة، وأعطيتُ كل سهمٍ يعبر حدّ ثقة تهديدًا مسمّى مع معرّف OWASP وتقنيةٍ من ATLAS، وذكرتُ ما إذا كان الثالوث القاتل حاضرًا فيه"
+    "ar": "رسمتُ مخطط تدفّق البيانات لميزة نموذجٍ لغوي كبير أملكها أو لتطبيق مختبرٍ محلي صغير، وأجبتُ عن الأسئلة الخمسة، وأعطيتُ كل سهمٍ يعبر حدّ ثقة تهديدًا مسمّى مع معرّف OWASP وتقنيةٍ من ATLAS، وذكرتُ ما إذا كان الثالوث القاتل حاضرًا فيه"
    }
   },
   {
@@ -128,7 +128,7 @@
    "lesson": "8.2",
    "text": {
     "en": "I have planted a benign canary instruction in one of my own documents, run twenty summaries before and twenty after adding spotlighting, recorded both rates, and explained why the second is unlikely to be zero and which control I would add next",
-    "ar": "زرعتُ تعليمة «كناري» غير ضارة في أحد مستنداتي، وشغّلتُ عشرين تلخيصًا (twenty summaries) قبل إضافة تقنية الإبراز (spotlighting) وعشرين بعدها (twenty after)، وسجّلتُ المعدّلين كليهما (both rates)، وشرحتُ لماذا يُستبعد أن يكون الثاني صفرًا وأيّ ضابطٍ سأضيفه بعد ذلك (which control I would add next)"
+    "ar": "زرعتُ تعليمة «كناري» غير ضارة في أحد مستنداتي، وشغّلتُ عشرين تلخيصًا قبل إضافة تقنية الإبراز (spotlighting) وعشرين بعدها، وسجّلتُ المعدّلين كليهما، وشرحتُ لماذا يُستبعد أن يكون الثاني صفرًا وأيّ ضابطٍ سأضيفه بعد ذلك"
    }
   }
  ]

@@ -7,7 +7,7 @@
       "lesson": "6.2",
       "q": {
         "en": "Of the protections Najm can apply to personal data in a copy made for analysis, which one gives the strongest privacy?",
-        "ar": "من بين وسائل الحماية (protections) التي يستطيع بنك نجم (Najm Bank) تطبيقها على البيانات الشخصية (personal data) في نسخة مُعدّة للتحليل، أيّها يمنح أقوى حماية للخصوصية (strongest privacy)؟"
+        "ar": "من بين وسائل الحماية (protections) التي يستطيع بنك نجم (Najm Bank) تطبيقها على البيانات الشخصية (personal data) في نسخة مُعدّة للتحليل، أيّها يمنح أقوى حماية للخصوصية؟"
       },
       "o": {
         "en": [
@@ -17,16 +17,16 @@
           "Generalising birth dates to age bands and addresses to cities"
         ],
         "ar": [
-          "استبدال كل مُعرِّف (identifier) باسم مستعار بتجزئة مفتاحية (keyed HMAC-SHA-256 pseudonym)",
-          "استبعاد الأعمدة التي لا يحتاجها الغرض (purpose) عند التحميل (load time)",
-          "إخفاء (masking) أرقام الهواتف والهويات (IDs) بحيث لا تظهر إلا قيم جزئية (partial values)",
-          "تعميم (generalising) تواريخ الميلاد إلى فئات عمرية (age bands) والعناوين إلى مدن (cities)"
+          "استبدال كل مُعرِّف (identifier) باسم مستعار بتجزئة مفتاحية",
+          "استبعاد الأعمدة التي لا يحتاجها الغرض (purpose) عند التحميل",
+          "إخفاء (masking) أرقام الهواتف والهويات (IDs) بحيث لا تظهر إلا قيم جزئية",
+          "تعميم (generalising) تواريخ الميلاد إلى فئات عمرية والعناوين إلى مدن (cities)"
         ]
       },
       "a": 1,
       "why": {
         "en": "The safest personal data is the data you never copied: a column dropped at load time is no data at all. Keyed-hash pseudonyms are tempting, but they remain personal data under GDPR Article 4(5), because whoever holds the key can re-link them.",
-        "ar": "أكثر البيانات الشخصية (personal data) أمانًا هي البيانات التي لم تنسخها أصلًا (never copied)؛ فالعمود المُستبعَد عند التحميل لا يترك أي بيانات. أما الأسماء المستعارة بالتجزئة المفتاحية (keyed-hash pseudonyms) فمغرية، لكنها تبقى بيانات شخصية بموجب المادة 4(5) من اللائحة العامة لحماية البيانات (GDPR Article 4(5))، لأن حامل المفتاح (key holder) يستطيع إعادة ربطها (re-link)."
+        "ar": "أكثر البيانات الشخصية (personal data) أمانًا هي البيانات التي لم تنسخها أصلًا؛ فالعمود المُستبعَد عند التحميل لا يترك أي بيانات. أما الأسماء المستعارة بالتجزئة المفتاحية فمغرية، لكنها تبقى بيانات شخصية بموجب المادة 4(5) من اللائحة العامة لحماية البيانات (GDPR Article 4(5))، لأن حامل المفتاح يستطيع إعادة ربطها (re-link)."
       }
     },
     {
@@ -35,7 +35,7 @@
       "lesson": "6.1",
       "q": {
         "en": "A year into Najm's governance programme, the governance office's quarterly report lists 35 approved policies, 24 committee meetings and 9,000 tables in the catalogue. Faisal asks whether governance is actually working. What should the report measure instead?",
-        "ar": "بعد عام من برنامج الحوكمة (governance programme) في بنك نجم (Najm Bank)، يعرض التقرير الفصلي (quarterly report) لمكتب الحوكمة (governance office) 35 سياسة معتمدة (approved policies) و24 اجتماع لجنة (committee meetings) و9,000 جدول في الفهرس (catalogue). يسأل فيصل هل تعمل الحوكمة فعلًا (actually working). ماذا ينبغي أن يقيس التقرير (report measure) بدلًا من ذلك؟"
+        "ar": "بعد عام من برنامج الحوكمة في بنك نجم (Najm Bank)، يعرض التقرير الفصلي لمكتب الحوكمة 35 سياسة معتمدة و24 اجتماع لجنة و9,000 جدول في الفهرس (catalogue). يسأل فيصل هل تعمل الحوكمة فعلًا. ماذا ينبغي أن يقيس التقرير بدلًا من ذلك؟"
       },
       "o": {
         "en": [
@@ -45,16 +45,16 @@
           "Tier-1 coverage of owners and contracts, and the time to answer impact questions"
         ],
         "ar": [
-          "عدد الجداول الجديدة المُفهرَسة (tables catalogued) كل فصل، لإثبات نمو الاعتماد (adoption)",
-          "نسبة الحضور في لجان الحوكمة (governance committees)، لإثبات انخراط مالكي البيانات (data owners)",
-          "عدد الموظفين الذين أتمّوا تدريب الحوكمة (governance training) في الأشهر الاثني عشر الماضية",
+          "عدد الجداول الجديدة المُفهرَسة كل فصل، لإثبات نمو الاعتماد (adoption)",
+          "نسبة الحضور في لجان الحوكمة، لإثبات انخراط مالكي البيانات",
+          "عدد الموظفين الذين أتمّوا تدريب الحوكمة في الأشهر الاثني عشر الماضية",
           "تغطية المستوى الأول (tier-1 coverage) بالمالكين والعقود، وزمن الإجابة عن أسئلة الأثر (impact)"
         ]
       },
       "a": 3,
       "why": {
         "en": "Governance is measured by coverage and speed, not activity: the share of tier-1 models with owner, description, contract and tests, and how long an impact question takes to answer. Counting catalogued tables is tempting, but ten thousand undocumented tables help nobody.",
-        "ar": "تُقاس الحوكمة (governance) بالتغطية والسرعة لا بالنشاط (activity): نسبة نماذج المستوى الأول (tier-1 models) التي لها مالك ووصف وعقد واختبارات، والزمن اللازم للإجابة عن سؤال أثر (impact question). أما عدّ الجداول المُفهرَسة (catalogued tables) فمغرٍ، لكن عشرة آلاف جدول بلا توثيق (undocumented tables) لا تفيد أحدًا."
+        "ar": "تُقاس الحوكمة (governance) بالتغطية والسرعة لا بالنشاط (activity): نسبة نماذج المستوى الأول (tier-1 models) التي لها مالك ووصف وعقد واختبارات، والزمن اللازم للإجابة عن سؤال أثر. أما عدّ الجداول المُفهرَسة فمغرٍ، لكن عشرة آلاف جدول بلا توثيق لا تفيد أحدًا."
       }
     },
     {
@@ -63,7 +63,7 @@
       "lesson": "6.3",
       "q": {
         "en": "Lina adds a view over marts.loan_book, which has a row-level security policy by country, and grants SELECT on the view to marts_reader. The view is owned by the pipeline account that builds the mart, and no one holds a superuser login. Analysts querying the view now see every country's loans. What is the cause and the fix?",
-        "ar": "تُضيف لينا عرضًا (view) فوق الجدول marts.loan_book الذي تحميه سياسة أمان على مستوى الصفوف حسب الدولة، وتمنح صلاحية SELECT على العرض للدور marts_reader. يملك العرضَ حسابُ خط البيانات (pipeline account) الذي يبني المستودع التحليلي (mart)، ولا أحد يستخدم حساب مستخدم خارق (superuser). صار المحلّلون (analysts) الذين يستعلمون العرض يرون قروض كل الدول. ما السبب وما العلاج؟"
+        "ar": "تُضيف لينا عرضًا فوق الجدول marts.loan_book الذي تحميه سياسة أمان على مستوى الصفوف حسب الدولة، وتمنح صلاحية SELECT على العرض للدور marts_reader. يملك العرضَ حسابُ خط البيانات الذي يبني المستودع التحليلي (mart)، ولا أحد يستخدم حساب مستخدم خارق (superuser). صار المحلّلون الذين يستعلمون العرض يرون قروض كل الدول. ما السبب وما العلاج؟"
       },
       "o": {
         "en": [
@@ -73,7 +73,7 @@
           "The analysts' role bypasses RLS; remove BYPASSRLS from marts_reader to fix it"
         ],
         "ar": [
-          "يتحقق العرض (view) من السياسة مقابل مالكه (owner)؛ اضبط عليه security_invoker = true",
+          "يتحقق العرض من السياسة مقابل مالكه؛ اضبط عليه security_invoker = true",
           "لا تسري السياسات (policies) عبر العروض (views)؛ أعد إنشاء سياسة الدولة على العرض نفسه",
           "السياسة تغطي SELECT فقط؛ وسّعها إلى FOR ALL كي تشمل العروض (views) أيضًا",
           "دور المحلّلين يتجاوز الأمان على مستوى الصفوف (RLS)؛ أزل BYPASSRLS من marts_reader"
@@ -82,7 +82,7 @@
       "a": 0,
       "why": {
         "en": "A PostgreSQL view runs with its owner's rights by default, so the base table's policy is checked against the owner, not the analyst; security_invoker = true (PostgreSQL 15 and later) or a filter inside the view fixes it. Recreating the policy on the view fails because row-level security policies attach to tables, and the scenario already rules out a role that bypasses RLS.",
-        "ar": "يعمل العرض (view) في PostgreSQL افتراضيًا بصلاحيات مالكه (owner's rights)، فتُفحص سياسة الجدول الأساسي (base table) مقابل المالك لا مقابل المحلّل؛ ويعالج ذلك الإعداد security_invoker = true (PostgreSQL 15 فما بعد) أو ترشيح داخل العرض. أما إعادة إنشاء السياسة على العرض فلا تنجح لأن سياسات الأمان على مستوى الصفوف تُربط بالجداول (tables)، والسيناريو يستبعد أصلًا وجود دور يتجاوز RLS."
+        "ar": "يعمل العرض في PostgreSQL افتراضيًا بصلاحيات مالكه، فتُفحص سياسة الجدول الأساسي مقابل المالك لا مقابل المحلّل؛ ويعالج ذلك الإعداد security_invoker = true (PostgreSQL 15 فما بعد) أو ترشيح داخل العرض. أما إعادة إنشاء السياسة على العرض فلا تنجح لأن سياسات الأمان على مستوى الصفوف تُربط بالجداول، والسيناريو يستبعد أصلًا وجود دور يتجاوز RLS."
       }
     },
     {
@@ -91,7 +91,7 @@
       "lesson": "6.2",
       "q": {
         "en": "A university asks Najm for complaint data for research. Kareem prepares an extract with names and national IDs removed, customer IDs replaced by keyed hashes whose key stays in Najm's secrets manager, and exact birth date, nationality, branch and complaint notes kept. He proposes labelling it \"anonymous\". What is the soundest judgement?",
-        "ar": "تطلب جامعة من بنك نجم (Najm Bank) بيانات الشكاوى (complaint data) لأغراض البحث (research). يُعدّ كريم مستخرجًا (extract) حُذفت منه الأسماء وأرقام الهوية الوطنية (national IDs)، واستُبدلت فيه مُعرِّفات العملاء (customer IDs) بتجزئات مفتاحية (keyed hashes) يبقى مفتاحها في مدير الأسرار (secrets manager) لدى البنك، وبقي فيه تاريخ الميلاد الدقيق والجنسية والفرع وملاحظات الشكاوى (complaint notes). يقترح أن يصفه بأنه \"مجهول الهوية\" (anonymous). ما الحكم الأسلم (soundest judgement)؟"
+        "ar": "تطلب جامعة من بنك نجم (Najm Bank) بيانات الشكاوى لأغراض البحث (research). يُعدّ كريم مستخرجًا حُذفت منه الأسماء وأرقام الهوية الوطنية، واستُبدلت فيه مُعرِّفات العملاء بتجزئات مفتاحية يبقى مفتاحها في مدير الأسرار لدى البنك، وبقي فيه تاريخ الميلاد الدقيق والجنسية والفرع وملاحظات الشكاوى. يقترح أن يصفه بأنه \"مجهول الهوية\" (anonymous). ما الحكم الأسلم؟"
       },
       "o": {
         "en": [
@@ -101,16 +101,16 @@
           "Also drop the keyed-hash column, since with no identifiers left it is anonymous"
         ],
         "ar": [
-          "يصفه بأنه مجهول الهوية (anonymous)، لأن الجامعة لن تحصل أبدًا على مفتاح التجزئة (hashing key)",
+          "يصفه بأنه مجهول الهوية (anonymous)، لأن الجامعة لن تحصل أبدًا على مفتاح التجزئة",
           "يُشفّر الملف (encrypt) قبل إرساله، لأن التشفير (encryption) يجعل المستخرج مجهول الهوية",
           "يعامله كبيانات شخصية (personal data): يُعمّم، ويفحص إخفاء الهوية k، وينظّف الملاحظات، ويستشير سارة",
-          "يحذف عمود التجزئة المفتاحية (keyed-hash column) أيضًا، فبلا مُعرِّفات (identifiers) يصبح مجهول الهوية"
+          "يحذف عمود التجزئة المفتاحية أيضًا، فبلا مُعرِّفات (identifiers) يصبح مجهول الهوية"
         ]
       },
       "a": 2,
       "why": {
         "en": "Keyed hashes are pseudonymous, not anonymous, and exact birth date, nationality and branch are quasi-identifiers that can single people out, while free-text notes can hide names and IDs; at Najm any \"anonymous\" dataset needs Sara's sign-off. Dropping the hash column is tempting, but the quasi-identifiers and notes still allow re-identification.",
-        "ar": "التجزئات المفتاحية (keyed hashes) أسماء مستعارة (pseudonymous) لا إخفاء للهوية (anonymous)، وتاريخ الميلاد الدقيق والجنسية والفرع مُعرِّفات شبه مباشرة (quasi-identifiers) قد تكشف أفرادًا بعينهم، والملاحظات النصية الحرة (free-text notes) قد تخفي أسماء وأرقام هوية؛ وفي بنك نجم تحتاج أي مجموعة بيانات \"مجهولة الهوية\" (anonymous dataset) إلى موافقة سارة (Sara's sign-off). أما حذف عمود التجزئة فمغرٍ، لكن المُعرِّفات شبه المباشرة والملاحظات تظل تسمح بإعادة التعرّف (re-identification)."
+        "ar": "التجزئات المفتاحية أسماء مستعارة (pseudonymous) لا إخفاء للهوية (anonymous)، وتاريخ الميلاد الدقيق والجنسية والفرع مُعرِّفات شبه مباشرة (quasi-identifiers) قد تكشف أفرادًا بعينهم، والملاحظات النصية الحرة قد تخفي أسماء وأرقام هوية؛ وفي بنك نجم تحتاج أي مجموعة بيانات \"مجهولة الهوية\" إلى موافقة سارة. أما حذف عمود التجزئة فمغرٍ، لكن المُعرِّفات شبه المباشرة والملاحظات تظل تسمح بإعادة التعرّف (re-identification)."
       }
     }
   ],
@@ -120,7 +120,7 @@
       "lesson": "6.2",
       "text": {
         "en": "I have built an analyst view on synthetic data with a keyed-hash customer key, an age band and a masked phone, and shown that an unsalted MD5-hashed ID can be recovered by brute force while the keyed hash cannot.",
-        "ar": "لقد بنيتُ عرضًا للمحلّلين (analyst view) على بيانات اصطناعية (synthetic data) فيه مفتاح عميل بتجزئة مفتاحية وفئة عمرية (age band) وهاتف مُخفى (masked phone)، وأثبتُّ أن مُعرِّفًا مُجزّأً بـ MD5 بلا ملح (unsalted MD5-hashed ID) يمكن استرجاعه بالقوة الغاشمة (brute force) بينما لا يمكن ذلك مع التجزئة المفتاحية (keyed hash)."
+        "ar": "لقد بنيتُ عرضًا للمحلّلين على بيانات اصطناعية (synthetic data) فيه مفتاح عميل بتجزئة مفتاحية وفئة عمرية وهاتف مُخفى (masked phone)، وأثبتُّ أن مُعرِّفًا مُجزّأً بـ MD5 بلا ملح يمكن استرجاعه بالقوة الغاشمة بينما لا يمكن ذلك مع التجزئة المفتاحية."
       }
     },
     {
@@ -128,7 +128,7 @@
       "lesson": "6.3",
       "text": {
         "en": "I have set up named users, group roles and row-level security by country in a test PostgreSQL, and shown with real queries that each analyst sees only their own country's rows and is denied the base and raw tables.",
-        "ar": "لقد أعددتُ مستخدمين بأسماء (named users) وأدوارًا جماعية (group roles) وأمانًا على مستوى الصفوف (row-level security) حسب الدولة في PostgreSQL تجريبي، وأثبتُّ باستعلامات حقيقية (real queries) أن كل محلّل لا يرى إلا صفوف دولته وأنه يُمنع من الجداول الأساسية والخام."
+        "ar": "لقد أعددتُ مستخدمين بأسماء وأدوارًا جماعية وأمانًا على مستوى الصفوف (row-level security) حسب الدولة في PostgreSQL تجريبي، وأثبتُّ باستعلامات حقيقية أن كل محلّل لا يرى إلا صفوف دولته وأنه يُمنع من الجداول الأساسية والخام."
       }
     }
   ]

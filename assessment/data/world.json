@@ -17,10 +17,10 @@
           "The apex can't take a CNAME, so half of all lookups are silently failing"
         ],
         "ar": [
-          "شهادة TLS (TLS certificate) للخادم الجديد لم تُصدر بعد في كل المناطق",
-          "المحلِّلات (resolvers) تواصل تقديم السجلّ القديم المخزَّن مؤقتًا حتى تنتهي مدة بقائه (TTL)",
-          "شبكة توصيل المحتوى (CDN) توازن بين الخادمين حتى تُفرغ كاشها (purge)",
-          "الجذر (apex) لا يقبل CNAME، فنصف عمليات البحث تفشل بصمت"
+          "شهادة TLS للخادم الجديد لم تُصدر بعد في كل المناطق",
+          "المحلِّلات تواصل تقديم السجلّ القديم المخزَّن مؤقتًا حتى تنتهي مدة بقائه (TTL)",
+          "شبكة توصيل المحتوى (CDN) توازن بين الخادمين حتى تُفرغ كاشها",
+          "الجذر لا يقبل CNAME، فنصف عمليات البحث تفشل بصمت"
         ]
       },
       "a": 1,
@@ -35,7 +35,7 @@
       "lesson": "11.2",
       "q": {
         "en": "Arabic users report that searching for a perfectly valid word returns zero results, though the article exists. Your agent says the index must be incomplete and proposes a full re-index. What does the course point you to instead?",
-        "ar": "يبلّغ مستخدمون عرب أن البحث عن كلمة صحيحة تمامًا يعيد صفر نتائج، مع أن المقال موجود. يقول وكيلك (agent) إن الفهرس (index) ناقص ويقترح إعادة فهرسة كاملة (full re-index). إلامَ توجّهك الدورة بدلًا من ذلك؟"
+        "ar": "يبلّغ مستخدمون عرب أن البحث عن كلمة صحيحة تمامًا يعيد صفر نتائج، مع أن المقال موجود. يقول وكيلك (agent) إن الفهرس (index) ناقص ويقترح إعادة فهرسة كاملة. إلامَ توجّهك الدورة بدلًا من ذلك؟"
       },
       "o": {
         "en": [
@@ -46,15 +46,15 @@
         ],
         "ar": [
           "أعد فهرسة كل شيء ليلًا كي تكون المقالات الجديدة قابلة للعثور عليها دائمًا",
-          "حوّل الصفحة إلى اتجاه من اليمين إلى اليسار (RTL) بخصائص منطقية (logical properties) كي يُعرض النص العربي صحيحًا",
-          "أضف المفاتيح العربية الناقصة إلى ar.json، مع اختبار حارس الانجراف (drift-guard test) يتحقق منها",
-          "وحّد أشكال الحروف والتشكيل (diacritics) إلى صيغة قياسية واحدة (canonical form) عند الفهرسة وعند الاستعلام"
+          "حوّل الصفحة إلى اتجاه من اليمين إلى اليسار (RTL) بخصائص منطقية كي يُعرض النص العربي صحيحًا",
+          "أضف المفاتيح العربية الناقصة إلى ar.json، مع اختبار حارس الانجراف يتحقق منها",
+          "وحّد أشكال الحروف والتشكيل إلى صيغة قياسية واحدة عند الفهرسة وعند الاستعلام"
         ]
       },
       "a": 3,
       "why": {
         "en": "The same Arabic word can be typed with or without diacritics and with different alef forms (أ / إ / ا), so the index and the query must be normalized the same way. Re-indexing un-normalized text just rebuilds the same mismatch.",
-        "ar": "الكلمة العربية نفسها قد تُكتب بالتشكيل (diacritics) أو بدونه وبأشكال ألف مختلفة (أ / إ / ا)، فيجب تطبيع (normalize) الفهرس (index) والاستعلام (query) بالطريقة نفسها. وإعادة فهرسة نص غير مطبَّع تعيد بناء عدم التطابق نفسه."
+        "ar": "الكلمة العربية نفسها قد تُكتب بالتشكيل أو بدونه وبأشكال ألف مختلفة (أ / إ / ا)، فيجب تطبيع الفهرس (index) والاستعلام (query) بالطريقة نفسها. وإعادة فهرسة نص غير مطبَّع تعيد بناء عدم التطابق نفسه."
       }
     },
     {
@@ -73,16 +73,16 @@
           "Skip the sitemap during builds and regenerate it by hand once a week"
         ],
         "ar": [
-          "قدّم خرائط موقع مجزّأة (chunked sitemaps) وقت الطلب (request time)، كي لا يعتمد البناء (build) على أي بيانات حيّة",
-          "امنح استدعاء الـAPI في البناء (build) مهلة (timeout) أطول وإعادات محاولة (retries) أكثر كي ينتهي في النهاية دائمًا",
-          "ولّد ملف خريطة موقع (sitemap) واحدًا كاملًا وقت البناء (build time) وخزّنه في شبكة توصيل المحتوى (CDN) أيضًا",
+          "قدّم خرائط موقع مجزّأة وقت الطلب، كي لا يعتمد البناء (build) على أي بيانات حيّة",
+          "امنح استدعاء الـAPI في البناء (build) مهلة (timeout) أطول وإعادات محاولة أكثر كي ينتهي في النهاية دائمًا",
+          "ولّد ملف خريطة موقع (sitemap) واحدًا كاملًا وقت البناء وخزّنه في شبكة توصيل المحتوى (CDN) أيضًا",
           "تخطَّ خريطة الموقع (sitemap) أثناء البناء (build) وأعد توليدها يدويًا مرة في الأسبوع"
         ]
       },
       "a": 0,
       "why": {
         "en": "A build must succeed from source alone; once it calls a live API, a runtime outage becomes a deploy outage. Longer timeouts keep the coupling, and one giant file breaks the 50,000-URL / 50MB caps.",
-        "ar": "يجب أن ينجح البناء (build) من الكود المصدري (source) وحده؛ فما إن يستدعي واجهة حيّة (live API) حتى يصير عطل وقت التشغيل (runtime outage) عطلًا في النشر (deploy). والمهلة (timeout) الأطول تُبقي الاقتران (coupling)، والملف الضخم الواحد يتجاوز حدّي 50,000 رابط و50MB."
+        "ar": "يجب أن ينجح البناء (build) من الكود المصدري وحده؛ فما إن يستدعي واجهة حيّة حتى يصير عطل وقت التشغيل عطلًا في النشر (deploy). والمهلة (timeout) الأطول تُبقي الاقتران، والملف الضخم الواحد يتجاوز حدّي 50,000 رابط و50MB."
       }
     },
     {
@@ -91,7 +91,7 @@
       "lesson": "11.5",
       "q": {
         "en": "You set up cache rules and the WAF in your edge platform's dashboard. Your local cache-poisoning and rate-limit tests are green, and your agent reports: \"The edge is configured and safe.\" What is the best call?",
-        "ar": "ضبطتَ قواعد الكاش (cache rules) وجدار حماية تطبيقات الويب (WAF) من لوحة منصة الحافة (edge platform). اختبارات تسميم الكاش (cache poisoning) وتحديد المعدّل (rate limit) المحلية خضراء، ويقول وكيلك (agent): «الحافة مضبوطة وآمنة». ما القرار الأصوب؟"
+        "ar": "ضبطتَ قواعد الكاش وجدار حماية تطبيقات الويب (WAF) من لوحة منصة الحافة. اختبارات تسميم الكاش (cache poisoning) وتحديد المعدّل (rate limit) المحلية خضراء، ويقول وكيلك (agent): «الحافة مضبوطة وآمنة». ما القرار الأصوب؟"
       },
       "o": {
         "en": [
@@ -102,15 +102,15 @@
         ],
         "ar": [
           "ثق بالاختبارات المحلية، فالحافة (edge) تمرّر فقط ما يعيده خادمك الأصلي (origin)",
-          "اعتمد على الإعدادات الافتراضية (defaults) للمنصة، فالحافة المُدارة يختبرها مزوّدها",
+          "اعتمد على الإعدادات الافتراضية للمنصة، فالحافة المُدارة يختبرها مزوّدها",
           "أعد تشغيل تلك الاختبارات عبر الحافة (edge) الحقيقية وصدّر إعداداتها (config) إلى المستودع (repo)",
-          "اضبط إدارة الروبوتات (bot management) على الحد الأقصى كي تُحجب الحركة المشبوهة أولًا دائمًا"
+          "اضبط إدارة الروبوتات على الحد الأقصى كي تُحجب الحركة المشبوهة أولًا دائمًا"
         ]
       },
       "a": 2,
       "why": {
         "en": "Local tests bypass the edge, so they go false-green on poisoning or rate-limit-behind-CDN bugs, and dashboard config has no diff or rollback until you version it. Defaults are decisions made for you, such as a CDN ignoring Vary.",
-        "ar": "الاختبارات المحلية تتجاوز الحافة (edge)، فتعطي أخضر كاذبًا (false-green) أمام أخطاء التسميم (poisoning) أو تحديد المعدّل خلف الـCDN، وإعدادات اللوحة بلا فروق (diff) ولا تراجع (rollback) حتى تضعها تحت الإصدار (version). والإعدادات الافتراضية (defaults) قرارات اتُّخذت عنك، كتجاهل الـCDN لترويسة Vary."
+        "ar": "الاختبارات المحلية تتجاوز الحافة (edge)، فتعطي أخضر كاذبًا أمام أخطاء التسميم (poisoning) أو تحديد المعدّل خلف الـCDN، وإعدادات اللوحة بلا فروق (diff) ولا تراجع (rollback) حتى تضعها تحت الإصدار. والإعدادات الافتراضية قرارات اتُّخذت عنك، كتجاهل الـCDN لترويسة Vary."
       }
     }
   ],
@@ -120,7 +120,7 @@
       "lesson": "11.1",
       "text": {
         "en": "I have hit my origin server's raw IP directly and watched it refuse, while the app still worked through the real domain",
-        "ar": "طلبتُ عنوان IP الخام (raw IP) لخادمي الأصلي (origin) مباشرةً وشاهدته يرفض، بينما ظل التطبيق يعمل عبر النطاق (domain) الحقيقي"
+        "ar": "طلبتُ عنوان IP الخام لخادمي الأصلي (origin) مباشرةً وشاهدته يرفض، بينما ظل التطبيق يعمل عبر النطاق (domain) الحقيقي"
       }
     },
     {
@@ -128,7 +128,7 @@
       "lesson": "11.4",
       "text": {
         "en": "I have written a cost model with 1×, 10× and 100× columns and can name the line item that scales worst",
-        "ar": "كتبتُ نموذج كلفة (cost model) بأعمدة 1× و10× و100×، وأستطيع تسمية بند الكلفة (line item) الذي يتضخّم أسوأ من غيره"
+        "ar": "كتبتُ نموذج كلفة بأعمدة 1× و10× و100×، وأستطيع تسمية بند الكلفة الذي يتضخّم أسوأ من غيره"
       }
     }
   ]

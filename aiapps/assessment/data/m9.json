@@ -7,7 +7,7 @@
       "lesson": "9.1",
       "q": {
         "en": "A week after his last chat, Rayan opens a new Najm Desk session and the assistant replies in Arabic, as he prefers. Lujain tells Hind: \"The model remembered him.\" What actually happened?",
-        "ar": "بعد أسبوع من محادثته الأخيرة، يفتح ريان جلسة جديدة (new session) في نجم ديسك (Najm Desk)، فيجيبه المساعد بالعربية كما يفضّل. تقول لجين لهند: «النموذج (model) تذكّره». ما الذي حدث فعلًا؟"
+        "ar": "بعد أسبوع من محادثته الأخيرة، يفتح ريان جلسة جديدة في نجم ديسك، فيجيبه المساعد بالعربية كما يفضّل. تقول لجين لهند: «النموذج تذكّره». ما الذي حدث فعلًا؟"
       },
       "o": {
         "en": [
@@ -17,16 +17,16 @@
           "The API keeps a hidden memory for each user and loads it into the model on its own"
         ],
         "ar": [
-          "غيّرت محادثاته السابقة أوزان النموذج (model weights)، فصار التفضيل (preference) مدمجًا فيه",
-          "أبقى المزوّد (provider) نافذة السياق (context window) القديمة مفتوحة، فتتابع الجلسة الجديدة المحادثة نفسها",
-          "قرأت شيفرة نجم ديسك (Najm Desk) ملاحظة محفوظة عنه (stored note) وأضافتها إلى الطلب الجديد نصًّا",
-          "تحتفظ الواجهة (API) بذاكرة خفية (hidden memory) لكل مستخدم وتحمّلها في النموذج (model) تلقائيًا"
+          "غيّرت محادثاته السابقة أوزان النموذج (model weights)، فصار التفضيل مدمجًا فيه",
+          "أبقى المزوّد نافذة السياق (context window) القديمة مفتوحة، فتتابع الجلسة الجديدة المحادثة نفسها",
+          "قرأت شيفرة نجم ديسك ملاحظة محفوظة عنه وأضافتها إلى الطلب الجديد نصًّا",
+          "تحتفظ الواجهة (API) بذاكرة خفية لكل مستخدم وتحمّلها في النموذج تلقائيًا"
         ]
       },
       "a": 2,
       "why": {
         "en": "The model is a stateless function of its messages list, so anything that seems remembered is text your code stored and put back into the request. The hidden-memory option is the tempting one, but the API keeps nothing between calls, so only your own store can carry the preference.",
-        "ar": "النموذج (model) دالة عديمة الحالة (stateless function) من قائمة رسائله (messages list)، فكل ما يبدو متذكَّرًا هو نص خزّنته شيفرتك (code) وأعادته إلى الطلب (request). والخيار D هو المغري، لكن الواجهة (API) لا تحتفظ بشيء بين الاستدعاءات (calls)، فلا يحمل التفضيل (preference) إلا مخزنك أنت."
+        "ar": "النموذج دالة عديمة الحالة (stateless function) من قائمة رسائله (messages list)، فكل ما يبدو متذكَّرًا هو نص خزّنته شيفرتك وأعادته إلى الطلب. والخيار D هو المغري، لكن الواجهة لا تحتفظ بشيء بين الاستدعاءات، فلا يحمل التفضيل إلا مخزنك أنت."
       }
     },
     {
@@ -35,7 +35,7 @@
       "lesson": "9.1",
       "q": {
         "en": "On a thirty-message VPN ticket, Najm Desk keeps suggesting a client restart that Rayan already tried. Lujain's loop resends the whole conversation each turn. What is the best fix?",
-        "ar": "في تذكرة VPN من ثلاثين رسالة (thirty-message ticket)، يواصل نجم ديسك (Najm Desk) اقتراح إعادة تشغيل العميل (client restart) التي جرّبها ريان من قبل. وحلقة لجين (loop) تعيد إرسال المحادثة كاملة (whole conversation) في كل دور. ما أفضل حل؟"
+        "ar": "في تذكرة VPN من ثلاثين رسالة، يواصل نجم ديسك اقتراح إعادة تشغيل العميل التي جرّبها ريان من قبل. وحلقة لجين تعيد إرسال المحادثة كاملة في كل دور. ما أفضل حل؟"
       },
       "o": {
         "en": [
@@ -45,16 +45,16 @@
           "Summarise the chat with a second model call each turn and send only the summary"
         ],
         "ar": [
-          "إبقاء كائن حالة (state object) صغير تحدّثه الشيفرة (code) في كل خطوة وتعرضه في كل موجّه (prompt)",
-          "حفظ كل خطوة ذاكرةً طويلة المدى (long-term memory) ليستدعي النموذج (model) القائمة في كل دور",
-          "أن يُطلب من النموذج (model) في موجّه النظام (system prompt) أن يحتفظ بقائمة الخطوات المجرَّبة",
-          "تلخيص المحادثة (chat) باستدعاء نموذج ثانٍ في كل دور وإرسال الملخّص وحده"
+          "إبقاء كائن حالة (state object) صغير تحدّثه الشيفرة في كل خطوة وتعرضه في كل موجّه (prompt)",
+          "حفظ كل خطوة ذاكرةً طويلة المدى (long-term memory) ليستدعي النموذج القائمة في كل دور",
+          "أن يُطلب من النموذج في موجّه النظام (system prompt) أن يحتفظ بقائمة الخطوات المجرَّبة",
+          "تلخيص المحادثة باستدعاء نموذج ثانٍ في كل دور وإرسال الملخّص وحده"
         ]
       },
       "a": 0,
       "why": {
         "en": "A small state object that code updates after each step is cheap, testable and ready for hand-over, instead of hoping the model keeps a long task straight. Asking the model to track the list in the system prompt is the tempting shortcut, but it leaves the job to the component that lost the steps.",
-        "ar": "كائن الحالة (state object) الصغير الذي تحدّثه الشيفرة (code) بعد كل خطوة رخيص وقابل للاختبار وجاهز للتسليم (hand-over)، بدل الرجاء بأن يبقي النموذج (model) مهمة طويلة منظَّمة. وطلب تتبّع القائمة من النموذج في موجّه النظام (system prompt) هو الاختصار المغري، لكنه يترك المهمة للمكوّن نفسه الذي أضاع الخطوات."
+        "ar": "كائن الحالة الصغير الذي تحدّثه الشيفرة بعد كل خطوة رخيص وقابل للاختبار وجاهز للتسليم (hand-over)، بدل الرجاء بأن يبقي النموذج مهمة طويلة منظَّمة. وطلب تتبّع القائمة من النموذج في موجّه النظام هو الاختصار المغري، لكنه يترك المهمة للمكوّن نفسه الذي أضاع الخطوات."
       }
     },
     {
@@ -63,7 +63,7 @@
       "lesson": "9.2",
       "q": {
         "en": "Mid-chat, Rayan asks Najm Desk to forget his laptop. Lujain's forget deletes the memory row and the logged turns and drops the summary, and a test reading the raw database file finds no trace. Yet two messages later the assistant names his laptop model. Why?",
-        "ar": "في منتصف المحادثة، يطلب ريان من نجم ديسك (Najm Desk) أن ينسى جهازه المحمول. يحذف `forget` عند لجين صف الذاكرة (memory row) والأدوار المسجّلة (logged turns) ويُسقط الملخّص (summary)، واختبار يقرأ ملف قاعدة البيانات الخام لا يجد أثرًا. لكن المساعد يذكر طراز جهازه بعد رسالتين. لماذا؟"
+        "ar": "في منتصف المحادثة، يطلب ريان من نجم ديسك أن ينسى جهازه المحمول. يحذف `forget` عند لجين صف الذاكرة والأدوار المسجّلة ويُسقط الملخّص، واختبار يقرأ ملف قاعدة البيانات الخام لا يجد أثرًا. لكن المساعد يذكر طراز جهازه بعد رسالتين. لماذا؟"
       },
       "o": {
         "en": [
@@ -73,16 +73,16 @@
           "The session's live messages still hold the text and go out with the next call"
         ],
         "ar": [
-          "ما زالت البايتات المحذوفة (deleted bytes) في ملف قاعدة البيانات (database file) حتى تنتهي العملية (process)",
-          "أُسقط الملخّص (summary) لكنه يُشتق من جديد من الأدوار المسجّلة (logged turns) نفسها",
-          "ما زالت بوابة الصلة (relevance gate) في `recall` تمنح الذاكرة المحذوفة درجة فوق حدّها (cut-off)",
-          "ما زالت الرسائل الحيّة (live messages) في الجلسة تحوي النص وتُرسل مع الطلب التالي (next request)"
+          "ما زالت البايتات المحذوفة في ملف قاعدة البيانات حتى تنتهي العملية",
+          "أُسقط الملخّص لكنه يُشتق من جديد من الأدوار المسجّلة نفسها",
+          "ما زالت بوابة الصلة في `recall` تمنح الذاكرة المحذوفة درجة فوق حدّها",
+          "ما زالت الرسائل الحيّة في الجلسة تحوي النص وتُرسل مع الطلب التالي"
         ]
       },
       "a": 3,
       "why": {
         "en": "A fact lives in the row, the logged turns, the summary and the live messages the session still holds, and forget must scrub all of them or the model is shown it again. The raw-file test passes because it checks only the file, not the messages in the running process. A summary cannot be derived again once the turns behind it are deleted.",
-        "ar": "تعيش المعلومة (fact) في الصف والأدوار المسجّلة (logged turns) والملخّص (summary) والرسائل الحيّة (live messages) التي ما زالت الجلسة تحملها، ويجب أن يمسح `forget` كلها وإلا عُرض النص على النموذج (model) من جديد. ونجح اختبار الملف الخام (raw-file test) لأنه يفحص الملف وحده لا الرسائل في العملية الجارية (running process). ولا يمكن اشتقاق الملخّص من جديد بعد حذف الأدوار التي بُني عليها."
+        "ar": "تعيش المعلومة في الصف والأدوار المسجّلة والملخّص والرسائل الحيّة التي ما زالت الجلسة تحملها، ويجب أن يمسح `forget` كلها وإلا عُرض النص على النموذج من جديد. ونجح اختبار الملف الخام لأنه يفحص الملف وحده لا الرسائل في العملية الجارية. ولا يمكن اشتقاق الملخّص من جديد بعد حذف الأدوار التي بُني عليها."
       }
     },
     {
@@ -91,7 +91,7 @@
       "lesson": "9.2",
       "q": {
         "en": "Noura reviews the memory lab. The taint rule makes memory read-only after the assistant reads any ticket note, even a harmless \"printer replaced\" one, so users must start a new chat to save a preference. Lujain wants to relax it. What should Noura decide?",
-        "ar": "تراجع نورة مختبر الذاكرة (memory lab). قاعدة التلوّث (taint rule) تجعل الذاكرة للقراءة فقط (read-only) بعد أن يقرأ المساعد أي ملاحظة تذكرة (ticket note)، حتى ملاحظة بريئة مثل «استُبدلت الطابعة»، فيضطر المستخدمون إلى بدء محادثة جديدة لحفظ تفضيل (preference). تريد لجين تخفيف القاعدة. ماذا ينبغي أن تقرّر نورة؟"
+        "ar": "تراجع نورة مختبر الذاكرة. قاعدة التلوّث تجعل الذاكرة للقراءة فقط بعد أن يقرأ المساعد أي ملاحظة تذكرة، حتى ملاحظة بريئة مثل «استُبدلت الطابعة»، فيضطر المستخدمون إلى بدء محادثة جديدة لحفظ تفضيل. تريد لجين تخفيف القاعدة. ماذا ينبغي أن تقرّر نورة؟"
       },
       "o": {
         "en": [
@@ -101,16 +101,16 @@
           "Drop the taint and widen the write policy's pattern with phrases from known attacks"
         ],
         "ar": [
-          "تلويث الذاكرة (taint) بالملاحظات المطابقة لنمط التعليمات (instruction pattern) فقط، لأن الملاحظة البريئة لا تسمّم الذاكرة",
-          "إبقاء التلويث (taint) عند قراءة أي ملاحظة، لأن المصدر (origin) هو المهم وقد تُصاغ الكذبة في هيئة حقيقة",
+          "تلويث الذاكرة (taint) بالملاحظات المطابقة لنمط التعليمات فقط، لأن الملاحظة البريئة لا تسمّم الذاكرة",
+          "إبقاء التلويث (taint) عند قراءة أي ملاحظة، لأن المصدر هو المهم وقد تُصاغ الكذبة في هيئة حقيقة",
           "التلويث (taint) فقط حين تكرر الذاكرة المقترحة صياغة من ملاحظة قرأها المساعد للتو",
-          "إلغاء التلويث وتوسيع نمط سياسة الكتابة (write policy) بعبارات من هجمات معروفة (known attacks)"
+          "إلغاء التلويث وتوسيع نمط سياسة الكتابة (write policy) بعبارات من هجمات معروفة"
         ]
       },
       "a": 1,
       "why": {
         "en": "Taint is about origin, not content: a lie phrased as a fact passes any wording filter, so even a harmless note taints, and then the user starts afresh or a person confirms. Matching the instruction pattern is the tempting shortcut, but it is the same speed bump that a fact-shaped lie already slips past, and tainting only on repeated wording is a content test too, which a paraphrased lie defeats.",
-        "ar": "التلوّث (taint) يتعلق بالمصدر (origin) لا بالمحتوى: فالكذبة المصوغة في هيئة حقيقة تمر من أي مرشّح كلمات (wording filter)، ولذلك تلوّث الملاحظة البريئة أيضًا، ثم يبدأ المستخدم من جديد أو يؤكد شخص ما. أما مطابقة نمط التعليمات (instruction pattern) فهي الاختصار المغري، لكنها نفس حاجز تخفيف السرعة (speed bump) الذي تتجاوزه الكذبة المصوغة كحقيقة، والتلويث عند تكرار الصياغة وحدها اختبار للمحتوى أيضًا تتجاوزه كذبة أُعيدت صياغتها."
+        "ar": "التلوّث يتعلق بالمصدر لا بالمحتوى: فالكذبة المصوغة في هيئة حقيقة تمر من أي مرشّح كلمات، ولذلك تلوّث الملاحظة البريئة أيضًا، ثم يبدأ المستخدم من جديد أو يؤكد شخص ما. أما مطابقة نمط التعليمات فهي الاختصار المغري، لكنها نفس حاجز تخفيف السرعة الذي تتجاوزه الكذبة المصوغة كحقيقة، والتلويث عند تكرار الصياغة وحدها اختبار للمحتوى أيضًا تتجاوزه كذبة أُعيدت صياغتها."
       }
     }
   ],
@@ -120,7 +120,7 @@
       "lesson": "9.1",
       "text": {
         "en": "I have written twelve candidate memories for Najm Desk (four to keep, four never, four that depend), each with a kind, a retention and the rule behind it, and named the question I would ask for every \"depends\" row",
-        "ar": "لقد كتبتُ اثنتي عشرة ذاكرة مرشّحة (candidate memories) لنجم ديسك (Najm Desk): أربعًا للاحتفاظ وأربعًا لا تُحفظ أبدًا وأربعًا تعتمد على السياق (depend)، لكل منها نوع (kind) ومدة احتفاظ (retention) والقاعدة (rule) التي تقف خلفها، وسمّيتُ السؤال الذي سأطرحه في كل صف «يعتمد» (depends)"
+        "ar": "لقد كتبتُ اثنتي عشرة ذاكرة مرشّحة لنجم ديسك: أربعًا للاحتفاظ وأربعًا لا تُحفظ أبدًا وأربعًا تعتمد على السياق، لكل منها نوع ومدة احتفاظ والقاعدة التي تقف خلفها، وسمّيتُ السؤال الذي سأطرحه في كل صف «يعتمد»"
       }
     },
     {
@@ -128,7 +128,7 @@
       "lesson": "9.2",
       "text": {
         "en": "I have stored a marker fact in my lab memory, run forget on it, and shown by reading the raw database file, not just a SELECT, that the marker is gone from the export, the summary and the file",
-        "ar": "لقد خزّنتُ معلومة علامة (marker fact) في ذاكرة مختبري (lab memory)، ونفّذتُ `forget` عليها، وأثبتُّ بقراءة ملف قاعدة البيانات الخام، لا بمجرد `SELECT`، أن العلامة (marker) اختفت من التصدير (export) ومن الملخّص (summary) ومن الملف"
+        "ar": "لقد خزّنتُ معلومة علامة في ذاكرة مختبري، ونفّذتُ `forget` عليها، وأثبتُّ بقراءة ملف قاعدة البيانات الخام، لا بمجرد `SELECT`، أن العلامة اختفت من التصدير ومن الملخّص ومن الملف"
       }
     }
   ]

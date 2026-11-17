@@ -7,7 +7,7 @@
    "lesson": "1.1",
    "q": {
     "en": "Dana's team validated Najm's credit-scoring model on a hold-out set and it performed well. Khalid proposes that the Committee approve the model and leave score thresholds, underwriter review and decline letters to operations. What should the Committee do?",
-    "ar": "تحقّق فريق دانة من نموذج تقييم الجدارة الائتمانية (credit-scoring model) في بنك نجم على مجموعة بيانات محجوزة (hold-out set)، فكان أداؤه جيدًا (performed well). ويقترح خالد أن تعتمد اللجنة (Committee) النموذج (model) وتترك حدود الدرجات (score thresholds) ومراجعة المكتتبين (underwriter review) وخطابات الرفض (decline letters) لفريق العمليات (operations). ماذا ينبغي أن تفعل اللجنة؟"
+    "ar": "تحقّق فريق دانة من نموذج تقييم الجدارة الائتمانية في بنك نجم على مجموعة بيانات محجوزة (hold-out set)، فكان أداؤه جيدًا. ويقترح خالد أن تعتمد اللجنة النموذج وتترك حدود الدرجات ومراجعة المكتتبين وخطابات الرفض لفريق العمليات. ماذا ينبغي أن تفعل اللجنة؟"
    },
    "o": {
     "en": [
@@ -17,16 +17,16 @@
      "Approve the model and ask operations to document the thresholds and letters"
     ],
     "ar": [
-     "تعتمد النموذج (model)، لأن التحقق على البيانات المحجوزة (hold-out validation) يبيّن سلوكه في الاستخدام الفعلي",
-     "تكلّف فريقًا ثانيًا بإعادة التحقق (validation) قبل اعتماد النموذج (model)",
-     "تراجع حدود الدرجات (thresholds) والتجاوزات (overrides) وتغذية البيانات (data feeds) والخطابات (letters) مع النموذج (model)",
-     "تعتمد النموذج (model) وتطلب من فريق العمليات (operations) توثيق حدود الدرجات (thresholds) والخطابات (letters)"
+     "تعتمد النموذج، لأن التحقق على البيانات المحجوزة (hold-out validation) يبيّن سلوكه في الاستخدام الفعلي",
+     "تكلّف فريقًا ثانيًا بإعادة التحقق قبل اعتماد النموذج",
+     "تراجع حدود الدرجات والتجاوزات وتغذية البيانات والخطابات مع النموذج",
+     "تعتمد النموذج وتطلب من فريق العمليات توثيق حدود الدرجات والخطابات"
     ]
    },
    "a": 2,
    "why": {
     "en": "Governance attaches to the AI system: the same model can be fair or unfair depending on its thresholds, whether underwriters can override it, the data it is fed and how declined applicants are told. A strong hold-out result shows how the model scores, not how the system will treat people, and merely documenting the rest leaves it unreviewed.",
-    "ar": "تنصبّ الحوكمة (governance) على نظام الذكاء الاصطناعي (AI system): فالنموذج نفسه قد يكون عادلًا (fair) أو غير عادل بحسب حدود الدرجات (thresholds)، وقدرة المكتتبين (underwriters) على تجاوزه (override)، والبيانات التي تُغذّيه، وطريقة إبلاغ المتقدمين المرفوضين (declined applicants). أما النتيجة الجيدة على البيانات المحجوزة (hold-out result) فتبيّن كيف يمنح النموذج الدرجات، لا كيف سيعامل النظام (system) الناس، ومجرد توثيق الباقي يتركه بلا مراجعة (unreviewed)."
+    "ar": "تنصبّ الحوكمة على نظام الذكاء الاصطناعي (AI system): فالنموذج نفسه قد يكون عادلًا أو غير عادل بحسب حدود الدرجات، وقدرة المكتتبين على تجاوزه، والبيانات التي تُغذّيه، وطريقة إبلاغ المتقدمين المرفوضين. أما النتيجة الجيدة على البيانات المحجوزة (hold-out result) فتبيّن كيف يمنح النموذج الدرجات، لا كيف سيعامل النظام الناس، ومجرد توثيق الباقي يتركه بلا مراجعة."
    }
   },
   {
@@ -35,7 +35,7 @@
    "lesson": "1.1",
    "q": {
     "en": "Omar proposes dropping the credit memo copilot's retrieval step and instead fine-tuning the third-party LLM on ten years of Najm's credit memos. What is the main governance consequence?",
-    "ar": "يقترح عمر الاستغناء عن خطوة الاسترجاع (retrieval step) في المساعد الذكي لمذكرات الائتمان (credit memo copilot)، والاستعاضة عنها بالضبط الدقيق (fine-tuning) للنموذج اللغوي الكبير (LLM) التابع لطرف ثالث (third party) على مذكرات الائتمان (credit memos) التي كتبها بنك نجم (Najm Bank) خلال عشر سنوات. ما الأثر الحوكمي الرئيسي؟"
+    "ar": "يقترح عمر الاستغناء عن خطوة الاسترجاع (retrieval step) في المساعد الذكي لمذكرات الائتمان، والاستعاضة عنها بالضبط الدقيق (fine-tuning) للنموذج اللغوي الكبير (LLM) التابع لطرف ثالث على مذكرات الائتمان التي كتبها بنك نجم (Najm Bank) خلال عشر سنوات. ما الأثر الحوكمي الرئيسي؟"
    },
    "o": {
     "en": [
@@ -45,16 +45,16 @@
      "Governance gets lighter, because there is no retrieval index left to control"
     ],
     "ar": [
-     "يجب مراجعة دور بنك نجم وواجباته وحقوق البيانات (data rights)، لأن بنك نجم يغيّر النموذج (model)",
-     "لا يتغير شيء بالنسبة إلى بنك نجم، لأن المورّد (vendor) لا يزال يملك النموذج الأساسي (base model)",
-     "يزول خطر التلفيق (confabulation)، لأن النموذج (model) سيتعلّم أرقام بنك نجم الحقيقية (real figures)",
-     "تخفّ الحوكمة (governance)، لأنه لم يبقَ فهرس استرجاع (retrieval index) يحتاج إلى ضوابط (controls)"
+     "يجب مراجعة دور بنك نجم وواجباته وحقوق البيانات، لأن بنك نجم يغيّر النموذج",
+     "لا يتغير شيء بالنسبة إلى بنك نجم، لأن المورّد لا يزال يملك النموذج الأساسي",
+     "يزول خطر التلفيق (confabulation)، لأن النموذج سيتعلّم أرقام بنك نجم الحقيقية",
+     "تخفّ الحوكمة، لأنه لم يبقَ فهرس استرجاع (retrieval index) يحتاج إلى ضوابط"
     ]
    },
    "a": 0,
    "why": {
     "en": "Fine-tuning is further training that changes the model, which may change Najm's role and duties and brings training-data rights and privacy into scope. Assuming the duties stay with the vendor misses that Najm would now be shaping the model, not only the system around it.",
-    "ar": "الضبط الدقيق (fine-tuning) تدريب إضافي (further training) يغيّر النموذج (model)، وقد يغيّر ذلك دور بنك نجم وواجباته، ويُدخل حقوق بيانات التدريب (training-data rights) والخصوصية (privacy) في النطاق. أما افتراض أن الواجبات (duties) تبقى على المورّد (vendor) فيغفل أن بنك نجم سيشكّل النموذج نفسه، لا النظام المحيط به فقط."
+    "ar": "الضبط الدقيق (fine-tuning) تدريب إضافي يغيّر النموذج، وقد يغيّر ذلك دور بنك نجم وواجباته، ويُدخل حقوق بيانات التدريب والخصوصية في النطاق. أما افتراض أن الواجبات تبقى على المورّد فيغفل أن بنك نجم سيشكّل النموذج نفسه، لا النظام المحيط به فقط."
    }
   },
   {
@@ -63,7 +63,7 @@
    "lesson": "1.2",
    "q": {
     "en": "For two years Najm's credit model has declined most young self-employed applicants. Preparing the retraining set, Dana's team finds almost no repayment history for that group, and the new model declines them even more often. What best explains this?",
-    "ar": "منذ عامين يرفض نموذج الائتمان (credit model) في بنك نجم معظم المتقدمين الشباب العاملين لحسابهم. وعند إعداد مجموعة إعادة التدريب (retraining set)، يجد فريق دانة أنه لا يكاد يوجد سجل سداد (repayment history) لهذه المجموعة، ويرفضهم النموذج الجديد (new model) بوتيرة أعلى من ذي قبل. ما أفضل تفسير لذلك؟"
+    "ar": "منذ عامين يرفض نموذج الائتمان في بنك نجم معظم المتقدمين الشباب العاملين لحسابهم. وعند إعداد مجموعة إعادة التدريب، يجد فريق دانة أنه لا يكاد يوجد سجل سداد لهذه المجموعة، ويرفضهم النموذج الجديد بوتيرة أعلى من ذي قبل. ما أفضل تفسير لذلك؟"
    },
    "o": {
     "en": [
@@ -73,16 +73,16 @@
      "A feedback loop: declined people never show repayment, so bias deepens"
     ],
     "ar": [
-     "الانجراف (drift): ابتعدت الظروف الاقتصادية (economic conditions) عن بيانات التدريب الأصلية",
-     "الضرر التمثيلي (representational harm): يعزّز النموذج (model) صورة نمطية (stereotype) عن المجموعة",
-     "التلفيق (confabulation): يخترع النموذج (model) أنماطًا (patterns) حيثما كانت بياناته شحيحة",
-     "حلقة تغذية راجعة (feedback loop): المرفوضون لا يُظهرون سدادًا (repayment) أبدًا، فيتعمّق التحيّز (bias)"
+     "الانجراف (drift): ابتعدت الظروف الاقتصادية عن بيانات التدريب الأصلية",
+     "الضرر التمثيلي (representational harm): يعزّز النموذج صورة نمطية عن المجموعة",
+     "التلفيق (confabulation): يخترع النموذج أنماطًا حيثما كانت بياناته شحيحة",
+     "حلقة تغذية راجعة: المرفوضون لا يُظهرون سدادًا أبدًا، فيتعمّق التحيّز (bias)"
     ]
    },
    "a": 3,
    "why": {
     "en": "Declined applicants never receive a loan, so the bank never observes their repayment; each training set holds less evidence about them and the harm compounds. Drift is tempting, but nothing in the world changed here: the model's own decisions starved it of data.",
-    "ar": "المتقدمون المرفوضون (declined applicants) لا يحصلون على قرض (loan)، فلا يرى البنك سلوكهم في السداد (repayment) أبدًا؛ فتحتوي كل مجموعة تدريب (training set) على أدلة أقل عنهم، ويتراكم الضرر (harm compounds). والانجراف (drift) خيار مغرٍ، لكن العالم لم يتغير هنا: فقرارات النموذج نفسه هي التي حرمته من البيانات (data)."
+    "ar": "المتقدمون المرفوضون لا يحصلون على قرض، فلا يرى البنك سلوكهم في السداد أبدًا؛ فتحتوي كل مجموعة تدريب على أدلة أقل عنهم، ويتراكم الضرر. والانجراف (drift) خيار مغرٍ، لكن العالم لم يتغير هنا: فقرارات النموذج نفسه هي التي حرمته من البيانات."
    }
   },
   {
@@ -91,7 +91,7 @@
    "lesson": "1.3",
    "q": {
     "en": "A product team wants Najm Assist to spot signs of financial distress in customers' chats and steer those customers to a high-fee short-term loan. Dana offers to add a debiasing step and an explanation feature before launch. What is the soundest governance position?",
-    "ar": "يريد فريق منتجات (product team) أن يرصد Najm Assist علامات الضائقة المالية (financial distress) في محادثات العملاء (customers' chats)، وأن يوجّه هؤلاء العملاء إلى قرض قصير الأجل مرتفع الرسوم. وتعرض دانة إضافة خطوة لإزالة التحيّز (debiasing step) وميزة تفسير (explanation feature) قبل الإطلاق (launch). ما الموقف الحوكمي الأسلم؟"
+    "ar": "يريد فريق منتجات أن يرصد Najm Assist علامات الضائقة المالية في محادثات العملاء، وأن يوجّه هؤلاء العملاء إلى قرض قصير الأجل مرتفع الرسوم. وتعرض دانة إضافة خطوة لإزالة التحيّز وميزة تفسير (explanation feature) قبل الإطلاق. ما الموقف الحوكمي الأسلم؟"
    },
    "o": {
     "en": [
@@ -101,16 +101,16 @@
      "Approve it provided the chatbot tells customers they are talking to AI"
     ],
     "ar": [
-     "اعتماده بعد أن تُظهر إزالة التحيّز (debiasing) نتائج متساوية (equal outcomes) لجميع المجموعات",
-     "إعادة النظر في الاستخدام نفسه بتضييقه (narrowing) أو إعادة تصميمه (redesigning) أو عدم نشره",
-     "الطلب من فريق التحقق من النماذج (model validation) أن يؤكد أولًا دقة كاشف الضائقة (distress detector)",
-     "اعتماده بشرط أن يخبر روبوت المحادثة (chatbot) العملاء بأنهم يتحدثون مع ذكاء اصطناعي (AI)"
+     "اعتماده بعد أن تُظهر إزالة التحيّز نتائج متساوية لجميع المجموعات",
+     "إعادة النظر في الاستخدام نفسه بتضييقه أو إعادة تصميمه أو عدم نشره",
+     "الطلب من فريق التحقق من النماذج (model validation) أن يؤكد أولًا دقة كاشف الضائقة",
+     "اعتماده بشرط أن يخبر روبوت المحادثة العملاء بأنهم يتحدثون مع ذكاء اصطناعي (AI)"
     ]
    },
    "a": 1,
    "why": {
     "en": "The problem is the use, not the model: no fairness or explainability technique can make steering distressed customers to costly credit acceptable, so the answer is to narrow, redesign or not deploy. Debiasing first is the tempting technical fix, but it treats a use problem as a model problem.",
-    "ar": "المشكلة في الاستخدام (use) لا في النموذج (model): فلا أسلوب للعدالة (fairness technique) ولا أسلوب للتفسير (explainability method) يجعل توجيه العملاء المتعثّرين (distressed customers) إلى ائتمان مرتفع الكلفة (costly credit) مقبولًا، لذا تكون الإجابة تضييق الاستخدام أو إعادة تصميمه (redesign) أو عدم النشر. أما البدء بإزالة التحيّز (debiasing) فهو الحل التقني المغري، لكنه يعامل مشكلة استخدام (use problem) كأنها مشكلة نموذج (model problem)."
+    "ar": "المشكلة في الاستخدام لا في النموذج: فلا أسلوب للعدالة ولا أسلوب للتفسير يجعل توجيه العملاء المتعثّرين إلى ائتمان مرتفع الكلفة مقبولًا، لذا تكون الإجابة تضييق الاستخدام أو إعادة تصميمه أو عدم النشر. أما البدء بإزالة التحيّز فهو الحل التقني المغري، لكنه يعامل مشكلة استخدام كأنها مشكلة نموذج."
    }
   }
  ],
@@ -120,7 +120,7 @@
    "lesson": "1.2",
    "text": {
     "en": "I have written four harm-register rows for a GenAI system, using at least three NIST AI 600-1 risks, each with a source, a likelihood, people and organisation severities and a concrete action",
-    "ar": "كتبتُ أربعة صفوف في سجل الأضرار (harm register) لنظام ذكاء اصطناعي توليدي (GenAI system)، مستخدمًا ثلاثة مخاطر (risks) على الأقل من NIST AI 600-1، ولكل صف (row) مصدر (source) واحتمال (likelihood) وشدّتان للناس وللمؤسسة وإجراء ملموس (concrete action)"
+    "ar": "كتبتُ أربعة صفوف في سجل الأضرار لنظام ذكاء اصطناعي توليدي (GenAI system)، مستخدمًا ثلاثة مخاطر على الأقل من NIST AI 600-1، ولكل صف مصدر واحتمال وشدّتان للناس وللمؤسسة وإجراء ملموس"
    }
   },
   {
@@ -128,7 +128,7 @@
    "lesson": "1.3",
    "text": {
     "en": "I have written an oversight design for people reviewing an AI system's outputs, covering competence, information, time and authority, and measurement, with at least two metrics and the values that trigger action",
-    "ar": "كتبتُ تصميمًا للإشراف (oversight design) للأشخاص الذين يراجعون مخرجات (outputs) نظام ذكاء اصطناعي (AI system)، يغطي الكفاءة (Competence) والمعلومات (Information) والوقت والصلاحية (Time and authority) والقياس (Measurement)، ويسمّي مقياسين (metrics) على الأقل والقيم التي تستدعي اتخاذ إجراء (trigger action)"
+    "ar": "كتبتُ تصميمًا للإشراف للأشخاص الذين يراجعون مخرجات نظام ذكاء اصطناعي (AI system)، يغطي الكفاءة والمعلومات والوقت والصلاحية والقياس، ويسمّي مقياسين على الأقل والقيم التي تستدعي اتخاذ إجراء"
    }
   }
  ]

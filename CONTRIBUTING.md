@@ -18,7 +18,7 @@ Once a second maintainer exists, every pull request needs a review from someone 
 
 ## Arabic rules
 
-1. Put the English expression in parentheses beside every Arabic term.
+1. Put the English term in parentheses beside an Arabic technical term, at its first use in the lesson. Do not gloss plain phrases or repeat a gloss (`python3 scripts/qa/trim_glosses.py` applies the rule).
 2. Arabic diagrams run right to left.
 3. Write "DPO" with the Arabic word for protection (حماية).
 

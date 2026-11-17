@@ -7,7 +7,7 @@
    "lesson": "0.3",
    "q": {
     "en": "Rania asks Mariam's red team to test Najm Assist's defences against prompt injection in the staging environment next week. What must be in place before any testing starts?",
-    "ar": "تطلب رانيا من الفريق الأحمر (red team) بقيادة مريم أن يختبر دفاعات نجم أسيست ضد حقن الموجّهات (prompt injection) في بيئة الاختبار المرحلية (staging environment) الأسبوع المقبل (next week). ما الذي يجب أن يكون جاهزًا قبل أن يبدأ أي اختبار؟"
+    "ar": "تطلب رانيا من الفريق الأحمر (red team) بقيادة مريم أن يختبر دفاعات نجم أسيست ضد حقن الموجّهات (prompt injection) في بيئة الاختبار المرحلية الأسبوع المقبل. ما الذي يجب أن يكون جاهزًا قبل أن يبدأ أي اختبار؟"
    },
    "o": {
     "en": [
@@ -17,16 +17,16 @@
      "A test plan based on the OWASP Web Security Testing Guide, shared with Tariq's team"
     ],
     "ar": [
-     "لا شيء إضافي (nothing extra)، لأن الفريق الأحمر (red team) يعمل لدى البنك، وبيئة الاختبار المرحلية (staging) ليست بيئة الإنتاج (production)",
-     "موافقة شفهية (verbal approval) من رانيا، لأنها رئيسة منتجات الذكاء الاصطناعي (Head of AI Products) وهي من طلبت الاختبار",
-     "تفويض موقّع (signed authorisation) يحدد النطاق (scope) والتواريخ (dates) وما هو محظور ومن يُتصل به",
-     "خطة اختبار (test plan) مبنية على دليل OWASP لاختبار أمن الويب، تُشارَك مع فريق طارق (Tariq's team)"
+     "لا شيء إضافي، لأن الفريق الأحمر يعمل لدى البنك، وبيئة الاختبار المرحلية ليست بيئة الإنتاج",
+     "موافقة شفهية من رانيا، لأنها رئيسة منتجات الذكاء الاصطناعي وهي من طلبت الاختبار",
+     "تفويض موقّع يحدد النطاق والتواريخ وما هو محظور ومن يُتصل به",
+     "خطة اختبار مبنية على دليل OWASP لاختبار أمن الويب، تُشارَك مع فريق طارق"
     ]
    },
    "a": 2,
    "why": {
     "en": "Testing without permission is an attack whatever the intent, so red-team work needs signed rules of engagement covering scope, dates, what is off limits and whom to call if something breaks. Working for the bank or testing in staging is not authorisation, and a verbal OK leaves the scope and limits undefined.",
-    "ar": "الاختبار دون إذن هجوم أيًّا كانت النية، لذا يحتاج عمل الفريق الأحمر (red-team work) إلى قواعد اشتباك موقّعة تغطي النطاق (scope) والتواريخ (dates) وما هو محظور ومن يُتصل به إذا تعطّل شيء. أما العمل لدى البنك أو الاختبار في البيئة المرحلية فليس تفويضًا، والموافقة الشفهية تترك النطاق والحدود غير محددة."
+    "ar": "الاختبار دون إذن هجوم أيًّا كانت النية، لذا يحتاج عمل الفريق الأحمر إلى قواعد اشتباك موقّعة تغطي النطاق والتواريخ وما هو محظور ومن يُتصل به إذا تعطّل شيء. أما العمل لدى البنك أو الاختبار في البيئة المرحلية فليس تفويضًا، والموافقة الشفهية تترك النطاق والحدود غير محددة."
    }
   },
   {
@@ -35,7 +35,7 @@
    "lesson": "0.1",
    "q": {
     "en": "A review finds that the SME Portal's old /v1 upload endpoint still accepts any file type. Tariq says the fix can wait until next quarter, and the meeting moves on without recording anything. What has the bank actually done, and what should follow?",
-    "ar": "تكشف مراجعةٌ أن نقطة النهاية القديمة للرفع /v1 في بوابة الشركات الصغيرة (SME Portal) لا تزال تقبل أي نوع من الملفات. يقول طارق إن الإصلاح يمكن أن ينتظر حتى الربع المقبل (next quarter)، وينتقل الاجتماع إلى بند آخر دون توثيق أي شيء. ما الذي فعله البنك فعلًا (actually done)، وما الذي ينبغي أن يليه؟"
+    "ar": "تكشف مراجعةٌ أن نقطة النهاية القديمة للرفع /v1 في بوابة الشركات الصغيرة لا تزال تقبل أي نوع من الملفات. يقول طارق إن الإصلاح يمكن أن ينتظر حتى الربع المقبل، وينتقل الاجتماع إلى بند آخر دون توثيق أي شيء. ما الذي فعله البنك فعلًا، وما الذي ينبغي أن يليه؟"
    },
    "o": {
     "en": [
@@ -47,8 +47,8 @@
     "ar": [
      "قَبِل المخاطر بصمت؛ سجّلها في سجل المخاطر مع مالك وموعد مراجعة",
      "قلّل المخاطر، لأن الإصلاح أصبح مُخطَّطًا؛ تأكّد في الربع المقبل من أن الإصلاح أُطلق",
-     "نقل المخاطر إلى فريق طارق (Tariq's team)؛ اتركه يتابعها في قائمة أعماله الهندسية",
-     "لم يتخذ قرارًا بشأن المخاطر بعد؛ سجّل قرارًا (record one) فقط إذا أُلغي لاحقًا الإصلاح المخطط للربع المقبل"
+     "نقل المخاطر إلى فريق طارق؛ اتركه يتابعها في قائمة أعماله الهندسية",
+     "لم يتخذ قرارًا بشأن المخاطر بعد؛ سجّل قرارًا فقط إذا أُلغي لاحقًا الإصلاح المخطط للربع المقبل"
     ]
    },
    "a": 0,
@@ -63,7 +63,7 @@
    "lesson": "0.2",
    "q": {
     "en": "Najm Assist's new card-freeze tool acts on whatever card number the model passes to it. Rania points out that the system prompt already tells Assist to act only on the customer's own cards. Which change still limits the harm when an injected instruction gets through?",
-    "ar": "تعمل أداة تجميد البطاقات (card-freeze tool) الجديدة في نجم أسيست (Najm Assist) على أي رقم بطاقة يمرّره إليها النموذج. وتشير رانيا إلى أن موجّه النظام (system prompt) يطلب من أسيست بالفعل ألا يعمل إلا على بطاقات العميل نفسه. أي تغيير يظل يحدّ من الضرر عندما تمرّ تعليمات محقونة؟"
+    "ar": "تعمل أداة تجميد البطاقات الجديدة في نجم أسيست على أي رقم بطاقة يمرّره إليها النموذج. وتشير رانيا إلى أن موجّه النظام (system prompt) يطلب من أسيست بالفعل ألا يعمل إلا على بطاقات العميل نفسه. أي تغيير يظل يحدّ من الضرر عندما تمرّ تعليمات محقونة؟"
    },
    "o": {
     "en": [
@@ -73,16 +73,16 @@
      "Pass random tokens instead of card numbers, so an attacker cannot guess valid cards"
     ],
     "ar": [
-     "تكرار قاعدة بطاقات العميل نفسه (own-cards rule) بصرامة أكبر في موجّه النظام (system prompt)، كي لا يغفلها النموذج",
+     "تكرار قاعدة بطاقات العميل نفسه بصرامة أكبر في موجّه النظام، كي لا يغفلها النموذج",
      "قصر الأداة على بطاقات العميل المسجّل دخوله، مع فرض ذلك على الخادم",
-     "حظر رسائل العملاء (customer messages) التي تحتوي على عبارات مثل «تجاهل التعليمات السابقة»",
-     "تمرير رموز عشوائية (random tokens) بدلًا من أرقام البطاقات (card numbers)، كي لا يستطيع المهاجم تخمين بطاقات صالحة"
+     "حظر رسائل العملاء التي تحتوي على عبارات مثل «تجاهل التعليمات السابقة»",
+     "تمرير رموز عشوائية بدلًا من أرقام البطاقات، كي لا يستطيع المهاجم تخمين بطاقات صالحة"
     ]
    },
    "a": 1,
    "why": {
     "en": "Scoping the tool to the signed-in customer's cards removes the excessive agency, so even a successful injection cannot freeze someone else's card. A system-prompt rule can be overridden, because the model cannot reliably tell instructions from data, and random identifiers hide the hole without checking ownership.",
-    "ar": "إن قصر الأداة على بطاقات العميل المسجّل دخوله يزيل الصلاحيات المفرطة (excessive agency)، فلا يستطيع حتى الحقن الناجح تجميد بطاقة شخص آخر. أما قاعدة موجّه النظام (system-prompt rule) فيمكن تجاوزها، لأن النموذج لا يستطيع التمييز بشكل موثوق بين التعليمات والبيانات، والمعرّفات العشوائية (random identifiers) تخفي الثغرة دون التحقق من الملكية."
+    "ar": "إن قصر الأداة على بطاقات العميل المسجّل دخوله يزيل الصلاحيات المفرطة (excessive agency)، فلا يستطيع حتى الحقن الناجح تجميد بطاقة شخص آخر. أما قاعدة موجّه النظام فيمكن تجاوزها، لأن النموذج لا يستطيع التمييز بشكل موثوق بين التعليمات والبيانات، والمعرّفات العشوائية تخفي الثغرة دون التحقق من الملكية."
    }
   },
   {
@@ -91,7 +91,7 @@
    "lesson": "0.2",
    "q": {
     "en": "An incident review on the SME Portal finds this chain: a leaked password worked on an SME user account without MFA; the portal's cloud role could read every storage bucket; and invoices were bulk-downloaded for three weeks until an outside tip. Ali proposes enforcing MFA for all SME users and closing the review, since breaking one link stops a chain. What is the best judgement?",
-    "ar": "تكشف مراجعة حادثة في بوابة الشركات الصغيرة (SME Portal) السلسلةَ التالية: نجحت كلمة مرور مسرَّبة على حساب مستخدم لشركة صغيرة لا يستخدم المصادقة متعددة العوامل (without MFA)؛ وكان الدور السحابي للبوابة يستطيع قراءة كل حاوية تخزين؛ ونُزّلت الفواتير بالجملة طوال ثلاثة أسابيع حتى وصل بلاغ خارجي. يقترح علي فرض المصادقة متعددة العوامل (enforcing MFA) على جميع مستخدمي الشركات الصغيرة وإغلاق المراجعة، لأن كسر حلقة واحدة يوقف السلسلة. ما الحكم الأفضل؟"
+    "ar": "تكشف مراجعة حادثة في بوابة الشركات الصغيرة السلسلةَ التالية: نجحت كلمة مرور مسرَّبة على حساب مستخدم لشركة صغيرة لا يستخدم المصادقة متعددة العوامل (without MFA)؛ وكان الدور السحابي للبوابة يستطيع قراءة كل حاوية تخزين؛ ونُزّلت الفواتير بالجملة طوال ثلاثة أسابيع حتى وصل بلاغ خارجي. يقترح علي فرض المصادقة متعددة العوامل (enforcing MFA) على جميع مستخدمي الشركات الصغيرة وإغلاق المراجعة، لأن كسر حلقة واحدة يوقف السلسلة. ما الحكم الأفضل؟"
    },
    "o": {
     "en": [
@@ -101,16 +101,16 @@
      "Fix each failed layer: MFA, a role narrowed to the invoice bucket, a download alert"
     ],
     "ar": [
-     "الموافقة، لأن المصادقة متعددة العوامل (MFA) تكسر الحلقة الأولى، ويكفي المدافع أن يكسر حلقة واحدة",
+     "الموافقة، لأن المصادقة متعددة العوامل تكسر الحلقة الأولى، ويكفي المدافع أن يكسر حلقة واحدة",
      "البحث أولًا عن السبب الجذري الوحيد، لأن إصلاح عدة طبقات يشتّت الجهد أكثر من اللازم",
-     "وضع جدار حماية لتطبيقات الويب (web application firewall) أمام البوابة لإيقاف طريق الدخول التالي أيضًا",
-     "إصلاح كل طبقة أخفقت: المصادقة متعددة العوامل (MFA)، ودور مقيّد بحاوية الفواتير، وتنبيه على التنزيل"
+     "وضع جدار حماية لتطبيقات الويب أمام البوابة لإيقاف طريق الدخول التالي أيضًا",
+     "إصلاح كل طبقة أخفقت: المصادقة متعددة العوامل، ودور مقيّد بحاوية الفواتير، وتنبيه على التنزيل"
     ]
    },
    "a": 3,
    "why": {
     "en": "Breaches have several causes: closing only the entry point leaves the over-privileged role and the monitoring gap waiting for the next way in, so assume breach and fix every layer that failed. Breaking one link is enough only if you have also chosen in advance where you would notice, and here nobody noticed for three weeks.",
-    "ar": "للاختراقات أسباب عدة: فإغلاق نقطة الدخول وحدها يترك الدور ذا الصلاحيات المفرطة وفجوة المراقبة بانتظار طريق الدخول التالي، لذا افترض الاختراق (assume breach) وأصلح كل طبقة أخفقت. ولا يكفي كسر حلقة واحدة إلا إذا اخترت مسبقًا أين ستلاحظ، وهنا لم يلاحظ أحد طوال ثلاثة أسابيع."
+    "ar": "للاختراقات أسباب عدة: فإغلاق نقطة الدخول وحدها يترك الدور ذا الصلاحيات المفرطة وفجوة المراقبة بانتظار طريق الدخول التالي، لذا افترض الاختراق وأصلح كل طبقة أخفقت. ولا يكفي كسر حلقة واحدة إلا إذا اخترت مسبقًا أين ستلاحظ، وهنا لم يلاحظ أحد طوال ثلاثة أسابيع."
    }
   }
  ],
@@ -120,7 +120,7 @@
    "lesson": "0.1",
    "text": {
     "en": "I have written an asset register of at least six rows for an application I build or maintain, including a secret and an action, with an owner and an impact rating on every row and Noura's three questions answered underneath.",
-    "ar": "كتبت سجل أصول (asset register) من ستة صفوف على الأقل لتطبيق أبنيه أو أتولى صيانته (an application I build or maintain)، يتضمن سرًّا وإجراءً، ولكل صف مالك وتقييم للأثر، وأجبت تحته عن أسئلة نورة الثلاثة (Noura's three questions)."
+    "ar": "كتبت سجل أصول من ستة صفوف على الأقل لتطبيق أبنيه أو أتولى صيانته، يتضمن سرًّا وإجراءً، ولكل صف مالك وتقييم للأثر، وأجبت تحته عن أسئلة نورة الثلاثة."
    }
   },
   {
@@ -128,7 +128,7 @@
    "lesson": "0.3",
    "text": {
     "en": "I have run OWASP Juice Shop or another deliberately vulnerable app on my own machine and written one page of rules of engagement for myself that names two kinds of system I will never test.",
-    "ar": "شغّلت OWASP Juice Shop أو تطبيقًا آخر معرّضًا للثغرات عن عمد على جهازي، وكتبت لنفسي صفحة واحدة من قواعد الاشتباك تسمّي نوعين من الأنظمة لن أختبرهما أبدًا (two kinds of system I will never test)."
+    "ar": "شغّلت OWASP Juice Shop أو تطبيقًا آخر معرّضًا للثغرات عن عمد على جهازي، وكتبت لنفسي صفحة واحدة من قواعد الاشتباك تسمّي نوعين من الأنظمة لن أختبرهما أبدًا."
    }
   }
  ]

@@ -7,7 +7,7 @@
    "lesson": "2.1",
    "q": {
     "en": "Yusuf in procurement has a quote for an AI governance platform that catalogues models and automates approvals, and the CEO wants to buy it as the first step of Najm’s AI governance programme. What should Najm do first?",
-    "ar": "لدى يوسف في المشتريات (procurement) عرض سعر (quote) لمنصة حوكمة الذكاء الاصطناعي تفهرس النماذج (catalogues models) وتؤتمت الاعتمادات (automates approvals)، ويريد الرئيس التنفيذي (CEO) شراءها خطوةً أولى (first step) في برنامج حوكمة الذكاء الاصطناعي لدى بنك نجم (Najm Bank). ما الذي ينبغي أن يفعله بنك نجم أولًا؟"
+    "ar": "لدى يوسف في المشتريات عرض سعر لمنصة حوكمة الذكاء الاصطناعي تفهرس النماذج وتؤتمت الاعتمادات، ويريد الرئيس التنفيذي (CEO) شراءها خطوةً أولى في برنامج حوكمة الذكاء الاصطناعي لدى بنك نجم (Najm Bank). ما الذي ينبغي أن يفعله بنك نجم أولًا؟"
    },
    "o": {
     "en": [
@@ -18,15 +18,15 @@
     ],
     "ar": [
      "شراء المنصة، إذ لا يمكن تحديد شهية المخاطر (risk appetite) قبل فهرسة كل نموذج",
-     "الاتفاق على المبادئ (agree principles)، واستراتيجية للذكاء الاصطناعي (AI strategy)، وشهية مخاطر (risk appetite) يعتمدها مجلس الإدارة (board)",
-     "نشر مبادئ أخلاقية (ethical principles) على الموقع الإلكتروني (website)، ثم شراء المنصة",
-     "تجميد (freeze) كل استخدام للذكاء الاصطناعي (AI use) حتى تُكتب حزمة السياسات (policy suite) كاملة وتُعتمد"
+     "الاتفاق على المبادئ، واستراتيجية للذكاء الاصطناعي، وشهية مخاطر (risk appetite) يعتمدها مجلس الإدارة",
+     "نشر مبادئ أخلاقية على الموقع الإلكتروني، ثم شراء المنصة",
+     "تجميد كل استخدام للذكاء الاصطناعي حتى تُكتب حزمة السياسات كاملة وتُعتمد"
     ]
    },
    "a": 1,
    "why": {
     "en": "Structure follows strategy: the cascade starts with principles, an AI strategy and a board-set risk appetite, which then tell any platform what to record and approve. Buying the tool first is the classic wrong first step, and published principles with no strategy, appetite or owners are marketing, not governance.",
-    "ar": "الهيكل يتبع الاستراتيجية: يبدأ تسلسل الحوكمة (governance cascade) بالمبادئ (principles) واستراتيجية الذكاء الاصطناعي (AI strategy) وشهية مخاطر (risk appetite) يحددها مجلس الإدارة (board)، وهي التي تخبر أي منصة (platform) بما تسجّله وتعتمده. وشراء الأداة أولًا هو الخطوة الأولى الخاطئة الكلاسيكية، والمبادئ المنشورة (published principles) بلا استراتيجية ولا شهية ولا مالكين (owners) تسويق (marketing) لا حوكمة (governance)."
+    "ar": "الهيكل يتبع الاستراتيجية: يبدأ تسلسل الحوكمة بالمبادئ واستراتيجية الذكاء الاصطناعي وشهية مخاطر (risk appetite) يحددها مجلس الإدارة، وهي التي تخبر أي منصة بما تسجّله وتعتمده. وشراء الأداة أولًا هو الخطوة الأولى الخاطئة الكلاسيكية، والمبادئ المنشورة بلا استراتيجية ولا شهية ولا مالكين تسويق لا حوكمة."
    }
   },
   {
@@ -35,7 +35,7 @@
    "lesson": "2.2",
    "q": {
     "en": "Najm runs one group-wide chatbot platform built on a vendor’s language model: retail uses it to answer customer FAQs and HR uses it to answer staff queries. IT hosts it and Dana’s team configured it. How should the AI inventory record ownership?",
-    "ar": "يشغّل بنك نجم (Najm Bank) منصة روبوت محادثة واحدة على مستوى المجموعة مبنية على نموذج لغوي من مورّد: تستخدمها خدمات الأفراد (retail) للإجابة عن الأسئلة الشائعة للعملاء (customer FAQs)، وتستخدمها الموارد البشرية (HR) للرد على استفسارات الموظفين (staff queries). تستضيفها تقنية المعلومات، وقد هيّأها فريق دانة (configured it). كيف ينبغي أن يسجّل سجل أنظمة الذكاء الاصطناعي (AI inventory) الملكية (ownership)؟"
+    "ar": "يشغّل بنك نجم (Najm Bank) منصة روبوت محادثة واحدة على مستوى المجموعة مبنية على نموذج لغوي من مورّد: تستخدمها خدمات الأفراد للإجابة عن الأسئلة الشائعة للعملاء، وتستخدمها الموارد البشرية (HR) للرد على استفسارات الموظفين. تستضيفها تقنية المعلومات، وقد هيّأها فريق دانة. كيف ينبغي أن يسجّل سجل أنظمة الذكاء الاصطناعي (AI inventory) الملكية؟"
    },
    "o": {
     "en": [
@@ -45,16 +45,16 @@
      "A technical owner for the platform and a business owner for each use"
     ],
     "ar": [
-     "رئيس تقنية المعلومات مالكًا واحدًا (single owner) للمنصة (platform) ولكل استخداماتها (every use)",
-     "فريق دانة مالكًا (owner)، لأنه هيّأ المنصة ويعرفها أكثر من غيره",
-     "المورّد (vendor) مالكًا، لأنه يورّد النموذج وشروطه تغطي المخرجات (outputs)",
-     "مالك تقني (technical owner) للمنصة (platform)، ومالك عمل (business owner) لكل استخدام (each use)"
+     "رئيس تقنية المعلومات مالكًا واحدًا للمنصة ولكل استخداماتها",
+     "فريق دانة مالكًا، لأنه هيّأ المنصة ويعرفها أكثر من غيره",
+     "المورّد مالكًا، لأنه يورّد النموذج وشروطه تغطي المخرجات",
+     "مالك تقني للمنصة، ومالك عمل لكل استخدام"
     ]
    },
    "a": 3,
    "why": {
     "en": "Ownership must be singular for each use: the platform can have a technical owner, but the retail FAQ and HR deployments each need a business owner who answers for their outcomes. One IT owner for everything cannot accept business risk for customers and staff it does not serve, and buying from a vendor never transfers accountability.",
-    "ar": "يجب أن تكون الملكية (ownership) فردية لكل استخدام (each use): فقد يكون للمنصة (platform) مالك تقني (technical owner)، لكن نشر الأسئلة الشائعة للأفراد (retail FAQs) ونشر الموارد البشرية (HR) يحتاج كلٌّ منهما إلى مالك عمل (business owner) يُحاسَب على نتائجه (outcomes). ومالك واحد من تقنية المعلومات لكل شيء لا يستطيع قبول مخاطر العمل (business risk) نيابة عن عملاء وموظفين لا يخدمهم، والشراء من مورّد (vendor) لا ينقل أبدًا المساءلة (accountability)."
+    "ar": "يجب أن تكون الملكية فردية لكل استخدام: فقد يكون للمنصة مالك تقني، لكن نشر الأسئلة الشائعة للأفراد ونشر الموارد البشرية (HR) يحتاج كلٌّ منهما إلى مالك عمل يُحاسَب على نتائجه. ومالك واحد من تقنية المعلومات لكل شيء لا يستطيع قبول مخاطر العمل نيابة عن عملاء وموظفين لا يخدمهم، والشراء من مورّد لا ينقل أبدًا المساءلة (accountability)."
    }
   },
   {
@@ -63,7 +63,7 @@
    "lesson": "2.3",
    "q": {
     "en": "Najm’s Frankfurt branch outsources evening customer support to a contact-centre firm whose agents answer customers with Najm’s GenAI assistant. The branch’s draft literacy plan lists only Najm employees, and the firm says its agents are not Najm staff. What does Article 4 of the EU AI Act mean for these agents?",
-    "ar": "يُسند فرع بنك نجم (Najm Bank) في فرانكفورت دعم العملاء المسائي إلى شركة مركز اتصال (contact-centre firm) يجيب وكلاؤها (agents) العملاءَ باستخدام مساعد الذكاء الاصطناعي التوليدي (GenAI assistant) التابع للبنك. ومسودة خطة الإلمام في الفرع لا تذكر إلا موظفي بنك نجم (Najm employees)، وتقول الشركة إن وكلاءها ليسوا من موظفي البنك. ماذا تعني المادة 4 (Article 4) من EU AI Act لهؤلاء الوكلاء؟"
+    "ar": "يُسند فرع بنك نجم (Najm Bank) في فرانكفورت دعم العملاء المسائي إلى شركة مركز اتصال يجيب وكلاؤها العملاءَ باستخدام مساعد الذكاء الاصطناعي التوليدي (GenAI assistant) التابع للبنك. ومسودة خطة الإلمام في الفرع لا تذكر إلا موظفي بنك نجم، وتقول الشركة إن وكلاءها ليسوا من موظفي البنك. ماذا تعني المادة 4 من EU AI Act لهؤلاء الوكلاء؟"
    },
    "o": {
     "en": [
@@ -73,16 +73,16 @@
      "In scope, but each agent must first hold an accredited literacy certificate"
     ],
     "ar": [
-     "مشمولون: فهم يستخدمون الذكاء الاصطناعي لبنك نجم نيابة عنه، فيجب أن تصل إليهم التدابير (measures)",
-     "غير مشمولين (out of scope): فالواجب (duty) يغطي موظفي البنك أنفسهم (own employees) فقط، لا المورّدين (suppliers)",
-     "غير مشمولين (out of scope) ما لم يُصنَّف مساعد الذكاء الاصطناعي التوليدي (GenAI assistant) نظامًا عالي المخاطر (high-risk system)",
-     "مشمولون، لكن يجب أولًا أن يحمل كل وكيل (agent) شهادة إلمام معتمدة"
+     "مشمولون: فهم يستخدمون الذكاء الاصطناعي لبنك نجم نيابة عنه، فيجب أن تصل إليهم التدابير",
+     "غير مشمولين: فالواجب يغطي موظفي البنك أنفسهم فقط، لا المورّدين",
+     "غير مشمولين ما لم يُصنَّف مساعد الذكاء الاصطناعي التوليدي (GenAI assistant) نظامًا عالي المخاطر (high-risk system)",
+     "مشمولون، لكن يجب أولًا أن يحمل كل وكيل شهادة إلمام معتمدة"
     ]
    },
    "a": 0,
    "why": {
     "en": "Article 4 covers staff and other persons dealing with the operation and use of AI systems on the provider’s or deployer’s behalf, such as contractors, so Najm must take proportionate measures for the agents, for example training before access. The duty is not limited to high-risk systems, and the Act prescribes no certificate.",
-    "ar": "تغطي المادة 4 (Article 4) الموظفين والأشخاص الآخرين (other persons) الذين يتعاملون مع تشغيل أنظمة الذكاء الاصطناعي (AI systems) واستخدامها نيابة عن مقدّم النظام (provider) أو المُشغِّل (deployer)، مثل المتعاقدين (contractors)، لذا يجب على بنك نجم (Najm Bank) اتخاذ تدابير متناسبة (proportionate measures) للوكلاء (agents)، كالتدريب قبل منح الوصول. ولا يقتصر الواجب (duty) على الأنظمة عالية المخاطر (high-risk systems)، ولا يفرض القانون شهادة (certificate)."
+    "ar": "تغطي المادة 4 الموظفين والأشخاص الآخرين الذين يتعاملون مع تشغيل أنظمة الذكاء الاصطناعي (AI systems) واستخدامها نيابة عن مقدّم النظام (provider) أو المُشغِّل (deployer)، مثل المتعاقدين، لذا يجب على بنك نجم (Najm Bank) اتخاذ تدابير متناسبة للوكلاء، كالتدريب قبل منح الوصول. ولا يقتصر الواجب على الأنظمة عالية المخاطر (high-risk systems)، ولا يفرض القانون شهادة."
    }
   },
   {
@@ -91,7 +91,7 @@
    "lesson": "2.3",
    "q": {
     "en": "All of Najm’s HR recruiters have completed overseer training and competency sign-off for the CV-screening tool, yet quarterly sampling finds they override fewer than 1 in 200 rankings, including some that later review found clearly wrong. The screen shows only a score, and an override needs a written justification to their manager, while accepting takes one click. What is the best diagnosis and fix?",
-    "ar": "أكمل جميع مسؤولي التوظيف (HR recruiters) في بنك نجم (Najm Bank) تدريب المشرفين (overseer training) واعتماد الكفاءة (competency sign-off) لأداة فرز السير الذاتية (CV-screening tool)، ومع ذلك تجد العيّنات الفصلية (quarterly sampling) أنهم يتجاوزون (override) أقل من تصنيف واحد من كل 200 تصنيف (1 in 200 rankings)، ومنها تصنيفات وجدتها مراجعة لاحقة (later review) خاطئة بوضوح (clearly wrong). فالشاشة (screen) لا تعرض سوى درجة (score)، والتجاوز يتطلب تبريرًا مكتوبًا (written justification) إلى مديرهم، بينما يتم القبول بنقرة واحدة (one click). ما أفضل تشخيص (diagnosis) وعلاج (fix)؟"
+    "ar": "أكمل جميع مسؤولي التوظيف في بنك نجم (Najm Bank) تدريب المشرفين واعتماد الكفاءة لأداة فرز السير الذاتية، ومع ذلك تجد العيّنات الفصلية أنهم يتجاوزون أقل من تصنيف واحد من كل 200 تصنيف (1 in 200 rankings)، ومنها تصنيفات وجدتها مراجعة لاحقة خاطئة بوضوح. فالشاشة لا تعرض سوى درجة، والتجاوز يتطلب تبريرًا مكتوبًا إلى مديرهم، بينما يتم القبول بنقرة واحدة. ما أفضل تشخيص وعلاج؟"
    },
    "o": {
     "en": [
@@ -101,16 +101,16 @@
      "A sound tool; ask the vendor to certify its fairness and keep the process as is"
     ],
     "ar": [
-     "فجوة تدريب (training gap)؛ أعِد الدورة بحالات أصعب وباختبار كفاءة (competency test) أشد",
-     "فجوة سياسات (policy gap)؛ أعِد إصدار سياسة الذكاء الاصطناعي (AI policy) واطلب من كل مسؤول توظيف (recruiter) إعادة الإقرار بها (re-attest)",
-     "خلل في التصميم (design gap)؛ اعرض أسباب الأداة وكُفَّ عن ردع التجاوزات المبررة (justified overrides)",
-     "الأداة سليمة (sound tool)؛ اطلب من المورّد (vendor) أن يشهد بعدالتها وأبقِ العملية كما هي"
+     "فجوة تدريب؛ أعِد الدورة بحالات أصعب وباختبار كفاءة أشد",
+     "فجوة سياسات؛ أعِد إصدار سياسة الذكاء الاصطناعي واطلب من كل مسؤول توظيف إعادة الإقرار بها",
+     "خلل في التصميم؛ اعرض أسباب الأداة وكُفَّ عن ردع التجاوزات المبررة",
+     "الأداة سليمة؛ اطلب من المورّد أن يشهد بعدالتها وأبقِ العملية كما هي"
     ]
    },
    "a": 2,
    "why": {
     "en": "Training is done and competence signed off, so the failure sits in the system: a bare score and a one-sided burden on overriding push recruiters to agree, and managers must not penalise justified overrides. Rerunning the course is the tempting answer, but no amount of training makes oversight meaningful when the interface hides what overseers need.",
-    "ar": "اكتمل التدريب (training) واعتُمدت الكفاءة، لذا فالخلل في النظام نفسه: درجة مجردة (bare score) وعبء أحادي الجانب على التجاوز يدفعان مسؤولي التوظيف (recruiters) إلى الموافقة، ويجب ألا يعاقب المديرون على التجاوزات المبررة (justified overrides). وإعادة الدورة هي الإجابة المغرية، لكن لا قدر من التدريب يجعل الإشراف (oversight) ذا معنى حين تخفي الواجهة (interface) ما يحتاجه المشرفون (overseers)."
+    "ar": "اكتمل التدريب واعتُمدت الكفاءة، لذا فالخلل في النظام نفسه: درجة مجردة وعبء أحادي الجانب على التجاوز يدفعان مسؤولي التوظيف إلى الموافقة، ويجب ألا يعاقب المديرون على التجاوزات المبررة. وإعادة الدورة هي الإجابة المغرية، لكن لا قدر من التدريب يجعل الإشراف ذا معنى حين تخفي الواجهة ما يحتاجه المشرفون."
    }
   }
  ],
@@ -120,7 +120,7 @@
    "lesson": "2.1",
    "text": {
     "en": "I have drafted an AI risk appetite table for one AI system covering at least four risk categories, each with an appetite level, a measurable tolerance or KRI and a named owner, and justified at least one moderate (not low) appetite.",
-    "ar": "صغت جدولًا لشهية مخاطر الذكاء الاصطناعي لنظام ذكاء اصطناعي (AI system) واحد يغطي أربع فئات مخاطر (risk categories) على الأقل، لكلٍّ منها مستوى شهية (appetite level)، وحد تحمّل قابل للقياس (measurable tolerance) أو مؤشر مخاطر رئيسي (KRI)، ومالك محدد بالاسم (named owner)، وبرّرت شهيةً متوسطة (moderate) واحدة على الأقل لا منخفضة."
+    "ar": "صغت جدولًا لشهية مخاطر الذكاء الاصطناعي لنظام ذكاء اصطناعي (AI system) واحد يغطي أربع فئات مخاطر على الأقل، لكلٍّ منها مستوى شهية، وحد تحمّل قابل للقياس أو مؤشر مخاطر رئيسي (KRI)، ومالك محدد بالاسم، وبرّرت شهيةً متوسطة واحدة على الأقل لا منخفضة."
    }
   },
   {
@@ -128,7 +128,7 @@
    "lesson": "2.2",
    "text": {
     "en": "I have written a one-page charter for an AI governance committee setting out scope, membership, quorum, decision rights and delegated authority for low-tier systems, clear enough that an outsider could tell what it can and cannot decide.",
-    "ar": "كتبت ميثاقًا (charter) من صفحة واحدة للجنة حوكمة الذكاء الاصطناعي (AI governance committee) يحدد النطاق (scope)، والعضوية (membership)، والنصاب (quorum)، وصلاحيات القرار (decision rights)، والصلاحيات المفوَّضة (delegated authority) لأنظمة المستوى المنخفض (low-tier systems)، بوضوح يكفي ليعرف شخص من خارجها ما تستطيع اللجنة (committee) البت فيه وما لا تستطيع."
+    "ar": "كتبت ميثاقًا من صفحة واحدة للجنة حوكمة الذكاء الاصطناعي (AI governance committee) يحدد النطاق، والعضوية، والنصاب، وصلاحيات القرار، والصلاحيات المفوَّضة لأنظمة المستوى المنخفض، بوضوح يكفي ليعرف شخص من خارجها ما تستطيع اللجنة البت فيه وما لا تستطيع."
    }
   }
  ]

@@ -7,7 +7,7 @@
       "lesson": "0.1",
       "q": {
         "en": "In a market scan of ten junior backend ads, Git appears in nine ads and Docker in five. How does the lesson's method classify these two skills?",
-        "ar": "في مسح السوق (market scan) لعشرة إعلانات وظائف (job ads) لمطوّري الخلفية المبتدئين (junior backend)، يظهر Git في تسعة إعلانات ويظهر Docker في خمسة. كيف تصنّف طريقة الدرس هاتين المهارتين؟"
+        "ar": "في مسح السوق لعشرة إعلانات وظائف لمطوّري الخلفية المبتدئين، يظهر Git في تسعة إعلانات ويظهر Docker في خمسة. كيف تصنّف طريقة الدرس هاتين المهارتين؟"
       },
       "o": {
         "en": [
@@ -17,16 +17,16 @@
           "Git is a differentiator and Docker can be safely skipped"
         ],
         "ar": [
-          "كلتاهما مهارتان مميِّزتان (differentiators)، لأن أيًّا منهما لا يظهر في الإعلانات العشرة كلها",
-          "Docker أهم، لأن المهارات الأندر (rarer skills) تلفت نظر مسؤولي التوظيف (recruiters) أكثر",
-          "Git مهارة أساسية (baseline skill)، وDocker مهارة مميِّزة (differentiator)",
-          "Git مهارة مميِّزة (differentiator)، ويمكن تجاهل Docker بأمان (safely skipped)"
+          "كلتاهما مهارتان مميِّزتان، لأن أيًّا منهما لا يظهر في الإعلانات العشرة كلها",
+          "Docker أهم، لأن المهارات الأندر تلفت نظر مسؤولي التوظيف أكثر",
+          "Git مهارة أساسية، وDocker مهارة مميِّزة",
+          "Git مهارة مميِّزة، ويمكن تجاهل Docker بأمان"
         ]
       },
       "a": 2,
       "why": {
         "en": "Skills in seven or more of ten ads are the baseline and skills in three to six are differentiators, so Git (9) is baseline and Docker (5) a differentiator. Treating rarer skills as more important gets the order wrong: prove the baseline first.",
-        "ar": "المهارات التي تظهر في سبعة إعلانات أو أكثر من عشرة هي الأساس (baseline)، والتي تظهر في ثلاثة إلى ستة هي المميِّزات (differentiators)؛ لذا فـGit (9) أساسية وDocker (5) مميِّزة. واعتبار المهارة الأندر أهمَّ يقلب الترتيب: أثبِت المهارات الأساسية أولًا."
+        "ar": "المهارات التي تظهر في سبعة إعلانات أو أكثر من عشرة هي الأساس، والتي تظهر في ثلاثة إلى ستة هي المميِّزات؛ لذا فـGit (9) أساسية وDocker (5) مميِّزة. واعتبار المهارة الأندر أهمَّ يقلب الترتيب: أثبِت المهارات الأساسية أولًا."
       }
     },
     {
@@ -35,7 +35,7 @@
       "lesson": "0.2",
       "q": {
         "en": "Reem chooses junior AI application engineer as her target role. Which portfolio piece is the kind of proof the lesson says helps most for that family?",
-        "ar": "اختارت ريم دور مهندس تطبيقات الذكاء الاصطناعي المبتدئ دورًا مستهدفًا (target role). أيّ عمل في معرض الأعمال (portfolio) هو نوع الإثبات (proof) الذي يقول الدرس إنه الأنفع لهذه العائلة (family)؟"
+        "ar": "اختارت ريم دور مهندس تطبيقات الذكاء الاصطناعي المبتدئ دورًا مستهدفًا. أيّ عمل في معرض الأعمال هو نوع الإثبات الذي يقول الدرس إنه الأنفع لهذه العائلة؟"
       },
       "o": {
         "en": [
@@ -45,16 +45,16 @@
           "An online prompt-engineering certificate and a list of AI tools she has used"
         ],
         "ar": [
-          "ميزة صغيرة مبنية على نموذج لغوي كبير (LLM feature) مع مجموعة تقييم وحالات إخفاق موثّقة",
-          "عرض تجريبي مصقول لروبوت محادثة (chatbot demo) بواجهة أنيقة (slick interface) وقوالب أوامر (prompt templates)",
-          "دفتر ملاحظات (notebook) يدرّب نموذجًا للتنبؤ بتسرّب العملاء (churn model) على بيانات عامة (public data) بدقة عالية (high accuracy)",
-          "شهادة إلكترونية في هندسة الأوامر (prompt-engineering certificate) وقائمة بأدوات الذكاء الاصطناعي (AI tools) التي استخدمتها"
+          "ميزة صغيرة مبنية على نموذج لغوي كبير مع مجموعة تقييم وحالات إخفاق موثّقة",
+          "عرض تجريبي مصقول لروبوت محادثة بواجهة أنيقة وقوالب أوامر",
+          "دفتر ملاحظات يدرّب نموذجًا للتنبؤ بتسرّب العملاء على بيانات عامة بدقة عالية",
+          "شهادة إلكترونية في هندسة الأوامر وقائمة بأدوات الذكاء الاصطناعي التي استخدمتها"
         ]
       },
       "a": 0,
       "why": {
         "en": "AI application interviews test building with an LLM API, evaluating output and handling failure, so a feature with an evaluation set and documented failure cases is the strongest proof. A polished demo shows output but not that she can evaluate or handle bad model output.",
-        "ar": "تختبر مقابلات تطبيقات الذكاء الاصطناعي (AI application) البناءَ بواجهة نموذج لغوي (LLM API) وتقييمَ المخرجات (evaluating output) والتعاملَ مع الإخفاق (handling failure)، لذا فالميزة ذات مجموعة التقييم (evaluation set) وحالات الإخفاق الموثّقة هي أقوى إثبات. أما العرض المصقول (polished demo) فيُظهر ناتجًا، لكنه لا يُثبت قدرتها على التقييم أو على معالجة مخرجات النموذج الرديئة."
+        "ar": "تختبر مقابلات تطبيقات الذكاء الاصطناعي البناءَ بواجهة نموذج لغوي (LLM API) وتقييمَ المخرجات والتعاملَ مع الإخفاق، لذا فالميزة ذات مجموعة التقييم وحالات الإخفاق الموثّقة هي أقوى إثبات. أما العرض المصقول فيُظهر ناتجًا، لكنه لا يُثبت قدرتها على التقييم أو على معالجة مخرجات النموذج الرديئة."
       }
     },
     {
@@ -63,7 +63,7 @@
       "lesson": "0.3",
       "q": {
         "en": "Over a month, Mohammed sends twelve targeted applications for full-stack roles and gets no replies. Following the course's map of steps and modules, what is the usual fix?",
-        "ar": "خلال شهر، أرسل محمد اثني عشر طلبًا موجّهًا (targeted applications) لأدوار التطوير الشامل (full-stack roles) ولم يتلقَّ أي رد. وفقًا لخريطة خطوات المقرر ووحداته، ما العلاج المعتاد (usual fix)؟"
+        "ar": "خلال شهر، أرسل محمد اثني عشر طلبًا موجّهًا لأدوار التطوير الشامل ولم يتلقَّ أي رد. وفقًا لخريطة خطوات المقرر ووحداته، ما العلاج المعتاد؟"
       },
       "o": {
         "en": [
@@ -73,16 +73,16 @@
           "Go back to Build and Prove (Module 3) and strengthen his proof"
         ],
         "ar": [
-          "إرسال خمسين طلبًا آخر هذا الشهر، لأن الكثرة (volume) ستعوّض النقص",
-          "القفز إلى الوحدة 5 (Module 5) والتدرّب على أسئلة المقابلات (interview questions) حتى تصل الردود",
-          "بدء مقرر إلكتروني جديد (online course) لتضيف سيرته الذاتية (CV) شهادة حديثة أخرى",
-          "العودة إلى خطوة البناء والإثبات في الوحدة 3 (Module 3) وتقوية إثباته (proof)"
+          "إرسال خمسين طلبًا آخر هذا الشهر، لأن الكثرة ستعوّض النقص",
+          "القفز إلى الوحدة 5 والتدرّب على أسئلة المقابلات حتى تصل الردود",
+          "بدء مقرر إلكتروني جديد لتضيف سيرته الذاتية شهادة حديثة أخرى",
+          "العودة إلى خطوة البناء والإثبات في الوحدة 3 وتقوية إثباته"
         ]
       },
       "a": 3,
       "why": {
         "en": "The step map loops from Apply back to Build and Prove: when applications get no replies, the fix is usually better proof, not more applications. Interview practice does not help when he is not reaching interviews yet.",
-        "ar": "تعود خريطة الخطوات من التقديم (Apply) إلى البناء والإثبات: إذا لم تتلقَّ الطلبات ردودًا، فالعلاج عادةً إثبات أفضل (better proof) لا طلبات أكثر (more applications). والتدرّب على المقابلات (interview practice) لا يفيد ما دام لم يصل إلى المقابلات بعد."
+        "ar": "تعود خريطة الخطوات من التقديم إلى البناء والإثبات: إذا لم تتلقَّ الطلبات ردودًا، فالعلاج عادةً إثبات أفضل لا طلبات أكثر. والتدرّب على المقابلات لا يفيد ما دام لم يصل إلى المقابلات بعد."
       }
     },
     {
@@ -91,7 +91,7 @@
       "lesson": "0.1",
       "q": {
         "en": "Omar's market scan lists Git, SQL, a backend language and REST APIs as baseline, and several ads say \"production\" and \"end to end\". He can prove algorithms (a contest record), Java and Python, but has never deployed anything. What is the best diagnosis and next step?",
-        "ar": "يُظهر مسح السوق (market scan) الذي أعدّه عمر أن Git وSQL ولغة خلفية (backend language) وواجهات REST (REST APIs) مهارات أساسية (baseline)، وتذكر عدة إعلانات «الإنتاج» (production) و«من البداية إلى النهاية» (end to end). يستطيع إثبات الخوارزميات (algorithms) بسجلّ مسابقاته (contest record) وJava وPython، لكنه لم ينشر (deployed) أي شيء قط. ما أفضل تشخيص (diagnosis) وخطوة تالية (next step)؟"
+        "ar": "يُظهر مسح السوق الذي أعدّه عمر أن Git وSQL ولغة خلفية وواجهات REST (REST APIs) مهارات أساسية، وتذكر عدة إعلانات «الإنتاج» (production) و«من البداية إلى النهاية». يستطيع إثبات الخوارزميات بسجلّ مسابقاته وJava وPython، لكنه لم ينشر أي شيء قط. ما أفضل تشخيص وخطوة تالية؟"
       },
       "o": {
         "en": [
@@ -101,16 +101,16 @@
           "His gap is formal credentials; he should start a master's before applying"
         ],
         "ar": [
-          "فجوته في عمق الخوارزميات (algorithms depth)؛ عليه أن يحلّ مزيدًا من مسائل المسابقات (contest problems)",
-          "فجوته في إثبات القدرة على التسليم؛ عليه نشر واجهة برمجية صغيرة مختبَرة مع تكامل مستمر (CI)",
-          "فجوته في اتساع الأدوات (tool breadth)؛ عليه إدراج كل أداة وردت في الإعلانات في سيرته الذاتية (CV)",
-          "فجوته في المؤهلات الرسمية (formal credentials)؛ عليه بدء درجة الماجستير (master's) قبل التقديم"
+          "فجوته في عمق الخوارزميات؛ عليه أن يحلّ مزيدًا من مسائل المسابقات",
+          "فجوته في إثبات القدرة على التسليم؛ عليه نشر واجهة برمجية صغيرة مختبَرة مع تكامل مستمر",
+          "فجوته في اتساع الأدوات؛ عليه إدراج كل أداة وردت في الإعلانات في سيرته الذاتية",
+          "فجوته في المؤهلات الرسمية؛ عليه بدء درجة الماجستير قبل التقديم"
         ]
       },
       "a": 1,
       "why": {
         "en": "His knowledge is strong but nothing shows he can ship, which the baseline and words like \"production\" ask for; a small deployed API with tests and CI closes that gap. More contest problems would deepen proof he already has instead of closing the gap.",
-        "ar": "معرفته قوية، لكن لا شيء يُثبت قدرته على التسليم (ship)، وهو ما تطلبه المهارات الأساسية (baseline) وكلمات مثل «الإنتاج» (production)؛ وواجهة برمجية صغيرة منشورة مع اختبارات (tests) وتكامل مستمر (CI) تسدّ هذه الفجوة. أما مزيد من مسائل المسابقات (contest problems) فيعمّق إثباتًا يملكه أصلًا بدل سدّ الفجوة."
+        "ar": "معرفته قوية، لكن لا شيء يُثبت قدرته على التسليم، وهو ما تطلبه المهارات الأساسية وكلمات مثل «الإنتاج» (production)؛ وواجهة برمجية صغيرة منشورة مع اختبارات وتكامل مستمر (CI) تسدّ هذه الفجوة. أما مزيد من مسائل المسابقات فيعمّق إثباتًا يملكه أصلًا بدل سدّ الفجوة."
       }
     }
   ],
@@ -120,7 +120,7 @@
       "lesson": "0.2",
       "text": {
         "en": "I have scored at least three role families on energy, evidence and market, with a one-line reason for each score, and written down a three-month target role with a review date.",
-        "ar": "قيّمتُ ثلاث عائلات أدوار (role families) على الأقل وفق الطاقة والدليل والسوق، مع سبب من سطر واحد لكل درجة (one-line reason)، ودوّنتُ دورًا مستهدفًا لثلاثة أشهر مع تاريخ مراجعة (review date)."
+        "ar": "قيّمتُ ثلاث عائلات أدوار على الأقل وفق الطاقة والدليل والسوق، مع سبب من سطر واحد لكل درجة، ودوّنتُ دورًا مستهدفًا لثلاثة أشهر مع تاريخ مراجعة."
       }
     },
     {
@@ -128,7 +128,7 @@
       "lesson": "0.3",
       "text": {
         "en": "I have completed a starting audit with every row filled, blocked my weekly time budget in my calendar for the next four weeks, and saved it in my career folder.",
-        "ar": "أكملتُ تدقيق البداية (starting audit) بملء كل صفوفه، وحجزتُ ميزانية الوقت الأسبوعية (weekly time budget) في تقويمي (calendar) للأسابيع الأربعة القادمة، وحفظتُه في مجلد المسار المهني (career folder)."
+        "ar": "أكملتُ تدقيق البداية بملء كل صفوفه، وحجزتُ ميزانية الوقت الأسبوعية في تقويمي للأسابيع الأربعة القادمة، وحفظتُه في مجلد المسار المهني."
       }
     }
   ]

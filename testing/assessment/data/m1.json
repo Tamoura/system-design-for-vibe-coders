@@ -7,7 +7,7 @@
    "lesson": "1.1",
    "q": {
     "en": "Hamad's squad finishes the new beneficiary screen. Every planned test passes, no defect is open, and the screen does exactly what its story says. At launch, customers complain that they cannot pay a recipient by mobile number, which no story had ever asked for. Which testing principle does this show?",
-    "ar": "ينهي فريق حمد (Hamad's squad) شاشة المستفيد (beneficiary screen) الجديدة: تنجح كل الاختبارات المخطط لها، ولا يبقى عيب مفتوح، وتفعل الشاشة ما تقوله قصتها بالضبط. وعند الإطلاق يشكو العملاء (customers complain) من أنهم لا يستطيعون الدفع لمستفيد برقم الجوال، وهو ما لم تطلبه أي قصة. أي مبدأ من مبادئ الاختبار (testing principles) يوضحه هذا؟"
+    "ar": "ينهي فريق حمد شاشة المستفيد الجديدة: تنجح كل الاختبارات المخطط لها، ولا يبقى عيب مفتوح، وتفعل الشاشة ما تقوله قصتها بالضبط. وعند الإطلاق يشكو العملاء من أنهم لا يستطيعون الدفع لمستفيد برقم الجوال، وهو ما لم تطلبه أي قصة. أي مبدأ من مبادئ الاختبار يوضحه هذا؟"
    },
    "o": {
     "en": [
@@ -18,15 +18,15 @@
     ],
     "ar": [
      "يُظهر الاختبار وجود العيوب، فلا بد أن يكون الفريق قد فوّت عيبًا في الشاشة",
-     "الاختبار الشامل مستحيل (exhaustive testing is impossible)، فنفّذ الفريق اختبارات قليلة جدًا قبل يوم الإطلاق (launch day)",
-     "غياب العيوب مغالطة، فقد تظل الشاشة الخالية من العيوب (bug-free screen) هي الشاشة الخاطئة",
-     "الاختبار يعتمد على السياق، فاختبر الفريق شاشة مدفوعات (payments screen) بعمق أقل مما يلزم لمستوى خطرها"
+     "الاختبار الشامل مستحيل، فنفّذ الفريق اختبارات قليلة جدًا قبل يوم الإطلاق",
+     "غياب العيوب مغالطة، فقد تظل الشاشة الخالية من العيوب هي الشاشة الخاطئة",
+     "الاختبار يعتمد على السياق، فاختبر الفريق شاشة مدفوعات بعمق أقل مما يلزم لمستوى خطرها"
     ]
    },
    "a": 2,
    "why": {
     "en": "A system with no known bugs can still be the wrong system (principle 7): the screen did what its story said, but paying by mobile number was never specified, so no test written from the story could have flagged it. Blaming a missed bug is the tempting reading, yet nothing in the code departs from the story; the gap is in what was asked for.",
-    "ar": "قد يظل النظام الخالي من العيوب المعروفة (known bugs) هو النظام الخاطئ (wrong system)، وهذا هو المبدأ السابع (principle 7): فعلت الشاشة ما تقوله قصتها، لكن الدفع برقم الجوال لم يُحدَّد قط، فلا يستطيع أي اختبار مكتوب من القصة أن يكشفه. أما لوم عيب فائت (missed bug) فهو القراءة المغرية (tempting reading)، لكن لا شيء في الشيفرة يخالف القصة؛ فالنقص في ما طُلب."
+    "ar": "قد يظل النظام الخالي من العيوب المعروفة هو النظام الخاطئ، وهذا هو المبدأ السابع: فعلت الشاشة ما تقوله قصتها، لكن الدفع برقم الجوال لم يُحدَّد قط، فلا يستطيع أي اختبار مكتوب من القصة أن يكشفه. أما لوم عيب فائت فهو القراءة المغرية، لكن لا شيء في الشيفرة يخالف القصة؛ فالنقص في ما طُلب."
    }
   },
   {
@@ -35,7 +35,7 @@
    "lesson": "1.2",
    "q": {
     "en": "Domestic transfers are free up to and including 1,000.00 QAR and cost 2.00 above that. Maha's tests use 500.00 (free) and 5,000.00 (2.00). A developer tidies the check from `amount <= 1000` to `amount < 1000`. Which one added amount would catch the change?",
-    "ar": "لا رسم (fee) على التحويلات المحلية (domestic transfers) حتى 1,000.00 QAR شاملةً، ويبلغ الرسم 2.00 فوق ذلك (above that). تستخدم اختبارات مها (Maha's tests) المبلغين 500.00 دون رسم و5,000.00 برسم 2.00. يعدّل مطوّر شرط الفحص من `amount <= 1000` إلى `amount < 1000`. أي مبلغ إضافي واحد يكشف هذا التغيير؟"
+    "ar": "لا رسم على التحويلات المحلية حتى 1,000.00 QAR شاملةً، ويبلغ الرسم 2.00 فوق ذلك. تستخدم اختبارات مها المبلغين 500.00 دون رسم و5,000.00 برسم 2.00. يعدّل مطوّر شرط الفحص من `amount <= 1000` إلى `amount < 1000`. أي مبلغ إضافي واحد يكشف هذا التغيير؟"
    },
    "o": {
     "en": [
@@ -45,16 +45,16 @@
      "25,000.00 QAR, the largest allowed amount, which also pays 2.00"
     ],
     "ar": [
-     "1,000.00 QAR تمامًا عند الحد، ويجب أن يبقى معفى من الرسم (stay free)",
-     "999.99 QAR، أي دون الحد بسنت واحد (one cent)، وهو معفى من الرسم أيضًا (also free)",
-     "1,000.01 QAR، أي فوق الحد بسنت واحد (one cent)، ويدفع 2.00 (pays 2.00)",
-     "25,000.00 QAR، أكبر مبلغ مسموح، ويدفع 2.00 أيضًا (also pays 2.00)"
+     "1,000.00 QAR تمامًا عند الحد، ويجب أن يبقى معفى من الرسم",
+     "999.99 QAR، أي دون الحد بسنت واحد، وهو معفى من الرسم أيضًا",
+     "1,000.01 QAR، أي فوق الحد بسنت واحد، ويدفع 2.00",
+     "25,000.00 QAR، أكبر مبلغ مسموح، ويدفع 2.00 أيضًا"
     ]
    },
    "a": 0,
    "why": {
     "en": "Only a transfer of exactly 1,000.00 behaves differently under `<`: it would wrongly be charged 2.00. The amounts a cent either side, and the maximum, get the same fee from both versions, so those tests stay green and the slip survives.",
-    "ar": "لا يختلف سلوك الشرطين إلا عند مبلغ 1,000.00 تمامًا (exactly 1,000.00)، إذ يفرض عليه الشرط `<` رسم 2.00 خطأً (wrongly charged). أما المبلغان اللذان يبعدان سنتًا واحدًا عن الحد، وكذلك الحد الأقصى، فيعطي كلٌّ منها الرسم نفسه في النسختين، فتبقى اختباراتها خضراء (green) ويفلت الخطأ."
+    "ar": "لا يختلف سلوك الشرطين إلا عند مبلغ 1,000.00 تمامًا، إذ يفرض عليه الشرط `<` رسم 2.00 خطأً. أما المبلغان اللذان يبعدان سنتًا واحدًا عن الحد، وكذلك الحد الأقصى، فيعطي كلٌّ منها الرسم نفسه في النسختين، فتبقى اختباراتها خضراء ويفلت الخطأ."
    }
   },
   {
@@ -63,7 +63,7 @@
    "lesson": "1.3",
    "q": {
     "en": "Dana reports that the international fee for 3,090.00 QAR is wrong, but her report lists fourteen steps across three screens, and the developer cannot tell which ones matter. What should Rashid ask her to do?",
-    "ar": "تبلّغ دانة عن خطأ في الرسم الدولي (international fee) لتحويل 3,090.00 QAR، لكن تقريرها (bug report) يسرد أربع عشرة خطوة (fourteen steps) عبر ثلاث شاشات (three screens)، ولا يعرف المطوّر أيّها مهم. ماذا ينبغي أن يطلب راشد منها؟"
+    "ar": "تبلّغ دانة عن خطأ في الرسم الدولي لتحويل 3,090.00 QAR، لكن تقريرها يسرد أربع عشرة خطوة عبر ثلاث شاشات، ولا يعرف المطوّر أيّها مهم. ماذا ينبغي أن يطلب راشد منها؟"
    },
    "o": {
     "en": [
@@ -73,16 +73,16 @@
      "Remove steps and data one by one, re-running each time, until only what fails is left"
     ],
     "ar": [
-     "إرفاق تسجيل شاشة (screen recording) يعرض الخطوات الأربع عشرة كلها",
-     "حذف الخطوات التي تراها غير مهمة (unimportant) وإرسال القائمة الأقصر دون تجربتها (untried)",
-     "رفع الخطورة (severity) إلى S1 حتى يعامل المطوّر التقرير كله على أنه عاجل (urgent)",
+     "إرفاق تسجيل شاشة يعرض الخطوات الأربع عشرة كلها",
+     "حذف الخطوات التي تراها غير مهمة وإرسال القائمة الأقصر دون تجربتها",
+     "رفع الخطورة (severity) إلى S1 حتى يعامل المطوّر التقرير كله على أنه عاجل",
      "إزالة الخطوات والبيانات واحدًا واحدًا مع إعادة التشغيل حتى لا يبقى إلا ما يفشل"
     ]
    },
    "a": 3,
    "why": {
     "en": "A minimal reproduction, the smallest steps and data that still show the failure, is what a developer can act on, and you find it by removing one thing at a time and re-running until the failure stops, then putting the last one back. A longer recording adds bulk, a higher severity adds pressure, and a cut that was never re-run may have lost the failure, so it is a guess, not evidence.",
-    "ar": "إعادة الإنتاج المصغّرة (minimal reproduction)، أي أصغر خطوات وبيانات ما زالت تُظهر الفشل (failure)، هي ما يستطيع المطوّر العمل عليه (act on)، وتصل إليها بإزالة شيء واحد في كل مرة وإعادة التشغيل حتى يتوقف الفشل، ثم استعادة آخر ما أُزيل. أما التسجيل الأطول فيزيد الحجم (bulk)، ورفع الخطورة (higher severity) يزيد الضغط (pressure)، والحذف الذي لم تُعد تجربته (never re-run) قد يكون أضاع الفشل، فهو تخمين (guess) وليس دليلًا (evidence)."
+    "ar": "إعادة الإنتاج المصغّرة (minimal reproduction)، أي أصغر خطوات وبيانات ما زالت تُظهر الفشل، هي ما يستطيع المطوّر العمل عليه، وتصل إليها بإزالة شيء واحد في كل مرة وإعادة التشغيل حتى يتوقف الفشل، ثم استعادة آخر ما أُزيل. أما التسجيل الأطول فيزيد الحجم، ورفع الخطورة يزيد الضغط، والحذف الذي لم تُعد تجربته قد يكون أضاع الفشل، فهو تخمين وليس دليلًا."
    }
   },
   {
@@ -91,7 +91,7 @@
    "lesson": "1.2",
    "q": {
     "en": "While building the limits table, Sara sees that 30,000.00 QAR with 49,000.00 already sent today breaks both the per-transfer maximum and the daily limit. The code reports above_per_transfer_max, and the story does not say which message should win. What should her test do?",
-    "ar": "أثناء بناء جدول القرارات (decision table) للحدود (limits)، تلاحظ سارة أن تحويل 30,000.00 QAR بعد إرسال 49,000.00 اليوم يخالف الحد الأقصى للتحويل الواحد (per-transfer maximum) والحد اليومي (daily limit) معًا. تُرجع الشيفرة `above_per_transfer_max`، ولا تحدد القصة أي رسالة يجب أن تسود. ماذا ينبغي أن يفعل اختبارها؟"
+    "ar": "أثناء بناء جدول القرارات (decision table) للحدود، تلاحظ سارة أن تحويل 30,000.00 QAR بعد إرسال 49,000.00 اليوم يخالف الحد الأقصى للتحويل الواحد والحد اليومي معًا. تُرجع الشيفرة `above_per_transfer_max`، ولا تحدد القصة أي رسالة يجب أن تسود. ماذا ينبغي أن يفعل اختبارها؟"
    },
    "o": {
     "en": [
@@ -102,15 +102,15 @@
     ],
     "ar": [
      "توقّع `daily_limit_exceeded` لأن القاعدة التي تحمي مالًا أكثر هي التي تسود",
-     "تثبيت إجابة الشيفرة كاختبار توصيفي (characterisation test) وسؤال فريق المنتج (product) أيّ القاعدتين تسود",
-     "توقّع `above_per_transfer_max` لأن ترتيب فحوصات الشيفرة نفسها هو المواصفة (spec)",
+     "تثبيت إجابة الشيفرة كاختبار توصيفي (characterisation test) وسؤال فريق المنتج أيّ القاعدتين تسود",
+     "توقّع `above_per_transfer_max` لأن ترتيب فحوصات الشيفرة نفسها هو المواصفة",
      "تجاوز هذه الحالة لأن مخالفة قاعدتين معًا نادرة جدًا فلا تستحق الاختبار"
     ]
    },
    "a": 1,
    "why": {
     "en": "No requirement says which rule wins, so the code cannot be the oracle: a characterisation test records what it does today, labelled as such, while product decides. Asserting the code's own check order (or inventing a winner) turns an open question into a false expected value.",
-    "ar": "لا يوجد متطلب (requirement) يحدد القاعدة الغالبة، فلا يصلح سلوك الشيفرة مرجعًا للنتيجة المتوقعة (test oracle): الاختبار التوصيفي (characterisation test) يسجّل ما تفعله اليوم بوصفه كذلك، بينما يقرر فريق المنتج (product). أما تثبيت ترتيب الفحوصات في الشيفرة أو اختراع قاعدة غالبة فيحوّل سؤالًا مفتوحًا (open question) إلى قيمة متوقعة زائفة."
+    "ar": "لا يوجد متطلب يحدد القاعدة الغالبة، فلا يصلح سلوك الشيفرة مرجعًا للنتيجة المتوقعة (test oracle): الاختبار التوصيفي (characterisation test) يسجّل ما تفعله اليوم بوصفه كذلك، بينما يقرر فريق المنتج. أما تثبيت ترتيب الفحوصات في الشيفرة أو اختراع قاعدة غالبة فيحوّل سؤالًا مفتوحًا إلى قيمة متوقعة زائفة."
    }
   }
  ],
@@ -120,7 +120,7 @@
    "lesson": "1.1",
    "text": {
     "en": "I have written a pytest test for each of quantize, fee, check_transfer and value_date whose expected value comes from outside the code (a policy text, a hand calculation or a property), and seen at least two of them fail when the matching bug was switched on with NAJM_BUGS.",
-    "ar": "كتبتُ اختبار pytest لكل من `quantize` و`fee` و`check_transfer` و`value_date` يأتي مرجع نتيجته المتوقعة (test oracle) من خارج الشيفرة، أي من نص سياسة (policy text) أو حساب يدوي (hand calculation) أو خاصية (property)، ورأيتُ اثنين منها على الأقل يفشلان (fail) عند تفعيل العيب المقابل (matching bug) عبر `NAJM_BUGS`."
+    "ar": "كتبتُ اختبار pytest لكل من `quantize` و`fee` و`check_transfer` و`value_date` يأتي مرجع نتيجته المتوقعة (test oracle) من خارج الشيفرة، أي من نص سياسة أو حساب يدوي أو خاصية (property)، ورأيتُ اثنين منها على الأقل يفشلان عند تفعيل العيب المقابل عبر `NAJM_BUGS`."
    }
   },
   {
@@ -128,7 +128,7 @@
    "lesson": "1.3",
    "text": {
     "en": "I have written a bug report for a failure I reproduced on the sample, using every field of the Najm Defect Standard, with a reproduction of five lines or fewer that prints the wrong result with the bug on and the right one with it off.",
-    "ar": "كتبتُ تقرير عيب (bug report) عن فشل أعدتُ إنتاجه (reproduced) على النظام النموذجي (sample system)، مستخدمًا كل حقول (every field) معيار نجم للعيوب، مع إعادة إنتاج (reproduction) لا تتجاوز خمسة أسطر تطبع النتيجة الخاطئة عند تفعيل العيب (bug on) والنتيجة الصحيحة عند إيقافه (bug off)."
+    "ar": "كتبتُ تقرير عيب عن فشل أعدتُ إنتاجه على النظام النموذجي، مستخدمًا كل حقول معيار نجم للعيوب، مع إعادة إنتاج لا تتجاوز خمسة أسطر تطبع النتيجة الخاطئة عند تفعيل العيب والنتيجة الصحيحة عند إيقافه."
    }
   }
  ]

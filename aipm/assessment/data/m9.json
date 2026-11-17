@@ -7,7 +7,7 @@
       "lesson": "9.2",
       "q": {
         "en": "Khalid asks why Rania's AI roadmap includes learning milestones, such as a spike result by a set date, when his other technology roadmaps simply list features with delivery dates. What is the main reason?",
-        "ar": "يسأل خالد لماذا تتضمن خارطة طريق الذكاء الاصطناعي (AI roadmap) لدى رانيا محطات تعلّم (learning milestones)، مثل نتيجة اختبار جدوى سريع (spike result) بحلول موعد محدد، بينما تكتفي خرائط الطريق التقنية الأخرى لديه بسرد الميزات مع مواعيد تسليمها. ما السبب الرئيسي (main reason)؟"
+        "ar": "يسأل خالد لماذا تتضمن خارطة طريق الذكاء الاصطناعي لدى رانيا محطات تعلّم، مثل نتيجة اختبار جدوى سريع بحلول موعد محدد، بينما تكتفي خرائط الطريق التقنية الأخرى لديه بسرد الميزات مع مواعيد تسليمها. ما السبب الرئيسي؟"
       },
       "o": {
         "en": [
@@ -17,16 +17,16 @@
           "Value stays open longer: customers often cannot say in interviews whether they would really want a new AI feature"
         ],
         "ar": [
-          "تبقى مخاطر الجدوى التقنية (feasibility risk) مفتوحة أطول: فبلوغ معدل خطأ مقبول يظل غالبًا غير مُثبت حتى يُقيَّم نموذج أولي (prototype) على حالات حقيقية (real cases)",
-          "تبقى مخاطر سهولة الاستخدام (usability risk) مفتوحة أطول: فالموظفون (staff) يحتاجون عادةً إلى تعلّم كتابة موجّهات جيدة قبل أن يفيدهم منتج الذكاء الاصطناعي (AI product) كثيرًا",
-          "تبقى مخاطر الجدوى التجارية (viability risk) مفتوحة أطول: فأسعار النماذج (model prices) تتغير غالبًا بسرعة تمنع تقدير أي تكلفة تشغيل لكل مهمة قبل الإطلاق (launch)",
-          "تبقى مخاطر القيمة (value risk) مفتوحة أطول: فالعملاء غالبًا لا يستطيعون القول في المقابلات (interviews) هل يريدون فعلًا ميزة ذكاء اصطناعي جديدة"
+          "تبقى مخاطر الجدوى التقنية مفتوحة أطول: فبلوغ معدل خطأ مقبول يظل غالبًا غير مُثبت حتى يُقيَّم نموذج أولي على حالات حقيقية",
+          "تبقى مخاطر سهولة الاستخدام مفتوحة أطول: فالموظفون يحتاجون عادةً إلى تعلّم كتابة موجّهات جيدة قبل أن يفيدهم منتج الذكاء الاصطناعي كثيرًا",
+          "تبقى مخاطر الجدوى التجارية مفتوحة أطول: فأسعار النماذج تتغير غالبًا بسرعة تمنع تقدير أي تكلفة تشغيل لكل مهمة قبل الإطلاق",
+          "تبقى مخاطر القيمة مفتوحة أطول: فالعملاء غالبًا لا يستطيعون القول في المقابلات هل يريدون فعلًا ميزة ذكاء اصطناعي جديدة"
         ]
       },
       "a": 0,
       "why": {
         "en": "In AI products feasibility risk stays open far longer than in ordinary software: you often cannot know whether the product reaches an acceptable error rate until a prototype is evaluated on real cases, so the roadmap commits to dates for learning. Prices do drift several times a year, but run cost can still be estimated per task; drift is a reason to plan for model change, not to drop estimates.",
-        "ar": "في منتجات الذكاء الاصطناعي (AI products) تبقى مخاطر الجدوى التقنية (feasibility risk) مفتوحة أطول بكثير مما في البرمجيات العادية (ordinary software): فكثيرًا ما لا تعرف هل يبلغ المنتج معدل خطأ مقبولًا حتى تقيّم نموذجًا أوليًا (prototype) على حالات حقيقية (real cases)، ولذلك تلتزم خارطة الطريق (roadmap) بمواعيد للتعلّم. صحيح أن الأسعار تنجرف (prices drift) عدة مرات في السنة، لكن تكلفة التشغيل (run cost) تظل قابلة للتقدير لكل مهمة (per task)؛ فالانجراف سبب للتخطيط لتغيّر النماذج، لا للتخلي عن التقديرات (drop estimates)."
+        "ar": "في منتجات الذكاء الاصطناعي تبقى مخاطر الجدوى التقنية مفتوحة أطول بكثير مما في البرمجيات العادية: فكثيرًا ما لا تعرف هل يبلغ المنتج معدل خطأ مقبولًا حتى تقيّم نموذجًا أوليًا على حالات حقيقية، ولذلك تلتزم خارطة الطريق بمواعيد للتعلّم. صحيح أن الأسعار تنجرف عدة مرات في السنة، لكن تكلفة التشغيل تظل قابلة للتقدير لكل مهمة؛ فالانجراف سبب للتخطيط لتغيّر النماذج، لا للتخلي عن التقديرات."
       }
     },
     {
@@ -35,7 +35,7 @@
       "lesson": "9.1",
       "q": {
         "en": "Faisal's draft for the board calls Credit Memo Copilot a differentiator because it runs on the newest model with a prompt tuned over six months. Rania asks for evidence that it is building a lasting power, not just a benefit. Which evidence would best support the claim?",
-        "ar": "تصف مسودة فيصل لمجلس الإدارة مساعدَ مذكرات الائتمان (Credit Memo Copilot) بأنه عنصر تمايز (differentiator)، لأنه يعمل على أحدث نموذج (newest model) بموجّه مضبوط على مدى ستة أشهر. تطلب رانيا دليلًا (evidence) على أنه يبني قوة دائمة (lasting power)، لا مجرد منفعة (benefit). أيّ دليل يدعم هذا الادعاء على أفضل وجه؟"
+        "ar": "تصف مسودة فيصل لمجلس الإدارة مساعدَ مذكرات الائتمان (Credit Memo Copilot) بأنه عنصر تمايز، لأنه يعمل على أحدث نموذج بموجّه مضبوط على مدى ستة أشهر. تطلب رانيا دليلًا على أنه يبني قوة دائمة، لا مجرد منفعة. أيّ دليل يدعم هذا الادعاء على أفضل وجه؟"
       },
       "o": {
         "en": [
@@ -45,16 +45,16 @@
           "It launched before any other bank in Qatar offered RMs a copilot for credit memos"
         ],
         "ar": [
-          "تحصل مسوداته (drafts) على درجات أعلى من مساعد بنك منافس في معيار مرجعي عام (public benchmark) هذا الفصل",
-          "ازداد موجّهه (prompt) طولًا وتفصيلًا مع كل إصدار (each release) منذ المشروع التجريبي للشركات الصغيرة (SME pilot)",
-          "ترتفع باستمرار (keeps rising) حصته من مذكرات مديري العلاقات، مع تراكم القوالب والمذكرات السابقة والعادات فيه",
-          "أُطلق (launched) قبل أن يقدّم أي بنك آخر في قطر لمديري العلاقات (RMs) مساعدًا لمذكرات الائتمان"
+          "تحصل مسوداته على درجات أعلى من مساعد بنك منافس في معيار مرجعي عام هذا الفصل",
+          "ازداد موجّهه طولًا وتفصيلًا مع كل إصدار منذ المشروع التجريبي للشركات الصغيرة",
+          "ترتفع باستمرار حصته من مذكرات مديري العلاقات، مع تراكم القوالب والمذكرات السابقة والعادات فيه",
+          "أُطلق قبل أن يقدّم أي بنك آخر في قطر لمديري العلاقات مساعدًا لمذكرات الائتمان"
         ]
       },
       "a": 2,
       "why": {
         "en": "Power needs a benefit and a barrier: a rising share of memos drafted in the tool, as it holds templates, past memos and RM habits, shows switching costs forming, the power the strategy expects of it. A benchmark lead is the tempting answer, but it is only a benefit: a rival renting the same model can close it next quarter.",
-        "ar": "تحتاج القوة (power) إلى منفعة (benefit) وحاجز (barrier) معًا: فالحصة المتزايدة من المذكرات المصاغة في الأداة، مع احتفاظها بالقوالب والمذكرات السابقة وعادات مديري العلاقات، تُظهر تكاليف تحويل (switching costs) آخذة في التشكّل، وهي القوة التي تنتظرها الاستراتيجية منه. أما التفوق في معيار مرجعي (benchmark lead) فهو الإجابة المغرية (tempting answer)، لكنه منفعة فقط: إذ يستطيع منافس يستأجر النموذج نفسه أن يسدّ الفجوة في الفصل القادم (next quarter)."
+        "ar": "تحتاج القوة إلى منفعة وحاجز معًا: فالحصة المتزايدة من المذكرات المصاغة في الأداة، مع احتفاظها بالقوالب والمذكرات السابقة وعادات مديري العلاقات، تُظهر تكاليف تحويل آخذة في التشكّل، وهي القوة التي تنتظرها الاستراتيجية منه. أما التفوق في معيار مرجعي فهو الإجابة المغرية، لكنه منفعة فقط: إذ يستطيع منافس يستأجر النموذج نفسه أن يسدّ الفجوة في الفصل القادم."
       }
     },
     {
@@ -63,7 +63,7 @@
       "lesson": "9.3",
       "q": {
         "en": "The Smart Alerts team's first golden set and rubric are two months late. Fraud analysts were asked to label cases and review outputs in their spare time, and their own caseloads are always full. What is the best fix?",
-        "ar": "تأخرت أول مجموعة مرجعية (golden set) وأول معيار تقدير (rubric) لفريق التنبيهات الذكية شهرين. فقد طُلب من محللي الاحتيال (fraud analysts) وسم الحالات (label cases) ومراجعة المخرجات (review outputs) في وقت فراغهم (spare time)، بينما أعباء عملهم الخاصة (own caseloads) ممتلئة دائمًا. ما أفضل حل (best fix)؟"
+        "ar": "تأخرت أول مجموعة مرجعية (golden set) وأول معيار تقدير (rubric) لفريق التنبيهات الذكية شهرين. فقد طُلب من محللي الاحتيال وسم الحالات ومراجعة المخرجات في وقت فراغهم، بينما أعباء عملهم الخاصة ممتلئة دائمًا. ما أفضل حل؟"
       },
       "o": {
         "en": [
@@ -73,16 +73,16 @@
           "Second named analysts for time agreed in writing, since rubrics need their judgement"
         ],
         "ar": [
-          "تكليف علماء البيانات لدى دانة بكتابة معيار التقدير (rubric)، لأن تصميم التقييم (evaluation design) من صميم عملهم",
-          "الطلب من شريك الحوكمة (governance partner) أن يكتب معيار التقدير (rubric)، لأن الحوكمة تراجع جودة المنتج (product quality)",
-          "جعل نموذج كبير (large model) يصوغ الحالات ويقيّمها، فلا يلزم أي وقت من المحللين (analyst time)",
-          "إعارة محللين مسمّين لوقت متفق عليه كتابةً، لأن معايير التقدير (rubrics) تحتاج إلى حكمهم"
+          "تكليف علماء البيانات لدى دانة بكتابة معيار التقدير، لأن تصميم التقييم من صميم عملهم",
+          "الطلب من شريك الحوكمة أن يكتب معيار التقدير، لأن الحوكمة تراجع جودة المنتج",
+          "جعل نموذج كبير يصوغ الحالات ويقيّمها، فلا يلزم أي وقت من المحللين",
+          "إعارة محللين مسمّين لوقت متفق عليه كتابةً، لأن معايير التقدير تحتاج إلى حكمهم"
         ]
       },
       "a": 3,
       "why": {
         "en": "The quality of an AI product is capped by the judgement behind its evals, so domain experts belong on the team with time agreed in writing and counted towards their objectives, as Najm does with its seconded RMs. Handing the rubric to data scientists is tempting, but the golden set would then be written by people who have never worked a fraud alert.",
-        "ar": "جودة منتج الذكاء الاصطناعي (AI product) محدودة بسقف جودة الحكم الذي تقوم عليه تقييماته (evals)، لذا ينتمي خبراء المجال (domain experts) إلى الفريق بوقت متفق عليه كتابةً ومحتسب ضمن أهدافهم (objectives)، كما يفعل نجم مع مديري العلاقات المُعارين (seconded RMs). أما تسليم معيار التقدير (rubric) لعلماء البيانات (data scientists) فمغرٍ، لكن المجموعة المرجعية (golden set) سيكتبها حينئذٍ أشخاص لم يعالجوا قط تنبيه احتيال (fraud alert)."
+        "ar": "جودة منتج الذكاء الاصطناعي محدودة بسقف جودة الحكم الذي تقوم عليه تقييماته (evals)، لذا ينتمي خبراء المجال إلى الفريق بوقت متفق عليه كتابةً ومحتسب ضمن أهدافهم، كما يفعل نجم مع مديري العلاقات المُعارين. أما تسليم معيار التقدير (rubric) لعلماء البيانات فمغرٍ، لكن المجموعة المرجعية (golden set) سيكتبها حينئذٍ أشخاص لم يعالجوا قط تنبيه احتيال."
       }
     },
     {
@@ -91,7 +91,7 @@
       "lesson": "9.4",
       "q": {
         "en": "As SME Instant Finance moves to wider launch, Dana's slice evaluation shows that businesses under two years old are declined far more often than older ones with similar repayment records. A threshold change narrows the gap but lowers overall approval accuracy slightly. Dana offers to pick the setting herself and fold it into the next model update so the launch does not slip. What should Faisal do?",
-        "ar": "مع انتقال التمويل الفوري للشركات الصغيرة (SME Instant Finance) إلى إطلاق أوسع (wider launch)، يُظهر تقييم الشرائح (slice evaluation) الذي أجرته دانة أن المنشآت التي يقل عمرها عن سنتين تُرفض (declined) أكثر بكثير من المنشآت الأقدم ذات سجلات السداد المماثلة. يضيّق تعديل العتبة (threshold change) الفجوة، لكنه يخفض دقة الموافقات الإجمالية قليلًا. تعرض دانة أن تختار الإعداد بنفسها وتُدرجه في تحديث النموذج القادم حتى لا يتأخر الإطلاق. ماذا ينبغي أن يفعل فيصل؟"
+        "ar": "مع انتقال التمويل الفوري للشركات الصغيرة (SME Instant Finance) إلى إطلاق أوسع، يُظهر تقييم الشرائح (slice evaluation) الذي أجرته دانة أن المنشآت التي يقل عمرها عن سنتين تُرفض أكثر بكثير من المنشآت الأقدم ذات سجلات السداد المماثلة. يضيّق تعديل العتبة الفجوة، لكنه يخفض دقة الموافقات الإجمالية قليلًا. تعرض دانة أن تختار الإعداد بنفسها وتُدرجه في تحديث النموذج القادم حتى لا يتأخر الإطلاق. ماذا ينبغي أن يفعل فيصل؟"
       },
       "o": {
         "en": [
@@ -101,16 +101,16 @@
           "Apply the change, since a fair model must satisfy every common fairness measure at once"
         ],
         "ar": [
-          "ترك الاختيار لدانة، لأن انتقاء مقياس الإنصاف (fairness measure) قرار تقني (technical call) يخص عالمة البيانات (data scientist)",
-          "عرض الإعدادين وأدلتهما على المالكين المساءَلين (accountable owners)، لأنها مفاضلة حقيقية (genuine trade-off)",
-          "الإبقاء على الإعداد الحالي (current setting)، لأن الدقة الإجمالية (overall accuracy) هي الرقم الذي سينظر إليه مجلس الإدارة (board) أولًا",
-          "تطبيق التعديل، لأن النموذج المنصف (fair model) يجب أن يستوفي كل مقاييس الإنصاف الشائعة معًا"
+          "ترك الاختيار لدانة، لأن انتقاء مقياس الإنصاف قرار تقني يخص عالمة البيانات",
+          "عرض الإعدادين وأدلتهما على المالكين المساءَلين، لأنها مفاضلة حقيقية",
+          "الإبقاء على الإعداد الحالي، لأن الدقة الإجمالية هي الرقم الذي سينظر إليه مجلس الإدارة أولًا",
+          "تطبيق التعديل، لأن النموذج المنصف يجب أن يستوفي كل مقاييس الإنصاف الشائعة معًا"
         ]
       },
       "a": 1,
       "why": {
         "en": "This is a genuine trade-off, so the options go to the accountable owners with the evidence and risk visible, and the fairness measure chosen is a documented judgement; a trade-off hidden in a model setting becomes a decision nobody knowingly made. Leaving it to Dana is tempting because her team owns the fairness report, but producing the evidence is not the same as owning the decision.",
-        "ar": "هذه مفاضلة حقيقية (genuine trade-off)، لذا تُعرض الخيارات على المالكين المساءَلين (accountable owners) مع إظهار الأدلة والمخاطر، واختيار مقياس الإنصاف (fairness measure) حكم موثّق (documented judgement)؛ فالمفاضلة المخفية في إعداد النموذج تصبح قرارًا لم يتخذه أحد عن وعي. وترك الأمر لدانة مغرٍ لأن فريقها يملك تقرير الإنصاف (fairness report)، لكن إنتاج الأدلة ليس هو امتلاك القرار."
+        "ar": "هذه مفاضلة حقيقية، لذا تُعرض الخيارات على المالكين المساءَلين مع إظهار الأدلة والمخاطر، واختيار مقياس الإنصاف حكم موثّق؛ فالمفاضلة المخفية في إعداد النموذج تصبح قرارًا لم يتخذه أحد عن وعي. وترك الأمر لدانة مغرٍ لأن فريقها يملك تقرير الإنصاف، لكن إنتاج الأدلة ليس هو امتلاك القرار."
       }
     }
   ],

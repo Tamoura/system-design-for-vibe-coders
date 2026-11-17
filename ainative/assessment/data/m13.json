@@ -7,7 +7,7 @@
       "lesson": "13.1",
       "q": {
         "en": "Lujain's agent rewrites the monthly-limit check in `check_limits`. The diff is tidy and well commented, but she cannot say why the old code compared amounts the way it did, so she cannot tell whether the change is safe. Which skill is she missing?",
-        "ar": "أعاد الوكيل (agent) الذي تستعين به لجين كتابة فحص الحد الشهري (monthly-limit check) في `check_limits`. الفروقات (diff) مرتبة وموثّقة بتعليقات جيدة (well commented)، لكنها لا تستطيع أن تقول لماذا كانت الشيفرة القديمة (old code) تقارن المبالغ بتلك الطريقة، فلا تعرف إن كان التغيير آمنًا (safe). أي مهارة تنقصها؟"
+        "ar": "أعاد الوكيل (agent) الذي تستعين به لجين كتابة فحص الحد الشهري في `check_limits`. الفروقات (diff) مرتبة وموثّقة بتعليقات جيدة، لكنها لا تستطيع أن تقول لماذا كانت الشيفرة القديمة تقارن المبالغ بتلك الطريقة، فلا تعرف إن كان التغيير آمنًا. أي مهارة تنقصها؟"
       },
       "o": {
         "en": [
@@ -17,16 +17,16 @@
           "Testing: deciding which result would show that the new comparison is wrong, then checking for it"
         ],
         "ar": [
-          "صياغة الطلبات (prompt craft): كتابة طلباتها بحيث ينبّه الوكيل (agent) إلى مخاطر تغييراته بنفسه",
-          "تصحيح الأخطاء (debugging): صياغة فرضيات (hypotheses) عن فشل نظامها، ثم اختبار أرخصها أولًا",
-          "قراءة الشيفرة (reading code): معرفة غاية الشيفرة القديمة (old code) بسؤال لماذا هي على هذا النحو",
-          "الاختبار (testing): تحديد أي نتيجة ستُظهر أن المقارنة الجديدة (new comparison) خاطئة"
+          "صياغة الطلبات: كتابة طلباتها بحيث ينبّه الوكيل إلى مخاطر تغييراته بنفسه",
+          "تصحيح الأخطاء: صياغة فرضيات عن فشل نظامها، ثم اختبار أرخصها أولًا",
+          "قراءة الشيفرة: معرفة غاية الشيفرة القديمة بسؤال لماذا هي على هذا النحو",
+          "الاختبار: تحديد أي نتيجة ستُظهر أن المقارنة الجديدة خاطئة"
         ]
       },
       "a": 2,
       "why": {
         "en": "Verification stands on being able to read: past the edge of what she can read she is trusting, not reviewing. The lesson names the missing piece as a fundamental, reading code and asking why it is the way it is, not a prompt trick. Prompt craft is the tempting fix, but it leaves the understanding with the agent, and neither debugging nor testing tells her what the old comparison was for.",
-        "ar": "يقوم التحقق (verification) على القدرة على القراءة (reading)، فخارج ما تستطيع قراءته تثق ولا تراجع (reviewing)؛ وقد سمّى الدرس الحلقة الناقصة مهارة أساسية (fundamental)، هي قراءة الشيفرة وسؤال لماذا هي على هذا النحو، لا حيلة موجّه (prompt trick). وصياغة الطلبات هي الحل المغري (tempting fix)، لكنها تُبقي الفهم عند الوكيل (agent)، ولا يخبرها تصحيح الأخطاء ولا الاختبار بما كانت تفعله المقارنة القديمة."
+        "ar": "يقوم التحقق على القدرة على القراءة، فخارج ما تستطيع قراءته تثق ولا تراجع؛ وقد سمّى الدرس الحلقة الناقصة مهارة أساسية، هي قراءة الشيفرة وسؤال لماذا هي على هذا النحو، لا حيلة موجّه. وصياغة الطلبات هي الحل المغري، لكنها تُبقي الفهم عند الوكيل، ولا يخبرها تصحيح الأخطاء ولا الاختبار بما كانت تفعله المقارنة القديمة."
       }
     },
     {
@@ -35,7 +35,7 @@
       "lesson": "13.2",
       "q": {
         "en": "Lujain adds an eval task, \"write boundary tests for the monthly limit in `check_limits`\". Her check runs the tests the tool writes and passes when they pass. Nada warns that a lazy answer can pass it. Which change makes the check trustworthy?",
-        "ar": "تضيف لجين إلى تقييمها (eval) مهمة: «اكتب اختبارات حدّية (boundary tests) للحد الشهري في `check_limits`». يشغّل فحصها (check) الاختبارات (tests) التي تكتبها الأداة (tool) وينجح حين تنجح. تحذّر ندى من أن إجابة كسولة (lazy answer) قد تمرّ منه. أي تغيير يجعل الفحص جديرًا بالثقة؟"
+        "ar": "تضيف لجين إلى تقييمها (eval) مهمة: «اكتب اختبارات حدّية للحد الشهري في `check_limits`». يشغّل فحصها الاختبارات التي تكتبها الأداة وينجح حين تنجح. تحذّر ندى من أن إجابة كسولة قد تمرّ منه. أي تغيير يجعل الفحص جديرًا بالثقة؟"
       },
       "o": {
         "en": [
@@ -45,16 +45,16 @@
           "Run the tests on the real code, then on a copy with the rule changed, where they must fail"
         ],
         "ar": [
-          "اشتراط أربع دوال اختبار جديدة على الأقل في ملف الاختبار، فلا يمرّ ملف فارغ (empty file)",
-          "إضافة حارس (guard) يشغّل مجموعة الاختبارات (test suite) القائمة كلها قبل عمل الأداة (tool) وبعده في كل مرة",
-          "تشغيل اختبارات الأداة (tool) ثلاث مرات (three times)، واعتبار المهمة ناجحة (passed) فقط إذا نجحت كل مرة منها بلا استثناء",
-          "تشغيل الاختبارات على الشيفرة الحقيقية (real code)، ثم على نسخة غُيّرت قاعدتها فيجب أن تفشل"
+          "اشتراط أربع دوال اختبار جديدة على الأقل في ملف الاختبار، فلا يمرّ ملف فارغ",
+          "إضافة حارس يشغّل مجموعة الاختبارات القائمة كلها قبل عمل الأداة وبعده في كل مرة",
+          "تشغيل اختبارات الأداة ثلاث مرات، واعتبار المهمة ناجحة فقط إذا نجحت كل مرة منها بلا استثناء",
+          "تشغيل الاختبارات على الشيفرة الحقيقية، ثم على نسخة غُيّرت قاعدتها فيجب أن تفشل"
         ]
       },
       "a": 3,
       "why": {
         "en": "A test that asserts nothing passes on any code, so a check must show that the tests fail when the rule is wrong: it runs them on the real code and on a copy with the rule changed. Counting test functions, the tempting safeguard, is beaten by a function with an empty body.",
-        "ar": "الاختبار (test) الذي لا يتحقق من شيء ينجح على أي شيفرة (code)، لذا يجب أن يُظهر الفحص (check) أن الاختبارات تفشل حين تكون القاعدة (rule) خاطئة: فيشغّلها على الشيفرة الحقيقية وعلى نسخة غُيّرت قاعدتها. وعدّ دوال الاختبار (test functions)، وهو الضمان المغري (tempting safeguard)، يتغلب عليه ببساطة اختبار بجسم فارغ (empty body)."
+        "ar": "الاختبار الذي لا يتحقق من شيء ينجح على أي شيفرة، لذا يجب أن يُظهر الفحص أن الاختبارات تفشل حين تكون القاعدة خاطئة: فيشغّلها على الشيفرة الحقيقية وعلى نسخة غُيّرت قاعدتها. وعدّ دوال الاختبار، وهو الضمان المغري، يتغلب عليه ببساطة اختبار بجسم فارغ."
       }
     },
     {
@@ -63,7 +63,7 @@
       "lesson": "13.1",
       "q": {
         "en": "An agent reorders the steps inside `send`. Lujain reads the whole diff, finds nothing odd, and wants a real test of her own understanding of the change before she opens the pull request. What should she do?",
-        "ar": "أعاد وكيل (agent) ترتيب الخطوات (steps) داخل `send`. قرأت لجين الفروقات (diff) كلها فلم تجد شيئًا غريبًا (nothing odd)، وتريد اختبارًا حقيقيًا لفهمها (understanding) هي للتغيير قبل أن تفتح طلب الدمج (pull request). ماذا ينبغي أن تفعل؟"
+        "ar": "أعاد وكيل (agent) ترتيب الخطوات داخل `send`. قرأت لجين الفروقات (diff) كلها فلم تجد شيئًا غريبًا، وتريد اختبارًا حقيقيًا لفهمها هي للتغيير قبل أن تفتح طلب الدمج (pull request). ماذا ينبغي أن تفعل؟"
       },
       "o": {
         "en": [
@@ -73,16 +73,16 @@
           "Read the diff a second time with the ticket beside her, and tick off each change she can tie to a requirement"
         ],
         "ar": [
-          "أن تغلق الفروقات (diff)، وتشرح كل سطر تغيّر (changed line) من الذاكرة كتابةً، ثم تفتحها وتقارن (compare)",
-          "أن تكتب توقعًا (prediction) بأن الاختبارات ستنجح وبالزمن الذي سيستغرقه ذلك، ثم تشغّلها وتسجّل النتيجة (outcome)",
-          "أن تطلب من ندى، المراجِعة الثانية (second reviewer) لمنطق الأموال، أن تمرّ على الفروقات (diff) وتقول ما كانت ستسأل عنه",
-          "أن تقرأ الفروقات (diff) مرة ثانية والتذكرة (ticket) بجانبها، وتضع علامة على كل تغيير تربطه بمتطلب (requirement)"
+          "أن تغلق الفروقات، وتشرح كل سطر تغيّر من الذاكرة كتابةً، ثم تفتحها وتقارن",
+          "أن تكتب توقعًا بأن الاختبارات ستنجح وبالزمن الذي سيستغرقه ذلك، ثم تشغّلها وتسجّل النتيجة",
+          "أن تطلب من ندى، المراجِعة الثانية لمنطق الأموال، أن تمرّ على الفروقات وتقول ما كانت ستسأل عنه",
+          "أن تقرأ الفروقات مرة ثانية والتذكرة بجانبها، وتضع علامة على كل تغيير تربطه بمتطلب"
         ]
       },
       "a": 0,
       "why": {
         "en": "Explain-back makes her produce the explanation from memory before the diff can prompt it, so it shows what she does not follow. Re-reading the diff against the ticket, the tempting choice, only recognises what is already on the page. A prediction log calibrates trust in outcomes over many entries, and a second reviewer tests Nada's reading, not hers.",
-        "ar": "يجبرها الشرح العكسي (explain-back) على إنتاج الشرح من الذاكرة قبل أن تذكّرها الفروقات (diff) به، فيكشف ما لا تفهمه. أما إعادة قراءة الفروقات مع التذكرة، وهي الخيار المغري (tempting choice)، فلا تتيح إلا التعرّف على ما هو مكتوب أمامها. وسجل التوقعات (calibration log) يعايِر الثقة بالنتائج على مدى إدخالات كثيرة، والمراجِعة الثانية تختبر قراءة ندى لا قراءتها هي."
+        "ar": "يجبرها الشرح العكسي (explain-back) على إنتاج الشرح من الذاكرة قبل أن تذكّرها الفروقات به، فيكشف ما لا تفهمه. أما إعادة قراءة الفروقات مع التذكرة، وهي الخيار المغري، فلا تتيح إلا التعرّف على ما هو مكتوب أمامها. وسجل التوقعات يعايِر الثقة بالنتائج على مدى إدخالات كثيرة، والمراجِعة الثانية تختبر قراءة ندى لا قراءتها هي."
       }
     },
     {
@@ -91,7 +91,7 @@
       "lesson": "13.2",
       "q": {
         "en": "Lujain runs `baseline` on her eval and every check fails on the untouched repository, as she wants. Nada asks her to read the reasons. For T04 it prints a `ModuleNotFoundError` raised inside the check script itself, not a message about the missing behaviour. What should she do?",
-        "ar": "شغّلت لجين الأمر `baseline` على تقييمها (eval) ففشلت كل الفحوص (checks) على المستودع الأصلي دون تعديل (untouched repository) كما أرادت. تطلب منها ندى قراءة الأسباب (reasons) التي يطبعها. وفي المهمة (task) T04 يطبع خطأ `ModuleNotFoundError` صادرًا من داخل سكربت الفحص (check script) نفسه، لا رسالة عن السلوك الناقص (missing behaviour). ماذا ينبغي أن تفعل؟"
+        "ar": "شغّلت لجين الأمر `baseline` على تقييمها (eval) ففشلت كل الفحوص على المستودع الأصلي دون تعديل كما أرادت. تطلب منها ندى قراءة الأسباب التي يطبعها. وفي المهمة T04 يطبع خطأ `ModuleNotFoundError` صادرًا من داخل سكربت الفحص نفسه، لا رسالة عن السلوك الناقص. ماذا ينبغي أن تفعل؟"
       },
       "o": {
         "en": [
@@ -101,16 +101,16 @@
           "Run `baseline` again, since an error like that usually comes from a busy machine, not the check"
         ],
         "ar": [
-          "أن تقبله، فالفشل على المستودع الأصلي (untouched repository) هو الخاصية التي وُجد `baseline` ليثبتها",
-          "أن تصلح الانهيار (crash) وتشغّل الفحص (check) يدويًا حتى يفشل لأن السلوك (behaviour) ناقص فعلًا",
-          "أن تضيف حارسًا (guard) إلى T04، ليلتقط الحارس ما يعجز الفحص المنهار (crashing check) عن رؤيته (see)",
-          "أن تعيد تشغيل `baseline`، فخطأ كهذا يأتي عادة من جهاز مشغول (busy machine) لا من الفحص (check)"
+          "أن تقبله، فالفشل على المستودع الأصلي هو الخاصية التي وُجد `baseline` ليثبتها",
+          "أن تصلح الانهيار وتشغّل الفحص يدويًا حتى يفشل لأن السلوك ناقص فعلًا",
+          "أن تضيف حارسًا إلى T04، ليلتقط الحارس ما يعجز الفحص المنهار عن رؤيته",
+          "أن تعيد تشغيل `baseline`، فخطأ كهذا يأتي عادة من جهاز مشغول لا من الفحص"
         ]
       },
       "a": 1,
       "why": {
         "en": "A check that crashes on a bug of its own also fails on the untouched repository, so its failure says nothing about the task; she must fix it and see it fail because the behaviour is missing. Accepting the failure is tempting because a failure is what `baseline` should show, but the reason is what counts.",
-        "ar": "الفحص (check) الذي ينهار (crashes) بسبب خطأ فيه هو نفسه يفشل على المستودع الأصلي (untouched repository)، فلا يقول فشله شيئًا عن المهمة (task)؛ فعليها إصلاحه حتى يفشل لأن السلوك (behaviour) ناقص. وقبول الفشل مغرٍ (tempting) لأن الفشل هو ما ينبغي أن يظهره `baseline`، لكن السبب هو المهم."
+        "ar": "الفحص الذي ينهار بسبب خطأ فيه هو نفسه يفشل على المستودع الأصلي، فلا يقول فشله شيئًا عن المهمة؛ فعليها إصلاحه حتى يفشل لأن السلوك ناقص. وقبول الفشل مغرٍ لأن الفشل هو ما ينبغي أن يظهره `baseline`، لكن السبب هو المهم."
       }
     }
   ],

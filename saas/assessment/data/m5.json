@@ -7,7 +7,7 @@
    "lesson": "5.1",
    "q": {
     "en": "During a deploy, Beacon's notify-incident worker emails 25 of an incident's 40 subscribers, then is killed before it acknowledges the job. The broker hands the job to another worker, and those 25 people get the email twice. Which change stops the duplicates without losing the other 15?",
-    "ar": "أثناء النشر (deploy)، يرسل عامل الإشعارات (notify-incident worker) في Beacon بريدًا (email) إلى 25 من أصل 40 مشتركًا في الحادثة (incident subscribers)، ثم يُقتل (killed) قبل أن يؤكد المهمة. فيسلّم الوسيط (broker) المهمة إلى عامل آخر (another worker)، فيصل البريد إلى هؤلاء الخمسة والعشرين مرتين (twice). أي تغيير يمنع التكرار (duplicates) دون أن يخسر الخمسة عشر الباقون (other 15) بريدهم؟"
+    "ar": "أثناء النشر، يرسل عامل الإشعارات في Beacon بريدًا إلى 25 من أصل 40 مشتركًا في الحادثة، ثم يُقتل قبل أن يؤكد المهمة. فيسلّم الوسيط المهمة إلى عامل آخر، فيصل البريد إلى هؤلاء الخمسة والعشرين مرتين. أي تغيير يمنع التكرار دون أن يخسر الخمسة عشر الباقون (other 15) بريدهم؟"
    },
    "o": {
     "en": [
@@ -17,16 +17,16 @@
      "Acknowledge the job as soon as a worker picks it up, before any email goes out"
     ],
     "ar": [
-     "اضبط عدد محاولات المهمة (job attempts) على 1، حتى لا يشغّلها الوسيط (broker) مرة ثانية أبدًا",
-     "أدخل صف تسليم فريدًا لكل مشترك (per subscriber)، وتخطَّ البريد عند التعارض",
-     "أعطِ المهمة معرّفًا حتميًا (deterministic jobId)، حتى لا يستطيع الوسيط (broker) تشغيلها مرتين أبدًا",
-     "أكّد المهمة بمجرد أن يلتقطها عامل (worker)، قبل إرسال أي بريد (email)"
+     "اضبط عدد محاولات المهمة على 1، حتى لا يشغّلها الوسيط مرة ثانية أبدًا",
+     "أدخل صف تسليم فريدًا لكل مشترك، وتخطَّ البريد عند التعارض",
+     "أعطِ المهمة معرّفًا حتميًا، حتى لا يستطيع الوسيط تشغيلها مرتين أبدًا",
+     "أكّد المهمة بمجرد أن يلتقطها عامل، قبل إرسال أي بريد"
     ]
    },
    "a": 1,
    "why": {
     "en": "Queues deliver at least once, so the fix is to make a rerun harmless: a notification_deliveries row unique on (incident, subscriber, channel), inserted before each send, lets the second run skip the 25 and still email the other 15. A deterministic jobId only stops the same job being enqueued twice; it cannot stop an unacknowledged job from running again.",
-    "ar": "الطوابير (queues) تسلّم مرة واحدة على الأقل، لذلك الحل أن تجعل إعادة التنفيذ (rerun) غير ضارة: صف في notification_deliveries بقيد فريد (unique constraint) على، يُدرَج قبل كل إرسال، فيتخطى التشغيل الثاني (second run) الخمسة والعشرين ويرسل إلى الخمسة عشر الباقين (other 15). أما المعرّف الحتمي للمهمة (deterministic jobId) فيمنع فقط إضافة المهمة نفسها إلى الطابور مرتين (enqueued twice)، ولا يمنع مهمة لم تُؤكَّد (unacknowledged job) من أن تُنفَّذ مرة أخرى."
+    "ar": "الطوابير تسلّم مرة واحدة على الأقل، لذلك الحل أن تجعل إعادة التنفيذ غير ضارة: صف في notification_deliveries بقيد فريد (unique constraint) على، يُدرَج قبل كل إرسال، فيتخطى التشغيل الثاني الخمسة والعشرين ويرسل إلى الخمسة عشر الباقين (other 15). أما المعرّف الحتمي للمهمة فيمنع فقط إضافة المهمة نفسها إلى الطابور مرتين، ولا يمنع مهمة لم تُؤكَّد من أن تُنفَّذ مرة أخرى."
    }
   },
   {
@@ -35,7 +35,7 @@
    "lesson": "5.2",
    "q": {
     "en": "An Acme developer pushes a script containing a Beacon API key to a public GitHub repo. Acme runs four other production integrations on Beacon. Which credential design lets the leak be spotted quickly and shut off without breaking the other four?",
-    "ar": "ينشر مطوّر (developer) في Acme سكربتًا (script) يحتوي مفتاح API لـBeacon في مستودع عام على GitHub. ولدى Acme أربعة تكاملات إنتاجية (production integrations) أخرى تعمل على Beacon. أي تصميم لبيانات الاعتماد (credential design) يسمح برصد التسريب (leak) بسرعة وإيقافه (shut off) دون كسر التكاملات الأربعة الأخرى؟"
+    "ar": "ينشر مطوّر في Acme سكربتًا يحتوي مفتاح API لـBeacon في مستودع عام على GitHub. ولدى Acme أربعة تكاملات إنتاجية أخرى تعمل على Beacon. أي تصميم لبيانات الاعتماد يسمح برصد التسريب بسرعة وإيقافه دون كسر التكاملات الأربعة الأخرى؟"
    },
    "o": {
     "en": [
@@ -45,16 +45,16 @@
      "Prefixed keys that secret scanners can match, each revocable on its own"
     ],
     "ar": [
-     "مفاتيح (keys) تُخزَّن كتجزئات SHA-256 (SHA-256 hashes) فقط، فلا يمكن استخدام النسخة المسربة (leaked copy) إطلاقًا",
-     "مفتاح واحد لكل مؤسسة، يدوّره الدعم فور الإبلاغ عن تسريب (leak)",
-     "كعكات جلسة (session cookies) تنتهي صلاحيتها بعد ساعة (one-hour expiry)، فتموت النسخة المسربة (leaked copy) وحدها",
-     "مفاتيح ببادئة (prefixed keys) تطابقها أدوات فحص الأسرار (secret scanners)، ويمكن إلغاء كل منها وحده"
+     "مفاتيح تُخزَّن كتجزئات SHA-256 (SHA-256 hashes) فقط، فلا يمكن استخدام النسخة المسربة إطلاقًا",
+     "مفتاح واحد لكل مؤسسة، يدوّره الدعم فور الإبلاغ عن تسريب",
+     "كعكات جلسة تنتهي صلاحيتها بعد ساعة، فتموت النسخة المسربة وحدها",
+     "مفاتيح ببادئة تطابقها أدوات فحص الأسرار، ويمكن إلغاء كل منها وحده"
     ]
    },
    "a": 3,
    "why": {
     "en": "A recognisable prefix such as bk_live_ lets secret scanners (GitHub's partner program works this way) flag the leak, and per-key revocation kills only that key. Hashing at rest protects against a database leak, not against a plaintext key the customer published, which still matches its stored hash.",
-    "ar": "البادئة المميزة (recognisable prefix) مثل bk_live_ تسمح لأدوات فحص الأسرار (secret scanners) برصد التسريب (leak)، وبرنامج الشركاء في GitHub يعمل بهذه الطريقة، والإلغاء لكل مفتاح (per-key revocation) يوقف ذلك المفتاح وحده. أما التخزين كتجزئة فيحمي من تسريب قاعدة البيانات (database leak)، لا من مفتاح نصي صريح (plaintext key) نشره العميل بنفسه، فهذا المفتاح ما زال يطابق تجزئته المخزنة (stored hash)."
+    "ar": "البادئة المميزة مثل bk_live_ تسمح لأدوات فحص الأسرار برصد التسريب، وبرنامج الشركاء في GitHub يعمل بهذه الطريقة، والإلغاء لكل مفتاح يوقف ذلك المفتاح وحده. أما التخزين كتجزئة فيحمي من تسريب قاعدة البيانات، لا من مفتاح نصي صريح نشره العميل بنفسه، فهذا المفتاح ما زال يطابق تجزئته المخزنة."
    }
   },
   {
@@ -63,7 +63,7 @@
    "lesson": "5.3",
    "q": {
     "en": "Beacon's URL guard resolves a customer's hostname, rejects private and link-local IPs, pins the checked IP and connects to it. A pen tester adds an HTTP monitor whose public URL answers with a 302 to http://169.254.169.254/latest/meta-data/, and the checker follows it. What should the guard do?",
-    "ar": "يحلّ حارس الروابط (URL guard) في Beacon اسم المضيف (hostname) الذي يقدمه العميل، ويرفض العناوين الخاصة (private IPs) والمحلية للرابط (link-local)، ويثبّت العنوان الذي فحصه ثم يتصل به. يضيف مختبِر اختراق (pen tester) مراقِب HTTP (HTTP monitor) يرد رابطه العام (public URL) بـ302 إلى http://169.254.169.254/latest/meta-data/، فيتبعه الفاحص (checker). ماذا يجب أن يفعل الحارس (guard)؟"
+    "ar": "يحلّ حارس الروابط في Beacon اسم المضيف الذي يقدمه العميل، ويرفض العناوين الخاصة والمحلية للرابط، ويثبّت العنوان الذي فحصه ثم يتصل به. يضيف مختبِر اختراق مراقِب HTTP يرد رابطه العام بـ302 إلى http://169.254.169.254/latest/meta-data/، فيتبعه الفاحص. ماذا يجب أن يفعل الحارس؟"
    },
    "o": {
     "en": [
@@ -73,16 +73,16 @@
      "Keep following redirects, but hide response bodies from the check log"
     ],
     "ar": [
-     "اعتبر هدف كل إعادة توجيه (redirect target) رابطًا جديدًا (new URL)، وشغّل عليه الحارس كاملًا (full guard)",
-     "اتبع إعادة التوجيه (redirect) فقط عندما يستخدم رابط Location (Location URL) بروتوكول HTTPS، لا HTTP العادي (plain HTTP)",
-     "ارفض أي ترويسة Location (Location header) يحتوي نصها على 169.254 أو 127.0.0.1",
-     "استمر في تتبع إعادة التوجيه (redirects)، لكن أخفِ أجسام الردود (response bodies) من سجل الفحص (check log)"
+     "اعتبر هدف كل إعادة توجيه رابطًا جديدًا، وشغّل عليه الحارس كاملًا",
+     "اتبع إعادة التوجيه فقط عندما يستخدم رابط Location بروتوكول HTTPS، لا HTTP العادي",
+     "ارفض أي ترويسة Location يحتوي نصها على 169.254 أو 127.0.0.1",
+     "استمر في تتبع إعادة التوجيه، لكن أخفِ أجسام الردود من سجل الفحص"
     ]
    },
    "a": 0,
    "why": {
     "en": "The first check only cleared the first address, so for monitors the lesson's defence is to re-check each hop with the full guard (webhooks should not follow redirects at all). Matching the Location text misses other internal ranges and odd encodings such as http://0x7f000001/; the guard must check the resolved address, not the string.",
-    "ar": "الفحص الأول (first check) لم يُجِز إلا العنوان الأول (first address)، لذلك فالدفاع الذي يقدمه الدرس للمراقِبات (monitors) هو إعادة الفحص عند كل قفزة بالحارس كاملًا (full guard)، أما الويب هوك (webhooks) فلا ينبغي أن يتبع إعادة التوجيه (redirects) أصلًا. ومطابقة نص Location (Location text) تفوّت نطاقات داخلية أخرى والترميزات الغريبة (odd encodings) مثل http://0x7f000001/، فعلى الحارس (guard) أن يفحص العنوان الناتج (resolved address)، لا النص (string)."
+    "ar": "الفحص الأول لم يُجِز إلا العنوان الأول، لذلك فالدفاع الذي يقدمه الدرس للمراقِبات هو إعادة الفحص عند كل قفزة بالحارس كاملًا، أما الويب هوك (webhooks) فلا ينبغي أن يتبع إعادة التوجيه أصلًا. ومطابقة نص Location تفوّت نطاقات داخلية أخرى والترميزات الغريبة مثل http://0x7f000001/، فعلى الحارس أن يفحص العنوان الناتج، لا النص."
    }
   },
   {
@@ -91,7 +91,7 @@
    "lesson": "5.4",
    "q": {
     "en": "Beacon's escalation workflow runs on Inngest. A tidy-up deploy renames its steps from notify-tier-${i} to page-tier-${i}. Minutes later, engineers whose incidents were already waiting for an acknowledgement before the deploy get the first tier's page a second time. Incidents opened after the deploy escalate normally. What is the most likely cause?",
-    "ar": "يعمل سير عمل التصعيد (escalation workflow) في Beacon على Inngest. ويعيد نشرٌ تنظيمي (tidy-up deploy) تسميةَ خطواته من notify-tier-${i} إلى page-tier-${i}. وبعد دقائق، يتلقى المهندسون (engineers) الذين كانت حوادثهم (incidents) تنتظر التأكيد (acknowledgement) قبل النشر استدعاءَ المستوى الأول مرة ثانية. أما الحوادث التي فُتحت بعد النشر فتتصاعد بشكل طبيعي (escalate normally). ما السبب الأرجح (most likely cause)؟"
+    "ar": "يعمل سير عمل التصعيد في Beacon على Inngest. ويعيد نشرٌ تنظيمي تسميةَ خطواته من notify-tier-${i} إلى page-tier-${i}. وبعد دقائق، يتلقى المهندسون الذين كانت حوادثهم تنتظر التأكيد قبل النشر استدعاءَ المستوى الأول مرة ثانية. أما الحوادث التي فُتحت بعد النشر فتتصاعد بشكل طبيعي. ما السبب الأرجح؟"
    },
    "o": {
     "en": [
@@ -101,16 +101,16 @@
      "Every wake-up replays the code from the top and re-sends the earlier steps"
     ],
     "ar": [
-     "كانت التشغيلات المنتظرة (waiting runs) في ذاكرة العامل (worker memory)، فأضاعت إعادةُ تشغيل العمال عند النشر (deploy restart) موضعَها",
-     "الخطوات (steps) تُنفَّذ مرة واحدة على الأقل، فنُفِّذت من جديد بعد إعادة تشغيل العمال (restart) كلُّ خطوة للمستوى الأول (first-tier step) كانت قيد التنفيذ",
-     "التشغيلات الأقدم (older runs) ليس في سجلها (history) خطوات page-tier، فتنفّذها إعادة التشغيل (replay) فعليًا",
-     "كل استيقاظ (wake-up) يعيد تشغيل الكود من البداية، فيعيد إرسال الخطوات السابقة (earlier steps)"
+     "كانت التشغيلات المنتظرة في ذاكرة العامل، فأضاعت إعادةُ تشغيل العمال عند النشر موضعَها",
+     "الخطوات تُنفَّذ مرة واحدة على الأقل، فنُفِّذت من جديد بعد إعادة تشغيل العمال كلُّ خطوة للمستوى الأول كانت قيد التنفيذ",
+     "التشغيلات الأقدم ليس في سجلها خطوات page-tier، فتنفّذها إعادة التشغيل فعليًا",
+     "كل استيقاظ يعيد تشغيل الكود من البداية، فيعيد إرسال الخطوات السابقة"
     ]
    },
    "a": 2,
    "why": {
     "en": "Replay matches steps to the recorded history by step ID, so in runs started before the deploy page-tier-0 has no recorded result and executes for real; version the workflow or only append. A restart is not the cause: those runs were suspended on a wait, holding no worker and no step in flight, and replay returns recorded results for the steps it finds in the history.",
-    "ar": "إعادة التشغيل (replay) تطابق الخطوات (steps) مع سجل الأحداث (recorded history) بمعرّف الخطوة (step ID)، لذلك لا توجد في التشغيلات (runs) التي بدأت قبل النشر (deploy) نتيجة مسجلة (recorded result) لـpage-tier-0، فتُنفَّذ فعليًا؛ والحل أن تضع إصدارًا لسير العمل أو أن تضيف الخطوات في النهاية فقط (only append). وليست إعادة تشغيل العمال (restart) هي السبب: فتلك التشغيلات كانت معلّقة (suspended) على انتظار (wait)، لا تشغل عاملًا (worker) ولا خطوة قيد التنفيذ، وإعادةُ التشغيل تعيد النتائج المسجلة (recorded results) لكل خطوة تجدها في السجل."
+    "ar": "إعادة التشغيل تطابق الخطوات مع سجل الأحداث بمعرّف الخطوة، لذلك لا توجد في التشغيلات التي بدأت قبل النشر نتيجة مسجلة لـpage-tier-0، فتُنفَّذ فعليًا؛ والحل أن تضع إصدارًا لسير العمل أو أن تضيف الخطوات في النهاية فقط. وليست إعادة تشغيل العمال هي السبب: فتلك التشغيلات كانت معلّقة على انتظار، لا تشغل عاملًا ولا خطوة قيد التنفيذ، وإعادةُ التشغيل تعيد النتائج المسجلة لكل خطوة تجدها في السجل."
    }
   }
  ],
@@ -120,7 +120,7 @@
    "lesson": "5.1",
    "text": {
     "en": "I have pointed Beacon's email provider at a bad host, watched the notify-incident job retry with backoff and succeed once I restored it, and seen a job that failed every attempt land in the dead-letter queue with its error",
-    "ar": "وجّهتُ مزوّد البريد (email provider) في Beacon إلى مضيف خاطئ (bad host)، وشاهدتُ مهمة notify-incident (notify-incident job) تعيد المحاولة بتأخير متزايد (retry with backoff) ثم تنجح بعد أن أعدتُه (once I restored it)، ورأيتُ مهمة فشلت في كل المحاولات تنتهي في طابور الرسائل الميتة (dead-letter queue) مع خطئها"
+    "ar": "وجّهتُ مزوّد البريد في Beacon إلى مضيف خاطئ، وشاهدتُ مهمة notify-incident تعيد المحاولة بتأخير متزايد ثم تنجح بعد أن أعدتُه (once I restored it)، ورأيتُ مهمة فشلت في كل المحاولات تنتهي في طابور الرسائل الميتة (dead-letter queue) مع خطئها"
    }
   },
   {
@@ -128,7 +128,7 @@
    "lesson": "5.3",
    "text": {
     "en": "I have tried to register http://127.0.0.1, http://169.254.169.254, http://[::1] and a hostname resolving to 10.x as both a webhook and a monitor URL, and seen every one rejected",
-    "ar": "حاولتُ تسجيل (register) http://127.0.0.1 وhttp://169.254.169.254 وhttp://[::1] واسم مضيف يُحلّ إلى 10.x (hostname resolving to 10.x)، كرابط ويب هوك (webhook URL) وكرابط مراقِب (monitor URL) معًا، ورأيتُ رفضها كلها"
+    "ar": "حاولتُ تسجيل http://127.0.0.1 وhttp://169.254.169.254 وhttp://[::1] واسم مضيف يُحلّ إلى 10.x (hostname resolving to 10.x)، كرابط ويب هوك وكرابط مراقِب معًا، ورأيتُ رفضها كلها"
    }
   }
  ]
