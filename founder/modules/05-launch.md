@@ -177,7 +177,7 @@ On rung 1, Nadia reports that one client received a reminder 30 minutes late. La
 
 - A. Carry on, because only one reminder was late and the rest were fine
 - B. Wait until Friday to see whether more customers report the same problem to her
-- C. Stop, use the undo, find the cause, then repeat the rung
+- C. Stop, use the undo, find the cause, then repeat the same rung
 - D. Change the stop rule so that one late reminder is allowed
 
 <details><summary>Answer</summary>
@@ -190,7 +190,7 @@ On rung 1, Nadia reports that one client received a reminder 30 minutes late. La
 
 - A. How many files did the agent change, and can I read a summary of each one?
 - B. Which of the three changes in this release was the hardest for the agent to write?
-- C. Can the old version read the data the new one wrote, and can you show me the undo?
+- C. Can the old version read the data the new one wrote, and can you show me the undo working?
 - D. Will the agent watch the release overnight and report anything that it notices?
 
 <details><summary>Answer</summary>
@@ -204,7 +204,7 @@ On rung 1, Nadia reports that one client received a reminder 30 minutes late. La
 - A. "If complaints seem to be rising this week, I will stop and review."
 - B. "If most customers look unhappy after a few days, I will slow down."
 - C. "If the launch feels shaky, I will ask the agent for its opinion."
-- D. "If any customer gets a duplicate reminder, I stop and use the undo."
+- D. "If a customer gets a duplicate reminder, I stop and use the undo."
 
 <details><summary>Answer</summary>
 
@@ -360,7 +360,7 @@ The next week, Nadia writes: "Are you a robot?" The reply says yes, an AI assist
 
 - A. Be friendly and resolve every customer problem quickly, using your own judgement on difficult cases that arise.
 - B. Always give the customer an answer, and if facts are missing, make a sensible estimate that sounds confident.
-- C. Say you are an AI; use only approved help text; pass money, data, faults or doubt to a person.
+- C. Say you are an AI; use only approved help text; pass money, data, faults or doubt to a person straight away, every time.
 - D. Decide for yourself when a person should join, and use whatever company information helps you answer fully.
 
 <details><summary>Answer</summary>
@@ -374,7 +374,7 @@ The next week, Nadia writes: "Are you a robot?" The reply says yes, an AI assist
 - A. Keep the name, and add a line about AI to the terms of service where it is documented
 - B. Wait to say anything unless more customers ask, since most customers never ask the question
 - C. Switch the assistant off for good and answer every message by hand from now on
-- D. Say it is an AI in the first reply, drop the human persona, offer a person
+- D. Say it is an AI in the first reply, drop the human persona, offer a real person to talk to
 
 <details><summary>Answer</summary>
 
@@ -397,7 +397,7 @@ The next week, Nadia writes: "Are you a robot?" The reply says yes, an AI assist
 
 **5. Layla's log shows the assistant handled 80% of messages without a human, and the number of customers asking for a person doubled. What is the best reading?**
 
-- A. It may be keeping people from help, so read those conversations and review the tiers
+- A. It may be keeping people from help, so read those conversations in full and review the tiers
 - B. Customers are impatient at launch, which is normal, so keep the target and wait for it to settle
 - C. The assistant is working well, so Layla should raise the 80% target and automate more topics
 - D. The pricing page is wrong, so Layla should lower the price and watch next week's messages
@@ -559,7 +559,7 @@ She sends a three-sentence version to the nine salons. Mona's one question: "How
 **1. At 16:30 Nadia reports that no reminders have arrived. Layla has found the fault but not the cause. What should she do?**
 
 - A. Wait until she knows the cause so that the message is complete and nothing needs correcting
-- B. Send a short message now: what is wrong, what she is doing, what is unknown, next update
+- B. Send a short message now: what is wrong, what she is doing, what is not known, next update
 - C. Post a general update on social media and let affected salons find it when they look there
 - D. Fix it first, then mention it only to the customers who complain after the reminders return
 
@@ -574,7 +574,7 @@ She sends a three-sentence version to the nine salons. Mona's one question: "How
 - A. Send it, since the assistant is usually accurate about outages of this kind
 - B. Send it with a short apology added at the end, which makes the wording kinder
 - C. Ask the assistant to make it sound more confident so that customers feel reassured
-- D. Rewrite it with only confirmed facts, and say that the cause is not yet known
+- D. Rewrite it with only confirmed facts, and say plainly that the cause is not yet known
 
 <details><summary>Answer</summary>
 
@@ -585,7 +585,7 @@ She sends a three-sentence version to the nine salons. Mona's one question: "How
 **3. Which action is the best for a post-incident note?**
 
 - A. Sam will be more careful with the shared settings from next week onwards.
-- B. Layla adds an alert for no reminders in 30 working minutes, by Friday.
+- B. Layla adds an alert for no reminders in 30 working minutes, by this Friday.
 - C. Layla will improve the monitoring across the whole product by next month.
 - D. Layla and Sam will communicate better with customers by the end of the quarter.
 

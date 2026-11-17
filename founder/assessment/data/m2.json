@@ -12,13 +12,13 @@
       "o": {
         "en": [
           "Keep all four features, since the agent already wrote them and extras cost nothing to maintain later",
-          "Write the job as chasing late payments, and move the others to a kill list with the return conditions",
+          "Write the job as chasing late payments, and move the others to a kill list with their return conditions written down",
           "Ask the agent which feature similar apps usually rank first, and keep only that one for version one",
           "Keep the reminders and the portal, and hide the menu links to the team chat and the analytics page"
         ],
         "ar": [
           "تُبقي الميزات الأربع كلها، لأن الوكيل كتبها أصلًا وصيانة الإضافات لا تكلّف شيئًا في المستقبل أبدًا",
-          "تكتب المهمة على أنها ملاحقة الدفعات المتأخرة، وتنقل الباقي إلى قائمة الاستبعاد مع شروط عودتها",
+          "تكتب المهمة على أنها ملاحقة الدفعات المتأخرة، وتنقل الباقي إلى قائمة الاستبعاد مع شروط عودتها مكتوبة أمامها",
           "تسأل الوكيل أي ميزة تضعها التطبيقات المشابهة في المقدمة عادةً، وتُبقي تلك وحدها في النسخة الأولى",
           "تُبقي التذكيرات والبوابة، وتُخفي روابط القائمة المؤدية إلى دردشة الفريق وصفحة التحليلات"
         ]
@@ -97,13 +97,13 @@
         "en": [
           "Accept the result, since fourteen passing tests show the first version is complete",
           "Ask the same agent to review its own edits and confirm that they were all reasonable ones",
-          "Compare the edits with her own checks, undo any that weakened them, and run them herself",
+          "Compare edits with her own checks, undo weakening ones, and run them herself",
           "Delete all the tests, since an agent that edits them can never be trusted to write any"
         ],
         "ar": [
           "تقبل النتيجة، لأن نجاح أربعة عشر اختبارًا يعني أن النسخة الأولى مكتملة",
           "تطلب من الوكيل نفسه أن يراجع تعديلاته ويؤكد لها أنها كانت كلها تعديلات معقولة",
-          "تقارن التعديلات بفحوصها الأصلية، وتتراجع عمّا أضعفها، وتشغّلها كلها بنفسها",
+          "تقارن التعديلات بفحوصها، وتتراجع عمّا أضعفها، وتشغّلها بنفسها",
           "تحذف الاختبارات كلها، لأن وكيلًا يعدّلها لا يمكن الوثوق به في كتابتها أبدًا"
         ]
       },
