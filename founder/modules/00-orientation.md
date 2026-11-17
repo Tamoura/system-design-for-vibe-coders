@@ -11,7 +11,7 @@
 
 ## ⚡ In 60 seconds
 - After this lesson you can write a one-page "still hard" list for your own idea: at least five things that AI tools did not make easier, each with the question that tests it.
-- What changed: the cost and time of producing a first version of software fell sharply for many kinds of product. A person who cannot code can now direct an agent to build something that runs.
+- What changed: many builders report that a first version of many kinds of software takes far less time and money than before; results vary and this lesson gives no figures. A person who cannot code can now direct an agent to build something that runs.
 - What did not change: knowing that a real person has the problem, choosing what to leave out, getting someone to pay, keeping promises about data and law, and being around when things break.
 - The rule that matters most: **cheap to build is not cheap to be wrong.** Building faster only lets you be wrong faster, unless you also find out faster.
 - Decision cue: before you ask the agent for the next feature, can you name the customer who asked for it, or the test that will show nobody wants it?
@@ -23,7 +23,7 @@ Layla spent a long weekend describing an appointment-reminder app to an AI codin
 
 On Monday she tried to answer four plain questions from a stranger in her co-working space: who uses it, why would they pay, what happens if a reminder goes to the wrong person, and what do you do if the app is down on a Saturday morning at a salon? She had an answer for none of them. Mona, the mentor, did not say the product was bad. She said: "You have finished the part that used to be the hard part. Now start the part that was always the hard part."
 
-That is the situation this course is for. The first version is no longer the main obstacle for many products. The obstacles that remain are the ones that were always there, and they now arrive earlier, because you reach them before you have spent months and money. The good news is that you can face them cheaply. The risk is that a fast build hides them from you for a while.
+That is the situation this course is for. The first version is no longer the main obstacle for many products. The obstacles that remain are the ones that were always there, and they now arrive earlier, because you reach them before you have spent months and money.
 
 This is not a promise that building with AI will make you money. Many products do not find customers, and that is normal. The aim of this course is narrower and more honest: to help you find out cheaply whether yours can, and to run it properly if it can.
 
@@ -33,15 +33,14 @@ This is not a promise that building with AI will make you money. Many products d
 
 **A product and a business are different things.** A **product** is what the customer uses. A **business** is the product plus a reason someone pays for it, a way of reaching them, a price that covers your costs, promises you can keep, and a way to keep running. AI tools have been most obviously useful on the product side. The business side is mostly people, money, law and trust.
 
-**What AI tools changed.** Be specific, because vague claims lead to bad decisions.
+**What AI tools changed.**
 
 | Area | Before | Now, for many products |
 |---|---|---|
-| First working version | Needed a developer or an agency, and weeks or months | A non-technical person can direct an AI agent to a first version in days |
+| First working version | Needed a developer or an agency, and weeks or months | A non-technical person can direct an AI agent to a first version in a short time |
 | Prototype for a test | Costly, so people debated rather than tested | Cheap enough to build several rough versions and show them |
 | Routine pieces | Login, forms, emails, dashboards written by hand | Often generated, sometimes by assembling ready-made services |
 | Drafting words | Landing page copy, help articles, emails all started from blank | A usable first draft in seconds, to be edited by you |
-| Small-team reach | A few people could do a few jobs | A few people, with agents, can attempt more jobs |
 
 "For many products" matters. It is a claim about the typical small web or mobile product, not about everything. A medical device, a payment system or a product that needs deep new research is still hard to build, with or without AI.
 
@@ -57,15 +56,13 @@ This is not a promise that building with AI will make you money. Many products d
 | Being there when it breaks | Customers call you, not the agent | Who fixes it on Saturday, and how do customers hear about it? |
 | Keeping the company running | A business needs money, records and continuity | If I vanished for two weeks, what would stop? |
 
-You can see that none of these is about writing code. That is the point.
-
 **The one memorable rule: cheap to build is not cheap to be wrong.** Imagine two founders. One spends six months building before showing anyone, and discovers nobody wants it. The other builds in a weekend, shows it to nobody, and then adds features for six weeks. Both end in the same place. What protects you is not building speed. It is learning speed: how fast you get evidence from real people.
 
 **Honest uncertainty.** This course will not tell you how many startups fail, how much AI saves, or how fast you can grow. Those numbers are often quoted without good sources, and a number you cannot trace is a decision you cannot check. Where a figure appears here, it is labelled illustrative, or it has a source.
 
 ### 🟡 Going deeper
 
-**Essential and accidental difficulty.** The software engineer Frederick Brooks, in a well-known paper presented in 1986 and published in 1987, "No Silver Bullet", separated the *accidental* difficulty of software (clumsy tools, boilerplate, the mechanics of writing code) from the *essential* difficulty (deciding what to build, and getting the design right for the real problem). Tools can remove accidental difficulty, and the essay argued that no tool removes the essential kind. You do not need to agree with every claim in the essay to find the distinction useful. AI agents are very good at the accidental part. The essential part, in a business, is what this course calls the founder's work.
+**Essential and accidental difficulty.** The software engineer Frederick Brooks, in a well-known paper presented in 1986 and published in 1987, "No Silver Bullet", separated the *accidental* difficulty of software (clumsy tools, boilerplate, the mechanics of writing code) from the *essential* difficulty (deciding what to build, and getting the design right for the real problem). Tools can remove accidental difficulty, and the essay argued that no tool removes the essential kind. AI agents are very good at the accidental part. The essential part, in a business, is what this course calls the founder's work.
 
 **Where the effort moves.** When producing the product gets cheaper, the effort does not vanish. It moves to other places:
 
@@ -76,8 +73,6 @@ You can see that none of these is about writing code. That is the point.
 | Selling | Finding people, talking to them, asking for money |
 | Explaining | Writing down what you promised, and what the AI part does and does not do |
 | Operating | Handling support, incidents, costs, vendors and access |
-
-Notice that the first and second rows are a form of judgement, and judgement cannot be delegated to a tool that wants to please you.
 
 **New risks that come with AI-built products.** Building fast with agents adds some risks of its own, which later modules cover in depth:
 
@@ -90,9 +85,9 @@ Notice that the first and second rows are a form of judgement, and judgement can
 
 ### 🔴 Expert view
 
-**The cost of the first version is not the cost of the product.** Software has a long tail: maintenance, fixes, changes to the tools you depend on, customer support and security. A first version may be cheap while owning the product stays expensive. Founders who count only the first number make plans that do not hold. In Module 3 you will list the recurring costs, and in Module 7 the vendors and the risk of depending on one.
+**The cost of the first version is not the cost of the product.** Software has a long tail: maintenance, fixes, changes to the tools you depend on, customer support and security. A first version may be cheap while owning the product stays expensive. In Module 3 you will list the recurring costs, and in Module 7 the vendors and the risk of depending on one.
 
-**Cheap prototypes change which risk to test first.** Before, a founder tested *can it be built?* because that was the expensive unknown. Now it is often the cheapest unknown, so the risk to test first is usually *will anyone want it, and pay?* Modules 1 and 4 are built around that shift. The **lean startup** approach, popularised by Eric Ries, describes building the smallest thing that lets you learn, and measuring what you learn. The ideas behind it predate AI tools. AI makes the "smallest thing" even smaller, and it does not change the principle.
+**Cheap prototypes change which risk to test first.** Before, a founder tested *can it be built?* because that was the expensive unknown. Now it is often the cheapest unknown, so the risk to test first is usually *will anyone want it, and pay?* Modules 1 and 4 are built around that shift. The **lean startup** approach, popularised by Eric Ries, describes building the smallest thing that lets you learn, and measuring what you learn. AI makes the "smallest thing" even smaller, and it does not change the principle.
 
 
 ## 🧰 The toolkit
@@ -122,7 +117,7 @@ On Tuesday, Layla sat with Mona and wrote the "still hard" list for Tick. It too
 | Support | Layla's own phone number is on the signup page | Who answers on Saturday? | Layla |
 | Continuity | Everything runs from Layla's one account | If Layla is ill for two weeks, what stops? | Layla |
 
-She also started a built-versus-learned log. After the weekend, the "built" column had six items and the "learned" column was empty. Mona pointed at it and said nothing. Layla wrote the first "learned" item that evening, after messaging Nadia: *Nadia's clients reply "yes" to reminders, and Tick does not handle replies.* It was a small piece of real information, and it changed her plan for the following week.
+She also started a built-versus-learned log. After the weekend, the "built" column had six items and the "learned" column was empty. Mona pointed at it and said nothing. Layla wrote the first "learned" item that evening, after messaging Nadia: *Nadia's clients reply "yes" to reminders, and Tick does not handle replies.*
 
 ## 🛠️ Exercises
 🟢 **Write your "still hard" list.** For your own idea, or for a made-up one, list at least five things from the second table in this lesson. For each, write one test question and an owner. *Done when:* the list exists as a document, has at least five rows, and each row has a question you could actually ask a real person.
@@ -259,7 +254,7 @@ A map fixes this. It does not tell you what to do every day. It tells you what o
 
 Module 8 pulls all eight together into a venture file and a practice exam.
 
-**Why this order.** The order follows cost and risk. The cheapest questions come first because a wrong answer there is the most valuable thing to learn early. It costs an afternoon to learn that nobody wants a feature. It costs months to learn it after building.
+**Why this order.** The order follows cost and risk. The cheapest questions come first because a wrong answer there is the most valuable thing to learn early. Learning that nobody wants a feature before building usually costs less than learning it after; the gap varies.
 
 **It is a loop, not a line.** Real journeys look like this:
 
@@ -277,6 +272,10 @@ flowchart LR
     U -. "launch shows a gap" .-> S
     N -. "costs too high" .-> P
 ```
+
+Protect's first question list comes before Launch; its full work continues after.
+
+Protect's first question list comes before Launch; its full work continues after.
 
 Going back is not failing. It is the map doing its job. A price test that fails is information about validation. A launch that exposes a gap is information about scope.
 
@@ -398,7 +397,7 @@ Notice that she did not delete the logo forever. She postponed it behind a cheap
 
 - A. Launching early is always forbidden by the course rules, whatever the situation.
 - B. Investors require a validated idea before any meeting.
-- C. Cheap questions come first, so errors cost least.
+- C. Cheap questions come first, so a wrong answer costs the least.
 - D. Validation is the only step that matters, and the rest are optional.
 
 <details><summary>Answer</summary>
@@ -412,7 +411,7 @@ Notice that she did not delete the logo forever. She postponed it behind a cheap
 - A. It may need to go back to Validate, as the pain may not be strong enough.
 - B. She should skip straight to Run, since Price is no longer needed at all.
 - C. She should delete the map, since it failed to predict the result at all.
-- D. She should launch faster to reach more people before they notice a problem.
+- D. She should lower the price to zero and keep building the product.
 
 <details><summary>Answer</summary>
 
@@ -438,7 +437,7 @@ Notice that she did not delete the logo forever. She postponed it behind a cheap
 - A. Do the logo first, since it is quick, visible and feels like progress.
 - B. Defer what would not matter if Nadia left; do the earliest missing artefact.
 - C. Delete the whole list and start only when a customer asks for something specific.
-- D. Ask Sam to do all forty tasks in parallel, to finish the list quickly.
+- D. Move all forty tasks to Sam and review them later.
 
 <details><summary>Answer</summary>
 
@@ -591,9 +590,9 @@ After the privacy notice mistake, Layla went back to Mona and wrote a "how I wil
 - **Pace:** One lesson a week, exercises in the same week, a Friday review.
 - **Folder:** A shared folder called "Tick venture file", dated entries.
 - **Professionals:** A placeholder entry for an accountant, Hana, and a lawyer, Rashid, with a note to find out whether a first short consultation is available and what it costs. She did not assume what either would say.
-- **Limits:** No invented reviews. No messages to people who have not agreed to hear from Tick. Tell clients plainly that Tick uses an AI model to draft some messages, once she decides to include that.
+- **Limits:** No invented reviews. No messages to people who have not agreed to hear from Tick. Tell clients plainly where Tick uses an AI model to draft messages, and ask Rashid where disclosure is expected.
 
-Then she did the privacy notice properly. She removed the notice she had published, replaced it with a short plain statement of what Tick actually stores (client names and phone numbers) and a line saying a full notice was being prepared, and marked each promise from the old draft.
+Then she did the privacy notice properly. She removed the notice she had published, replaced it with a short plain statement of what Tick actually stores (client names and phone numbers) and a line saying a full notice was being prepared, and marked each promise from the old draft. She also asked Nadia what her clients had been told about reminders, and stored nothing more until Rashid answered.
 
 | Sentence in the draft | Does Tick really do this? | Question for Rashid |
 |---|---|---|
@@ -656,9 +655,9 @@ She sent Rashid the table and a one-paragraph description, three days before the
 
 **3. Before meeting Rashid, what should Layla bring?**
 
-- A. A request that he decide her business model, her pricing and her launch date.
-- B. A short description of Tick, its data, her promises, and ranked questions for him.
-- C. Nothing, so that his advice is not influenced by her own thinking.
+- A. A request that he decide her business model, her pricing, her launch date and her plan.
+- B. A short description of Tick, its data, her promises, and ranked questions.
+- C. A long file of all her client messages, with no order or summary.
 - D. A copy of another business's terms, to be signed as her own work.
 
 <details><summary>Answer</summary>
@@ -682,14 +681,14 @@ She sent Rashid the table and a one-paragraph description, three days before the
 
 **5. Mona asks Layla to name one honest limit. Which is the best example from this course?**
 
-- A. Never contact anyone about Tick, in order to avoid making mistakes.
-- B. Never ask a professional anything at all, in order to keep costs low.
-- C. Never mention AI use to customers, in order to look more established.
-- D. Never invent reviews or traction; disclose AI use where it matters to customers.
+- A. Never contact anyone about Tick until they ask you to and agree.
+- B. Never mention AI use unless a customer asks you directly.
+- C. Never publish customer reviews unless every one is positive.
+- D. Never invent reviews or traction, under any circumstances.
 
 <details><summary>Answer</summary>
 
-**D.** No fabricated reviews or traction, and disclosure of AI use where it matters, are limits the course states. A would stop the business from learning, B rules out professional help, and C is the opposite of disclosure. (See "Customer research and honesty" and "Ethics as a working method".)
+**D.** No fabricated reviews or traction is a limit the course states, and the course also asks for disclosure of AI use where it matters. A would stop the business from learning, B discloses AI use too narrowly, and C hides honest feedback. (See "Customer research and honesty" and "Ethics as a working method".)
 
 </details>
 

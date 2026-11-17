@@ -6,8 +6,8 @@
    "level": 1,
    "lesson": "8.1",
    "q": {
-    "en": "Layla's pricing sheet is dated last month, but it rests only on her own calculations and one test with friendly prospects. How does the readiness table rate the Price step?",
-    "ar": "ورقة التسعير عند ليلى مؤرَّخة بالشهر الماضي، لكنها تستند إلى حساباتها وحدها واختبار واحد مع عملاء محتملين مقرَّبين. كيف يقيّم جدول الجاهزية خطوة Price؟"
+    "en": "Layla's pricing sheet is dated last month, but it rests mostly on her own calculations and one test with friendly prospects. How does the readiness table rate the Price step?",
+    "ar": "ورقة التسعير عند ليلى مؤرَّخة بالشهر الماضي، لكنها تستند في معظمها إلى حساباتها واختبار واحد مع عملاء محتملين مقرَّبين. كيف يقيّم جدول الجاهزية خطوة Price؟"
    },
    "o": {
     "en": [
@@ -18,7 +18,7 @@
     ],
     "ar": [
      "أخضر، لأن المخرَج موجود وعليه تاريخ حديث",
-     "أحمر، لأن سعرًا يستند إلى الرأي مثل سعر غير موجود",
+     "أحمر، لأن السعر المبني على الرأي كالسعر الغائب",
      "برتقالي، لأنه موجود لكنه يستند في معظمه إلى رأيها",
      "غير مقيَّم، لأن السعر لا يُحكم عليه دون مختص"
     ]
@@ -39,13 +39,13 @@
    },
    "o": {
     "en": [
-     "Three countable outcomes, about eight planned hours a week, and a real-person or real-check task every week",
+     "Three countable outcomes, about eight planned hours, and a real-person task weekly",
      "Five outcomes across all eight steps, planned at the full twelve hours so that no step is left out",
      "Three outcomes, all new features, planned at the full twelve hours with the rule written on day 30",
      "Two outcomes on his favourite step, about eight planned hours, with the review set for day 45"
     ],
     "ar": [
-     "ثلاث نتائج قابلة للعدّ، ونحو ثماني ساعات مخطَّطة أسبوعيًا، ومهمة مع شخص حقيقي أو فحص حقيقي في كل أسبوع",
+     "ثلاث نتائج قابلة للعدّ، ونحو ثماني ساعات مخطَّطة، ومهمة أسبوعية مع شخص حقيقي",
      "خمس نتائج على الخطوات الثماني كلها، مخطَّطة على الاثنتي عشرة ساعة كاملة كي لا تُترك خطوة",
      "ثلاث نتائج كلها ميزات جديدة، مخطَّطة على الاثنتي عشرة ساعة كاملة مع كتابة القاعدة في اليوم الثلاثين",
      "نتيجتان على خطوته المفضلة، ونحو ثماني ساعات مخطَّطة، مع تحديد المراجعة في اليوم الخامس والأربعين"
@@ -76,7 +76,7 @@
      "تعدّ الدرجة توقعًا لأداء مشروعها وتعدّل خططها بحسبها",
      "تعيد الامتحان حتى تصير الإجابات مألوفة، ثم تنتقل إلى الدورة التالية",
      "تعيد قراءة الدروس التي أخطأت فيها وحدها، وتتجاوز شروح الأسئلة التي أصابت فيها",
-     "تقرأ كل الشروح، ثم تعيد قراءة الدروس وراء إجاباتها الخاطئة أولًا"
+     "تقرأ كل الشروح، ثم تعيد قراءة الدروس وراء إجاباتها الخاطئة قبل أن تنتقل"
     ]
    },
    "a": 3,
@@ -96,21 +96,21 @@
    "o": {
     "en": [
      "Ask an AI tool to compare the terms with typical deals, and reply if they look similar to them",
-     "Bring the term sheet, file and written questions to a qualified professional first",
+     "Bring the term sheet, file and written questions to a qualified professional before replying, since terms can bind for years",
      "Turn the two red rows amber with fresh wording, so the file looks stronger when it is shared",
      "Reply quickly with the file as it stands, since the funder will explain each term later"
     ],
     "ar": [
      "تطلب من أداة ذكاء اصطناعي مقارنة الشروط بصفقات معتادة، وتردّ إن بدت متشابهة",
-     "تحمل ورقة الشروط وملف المشروع وأسئلة مكتوبة إلى مختص مؤهَّل أولًا",
+     "تحمل ورقة الشروط وملف المشروع وأسئلة مكتوبة إلى مختص مؤهَّل قبل أن تردّ",
      "تحوّل الصفّين الأحمرين إلى برتقاليين بصياغة جديدة، ليبدو الملف أقوى حين يُشارك",
      "تردّ سريعًا بالملف كما هو، لأن الجهة ستشرح كل شرط في المكالمة التالية"
     ]
    },
    "a": 1,
    "why": {
-    "en": "A term sheet can bind a founder for years, and the course teaches concepts, not advice, so the next step is a qualified professional with the term sheet, the file and ranked questions. An AI summary is not a substitute, and smoothing the ratings to look better is exactly what the lesson warns against.",
-    "ar": "قد تُلزم ورقة الشروط المؤسِّس سنوات، والدورة تعلّم المفاهيم لا النصيحة، فالخطوة التالية مختص مؤهَّل مع ورقة الشروط والملف وأسئلة مرتّبة. وملخص الذكاء الاصطناعي لا يغني عنه، وتجميل التقديرات ليبدو الملف أقوى هو ما يحذّر منه الدرس."
+    "en": "The terms a term sheet leads to can bind a founder for years, and which parts bind differs by country and deal. The course teaches concepts, not advice, so the next step is a qualified professional with the term sheet, the file and ranked questions. An AI summary is not a substitute, and smoothing the ratings to look better is exactly what the lesson warns against.",
+    "ar": "قد تُلزم الشروط التي تؤدي إليها ورقة الشروط المؤسِّس سنوات، وأي أجزائها تُلزم يختلف بحسب البلد والصفقة. والدورة تعلّم المفاهيم لا النصيحة، فالخطوة التالية مختص مؤهَّل مع ورقة الشروط والملف وأسئلة مرتّبة. وملخص الذكاء الاصطناعي لا يغني عنه، وتجميل التقديرات ليبدو الملف أقوى هو ما يحذّر منه الدرس."
    }
   }
  ],
@@ -128,7 +128,7 @@
    "lesson": "8.1",
    "text": {
     "en": "I have saved a 30-day plan with at most three countable outcomes and a continue, change or stop rule dated day 1, and put the day-30 review in my calendar.",
-    "ar": "حفظتُ خطة لثلاثين يومًا بثلاث نتائج قابلة للعدّ على الأكثر وقاعدة «أكمل أو غيّر أو توقف» مؤرَّخة باليوم الأول، ووضعتُ مراجعة اليوم الثلاثين في تقويمي."
+    "ar": "حفظتُ خطة لثلاثين يومًا بثلاث نتائج قابلة للعدّ على الأكثر وقاعدة المواصلة والتغيير والتوقف مؤرَّخة باليوم الأول، ووضعتُ مراجعة اليوم الثلاثين في تقويمي."
    }
   }
  ]

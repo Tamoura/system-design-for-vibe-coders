@@ -7,18 +7,18 @@
       "lesson": "4.1",
       "q": {
         "en": "Layla is filling in her first-ten list. Which row is ready to count as a named prospect, with a reason and a next step?",
-        "ar": "تملأ ليلى قائمة العشرة الأوائل (first-ten list). أيّ صف جاهز ليُحتسب عميلًا محتملًا مسمّى، له سبب وخطوة تالية؟"
+        "ar": "تملأ ليلى قائمة العشرة الأوائل. أيّ صف جاهز ليُحتسب عميلًا محتملًا مسمّى، له سبب وخطوة تالية؟"
       },
       "o": {
         "en": [
-          "Owner E, two-chair salon, circle 3: suggested by her assistant as a likely fit for reminders; next step: email her this week",
-          "Regional salon group, circle 3: hundreds of members who probably need reminders; next step: post an invitation in the weekly thread",
+          "Owner E, two-chair salon, circle 3: suggested by Layla's AI assistant as a likely fit for reminders; next step: email her Friday",
+          "Regional salon group, circle 3: hundreds of members who probably need reminders; next step: post an invitation in Tuesday's thread",
           "Owner F, one-chair salon, circle 2: introduced by Nadia, loses slots to cancellations; next step: two-line note Thursday",
           "Owner G, a friend, circle 1: said she would support Tick; next step: ask her to pay for a trial as a favour to Layla"
         ],
         "ar": [
-          "صاحبة الصالون هـ، صالون بكرسيين، الدائرة 3: رشّحها المساعد على أنها مناسبة محتملة لخدمة التذكيرات؛ الخطوة التالية: مراسلتها بالبريد هذا الأسبوع",
-          "مجموعة الصالونات الإقليمية، الدائرة 3: مئات الأعضاء ممن يحتاجون التذكيرات غالبًا؛ الخطوة التالية: نشر دعوة في موضوع الأسبوع",
+          "صاحبة الصالون هـ، صالون بكرسيين، الدائرة 3: رشّحها المساعد الذكي لليلى على أنها مناسبة محتملة لخدمة التذكيرات؛ الخطوة التالية: مراسلتها بالبريد يوم الجمعة",
+          "مجموعة الصالونات الإقليمية، الدائرة 3: مئات الأعضاء ممن يحتاجون التذكيرات غالبًا؛ الخطوة التالية: نشر دعوة في موضوع الثلاثاء",
           "صاحبة الصالون و، صالون بكرسي واحد، الدائرة 2: قدّمتها نادية وتخسر مواعيد بسبب الإلغاء؛ الخطوة التالية: رسالة من سطرين يوم الخميس",
           "صاحبة الصالون ز، صديقة، الدائرة 1: قالت إنها ستدعم تيك؛ الخطوة التالية: أن تطلب منها دفع ثمن تجربة معروفًا لليلى"
         ]
@@ -35,7 +35,7 @@
       "lesson": "4.2",
       "q": {
         "en": "Layla's assistant offers to send personalised outreach to 200 addresses from a scraped list, adding a friendly detail to each and following up until people reply. What fits the lesson best?",
-        "ar": "يعرض مساعد ليلى إرسال رسائل تواصل مباشر (outreach) مخصّصة إلى 200 عنوان من قائمة مجموعة بالكشط، مع إضافة تفصيل ودّي لكل رسالة والمتابعة حتى يردّ الناس. ما أنسب موقف وفق الدرس؟"
+        "ar": "يعرض مساعد ليلى إرسال رسائل تواصل مباشر (outreach) مخصّصة إلى 200 عنوان من قائمة جُمعت بالكشط، مع إضافة تفصيل ودّي لكل رسالة والمتابعة حتى يردّ الناس. ما أنسب موقف وفق الدرس؟"
       },
       "o": {
         "en": [
@@ -45,8 +45,8 @@
           "Accept it only for addresses in countries where she has heard that unsolicited messages are generally tolerated"
         ],
         "ar": [
-          "ترفضه، وتكتب لأشخاص مسمّين لها سبب لمراسلتهم، وتتابع مرة واحدة",
-          "تقبله، لكنها تقلّص القائمة إلى الخمسين عنوانًا الأكثر وعدًا وتُبقي في كل رسالة التفصيل الودّي المختلق",
+          "ترفضه، وتكتب لأشخاص مسمّين لها سبب لمراسلتهم، وتتابع مرة واحدة ثم تتوقف",
+          "تقبله، لكنها تقلّص القائمة المكشوطة إلى الخمسين عنوانًا الأكثر ترجيحًا للرد وتُبقي في كل رسالة التفصيل الودّي المختلق",
           "تقبله، وتضيف إلى كل رسالة سطرًا واضحًا لإلغاء الاشتراك ليبقى باقي النص كما صيغ أصلًا",
           "تقبله فقط للعناوين في بلدان سمعت أن الرسائل غير المطلوبة فيها مسموح بها عمومًا"
         ]
@@ -63,7 +63,7 @@
       "lesson": "4.3",
       "q": {
         "en": "A new owner has just said yes to a free two-week trial of Tick on a call. Which plan fits the lesson's approach to onboarding?",
-        "ar": "قالت صاحبة صالون جديدة نعم لتجربة مجانية لتيك مدتها أسبوعان خلال مكالمة. أيّ خطة تناسب نهج الدرس في التهيئة (onboarding) وفي بلوغ النتيجة الأولى (first result)؟"
+        "ar": "قالت صاحبة صالون جديدة نعم لتجربة مجانية لتيك مدتها أسبوعان خلال مكالمة. أيّ خطة تناسب نهج الدرس في التهيئة (onboarding) وفي بلوغ النتيجة الأولى؟"
       },
       "o": {
         "en": [
@@ -91,7 +91,7 @@
       "lesson": "4.3",
       "q": {
         "en": "Of six trial customers, four reached the first result and two stopped at the calendar step. One said, \"I did not know which calendar to pick.\" What should Layla do next?",
-        "ar": "من بين ستة عملاء في التجربة، بلغ أربعة النتيجة الأولى (first result) وتوقف اثنان عند خطوة التقويم. قالت إحداهما: «لم أعرف أي تقويم أختار». ماذا تفعل ليلى بعد ذلك؟"
+        "ar": "من بين ستة عملاء في التجربة، بلغ أربعة النتيجة الأولى وتوقف اثنان عند خطوة التقويم. قالت إحداهما: «لم أعرف أي تقويم أختار». ماذا تفعل ليلى بعد ذلك؟"
       },
       "o": {
         "en": [
@@ -120,7 +120,7 @@
       "lesson": "4.1",
       "text": {
         "en": "I have built a first-ten list of at least thirty named people or businesses, each row with a circle, a source, a reason they might have the problem and a dated next step, and saved it in my founder folder.",
-        "ar": "بنيتُ قائمة العشرة الأوائل (first-ten list) من ثلاثين اسمًا على الأقل لأشخاص أو أعمال مسمّين، في كل صف دائرة ومصدر وسبب قد يجعل المشكلة مشكلتهم وخطوة تالية بتاريخ، وحفظتُها في مجلد المؤسس."
+        "ar": "بنيتُ قائمة العشرة الأوائل من ثلاثين اسمًا على الأقل لأشخاص أو أعمال مسمّين، في كل صف دائرة ومصدر وسبب قد يجعل المشكلة مشكلتهم وخطوة تالية بتاريخ، وحفظتُها في مجلد المؤسس."
       }
     },
     {
@@ -128,7 +128,7 @@
       "lesson": "4.3",
       "text": {
         "en": "I have written a first-result statement and an onboarding checklist for my product, and saved both in my founder folder with the day by which a new customer should reach the result.",
-        "ar": "كتبتُ بيان النتيجة الأولى (first result) وقائمة تهيئة (onboarding checklist) لمنتجي، وحفظتُهما معًا في مجلد المؤسس مع اليوم الذي ينبغي أن يبلغ فيه العميل الجديد النتيجة."
+        "ar": "كتبتُ بيان النتيجة الأولى وقائمة تهيئة لمنتجي، وحفظتُهما معًا في مجلد المؤسس مع اليوم الذي ينبغي أن يبلغ فيه العميل الجديد النتيجة."
       }
     }
   ]

@@ -14,13 +14,13 @@
      "The reminder format, because it is the largest change to her code",
      "The email to the whole list, since a sent message cannot be recalled",
      "The price page, because customers decide whether to buy from it",
-     "Her own test run with fake clients, since it needs real appointments"
+     "Her own test run with fake clients, since it takes the longest to do"
     ],
     "ar": [
      "صيغة التذكير، لأنها أكبر تغيير في شيفرة المنتج كله",
-     "الرسالة إلى القائمة كلها، لأن المرسلة لا يمكن استرجاعها",
+     "الرسالة إلى القائمة كلها، لأن الرسالة لا يمكن استرجاعها",
      "صفحة الأسعار، لأن العملاء يقررون الشراء بناءً على ما فيها",
-     "تجربتها الخاصة بعملاء وهميين، لأنها تحتاج إلى مواعيد حقيقية"
+     "تجربتها الخاصة بعملاء وهميين، لأنها أطول الخطوات زمنًا"
     ]
    },
    "a": 1,
@@ -48,7 +48,7 @@
      "تواصل العمل، لأن نجاح الشهر الماضي ما زال ينطبق على التعليمات نفسها",
      "تقرأ الردود الحية التالية وتوقفه فقط إن بدا أحدها خاطئًا",
      "تطلب من المساعد أن يؤكد أنه ما زال يتبع سياسة الدعم",
-     "تعيد تشغيل الاختبارات العشرة وتقيّم كل رد"
+     "تعيد الاختبارات العشرة وتقيّم كل رد بحسب السياسة"
     ]
    },
    "a": 3,
@@ -90,20 +90,20 @@
    "level": 3,
    "lesson": "5.1",
    "q": {
-    "en": "Her builder says a new release stores appointment times in a different shape, and the old code cannot read that shape. How should she plan the release?",
-    "ar": "يقول مطوّرها إن إصدارًا جديدًا يخزّن أوقات المواعيد بصيغة مختلفة، وإن الشيفرة القديمة لا تستطيع قراءة هذه الصيغة. كيف تخطط للإصدار؟"
+    "en": "Layla's builder says a new release stores appointment times in a different shape, and the old code cannot read that shape. How should Layla plan the release?",
+    "ar": "يقول مطوّر ليلى إن إصدارًا جديدًا يخزّن أوقات المواعيد بصيغة مختلفة، وإن الشيفرة القديمة لا تستطيع قراءة هذه الصيغة. كيف تخطط ليلى للإصدار؟"
    },
    "o": {
     "en": [
      "As reversible, since the previous version is kept on the hosting platform",
-     "As reversible, since a feature flag can hide the new screens if needed",
+     "As reversible, since a feature flag can hide the new screens",
      "As irreversible: release small, with a restored backup and a person watching",
      "As low risk, since her agent says the change is small and well tested"
     ],
     "ar": [
      "على أنه قابل للتراجع، لأن النسخة السابقة محفوظة على منصة الاستضافة",
-     "على أنه قابل للتراجع، لأن علم الميزة يستطيع إخفاء الشاشات الجديدة عند الحاجة",
-     "على أنه لا رجعة فيه: إطلاق صغير مع نسخة احتياطية مجرَّبة وشخص يراقب طوال الإطلاق",
+     "على أنه قابل للتراجع، لأن علم الميزة يستطيع إخفاء الشاشات الجديدة",
+     "على أنه لا رجعة فيه: إطلاق صغير مع نسخة احتياطية سبق أن استُعيدت وشخص يراقب",
      "على أنه منخفض الخطر، لأن وكيلها يقول إن التغيير صغير ومُختبَر جيدًا"
     ]
    },

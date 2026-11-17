@@ -64,11 +64,11 @@ The weak versions can be agreed with by anyone and tested by no one. The strong 
 
 ### 🟡 Going deeper
 
-**A simple scoring table.** Give each candidate a score from 1 to 5 on each property, plus a note on the evidence behind the score. Evidence matters more than the number; a 4 with "Nadia and two other owners told me stories" beats a 5 with "I think so".
+**A simple scoring table.** Give each candidate a score from 1 to 5 on each property, plus a note on the evidence behind the score. Evidence matters more than the number; a 4 with "Nadia told me a recent story" beats a 5 with "I think so".
 
 | Candidate problem | Reach | Pain | Frequency | Evidence so far | Next cheapest test |
 |---|---|---|---|---|---|
-| Missed appointments at small salons | 4 | 4 | 4 | Nadia, plus two owners Layla has met | Talk to eight more owners |
+| Missed appointments at small salons | 4 | 4 | 4 | Nadia's call | Interview eight owners |
 | Tutors chasing late payment | 3 | 4 | 3 | One tutor friend | Ask three tutors for their last unpaid lesson story |
 | Repair shops losing track of customer callbacks | 2 | 3 | 4 | A guess | Visit two shops and watch for an hour |
 
@@ -139,7 +139,7 @@ She wrote her kill condition: "If I cannot find three owners besides Nadia who l
 **1. Layla describes Tick as "an AI app that reminds clients about appointments". Mona asks her to restate it as a problem. Which version is best?**
 
 - A. Small businesses need smarter, more automated communication with their customers.
-- B. Salon owners lose chair time when clients forget, and text reminders by hand at night after closing.
+- B. Salon owners lose chair time when clients forget, and text reminders by hand.
 - C. Clients forget things, so an AI tool that sends reminders at the right time would help them.
 - D. Appointment reminders are a growing category, so Tick is well placed to serve many salons.
 
@@ -164,33 +164,33 @@ She wrote her kill condition: "If I cannot find three owners besides Nadia who l
 
 **3. A candidate problem happens to a customer about once every two years but is serious when it does. For a solo founder with a small business in mind, what is the main concern?**
 
-- A. Low frequency makes it hard to meet customers often or be remembered.
-- B. A serious problem is always too complicated for a solo founder to understand.
-- C. Customers with infrequent problems never pay for anything, whatever the pain is.
-- D. Infrequent problems cannot be reached through interviews, so no evidence is possible.
+- A. Low frequency makes it hard to meet customers repeatedly or be remembered.
+- B. A problem this serious needs a bigger team than a solo founder before any testing.
+- C. Customers with rarer problems value a fix less, so they tend to pay less for it.
+- D. Interviews with owners of rare problems are less useful than with owners of daily ones.
 
 <details><summary>Answer</summary>
 
-**A.** Frequency affects how easy it is to reach customers repeatedly and how quickly a fix pays back. It does not make the problem impossible, which is what B, C and D wrongly claim. See "Three properties to check".
+**A.** Frequency affects how easy it is to reach customers repeatedly and how quickly a fix pays back. It does not make the problem impossible to study, and B, C and D assert things the lesson does not claim: a solo founder can test a serious problem, low frequency does not by itself mean low willingness to pay, and rare problems can still be researched. See "Three properties to check".
 
 </details>
 
 **4. Before interviewing owners, Layla writes: "If fewer than three of eight owners describe a recent no-show and a workaround, I drop salon no-shows." What is the purpose of this line?**
 
-- A. It guarantees that the idea will succeed once three owners agree to talk to her.
-- B. It lets her skip interviews entirely, because the threshold already predicts the outcome.
+- A. It shows the idea will probably succeed once three owners agree to talk to her.
+- B. It lets her cut down the interviews, because the threshold already points to the outcome.
 - C. It protects her from reading ambiguous results as encouraging, since the rule came first.
-- D. It is a legal requirement for any founder who plans to interview potential customers.
+- D. It is a habit that makes her notes look more professional to the people who read them.
 
 <details><summary>Answer</summary>
 
-**C.** A kill condition set in advance makes the evidence harder to bend. It promises nothing (A), does not replace talking to people (B), and is not a legal requirement (D). See "Write the 'what would change my mind' line".
+**C.** A kill condition set in advance makes the evidence harder to bend. It does not predict success (A), does not replace talking to people (B), and its purpose is not appearance (D). See "Write the 'what would change my mind' line".
 
 </details>
 
 **5. Layla's friend, a developer, says: "There are no competitors for Tick." What is the best reply?**
 
-- A. Agree, because no competitor means the market is wide open and demand is guaranteed.
+- A. Agree, because no competitor suggests the market is open and demand is likely.
 - B. List what customers do today, including doing nothing, and what Tick must beat now.
 - C. Search for a famous company and copy its product, because that removes the risk.
 - D. Wait until a competitor appears, which proves that real demand exists for the idea.
@@ -235,7 +235,7 @@ Customer interviews are the cheapest and most powerful tool you have at this sta
 
 **What an interview is for.** At this stage you want to learn: who the person is, what situation they are in, what the problem costs, and what they do now. You are **not** trying to sell, to prove your idea is good, or to find out whether they "like" it. Your goal is to be **surprised**. If every interview confirms what you already believed, you are probably not listening or not asking.
 
-**The core rules.** These come from a long tradition of customer research, and a well-known short book on the subject, *The Mom Test*, summarises them well (see References):
+**The core rules.** These come from a long tradition of customer research, and they are in the spirit of *The Mom Test*, a short book on the subject (see References):
 
 1. **Talk about their life, not your idea.** Ask about what they do, not what they think of a product.
 2. **Ask about specifics in the past, not generalities or the future.** "Last time" beats "usually", and "usually" beats "would you ever".
@@ -294,7 +294,7 @@ A useful habit is to put a **tag** on each fact: **P** for a problem or pain, **
 1. A compliment ("great idea"): nearly free.
 2. An agreement to another conversation: small cost.
 3. An introduction to a colleague: they spend social capital.
-4. Letting you watch them work or share a real document (an appointment list, with identifying details removed): time and trust.
+4. Letting you watch them work or share a real document (an appointment list: ask her to hide client names and numbers first): time and trust.
 5. A deposit or pre-order: money. Lesson 1.4 covers this.
 
 If every interview ends at level 1, you have a kind audience, not a customer.
@@ -344,11 +344,11 @@ She interviewed eight owners over two weeks: Nadia (a friend, so she logged her 
 | Who | Last time | Cost | Workaround | Commitment | Surprise |
 |---|---|---|---|---|---|
 | Owner 2 | Missed one booking last Friday | An empty hour | Paper diary, calls the day before | Introduced a colleague | Feels rude texting |
-| Owner 3 | Two late cancellations in a month | Lost deposit-free slots | Messaging app group | Showed her real diary | Clients prefer messages to calls |
+| Owner 3 | Two late cancellations in a month | Lost deposit-free slots | Messaging app group | Showed her diary (client names covered) | Clients prefer messages to calls |
 | Owner 4 | "Not really a problem" | None | None | None | Her salon takes deposits |
 | Owner 5 | Weekly no-shows on Saturdays | A full hour | Calls, when she remembers | Asked to be told when ready | Reminders she sent were ignored |
 
-Five of the seven strangers described a recent missed or late-cancelled booking and a workaround; one had "no problem" because her salon takes deposits; one gave a vague answer. That met Layla's kill condition (three or more) but not by a wide margin, so she wrote: "Problem is real for some; check whether it is real for salons that do not take deposits." She also noticed, from the surprise column, that two owners said texting felt rude, which meant the wording of reminders mattered more than she had assumed.
+Five of the seven strangers described a recent missed or late-cancelled booking and a workaround; one had "no problem" because her salon takes deposits; one gave a vague answer. That met Layla's kill condition (three or more), though she noted that the sample was small and mostly introduced contacts, so she wrote: "Problem is real for some; check whether it is real for salons that do not take deposits." She also noticed, from the surprise column, that two owners said texting felt rude, which meant the wording of reminders mattered more than she had assumed.
 
 Mona's comment on the log was short: "Which of these is a fact and which is you?" Layla went back and relabelled two lines.
 
@@ -407,8 +407,8 @@ Mona's comment on the log was short: "Which of these is a fact and which is you?
 
 **3. After six interviews, Layla's notes read "Owner 3 hates no-shows". What is the problem with this note?**
 
-- A. It is too short, and every note must contain at least three full sentences.
-- B. It is a fact, so it belongs in the column for what she thinks.
+- A. It does not give the salon's full name or the date of the interview.
+- B. It is a direct quote, so it need not be kept apart from the other notes.
 - C. It should have been recorded with audio instead, so nothing is lost.
 - D. It is an interpretation written as a fact, and should be a quote or event.
 
@@ -422,7 +422,7 @@ Mona's comment on the log was short: "Which of these is a fact and which is you?
 
 - A. The owner says the idea is clever and wishes Layla well with it.
 - B. The owner asks Layla to send her the product link when it is ready.
-- C. The owner shares her real appointment diary and introduces a colleague.
+- C. The owner shares a redacted copy of her appointment diary and introduces a colleague.
 - D. The owner asks several detailed questions about how the technology works.
 
 <details><summary>Answer</summary>
@@ -435,7 +435,7 @@ Mona's comment on the log was short: "Which of these is a fact and which is you?
 
 - A. Start recording without telling anyone, since a summary will be more accurate.
 - B. Avoid reading the summary and trust it, since the tool is more careful than she is.
-- C. Ask first, check the tool's storage terms, and compare its summary with her own notes afterwards.
+- C. Ask first, check the tool's storage terms, and compare its summary with her notes afterwards.
 - D. Record only the first interview, and reuse that summary for all of the later ones.
 
 <details><summary>Answer</summary>
@@ -639,7 +639,7 @@ Mona's rule of thumb for the claims table: "If you cannot say where it came from
 
 - A. As interview evidence, since the tool was built from many realistic salon conversations.
 - B. As a replacement for her real interviews, saving her time on the first round.
-- C. As rehearsal material for testing questions, but not as evidence of what customers actually do.
+- C. As rehearsal for testing questions, not as evidence from customers.
 - D. As survey data, which she can report as ten respondents in her pitch.
 
 <details><summary>Answer</summary>
@@ -707,7 +707,7 @@ A smoke test costs a day or two and some embarrassment. Not doing one risks spen
 
 ### 🟢 The essentials
 
-**What a smoke test is.** The name is usually explained by an old engineering habit: switch a new device on and see whether it smokes, before testing it properly. For a business idea, it means putting the **promise** in front of **real prospects** and measuring a **real action**. It does not measure whether the product works; it measures whether the offer is wanted.
+**What a smoke test is.** A smoke test means putting the **promise** in front of **real prospects** and measuring a **real action**. It does not measure whether the product works; it measures whether the offer is wanted.
 
 **The commitment ladder, again.** Evidence gets stronger as the action costs the person more.
 
@@ -766,7 +766,7 @@ Compare:
 
 **Analytics and privacy.** To count visits and actions you may use simple analytics. Collect as little personal data as you can, tell visitors what you collect, and check the rules for cookies and consent in the countries you target; they differ. For how to set up measurement properly, see [*System Design for Vibe Coders*, lesson 7.5 — Product Analytics in Practice: GA, Cloudflare, and Owning Your Events](../vibe/index.en.html#l7-5), and for the technical side of making a page findable, [*System Design for Vibe Coders*, lesson 11.3 — SEO and AEO: Being Found by Crawlers and Cited by Answer Engines](../vibe/index.en.html#l11-3). Do not over-invest in either at this stage.
 
-**Payments for the test.** For a deposit you will need a payment provider; examples include well-known card payment services, and each has onboarding checks and terms. Do not store card details yourself. The mechanics of checkout and webhooks are covered in [*SaaS Building Blocks*, lesson 3.1 — Subscriptions and payments: checkout, webhooks, the customer portal](../saas/index.html#/3.1); for a smoke test, a hosted payment link from a provider is enough, and you can refund every deposit if you stop.
+**Payments for the test.** For a deposit you will need a payment provider; examples include well-known card payment services, and each has onboarding checks and terms. Do not store card details yourself. The mechanics of checkout and webhooks are covered in [*SaaS Building Blocks*, lesson 3.1 — Subscriptions and payments: checkout, webhooks, the customer portal](../saas/index.html#/3.1); for a smoke test, a hosted payment link from a provider is enough. Before taking money, check in the provider's terms whether processing fees are returned on a refund, and keep enough cash to refund every deposit if you stop.
 
 ### 🔴 Expert view
 
@@ -853,7 +853,7 @@ Result after two weeks (illustrative): of the twelve, two paid the deposit, thre
 ## ✍️ Check yourself
 **1. Layla's landing page gets two hundred visits from a post in a general social media group and thirty email sign-ups. What does this show?**
 
-- A. Weak interest from mixed visitors; the right prospects actually acting would be much stronger.
+- A. Weak interest from mixed visitors; the right prospects acting would be stronger.
 - B. Strong demand, since thirty sign-ups out of two hundred is a good conversion rate.
 - C. That Tick is ready to launch, since people have already signed up in numbers.
 - D. That advertising works, so Layla should spend more on the same post straight away.
@@ -881,7 +881,7 @@ Result after two weeks (illustrative): of the twelve, two paid the deposit, thre
 
 - A. Add it, because small claims like this are normal marketing in every industry.
 - B. Add "Trusted by 20 salons" instead, since a smaller number is less likely to be noticed.
-- C. Leave it out and say honestly that Tick is starting a pilot with a few salons, so nothing is overstated.
+- C. Leave it out and say honestly that Tick is starting a pilot with a few salons.
 - D. Keep the claim until someone challenges it, then remove it quietly.
 
 <details><summary>Answer</summary>

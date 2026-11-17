@@ -20,7 +20,7 @@
 ## 🧭 Why it matters
 Layla's launch (lesson 5.1) went well enough that Tick now has paying salons. Then Nadia, her first design-partner customer, sends a short message: "Before I give you my client list, can I see your terms and what you do with my clients' phone numbers?" Layla has a "Terms" link in the footer. The agent generated it in the first week. She has never read it.
 
-She opens it for the first time. It says Tick keeps no customer data after an account is closed. It says refunds are available within thirty days for any reason. It says disputes are settled in a court in a country where Layla has never lived. None of these was a decision. The agent wrote text that sounded like a typical software company, and Layla's habit of skipping the check let it through. In fact Tick keeps backups for months, she has only ever agreed with Nadia to credit months when the service was down, and she has no idea which court would apply.
+She opens it for the first time. It says Tick keeps no customer data after an account is closed. It says disputes are settled in a court in a country where Layla has never lived. Her pricing page, also written by the agent, says refunds are available within thirty days for any reason. None of these was a decision. The agent wrote text that sounded like a typical software company, and Layla's habit of skipping the check let it through. In fact Tick keeps backups for months, she has only ever agreed with Nadia to credit months when the service was down, and she has no idea which court would apply.
 
 Nadia asks what a careful customer asks, and it is what a customer's lawyer, a payment provider reviewing your account and an app store reviewer may also do. A written promise that your product does not keep is worse than no written promise, because it is easy to point at. Mona, her mentor, does not rewrite the documents. She asks Layla to do the inventory described below, and then to book thirty minutes with Rashid, a lawyer, with the questions the inventory produced. The conversation with Rashid is short and useful because Layla arrives knowing what she does and what she has said.
 
@@ -121,7 +121,7 @@ Then she books thirty minutes with Rashid. Her question list has seven items, in
 
 - A. Leave the sentence as it is, because the live system deletes data and backups are a technical detail nobody reads.
 - B. Remove the deletion sentence entirely and say nothing about data after closure, so that nothing can contradict it.
-- C. Change the sentence to state the real 90-day backup period, or change the product to match it, and record which and when.
+- C. Change the sentence to state the real 90-day backup period, or change the product to match it.
 - D. Ask the agent to rewrite the sentence in more formal language so that it sounds more certain to readers.
 
 <details><summary>Answer</summary>
@@ -147,29 +147,29 @@ Then she books thirty minutes with Rashid. Her question list has seven items, in
 
 - A. Privacy notices may only ever be written by a licensed lawyer working entirely on their own, never with a draft.
 - B. The tool knows nothing of Tick's actual data, vendors or country, so it will guess and sound sure.
-- C. AI tools are unable to produce any document longer than one page, so the draft would be cut off.
+- C. The tool will write in legal language, so the draft will need no review afterwards.
 - D. The request is acceptable if Layla also asks for a second-language version of the document afterwards.
 
 <details><summary>Answer</summary>
 
-**B.** The drafter needs facts and a rule to mark gaps. A request for protection invites invented confident text. A professional checks the result, but a first draft from facts is useful (A is too absolute), length is not the issue (C) and translating does not address facts (D). (Section: A safe way to use AI for a first draft.)
+**B.** The drafter needs facts and a rule to mark gaps. A request for protection invites invented confident text. A professional checks the result, but a first draft from facts is useful (A is too absolute), assuming no review is needed (C) is the very assumption to avoid, and translating does not address facts (D). (Section: A safe way to use AI for a first draft.)
 
 </details>
 
 **4. What makes a thirty-minute meeting with a lawyer most useful for a small founder?**
 
 - A. Arriving with no draft, so the lawyer can start from a blank page and give an unbiased view of everything.
-- B. Arriving with a request for a written guarantee that the business will never face any dispute at all.
-- C. Arriving with a list of every law in the world that might ever apply to any kind of software.
+- B. Arriving with a request that the lawyer certify the terms as fully compliant in every market.
+- C. Arriving with only the AI draft and no facts, so the lawyer can fill in the rest.
 - D. Arriving with the draft, a product description, the inventory and specific questions.
 
 <details><summary>Answer</summary>
 
-**D.** A professional is paid for time, and facts and specific questions make the time useful. They will also say what they cannot answer without more facts. No one can guarantee no disputes (B), and a world list (C) is not a question. A blank page (A) wastes the hour. (Section: How to ask a professional well.)
+**D.** A professional is paid for time, and facts and specific questions make the time useful. They will also say what they cannot answer without more facts. A certification request (B) cannot be met without facts, and a draft with no facts (C) leaves the lawyer guessing. A blank page (A) wastes the hour. (Section: How to ask a professional well.)
 
 </details>
 
-**5. Tick's refund policy currently says "any reason, any time". What should Layla do first?**
+**5. Tick's refund policy currently says "within 30 days, any reason". What should Layla do first?**
 
 - A. Write a note on what she can afford, then ask a professional what her market's law adds.
 - B. Copy the most generous refund policy she can find in her market, because it will win more customers.
@@ -222,18 +222,18 @@ Nothing has gone wrong yet, which is the moment to look.
 
 | Data | Where it comes from | Where it goes | Why | Kept for |
 |---|---|---|---|---|
-| Client name and phone | Salon enters it | Database, messaging vendor | Send the reminder | While the salon is a customer, then deleted |
+| Client name and phone | Salon enters it | Database, messaging vendor, model vendor (first name only) | Send the reminder | While the salon is a customer, then deleted; backups up to 90 days |
 | Appointment time and service | Salon enters it | Database, model vendor (only the service name and time) | Write the reminder wording | Wording not stored; time kept 12 months |
 | Free-text salon note | Salon enters it | Database only | Salon's own use | While the salon is a customer |
 
-(Illustrative, fictional.) Note what the third row does: it decides that the free-text note never goes to the model.
+(Illustrative, fictional.) The third row decides that the free-text note never goes to the model.
 
 **What may you send to an AI model?** There is no single answer, which is why the question belongs to you and your professional. Work through four steps:
 
 1. **Is it needed?** If the model can do the job with less, send less. A reminder needs a first name, a time and a service, not a surname, a phone number or a note.
 2. **What does the vendor do with it?** Read the vendor's terms and data pages for the exact plan or interface you use. Look for four things: whether inputs are kept and for how long, whether they may be used to train or improve models, who at the vendor can see them, and where they are processed. Consumer chat products, business plans and programmatic interfaces (APIs) often have different terms.
 3. **Do your promises allow it?** Your privacy notice (lesson 6.1) and your customer's expectations must match what you do. If you tell people you share data with no one else, an AI vendor is someone else.
-4. **Is there an agreement?** Many vendors offer a **data processing agreement** (DPA), a contract about how they handle personal data on your behalf. Ask whether you need one for each vendor, and whether the vendor offers it.
+4. **Is there an agreement?** Many vendors offer a **data processing agreement** (DPA), a contract about how they handle personal data on your behalf. Ask whether you need one for each vendor.
 
 **Special kinds of data.** Some information carries more risk in many places: health, children's data, precise location, government identifiers and financial account details. The default for these: do not send them to a model unless you have decided to, on purpose, with advice. Remove them from prompts, or tell users not to type them into free-text fields.
 
@@ -277,9 +277,9 @@ Layla draws her map (illustrative, fictional). It has nine rows and six destinat
 
 She fixes them in an evening: the model now gets first name, service and time only. A filter strips the note from error reports. The analytics event drops the phone number. She deletes the two chat conversations and asks the agent never to use production data again; for debugging she makes a file of invented appointments.
 
-She then reads the model vendor's data pages for the plan she uses, and writes down what they say about retention and training with the date. She writes a retention schedule in six lines and a deletion drill: she creates a fake salon, deletes it and lists what remains. Backups, error reports and a CSV export remain. Two of those she can fix. The third, backups, she records as "removed on a rolling cycle" and takes to Rashid.
+She then reads the model vendor's data pages for the plan she uses, and writes down what they say about retention and training with the date. She writes a retention schedule in six lines and a deletion drill: she creates a fake salon, deletes it and lists what remains. Error reports, a CSV export and backups remain. Two of those she can fix. The third, backups, she records as "removed on a rolling cycle" and takes to Rashid.
 
-Her questions for Rashid include: is Tick a controller or a processor for the salon's clients, does Tick need a DPA with salons and with vendors, who must ask clients for consent to messages, and what are the rules on telling people about a breach in the places her first customers are. He answers some; others depend on country. She leaves with an order of work, not a certificate.
+Her questions for Rashid include: is Tick a controller or a processor for the salon's clients, does Tick need a DPA with salons and with vendors, who must ask clients for consent to messages, and what are the rules on telling people about a breach in the places her first customers are. She leaves with an order of work, not a certificate.
 
 ## 🛠️ Exercises
 **🟢 List the leaks.** Write down every place a customer's data goes: database, vendors, AI models, analytics, error tools, your chat history with coding tools. *Done when:* a list of at least six destinations exists and each has an owner (a vendor name or "me").
@@ -348,9 +348,9 @@ Her questions for Rashid include: is Tick a controller or a processor for the sa
 **4. Why does Layla stop pasting real appointment records into her coding agent?**
 
 - A. The provider may receive and keep what she pastes, under terms that she has not yet read or checked.
-- B. Coding agents are unable to read appointment data of any kind, so the paste does nothing at all.
+- B. Coding agents ignore pasted appointment data, so the paste does nothing useful for her.
 - C. Real records only make the agent slower on long tasks, so fake data saves her time.
-- D. Pasting data into any tool is a legal offence in every country, so she must stop completely.
+- D. Her free account is the problem, since pasting data into any tool is fine on a paid plan.
 
 <details><summary>Answer</summary>
 
@@ -360,10 +360,10 @@ Her questions for Rashid include: is Tick a controller or a processor for the sa
 
 **5. Mona asks who must ask the salon's clients for consent to messages from Tick. What is the honest answer?**
 
-- A. Tick always, because Tick is the party that actually sends the messages to the clients.
+- A. Tick in most cases, because Tick is the party that actually sends the messages to the clients.
 - B. It depends on the law and the roles, so ask a lawyer who must ask, and in what words.
-- C. Nobody, because appointment reminders never need any lawful basis under any data law.
-- D. The salon always, because the clients are the salon's customers and not Tick's customers.
+- C. Nobody, because appointment reminders do not need a lawful basis under most data laws.
+- D. The salon in most cases, because the clients are the salon's customers and not Tick's customers.
 
 <details><summary>Answer</summary>
 
@@ -396,7 +396,7 @@ A larger customer, a chain of salons, asks Layla for a short call. Their IT cont
 
 She goes looking. The landing page and logo were made by Sam, a freelance designer, who sent a file and an invoice by message. They never signed anything. The agent added thirty-odd packages to Tick, and she has never seen their licences. A snippet in the reminder scheduler looks very like a published example; she cannot say where it came from. The name "Tick" is on the app and the domain, and she never checked whether another business already uses it for similar services.
 
-Nothing here means something is wrong. It means she cannot yet prove anything. Mona explains that a small company is rarely sued over such things; it is more often asked, by a buyer or a platform, and then loses weeks to answers it cannot give. The remedy is mostly paperwork, done early, with a lawyer for the parts that are not obvious.
+Nothing here means something is wrong, only that she cannot yet prove anything. Mona points out that the first sign of such a gap is often a question from a buyer, a platform or a large customer, and answering it takes weeks if you have no records. The remedy is mostly paperwork, done early, with a lawyer for the parts that are not obvious.
 
 ## 📐 How it works
 
@@ -412,9 +412,9 @@ Nothing here means something is wrong. It means she cannot yet prove anything. M
 | 34 open-source packages | Many authors | Each package's licence | Licence list not yet checked |
 | The name "Tick" and domain | Layla | Domain registration; no name search done | Search before spending more on the brand |
 
-(Illustrative, fictional.) It is an honest list. The goal is not that every row is green on day one. It is that you can see which are not.
+(Illustrative, fictional.) The goal is not that every row is green on day one, but that you can see which are not.
 
-**AI-written code.** Rules on whether anyone owns the output of an AI system differ and are still developing. Some official bodies have published views that material produced by a machine without enough human creative control may not be protected by copyright in their country, and that human contribution matters. Other countries take other approaches, and the facts of each case (how much you directed, edited and selected) can matter. The AI tool's own terms also say something about who may use the output and what you promise about it. Read them for your plan. What this means for Tick is a question for a lawyer, and the useful way to ask it is below. Meanwhile, two practical habits help in every country: keep a record of what you and the tool each did, and do not rely on being able to stop others copying code that an agent generated.
+**AI-written code.** Rules on whether anyone owns the output of an AI system differ and are still developing. Some official bodies have published views that material produced by a machine without enough human creative control may not be protected by copyright in their country, and that human contribution matters. Other countries take other approaches, and the facts of each case (how much you directed, edited and selected) can matter. The AI tool's own terms also say something about who may use the output and what you promise about it. Read them for your plan. What this means for Tick is a question for a lawyer, and the useful way to ask it is below. Two practical habits help in every country: keep a record of what you and the tool each did, and do not rely on being able to stop others copying code that an agent generated.
 
 **Contractors and freelancers.** When Sam makes the logo, the default rule about who owns the work varies by country and by whether he is an employee or a contractor. Do not rely on the default. The safe habit is a short written agreement before work starts, saying who owns the result, whether he **assigns** it to you (transfers ownership) or **licenses** it (lets you use it on stated terms), what he must not include (other people's work, stock material without permission), and whether he used AI tools. A lawyer can draft or check it. The same applies to a co-founder, a part-time helper, and an agency. Payment and tax questions go to an accountant such as Hana (lesson 3.3).
 
@@ -450,7 +450,7 @@ These are broad descriptions, not legal rules; each licence has its own text and
 
 ### 🔴 Expert view
 
-**What a buyer or a large customer does.** In a purchase, an investment or a large customer review, someone often asks for a list of IP and a list of open-source components, called due diligence. Founders without a register spend weeks reconstructing it, and sometimes find a gap that costs money to close, such as a contractor who cannot be found. An up-to-date register costs an hour a quarter.
+**What a buyer or a large customer does.** In a purchase, an investment or a large customer review, someone often asks for a list of IP and a list of open-source components, called due diligence. Founders without a register can spend weeks reconstructing it, and sometimes find a gap that costs money to close, such as a contractor who cannot be found. In Layla's illustrative case, keeping the register current takes about an hour a quarter.
 
 **AI-specific clauses.** Some customers may ask whether AI tools were used to write the software, and what you promise about third-party rights in the output. Answer honestly. Some AI tool terms include promises from the vendor about output, with conditions; read what applies to you rather than assuming any protection exists.
 
@@ -473,7 +473,7 @@ Layla builds the register in an evening (illustrative, fictional). It has twelve
 
 She runs a licence-listing tool on the repository and finds that two packages carry licences she does not recognise and one has none declared. She asks the agent to replace the package with no licence. The other two go to Rashid. For the scheduler snippet she asks the agent where it came from; it cannot say, so she has it write a fresh version from a description and notes the date and what she asked.
 
-She searches the name in two company registers and a trademark register for her first market. She finds one business with a similar name in an unrelated trade. She writes it down and takes it to Rashid; she does not rename yet and does not spend on printed material until he answers.
+She searches the name in two company registers and a trademark register for her first market. She finds one business with a similar name in an unrelated trade. She writes it down and takes it to Rashid; she does not rename yet or spend on printed material until he answers.
 
 Her notes to the chain of salons are short and true: "Tick was built by me with AI tools and open-source components under their licences; I keep a register of components and agreements and can share a summary." The IT contact asks one follow-up on licences, and she can answer it. The call ends with a pilot, not a promise from either side.
 
@@ -531,7 +531,7 @@ Her notes to the chain of salons are short and true: "Tick was built by me with 
 **3. The licence list shows one package with no licence declared. What is the sensible next step?**
 
 - A. Replace it or ask the author, because public code is not free to reuse by default, ever.
-- B. Keep it, because anything published openly on the internet may be freely used by anyone.
+- B. Keep it, because code published openly on the internet is usually free to use.
 - C. Keep it, but delete its line from the licence list so that the list looks complete.
 - D. Treat it as permissive, since permissive licences are the most common kind of licence.
 
@@ -556,10 +556,10 @@ Her notes to the chain of salons are short and true: "Tick was built by me with 
 
 **5. Which statement about open-source licences matches the lesson?**
 
-- A. All open-source licences have the same conditions, so a single check covers all of them.
+- A. Open-source licences have roughly the same conditions, so one check covers them all.
 - B. Permissive and copyleft licences differ, and copyleft may change how you share your code.
-- C. Open-source packages never need to be listed, because the agent chose them for her.
-- D. Open-source licences only matter to large companies, never to a founder of a small product.
+- C. There is no need to list open-source packages while the project is small.
+- D. Open-source licences matter more to large companies than to a founder of a small product.
 
 <details><summary>Answer</summary>
 

@@ -14,7 +14,6 @@
 - The venture file is not a business plan. It is a folder of the things you actually made in this course, each with a date and a note on how you know it is true.
 - The rule that matters most: **plan the weakest step, not the favourite one.** Builders drift toward building; the plan should go where the evidence is thinnest.
 - Decision cue: for each step, can you show the artefact and say which real person or real check it rests on? If the honest answer is "my own opinion", the step is amber at best.
-- Biggest trap: a 30-day plan made of fifteen tasks, all of them "build". A plan with no selling, no learning and no protecting is a wish list.
 - This lesson is education, not legal, tax, accounting or investment advice, and it promises no result. Tick and all its figures are fictional and illustrative.
 
 ## 🧭 Why it matters
@@ -22,7 +21,7 @@ Tick, Layla, Nadia, Sam, Mona, Hana and Rashid are fictional, and every number b
 
 Six months in, Layla had a folder called "Tick" full of prompts, screenshots, half-finished price sheets and a transcript she could not find the end of. When Mona asked, "If you were away for a week, could someone tell whether Tick is working as a business?" Layla could not point to one place. She knew a lot. She could not show it.
 
-Mona did not ask for a plan. She asked for a table with eight rows, one per step, and one question per row: "What is the artefact, and what is it based on?" It took Layla an afternoon. The table showed something she had half suspected. Explore and Validate were strong, because she had done them early and carefully. Price was amber, because she had tested with twelve prospects and not yet with strangers. Protect was red: she had a promise inventory, but no lawyer had seen it, and her terms still said things the product could not do. Run was red too, because everything lived in Layla's head and her own accounts.
+Mona asked for a table with eight rows, one per step, and one question per row: "What is the artefact, and what is it based on?" It took Layla an afternoon. The table showed something she had half suspected. Explore and Validate were strong, because she had done them early and carefully. Price was amber, because she had tested with twelve prospects and not yet with strangers. Protect was amber: Rashid had answered only part of her question list, and two terms sentences waited on the rest. Run was amber too: the handover pack existed and Mona's drill had found one gap, but the questions about who could act for Layla were still unanswered.
 
 The next month stopped being "do more of everything" and became three specific things. That is the purpose of a capstone: not to prove you finished, but to decide what to do next with the evidence you have.
 
@@ -30,7 +29,7 @@ The next month stopped being "do more of everything" and became three specific t
 
 ### 🟢 The essentials
 
-**The venture file.** A **venture file** is a single folder (on a drive you control, with a backup) that holds one artefact per step of the journey, each with a date and a one-line "based on" note. It is not a new document to write. It is the collection of what you made while working through the course. The point of the "based on" note is honesty: it says whether the artefact rests on customers, on a real check, on a professional's reply, or only on your own thinking.
+**The venture file.** A **venture file** is a single folder (on a drive you control, with a backup) that holds one artefact per step of the journey, each with a date and a one-line "based on" note. It is not a new document to write. It is the collection of what you made while working through the course. The point of the "based on" note is honesty: it says whether the artefact rests on customers, on a real check, on a professional's reply, or only on your own thinking. Keep customer personal data, contact details, credentials and contract text out of the file, or redact them before sharing it outside, and ask a lawyer about confidentiality before sharing it with a funder.
 
 | Step | Artefacts to put in the file | Made in |
 |---|---|---|
@@ -86,8 +85,6 @@ Questions people commonly ask a founder, whatever the source of money:
 
 If a conversation reaches an actual offer, a **term sheet** is a short document that sets out the main proposed terms of an investment before the full legal documents. At a high level, such a document usually covers how much is invested, what the company is treated as worth, what share of the company the funder receives, and the rights that come with it. The details, names and consequences differ by country and by deal and change over time, and some of them bind you for years. Do not sign or reply on the strength of this lesson or an AI summary. Bring the term sheet, your venture file and a written question list to a lawyer and, for the money side, an accountant, in the way lessons 3.3 and 6.1 showed.
 
-**Do not fabricate to fit.** Never invent traction, customers or testimonials to make the file look better. An honest red is more useful, and more credible, than a quietly smoothed file.
-
 ## 🧰 The toolkit
 | Resource, tool or template | What it is and does | When to reach for it |
 |---|---|---|
@@ -99,7 +96,6 @@ If a conversation reaches an actual offer, a **term sheet** is a short document 
 | **Funder question list** | The six questions above, each linked to the artefact that answers it | Before any conversation about money; bring it to a professional |
 | **Professional meeting brief** | The documents, facts and ranked questions for an accountant or lawyer (lesson 0.3) | When a red row needs a professional answer |
 
-Any folder or spreadsheet tool works; none is endorsed.
 
 ## 🏛️ In practice with Tick
 Layla's readiness table, as she filled it in on a Sunday afternoon. Illustrative, fictional:
@@ -108,22 +104,21 @@ Layla's readiness table, as she filled it in on a Sunday afternoon. Illustrative
 |---|---|---|---|
 | Explore | Problem statement v3 | Interviews with seven strangers: five described a recent missed booking and a workaround | Green |
 | Validate | Interview log, smoke-test result | Of twelve prospects, three booked a call and two paid a deposit; her thresholds were met (illustrative) | Green |
-| Scope | Scope statement and kill list | Her own judgement and Nadia's use; five of fourteen features on the kill list | Amber |
+| Scope | Scope statement and kill list | Her own judgement and Nadia's use; eleven of seventeen items on the kill list | Amber |
 | Price | Unit economics, price test | Contribution of 16.51 per salon per month before her time (illustrative); price tested with twelve prospects, no strangers yet | Amber |
-| Sell | First-ten list, onboarding checklist | Six paying salons, three of them found by introduction | Amber |
-| Launch | Launch checklist, support policy | Ran the ladder to three salons; ten-message test set passes | Green |
-| Protect | Promise inventory | Her own review; no lawyer yet; two terms sentences the product cannot keep | Red |
-| Run | Handover pack | Does not exist; every login is in her head | Red |
+| Sell | First-ten list, onboarding checklist | Nine paying salons, three of them found by introduction | Amber |
+| Launch | Launch checklist, support policy | Ran the ladder to every existing customer; ten-message test set passes | Green |
+| Protect | Promise inventory | Her own review; Rashid answered part of the question list; two terms sentences still open | Amber |
+| Run | Handover pack | Exists; Mona's drill found five of six items; no answer yet on who may act for her | Amber |
 
 Mona asked her to choose, and Layla wrote her three outcomes for the next thirty days:
 
-1. **Protect.** Fix the two sentences the product cannot keep, send a one-page brief and question list to Rashid, and have his answers written into the promise inventory by day 21.
-2. **Run.** Write a 30-minute handover pack and have Mona (as the trusted person) follow it to find the accounts and take a backup restore on a test copy, by day 24.
+1. **Protect.** Close Rashid's open questions: send him a one-page brief on what is left, check the two open terms sentences against his answers, and have them written into the promise inventory by day 21.
+2. **Run.** Repeat Mona's 30-minute drill on the fixed handover pack and get written answers from Hana and Rashid on who may act if Layla cannot, by day 24.
 3. **Price.** Quote the price to five salons she has never spoken to before and record each answer, by day 28.
 
-Her weeks: rewrite and brief; lawyer meeting and half the pack; test the pack and quote strangers; review. She wrote the decision rule on day 1: "If at least two of five strangers accept the price or a deposit, keep the price. If one accepts, change the price or the offer and retest. If none, stop selling on this page and return to interviews."
+Her weeks: brief Rashid; his answers and the open sentences; repeat the drill and quote strangers; review. She wrote the decision rule on day 1: "If at least two of five strangers accept the price or a deposit, keep the price. If one accepts, change the price or the offer and retest. If none, stop selling on this page and return to interviews."
 
-On day 30 she wrote a one-page review and built the next month's plan from the result, not from what she had hoped.
 
 ## 🛠️ Exercises
 **🟢 Assemble the venture file.** Create the folder, copy in every artefact you already have, name each with its step and date, and add the "based on" note. Write "missing" for rows with nothing.
@@ -138,9 +133,7 @@ On day 30 she wrote a one-page review and built the next month's plan from the r
 ## ⚠️ Mistakes and traps
 - **A file made to look good.** Filling every cell to show completeness hides the gaps you most need. Instead, write "missing" and a rating you would defend to a sceptic.
 - **Planning the favourite step.** The plan fills with build tasks. Instead, plan the weakest step and cap build tasks at one per week.
-- **Too many outcomes.** Five goals in thirty days means five half-finished ones. Instead, pick at most three and move the rest to the kill list.
 - **A decision rule written after the results.** Numbers can be read to fit what you hoped. Instead, write continue, change and stop on day 1.
-- **Treating colours as a forecast.** A green table is not a promise of customers or income. Instead, treat it as a map of where your evidence is thin.
 - **Acting on funding or legal points from this lesson.** It teaches concepts and questions only. Instead, bring a term sheet, a draft or a question list to a qualified professional before you reply or sign.
 
 ## 🧾 Recap
@@ -165,12 +158,12 @@ On day 30 she wrote a one-page review and built the next month's plan from the r
 
 </details>
 
-**2. Layla's readiness table has Validate green, Price amber, Protect red and Run red. She likes building. Which plan fits the capstone rule?**
+**2. A founder's readiness table has Validate green, Price amber, Protect red and Run red. She likes building. Which plan fits the capstone rule?**
 
 - A. Put Protect and Run first, ordered by cost if wrong, and cap build tasks
 - B. Repeat the interviews, since Validate is the step most founders can improve most
 - C. Spend the month on new features, since the green steps show the product is ready
-- D. Wait until all four weak rows turn amber before planning any single outcome
+- D. Wait until all three weak rows turn amber before planning any single outcome
 
 <details><summary>Answer</summary>
 
@@ -182,7 +175,7 @@ On day 30 she wrote a one-page review and built the next month's plan from the r
 
 - A. Look again at the price page and the support policy to see what could be better
 - B. Four of the next five new salons reach the first result in one session, with notes on the fifth
-- C. Spend more time each week on customer conversations than on building features
+- C. Talk with customers more and spend less time building features
 - D. Improve onboarding so that new salons have a smoother and friendlier first session
 
 <details><summary>Answer</summary>
@@ -213,7 +206,7 @@ On day 30 she wrote a one-page review and built the next month's plan from the r
 
 <details><summary>Answer</summary>
 
-**D.** The course does not advise for or against raising and is not investment or legal advice; terms differ and bind for years, so a qualified professional of her own reads the document. An AI summary is not a substitute, the course gives no such advice, and the other side's lawyer acts for the other side. (Section: When someone asks about funding.)
+**D.** The course does not advise for or against raising and is not investment or legal advice; the terms it leads to can bind for years, and which parts bind differs by country and deal, so a qualified professional of her own reads the document. An AI summary is not a substitute, the course gives no such advice, and the other side's lawyer acts for the other side. (Section: When someone asks about funding.)
 
 </details>
 
@@ -309,7 +302,7 @@ Books and writers are cited by title and author because their exact web pages we
 
 **6. Which question is best in a customer interview with a salon owner?**
 
-- A. Tell me about the last time a client did not show up
+- A. What happened the last time a client did not show up?
 - B. How much would you pay each month for a tool that fixed missed appointments?
 - C. Do you think missed appointments are a big problem for salons like yours?
 - D. Would you use an app that reminded your clients before each appointment?
@@ -485,7 +478,7 @@ Books and writers are cited by title and author because their exact web pages we
 
 <details><summary>Answer</summary>
 
-**C.** A price nobody says no to is probably too low, and twelve conversations show direction, not proof. (Lesson 3.2.)
+**C.** A price nobody says no to is probably too low, and a handful of conversations shows direction, not proof. (Lesson 3.2.)
 
 </details>
 
@@ -545,12 +538,12 @@ Books and writers are cited by title and author because their exact web pages we
 
 - A. Accept, but ask the tool to make the invented details sound more believable
 - B. Decline: a made-up detail is a lie, and mass sending may break anti-spam rules
-- C. Accept if she sends them in small batches so that nobody notices the pattern
+- C. Decline, because any message to a stranger breaks the law everywhere
 - D. Accept, since personalised messages reply better than plain ones in every case
 
 <details><summary>Answer</summary>
 
-**B.** Personalise only with facts you can show, and check anti-spam and marketing rules, which vary by country. Hiding the pattern does not fix the dishonesty. (Lesson 4.2.)
+**B.** Personalise only with facts you can show, and check anti-spam and marketing rules, which vary by country; they do not ban every message to a stranger. (Lesson 4.2.)
 
 </details>
 
@@ -741,7 +734,7 @@ Books and writers are cited by title and author because their exact web pages we
 - A. Someone she trusts can follow it alone to reach the accounts and keep customers served
 - B. It lists every password in full, kept in a shared note that anyone can open
 - C. It describes the product's design in detail, so that anyone could rebuild it from scratch if needed
-- D. It is written once and kept in her head until a problem makes it necessary
+- D. It is written once, never tested, and reread only when a problem makes it necessary
 
 <details><summary>Answer</summary>
 

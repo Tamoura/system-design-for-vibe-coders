@@ -20,11 +20,11 @@
 ## 🧭 Why it matters
 On Sunday evening Layla opens Tick for the first time since the weekend and counts the screens. There is a calendar, a client list, reminder templates, a loyalty-points page, a "staff schedule" view, a dashboard with charts, and a settings page with eleven options. She asked the agent for reminders. It added the rest, helpfully, because her prompts said things like "make it a complete app for salons".
 
-Nadia, the salon owner who agreed to try it, receives a demo link. She taps around for a minute and says, kindly, "It's very full. Where do I start?" Layla realises she cannot answer in one sentence either. Worse, she has not tested the loyalty page at all, and she is about to put her name behind it.
+Nadia, who agreed to try it, gets a demo link. She taps around and says, kindly, "It's very full. Where do I start?" Layla realises she cannot answer in one sentence either, and she has never tested the loyalty page.
 
 Mona, her mentor, asks one question: "If Nadia could only keep one screen, which would it be?" Nadia, asked by message, answers in seconds: "The one that sends the text the day before." That single sentence is the first version of Tick. Everything else is, for now, cost without evidence.
 
-This happens to many people who build with AI. The old brake on scope was the price of programmer time. That brake is weaker now, so the founder has to supply it on purpose. Lesson 0.1 in this course makes this point as the main thing that did *not* change: judgement is still yours.
+This can happen to anyone who builds with an agent. One old brake on scope was the price of programmer time. That brake is weaker now, so the founder has to supply it on purpose. Lesson 0.1 names this as something that did *not* change: judgement is still yours.
 
 ## 📐 How it works
 
@@ -39,13 +39,13 @@ This happens to many people who build with AI. The old brake on scope was the pr
 | **Supporting** | Questions and bugs arrive about it | "Why did I get two points?" at 9 p.m. |
 | **Changing** | Every later change must respect it | A new reminder type must also work in the staff view |
 
-The agent hides the first cost of writing, so the other four feel free. They are not. A solo founder or a team of up to five has a few hours a week for them, and the hours are the real budget.
+The agent hides the first cost of writing, so the other four feel free. A solo founder or a team of up to five has a few hours a week for them, and the hours are the real budget.
 
 **The job, not the feature.** A **job** is a short sentence about progress the customer wants, written in their words. "Reminders" is a feature. "Stop empty chairs when clients forget" is a job. Start from what you learned in module 1 (the interviews and the smoke test), not from what the agent can generate. A useful job sentence has three parts:
 
 > *When* [a situation], *a* [kind of customer] *wants to* [progress], *so that* [outcome they care about].
 
-For Tick: *When a client does not turn up, a salon owner wants to have reminded them the day before, so that the slot is not wasted.* Notice what is absent: dashboards, loyalty, staff schedules. They may be good ideas. They are different jobs.
+For Tick: *When a client does not turn up, a salon owner wants to have reminded them the day before, so that the slot is not wasted.* Notice what is absent: dashboards, loyalty, staff schedules. They are different jobs.
 
 **One customer, not "small businesses".** "Small service businesses" is a market. A **customer** here means a specific kind of person you can name and reach: "owner-operated hair salons with one to four chairs who book by phone or messaging app". The narrower you are, the more your first version can fit one person's real week, and the faster you learn. Choosing a narrow customer is not a permanent limit. It is a way to get a clear yes or no.
 
@@ -64,7 +64,7 @@ If a stranger can read that and say what the product does and does not do, the s
 | Loyalty points | Not part of the reminder job; nobody has asked for it | Nobody; the agent proposed it | Two customers ask unprompted | After 10 customers |
 | Staff schedule view | A different job, bigger to check | Nadia, once, in passing | Three salons say they cancel because of it | Month 3 |
 
-Three rules keep it honest. First, **"who asked" must name a real person or say "nobody"**; a feature the agent proposed is not demand. Second, **every row has a way back**: the evidence that would change your mind. This makes killing painless, because nothing is deleted from your thinking. Third, **the list is longer than the product**. A healthy first kill list has more rows than the product has features.
+Three rules keep it honest. First, **"who asked" must name a real person or say "nobody"**; a feature the agent proposed is not demand. Second, **every row has a way back**: the evidence that would change your mind. This makes killing painless, because nothing is deleted from your thinking. Third, **the list is not shorter than the product**: a healthy first kill list has at least as many rows as the product has features.
 
 ### 🟡 Going deeper
 
@@ -74,8 +74,8 @@ Three rules keep it honest. First, **"who asked" must name a real person or say 
 |---|---|---|
 | **Core** | Without it the job is not done | Build and check it carefully |
 | **Needed to sell** | Not the job itself, but you cannot charge or onboard without it (sign-in, a way to pay or promise to pay, a way to contact you) | Build the plainest version, or buy it (lesson 2.2) |
-| **Later** | A real idea with some evidence | Kill list, with the return condition |
-| **Never** | No evidence, and it changes what the product is | Delete from the code, not just from the menu |
+| **Later** | An idea worth keeping, with a return condition | Kill list, with the return condition |
+| **Never** | No evidence, and it changes what the product is | Delete from the code, not just from the menu; it may keep a kill-list row |
 
 The "needed to sell" pile is where first-time founders are surprised. Sign-in, email, billing and an admin view are not the job, but a customer cannot use the product without some of them. The library's [*SaaS Building Blocks*, lesson 0.1 — The 80% nobody sells: the anatomy of every SaaS](../saas/index.html#/0.1) shows how much of a SaaS is this kind of plain machinery, and why you should not reinvent it.
 
@@ -84,7 +84,7 @@ The "needed to sell" pile is where first-time founders are surprised. Sign-in, e
 1. *One afternoon to check.* Can you walk through every promise of the product, with real data, in about four hours? If checking takes longer, the product is too large for one person to vouch for.
 2. *One Saturday to support.* If a customer has trouble on a Saturday, can you find the cause by yourself using what you built? If the agent built a part you cannot read, a bug there is a day lost.
 
-These are guidelines, not laws; your numbers will differ. The point is to turn "too big" into something you can measure on yourself.
+These are guidelines; your numbers will differ. They turn "too big" into something you can measure.
 
 **Dead code is not dead.** Hiding a menu link leaves the code and data in place. Remove it in a small change and check it is gone. The library's [*System Design for Vibe Coders*, lesson 8.1 — The 600-file near-miss](../vibe/index.en.html#l8-1) shows how large unreviewed changes become dangerous.
 
@@ -92,11 +92,9 @@ These are guidelines, not laws; your numbers will differ. The point is to turn "
 
 ### 🔴 Expert view
 
-**Agent scope creep.** Agents complete the pattern they have seen, so a booking app gets users, roles and an admin page. Give every task the scope statement and kill list as non-goals (lesson 2.3).
+**Agent scope creep.** Agents complete the pattern they have seen, so a booking app gets users, roles and an admin page. Give every task the scope statement and kill list as non-goals (lesson 2.3). Anthropic's "Building effective agents" advises the simplest solution possible.
 
 **What not to cut.** A small product can still be careless. Do not put these on the kill list: the plain way to say what data you keep, a way for a customer to reach you, a way to stop the product doing something to the customer's own clients (for Tick, an unsubscribe or "stop reminders" path), and a record of what the product did (so you can answer "did the reminder go out?"). These are what make a small product trustworthy. Module 6 returns to the law and privacy side, with questions for a professional.
-
-**Scope also protects price.** A product that does one job can be priced against that job, which lesson 3.2 builds on.
 
 ## 🧰 The toolkit
 | Resource, tool or template | What it is and does | When to reach for it |
@@ -113,7 +111,7 @@ Tick, its people and all figures here are fictional, and the numbers are illustr
 
 On Monday, Layla spent an hour with Mona. First she wrote the feature inventory by opening every screen of Tick and listing it: fourteen items. Then she asked the agent, in one message, "List every page, every setting and every database table you created, one line each, and mark any I did not ask for." The agent's list had three things she had missed, including a "referral code" table.
 
-Next she sorted. *Core:* send a text reminder the day before; a client list with phone numbers; a way to mark an appointment cancelled. *Needed to sell:* sign-in for Nadia, a "stop reminders" reply path, and a way for Layla to see which reminders went out. Everything else, five items, went to the kill list.
+Next she sorted. *Core:* send a text reminder the day before; a client list with phone numbers; a way to mark an appointment cancelled. *Needed to sell:* sign-in for Nadia, a "stop reminders" reply path, and a way for Layla to see which reminders went out. Six of seventeen items stayed; the rest, plus ideas such as tutor mode, went to the kill list (five rows shown).
 
 | Feature | Why not now | Who asked | Evidence that brings it back | Revisit |
 |---|---|---|---|---|
@@ -123,7 +121,7 @@ Next she sorted. *Core:* send a text reminder the day before; a client list with
 | Referral codes | No customers to refer | Nobody (agent idea) | Customers say they tell friends | Month 4 |
 | Tutor mode | Other customer type | Nobody yet | Three tutors ask | Month 3 |
 
-Her scope statement, pinned above the list: *Tick texts each client the day before their appointment, for owner-operated salons with one to four chairs. It does not handle payments, staff rosters, loyalty, booking or reports.* Her test: "Three of the five salons I show it to start a free trial, and Nadia keeps using it for two weeks."
+Her scope statement, pinned above the list: *Tick texts each client the day before their appointment, for owner-operated salons with one to four chairs. It does not handle payments, staff rosters, loyalty, booking or reports.* Her test: "Three of the five salons I show it to pay a small deposit or pre-order, and Nadia keeps using it for two weeks."
 
 She asked the agent to remove the loyalty and referral features and to list every file changed. Then she opened the app and tried the old addresses of those pages: both showed "not found". She noted one honest doubt: "I am not sure the removed pages' data tables are gone." That went to the checking list for lesson 2.3.
 
@@ -144,7 +142,7 @@ She asked the agent to remove the loyalty and referral features and to list ever
 - A job is the progress a customer wants, in their words; a first version does one job for one kind of customer.
 - Cheap code still carries four costs: checking, explaining, supporting and changing.
 - Write a scope statement with a "does not" clause before you prompt the agent.
-- The kill list records what you will not build now, who asked and what evidence would bring it back; it is longer than the product.
+- The kill list records what you will not build now, who asked and what evidence would bring it back; it is not shorter than the product.
 - Sort into core, needed to sell, later and never; remove the never items from the code.
 - Scope is a hypothesis with a test written next to it.
 
@@ -176,11 +174,11 @@ She asked the agent to remove the loyalty and referral features and to list ever
 
 </details>
 
-**3. Layla's kill list row for "Staff schedule view" says "Nadia mentioned it once". What does this lesson say about the evidence column?**
+**3. Layla's kill list row for "Staff schedule view" says "Nadia mentioned it once". What does this lesson say about the "who asked" column?**
 
 - A. It proves the feature belongs in the first version, so it should be built now.
 - B. It should be left blank until the feature has actually been built and tried.
-- C. It should name who asked and how many; one mention is thin, so the row stays.
+- C. It should name who asked and how many; one mention is thin.
 - D. It should list the features competitors already have, to show that there is demand.
 
 <details><summary>Answer</summary>
@@ -191,7 +189,7 @@ She asked the agent to remove the loyalty and referral features and to list ever
 
 **4. Which item should NOT be put on a kill list, according to the "what not to cut" guidance?**
 
-- A. A "stop reminders" path for the customer's own clients, so they can opt out.
+- A. A "stop reminders" path for the customer's own clients, to opt out.
 - B. A charts dashboard for a product with no customers yet.
 - C. A referral-code system that was proposed by the agent.
 - D. A tutor mode, which is meant for a different type of customer.
@@ -235,7 +233,7 @@ She asked the agent to remove the loyalty and referral features and to list ever
 ## 🧭 Why it matters
 Layla's Tick needs to send text messages. Her agent offers to write a small module that talks to a mobile carrier directly. It generates the code in ten minutes and it appears to work on her own phone.
 
-Mona asks three questions. What happens when a message is rejected? Who handles opt-outs and complaints? What does it cost per message at the volume you hope for? Layla has no answers. A messaging service from a vendor would already handle delivery reports and opt-out replies, and would cost a small amount per message. She does not know the amount, so she opens the vendor's pricing page and reads it with Mona, rather than trusting a number from memory.
+Mona asks three questions. What happens when a message is rejected? Who handles opt-outs and complaints? What does it cost per message at the volume you hope for? Layla has no answers. A messaging service from a vendor may offer delivery reports and some opt-out handling (its documentation says which), though Layla would still own consent and what her clients are told. Its price is per message and she does not know the amount, so she opens the vendor's pricing page and reads it with Mona, rather than trusting a number from memory.
 
 The moral is not "always buy". It is that the *first ten minutes* of building are not the cost. The cost is every month afterwards. The library's [*System Design for Vibe Coders*, lesson 0.3 — Build vs buy: the highest-leverage decision you'll make](../vibe/index.en.html#l0-3) treats this from the engineering side; this lesson is the founder's view: money, time, risk and the ability to explain your choice.
 
@@ -290,7 +288,7 @@ You are not doing a legal review. You are building a one-page note you can hand 
 
 **The AI model itself is a buy decision.** If Tick used an AI model, for example to draft friendlier reminder wording, that model is a vendor. You pay per use, the vendor can change behaviour, prices or limits, and what you send may be covered by its terms. Treat it like any other part: ask the five questions, compute the cost per customer, keep a way to switch. The library's [*AI Product Management: Zero to Hero*, lesson 1.3 — The build spectrum: prompt, retrieval (RAG), fine-tune, train, or buy](../aipm/index.html#/1.3) covers the product side in depth. Lesson 6.2 here covers what you may send to a model.
 
-**Agents and "build" feel the same.** When an agent writes a part, it feels like buying: it is instant and cheap. But operationally you own it, and you own its failures. Count it as "build" in your table.
+**Agents and "build" feel the same.** When an agent writes a part, it feels like buying: it is instant and cheap. But operationally you own it, and you own its failures. Count it as "build" in your table. Anthropic's "Building effective agents" advises the simplest solution possible; a part you did not need is complexity you now own.
 
 ### 🔴 Expert view
 
@@ -326,7 +324,7 @@ Layla built the table from her two lists in lesson 2.1.
 | Error and send log | No | No | Layla does not notice a failure | **Borrow** a free error-tracking tier, then review | Logs are kept in Tick's own database too |
 | Landing page | No | Yes | Page down | **Borrow** a page builder; Sam may design later | Export HTML |
 
-For messaging she opened the vendor's pricing page, wrote the date, and noted the unit: per message sent. With 200 reminders per salon per month and an illustrative 0.05 per message, the cost was 10 per salon per month. She wrote that figure into the table, next to "check again on the day we price (lesson 3.1)". For payment she chose to invoice by hand for the first month: it cost her half an hour and taught her what Nadia's accountant would need on an invoice.
+For messaging she opened the vendor's pricing page, wrote the date, and noted the unit: per message sent. With 200 reminders per salon per month and an illustrative 0.05 per message, the cost was 10 per salon per month. She wrote that figure into the table, next to "check again on the day we price (lesson 3.1)". For payment she chose to invoice by hand for the first month: it cost her half an hour and taught her which questions to ask Nadia's accountant about invoices.
 
 Mona read the table and asked one question: "Which row would hurt most if the vendor vanished tomorrow?" Layla pointed to messaging and added a second candidate vendor to the exit column. She did not sign up with it. She only wrote down its name and that it has an export or a replacement path to check.
 
@@ -381,27 +379,27 @@ Mona read the table and asked one question: "Which row would hurt most if the ve
 
 **3. Layla wants to write a vendor's monthly price into her plan. What does the lesson say to do?**
 
-- A. Use the price she remembers, since vendors rarely change their prices at all.
+- A. Use the price she remembers from the last time she looked at the vendor's page.
 - B. Use the cheapest price that any review of the vendor happens to mention.
-- C. Leave the costs out of the plan until a paying customer actually asks about them.
-- D. Read the pricing page that day, note the date and unit, and compute.
+- C. Copy the price from the vendor's marketing page into the plan once, and trust it.
+- D. Read the vendor's pricing page that day, note the date and unit, and compute.
 
 <details><summary>Answer</summary>
 
-**D.** Prices and plans change, so the plan holds a dated reading and a sum, not a remembered figure. A and B rely on stale or second-hand numbers; C avoids the work that lesson 3.1 needs. (See "Tool prices change, so compute, do not quote".)
+**D.** Prices and plans change, so the plan holds a dated reading and a sum, not a remembered figure. A, B and C rely on stale or second-hand numbers that nobody has checked. (See "Tool prices change, so compute, do not quote".)
 
 </details>
 
 **4. Why does the lesson count a part written by an agent as "build" in the table?**
 
 - A. Because agent-written code is always of lower quality than vendor-written code.
-- B. Because Layla owns its failures and upkeep, however quick it was to generate in the first place.
+- B. Because Layla owns its failures and upkeep, however fast the agent was to generate it.
 - C. Because vendors never use coding agents when they write their own software.
-- D. Because the table has no room for a category other than build, buy or borrow.
+- D. Because an agent-written part costs nothing to run, so it needs no row.
 
 <details><summary>Answer</summary>
 
-**B.** Ownership, not speed, defines build. A is an unsupported generalisation, C is irrelevant to ownership, and D misses the point: the table has a "borrow" option but the issue is who owns the failures. (See "Agents and 'build' feel the same".)
+**B.** Ownership, not speed, defines build. A is an unsupported generalisation, C is irrelevant to ownership, and D is wrong because an agent-written part still costs checking, fixes and upkeep. (See "Agents and 'build' feel the same".)
 
 </details>
 
@@ -409,12 +407,12 @@ Mona read the table and asked one question: "Which row would hurt most if the ve
 
 - A. Buying a vendor service so that she does not have to learn the topic herself.
 - B. Building the edge of the product herself, so that she keeps control of it.
-- C. Doing a step by hand for the first customers, to learn before automating it.
+- C. Doing a step by hand for the first few customers, to learn before automating it.
 - D. Planning a switch away from a vendor, with a written route for leaving it.
 
 <details><summary>Answer</summary>
 
-**C.** It is the "borrow: do it by hand" option, and it taught her what an invoice must contain. A and B describe other table rows, and D concerns exit routes. (See "Three words, defined".)
+**C.** It is the "borrow: do it by hand" option, and it showed her what an invoice might need to show, which depends on the country (a question for an accountant). A and B describe other table rows, and D concerns exit routes. (See "Three words, defined".)
 
 </details>
 
@@ -438,9 +436,9 @@ Mona read the table and asked one question: "Which row would hurt most if the ve
 - Biggest trap: testing only the happy path with the three sample records you typed yourself.
 
 ## 🧭 Why it matters
-Layla tells her agent, "Build the reminder sender." An hour later it reports: "Done. Reminders are sent the day before each appointment." She tries it with her own number and an appointment she created, and a message arrives. She tells Nadia it is ready.
+Layla tells her agent, "Build the reminder sender." An hour later it reports: "Done. Reminders are sent the day before each appointment." She tries it with her own number and an appointment she created, and a message arrives. She tells Nadia it is ready for a small pilot with three clients who agreed to be texted.
 
-On Nadia's first real day, Tick sends reminders for tomorrow's appointments, as intended. It also sends one to a client whose appointment was cancelled that morning, one at 2 a.m. because the server's clock and the salon's clock disagreed, and two copies to a client entered twice with slightly different spellings. Nadia's client is annoyed. Nadia is polite. Layla feels sick.
+On the first pilot day, Tick sends reminders for tomorrow's appointments, as intended. It also sends one to a client whose appointment was cancelled that morning, one at 2 a.m. because the server's clock and the salon's clock disagreed, and two copies to a client entered twice with slightly different spellings. Nadia's client is annoyed. Nadia is polite. Layla feels sick.
 
 None of these is exotic. Each is a case Layla never tried because her sample data was twelve clean records. The agent was not lying. It reported that the code did what the code was written to do. Whether that is what the customer needs is Layla's question, and only she can ask it. This lesson gives her a brief that makes the agent's job clear and a check that makes her own job doable. The library's [*System Design for Vibe Coders*, lesson F.4 — Meet your agent: how to direct a builder you can't watch](../vibe/index.en.html#lF-4) teaches directing from the engineering side. Here we keep it to what a founder must decide and verify.
 
@@ -473,9 +471,9 @@ Keep the brief in a file in your project so every task starts from it. Writing t
 
 The strong versions can be tried with real or realistic data, and a stranger can tell whether they passed.
 
-**Small steps.** Give the agent one task at a time, ask it to save a version (a commit) when each check passes, and look at what changed before the next task. If something breaks, you can go back one step. The library's [*System Design for Vibe Coders*, lesson 9.1 — You are the architect now](../vibe/index.en.html#l9-1) and [lesson 9.4 — Verification before completion](../vibe/index.en.html#l9-4) go deeper on this; the founder version is: never accept a big change you did not look at.
+**Small steps.** Give the agent one task at a time, ask it to save a version (a commit) when each check passes, and look at what changed before the next task. If something breaks, you can go back one step. The library's [*System Design for Vibe Coders*, lesson 9.1 — You are the architect now](../vibe/index.en.html#l9-1) and [lesson 9.4 — Verification before completion](../vibe/index.en.html#l9-4) go deeper on this; the founder version is: never accept a big change you did not look at. Anthropic's "Building effective agents" likewise advises the simplest solution possible, adding complexity only when needed.
 
-**Check with realistic data.** The three records you typed are the friendliest data in the world. Real salons have names in several scripts, two clients with the same name, no phone number, a number in the wrong format, appointments cancelled at the last minute and bookings across midnight or a clock change. Build a small **test data set** of 20 to 30 records on purpose, including the awkward ones. If real data is available from a design partner, ask permission before using it; do not copy real customers' details into tools without thinking about what the tool's terms allow (lesson 6.2 covers this). Fake data is safer to start with.
+**Check with realistic data.** The three records you typed are the friendliest data in the world. Real salons have names in several scripts, two clients with the same name, no phone number, a number in the wrong format, appointments cancelled at the last minute and bookings across midnight or a clock change. Build a small **test data set** of 20 to 30 records on purpose, including the awkward ones. Use invented data. Do not put real customers' details into any tool until you have read its terms and asked a professional (lesson 6.2).
 
 ### 🟡 Going deeper
 
@@ -500,7 +498,7 @@ The last line matters. An honest "not checked: daylight-saving changes, clients 
 
 ### 🔴 Expert view
 
-**Failure modes specific to agents.** Watch for: an agent changing tests so that they pass; touching files outside the task; adding a new library without saying so; claiming it ran something it did not; and fixing the symptom you described while leaving the cause. Two guards help: ask for the list of changed files every time, and keep your acceptance checks in a place the agent is told not to edit. The library's [*System Design for Vibe Coders*, lesson 8.1 — The 600-file near-miss](../vibe/index.en.html#l8-1) shows the cost of unreviewed large changes.
+**Failure modes specific to agents.** Watch for: an agent changing tests so that they pass; touching files outside the task; adding a new library without saying so; claiming it ran something it did not; and fixing the symptom you described while leaving the cause. Two guards help: ask for the list of changed files every time, and keep your acceptance checks where the agent cannot write (a read-only file, a separate repository, or a review of the diff every time). The library's [*System Design for Vibe Coders*, lesson 8.1 — The 600-file near-miss](../vibe/index.en.html#l8-1) shows the cost of unreviewed large changes.
 
 **Separate the build from the verify.** The more consequential the part, the more the check should come from someone or something other than the builder. For a founder this may be you doing the check, a second agent session given only the brief (not the first agent's reasoning), or a person. Different eyes find different mistakes.
 
@@ -530,9 +528,9 @@ After the 2 a.m. message, Layla and Mona rebuilt the work as a brief. She wrote 
 | 3 | A client with no phone number is skipped, and the log says "no number" | Pass | Client 15 logged |
 | 4 | The same client entered twice gets one text | Fail | Two texts; she added a rule and a duplicate in the data set |
 | 5 | Replying "stop" ends reminders for that client | Not checked | Waiting for the messaging service to forward replies |
-| 6 | The send log shows every message and its result | Pass | 28 rows for 28 sends |
+| 6 | The send log shows every message and its result | Pass | 21 rows for 21 sends |
 
-She had built a data set of 26 invented records: names in two scripts, two with the same name, three with no number, two cancelled, one at 00:30 and one booked across a clock change. She noted two honest gaps: "not checked: replies, clock-change date" and gave the "who can read this code?" question to a freelance engineer, an hour of review she planned before Nadia's real launch.
+She had built a data set of 26 invented records: names in two scripts, two with the same name, three with no number, two cancelled, one at 00:30 and one booked across a clock change. She noted two honest gaps: "not checked: replies, clock-change date" and gave the "who can read this code?" question to a freelance engineer, an hour of review she planned before Nadia's real launch, which waits until that review is done and check 5 passes.
 
 The brief's report-back line paid off the next day. The agent listed a changed file Layla had not expected: a settings file in which it had switched on an email feature "to be helpful". She asked it to revert that, checked the diff, and moved on. Mona asked what Layla had learned. She wrote it in the built-versus-learned log from lesson 0.1: *The agent reports on its own work; I verify on messy data. Writing the checks first made me decide what "works" means.*
 
@@ -574,14 +572,14 @@ The brief's report-back line paid off the next day. The agent listed a changed f
 
 **2. Which acceptance check is written well?**
 
-- A. Reminders should work properly and reliably for all of the clients using it.
-- B. The system must be reliable, fast and secure whenever people use it daily.
-- C. Handle all of the unusual edge cases sensibly and without any failures at all.
-- D. A cancelled appointment gets no text, and the log says why it was skipped.
+- A. A cancelled appointment should be handled properly by Tick every time.
+- B. Tick should send reminders quickly and never send a wrong one to anyone.
+- C. Every client should get a reminder that reads well on their own phone.
+- D. A cancelled appointment gets no text, and the log says it was skipped and why.
 
 <details><summary>Answer</summary>
 
-**D.** It names a situation and a result that can be seen to pass or fail. A, B and C are vague wishes with no way to observe a result. (See "Write acceptance checks in the customer's terms".)
+**D.** It names a situation and a result that can be seen to pass or fail. A, B and C name no situation or no result that can be seen to pass or fail. (See "Write acceptance checks in the customer's terms".)
 
 </details>
 
@@ -600,27 +598,27 @@ The brief's report-back line paid off the next day. The agent listed a changed f
 
 **4. Why write acceptance checks before the build?**
 
-- A. So that you decide what "works" means for the customer, not the code.
-- B. So that the agent can edit them later, to match whatever its code outputs.
+- A. So that you, not the code, decide what "works" means to the customer.
+- B. So that the agent can see what to build, because it cannot read the brief.
 - C. So that the checks run faster later, once the agent has finished building.
 - D. So that you can skip the 30-minute check after the agent has finished a task.
 
 <details><summary>Answer</summary>
 
-**A.** Writing them first forces a decision about what the customer needs. B is exactly the failure mode to avoid, C is not the reason, and D removes the verification itself. (See "The one-page brief" and "Failure modes specific to agents".)
+**A.** Writing them first forces a decision about what the customer needs. B is wrong because the agent does read the brief; the real risk is an agent editing checks to match its code. C is not the reason, and D removes the verification itself. (See "The one-page brief" and "Failure modes specific to agents".)
 
 </details>
 
 **5. Which risk should Layla plan to have a qualified person review rather than judge alone?**
 
-- A. The colour scheme and the typeface used across the reminder screen.
-- B. The order in which the items are listed in the main menu.
-- C. Whether signed-in owners can see only their own salon's clients.
-- D. The wording of the labels and help text on the settings page.
+- A. Whether the reminder wording sounds respectful and clear to the clients.
+- B. Whether the landing page explains what the product does clearly enough.
+- C. Whether a signed-in owner can open only their own salon's client list.
+- D. Whether the settings page has too many options for a new customer.
 
 <details><summary>Answer</summary>
 
-**C.** Access to other people's data is a high-consequence area that a non-technical founder cannot fully judge. The others are low-risk appearance choices. (See "Know what you cannot judge, and who can".)
+**C.** Access to other people's data is a high-consequence area that a non-technical founder cannot fully judge. The others are judgement calls a founder can make by knowing the customer. (See "Know what you cannot judge, and who can".)
 
 </details>
 

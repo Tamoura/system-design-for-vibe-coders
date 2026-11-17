@@ -35,7 +35,7 @@
       "lesson": "2.2",
       "q": {
         "en": "A founder's AI coding agent can generate any part of a tutoring-booking product in an afternoon. The product's edge is its logic for matching tutors to students by subject and level. Which build, buy or borrow plan fits the lesson?",
-        "ar": "يستطيع وكيل البرمجة (AI coding agent) عند مؤسِّس أن يولّد أي جزء من منتج لحجز الدروس الخصوصية في عصر يوم واحد. وميزة المنتج الفارقة هي منطق مطابقة المدرّسين بالطلاب حسب المادة والمستوى. أي خطة بناء أو شراء أو استعارة تناسب الدرس؟"
+        "ar": "يستطيع وكيل البرمجة عند مؤسِّس أن يولّد أي جزء من منتج لحجز الدروس الخصوصية في عصر يوم واحد. وميزة المنتج التنافسية هي منطق مطابقة المدرّسين بالطلاب حسب المادة والمستوى. أي خطة بناء أو شراء أو استعارة تناسب الدرس؟"
       },
       "o": {
         "en": [
@@ -54,7 +54,7 @@
       "a": 3,
       "why": {
         "en": "Build the edge and buy or borrow the plain machinery that vendors run for many customers. Building all three treats speed of generation as the cost; buying the edge hides what he should be learning; and swapping the roles of edge and machinery gets the rule backwards.",
-        "ar": "ابنِ ما يميّز منتجك واشترِ أو استعر الأجزاء العادية التي تديرها الشركات المزوّدة لعملاء كثيرين. بناء الثلاثة يعدّ سرعة التوليد هي الكلفة؛ وشراء ما يميّز المنتج يُخفي ما ينبغي أن يتعلمه؛ وقلب الأدوار بين الميزة الفارقة والأجزاء العادية يعكس القاعدة."
+        "ar": "ابنِ ما يميّز منتجك واشترِ أو استعر الأجزاء العادية التي تديرها الشركات المزوّدة لعملاء كثيرين. بناء الثلاثة يعدّ سرعة التوليد هي الكلفة؛ وشراء ما يميّز المنتج يُخفي ما ينبغي أن يتعلمه؛ وقلب الأدوار بين الميزة التنافسية والأجزاء العادية يعكس القاعدة."
       }
     },
     {
@@ -63,7 +63,7 @@
       "lesson": "2.1",
       "q": {
         "en": "Karim's product sends invoice reminders. His list of features is: sending the reminders, sign-in, a way for customers to pay, and a dark mode. Which sort into core, needed to sell and later matches the lesson?",
-        "ar": "يرسل منتج كريم تذكيرات بالفواتير. وقائمة ميزاته هي: إرسال التذكيرات، وتسجيل الدخول، ووسيلة يدفع بها العملاء، ووضع داكن. أي فرز إلى أساسية ولازمة للبيع ومؤجّلة يطابق الدرس؟"
+        "ar": "يرسل منتج كريم تذكيرات بالفواتير. وقائمة ميزاته هي: إرسال التذكيرات، وتسجيل الدخول، ووسيلة يدفع بها العملاء، ووضع داكن. أي فرز إلى الأساس ولازمة للبيع ولاحقًا يطابق الدرس؟"
       },
       "o": {
         "en": [
@@ -73,16 +73,16 @@
           "Core: sign-in; needed to sell: dark mode and sending the reminders; later: a way to pay"
         ],
         "ar": [
-          "أساسية: إرسال التذكيرات؛ لازمة للبيع: تسجيل الدخول ووسيلة الدفع؛ مؤجّلة: الوضع الداكن",
-          "أساسية: تسجيل الدخول والوضع الداكن؛ لازمة للبيع: إرسال التذكيرات؛ مؤجّلة: وسيلة الدفع",
-          "أساسية: إرسال التذكيرات ووسيلة الدفع؛ لازمة للبيع: الوضع الداكن؛ مؤجّلة: تسجيل الدخول",
-          "أساسية: تسجيل الدخول؛ لازمة للبيع: الوضع الداكن وإرسال التذكيرات؛ مؤجّلة: وسيلة الدفع"
+          "الأساس: إرسال التذكيرات؛ لازمة للبيع: تسجيل الدخول ووسيلة الدفع؛ لاحقًا: الوضع الداكن",
+          "الأساس: تسجيل الدخول والوضع الداكن؛ لازمة للبيع: إرسال التذكيرات؛ لاحقًا: وسيلة الدفع",
+          "الأساس: إرسال التذكيرات ووسيلة الدفع؛ لازمة للبيع: الوضع الداكن؛ لاحقًا: تسجيل الدخول",
+          "الأساس: تسجيل الدخول؛ لازمة للبيع: الوضع الداكن وإرسال التذكيرات؛ لاحقًا: وسيلة الدفع"
         ]
       },
       "a": 0,
       "why": {
-        "en": "Core is what the job cannot be done without, which is the reminders. Needed to sell is what you cannot charge or onboard without, which covers sign-in and a way to pay. A cosmetic option with no evidence of demand belongs on the later list. The other sorts put the job, or the means of selling, in the wrong pile.",
-        "ar": "الأساسي هو ما لا تتم المهمة بدونه، أي التذكيرات. واللازم للبيع هو ما لا تستطيع بدونه أن تتقاضى أو تستقبل العملاء، وهو تسجيل الدخول ووسيلة الدفع. أما خيار شكلي لا دليل على الطلب عليه فمكانه قائمة المؤجَّل. وبقية الفرزات تضع المهمة، أو وسيلة البيع، في مجموعة خاطئة."
+        "en": "Core is what the job cannot be done without, which is the reminders. Needed to sell is what you cannot charge or onboard without, which covers sign-in and a way to pay. A cosmetic option can wait, so among these three piles it belongs on the later list. The other sorts put the job, or the means of selling, in the wrong pile.",
+        "ar": "الأساسي هو ما لا تتم المهمة بدونه، أي التذكيرات. واللازم للبيع هو ما لا تستطيع بدونه أن تتقاضى أو تستقبل العملاء، وهو تسجيل الدخول ووسيلة الدفع. أما خيار شكلي فيمكن أن ينتظر، فمكانه من بين هذه المجموعات الثلاث «لاحقًا». وبقية الفرزات تضع المهمة، أو وسيلة البيع، في مجموعة خاطئة."
       }
     },
     {
@@ -91,7 +91,7 @@
       "lesson": "2.3",
       "q": {
         "en": "Rania asked her AI coding agent to write tests for her acceptance checks. It reports that all fourteen tests pass, but its list of changed files shows that it also edited her original checks file. What is the best next step?",
-        "ar": "طلبت رانيا من وكيل البرمجة (AI coding agent) عندها أن يكتب اختبارات لفحوص القبول (acceptance checks) التي وضعتها. أبلغها بأن الاختبارات الأربعة عشر كلها نجحت، لكن قائمة الملفات المعدَّلة تُظهر أنه عدّل أيضًا ملف فحوصها الأصلي. ما أفضل خطوة تالية؟"
+        "ar": "طلبت رانيا من وكيل البرمجة عندها أن يكتب اختبارات لفحوص القبول (acceptance checks) التي وضعتها. أبلغها بأن الاختبارات الأربعة عشر كلها نجحت، لكن قائمة الملفات المعدَّلة تُظهر أنه عدّل أيضًا ملف فحوصها الأصلي. ما أفضل خطوة تالية؟"
       },
       "o": {
         "en": [
@@ -110,7 +110,7 @@
       "a": 2,
       "why": {
         "en": "Changing checks so that they pass is a known agent failure mode, and an agent grading itself shares its own blind spots. The remedy is to compare against the checks she wrote first, revert weakening edits, and run them herself. Accepting the pass counts a claim as evidence, and deleting the tests discards useful work.",
-        "ar": "تغيير الفحوص لتنجح من أنماط إخفاق الوكلاء المعروفة، والوكيل الذي يقيّم نفسه يشاركها نقاطه العمياء. والعلاج أن تقارن بما كتبته هي أولًا، وتتراجع عن التعديلات التي أضعفت الفحوص، وتشغّلها بنفسها. أما قبول النجاح فيعدّ الادعاء دليلًا، وحذف الاختبارات يرمي عملًا مفيدًا."
+        "ar": "تغيير الفحوص لتنجح من أنماط إخفاق الوكلاء المعروفة، والوكيل الذي يقيّم عمله بنفسه تلازمه النقاط العمياء نفسها. والعلاج أن تقارن بما كتبته هي أولًا، وتتراجع عن التعديلات التي أضعفت الفحوص، وتشغّلها بنفسها. أما قبول النجاح فيعدّ الادعاء دليلًا، وحذف الاختبارات يرمي عملًا مفيدًا."
       }
     }
   ],
@@ -120,7 +120,7 @@
       "lesson": "2.1",
       "text": {
         "en": "I have written a job sentence and a scope statement with at least one \"does not\" clause, and a kill list of at least ten rows in which every row names who asked (a real person or \"nobody\") and the evidence that would bring it back.",
-        "ar": "كتبتُ جملة المهمة وبيان النطاق (scope statement) وفيه عبارة «لا يشمل» واحدة على الأقل، وقائمة استبعاد (kill list) من عشرة صفوف على الأقل يذكر كل صف فيها من طلب الميزة والدليل الذي يعيدها."
+        "ar": "كتبتُ جملة المهمة وبيان النطاق (scope statement) وفيه عبارة «لا يفعل» واحدة على الأقل، وقائمة استبعاد (kill list) من عشرة صفوف على الأقل يذكر كل صف فيها من طلب الميزة (شخصًا حقيقيًا أو «لا أحد») والدليل الذي يعيدها."
       }
     },
     {
@@ -128,7 +128,7 @@
       "lesson": "2.3",
       "text": {
         "en": "I have saved a one-page agent brief with acceptance checks, run those checks on a test data set of at least 20 invented records, and kept a what-I-checked note with a line for what I did not check.",
-        "ar": "حفظتُ موجزًا من صفحة واحدة للوكيل (agent) يتضمن فحوص قبول (acceptance checks)، وشغّلتُ هذه الفحوص على مجموعة بيانات اختبار من 20 سجلًّا مختلقًا على الأقل، واحتفظتُ بملاحظة «ما فحصته» فيها سطر لما لم أفحصه."
+        "ar": "حفظتُ موجزًا من صفحة واحدة للوكيل يتضمن فحوص قبول (acceptance checks)، وشغّلتُ هذه الفحوص على مجموعة بيانات اختبار من 20 سجلًّا مصطنعًا على الأقل، واحتفظتُ بملاحظة «ما فحصته» فيها سطر لما لم أفحصه."
       }
     }
   ]

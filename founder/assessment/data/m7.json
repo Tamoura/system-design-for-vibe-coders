@@ -35,7 +35,7 @@
       "lesson": "7.2",
       "q": {
         "en": "Tick's message vendor bills per message. Layla set a budget alert at twice last month's bill, and nothing else. A bug starts sending messages in a loop overnight. What does the lesson say the alert does here?",
-        "ar": "يحاسب مزوّد الرسائل لدى Tick على كل رسالة. ضبطت ليلى تنبيه ميزانية عند ضعف فاتورة الشهر الماضي، ولا شيء غيره. بدأ خطأ برمجي يرسل الرسائل في حلقة طوال الليل. ماذا يفعل التنبيه هنا بحسب الدرس؟"
+        "ar": "يحاسب مزوّد الرسائل لدى تيك على كل رسالة. ضبطت ليلى تنبيه ميزانية عند ضعف فاتورة الشهر الماضي، ولا شيء غيره. بدأ خطأ برمجي يرسل الرسائل في حلقة طوال الليل. ماذا يفعل التنبيه هنا بحسب الدرس؟"
       },
       "o": {
         "en": [
@@ -53,8 +53,8 @@
       },
       "a": 0,
       "why": {
-        "en": "An alert tells you; a cap stops the spend, and many vendors only offer alerts. So she needs to know which one she has, and set a hard limit where the vendor offers it. Neither kind of control refunds charges or predicts the loop.",
-        "ar": "التنبيه يخبرك، أما الحدّ الأقصى فيوقف الإنفاق، وكثير من المزوّدين يقدّمون التنبيه وحده. لذا عليها أن تعرف أيّهما لديها، وأن تضبط حدًّا صارمًا حيث يتيحه المزوّد. ولا يردّ أيٌّ من النوعين الرسوم ولا يتنبأ بالحلقة."
+        "en": "An alert tells you; a cap stops the spend, and some vendors only offer alerts. So she needs to know which one she has, and set a hard limit where the vendor offers it. Neither kind of control refunds charges or predicts the loop.",
+        "ar": "التنبيه يخبرك، أما السقف فيوقف الإنفاق، وبعض المزوّدين يقدّمون التنبيه وحده. لذا عليها أن تعرف أيّهما لديها، وأن تضبط سقفًا صارمًا حيث يتيحه المزوّد. ولا يردّ أيٌّ من النوعين الرسوم ولا يتنبأ بالحلقة."
       }
     },
     {
@@ -82,7 +82,7 @@
       "a": 3,
       "why": {
         "en": "The pack holds no secrets, the helper gets pause and read rights, and money movement stays with the founder. A pause is safer than a fix by someone who does not understand the system. The master password never goes in the pack, and no one shares logins.",
-        "ar": "الحزمة لا تحوي أسرارًا، ويحصل المساعد على صلاحيتي الإيقاف المؤقت والقراءة، وتبقى حركة المال عند المؤسِّسة. والإيقاف المؤقت أأمن من إصلاح يجريه من لا يفهم النظام. ولا توضع كلمة المرور الرئيسية في الحزمة، ولا يُتشارك أي حساب."
+        "ar": "الحزمة لا تحوي أسرارًا، ويحصل المساعد على صلاحيتي الإيقاف المؤقت والقراءة، وتبقى حركة المال عند المؤسِّسة. والإيقاف المؤقت أأمن من إصلاح يجريه من لا يفهم النظام. ولا توضع كلمة المرور الرئيسية في الحزمة، ولا تُشارَك بيانات الدخول مع أحد."
       }
     },
     {
@@ -120,7 +120,7 @@
       "lesson": "7.2",
       "text": {
         "en": "I have written a vendor register with one row for every service my company pays or depends on, each with a billing owner, a renewal date and an exit route, and saved it where I can open it.",
-        "ar": "كتبتُ سجل موردين بصف لكل خدمة تدفع لها شركتي أو تعتمد عليها، في كل صف مالك الفوترة وتاريخ التجديد ومسار الخروج، وحفظتُه في مكان أستطيع فتحه."
+        "ar": "كتبتُ سجل مورّدين بصف لكل خدمة تدفع لها شركتي أو تعتمد عليها، في كل صف صاحب الفاتورة وتاريخ التجديد وطريق الخروج، وحفظتُه في مكان أستطيع فتحه."
       }
     },
     {
@@ -128,7 +128,7 @@
       "lesson": "7.3",
       "text": {
         "en": "I have written a handover pack with no secrets in it, given it to one trusted person, and recorded the date and result of a 30-minute drill in which they found six named items.",
-        "ar": "كتبتُ حزمة تسليم لا تحوي أي أسرار، وسلّمتُها لشخص واحد موثوق، ودوّنتُ تاريخ تمرين مدته ثلاثون دقيقة ونتيجته، وجد فيه ستة عناصر محددة."
+        "ar": "كتبتُ حزمة تسليم لا تحوي أي أسرار، وسلّمتُها لشخص واحد موثوق، ودوّنتُ تاريخ تمرين مدته ثلاثون دقيقة ونتيجته، وجد فيه ستة بنود مسمّاة."
       }
     }
   ]

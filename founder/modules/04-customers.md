@@ -36,7 +36,7 @@ The cause is not laziness. When an AI tool can draft a plan, a calendar and the 
 | Circle | Who is in it | Why it is easier | Honest watch-out |
 |---|---|---|---|
 | **1. People who already talked to you** | Interviewees (lesson 1.2), smoke-test respondents (lesson 1.4), people who booked a call, people who answered a question | They know you and have shown the problem is real to them | They may say yes to be kind. Ask for a real commitment |
-| **2. People one introduction away** | Contacts of interviewees, other customers of your design partner, friends of friends who run the right kind of business | A named person vouches that you are real, so a reply is far more likely | Ask for a specific introduction, not "tell people about me" |
+| **2. People one introduction away** | Contacts of interviewees, other customers of your design partner, friends of friends who run the right kind of business | A named person vouches that you are real, so a reply is usually more likely | Ask for a specific introduction, not "tell people about me" |
 | **3. Places where your exact customer gathers** | A trade association's member forum, a community group for salon owners, a local business directory, a supplier's customer group, a course for the trade | Many of the right people in one place, and you can see what they ask about | Read the group's rules first. Many ban promotion. Join by being useful |
 
 Most first customers come from circles 1 and 2. Circle 3 is for learning how your customers talk and for finding the people to put on your list; it is slow and the rules are strict.
@@ -69,7 +69,7 @@ The strong versions name a single person, give the helper control, and cost them
 
 ### 🔴 Expert view
 
-**Do things that do not scale, on purpose.** Early on, the manual way is often the right way: you message people yourself, you set up each customer yourself, and you sit with them. Writers on starting companies have long argued that early founders should recruit users by hand and not wait for growth to arrive; the essays are cited in the References. The reason is learning. Each manual contact teaches you something a dashboard cannot. Automate only what you have done by hand enough times to understand.
+**Do things that do not scale, on purpose.** Early on, the manual way is often the right way: you message people yourself, you set up each customer yourself, and you sit with them. One widely read essay argues that early founders should recruit users by hand and not wait for growth to arrive (cited in the References). The reason is learning. Each manual contact teaches you something a dashboard cannot. Automate only what you have done by hand enough times to understand.
 
 **Customers who are friends.** Friends and family can be useful early users, but treat them as a separate row type, and do not count them as evidence that strangers will pay. If a friend pays, record it; if they use it without paying, record that too. The honest test of the first ten includes at least some people who owe you nothing.
 
@@ -85,17 +85,17 @@ The strong versions name a single person, give the helper control, and cost them
 ## 🏛️ In practice with Tick
 Fictional and illustrative. After Mona's question, Layla put her week's posting calendar aside and built the first-ten list in an evening. She started with circle 1: the seven strangers she had interviewed, the five from the smoke test (two overlapped), and Nadia. That gave eleven rows, and four of them had already declined or gone quiet, so she marked them *not now* with a note and did not chase them.
 
-For circle 2, she sent Nadia a short note: "Is there one owner you know who also gets cancelled slots? If you give me a name, I will send them two lines that mention you, and you can read them first." Nadia named two, plus a supplier representative who visits many salons. Two of the interviewees also named one owner each. That added six rows.
+For circle 2, she sent Nadia a short note: "Is there one owner you know who also gets cancelled slots? If you give me a name, I will send them two lines that mention you, and you can read them first." Nadia named two, plus a supplier representative who visits many salons. Two of the interviewees also named one owner each. That added five rows.
 
 For circle 3, Layla joined a regional group for salon owners. She read the rules, which banned promotion, and she spent a week answering questions about client reminders without linking to Tick. One owner wrote that she lost an hour a week to no-shows. Layla did not message her about Tick. She replied publicly with a tip, and wrote to the moderator to ask whether she could post a short invitation to a research chat. The moderator said yes, once, in the weekly thread, with a statement that she was building a product. Four owners replied. That added four rows, each with "volunteered in the group thread" as the source.
 
-By the end of the second week her list had twenty-three names. She tracked it with three weekly counts (illustrative figures, not benchmarks):
+By the end of the second week her list had twenty names. She tracked it with three weekly counts (illustrative figures, not benchmarks):
 
 ```text
 FIRST-TEN LIST — Tick (fictional, illustrative)
 
 Week 1: names added 11, conversations 3, commitments 1 (Nadia, already a pilot)
-Week 2: names added 12, conversations 6, commitments 2 (two trials started)
+Week 2: names added 9, conversations 6, commitments 2 (two trials started)
 
 Row example:
 Name: Owner A | Business: two-chair salon | Circle: 2
@@ -129,7 +129,6 @@ Mona's comment was brief: "Now you can see where the next ten are. Which circle 
 - Your first ten customers are found by name, one at a time. A list of named people with reasons and next steps beats a posting calendar.
 - Work warm to cold: people who already talked to you, then people one introduction away, then places where your exact customer gathers.
 - Ask for one specific introduction and make it easy, with a draft the helper can edit; report back afterwards.
-- Choose a narrow group you can reach and serve; widen only with evidence.
 - Use AI to organise and brainstorm, never to supply prospects; keep contact collection honest and within site terms and the law, which vary by country.
 - Count names added, conversations and commitments weekly, as counts and not percentages.
 
@@ -174,7 +173,7 @@ Mona's comment was brief: "Now you can see where the next ten are. Which circle 
 
 </details>
 
-**4. After two weeks, Layla's list has twenty-three names, but twelve are friends, family or people who said they would "support her". What is the most useful reading?**
+**4. Suppose Layla's list had twenty names after two weeks, but eight were friends, family or people who said they would "support her". What is the most useful reading?**
 
 - A. The product is validated because so many people have already agreed to try it
 - B. Friends are the best customers because they will not leave when things go wrong
@@ -256,7 +255,7 @@ Compare:
 |---|---|
 | "Hi! I came across your salon and was blown away. We are revolutionising client management with AI. Can I get 30 minutes to show you a demo?" | "Hi Rania, Nadia at her salon suggested I write to you. I am building a tool that texts clients the day before their appointment, because Nadia said missed slots cost her about an hour a week. Could I ask you three questions about how you handle no-shows, by message or a 15-minute call? If this is not useful to you, just say so and I will not write again. Layla" |
 
-The strong message has a real reason (an introduction, which Nadia has agreed to), a plain description, a small ask and an exit. It does not claim to have noticed anything, and it does not overstate. If it is true that Nadia said it, and she has agreed, it is honest.
+The strong message has a real reason (an introduction, which Nadia has agreed to), a plain description, a small ask and an exit.
 
 **Rules for personalisation.** Personalise using facts you know and can show. Never write "I loved your work" if you did not look at it, and never let an assistant add a detail you did not check. A short true message beats a long false one.
 
@@ -264,7 +263,7 @@ The strong message has a real reason (an introduction, which Nadia has agreed to
 
 ### 🟡 Going deeper
 
-**Where AI helps and where it harms.** An assistant is good at tightening a draft, making it shorter, checking the tone, and creating a draft in Arabic or another language for a native speaker to check. It is bad at inventing facts about a person. A safe working rule: you supply the facts (the name, the reason, the exact words you want to say), and the assistant edits; then you read every word as the recipient would. Never let a tool send messages on its own to people you have not individually chosen. Bulk "automated outreach" tools make it easy to cross the line; the rules on consent and unsolicited messages can apply to you personally. If you use any sending tool, check what it records about the recipient and how it handles opt-outs, and see [*System Design for Vibe Coders*, lesson 5.5 — Email is production infrastructure](../vibe/index.en.html#l5-5) for why bulk sending damages the reputation of your sending domain.
+**Where AI helps and where it harms.** An assistant is good at tightening a draft, making it shorter and checking the tone. It is bad at inventing facts about a person. A safe rule: you supply the facts, the assistant edits, and you read every word as the recipient would. Never let a tool send messages on its own to people you have not individually chosen. Bulk "automated outreach" tools make it easy to cross the line; the rules on consent and unsolicited messages can apply to you personally. If you use any sending tool, check what it records about the recipient and how it handles opt-outs, and see [*System Design for Vibe Coders*, lesson 5.5 — Email is production infrastructure](../vibe/index.en.html#l5-5) for why bulk sending damages the reputation of your sending domain.
 
 **The sales call, in four parts.** A first call is a conversation with a purpose. A workable shape for 20 minutes:
 
@@ -277,7 +276,7 @@ The strong message has a real reason (an introduction, which Nadia has agreed to
 
 You talk less than they do. If you find yourself listing features, you have stopped listening.
 
-**Handling "no" and "maybe".** A clear "no" is useful: ask one question ("Is it the timing, the price, or that you do not have this problem?"), note the answer, thank them and stop. A "maybe" usually means one of three things: they do not feel the problem, they cannot decide alone, or they are afraid of the effort of switching. Ask which. Do not answer a "maybe" with a discount; a discount does not fix any of those three and it hides what you could learn. A price conversation belongs to lesson 3.2, and you should have your pilot price and its limits written down before the call.
+**Handling "no" and "maybe".** A clear "no" is useful: ask one question ("Is it the timing, the price, or that you do not have this problem?"), note the answer, thank them and stop. A "maybe" usually means one of three things: they do not feel the problem, they cannot decide alone, or they are afraid of the effort of switching. Ask which. Do not answer a "maybe" with a discount; a discount does not fix any of those three and it hides what you could learn. Price belongs to lesson 3.2; write down your pilot price before the call.
 
 **Recording and notes.** If you want to record a call, ask first, and check the rules where you and the other person live; recording consent rules differ widely. If you use an AI note-taker on a call, tell the other person that it is there and where the transcript goes; it may capture their personal information and their client's. Notes you write by hand are the safe default.
 
@@ -295,20 +294,17 @@ You talk less than they do. If you find yourself listing features, you have stop
 | **Rules checklist** | Questions for the regulator's guidance or a professional: who may I contact, what consent, what must each message contain | Before you message strangers in any country |
 
 ## 🏛️ In practice with Tick
-Fictional and illustrative. After the junk-report, Layla wrote to the nine owners again, which was uncomfortable but honest: a single short note saying the earlier message had a detail she could not support, apologising, and saying she would not write again. She added each of them to a do-not-contact list unless they replied, and two replied kindly. One owner said she was happy to talk.
+Fictional and illustrative. After the junk-report, Layla wrote one short apology, only to the owner who had asked how she got her address: it said the earlier message had a detail she could not support, and told her honestly where the address came from. She sent nothing to the other eight, put all nine on a do-not-contact list, and wrote down a question for the regulator's guidance or a professional: was she allowed to use that address at all?
 
 She then rebuilt her approach. For each person on her circle 2 list, she wrote the four-sentence message by hand, and she asked her assistant only to shorten it and check the tone. She sent each one to the introducer first. Hers looked like this:
 
 ```text
 OUTREACH MESSAGE — Tick (fictional, illustrative)
 
-To: Owner B (introduced by Owner A, who has read this)
+To: Owner B (introduced by Nadia, who has read this)
 
-Hi Rania, Nadia suggested I write to you. I am building a tool that
-texts clients the day before their appointment; Nadia says missed
-slots cost her about an hour a week. Could I ask you three questions
-about how you handle no-shows, by message or a 15-minute call? If this
-is not useful, just say so and I will not write again. Layla
+(The four sentences from the strong example above, addressed to Rania
+and naming Nadia. Every detail is true and Nadia has agreed.)
 
 Follow-up: one reminder after four days; one closing note a week later
 saying I will stop. Then the contact goes on the do-not-contact list.
@@ -346,10 +342,10 @@ Owner B said she already used reminders in her booking tool and did not need Tic
 ## ⚠️ Mistakes and traps
 - **Letting an assistant invent a "personal" detail.** A made-up compliment is a lie, and the recipient can tell. Supply true facts yourself and let the tool edit only.
 - **Sending one message to many strangers.** It is cheap, so it feels harmless, and it is what anti-spam rules target. Write to named people for whom you have a real reason, and check the rules.
-- **Hiding who you are.** Use your real name, say what the product is, and offer a way to stop. A deceptive subject line or sender name is both dishonest and a legal risk.
+- **Hiding who you are.** Use your real name, say what the product is, and offer a way to stop. A deceptive subject line or sender name is dishonest and may break anti-spam or consumer rules in your country; check the regulator's guidance.
 - **A vague ask.** "Let's connect" has no answer. Ask for one small, specific thing.
 - **Following up forever.** One reminder and one closing note, then stop. Anyone who says no goes on the do-not-contact list and is never messaged again.
-- **Answering "maybe" with a discount.** It hides what you could learn and trains people to wait for a deal. Ask what stands between them and a yes.
+- **Answering "maybe" with a discount.** It hides what you could learn. Ask what stands between them and a yes.
 
 ## 🧾 Recap
 - Outreach is a message to a person you have a real reason to contact; spam is the same message sent without reason, honesty or an exit.
@@ -377,7 +373,7 @@ Owner B said she already used reminders in her booking tool and did not need Tic
 **2. Which opening best fits a first message to an owner Layla has never met, introduced by Nadia, who has agreed to be named?**
 
 - A. "Hi, I run a revolutionary AI platform for salons and would love 30 minutes to demo it to you this week, whenever you are free."
-- B. "Nadia suggested I write. May I ask you three questions about no-shows? If not useful, tell me and I will not write again."
+- B. "Nadia suggested I write to you. May I ask you three questions about no-shows, by message or a short call? If not useful, tell me and I will not write again."
 - C. "I saw your salon online and think we could grow together, so please call me anytime this week, or reach me on any channel you like."
 - D. "Nadia and a lot of other happy salons already use Tick every day, so you should really try it too, and I can set it up for you."
 
@@ -392,7 +388,7 @@ Owner B said she already used reminders in her booking tool and did not need Tic
 - A. Send the planned reminder anyway, since the whole sequence is already set up
 - B. Reply with a discount offer to try to change her mind about writing again
 - C. Ask a friend to contact the owner from another account, so the message looks new
-- D. Add her to the do-not-contact list and send nothing more, perhaps a one-line thanks
+- D. Add her to the do-not-contact list and send nothing more, not even a reminder, since a no is final
 
 <details><summary>Answer</summary>
 
@@ -403,7 +399,7 @@ Owner B said she already used reminders in her booking tool and did not need Tic
 **4. On a call, an owner says "maybe, send me some information". Which response fits the lesson best?**
 
 - A. Send a long deck covering every feature and then wait for a reply from her
-- B. Ask what the information would need to show, and what is behind the "maybe"
+- B. Ask what the information would need to show and what is behind the "maybe", then agree a next step
 - C. Offer a large discount to close the sale on the spot, before she can think it over
 - D. Say the product is nearly full and that she should decide today to be safe
 
@@ -417,8 +413,8 @@ Owner B said she already used reminders in her booking tool and did not need Tic
 
 - A. Let it join without saying so, since the transcript helps only her afterwards
 - B. Use it only when she guesses that the other person will not mind it
-- C. Say it is there, ask first, and check recording rules
-- D. Keep quiet about it, because telling people makes the whole call awkward
+- C. Say it is there, ask first, check recording rules, and say where the transcript goes
+- D. Mention it only if the other person asks, since a note-taker is a minor tool
 
 <details><summary>Answer</summary>
 
@@ -441,7 +437,7 @@ Links are not given because the rules differ by country and change. Find the cur
 
 ## ⚡ In 60 seconds
 - After this lesson you can name the **first result** a new Tick customer must reach, write an onboarding checklist that gets a customer there in one session, and track how many new customers reach it and how long it takes them.
-- **Onboarding** is everything between "yes" and the moment the customer sees the product work for them. It is where most of the value of a sale is won or lost.
+- **Onboarding** is everything between "yes" and the moment the customer sees the product work for them. It is where much of the value of a sale can be won or lost.
 - The rule that matters most: **onboard to the first result, not to the whole product.** Define the one outcome that proves the product works for this customer, and remove every step that does not lead to it.
 - Decision cue: if a customer said yes on Monday, can you say by Friday whether they reached the first result? If not, you are not measuring onboarding, you are hoping.
 - Biggest trap: counting sign-ups as success. A customer who signed up and never reached the first result has not become a customer yet.
@@ -466,14 +462,14 @@ Nothing was wrong with Tick. It was a path that asked a non-technical owner to m
 | Step | Needed for the first result? | What to do |
 |---|---|---|
 | Create account | Yes | Keep, and make it a minute or less |
-| Confirm email | Maybe | Allow the first result first if your risks allow, confirm later |
+| Confirm email | Maybe | Keep it before any message goes to a client; let the owner see a test reminder to herself first, and confirm email before the first real client send |
 | Choose a plan | No | Do it after the first result, or have already agreed it on the call |
 | Import all clients | No | Start with one client, or add one by hand |
 | Connect the calendar | Yes, but hard | Offer a guided option, or set it up for her on a call |
 | Customise reminder wording | No | Start with a sensible default message |
 | Invite staff | No | Later |
 
-The shorter the path, the more customers arrive. A step that is not needed for the first result is a place to lose someone.
+A shorter path often loses fewer people. A step that is not needed for the first result is a place to lose someone.
 
 **Do it with them, at first.** With ten customers, there is no shame and a lot of value in setting up each one yourself, on a call or in person, while they watch. This is not a failure of the product; it is research. You see where they hesitate, what they ask and what they misread, and that is what you fix. This **white-glove onboarding** (you set up the customer by hand) does not scale, and you are not trying to scale it yet. You are trying to learn what a self-service path would need.
 
@@ -496,7 +492,7 @@ Write down, for each stalled customer, the last step they completed and, if they
 
 | Weak welcome | Strong welcome |
 |---|---|
-| A long email listing every setting and a link to "explore" | "Welcome, Rania. Your first goal is one reminder sent to one of your clients. It takes about 20 minutes. Reply with two times this week and I will do it with you." |
+| A long email listing every setting and a link to "explore" | "Welcome, Dana. Your first goal is one reminder sent to one of your clients. It takes about 20 minutes. Reply with two times this week and I will do it with you." |
 | Sent by a no-reply address | Sent from a real address you read, signed by you |
 | No expected next step | One next step with a date |
 
@@ -573,20 +569,20 @@ Layla called Owner C on the third day, using her stalled-customer script: "What 
 - Set up the first customers by hand, because the observation is the research; do not try to scale it before you understand it.
 - Measure reached the result, time to result, stalled customers and where they stopped, as counts in a simple tracker.
 - Contact stalled customers, ask open questions and record their words; change one thing at a time.
-- Be honest about AI-written messages, import the minimum customer data, and make leaving easy.
+- Be honest about AI-written messages and import the minimum customer data.
 
 ## ✍️ Check yourself
 
 **1. Four owners said yes to Tick. Two have never gone past the first screen. What is the best first reading and action?**
 
-- A. They were never really interested, so Layla should stop contacting them and look for others
-- B. They need a discount, because price must be the barrier that stops them from going further
+- A. They may not have been really interested, so Layla should stop contacting them and look for others
+- B. They may need a discount, because price could be the barrier that stops them from going further
 - C. They need more features, so Layla should add them to the product before contacting them again
 - D. The path may be confusing; she should ask each one what happened last time they opened it
 
 <details><summary>Answer</summary>
 
-**D.** Stalls are usually confusion or lost time, and the quickest way to know is to ask each person in an open way. A assumes indifference, B guesses price, and C adds more steps to a path that is already failing. (See "Learn from the stall, not only the success".)
+**D.** Stalls are usually confusion or lost time, and the quickest way to know is to ask each person in an open way. A assumes indifference, B guesses the price, and C builds more before learning anything. (See "Learn from the stall, not only the success".)
 
 </details>
 
@@ -594,7 +590,7 @@ Layla called Owner C on the third day, using her stalled-customer script: "What 
 
 - A. The owner has created an account, connected her calendar and invited her staff
 - B. The owner has read the welcome email, watched the tour and opened the help pages
-- C. One reminder has reached one of her own clients for a real appointment
+- C. One real reminder reached one of her own clients for a real appointment; she saw it
 - D. The owner has imported every client and configured all reminder templates
 
 <details><summary>Answer</summary>
@@ -620,7 +616,7 @@ Layla called Owner C on the third day, using her stalled-customer script: "What 
 
 - A. Onboarding is solved, so she can stop tracking it and move to the next task
 - B. Good sign, but four is too few for a trend, so she keeps tracking to ten
-- C. About every customer will reach the result, so she can forecast her revenue from it
+- C. Probably every customer will reach the result, so she can forecast her revenue from it
 - D. She should now remove her calls and rely on the welcome email
 
 <details><summary>Answer</summary>

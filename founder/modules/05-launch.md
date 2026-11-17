@@ -10,7 +10,7 @@
 *Level: 🟡 Intermediate* · *Prerequisites: 2.3, 4.3* · *Step: Launch*
 
 ## ⚡ In 60 seconds
-- After this lesson you can write a **launch checklist** of one page that lists, for each launch step, what you will check, what would make you stop, and exactly how you would undo it, and you can run a first launch to no more than three customers before anyone else sees the product.
+- After this lesson you can write a **launch checklist** of one page that lists, for each launch step, what you will check, what would make you stop, and exactly how you would undo it, and you can run a first launch to no more than five customers before anyone else sees the product.
 - A launch is not a date. It is a **ladder of steps**: you, then a few trusted customers, then more, then everyone. At each rung you look at what happened before you climb.
 - The rule that matters most: **do not take a step you cannot undo before you have taken the same step on a small scale.** Anything that is hard to reverse (a message sent to every customer, a charge, a data change, a public announcement) goes last and goes small first.
 - Decision cue: for each step ask, "If this goes wrong in the next hour, what is my undo, and have I tried it?" If you have not tried the undo, you do not have one.
@@ -107,8 +107,8 @@ After the Monday morning, Layla writes her first launch checklist with Mona. The
 
 | Rung | Who sees it | What I check | Stop rule | Undo (tried on) |
 |---|---|---|---|---|
-| 0 | Me, with a test salon and ten fake clients | Each fake client gets one reminder per appointment, at the right time | Any duplicate or missing reminder | Switch flag off, and go back to the last good version (tried Tuesday, took 6 minutes) |
-| 1 | Nadia's salon only, for 2 days | Nadia's day of reminders against her calendar; Nadia tells me what her clients said | Any duplicate, or any missed reminder | Same |
+| 0 | Me, with a test salon and ten fake clients | Each fake client gets one reminder per appointment, at the right time | Any duplicate, missing or late reminder | Switch flag off, and go back to the last good version (tried Tuesday, took 6 minutes) |
+| 1 | Nadia's salon only, for 2 days | Nadia's day of reminders against her calendar; Nadia tells me what her clients said | Any duplicate, any missed reminder, or any reminder more than 10 minutes late | Same |
 | 2 | Three salons from the first-ten list, for 3 days | Same check each morning; a count of reminders for cancelled appointments | Any duplicate, or more than one missed reminder across the three | Same |
 | 3 | All 9 existing customers | Same, plus support messages | Any duplicate | Same |
 | 4 | Open sign-ups, new price page | First result reached by each new customer (lesson 4.3) | Two new customers stall at the same step | Hide the price page, pause sign-ups |
@@ -116,7 +116,7 @@ After the Monday morning, Layla writes her first launch checklist with Mona. The
 
 She also writes her agent rule: the agent builds on a test copy, nothing goes live until the row is filled in, and every release comes with an undo she has watched run.
 
-On rung 1, Nadia reports that one client received a reminder 30 minutes late. Layla stops, as the stop rule says (a late reminder was also on her list), switches the flag off, and fixes a time-zone setting with the agent. She repeats rung 0, and then rung 1. The email on rung 5 goes out nine days later than she wanted, and it is true. Mona's comment: "You lost nine days. On Monday you were about to lose a customer."
+On rung 1, Nadia reports that one client received a reminder 30 minutes late. Layla stops, as the stop rule says, switches the flag off, and fixes a time-zone setting with the agent. She repeats rung 0, and then rung 1. The email on rung 5 goes out nine days later than she wanted, and it is true. Mona's comment: "You lost nine days. On Monday you were about to lose a customer."
 
 ## 🛠️ Exercises
 
@@ -177,12 +177,12 @@ On rung 1, Nadia reports that one client received a reminder 30 minutes late. La
 
 - A. Carry on, because only one reminder was late and the rest were fine
 - B. Wait until Friday to see whether more customers report the same problem to her
-- C. Stop, use the undo, find the cause, then repeat the same rung
+- C. Stop, use the undo, find the cause, then repeat the earlier rungs before going on
 - D. Change the stop rule so that one late reminder is allowed
 
 <details><summary>Answer</summary>
 
-**C.** The stop rule was written before the rung so that Layla would not talk herself out of it. Using it, going back and repeating the rung is the plan working. A, B and D all reinterpret the rule after seeing the result. (See "The stop rule".)
+**C.** The stop rule was written before the rung so that Layla would not talk herself out of it. Using it, going back and repeating the earlier rungs is the plan working. A, B and D all reinterpret the rule after seeing the result. (See "The stop rule".)
 
 </details>
 
@@ -201,8 +201,8 @@ On rung 1, Nadia reports that one client received a reminder 30 minutes late. La
 
 **5. Which sentence is a usable stop rule for rung 2?**
 
-- A. "If complaints seem to be rising this week, I will stop and review."
-- B. "If most customers look unhappy after a few days, I will slow down."
+- A. "If complaints rise by more than a few this week, I will stop and review."
+- B. "If most customers look unhappy after three days, I will slow down."
 - C. "If the launch feels shaky, I will ask the agent for its opinion."
 - D. "If a customer gets a duplicate reminder, I stop and use the undo."
 
@@ -236,7 +236,7 @@ By the end of the launch ladder, Tick has nine customers and Layla is answering 
 
 She does what many founders do. She connects an AI assistant to the support inbox, gives it the help pages and a line, "answer customers politely and solve their problems", and switches on automatic replies. For two days it is wonderful: replies in seconds, in the customer's language, friendly. On the third day, a salon owner asks whether she can get her money back for the month because Tick missed a weekend. The assistant, trying to be helpful, replies that a full refund will be issued and that Tick guarantees 99.9% delivery of reminders. Layla has no such guarantee in her terms, and no refund process promised. The customer, reasonably, writes back with the screenshot.
 
-The question is not whether the assistant is clever. It is who is allowed to speak for the company, about what. A public example that is often cited: in 2024 a Canadian tribunal decided that an airline was responsible for wrong information its website chatbot gave a customer about a refund, and rejected the argument that the chatbot was a separate entity. Rules differ elsewhere, but the lesson is plain for a founder: **what your assistant tells customers will be treated as something you told them.** The full citation is in the References; check the facts there before you rely on them.
+The question is not whether the assistant is clever. It is who is allowed to speak for the company, about what. A public example reported in the press: a 2024 tribunal ruling held an airline responsible for its website chatbot's refund advice. Rules differ elsewhere, and this is not legal advice, but the lesson for a founder is plain: **what your assistant tells customers may be treated as something you told them.** The References say how to find the ruling; read it yourself before you rely on this summary.
 
 The founder's job is to set the boundaries before the assistant speaks, not after the screenshot. Engineering of the inbox and admin tools is in [*SaaS Building Blocks*, lesson 7.1 — The admin panel: support tools and impersonation](../saas/index.html#/7.1); the product view of designing for trust is in [*AI Product Management*, lesson 4.2 — Designing for trust: expectations, explanations, errors and recovery](../aipm/index.html#/4.2). This lesson is the policy you write.
 
@@ -261,14 +261,14 @@ It is poor at things that need authority or truth about your private situation: 
 | Tier | What it covers | Who answers | Example for Tick |
 |---|---|---|---|
 | **Green: assistant may answer alone** | Factual questions fully answered by approved help text, with no promise and no account data | The assistant, from your approved help pages only | "How do I reconnect my calendar?" |
-| **Amber: assistant drafts, you send** | Anything involving the customer's account, a fault, a feature request, or a mild complaint | The assistant drafts; you read, edit and send, ideally within your stated response time | "My reminders stopped on Thursday." |
-| **Red: human only** | Money (refunds, credits, price), personal data (access, deletion, a breach), legal or contract wording, safety, an upset customer, anything the assistant is unsure about | You, and nobody and nothing else replies | "I want a refund." "Delete everything you have on my clients." |
+| **Amber: assistant drafts, you send** | Anything involving the customer's account, a fault, a feature request, or a mild complaint | The assistant drafts; you read, edit and send, within your stated response time | "My reminders stopped on Thursday." |
+| **Red: human only** | Money (refunds, credits, price), personal data (access, deletion, a breach), legal or contract wording, safety, an upset customer, anything the assistant is unsure about | You give the substantive reply; the assistant sends only the fixed holding message | "I want a refund." "Delete everything you have on my clients." |
 
-Write the tiers down as your **support policy**. The assistant's instructions then state: answer only green questions, only from the approved text, and if the message is anything else, do not answer it, reply with a short holding message, and pass it to the founder.
+Write the tiers down as your **support policy**. The assistant's instructions then state: answer only green questions, only from the approved text, and if the message is anything else, do not answer it, reply with a short holding message, and pass it to the founder. The holding message is fixed text you approve in advance; it promises nothing except a reply time.
 
 **Escalation.** **Escalation** means passing a message to a person with more authority. The assistant must escalate in three situations: the message matches a red topic, the assistant is not sure, or the customer asks for a human. The last one must always work, without argument. A customer who says "I want to talk to a person" gets one, or a clear time when one will reply.
 
-**Disclosure.** Tell customers when they are talking to an AI. Say it in plain words in the first reply, not in the terms: "I'm Tick's AI assistant. A person reviews anything about your account or money, and you can ask for one at any time." Disclosure matters for honesty and trust, and some places have rules that require it for certain kinds of AI systems (for example, transparency rules in the EU's AI Act cover systems that interact with people; whether and how they apply to you depends on your product and country, and is a question for a qualified professional). Never let an assistant pretend to be a person with a human name and picture.
+**Disclosure.** Tell customers when they are talking to an AI. Say it in plain words in the first reply, not in the terms: "I'm Tick's AI assistant. A person reviews anything about your account or money, and you can ask for one at any time." Disclosure matters for honesty and trust, and some places have rules that require it for certain kinds of AI systems (for example, the EU's AI Act has transparency rules for systems that interact with people; whether they apply to you is a question for a qualified professional). Never let an assistant pretend to be a person with a human name and picture.
 
 ### 🟡 Going deeper
 
@@ -358,9 +358,9 @@ The next week, Nadia writes: "Are you a robot?" The reply says yes, an AI assist
 
 **2. Which instruction is the best for a support assistant?**
 
-- A. Be friendly and resolve every customer problem quickly, using your own judgement on difficult cases that arise.
+- A. Be friendly and resolve every customer problem quickly, using your own judgement on the difficult cases that arise.
 - B. Always give the customer an answer, and if facts are missing, make a sensible estimate that sounds confident.
-- C. Say you are an AI; use only approved help text; pass money, data, faults or doubt to a person straight away, every time.
+- C. Say you are an AI; answer only from approved help text; pass money, data, faults and doubt to a person straight away.
 - D. Decide for yourself when a person should join, and use whatever company information helps you answer fully.
 
 <details><summary>Answer</summary>
@@ -384,10 +384,10 @@ The next week, Nadia writes: "Are you a robot?" The reply says yes, an AI assist
 
 **4. After a change to the assistant's instructions, what should Layla do before it talks to customers again?**
 
-- A. Trust that the stricter wording works
-- B. Read one or two replies and decide
-- C. Rerun her ten test messages and score each reply
-- D. Ask the assistant whether it follows the policy
+- A. Trust that the stricter wording will work as she intended
+- B. Read one or two live replies and decide whether it behaves
+- C. Rerun her ten test messages and score each reply against the policy
+- D. Ask the assistant whether it follows the policy, and trust its reply
 
 <details><summary>Answer</summary>
 
@@ -409,7 +409,7 @@ The next week, Nadia writes: "Are you a robot?" The reply says yes, an AI assist
 </details>
 
 ## 📚 References
-- *Moffatt v. Air Canada*, 2024 BCCRT 149 (Civil Resolution Tribunal of British Columbia, Canada). Decision on an airline's responsibility for information given by its website chatbot. Cited from memory of the published decision, not opened in this session, and so not given a URL; read the decision itself before relying on the summary above, and ask a qualified professional what applies where you operate.
+- A 2024 ruling by a Canadian tribunal on an airline's responsibility for refund information given by its website chatbot, as reported in the press. Not opened in this session, so no case name or URL is given; search for the published decision, read it before relying on the summary above, and ask a qualified professional what applies where you operate.
 - European Union, Regulation (EU) 2024/1689 (the AI Act), Article 50, transparency obligations for certain AI systems, including systems that interact with people. Cited by title and article only; not opened in this session. Whether and how it applies to a given product is a question for a qualified professional.
 - Your AI tool vendor's current terms and data-use documentation. Read the pages for the tool you use before sending any customer data to it.
 
@@ -492,7 +492,7 @@ The weak version says nothing a customer can act on. The strong one is plain abo
 
 Rule: **you confirm every factual sentence in a customer message.** If the AI wrote "a third-party provider outage", and the cause was Sam's setting change, the message is false, and a customer who later learns the truth trusts you less.
 
-**When data may be involved.** If the incident might involve **personal data** (information about an identifiable person, such as clients' names and phone numbers) being lost, exposed or changed, it is a different kind of incident. Many places have data protection laws, such as the EU GDPR or a national equivalent, that can require notifying a regulator and sometimes affected people, within a short time that varies by law. The time starts when you become aware. As a founder you cannot decide this alone and should not guess. Do three things: **stop the cause** (go back, switch off, change the access), **write down what you know and when you learned it**, and **contact a qualified professional promptly**. Keep a one-line note in your launch checklist saying who that person is, so that you do not search for one at 19:00. Rashid, the lawyer, appears in lesson 6.2 for this reason. The course does not tell you what the rule is where you live.
+**When data may be involved.** If the incident might involve **personal data** (information about an identifiable person, such as clients' names and phone numbers) being lost, exposed or changed, it is a different kind of incident. Many places have data protection laws, such as the EU GDPR or a national equivalent, that can require notifying a regulator and sometimes affected people, within a short time that varies by law. In some laws the time starts when you become aware, and which rule applies to you is a question for a qualified professional. As a founder you cannot decide this alone and should not guess. Do three things: **stop the cause** (go back, switch off, change the access), **write down what you know and when you learned it**, and **contact a qualified professional promptly**. Keep a one-line note in your launch checklist saying who that person is, so that you do not search for one at 19:00. Rashid, the lawyer, appears in lesson 6.2 for this reason.
 
 ### 🔴 Expert view
 
@@ -517,13 +517,13 @@ Layla's first **post-incident note** for the Thursday outage, written the next m
 
 **Summary.** On Thursday, between 14:10 and 17:25, Tick sent no reminders to any customer. Nine salons were affected. A change to a shared setting caused it, and the previous setting was restored.
 
-**Impact.** About 3 hours 15 minutes without reminders. Reminders for the next day were sent late or by hand by owners. One salon asked for a credit; Layla gave one day's credit to all nine, as her new rule says.
+**Impact.** About 3 hours 15 minutes without reminders. Reminders for the next day were sent late or by hand by owners. One salon asked for a credit; Layla gave one day's credit to all nine and wrote a one-line credit rule into her support policy (action c).
 
 **Timeline.** 14:10 setting changed. 16:30 Nadia reports. 16:38 confirmed reminders queued but not sent. 16:50 first message to all customers with tomorrow's client list. 17:25 previous setting restored, queue sent. 18:00 update sent. 18:20 Layla confirms tomorrow's reminders against calendars.
 
-**What went well.** The first message went out 20 minutes after confirmation, with a list customers could use. The update at 18:00 was sent on time.
+**What went well.** The first message went out 12 minutes after confirmation (20 minutes after Nadia's report), with a list customers could use. The update at 18:00 was sent on time.
 
-**Actions.** (a) Layla: alert when no reminder is sent for 30 minutes in working hours, by Friday. (b) Layla and Sam: separate the page setting from the reminder setting, and list the "ask first" settings, by next Wednesday. (c) Layla: add a severity table and the first-message template to the support policy, and name the lawyer to call if personal data is ever involved, by next Friday.
+**Actions.** (a) Layla: alert when no reminder is sent for 30 minutes in working hours, by Friday. (b) Layla and Sam: separate the page setting from the reminder setting, and list the "ask first" settings, by next Wednesday. (c) Layla: add a severity table, the first-message template and the credit rule to the support policy, and name the lawyer to call if personal data is ever involved, by next Friday. (d) Layla: give Sam his own login, limited to the landing page, and remove his access to the SMS provider account, by Friday.
 
 She sends a three-sentence version to the nine salons. Mona's one question: "How long did it take to find out, and who told you?" Two hours twenty minutes, and Nadia. That is why action (a) comes first.
 
@@ -586,7 +586,7 @@ She sends a three-sentence version to the nine salons. Mona's one question: "How
 
 - A. Sam will be more careful with the shared settings from next week onwards.
 - B. Layla adds an alert for no reminders in 30 working minutes, by this Friday.
-- C. Layla will improve the monitoring across the whole product by next month.
+- C. Layla will improve the monitoring across the whole product by 30 June.
 - D. Layla and Sam will communicate better with customers by the end of the quarter.
 
 <details><summary>Answer</summary>

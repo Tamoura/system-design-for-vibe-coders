@@ -18,11 +18,11 @@
 - Biggest trap: using last month's vendor price from memory, or leaving out your own time. Read the pricing page on the day and write the date.
 
 ## 🧭 Why it matters
-Layla's pre-sale in lesson 1.4 worked: Nadia and two other salon owners agreed to pay for Tick before the full version existed. Layla is delighted, and then Mona asks a plain question: "When Nadia pays you, what is left?"
+Layla's pilot in lesson 1.4 worked: Nadia and one other salon owner paid the pilot deposit, and three more booked calls, before the full version existed. Layla is delighted, and then Mona asks a plain question: "When Nadia pays you, what is left?"
 
 Layla knows Tick sends text reminders and, since last week, uses an AI model to write friendlier reminder wording for each client. She does not know what either costs per salon. The agent built the wording feature in an afternoon and she has never opened the model vendor's bill. Mona does not give her the answer. She asks her to open the pricing pages, write down the date, and work it out on one sheet of paper.
 
-The result is not a disaster, and not a triumph. It is a number she can finally reason about: a margin she can see, a customer who would hurt it, and a part of the bill she did not know was there. This is the same question every AI-first founder faces, because the agent hides the running cost behind the speed of building. The library's [*AI Product Management: Zero to Hero*, lesson 8.2 — Unit economics: cost to serve, pricing models and margins](../aipm/index.html#/8.2) covers cost to serve inside a company. This lesson is the founder's version: small, hand-checkable, and tied to the decision of what to charge in lesson 3.2.
+The result is not a disaster, and not a triumph. It is a number she can finally reason about: a margin she can see, a customer who would hurt it, and a part of the bill she did not know was there. The library's [*AI Product Management: Zero to Hero*, lesson 8.2 — Unit economics: cost to serve, pricing models and margins](../aipm/index.html#/8.2) covers cost to serve inside a company. This lesson is the founder's version: small, hand-checkable, and tied to the decision of what to charge in lesson 3.2.
 
 ## 📐 How it works
 
@@ -48,7 +48,7 @@ The result is not a disaster, and not a triumph. It is a number she can finally 
 | **Storage and bandwidth** | Data stored, files served | Hosting or storage pricing page; usually small at the start |
 | **Support time** | Each question or problem | Your own minutes per customer per month, at an honest hourly rate |
 
-Never copy these prices from memory or from an article. Vendors change plans, units and limits. Open the pricing page, write the date and the unit, and compute for your volume. This lesson shows the sums with invented figures so you can follow the method.
+Never copy these prices from memory or from an article. Vendors change plans, units and limits. Open the pricing page, write the date and the unit, and compute for your volume.
 
 **Tokens, in plain words.** A **token** is a small piece of text, roughly a short word or part of a word, that an AI model reads or writes. Model vendors commonly charge per amount of text processed, with the text you send in (**input**) and the text the model writes back (**output**) priced separately, and with discounts for certain features such as reusing earlier text (caching). Anthropic's pricing page, one example among several vendors, is organised this way: a price per million tokens for input, for output, and for cached input. Whatever vendor you use, check its page for its own units. The library's [*AI Product Management: Zero to Hero*, lesson 1.2 — Capabilities and limits: errors, hallucination, context, latency and cost](../aipm/index.html#/1.2) explains tokens and context from the product side.
 
@@ -60,10 +60,10 @@ Never copy these prices from memory or from an article. Vendors change plans, un
 
 ### 🟡 Going deeper
 
-**Why AI cost is different.** Hosting, messages and payments mostly track the number of customers or events. Model cost tracks **how much text goes through the model**. That depends on three things you control and one you do not:
+**Why AI cost is different.** Hosting, messages and payments mostly track the number of customers or events. Model cost tracks **how much text goes through the model**. That depends on four things you control:
 
 - **Prompt size.** Everything you send in each call is billed as input. A long instruction, a pasted customer record or a whole conversation history is paid for on every call.
-- **Output length.** Longer answers cost more, and output is often priced higher than input per token.
+- **Output length.** Longer answers cost more, and output may be priced differently from input.
 - **Number of calls per task.** Retries, "regenerate", checking steps and agents that call tools several times multiply the cost of one task.
 - **Which model you choose.** Vendors offer larger and smaller models at very different prices. The library's [*Building AI Applications & Agents*, lesson 14.2 — Cost, latency and reliability engineering: budgets, caching, routing, retries and SLOs](../aiapps/index.html#/14.2) goes deep on budgets and routing; here you only need the founder's habit of measuring one real task.
 
@@ -75,7 +75,7 @@ Never copy these prices from memory or from an article. Vendors change plans, un
 
 ### 🔴 Expert view
 
-**Spending limits protect cash.** Many vendors let you set a budget alert or a hard limit on usage-based bills. Check what your vendors offer, turn it on, and note the limit in your sheet. A runaway loop in an agent, or one abusive account, can otherwise produce a large bill before you notice. The library's [*System Design for Vibe Coders*, lesson 5.2 — Rate Limiting That Survives a CDN](../vibe/index.en.html#l5-2) explains how to limit how much one user can consume.
+**Spending limits protect cash.** Check whether each vendor offers a budget alert or a hard limit on usage-based bills, turn it on if it does, and note the limit in your sheet. A runaway loop in an agent, or one abusive account, can otherwise produce a large bill before you notice. The library's [*System Design for Vibe Coders*, lesson 5.2 — Rate Limiting That Survives a CDN](../vibe/index.en.html#l5-2) explains how to limit how much one user can consume.
 
 **Vendor price changes are a business risk.** The library's [*System Design for Vibe Coders*, lesson 11.4 — Cost Engineering](../vibe/index.en.html#l11-4) covers the engineering levers for cutting model cost; your job is to decide which margin is acceptable. If one model vendor's price or behaviour change would wreck your margin, write that on the sheet as a risk, with what you would do: switch model, raise the price, cap use. For how metering and usage-based billing are implemented, the library's [*SaaS Building Blocks*, lesson 3.3 — Usage-based billing and metering](../saas/index.html#/3.3) is the engineering companion.
 
@@ -221,7 +221,7 @@ Mona asked what Layla would do if a large salon sent 2,000 reminders. Layla's an
 - Biggest trap: choosing the price out of fear, copying a competitor without knowing their costs, or giving an endless discount and calling it a price.
 
 ## 🧭 Why it matters
-Layla wrote 9 per month on the pre-sale page in lesson 1.4 because she felt nervous asking for more. Nadia paid it without a word. Layla took that as proof the price was right. Mona was not so sure. "Nobody argued," she said. "What does that tell you?"
+After the pilot in lesson 1.4, Layla quoted Nadia 9 per month, a figure she picked out of nervousness. Nadia accepted it without a word. Layla took that as proof the price was right. Mona was not so sure. "Nobody argued," she said. "What does that tell you?"
 
 Layla's sheet from lesson 3.1 says that at 29 she keeps about 16.51 per salon after variable costs, and that at 9 she would keep less than zero: 9 minus 12.49 is negative. The low price would lose money on every salon. A price set by nerves had been hiding a cost problem.
 
@@ -259,13 +259,13 @@ Use cost-plus as the floor, competitors as a reference, and value as the guide f
 | **Usage-based** | Pay for what is used (per message, per result) | Your cost and their value both grow with use | Bills vary, which customers dislike; metering must be accurate |
 | **Hybrid** | A base price including an allowance, then usage above it | You want predictability plus protection from heavy use | Needs a clear explanation on one page |
 
-If your cost grows with usage, as Tick's messages do, protect the margin with an allowance and a clear charge above it, or with a plan limit. The library's [*SaaS Building Blocks*, lesson 3.2 — Plans, limits and entitlements: turning pricing into code](../saas/index.html#/3.2) shows how a price becomes limits in the product, and [*SaaS Building Blocks*, lesson 3.1 — Subscriptions and payments: checkout, webhooks, the customer portal](../saas/index.html#/3.1) shows how payments are collected. This lesson stays with the decision.
+If your cost grows with usage, as Tick's messages do, protect the margin with an allowance and a clear charge above it, or with a plan limit. The library's [*SaaS Building Blocks*, lesson 3.2 — Plans, limits and entitlements: turning pricing into code](../saas/index.html#/3.2) shows how a price becomes limits in the product, and [*SaaS Building Blocks*, lesson 3.1 — Subscriptions and payments: checkout, webhooks, the customer portal](../saas/index.html#/3.1) shows how payments are collected.
 
 **Weak versus strong price page.**
 
 | Weak | Strong |
 |---|---|
-| "Only 9! Cheapest around!" | "29 a month per salon. Includes 300 reminders. Extra reminders 0.08 each. Cancel any time." |
+| "Only 9! Cheapest around!" | "29 a month per salon. Includes 200 reminders. Extra reminders 0.08 each. Cancel any time." |
 | "Contact us for pricing" (for a tiny product) | One visible price and what it includes |
 | "Unlimited everything" | A stated allowance and what happens above it |
 
@@ -277,15 +277,15 @@ If your cost grows with usage, as Tick's messages do, protect the margin with an
 
 1. **Ask** in an interview: "What would you expect this to cost?" and "At what price would it be too expensive to consider?" Answers are a rough guide only, because people say what they think is polite.
 2. **Show a price, ask for a commitment.** On the smoke-test page or in a conversation (lesson 1.4), show one price and ask for a pre-payment, a deposit or a signed letter of intent. This is the strongest signal.
-3. **Show different prospects different prices.** Give each prospect one honest price. Do not show one person two prices for the same thing and do not misstate what other customers pay. Consumer-protection and competition law about price differences varies by country; if you plan to vary prices on a public page, ask a professional (lesson 6.1 lists such questions).
+3. **Show different prospects different prices.** Give each prospect one honest price. Do not show one person two prices for the same thing and do not misstate what other customers pay. Consumer-protection and competition law about price differences varies by country; if you plan to vary prices on a public page, ask a lawyer: may I charge different prospects different prices?
 
-**Sample size, honestly.** Twelve conversations do not give statistics. They show direction. If four people see 19 and all four pay, four see 29 and three pay, and four see 49 and none pay, that is a signal to try 29 to 39 next, not proof of the best price. Write down, before the test, what result would make you move the price up, hold it or move it down. This avoids deciding after the fact to like whatever happened.
+**Sample size, honestly.** Twelve conversations do not give statistics. They show direction. If four people see 19 and all four pay, four see 29 and three pay, and four see 49 and none pay, that is a signal to try 29 to 39 next, not proof of the best price. Write down, before the test, what result would make you move the price up, hold it or move it down.
 
 **Free trials, pilots and discounts.** A free trial gives the customer time to see the value but does not tell you they will pay. A **paid pilot** (a short, discounted, paid trial with a clear end) tells you much more. A **founder discount** is fine if it has an end date and is written down: "25 percent off for the first six months, then the standard price". A discount without an end date becomes the price.
 
-**Annual plans.** Offering a yearly price lower than twelve months brings cash earlier (lesson 3.3) and may reduce cancellations, but it creates an obligation: if the product fails, customers may expect a refund. Lesson 6.1 covers the refund promise. Do not sell annual plans before the product is stable enough to deserve them.
+**Annual plans.** Offering a yearly price lower than twelve times the monthly price brings cash earlier (lesson 3.3), but it creates an obligation: if the product fails, customers may expect a refund. Lesson 6.1 covers the refund promise. Do not sell annual plans before the product is stable enough to deserve them.
 
-**Your AI cost sets a floor, and a use limit sets a safety.** If a feature costs more the more it is used, choose one: include a clear allowance, charge for use above it, or make the feature a higher tier. Then set an upper bound so one account cannot cost more than it pays.
+**Your AI cost sets a floor, and a use limit sets a safety.** If a feature costs more the more it is used, include an allowance, charge above it or make it a higher tier, and cap use so no account costs more than it pays.
 
 ### 🔴 Expert view
 
@@ -293,15 +293,15 @@ If your cost grows with usage, as Tick's messages do, protect the margin with an
 
 **Changing a price after you have customers.** Raising a price is normal; doing it carelessly costs trust.
 
-- **Check your promise.** What did your terms and your page say about price changes and notice? Lesson 6.1 gives questions for a lawyer about terms. Your agreement, and in some places the law, may require notice or consent for a change.
+- **Check your promise.** What did your terms and your page say about price changes and notice? Ask a lawyer what notice or consent a price rise for existing customers needs. Your agreement, and in some places the law, may require it.
 - **Give notice.** Write to customers early, in plain words: the new price, the date, the reason, and what stays the same.
-- **Consider keeping early customers on the old price for a stated period.** This rewards the people who took the risk and is cheap when you have few customers. It is a choice, not a rule. If you do it, write the end date.
+- **Consider keeping early customers on the old price for a stated period.** It is a choice, not a rule. If you do it, write the end date.
 - **Change new sign-ups first.** Raise the price for new customers, see what happens, then decide about existing customers.
 - **Never change a price silently.** Existing invoices and agreed terms still apply; the new price starts from the date you stated.
 
 **Lowering a price** is rarely the best response to a "no". First ask why: unclear value, wrong customer, wrong shape. A discount hides the answer.
 
-**Do not game the test.** Fake scarcity ("only 3 left"), invented testimonials and hidden fees are deceptive, may breach consumer-protection rules, and also ruin the evidence you are collecting. If you cannot test honestly, do not test yet.
+**Do not game the test.** Fake scarcity ("only 3 left"), invented testimonials and hidden fees are deceptive, may breach consumer-protection rules, and also ruin the evidence you are collecting.
 
 ## 🧰 The toolkit
 | Resource, tool or template | What it is and does | When to reach for it |
@@ -316,18 +316,19 @@ If your cost grows with usage, as Tick's messages do, protect the margin with an
 ## 🏛️ In practice with Tick
 Tick, its people and all numbers are fictional; the figures are illustrative, not benchmarks.
 
-Layla replaced her nervous 9 with a test. Her floor from lesson 3.1 was a cost to serve of 12.49, so anything under about 20 would leave almost nothing for her fixed costs. Her ceiling came from Nadia's numbers: about 40 per missed appointment and about four missed a month, so roughly 160 a month at risk. If Tick halved the misses, that was about 80 recovered. At 29, Tick cost her a little over a third of that.
+Layla replaced her nervous 9 with a test. Her floor from lesson 3.1 was a cost to serve of 12.49, so anything under about 20 would leave almost nothing for her fixed costs. Her ceiling came from Nadia's numbers: about 40 per missed appointment and about four missed a month, so roughly 160 a month at risk. If Tick halved the misses, that was about 80 recovered. At 29, Tick cost the salon a little over a third of that.
 
 Her **price test plan**, in short:
 
-- **Hypothesis:** salon owners will pay 29 a month for Tick, including 300 reminders, if they believe it recovers missed appointments.
-- **Price points:** 19, 29 and 49 per month, each with the same 300 reminders included and 0.08 for each extra one.
+- **Hypothesis:** salon owners will pay 29 a month for Tick, including 200 reminders, if they believe it recovers missed appointments.
+- **Price points:** 19, 29 and 49 per month, each with the same 200 reminders included and 0.08 for each extra one.
 - **Who:** twelve salon and tutor owners from her interviews and waiting list, four per price point, each shown one price only, in a short video call or message with the same description.
 - **Ask:** a first month paid in advance with a clear cancel-any-time promise, or a signed letter saying they would pay on a stated start date.
 - **Signal rules written beforehand:** if at least two of four pay at 49, try 49 to 59 next; if at least two of four pay at 29 and fewer at 49, hold 29; if fewer than two pay at 29, look at the value story before lowering the price.
+- **After the test:** anyone who paid keeps that price for a stated period or is refunded, with the end date written down before the test starts.
 - **Honesty line:** each person sees one real price, with no invented discounts and no fake scarcity.
 
-The result, after two weeks: at 19, four of four paid; at 29, three of four paid; at 49, one of four paid. Layla felt 19 had been "easy", but at 19 the contribution would be about 19 minus 12.49, or roughly 6.5 before time, which would leave about 1.5 after her support time of 5.00 and almost nothing toward fixed costs. She chose 29, with a founder offer of 25 percent off the first six months for the first ten salons, written on the page with its end date. She sent Nadia, who was paying 9, a short note: the first six months stay at 9, then the standard price starts on a date she gave, and Nadia kept her place as the first design partner. Layla knew 9 is below her floor of 12.49; she accepted that loss on one salon, for a stated end date, as the cost of a design partner. Mona's comment: "You wrote the date down. That is the part people skip."
+The result, after two weeks: at 19, four of four paid; at 29, three of four paid; at 49, one of four paid. As her plan said, the five who paid kept their price for a stated period or took a refund. Layla felt 19 had been "easy", but at 19 the contribution would be about 19 minus 12.49, or roughly 6.8 before time (the payment fee is smaller at a lower price), which would leave about 1.8 after her support time of 5.00 and almost nothing toward fixed costs. She chose 29, with a founder offer of 25 percent off the first six months for the first ten salons, written on the page with its end date. She sent Nadia, who had agreed to 9, a short note: the first six months stay at 9, then the standard price starts on a date she gave, and Nadia kept her place as the first design partner. Layla knew 9 is below her floor of 12.49; she accepted that loss on one salon, for a stated end date, as the cost of a design partner. Mona's comment: "You wrote the date down. That is the part people skip."
 
 She also wrote down what the test could not tell her: twelve people is a small group, they mostly came from her own network and may be kinder than strangers, and she would repeat the test with cold prospects in module 4.
 
@@ -342,7 +343,7 @@ She also wrote down what the test could not tell her: twelve people is a small g
 - **Testing with opinions.** "That sounds fair" costs the person nothing. Instead, ask for a payment, a deposit or a signed letter at a stated price.
 - **Deciding after the result.** If you pick the rule after you see the numbers, you will like whatever happened. Instead, write the signal rules before the test.
 - **Discounts with no end date.** They become the price and are hard to remove. Instead, write the end date and the standard price on the offer.
-- **Changing the price silently, or in a way your terms do not allow.** It costs trust and may breach your agreement. Instead, give notice in plain words, check your terms (lesson 6.1), and consider keeping early customers on the old price for a stated period.
+- **Changing the price silently, or in a way your terms do not allow.** It costs trust and may breach your agreement. Instead, give notice in plain words, and check your terms (lesson 6.1).
 
 ## 🧾 Recap
 - A price has a floor (your cost), a ceiling (the customer's value) and needs a test with real people.
@@ -409,8 +410,8 @@ She also wrote down what the test could not tell her: twelve people is a small g
 **5. Layla wants to raise the price for salons that already pay. What is the sound approach?**
 
 - A. Change the amount on the next invoice and explain only if someone complains about it.
-- B. Raise the price only for the customer who argues least about it.
-- C. Give plain notice with the price, date and reason, after checking her terms and what she promised.
+- B. Raise the price only for the customer who argues least, with no notice to the rest.
+- C. Give clear notice of the price, date and reason, after checking her terms.
 - D. Wait until every customer cancels, then start again with the new price.
 
 <details><summary>Answer</summary>
@@ -443,7 +444,7 @@ Layla now has a price and a margin. On a Sunday she opens her bank app and sees 
 
 Nadia asks for an invoice. Layla has been sending a message that says "9, thanks!" and a payment link. Nadia's accountant needs something more formal. Layla does not know what an invoice must contain where Nadia lives, and she does not want to guess.
 
-Mona introduces Hana, an accountant, and gives Layla a rule: "Do not turn up with a shoebox. Turn up with a table and five good questions." This lesson builds both. Hana appears only to show what a professional is asked. She is fictional, and nothing she says here is a rule for your country.
+Mona introduces Hana, an accountant, and gives Layla a rule: "Do not turn up with a shoebox. Turn up with a table and a list of good questions." This lesson builds both. Hana appears only to show what a professional is asked. She is fictional, and nothing she says here is a rule for your country.
 
 ## 📐 How it works
 
@@ -476,9 +477,9 @@ Then add runway as a final cell: closing cash divided by that month's net burn.
 
 **Break-even** is the number of customers at which monthly contribution (per-customer margin from lesson 3.1) covers monthly fixed costs. Fixed costs divided by contribution per customer, rounded up. This tells you the size you need before the business stops using up cash; it is not a promise that you will reach it.
 
-**Invoices, in plain words.** An **invoice** is a document that asks a customer to pay for something you supplied, stating what, how much, to whom and by when. Many payment providers send receipts automatically; an invoice may be separate, and the rules about what counts as a valid invoice differ by country. Common contents include an invoice number, a date, your details, the customer's details, a description of what was supplied, the amount, and payment terms. If a sales tax, value-added tax (VAT) or goods-and-services tax applies, it may need its own line or registration number. Whether it applies to you, at what rate and from which sales threshold is for an accountant in your country to tell you. Do not copy an invoice layout from another country and assume it is valid.
+**Invoices, in plain words.** An **invoice** is a document that asks a customer to pay for something you supplied, stating what, how much, to whom and by when. Many payment providers send receipts automatically; an invoice may be separate, and the rules about what counts as a valid invoice differ by country. Common contents include an invoice number, a date, your details, the customer's details, a description of what was supplied, the amount, and payment terms. If a sales tax, value-added tax (VAT) or goods-and-services tax applies, it may need its own line or registration number. Whether it applies to you, at what rate and from which sales threshold is for an accountant in your country to tell you.
 
-**Payment terms.** "Due on receipt", "14 days" or "30 days" are common wordings. Longer terms delay your cash. For a small business with little cash, shorter terms and paying by card in advance are friendlier to the cash table.
+**Payment terms.** "Due on receipt", "14 days" or "30 days" are common wordings. Longer terms delay your cash. For a small business, shorter terms and paying by card in advance are friendlier to the cash table.
 
 ### 🟡 Going deeper
 
@@ -492,7 +493,7 @@ Then add runway as a final cell: closing cash divided by that month's net burn.
 
 **Pay yourself on purpose.** Your own pay is the biggest line in many small companies and the one most often left out. Decide it from runway: how many months of cash will remain if you take this amount? Whether and how a founder can be paid depends on the legal form of the business and the tax rules where you live. That is for your accountant and, for the form itself, a lawyer.
 
-**Keep the money separate.** Many accountants advise keeping business money and personal money in separate accounts and keeping every receipt and invoice. This is a common practice, not a rule that applies the same way everywhere; ask what is needed where you are.
+**Keep the money separate.** Many accountants advise keeping business money and personal money in separate accounts and keeping every receipt and invoice. Ask what is needed where you are.
 
 **Records.** Keep a folder of invoices you issued, invoices you received, bank statements and payout reports from your payment provider, each with a date. Many countries require businesses to keep records for a number of years; ask your accountant how long and in what form.
 
@@ -548,7 +549,7 @@ Layla built a **cash table** with the numbers from lessons 3.1 and 3.2, using th
 | 5 | 11 | 319.00 | 137.39 | 250.00 | −68.39 | 2,327.85 |
 | 6 | 13 | 377.00 | 162.37 | 250.00 | −35.37 | 2,292.48 |
 
-At month 2, net burn was 167.45, so runway was 2,632.08 divided by 167.45, about 15.7 months. Break-even: 250 divided by 16.51 is about 15.1, so 16 salons. She was not yet at break-even in month 6, and the table did not promise she would get there. It did show her that growth at that pace costs about 700 in total over six months, and that she could afford it.
+At month 2, net burn was 167.45, so runway was 2,632.08 divided by 167.45, about 15.7 months. Break-even: 250 divided by 16.51 is about 15.1, so 16 salons. That excludes Layla's own time: at the after-time contribution of 11.51 it is 250 divided by 11.51, about 22 salons. The table also leaves out the founder offer, so real early months are worse. She was not yet at break-even in month 6, and the table did not promise she would get there. It did show her that growth at that pace costs about 700 in total over six months, and that she could afford it.
 
 Then Layla ran two stress cases. If she paid herself 1,000 a month from month 1, net burn would be over 1,100 and runway under three months: she decided not to. If all salons paid 30 days late, her month-1 receipts would arrive in month 2, and she would be short for a month, which she could cover but would not enjoy.
 
@@ -592,14 +593,14 @@ She sent Hana a one-page list: the cash table, a sample invoice, her vendor list
 
 **2. Layla has 2,632.08 in cash and a net burn of 167.45. What is her runway, and what does it mean?**
 
-- A. About 2,632 months, because cash is the largest number in the sum.
-- B. About 167 months, because burn is the number that sets the limit.
+- A. About 10.5 months, because only the fixed costs of 250 count.
+- B. About 8.4 months, because full costs of 312.45 count with no revenue.
 - C. About 15.7 months, how long her cash lasts.
 - D. About 0.06 months, because she has far more burn than cash.
 
 <details><summary>Answer</summary>
 
-**C.** Runway is cash divided by net burn: 2,632.08 divided by 167.45 is about 15.7 months. A and B use one number alone, and D inverts the division. (Section: The essentials, Burn and runway.)
+**C.** Runway is cash divided by net burn: 2,632.08 divided by 167.45 is about 15.7 months. A divides by the fixed costs alone, B ignores revenue, and D inverts the division. (Section: The essentials, Burn and runway.)
 
 </details>
 
@@ -621,7 +622,7 @@ She sent Hana a one-page list: the cash table, a sample invoice, her vendor list
 - A. Ignore it, since the table's base case already looks comfortable enough for her.
 - B. Take a larger customer discount, so that the gap closes immediately.
 - C. Stop recording payments, so that the gap no longer appears in the table.
-- D. Set a threshold and an action in advance, such as cutting a cost or her own pay, before the gap opens.
+- D. Set a threshold and an action in advance, before the gap opens.
 
 <details><summary>Answer</summary>
 
@@ -631,7 +632,7 @@ She sent Hana a one-page list: the cash table, a sample invoice, her vendor list
 
 **5. Which question belongs on Layla's list for the accountant?**
 
-- A. Do I need to register for sales tax or VAT, and from what level of sales in my country this year?
+- A. Do I need to register for sales tax or VAT, and from what level of sales in my country?
 - B. Which investors should I approach first, and how much should I ask them for this year?
 - C. What is the right price for Tick, given that Nadia is happy to pay 29 each month?
 - D. Will Tick reach break-even by month 12, if she keeps growing at the same pace as her table?

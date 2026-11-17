@@ -45,7 +45,7 @@
           "She suggested a loyalty-points screen and said it is what her clients would really want most"
         ],
         "ar": [
-          "وصفت يوم الخميس الماضي حين غابت عميلتان وقضت العصر تتصل بأخريات لملء الموعدين",
+          "وصفت يوم الخميس الماضي حين غابت عميلتان عن موعديهما فاتصلت بأخريات لملء الموعدين",
           "وصفت الفكرة بأنها رائعة وقالت إنها ستدفع حتمًا ثمن أداة كهذه حين تصبح جاهزة",
           "قالت إنها تراجع حجوزاتها عادةً كل صباح وتعتقد أن التذكيرات قد تقلّل الغياب فعلًا",
           "اقترحت شاشة لنقاط الولاء وقالت إنها أكثر ما يريده عميلاتها حقًا في الصالون"
@@ -67,16 +67,16 @@
       },
       "o": {
         "en": [
-          "Ask a second AI tool the same question and keep the figure if both answers agree",
-          "Keep the figure, but label it approximate and note that an AI assistant produced it",
+          "Ask a second AI tool the same question, and keep the figure if both of its answers agree",
+          "Keep the figure, but label it as approximate and note that an AI assistant produced it",
           "Ask the assistant for its source and keep the figure if it names a title and a publisher",
-          "Mark it unverified, find the original report, and check its date and who it measured, before using it"
+          "Mark it unverified, find the original report, and check its date and scope before using it"
         ],
         "ar": [
-          "اسأل أداة ذكاء اصطناعي ثانية السؤال نفسه واحتفظ بالرقم إن اتفقت الإجابتان",
+          "اسأل أداة ذكاء اصطناعي ثانية السؤال نفسه، واحتفظ بالرقم إن اتفقت إجابتاهما",
           "احتفظ بالرقم، لكن صِفه بأنه تقريبي ودوّن أن مساعد ذكاء اصطناعي هو من أنتجه",
           "اطلب من المساعد مصدره، واحتفظ بالرقم إن ذكر عنوانًا واسم ناشر معروف",
-          "ضعه في خانة غير المتحقَّق منه، وابحث عن التقرير الأصلي، وافحص تاريخه ونطاقه قبل استعماله"
+          "ضعه في خانة غير المتحقَّق منه، وابحث عن التقرير الأصلي، وافحص تاريخه ونطاقه أولًا"
         ]
       },
       "a": 3,

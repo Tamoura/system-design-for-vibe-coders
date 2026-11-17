@@ -35,7 +35,7 @@
       "lesson": "0.1",
       "q": {
         "en": "After a month, a founder's dated log has eleven items in the \"built\" column and one in the \"learned\" column. What does the lesson say this pattern suggests?",
-        "ar": "بعد شهر، في سجل مؤسِّس مؤرَّخ أحد عشر بندًا في عمود «بنيتُ» وبند واحد في عمود «تعلّمتُ». ماذا يقول الدرس عن دلالة هذا النمط؟"
+        "ar": "بعد شهر، في سجل مؤسِّس مؤرَّخ أحد عشر بندًا في عمود «ما بُني» وبند واحد في عمود «ما تُعلّم». ماذا يقول الدرس عن دلالة هذا النمط؟"
       },
       "o": {
         "en": [
@@ -45,16 +45,16 @@
           "A sign the log is the wrong tool, since real learning does not fit in a column"
         ],
         "ar": [
-          "انجراف: الميزات تتزايد بينما لا تتناقص الشكوك حول من يدفع ولماذا",
+          "انجراف: الميزات تتزايد بينما لا يتناقص عدم اليقين حول من يدفع ولماذا",
           "تقدّم سليم، لأن عدد البنود المبنية هو أفضل مقياس للعمل التجاري",
-          "إشارة إلى أن عليه إبقاء السجل لكن البناء بسرعة أكبر حتى يمتلئ عمود التعلّم",
+          "إشارة إلى أن عليه إبقاء السجل لكن البناء بسرعة أكبر حتى يمتلئ عمود «ما تُعلّم»",
           "إشارة إلى أن السجل أداة غير مناسبة، لأن التعلّم الحقيقي لا يُختصر في عمود"
         ]
       },
       "a": 0,
       "why": {
         "en": "Progress in a business is a reduction in uncertainty, and conversations, pre-sales and usage reduce it, not features. If only the built list grows, the founder is drifting. Building faster cannot fill the learned column, because that comes from real people.",
-        "ar": "التقدّم في العمل التجاري هو تقلّص الشكوك، والذي يقلّصها هو المحادثات والبيع المسبق والاستخدام، لا الميزات. فإذا نما قسم البناء وحده فالمؤسِّس منجرف. والبناء الأسرع لا يملأ عمود التعلّم، لأنه يأتي من الناس الحقيقيين."
+        "ar": "التقدّم في العمل التجاري هو تقلّص عدم اليقين، والذي يقلّصه هو المحادثات والبيع المسبق والاستخدام، لا الميزات. فإذا نما عمود «ما بُني» وحده فالمؤسِّس منجرف. والبناء الأسرع لا يملأ عمود «ما تُعلّم»، لأنه يأتي من الناس الحقيقيين."
       }
     },
     {
@@ -69,13 +69,13 @@
         "en": [
           "Start with the tasks that feel most like visible progress, then move to the harder ones",
           "Start with the tasks that take least time, so the list shrinks quickly and morale stays up",
-          "Pick the task tied to the earliest step still lacking its proof, and defer the later ones until then",
+          "Pick the tasks tied to the earliest step still lacking its proof, and leave the rest for later",
           "Pick the tasks an investor would be likely to ask about first, then work backwards"
         ],
         "ar": [
           "تبدأ بالمهام التي تبدو أكثر تقدّمًا ظاهرًا، ثم تنتقل إلى الأصعب منها",
           "تبدأ بالمهام الأقصر وقتًا، فتتقلص القائمة بسرعة ويبقى الحماس مرتفعًا",
-          "تختار مهمة أبكر خطوة ما زال ينقصها ناتجها، وتؤجّل ما بعدها من المهام إلى حينه",
+          "تختار مهام أبكر خطوة ما زال ينقصها ناتجها، وتؤجّل البقية إلى وقت لاحق",
           "تختار المهام التي يرجَّح أن يسأل عنها مستثمر أولًا، ثم تعمل عكسيًا"
         ]
       },
