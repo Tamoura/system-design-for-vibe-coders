@@ -553,7 +553,7 @@ def verify_access_token(token: str) -> dict:
 *المستوى: 🟡 متوسط* · *المتطلبات: 1.2، 3.1* · *المرحلة: Build, Test*
 
 ## ⚡ الدرس في دقيقة
-- **التفويض (Authorisation)** يقرر ما يجوز للمستخدم الموثَّق أن يفعله، وعلى أي كائن. تصدّر كسر التحكم في الوصول (broken access control) قائمة OWASP Top 10 في إصدار 2021، ويتصدّر **كسر التفويض على مستوى الكائن (Broken Object Level Authorization, BOLA)** قائمة OWASP API Security Top 10 لعام 2023.
+- **التفويض (Authorisation)** يقرر ما يجوز للمستخدم الموثَّق أن يفعله، وعلى أي كائن. يتصدّر كسر التحكم في الوصول (broken access control) قائمة OWASP Top 10، فهو A01 في إصدار 2025 كما كان في 2021، ويتصدّر **كسر التفويض على مستوى الكائن (Broken Object Level Authorization, BOLA)** قائمة OWASP API Security Top 10 لعام 2023.
 - افحص ثلاثة مستويات على الخادم، في كل طلب: **الوظيفة**: هل يجوز لهذا الدور استدعاء هذا؟؛ و**الكائن**: هذه الفاتورة بعينها؟؛ و**الخاصية**: أيّ الحقول يجوز لهم رؤيتها أو تغييرها؟
 - **IDOR**، أي مرجع الكائن المباشر غير الآمن: يجلب الخادم أي معرّفٍ يسمّيه الطلب دون أن يسأل «هل هذا لك؟». المعرّفات العشوائية تُبطئ المهاجمين؛ لكنها لا تُصلح المشكلة.
 - **ارفض افتراضيًّا**، واتخذ القرار في سياسةٍ مركزية واحدة، وخذ المستخدم والمستأجر من الجلسة، لا من الطلب أبدًا.
@@ -843,7 +843,7 @@ flowchart TD
 </details>
 
 ## 📚 المراجع
-- قائمة OWASP Top 10، إصدار 2021 والتحديثات اللاحقة — https://owasp.org/Top10/
+- قائمة OWASP Top 10، إصدار 2025 — https://owasp.org/Top10/2025/
 - قائمة OWASP API Security Top 10 لعام 2023 — https://owasp.org/API-Security/
 - ورقة OWASP المختصرة للتفويض — https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html
 - معيار OWASP للتحقق من أمن التطبيقات — https://owasp.org/www-project-application-security-verification-standard/

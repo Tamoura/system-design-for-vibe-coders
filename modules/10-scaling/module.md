@@ -53,13 +53,13 @@ There are two ways to handle more load:
 | | Scale **up** (vertical) | Scale **out** (horizontal) |
 |---|---|---|
 | What you do | Bigger machine (more CPU/RAM) | More machines, same size |
-| Ceiling | The biggest box money buys | Effectively none |
+| Ceiling | The biggest box money buys | Much higher, but set by the shared parts |
 | Failure | One box down = all down | One box down = others carry on |
 | Requires | Nothing special | **Stateless app instances** |
 
 Scaling up is easy and boring and you should do it first (lesson 10.3 revisits
 this). But it has a ceiling and a single point of failure. Scaling *out* — many
-identical instances — has no ceiling and survives one machine dying. Its one
+identical instances — has a much higher ceiling and survives one machine dying. Its one
 hard requirement: **every instance must be interchangeable.** A request must land
 on *any* instance and get the right answer. That is only possible if instances
 share nothing that matters.
@@ -67,6 +67,15 @@ share nothing that matters.
 Stack Overflow served a top-100 audience for years on about nine web servers
 (lesson F.2) — few, but *interchangeable*, fronted by a load balancer, with all
 the real state in shared databases and caches. Small and boring and horizontal.
+
+**Scaling a service is not scaling the system.** Ten stateless instances are ten
+times the web tier, not ten times the product. They all still talk to one
+database (and its connection limit), the same shared dependencies — the cache,
+the queue, a third-party API with its own rate limit — the same network links,
+and every extra instance adds coordination overhead and cost. Each scaling step
+*moves* the bottleneck rather than removing it: add instances and the database
+connection pool may be the next thing to bend. So after each step, measure where
+the bottleneck went before you add more of anything.
 
 ### 2. The three kinds of process state that bite
 
@@ -186,6 +195,9 @@ Finish: *"Commit with the message `10-1-stateless-services`."*
       with zero failed requests.
 - [ ] You can retell the rate-limit-counter story and name the two ways process
       state broke it (reset on deploy; multiplied across instances).
+- [ ] You doubled the instance count under a load test, then named the shared
+      part that limited throughput next (DB connections, cache, queue, or an
+      external API's rate limit) with the number that showed it.
 
 ## 🧾 Recap card
 

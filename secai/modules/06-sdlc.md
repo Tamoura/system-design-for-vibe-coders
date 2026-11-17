@@ -58,7 +58,7 @@ flowchart LR
 | **Secret scanning** | Code, commits and history | Keys, passwords and tokens committed by mistake (5.2) | Secrets stored outside the repository |
 | **Security tests you write** | Your own unit and integration tests | Authorisation, tenant isolation, business rules | Anything nobody thought to test |
 
-Look at the last row. Scanners are poor at broken access control, the top category in the OWASP Top 10 (2021, and again in the 2025 update), because they do not know that invoice 77 belongs to company 12. Only a test that encodes your rules can check that.
+Look at the last row. Scanners are poor at broken access control, A01 and the top category in the OWASP Top 10:2025 (as in 2021), because they do not know that invoice 77 belongs to company 12. Only a test that encodes your rules can check that.
 
 ```python
 # A security integration test that encodes the rule

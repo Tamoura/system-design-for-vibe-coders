@@ -652,8 +652,8 @@ Finish: *"Commit the cost model as `11-4-cost-model.md` with the message
 Every earlier module left a mark on the same edge platform. Gathered in one place,
 they tell a single story:
 
-- **The `Vary` it ignored (3.2).** The CDN did not honor the `Vary` header, so it
-  cached a data response as the page — global cache poisoning. The durable fix
+- **The `Vary` it ignored (3.2).** The CDN's default at the time did not honor
+  the `Vary` header, so it cached a data response as the page — global cache poisoning. The durable fix
   lived at the proxy layer, *below* the edge's defaults.
 - **The client-IP header it provides (5.2).** Behind the edge, every request
   arrives from a CDN IP; rate limiting had to key on the CDN's `CF-Connecting-IP`
@@ -703,7 +703,8 @@ flowchart LR
 
 The single most misunderstood edge control is *how the cache treats your origin's
 `Cache-Control` and `Vary` headers.* The default is not always "do what my app
-says." Lesson 3.2 exists because a CDN's default ignored `Vary`. So the rule is
+says." Lesson 3.2 exists because a CDN's default at the time ignored `Vary`, and
+defaults move (Cache Rules can now be set to honor it). So the rule is
 concrete: **know, per platform, exactly which of your headers the edge honors and
 which it overrides — and defend at the layer you control** (the proxy) rather than
 the layer whose defaults you're guessing at.
@@ -763,7 +764,8 @@ Finish: *"Commit with the message `11-5-edge-cloudflare`."*
 > 🔧 **Under the hood** (optional): Cloudflare's config exports via Terraform
 > (`cloudflare_ruleset`, `cloudflare_record`) and Workers via Wrangler; the
 > proxy/grey-cloud state is per-DNS-record; cache and Vary behavior is governed by
-> Cache Rules and the "respect existing headers" setting.
+> Cache Rules (including any opt-in `Vary` handling) and the "respect existing
+> headers" setting — check the current configuration rather than assuming.
 
 ## ✅ Verify It
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="testing-source" content="1ddcd4c280bfcdf4">
+<meta name="testing-source" content="d750ab42c8434a69">
 <meta name="description" content="Software Testing: Zero to Hero in the AI Era — a free, bilingual course: test design, unit, integration, API and end-to-end testing, performance, security, reliability and data testing, CI/CD, exploratory testing and BDD, verifying AI-generated code, AI testing assistants, and testing LLM apps, RAG and agents, with a quiz in every lesson and a 60-question practice exam.">
 <title>Software Testing: Zero to Hero in the AI Era</title>
 <style>
@@ -6917,7 +6917,7 @@ E       assert 51 == 6
 <ul>
 <li>Testers add what scanners cannot: <strong>abuse cases</strong>, <strong>authorisation matrices</strong> (who may do what to whose data), hostile and generated input, and a regression test for every vulnerability.</li>
 <li><strong>SAST</strong> reads code, <strong>SCA</strong> reads dependencies, <strong>DAST</strong> attacks a running app, <strong>fuzzing</strong> feeds generated input; each sees something different.</li>
-<li>The best hour is an authorisation test: broken access control is first in the OWASP Top 10 (2021 edition).</li>
+<li>The best hour is an authorisation test: broken access control is first in the OWASP Top 10 (2025 edition, as in 2021).</li>
 <li>Scanners give leads, not verdicts: block on new, high-confidence findings; triage the rest.</li>
 <li>Biggest trap: &quot;the scanner was green, so it is secure&quot;.</li>
 <li>Scope and written permission first; here, attack only the sample system, on your own machine.</li>
@@ -6929,53 +6929,53 @@ E       assert 51 == 6
 <section class="sec sec-how"><h2>📐 How it works</h2>
 <h3>🟢 The essentials</h3>
 <p><strong>What testers add.</strong> Developers ask how a feature should work; attackers ask how to make it misbehave. Testers write the second list as <strong>abuse cases</strong> (&quot;as Bob I change the id in the URL&quot;, &quot;as a script I replay a captured transfer&quot;), turn each into a test that must fail safely, and keep it as a regression test. They also own what no scanner can produce: the expected answer for every role and object.</p>
-<p><strong>The OWASP Top 10 as a source of test ideas.</strong> The OWASP Top 10 is a widely used list of web risks. These are the 2021 names; a newer edition may be current when you read this, so check owasp.org and keep the method: one test idea per category.</p>
+<p><strong>The OWASP Top 10 as a source of test ideas.</strong> The OWASP Top 10 is a widely used list of web risks. These are the 2025 edition&#39;s names; editions change, so check owasp.org and keep the method: one test idea per category.</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
-<th>Category</th>
+<th>Category (2025)</th>
 <th>A test idea on Transfers</th>
 </tr>
 </thead>
 <tbody><tr>
 <td>A01 Broken Access Control</td>
-<td>Bob reads Alice&#39;s transfer or sends from <code>acc-1</code>; change every id in every URL</td>
+<td>Bob reads Alice&#39;s transfer or sends from <code>acc-1</code>; change every id in every URL; any feature that fetches a user-supplied URL (SSRF, now part of this category; none in the sample)</td>
 </tr>
 <tr>
-<td>A02 Cryptographic Failures</td>
-<td>Reachable over plain HTTP? Tokens or account numbers in logs and error text?</td>
-</tr>
-<tr>
-<td>A03 Injection</td>
-<td>Quotes, markup and oversize strings in every field; SQL built from strings</td>
-</tr>
-<tr>
-<td>A04 Insecure Design</td>
-<td>Replay a captured request; race two identical ones; split a limit-busting transfer</td>
-</tr>
-<tr>
-<td>A05 Security Misconfiguration</td>
+<td>A02 Security Misconfiguration</td>
 <td>Debug pages, default credentials, open API docs in production, missing headers</td>
 </tr>
 <tr>
-<td>A06 Vulnerable and Outdated Components</td>
+<td>A03 Software Supply Chain Failures</td>
 <td>Dependency scan on every build; does a package an AI suggested really exist?</td>
 </tr>
 <tr>
-<td>A07 Identification and Authentication Failures</td>
+<td>A04 Cryptographic Failures</td>
+<td>Reachable over plain HTTP? Tokens or account numbers in logs and error text?</td>
+</tr>
+<tr>
+<td>A05 Injection</td>
+<td>Quotes, markup and oversize strings in every field; SQL built from strings</td>
+</tr>
+<tr>
+<td>A06 Insecure Design</td>
+<td>Replay a captured request; race two identical ones; split a limit-busting transfer</td>
+</tr>
+<tr>
+<td>A07 Authentication Failures</td>
 <td>Expired, forged and wrong-audience tokens; rate limits on login</td>
 </tr>
 <tr>
-<td>A08 Software and Data Integrity Failures</td>
+<td>A08 Software or Data Integrity Failures</td>
 <td>Tampered tokens, unsigned artefacts and updates</td>
 </tr>
 <tr>
-<td>A09 Security Logging and Monitoring Failures</td>
+<td>A09 Security Logging and Alerting Failures</td>
 <td>A refused transfer leaves an audit record, without the token in it</td>
 </tr>
 <tr>
-<td>A10 Server-Side Request Forgery</td>
-<td>Any feature that fetches a user-supplied URL (none in the sample)</td>
+<td>A10 Mishandling of Exceptional Conditions</td>
+<td>Make the limit or ownership check throw (a timeout, a missing field): the transfer must be refused, not let through, and the error must not leak stack traces or data</td>
 </tr>
 </tbody></table></div>
 <p><strong>Two checklists.</strong> The <strong>OWASP Application Security Verification Standard (ASVS)</strong> lists security requirements at three verification levels: use it to decide what &quot;secure enough&quot; means. The <strong>OWASP Web Security Testing Guide (WSTG)</strong> describes how to test each area, from authentication to business logic: use it to design tests.</p>

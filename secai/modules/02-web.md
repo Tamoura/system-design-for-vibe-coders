@@ -20,7 +20,7 @@
 ## 🧭 Why it matters
 Ali's first code review at Najm Bank is a pull request for the SME Portal's new invoice search, built in an afternoon with an AI coding agent. The query line reads `f"SELECT * FROM invoices WHERE company_id = {cid} AND reference = '{q}'"`. Ali approves it because the tests pass. Noura rejects it with one comment: "Run it on your laptop, type `' OR '1'='1` into the search box, and tell me whose invoices you see." The answer is every company's. On a multi-tenant portal that is a data breach waiting for its first curious customer, and Sara, the DPO, would have to handle it as one.
 
-Injection is the oldest bug class in web security and has never left the lists. It is a category in the OWASP Top 10 (A03 in the 2021 edition; check the current edition, updated in 2025), and SQL injection (CWE-89) and OS command injection (CWE-78) recur in MITRE's CWE Top 25. In 2023 a SQL injection flaw in the MOVEit Transfer product (CVE-2023-34362) was exploited at scale by an extortion group, and many organisations, as publicly reported, lost files from a product they had bought rather than built. In 2017 Equifax was breached through an unpatched Apache Struts flaw (CVE-2017-5638) in which a crafted HTTP header was evaluated as an expression: injection again, in code the victim did not write.
+Injection is the oldest bug class in web security and has never left the lists. It is A05 Injection in the OWASP Top 10 (2025 edition; it was A03 in 2021), and SQL injection (CWE-89) and OS command injection (CWE-78) recur in MITRE's CWE Top 25. In 2023 a SQL injection flaw in the MOVEit Transfer product (CVE-2023-34362) was exploited at scale by an extortion group, and many organisations, as publicly reported, lost files from a product they had bought rather than built. In 2017 Equifax was breached through an unpatched Apache Struts flaw (CVE-2017-5638) in which a crafted HTTP header was evaluated as an expression: injection again, in code the victim did not write.
 
 ## 📐 How it works
 
@@ -255,7 +255,7 @@ Hands-on work runs only on your own machine, against your own code or deliberate
 </details>
 
 ## 📚 References
-- OWASP Top 10 (2021 edition, Injection; check the current edition) — https://owasp.org/Top10/
+- OWASP Top 10 (2025 edition, A05 Injection) — https://owasp.org/Top10/2025/
 - OWASP Cheat Sheet Series, SQL Injection Prevention — https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
 - OWASP Cheat Sheet Series, OS Command Injection Defense — https://cheatsheetseries.owasp.org/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html
 - OWASP, CSV Injection — https://owasp.org/www-community/attacks/CSV_Injection
@@ -550,7 +550,7 @@ Run everything on your own machine or on deliberately vulnerable training apps s
 ## 🧭 Why it matters
 The SME Portal team wants two features next sprint. **Import invoice from link** fetches a file from a URL the customer pastes; **webhooks** notify a customer-chosen URL when an invoice is approved. Tariq's developers built both with an AI coding agent, and each comes down to one line: `requests.get(url)`. Noura asks Ali to threat-model the import feature with STRIDE before launch (1.1). His first question, "Where can this server reach that the customer cannot?", turns out to be the whole lesson.
 
-The best-known public example is the 2019 Capital One breach. As publicly reported, an attacker made a misconfigured web application firewall send requests to the cloud instance metadata service, which returned temporary credentials for an over-privileged role; those were used to copy data from storage buckets. SSRF (CWE-918) became its own OWASP Top 10 category in 2021 (A10 in that edition; the 2025 edition folds it into Broken Access Control, so check the current list) and is API7 in the OWASP API Security Top 10 (2023).
+The best-known public example is the 2019 Capital One breach. As publicly reported, an attacker made a misconfigured web application firewall send requests to the cloud instance metadata service, which returned temporary credentials for an over-privileged role; those were used to copy data from storage buckets. The OWASP Top 10 (2025 edition) files SSRF (CWE-918) under A01 Broken Access Control (it was its own category, A10, in 2021), and it is API7 in the OWASP API Security Top 10 (2023).
 
 Uploads, paths and deserialisation sit right beside it: customers upload invoices, staff download them, and Dana's team has started loading pre-trained models from public hubs.
 

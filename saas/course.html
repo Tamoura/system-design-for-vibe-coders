@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="saas-source" content="1421498d1e016d71">
+<meta name="saas-source" content="0e532d5a96b4c73c">
 <meta name="description" content="SaaS Building Blocks — the ~25 components every SaaS shares, taught beginner to advanced, with the best open-source repos to learn each one from.">
 <title>SaaS Building Blocks — Complete Course</title>
 <style>
@@ -10483,7 +10483,7 @@ export async function loadLicense(token?: string) {
 <td>this lesson</td>
 </tr>
 </tbody></table></div>
-<p>Two OWASP lists give you a checklist. The <strong>OWASP Top 10</strong> covers web apps. In the 2021 edition, A01 Broken Access Control is #1 and SSRF is A10. Check owasp.org for the latest edition. The <strong>OWASP API Security Top 10 (2023)</strong> is more relevant to a SaaS API: API1 is <strong>Broken Object Level Authorization</strong> (BOLA: changing <code>/monitors/123</code> to <code>/monitors/124</code> and getting someone else&#39;s monitor), and API5 is Broken Function Level Authorization (a Member calling an admin-only endpoint). In multi-tenant SaaS, BOLA across tenants is <em>the</em> bug class to design against. It&#39;s why lesson <a class="xref" href="#l2-4">2.4</a> made tenant scoping structural, not a thing each developer has to remember.</p>
+<p>Two OWASP lists give you a checklist. The <strong>OWASP Top 10</strong> covers web apps. In the 2025 edition, A01 Broken Access Control is still #1, and SSRF (A10 in the 2021 edition) is now folded into it. Check owasp.org for the current list. The <strong>OWASP API Security Top 10 (2023)</strong> is more relevant to a SaaS API: API1 is <strong>Broken Object Level Authorization</strong> (BOLA: changing <code>/monitors/123</code> to <code>/monitors/124</code> and getting someone else&#39;s monitor), and API5 is Broken Function Level Authorization (a Member calling an admin-only endpoint). In multi-tenant SaaS, BOLA across tenants is <em>the</em> bug class to design against. It&#39;s why lesson <a class="xref" href="#l2-4">2.4</a> made tenant scoping structural, not a thing each developer has to remember.</p>
 <p><strong>SSRF defence for Beacon&#39;s checker.</strong> Resolve the hostname yourself, then <strong>reject private, loopback, link-local and metadata addresses</strong> (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, 127.0.0.0/8, 169.254.0.0/16, <code>::1</code>, <code>fc00::/7</code>, and so on). Connect to the IP you checked, so a DNS rebinding answer can&#39;t swap it after the check. Don&#39;t follow redirects blindly: re-validate each hop. Better still, run check workers in a network segment with no route to your internal services and with IMDSv2 (the token-required metadata service) enforced on AWS.</p>
 <p><strong>Secrets never go in git.</strong> A secret is any credential: database URL, Stripe key, signing key. Even in private repos, secrets in git get cloned to laptops, CI caches and forks, and stay in history forever. Instead:</p>
 <ul>

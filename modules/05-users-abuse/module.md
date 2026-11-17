@@ -55,9 +55,13 @@ flowchart TD
     B -->|no| X["Blocked — costs the attacker<br/>a human or a solver fee"]
     B -->|yes| C{"Under the<br/>per-IP limit?"}
     C -->|no| X2["Throttled — attacker needs<br/>many IPs = more cost"]
-    C -->|yes| D{"Under the global<br/>side-effect budget?"}
-    D -->|no| X3["Side effect suppressed<br/>(no email sent) — action still 200s"]
-    D -->|yes| E["Allowed"]
+    C -->|yes| R{"Under the<br/>per-recipient limit?"}
+    R -->|no| H["Email held — same generic 200<br/>(no hint whether the account exists)"]
+    R -->|yes| D{"Under the global<br/>backstop budget?"}
+    D -->|no| H
+    D -->|yes| Q["Delivery queue<br/>(send, retry on failure)"]
+    Q --> E["Allowed — email sent"]
+    H -.->|"user's way out"| U["'Didn't get it? Resend in a few<br/>minutes, or contact support'"]
 ```
 
 Each gate raises a different cost: a human check, an IP-diversity cost, and a
@@ -95,6 +99,13 @@ the global budget only as a last-resort backstop with the ceiling set high enoug
 that normal traffic never reaches it. Alert when the global cap trips — it means
 either an attack got past the finer limits or the ceiling is set too low.
 
+Held is not lost. Put sends on a **delivery queue with retry**, so a provider
+hiccup doesn't drop a real user's email; rate-limit **resends** per recipient (a
+resend button is itself an email-sending endpoint); and give the user a visible
+way out on the same generic screen: *"Didn't get it? Resend in a few minutes, or
+contact support."* The screen is identical whether or not the account exists, so
+enumeration resistance survives.
+
 ### 4. Disposable-email rejection and constant responses
 
 Two cheap finishing moves. Reject known disposable/throwaway email domains at
@@ -126,11 +137,12 @@ they're free. Let's price them.
    > forms. The server must reject the request if the Turnstile token is missing
    > or invalid. Show me the form failing without a solved challenge."*
 3. **Budget the side effect, not the action.**
-   > *"Add a global daily budget on outbound verification/reset emails, stored in
-   > Redis. When the budget is exceeded, the signup still returns success to the
-   > user but the email is silently not sent and the event is logged. Do NOT add a
-   > global cap on the signup action itself — explain why that would be a
-   > self-inflicted denial of service."*
+   > *"Send verification/reset emails through a queue with retry. Limit them per
+   > IP and per recipient, with a global daily budget in Redis only as a high
+   > backstop. When a send is held, return the same generic success, log the
+   > event, and show 'Didn't get it? Resend in a few minutes, or contact support',
+   > with the resend itself rate-limited. Do NOT add a global cap on the signup
+   > action itself — explain why that would be a self-inflicted denial of service."*
 4. **Reject disposable emails and enumerate-proof the reset.**
    > *"Reject signups from known disposable-email domains. Make forgot-password
    > return the exact same generic response whether or not the account exists.
@@ -144,8 +156,8 @@ they're free. Let's price them.
 Finish: *"Commit with the message `05-1-abuse-defense`."*
 
 > 🔧 **Under the hood** (optional): Turnstile is a server-side token verify
-> (`POST` to `siteverify` with your secret); the email budget is a Redis
-> `INCR` on a daily key with `EXPIRE`, checked before the send call, not before
+> (`POST` to `siteverify` with your secret); each email budget (per recipient,
+> global) is a Redis `INCR` on a keyed counter with `EXPIRE`, checked before the send call, not before
 > the handler; disposable-domain rejection is a checked list at validation time.
 
 ## ✅ Verify It
@@ -156,6 +168,8 @@ Finish: *"Commit with the message `05-1-abuse-defense`."*
 - [ ] You ran the "bob" flood yourself and watched the outbound email get capped
       while a real user on another IP still registered.
 - [ ] Forgot-password returns byte-identical output for a real and a fake email.
+- [ ] A held email can be recovered: trip the per-recipient limit for a test
+      address, wait, press resend, and the email arrives.
 - [ ] You can retell the "bob" incident and explain why a global registration cap
       would have handed the attacker a denial-of-service instead of stopping one.
 
@@ -859,10 +873,10 @@ findings' severity — it was how *ordinary* they were. Nothing exotic. Every
 finding was a category on the list, sitting in plain sight in a working,
 shipping app:
 
-- A streaming proxy that would fetch and sign internal URLs — **A10, SSRF** (lesson 5.4).
-- A signing secret that silently fell back to a hardcoded default — **A05, Security Misconfiguration** (5.4, 5.7).
-- No server-side error tracking at all, so failures were invisible — **A09, Security Logging & Monitoring Failures** (Module 7).
-- All of CI running on a credential-bearing personal machine that executed untrusted pull-request code, with third-party actions pinned by *tag* (mutable) instead of by SHA (fixed) — **A08, Software & Data Integrity Failures** / supply chain (Module 8.4).
+- A streaming proxy that would fetch and sign internal URLs — SSRF, which the 2025 list files under **A01, Broken Access Control** (lesson 5.4).
+- A signing secret that silently fell back to a hardcoded default — **A02, Security Misconfiguration** (5.4, 5.7).
+- No server-side error tracking at all, so failures were invisible — **A09, Security Logging & Alerting Failures** (Module 7).
+- All of CI running on a credential-bearing personal machine that executed untrusted pull-request code, with third-party actions pinned by *tag* (mutable) instead of by SHA (fixed) — **A03, Software Supply Chain Failures**, with an A08 integrity edge (Module 8.4).
 
 Four findings, four Top-10 categories, zero zero-days. **The Top 10 isn't an exam
 you pass once — it's a checklist you walk every time, because the failures it
@@ -875,20 +889,23 @@ names are the boring, common ones that ship in real apps built fast.**
 The OWASP Top 10 is a *periodically updated* list of the risk categories that
 actually cause breaches. You don't get "OWASP certified." You use it as a
 walk-through: for each category, where could this appear in *my* app? Here's the
-list mapped to where it tends to show up in an agent-built codebase:
+2025 edition (announced in November 2025, reported as finalised in early 2026)
+mapped to where it tends to show up in an agent-built codebase. The 2021 edition
+numbered these differently (misconfiguration was A05, SSRF had its own A10), so
+older material and tool reports will not match these numbers.
 
 | # | Category | Where it hides in a vibe-coded app |
 |---|---|---|
-| A01 | Broken Access Control | An endpoint that forgets to check *who's* asking; IDs you can increment to see others' data |
-| A02 | Cryptographic Failures | Secrets in code; weak/absent hashing; tokens in localStorage (5.3) |
-| A03 | Injection | Unsanitised input into a query/command; the agent's `String + input` |
-| A04 | Insecure Design | Missing rate limits, no abuse model — the whole of 5.1 |
-| A05 | Security Misconfiguration | Secrets falling back to defaults (5.4); debug on in prod; permissive CORS |
-| A06 | Vulnerable Components | Outdated dependencies with known CVEs (Module 8.4) |
-| A07 | Auth Failures | Weak sessions, no 2FA, enumerable accounts (5.3) |
-| A08 | Software/Data Integrity | Unpinned CI actions, untrusted build pipeline (8.4) |
-| A09 | Logging & Monitoring Failures | No error tracking — blind in production (Module 7) |
-| A10 | SSRF | Fetching client-influenced URLs (5.4) |
+| A01 | Broken Access Control (now includes SSRF) | An endpoint that forgets to check *who's* asking; IDs you can increment to see others' data; fetching client-influenced URLs (5.4) |
+| A02 | Security Misconfiguration | Secrets falling back to defaults (5.4); debug on in prod; permissive CORS |
+| A03 | Software Supply Chain Failures | Outdated dependencies with known CVEs; unpinned CI actions (Module 8.4) |
+| A04 | Cryptographic Failures | Weak/absent hashing; homemade crypto; tokens in localStorage (5.3) |
+| A05 | Injection | Unsanitised input into a query/command; the agent's `String + input` |
+| A06 | Insecure Design | Missing rate limits, no abuse model — the whole of 5.1 |
+| A07 | Authentication Failures | Weak sessions, no 2FA, enumerable accounts (5.3) |
+| A08 | Software or Data Integrity Failures | Webhooks or updates trusted without checking a signature; a build pipeline untrusted code can write to (8.4) |
+| A09 | Security Logging & Alerting Failures | No error tracking — blind in production (Module 7) |
+| A10 | Mishandling of Exceptional Conditions | A `catch` that swallows the error and carries on; an auth or payment check that fails *open* when a dependency times out |
 
 Notice how much of this module is already on the list. The Top 10 is the map;
 this course is the terrain.
@@ -913,7 +930,7 @@ flowchart LR
 
 ### 3. Supply-chain hygiene: your app is mostly code you didn't write
 
-The A08 finding — tag-pinned third-party CI actions on a credential-bearing runner
+The A03 finding — tag-pinned third-party CI actions on a credential-bearing runner
 — is worth its own habit. Your build runs other people's code. **Pin build actions
 by SHA** (a tag like `@v3` can be moved to point at malicious code; a SHA can't),
 commit and respect **lockfiles** (so `install` gets the exact versions you
@@ -924,7 +941,7 @@ supply chain gets its own lesson.
 **Pair it with a public case.** Cloudflare's July 2019 outage — a single WAF rule
 with a catastrophic regex took 100% of their edge CPU to the ceiling and returned
 502s across much of the web for ~27 minutes — is a security *misconfiguration*
-(A05) writ global: one config line, deployed everywhere at once, with no staged
+(A02) writ global: one config line, deployed everywhere at once, with no staged
 rollout or kill switch. The Top 10 categories aren't small-app problems. They're
 the same shapes at every scale.
 
@@ -987,11 +1004,11 @@ Finish: *"Commit with the message `05-6-owasp-audit`."*
 
 ## 📚 References & further wandering
 
-- **OWASP Top 10** (owasp.org/Top10) — the list itself, with each category explained and linked to prevention.
+- **OWASP Top 10:2025** (owasp.org/Top10/2025) — the list itself, with each category explained and linked to prevention.
 - **OWASP Application Security Verification Standard (ASVS)** — the Top 10's detailed, testable big sibling.
 - **OWASP Cheat Sheet Series** — one focused page per risk; the practical companion to the list.
-- Cloudflare postmortem, **"Details of the Cloudflare outage on July 2, 2019"** — misconfiguration (A05) at global scale, beautifully written.
-- **GitHub's guidance on pinning actions to a full commit SHA** — the supply-chain fix from the A08 finding.
+- Cloudflare postmortem, **"Details of the Cloudflare outage on July 2, 2019"** — misconfiguration (A02 in the 2025 list) at global scale, beautifully written.
+- **GitHub's guidance on pinning actions to a full commit SHA** — the supply-chain fix from the A03 finding.
 
 ---
 

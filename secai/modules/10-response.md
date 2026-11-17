@@ -20,7 +20,7 @@
 ## 🧭 Why it matters
 Six weeks into Najm Assist's pilot, Jassim (SOC and incident response lead) asks Ali for its logs. Ali finds them in the app team's debug bucket. They hold full conversation text, including card numbers customers typed, but not which tool was called, for whom, or whether it was allowed. Clocks disagree, and everything is deleted after seven days. If Najm Assist froze the wrong card, nobody could prove what happened, and the bucket is now the project's most sensitive data store.
 
-"Security Logging and Monitoring Failures" is a category in the OWASP Top 10 (A09 in the 2021 edition; the 2025 update renames it "Security Logging and Alerting Failures", so check the current list) because breaches are so often found late, and by outsiders. In the Equifax breach of 2017, US government reviews published in 2018 reported that a device for inspecting encrypted traffic had an expired certificate, so it was not inspecting that traffic; once the certificate was renewed, staff noticed the suspicious activity. A monitoring control that silently stops working is worse than none, because everyone believes they are covered.
+A09 "Security Logging and Alerting Failures" is a category in the OWASP Top 10 (2025 edition; "Logging and Monitoring" in 2021) because breaches are so often found late, and by outsiders. In the Equifax breach of 2017, US government reviews published in 2018 reported that a device for inspecting encrypted traffic had an expired certificate, so it was not inspecting that traffic; once the certificate was renewed, staff noticed the suspicious activity. A monitoring control that silently stops working is worse than none, because everyone believes they are covered.
 
 Noura (Head of Application & AI Security) sums it up: "If it isn't logged, it didn't happen. If nobody looks, it still didn't happen. If it's logged with a card number, we've created a second incident."
 
@@ -284,7 +284,7 @@ Noura and Jassim publish the **Najm Bank Security Logging Standard v1** (signed 
 </details>
 
 ## 📚 References
-- OWASP Top 10 (2021 edition, A09 Security Logging and Monitoring Failures; check the current edition) — https://owasp.org/Top10/
+- OWASP Top 10 (2025 edition, A09 Security Logging and Alerting Failures) — https://owasp.org/Top10/2025/
 - OWASP Logging Cheat Sheet — https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html
 - OWASP Logging Vocabulary Cheat Sheet — https://cheatsheetseries.owasp.org/cheatsheets/Logging_Vocabulary_Cheat_Sheet.html
 - NIST SP 800-92, Guide to Computer Security Log Management (2006; a Rev. 1 draft was published in 2023, so check for a final revision) — https://csrc.nist.gov/pubs/sp/800/92/final

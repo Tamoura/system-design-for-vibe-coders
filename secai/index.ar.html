@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="secai-source" content="2f303c5dac239219">
+<meta name="secai-source" content="b01ff11ec0bba3f9">
 <meta name="description" content="أمن الذكاء الاصطناعي والتطبيقات من الصفر إلى الاحتراف: دورة مجانية ثنائية اللغة عن نمذجة التهديدات، وأمن الويب والهوية وواجهات API والسحابة وسلسلة التوريد، وتأمين تطبيقات النماذج اللغوية الكبيرة ووكلاء الذكاء الاصطناعي، مع اختبار في كل درس وامتحان تدريبي من 60 سؤالًا.">
 <title>أمن الذكاء الاصطناعي والتطبيقات — من الصفر إلى الاحتراف</title>
 <style>
@@ -3575,7 +3575,7 @@ def priority(f) -&gt; str:
 </section>
 <section class="sec sec-why"><h2>🧭 لماذا يهم</h2>
 <p>أول مراجعةٍ للشيفرة يجريها علي في بنك نجم هي طلب سحب لميزة البحث في الفواتير الجديدة في بوابة الشركات الصغيرة، بُنيت في عصر يومٍ واحد باستخدام وكيل برمجة بالذكاء الاصطناعي. ويقرأ سطر الاستعلام: <code>f&quot;SELECT * FROM invoices WHERE company_id = {cid} AND reference = &#39;{q}&#39;&quot;</code>. يوافق عليه علي لأن الاختبارات تنجح. وترفضه نورة بتعليقٍ واحد: «شغّله على حاسوبك المحمول، واكتب <code>&#39; OR &#39;1&#39;=&#39;1</code> في مربع البحث، وأخبرني فواتيرَ مَن ترى.» والجواب: فواتير كل الشركات. وفي بوابةٍ متعددة المستأجرين يكون هذا اختراقًا للبيانات ينتظر أول عميلٍ فضولي، وستضطر سارة، مسؤولة حماية البيانات <bdi>(DPO)</bdi>، إلى التعامل معه على هذا الأساس.</p>
-<p>الحقن أقدم فئات الأخطاء في أمن الويب، ولم يغادر القوائم قط. فهو فئةٌ في قائمة OWASP Top 10، إذ حمل الرمز A03 في إصدار 2021؛ وتحقّق من الإصدار الحالي الذي حُدِّث عام 2025. ويتكرر حقن SQL وحقن أوامر نظام التشغيل في قائمة CWE Top 25 الصادرة عن MITRE. وفي عام 2023 استغلّت مجموعة ابتزاز على نطاقٍ واسع ثغرةَ حقن SQL ‏ في منتج MOVEit Transfer، وهي CVE-2023-34362، وفقدت مؤسساتٌ كثيرة، بحسب ما أُعلن، ملفاتٍ من منتجٍ اشترته لا منتجٍ بنته. وفي عام 2017 اختُرقت شركة Equifax عبر ثغرةٍ غير مرقَّعة في Apache Struts، هي CVE-2017-5638، قُيِّمت فيها ترويسة HTTP مُصمَّمة خصيصًا بوصفها تعبيرًا: حقنٌ مرةً أخرى، في شيفرةٍ لم تكتبها الضحية.</p>
+<p>الحقن أقدم فئات الأخطاء في أمن الويب، ولم يغادر القوائم قط. فهو الفئة A05 «الحقن» في قائمة OWASP Top 10 بإصدار 2025، وكان A03 في إصدار 2021. ويتكرر حقن SQL وحقن أوامر نظام التشغيل في قائمة CWE Top 25 الصادرة عن MITRE. وفي عام 2023 استغلّت مجموعة ابتزاز على نطاقٍ واسع ثغرةَ حقن SQL ‏ في منتج MOVEit Transfer، وهي CVE-2023-34362، وفقدت مؤسساتٌ كثيرة، بحسب ما أُعلن، ملفاتٍ من منتجٍ اشترته لا منتجٍ بنته. وفي عام 2017 اختُرقت شركة Equifax عبر ثغرةٍ غير مرقَّعة في Apache Struts، هي CVE-2017-5638، قُيِّمت فيها ترويسة HTTP مُصمَّمة خصيصًا بوصفها تعبيرًا: حقنٌ مرةً أخرى، في شيفرةٍ لم تكتبها الضحية.</p>
 </section>
 <section class="sec sec-how"><h2>📐 كيف يعمل</h2>
 <h3>🟢 الأساسيات</h3>
@@ -3878,7 +3878,7 @@ cursor.execute(sql, (cid,))
 </section>
 <section class="sec sec-refs"><h2>📚 المراجع</h2>
 <ul>
-<li>قائمة OWASP Top 10، إصدار 2021، فئة الحقن؛ وتحقّق من الإصدار الحالي — <a href="https://owasp.org/Top10/">https://owasp.org/Top10/</a></li>
+<li>قائمة OWASP Top 10، إصدار 2025، الفئة A05 الحقن — <a href="https://owasp.org/Top10/2025/">https://owasp.org/Top10/2025/</a></li>
 <li>سلسلة OWASP Cheat Sheet Series، ورقة الوقاية من حقن SQL ‏ — <a href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html</a></li>
 <li>سلسلة OWASP Cheat Sheet Series، ورقة الدفاع ضد حقن أوامر نظام التشغيل — <a href="https://cheatsheetseries.owasp.org/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html</a></li>
 <li>OWASP، صفحة حقن CSV — <a href="https://owasp.org/www-community/attacks/CSV_Injection">https://owasp.org/www-community/attacks/CSV_Injection</a></li>
@@ -4283,7 +4283,7 @@ const clean = DOMPurify.sanitize(invoice.notes, {
 </section>
 <section class="sec sec-why"><h2>🧭 لماذا يهم</h2>
 <p>يريد فريق بوابة الشركات الصغيرة ميزتين في السباق التالي. فميزة <strong>استيراد فاتورة من رابط</strong> تجلب ملفًا من عنوان URL يلصقه العميل؛ و<strong>خطافات الويب <bdi>(webhooks)</bdi></strong> تُشعر عنوان URL يختاره العميل حين تُعتمد فاتورة. بنى مطوّرو طارق الميزتين بوكيل برمجة بالذكاء الاصطناعي، وتنحصر كلٌّ منهما في سطرٍ واحد: <code>requests.get(url)</code>. وتطلب نورة من علي أن ينمذج تهديدات ميزة الاستيراد باستخدام STRIDE قبل الإطلاق، كما في الدرس <a class="xref" href="#/1.1">1.1</a>. ويتبيّن أن سؤاله الأول، «أين يستطيع هذا الخادم الوصول حيث لا يستطيع العميل؟»، هو الدرس كله.</p>
-<p>أشهر مثالٍ علني هو اختراق Capital One عام 2019. فبحسب ما أُعلن، جعل مهاجمٌ جدار حماية تطبيقات ويب سيئ الإعداد يرسل طلباتٍ إلى خدمة البيانات الوصفية للمثيل السحابي، فأعادت بيانات اعتماد مؤقتة لدورٍ ذي صلاحياتٍ مفرطة؛ واستُخدمت هذه لنسخ البيانات من حاويات التخزين. وأصبح SSRF، أي CWE-918، فئةً مستقلة في قائمة OWASP Top 10 عام 2021، بالرمز A10 في ذلك الإصدار، أما إصدار 2025 فيدمجه في فئة التحكم في الوصول المعطَّل <bdi>(Broken Access Control)</bdi>، فتحقّق من القائمة الحالية؛ وهو API7 في قائمة OWASP API Security Top 10 لعام 2023.</p>
+<p>أشهر مثالٍ علني هو اختراق Capital One عام 2019. فبحسب ما أُعلن، جعل مهاجمٌ جدار حماية تطبيقات ويب سيئ الإعداد يرسل طلباتٍ إلى خدمة البيانات الوصفية للمثيل السحابي، فأعادت بيانات اعتماد مؤقتة لدورٍ ذي صلاحياتٍ مفرطة؛ واستُخدمت هذه لنسخ البيانات من حاويات التخزين. ويضع إصدار 2025 من قائمة OWASP Top 10 ثغرة SSRF، أي CWE-918، ضمن الفئة A01 «التحكم في الوصول المعطَّل» <bdi>(Broken Access Control)</bdi>، وكانت فئةً مستقلة بالرمز A10 في إصدار 2021؛ وهو API7 في قائمة OWASP API Security Top 10 لعام 2023.</p>
 <p>وتقع الرفوعات والمسارات وإلغاء التسلسل بجواره مباشرةً: فالعملاء يرفعون الفواتير، والموظفون ينزّلونها، وقد بدأ فريق دانة تحميل نماذج مدرَّبة مسبقًا من منصاتٍ عامة.</p>
 </section>
 <section class="sec sec-how"><h2>📐 كيف يعمل</h2>
@@ -5417,7 +5417,7 @@ def verify_access_token(token: str) -&gt; dict:
 <p class="meta"><span class="lvl lvl-i">🟡 متوسط</span> · <span class="bok">المرحلة <bdi>(Phase)</bdi> <bdi dir="ltr">Build, Test</bdi></span> · <span class="prereq">اقرأ قبله: <a href="#/1.2">1.2</a>، <a href="#/3.1">3.1</a></span></p>
 <section class="sec sec-tldr"><h2>⚡ الدرس في دقيقة</h2>
 <ul>
-<li><strong>التفويض <bdi>(Authorisation)</bdi></strong> يقرر ما يجوز للمستخدم الموثَّق أن يفعله، وعلى أي كائن. تصدّر كسر التحكم في الوصول <bdi>(broken access control)</bdi> قائمة OWASP Top 10 في إصدار 2021، ويتصدّر <strong>كسر التفويض على مستوى الكائن <bdi>(Broken Object Level Authorization, BOLA)</bdi></strong> قائمة OWASP API Security Top 10 لعام 2023.</li>
+<li><strong>التفويض <bdi>(Authorisation)</bdi></strong> يقرر ما يجوز للمستخدم الموثَّق أن يفعله، وعلى أي كائن. يتصدّر كسر التحكم في الوصول <bdi>(broken access control)</bdi> قائمة OWASP Top 10، فهو A01 في إصدار 2025 كما كان في 2021، ويتصدّر <strong>كسر التفويض على مستوى الكائن <bdi>(Broken Object Level Authorization, BOLA)</bdi></strong> قائمة OWASP API Security Top 10 لعام 2023.</li>
 <li>افحص ثلاثة مستويات على الخادم، في كل طلب: <strong>الوظيفة</strong>: هل يجوز لهذا الدور استدعاء هذا؟؛ و<strong>الكائن</strong>: هذه الفاتورة بعينها؟؛ و<strong>الخاصية</strong>: أيّ الحقول يجوز لهم رؤيتها أو تغييرها؟</li>
 <li><strong>IDOR</strong>، أي مرجع الكائن المباشر غير الآمن: يجلب الخادم أي معرّفٍ يسمّيه الطلب دون أن يسأل «هل هذا لك؟». المعرّفات العشوائية تُبطئ المهاجمين؛ لكنها لا تُصلح المشكلة.</li>
 <li><strong>ارفض افتراضيًّا</strong>، واتخذ القرار في سياسةٍ مركزية واحدة، وخذ المستخدم والمستأجر من الجلسة، لا من الطلب أبدًا.</li>
@@ -5850,7 +5850,7 @@ CREATE POLICY company_isolation ON invoices
 </section>
 <section class="sec sec-refs"><h2>📚 المراجع</h2>
 <ul>
-<li>قائمة OWASP Top 10، إصدار 2021 والتحديثات اللاحقة — <a href="https://owasp.org/Top10/">https://owasp.org/Top10/</a></li>
+<li>قائمة OWASP Top 10، إصدار 2025 — <a href="https://owasp.org/Top10/2025/">https://owasp.org/Top10/2025/</a></li>
 <li>قائمة OWASP API Security Top 10 لعام 2023 — <a href="https://owasp.org/API-Security/">https://owasp.org/API-Security/</a></li>
 <li>ورقة OWASP المختصرة للتفويض — <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html</a></li>
 <li>معيار OWASP للتحقق من أمن التطبيقات — <a href="https://owasp.org/www-project-application-security-verification-standard/">https://owasp.org/www-project-application-security-verification-standard/</a></li>
@@ -6969,7 +6969,7 @@ await api.post(&quot;/v2/device/verify&quot;, { challenge, signature });
 </section>
 <section class="sec sec-why"><h2>🧭 لماذا يهم</h2>
 <p>أول مراجعةٍ للشيفرة يُجريها علي في بنك نجم هي طلب سحب لميزة «دعوة زميل» في بوابة الشركات الصغيرة. فيوافق عليه: «كل ما هو حساس مُجزَّأ أو مُشفَّر». تعيد نورة فتحه وتُبرز ثلاثة أسطر. كلمات مرور المستخدمين الجدد مخزّنةٌ بصيغة <code>sha256(password)</code>. واستدعاءٌ إلى شريك الفوترة الإلكترونية يضبط <code>verify=False</code> «لأن شهادة الاختبار ظلّت تفشل». والبيانات المصرفية للفواتير مُشفَّرةٌ بمفتاح AES مكتوبٍ داخل ملف الشيفرة المصدرية، بنمطٍ يُسمّى ECB. وكان تعليقها: «الثلاثة كلها تشفير. ولا واحد منها يحمي شيئًا».</p>
-<p>تُفرد قائمة OWASP Top 10، في إصدار 2021، لهذا النمط فئةً خاصة به، هي <em>الإخفاقات التشفيرية <bdi>(Cryptographic Failures)</bdi></em>، وقد نشرت OWASP منذ ذلك الحين تحديثًا لعام 2025، فتحقّق من القائمة الحالية بدل الاعتماد على الترقيم. ونادرًا ما تنطوي هذه الإخفاقات على رياضياتٍ مكسورة. إنها تنطوي على الأداة الخطأ، أو فحصٍ مُعطَّل، أو مفتاحٍ في المكان الخطأ. والعمليات مهمةٌ أيضًا: فقد وصفت مراجعةٌ أجراها مكتب المساءلة الحكومية الأمريكي لاختراق Equifax عام 2017 كيف أن شهادةً منتهية الصلاحية على جهاز فحص حركة المرور تركت حركة المرور المشفّرة دون فحص؛ ولوحظت حركة المرور المريبة بعد تجديدها.</p>
+<p>تُفرد قائمة OWASP Top 10 لهذا النمط فئةً خاصة به، هي <em>الإخفاقات التشفيرية <bdi>(Cryptographic Failures)</bdi></em>: A04 في إصدار 2025، وكانت A02 في إصدار 2021، لذا ترقّمها المراجع الأقدم ترقيمًا مختلفًا. ونادرًا ما تنطوي هذه الإخفاقات على رياضياتٍ مكسورة. إنها تنطوي على الأداة الخطأ، أو فحصٍ مُعطَّل، أو مفتاحٍ في المكان الخطأ. والعمليات مهمةٌ أيضًا: فقد وصفت مراجعةٌ أجراها مكتب المساءلة الحكومية الأمريكي لاختراق Equifax عام 2017 كيف أن شهادةً منتهية الصلاحية على جهاز فحص حركة المرور تركت حركة المرور المشفّرة دون فحص؛ ولوحظت حركة المرور المريبة بعد تجديدها.</p>
 </section>
 <section class="sec sec-how"><h2>📐 كيف يعمل</h2>
 <h3>🟢 الأساسيات</h3>
@@ -7299,7 +7299,7 @@ if abs(time.time() - int(ts)) &gt; 300 or not hmac.compare_digest(expected, rece
 <li>IETF، وثيقة RFC 8996: إيقاف اعتماد TLS 1.0 وTLS 1.1 — <a href="https://www.rfc-editor.org/rfc/rfc8996">https://www.rfc-editor.org/rfc/rfc8996</a></li>
 <li>IETF، وثيقة RFC 9106: خوارزمية Argon2 — <a href="https://www.rfc-editor.org/rfc/rfc9106">https://www.rfc-editor.org/rfc/rfc9106</a></li>
 <li>سلسلة أوراق OWASP المختصرة <bdi>(OWASP Cheat Sheet Series)</bdi>: تخزين كلمات المرور، والتخزين التشفيري <bdi>(Cryptographic Storage)</bdi>، وإدارة المفاتيح، وأمن طبقة النقل — <a href="https://cheatsheetseries.owasp.org/">https://cheatsheetseries.owasp.org/</a></li>
-<li>قائمة OWASP Top 10، فئة الإخفاقات التشفيرية — <a href="https://owasp.org/Top10/">https://owasp.org/Top10/</a></li>
+<li>قائمة OWASP Top 10:2025، الفئة A04 الإخفاقات التشفيرية — <a href="https://owasp.org/Top10/2025/">https://owasp.org/Top10/2025/</a></li>
 <li>وثيقة NIST SP 800-38D، نمط غالوا/العدّاد — <a href="https://csrc.nist.gov/pubs/sp/800/38/d/final">https://csrc.nist.gov/pubs/sp/800/38/d/final</a></li>
 <li>وثيقة NIST SP 800-57 الجزء 1، المراجعة 5، توصيةٌ لإدارة المفاتيح — <a href="https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final">https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final</a></li>
 <li>مشروع NIST للتشفير لما بعد الكمّ: FIPS 203 و204 و205 — <a href="https://csrc.nist.gov/projects/post-quantum-cryptography">https://csrc.nist.gov/projects/post-quantum-cryptography</a></li>
@@ -8120,7 +8120,7 @@ log.info(&quot;assist_request&quot;, extra={
 <td>أي شيءٍ لم يخطر لأحدٍ أن يختبره</td>
 </tr>
 </tbody></table></div>
-<p>انظر إلى الصف الأخير. أدوات الفحص ضعيفةٌ في اكتشاف التحكم المعطوب في الوصول، وهو الفئة الأولى في OWASP Top 10 في إصدار 2021، ثم مجددًا في تحديث 2025، لأنها لا تعرف أن الفاتورة 77 تخصّ الشركة 12. ولا يستطيع التحقق من ذلك إلا اختبارٌ يُرمِّز قواعدك.</p>
+<p>انظر إلى الصف الأخير. أدوات الفحص ضعيفةٌ في اكتشاف التحكم المعطوب في الوصول، وهو الفئة الأولى A01 في إصدار 2025 من OWASP Top 10، كما كان في 2021، لأنها لا تعرف أن الفاتورة 77 تخصّ الشركة 12. ولا يستطيع التحقق من ذلك إلا اختبارٌ يُرمِّز قواعدك.</p>
 <pre><code class="language-python"># A security integration test that encodes the rule
 # &quot;an admin of one company cannot act on another company&quot;
 def test_admin_cannot_invite_into_other_company(client, company_a_admin, company_b):
@@ -9571,7 +9571,7 @@ def export_invoice(invoice_id):
 <ul>
 <li>AWS، نموذج المسؤولية المشتركة — <a href="https://aws.amazon.com/compliance/shared-responsibility-model/">https://aws.amazon.com/compliance/shared-responsibility-model/</a></li>
 <li>Microsoft، المسؤولية المشتركة في السحابة — <a href="https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility">https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility</a></li>
-<li>قائمة OWASP Top 10، إصدار 2021، وتحقّق من القائمة الحالية: سوء الإعداد الأمني وتزوير الطلبات من جهة الخادم — <a href="https://owasp.org/Top10/">https://owasp.org/Top10/</a></li>
+<li>قائمة OWASP Top 10:2025: الفئة A02 سوء الإعداد الأمني، والفئة A01 كسر التحكم في الوصول التي باتت تشمل تزوير الطلبات من جهة الخادم (وقد اختلف ترقيم 2021) — <a href="https://owasp.org/Top10/2025/">https://owasp.org/Top10/2025/</a></li>
 <li>ورقة OWASP المختصرة للوقاية من تزوير الطلبات من جهة الخادم — <a href="https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html</a></li>
 <li>MITRE ATT&amp;CK، مصفوفة السحابة — <a href="https://attack.mitre.org/matrices/enterprise/cloud/">https://attack.mitre.org/matrices/enterprise/cloud/</a></li>
 <li>مركز أمن الإنترنت، معايير CIS — <a href="https://www.cisecurity.org/cis-benchmarks">https://www.cisecurity.org/cis-benchmarks</a></li>
@@ -13020,7 +13020,7 @@ hits = index.query(
 </section>
 <section class="sec sec-why"><h2>🧭 لماذا يهم</h2>
 <p>بعد ستة أسابيع من بدء التجربة الأولية لنجم أسيست، يطلب جاسم، قائد مركز العمليات الأمنية والاستجابة للحوادث، من علي سجلاتِ المساعد. فيجدها علي في حاوية التصحيح التابعة لفريق التطبيق. وهي تحوي نصّ المحادثات كاملًا، بما في ذلك أرقام البطاقات التي كتبها العملاء، لكنها لا تبيّن أيّ أداةٍ استُدعيت، ولا لصالح من، ولا ما إذا كان ذلك مسموحًا. والساعات غير متطابقة، وكل شيءٍ يُحذف بعد سبعة أيام. فلو جمّد نجم أسيست البطاقة الخطأ، لما استطاع أحدٌ إثبات ما حدث، وقد أصبحت هذه الحاوية الآن أكثر مخازن البيانات حساسيةً في المشروع.</p>
-<p>إن «إخفاقات التسجيل والمراقبة الأمنية» فئةٌ في قائمة OWASP Top 10، وهي A09 في إصدار 2021، ويعيد تحديث 2025 تسميتها «إخفاقات التسجيل والتنبيه الأمني»، فتحقّق من القائمة الحالية؛ وسبب ذلك أن الاختراقات كثيرًا ما تُكتشف متأخرة، وعلى يد جهاتٍ خارجية. ففي اختراق Equifax عام 2017، أفادت مراجعاتٌ حكومية أمريكية نُشرت عام 2018 بأن جهازًا لفحص حركة المرور المشفّرة كانت شهادته منتهية الصلاحية، فلم يكن يفحص تلك الحركة؛ وما إن جُدّدت الشهادة حتى لاحظ الموظفون النشاط المريب. إن ضابط المراقبة الذي يتوقف عن العمل بصمت أسوأ من عدم وجوده أصلًا، لأن الجميع يعتقدون أنهم محميّون.</p>
+<p>إن A09 «إخفاقات التسجيل والتنبيه الأمني» فئةٌ في قائمة OWASP Top 10 بإصدار 2025، وكان اسمها في إصدار 2021 «التسجيل والمراقبة»؛ وسبب ذلك أن الاختراقات كثيرًا ما تُكتشف متأخرة، وعلى يد جهاتٍ خارجية. ففي اختراق Equifax عام 2017، أفادت مراجعاتٌ حكومية أمريكية نُشرت عام 2018 بأن جهازًا لفحص حركة المرور المشفّرة كانت شهادته منتهية الصلاحية، فلم يكن يفحص تلك الحركة؛ وما إن جُدّدت الشهادة حتى لاحظ الموظفون النشاط المريب. إن ضابط المراقبة الذي يتوقف عن العمل بصمت أسوأ من عدم وجوده أصلًا، لأن الجميع يعتقدون أنهم محميّون.</p>
 <p>وتلخّص نورة، رئيسة أمن التطبيقات والذكاء الاصطناعي، الأمر قائلةً: «إن لم يُسجَّل، فهو لم يحدث. وإن لم ينظر إليه أحد، فهو أيضًا لم يحدث. وإن سُجّل ومعه رقم بطاقة، فقد صنعنا حادثةً ثانية.»</p>
 </section>
 <section class="sec sec-how"><h2>📐 كيف يعمل</h2>
@@ -13379,7 +13379,7 @@ level: high
 </section>
 <section class="sec sec-refs"><h2>📚 المراجع</h2>
 <ul>
-<li>قائمة OWASP Top 10، إصدار 2021، البند A09، إخفاقات التسجيل والمراقبة الأمنية؛ وتحقّق من الإصدار الحالي — <a href="https://owasp.org/Top10/">https://owasp.org/Top10/</a></li>
+<li>قائمة OWASP Top 10، إصدار 2025، البند A09، إخفاقات التسجيل والتنبيه الأمني — <a href="https://owasp.org/Top10/2025/">https://owasp.org/Top10/2025/</a></li>
 <li>ورقة OWASP المختصرة للتسجيل — <a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html</a></li>
 <li>ورقة OWASP المختصرة لمفردات التسجيل — <a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Vocabulary_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Logging_Vocabulary_Cheat_Sheet.html</a></li>
 <li>NIST SP 800-92، دليل إدارة سجلات أمن الحاسوب، 2006؛ ونُشرت مسودةٌ للمراجعة الأولى عام 2023، فتحقّق من وجود مراجعةٍ نهائية — <a href="https://csrc.nist.gov/pubs/sp/800/92/final">https://csrc.nist.gov/pubs/sp/800/92/final</a></li>

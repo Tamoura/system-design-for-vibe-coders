@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="secai-source" content="2f303c5dac239219">
+<meta name="secai-source" content="b01ff11ec0bba3f9">
 <meta name="description" content="Secure AI &amp; Application Security: Zero to Hero — a free, bilingual course: threat modelling, web, identity, API, cloud and supply-chain security, and securing LLM apps and AI agents, with a quiz in every lesson and a 60-question practice exam.">
 <title>Secure AI &amp; Application Security: Zero to Hero</title>
 <style>
@@ -3575,7 +3575,7 @@ def priority(f) -&gt; str:
 </section>
 <section class="sec sec-why"><h2>🧭 Why it matters</h2>
 <p>Ali&#39;s first code review at Najm Bank is a pull request for the SME Portal&#39;s new invoice search, built in an afternoon with an AI coding agent. The query line reads <code>f&quot;SELECT * FROM invoices WHERE company_id = {cid} AND reference = &#39;{q}&#39;&quot;</code>. Ali approves it because the tests pass. Noura rejects it with one comment: &quot;Run it on your laptop, type <code>&#39; OR &#39;1&#39;=&#39;1</code> into the search box, and tell me whose invoices you see.&quot; The answer is every company&#39;s. On a multi-tenant portal that is a data breach waiting for its first curious customer, and Sara, the DPO, would have to handle it as one.</p>
-<p>Injection is the oldest bug class in web security and has never left the lists. It is a category in the OWASP Top 10 (A03 in the 2021 edition; check the current edition, updated in 2025), and SQL injection (CWE-89) and OS command injection (CWE-78) recur in MITRE&#39;s CWE Top 25. In 2023 a SQL injection flaw in the MOVEit Transfer product (CVE-2023-34362) was exploited at scale by an extortion group, and many organisations, as publicly reported, lost files from a product they had bought rather than built. In 2017 Equifax was breached through an unpatched Apache Struts flaw (CVE-2017-5638) in which a crafted HTTP header was evaluated as an expression: injection again, in code the victim did not write.</p>
+<p>Injection is the oldest bug class in web security and has never left the lists. It is A05 Injection in the OWASP Top 10 (2025 edition; it was A03 in 2021), and SQL injection (CWE-89) and OS command injection (CWE-78) recur in MITRE&#39;s CWE Top 25. In 2023 a SQL injection flaw in the MOVEit Transfer product (CVE-2023-34362) was exploited at scale by an extortion group, and many organisations, as publicly reported, lost files from a product they had bought rather than built. In 2017 Equifax was breached through an unpatched Apache Struts flaw (CVE-2017-5638) in which a crafted HTTP header was evaluated as an expression: injection again, in code the victim did not write.</p>
 </section>
 <section class="sec sec-how"><h2>📐 How it works</h2>
 <h3>🟢 The essentials</h3>
@@ -3878,7 +3878,7 @@ cursor.execute(sql, (cid,))
 </section>
 <section class="sec sec-refs"><h2>📚 References</h2>
 <ul>
-<li>OWASP Top 10 (2021 edition, Injection; check the current edition) — <a href="https://owasp.org/Top10/">https://owasp.org/Top10/</a></li>
+<li>OWASP Top 10 (2025 edition, A05 Injection) — <a href="https://owasp.org/Top10/2025/">https://owasp.org/Top10/2025/</a></li>
 <li>OWASP Cheat Sheet Series, SQL Injection Prevention — <a href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html</a></li>
 <li>OWASP Cheat Sheet Series, OS Command Injection Defense — <a href="https://cheatsheetseries.owasp.org/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html</a></li>
 <li>OWASP, CSV Injection — <a href="https://owasp.org/www-community/attacks/CSV_Injection">https://owasp.org/www-community/attacks/CSV_Injection</a></li>
@@ -4283,7 +4283,7 @@ const clean = DOMPurify.sanitize(invoice.notes, {
 </section>
 <section class="sec sec-why"><h2>🧭 Why it matters</h2>
 <p>The SME Portal team wants two features next sprint. <strong>Import invoice from link</strong> fetches a file from a URL the customer pastes; <strong>webhooks</strong> notify a customer-chosen URL when an invoice is approved. Tariq&#39;s developers built both with an AI coding agent, and each comes down to one line: <code>requests.get(url)</code>. Noura asks Ali to threat-model the import feature with STRIDE before launch (<a class="xref" href="#/1.1">1.1</a>). His first question, &quot;Where can this server reach that the customer cannot?&quot;, turns out to be the whole lesson.</p>
-<p>The best-known public example is the 2019 Capital One breach. As publicly reported, an attacker made a misconfigured web application firewall send requests to the cloud instance metadata service, which returned temporary credentials for an over-privileged role; those were used to copy data from storage buckets. SSRF (CWE-918) became its own OWASP Top 10 category in 2021 (A10 in that edition; the 2025 edition folds it into Broken Access Control, so check the current list) and is API7 in the OWASP API Security Top 10 (2023).</p>
+<p>The best-known public example is the 2019 Capital One breach. As publicly reported, an attacker made a misconfigured web application firewall send requests to the cloud instance metadata service, which returned temporary credentials for an over-privileged role; those were used to copy data from storage buckets. The OWASP Top 10 (2025 edition) files SSRF (CWE-918) under A01 Broken Access Control (it was its own category, A10, in 2021), and it is API7 in the OWASP API Security Top 10 (2023).</p>
 <p>Uploads, paths and deserialisation sit right beside it: customers upload invoices, staff download them, and Dana&#39;s team has started loading pre-trained models from public hubs.</p>
 </section>
 <section class="sec sec-how"><h2>📐 How it works</h2>
@@ -5417,7 +5417,7 @@ def verify_access_token(token: str) -&gt; dict:
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Build, Test</bdi></span> · <span class="prereq">Before this: <a href="#/1.2">1.2</a>, <a href="#/3.1">3.1</a></span></p>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
-<li><strong>Authorisation</strong> decides what an authenticated user may do, and to which object. Broken access control topped the OWASP Top 10 (2021 edition), and <strong>Broken Object Level Authorization (BOLA)</strong> leads the OWASP API Security Top 10 (2023).</li>
+<li><strong>Authorisation</strong> decides what an authenticated user may do, and to which object. Broken access control tops the OWASP Top 10 (A01 in the 2025 edition, as in 2021), and <strong>Broken Object Level Authorization (BOLA)</strong> leads the OWASP API Security Top 10 (2023).</li>
 <li>Check three levels on the server, every request: <strong>function</strong> (may this role call this?), <strong>object</strong> (this particular invoice?) and <strong>property</strong> (which fields may they see or change?).</li>
 <li><strong>IDOR</strong> (insecure direct object reference): the server fetches whatever ID the request names without asking &quot;is this yours?&quot;. Random IDs slow attackers; they do not fix it.</li>
 <li><strong>Deny by default</strong>, decide in one central policy, and take user and tenant from the session, never the request.</li>
@@ -5432,7 +5432,7 @@ def verify_access_token(token: str) -&gt; dict:
 </section>
 <section class="sec sec-how"><h2>📐 How it works</h2>
 <h3>🟢 The essentials</h3>
-<p><strong>The question every request must answer.</strong> <em>May this <strong>subject</strong> (a user, a service or an agent) perform this <strong>action</strong> on this <strong>resource</strong>, in this <strong>context</strong>?</em> Authentication (<a class="xref" href="#/3.1">3.1</a>) and tokens (<a class="xref" href="#/3.2">3.2</a>) establish the subject; authorisation answers the rest, on the server, every time, because the client is under the attacker&#39;s control. (OWASP published a 2025 Top 10 update; check the current list rather than numbering.)</p>
+<p><strong>The question every request must answer.</strong> <em>May this <strong>subject</strong> (a user, a service or an agent) perform this <strong>action</strong> on this <strong>resource</strong>, in this <strong>context</strong>?</em> Authentication (<a class="xref" href="#/3.1">3.1</a>) and tokens (<a class="xref" href="#/3.2">3.2</a>) establish the subject; authorisation answers the rest, on the server, every time, because the client is under the attacker&#39;s control. (The 2025 OWASP Top 10 also files SSRF under A01, Broken Access Control.)</p>
 <p><strong>Three levels of check.</strong></p>
 <div class="table-scroll"><table>
 <thead>
@@ -5850,7 +5850,7 @@ CREATE POLICY company_isolation ON invoices
 </section>
 <section class="sec sec-refs"><h2>📚 References</h2>
 <ul>
-<li>OWASP Top 10 (2021 edition and later updates) — <a href="https://owasp.org/Top10/">https://owasp.org/Top10/</a></li>
+<li>OWASP Top 10:2025 — <a href="https://owasp.org/Top10/2025/">https://owasp.org/Top10/2025/</a></li>
 <li>OWASP API Security Top 10 (2023) — <a href="https://owasp.org/API-Security/">https://owasp.org/API-Security/</a></li>
 <li>OWASP Authorization Cheat Sheet — <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html</a></li>
 <li>OWASP Application Security Verification Standard (ASVS) — <a href="https://owasp.org/www-project-application-security-verification-standard/">https://owasp.org/www-project-application-security-verification-standard/</a></li>
@@ -6969,7 +6969,7 @@ await api.post(&quot;/v2/device/verify&quot;, { challenge, signature });
 </section>
 <section class="sec sec-why"><h2>🧭 Why it matters</h2>
 <p>Ali&#39;s first code review at Najm Bank is a pull request for the SME Portal&#39;s &quot;invite a colleague&quot; feature. He approves it: &quot;Everything sensitive is hashed or encrypted.&quot; Noura reopens it and highlights three lines. New users&#39; passwords are stored as <code>sha256(password)</code>. A call to the e-invoicing partner sets <code>verify=False</code> &quot;because the test certificate kept failing&quot;. Invoice bank details are encrypted with an AES key written into the source file, in a mode called ECB. Her comment: &quot;All three are cryptography. None of the three protects anything.&quot;</p>
-<p>The OWASP Top 10 (2021 edition) gives this pattern its own category, <em>Cryptographic Failures</em> (OWASP has since published a 2025 update; check the current list rather than relying on numbering). Such failures rarely involve broken mathematics. They involve the wrong tool, a disabled check or a key in the wrong place. Operations matter too: a US Government Accountability Office review of the 2017 Equifax breach described how an expired certificate on a traffic-inspection device left encrypted traffic uninspected; suspicious traffic was noticed after it was renewed.</p>
+<p>The OWASP Top 10 gives this pattern its own category, <em>Cryptographic Failures</em>: A04 in the 2025 edition (it was A02 in 2021, so older material numbers it differently). Such failures rarely involve broken mathematics. They involve the wrong tool, a disabled check or a key in the wrong place. Operations matter too: a US Government Accountability Office review of the 2017 Equifax breach described how an expired certificate on a traffic-inspection device left encrypted traffic uninspected; suspicious traffic was noticed after it was renewed.</p>
 </section>
 <section class="sec sec-how"><h2>📐 How it works</h2>
 <h3>🟢 The essentials</h3>
@@ -7299,7 +7299,7 @@ if abs(time.time() - int(ts)) &gt; 300 or not hmac.compare_digest(expected, rece
 <li>IETF, RFC 8996: Deprecating TLS 1.0 and TLS 1.1 — <a href="https://www.rfc-editor.org/rfc/rfc8996">https://www.rfc-editor.org/rfc/rfc8996</a></li>
 <li>IETF, RFC 9106: Argon2 — <a href="https://www.rfc-editor.org/rfc/rfc9106">https://www.rfc-editor.org/rfc/rfc9106</a></li>
 <li>OWASP Cheat Sheet Series (Password Storage, Cryptographic Storage, Key Management, Transport Layer Security) — <a href="https://cheatsheetseries.owasp.org/">https://cheatsheetseries.owasp.org/</a></li>
-<li>OWASP Top 10 (Cryptographic Failures) — <a href="https://owasp.org/Top10/">https://owasp.org/Top10/</a></li>
+<li>OWASP Top 10:2025 (A04 Cryptographic Failures) — <a href="https://owasp.org/Top10/2025/">https://owasp.org/Top10/2025/</a></li>
 <li>NIST SP 800-38D (Galois/Counter Mode) — <a href="https://csrc.nist.gov/pubs/sp/800/38/d/final">https://csrc.nist.gov/pubs/sp/800/38/d/final</a></li>
 <li>NIST SP 800-57 Part 1 Rev. 5, Recommendation for Key Management — <a href="https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final">https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final</a></li>
 <li>NIST Post-Quantum Cryptography project (FIPS 203, 204, 205) — <a href="https://csrc.nist.gov/projects/post-quantum-cryptography">https://csrc.nist.gov/projects/post-quantum-cryptography</a></li>
@@ -8120,7 +8120,7 @@ log.info(&quot;assist_request&quot;, extra={
 <td>Anything nobody thought to test</td>
 </tr>
 </tbody></table></div>
-<p>Look at the last row. Scanners are poor at broken access control, the top category in the OWASP Top 10 (2021, and again in the 2025 update), because they do not know that invoice 77 belongs to company 12. Only a test that encodes your rules can check that.</p>
+<p>Look at the last row. Scanners are poor at broken access control, A01 and the top category in the OWASP Top 10:2025 (as in 2021), because they do not know that invoice 77 belongs to company 12. Only a test that encodes your rules can check that.</p>
 <pre><code class="language-python"># A security integration test that encodes the rule
 # &quot;an admin of one company cannot act on another company&quot;
 def test_admin_cannot_invite_into_other_company(client, company_a_admin, company_b):
@@ -9571,7 +9571,7 @@ def export_invoice(invoice_id):
 <ul>
 <li>AWS, Shared Responsibility Model — <a href="https://aws.amazon.com/compliance/shared-responsibility-model/">https://aws.amazon.com/compliance/shared-responsibility-model/</a></li>
 <li>Microsoft, Shared responsibility in the cloud — <a href="https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility">https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility</a></li>
-<li>OWASP Top 10 (2021 edition; check the current list): Security Misconfiguration and Server-Side Request Forgery — <a href="https://owasp.org/Top10/">https://owasp.org/Top10/</a></li>
+<li>OWASP Top 10:2025: A02 Security Misconfiguration, and A01 Broken Access Control, which now covers Server-Side Request Forgery (2021 numbering differed) — <a href="https://owasp.org/Top10/2025/">https://owasp.org/Top10/2025/</a></li>
 <li>OWASP Server-Side Request Forgery Prevention Cheat Sheet — <a href="https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html</a></li>
 <li>MITRE ATT&amp;CK, Cloud matrix — <a href="https://attack.mitre.org/matrices/enterprise/cloud/">https://attack.mitre.org/matrices/enterprise/cloud/</a></li>
 <li>Center for Internet Security, CIS Benchmarks — <a href="https://www.cisecurity.org/cis-benchmarks">https://www.cisecurity.org/cis-benchmarks</a></li>
@@ -13020,7 +13020,7 @@ hits = index.query(
 </section>
 <section class="sec sec-why"><h2>🧭 Why it matters</h2>
 <p>Six weeks into Najm Assist&#39;s pilot, Jassim (SOC and incident response lead) asks Ali for its logs. Ali finds them in the app team&#39;s debug bucket. They hold full conversation text, including card numbers customers typed, but not which tool was called, for whom, or whether it was allowed. Clocks disagree, and everything is deleted after seven days. If Najm Assist froze the wrong card, nobody could prove what happened, and the bucket is now the project&#39;s most sensitive data store.</p>
-<p>&quot;Security Logging and Monitoring Failures&quot; is a category in the OWASP Top 10 (A09 in the 2021 edition; the 2025 update renames it &quot;Security Logging and Alerting Failures&quot;, so check the current list) because breaches are so often found late, and by outsiders. In the Equifax breach of 2017, US government reviews published in 2018 reported that a device for inspecting encrypted traffic had an expired certificate, so it was not inspecting that traffic; once the certificate was renewed, staff noticed the suspicious activity. A monitoring control that silently stops working is worse than none, because everyone believes they are covered.</p>
+<p>A09 &quot;Security Logging and Alerting Failures&quot; is a category in the OWASP Top 10 (2025 edition; &quot;Logging and Monitoring&quot; in 2021) because breaches are so often found late, and by outsiders. In the Equifax breach of 2017, US government reviews published in 2018 reported that a device for inspecting encrypted traffic had an expired certificate, so it was not inspecting that traffic; once the certificate was renewed, staff noticed the suspicious activity. A monitoring control that silently stops working is worse than none, because everyone believes they are covered.</p>
 <p>Noura (Head of Application &amp; AI Security) sums it up: &quot;If it isn&#39;t logged, it didn&#39;t happen. If nobody looks, it still didn&#39;t happen. If it&#39;s logged with a card number, we&#39;ve created a second incident.&quot;</p>
 </section>
 <section class="sec sec-how"><h2>📐 How it works</h2>
@@ -13379,7 +13379,7 @@ level: high
 </section>
 <section class="sec sec-refs"><h2>📚 References</h2>
 <ul>
-<li>OWASP Top 10 (2021 edition, A09 Security Logging and Monitoring Failures; check the current edition) — <a href="https://owasp.org/Top10/">https://owasp.org/Top10/</a></li>
+<li>OWASP Top 10 (2025 edition, A09 Security Logging and Alerting Failures) — <a href="https://owasp.org/Top10/2025/">https://owasp.org/Top10/2025/</a></li>
 <li>OWASP Logging Cheat Sheet — <a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html</a></li>
 <li>OWASP Logging Vocabulary Cheat Sheet — <a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Vocabulary_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Logging_Vocabulary_Cheat_Sheet.html</a></li>
 <li>NIST SP 800-92, Guide to Computer Security Log Management (2006; a Rev. 1 draft was published in 2023, so check for a final revision) — <a href="https://csrc.nist.gov/pubs/sp/800/92/final">https://csrc.nist.gov/pubs/sp/800/92/final</a></li>

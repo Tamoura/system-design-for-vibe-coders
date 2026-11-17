@@ -250,7 +250,7 @@ flowchart RL
 ## 📚 المراجع
 - AWS، نموذج المسؤولية المشتركة — https://aws.amazon.com/compliance/shared-responsibility-model/
 - Microsoft، المسؤولية المشتركة في السحابة — https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility
-- قائمة OWASP Top 10، إصدار 2021، وتحقّق من القائمة الحالية: سوء الإعداد الأمني وتزوير الطلبات من جهة الخادم — https://owasp.org/Top10/
+- قائمة OWASP Top 10:2025: الفئة A02 سوء الإعداد الأمني، والفئة A01 كسر التحكم في الوصول التي باتت تشمل تزوير الطلبات من جهة الخادم (وقد اختلف ترقيم 2021) — https://owasp.org/Top10/2025/
 - ورقة OWASP المختصرة للوقاية من تزوير الطلبات من جهة الخادم — https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html
 - MITRE ATT&CK، مصفوفة السحابة — https://attack.mitre.org/matrices/enterprise/cloud/
 - مركز أمن الإنترنت، معايير CIS — https://www.cisecurity.org/cis-benchmarks

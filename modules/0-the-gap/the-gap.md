@@ -74,6 +74,24 @@ week's cold start?), and **works *for whom*** (you, logged in, on Wi-Fi — or a
 stranger on old mobile data with last week's version?). Any "done" that can't
 answer all three is a component claim wearing a system costume.
 
+### How you check: three tiers of evidence
+
+This course promises you can check your agent's work without reading code. That
+holds for **what the product visibly does**, within limits. Checking comes in three
+tiers:
+
+1. **Tier 1 — see it yourself.** You click, load or watch the behaviour from where
+   users stand. This is the tier the course trains.
+2. **Tier 2 — automated controls that run every time.** Tests, type and lint checks,
+   CI gates, security scanners. Your agent sets them up; you check they exist and run.
+3. **Tier 3 — independent specialist review** for high-risk changes: login and
+   permissions, payments, keeping one customer's data away from another's, things
+   happening at the same time (concurrency), security settings, database migrations.
+
+Watching it work cannot, by itself, establish that a product is secure, correct
+under concurrency, isolated between customers, or ready for production. That is
+what Tiers 2 and 3 are for.
+
 ## 🎛️ Direct Your Agent
 
 1. > *"List every seam in this project: every place where two things we don't

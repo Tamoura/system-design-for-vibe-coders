@@ -20,7 +20,7 @@
 ## 🧭 Why it matters
 Ali's first code review at Najm Bank is a pull request for the SME Portal's "invite a colleague" feature. He approves it: "Everything sensitive is hashed or encrypted." Noura reopens it and highlights three lines. New users' passwords are stored as `sha256(password)`. A call to the e-invoicing partner sets `verify=False` "because the test certificate kept failing". Invoice bank details are encrypted with an AES key written into the source file, in a mode called ECB. Her comment: "All three are cryptography. None of the three protects anything."
 
-The OWASP Top 10 (2021 edition) gives this pattern its own category, *Cryptographic Failures* (OWASP has since published a 2025 update; check the current list rather than relying on numbering). Such failures rarely involve broken mathematics. They involve the wrong tool, a disabled check or a key in the wrong place. Operations matter too: a US Government Accountability Office review of the 2017 Equifax breach described how an expired certificate on a traffic-inspection device left encrypted traffic uninspected; suspicious traffic was noticed after it was renewed.
+The OWASP Top 10 gives this pattern its own category, *Cryptographic Failures*: A04 in the 2025 edition (it was A02 in 2021, so older material numbers it differently). Such failures rarely involve broken mathematics. They involve the wrong tool, a disabled check or a key in the wrong place. Operations matter too: a US Government Accountability Office review of the 2017 Equifax breach described how an expired certificate on a traffic-inspection device left encrypted traffic uninspected; suspicious traffic was noticed after it was renewed.
 
 ## 📐 How it works
 
@@ -268,7 +268,7 @@ Ali turns his review into the bank's **Cryptography Standard for Builders (v1, e
 - IETF, RFC 8996: Deprecating TLS 1.0 and TLS 1.1 — https://www.rfc-editor.org/rfc/rfc8996
 - IETF, RFC 9106: Argon2 — https://www.rfc-editor.org/rfc/rfc9106
 - OWASP Cheat Sheet Series (Password Storage, Cryptographic Storage, Key Management, Transport Layer Security) — https://cheatsheetseries.owasp.org/
-- OWASP Top 10 (Cryptographic Failures) — https://owasp.org/Top10/
+- OWASP Top 10:2025 (A04 Cryptographic Failures) — https://owasp.org/Top10/2025/
 - NIST SP 800-38D (Galois/Counter Mode) — https://csrc.nist.gov/pubs/sp/800/38/d/final
 - NIST SP 800-57 Part 1 Rev. 5, Recommendation for Key Management — https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final
 - NIST Post-Quantum Cryptography project (FIPS 203, 204, 205) — https://csrc.nist.gov/projects/post-quantum-cryptography

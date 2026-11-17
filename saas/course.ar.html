@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="saas-source" content="1421498d1e016d71">
+<meta name="saas-source" content="0e532d5a96b4c73c">
 <meta name="description" content="لبنات بناء SaaS: المكوّنات التي تشترك فيها كل تطبيقات SaaS، من المبتدئ إلى المتقدم، مع أفضل المستودعات مفتوحة المصدر لتعلّم كل مكوّن.">
 <title>لبنات بناء SaaS — الدورة كاملة</title>
 <style>
@@ -10478,7 +10478,7 @@ export async function loadLicense(token?: string) {
 <td>هذا الدرس</td>
 </tr>
 </tbody></table></div>
-<p>تعطيك قائمتان من OWASP قائمة تحقق. <strong>OWASP Top 10</strong> تغطي تطبيقات الويب. في إصدار 2021 يأتي A01 خلل التحكم بالوصول في المرتبة الأولى، وSSRF هو A10. راجع owasp.org لأحدث إصدار. أما <strong>OWASP API Security Top 10 <bdi>(2023)</bdi></strong> فهي أقرب إلى واجهة API في منتج SaaS: API1 هو <strong>خلل التفويض على مستوى الكائن <bdi>(Broken Object Level Authorization)</bdi></strong> (BOLA: تغيّر <code>/monitors/123</code> إلى <code>/monitors/124</code> فتحصل على أداة مراقبة يملكها شخص آخر)، وAPI5 هو خلل التفويض على مستوى الوظيفة <bdi>(Broken Function Level Authorization)</bdi> (عضو عادي يستدعي نقطة مخصصة للمدير). في SaaS متعدد المستأجرين <bdi>(multi-tenant)</bdi>، BOLA بين المستأجرين هو <em>فئة</em> الأخطاء التي يجب أن تصمم ضدها. ولهذا جعل الدرس <a class="xref" href="#l2-4">2.4</a> تقييد البيانات بالمستأجر جزءًا من البنية، لا شيئًا يجب أن يتذكره كل مطور.</p>
+<p>تعطيك قائمتان من OWASP قائمة تحقق. <strong>OWASP Top 10</strong> تغطي تطبيقات الويب. في إصدار 2025 يبقى A01 خلل التحكم بالوصول في المرتبة الأولى، وقد دُمج فيه SSRF، الذي كان A10 في إصدار 2021. راجع owasp.org للقائمة الحالية. أما <strong>OWASP API Security Top 10 <bdi>(2023)</bdi></strong> فهي أقرب إلى واجهة API في منتج SaaS: API1 هو <strong>خلل التفويض على مستوى الكائن <bdi>(Broken Object Level Authorization)</bdi></strong> (BOLA: تغيّر <code>/monitors/123</code> إلى <code>/monitors/124</code> فتحصل على أداة مراقبة يملكها شخص آخر)، وAPI5 هو خلل التفويض على مستوى الوظيفة <bdi>(Broken Function Level Authorization)</bdi> (عضو عادي يستدعي نقطة مخصصة للمدير). في SaaS متعدد المستأجرين <bdi>(multi-tenant)</bdi>، BOLA بين المستأجرين هو <em>فئة</em> الأخطاء التي يجب أن تصمم ضدها. ولهذا جعل الدرس <a class="xref" href="#l2-4">2.4</a> تقييد البيانات بالمستأجر جزءًا من البنية، لا شيئًا يجب أن يتذكره كل مطور.</p>
 <p><strong>الدفاع ضد SSRF في أداة الفحص في Beacon.</strong> حُلّ اسم المضيف بنفسك، ثم <strong>ارفض العناوين الخاصة وعناوين الاسترجاع والعناوين المحلية للرابط وعناوين البيانات الوصفية</strong> (10.0.0.0/8، 172.16.0.0/12، 192.168.0.0/16، 127.0.0.0/8، 169.254.0.0/16، <code>::1</code>، <code>fc00::/7</code>، وغيرها). اتصل بعنوان IP الذي فحصته، حتى لا تستطيع إجابة DNS rebinding أن تبدّله بعد الفحص. لا تتبع إعادة التوجيه بشكل أعمى: أعد التحقق عند كل قفزة. والأفضل من ذلك أن تشغّل عمّال الفحص في جزء من الشبكة لا يملك مسارًا إلى خدماتك الداخلية، مع فرض IMDSv2 (خدمة البيانات الوصفية التي تتطلب رمزًا) على AWS.</p>
 <p><strong>الأسرار لا توضع في git أبدًا.</strong> السر هو أي بيانات اعتماد: رابط قاعدة البيانات، مفتاح Stripe، مفتاح التوقيع. حتى في المستودعات الخاصة، تُنسخ الأسرار الموجودة في git إلى الحواسيب المحمولة وذاكرات CI والنسخ المتفرعة، وتبقى في التاريخ إلى الأبد. بدلًا من ذلك:</p>
 <ul>

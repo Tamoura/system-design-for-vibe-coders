@@ -222,7 +222,7 @@ flowchart TD
 | Fact | Where it lives | Why |
 |---|---|---|
 | "Never touch prod without a fresh yes" | Project CLAUDE.md | Stable, applies every session |
-| "Our CDN ignores `Vary`; guard at the proxy" | Memory file | Hard-won, load it near caching work |
+| "Our CDN setup ignores `Vary`; guard at the proxy" | Memory file | Hard-won, load it near caching work |
 | "Build a scheduled-post feature with these criteria" | The spec | True for this task only |
 | "I prefer small PRs and Given/When/Then criteria" | Global CLAUDE.md | You, on every project |
 
@@ -485,6 +485,14 @@ localhost is not evidence.**
 
 ## 📐 The Principle
 
+Verification before completion uses the three tiers from lesson 0.1. **Tier 1** —
+you watch it work from the user's seat — is what most of this lesson trains.
+**Tier 2** — tests, type and lint checks, CI gates, scanners — runs on every change
+so nobody has to remember. **Tier 3** — an independent specialist — reviews
+high-risk changes: auth, payments, data isolation between customers, concurrency,
+security configuration, migrations. A change is complete only when every tier it
+needs has passed; Tier 1 evidence alone never closes a Tier 3 change.
+
 ### 1. "Merged" is not "works"
 
 There is a ladder between a change existing and a user experiencing it, and every rung
@@ -545,7 +553,9 @@ Give Relay a definition-of-done that produces evidence instead of assurances.
 1. **Write the definition of done.**
    > *"Write Relay's definition-of-done checklist. For each change type — deploy,
    > new feature, bug fix, config/flag change — list the specific evidence required
-   > before it's closed, and say which layer that evidence must come from."*
+   > before it's closed, say which layer that evidence must come from, and which of
+   > the three tiers from 0.1 it needs. Anything touching auth, payments, customer
+   > data isolation or migrations needs Tier 3."*
 2. **Make a deploy prove itself past the cache.**
    > *"After the next deploy, don't tell me it's live. Show me the asset hash at the
    > origin matching the new build, past the CDN. If they differ, the deploy isn't
@@ -587,6 +597,7 @@ Finish: *"Commit as `09-4-definition-of-done`."*
 - Never let the agent be the only witness to its own work — verify from an independent vantage.
 - For bugs: reproduce on the exact reported surface first, then confirm the fix there.
 - Write the definition of done down, so evidence is a checklist, not a judgment call.
+- Done means every tier the change needs: what you saw (1), what runs every time (2), and a specialist for high-risk changes (3).
 
 ## 📚 References & further wandering
 

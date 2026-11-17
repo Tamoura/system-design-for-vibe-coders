@@ -250,7 +250,7 @@ Each production role also gets a **role review card**: the workload that assumes
 ## 📚 References
 - AWS, Shared Responsibility Model — https://aws.amazon.com/compliance/shared-responsibility-model/
 - Microsoft, Shared responsibility in the cloud — https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility
-- OWASP Top 10 (2021 edition; check the current list): Security Misconfiguration and Server-Side Request Forgery — https://owasp.org/Top10/
+- OWASP Top 10:2025: A02 Security Misconfiguration, and A01 Broken Access Control, which now covers Server-Side Request Forgery (2021 numbering differed) — https://owasp.org/Top10/2025/
 - OWASP Server-Side Request Forgery Prevention Cheat Sheet — https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html
 - MITRE ATT&CK, Cloud matrix — https://attack.mitre.org/matrices/enterprise/cloud/
 - Center for Internet Security, CIS Benchmarks — https://www.cisecurity.org/cis-benchmarks
