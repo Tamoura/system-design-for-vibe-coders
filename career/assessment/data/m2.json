@@ -26,7 +26,7 @@
       "a": 2,
       "why": {
         "en": "No evaluation, no product: before adding a feature, ask how you would know if it got worse, and build the evaluation first if you cannot answer. A newer or more fluent model is a guess until it has been measured on a golden set.",
-        "ar": "لا تقييم، لا منتج (no evaluation, no product): قبل إضافة ميزة (feature) اسأل كيف ستعرف إن ساءت، وابنِ التقييم (evaluation) أولًا إن لم تجد جوابًا. أمّا النموذج الأحدث أو الأكثر طلاقة (newer model) فمجرّد تخمين (guess) حتى يُقاس على مجموعة ذهبية (golden set)."
+        "ar": "لا تقييم، لا منتج: قبل إضافة ميزة (feature) اسأل كيف ستعرف إن ساءت، وابنِ التقييم (evaluation) أولًا إن لم تجد جوابًا. أمّا النموذج الأحدث أو الأكثر طلاقة (newer model) فمجرّد تخمين (guess) حتى يُقاس على مجموعة ذهبية (golden set)."
       }
     },
     {
@@ -35,7 +35,7 @@
       "lesson": "2.3",
       "q": {
         "en": "Huda's daily load from a public open-data API fails halfway through on Tuesday. She reruns it, and the table now holds some of Tuesday's rows twice. Which production habit is missing?",
-        "ar": "يتعطّل التحميل اليومي (daily load) الذي بنته هدى من واجهة بيانات مفتوحة عامة (public open-data API) في منتصفه يوم الثلاثاء. تعيد تشغيله (rerun)، فيصبح الجدول (table) محتويًا على بعض صفوف الثلاثاء (rows) مرتين. أيّ عادة إنتاجية (production habit) غائبة؟"
+        "ar": "يتعطّل التحميل اليومي (daily load) الذي بنته هدى من واجهة بيانات مفتوحة عامة في منتصفه يوم الثلاثاء. تعيد تشغيله (rerun)، فيصبح الجدول (table) محتويًا على بعض صفوف الثلاثاء (rows) مرتين. أيّ عادة إنتاجية (production habit) غائبة؟"
       },
       "o": {
         "en": [
@@ -54,7 +54,7 @@
       "a": 0,
       "why": {
         "en": "A production pipeline must be idempotent: it can rerun safely without duplicating rows. Running more often only shrinks each batch and still duplicates data on the next failed rerun.",
-        "ar": "يجب أن يكون خط البيانات الإنتاجي (production pipeline) متساوي القوى (idempotent): يُعاد تشغيله بأمان (rerun safely) دون تكرار الصفوف (duplicating rows). أمّا التشغيل الأكثر تكرارًا (running more often) فيصغّر كل دفعة (batch) فقط، ويظل يكرّر البيانات عند الإعادة التالية بعد تعطّل."
+        "ar": "يجب أن يكون خط البيانات الإنتاجي (production pipeline) متساوي القوى (idempotent): يُعاد تشغيله بأمان (rerun safely) دون تكرار الصفوف (duplicating rows). أمّا التشغيل الأكثر تكرارًا فيصغّر كل دفعة (batch) فقط، ويظل يكرّر البيانات عند الإعادة التالية بعد تعطّل."
       }
     },
     {
@@ -63,7 +63,7 @@
       "lesson": "2.4",
       "q": {
         "en": "A coding agent drafts Yousef's infrastructure as code, and the pipeline role it creates has full administrator rights on his cloud account. The deploy works. What should he do before calling the project done?",
-        "ar": "يصوغ وكيل البرمجة (coding agent) البنية التحتية كشيفرة (infrastructure as code) الخاصة بيوسف، ويمنح دورُ خط النشر (pipeline role) الذي أنشأه صلاحياتِ مسؤول كاملة (full administrator rights) على حسابه السحابي (cloud account). النشر (deploy) يعمل. ماذا ينبغي أن يفعل قبل أن يعدّ المشروع مكتملًا؟"
+        "ar": "يصوغ وكيل البرمجة (coding agent) البنية التحتية كشيفرة (infrastructure as code) الخاصة بيوسف، ويمنح دورُ خط النشر (pipeline role) الذي أنشأه صلاحياتِ مسؤول كاملة على حسابه السحابي (cloud account). النشر (deploy) يعمل. ماذا ينبغي أن يفعل قبل أن يعدّ المشروع مكتملًا؟"
       },
       "o": {
         "en": [
@@ -75,8 +75,8 @@
         "ar": [
           "يُبقيه كما هو، لأن خط النشر (pipeline) يعمل في حسابه الشخصي (personal account) فقط",
           "يُبقيه، لكن يضيف ملاحظة في ملف README تفيد بأن الدور واسع (too broad)",
-          "يستبدل بالدور مفتاحه الشخصي طويل العمر (long-lived personal key) لعمليات النشر (deploys)",
-          "يضيّق الدور (narrow the role) ليستطيع نشر هذه الخدمة (service) فقط ولا شيء غيرها"
+          "يستبدل بالدور مفتاحه الشخصي طويل العمر لعمليات النشر (deploys)",
+          "يضيّق الدور ليستطيع نشر هذه الخدمة (service) فقط ولا شيء غيرها"
         ]
       },
       "a": 3,
@@ -91,7 +91,7 @@
       "lesson": "2.1",
       "q": {
         "en": "After two months, Omar's study-path table shows 12 of 15 rows as \"Done\", yet in a Sadeem Pay take-home he again cannot get his API running with its database outside his laptop. What is the most likely diagnosis?",
-        "ar": "بعد شهرين، يُظهر جدول المسار الدراسي (study-path table) لعمر 12 صفًا من 15 بحالة «مكتمل» (Done)، ومع ذلك لا يستطيع مرة أخرى في المهمة المنزلية (take-home) لشركة سديم باي (Sadeem Pay) تشغيل واجهته البرمجية (API) مع قاعدة بياناتها (database) خارج حاسوبه المحمول. ما التشخيص الأرجح (most likely diagnosis)؟"
+        "ar": "بعد شهرين، يُظهر جدول المسار الدراسي (study-path table) لعمر 12 صفًا من 15 بحالة «مكتمل» (Done)، ومع ذلك لا يستطيع مرة أخرى في المهمة المنزلية (take-home) لشركة سديم باي (Sadeem Pay) تشغيل واجهته البرمجية (API) مع قاعدة بياناتها (database) خارج حاسوبه المحمول. ما التشخيص الأرجح؟"
       },
       "o": {
         "en": [
@@ -110,7 +110,7 @@
       "a": 1,
       "why": {
         "en": "Khalid's rule is proof before \"Done\": a row is done when the link exists, not when the lesson is read, so twelve unproven rows hide the same shipping gap. The variant rows only add to the shared core, and Work with AI belongs last because you need the earlier stages to judge an agent.",
-        "ar": "قاعدة خالد هي الإثبات قبل «مكتمل» (proof before \"Done\"): يكتمل الصف حين يوجد الرابط (link)، لا حين يُقرأ الدرس، فاثنا عشر صفًا بلا إثبات تُخفي فجوة الشحن (shipping gap) نفسها. أمّا صفوف المتغيّرات (variant rows) فتُضاف فوق الجوهر المشترك (shared core) فقط، ومرحلة العمل مع الذكاء الاصطناعي (Work with AI) مكانها الأخير لأنك تحتاج المراحل السابقة لتحكم على مخرجات الوكيل (agent)."
+        "ar": "قاعدة خالد هي الإثبات قبل «مكتمل»: يكتمل الصف حين يوجد الرابط (link)، لا حين يُقرأ الدرس، فاثنا عشر صفًا بلا إثبات تُخفي فجوة الشحن (shipping gap) نفسها. أمّا صفوف المتغيّرات (variant rows) فتُضاف فوق الجوهر المشترك (shared core) فقط، ومرحلة العمل مع الذكاء الاصطناعي (Work with AI) مكانها الأخير لأنك تحتاج المراحل السابقة لتحكم على مخرجات الوكيل (agent)."
       }
     }
   ],
@@ -128,7 +128,7 @@
       "lesson": "2.4",
       "text": {
         "en": "I have destroyed and rebuilt a small environment from infrastructure as code, following my own README, and recorded how long the rebuild took",
-        "ar": "دمّرتُ بيئة صغيرة (small environment) وأعدتُ بناءها (rebuild) من البنية التحتية كشيفرة (infrastructure as code) باتباع ملف README الخاص بي، وسجّلتُ المدة التي استغرقتها إعادة البناء (rebuild)"
+        "ar": "دمّرتُ بيئة صغيرة (small environment) وأعدتُ بناءها (rebuild) من البنية التحتية كشيفرة (infrastructure as code) باتباع ملف README الخاص بي، وسجّلتُ المدة التي استغرقتها إعادة البناء"
       }
     }
   ]

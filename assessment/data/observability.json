@@ -18,7 +18,7 @@
         ],
         "ar": [
           "المهمة المجدولة (cron job) غير موثوقة؛ الأفضل تحويلها إلى عملية دائمة التشغيل (long-running process) على ذلك الخادم",
-          "يجب أن يستدعي نقطة فحص صحة داخلية (internal health endpoint) بدل الرابط العام الحقيقي (public URL)",
+          "يجب أن يستدعي نقطة فحص صحة داخلية بدل الرابط العام الحقيقي (public URL)",
           "حين يتوقف ذلك الخادم (server) يتوقف الفحص معه، فلا شيء يخبرك بأن الموقع معطّل",
           "الفحص كل دقيقة من مضيف (host) التطبيق نفسه سيُثقل التطبيق ويبطئه"
         ]
@@ -35,7 +35,7 @@
       "lesson": "7.2",
       "q": {
         "en": "The biggest issue in Relay's error tracker has 1,200 events. You open it: it's a \"feed cache refreshed OK\" message logged at Error. What should you do?",
-        "ar": "أكبر مشكلة (issue) في متتبّع الأخطاء (error tracker) لدى Relay فيها 1200 حدث (event). تفتحها فتجدها رسالة «تم تحديث ذاكرة الخلاصة المؤقتة بنجاح» (feed cache refreshed OK) مسجّلة بمستوى خطأ (Error). ماذا تفعل؟"
+        "ar": "أكبر مشكلة (issue) في متتبّع الأخطاء (error tracker) لدى Relay فيها 1200 حدث (event). تفتحها فتجدها رسالة «تم تحديث ذاكرة الخلاصة المؤقتة بنجاح» مسجّلة بمستوى خطأ (Error). ماذا تفعل؟"
       },
       "o": {
         "en": [
@@ -91,7 +91,7 @@
       "lesson": "7.1",
       "q": {
         "en": "You change Relay's \"returning users\" from login count to users with 2+ distinct active days. The number drops 35%. Your cofounder wants the old metric back for the investor update. What's the right call?",
-        "ar": "غيّرت تعريف «المستخدمين العائدين (returning users)» في Relay من عدد مرات الدخول (login count) إلى من لهم يومان نشطان متمايزان (distinct active days) أو أكثر، فانخفض الرقم 35%. ويريد شريكك المؤسس (cofounder) استعادة المقياس (metric) القديم من أجل تقرير المستثمرين (investor update). ما القرار الصحيح؟"
+        "ar": "غيّرت تعريف «المستخدمين العائدين (returning users)» في Relay من عدد مرات الدخول (login count) إلى من لهم يومان نشطان متمايزان أو أكثر، فانخفض الرقم 35%. ويريد شريكك المؤسس (cofounder) استعادة المقياس (metric) القديم من أجل تقرير المستثمرين (investor update). ما القرار الصحيح؟"
       },
       "o": {
         "en": [

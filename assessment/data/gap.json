@@ -60,7 +60,7 @@
   ],
   "evidence": [
     {"id": "gap-e1", "lesson": "0.2", "text": {"en": "I have written a one-page threat map for my product that names a specific bad day for each seam, and I can name my top three seams and their cheapest first actions from memory.",
-                                                "ar": "كتبت خريطة تهديدات (threat map) من صفحةٍ واحدة لمنتجي تسمّي يومًا سيئًا محددًا لكل مفصل (seam)، وأستطيع تسمية أهم ثلاثة مفاصل وأرخص إجراءٍ أول (cheapest first action) لكلٍّ منها من الذاكرة."}},
+                                                "ar": "كتبت خريطة تهديدات (threat map) من صفحةٍ واحدة لمنتجي تسمّي يومًا سيئًا محددًا لكل مفصل (seam)، وأستطيع تسمية أهم ثلاثة مفاصل وأرخص إجراءٍ أول لكلٍّ منها من الذاكرة."}},
     {"id": "gap-e2", "lesson": "0.3", "text": {"en": "I have made a build-vs-buy table of my product’s capabilities, changed at least one classification myself, and auth, payments and email say ‘buy’ or carry a written justification.",
                                                 "ar": "أعددت جدول «ابنِ أم اشترِ (build-vs-buy)» لقدرات (capabilities) منتجي، وغيّرت تصنيفًا واحدًا على الأقل بنفسي، والمصادقة (auth) والمدفوعات (payments) والبريد (email) مكتوبٌ أمامها «اشترِ» أو تبريرٌ مكتوب (written justification)."}}
   ]

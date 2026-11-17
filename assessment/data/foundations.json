@@ -18,7 +18,7 @@
         ],
         "ar": [
           "انهارت الخوادم (servers) تحت الحمل (load) وتوقفت عن الرد على الطلبات (requests)",
-          "خطوة دليل الهاتف (phone book): فقدت الإنترنت الطريق (the way) إلى حواسيبهم",
+          "خطوة دليل الهاتف (phone book): فقدت الإنترنت الطريق إلى حواسيبهم",
           "اقتحم مهاجمون (attackers) الأنظمة وحذفوا الصفحات التي ترسلها الخوادم",
           "ظلت شبكة توصيل المحتوى (CDN) تقدّم نسخًا قديمة بدل جلب صفحاتٍ جديدة"
         ]
@@ -54,7 +54,7 @@
       "a": 3,
       "why": {
         "en": "Code is a recipe and a running program is cooking: close the lid and the cooking stops. ‘The code exists’ and ‘the app is up’ are different facts — the app needs an always-on server; a repo only stores drafts.",
-        "ar": "الكود (code) وصفة (recipe) والبرنامج العامل (running program) طبخ: أغلق الغطاء يتوقف الطبخ. «الكود موجود» و«التطبيق شغّال (the app is up)» حقيقتان مختلفتان — يحتاج التطبيق خادمًا (server) لا ينطفئ؛ والمستودع (repo) يخزّن المسودات فقط."
+        "ar": "الكود (code) وصفة (recipe) والبرنامج العامل (running program) طبخ: أغلق الغطاء يتوقف الطبخ. «الكود موجود» و«التطبيق شغّال» حقيقتان مختلفتان — يحتاج التطبيق خادمًا (server) لا ينطفئ؛ والمستودع (repo) يخزّن المسودات فقط."
       }
     },
     {
@@ -128,7 +128,7 @@
       "lesson": "F.4",
       "text": {
         "en": "I have tested the brakes: I asked my agent to delete project data and watched it ask for my explicit yes instead of acting.",
-        "ar": "اختبرت المكابح (tested the brakes): طلبت من وكيلي (agent) حذف بيانات المشروع ورأيته يطلب موافقتي الصريحة (explicit yes) بدل أن يتصرف."
+        "ar": "اختبرت المكابح: طلبت من وكيلي (agent) حذف بيانات المشروع ورأيته يطلب موافقتي الصريحة (explicit yes) بدل أن يتصرف."
       }
     }
   ]

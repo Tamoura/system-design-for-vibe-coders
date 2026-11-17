@@ -1,31 +1,31 @@
-# الوحدة 1 — كيف يعمل تطبيق النموذج اللغوي فعليًا (How an LLM application actually works)
+# الوحدة 1 — كيف يعمل تطبيق النموذج اللغوي فعليًا
 
-*كل روبوت محادثة (chatbot) ومساعد (copilot) ووكيل (agent) ستبنيه لبنك نجم (Najm Bank) يقوم على فكرة واحدة: النموذج اللغوي الكبير (LLM) دالة عديمة الحالة (stateless function) تحوّل قائمة رسائل (list of messages) إلى الرسالة التالية (next message)، وكل ما عدا ذلك شيفرة (code) تحيط به. يعلّمك الدرس 1.1 هذه الفكرة والمفردات المرافقة لها: الرموز (tokens) ونافذة السياق (context window) وقائمة الرسائل (messages list) وموجّه النظام (system prompt) و`max_tokens` و`stop_reason` و`usage`، وما يمكنك فعله وما لا يمكنك فعله بشأن درجة الحرارة (temperature). أما الدرس 1.2 فهو مختبر (lab): تبني روبوت محادثة ذاكرته قائمة Python، وتكسره عمدًا (break it on purpose) بإغراق نافذة السياق، وتكتب `trim()`، ثم تخطو الخطوة الواحدة التي تحوّل روبوت المحادثة إلى وكيل: حلقة (loop) يطلب فيها النموذج أداة (tool) وتقرر شيفرتك هل تنفّذها. يعمل كل شيء دون اتصال (offline) على نسخة المحاكاة (mock) لواجهة البرمجة (API) في عدّة المختبر (lab kit)، ودون أي تغيير على الواجهة الحقيقية (real API). ويبدأ من هنا نجم ديسك (Najm Desk)، مساعد مكتب خدمة تقنية المعلومات (IT Service Desk) الذي ستأخذه من الاستكشاف (discovery) إلى الإطلاق (go-live)، بأول إجابة صادقة (first honest answer) عن تذكرة (ticket).*
+*كل روبوت محادثة (chatbot) ومساعد (copilot) ووكيل (agent) ستبنيه لبنك نجم (Najm Bank) يقوم على فكرة واحدة: النموذج اللغوي الكبير (LLM) دالة عديمة الحالة (stateless function) تحوّل قائمة رسائل إلى الرسالة التالية (next message)، وكل ما عدا ذلك شيفرة (code) تحيط به. يعلّمك الدرس 1.1 هذه الفكرة والمفردات المرافقة لها: الرموز (tokens) ونافذة السياق (context window) وقائمة الرسائل (messages list) وموجّه النظام (system prompt) و`max_tokens` و`stop_reason` و`usage`، وما يمكنك فعله وما لا يمكنك فعله بشأن درجة الحرارة (temperature). أما الدرس 1.2 فهو مختبر (lab): تبني روبوت محادثة ذاكرته قائمة Python، وتكسره عمدًا (break it on purpose) بإغراق نافذة السياق، وتكتب `trim()`، ثم تخطو الخطوة الواحدة التي تحوّل روبوت المحادثة إلى وكيل: حلقة (loop) يطلب فيها النموذج أداة (tool) وتقرر شيفرتك هل تنفّذها. يعمل كل شيء دون اتصال (offline) على نسخة المحاكاة (mock) لواجهة البرمجة (API) في عدّة المختبر (lab kit)، ودون أي تغيير على الواجهة الحقيقية (real API). ويبدأ من هنا نجم ديسك (Najm Desk)، مساعد مكتب خدمة تقنية المعلومات الذي ستأخذه من الاستكشاف (discovery) إلى الإطلاق (go-live)، بأول إجابة صادقة عن تذكرة (ticket).*
 
-> **الطبقة (Layer):** Model, Agents — ما هو استدعاء النموذج حقًّا (what a model call really is): الرسائل (messages) والرموز (tokens) والسياق (context) والتكلفة (cost)، وأصغر حلقة وكيل (smallest agent loop) مبنية عليه، وهي الأساس (foundation) تحت كل طبقة لاحقة (every later layer).
+> **الطبقة (Layer):** Model, Agents — ما هو استدعاء النموذج حقًّا: الرسائل (messages) والرموز والسياق (context) والتكلفة (cost)، وأصغر حلقة وكيل مبنية عليه، وهي الأساس (foundation) تحت كل طبقة لاحقة.
 
 ---
 
-# 1.1 — الفكرة الواحدة: دالة عديمة الحالة والرموز ونافذة السياق وقائمة الرسائل (The one idea: a stateless function, tokens, the context window and the messages list)
-*المستوى (Level): 🟢 مبتدئ (Beginner)* · *المتطلبات (Prerequisites): 0.2* · *الطبقة (Layer): Model*
+# 1.1 — الفكرة الواحدة: دالة عديمة الحالة والرموز ونافذة السياق وقائمة الرسائل
+*المستوى (Level): 🟢 مبتدئ (Beginner)* · *المتطلبات (Prerequisites): 0.2* · *الطبقة: Model*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
-- النموذج اللغوي الكبير (LLM) **دالة (function)**: قائمة رسائل (a list of messages) تدخل، والرسالة التالية (the next message) تخرج. لا يحتفظ بشيء بين الاستدعاءات (keeps nothing between calls)، لذا **الذاكرة (memory) هي ما تعيد شيفرتك إرساله (resends)**. وكل روبوت محادثة (chatbot) ومساعد (copilot) ووكيل (agent) يستدعيه في حلقة (in a loop) ويقرر ما يدخل القائمة (what goes into the list).
-- يقرأ النموذج ويكتب **رموزًا (tokens)**. تدفع مقابل رموز الإدخال (input tokens) في كل استدعاء، أي السجل كله (the whole history) مرة أخرى، ومقابل رموز الإخراج (output tokens) بما فيها التفكير (thinking included)؛ لذا تنمو التكلفة (cost) أسرع من عدد الأدوار (number of turns).
-- اعرف خمسة أشياء في كل استدعاء: `system` وهو معامل (a parameter) لا رسالة (not a message)، و`messages`، و`max_tokens` (اترك مجالًا للتفكير (leave room for thinking))، و`stop_reason`، و`usage`.
-- لا تستطيع في الغالب ضبط درجة الحرارة (temperature) في نماذج Claude الحالية. احصل على الاتساق (consistency) عبر موجّهات دقيقة (precise prompts) ومخرجات مهيكلة (structured output) وتحقق من الصحة (validation)؛ واختبر شكل الإجابة (the shape of an answer) لا بايتاتها (never its bytes).
-- مؤشر القرار (Decision cue): حين يبدو أن شيئًا ما «ينسى» (forgets) أو «يكلّف كثيرًا» (costs too much) أو «ينقطع» (gets cut off)، فاطبع القائمة (print the list) و`usage` و`stop_reason` أولًا.
+- النموذج اللغوي الكبير **دالة (function)**: قائمة رسائل تدخل، والرسالة التالية تخرج. لا يحتفظ بشيء بين الاستدعاءات، لذا **الذاكرة (memory) هي ما تعيد شيفرتك إرساله (resends)**. وكل روبوت محادثة ومساعد ووكيل يستدعيه في حلقة ويقرر ما يدخل القائمة.
+- يقرأ النموذج ويكتب **رموزًا (tokens)**. تدفع مقابل رموز الإدخال (input tokens) في كل استدعاء، أي السجل كله مرة أخرى، ومقابل رموز الإخراج (output tokens) بما فيها التفكير (thinking included)؛ لذا تنمو التكلفة أسرع من عدد الأدوار.
+- اعرف خمسة أشياء في كل استدعاء: `system` وهو معامل لا رسالة، و`messages`، و`max_tokens` (اترك مجالًا للتفكير)، و`stop_reason`، و`usage`.
+- لا تستطيع في الغالب ضبط درجة الحرارة في نماذج Claude الحالية. احصل على الاتساق (consistency) عبر موجّهات دقيقة (precise prompts) ومخرجات مهيكلة (structured output) وتحقق من الصحة (validation)؛ واختبر شكل الإجابة لا بايتاتها.
+- مؤشر القرار (Decision cue): حين يبدو أن شيئًا ما «ينسى» (forgets) أو «يكلّف كثيرًا» أو «ينقطع»، فاطبع القائمة و`usage` و`stop_reason` أولًا.
 
-## 🧭 لماذا يهم (Why it matters)
-إنه الأربعاء الثاني من التجربة التشغيلية (pilot) لنجم ديسك (Najm Desk)، وهي افتراضية (hypothetical) بأرقام خيالية (fictional numbers). نجا النموذج الأولي (prototype) الذي بنته لجين (Lujain) من كل العروض التجريبية (demos). ثم تصل ثلاث رسائل. يارا (Yara)، قائدة فريق مكتب الخدمة (Service Desk team lead): «نسي طراز حاسوبي المحمول بعد رسالتين من إخباري له.» ⁦(It forgot my laptop model two messages after I told it.)⁩ وهند (Hind)، الراعية (the sponsor): «توقفت إجابة في منتصف الجملة وكانت أخرى فارغة.» ⁦(One answer stopped mid-sentence and one was blank.)⁩ وفهد (Fahad)، من تقرير الاستخدام (usage report): «لماذا رموز الإدخال (input tokens) أكثر بعشرين ضعفًا من رموز الإخراج (output tokens) مع أن الموظفين يكتبون سطرًا قصيرًا واحدًا في كل مرة؟»
+## 🧭 لماذا يهم
+إنه الأربعاء الثاني من التجربة التشغيلية (pilot) لنجم ديسك، وهي افتراضية (hypothetical) بأرقام خيالية (fictional numbers). نجا النموذج الأولي (prototype) الذي بنته لجين (Lujain) من كل العروض التجريبية (demos). ثم تصل ثلاث رسائل. يارا (Yara)، قائدة فريق مكتب الخدمة: «نسي طراز حاسوبي المحمول بعد رسالتين من إخباري له.» ⁦(It forgot my laptop model two messages after I told it.)⁩ وهند (Hind)، الراعية: «توقفت إجابة في منتصف الجملة وكانت أخرى فارغة.» ⁦⁩ وفهد (Fahad)، من تقرير الاستخدام (usage report): «لماذا رموز الإدخال أكثر بعشرين ضعفًا من رموز الإخراج مع أن الموظفين يكتبون سطرًا قصيرًا واحدًا في كل مرة؟»
 
-تطارد لجين (Lujain) ثلاثة أخطاء (bugs)، وفكرتان تفسران الثلاثة كلها. يبدأ المعالج (handler) كل طلب بـ `history = []`، فلم يرَ النموذج طراز الحاسوب المحمول قط. واستُهلك `max_tokens=400` في التفكير (thinking)، وهو إخراج (output)، قبل أن تظهر أول كلمة من الإجابة. والتقرير محق (the report is right): ففي محادثة من عشرين دورًا (a twenty-turn chat) أعاد كل استدعاء إرسال كل دور سابق (resent every earlier turn). **النموذج دالة عديمة الحالة (stateless function)، وكل ما «يعرفه» (knows) عن المحادثة (about the conversation) هو القائمة (list) التي ترسلها شيفرتك.** وكل وحدة لاحقة تجيب عن سؤال واحد بمزيد من العناية: *ما الذي ينبغي أن يكون في القائمة في هذا الاستدعاء؟ ⁦(what should be in the list on this call?)⁩*
+تطارد لجين ثلاثة أخطاء (bugs)، وفكرتان تفسران الثلاثة كلها. يبدأ المعالج (handler) كل طلب بـ `history = []`، فلم يرَ النموذج طراز الحاسوب المحمول قط. واستُهلك `max_tokens=400` في التفكير (thinking)، وهو إخراج (output)، قبل أن تظهر أول كلمة من الإجابة. والتقرير محق: ففي محادثة من عشرين دورًا أعاد كل استدعاء إرسال كل دور سابق. **النموذج دالة عديمة الحالة (stateless function)، وكل ما «يعرفه» (knows) عن المحادثة (about the conversation) هو القائمة (list) التي ترسلها شيفرتك.** وكل وحدة لاحقة تجيب عن سؤال واحد بمزيد من العناية: *ما الذي ينبغي أن يكون في القائمة في هذا الاستدعاء؟ ⁦⁩*
 
-## 📐 كيف يعمل (How it works)
+## 📐 كيف يعمل
 
-### 🟢 الأساسيات (The essentials)
+### 🟢 الأساسيات
 
-**النموذج دالة (A model is a function).** يأخذ النموذج اللغوي الكبير (LLM) قائمة رسائل (a list of messages) ويعيد الرسالة التالية (the next message). ليس لديه ذاكرة (memory) ولا حالة (state)، ولا فكرة بأنه كلّمك قبل ثانية (a second ago).
+**النموذج دالة (A model is a function).** يأخذ النموذج اللغوي الكبير قائمة رسائل ويعيد الرسالة التالية. ليس لديه ذاكرة ولا حالة (state)، ولا فكرة بأنه كلّمك قبل ثانية.
 
 ```mermaid
 sequenceDiagram
@@ -37,11 +37,11 @@ sequenceDiagram
     M-->>C: الرد 2 (reply 2)
 ```
 
-> **انعدام الحالة (Statelessness).** يبدأ كل استدعاء من الصفر (starts from zero). و«ذاكرة المحادثة» (conversation memory) وهم (an illusion) تصنعه شيفرتك بإعادة إرسال السجل (history) في كل مرة. وهذه الحقيقة وراء كثير من الالتباس (confusion) حول النماذج اللغوية الكبيرة (LLMs) وكثير من تكلفة تشغيلها (cost of running them).
+> **انعدام الحالة (Statelessness).** يبدأ كل استدعاء من الصفر. و«ذاكرة المحادثة» (conversation memory) وهم تصنعه شيفرتك بإعادة إرسال السجل (history) في كل مرة. وهذه الحقيقة وراء كثير من الالتباس (confusion) حول النماذج اللغوية الكبيرة (LLMs) وكثير من تكلفة تشغيلها.
 
-**الرموز (Tokens).** يقرأ النموذج *رموزًا*، وهي أجزاء أصغر من الكلمة (sub-word chunks): فالكلمة الإنجليزية الشائعة (common English word) غالبًا رمز واحد، أما الكلمة النادرة (rare word) أو الرقم أو الكلمة العربية (Arabic word) فقد تكون عدة رموز. وبالنسبة إلى النثر الإنجليزي (English prose)، فإن 4 أحرف لكل رمز (4 characters per token) قاعدة تقريبية (rough rule) — إذ تقارب 750 كلمة نحو 1,000 رمز — وليست حقيقة عن Claude. وتُقسَّم الشيفرة (code) وJSON واللغات الأخرى (other languages) بصورة مختلفة؛ وكثيرًا ما يُقال إن العربية «ضعفان إلى ثلاثة أضعاف» (two to three times) عدد الرموز الإنجليزي لكل كلمة. لا تعتمد على هذا الرقم؛ بل **قِس (measure)** باستخدام `client.messages.count_tokens(...)` لنموذجك. والأعداد خاصة بكل نموذج (model-specific): تذكر ملاحظات Anthropic أن بعض النماذج الأحدث تحسب النص نفسه بعدد رموز أكبر بنحو 30% مما تحسبه سابقاتها، فقد تغيّر الترقية (upgrade) فاتورتك. لا تستخدم `tiktoken` مع Claude أبدًا: فهو مقسّم رموز (tokenizer) من مزوّد آخر (another vendor) ويحسب أقل من العدد الفعلي (undercounts).
+**الرموز (Tokens).** يقرأ النموذج *رموزًا*، وهي أجزاء أصغر من الكلمة (sub-word chunks): فالكلمة الإنجليزية الشائعة غالبًا رمز واحد، أما الكلمة النادرة (rare word) أو الرقم أو الكلمة العربية (Arabic word) فقد تكون عدة رموز. وبالنسبة إلى النثر الإنجليزي (English prose)، فإن 4 أحرف لكل رمز (4 characters per token) قاعدة تقريبية (rough rule) — إذ تقارب 750 كلمة نحو 1,000 رمز — وليست حقيقة عن Claude. وتُقسَّم الشيفرة وJSON واللغات الأخرى (other languages) بصورة مختلفة؛ وكثيرًا ما يُقال إن العربية «ضعفان إلى ثلاثة أضعاف» عدد الرموز الإنجليزي لكل كلمة. لا تعتمد على هذا الرقم؛ بل **قِس (measure)** باستخدام `client.messages.count_tokens(...)` لنموذجك. والأعداد خاصة بكل نموذج (model-specific): تذكر ملاحظات Anthropic أن بعض النماذج الأحدث تحسب النص نفسه بعدد رموز أكبر بنحو 30% مما تحسبه سابقاتها، فقد تغيّر الترقية (upgrade) فاتورتك. لا تستخدم `tiktoken` مع Claude أبدًا: فهو مقسّم رموز (tokenizer) من مزوّد آخر (another vendor) ويحسب أقل من العدد الفعلي (undercounts).
 
-**نافذة السياق (The context window)** هي أقصى عدد من الرموز (the most tokens) يستطيع النموذج التعامل معه في استدعاء واحد (in one call). ويجب أن يتسع الإدخال (input) والإخراج (output)، بما فيه التفكير (thinking included)، معًا (fit together).
+**نافذة السياق (The context window)** هي أقصى عدد من الرموز يستطيع النموذج التعامل معه في استدعاء واحد. ويجب أن يتسع الإدخال (input) والإخراج، بما فيه التفكير، معًا (fit together).
 
 ```text
 | system | turn 1 | turn 2 | ... | turn N | new message |  reply + thinking  |
@@ -49,11 +49,11 @@ sequenceDiagram
 |<------------------- must fit inside the context window ------------------------>|
 ```
 
-تُعلن نماذج Claude الحالية (current Claude models) نوافذ بين 200K و1M رمز: معظمها 1M، ويُعلن Haiku 4.5 نافذة 200K. اسأل واجهة البرمجة (API): يعيد `client.models.retrieve(MODEL)` القيمتين `max_input_tokens` و`max_tokens` على الواجهة الحقيقية فقط (real API only). ثلاث حقائق تصمد أمام أي حجم للنافذة (three facts survive any window size): تدفع مقابل كل رمز إدخال (input token) في كل استدعاء؛ وقد تتراجع الجودة (quality can degrade) قبل بلوغ الحد؛ ويُرفض الموجّه (prompt) الأطول من النافذة (longer than the window)، فعلى شيفرتك أن تدير القائمة (manage the list). يتشارك الإدخال والرد (reply) النافذة نفسها: ففي موجّه شبه ممتلئ (nearly full prompt) يتوقف الرد الطويل بـ `model_context_window_exceeded` في النماذج الأحدث (newer models)، أو يُرفض الطلب في النماذج الأقدم (older ones). النافذة الأكبر تنقل الجدار (moves the wall) لا التكلفة (the cost).
+تُعلن نماذج Claude الحالية نوافذ بين 200K و1M رمز: معظمها 1M، ويُعلن Haiku 4.5 نافذة 200K. اسأل واجهة البرمجة: يعيد `client.models.retrieve(MODEL)` القيمتين `max_input_tokens` و`max_tokens` على الواجهة الحقيقية فقط. ثلاث حقائق تصمد أمام أي حجم للنافذة: تدفع مقابل كل رمز إدخال (input token) في كل استدعاء؛ وقد تتراجع الجودة قبل بلوغ الحد؛ ويُرفض الموجّه (prompt) الأطول من النافذة، فعلى شيفرتك أن تدير القائمة. يتشارك الإدخال والرد (reply) النافذة نفسها: ففي موجّه شبه ممتلئ يتوقف الرد الطويل بـ `model_context_window_exceeded` في النماذج الأحدث (newer models)، أو يُرفض الطلب في النماذج الأقدم (older ones). النافذة الأكبر تنقل الجدار لا التكلفة.
 
-**قائمة الرسائل (The messages list).** `messages` قائمة (list) من القواميس (dicts) على الشكل `{"role": ..., "content": ...}` بدورين (two roles) هما `user` و`assistant`. ويجب أن يكون الأول `user`. و`content` إما نص (string) أو قائمة من الكتل (list of blocks): `text` الآن، و`tool_use` و`tool_result` و`thinking` في الدرس 1.2. تضيف شيفرتك كل رد (reply) بوصفه رسالة `assistant`؛ وهذا كل ما تعنيه كلمة «تذكّر» (remembered). بدّل الأدوار تبديلًا صارمًا (alternate roles strictly): فقد تُدمج رسالتان متتاليتان بالدور نفسه (two same-role messages in a row) في دور واحد أو تُرفضان، لذلك لا تعتمد على أيٍّ منهما.
+**قائمة الرسائل (The messages list).** `messages` قائمة من القواميس (dicts) على الشكل `{"role": ..., "content": ...}` بدورين (two roles) هما `user` و`assistant`. ويجب أن يكون الأول `user`. و`content` إما نص (string) أو قائمة من الكتل: `text` الآن، و`tool_use` و`tool_result` و`thinking` في الدرس 1.2. تضيف شيفرتك كل رد بوصفه رسالة `assistant`؛ وهذا كل ما تعنيه كلمة «تذكّر» (remembered). بدّل الأدوار تبديلًا صارمًا: فقد تُدمج رسالتان متتاليتان بالدور نفسه في دور واحد أو تُرفضان، لذلك لا تعتمد على أيٍّ منهما.
 
-**موجّه النظام (The system prompt) ليس رسالة (not a message).** من هو النموذج (who the model is)، وما الذي يحق له الإجابة عنه (what it may answer)، وأي لغة يستخدم (which language to use)، كلها تُوضع في المعامل المنفصل (separate parameter) `system=`. يُرسل في كل استدعاء ويُحاسَب عليه في كل استدعاء (sent and billed on every call)، ووجود عنصر `{"role": "system"}` رسالةً أولى خطأ، وإن كانت بعض النماذج تقبل واحدًا في موضع متأخر من المحادثة (later in a conversation). استدعاء كامل (a complete call)، يعمل على النسخة المحاكاة (mock):
+**موجّه النظام (The system prompt) ليس رسالة (not a message).** من هو النموذج، وما الذي يحق له الإجابة عنه، وأي لغة يستخدم، كلها تُوضع في المعامل المنفصل (separate parameter) `system=`. يُرسل في كل استدعاء ويُحاسَب عليه في كل استدعاء، ووجود عنصر `{"role": "system"}` رسالةً أولى خطأ، وإن كانت بعض النماذج تقبل واحدًا في موضع متأخر من المحادثة. استدعاء كامل، يعمل على النسخة المحاكاة:
 
 ```python
 import os
@@ -81,144 +81,144 @@ sent 3 messages | input_tokens=62 output_tokens=12 stop=end_turn
 sent 5 messages | input_tokens=84 output_tokens=9 stop=end_turn
 ```
 
-يرتفع الإدخال (input climbs) مع أن كل سؤال سطر قصير واحد (one short line)؛ والردود الحقيقية أطول من ردود النسخة المحاكاة (the mock's)، فالارتفاع الحقيقي أشد انحدارًا. **اقرأ الاستجابة (response)، لا النص وحده.** `content` *قائمة كتل (list of blocks)*؛ و`stop_reason` يقول لماذا توقف؛ و`usage` هو فاتورتك (your bill):
+يرتفع الإدخال (input climbs) مع أن كل سؤال سطر قصير واحد؛ والردود الحقيقية أطول من ردود النسخة المحاكاة، فالارتفاع الحقيقي أشد انحدارًا. **اقرأ الاستجابة (response)، لا النص وحده.** `content` *قائمة كتل*؛ و`stop_reason` يقول لماذا توقف؛ و`usage` هو فاتورتك:
 
-| `stop_reason` | المعنى (Meaning) | ما ينبغي أن تفعله شيفرتك (Your code should) |
+| `stop_reason` | المعنى (Meaning) | ما ينبغي أن تفعله شيفرتك |
 |---|---|---|
-| `end_turn` | أنهى النموذج (The model finished) | استخدم النص (Use the text) |
-| `max_tokens` | بلغ سقفك (hit your ceiling): الإجابة مقطوعة (the answer is cut off) | ارفع الحد (raise the limit) أو استخدم البث (stream)؛ ولا تثق بها أبدًا (never trust it) |
-| `model_context_window_exceeded` | بلغ نافذة السياق (hit the context window) في النماذج الأحدث (newer models) | قصّر القائمة أو لخّصها (shorten or summarise the list)؛ ولا تثق بها أبدًا (never trust it) |
-| `stop_sequence` | بلغ سلسلة إيقاف مخصصة (custom stop string) ضبطتها أنت | تعامل معه مثل `end_turn` (handle like end_turn) |
-| `tool_use` | يطلب النموذج أداة (the model asks for a tool) | نفّذها (run it) وأعد النتيجة (return the result)، الدرس 1.2 |
-| `pause_turn` | توقف دور أداة خادم طويل مؤقتًا (a long server-tool turn paused) | أعد المحادثة إلى الواجهة لاستئنافها (send the conversation back to resume) |
-| `refusal` | رفض مصنِّف أمان (a safety classifier declined) | اعرض رسالة واضحة (show a clear message)؛ وقد يذكر `stop_details` السبب، وقد يكون `None` |
+| `end_turn` | أنهى النموذج | استخدم النص |
+| `max_tokens` | بلغ سقفك: الإجابة مقطوعة | ارفع الحد أو استخدم البث (stream)؛ ولا تثق بها أبدًا |
+| `model_context_window_exceeded` | بلغ نافذة السياق في النماذج الأحدث | قصّر القائمة أو لخّصها؛ ولا تثق بها أبدًا |
+| `stop_sequence` | بلغ سلسلة إيقاف مخصصة ضبطتها أنت | تعامل معه مثل `end_turn` |
+| `tool_use` | يطلب النموذج أداة | نفّذها (run it) وأعد النتيجة، الدرس 1.2 |
+| `pause_turn` | توقف دور أداة خادم طويل مؤقتًا | أعد المحادثة إلى الواجهة لاستئنافها |
+| `refusal` | رفض مصنِّف أمان | اعرض رسالة واضحة؛ وقد يذكر `stop_details` السبب، وقد يكون `None` |
 
 يحتوي `usage` على `input_tokens` و`output_tokens`، إضافة إلى `cache_creation_input_tokens` و`cache_read_input_tokens` متى استخدمت التخزين المؤقت للموجّه (prompt caching) في الدرس 14.2؛ وعند تفعيل التخزين المؤقت (caching on) لا يحسب `input_tokens` إلا الجزء غير المخزَّن مؤقتًا (uncached part).
 
 ### 🟡 التعمق أكثر (Going deeper)
 
-**تكلفة المحادثة (The cost of a conversation).** يكلّف كل دور (turn) أكثر من سابقه لأن الإدخال يُحاسَب عليه في كل استدعاء (billed on every call). الأسعار **أرقام لعبة (toy numbers)، $1 لكل مليون رمز إدخال و$5 لكل مليون رمز إخراج؛ وهي ليست سعر أي نموذج**. اقرأ صفحة الأسعار الحالية (current price page) لمعرفة الأسعار الحقيقية. افترض موجّه نظام (system prompt) من 1,000 رمز، ثم رسالة مستخدم (user message) من 200 رمز ورد (reply) من 300 رمز في كل دور. يرسل الاستدعاء *n* ما مقداره 1,000 + (*n* − 1) × 500 + 200 رمز إدخال (input tokens)، فيبلغ مجموع ما ترسله *N* من الأدوار (turns) 1,200*N* + 250*N*(*N* − 1).
+**تكلفة المحادثة (The cost of a conversation).** يكلّف كل دور (turn) أكثر من سابقه لأن الإدخال يُحاسَب عليه في كل استدعاء (billed on every call). الأسعار **أرقام لعبة (toy numbers)، $1 لكل مليون رمز إدخال و$5 لكل مليون رمز إخراج؛ وهي ليست سعر أي نموذج**. اقرأ صفحة الأسعار الحالية (current price page) لمعرفة الأسعار الحقيقية. افترض موجّه نظام من 1,000 رمز، ثم رسالة مستخدم (user message) من 200 رمز ورد من 300 رمز في كل دور. يرسل الاستدعاء *n* ما مقداره 1,000 + (*n* − 1) × 500 + 200 رمز إدخال، فيبلغ مجموع ما ترسله *N* من الأدوار (turns) 1,200*N* + 250*N*(*N* − 1).
 
-| الدور *N* (Turn) | الإدخال في هذا الاستدعاء (Input on this call) | الإدخال حتى الآن (Input so far) | التكلفة حتى الآن (Cost so far)، بأرقام اللعبة (toy) |
+| الدور *N* | الإدخال في هذا الاستدعاء | الإدخال حتى الآن | التكلفة حتى الآن، بأرقام اللعبة (toy) |
 |---|---|---|---|
 | 1 | 1,200 | 1,200 | $0.0027 |
 | 10 | 5,700 | 34,500 | $0.0495 |
 | 20 | 10,700 | 119,000 | $0.1490 |
 | 40 | 20,700 | 438,000 | $0.4980 |
 
-تحقق من الدور 10 (check turn 10): الإدخال 34,500 × $1 ÷ 1,000,000 = $0.0345؛ والإخراج 3,000 × $5 ÷ 1,000,000 = $0.0150؛ فالمجموع $0.0495. مضاعفة الأدوار (doubling the turns) من 10 إلى 20 ترفع التكلفة إلى ثلاثة أمثالها (triples the cost)، من $0.0495 إلى $0.1490: فالمجموع ينمو مع *مربع* عدد الأدوار. ومن بين 119,000 رمز إدخال محاسَب عليها (billed) على مدى 20 دورًا لم يكن جديدًا من كلمات المستخدم (new user words) إلا 4,000؛ و95,000 كانت سجلًا أُعيد إرساله (history resent)، و20,000 هي موجّه النظام (system prompt). وسائل التحكم (Levers): محادثة واحدة لكل موضوع (one conversation per topic)، والتقليم (trim) أو التلخيص (summarise) في الدرس 1.2 والوحدة 9، وتخزين البادئة مؤقتًا (cache the prefix) في الدرس 14.2، ونموذج أرخص (a cheaper model) للخطوات السهلة (easy steps).
+تحقق من الدور 10 (check turn 10): الإدخال 34,500 × $1 ÷ 1,000,000 = $0.0345؛ والإخراج 3,000 × $5 ÷ 1,000,000 = $0.0150؛ فالمجموع $0.0495. مضاعفة الأدوار من 10 إلى 20 ترفع التكلفة إلى ثلاثة أمثالها، من $0.0495 إلى $0.1490: فالمجموع ينمو مع *مربع* عدد الأدوار. ومن بين 119,000 رمز إدخال محاسَب عليها (billed) على مدى 20 دورًا لم يكن جديدًا من كلمات المستخدم إلا 4,000؛ و95,000 كانت سجلًا أُعيد إرساله (history resent)، و20,000 هي موجّه النظام. وسائل التحكم (Levers): محادثة واحدة لكل موضوع، والتقليم (trim) أو التلخيص (summarise) في الدرس 1.2 والوحدة 9، وتخزين البادئة مؤقتًا في الدرس 14.2، ونموذج أرخص للخطوات السهلة (easy steps).
 
-**التفكير (Thinking) والجهد (effort) و`max_tokens`.** تفكّر النماذج الحالية (current models) قبل أن تجيب. والتفكير مفعّل افتراضيًا في عدة نماذج (on by default)، ولا يمكن إيقافه في بعضها (cannot be switched off)، والنموذج هو الذي يقرر مقداره. رموز التفكير (thinking tokens) هي **رموز إخراج (output tokens)**، تُحاسَب وتُحتسب ضمن `max_tokens`. وإذا نفدت الميزانية (budget) أثناء التفكير حصلت على `stop_reason == "max_tokens"` وكتلة نص قصيرة أو فارغة (short or empty text block): وهذا هو خطأ لجين (Lujain's bug). اضبط `max_tokens` على 1024 على الأقل — وتستخدم أمثلة مرجع واجهة البرمجة (API reference) نحو 16,000 — وافحص `stop_reason`، ووجّه العمق والتكلفة (steer depth and cost) بـ `output_config={"effort": "low"}`. تمتد مستويات الجهد من `low` إلى `max`؛ ويختلف الافتراضي (default) من نموذج إلى آخر: `high` في Sonnet 5.5. وتستخدم المختبرات `low`؛ وقد أُزيل `budget_tokens` من أحدث النماذج (newest models).
+**التفكير (Thinking) والجهد (effort) و`max_tokens`.** تفكّر النماذج الحالية (current models) قبل أن تجيب. والتفكير مفعّل افتراضيًا في عدة نماذج، ولا يمكن إيقافه في بعضها، والنموذج هو الذي يقرر مقداره. رموز التفكير (thinking tokens) هي **رموز إخراج (output tokens)**، تُحاسَب وتُحتسب ضمن `max_tokens`. وإذا نفدت الميزانية (budget) أثناء التفكير حصلت على `stop_reason == "max_tokens"` وكتلة نص قصيرة أو فارغة: وهذا هو خطأ لجين (Lujain's bug). اضبط `max_tokens` على 1024 على الأقل — وتستخدم أمثلة مرجع واجهة البرمجة (API reference) نحو 16,000 — وافحص `stop_reason`، ووجّه العمق والتكلفة بـ `output_config={"effort": "low"}`. تمتد مستويات الجهد من `low` إلى `max`؛ ويختلف الافتراضي (default) من نموذج إلى آخر: `high` في Sonnet 5.5. وتستخدم المختبرات `low`؛ وقد أُزيل `budget_tokens` من أحدث النماذج (newest models).
 
-**الأخطاء لها أنواع (Errors are typed).** التقط الأخطاء بفئات حزمة التطوير (SDK's classes)، لا بنصوص الرسائل (message strings) أبدًا. الخطأ 400 هو `anthropic.BadRequestError`: طلبك خاطئ (your request is wrong)، فأصلحه. وتعني 401 و403 و404 مفتاحًا سيئًا (a bad key) أو صلاحية ناقصة (a missing permission) أو معرّف نموذج مجهولًا (an unknown model id)؛ و429 هو `RateLimitError`؛ و500 و529 من جانب الخادم (server-side). تعيد حزمة التطوير محاولة الأخطاء 408 و409 و429 و5xx وأخطاء الاتصال (connection errors) مرتين افتراضيًا (twice by default)، ولا تعيد 400 أبدًا. ويُرفض الموجّه (prompt) الأطول من النافذة مقدمًا (refused up front)، عادةً بخطأ 400؛ أما متن الطلب الذي يتجاوز حد البايتات (a body over the byte limit) فخطؤه 413، `RequestTooLargeError`. يتسبب الدرس 1.2 في خطأ منها عمدًا (on purpose)، على نسخة محاكاة (mock) بدأت بـ `MOCK_CONTEXT_WINDOW=8000`. وتختلف الصياغة الحقيقية (real wording): طابق الفئة (match the class)، لا الجملة (not the sentence).
+**الأخطاء لها أنواع (Errors are typed).** التقط الأخطاء بفئات حزمة التطوير (SDK's classes)، لا بنصوص الرسائل (message strings) أبدًا. الخطأ 400 هو `anthropic.BadRequestError`: طلبك خاطئ، فأصلحه. وتعني 401 و403 و404 مفتاحًا سيئًا أو صلاحية ناقصة أو معرّف نموذج مجهولًا؛ و429 هو `RateLimitError`؛ و500 و529 من جانب الخادم (server-side). تعيد حزمة التطوير محاولة الأخطاء 408 و409 و429 و5xx وأخطاء الاتصال (connection errors) مرتين افتراضيًا، ولا تعيد 400 أبدًا. ويُرفض الموجّه الأطول من النافذة مقدمًا، عادةً بخطأ 400؛ أما متن الطلب الذي يتجاوز حد البايتات فخطؤه 413، `RequestTooLargeError`. يتسبب الدرس 1.2 في خطأ منها عمدًا، على نسخة محاكاة بدأت بـ `MOCK_CONTEXT_WINDOW=8000`. وتختلف الصياغة الحقيقية (real wording): طابق الفئة، لا الجملة.
 
-**درجة الحرارة (Temperature) وبقية المقابض (the other knobs)، بصدق.** الخطوة الأخيرة في النموذج تحوّل الدرجات (scores) إلى احتمالات (probabilities) للرمز التالي (next token) وتختار واحدًا. وتعيد *درجة الحرارة* تحجيمها (rescales) أولًا: القيم المنخفضة تترك الرمز الأرجح (likeliest token) يفوز تقريبًا دائمًا، فالنتيجة أبسط وقابلة للتكرار (repeatable)؛ والقيم المرتفعة تمنح الرموز غير المرجحة فرصة (unlikely tokens a chance)، فالنتيجة متنوعة (varied) وأكثر مخاطرة. أما *Top-p* و*top-k* فتقلّمان قائمة المرشحين (candidate list) بدلًا من ذلك. تقول الدروس التعليمية (tutorials) «اضبط درجة الحرارة على 0» (set temperature to 0). وهناك ثلاث حقائق (three facts):
+**درجة الحرارة (Temperature) وبقية المقابض (the other knobs)، بصدق.** الخطوة الأخيرة في النموذج تحوّل الدرجات (scores) إلى احتمالات (probabilities) للرمز التالي (next token) وتختار واحدًا. وتعيد *درجة الحرارة* تحجيمها (rescales) أولًا: القيم المنخفضة تترك الرمز الأرجح (likeliest token) يفوز تقريبًا دائمًا، فالنتيجة أبسط وقابلة للتكرار (repeatable)؛ والقيم المرتفعة تمنح الرموز غير المرجحة فرصة، فالنتيجة متنوعة (varied) وأكثر مخاطرة. أما *Top-p* و*top-k* فتقلّمان قائمة المرشحين (candidate list) بدلًا من ذلك. تقول الدروس التعليمية (tutorials) «اضبط درجة الحرارة على 0» (set temperature to 0). وهناك ثلاث حقائق (three facts):
 
-1. في الإصدار 1.x من حزمة التطوير (SDK) لا تملك `messages.create()` **معامل `temperature` (no temperature parameter)**؛ ويؤدي تمريره إلى رفع `TypeError: Messages.create() got an unexpected keyword argument 'temperature'` قبل إرسال أي طلب (before any request is sent).
-2. أحدث النماذج (newest models) — Opus 5.5 وSonnet 5.5 وHaiku 5.5 وOpus وSonnet 5 وFable 5.x وOpus 4.7 و4.8 — **ترفض (reject)** قيم أخذ العينات غير الافتراضية (non-default sampling values) بخطأ 400، حتى عبر `extra_body`.
-3. النماذج الأقدم (older models) مثل Sonnet 4.6 وHaiku 4.5 تقبل `extra_body={"temperature": 0}`، لكن شيفرة كهذه تنكسر عند الترقية (breaks on upgrade). ولا يزال المزوّدون الآخرون (other providers) والنماذج المفتوحة (open models) يتيحون هذا المقبض (the knob).
+1. في الإصدار 1.x من حزمة التطوير (SDK) لا تملك `messages.create()` **معامل `temperature` (no temperature parameter)**؛ ويؤدي تمريره إلى رفع `TypeError: Messages.create() got an unexpected keyword argument 'temperature'` قبل إرسال أي طلب.
+2. أحدث النماذج — Opus 5.5 وSonnet 5.5 وHaiku 5.5 وOpus وSonnet 5 وFable 5.x وOpus 4.7 و4.8 — **ترفض (reject)** قيم أخذ العينات غير الافتراضية بخطأ 400، حتى عبر `extra_body`.
+3. النماذج الأقدم (older models) مثل Sonnet 4.6 وHaiku 4.5 تقبل `extra_body={"temperature": 0}`، لكن شيفرة كهذه تنكسر عند الترقية. ولا يزال المزوّدون الآخرون (other providers) والنماذج المفتوحة (open models) يتيحون هذا المقبض.
 
-بدلًا من ذلك (instead): للحصول على *الشكل* نفسه (same format)، استخدم المخرجات المهيكلة (structured output) بمخطط JSON (JSON schema) في الوحدة 3؛ وللحصول على *السلوك* نفسه (same behaviour)، استخدم موجّهًا دقيقًا (a precise prompt) ومعرّف نموذج مثبّتًا (a pinned model id) لا يتغير إلا بعد اجتياز تقييم (behind an eval) في الوحدتين 2 و12؛ وللحصول على مخرجات *صالحة* (valid output)، تحقق وأعد المحاولة (validate and retry) مع تمرير الخطأ تغذيةً راجعة (the error as feedback) في الدرس 3.1؛ وللحصول على *الإجابة* نفسها (same answer)، خزّنها وأعد استخدامها (store and reuse it) بذاكرة نتائج مؤقتة (a result cache) في الدرس 14.2. **لا تختبر أبدًا تطابق المخرجات بايتًا ببايت (never test for byte-identical output).** فحتى حيث وُجدت درجة الحرارة 0 (temperature 0) كان يمكن أن يختلف استدعاءان (two calls could differ)؛ واختبار النص المطابق تمامًا (exact-string test) يفشل عند إعادة صياغة غير ضارة (harmless rewording)، فتخفف الفرق صرامته (loosen it) حتى لا يلتقط شيئًا (catches nothing). اختبر الشكل (test the shape): JSON صالح (valid JSON)، وتسمية مسموحة (an allowed label)، ومعرّف التذكرة (the ticket id)، وسياسة مستشهد بها (a cited policy) — الوحدة 12؛ وانظر أيضًا [*اختبار البرمجيات (Software Testing)*، الدرس 7.1 — التقييمات (Evals)](../testing/index.ar.html#/7.1). في سؤال الحاسوب المحمول (the laptop question)، الاختبار الضعيف (weak test) هو `answer == "Open a ticket under Hardware."`؛ والقوي (the strong one) هو `"Hardware" in answer and len(answer) < 600`.
+بدلًا من ذلك (instead): للحصول على *الشكل* نفسه (same format)، استخدم المخرجات المهيكلة بمخطط JSON (JSON schema) في الوحدة 3؛ وللحصول على *السلوك* نفسه (same behaviour)، استخدم موجّهًا دقيقًا ومعرّف نموذج مثبّتًا لا يتغير إلا بعد اجتياز تقييم في الوحدتين 2 و12؛ وللحصول على مخرجات *صالحة* (valid output)، تحقق وأعد المحاولة مع تمرير الخطأ تغذيةً راجعة في الدرس 3.1؛ وللحصول على *الإجابة* نفسها (same answer)، خزّنها وأعد استخدامها بذاكرة نتائج مؤقتة في الدرس 14.2. **لا تختبر أبدًا تطابق المخرجات بايتًا ببايت (never test for byte-identical output).** فحتى حيث وُجدت درجة الحرارة 0 (temperature 0) كان يمكن أن يختلف استدعاءان؛ واختبار النص المطابق تمامًا (exact-string test) يفشل عند إعادة صياغة غير ضارة (harmless rewording)، فتخفف الفرق صرامته (loosen it) حتى لا يلتقط شيئًا (catches nothing). اختبر الشكل: JSON صالح (valid JSON)، وتسمية مسموحة، ومعرّف التذكرة، وسياسة مستشهد بها — الوحدة 12؛ وانظر أيضًا [*اختبار البرمجيات (Software Testing)*، الدرس 7.1 — التقييمات (Evals)](../testing/index.ar.html#/7.1). في سؤال الحاسوب المحمول، الاختبار الضعيف (weak test) هو `answer == "Open a ticket under Hardware."`؛ والقوي هو `"Hardware" in answer and len(answer) < 600`.
 
 ### 🔴 نظرة الخبير (Expert view)
 
-**أين يمكن أن تعيش الذاكرة (Where memory can live).** واجهة الرسائل (Messages API) عديمة الحالة (stateless)، فالذاكرة من تصميمك: قائمة داخل عملية التشغيل (a list in a process) في المختبرات، أو صف قاعدة بيانات لكل محادثة (a database row per conversation) في الإنتاج (production)، أو ملخص يحل محل الأدوار القديمة (a summary replacing old turns) في الوحدة 9، أو ميزة في المنصة (a platform feature) مثل الضغط (compaction) وجلسات Managed Agents، وعدد منها تجريبي (beta).
+**أين يمكن أن تعيش الذاكرة (Where memory can live).** واجهة الرسائل (Messages API) عديمة الحالة (stateless)، فالذاكرة من تصميمك: قائمة داخل عملية التشغيل في المختبرات، أو صف قاعدة بيانات لكل محادثة في الإنتاج (production)، أو ملخص يحل محل الأدوار القديمة في الوحدة 9، أو ميزة في المنصة مثل الضغط (compaction) وجلسات Managed Agents، وعدد منها تجريبي (beta).
 
-**للتقليم تكلفة خفية (Trimming has a hidden cost).** يطابق التخزين المؤقت للموجّه (prompt caching) بادئة مطابقة تمامًا (an exact prefix)، فإسقاط أقدم دور في كل استدعاء يكسر البادئة المخزَّنة مؤقتًا (cached prefix) للمحادثة؛ فقلّم بخطوات أكبر (larger steps) أو لخّص (summarise). احتفظ *بالسجل الكامل (full log)* للتدقيق (audit) وأرسل *عرضًا (view)* مقلَّمًا (trimmed) في الدرس 1.2. والقائمة بيانات أيضًا (the list is also data): ومن يحتفظ بها يتحمل واجبات خصوصيتها (privacy duties) في الوحدتين 9 و13.
+**للتقليم تكلفة خفية (Trimming has a hidden cost).** يطابق التخزين المؤقت للموجّه بادئة مطابقة تمامًا، فإسقاط أقدم دور في كل استدعاء يكسر البادئة المخزَّنة مؤقتًا (cached prefix) للمحادثة؛ فقلّم بخطوات أكبر (larger steps) أو لخّص. احتفظ *بالسجل الكامل (full log)* للتدقيق (audit) وأرسل *عرضًا (view)* مقلَّمًا (trimmed) في الدرس 1.2. والقائمة بيانات أيضًا: ومن يحتفظ بها يتحمل واجبات خصوصيتها (privacy duties) في الوحدتين 9 و13.
 
-**التذكّر من السياقات الطويلة ليس مجانيًا (Long contexts are not free recall).** أفادت ورقة «Lost in the Middle» لعام 2023 بأن النماذج (models) استخدمت وسط الموجّه الطويل (a long prompt) بموثوقية أقل من بدايته أو نهايته (less reliably than its start or end). وقد تتحسن النماذج الأحدث (newer models may do better)؛ فاختبر بمستنداتك أنت (your own documents).
+**التذكّر من السياقات الطويلة ليس مجانيًا (Long contexts are not free recall).** أفادت ورقة «Lost in the Middle» لعام 2023 بأن النماذج (models) استخدمت وسط الموجّه الطويل بموثوقية أقل من بدايته أو نهايته. وقد تتحسن النماذج الأحدث؛ فاختبر بمستنداتك أنت.
 
-## 🧰 الأدوات (The toolkit)
-| الأداة أو الممارسة أو النمط (Tool, practice or pattern) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
+## 🧰 الأدوات
+| الأداة أو الممارسة أو النمط (Tool, practice or pattern) | ما هي وماذا تفعل | متى تلجأ إليها |
 |---|---|---|
-| **Messages list** — قائمة الرسائل | الذاكرة الوحيدة (the only memory): رسائل متناوبة (alternating messages) تعيد شيفرتك إرسالها (resends) | كل استدعاء (every call) |
-| **Token counting** — عدّ الرموز | `count_tokens`: عدد رموز الإدخال الدقيق (exact input tokens) لنموذج معيّن | تقدير التكلفة (cost sizing)؛ والعربية والشيفرة (Arabic and code) |
-| **Context budget** — ميزانية السياق | خطة مكتوبة (a written plan): النافذة (window) والأدوار (turns) و`max_tokens` ونقطة التقليم (trim point) | قبل التجربة التشغيلية (before the pilot) |
-| **Stop-reason check** — فحص سبب التوقف | تفرّع بحسب `stop_reason` وسجّل `usage` قبل استخدام `content` (Branch on stop_reason and log usage before using content) | بعد كل استدعاء (after every call) |
+| **Messages list** — قائمة الرسائل | الذاكرة الوحيدة: رسائل متناوبة (alternating messages) تعيد شيفرتك إرسالها | كل استدعاء (every call) |
+| **Token counting** — عدّ الرموز | `count_tokens`: عدد رموز الإدخال الدقيق لنموذج معيّن | تقدير التكلفة (cost sizing)؛ والعربية والشيفرة |
+| **Context budget** — ميزانية السياق | خطة مكتوبة: النافذة (window) والأدوار و`max_tokens` ونقطة التقليم (trim point) | قبل التجربة التشغيلية (before the pilot) |
+| **Stop-reason check** — فحص سبب التوقف | تفرّع بحسب `stop_reason` وسجّل `usage` قبل استخدام `content` | بعد كل استدعاء |
 
-## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-المُخرَج (the artefact) هو **Najm Desk Context Budget v1**، أي ميزانية سياق نجم ديسك: جدول من صفحة واحدة (a one-page table) تملؤه لجين (Lujain) قبل التجربة التشغيلية (pilot) ويراجعه فهد (Fahad). القيم عناصر نائبة خيالية (fictional placeholders) ينبغي استبدالها.
+## 🏛️ عمليًا في بنك نجم
+المُخرَج هو **Najm Desk Context Budget v1**، أي ميزانية سياق نجم ديسك: جدول من صفحة واحدة تملؤه لجين قبل التجربة التشغيلية ويراجعه فهد. القيم عناصر نائبة خيالية (fictional placeholders) ينبغي استبدالها.
 
-| البند (Item) | قيمة نائبة (Placeholder)، خيالية (fictional) | الرقم الحقيقي من (Real number from) |
+| البند (Item) | قيمة نائبة (Placeholder)، خيالية (fictional) | الرقم الحقيقي من |
 |---|---|---|
-| النموذج والنافذة (Model and window) | `claude-sonnet-5-5`؛ والنافذة من واجهة النماذج (window from the Models API) | `client.models.retrieve(MODEL)` |
-| موجّه النظام مع الأدوات (System prompt plus tools) | 1,500 رمز (tokens) | `count_tokens` مع `system=` و`tools=` |
-| رسالة المستخدم والإجابة (User message, answer) | 80 و250 رمزًا، وتشمل الإجابة التفكير (answer includes thinking) | 20 تذكرة عيّنة (sampled tickets)؛ وسجلات التجربة التشغيلية (pilot logs) |
-| الأدوار (Turns) | الوسيط 6، وسقف صارم 40 (median 6, hard cap 40) | سجلات التجربة التشغيلية (pilot logs) |
-| لكل محادثة (Per conversation) | 14,430 رمز إدخال (tokens in) و1,500 رمز إخراج (out) | صيغة التكلفة (the cost formula) |
-| في الأسبوع (Per week) | نحو 6.5M إدخال (in) و0.7M إخراج (out) | 450 محادثة (conversations)، وهي ربع التذاكر الخيالية البالغة 1,800 الخاصة بأسئلة السياسات (the policy-question quarter of the fictional 1,800 tickets) |
-| من يحتفظ بالقائمة (Who holds the list) | مخزن مفتاحه معرّف المحادثة (a store keyed by conversation id)، يُحذف بعد N يومًا (deleted after N days) | يُقرَّر مع سارة (Sara)، مسؤولة حماية البيانات (Data Protection Officer) |
+| النموذج والنافذة | `claude-sonnet-5-5`؛ والنافذة من واجهة النماذج | `client.models.retrieve(MODEL)` |
+| موجّه النظام مع الأدوات | 1,500 رمز | `count_tokens` مع `system=` و`tools=` |
+| رسالة المستخدم والإجابة | 80 و250 رمزًا، وتشمل الإجابة التفكير | 20 تذكرة عيّنة (sampled tickets)؛ وسجلات التجربة التشغيلية (pilot logs) |
+| الأدوار | الوسيط 6، وسقف صارم 40 (median 6, hard cap 40) | سجلات التجربة التشغيلية |
+| لكل محادثة (Per conversation) | 14,430 رمز إدخال (tokens in) و1,500 رمز إخراج (out) | صيغة التكلفة |
+| في الأسبوع (Per week) | نحو 6.5M إدخال و0.7M إخراج | 450 محادثة (conversations)، وهي ربع التذاكر الخيالية البالغة 1,800 الخاصة بأسئلة السياسات (the policy-question quarter of the fictional 1,800 tickets) |
+| من يحتفظ بالقائمة | مخزن مفتاحه معرّف المحادثة، يُحذف بعد N يومًا | يُقرَّر مع سارة (Sara)، مسؤولة حماية البيانات (Data Protection Officer) |
 
-الرقم 14,430 هو ستة استدعاءات (six calls) من 1,500 + (*n* − 1) × 330 + 80 رمزًا: 1,580 + 1,910 + 2,240 + 2,570 + 2,900 + 3,230. والتكلفة الأسبوعية (weekly money) هي 6.5 × سعر الإدخال (price in) + 0.7 × سعر الإخراج (price out) لكل مليون، من صفحة أسعار اليوم (today's price page). ونقطة التقليم (trim point) هي النافذة (window) − `max_tokens` − هامش أمان (a margin).
+الرقم 14,430 هو ستة استدعاءات (six calls) من 1,500 + (*n* − 1) × 330 + 80 رمزًا: 1,580 + 1,910 + 2,240 + 2,570 + 2,900 + 3,230. والتكلفة الأسبوعية (weekly money) هي 6.5 × سعر الإدخال (price in) + 0.7 × سعر الإخراج (price out) لكل مليون، من صفحة أسعار اليوم. ونقطة التقليم هي النافذة − `max_tokens` − هامش أمان.
 
 ## 🛠️ التمارين (Exercises)
-الدرجات (grades): 🟢 دون اتصال فقط (offline only)، 🟡 دون اتصال مع صفحة أسعار (offline plus a price page)، 🔴 مفتاح واجهة برمجة حقيقي (a real API key).
+الدرجات (grades): 🟢 دون اتصال فقط (offline only)، 🟡 دون اتصال مع صفحة أسعار، 🔴 مفتاح واجهة برمجة حقيقي.
 
-- 🟢 **ارسم إعادة الإرسال (Draw the resend).** اكتب `system` و`messages` بالضبط كما أُرسلا في الاستدعاءات 1 و2 و3 من محادثة طلب حاسوب محمول (laptop-request chat)، وقدّر رموز الإدخال (input tokens). ثم شغّل الحلقة أعلاه على النسخة المحاكاة (mock). *يكتمل عندما (Done when):* تُعرض ثلاث قوائم جنبًا إلى جنب (three lists sit side by side)، وترتفع تقديراتك (your estimates rise)، وتستطيع أن تسمّي ما الجديد في الاستدعاء 3 (what is new in call 3).
-- 🟡 **نموذج التكلفة (Cost model).** اكتب `cost(system, user, reply, turns, price_in, price_out)` وأعد إنتاج الجدول (reproduce the table). أوجد أول استدعاء يكلّف عشرة أضعاف الأول (ten times the first)، وهو الاستدعاء 50 هنا، ثم أعد التشغيل بأسعار من صفحة الأسعار الحالية (current price page). *يكتمل عندما (Done when):* يطابق الناتج الجدول حتى أربع خانات عشرية (four decimals) وتبيّن ملاحظة ما إذا كنت ستقلّم (trim) أم تلخّص (summarise) أم تبدأ من جديد (restart) عند دور العشرة أضعاف (the ten-times turn)، ولماذا.
-- 🔴 **قِس ولا تفترض (Measure, do not assume).** على واجهة البرمجة الحقيقية (against the real API): (a) اقرأ `max_input_tokens` لنموذجين؛ (b) عُدّ رموز فقرة سياسة واحدة نصًّا عاديًا (plain text) وبصيغة JSON منسّقة (pretty-printed JSON)؛ (c) شغّل عشرة أدوار (ten turns)، وسجّل `usage` وقارنه بنموذج التكلفة (your cost model)؛ (d) اطرح سؤالًا واحدًا بـ `max_tokens=64` وسجّل `stop_reason` وهل كتلة النص فارغة (the text block is empty). *يكتمل عندما (Done when):* يحتوي `NOTES.md` على معرّفات النماذج (model ids) والتاريخ والرموز المتوقعة مقابل المقيسة (predicted against measured tokens) مع تفسير الفجوة (the gap explained)، وعلى (d). *يحتاج إلى واجهة البرمجة الحقيقية (Needs the real API)*؛ اضبط سقف الإنفاق (spending cap) من الدرس 0.2 أولًا.
+- 🟢 **ارسم إعادة الإرسال (Draw the resend).** اكتب `system` و`messages` بالضبط كما أُرسلا في الاستدعاءات 1 و2 و3 من محادثة طلب حاسوب محمول (laptop-request chat)، وقدّر رموز الإدخال. ثم شغّل الحلقة أعلاه على النسخة المحاكاة. *يكتمل عندما (Done when):* تُعرض ثلاث قوائم جنبًا إلى جنب، وترتفع تقديراتك، وتستطيع أن تسمّي ما الجديد في الاستدعاء 3 (what is new in call 3).
+- 🟡 **نموذج التكلفة (Cost model).** اكتب `cost(system, user, reply, turns, price_in, price_out)` وأعد إنتاج الجدول. أوجد أول استدعاء يكلّف عشرة أضعاف الأول، وهو الاستدعاء 50 هنا، ثم أعد التشغيل بأسعار من صفحة الأسعار الحالية. *يكتمل عندما:* يطابق الناتج الجدول حتى أربع خانات عشرية (four decimals) وتبيّن ملاحظة ما إذا كنت ستقلّم أم تلخّص أم تبدأ من جديد (restart) عند دور العشرة أضعاف، ولماذا.
+- 🔴 **قِس ولا تفترض (Measure, do not assume).** على واجهة البرمجة الحقيقية (against the real API): اقرأ `max_input_tokens` لنموذجين؛ (b) عُدّ رموز فقرة سياسة واحدة نصًّا عاديًا (plain text) وبصيغة JSON منسّقة (pretty-printed JSON)؛ (c) شغّل عشرة أدوار (ten turns)، وسجّل `usage` وقارنه بنموذج التكلفة؛ (d) اطرح سؤالًا واحدًا بـ `max_tokens=64` وسجّل `stop_reason` وهل كتلة النص فارغة. *يكتمل عندما:* يحتوي `NOTES.md` على معرّفات النماذج (model ids) والتاريخ والرموز المتوقعة مقابل المقيسة مع تفسير الفجوة، وعلى. *يحتاج إلى واجهة البرمجة الحقيقية (Needs the real API)*؛ اضبط سقف الإنفاق (spending cap) من الدرس 0.2 أولًا.
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
-- **`history` عامّ، أو `[]` جديدة في كل طلب (a global history, or a new [] on every request).** الأول يسرّب محادثة مستخدم إلى آخرين (leaks a user's chat to others)، والثاني ينسى (forgets). أبقِ قائمة واحدة لكل معرّف محادثة (one list per conversation id).
-- **`resp.content[0].text`.** قد تكون الكتلة الأولى (the first block) هي `thinking`. خذ الكتلة التي `type` فيها `"text"`.
-- **`max_tokens` صغير (a small max_tokens).** يلتهمه التفكير (thinking eats it) فتصبح الإجابة فارغة أو مقطوعة (empty or cut off). استخدم 1024 أو أكثر، وخفّض `effort`، وافحص `stop_reason`.
+- **`history` عامّ، أو `[]` جديدة في كل طلب (a global history, or a new [] on every request).** الأول يسرّب محادثة مستخدم إلى آخرين، والثاني ينسى. أبقِ قائمة واحدة لكل معرّف محادثة.
+- **`resp.content[0].text`.** قد تكون الكتلة الأولى هي `thinking`. خذ الكتلة التي `type` فيها `"text"`.
+- **`max_tokens` صغير (a small max_tokens).** يلتهمه التفكير فتصبح الإجابة فارغة أو مقطوعة. استخدم 1024 أو أكثر، وخفّض `effort`، وافحص `stop_reason`.
 - **نسبة رموز في ذهنك (a token ratio in your head)، أو `tiktoken`.** كلاهما تخمين بالنسبة إلى Claude. استدعِ `count_tokens`.
-- **`temperature=0` واختبارات النص المطابق (exact-text tests).** الأول يرفع `TypeError`، والثاني يتذبذب (flakes). اختبر الشكل (test the shape).
+- **`temperature=0` واختبارات النص المطابق (exact-text tests).** الأول يرفع `TypeError`، والثاني يتذبذب (flakes). اختبر الشكل.
 
 ## 🧾 الخلاصة (Recap)
-- النموذج دالة عديمة الحالة (stateless function) لقائمة رسائل (messages list)؛ والذاكرة (memory) هي كل ما تعيد شيفرتك إرساله (resends).
-- الرموز (tokens) وحدة التكلفة والحدود (unit of cost and limits): قِسها بـ `count_tokens`.
-- يُحاسَب على الإدخال (input) في كل استدعاء، فتنمو التكلفة الإجمالية (total cost) مع مربع عدد الأدوار (square of the turns).
-- `system` معامل منفصل (separate parameter). اقرأ `stop_reason` و`usage` في كل مرة؛ وخذ كتلة النص (text block)، لا `content[0]` أبدًا.
-- رموز التفكير (thinking tokens) هي رموز إخراج (output tokens): اترك مجالًا في `max_tokens` ووجّه بـ `effort`.
-- درجة الحرارة (temperature) مفهوم لا مقبض (a concept, not a knob): ابنِ الاتساق (consistency) بالموجّهات (prompts) والمخططات (schemas) والتحقق من الصحة (validation) واختبارات الشكل (shape tests).
+- النموذج دالة عديمة الحالة لقائمة رسائل؛ والذاكرة هي كل ما تعيد شيفرتك إرساله.
+- الرموز وحدة التكلفة والحدود: قِسها بـ `count_tokens`.
+- يُحاسَب على الإدخال في كل استدعاء، فتنمو التكلفة الإجمالية (total cost) مع مربع عدد الأدوار.
+- `system` معامل منفصل. اقرأ `stop_reason` و`usage` في كل مرة؛ وخذ كتلة النص (text block)، لا `content[0]` أبدًا.
+- رموز التفكير هي رموز إخراج: اترك مجالًا في `max_tokens` ووجّه بـ `effort`.
+- درجة الحرارة مفهوم لا مقبض: ابنِ الاتساق بالموجّهات (prompts) والمخططات (schemas) والتحقق من الصحة واختبارات الشكل (shape tests).
 
 ## ✍️ اختبر نفسك (Check yourself)
 
 **1. «تنسى» (forgets) محادثة يارا (Yara) طراز حاسوبها المحمول. يبدأ معالج الويب (web handler) كل طلب بـ `history = []`. أي تغيير يصلح ذلك (which change fixes it)؟**
 
-- A. خفّض `effort` ليقلّ تفكير النموذج في الرسائل القديمة (reasons less about old messages)
-- B. ارفع `max_tokens` لتبقى أجزاء أكثر من كل رد (more of each reply survives)
-- C. أبقِ قائمة واحدة لكل معرّف محادثة (one list per conversation id) وأعد تحميلها في كل مرة (reload it each time)
-- D. كرّر موجّه النظام الكامل (full system prompt) داخل أول رسالة مستخدم (first user message)
+- A. خفّض `effort` ليقلّ تفكير النموذج في الرسائل القديمة
+- B. ارفع `max_tokens` لتبقى أجزاء أكثر من كل رد
+- C. أبقِ قائمة واحدة لكل معرّف محادثة وأعد تحميلها في كل مرة
+- D. كرّر موجّه النظام الكامل داخل أول رسالة مستخدم
 
 <details><summary>الإجابة</summary>
 
-**C.** بنى كل طلب قائمة جديدة (a fresh list) والنموذج لا يحتفظ بشيء (keeps nothing)، فيجب أن تعيش القائمة أطول من الطلب (outlive the request). والخيارات الأخرى تغيّر العمق أو الطول (depth or length)، لا القائمة. 🟢 النموذج دالة (A model is a function).
+**C.** بنى كل طلب قائمة جديدة والنموذج لا يحتفظ بشيء (keeps nothing)، فيجب أن تعيش القائمة أطول من الطلب. والخيارات الأخرى تغيّر العمق أو الطول، لا القائمة. 🟢 النموذج دالة.
 
 </details>
 
 **2. تحمل محادثة 180,000 رمز (tokens) من السجل (history) ونافذة النموذج 200,000. ما أكبر حجم آمن تقريبًا لـ `max_tokens`؟ ⁦(Roughly how large can max_tokens safely be?)⁩**
 
-- A. 200,000، لأن النافذة كلها متاحة للإخراج (available to output)
-- B. أقل من 20,000، لأن الإدخال والإخراج يتشاركان النافذة (share the window)
-- C. 180,000، ليطابق طول الإدخال (matches the input length)
+- A. 200,000، لأن النافذة كلها متاحة للإخراج
+- B. أقل من 20,000، لأن الإدخال والإخراج يتشاركان النافذة
+- C. 180,000، ليطابق طول الإدخال
 - D. أي قيمة، لأن الإخراج يُحاسَب عليه بشكل منفصل (billed separately)
 
 <details><summary>الإجابة</summary>
 
-**B.** يتشارك الإدخال والإخراج النافذة (share the window)، فتترك 180,000 رمز إدخال أقل من 20,000 للرد. وإن طلبت أكثر فقد يُرفض الطلب (rejected) أو يُقطع الرد (cut off) مع `model_context_window_exceeded`. 🟢 نافذة السياق (The context window).
+**B.** يتشارك الإدخال والإخراج النافذة، فتترك 180,000 رمز إدخال أقل من 20,000 للرد. وإن طلبت أكثر فقد يُرفض الطلب (rejected) أو يُقطع الرد (cut off) مع `model_context_window_exceeded`. 🟢 نافذة السياق.
 
 </details>
 
 **3. يضيف كل دور (turn) 200 رمز مستخدم و300 رمز رد خلف موجّه نظام (system prompt) من 1,000 رمز. لماذا تكلّف محادثة من 40 دورًا (a 40-turn chat) أكثر بكثير من ضعفي محادثة من 20 دورًا (far more than twice a 20-turn chat)؟**
 
-- A. الردود المتأخرة أطول وتكلّف أكثر لكل رمز من الأولى (cost more per token)
-- B. يتباطأ النموذج في المحادثات الطويلة (slows down in long chats)، فيرتفع سعر الرمز (per-token price rises)
-- C. كل استدعاء يعيد إرسال كل السجل (resends all history)، فينمو الإدخال مع مربع عدد الأدوار (turns squared)
+- A. الردود المتأخرة أطول وتكلّف أكثر لكل رمز من الأولى
+- B. يتباطأ النموذج في المحادثات الطويلة، فيرتفع سعر الرمز
+- C. كل استدعاء يعيد إرسال كل السجل، فينمو الإدخال مع مربع عدد الأدوار (turns squared)
 - D. تُحاسَب الرموز المخزَّنة مؤقتًا (cached tokens) بسعر أعلى كلما طالت المحادثة
 
 <details><summary>الإجابة</summary>
 
-**C.** إجمالي الإدخال تربيعي تقريبًا (roughly quadratic): 119,000 رمز عند 20 دورًا و438,000 عند 40. وأسعار الرمز لا تتغير داخل المحادثة (per-token prices do not change). 🟡 تكلفة المحادثة (The cost of a conversation).
+**C.** إجمالي الإدخال تربيعي تقريبًا (roughly quadratic): 119,000 رمز عند 20 دورًا و438,000 عند 40. وأسعار الرمز لا تتغير داخل المحادثة. 🟡 تكلفة المحادثة.
 
 </details>
 
 **4. في نموذج حالي (a current model)، يعيد استدعاء محادثة بـ `max_tokens=400` القيمة `stop_reason: "max_tokens"` وكتلة نص فارغة (empty text block). ما أفضل إصلاح (best fix)؟**
 
-- A. أضف `temperature=0` ليكفّ النموذج عن الاسترسال عند الحد (stops rambling at the limit)
+- A. أضف `temperature=0` ليكفّ النموذج عن الاسترسال عند الحد
 - B. غلّف الاستدعاء بحلقة إعادة محاولة (retry loop)، لأن الخطأ عابر (transient) فقط
-- C. اقرأ `content[0].text` وتجاهل كل كتلة أخرى (ignore every other block)
+- C. اقرأ `content[0].text` وتجاهل كل كتلة أخرى
 - D. ارفع `max_tokens` إلى 1024 فأكثر، وخفّض `effort`، وافحص `stop_reason` (Raise max_tokens to 1024+, lower effort, check stop_reason)
 
 <details><summary>الإجابة</summary>
@@ -230,41 +230,41 @@ sent 5 messages | input_tokens=84 output_tokens=9 stop=end_turn
 **5. يتحقق اختبار دانة (Dana) من أن الإجابة تساوي جملة واحدة مخزَّنة (one stored sentence). نجح يوم الاثنين وفشل يوم الثلاثاء دون أي تغيير في الشيفرة. ماذا ينبغي أن تفعل (what should she do)؟**
 
 - A. شغّله ثلاث مرات واقبل البناء (build) إن نجح تشغيلان
-- B. تحقق من الشكل (assert the shape): الحقائق المطلوبة (required facts) والصيغة الصالحة (valid format) والتسمية المسموحة (allowed label)
-- C. أرسل `temperature=0` عبر `extra_body` لتثبيت المخرجات (fix the output)
-- D. قارن الجملة الأولى فقط (only the first sentence)، فهي نادرًا ما تتغير
+- B. تحقق من الشكل: الحقائق المطلوبة (required facts) والصيغة الصالحة (valid format) والتسمية المسموحة (allowed label)
+- C. أرسل `temperature=0` عبر `extra_body` لتثبيت المخرجات
+- D. قارن الجملة الأولى فقط، فهي نادرًا ما تتغير
 
 <details><summary>الإجابة</summary>
 
-**B.** تنكسر النصوص المطابقة تمامًا (exact strings) عند إعادة صياغة غير ضارة (harmless rewording)؛ أما فحوص الشكل (shape checks) فتلتقط الانحدارات الحقيقية (real regressions). وأحدث النماذج ترفض `temperature` غير الافتراضية (non-default). 🟡 لا تختبر أبدًا تطابق المخرجات بايتًا ببايت (never test for byte-identical output).
+**B.** تنكسر النصوص المطابقة تمامًا (exact strings) عند إعادة صياغة غير ضارة (harmless rewording)؛ أما فحوص الشكل (shape checks) فتلتقط الانحدارات الحقيقية (real regressions). وأحدث النماذج ترفض `temperature` غير الافتراضية (non-default). 🟡 لا تختبر أبدًا تطابق المخرجات بايتًا ببايت.
 
 </details>
 
 ## 📚 المراجع (References)
-- Claude API، نظرة عامة على النماذج (Models overview)، وفيها نوافذ السياق (context windows) ومعرّفات النماذج (model ids): https://platform.claude.com/docs/en/about-claude/models/overview
-- Claude API: الأسعار (Pricing) https://platform.claude.com/docs/en/about-claude/pricing; الجهد (Effort) https://platform.claude.com/docs/en/build-with-claude/effort; عدّ الرموز (Token counting) https://platform.claude.com/docs/en/build-with-claude/token-counting; التفكير التكيفي (Adaptive thinking) https://platform.claude.com/docs/en/build-with-claude/adaptive-thinking; الأخطاء (Errors) https://platform.claude.com/docs/en/api/errors
+- Claude API، نظرة عامة على النماذج (Models overview)، وفيها نوافذ السياق (context windows) ومعرّفات النماذج: https://platform.claude.com/docs/en/about-claude/models/overview
+- Claude API: الأسعار (Pricing) https://platform.claude.com/docs/en/about-claude/pricing; الجهد https://platform.claude.com/docs/en/build-with-claude/effort; عدّ الرموز (Token counting) https://platform.claude.com/docs/en/build-with-claude/token-counting; التفكير التكيفي (Adaptive thinking) https://platform.claude.com/docs/en/build-with-claude/adaptive-thinking; الأخطاء (Errors) https://platform.claude.com/docs/en/api/errors
 - حزمة تطوير Anthropic لـ Python (Anthropic Python SDK): https://github.com/anthropics/anthropic-sdk-python
-- **اقرأ هذا الأسبوع (Read this week)، الوحدة 1.** Grokking AI Applications، الفصلان 1 و2 («Peeking inside the black box» و«Building your first GenAI app»): النسخة المصوّرة من هذا الدرس (the illustrated version of this lesson)، اقرأها أولًا (read first): https://www.manning.com/. Microsoft، *AI Agents for Beginners*، الدرس 01، ومدته 15 دقيقة مع الفيديو (15 minutes plus the video): https://github.com/microsoft/ai-agents-for-beginners. Gulli، *Agentic Design Patterns*: المقدمة (the introduction) وقسم «What makes an AI system an agent?» في 9 صفحات (9 pages)، ويذكر الدرس 0.1 أين تجد المسودة (where to find the draft). Anthropic، «Building effective agents»: قسم «When (and when not) to use agents» فقط؛ وناقشه في المجموعة (argue about it in the group): https://www.anthropic.com/engineering
+- **اقرأ هذا الأسبوع (Read this week)، الوحدة 1.** Grokking AI Applications، الفصلان 1 و2: النسخة المصوّرة من هذا الدرس، اقرأها أولًا (read first): https://www.manning.com/. Microsoft، *AI Agents for Beginners*، الدرس 01، ومدته 15 دقيقة مع الفيديو (15 minutes plus the video): https://github.com/microsoft/ai-agents-for-beginners. Gulli، *Agentic Design Patterns*: المقدمة وقسم «What makes an AI system an agent?» في 9 صفحات (9 pages)، ويذكر الدرس 0.1 أين تجد المسودة. Anthropic، «Building effective agents»: قسم «When to use agents» فقط؛ وناقشه في المجموعة: https://www.anthropic.com/engineering
 
 ---
 
-# 1.2 — مختبر: روبوت محادثة بذاكرة، ثم كسره عمدًا، ثم أول حلقة وكيل لك (Lab: a chatbot with memory, break it on purpose, then your first agent loop)
-*المستوى (Level): 🟢 مبتدئ (Beginner)* · *المتطلبات (Prerequisites): 0.2، 1.1* · *الطبقة (Layer): Model, Agents*
+# 1.2 — مختبر: روبوت محادثة بذاكرة، ثم كسره عمدًا، ثم أول حلقة وكيل لك
+*المستوى: 🟢 مبتدئ* · *المتطلبات: 0.2، 1.1* · *الطبقة: Model, Agents*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
-- **المختبر A (Lab A).** روبوت المحادثة (chatbot) قائمة (list) ودالة واحدة (one function): أضف رسالتك (append your message)، وأرسل القائمة كلها (send the whole list)، وأضف الرد (append the reply). أرسل أقل فينسى (forgets).
-- **اكسره عمدًا (Break it on purpose).** القائمة الطويلة جدًا (over-long list) تعني خطأ 400. وترسل `trim()` *عرضًا (view)* مقلَّمًا (trimmed)؛ والميزانية (budget) = النافذة (window) − `max_tokens` − هامش أمان (margin).
-- **المختبر B (Lab B).** يضيف الوكيل (agent) شيئًا واحدًا: قد يجيب النموذج بإجراء (an action)؛ وتنفّذه شيفرتك وتعيد `tool_result`. **النموذج يقترح وشيفرتك تقرر (the model proposes, your code disposes).**
-- يجب أن تضع الحلقة (loop) سقفًا لخطواتها (cap its steps)، وأن تعالج كل `stop_reason`، وتجيب عن كل معرّف `tool_use` في رسالة مستخدم **واحدة**، وتعلّم الإخفاقات (flag failures) بـ `is_error`. تثبت النسخة المحاكاة (mock) الآليات (mechanics) لا الجودة (quality).
+- **المختبر A (Lab A).** روبوت المحادثة قائمة ودالة واحدة (one function): أضف رسالتك، وأرسل القائمة كلها، وأضف الرد. أرسل أقل فينسى.
+- **اكسره عمدًا (Break it on purpose).** القائمة الطويلة جدًا (over-long list) تعني خطأ 400. وترسل `trim()` *عرضًا* مقلَّمًا؛ والميزانية = النافذة − `max_tokens` − هامش أمان (margin).
+- **المختبر B (Lab B).** يضيف الوكيل شيئًا واحدًا: قد يجيب النموذج بإجراء؛ وتنفّذه شيفرتك وتعيد `tool_result`. **النموذج يقترح وشيفرتك تقرر (the model proposes, your code disposes).**
+- يجب أن تضع الحلقة سقفًا لخطواتها، وأن تعالج كل `stop_reason`، وتجيب عن كل معرّف `tool_use` في رسالة مستخدم **واحدة**، وتعلّم الإخفاقات (flag failures) بـ `is_error`. تثبت النسخة المحاكاة الآليات (mechanics) لا الجودة (quality).
 
-## 🧭 لماذا يهم (Why it matters)
-يطلب فهد (Fahad) من لجين (Lujain) أن تُري يارا (Yara) أول شيء يلمس تذاكرها. وحين يُسأل «هل انتهت التذكرة 4471 بعد؟» ⁦(Is ticket 4471 done yet?)⁩ لا يستطيع روبوت المحادثة (chatbot) في المختبر A (Lab A) إلا أن يعترف بأنه لا يستطيع البحث عن أي شيء (cannot look anything up)، أو أن يخمّن بطلاقة (guess fluently): «نعم، أُغلقت أمس.» ⁦(Yes, it was closed yesterday.)⁩ والتخمين يبدو معرفة (sounds like knowledge). والحل ليس موجّهًا (prompt) أفضل بل حلقة (loop) يستطيع فيها النموذج أن *يسأل* TicketHub: أصغر وكيل (the smallest agent)، ومن السهل بناؤه بناءً سيئًا (easy to build badly). والنسخة الأولى من لجين، وهي افتراضية (hypothetical)، بلا حدّ للخطوات (no step cap): فحين تنتهي مهلة (times out) TicketHub يستطيع النموذج مواصلة الطلب، وكل استدعاء يحمل السجل الكامل (full history)، حتى ينطلق إنذار الإنفاق (spending alarm).
+## 🧭 لماذا يهم
+يطلب فهد من لجين أن تُري يارا أول شيء يلمس تذاكرها. وحين يُسأل «هل انتهت التذكرة 4471 بعد؟» ⁦(Is ticket 4471 done yet?)⁩ لا يستطيع روبوت المحادثة في المختبر A إلا أن يعترف بأنه لا يستطيع البحث عن أي شيء، أو أن يخمّن بطلاقة (guess fluently): «نعم، أُغلقت أمس.» ⁦⁩ والتخمين يبدو معرفة. والحل ليس موجّهًا أفضل بل حلقة يستطيع فيها النموذج أن *يسأل* TicketHub: أصغر وكيل، ومن السهل بناؤه بناءً سيئًا. والنسخة الأولى من لجين، وهي افتراضية، بلا حدّ للخطوات: فحين تنتهي مهلة (times out) TicketHub يستطيع النموذج مواصلة الطلب، وكل استدعاء يحمل السجل الكامل (full history)، حتى ينطلق إنذار الإنفاق (spending alarm).
 
-## 📐 كيف يعمل (How it works)
+## 📐 كيف يعمل
 
-### 🟢 الأساسيات (The essentials)
+### 🟢 الأساسيات
 
-**المختبر A: روبوت محادثة بذاكرة في نحو 40 سطرًا (Lab A: a chatbot with memory in about 40 lines).** شغّل النسخة المحاكاة (mock) ووجّه حزمة التطوير (SDK) إليها؛ وعلى واجهة البرمجة الحقيقية (real API) تكون الشيفرة هي نفسها: ألغِ ضبط `ANTHROPIC_BASE_URL` وضع مفتاحك الحقيقي (real key) في `ANTHROPIC_API_KEY`.
+**المختبر A: روبوت محادثة بذاكرة في نحو 40 سطرًا (Lab A: a chatbot with memory in about 40 lines).** شغّل النسخة المحاكاة ووجّه حزمة التطوير إليها؛ وعلى واجهة البرمجة الحقيقية تكون الشيفرة هي نفسها: ألغِ ضبط `ANTHROPIC_BASE_URL` وضع مفتاحك الحقيقي (real key) في `ANTHROPIC_API_KEY`.
 
 ```bash
 cd aiapps/labkit
@@ -327,17 +327,17 @@ if __name__ == "__main__":
         print("bot>", ask(text))
 ```
 
-> **ما تستطيع النسخة المحاكاة إظهاره وما لا تستطيع (What the mock can and cannot show).** تشغّل حزمة التطوير الحقيقية (real SDK) أمام ردود مكتوبة مسبقًا (scripted replies) وأعداد رموز مقدّرة (estimated token counts)، ولذلك تثبت الآليات (mechanics): إعادة الإرسال (the resend)، ونمو الرموز (token growth)، وخطأ 400 عند الفيض (overflow)، والحلقة (the loop)، وأخطاء البروتوكول (protocol errors). ولا تستطيع الحكم على جودة الإجابة (answer quality) أو أوصاف الأدوات (tool descriptions) أو الصدق (honesty).
+> **ما تستطيع النسخة المحاكاة إظهاره وما لا تستطيع (What the mock can and cannot show).** تشغّل حزمة التطوير الحقيقية (real SDK) أمام ردود مكتوبة مسبقًا (scripted replies) وأعداد رموز مقدّرة، ولذلك تثبت الآليات: إعادة الإرسال، ونمو الرموز (token growth)، وخطأ 400 عند الفيض (overflow)، والحلقة، وأخطاء البروتوكول (protocol errors). ولا تستطيع الحكم على جودة الإجابة (answer quality) أو أوصاف الأدوات (tool descriptions) أو الصدق (honesty).
 
-يعالج شرط الحماية (guard) `if not reply` إجابة لجين (Lujain) الفارغة (blank answer): فرسالة مساعد فارغة (empty assistant message) في القائمة ستجعل الاستدعاء *التالي* خطأ 400.
+يعالج شرط الحماية (guard) `if not reply` إجابة لجين الفارغة (blank answer): فرسالة مساعد فارغة في القائمة ستجعل الاستدعاء *التالي* خطأ 400.
 
-اكتب هذه الجمل الإنجليزية كما هي: "My name is Rayan." (اسمي ريان) و"How do I request a new laptop?" (كيف أطلب حاسوبًا محمولًا جديدًا؟) و"What is my name?" (ما اسمي؟) و"What did I just ask?" (ماذا سألتُ للتو؟). تجيب النسخة المحاكاة (the mock) بـ `Your name is Rayan.` وتقتبس سؤالك الأخير (quotes your last question)، بينما يرتفع `in=` فيصبح 33 ثم 56 ثم 79 ثم 95 مع إعادة إرسال السجل (the history is resent).
+اكتب هذه الجمل الإنجليزية كما هي: "My name is Rayan." (اسمي ريان) و"How do I request a new laptop?" (كيف أطلب حاسوبًا محمولًا جديدًا؟) و"What is my name?" (ما اسمي؟) و"What did I just ask?" (ماذا سألتُ للتو؟). تجيب النسخة المحاكاة بـ `Your name is Rayan.` وتقتبس سؤالك الأخير، بينما يرتفع `in=` فيصبح 33 ثم 56 ثم 79 ثم 95 مع إعادة إرسال السجل.
 
-**أثبت لنفسك انعدام الحالة (Prove statelessness to yourself).** في `ask`، غيّر `messages=history,` إلى `messages=history[-1:],` واطرح الأسئلة نفسها (ask the same questions). تصبح إجابة الاسم `I don't know your name. It has not come up in this conversation.` وهذه صياغة النسخة المحاكاة (mock wording). لم يتغير إلا القائمة (only the list changed).
+**أثبت لنفسك انعدام الحالة (Prove statelessness to yourself).** في `ask`، غيّر `messages=history,` إلى `messages=history[-1:],` واطرح الأسئلة نفسها. تصبح إجابة الاسم `I don't know your name. It has not come up in this conversation.` وهذه صياغة النسخة المحاكاة (mock wording). لم يتغير إلا القائمة.
 
-### 🟡 التعمق أكثر (Going deeper)
+### 🟡 التعمق أكثر
 
-**التمرين 1.1: اكسره عمدًا (Exercise 1.1: break it on purpose).** أوقف النسخة المحاكاة (mock)، وأعد تشغيلها بـ `MOCK_CONTEXT_WINDOW=8000 python -m labkit.mock_server --port 8787 &` ومرّر أربعة أسطر طويلة (four long lines) إلى روبوت المحادثة (chatbot) عبر الأنبوب (pipe):
+**التمرين 1.1: اكسره عمدًا (Exercise 1.1: break it on purpose).** أوقف النسخة المحاكاة، وأعد تشغيلها بـ `MOCK_CONTEXT_WINDOW=8000 python -m labkit.mock_server --port 8787 &` ومرّر أربعة أسطر طويلة إلى روبوت المحادثة عبر الأنبوب (pipe):
 
 ```bash
 python3 -c "for _ in range(4): print('Staff connect to the corporate VPN before opening internal systems. ' * 150)" > big.txt
@@ -375,9 +375,9 @@ def trim(history: list[dict], max_tokens: int, count=count) -> list[dict]:
     return kept
 ```
 
-اربطها بـ `chat.py` بتعديلين (two edits): `from trim import trim` تحت `import os`، و`messages=trim(history, 6000),` بدل `messages=history,`؛ فالقيمة 6000 هي النافذة 8000 ناقص `max_tokens` البالغ 1024 وهامش أمان (a margin). شغّل `big.txt` مرة أخرى: تنجح الأسطر الأربعة كلها (all four lines succeed) ويستقر `in=` عند 5169. يبقى `history` السجل الكامل (complete log)؛ ولا يُقلَّم إلا *العرض (view)*. والتقليم ينسى بصمت (trimming forgets silently)، لذا تلخّص المنتجات الحقيقية (real products summarise) في الوحدة 9؛ ورسالة واحدة أكبر من النافذة لا يمكن تقليمها بعيدًا (cannot be trimmed away).
+اربطها بـ `chat.py` بتعديلين (two edits): `from trim import trim` تحت `import os`، و`messages=trim(history, 6000),` بدل `messages=history,`؛ فالقيمة 6000 هي النافذة 8000 ناقص `max_tokens` البالغ 1024 وهامش أمان. شغّل `big.txt` مرة أخرى: تنجح الأسطر الأربعة كلها ويستقر `in=` عند 5169. يبقى `history` السجل الكامل (complete log)؛ ولا يُقلَّم إلا *العرض*. والتقليم ينسى بصمت، لذا تلخّص المنتجات الحقيقية في الوحدة 9؛ ورسالة واحدة أكبر من النافذة لا يمكن تقليمها بعيدًا.
 
-**من روبوت المحادثة إلى الوكيل (From chatbot to agent).** حلقة روبوت المحادثة (a chatbot's loop) هي: يتكلم المستخدم، ويجيب النموذج، ثم الانتظار. ويغيّر الوكيل (agent) شيئًا واحدًا: قد يجيب النموذج بـ *إجراء (action)*، وتنفّذه شيفرتك، وتعود النتيجة إلى القائمة (goes back into the list)، حتى يقرر النموذج أنه انتهى.
+**من روبوت المحادثة إلى الوكيل (From chatbot to agent).** حلقة روبوت المحادثة هي: يتكلم المستخدم، ويجيب النموذج، ثم الانتظار. ويغيّر الوكيل شيئًا واحدًا: قد يجيب النموذج بـ *إجراء (action)*، وتنفّذه شيفرتك، وتعود النتيجة إلى القائمة، حتى يقرر النموذج أنه انتهى.
 
 ```mermaid
 flowchart TD
@@ -393,9 +393,9 @@ flowchart TD
     Q -->|"توقف الدور مؤقتًا (pause_turn)"| C
 ```
 
-> **النموذج يقترح وشيفرتك تقرر (The model proposes, your code disposes).** لا ينفّذ النموذج شيفرة أبدًا (never runs code)، ولا يلمس قاعدة بيانات، ولا يرسل بريدًا إلكترونيًا. إنه يُصدر طلبًا مهيكلًا (a structured request) — «استدعِ `get_ticket_status` مع `ticket_id` بقيمة 4471» (call get_ticket_status with ticket_id 4471) — ويقرر برنامجك هل يلبّيه (honour it)، ثم ينفّذه ويبلّغ النموذج بالنتيجة (reports back). وكل حاجز وقائي (guardrail) وفحص صلاحيات (permission check) وسجل تدقيق (audit log) في هذه الدورة يعيش في تلك الفجوة (that gap).
+> **النموذج يقترح وشيفرتك تقرر (The model proposes, your code disposes).** لا ينفّذ النموذج شيفرة أبدًا، ولا يلمس قاعدة بيانات، ولا يرسل بريدًا إلكترونيًا. إنه يُصدر طلبًا مهيكلًا — «استدعِ `get_ticket_status` مع `ticket_id` بقيمة 4471» (call get_ticket_status with ticket_id 4471) — ويقرر برنامجك هل يلبّيه (honour it)، ثم ينفّذه ويبلّغ النموذج بالنتيجة (reports back). وكل حاجز وقائي (guardrail) وفحص صلاحيات (permission check) وسجل تدقيق (audit log) في هذه الدورة يعيش في تلك الفجوة.
 
-### 🔴 نظرة الخبير (Expert view)
+### 🔴 نظرة الخبير
 
 **المختبر B: وكيلك الأول، أداة واحدة، بلا إطار عمل (Lab B: your first agent, one tool, no framework).** اقرأ التعليقات المرقّمة (numbered comments) بالترتيب.
 
@@ -487,34 +487,34 @@ if __name__ == "__main__":
 Here is what I found: In progress, assigned to Networks; Closed.
 ```
 
-طلبان في رد واحد (two requests in one reply)، يُجاب عنهما معًا في رسالة واحدة (both answered in one message)، ثم النص النهائي (the final text): هذا لبّ كل منصة وكلاء (the core of every agent platform) مهما كبرت. وفي النسخة المحاكاة (mock) يأتي الاستدعاء من تداخل الكلمات (word overlap) مع وصف الأداة (tool's description)؛ أما النموذج الحقيقي فيقرر بنفسه، فتوقّع استدعاءات مختلفة (different calls).
+طلبان في رد واحد، يُجاب عنهما معًا في رسالة واحدة، ثم النص النهائي: هذا لبّ كل منصة وكلاء مهما كبرت. وفي النسخة المحاكاة يأتي الاستدعاء من تداخل الكلمات (word overlap) مع وصف الأداة (tool's description)؛ أما النموذج الحقيقي فيقرر بنفسه، فتوقّع استدعاءات مختلفة (different calls).
 
-**قواعد البروتوكول (The protocol rules).** أضف `resp.content` *كاملًا* بوصفه دور المساعد (assistant turn)، لا نصه فقط: فهو يحمل كتل `tool_use`، وكتل التفكير (thinking blocks) إن وُجدت، التي يجب أن يطابقها الاستدعاء التالي (the next call must match). كل معرّف `tool_use` يحتاج إلى `tool_result` بـ `tool_use_id` نفسه، كلها في رسالة مستخدم **واحدة (one user message)**؛ وإن فاتك واحد صار الاستدعاء التالي خطأ 400. استخدم `is_error: True` حين *تفشل* أداة (a tool fails) — مهلة (timeout) أو وسائط خاطئة (bad arguments) أو أداة مجهولة (unknown tool)؛ أما «التذكرة غير موجودة» (ticket not found) فنتيجة عادية (a normal result). لا تنفّذ أدوات من رد `max_tokens` أو `refusal` أبدًا: فقد يكون الاستدعاء مكتوبًا ناقصًا (half-written).
+**قواعد البروتوكول (The protocol rules).** أضف `resp.content` *كاملًا* بوصفه دور المساعد (assistant turn)، لا نصه فقط: فهو يحمل كتل `tool_use`، وكتل التفكير (thinking blocks) إن وُجدت، التي يجب أن يطابقها الاستدعاء التالي. كل معرّف `tool_use` يحتاج إلى `tool_result` بـ `tool_use_id` نفسه، كلها في رسالة مستخدم **واحدة (one user message)**؛ وإن فاتك واحد صار الاستدعاء التالي خطأ 400. استخدم `is_error: True` حين *تفشل* أداة — مهلة (timeout) أو وسائط خاطئة (bad arguments) أو أداة مجهولة (unknown tool)؛ أما «التذكرة غير موجودة» فنتيجة عادية. لا تنفّذ أدوات من رد `max_tokens` أو `refusal` أبدًا: فقد يكون الاستدعاء مكتوبًا ناقصًا (half-written).
 
-**وصف الأداة موجّه (A tool description is a prompt).** الضعيف (weak): `does stuff`. والقوي (strong): وصف المختبر، الذي يقول ما تفعله الأداة *ومتى تُستدعى (and when to call it)*. أحدث النماذج (the newest models) مثل Sonnet 5.5 وOpus 5.5 وFable 5.1 ترفض `tool_choice` المفروض (forced)، فوجّه بالوصف أو بـ `strict: true` أو بالمخرجات المهيكلة (structured output) في الوحدة 3. يستطيع مشغّل الأدوات التجريبي (beta tool runner) في حزمة التطوير (SDK) تشغيل هذه الحلقة عنك، ويقبل سقف `max_iterations`؛ فابنها بيدك أولًا (build it by hand first) كي تعرف ما الذي يفعله عنك.
+**وصف الأداة موجّه (A tool description is a prompt).** الضعيف (weak): `does stuff`. والقوي (strong): وصف المختبر، الذي يقول ما تفعله الأداة *ومتى تُستدعى*. أحدث النماذج مثل Sonnet 5.5 وOpus 5.5 وFable 5.1 ترفض `tool_choice` المفروض (forced)، فوجّه بالوصف أو بـ `strict: true` أو بالمخرجات المهيكلة في الوحدة 3. يستطيع مشغّل الأدوات التجريبي في حزمة التطوير تشغيل هذه الحلقة عنك، ويقبل سقف `max_iterations`؛ فابنها بيدك أولًا كي تعرف ما الذي يفعله عنك.
 
-> **تحذير: الحلقات الثلاث التي يكتبها المبتدئون أولًا (Warning: the three loops juniors write first).** يمكن إعادة إنتاج كل منها على النسخة المحاكاة (reproducible on the mock):
-> - **بلا حدّ للخطوات (No step cap).** مع `[mock:loop]` في الهدف (goal) يطلب النموذج التذكرة نفسها حتى يوقفه الحد (the cap).
-> - **بلا معالجة لـ `stop_reason` (No stop_reason handling).** عامل الرد الأول على أنه نهائي (treat the first reply as final): يرفع `resp.content[0].text` الخطأ `AttributeError: 'ToolUseBlock' object has no attribute 'text'`، وطباعة الرد تُظهر للمستخدم JSON خامًا (raw JSON).
-> - **سلسلة نصية عادية بدل كتلة `tool_result` (A plain string instead of a tool_result block).** يكون الاستدعاء التالي خطأ 400 تقول رسالته إن معرّفات `tool_use` وُجدت دون كتل `tool_result`؛ وقد تختلف الصياغة الدقيقة في الواجهة الحقيقية (the real API's exact wording may differ).
+> **تحذير: الحلقات الثلاث التي يكتبها المبتدئون أولًا (Warning: the three loops juniors write first).** يمكن إعادة إنتاج كل منها على النسخة المحاكاة:
+> - **بلا حدّ للخطوات (No step cap).** مع `[mock:loop]` في الهدف (goal) يطلب النموذج التذكرة نفسها حتى يوقفه الحد.
+> - **بلا معالجة لـ `stop_reason` (No stop_reason handling).** عامل الرد الأول على أنه نهائي: يرفع `resp.content[0].text` الخطأ `AttributeError: 'ToolUseBlock' object has no attribute 'text'`، وطباعة الرد تُظهر للمستخدم JSON خامًا (raw JSON).
+> - **سلسلة نصية عادية بدل كتلة `tool_result` (A plain string instead of a tool_result block).** يكون الاستدعاء التالي خطأ 400 تقول رسالته إن معرّفات `tool_use` وُجدت دون كتل `tool_result`؛ وقد تختلف الصياغة الدقيقة في الواجهة الحقيقية.
 
-يتجنب المختبر B (Lab B) الثلاثة كلها: التعليقات (comments) 3 و5a إلى 5e، و`run_tools`.
+يتجنب المختبر B الثلاثة كلها: التعليقات (comments) 3 و5a إلى 5e، و`run_tools`.
 
-## 🧰 الأدوات (The toolkit)
-| الأداة أو الممارسة أو النمط (Tool, practice or pattern) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
+## 🧰 الأدوات
+| الأداة أو الممارسة أو النمط | ما هي وماذا تفعل | متى تلجأ إليها |
 |---|---|---|
-| **Tool use loop** — حلقة استخدام الأدوات | استدعِ (call)، واقرأ `stop_reason`، ونفّذ الأدوات (run tools)، وأعد النتائج (return results)، وكرّر (repeat) | حين يجب على النموذج أن يبحث أو يفعل شيئًا (look up or do something) |
-| **Tool definition** — تعريف الأداة | الاسم (name) والوصف (description) وJSON Schema: كل ما يعرفه النموذج عن الأداة (all the model knows of a tool) | كل أداة (every tool) |
-| **Tool result block** — كتلة نتيجة الأداة | `tool_result` مع `tool_use_id` والمحتوى (content) و`is_error` الاختياري | كل `tool_use`، في رسالة مستخدم واحدة (in one user message) |
-| **Step cap** — حدّ الخطوات | حد صارم (a hard limit) لتكرارات الحلقة (loop iterations) | كل حلقة (every loop) |
-| **History trim** — تقليم السجل | أرسل عرضًا مقلَّمًا (send a trimmed view)؛ واحتفظ بالسجل الكامل (keep the full log) | المحادثات الطويلة (long chats)، إلى أن تلخّص (until you summarise) |
+| **Tool use loop** — حلقة استخدام الأدوات | استدعِ (call)، واقرأ `stop_reason`، ونفّذ الأدوات (run tools)، وأعد النتائج (return results)، وكرّر (repeat) | حين يجب على النموذج أن يبحث أو يفعل شيئًا |
+| **Tool definition** — تعريف الأداة | الاسم (name) والوصف (description) وJSON Schema: كل ما يعرفه النموذج عن الأداة | كل أداة (every tool) |
+| **Tool result block** — كتلة نتيجة الأداة | `tool_result` مع `tool_use_id` والمحتوى (content) و`is_error` الاختياري | كل `tool_use`، في رسالة مستخدم واحدة |
+| **Step cap** — حدّ الخطوات | حد صارم لتكرارات الحلقة (loop iterations) | كل حلقة (every loop) |
+| **History trim** — تقليم السجل | أرسل عرضًا مقلَّمًا؛ واحتفظ بالسجل الكامل | المحادثات الطويلة (long chats)، إلى أن تلخّص |
 
-## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-**المُسلَّم الأسبوعي (Weekly deliverable).** أودِع (commit) `chat.py` (مع `trim()` الخاصة بك)، و`agent.py`، واختبارات ناجحة دون اتصال (passing offline tests)، وملف `NOTES.md` يجيب عن أسئلة «اختبر نفسك» (Check yourself) في الدرسين، ويسجل نسبة الرموز بين العربية والإنجليزية (Arabic-to-English token ratio)، ويقتبس جملتك من التمرين 1.3(c) (Exercise 1.3(c) sentence).
+## 🏛️ عمليًا في بنك نجم
+**المُسلَّم الأسبوعي (Weekly deliverable).** أودِع (commit) `chat.py` (مع `trim()` الخاصة بك)، و`agent.py`، واختبارات ناجحة دون اتصال، وملف `NOTES.md` يجيب عن أسئلة «اختبر نفسك» في الدرسين، ويسجل نسبة الرموز بين العربية والإنجليزية، ويقتبس جملتك من التمرين 1.3 (Exercise 1.3 sentence).
 
-**جلسة المجموعة (Group session)، 60 دقيقة.** يعرض كل فرد (everyone demos) التمرين 1.3(c) وجملة `SYSTEM` الخاصة به، ويقارن النسب العربية (compares Arabic ratios). ويرسم كل شخص الحلقة من الذاكرة (draws the loop from memory) ويشير إلى السطر الذي يوقفها (the line that stops it). اختتموا بالنقاش (arguing) حول «متى (ومتى لا) تستخدم الوكلاء»، وهو قسم «When (and when not) to use agents».
+**جلسة المجموعة (Group session)، 60 دقيقة.** يعرض كل فرد (everyone demos) التمرين 1.3 وجملة `SYSTEM` الخاصة به، ويقارن النسب العربية. ويرسم كل شخص الحلقة من الذاكرة ويشير إلى السطر الذي يوقفها. اختتموا بالنقاش (arguing) حول «متى (ومتى لا) تستخدم الوكلاء»، وهو قسم «When to use agents».
 
-**ابنِه مع Claude Code (Build it with Claude Code).** أعطِ هذه المواصفة (spec) إلى Claude Code في مستودع فارغ (an empty repository)، في وضع التخطيط (plan mode) — وتحقق من توثيق Claude Code الحالي (current Claude Code documentation) — وراجع خطته (its plan) قبل أن يعدّل أي شيء:
+**ابنِه مع Claude Code (Build it with Claude Code).** أعطِ هذه المواصفة (spec) إلى Claude Code في مستودع فارغ، في وضع التخطيط (plan mode) — وتحقق من توثيق Claude Code الحالي — وراجع خطته قبل أن يعدّل أي شيء:
 
 ```text
 Goal: chat.py (a chatbot with memory), trim.py (trim(history, max_tokens)) and
@@ -534,41 +534,41 @@ gets one user message holding three tool_results.
 ```
 
 **تحقق قبل أن تقبله (Verify before you accept it).**
-- شغّل الاختبارات (run the tests)، ثم اكسر الشيفرة عمدًا (break the code on purpose) بحذف إضافة رسالة المساعد (drop the assistant append) وضبط الحد على 1 (set the cap to 1)، وتأكد من أن اختبارًا يفشل في كل مرة (a test fails each time).
-- ابحث في الفرق (diff) عن `temperature` و`content[0]` و`tool_choice` و`eval(` والمفاتيح المكتوبة داخل الشيفرة (hard-coded keys) ومعرّفات النماذج (model ids) غير المقروءة من `MODEL`.
-- اقرأ الحلقة بنفسك (read the loop yourself): حدّ للخطوات (a cap)، وكل سبب توقف (every stop reason)، وكل معرّف `tool_use` يُجاب عنه في رسالة واحدة، والإخفاقات بوصفها `is_error`.
-- تأكد من أن الملفات التي طلبتها وحدها هي التي تغيّرت (only the files you asked for changed). والمزيد عن فحص الشيفرة التي يكتبها الوكيل (checking agent-written code): [*اختبار البرمجيات (Software Testing)*، الدرس 6.1 — التحقق من الشيفرة المولَّدة بالذكاء الاصطناعي (Verifying AI-generated code)](../testing/index.ar.html#/6.1).
+- شغّل الاختبارات (run the tests)، ثم اكسر الشيفرة عمدًا (break the code on purpose) بحذف إضافة رسالة المساعد وضبط الحد على 1 (set the cap to 1)، وتأكد من أن اختبارًا يفشل في كل مرة.
+- ابحث في الفرق (diff) عن `temperature` و`content[0]` و`tool_choice` و`eval(` والمفاتيح المكتوبة داخل الشيفرة (hard-coded keys) ومعرّفات النماذج غير المقروءة من `MODEL`.
+- اقرأ الحلقة بنفسك: حدّ للخطوات، وكل سبب توقف، وكل معرّف `tool_use` يُجاب عنه في رسالة واحدة، والإخفاقات بوصفها `is_error`.
+- تأكد من أن الملفات التي طلبتها وحدها هي التي تغيّرت. والمزيد عن فحص الشيفرة التي يكتبها الوكيل: [*اختبار البرمجيات*، الدرس 6.1 — التحقق من الشيفرة المولَّدة بالذكاء الاصطناعي (Verifying AI-generated code)](../testing/index.ar.html#/6.1).
 
-## 🛠️ التمارين (Exercises)
-في `NOTES.md`، اذكر أي الملاحظات جاءت من النسخة المحاكاة (the mock) وأيها من نموذج حقيقي (a real model).
-- 🟢 **التمرين 1.1: اكسره عمدًا، ثم اكتب `trim()` (Exercise 1.1: break it on purpose, then write trim()).** أغرق روبوت المحادثة (overflow the chatbot) كما هو موضح، وسجّل الخطأ (record the error)، ثم اكتب `trim(history, max_tokens)` مع اختبارات: إبقاء أحدث رسالة (newest message kept)، ورسالة المستخدم أولًا (user message first)، وعدم تعديل المُدخل أبدًا (input never mutated). *يكتمل عندما (Done when):* يعمل `big.txt` حتى النهاية مع ربط دالة trim الخاصة بك (your trim wired in). وعلى واجهة البرمجة الحقيقية (real API) استخدم ميزانية صغيرة (small budget) من 2,000 رمز؛ ولا تملأ نافذة حقيقية أبدًا.
-- 🟡 **التمرين 1.2: فحص تكلفة العربية (Exercise 1.2: Arabic cost check).** *يحتاج إلى واجهة البرمجة الحقيقية (Needs the real API)* (`count_tokens`). عُدّ رموز فقرة إنجليزية من 200 كلمة ونسخة عربية منها (an Arabic version) — ترجمها بـ Claude Code ثم راجعها — بـ `MODEL` الخاص بك. *يكتمل عندما (Done when):* يحتوي `NOTES.md` على العدّين (both counts)، والنسبة، ومعرّف النموذج والتاريخ (model id and date)، وما تفعله النسبة بتكلفة محادثة من ستة أدوار (a six-turn chat's cost). وأعداد النسخة المحاكاة (the mock's counts) تأتي من قاعدة مصطنعة (made-up rule) ولا معنى لها هنا. لا مفتاح بعد؟ اكتب «لم يُقَس» (not measured) بدل التخمين (rather than a guess).
-- 🔴 **التمرين 1.3: اجعله يسيء التصرف، ثم أصلحه (Exercise 1.3: make it misbehave, then fix it).** (a) دون اتصال (offline): `max_steps=1` مع ثلاث تذاكر، ثم `[mock:loop]` بحد قدره 5. (b) *يحتاج إلى واجهة البرمجة الحقيقية (Needs the real API):* غيّر الوصف فقط إلى `does stuff`، ثم أعد تسمية الأداة إلى `tool_one` وأسقط وصف الخاصية (property description)؛ خمس مرات تشغيل لكل حالة (five runs each). (c) *يحتاج إلى واجهة البرمجة الحقيقية:* اسأل عن التذكرة 9999 خمس مرات: تقرير صادق (honest report) أم حالة مختلقة (invented status)؟ أضف جملة `SYSTEM` واحدة تمنع النوع المختلق وشغّل خمس مرات أخرى، وإن كانت الخمس كلها صادقة فاذكر ذلك. *يكتمل عندما (Done when):* يكون لكل جزء ملاحظة (each part has a note). لا تستطيع النسخة المحاكاة (the mock) إظهار (b) أو (c): فهي لا تستدعي أبدًا أداة لا يتشارك اسمها ووصفها أي كلمة مع السؤال، وتردّد نتائج الأدوات (echoes tool results)، فينجح (c) في الحالتين (passes either way).
+## 🛠️ التمارين
+في `NOTES.md`، اذكر أي الملاحظات جاءت من النسخة المحاكاة وأيها من نموذج حقيقي.
+- 🟢 **التمرين 1.1: اكسره عمدًا، ثم اكتب `trim()` (Exercise 1.1: break it on purpose, then write trim()).** أغرق روبوت المحادثة كما هو موضح، وسجّل الخطأ، ثم اكتب `trim(history, max_tokens)` مع اختبارات: إبقاء أحدث رسالة، ورسالة المستخدم أولًا، وعدم تعديل المُدخل أبدًا. *يكتمل عندما:* يعمل `big.txt` حتى النهاية مع ربط دالة trim الخاصة بك. وعلى واجهة البرمجة الحقيقية استخدم ميزانية صغيرة (small budget) من 2,000 رمز؛ ولا تملأ نافذة حقيقية أبدًا.
+- 🟡 **التمرين 1.2: فحص تكلفة العربية (Exercise 1.2: Arabic cost check).** *يحتاج إلى واجهة البرمجة الحقيقية* (`count_tokens`). عُدّ رموز فقرة إنجليزية من 200 كلمة ونسخة عربية منها — ترجمها بـ Claude Code ثم راجعها — بـ `MODEL` الخاص بك. *يكتمل عندما:* يحتوي `NOTES.md` على العدّين (both counts)، والنسبة، ومعرّف النموذج والتاريخ، وما تفعله النسبة بتكلفة محادثة من ستة أدوار. وأعداد النسخة المحاكاة تأتي من قاعدة مصطنعة (made-up rule) ولا معنى لها هنا. لا مفتاح بعد؟ اكتب «لم يُقَس» بدل التخمين.
+- 🔴 **التمرين 1.3: اجعله يسيء التصرف، ثم أصلحه (Exercise 1.3: make it misbehave, then fix it).** دون اتصال: `max_steps=1` مع ثلاث تذاكر، ثم `[mock:loop]` بحد قدره 5. *يحتاج إلى واجهة البرمجة الحقيقية:* غيّر الوصف فقط إلى `does stuff`، ثم أعد تسمية الأداة إلى `tool_one` وأسقط وصف الخاصية (property description)؛ خمس مرات تشغيل لكل حالة. *يحتاج إلى واجهة البرمجة الحقيقية:* اسأل عن التذكرة 9999 خمس مرات: تقرير صادق (honest report) أم حالة مختلقة (invented status)؟ أضف جملة `SYSTEM` واحدة تمنع النوع المختلق وشغّل خمس مرات أخرى، وإن كانت الخمس كلها صادقة فاذكر ذلك. *يكتمل عندما:* يكون لكل جزء ملاحظة. لا تستطيع النسخة المحاكاة إظهار أو: فهي لا تستدعي أبدًا أداة لا يتشارك اسمها ووصفها أي كلمة مع السؤال، وتردّد نتائج الأدوات، فينجح في الحالتين.
 
-## ⚠️ أخطاء وفخاخ (Mistakes and traps)
-- **معاملة النسخة المحاكاة كأنها حَكَم (treating the mock as a judge).** تثبت أن الحلقة تعمل، لا أن موجّهك أو وصف أداتك جيد؛ فكرّر على نموذج حقيقي (repeat on a real model).
-- **الإجابة عن بعض معرّفات `tool_use` فقط، أو تقسيم النتائج على عدة رسائل (splitting results across messages).** المعرّف الناقص يعني خطأ 400 (a missing id)، والتقسيم يكسر الصيغة (breaks the format). أرسل رسالة مستخدم واحدة، و`tool_result` واحدة لكل معرّف (one per id).
-- **حلقة حيث يكفي استدعاء دالة (a loop where a function call would do).** إن كانت الخطوات ثابتة (fixed) — ابحث ثم نسّق (look up, then format) — فاستدعِ الأداة في شيفرتك أنت؛ ولا تستخدم الحلقة إلا حين يجب على النموذج أن يختار (must choose) في الوحدة 5.
+## ⚠️ أخطاء وفخاخ
+- **معاملة النسخة المحاكاة كأنها حَكَم (treating the mock as a judge).** تثبت أن الحلقة تعمل، لا أن موجّهك أو وصف أداتك جيد؛ فكرّر على نموذج حقيقي.
+- **الإجابة عن بعض معرّفات `tool_use` فقط، أو تقسيم النتائج على عدة رسائل (splitting results across messages).** المعرّف الناقص يعني خطأ 400، والتقسيم يكسر الصيغة. أرسل رسالة مستخدم واحدة، و`tool_result` واحدة لكل معرّف.
+- **حلقة حيث يكفي استدعاء دالة (a loop where a function call would do).** إن كانت الخطوات ثابتة (fixed) — ابحث ثم نسّق — فاستدعِ الأداة في شيفرتك أنت؛ ولا تستخدم الحلقة إلا حين يجب على النموذج أن يختار في الوحدة 5.
 - **الوثوق بـ `block.input` (trusting block.input).** إنه مخرجات النموذج (model output): تحقق من صحته (validate it) وافحص الصلاحيات (check permissions) في `run_tools` في الوحدة 13.
 
-## 🧾 الخلاصة (Recap)
-- روبوت المحادثة (chatbot) قائمة ودالة (a list and a function)؛ أرسل أقل يعرف أقل.
-- تجنب خطأ 400 الناتج عن الطول الزائد (the too-long 400) بعرض مقلَّم (trimmed view) وسجل كامل (full log). والتقليم ينسى (trimming forgets).
-- النموذج يقترح وشيفرتك تقرر (the model proposes, your code disposes): كل ضابط (control) مكانه تلك الفجوة (that gap).
-- ضع سقفًا للخطوات (cap the steps)، وعالج كل سبب توقف (handle every stop reason)، وأجب عن كل معرّف في رسالة واحدة (answer every id in one message)، وعلّم الإخفاقات (flag failures) بـ `is_error`.
+## 🧾 الخلاصة
+- روبوت المحادثة قائمة ودالة؛ أرسل أقل يعرف أقل.
+- تجنب خطأ 400 الناتج عن الطول الزائد (the too-long 400) بعرض مقلَّم (trimmed view) وسجل كامل. والتقليم ينسى (trimming forgets).
+- النموذج يقترح وشيفرتك تقرر: كل ضابط (control) مكانه تلك الفجوة.
+- ضع سقفًا للخطوات، وعالج كل سبب توقف، وأجب عن كل معرّف في رسالة واحدة، وعلّم الإخفاقات بـ `is_error`.
 
-## ✍️ اختبر نفسك (Check yourself)
+## ✍️ اختبر نفسك
 
 **1. تؤدي عملية نشر (deployment) إلى إعادة تشغيل عملية روبوت المحادثة (chatbot process) فتُنسى كل محادثة (every conversation is forgotten). أين كانت الذاكرة (the memory)؟**
 
-- A. في قائمة `history` في Python داخل العملية (inside the process)
-- B. في الذاكرة قصيرة المدى (short-term memory) للنموذج، التي تُعاد تهيئتها مع كل نشر (resets on each deploy)
+- A. في قائمة `history` في Python داخل العملية
+- B. في الذاكرة قصيرة المدى (short-term memory) للنموذج، التي تُعاد تهيئتها مع كل نشر
 - C. في جلسة من جانب الخادم (server-side session) مرتبطة بمفتاح الواجهة (API key)
 - D. في موجّه النظام (system prompt) الذي تخزّنه حزمة التطوير (SDK) مؤقتًا
 
 <details><summary>الإجابة</summary>
 
-**A.** واجهة البرمجة عديمة الحالة (stateless)؛ والذاكرة الوحيدة كانت قائمة عمليتك (your process's list). 🟢 المختبر A (Lab A).
+**A.** واجهة البرمجة عديمة الحالة (stateless)؛ والذاكرة الوحيدة كانت قائمة عمليتك. 🟢 المختبر A (Lab A).
 
 </details>
 
@@ -576,56 +576,56 @@ gets one user message holding three tool_results.
 
 - A. قُلِّم موجّه النظام (system prompt) مع أقدم دور (oldest turn)
 - B. تبدأ القائمة الآن برسالة مساعد (assistant message)
-- C. غيّرت `trim()` قائمة المستدعي (the caller's list) وأضاعت السجل (lost the log)
-- D. تعدّ النسخة المحاكاة (mock) والواجهة الحقيقية الرموز بطريقتين مختلفتين (count tokens differently)
+- C. غيّرت `trim()` قائمة المستدعي وأضاعت السجل
+- D. تعدّ النسخة المحاكاة (mock) والواجهة الحقيقية الرموز بطريقتين مختلفتين
 
 <details><summary>الإجابة</summary>
 
-**B.** حذف رسالة واحدة من قائمة تبدأ برسالة مستخدم يترك رسالة مساعد في المقدمة (leaves an assistant message first)، وهو ما ترفضه واجهة البرمجة (which the API rejects)؛ فأسقط الرد اليتيم (orphaned reply) أيضًا. 🟡 التمرين 1.1 (Exercise 1.1).
+**B.** حذف رسالة واحدة من قائمة تبدأ برسالة مستخدم يترك رسالة مساعد في المقدمة، وهو ما ترفضه واجهة البرمجة؛ فأسقط الرد اليتيم (orphaned reply) أيضًا. 🟡 التمرين 1.1 (Exercise 1.1).
 
 </details>
 
 **3. يعيد استدعاء `messages.create()` العادي كتلة `tool_use`. هل نُفِّذت الأداة (Has the tool run)، ومن ينفّذها (who runs it)؟**
 
-- A. لا؛ شيفرتك تنفّذها، أو ترفض تنفيذها (your code runs it, or refuses to)
-- B. نعم؛ نفّذتها واجهة البرمجة قبل الرد (ran it before replying)
+- A. لا؛ شيفرتك تنفّذها، أو ترفض تنفيذها
+- B. نعم؛ نفّذتها واجهة البرمجة قبل الرد
 - C. لا؛ تنفّذها خوادم Anthropic (servers) بمجرد أن ترسل نتيجة
 - D. نعم؛ تنفّذها حزمة التطوير (SDK) تلقائيًا للأدوات التي عرّفتها أنت (declared)
 
 <details><summary>الإجابة</summary>
 
-**A.** النموذج يطلب فقط (only asks)؛ وبرنامجك هو الذي يقرر هل يلبّي الطلب (honour it)، وحتى مشغّل الأدوات (tool runner) في حزمة التطوير (SDK) لا يشغّل إلا دوالك أنت. 🟡 من روبوت المحادثة إلى الوكيل (From chatbot to agent).
+**A.** النموذج يطلب فقط (only asks)؛ وبرنامجك هو الذي يقرر هل يلبّي الطلب (honour it)، وحتى مشغّل الأدوات (tool runner) في حزمة التطوير (SDK) لا يشغّل إلا دوالك أنت. 🟡 من روبوت المحادثة إلى الوكيل.
 
 </details>
 
 **4. يحتوي رد واحد على ثلاث كتل `tool_use`. كيف ينبغي أن تجيب الحلقة (how should the loop answer)؟**
 
-- A. رسالة مستخدم واحدة تضم النتائج الثلاث مدموجة في سلسلة نصية واحدة (joined as one string)
-- B. رسالة مساعد واحدة (one assistant message) تحمل النتائج الثلاث
-- C. النتيجة الأولى فقط، لأن النموذج سيسأل مجددًا (will ask again)
-- D. رسالة مستخدم واحدة تحمل ثلاث كتل `tool_result`، واحدة لكل معرّف (one per id)
+- A. رسالة مستخدم واحدة تضم النتائج الثلاث مدموجة في سلسلة نصية واحدة
+- B. رسالة مساعد واحدة تحمل النتائج الثلاث
+- C. النتيجة الأولى فقط، لأن النموذج سيسأل مجددًا
+- D. رسالة مستخدم واحدة تحمل ثلاث كتل `tool_result`، واحدة لكل معرّف
 
 <details><summary>الإجابة</summary>
 
-**D.** يحتاج كل معرّف إلى كتلة `tool_result` مطابقة في رسالة مستخدم واحدة؛ والسلسلة المدموجة (joined string) أو المعرّف الناقص (missing id) يعني خطأ 400. 🔴 قواعد البروتوكول (The protocol rules).
+**D.** يحتاج كل معرّف إلى كتلة `tool_result` مطابقة في رسالة مستخدم واحدة؛ والسلسلة المدموجة (joined string) أو المعرّف الناقص (missing id) يعني خطأ 400. 🔴 قواعد البروتوكول.
 
 </details>
 
 **5. تخفق خدمة التذاكر (ticket service) في كل استدعاء، وليس للحلقة حدّ للخطوات (no step cap). على ماذا يمكنك الاعتماد لإنهاء الحلقة (what can you rely on to end the loop)؟**
 
-- A. ترفض واجهة البرمجة (API) استدعاءً مطابقًا ومتكررًا للأداة بوصفه نسخة مكررة (rejects a repeated identical tool call as a duplicate)
-- B. يتوقف النموذج دائمًا من تلقاء نفسه بعد ثلاث محاولات فاشلة (three failed attempts)
-- C. حدّك أنت للخطوات (your own step cap) فقط؛ فلا الواجهة ولا حزمة التطوير تنهيها (neither the API nor the SDK ends it)
-- D. تنهيها حزمة التطوير (SDK) بمجرد استنفاد إعادتي المحاولة الافتراضيتين (its two default retries are used up)
+- A. ترفض واجهة البرمجة (API) استدعاءً مطابقًا ومتكررًا للأداة بوصفه نسخة مكررة
+- B. يتوقف النموذج دائمًا من تلقاء نفسه بعد ثلاث محاولات فاشلة
+- C. حدّك أنت للخطوات فقط؛ فلا الواجهة ولا حزمة التطوير تنهيها
+- D. تنهيها حزمة التطوير (SDK) بمجرد استنفاد إعادتي المحاولة الافتراضيتين
 
 <details><summary>الإجابة</summary>
 
-**C.** لا شيء في واجهة البرمجة أو حزمة التطوير ينهي الحلقة (Nothing in the API or SDK ends the loop)؛ فالنموذج هو الذي يقرر هل يواصل السؤال، لذا لا يحدّ التكلفة (bounds the cost) إلا سقفك أنت، لأن كل خطوة تعيد إرسال السجل المتنامي (growing history). وإعادات محاولة حزمة التطوير (SDK's retries) تغطي إخفاقات HTTP، لا حلقتك. 🔴 الحلقات الثلاث (The three loops).
+**C.** لا شيء في واجهة البرمجة أو حزمة التطوير ينهي الحلقة؛ فالنموذج هو الذي يقرر هل يواصل السؤال، لذا لا يحدّ التكلفة إلا سقفك أنت، لأن كل خطوة تعيد إرسال السجل المتنامي (growing history). وإعادات محاولة حزمة التطوير (SDK's retries) تغطي إخفاقات HTTP، لا حلقتك. 🔴 الحلقات الثلاث.
 
 </details>
 
-## 📚 المراجع (References)
+## 📚 المراجع
 - Claude API، نظرة عامة على استخدام الأدوات (Tool use overview): https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview
-- Claude API، الأخطاء (Errors): https://platform.claude.com/docs/en/api/errors
+- Claude API، الأخطاء: https://platform.claude.com/docs/en/api/errors
 - Anthropic، «Building effective agents»: https://www.anthropic.com/engineering
-- ملف README لعدّة المختبر (Lab kit README)، ويشمل النسخة المحاكاة (mock) والتوجيهات (directives) ومتغيرات البيئة (environment variables): https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/aiapps/labkit
+- ملف README لعدّة المختبر (Lab kit README)، ويشمل النسخة المحاكاة والتوجيهات (directives) ومتغيرات البيئة (environment variables): https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/aiapps/labkit

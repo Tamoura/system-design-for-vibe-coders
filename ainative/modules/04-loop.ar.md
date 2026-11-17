@@ -1,32 +1,32 @@
-# الوحدة 4 — الحلقة اليومية (The daily loop)
+# الوحدة 4 — الحلقة اليومية
 
-*الوحدة 4 هي الدورة القصيرة المتكررة (the short, repeatable cycle) التي تنجز بها أنت ووكيلك (agent) عملًا حقيقيًا: استكشف (explore)، وخطّط (plan)، ونفّذ خطوة صغيرة واحدة (implement one small step)، وافحصها بنفسك (check it yourself)، واقرأ الفروقات (read the diff)، وأودِع (commit)، ثم ابدأ من جديد. الدرس 4.1 هو درس المفاهيم (the concept lesson) الذي تدور أحداثه في فريق منصة المدفوعات (Payments Platform) ببنك نجم (Najm Bank): ما تفعله قبل الجلسة (before the session) — شجرة نظيفة (a clean tree) وفرع لكل مهمة (a branch per task) وخط أساس أخضر (a green baseline) — وسير العمل الذي توصي به وثائق Claude Code (the workflows the Claude Code documentation recommends)، ونقاط الاستعادة والرجوع (checkpoints and rewind)، ووضع التخطيط (plan mode)، وست إشارات تدل على أن الوكيل يضل الطريق (six cues that an agent is going astray)، وقاعدة الفشلين (the two-failure rule)، ومتى تتولى القيادة (when to take the wheel)، ونظافة الجلسة (session hygiene) وسجل الوكيل (the agent log)، مع خط زمني لجلسة تُعلَّم فيه التدخلات (a session timeline whose interventions are marked). وينتهي بمُنتَجين (two artefacts) هما قائمة تحقق الحلقة (the Loop checklist) وبطاقة إشارات المقاطعة (the Interruption cues card)، وبوصف Meta نفسها للتحقق بوصفه معيار «انتهى» (verification as the bar for done). أما الدرس 4.2 فهو المختبر (the lab): التذكرة REMIT-318 من حصة (Hessa)، مالكة المنتج (product owner)، تطلب من نجم ريميت (Najm Remit) أن ينبّه العميل، بالإنجليزية أو بالعربية، حين يبلغ به تحويل 80% من حده اليومي (80% of their daily limit). تكتب مواصفة (spec) وخطة (plan)، وتعمل بإيداعات صغيرة (small commits)، وتضيف اختبارات (tests)، ويشغّل المُقيِّم دون اتصال (offline grader) اختبارات قبول خفية (hidden acceptance tests) ويكسر ميزتك عمدًا (breaks your feature on purpose) ليرى هل تلحظ اختباراتك ذلك. والوكيل موصى به لا مطلوب (An agent is recommended, not required). وكل ما يخص جانب نجم خيالي (Everything on the Najm side is fictional).*
+*الوحدة 4 هي الدورة القصيرة المتكررة التي تنجز بها أنت ووكيلك (agent) عملًا حقيقيًا: استكشف (explore)، وخطّط (plan)، ونفّذ خطوة صغيرة واحدة، وافحصها بنفسك، واقرأ الفروقات (read the diff)، وأودِع (commit)، ثم ابدأ من جديد. الدرس 4.1 هو درس المفاهيم الذي تدور أحداثه في فريق منصة المدفوعات (Payments Platform) ببنك نجم (Najm Bank): ما تفعله قبل الجلسة — شجرة نظيفة وفرع لكل مهمة وخط أساس أخضر — وسير العمل الذي توصي به وثائق Claude Code، ونقاط الاستعادة والرجوع (checkpoints and rewind)، ووضع التخطيط (plan mode)، وست إشارات تدل على أن الوكيل يضل الطريق، وقاعدة الفشلين، ومتى تتولى القيادة، ونظافة الجلسة (session hygiene) وسجل الوكيل، مع خط زمني لجلسة تُعلَّم فيه التدخلات. وينتهي بمُنتَجين (two artefacts) هما قائمة تحقق الحلقة وبطاقة إشارات المقاطعة، وبوصف Meta نفسها للتحقق بوصفه معيار «انتهى». أما الدرس 4.2 فهو المختبر: التذكرة REMIT-318 من حصة (Hessa)، مالكة المنتج (product owner)، تطلب من نجم ريميت (Najm Remit) أن ينبّه العميل، بالإنجليزية أو بالعربية، حين يبلغ به تحويل 80% من حده اليومي (80% of their daily limit). تكتب مواصفة (spec) وخطة، وتعمل بإيداعات صغيرة (small commits)، وتضيف اختبارات (tests)، ويشغّل المُقيِّم دون اتصال (offline grader) اختبارات قبول خفية (hidden acceptance tests) ويكسر ميزتك عمدًا ليرى هل تلحظ اختباراتك ذلك. والوكيل موصى به لا مطلوب. وكل ما يخص جانب نجم خيالي.*
 
-> **التركيز (Focus):** Workflow — العادة 3 (habit 3)، *خطوات صغيرة مُتحقَّق منها (Small verified steps)*: خذ خطوة صغيرة واحدة في كل مرة (one small step at a time)، وافحصها بنفسك (check it yourself)، واحتفظ بإيداع تعود إليه (keep a commit to return to)، وأوقف الوكيل مبكرًا لا متأخرًا (stop the agent early rather than late).
+> **التركيز (Focus):** Workflow — العادة 3 (habit 3)، *خطوات صغيرة مُتحقَّق منها (Small verified steps)*: خذ خطوة صغيرة واحدة في كل مرة، وافحصها بنفسك، واحتفظ بإيداع تعود إليه، وأوقف الوكيل مبكرًا لا متأخرًا.
 
 ---
 
-# 4.1 — استكشف وخطّط ونفّذ وافحص وأودِع: الخطوات الصغيرة ونقاط الاستعادة ومتى تتولى القيادة (Explore, plan, implement, check, commit: small steps, checkpoints and when to take the wheel)
-*المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 3.1* · *التركيز (Focus): Workflow*
+# 4.1 — استكشف وخطّط ونفّذ وافحص وأودِع: الخطوات الصغيرة ونقاط الاستعادة ومتى تتولى القيادة
+*المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 3.1* · *التركيز: Workflow*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
-- للحلقة اليومية (the daily loop) ست حركات (six moves): **الاستكشاف (explore)** للقراءة فقط (read-only)، و**التخطيط (plan)**، و**تنفيذ خطوة صغيرة واحدة (implement one small step)**، و**فحصها (check)** بنفسك، و**قراءة الفروقات (read the diff)**، و**الإيداع (commit)**. والوحدة هي الخطوة لا التذكرة (The unit is the step, not the ticket).
-- حضّر أولًا (Prepare first): شجرة نظيفة (a clean tree)، وفرع لكل مهمة (a branch per task)، وخط أساس أخضر (a green baseline)، وجلسة جديدة (a fresh session).
-- الإيداعات نقاط حفظ (Commits are save points). أما نقاط الاستعادة (Checkpoints) (`Esc` `Esc`، `/rewind`) فتتراجع مؤقتًا عن تعديلات الوكيل (briefly undo the agent's edits)؛ وهي لا تحل محل git (do not replace git).
-- توقف عند أول إشارة (Stop at the first cue): التخبّط (thrashing)، أو تعديلات خارج النطاق (edits out of scope)، أو الأمر الفاشل نفسه (the same failing command)، أو اعتذارات بلا دليل (apologies without evidence). صحِّح مرة واحدة (Correct once). وبعد **محاولتين فاشلتين غيِّر المنهج (two failed attempts, change the approach)**: مهمة أصغر (smaller task)، وسياق جديد (fresh context)، ومواصفة أفضل (better spec).
-- تولَّ القيادة (Take the wheel) حين تكون كتابة الإصلاح أسرع من شرحه (typing the fix is faster than explaining it)، أو حين لا يرى الوكيل ما تراه أنت (the agent cannot see what you can).
+- للحلقة اليومية ست حركات (six moves): **الاستكشاف (explore)** للقراءة فقط (read-only)، و**التخطيط (plan)**، و**تنفيذ خطوة صغيرة واحدة (implement one small step)**، و**فحصها (check)** بنفسك، و**قراءة الفروقات (read the diff)**، و**الإيداع (commit)**. والوحدة هي الخطوة لا التذكرة.
+- حضّر أولًا (Prepare first): شجرة نظيفة، وفرع لكل مهمة، وخط أساس أخضر، وجلسة جديدة.
+- الإيداعات نقاط حفظ. أما نقاط الاستعادة (Checkpoints) (`Esc` `Esc`، `/rewind`) فتتراجع مؤقتًا عن تعديلات الوكيل؛ وهي لا تحل محل git.
+- توقف عند أول إشارة: التخبّط (thrashing)، أو تعديلات خارج النطاق، أو الأمر الفاشل نفسه، أو اعتذارات بلا دليل. صحِّح مرة واحدة (Correct once). وبعد **محاولتين فاشلتين غيِّر المنهج (two failed attempts, change the approach)**: مهمة أصغر (smaller task)، وسياق جديد (fresh context)، ومواصفة أفضل (better spec).
+- تولَّ القيادة (Take the wheel) حين تكون كتابة الإصلاح أسرع من شرحه، أو حين لا يرى الوكيل ما تراه أنت.
 - أكبر فخ (Biggest trap): الانتظار (waiting).
 
-## 🧭 لماذا يهم (Why it matters)
-في يوم جمعة (On a Friday)، وهو يوم مُختلَق (a constructed day)، تعطي لجين (Lujain)، المهندسة حديثة التخرج (graduate engineer)، وكيلها (her agent) التذكرة REMIT-269، وهي خيار `--since` للأمر `history`، في موجّه واحد (in one prompt) ثم تدخل اجتماعًا. وحين تعود يكون قد تغيّر 14 ملفًا و612 سطرًا (14 files and 612 lines have changed): الخيار نفسه (the option)، وإعادة هيكلة المحلِّل (a parser refactor)، وتنظيف في `fees.py` (a tidy-up)، وثلاثة اختبارات معدَّلة (three edited tests). كلها تنجح (All pass)؛ فتودعها (commits it) باسم `wip`. وتسأل ندى (Nada)، قائدة هندسة الجودة (quality engineering lead)، أيّ الأسطر الـ612 تحتاجها الميزة (which of the 612 lines the feature needs)؟ فلا تستطيع لجين الجواب، وكان أحد الاختبارات المعدَّلة يحرس حدًّا بين مستويين من الرسوم (guard a fee-tier boundary). فيُقسَّم طلب الدمج (The pull request) إلى أربعة، ويستغرق فك ما أُدخل على `fees.py` (unpicking) أطول مما استغرقته الميزة (longer than the feature did).
+## 🧭 لماذا يهم
+في يوم جمعة، وهو يوم مُختلَق، تعطي لجين (Lujain)، المهندسة حديثة التخرج (graduate engineer)، وكيلها التذكرة REMIT-269، وهي خيار `--since` للأمر `history`، في موجّه واحد ثم تدخل اجتماعًا. وحين تعود يكون قد تغيّر 14 ملفًا و612 سطرًا (14 files and 612 lines have changed): الخيار نفسه، وإعادة هيكلة المحلِّل، وتنظيف في `fees.py`، وثلاثة اختبارات معدَّلة. كلها تنجح؛ فتودعها (commits it) باسم `wip`. وتسأل ندى (Nada)، قائدة هندسة الجودة (quality engineering lead)، أيّ الأسطر الـ612 تحتاجها الميزة (which of the 612 lines the feature needs)؟ فلا تستطيع لجين الجواب، وكان أحد الاختبارات المعدَّلة يحرس حدًّا بين مستويين من الرسوم. فيُقسَّم طلب الدمج إلى أربعة، ويستغرق فك ما أُدخل على `fees.py` (unpicking) أطول مما استغرقته الميزة.
 
-لم يفعل الوكيل شيئًا غريبًا (Nothing the agent did was exotic). ما غاب هو الحلقة (The loop was missing): لا خطة تُقارَن بها الفروقات (no plan to hold the diff against)، ولا فحص بين الخطوات (no check between steps)، ولا إيداع تعود إليه (no commit to return to). وقد ربط تقرير DORA لعام 2024 ارتفاع اعتماد الذكاء الاصطناعي بانخفاض استقرار التسليم (lower delivery stability)، ويعزو مؤلفوه جزءًا من هذا الهبوط (dip) إلى أحجام الدفعات الأكبر (larger batch sizes)؛ وهذه ارتباطات استطلاعية (survey associations) لا إثبات للسبب (not proof of cause).
+لم يفعل الوكيل شيئًا غريبًا. ما غاب هو الحلقة: لا خطة تُقارَن بها الفروقات، ولا فحص بين الخطوات، ولا إيداع تعود إليه. وقد ربط تقرير DORA لعام 2024 ارتفاع اعتماد الذكاء الاصطناعي بانخفاض استقرار التسليم (lower delivery stability)، ويعزو مؤلفوه جزءًا من هذا الهبوط (dip) إلى أحجام الدفعات الأكبر (larger batch sizes)؛ وهذه ارتباطات استطلاعية (survey associations) لا إثبات للسبب.
 
-## 📐 كيف يعمل (How it works)
+## 📐 كيف يعمل
 
-### 🟢 الأساسيات (The essentials)
+### 🟢 الأساسيات
 
-**لفة واحدة (One lap).** تكون الخطوة صغيرة (A step is small) حين يكون لها سبب واحد للتغيير (one reason to change)، وفحص تستطيع تسميته في جملة (a check you can name in a sentence)، وفروقات تقرؤها في جلسة واحدة (a diff you can read in one sitting).
+**لفة واحدة (One lap).** تكون الخطوة صغيرة حين يكون لها سبب واحد للتغيير، وفحص تستطيع تسميته في جملة، وفروقات تقرؤها في جلسة واحدة.
 
 ```mermaid
 flowchart TD
@@ -43,18 +43,18 @@ flowchart TD
     J --> C
 ```
 
-في كل لفة (In each lap) **أنت** تذكر فحص الخطوة أولًا (state the step's check first)، وتشغّله بنفسك (run it yourself)، وتقرأ `git diff` والاختبارات أولًا (tests first)، وتكتب رسالة الإيداع (the commit message). أما **الوكيل** فيقرأ ويقترح ويعدّل (reads, proposes and edits)، ولا يودع إلا إذا طُلب منه (commits only when asked).
+في كل لفة **أنت** تذكر فحص الخطوة أولًا، وتشغّله بنفسك، وتقرأ `git diff` والاختبارات أولًا (tests first)، وتكتب رسالة الإيداع. أما **الوكيل** فيقرأ ويقترح ويعدّل، ولا يودع إلا إذا طُلب منه.
 
-**ما توصي به الوثائق (What the documentation recommends).** تتغير صفحة أفضل الممارسات (best-practices page) في Claude Code، فراجعها؛ وعبارات مثل «explore-plan-code-commit» أو «safe YOLO mode» ليست من عناوينها (are not its headings).
+**ما توصي به الوثائق (What the documentation recommends).** تتغير صفحة أفضل الممارسات (best-practices page) في Claude Code، فراجعها؛ وعبارات مثل «explore-plan-code-commit» أو «safe YOLO mode» ليست من عناوينها.
 
-| عنوان الصفحة أو موضوعها (The page's heading or topic) | خلاصته (Its gist) | أين نجده هنا (Here) |
+| عنوان الصفحة أو موضوعها | خلاصته | أين نجده هنا |
 |---|---|---|
-| **Explore first, then plan, then code** — استكشف أولًا ثم خطّط ثم اكتب الشيفرة | أربع مراحل (Four phases): الاستكشاف (Explore) والتخطيط (Plan) والتنفيذ (Implement) والإيداع (Commit). وضع التخطيط (plan mode): اضغط `Shift+Tab` حتى يظهر `⏸ plan mode on`، أو شغّل `claude --permission-mode plan`؛ ويفتح `Ctrl+G` الخطة في محررك (opens the plan in your editor). «إن كنت تستطيع وصف الفروقات في جملة واحدة فتجاوز الخطة» ⁦("If you could describe the diff in one sentence, skip the plan.")⁩ | هذا الدرس (This lesson) |
-| **Give Claude a way to verify its work** — امنح Claude طريقة للتحقق من عمله | «أعطِ Claude فحصًا يستطيع تشغيله: اختبارات أو بناءً أو لقطة شاشة للمقارنة» (Give Claude a check it can run: tests, a build, a screenshot to compare)، مثل «اكتب اختبارًا فاشلًا يعيد إنتاج المشكلة ثم أصلحها» (write a failing test that reproduces the issue, then fix it) | الدرس 5.1 (Lesson 5.1) |
-| **Run autonomously with auto mode** — شغّل باستقلالية بالوضع التلقائي | يراجع مُصنِّف (a classifier) الأوامر قبل تشغيلها (reviews commands before they run)، مثل `claude --permission-mode auto -p "fix all lint errors"` | الدرس 8.1 (Lesson 8.1) |
-| **Run multiple Claude sessions** — شغّل جلسات Claude متعددة | أشجار العمل (worktrees) وغيرها؛ وجلسة كاتب (a writer session) وجلسة مراجع (a reviewer session) في سياق جديد (fresh context) | الدرس 10.1 (Lesson 10.1) |
+| **Explore first, then plan, then code** — استكشف أولًا ثم خطّط ثم اكتب الشيفرة | أربع مراحل (Four phases): الاستكشاف والتخطيط والتنفيذ (Implement) والإيداع. وضع التخطيط: اضغط `Shift+Tab` حتى يظهر `⏸ plan mode on`، أو شغّل `claude --permission-mode plan`؛ ويفتح `Ctrl+G` الخطة في محررك. «إن كنت تستطيع وصف الفروقات في جملة واحدة فتجاوز الخطة» ⁦⁩ | هذا الدرس |
+| **Give Claude a way to verify its work** — امنح Claude طريقة للتحقق من عمله | «أعطِ Claude فحصًا يستطيع تشغيله: اختبارات أو بناءً أو لقطة شاشة للمقارنة»، مثل «اكتب اختبارًا فاشلًا يعيد إنتاج المشكلة ثم أصلحها» | الدرس 5.1 (Lesson 5.1) |
+| **Run autonomously with auto mode** — شغّل باستقلالية بالوضع التلقائي | يراجع مُصنِّف الأوامر قبل تشغيلها، مثل `claude --permission-mode auto -p "fix all lint errors"` | الدرس 8.1 (Lesson 8.1) |
+| **Run multiple Claude sessions** — شغّل جلسات Claude متعددة | أشجار العمل (worktrees) وغيرها؛ وجلسة كاتب وجلسة مراجع في سياق جديد | الدرس 10.1 (Lesson 10.1) |
 | **Run non-interactive mode; fan out across files** — شغّل الوضع غير التفاعلي؛ ووزّع العمل على الملفات | `claude -p` في التكامل المستمر (CI) أو السكربتات (scripts)، و`--allowedTools`، و`/batch` | الدرسان 9.1 و10.1 (Lessons 9.1 and 10.1) |
-| **Adversarial review** — المراجعة الخصومية؛ موضوع وليس عنوانًا (a topic, not a heading) | وكيل فرعي (subagent) يراجع الفروقات (the diff) في سياق جديد (fresh context)؛ والمراجعون «سيبلّغون عادةً عن بعض الملاحظات حتى حين يكون العمل سليمًا» (will usually report some, even when the work is sound) | الدرس 5.1 (Lesson 5.1) |
+| **Adversarial review** — المراجعة الخصومية؛ موضوع وليس عنوانًا | وكيل فرعي (subagent) يراجع الفروقات في سياق جديد؛ والمراجعون «سيبلّغون عادةً عن بعض الملاحظات حتى حين يكون العمل سليمًا» | الدرس 5.1 (Lesson 5.1) |
 
 **قبل الجلسة: نظافة git (Before the session: git hygiene).**
 
@@ -70,64 +70,64 @@ git add -p                                # stage what you read
 git commit -m "feat(cli): filter history with --since"
 ```
 
-- **فرع لكل مهمة وشجرة نظيفة (A branch per task and a clean tree)** يجعلان كل سطر في `git diff` من عمل الوكيل. و**خط الأساس الأخضر (A green baseline)** يجعل أي اختبار أحمر لاحق خبرًا (makes a later red test news).
-- **الإيداعات نقاط حفظ (Commits are save points)**، تُجرى حين تكون الخطوة خضراء (when a step is green). يتخلص `git restore <file>` من التعديلات غير المودَعة في ملف واحد (drops uncommitted edits to one file)؛ ويلغي `git revert <sha>` إيداعًا دون إعادة كتابة التاريخ (undoes a commit without rewriting history).
-- **Conventional Commits.** يطلب `CONTRIBUTING.md` في ريميت (Remit) الصيغة `type(scope): subject`: نوعًا من قائمة محددة (a listed type)، ونطاقًا إلزاميًا بأحرف صغيرة (a required lower-case scope)، وموضوعًا بصيغة الأمر دون نقطة في آخره (an imperative subject without a full stop)، وسطرًا أول (header) لا يتجاوز 72 حرفًا (up to 72 characters). والمواصفة العامة (The public specification) تجعل النطاق اختياريًا؛ وريميت أكثر صرامة.
+- **فرع لكل مهمة وشجرة نظيفة (A branch per task and a clean tree)** يجعلان كل سطر في `git diff` من عمل الوكيل. و**خط الأساس الأخضر (A green baseline)** يجعل أي اختبار أحمر لاحق خبرًا.
+- **الإيداعات نقاط حفظ (Commits are save points)**، تُجرى حين تكون الخطوة خضراء. يتخلص `git restore <file>` من التعديلات غير المودَعة في ملف واحد؛ ويلغي `git revert <sha>` إيداعًا دون إعادة كتابة التاريخ.
+- **Conventional Commits.** يطلب `CONTRIBUTING.md` في ريميت (Remit) الصيغة `type(scope): subject`: نوعًا من قائمة محددة، ونطاقًا إلزاميًا بأحرف صغيرة، وموضوعًا بصيغة الأمر دون نقطة في آخره، وسطرًا أول (header) لا يتجاوز 72 حرفًا (up to 72 characters). والمواصفة العامة تجعل النطاق اختياريًا؛ وريميت أكثر صرامة.
 
-**وضع التخطيط ومتى تتجاوزه (Plan mode, and when to skip it).** في وضع التخطيط (plan mode) يستكشف الوكيل ويقترح لكنه لا يعدّل ملفات المصدر (does not edit source files). استخدمه للعمل الذي يمتد عبر عدة ملفات (spans files) أو لشيفرة لا تفهمها بعد (code you do not yet understand)؛ وتجاوزه حين يمكن وصف الفروقات بجملة واحدة (the one-sentence diff).
+**وضع التخطيط ومتى تتجاوزه (Plan mode, and when to skip it).** في وضع التخطيط يستكشف الوكيل ويقترح لكنه لا يعدّل ملفات المصدر. استخدمه للعمل الذي يمتد عبر عدة ملفات (spans files) أو لشيفرة لا تفهمها بعد؛ وتجاوزه حين يمكن وصف الفروقات بجملة واحدة.
 
 ### 🟡 التعمق أكثر (Going deeper)
 
-**نقاط الاستعادة والرجوع (Checkpoints and rewind).** وقت كتابة هذا (At the time of writing) (2026)، يسجّل Claude Code نقطة استعادة (checkpoint) لكل موجّه (prompt) يبدأ دورة (a turn)، ويحتفظ بأحدث 100 منها (keeps the 100 most recent)، وتنتهي صلاحيتها بعد نحو 30 يومًا من آخر لقطة (snapshot) للجلسة. افتح القائمة بـ`Esc` `Esc` على موجّه فارغ (on an empty prompt)، أو بـ`/rewind`: استعد الشيفرة أو المحادثة أو كليهما (restore code, conversation or both)، أو لخّص (summarise). أما تغييرات Bash (`rm` و`mv` و`cp`) والتعديلات من خارج الأداة (outside edits) والجلسات الأخرى فلا تُتتبَّع (are not tracked)، وتقول الوثائق إن نقاط الاستعادة ليست بديلًا عن git (not a substitute for git).
+**نقاط الاستعادة والرجوع (Checkpoints and rewind).** وقت كتابة هذا (2026)، يسجّل Claude Code نقطة استعادة (checkpoint) لكل موجّه (prompt) يبدأ دورة، ويحتفظ بأحدث 100 منها (keeps the 100 most recent)، وتنتهي صلاحيتها بعد نحو 30 يومًا من آخر لقطة (snapshot) للجلسة. افتح القائمة بـ`Esc` `Esc` على موجّه فارغ، أو بـ`/rewind`: استعد الشيفرة أو المحادثة أو كليهما، أو لخّص (summarise). أما تغييرات Bash (`rm` و`mv` و`cp`) والتعديلات من خارج الأداة (outside edits) والجلسات الأخرى فلا تُتتبَّع، وتقول الوثائق إن نقاط الاستعادة ليست بديلًا عن git.
 
-**إشارات تدل على أن الوكيل يضل الطريق (Cues that an agent is going astray).** تسرد البطاقة في قسم 🏛️ ست إشارات. توقف عند أولاها (Stop at the first).
+**إشارات تدل على أن الوكيل يضل الطريق (Cues that an agent is going astray).** تسرد البطاقة في قسم 🏛️ ست إشارات. توقف عند أولاها.
 
-وجدت Anthropic، الشركة المطوِّرة لـ Claude Code (the maker of Claude Code)، أن خمسة مساعدين أظهروا المجاملة المفرطة (sycophancy) باطّراد، أي ميلًا نحو رأي المستخدم (a pull towards the user's view)، في أربع مهام لتوليد النصوص (four text-generation tasks) (Sharma وآخرون، ICLR 2024). عبارة «أنت محق» ⁦("You're right")⁩ ليست دليلًا، أما تشغيل الاختبار (a test run) فدليل — وهذه هي العادة 4 (habit 4)، *ثق بالدليل لا بالطلاقة (Trust evidence, not fluency)*.
+وجدت Anthropic، الشركة المطوِّرة لـ Claude Code، أن خمسة مساعدين أظهروا المجاملة المفرطة (sycophancy) باطّراد، أي ميلًا نحو رأي المستخدم، في أربع مهام لتوليد النصوص (Sharma وآخرون، ICLR 2024). عبارة «أنت محق» ⁦("You're right")⁩ ليست دليلًا، أما تشغيل الاختبار فدليل — وهذه هي العادة 4 (habit 4)، *ثق بالدليل لا بالطلاقة (Trust evidence, not fluency)*.
 
-**سلّم التدخل (The intervention ladder)** على البطاقة؛ فاستخدم أدنى درجة تنفع (the lowest rung that works). يوقف `Esc` الوكيل في الطرفية (stops the agent in the terminal) — وراجع الوثائق لواجهتك (check the documentation for your interface)؛ والرجوع (rewinding) يكون بـ`/rewind` أو `git restore` أو بإيداع (a commit). يحتاج التصحيح (A correction) إلى موضع وسبب وفحص (a place, a reason and a check). الضعيف (Weak): *«هذا خطأ، حاول مرة أخرى» ⁦("That is wrong, try again.")⁩* لا يضيف معلومة (adds no information)، فتحصل على المحاولة نفسها بصياغة أخرى (the same attempt reworded). والقوي (Strong): *«يحلّل `history` المعامل `since` على أنه `datetime` ساذج (naive)، وهو ما يرفضه المخزن (the store rejects). ابنِه بـ`QATAR_TZ` من `remit.limits`، ثم شغّل `pytest -q tests/test_config_cli.py`.»*
+**سلّم التدخل (The intervention ladder)** على البطاقة؛ فاستخدم أدنى درجة تنفع. يوقف `Esc` الوكيل في الطرفية — وراجع الوثائق لواجهتك؛ والرجوع (rewinding) يكون بـ`/rewind` أو `git restore` أو بإيداع. يحتاج التصحيح إلى موضع وسبب وفحص. الضعيف (Weak): *«هذا خطأ، حاول مرة أخرى» ⁦⁩* لا يضيف معلومة، فتحصل على المحاولة نفسها بصياغة أخرى. والقوي (Strong): *«يحلّل `history` المعامل `since` على أنه `datetime` ساذج (naive)، وهو ما يرفضه المخزن. ابنِه بـ`QATAR_TZ` من `remit.limits`، ثم شغّل `pytest -q tests/test_config_cli.py`.»*
 
-**قاعدة الفشلين (The two-failure rule).** بعد محاولتين فاشلتين (two failed attempts) في خطوة، نادرًا ما تنفع ثالثة في السياق نفسه (a third in the same context rarely helps): فهو يحمل الآن منهجين خاطئين (two wrong approaches)، وتسرد صفحة أفضل الممارسات (best-practices page) «التصحيح مرارًا وتكرارًا» ("Correcting over and over") بين أنماط الفشل (failure patterns). غيِّر شيئًا واحدًا: اجعل المهمة **أصغر (smaller)**، أو ابدأ **سياقًا جديدًا (fresh context)** بـ`/clear` ثم جملة واحدة (one sentence) عمّا تعلمته، أو اكتب **مواصفة أفضل (better spec)** تتضمن الواقعة الناقصة (the missing fact) أو مثالًا (an example) أو الاختبار الفاشل (the failing test). وهذه قاعدة تقريبية في الدورة (the course's rule of thumb) لا حدٌّ موثَّق (not a documented limit).
+**قاعدة الفشلين (The two-failure rule).** بعد محاولتين فاشلتين في خطوة، نادرًا ما تنفع ثالثة في السياق نفسه: فهو يحمل الآن منهجين خاطئين، وتسرد صفحة أفضل الممارسات «التصحيح مرارًا وتكرارًا» بين أنماط الفشل (failure patterns). غيِّر شيئًا واحدًا: اجعل المهمة **أصغر (smaller)**، أو ابدأ **سياقًا جديدًا (fresh context)** بـ`/clear` ثم جملة واحدة (one sentence) عمّا تعلمته، أو اكتب **مواصفة أفضل (better spec)** تتضمن الواقعة الناقصة أو مثالًا أو الاختبار الفاشل. وهذه قاعدة تقريبية في الدورة لا حدٌّ موثَّق.
 
-**متى تتولى القيادة (When to take the wheel).** تولَّها حين تكون كتابة الإصلاح أسرع من شرحه (typing the fix is faster than explaining it)؛ وحين يكون السبب واقعةً لا يعرفها غيرك (a fact only you hold) — كمنتصف ليل قطر (the Qatar midnight) أو قاعدة عمل (a business rule) — أو حين لا يستطيع الوكيل رؤية ما تراه أنت (the agent cannot see what you see)، كشاشة (a screen)؛ وحين لا تستطيع بعد التحقق من تغيير في مسار الأموال (a money-path change)؛ وحين فشلت محاولتان (two attempts failed)؛ أو حين تتمرن على مهارة تريد الاحتفاظ بها (a skill you want to keep) (الدرس 13.1). وليس هذا فشلًا (It is not failure): أصلح السطر الصعب (fix the hard line)، ثم أعد لوحة المفاتيح إلى الوكيل ليكتب الاختبارات (hand the keyboard back for the tests).
+**متى تتولى القيادة (When to take the wheel).** تولَّها حين تكون كتابة الإصلاح أسرع من شرحه؛ وحين يكون السبب واقعةً لا يعرفها غيرك — كمنتصف ليل قطر أو قاعدة عمل — أو حين لا يستطيع الوكيل رؤية ما تراه أنت، كشاشة؛ وحين لا تستطيع بعد التحقق من تغيير في مسار الأموال؛ وحين فشلت محاولتان؛ أو حين تتمرن على مهارة تريد الاحتفاظ بها (الدرس 13.1). وليس هذا فشلًا: أصلح السطر الصعب، ثم أعد لوحة المفاتيح إلى الوكيل ليكتب الاختبارات.
 
-**نظافة الجلسة (Session hygiene).** مهمة واحدة لكل جلسة (One task per session)؛ وتسمّي الصفحة عكس ذلك «جلسة كل شيء في آن واحد» ("The kitchen sink session"). استخدم `/clear` بين المهام (between tasks)، و`/compact Focus on the CLI changes` حين تملأ مهمة طويلة النافذة (fills the window)، و`/context` لترى ما حُمِّل (to see what is loaded)؛ وأرسل التحقيقات (investigations) إلى وكلاء فرعيين (subagents) لا يعيدون إلا تقريرًا (return a report only).
+**نظافة الجلسة (Session hygiene).** مهمة واحدة لكل جلسة؛ وتسمّي الصفحة عكس ذلك «جلسة كل شيء في آن واحد». استخدم `/clear` بين المهام (between tasks)، و`/compact Focus on the CLI changes` حين تملأ مهمة طويلة النافذة، و`/context` لترى ما حُمِّل؛ وأرسل التحقيقات (investigations) إلى وكلاء فرعيين (subagents) لا يعيدون إلا تقريرًا.
 
-**سجل الوكيل (The agent log).** بعد كل مهمة بمساعدة الذكاء الاصطناعي (AI-assisted task) دوّن الموجّه (the prompt) والنتيجة (the result) وتصحيحاتك (your corrections) وفحوصك (your checks) والدقائق (the minutes). كن صادقًا في الدقائق (Be honest about the minutes): فالسجل ساعتك (the log is your clock)، وإحساسك بالسرعة ليس كذلك (your feeling of speed is not).
+**سجل الوكيل (The agent log).** بعد كل مهمة بمساعدة الذكاء الاصطناعي (AI-assisted task) دوّن الموجّه والنتيجة وتصحيحاتك وفحوصك والدقائق. كن صادقًا في الدقائق: فالسجل ساعتك، وإحساسك بالسرعة ليس كذلك.
 
-**خط زمني لجلسة تُعلَّم فيه التدخلات (A session timeline with the interventions marked).** مُختلَق (Constructed) للتذكرة REMIT-269؛ ليس مسجَّلًا من نموذج حقيقي (not recorded from a real model)، والأوقات مخترَعة (the times are invented).
+**خط زمني لجلسة تُعلَّم فيه التدخلات (A session timeline with the interventions marked).** مُختلَق (Constructed) للتذكرة REMIT-269؛ ليس مسجَّلًا من نموذج حقيقي، والأوقات مخترَعة.
 
-| الوقت (Time) | الحركة (Move) | ما حدث (What happened) | الإشارة (Cue) | التدخل (Intervention) |
+| الوقت (Time) | الحركة (Move) | ما حدث | الإشارة (Cue) | التدخل (Intervention) |
 |---|---|---|---|---|
-| 09:12 | التخطيط (Plan) | سبع خطوات (Seven steps)؛ الخطوة 6 تنقل المحلِّل (moves the parser) والخطوة 7 تعدّل README | خطوات خارج النطاق (Out-of-scope steps) | `Ctrl+G`: احذف الاثنتين (delete both)؛ وأضف «التاريخ هو بداية ذلك اليوم القطري» ("a date is the start of that Qatar day") |
-| 09:31 | الخطوة 2 (Step 2) | `datetime` ساذج (naive)؛ يرفع المخزن (the store raises) الخطأ `datetimes must be timezone-aware`؛ ويضيف الوكيل `try/except` ثم يعدّل الاختبار (edits the test) | التخبّط (Thrashing)؛ اختبار معدَّل (a test edited) | `Esc`؛ و`/rewind` للشيفرة والمحادثة معًا (code and conversation)؛ أعد الصياغة (restate): استخدم توقيت قطر (use Qatar time) |
-| 09:44 | الخطوة 2 (Step 2) | أمر `pytest` نفسه ثلاث مرات (three times) | الأمر الفاشل نفسه (Same failing command) | تتولى القيادة (You take the wheel): اقرأ تتبّع الاستثناء (the traceback)، وأصلح سطرين، وأودِع |
-| 09:52 | الخطوة 3 (Step 3) | تفشل محاولتان في اختبار نص المساعدة (the help-text test) | فشلان (Two failures) | جلسة جديدة (New session)، ومواصفة من فقرة واحدة (a one-paragraph spec)، وخطوة أصغر (a smaller step) |
+| 09:12 | التخطيط | سبع خطوات (Seven steps)؛ الخطوة 6 تنقل المحلِّل والخطوة 7 تعدّل README | خطوات خارج النطاق (Out-of-scope steps) | `Ctrl+G`: احذف الاثنتين (delete both)؛ وأضف «التاريخ هو بداية ذلك اليوم القطري» |
+| 09:31 | الخطوة 2 (Step 2) | `datetime` ساذج؛ يرفع المخزن الخطأ `datetimes must be timezone-aware`؛ ويضيف الوكيل `try/except` ثم يعدّل الاختبار | التخبّط؛ اختبار معدَّل | `Esc`؛ و`/rewind` للشيفرة والمحادثة معًا؛ أعد الصياغة (restate): استخدم توقيت قطر |
+| 09:44 | الخطوة 2 (Step 2) | أمر `pytest` نفسه ثلاث مرات (three times) | الأمر الفاشل نفسه | تتولى القيادة: اقرأ تتبّع الاستثناء، وأصلح سطرين، وأودِع |
+| 09:52 | الخطوة 3 (Step 3) | تفشل محاولتان في اختبار نص المساعدة | فشلان (Two failures) | جلسة جديدة (New session)، ومواصفة من فقرة واحدة، وخطوة أصغر |
 | 10:05 | المراجعة (Review) | يسرد `git diff --stat` الملف `fees.py` | تعديل خارج النطاق (Out-of-scope edit) | `git restore src/remit/fees.py` |
 | 10:10 | الإغلاق (Close) | أخضر (Green)؛ طلب الدمج (pull request) موسوم بـ`AI-assisted`؛ السجل (log): 70 دقيقة و5 تدخلات (interventions) | | |
 
 ### 🔴 نظرة الخبير (Expert view)
 
-**«انتهى» تعني «متحقَّق منه» (Done means verified).** تصف مدونة الهندسة في Meta (Meta's engineering blog) فريقًا صغيرًا بنى تطبيق Forum بوكيل ذكاء اصطناعي مشارِكًا (an AI agent as a participant). وتذكر Meta أنها قاست النجاح بتغييرات جاهزة للإنتاج (production-ready changes) لا بحجم الشيفرة (not code volume)، وأنها وضعت المعيار «عند التحقق لا عند الترجمة البرمجية» ("at verification rather than compilation"): فالمهمة لا تكتمل إلا بعد أن تنجح الاختبارات الآلية والفحوص البصرية (automated tests and visual checks)، لا حين تُترجَم الشيفرة بنجاح (when the code compiles). وتذكر أيضًا أنه حين كرر الوكيل خطأ أكثر من مرتين (repeated a mistake more than twice)، رمّز الفريق التصحيح مرة واحدة للجميع (encoded the correction once, for everyone). وهدف Meta هو «الإنسان على الحلقة» ("human-on-the-loop"): يدير الوكيل دورة التخطيط والبناء والاختبار والتصحيح (the plan, build, test and correct cycle) بينما يضع المهندس الهدف ويعتمد النتيجة (sets the goal and approves the result). ويسمّي المنشور هذا هدفًا لا حالة منجزة (a target, not a finished state). وكل ذلك رواية شركة عن ممارستها الخاصة (a company's account of its own practice) لا دليل مستقل (not independent evidence). وتنطبق العادات نفسها على عملنا (The habits carry over): «انتهى» فحص شغّلته أنت (a check you ran)، والتصحيح الذي تكرره للمرة الثالثة (a correction you make a third time) مكانه `CLAUDE.md` أو اختبار أو خطاف (a hook) (الوحدتان 2 و9).
+**«انتهى» تعني «متحقَّق منه» (Done means verified).** تصف مدونة الهندسة في Meta فريقًا صغيرًا بنى تطبيق Forum بوكيل ذكاء اصطناعي مشارِكًا. وتذكر Meta أنها قاست النجاح بتغييرات جاهزة للإنتاج (production-ready changes) لا بحجم الشيفرة، وأنها وضعت المعيار «عند التحقق لا عند الترجمة البرمجية»: فالمهمة لا تكتمل إلا بعد أن تنجح الاختبارات الآلية والفحوص البصرية، لا حين تُترجَم الشيفرة بنجاح. وتذكر أيضًا أنه حين كرر الوكيل خطأ أكثر من مرتين، رمّز الفريق التصحيح مرة واحدة للجميع. وهدف Meta هو «الإنسان على الحلقة» ("human-on-the-loop"): يدير الوكيل دورة التخطيط والبناء والاختبار والتصحيح بينما يضع المهندس الهدف ويعتمد النتيجة. ويسمّي المنشور هذا هدفًا لا حالة منجزة. وكل ذلك رواية شركة عن ممارستها الخاصة لا دليل مستقل. وتنطبق العادات نفسها على عملنا: «انتهى» فحص شغّلته أنت، والتصحيح الذي تكرره للمرة الثالثة مكانه `CLAUDE.md` أو اختبار أو خطاف (الوحدتان 2 و9).
 
-**اجعل التوقف مشروطًا (Gate the stop).** يتوقف الوكيل حين يظن أنه انتهى (An agent stops when it believes it is done). وتسمّي الصفحة ثلاث طرق تجعل إعلان «انتهى» مشروطًا بفحصك (make "done" require your check): شرط `/goal`، أو خطاف التوقف (a Stop hook)، أو وكيل فرعي للتحقق (a verification subagent) — ويغطي الدرس 9.1 الخطاطيف (hooks) والوكلاء الفرعيين (subagents) لا `/goal`، فراجع الوثائق الحالية (check the current documentation).
+**اجعل التوقف مشروطًا (Gate the stop).** يتوقف الوكيل حين يظن أنه انتهى. وتسمّي الصفحة ثلاث طرق تجعل إعلان «انتهى» مشروطًا بفحصك: شرط `/goal`، أو خطاف التوقف، أو وكيل فرعي للتحقق — ويغطي الدرس 9.1 الخطاطيف (hooks) والوكلاء الفرعيين لا `/goal`، فراجع الوثائق الحالية (check the current documentation).
 
-**ما طول الرسن (How long a leash).** الوضع الافتراضي في الدورة (The course's default) هو الوضع اليدوي (Manual) أو وضع `acceptEdits` مع فحص بعد كل خطوة (a check after every step)؛ أما الوضع الذي يبدأ به Claude Code فيعتمد على إصداره وخطته ومزوّده (version, plan and provider)، فاقرأ شريط الحالة (status bar). تؤتي الأرسان الأطول (Longer leashes) — الوضع التلقائي (auto mode) والتشغيل في الخلفية (background) والتشغيل غير التفاعلي (headless runs) — ثمارها حين يكون العمل محدَّد المواصفة وقابلًا للفحص وقليل الكلفة عند التخلص منه (specified, checkable and cheap to throw away)، لكنك تفقد الإشارات (you lose the cues) لأنك لا تستطيع مقاطعة ما لا تراقبه (cannot interrupt what you are not watching): فأتمِت الفحوص (automate the checks). وتقول الوثائق إن الوضع التلقائي «لا يضمن الأمان» ("does not guarantee safety").
+**ما طول الرسن (How long a leash).** الوضع الافتراضي في الدورة هو الوضع اليدوي (Manual) أو وضع `acceptEdits` مع فحص بعد كل خطوة؛ أما الوضع الذي يبدأ به Claude Code فيعتمد على إصداره وخطته ومزوّده، فاقرأ شريط الحالة (status bar). تؤتي الأرسان الأطول (Longer leashes) — الوضع التلقائي (auto mode) والتشغيل في الخلفية (background) والتشغيل غير التفاعلي (headless runs) — ثمارها حين يكون العمل محدَّد المواصفة وقابلًا للفحص وقليل الكلفة عند التخلص منه، لكنك تفقد الإشارات لأنك لا تستطيع مقاطعة ما لا تراقبه: فأتمِت الفحوص. وتقول الوثائق إن الوضع التلقائي «لا يضمن الأمان».
 
-**متى لا تشغّل الحلقة كاملة (When not to run the full loop).** للفروقات ذات الجملة الواحدة (a one-sentence diff) اقرأ الفروقات وأودِع. وللتجربة الاستكشافية المؤقتة (a throwaway spike) احذف الفرع بعد ذلك (delete the branch afterwards). ولا تنقذ الحلقة تذكرة غامضة (cannot rescue a vague ticket): فإن انتهت كل لفة بعبارة «ليس هذا ما قصدته» ("not what I meant")، فعد إلى الدرس 3.1.
+**متى لا تشغّل الحلقة كاملة (When not to run the full loop).** للفروقات ذات الجملة الواحدة اقرأ الفروقات وأودِع. وللتجربة الاستكشافية المؤقتة احذف الفرع بعد ذلك. ولا تنقذ الحلقة تذكرة غامضة: فإن انتهت كل لفة بعبارة «ليس هذا ما قصدته» ("not what I meant")، فعد إلى الدرس 3.1.
 
-## 🧰 الأدوات (The toolkit)
-| الأداة أو الممارسة أو النمط (Tool, practice or pattern) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
+## 🧰 الأدوات
+| الأداة أو الممارسة أو النمط (Tool, practice or pattern) | ما هي وماذا تفعل | متى تلجأ إليها |
 |---|---|---|
-| **Loop checklist** — قائمة تحقق الحلقة | صفحة واحدة (One page): قبل الجلسة (before the session)، وفي كل لفة (each lap)، وبعد الخطوة الأخيرة (after the last step) | كل مهمة (Every task) |
-| **Interruption cues** — إشارات المقاطعة | بطاقة (A card): ست إشارات (six cues)، والسلّم (the ladder)، وقاعدة الفشلين (the two-failure rule) | كلما عمل وكيل وأنت تراقبه (Whenever an agent works while you watch) |
-| **Plan mode** — وضع التخطيط | استكشاف للقراءة فقط (Read-only exploration) وخطة قابلة للتحرير (an editable plan) (`Shift+Tab`، `/plan`) | تعديلات متعددة الملفات (Multi-file edits)؛ وشيفرة غير مألوفة (unfamiliar code) |
-| **Checkpoints and rewind** — نقاط الاستعادة والرجوع | تراجع لكل موجّه (A per-prompt undo) عن تعديلات الوكيل (the agent's edits) (`Esc` `Esc`، `/rewind`) | دورة سيئة داخل لفة (A bad turn inside a lap) |
-| **Branch per task** — فرع لكل مهمة | فرع واحد لكل تذكرة (One branch per ticket)، من شجرة نظيفة (from a clean tree) | كل مهمة (Every task) |
+| **Loop checklist** — قائمة تحقق الحلقة | صفحة واحدة (One page): قبل الجلسة، وفي كل لفة (each lap)، وبعد الخطوة الأخيرة | كل مهمة (Every task) |
+| **Interruption cues** — إشارات المقاطعة | بطاقة: ست إشارات (six cues)، والسلّم، وقاعدة الفشلين | كلما عمل وكيل وأنت تراقبه |
+| **Plan mode** — وضع التخطيط | استكشاف للقراءة فقط (Read-only exploration) وخطة قابلة للتحرير (`Shift+Tab`، `/plan`) | تعديلات متعددة الملفات (Multi-file edits)؛ وشيفرة غير مألوفة (unfamiliar code) |
+| **Checkpoints and rewind** — نقاط الاستعادة والرجوع | تراجع لكل موجّه عن تعديلات الوكيل (`Esc` `Esc`، `/rewind`) | دورة سيئة داخل لفة |
+| **Branch per task** — فرع لكل مهمة | فرع واحد لكل تذكرة، من شجرة نظيفة | كل مهمة |
 | **Conventional Commits** — صيغة الإيداعات المتعارف عليها | `type(scope): subject`، كما يعرّفها `CONTRIBUTING.md` | كل إيداع (Every commit) |
-| **Agent log** — سجل الوكيل | الموجّه والنتيجة والتصحيحات والفحوص والدقائق (Prompt, result, corrections, checks, minutes) | بعد كل مهمة بمساعدة الذكاء الاصطناعي (After every AI-assisted task) |
+| **Agent log** — سجل الوكيل | الموجّه والنتيجة والتصحيحات والفحوص والدقائق | بعد كل مهمة بمساعدة الذكاء الاصطناعي |
 
-## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-يفتتح طارق (Tariq)، قائد الهندسة (engineering lead)، العيادة الأسبوعية (the weekly clinic) ببطاقتين (two cards). الأولى هي **قائمة تحقق الحلقة (Loop checklist)**؛ انسخها باسم `loop-checklist.md`.
+## 🏛️ عمليًا في بنك نجم
+يفتتح طارق (Tariq)، قائد الهندسة (engineering lead)، العيادة الأسبوعية ببطاقتين (two cards). الأولى هي **قائمة تحقق الحلقة (Loop checklist)**؛ انسخها باسم `loop-checklist.md`.
 
 ```markdown
 # Loop checklist (one lap = one small step)
@@ -156,7 +156,7 @@ After the last step
 - [ ] A correction I made a third time is now a rule, a test or a hook.
 ```
 
-والثانية بطاقة **إشارات المقاطعة (Interruption cues)**. أبقها بجانب الطرفية (next to the terminal).
+والثانية بطاقة **إشارات المقاطعة (Interruption cues)**. أبقها بجانب الطرفية.
 
 ```text
 INTERRUPTION CUES - stop at the first one
@@ -172,132 +172,132 @@ LADDER  1 stop (Esc) and say what you saw    2 correct once: file, line, reason
         5 after two failures: smaller task, fresh context, better spec
 ```
 
-وقاعدة العيادة (The clinic's rule): لا طلب دمج (pull request) دون قائمة تحقق مملوءة (a filled checklist)، ولا «الوكيل هو من فعلها» ("the agent did it") في المراجعة (in review).
+وقاعدة العيادة: لا طلب دمج دون قائمة تحقق مملوءة، ولا «الوكيل هو من فعلها» في المراجعة.
 
 ## 🛠️ التمارين (Exercises)
-- 🟢 **علِّم خطًا زمنيًا (Mark a timeline).** *بلا وكيل (No agent).* اكتب خطًا زمنيًا من ستة أسطر (a six-line timeline) لآخر جلسة بمساعدة الذكاء الاصطناعي (your last AI-assisted session). *يكتمل عندما (Done when):* يسمّي كل سطر حركة (names a move)، ويسمّي سطران إشارة لاحظتها متأخرًا (a cue you noticed late) والدرجة التي كان ينبغي استخدامها (the rung you should have used).
-- 🟡 **شغّل الحلقة على تغيير صغير (Run the loop on a small change).** *الوكيل اختياري (Agent optional).* أنشئ بيئة معزولة خضراء (a green sandbox) (من مجلد `ailab`: `python -m ailab start m00 --dir ~/ainative/sandbox`، ثم `python -m ailab solve m00 --dir ~/ainative/sandbox`). في البيئة المعزولة (In the sandbox)، على فرع (on a branch)، أضف `--since YYYY-MM-DD` إلى `history`؛ فالتاريخ يعني بداية ذلك اليوم بتوقيت قطر (the start of that Qatar day). (جرّب `PYTHONPATH=src python -m remit history --customer C001` بعد `customer add` و`send`.) *يكتمل عندما (Done when):* يكون لديك ثلاثة إيداعات خضراء أو أكثر بصيغة ريميت (three or more green commits in the Remit format)، وتكون القائمة معلَّمة (the checklist is ticked) بالأوامر التي شغّلتها، ويقول سطر واحد ما الذي يجب تغييره (what to change).
-- 🔴 **تمرّن على مقاطعة (Rehearse an interruption).** *يحتاج وكيلًا (Needs an agent).* في البيئة المعزولة أعطِ الوكيل موجّهًا (a prompt) يدعو إلى توسّع النطاق (invites scope creep) («اجعل واجهة سطر الأوامر أجمل» — "make the CLI nicer")، بلا خطة (with no plan)، وراقب. *يكتمل عندما (Done when):* تذكر ملاحظاتك أول إشارة ووقتها (the first cue and its time) والدرجة التي استخدمتها وما الذي كانت قاعدة الفشلين (the two-failure rule) ستغيّره، ويكون الفرع عند إيداع أخضر (at a green commit).
+- 🟢 **علِّم خطًا زمنيًا (Mark a timeline).** *بلا وكيل.* اكتب خطًا زمنيًا من ستة أسطر لآخر جلسة بمساعدة الذكاء الاصطناعي. *يكتمل عندما (Done when):* يسمّي كل سطر حركة، ويسمّي سطران إشارة لاحظتها متأخرًا والدرجة التي كان ينبغي استخدامها.
+- 🟡 **شغّل الحلقة على تغيير صغير (Run the loop on a small change).** *الوكيل اختياري (Agent optional).* أنشئ بيئة معزولة خضراء (من مجلد `ailab`: `python -m ailab start m00 --dir ~/ainative/sandbox`، ثم `python -m ailab solve m00 --dir ~/ainative/sandbox`). في البيئة المعزولة، على فرع، أضف `--since YYYY-MM-DD` إلى `history`؛ فالتاريخ يعني بداية ذلك اليوم بتوقيت قطر. (جرّب `PYTHONPATH=src python -m remit history --customer C001` بعد `customer add` و`send`.) *يكتمل عندما:* يكون لديك ثلاثة إيداعات خضراء أو أكثر بصيغة ريميت، وتكون القائمة معلَّمة بالأوامر التي شغّلتها، ويقول سطر واحد ما الذي يجب تغييره.
+- 🔴 **تمرّن على مقاطعة (Rehearse an interruption).** *يحتاج وكيلًا (Needs an agent).* في البيئة المعزولة أعطِ الوكيل موجّهًا يدعو إلى توسّع النطاق، بلا خطة، وراقب. *يكتمل عندما:* تذكر ملاحظاتك أول إشارة ووقتها والدرجة التي استخدمتها وما الذي كانت قاعدة الفشلين ستغيّره، ويكون الفرع عند إيداع أخضر.
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
-- **انتظار انتهاء مهمة كبيرة (Waiting for a large task to finish).** كل دقيقة تضيف شيفرة عليك فكّها (Each minute adds code to unpick)؛ فقاطع عند أول إشارة (interrupt at the first cue).
-- **التخطيط لفروقات من جملة واحدة، أو تجاوز الخطة لتغيير في عشرة ملفات (Planning a one-sentence diff, or skipping the plan for a ten-file one).** طابِق الخطة بحجم الفروقات (Match the plan to the diff).
-- **اعتبار نقاط الاستعادة نسخة احتياطية (Treating checkpoints as a backup).** تغييرات Bash غير متتبَّعة (untracked) واللقطات (snapshots) تنتهي صلاحيتها؛ فأودِع (commit).
-- **تصحيح ثالث في السياق نفسه، أو الإصلاح نفسه في كل موجّه (A third correction in the same context, or the same fix in every prompt).** غيِّر المنهج (Change the approach)، وانقل التصحيح إلى `CLAUDE.md` أو اختبار أو خطاف (a hook).
+- **انتظار انتهاء مهمة كبيرة (Waiting for a large task to finish).** كل دقيقة تضيف شيفرة عليك فكّها؛ فقاطع عند أول إشارة.
+- **التخطيط لفروقات من جملة واحدة، أو تجاوز الخطة لتغيير في عشرة ملفات (Planning a one-sentence diff, or skipping the plan for a ten-file one).** طابِق الخطة بحجم الفروقات.
+- **اعتبار نقاط الاستعادة نسخة احتياطية (Treating checkpoints as a backup).** تغييرات Bash غير متتبَّعة (untracked) واللقطات (snapshots) تنتهي صلاحيتها؛ فأودِع.
+- **تصحيح ثالث في السياق نفسه، أو الإصلاح نفسه في كل موجّه (A third correction in the same context, or the same fix in every prompt).** غيِّر المنهج (Change the approach)، وانقل التصحيح إلى `CLAUDE.md` أو اختبار أو خطاف.
 
 ## 🧾 الخلاصة (Recap)
-- الحلقة (The loop): استكشف، خطّط، نفّذ خطوة صغيرة (implement a small step)، افحص، اقرأ الفروقات (read the diff)، أودِع، على فرع نظيف (a clean branch) بخط أساس أخضر (a green baseline).
-- الإيداعات نقاط حفظ (save points)؛ ونقاط الاستعادة (checkpoints) تراجع قصير العمر (a short-lived undo).
-- توقف عند أول إشارة (the first cue)، وصحِّح مرة واحدة (correct once)، وبعد فشلين غيِّر المنهج (change the approach).
-- تولَّ القيادة (Take the wheel) حين تعرف الإصلاح (know the fix)، أو تحمل واقعة يفتقدها الوكيل (hold a fact the agent lacks)، أو لا تستطيع التحقق بعد (cannot yet verify).
-- «انتهى» تعني «متحقَّق منه» لا «مُترجَم برمجيًا» (Done means verified, not compiled)؛ والتصحيح المكرَّر أكثر من مرتين (made more than twice) مكانه قاعدة دائمة (a durable rule).
+- الحلقة: استكشف، خطّط، نفّذ خطوة صغيرة، افحص، اقرأ الفروقات، أودِع، على فرع نظيف بخط أساس أخضر.
+- الإيداعات نقاط حفظ (save points)؛ ونقاط الاستعادة تراجع قصير العمر.
+- توقف عند أول إشارة، وصحِّح مرة واحدة، وبعد فشلين غيِّر المنهج.
+- تولَّ القيادة حين تعرف الإصلاح، أو تحمل واقعة يفتقدها الوكيل، أو لا تستطيع التحقق بعد.
+- «انتهى» تعني «متحقَّق منه» لا «مُترجَم برمجيًا»؛ والتصحيح المكرَّر أكثر من مرتين مكانه قاعدة دائمة.
 
 ## ✍️ اختبر نفسك (Check yourself)
 
 **1. بعد عشر دقائق من بدء الجلسة (Ten minutes in)، شغّل الوكيل أمر `pytest` الفاشل نفسه ثلاث مرات (three times) دون أن يغيّر شيئًا بين التشغيلات (changed nothing between runs). ماذا تفعل؟ ⁦(What do you do?)⁩**
 
-- A. اتركه يواصل (Let it carry on)، لأن تشغيلًا رابعًا قد ينجح دون أي تغيير (a fourth run may pass without any change).
-- B. اضغط `Esc`، واقرأ تتبّع الاستثناء (the traceback)، وقرّر هل تتولى القيادة (take the wheel).
-- C. بدّل إلى وضع يتجاوز الموافقات (a mode that skips approvals) كي تعمل إعادة المحاولات دون إشراف (run unattended).
-- D. اطلب منه أن يودع الحالة الحالية (commit the current state) كي يُحفظ العمل غير المكتمل (the half-finished work is saved).
+- A. اتركه يواصل، لأن تشغيلًا رابعًا قد ينجح دون أي تغيير.
+- B. اضغط `Esc`، واقرأ تتبّع الاستثناء، وقرّر هل تتولى القيادة (take the wheel).
+- C. بدّل إلى وضع يتجاوز الموافقات كي تعمل إعادة المحاولات دون إشراف (run unattended).
+- D. اطلب منه أن يودع الحالة الحالية كي يُحفظ العمل غير المكتمل.
 
 <details><summary>الإجابة</summary>
 
-**B.** الأمر الفاشل نفسه بلا فكرة جديدة (with no new idea) إشارة إلى التوقف (a cue to stop)؛ وتتبّع الاستثناء (the traceback) دليل يتجاهله الوكيل (evidence the agent ignores). 🟡 الإشارات والسلّم (Cues and the ladder).
+**B.** الأمر الفاشل نفسه بلا فكرة جديدة إشارة إلى التوقف؛ وتتبّع الاستثناء دليل يتجاهله الوكيل. 🟡 الإشارات والسلّم.
 
 </details>
 
 **2. فشلت محاولة الوكيل الثانية في خطوة بعد تصحيحك (The agent's second attempt at a step failed after your correction). ما أفضل خطوة تالية؟ ⁦(What is the best next move?)⁩**
 
-- A. صحِّحه مرة ثالثة (a third time) بالكلمات نفسها لكن بأحرف كبيرة (in capitals) كي ينتبه.
-- B. ارجع (Rewind) عن كل ما أُنجز اليوم وابدأ التذكرة كلها من الصفر (from scratch).
-- C. اطلب من الوكيل أن يعتذر (apologise) وأن يعد بمزيد من الحذر في المرة القادمة (to be more careful next time).
-- D. غيِّر المنهج (Change the approach): قسّم الخطوة (split the step)، أو ابدأ من جديد (start fresh)، أو أضف واقعة ناقصة (a missing fact).
+- A. صحِّحه مرة ثالثة بالكلمات نفسها لكن بأحرف كبيرة كي ينتبه.
+- B. ارجع (Rewind) عن كل ما أُنجز اليوم وابدأ التذكرة كلها من الصفر.
+- C. اطلب من الوكيل أن يعتذر (apologise) وأن يعد بمزيد من الحذر في المرة القادمة.
+- D. غيِّر المنهج (Change the approach): قسّم الخطوة، أو ابدأ من جديد (start fresh)، أو أضف واقعة ناقصة.
 
 <details><summary>الإجابة</summary>
 
-**D.** بعد فشلين نادرًا ما تنفع محاولة ثالثة في السياق نفسه (a third try in the same context rarely helps)؛ غيِّر المهمة أو السياق أو المواصفة (the task, the context or the spec). الأحرف الكبيرة والاعتذارات تضيف كلمات لا معلومات (add words, not information). 🟡 قاعدة الفشلين (The two-failure rule).
+**D.** بعد فشلين نادرًا ما تنفع محاولة ثالثة في السياق نفسه؛ غيِّر المهمة أو السياق أو المواصفة. الأحرف الكبيرة والاعتذارات تضيف كلمات لا معلومات. 🟡 قاعدة الفشلين.
 
 </details>
 
 **3. تقول لجين (Lujain) إن `Esc` `Esc` تجعل الإيداعات (commits) غير ضرورية لأنها تستطيع الرجوع عن أي شيء (rewind anything). ما الرد الصحيح؟ ⁦(What is the right reply?)⁩**
 
-- A. لا: تغييرات Bash والتعديلات من الخارج غير متتبَّعة (are not tracked)، وgit هو نقطة الحفظ (the save point).
-- B. نعم: تحتفظ نقاط الاستعادة بكل تغيير لمدة عام (for a year)، أيًّا كانت الأداة التي أجرته (whichever tool made the change).
-- C. نعم، ما دام الوكيل يعدّل الملفات فقط (only edits files) ولا يشغّل أي أمر في الصدفة (shell command) إطلاقًا.
-- D. لا: تغطي نقاط الاستعادة الفرع الرئيسي وحده (only the main branch) وتُحذف كل ليلة عند منتصف الليل (deleted every night at midnight).
+- A. لا: تغييرات Bash والتعديلات من الخارج غير متتبَّعة، وgit هو نقطة الحفظ.
+- B. نعم: تحتفظ نقاط الاستعادة بكل تغيير لمدة عام، أيًّا كانت الأداة التي أجرته.
+- C. نعم، ما دام الوكيل يعدّل الملفات فقط ولا يشغّل أي أمر في الصدفة (shell command) إطلاقًا.
+- D. لا: تغطي نقاط الاستعادة الفرع الرئيسي وحده وتُحذف كل ليلة عند منتصف الليل.
 
 <details><summary>الإجابة</summary>
 
-**A.** تغييرات Bash والتعديلات من الخارج غير متتبَّعة (untracked)، واللقطات تنتهي صلاحيتها (snapshots expire)، وgit هو نقطة الحفظ الحقيقية (the real save point). 🟡 نقاط الاستعادة والرجوع (Checkpoints and rewind).
+**A.** تغييرات Bash والتعديلات من الخارج غير متتبَّعة (untracked)، واللقطات تنتهي صلاحيتها (snapshots expire)، وgit هو نقطة الحفظ الحقيقية. 🟡 نقاط الاستعادة والرجوع (Checkpoints and rewind).
 
 </details>
 
 **4. تفتح حصة (Hessa)، مالكة المنتج (product owner)، تذكرة لإصلاح كلمة واحدة مكتوبة خطأ في رسالة إنجليزية (one misspelt word in an English message). أي نهج يناسب؟ ⁦(Which approach fits?)⁩**
 
-- A. خطة من سبع خطوات (A seven-step plan) في وضع التخطيط (plan mode)، مع نقطة استعادة (checkpoint) بعد كل خطوة.
-- B. جلسة جديدة (A fresh session) لكل جملة في التذكرة، للحفاظ على صغر السياق (to keep the context small).
-- C. صِف الفروقات في جملة واحدة (Describe the diff in one sentence)، ونفّذها، واقرأ `git diff`، واختبر، وأودِع.
-- D. شغّله في الخلفية (in the background) وراجع النتيجة في عيادة الأسبوع القادم (next week's clinic).
+- A. خطة من سبع خطوات في وضع التخطيط (plan mode)، مع نقطة استعادة (checkpoint) بعد كل خطوة.
+- B. جلسة جديدة لكل جملة في التذكرة، للحفاظ على صغر السياق.
+- C. صِف الفروقات في جملة واحدة، ونفّذها، واقرأ `git diff`، واختبر، وأودِع.
+- D. شغّله في الخلفية وراجع النتيجة في عيادة الأسبوع القادم.
 
 <details><summary>الإجابة</summary>
 
-**C.** تقول الصفحة تجاوز الخطة إن استطعت وصف الفروقات في جملة واحدة (describe the diff in one sentence)؛ ويبقى عليك أن تقرأ الفروقات وتشغّل الفحص (run the check). 🟢 وضع التخطيط ومتى تتجاوزه (Plan mode, and when to skip it).
+**C.** تقول الصفحة تجاوز الخطة إن استطعت وصف الفروقات في جملة واحدة؛ ويبقى عليك أن تقرأ الفروقات وتشغّل الفحص. 🟢 وضع التخطيط ومتى تتجاوزه.
 
 </details>
 
 **5. يقول زميل إن منشور Meta عن Forum يثبت أن الوكلاء ذوي الإعداد الجيد لا يحتاجون إلى مراجعة بشرية (need no human review). ما الرد المنصف؟ ⁦(What is a fair response?)⁩**
 
 - A. أثبتت Meta أن المراجعة غير ضرورية (unnecessary) متى صار إعداد الوكيل جيدًا بما يكفي.
-- B. هذه رواية Meta نفسها (Meta's own account)، وهي تسمّي «الإنسان على الحلقة» (human-on-the-loop) هدفًا لا نتيجة (a target, not a result).
-- C. يغطي المنشور لغة برمجة واحدة فقط (only one programming language)، فلا ينطبق منه شيء هنا.
+- B. هذه رواية Meta نفسها، وهي تسمّي «الإنسان على الحلقة» (human-on-the-loop) هدفًا لا نتيجة.
+- C. يغطي المنشور لغة برمجة واحدة فقط، فلا ينطبق منه شيء هنا.
 - D. الفحوص البصرية (visual checks) وحدها هي المهمة؛ وتعدّ Meta الاختبارات الآلية (automated tests) إضافات اختيارية (optional extras) لفرق صغيرة (small teams).
 
 <details><summary>الإجابة</summary>
 
-**B.** رواية الشركة عن ممارستها (A company's account of its own practice) ليست دليلًا مستقلًا (not independent evidence)، وMeta نفسها تصف الهدف بأنه غير مكتمل (unfinished). 🔴 «انتهى» تعني «متحقَّق منه» (Done means verified).
+**B.** رواية الشركة عن ممارستها ليست دليلًا مستقلًا، وMeta نفسها تصف الهدف بأنه غير مكتمل (unfinished). 🔴 «انتهى» تعني «متحقَّق منه».
 
 </details>
 
 ## 📚 المراجع (References)
-- وثائق Claude Code (Claude Code documentation): أفضل الممارسات (best practices) https://code.claude.com/docs/en/best-practices; ونقاط الاستعادة والرجوع (checkpointing and rewind) https://code.claude.com/docs/en/checkpointing; وأوضاع الصلاحيات (permission modes) ومنها وضع التخطيط (plan mode) https://code.claude.com/docs/en/permission-modes; ونافذة السياق (the context window) https://code.claude.com/docs/en/context-window
+- وثائق Claude Code (Claude Code documentation): أفضل الممارسات (best practices) https://code.claude.com/docs/en/best-practices; ونقاط الاستعادة والرجوع https://code.claude.com/docs/en/checkpointing; وأوضاع الصلاحيات (permission modes) ومنها وضع التخطيط https://code.claude.com/docs/en/permission-modes; ونافذة السياق https://code.claude.com/docs/en/context-window
 - Git: https://git-scm.com/docs. وConventional Commits 1.0.0: https://www.conventionalcommits.org
-- [*اختبار البرمجيات (Software Testing)*، الدرس 6.2 — الاختبارات بوصفها مواصفة لوكلاء البرمجة (Tests as the specification for coding agents)](../testing/index.ar.html#/6.2)
-- **تعمّق أكثر (Go deeper).** Engineering at Meta، «كيف بنت Meta تطبيق Forum بالهندسة الأصيلة في الذكاء الاصطناعي» ("How Meta Built Forum With AI-Native Engineering"): https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/ — اقرأ الأصل (read the original)؛ فهذا الدرس لم يعرفه إلا من ملخص (this lesson knew it only from a summary). Anthropic، «نحو فهم المجاملة المفرطة في النماذج اللغوية» ("Towards Understanding Sycophancy in Language Models"): https://www.anthropic.com/research/towards-understanding-sycophancy-in-language-models. وDORA، تقرير 2024 (2024 report): https://cloud.google.com/blog/products/devops-sre/announcing-the-2024-dora-report.
+- [*اختبار البرمجيات (Software Testing)*، الدرس 6.2 — الاختبارات بوصفها مواصفة لوكلاء البرمجة](../testing/index.ar.html#/6.2)
+- **تعمّق أكثر (Go deeper).** Engineering at Meta، «كيف بنت Meta تطبيق Forum بالهندسة الأصيلة في الذكاء الاصطناعي»: https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/ — اقرأ الأصل؛ فهذا الدرس لم يعرفه إلا من ملخص. Anthropic، «نحو فهم المجاملة المفرطة في النماذج اللغوية»: https://www.anthropic.com/research/towards-understanding-sycophancy-in-language-models. وDORA، تقرير 2024 (2024 report): https://cloud.google.com/blog/products/devops-sre/announcing-the-2024-dora-report.
 
 ---
 
-# 4.2 — المختبر: أطلق ميزة صغيرة عبر الحلقة بأكملها (Lab: ship a small feature through the whole loop)
-*المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 3.2، 4.1* · *التركيز (Focus): Workflow*
+# 4.2 — المختبر: أطلق ميزة صغيرة عبر الحلقة بأكملها
+*المستوى: 🟡 متوسط* · *المتطلبات: 3.2، 4.1* · *التركيز: Workflow*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
-- **المختبر m04 (Lab m04).** تذكرة حصة (Hessa) REMIT-318: حين يبلغ تحويل ناجح (a successful transfer) بالعميل 80% من حده اليومي (80% of their daily limit) أو أكثر، أرسل رسالة ثانية (a second message) بالإنجليزية أو بالعربية. نحو 25 سطرًا من الشيفرة (About 25 lines of code)، وخمس طرق سهلة للخطأ فيها (five easy ways to get them wrong).
-- تشغّل الحلقة كاملة (You run the whole loop): استكشاف (explore)، ومواصفة مع خطة (a spec with a plan)، وإيداعات صغيرة خضراء (small green commits)، واختبارات تفشل بدون الميزة (tests that fail without the feature)، وسجل وكيل (an agent log).
-- **يحتاج إلى وكيل (Needs an agent): لا (no)؛ والوكيل موصى به لا مطلوب (recommended, not required).** لا يستطيع المُقيِّم (The grader) أن يعرف من كتب الشيفرة (who typed the code).
-- يشغّل المُقيِّم اختبارات قبول خفية (hidden acceptance tests)، ثم يكسر التحذير عمدًا (breaks the warning on purpose) ليرى هل تلحظ اختباراتك ذلك. ولا يستطيع أن يعرف هل قرأت الفروقات (read the diff) أو قرّرت جيدًا (decided well).
+- **المختبر m04 (Lab m04).** تذكرة حصة REMIT-318: حين يبلغ تحويل ناجح بالعميل 80% من حده اليومي (80% of their daily limit) أو أكثر، أرسل رسالة ثانية بالإنجليزية أو بالعربية. نحو 25 سطرًا من الشيفرة (About 25 lines of code)، وخمس طرق سهلة للخطأ فيها.
+- تشغّل الحلقة كاملة: استكشاف، ومواصفة مع خطة، وإيداعات صغيرة خضراء، واختبارات تفشل بدون الميزة، وسجل وكيل.
+- **يحتاج إلى وكيل (Needs an agent): لا (no)؛ والوكيل موصى به لا مطلوب (recommended, not required).** لا يستطيع المُقيِّم أن يعرف من كتب الشيفرة.
+- يشغّل المُقيِّم اختبارات قبول خفية، ثم يكسر التحذير عمدًا ليرى هل تلحظ اختباراتك ذلك. ولا يستطيع أن يعرف هل قرأت الفروقات أو قرّرت جيدًا (decided well).
 
-## 🧭 لماذا يهم (Why it matters)
-يكتب وكيل لجين (Lujain) تحذير الحد (the limit warning) في أربع دقائق. يبدو صحيحًا وينجح في كل اختبار (passes every test)، بما فيها الاختبارات التي كتبها الوكيل بنفسه. لكنه يفشل عند 80% بالضبط (fails at exactly 80%)، ويعرض 100% لعميل عند 99.95%، ويطبع أرقامًا غربية (Western digits) لعملاء العربية، ويحوّل انقطاع البوابة (a gateway outage) إلى انهيار (a crash) بعد أن انتقلت الأموال (after the money has moved). ولا تثبت مجموعة اختبارات خضراء (A green suite) شيئًا من هذا: فالاختبارات القديمة سبقت الميزة (predate the feature)، واختبارات الوكيل لا تفحص إلا الحالات التي خطرت له (only the cases it thought of).
+## 🧭 لماذا يهم
+يكتب وكيل لجين تحذير الحد في أربع دقائق. يبدو صحيحًا وينجح في كل اختبار، بما فيها الاختبارات التي كتبها الوكيل بنفسه. لكنه يفشل عند 80% بالضبط (fails at exactly 80%)، ويعرض 100% لعميل عند 99.95%، ويطبع أرقامًا غربية (Western digits) لعملاء العربية، ويحوّل انقطاع البوابة إلى انهيار بعد أن انتقلت الأموال. ولا تثبت مجموعة اختبارات خضراء شيئًا من هذا: فالاختبارات القديمة سبقت الميزة، واختبارات الوكيل لا تفحص إلا الحالات التي خطرت له.
 
-## 📐 كيف يعمل (How it works)
+## 📐 كيف يعمل
 
-### 🟢 الأساسيات (The essentials)
+### 🟢 الأساسيات
 
-المختبر هو الحلقة في سبع خطوات (the loop in seven steps) — والترتيب نصيحة لا إلزام (the order is advice):
+المختبر هو الحلقة في سبع خطوات — والترتيب نصيحة لا إلزام:
 
-| الخطوة (Step) | ما تفعله (You do) | الدليل (Evidence) |
+| الخطوة (Step) | ما تفعله | الدليل (Evidence) |
 |---|---|---|
-| 1. الاستكشاف (Explore) | شغّل `pytest -q`. واقرأ `send` في `service.py`، و`LimitResult` في `limits.py`، و`render` في `notify.py` | تستطيع أن تقول ما يشمله `daily_used` (what it includes) |
-| 2. المواصفة والخطة (Spec and plan) | انسخ `specs/TEMPLATE.md` إلى `specs/REMIT-318.md`؛ واحسم ما تتركه التذكرة مفتوحًا (settle what the ticket leaves open) — أين يعيش المنطق (where the logic lives) والنسبة المئوية دون أعداد عشرية عائمة (the percentage without floats)؛ وخطّط نحو خمس خطوات (plan about five steps) | مواصفة مودَعة (A committed spec) |
-| 3. الرسالة (The message) | القالب (The template)، مع اختبارات لنصه الدقيق (tests of its exact text) | إيداع أخضر (A green commit) |
-| 4. القرار (The decision) | متى تنبّه (When to warn) وماذا تعرض (what to show)، مع اختبارات على جانبي الخط (tests either side of the line) | إيداع أخضر (A green commit) |
-| 5. الحالات الحدّية (The edges) | عميل عربي (Arabic customer)، وتحويل مرفوض (refused transfer)، وفشل التسليم (failed delivery) | إيداع أخضر (A green commit) |
-| 6. اكسرها (Break it) | أعد `src` إلى حالة `lab-start` وشغّل اختباراتك الجديدة (run your new tests): الاختبارات التي تحتاج إلى التحذير يجب أن تفشل (those that need the warning must fail) | أحمر لسبب صحيح (Red, for the right reason) |
-| 7. الإغلاق (Close) | اقرأ `git diff lab-start --stat`، وحدّث الوثائق إن شئت (update the docs if you wish)، واكتب السجل (write the log)، وقيِّم (grade) | درجة وسجل (A grade and a log) |
+| 1. الاستكشاف | شغّل `pytest -q`. واقرأ `send` في `service.py`، و`LimitResult` في `limits.py`، و`render` في `notify.py` | تستطيع أن تقول ما يشمله `daily_used` |
+| 2. المواصفة والخطة (Spec and plan) | انسخ `specs/TEMPLATE.md` إلى `specs/REMIT-318.md`؛ واحسم ما تتركه التذكرة مفتوحًا — أين يعيش المنطق والنسبة المئوية دون أعداد عشرية عائمة؛ وخطّط نحو خمس خطوات | مواصفة مودَعة |
+| 3. الرسالة | القالب، مع اختبارات لنصه الدقيق | إيداع أخضر |
+| 4. القرار | متى تنبّه وماذا تعرض، مع اختبارات على جانبي الخط | إيداع أخضر |
+| 5. الحالات الحدّية | عميل عربي (Arabic customer)، وتحويل مرفوض (refused transfer)، وفشل التسليم (failed delivery) | إيداع أخضر |
+| 6. اكسرها (Break it) | أعد `src` إلى حالة `lab-start` وشغّل اختباراتك الجديدة: الاختبارات التي تحتاج إلى التحذير يجب أن تفشل | أحمر لسبب صحيح |
+| 7. الإغلاق | اقرأ `git diff lab-start --stat`، وحدّث الوثائق إن شئت، واكتب السجل، وقيِّم (grade) | درجة وسجل |
 
-### 🟡 التعمق أكثر (Going deeper)
+### 🟡 التعمق أكثر
 
-**الفروقات الخطرة (The risky diff).** فيما يلي ما قد يكتبه وكيل متعجّل (a hurried agent) للخطوة 4؛ والشيفرة مُختلَقة لا مسجَّلة (constructed, not recorded) ولا تُنسخ (do not copy). ابحث عن خمسة عيوب (five defects) قبل أن تواصل القراءة.
+**الفروقات الخطرة (The risky diff).** فيما يلي ما قد يكتبه وكيل متعجّل للخطوة 4؛ والشيفرة مُختلَقة لا مسجَّلة ولا تُنسخ. ابحث عن خمسة عيوب (five defects) قبل أن تواصل القراءة.
 
 ```python
         ratio = limits.daily_used / limits.daily_limit
@@ -306,7 +306,7 @@ LADDER  1 stop (Esc) and say what you saw    2 correct once: file, line, reason
                                  remaining=limits.daily_limit - limits.daily_used)
 ```
 
-(1) `limits.daily_used` هو الموضع **قبل** هذا التحويل (the position **before** this transfer)، فيأتي التحذير متأخرًا بتحويل واحد (one transfer late). (2) تُقارَن قيمة `Decimal` بعدد عشري عائم (a float) مقارنةً دقيقة (compared exactly)، و`Decimal("0.8") >= 0.8` تساوي `False`: فلا يحصل 80% بالضبط على تحذير (gets no warning). (3) تقرّب `round` النسبة المئوية بدل أن تقرّبها إلى الأسفل (instead of rounding it down). (4) يُستدعى المُخطِر (The notifier) مباشرة، فيفلت فشل التسليم (a delivery failure) من `send` بعد أن حُفظ التحويل (after the transfer was saved). (5) النسبة المئوية من النوع `int` لا تُوطَّن (is not localised)، فيرى عملاء العربية أرقامًا غربية (Western digits). الدليل يتفوق على القراءة (Evidence beats reading): يكفيك عشر ثوانٍ لفحص العيب 2 (defect 2 takes ten seconds to check). ابحث عن هذه الخمسة في أي فروقات يكتبها وكيل (any agent diff).
+(1) `limits.daily_used` هو الموضع **قبل** هذا التحويل، فيأتي التحذير متأخرًا بتحويل واحد. (2) تُقارَن قيمة `Decimal` بعدد عشري عائم مقارنةً دقيقة (compared exactly)، و`Decimal("0.8") >= 0.8` تساوي `False`: فلا يحصل 80% بالضبط على تحذير. (3) تقرّب `round` النسبة المئوية بدل أن تقرّبها إلى الأسفل. (4) يُستدعى المُخطِر مباشرة، فيفلت فشل التسليم من `send` بعد أن حُفظ التحويل. (5) النسبة المئوية من النوع `int` لا تُوطَّن، فيرى عملاء العربية أرقامًا غربية. الدليل يتفوق على القراءة: يكفيك عشر ثوانٍ لفحص العيب 2 (defect 2 takes ten seconds to check). ابحث عن هذه الخمسة في أي فروقات يكتبها وكيل.
 
 ```text
 >>> from decimal import Decimal
@@ -314,7 +314,7 @@ LADDER  1 stop (Esc) and say what you saw    2 correct once: file, line, reason
 False
 ```
 
-**الموجّه الغامض والموجّه المحدَّد (The vague prompt and the specified one).** عبارة *«أضف تحذيرًا عند 80% من الحد اليومي»* ("Add a warning at 80% of the daily limit") تترك للوكيل اختيار قراءة (choose a reading)، وكل اختيار مما سبق قد يخطئ فيه (each choice above is one it can get wrong). أما الموجّه المحدَّد (Specified):
+**الموجّه الغامض والموجّه المحدَّد (The vague prompt and the specified one).** عبارة *«أضف تحذيرًا عند 80% من الحد اليومي»* ("Add a warning at 80% of the daily limit") تترك للوكيل اختيار قراءة، وكل اختيار مما سبق قد يخطئ فيه. أما الموجّه المحدَّد (Specified):
 
 ```text
 Read TASK.md and specs/REMIT-318.md, then service.py (send), limits.py and notify.py.
@@ -324,23 +324,23 @@ existing best-effort helper. Failing tests first, then the code. Do not touch fe
 existing test, and do not commit. Show me the diff when pytest -q is green.
 ```
 
-### 🔴 نظرة الخبير (Expert view)
+### 🔴 نظرة الخبير
 
-**كيف يحكم المُقيِّم على اختباراتك (How the grader judges your tests).** فحص «تفشل اختباراتك الجديدة عند إزالة التحذير» ("Your new tests fail when the warning is removed") يعيد كل ملف خارج `tests/` إلى حالة `lab-start` ويشغّل اختباراتك الجديدة (your new tests). وفحص «تلاحظ اختباراتك تحذيرًا مكسورًا» ("Your tests notice a broken warning") يشغّلها سبع مرات أخرى (seven more times) على شيفرتك أنت، وفي كل مرة يُطبَّق كسر متعمَّد واحد (one deliberate breakage) على البرنامج أثناء تشغيله بوساطة إضافة اختبار (a test plugin): التحذير الذي لا يُسلَّم أبدًا (the warning never delivered)، والنص بلا أرقامه (the text without its numbers)، والنسبة المئوية أعلى بواحد (the percentage one too high)، وعملاء العربية الذين يتلقون الإنجليزية (Arabic customers given English)، والأرقام الغربية في النص العربي (Western digits in Arabic)، وخط 80% أعلى قليلًا أو أدنى قليلًا (the 80% line a little too high or too low). يجب اكتشاف خمسة من سبعة (Five of seven must be caught)، ومنها كسرا خط 80% كلاهما (both 80%-line breakages): فالتذكرة تطلب أن تثبّت مجموعًا أدنى من الخط بقليل وآخر عليه تمامًا (a total just under the line and one exactly on it)، واختبارات الصياغة وحدها لا تمس الخط أبدًا (never touch the line). وهذه فكرة اختبار الطفرات (the mutation idea) من [*اختبار البرمجيات (Software Testing)*، الدرس 2.3 — هل اختباراتك جيدة فعلًا؟ ⁦(Are your tests any good?)⁩](../testing/index.ar.html#/2.3)، مطبَّقة على أطراف البرنامج (applied at the edges of the program) فتعمل أيًّا كان شكل شيفرتك (whatever your code looks like).
+**كيف يحكم المُقيِّم على اختباراتك (How the grader judges your tests).** فحص «تفشل اختباراتك الجديدة عند إزالة التحذير» يعيد كل ملف خارج `tests/` إلى حالة `lab-start` ويشغّل اختباراتك الجديدة. وفحص «تلاحظ اختباراتك تحذيرًا مكسورًا» يشغّلها سبع مرات أخرى على شيفرتك أنت، وفي كل مرة يُطبَّق كسر متعمَّد واحد على البرنامج أثناء تشغيله بوساطة إضافة اختبار: التحذير الذي لا يُسلَّم أبدًا، والنص بلا أرقامه، والنسبة المئوية أعلى بواحد، وعملاء العربية الذين يتلقون الإنجليزية، والأرقام الغربية في النص العربي، وخط 80% أعلى قليلًا أو أدنى قليلًا (the 80% line a little too high or too low). يجب اكتشاف خمسة من سبعة، ومنها كسرا خط 80% كلاهما (both 80%-line breakages): فالتذكرة تطلب أن تثبّت مجموعًا أدنى من الخط بقليل وآخر عليه تمامًا، واختبارات الصياغة وحدها لا تمس الخط أبدًا. وهذه فكرة اختبار الطفرات من [*اختبار البرمجيات*، الدرس 2.3 — هل اختباراتك جيدة فعلًا؟ ⁦⁩](../testing/index.ar.html#/2.3)، مطبَّقة على أطراف البرنامج فتعمل أيًّا كان شكل شيفرتك.
 
-**ما لا يستطيعه (What it cannot do).** لا يعرف أن تصميمك جيد (your design is good) ولا أن مواصفتك حكيمة (your spec wise) ولا أنك قرأت الفروقات (that you read the diff). فإن استخدمت اختباراتك مُخطِرًا زائفًا (a fake notifier) لا يستدعي `render` أبدًا، فبعض الكسور لا يمكن أن تصل إليها (cannot reach them). والنجاح ليس مراجعة (A pass is not a review): ففي فريق حقيقي (in a real team) يحتاج `service.py` إلى مراجع بشري ثانٍ (a second human reviewer)، ويحمل طلب الدمج (pull request) الوسم `AI-assisted`.
+**ما لا يستطيعه (What it cannot do).** لا يعرف أن تصميمك جيد ولا أن مواصفتك حكيمة ولا أنك قرأت الفروقات. فإن استخدمت اختباراتك مُخطِرًا زائفًا لا يستدعي `render` أبدًا، فبعض الكسور لا يمكن أن تصل إليها. والنجاح ليس مراجعة: ففي فريق حقيقي يحتاج `service.py` إلى مراجع بشري ثانٍ، ويحمل طلب الدمج الوسم `AI-assisted`.
 
-## 🧰 الأدوات (The toolkit)
-| الأداة أو الممارسة أو النمط (Tool, practice or pattern) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
+## 🧰 الأدوات
+| الأداة أو الممارسة أو النمط | ما هي وماذا تفعل | متى تلجأ إليها |
 |---|---|---|
-| **Spec template** — قالب المواصفة | عشرة أقسام (Ten sections)، من الهدف إلى الخطة (goal to plan)، في `specs/` | قبل أن يكتب الوكيل الشيفرة (Before the agent writes code) |
-| **Mutation check** — فحص الطفرات | اكسر الميزة عمدًا (Break the feature on purpose) وانظر هل تلاحظ الاختبارات ذلك (whether the tests notice) | حين يحتاج منطق الأموال أو نص العميل إلى اختبارات تكشف الخلل فعلًا (tests that bite) |
-| **Agent log** — سجل الوكيل | الموجّه والنتيجة والتصحيحات والفحوص والدقائق (Prompt, result, corrections, checks, minutes) | بعد كل جلسة (After every session) |
+| **Spec template** — قالب المواصفة | عشرة أقسام (Ten sections)، من الهدف إلى الخطة، في `specs/` | قبل أن يكتب الوكيل الشيفرة |
+| **Mutation check** — فحص الطفرات | اكسر الميزة عمدًا وانظر هل تلاحظ الاختبارات ذلك | حين يحتاج منطق الأموال أو نص العميل إلى اختبارات تكشف الخلل فعلًا |
+| **Agent log** — سجل الوكيل | الموجّه والنتيجة والتصحيحات والفحوص والدقائق | بعد كل جلسة |
 
-## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-*يحتاج إلى وكيل (Needs an agent): لا (no)؛ والوكيل موصى به لا مطلوب (recommended, not required).* **مسار بلا وكيل (No-agent path):** نفّذ كل خطوة بنفسك، أو اطلب من مساعد محادثة (a chat assistant) شروحًا وراجع شيفرتك بنفسك؛ فالمُقيِّم لا يفحص إلا المستودع (checks the repository only). وفي الحالتين اكتب السجل (write the log).
+## 🏛️ عمليًا في بنك نجم
+*يحتاج إلى وكيل: لا؛ والوكيل موصى به لا مطلوب.* **مسار بلا وكيل (No-agent path):** نفّذ كل خطوة بنفسك، أو اطلب من مساعد محادثة شروحًا وراجع شيفرتك بنفسك؛ فالمُقيِّم لا يفحص إلا المستودع. وفي الحالتين اكتب السجل.
 
-**التذكرة (The ticket).** هذا ملف `task.md` من العدة (the kit)، كما كتبته حصة (Hessa). يكتبه الأمر `start` في مجلد مختبرك باسم `TASK.md`، فالأحرف الكبيرة مهمة (capitals matter) في Linux وmacOS.
+**التذكرة (The ticket).** هذا ملف `task.md` من العدة، كما كتبته حصة. يكتبه الأمر `start` في مجلد مختبرك باسم `TASK.md`، فالأحرف الكبيرة مهمة (capitals matter) في Linux وmacOS.
 
 > ```text
 > # REMIT-318: warn customers when a transfer takes them to 80% of their daily limit
@@ -422,13 +422,13 @@ git switch -c remit-318-limit-warning
 pytest -q
 ```
 
-المستودع الابتدائي أخضر (The starter is green): ينجح 99 اختبارًا. ويضم `CLAUDE.md`، وهو ذاكرة المشروع (the project memory) من المختبر 2.2، و`specs/TEMPLATE.md`، و`agent-log.md` غير معبّأ، و`TASK.md`، مودَعة باسم «Lab starting state» ومعلَّمة بالوسم `lab-start` (tagged)؛ وتقارن الخطوتان 6 و7 والمُقيِّم مع هذا الوسم (compare with that tag). يقرأ المُقيِّم الفرع الحالي في `~/ainative/m04` (the branch checked out)، فقيِّم على فرع مهمتك (grade on your task branch). وإن كانت أداتك تقرأ `AGENTS.md` فانسخ ملف الذاكرة (the memory file) أو اربطه (copy or link).
+المستودع الابتدائي أخضر: ينجح 99 اختبارًا. ويضم `CLAUDE.md`، وهو ذاكرة المشروع من المختبر 2.2، و`specs/TEMPLATE.md`، و`agent-log.md` غير معبّأ، و`TASK.md`، مودَعة باسم «Lab starting state» ومعلَّمة بالوسم `lab-start` (tagged)؛ وتقارن الخطوتان 6 و7 والمُقيِّم مع هذا الوسم. يقرأ المُقيِّم الفرع الحالي في `~/ainative/m04`، فقيِّم على فرع مهمتك. وإن كانت أداتك تقرأ `AGENTS.md` فانسخ ملف الذاكرة أو اربطه.
 
-**دورك (Your move).** اتبع الخطوات السبع (Follow the seven steps). استكشف أولًا (Explore first)، في وضع التخطيط (plan mode) إن كنت تستخدم Claude Code، وسجّل في المواصفة ما تتركه التذكرة مفتوحًا (what the ticket leaves open). وأودِع المواصفة (Commit the spec). ومع الوكيل، أعطه خطوة واحدة في كل موجّه (one step per prompt)، كما في الموجّه المحدَّد أعلاه؛ فملف الذاكرة يتيح له أن يودع فقط عند الطلب (commit only when asked)، فاطلب منه ذلك أو أودِع بنفسك. ثم خطوة واحدة في كل لفة (one step per lap): اختبار فاشل (failing test)، فشيفرة، فتشغيلك `pytest -q` بنفسك، فـ`git diff`، فإيداع بصيغة `type(scope): subject`. توقف عند أول إشارة على البطاقة (the first cue on the card).
+**دورك (Your move).** اتبع الخطوات السبع. استكشف أولًا (Explore first)، في وضع التخطيط إن كنت تستخدم Claude Code، وسجّل في المواصفة ما تتركه التذكرة مفتوحًا. وأودِع المواصفة. ومع الوكيل، أعطه خطوة واحدة في كل موجّه، كما في الموجّه المحدَّد أعلاه؛ فملف الذاكرة يتيح له أن يودع فقط عند الطلب، فاطلب منه ذلك أو أودِع بنفسك. ثم خطوة واحدة في كل لفة: اختبار فاشل (failing test)، فشيفرة، فتشغيلك `pytest -q` بنفسك، فـ`git diff`، فإيداع بصيغة `type(scope): subject`. توقف عند أول إشارة على البطاقة.
 
-الخطوة 6 هي التي يتخطاها الناس (Step 6 is the one people skip). في `~/ainative/m04`، بعد الإيداع، شغّل `git restore --source=lab-start --staged --worktree src` لإعادة الشيفرة إلى حالتها (to put the code back)، ثم شغّل اختباراتك الجديدة. والاختبارات التي تتوقع تحذيرًا (expect a warning) يجب أن تفشل؛ أما اختبارات «لا تحذير عند 79.99%» ("no warning at 79.99%") أو «لا شيء يُرسل عند الرفض» ("nothing sent on a refusal") فتبقى خضراء، وهذا هو المطلوب (as they should). ثم يعيد `git restore --source=HEAD --staged --worktree src` ميزتك (brings your feature back).
+الخطوة 6 هي التي يتخطاها الناس (Step 6 is the one people skip). في `~/ainative/m04`، بعد الإيداع، شغّل `git restore --source=lab-start --staged --worktree src` لإعادة الشيفرة إلى حالتها، ثم شغّل اختباراتك الجديدة. والاختبارات التي تتوقع تحذيرًا يجب أن تفشل؛ أما اختبارات «لا تحذير عند 79.99%» ("no warning at 79.99%") أو «لا شيء يُرسل عند الرفض» فتبقى خضراء، وهذا هو المطلوب. ثم يعيد `git restore --source=HEAD --staged --worktree src` ميزتك.
 
-**ما يفحصه المُقيِّم (What the grader checks).** المطلوب (Required): تنجح مجموعة الاختبارات (the suite passes)؛ لم يُعدَّل أي اختبار قديم أو أداة تجهيز (fixture) أو ثابت (no old test, fixture or constant was edited)؛ وتنجح اختبارات القبول الخفية (hidden acceptance tests) — قواعد التذكرة وصياغتها وواجهتها (the rules, wording and interface)، باللغتين وفي فئات KYC الثلاث (all three KYC tiers)؛ وتفشل اختباراتك الجديدة بدون التحذير وتكشف خمسة من سبعة كسور (catch five of seven breakages)، منها كسرا خط 80% كلاهما (both 80%-line ones included)؛ ولم يتغير إلا الملفات التي يسردها `TASK.md`، بما لا يزيد على أربعة ملفات و120 سطرًا متغيرًا تحت `src/` (at most four files and 120 changed lines)؛ ولا إضافة لأعداد عشرية عائمة (no float added)؛ وثلاثة إيداعات أو أكثر برسائل ريميت (three or more commits with Remit messages)؛ ولا شيء غير مودَع (nothing uncommitted)؛ ولا أسرار (no secrets). والاستشاري (Advisory): مواصفة وخطة (a spec and plan)، والمواصفة قبل الشيفرة (spec before code)، وكل إيداع أخضر (every commit green)، ولا إيداع يضيف أكثر من 200 سطر (over 200 lines)، ولا `except` شاملة (no blanket)، وإدخال في السجل (a log entry).
+**ما يفحصه المُقيِّم (What the grader checks).** المطلوب (Required): تنجح مجموعة الاختبارات؛ لم يُعدَّل أي اختبار قديم أو أداة تجهيز (fixture) أو ثابت؛ وتنجح اختبارات القبول الخفية — قواعد التذكرة وصياغتها وواجهتها، باللغتين وفي فئات KYC الثلاث؛ وتفشل اختباراتك الجديدة بدون التحذير وتكشف خمسة من سبعة كسور، منها كسرا خط 80% كلاهما (both 80%-line ones included)؛ ولم يتغير إلا الملفات التي يسردها `TASK.md`، بما لا يزيد على أربعة ملفات و120 سطرًا متغيرًا تحت `src/` (at most four files and 120 changed lines)؛ ولا إضافة لأعداد عشرية عائمة؛ وثلاثة إيداعات أو أكثر برسائل ريميت؛ ولا شيء غير مودَع (nothing uncommitted)؛ ولا أسرار. والاستشاري (Advisory): مواصفة وخطة، والمواصفة قبل الشيفرة، وكل إيداع أخضر، ولا إيداع يضيف أكثر من 200 سطر (over 200 lines)، ولا `except` شاملة، وإدخال في السجل.
 
 **التقييم (Grade).**
 
@@ -437,7 +437,7 @@ cd ~/system-design-for-vibe-coders/ainative/ailab
 python -m ailab grade m04 --dir ~/ainative/m04
 ```
 
-يستغرق التقييم نحو خمس ثوانٍ (about five seconds): إذ يعيد تشغيل اختباراتك (re-runs your tests). وعلى حالة المستودع الابتدائي (On the starter state) تبدأ المخرجات الحقيقية (the real output) هكذا، وهي مختصرة (abridged)؛ فالأسطر الاستشارية (the advisory lines) تأتي بعد الأسطر المطلوبة (the required ones):
+يستغرق التقييم نحو خمس ثوانٍ: إذ يعيد تشغيل اختباراتك. وعلى حالة المستودع الابتدائي تبدأ المخرجات الحقيقية هكذا، وهي مختصرة (abridged)؛ فالأسطر الاستشارية تأتي بعد الأسطر المطلوبة:
 
 ```text
 [PASS] The whole test suite passes: 99 passed
@@ -448,7 +448,7 @@ python -m ailab grade m04 --dir ~/ainative/m04
 Lab m04: 5/12 required checks passed: NOT YET
 ```
 
-المخرجات الحقيقية (Real output) لميزة صحيحة لا تفحص اختباراتها إلا أن «شيئًا ما أُرسل» ("something was sent"):
+المخرجات الحقيقية (Real output) لميزة صحيحة لا تفحص اختباراتها إلا أن «شيئًا ما أُرسل»:
 
 ```text
 [PASS] Your new tests fail when the warning is removed: 1 new test fails without the warning, as they should
@@ -458,15 +458,15 @@ Lab m04: 5/12 required checks passed: NOT YET
 Lab m04: 11/12 required checks passed: NOT YET
 ```
 
-ومع اختبارات سليمة (With sound tests) يكون السطر الأخير `Lab m04: 12/12 required checks passed: PASSED`.
+ومع اختبارات سليمة يكون السطر الأخير `Lab m04: 12/12 required checks passed: PASSED`.
 
-**المُخرَج الأسبوعي للوحدة 4 (Weekly deliverable, Module 4).** في مستودع المختبر (In the lab repository): فرعك المؤلف من إيداعات صغيرة (your branch of small commits). وفي مستودع ملاحظاتك (In your notes repository): المجلد `week-04/` ويضم `loop-checklist.md` وقد عُلِّمت بنودها، و`timeline.md`، وهو جدول مثل جدول الدرس 4.1 (a table like lesson 4.1's): الوقت (Time)، والحركة (Move)، وما حدث (What happened)، والإشارة (Cue)، والتدخل (Intervention)؛ و`agent-log.md`؛ و`m04-grade.txt` — من مجلد `ailab` أضف `> <notes>/week-04/m04-grade.txt` إلى أمر التقييم (the grade command).
+**المُخرَج الأسبوعي للوحدة 4 (Weekly deliverable, Module 4).** في مستودع المختبر: فرعك المؤلف من إيداعات صغيرة. وفي مستودع ملاحظاتك: المجلد `week-04/` ويضم `loop-checklist.md` وقد عُلِّمت بنودها، و`timeline.md`، وهو جدول مثل جدول الدرس 4.1 (a table like lesson 4.1's): الوقت، والحركة، وما حدث، والإشارة، والتدخل؛ و`agent-log.md`؛ و`m04-grade.txt` — من مجلد `ailab` أضف `> <notes>/week-04/m04-grade.txt` إلى أمر التقييم.
 
-**الجلسة الجماعية (Group session) (60 دقيقة).** (1) تبادلوا `git log --oneline lab-start..HEAD`: هل يروي كل إيداع خطوة واحدة؟ ⁦(does each commit tell one step?)⁩ (10) (2) تبادلوا الاختبارات (Swap tests): اكسر ميزة شريكك يدويًا بطريقة واحدة (break your partner's feature by hand in one way)؛ هل يلاحظ اختبار ذلك؟ ⁦(does a test notice?)⁩ (20) (3) قارنوا الخطوط الزمنية (Compare timelines): أول إشارة والدرجة المستخدمة (first cue, rung used) (15) (4) اتفقوا على سطر واحد لقائمة تحقق الفريق (one line for the team checklist) (10) (5) سجلات الوكيل (Agent logs) (5).
+**الجلسة الجماعية (Group session) (60 دقيقة).** (1) تبادلوا `git log --oneline lab-start..HEAD`: هل يروي كل إيداع خطوة واحدة؟ ⁦⁩ (10) (2) تبادلوا الاختبارات (Swap tests): اكسر ميزة شريكك يدويًا بطريقة واحدة؛ هل يلاحظ اختبار ذلك؟ ⁦⁩ (20) (3) قارنوا الخطوط الزمنية (Compare timelines): أول إشارة والدرجة المستخدمة (15) (4) اتفقوا على سطر واحد لقائمة تحقق الفريق (10) (5) سجلات الوكيل (Agent logs) (5).
 
-**المراجعة الختامية (Debrief).** ما الذي أخطأ فيه الوكيل، وما الذي لم تره إلا بتشغيله؟ ⁦(What did the agent get wrong, and what did you only see by running it?)⁩ ما الذي فات سياقك أو مواصفتك؟ ⁦(What did your context or spec miss?)⁩ أي إشارة لاحظتها أخيرًا، وأين كان ينبغي أن تنطبق قاعدة الفشلين؟ ⁦(Which cue did you notice last, and where should the two-failure rule have applied?)⁩ كم دقيقة ذهبت إلى التحقق؟ ⁦(How many minutes went to verifying?)⁩
+**المراجعة الختامية (Debrief).** ما الذي أخطأ فيه الوكيل، وما الذي لم تره إلا بتشغيله؟ ⁦⁩ ما الذي فات سياقك أو مواصفتك؟ ⁦⁩ أي إشارة لاحظتها أخيرًا، وأين كان ينبغي أن تنطبق قاعدة الفشلين؟ ⁦⁩ كم دقيقة ذهبت إلى التحقق؟ ⁦⁩
 
-**سجل الوكيل (Agent log).** يحوي `agent-log.md` في المستودع الابتدائي هذه الحقول (these fields)؛ املأ إدخالًا واحدًا لكل جلسة (one entry per session) (مثلًا «REMIT-318, step 4»).
+**سجل الوكيل (Agent log).** يحوي `agent-log.md` في المستودع الابتدائي هذه الحقول؛ املأ إدخالًا واحدًا لكل جلسة (مثلًا «REMIT-318, step 4»).
 
 ```text
 Entry:
@@ -478,90 +478,90 @@ Minutes (you / agent / checking):
 Would I delegate it again?
 ```
 
-## 🛠️ التمارين (Exercises)
-- 🟢 **يدويًا (By hand).** *بلا وكيل (No agent).* أنجز المختبر دون أداة (without a tool). *يكتمل عندما (Done when):* يطبع `grade` الكلمة `PASSED`، ويكون لديك ثلاثة إيداعات على الأقل (at least three commits)، ويقول سجلك ما استغرق أطول وقت (what took longest).
-- 🟡 **مع وكيل، والإشارات (With an agent, and the cues).** *الوكيل موصى به (Agent recommended).* أعد المختبر في مجلد جديد (a fresh directory)، في وضع التخطيط (plan mode)، بخطوة واحدة في كل لفة (one step per lap). *يكتمل عندما (Done when):* تظهر `PASSED` مرة أخرى، ويعلّم `timeline.md` إشارة (marks a cue)، ويقارن جدول بين المحاولتين من حيث الدقائق والتدخلات (minutes and interventions).
-- 🔴 **اكسر ميزتك بنفسك (Break your own feature).** *الوكيل اختياري (Optional agent).* في مستودعك المكتمل (finished repository) أدخِل كل عيب من عيوب الفروقات الخطرة (the risky diff) بالتتابع (in turn). *يكتمل عندما (Done when):* يقول جدول هل فشل اختبار (whether a test failed) وأيّها (which one)، وما أضفته لكل عيب أفلت (slipped through).
+## 🛠️ التمارين
+- 🟢 **يدويًا (By hand).** *بلا وكيل.* أنجز المختبر دون أداة. *يكتمل عندما:* يطبع `grade` الكلمة `PASSED`، ويكون لديك ثلاثة إيداعات على الأقل، ويقول سجلك ما استغرق أطول وقت.
+- 🟡 **مع وكيل، والإشارات (With an agent, and the cues).** *الوكيل موصى به (Agent recommended).* أعد المختبر في مجلد جديد، في وضع التخطيط، بخطوة واحدة في كل لفة. *يكتمل عندما:* تظهر `PASSED` مرة أخرى، ويعلّم `timeline.md` إشارة، ويقارن جدول بين المحاولتين من حيث الدقائق والتدخلات.
+- 🔴 **اكسر ميزتك بنفسك (Break your own feature).** *الوكيل اختياري (Optional agent).* في مستودعك المكتمل (finished repository) أدخِل كل عيب من عيوب الفروقات الخطرة بالتتابع. *يكتمل عندما:* يقول جدول هل فشل اختبار وأيّها، وما أضفته لكل عيب أفلت (slipped through).
 
-## ⚠️ أخطاء وفخاخ (Mistakes and traps)
+## ⚠️ أخطاء وفخاخ
 - **اختبارات كُتبت بعد الشيفرة ولم تُرَ فاشلة قط (Tests written after the code, never seen failing).** شغّلها على `lab-start`.
-- **تصديق «كل الاختبارات تنجح» من الوكيل (Trusting "all tests pass" from the agent).** شغّل `pytest -q` بنفسك، واقرأ الفروقات (read the diff).
-- **تعديل اختبار قديم ليصير أخضر (Editing an old test to go green).** هذه إشارة (a cue): الشيفرة خاطئة (the code is wrong).
-- **إيداع واحد في النهاية (One commit at the end).** ثلاثة إيداعات خضراء صغيرة (Three small green commits) جزء من المهمة.
+- **تصديق «كل الاختبارات تنجح» من الوكيل (Trusting "all tests pass" from the agent).** شغّل `pytest -q` بنفسك، واقرأ الفروقات.
+- **تعديل اختبار قديم ليصير أخضر (Editing an old test to go green).** هذه إشارة: الشيفرة خاطئة.
+- **إيداع واحد في النهاية (One commit at the end).** ثلاثة إيداعات خضراء صغيرة جزء من المهمة.
 
-## 🧾 الخلاصة (Recap)
-- المواصفة والخطة أولًا (Spec and plan first)؛ ثم الاختبار الفاشل (failing test) فالشيفرة فتشغيلك بنفسك (your own run) فالفروقات (the diff) فالإيداع (a commit).
-- قارن قيم Decimal بقيم Decimal، وأضف التحويل الذي أُجري للتوّ (the transfer just made)، وقرّب إلى الأسفل (round down)، ووطِّن الأرقام (localise digits)، واستخدم مسار أفضل جهد (the best-effort path).
-- للاختبار قيمة حين يفشل بدون الميزة (fails without the feature) وحين يجعله كسر متعمَّد يفشل (a deliberate breakage makes it fail).
+## 🧾 الخلاصة
+- المواصفة والخطة أولًا؛ ثم الاختبار الفاشل فالشيفرة فتشغيلك بنفسك فالفروقات فالإيداع.
+- قارن قيم Decimal بقيم Decimal، وأضف التحويل الذي أُجري للتوّ، وقرّب إلى الأسفل (round down)، ووطِّن الأرقام (localise digits)، واستخدم مسار أفضل جهد.
+- للاختبار قيمة حين يفشل بدون الميزة وحين يجعله كسر متعمَّد يفشل.
 
-## ✍️ اختبر نفسك (Check yourself)
+## ✍️ اختبر نفسك
 
 **1. ميزتك تعمل، لكن المُقيِّم يُفشل فحص «تفشل اختباراتك الجديدة عند إزالة التحذير» ("Your new tests fail when the warning is removed")؛ إذ تنجح كل اختباراتك الجديدة بدونه (all of your new tests pass without it). ماذا يخبرك ذلك؟ ⁦(What does that tell you?)⁩**
 
-- A. المُقيِّم مخطئ (The grader is wrong): المجموعة خضراء، فلا بد أن الاختبارات الجديدة تعمل (the new tests must be working).
-- B. الميزة أصغر من أن تحتاج اختبارات خاصة بها (too small to need tests of its own)، فلم تكن هناك حاجة إليها (so no test was needed at all).
-- C. اختباراتك كلها تعتمد على أداة تجهيز (a fixture) لا تملكها الشيفرة الابتدائية بعد (the starter code does not have yet).
-- D. اختباراتك لا تعتمد على الميزة أبدًا (never depend on the feature)، فلن تلاحظ غيابها (would not notice it missing).
+- A. المُقيِّم مخطئ: المجموعة خضراء، فلا بد أن الاختبارات الجديدة تعمل.
+- B. الميزة أصغر من أن تحتاج اختبارات خاصة بها، فلم تكن هناك حاجة إليها.
+- C. اختباراتك كلها تعتمد على أداة تجهيز لا تملكها الشيفرة الابتدائية بعد.
+- D. اختباراتك لا تعتمد على الميزة أبدًا، فلن تلاحظ غيابها.
 
 <details><summary>الإجابة</summary>
 
-**D.** الاختبار الذي ينجح قبل أن توجد الميزة لا يثبت شيئًا (proves nothing): اجعل كلًا منها يفشل أولًا (make each fail first)، ثم ابنِ. والمجموعة الخضراء (A green suite) (A) لا تُظهر أن الاختبارات الجديدة تكشف الخلل فعلًا (bite). 🔴 كيف يحكم المُقيِّم على اختباراتك (How the grader judges your tests).
+**D.** الاختبار الذي ينجح قبل أن توجد الميزة لا يثبت شيئًا (proves nothing): اجعل كلًا منها يفشل أولًا، ثم ابنِ. والمجموعة الخضراء لا تُظهر أن الاختبارات الجديدة تكشف الخلل فعلًا (bite). 🔴 كيف يحكم المُقيِّم على اختباراتك.
 
 </details>
 
 **2. فروقات (diff) كتبها وكيل للخطوة 4 تحسب `ratio = limits.daily_used / limits.daily_limit` وتنبّه (warns) حين `ratio >= 0.8`. ما الخطأ فيها؟ ⁦(What is wrong with it?)⁩**
 
-- A. لا خطأ فيها (Nothing is wrong): تحوّل Python العدد العشري العائم 0.8 (the float 0.8) إلى Decimal قبل أن تجري المقارنة.
-- B. تقارن Decimal بعدد عشري عائم (a float)، فيفشل 80% بالضبط، وتُغفل هذا التحويل (leaves out this transfer).
-- C. تستخدم الحد اليومي (the daily limit)، لكن الحد الشهري (the monthly limit) هو المهم في هذه التذكرة (in this ticket).
-- D. تضيف الرسوم (the fee) إلى المجموع فيصل التحذير مبكرًا (arrives early)؛ كما أنها تقرّب النسبة المئوية (rounds the percentage).
+- A. لا خطأ فيها: تحوّل Python العدد العشري العائم 0.8 (the float 0.8) إلى Decimal قبل أن تجري المقارنة.
+- B. تقارن Decimal بعدد عشري عائم، فيفشل 80% بالضبط، وتُغفل هذا التحويل.
+- C. تستخدم الحد اليومي، لكن الحد الشهري هو المهم في هذه التذكرة.
+- D. تضيف الرسوم إلى المجموع فيصل التحذير مبكرًا (arrives early)؛ كما أنها تقرّب النسبة المئوية.
 
 <details><summary>الإجابة</summary>
 
-**B.** تُقارَن Decimal بعدد عشري عائم مقارنة دقيقة (compared with a float exactly)، و`Decimal("0.8") >= 0.8` تساوي False؛ و`daily_used` هو الموضع قبل هذا التحويل (the position before this transfer). 🟡 الفروقات الخطرة (The risky diff).
+**B.** تُقارَن Decimal بعدد عشري عائم مقارنة دقيقة، و`Decimal("0.8") >= 0.8` تساوي False؛ و`daily_used` هو الموضع قبل هذا التحويل. 🟡 الفروقات الخطرة.
 
 </details>
 
 **3. أي تاريخ إيداعات يقبله المختبر دليلًا على العمل بخطوات صغيرة؟ ⁦(Which history would the lab accept as working in small steps?)⁩**
 
 - A. إيداع واحد (One commit)، `feat(service): add warning`، يضم المواصفة والشيفرة والاختبارات.
-- B. أربعة إيداعات (Four commits) بأسماء wip وwip2 وfix وfinal، أُنجزت كلما بدا العمل منتهيًا (whenever the work seemed done).
-- C. إيداع للمواصفة (A spec commit) ثم ثلاثة إيداعات خضراء (three green commits): الرسالة والقرار واختبارات الحالات الحدّية (message, decision, edge tests).
+- B. أربعة إيداعات (Four commits) بأسماء wip وwip2 وfix وfinal، أُنجزت كلما بدا العمل منتهيًا.
+- C. إيداع للمواصفة ثم ثلاثة إيداعات خضراء: الرسالة والقرار واختبارات الحالات الحدّية.
 - D. إيداعان (Two commits): كل الاختبارات في الأول، ثم كل الشيفرة في الثاني.
 
 <details><summary>الإجابة</summary>
 
-**C.** يطلب المختبر ثلاثة إيداعات خضراء أو أكثر بصيغة ريميت (three or more green commits in the Remit format)، ويُحتسب إيداع المواصفة (the spec commit included). والإيداع الكبير الواحد (One big commit) (A) والأسماء الغامضة (vague names) (B) يخفقان في ذلك. 🟢 الأساسيات (The essentials).
+**C.** يطلب المختبر ثلاثة إيداعات خضراء أو أكثر بصيغة ريميت، ويُحتسب إيداع المواصفة. والإيداع الكبير الواحد (One big commit) والأسماء الغامضة (vague names) (B) يخفقان في ذلك. 🟢 الأساسيات.
 
 </details>
 
 **4. يقول المُقيِّم إنك تكشف 3 من 7 كسور (catch 3 of 7 breakages) وإنك تفوّت «يعرض النص العربي أرقامًا غربية» ("Arabic text shows Western digits"). ما أفضل خطوة تالية؟ ⁦(What is the best next step?)⁩**
 
-- A. أضف اختبارًا للرسالة العربية الدقيقة (the exact Arabic message)، بأرقام عربية-هندية (Arabic-Indic digits) ودون أي رقم ASCII.
-- B. تجاهله (Skip it): فالصياغة العربية من عمل فريق المحتوى (the content team's job).
-- C. عدّل إضافة المُقيِّم (the grader's plugin) حتى لا ينطبق الكسر بعد الآن (no longer applies).
+- A. أضف اختبارًا للرسالة العربية الدقيقة، بأرقام عربية-هندية (Arabic-Indic digits) ودون أي رقم ASCII.
+- B. تجاهله (Skip it): فالصياغة العربية من عمل فريق المحتوى.
+- C. عدّل إضافة المُقيِّم حتى لا ينطبق الكسر بعد الآن.
 - D. غيّر الشيفرة لتطبع أرقامًا غربية (Western digits)، فلا يغيّر الكسر شيئًا (changes nothing).
 
 <details><summary>الإجابة</summary>
 
-**A.** يبقى الكسر حيًّا (survives) فقط إن لم يثبّت أي اختبار أرقام النص العربي (pins the digits of the Arabic text)، فثبّتها. وإضعاف المُقيِّم (weakening the grader) (C) أو الميزة (D) يُفقد الغرض معناه (defeats the point). 🔴 كيف يحكم المُقيِّم على اختباراتك (How the grader judges your tests).
+**A.** يبقى الكسر حيًّا (survives) فقط إن لم يثبّت أي اختبار أرقام النص العربي، فثبّتها. وإضعاف المُقيِّم (C) أو الميزة (D) يُفقد الغرض معناه. 🔴 كيف يحكم المُقيِّم على اختباراتك.
 
 </details>
 
 **5. أي عبارة عن الدرجة صحيحة؟ ⁦(Which statement about the grade is correct?)⁩**
 
-- A. يستطيع أن يعرف من تاريخ الإيداعات والطوابع الزمنية (the commit history and the timestamps) هل كتب وكيل الشيفرة.
-- B. يبيّن أن الميزة صحيحة لكل مدخل ممكن (every possible input)، بما فيها غير المألوفة (unusual ones).
-- C. يفحص النتيجة (the result)، لا من كتبها ولا هل كانت قراراتك حكيمة (whether your decisions were wise).
-- D. يؤكد أنك قرأت الفروقات كلها بعناية (read each diff carefully) قبل أن تودعها في الفرع.
+- A. يستطيع أن يعرف من تاريخ الإيداعات والطوابع الزمنية هل كتب وكيل الشيفرة.
+- B. يبيّن أن الميزة صحيحة لكل مدخل ممكن، بما فيها غير المألوفة (unusual ones).
+- C. يفحص النتيجة، لا من كتبها ولا هل كانت قراراتك حكيمة.
+- D. يؤكد أنك قرأت الفروقات كلها بعناية قبل أن تودعها في الفرع.
 
 <details><summary>الإجابة</summary>
 
-**C.** تقيِّم العدة (The kit) المستودع (grades the repository). ولا تستطيع أن ترى التأليف (authorship) ولا القراءة (reading) ولا الحكم (judgement)، والنجاح ليس مراجعة (a pass is not a review). 🔴 ما لا يستطيعه (What it cannot do).
+**C.** تقيِّم العدة المستودع. ولا تستطيع أن ترى التأليف (authorship) ولا القراءة (reading) ولا الحكم (judgement)، والنجاح ليس مراجعة. 🔴 ما لا يستطيعه.
 
 </details>
 
-## 📚 المراجع (References)
-- ملف README الخاص بـ ailab (The ailab README): https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/ainative/ailab
-- وثائق Claude Code (Claude Code documentation): أفضل الممارسات (best practices) https://code.claude.com/docs/en/best-practices; ونقاط الاستعادة (checkpointing) https://code.claude.com/docs/en/checkpointing
+## 📚 المراجع
+- ملف README الخاص بـ ailab: https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/ainative/ailab
+- وثائق Claude Code: أفضل الممارسات https://code.claude.com/docs/en/best-practices; ونقاط الاستعادة (checkpointing) https://code.claude.com/docs/en/checkpointing
 - Python: وحدة `decimal` (module) https://docs.python.org/3/library/decimal.html; وpytest https://docs.pytest.org; وConventional Commits https://www.conventionalcommits.org

@@ -19,7 +19,7 @@
         "ar": [
           "أن يُعاد حسابها من أحدث الجداول (freshest tables) في كل مرة يُعاد فيها تدريب النموذج (retrained)",
           "أن تُحسب بالبذرة العشوائية (random seed) والإعدادات (settings) نفسها في كل تشغيل (run)",
-          "أن تستخدم فقط البيانات (data) التي كانت موجودة (existed) لحظة إجراء التنبؤ (moment of the prediction)",
+          "أن تستخدم فقط البيانات (data) التي كانت موجودة (existed) لحظة إجراء التنبؤ",
           "أن تأتي من جدول في مستودع البيانات (warehouse) يُحدَّث (refreshed) مرة يوميًا على الأقل"
         ]
       },
@@ -91,7 +91,7 @@
       "lesson": "5.2",
       "q": {
         "en": "Three weeks into a quarter, every Smart Alerts input passes its data-quality checks, every feature's PSI is below 0.1 and the daily alert count is stable. Yet the share of alerts analysts confirm within 48 hours keeps falling, and the random review sample of low-score transactions shows missed fraud rising. What is the best reading and response?",
-        "ar": "بعد ثلاثة أسابيع من بداية ربع السنة، تجتاز كل مدخلات التنبيهات الذكية (Smart Alerts) فحوص جودة البيانات (data-quality checks)، ومؤشر استقرار المجتمع (Population Stability Index, PSI) لكل خاصية (feature) أقل من 0.1، وعدد التنبيهات اليومي (daily alert count) مستقر. ومع ذلك تواصل نسبةُ التنبيهات التي يؤكدها المحللون خلال 48 ساعة الانخفاضَ، وتُظهر العينة العشوائية للمراجعة (random review sample) من المعاملات منخفضة الدرجة (low-score transactions) ارتفاعًا في الاحتيال الفائت (missed fraud). ما أفضل قراءة واستجابة؟"
+        "ar": "بعد ثلاثة أسابيع من بداية ربع السنة، تجتاز كل مدخلات التنبيهات الذكية (Smart Alerts) فحوص جودة البيانات (data-quality checks)، ومؤشر استقرار المجتمع لكل خاصية (feature) أقل من 0.1، وعدد التنبيهات اليومي مستقر. ومع ذلك تواصل نسبةُ التنبيهات التي يؤكدها المحللون خلال 48 ساعة الانخفاضَ، وتُظهر العينة العشوائية للمراجعة من المعاملات منخفضة الدرجة (low-score transactions) ارتفاعًا في الاحتيال الفائت (missed fraud). ما أفضل قراءة واستجابة؟"
       },
       "o": {
         "en": [
@@ -101,7 +101,7 @@
           "Concept drift; retrain automatically tonight on last month's data and promote the new version"
         ],
         "ar": [
-          "انقطاع في البيانات من المصدر (upstream data break)؛ يُوقَف التقييم (scoring) ويُعاد إلى القواعد (rules) حتى يُصلَح مصدر البيانات (feed)",
+          "انقطاع في البيانات من المصدر؛ يُوقَف التقييم (scoring) ويُعاد إلى القواعد (rules) حتى يُصلَح مصدر البيانات (feed)",
           "انجراف المفهوم (concept drift)؛ تُحلَّل حالات الاحتيال الفائتة، ثم يُعاد التدريب عبر خط البيانات (pipeline) مع وضع الظل (shadow mode) ثم يُطلب الاعتماد (sign-off)",
           "لا مشكلة حقيقية بعد؛ فما دام مؤشر الاستقرار (PSI) لكل خاصية (feature) أقل من 0.1 فالمدخلات (inputs) والنموذج (model) سليمان",
           "انجراف المفهوم (concept drift)؛ يُعاد التدريب تلقائيًا (retrain automatically) الليلة على بيانات الشهر الماضي وتُرقّى النسخة الجديدة (promote)"
@@ -110,7 +110,7 @@
       "a": 1,
       "why": {
         "en": "Clean, stable inputs with worsening outcomes mean the relationship between inputs and fraud has changed, as with a new scam pattern: concept drift, not an upstream break. Retraining is right, but only through the registered pipeline after diagnosis, with a shadow period and model-validation sign-off; automatic retrain-and-promote skips both.",
-        "ar": "مدخلات سليمة ومستقرة مع نتائج تزداد سوءًا تعني أن العلاقة بين المدخلات والاحتيال تغيّرت، كما في نمط احتيال جديد (new scam pattern): إنه انجراف المفهوم (concept drift) لا انقطاع من المصدر (upstream break). إعادة التدريب (retraining) صحيحة، لكن عبر خط البيانات المسجّل (registered pipeline) فقط بعد التشخيص، مع فترة ظل (shadow period) واعتماد من فريق التحقق من النماذج (model validation)؛ أما إعادة التدريب والترقية تلقائيًا (automatic retrain-and-promote) فتتجاوز الأمرين معًا."
+        "ar": "مدخلات سليمة ومستقرة مع نتائج تزداد سوءًا تعني أن العلاقة بين المدخلات والاحتيال تغيّرت، كما في نمط احتيال جديد: إنه انجراف المفهوم (concept drift) لا انقطاع من المصدر (upstream break). إعادة التدريب (retraining) صحيحة، لكن عبر خط البيانات المسجّل (registered pipeline) فقط بعد التشخيص، مع فترة ظل (shadow period) واعتماد من فريق التحقق من النماذج (model validation)؛ أما إعادة التدريب والترقية تلقائيًا (automatic retrain-and-promote) فتتجاوز الأمرين معًا."
       }
     }
   ],

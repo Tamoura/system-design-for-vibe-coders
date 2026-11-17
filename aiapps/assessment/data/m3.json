@@ -19,14 +19,14 @@
     ],
     "ar": [
      "استدعى النموذج (model) TicketHub بنفسه، والحالة (status) موجودة فعلًا داخل الردّ",
-     "لم يُنفَّذ شيء بعد (nothing has run)؛ الكتلة (block) طلب فقط، وشيفرتها (her code) تقرر تنفيذه",
+     "لم يُنفَّذ شيء بعد؛ الكتلة (block) طلب فقط، وشيفرتها تقرر تنفيذه",
      "نفّذت خوادم Anthropic الأداة (tool) وستُرفق الحالة (status) بالردّ التالي",
      "تحتفظ الواجهة (API) بالاستدعاء (call) وتنفّذه عند وصول رسالة المستخدم التالية"
     ]
    },
    "why": {
     "en": "A `tool_use` block is only a request: your code validates it, runs the tool and answers in the next user message. The tempting claim that the model called TicketHub itself mistakes the description of a call for the call.",
-    "ar": "كتلة (block) `tool_use` مجرد طلب (request) فقط؛ فشيفرتك (your code) هي التي تتحقق منه (validates) وتنفّذ الأداة (tool) وتجيب في رسالة المستخدم التالية (next user message). والادعاء المغري (tempting claim) بأن النموذج (model) استدعى TicketHub بنفسه يخلط بين وصف الاستدعاء (call description) والاستدعاء نفسه."
+    "ar": "كتلة (block) `tool_use` مجرد طلب (request) فقط؛ فشيفرتك هي التي تتحقق منه (validates) وتنفّذ الأداة (tool) وتجيب في رسالة المستخدم التالية. والادعاء المغري (tempting claim) بأن النموذج (model) استدعى TicketHub بنفسه يخلط بين وصف الاستدعاء (call description) والاستدعاء نفسه."
    }
   },
   {
@@ -36,7 +36,7 @@
    "a": 3,
    "q": {
     "en": "Rayan asks about ticket 5820. Najm Desk's trace shows `lookup_ticket` called with `ticket_id` \"5802\", two digits swapped, and the tool honestly returned another ticket, so the assistant gave the wrong status. Noura wants a change that would have stopped this answer whatever the model does, not only explained it. Which one?",
-    "ar": "يسأل ريان (Rayan) عن التذكرة (ticket) 5820. ويُظهر تتبّع (trace) نجم ديسك (Najm Desk) أن `lookup_ticket` استُدعيت بالمعرّف (id) \"5802\" أي بتبديل رقمين متجاورين (two digits swapped)، فأعادت الأداة (tool) بأمانة تذكرة أخرى، فأعطى المساعد (assistant) حالة خاطئة. وتريد نورة (Noura) تغييرًا كان سيمنع هذه الإجابة أيًّا كان ما يفعله النموذج (model)، لا يكتفي بتفسيرها. أي تغيير؟"
+    "ar": "يسأل ريان (Rayan) عن التذكرة (ticket) 5820. ويُظهر تتبّع (trace) نجم ديسك (Najm Desk) أن `lookup_ticket` استُدعيت بالمعرّف (id) \"5802\" أي بتبديل رقمين متجاورين، فأعادت الأداة (tool) بأمانة تذكرة أخرى، فأعطى المساعد (assistant) حالة خاطئة. وتريد نورة (Noura) تغييرًا كان سيمنع هذه الإجابة أيًّا كان ما يفعله النموذج (model)، لا يكتفي بتفسيرها. أي تغيير؟"
    },
    "o": {
     "en": [
@@ -54,7 +54,7 @@
    },
    "why": {
     "en": "A schema checks shape and a trace only records what happened; a code check that the id appears in the user's message refuses the wrong id before the lookup runs. `strict: true` is the tempting fix, but \"5802\" is a well-formed id, so it passes. A request in the description is a hope, not a control: the model can still swap digits.",
-    "ar": "المخطط (schema) يتحقق من الشكل (shape) والتتبّع (trace) يسجّل ما حدث فقط؛ أما فحص الشيفرة (code check) لظهور المعرّف (id) في رسالة المستخدم فيرفض المعرّف الخاطئ قبل تنفيذ البحث (lookup). و`strict: true` هو الإصلاح المغري (tempting fix)، لكن \"5802\" معرّف سليم الصيغة (well-formed) فيمرّ. وطلبٌ في الوصف (description) أمنية لا ضابط (a hope, not a control): فقد يبدّل النموذج (model) الرقمين مرة أخرى."
+    "ar": "المخطط (schema) يتحقق من الشكل (shape) والتتبّع (trace) يسجّل ما حدث فقط؛ أما فحص الشيفرة (code check) لظهور المعرّف (id) في رسالة المستخدم فيرفض المعرّف الخاطئ قبل تنفيذ البحث (lookup). و`strict: true` هو الإصلاح المغري (tempting fix)، لكن \"5802\" معرّف سليم الصيغة (well-formed) فيمرّ. وطلبٌ في الوصف (description) أمنية لا ضابط: فقد يبدّل النموذج (model) الرقمين مرة أخرى."
    }
   },
   {
@@ -64,7 +64,7 @@
    "a": 0,
    "q": {
     "en": "In a pilot trace, the model sends `INC-4471` to `lookup_ticket` six times in a row. Each time `run_tool` returns an `invalid_input` error, and the run ends at the step cap after six paid calls. A goal that recovers on its second try needs three model calls and must still finish. Lujain wants the model to keep seeing each of its own errors. How should she cut the cost of runs like this?",
-    "ar": "في تتبّع (trace) من التجربة التشغيلية (pilot) يرسل النموذج (model) القيمة `INC-4471` إلى `lookup_ticket` ست مرات متتالية (in a row). وفي كل مرة تعيد `run_tool` خطأ `invalid_input`، وتنتهي الجولة (run) عند حدّ الخطوات (step cap) بعد ستة استدعاءات مدفوعة (six paid calls). أما الهدف (goal) الذي يتعافى في محاولته الثانية (recovers on its second try) فيحتاج إلى ثلاثة استدعاءات للنموذج (model calls) ويجب أن يكتمل (must still finish). وتريد لجين (Lujain) أن يظل النموذج (model) يرى كل خطأ (error) يرتكبه بنفسه. كيف تخفّض كلفة (cost) مثل هذه الجولات؟"
+    "ar": "في تتبّع (trace) من التجربة التشغيلية (pilot) يرسل النموذج (model) القيمة `INC-4471` إلى `lookup_ticket` ست مرات متتالية. وفي كل مرة تعيد `run_tool` خطأ `invalid_input`، وتنتهي الجولة (run) عند حدّ الخطوات (step cap) بعد ستة استدعاءات مدفوعة. أما الهدف (goal) الذي يتعافى في محاولته الثانية فيحتاج إلى ثلاثة استدعاءات للنموذج (model calls) ويجب أن يكتمل. وتريد لجين (Lujain) أن يظل النموذج يرى كل خطأ (error) يرتكبه بنفسه. كيف تخفّض كلفة (cost) مثل هذه الجولات؟"
    },
    "o": {
     "en": [
@@ -75,14 +75,14 @@
     ],
     "ar": [
      "توقف الجولة (run) بعد نتيجتين (two results) `invalid_input` من أداة واحدة، مع إبقاء الحد (step cap)",
-     "تخفض (lower) `max_steps` إلى 2 كي لا تدفع أي جولة (run) ثمن أكثر من استدعاءين مدفوعين (two paid calls)",
+     "تخفض (lower) `max_steps` إلى 2 كي لا تدفع أي جولة (run) ثمن أكثر من استدعاءين مدفوعين",
      "ترفع (raise) `max_steps` إلى 20 كي تتاح للنموذج (model) فرص أكثر لإصلاح مُدخله (input) بنفسه دون تدخل",
      "تصحّح (repair) `INC-4471` إلى `4471` في الشيفرة (code) كي ينجح الاستدعاء (call) من المحاولة الأولى (first try)"
     ]
    },
    "why": {
     "en": "The cap limits the damage, but a stuck run still pays for six calls; stopping after repeated invalid input from one tool saves most of that and leaves a one-slip recovery alone. A lower cap is the tempting fix, but it cuts the recovering goals short too. Repairing the value in code would hide the mistake from the model, and raising the cap only buys a stuck run more paid calls.",
-    "ar": "حدّ الخطوات (step cap) يحصر الضرر (limits the damage)، لكن الجولة العالقة (stuck run) تظل تدفع ستة استدعاءات (six calls)؛ أما التوقف بعد تكرار المُدخل غير الصالح (invalid input) من أداة واحدة فيوفّر معظمها ويترك التعافي من زلة واحدة (one-slip recovery) على حاله. وخفض الحد هو الإصلاح المغري (tempting fix)، لكنه يقطع الأهداف المتعافية (recovering goals) أيضًا. وتصحيح القيمة في الشيفرة (code) يُخفي الخطأ (mistake) عن النموذج (model)، ورفع الحد لا يمنح الجولة العالقة إلا استدعاءات مدفوعة أكثر."
+    "ar": "حدّ الخطوات (step cap) يحصر الضرر، لكن الجولة العالقة (stuck run) تظل تدفع ستة استدعاءات (six calls)؛ أما التوقف بعد تكرار المُدخل غير الصالح (invalid input) من أداة واحدة فيوفّر معظمها ويترك التعافي من زلة واحدة (one-slip recovery) على حاله. وخفض الحد هو الإصلاح المغري (tempting fix)، لكنه يقطع الأهداف المتعافية (recovering goals) أيضًا. وتصحيح القيمة في الشيفرة (code) يُخفي الخطأ (mistake) عن النموذج (model)، ورفع الحد لا يمنح الجولة العالقة إلا استدعاءات مدفوعة أكثر."
    }
   },
   {
@@ -105,7 +105,7 @@
      "أداة `unlock_account(employee_id)` مع `strict: true`، فيكون المعرّف (id) سليم الصيغة (well formed) دائمًا",
      "أداة `unlock_account(employee_id)` يطلب وصفها (description) من النموذج ألا يفتح إلا حساب السائل",
      "أداة `request_account_unlock` تفتح طلب موافقة (approval request) يعتمده إنسان، والجلسة (session) تحدد السائل",
-     "أداة `unlock_account(employee_id, caller_id)` كي يقارن Najm ID بين المعرّفين (the two ids) ويرفض عند الاختلاف"
+     "أداة `unlock_account(employee_id, caller_id)` كي يقارن Najm ID بين المعرّفين ويرفض عند الاختلاف"
     ]
    },
    "why": {
@@ -120,7 +120,7 @@
    "lesson": "3.1",
    "text": {
     "en": "I have written a Pydantic model for `create_ticket_draft`, tried five valid and five invalid inputs (including `\"urgent!!\"`, an empty title and a pasted password), and tabled which layer caught each, naming one that slips through and the check that would catch it.",
-    "ar": "لقد كتبتُ نموذج Pydantic للأداة (tool) `create_ticket_draft`، وجرّبتُ خمسة مُدخلات صالحة وخمسة غير صالحة (five valid and five invalid inputs) منها `\"urgent!!\"` وعنوان فارغ (empty title) وكلمة مرور ملصوقة (pasted password)، ودوّنتُ في جدول أي طبقة (layer) التقطت كل واحد منها، وسمّيتُ مُدخلًا واحدًا يفلت (slips through) والفحص (check) الذي كان سيلتقطه."
+    "ar": "لقد كتبتُ نموذج Pydantic للأداة (tool) `create_ticket_draft`، وجرّبتُ خمسة مُدخلات صالحة وخمسة غير صالحة منها `\"urgent!!\"` وعنوان فارغ (empty title) وكلمة مرور ملصوقة (pasted password)، ودوّنتُ في جدول أي طبقة (layer) التقطت كل واحد منها، وسمّيتُ مُدخلًا واحدًا يفلت (slips through) والفحص (check) الذي كان سيلتقطه."
    }
   },
   {
@@ -128,7 +128,7 @@
    "lesson": "3.2",
    "text": {
     "en": "I have run the INC-4471 and stubborn goals with `TRACE_FILE` set and answered from the trace files alone how many model calls each took, which call failed and why, how `input_tokens` moved and which line shows the cap fired, citing `seq` numbers in `NOTES.md`.",
-    "ar": "لقد شغّلتُ الهدفين (goals) INC-4471 والعنيد (stubborn) مع ضبط `TRACE_FILE`، وأجبتُ من ملفات التتبّع (trace files) وحدها عن عدد استدعاءات النموذج (model calls) في كل منهما، وأي استدعاء فشل (failed) ولماذا، وكيف تحرّك `input_tokens`، وأي سطر يبيّن أن الحد قد بلغ (the cap fired)، مع الاستشهاد (citing) بأرقام `seq` في `NOTES.md`."
+    "ar": "لقد شغّلتُ الهدفين (goals) INC-4471 والعنيد (stubborn) مع ضبط `TRACE_FILE`، وأجبتُ من ملفات التتبّع (trace files) وحدها عن عدد استدعاءات النموذج (model calls) في كل منهما، وأي استدعاء فشل (failed) ولماذا، وكيف تحرّك `input_tokens`، وأي سطر يبيّن أن الحد قد بلغ، مع الاستشهاد (citing) بأرقام `seq` في `NOTES.md`."
    }
   }
  ]

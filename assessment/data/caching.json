@@ -53,13 +53,13 @@
                   "Stale edge copies; purge the CDN and drop its TTL to a minute so bad copies expire",
                   "The CDN ignored Vary and cached JSON as the page; the proxy marks data no-store",
                   "Data requests get cached; detect them by header in app middleware and mark them no-store"],
-           "ar": ["علة إماهة (hydration) في العميل (client)؛ ثبّت إصدار إطار العمل (framework) وأضف تتبّع أخطاء المتصفح (browser error tracking)",
+           "ar": ["علة إماهة (hydration) في العميل (client)؛ ثبّت إصدار إطار العمل (framework) وأضف تتبّع أخطاء المتصفح",
                   "نسخ قديمة على الحافة (edge)؛ أفرغ (purge) شبكة CDN واخفض أجل بقائها (TTL) إلى دقيقة لتنتهي النسخ السيئة",
                   "تجاهلت شبكة CDN ترويسة Vary فخزّنت JSON بوصفه الصفحة؛ والوسيط (proxy) يوسم استجابات البيانات بـno-store",
                   "طلبات البيانات تُخزَّن؛ اكتشفها بترويستها (header) في الوسيطة البرمجية (middleware) للتطبيق وَسِمها بـno-store"]},
      "a": 2,
      "why": {"en": "Intermittent, per-user, self-healing and invisible in logs points to a shared cache: the CDN didn't honor Vary, so the URL alone was the key. The middleware fix is the one that silently went inert after a framework upgrade; a proxy rule keyed on the response content type sits at a layer you control.",
-             "ar": "التقطّع، واختلافه من مستخدم لآخر، وشفاؤه الذاتي، وغيابه عن السجلات (logs) كلها تشير إلى كاش مشترك (shared cache): لم تحترم شبكة CDN ترويسة Vary، فصار الرابط (URL) وحده هو المفتاح (key). إصلاح الوسيطة البرمجية (middleware) هو الذي خمد بصمت بعد ترقية إطار العمل (framework)؛ أما قاعدة الوسيط (proxy) المبنية على نوع محتوى الاستجابة (response content type) فتقع في طبقة تتحكم بها."}}
+             "ar": "التقطّع، واختلافه من مستخدم لآخر، وشفاؤه الذاتي، وغيابه عن السجلات (logs) كلها تشير إلى كاش مشترك (shared cache): لم تحترم شبكة CDN ترويسة Vary، فصار الرابط (URL) وحده هو المفتاح (key). إصلاح الوسيطة البرمجية (middleware) هو الذي خمد بصمت بعد ترقية إطار العمل (framework)؛ أما قاعدة الوسيط (proxy) المبنية على نوع محتوى الاستجابة فتقع في طبقة تتحكم بها."}}
   ],
   "evidence": [
     {"id": "caching-e1", "lesson": "3.4",

@@ -7,7 +7,7 @@
    "lesson": "2.1",
    "q": {
     "en": "Tariq reviews Lujain's draft `CLAUDE.md` for Remit and asks of each line: would removing this cause the agent to make mistakes? Which line passes?",
-    "ar": "يراجع طارق مسودة (draft) `CLAUDE.md` التي كتبتها لجين لنجم ريميت (Najm Remit)، ويسأل عن كل سطر: هل يتسبب حذف هذا السطر في أخطاء للوكيل؟ ⁦(would removing this cause the agent to make mistakes?)⁩ أي سطر يجتاز هذا الاختبار؟"
+    "ar": "يراجع طارق مسودة (draft) `CLAUDE.md` التي كتبتها لجين لنجم ريميت (Najm Remit)، ويسأل عن كل سطر: هل يتسبب حذف هذا السطر في أخطاء للوكيل؟ ⁦⁩ أي سطر يجتاز هذا الاختبار؟"
    },
    "o": {
     "en": [
@@ -17,7 +17,7 @@
      "A table of each KYC tier's daily limit, copied from `limits.py`."
     ],
     "ar": [
-     "اتبع PEP 8: تلميحات الأنواع (type hints) والتوثيق (docstrings) وأسماء متغيرات وصفية (descriptive variable names) ودوال قصيرة (short functions).",
+     "اتبع PEP 8: تلميحات الأنواع (type hints) والتوثيق (docstrings) وأسماء متغيرات وصفية ودوال قصيرة (short functions).",
      "شغّل سطر الأوامر (command line) بالصيغة `PYTHONPATH=src python -m remit`، أما الاختبارات (tests) فلا تحتاج إلى بادئة.",
      "يضم `src/remit/` الوحدات (modules) `money.py` و`fees.py` و`limits.py` و`notify.py`.",
      "جدول بالحد اليومي (daily limit) لكل مستوى KYC (KYC tier)، منسوخ من `limits.py`."
@@ -35,7 +35,7 @@
    "lesson": "2.1",
    "q": {
     "en": "Earlier in a long session Lujain told the agent that \"the cap\" in her tickets means the fee cap in `fees.py`, not the daily limit in `limits.py`. She then asks the read-only Explore subagent to list every place the cap is applied, and its report covers daily limits. Which change makes the report cover the fee cap?",
-    "ar": "أخبرت لجين الوكيل (agent) في جلسة طويلة (long session) بأن «السقف» في تذاكرها (tickets) يعني سقف الرسوم (fee cap) في `fees.py` لا الحد اليومي (daily limit) في `limits.py`. ثم طلبت من الوكيل الفرعي (subagent) Explore، وهو للقراءة فقط (read-only)، أن يسرد كل موضع يُطبَّق فيه السقف، فجاء تقريره عن الحدود اليومية. أي تغيير يجعل التقرير يغطي سقف الرسوم (fee cap)؟"
+    "ar": "أخبرت لجين الوكيل (agent) في جلسة طويلة (long session) بأن «السقف» في تذاكرها (tickets) يعني سقف الرسوم (fee cap) في `fees.py` لا الحد اليومي (daily limit) في `limits.py`. ثم طلبت من الوكيل الفرعي (subagent) Explore، وهو للقراءة فقط (read-only)، أن يسرد كل موضع يُطبَّق فيه السقف، فجاء تقريره عن الحدود اليومية. أي تغيير يجعل التقرير يغطي سقف الرسوم؟"
    },
    "o": {
     "en": [
@@ -82,7 +82,7 @@
    "a": 0,
    "why": {
     "en": "\"No difference\" is a valid result: the agent in A can find the rule through the README, so that line changed nothing here, and the notes are graded for completeness, not for B winning. Dropping the row hides a finding, replacing A with a different copy changes a second variable, and one matching row says nothing about the other rows or about Remit as a whole.",
-    "ar": "«لا فرق» (no difference) نتيجة صحيحة: يستطيع الوكيل (agent) في التشغيل A أن يجد القاعدة عبر README، فلم يغيّر هذا السطر شيئًا هنا، وتُقيَّم الملاحظات (notes) على اكتمالها لا على تفوق B. وحذف الصف يخفي نتيجة (finding)، واستبدال A بنسخة (copy) مختلفة يغيّر متغيرًا (variable) ثانيًا، وصف واحد متطابق لا يقول شيئًا عن بقية الصفوف ولا عن ريميت (Remit) كله."
+    "ar": "«لا فرق» نتيجة صحيحة: يستطيع الوكيل (agent) في التشغيل A أن يجد القاعدة عبر README، فلم يغيّر هذا السطر شيئًا هنا، وتُقيَّم الملاحظات (notes) على اكتمالها لا على تفوق B. وحذف الصف يخفي نتيجة (finding)، واستبدال A بنسخة (copy) مختلفة يغيّر متغيرًا (variable) ثانيًا، وصف واحد متطابق لا يقول شيئًا عن بقية الصفوف ولا عن ريميت (Remit) كله."
    }
   },
   {

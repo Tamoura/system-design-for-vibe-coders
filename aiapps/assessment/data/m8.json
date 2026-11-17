@@ -26,7 +26,7 @@
       "a": 2,
       "why": {
         "en": "`end_turn` only says the model stopped; success is `end_turn` plus a check in code, here that every ticket id in the goal appears in the answer, and a failed check ends in a hand-off. Counting it as done (A) lets a premature finish reach the user as \"Done\", and a model asked to review its own answer (B) brings no new information.",
-        "ar": "`end_turn` يدل على أن النموذج (model) توقف فقط؛ أما النجاح (success) فهو `end_turn` مع فحص في الشيفرة (check in code)، وهنا أن يرد كل رقم تذكرة (ticket id) من الهدف في الإجابة، والفحص الفاشل (failed check) ينتهي بتسليم إلى شخص (hand-off). أما عدّ التشغيل ناجحًا (الخيار A) فيترك إنهاءً مبتسرًا (premature finish) يصل إلى المستخدم على أنه «تم»، وأما مراجعة النموذج (model) لإجابته بنفسه (الخيار B) فلا تأتي بمعلومة جديدة (new information)."
+        "ar": "`end_turn` يدل على أن النموذج (model) توقف فقط؛ أما النجاح (success) فهو `end_turn` مع فحص في الشيفرة، وهنا أن يرد كل رقم تذكرة (ticket id) من الهدف في الإجابة، والفحص الفاشل (failed check) ينتهي بتسليم إلى شخص (hand-off). أما عدّ التشغيل ناجحًا فيترك إنهاءً مبتسرًا (premature finish) يصل إلى المستخدم على أنه «تم»، وأما مراجعة النموذج لإجابته بنفسه (الخيار B) فلا تأتي بمعلومة جديدة (new information)."
       }
     },
     {
@@ -54,7 +54,7 @@
       "a": 0,
       "why": {
         "en": "A 503 is a transient fault, and recovering from it is your code's job: retry with growing waits and a random offset inside the deadline, then report the tool unavailable. Leaving it to the model (B) turns every retry into a full model call that re-sends the whole history; retrying at once without limit (D) hammers a struggling service and ignores the deadline.",
-        "ar": "الخطأ 503 عطل عابر (transient fault)، وإصلاحه مهمة شيفرتك (your code): أعد المحاولة (retry) بانتظار متزايد وإزاحة عشوائية (backoff and jitter) داخل المهلة (deadline)، ثم أبلغ أن الأداة (tool) غير متاحة (unavailable). وترك الأمر للنموذج (الخيار B) يحوّل كل إعادة محاولة إلى استدعاء كامل للنموذج (full model call) يعيد إرسال السجل كله (whole history)، وإعادة المحاولة فورًا بلا حدّ (الخيار D) تُجهد خدمة متعثرة وتتجاهل المهلة."
+        "ar": "الخطأ 503 عطل عابر (transient fault)، وإصلاحه مهمة شيفرتك: أعد المحاولة (retry) بانتظار متزايد وإزاحة عشوائية (backoff and jitter) داخل المهلة (deadline)، ثم أبلغ أن الأداة (tool) غير متاحة (unavailable). وترك الأمر للنموذج (الخيار B) يحوّل كل إعادة محاولة إلى استدعاء كامل للنموذج يعيد إرسال السجل كله (whole history)، وإعادة المحاولة فورًا بلا حدّ (الخيار D) تُجهد خدمة متعثرة وتتجاهل المهلة."
       }
     },
     {
@@ -76,13 +76,13 @@
           "تتركه كما هو (leave it)، لأن `input_tokens` يشمل البادئة المخزَّنة مؤقتًا (cached prefix) أصلًا",
           "تعدّ رموز المخرجات (output tokens) وحدها، لأن المدخلات تأتي الآن في معظمها من الذاكرة المؤقتة (cache)",
           "تحسب البادئة (prefix) مرة واحدة في الخطوة 1، لأن الجزء المخزَّن (cached part) لا يتغير",
-          "تضيف حقلي رموز التخزين المؤقت (cache token fields) إلى ما يُحسب منفقًا (spent) في كل استدعاء"
+          "تضيف حقلي رموز التخزين المؤقت إلى ما يُحسب منفقًا (spent) في كل استدعاء"
         ]
       },
       "a": 3,
       "why": {
         "en": "With caching on, `usage.input_tokens` counts only the uncached tail, so a guard that adds just input and output tokens undercounts; add `cache_creation_input_tokens` and `cache_read_input_tokens`. A is the natural assumption, and it is the one that lets a long run slip past the budget.",
-        "ar": "عند تفعيل التخزين المؤقت (caching) يعدّ `usage.input_tokens` الذيل غير المخزَّن (uncached tail) فقط، فيقلّل الحاجز (guard) الذي يجمع رموز المدخلات والمخرجات (input and output tokens) وحدها من العدّ (undercounts)؛ فأضف `cache_creation_input_tokens` و`cache_read_input_tokens`. والخيار A هو الافتراض الطبيعي (natural assumption)، وهو ما يسمح لتشغيل طويل بتجاوز الميزانية (budget) دون أن يُوقَف."
+        "ar": "عند تفعيل التخزين المؤقت (caching) يعدّ `usage.input_tokens` الذيل غير المخزَّن (uncached tail) فقط، فيقلّل الحاجز (guard) الذي يجمع رموز المدخلات والمخرجات وحدها من العدّ (undercounts)؛ فأضف `cache_creation_input_tokens` و`cache_read_input_tokens`. والخيار A هو الافتراض الطبيعي (natural assumption)، وهو ما يسمح لتشغيل طويل بتجاوز الميزانية (budget) دون أن يُوقَف."
       }
     },
     {
@@ -104,13 +104,13 @@
           "هل يوقف حدّ الخطوات (step cap) تشغيلًا لا يصل فيه النموذج (model) إلى `end_turn` أبدًا مهما طالت الحلقة",
           "هل يغيّر نموذج حقيقي (real model) مدخل استدعاء مكرَّر فيفوت حاجز المطابقة التامة (exact-match guard)",
           "هل تسرد حزمة التسليم (hand-off packet) الاستدعاءات (calls) التي جُرّبت كلها قبل أن يعمل الحاجز (guard)",
-          "هل ينتهي `end_turn` بلا أي نص (no text) إلى تسليم إلى شخص (hand-off) لا إلى `done`"
+          "هل ينتهي `end_turn` بلا أي نص إلى تسليم إلى شخص (hand-off) لا إلى `done`"
         ]
       },
       "a": 1,
       "why": {
         "en": "Green offline proves your code only: directives simulate failures and the playbook scripts recoveries, so the step cap (A), the packet (C) and the empty-answer check (D) are all shown there. Only the real API shows whether a model changes a repeated call's input and slips past an exact-match guard (B), whether it recovers from an `is_error`, and what latency and tokens really are.",
-        "ar": "النجاح دون اتصال (offline) يثبت شيفرتك (your code) وحدها: فالتوجيهات (directives) تحاكي الإخفاقات، وملف السيناريوهات (playbook) يكتب الاستعادات سلفًا (scripts recoveries)، فيظهر هناك حدّ الخطوات (الخيار A) وحزمة التسليم (الخيار C) وفحص الإجابة الفارغة (الخيار D). والواجهة الحقيقية (real API) وحدها تُظهر هل يغيّر النموذج مدخل استدعاء مكرَّر فيفوت حاجز المطابقة التامة (الخيار B)، وهل يتعافى من `is_error`، وما الكمون (latency) والرموز (tokens) الفعليان."
+        "ar": "النجاح دون اتصال (offline) يثبت شيفرتك وحدها: فالتوجيهات (directives) تحاكي الإخفاقات، وملف السيناريوهات (playbook) يكتب الاستعادات سلفًا (scripts recoveries)، فيظهر هناك حدّ الخطوات وحزمة التسليم (الخيار C) وفحص الإجابة الفارغة (الخيار D). والواجهة الحقيقية (real API) وحدها تُظهر هل يغيّر النموذج مدخل استدعاء مكرَّر فيفوت حاجز المطابقة التامة (الخيار B)، وهل يتعافى من `is_error`، وما الكمون (latency) والرموز (tokens) الفعليان."
       }
     }
   ],
@@ -128,7 +128,7 @@
       "lesson": "8.2",
       "text": {
         "en": "I have built the lab loop, made `done` and six different stop reasons happen on purpose, read each run in the replay tool, and recorded in `NOTES.md` the reason counts and, for each reason, the command and the line that stopped it.",
-        "ar": "لقد بنيتُ حلقة المختبر (lab loop)، وتسبّبتُ عمدًا في `done` وستة أسباب توقف مختلفة (six different stop reasons)، وقرأتُ كل تشغيل في أداة إعادة العرض (replay tool)، ودوّنتُ في `NOTES.md` أعداد الأسباب (reason counts) وفي كل سبب الأمر (command) والسطر الذي أوقف التشغيل (line that stopped it)."
+        "ar": "لقد بنيتُ حلقة المختبر (lab loop)، وتسبّبتُ عمدًا في `done` وستة أسباب توقف مختلفة، وقرأتُ كل تشغيل في أداة إعادة العرض (replay tool)، ودوّنتُ في `NOTES.md` أعداد الأسباب (reason counts) وفي كل سبب الأمر (command) والسطر الذي أوقف التشغيل."
       }
     }
   ]

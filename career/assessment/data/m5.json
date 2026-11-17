@@ -7,7 +7,7 @@
       "lesson": "5.1",
       "q": {
         "en": "Why do behavioural interviews ask \"Tell me about a time…\" rather than what you would do in a hypothetical situation?",
-        "ar": "لماذا تسأل المقابلات السلوكية (behavioural interviews) «حدّثني عن موقف…» (Tell me about a time…) بدلًا من سؤالك عمّا ستفعله في موقف افتراضي (hypothetical situation)؟"
+        "ar": "لماذا تسأل المقابلات السلوكية (behavioural interviews) «حدّثني عن موقف…» بدلًا من سؤالك عمّا ستفعله في موقف افتراضي (hypothetical situation)؟"
       },
       "o": {
         "en": [
@@ -19,7 +19,7 @@
         "ar": [
           "لاختبار قدرتك على سرد قصة (storytelling) بلغة إنجليزية طليقة ومصقولة (fluent English)",
           "للتحقق من دقة التواريخ والمسمّيات الوظيفية (job titles) في سيرتك الذاتية (CV)",
-          "لاستخدام السلوك السابق الحقيقي (real past behaviour) دليلًا على السلوك المستقبلي",
+          "لاستخدام السلوك السابق الحقيقي دليلًا على السلوك المستقبلي",
           "لمعرفة كيف ستتصرف في الموقف لو سارت الأمور على أفضل وجه (ideal world)"
         ]
       },
@@ -35,7 +35,7 @@
       "lesson": "5.2",
       "q": {
         "en": "In Najm's AI-review round, Yousef reviews an agent-written refund endpoint. He finds no check that the caller owns the account, a test that only checks the status code, duplicated helper code and a misspelt variable name. How should he present his review?",
-        "ar": "في جولة مراجعة الشيفرة المكتوبة بالذكاء الاصطناعي (AI-review round) في بنك نجم (Najm Bank)، يراجع يوسف نقطة نهاية للاسترداد (refund endpoint) كتبها وكيل البرمجة بالذكاء الاصطناعي (AI coding agent). يجد غياب التحقق من ملكية المتصل للحساب (ownership check)، واختبارًا يتحقق من رمز الحالة فقط (status code)، وشيفرة مساعدة مكررة (duplicated helper code)، واسم متغير بخطأ إملائي (misspelt variable name). كيف ينبغي أن يعرض مراجعته؟"
+        "ar": "في جولة مراجعة الشيفرة المكتوبة بالذكاء الاصطناعي (AI-review round) في بنك نجم (Najm Bank)، يراجع يوسف نقطة نهاية للاسترداد (refund endpoint) كتبها وكيل البرمجة بالذكاء الاصطناعي (AI coding agent). يجد غياب التحقق من ملكية المتصل للحساب (ownership check)، واختبارًا يتحقق من رمز الحالة فقط (status code)، وشيفرة مساعدة مكررة، واسم متغير بخطأ إملائي. كيف ينبغي أن يعرض مراجعته؟"
       },
       "o": {
         "en": [
@@ -63,7 +63,7 @@
       "lesson": "5.3",
       "q": {
         "en": "In Dana's data round, Mohammed is told that daily credit-card applications on Najm's dashboard fell 25% this week. What should he check first?",
-        "ar": "في جولة البيانات (data round) مع دانة، يُقال لمحمد إن طلبات بطاقات الائتمان اليومية (daily credit-card applications) في لوحة المتابعة (dashboard) لدى بنك نجم انخفضت 25% هذا الأسبوع. ما الذي ينبغي أن يتحقق منه أولًا؟"
+        "ar": "في جولة البيانات (data round) مع دانة، يُقال لمحمد إن طلبات بطاقات الائتمان اليومية في لوحة المتابعة (dashboard) لدى بنك نجم انخفضت 25% هذا الأسبوع. ما الذي ينبغي أن يتحقق منه أولًا؟"
       },
       "o": {
         "en": [
@@ -75,14 +75,14 @@
         "ar": [
           "نموذج للتنبؤ (forecast model) بطلبات الأسبوع القادم لمقارنته بالأرقام الفعلية",
           "حملة تسويقية (marketing campaign) لاستعادة المتقدمين الذين يبدو أنهم فُقدوا",
-          "تقسيم فوري حسب المنصة والبلد (segment by platform and country) لمعرفة من غادر",
+          "تقسيم فوري حسب المنصة والبلد لمعرفة من غادر",
           "فحص البيانات نفسها (data check)، كأن يكون التتبع (tracking) قد تعطّل"
         ]
       },
       "a": 3,
       "why": {
         "en": "The lesson's order is data first (did tracking break?), then segment, then look for changes such as a release or a campaign ending. Segmenting straight away is tempting, but if tracking broke every segment shows the same false drop.",
-        "ar": "الترتيب في الدرس هو البيانات أولًا (data first) ⁦(did tracking break?)⁩، ثم التقسيم (segment)، ثم البحث عن تغييرات (changes) مثل إصدار جديد (release) أو انتهاء حملة (campaign ending). التقسيم الفوري مغرٍ، لكن إن تعطّل التتبع (tracking) فستُظهر كل شريحة الانخفاض الزائف نفسه."
+        "ar": "الترتيب في الدرس هو البيانات أولًا (data first) ⁦⁩، ثم التقسيم (segment)، ثم البحث عن تغييرات (changes) مثل إصدار جديد (release) أو انتهاء حملة (campaign ending). التقسيم الفوري مغرٍ، لكن إن تعطّل التتبع (tracking) فستُظهر كل شريحة الانخفاض الزائف نفسه."
       }
     },
     {
@@ -91,7 +91,7 @@
       "lesson": "5.3",
       "q": {
         "en": "Asked to design a fault log where 50 branch staff report ATM problems, a candidate confidently proposes microservices, Kubernetes, Kafka and three databases, without saying why. Using Najm's junior design-round rubric, what is the best diagnosis and fix?",
-        "ar": "طُلب من مرشّح تصميم سجلّ أعطال (fault log) يبلّغ فيه 50 موظفًا في الفروع عن مشكلات أجهزة الصراف الآلي (ATM)، فاقترح بثقة الخدمات المصغّرة (microservices) وKubernetes وKafka وثلاث قواعد بيانات (databases) دون أن يذكر السبب. وفق معايير بنك نجم لتقييم جولات التصميم للمبتدئين (junior design-round rubric)، ما التشخيص والعلاج الأنسب؟"
+        "ar": "طُلب من مرشّح تصميم سجلّ أعطال (fault log) يبلّغ فيه 50 موظفًا في الفروع عن مشكلات أجهزة الصراف الآلي (ATM)، فاقترح بثقة الخدمات المصغّرة (microservices) وKubernetes وKafka وثلاث قواعد بيانات (databases) دون أن يذكر السبب. وفق معايير بنك نجم لتقييم جولات التصميم للمبتدئين، ما التشخيص والعلاج الأنسب؟"
       },
       "o": {
         "en": [
@@ -110,7 +110,7 @@
       "a": 1,
       "why": {
         "en": "No component has a reason and the scale is tiny, which scores 1 on \"simple, justified design\"; the fix is to clarify users and scale, start with the simplest design and justify each box with \"because\". Treating name-dropping as range is the tempting mistake the lesson warns against.",
-        "ar": "لا يحمل أي مكوّن (component) سببًا والحجم (scale) صغير جدًا، وهذا يحصل على 1 في بند «تصميم بسيط ومعلَّل» (simple, justified design)؛ والعلاج أن يوضّح المستخدمين والحجم، ويبدأ بأبسط تصميم (simplest design)، ويعلّل كل مربع بـ«لأن» (because). أما عدّ ذكر أسماء التقنيات (technology name-dropping) تنوّعًا فهو الخطأ المغري الذي يحذّر منه الدرس."
+        "ar": "لا يحمل أي مكوّن (component) سببًا والحجم (scale) صغير جدًا، وهذا يحصل على 1 في بند «تصميم بسيط ومعلَّل»؛ والعلاج أن يوضّح المستخدمين والحجم، ويبدأ بأبسط تصميم (simplest design)، ويعلّل كل مربع بـ«لأن» (because). أما عدّ ذكر أسماء التقنيات (technology name-dropping) تنوّعًا فهو الخطأ المغري الذي يحذّر منه الدرس."
       }
     }
   ],
@@ -128,7 +128,7 @@
       "lesson": "5.2",
       "text": {
         "en": "I have reviewed an AI-written pull request in writing, separated blockers from suggestions, and added at least one test because of the review.",
-        "ar": "لقد راجعت كتابيًا طلب دمج (pull request, PR) كتبه الذكاء الاصطناعي (AI-written)، وفصلت عوائق الدمج (blockers) عن الاقتراحات (suggestions)، وأضفت اختبارًا واحدًا على الأقل (at least one test) بسبب المراجعة."
+        "ar": "لقد راجعت كتابيًا طلب دمج (pull request, PR) كتبه الذكاء الاصطناعي (AI-written)، وفصلت عوائق الدمج (blockers) عن الاقتراحات (suggestions)، وأضفت اختبارًا واحدًا على الأقل بسبب المراجعة."
       }
     }
   ]

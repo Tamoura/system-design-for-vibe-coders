@@ -35,7 +35,7 @@
       "lesson": "10.2",
       "q": {
         "en": "Your agent moved welcome emails onto a durable queue and says: \"The queue guarantees exactly-once delivery, so we don't need any dedup.\" In a test, a worker crashes after sending an email but before acknowledging the job. What happens, and what should you require?",
-        "ar": "نقل وكيلك (agent) رسائل الترحيب إلى طابور متين (durable queue) وقال: «الطابور يضمن التسليم مرة واحدة بالضبط (exactly-once delivery)، فلا حاجة إلى منع التكرار (dedup)». في اختبار، تعطّل عامل (worker) بعد إرسال الرسالة وقبل إقرار المهمة (acknowledging the job). ماذا يحدث، وماذا يجب أن تشترط؟"
+        "ar": "نقل وكيلك (agent) رسائل الترحيب إلى طابور متين (durable queue) وقال: «الطابور يضمن التسليم مرة واحدة بالضبط (exactly-once delivery)، فلا حاجة إلى منع التكرار (dedup)». في اختبار، تعطّل عامل (worker) بعد إرسال الرسالة وقبل إقرار المهمة. ماذا يحدث، وماذا يجب أن تشترط؟"
       },
       "o": {
         "en": [
@@ -48,7 +48,7 @@
           "تُعاد المهمة (redelivered)؛ فيجب على المستهلك (consumer) تسجيل «أُرسلت» ذرّيًا (atomically) وتخطّيها إن أُنجزت",
           "لا شيء؛ فالطابور المتين (durable queue) لا يسلّم مهمة مرتين بعد أن يحجزها عامل (worker) واحد",
           "تضيع المهمة (job)؛ فأضف مهمة مجدولة (cron) تعيد إرسال كل رسائل الساعة الأخيرة (last hour)",
-          "تذهب المهمة إلى طابور الرسائل الميتة (dead-letter queue)؛ فأعد تشغيلها يدويًا (by hand) كل صباح بعد مراجعة قائمة المهام العالقة"
+          "تذهب المهمة إلى طابور الرسائل الميتة (dead-letter queue)؛ فأعد تشغيلها يدويًا كل صباح بعد مراجعة قائمة المهام العالقة"
         ]
       },
       "a": 0,

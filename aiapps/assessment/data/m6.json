@@ -7,7 +7,7 @@
    "lesson": "6.1",
    "q": {
     "en": "Lujain has interviewed Hind and Yara and wants to skip the Service Desk floor: \"Two interviews already tell us how tickets are handled.\" Fahad asks her to shadow the desk for a day anyway. What is his reason?",
-    "ar": "أجرت لجين مقابلتين (interviews) مع هند ويارا، وتريد تجاوز زيارة أرضية مكتب الخدمة (Service Desk floor) قائلة: «المقابلتان تكفيان لمعرفة طريقة معالجة التذاكر (how tickets are handled)». ومع ذلك يطلب منها فهد ملاحظة العمل ميدانيًا (shadowing) في المكتب ليومٍ كامل (a full day). ما سبب طلبه؟"
+    "ar": "أجرت لجين مقابلتين (interviews) مع هند ويارا، وتريد تجاوز زيارة أرضية مكتب الخدمة قائلة: «المقابلتان تكفيان لمعرفة طريقة معالجة التذاكر». ومع ذلك يطلب منها فهد ملاحظة العمل ميدانيًا (shadowing) في المكتب ليومٍ كامل. ما سبب طلبه؟"
    },
    "o": {
     "en": [
@@ -18,9 +18,9 @@
     ],
     "ar": [
      "الروايتان المتطابقتان تُظهران ما يحدث، فلا تلزم الملاحظة الميدانية (shadowing) إلا للترجيح عند تعارض أقوال المُقابَلين",
-     "المقابلات (interviews) تنقل ما يعتقده الناس (what people believe)، أما المشاهدة فتُظهر ما يحدث فعلًا، بما فيه خطوات لا يذكرها أحد",
+     "المقابلات (interviews) تنقل ما يعتقده الناس، أما المشاهدة فتُظهر ما يحدث فعلًا، بما فيه خطوات لا يذكرها أحد",
      "يستطيع مساعد الذكاء الاصطناعي (AI assistant) قراءة نصوص المقابلات (transcripts) واستخراج أي خطوة أغفلتها هند ويارا",
-     "يتحدث الموظفون على أرضية المكتب (agents on the floor) بصراحة أكبر من هند ويارا، فتتقدم آراؤهم (views) على آرائهما"
+     "يتحدث الموظفون على أرضية المكتب بصراحة أكبر من هند ويارا، فتتقدم آراؤهم (views) على آرائهما"
     ]
    },
    "a": 1,
@@ -45,9 +45,9 @@
      "Noura and Hamad now, because the unlock request is Tier 3 and the highest tier decides"
     ],
     "ar": [
-     "ليلى وحدها، لأن اثنتين من القدرات (capabilities) الثلاث تقعان في المستويين الأدنيين (two lower tiers)",
+     "ليلى وحدها، لأن اثنتين من القدرات (capabilities) الثلاث تقعان في المستويين الأدنيين",
      "سارة وحدها، لأن بيانات الموظفين بيانات شخصية (personal data) وهي تقدّم المشورة في قوانين الخصوصية (privacy law)",
-     "نورة وحمد عند العرض التجريبي (demo)، حين يتوافر طلب إلغاء قفل يعمل (working unlock request) ليراجعاه",
+     "نورة وحمد عند العرض التجريبي (demo)، حين يتوافر طلب إلغاء قفل يعمل ليراجعاه",
      "نورة وحمد الآن، لأن طلب إلغاء القفل (unlock request) من المستوى 3 (Tier 3) وأعلى مستوى (highest tier) يحسم"
     ]
    },
@@ -63,7 +63,7 @@
    "lesson": "6.2",
    "q": {
     "en": "Lujain's draft eval seed set for Najm Desk has 12 scenarios, each an ordinary question with an easy answer, and is due to reach about 30 by v0.2. Yara switches off two guardrails in a test build, and all 12 scenarios still pass. What should Lujain do next?",
-    "ar": "تضم مجموعة التقييم الأولية (eval seed set) التي صاغتها لجين لنجم ديسك (Najm Desk) اثني عشر سيناريو (scenarios)، كلٌّ منها سؤال عادي (ordinary question) إجابته سهلة، ومن المقرر أن تبلغ نحو ثلاثين بحلول الإصدار v0.2. عطّلت يارا حاجزين وقائيين (guardrails) في نسخة اختبار، ومع ذلك نجحت السيناريوهات الاثنا عشر كلها. ماذا ينبغي أن تفعل لجين بعد ذلك (next)؟"
+    "ar": "تضم مجموعة التقييم الأولية التي صاغتها لجين لنجم ديسك (Najm Desk) اثني عشر سيناريو (scenarios)، كلٌّ منها سؤال عادي (ordinary question) إجابته سهلة، ومن المقرر أن تبلغ نحو ثلاثين بحلول الإصدار v0.2. عطّلت يارا حاجزين وقائيين (guardrails) في نسخة اختبار، ومع ذلك نجحت السيناريوهات الاثنا عشر كلها. ماذا ينبغي أن تفعل لجين بعد ذلك (next)؟"
    },
    "o": {
     "en": [
@@ -75,7 +75,7 @@
     "ar": [
      "تضيف حالات تختبر حاجزًا وقائيًا (guardrail) أو تخرج عن النطاق، مثل تذكرة شخص آخر، كلٌّ منها مرتبط بمتطلب (requirement)",
      "تشغّل كل سيناريو من الاثني عشر عشر مرات (ten times)، لأن الإجابات تتفاوت بين تشغيل وآخر (runs) ولأن نجاحًا واحدًا لا يثبت شيئًا يُذكر",
-     "تكتب ردًّا متوقعًا حرفيًا (exact expected reply) لكل سيناريو من الاثني عشر، لتسهل مطابقة كل نتيجة (result)",
+     "تكتب ردًّا متوقعًا حرفيًا لكل سيناريو من الاثني عشر، لتسهل مطابقة كل نتيجة (result)",
      "تضيف أسئلة عادية (ordinary questions) أخرى في المواضيع نفسها (same topics)، فتبلغ المجموعة ثلاثين سيناريو (scenarios) سريعًا"
     ]
    },
@@ -91,7 +91,7 @@
    "lesson": "6.2",
    "q": {
     "en": "Thirty minutes into the spec review workshop for Najm Desk, Hind nods through every section while Yara and Noura say nothing. The spec went out two days ahead, and sign-off is next on the agenda. What should Lujain do?",
-    "ar": "بعد نصف ساعة من ورشة مراجعة المواصفة (spec review workshop) الخاصة بنجم ديسك (Najm Desk)، تهزّ هند رأسها موافقةً على كل قسم (every section)، وتصمت يارا ونورة (say nothing). وقد أُرسلت المواصفة (spec) قبل يومين، والتوقيع (sign-off) هو البند التالي في جدول الأعمال. ماذا ينبغي أن تفعل لجين؟"
+    "ar": "بعد نصف ساعة من ورشة مراجعة المواصفة الخاصة بنجم ديسك (Najm Desk)، تهزّ هند رأسها موافقةً على كل قسم (every section)، وتصمت يارا ونورة (say nothing). وقد أُرسلت المواصفة (spec) قبل يومين، والتوقيع (sign-off) هو البند التالي في جدول الأعمال. ماذا ينبغي أن تفعل لجين؟"
    },
    "o": {
     "en": [
@@ -101,10 +101,10 @@
      "Ask Yara and Noura in front of the room whether they have any objections, and sign off if they say no"
     ],
     "ar": [
-     "تعدّ الصمت موافقة (agreement)، لأن المواصفة (spec) أُرسلت قبل يومين لهذه القراءة تحديدًا (exactly this reading)",
+     "تعدّ الصمت موافقة (agreement)، لأن المواصفة (spec) أُرسلت قبل يومين لهذه القراءة تحديدًا",
      "تعيد استعراض كل متطلب (requirement) ببطء مرة ثانية إلى أن يطرح أحد اعتراضًا (concern)",
      "تقرأ سيناريوهات التقييم (eval scenarios) بصوت عالٍ (aloud) وتسأل كل شخص عمّا يجعله يرفض المواصفة",
-     "تسأل يارا ونورة أمام الحضور (in front of the room) هل لديهما اعتراض (objection)، وتنتقل إلى التوقيع إن أجابتا بـ«لا»"
+     "تسأل يارا ونورة أمام الحضور هل لديهما اعتراض (objection)، وتنتقل إلى التوقيع إن أجابتا بـ«لا»"
     ]
    },
    "a": 2,
@@ -120,7 +120,7 @@
    "lesson": "6.1",
    "text": {
     "en": "I have written discovery notes from the three lab sources in which every REQ, RISK, CON and Q line quotes its turn, `check_notes.py` exits 0, and at least five requirements are ones Hind never asked for.",
-    "ar": "لقد كتبتُ ملاحظات الاستكشاف (discovery notes) من مصادر المختبر الثلاثة (three lab sources) بحيث يقتبس كل سطر REQ أو RISK أو CON أو Q المداخلة (turn) التي يستند إليها، وينتهي `check_notes.py` بالرمز 0 (exits 0)، وخمسة متطلبات (requirements) على الأقل لم تطلبها هند قط."
+    "ar": "لقد كتبتُ ملاحظات الاستكشاف (discovery notes) من مصادر المختبر الثلاثة بحيث يقتبس كل سطر REQ أو RISK أو CON أو Q المداخلة (turn) التي يستند إليها، وينتهي `check_notes.py` بالرمز 0 (exits 0)، وخمسة متطلبات (requirements) على الأقل لم تطلبها هند قط."
    }
   },
   {
@@ -128,7 +128,7 @@
    "lesson": "6.2",
    "text": {
     "en": "I have built a permissions matrix for my agent's tools where every X names its limit, and written ten acceptance criteria that each cite a requirement id, one trigger and one result, four of them about what must not happen.",
-    "ar": "لقد بنيتُ مصفوفة الصلاحيات (permissions matrix) لأدوات وكيلي (agent's tools) بحيث يحدد كل X حدّه (names its limit)، وكتبتُ عشرة معايير قبول (acceptance criteria) يستشهد كلٌّ منها بمعرّف متطلب (requirement id) ومُحفِّز واحد (trigger) ونتيجة واحدة (result)، وأربعة منها تصف ما يجب ألا يحدث (must not happen)."
+    "ar": "لقد بنيتُ مصفوفة الصلاحيات (permissions matrix) لأدوات وكيلي (agent's tools) بحيث يحدد كل X حدّه، وكتبتُ عشرة معايير قبول (acceptance criteria) يستشهد كلٌّ منها بمعرّف متطلب (requirement id) ومُحفِّز واحد (trigger) ونتيجة واحدة (result)، وأربعة منها تصف ما يجب ألا يحدث."
    }
   }
  ]

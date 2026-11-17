@@ -54,7 +54,7 @@
       "a": 0,
       "why": {
         "en": "A tie exposes the wrong rule only where the rules disagree, which needs an even digit before the 5: 5.005 gives 5.01 under half up but 5.00 under half-even, while 5.015 and 5.035, the tempting extra ties, give 5.02 and 5.04 either way. Asking the agent which rule it used collects fluency, not a value worked out by hand.",
-        "ar": "لا يكشف التعادل (tie) القاعدة الخاطئة إلا حيث تختلف القاعدتان، وذلك يحتاج إلى رقم زوجي قبل الخمسة: فالقيمة 5.005 تعطي 5.01 بالتقريب إلى الأعلى (half up) و5.00 بالزوجي (half-even)، أما 5.015 و5.035، وهما التعادلان الإضافيان المغريان، فتعطيان 5.02 و5.04 في الحالتين. وسؤال الوكيل (agent) عن القاعدة التي استعملها يجمع طلاقة (fluency) لا قيمة حُسبت يدويًا (worked out by hand)."
+        "ar": "لا يكشف التعادل (tie) القاعدة الخاطئة إلا حيث تختلف القاعدتان، وذلك يحتاج إلى رقم زوجي قبل الخمسة: فالقيمة 5.005 تعطي 5.01 بالتقريب إلى الأعلى (half up) و5.00 بالزوجي (half-even)، أما 5.015 و5.035، وهما التعادلان الإضافيان المغريان، فتعطيان 5.02 و5.04 في الحالتين. وسؤال الوكيل (agent) عن القاعدة التي استعملها يجمع طلاقة (fluency) لا قيمة حُسبت يدويًا."
       }
     },
     {
@@ -63,7 +63,7 @@
       "lesson": "14.1",
       "q": {
         "en": "Every test is green on the agent's `service.py` change for `QAR-BDT`. A fresh reviewer session asks whether the service can ever choose a template id missing from `notify.TEMPLATES` in English or Arabic, which would raise `UnknownTemplate` after the ledger has posted. What is the sound response?",
-        "ar": "جميع الاختبارات (tests) خضراء (green) على تغيير الوكيل (agent) في `service.py` الخاص بـ `QAR-BDT`. تسأل جلسة مراجعة جديدة (fresh reviewer session) هل يمكن للخدمة أن تختار معرّف قالب (template id) غير موجود في `notify.TEMPLATES` بالإنجليزية أو بالعربية، فيُرفع `UnknownTemplate` بعد تسجيل القيد في دفتر الأستاذ (ledger). ما الاستجابة السليمة؟"
+        "ar": "جميع الاختبارات (tests) خضراء (green) على تغيير الوكيل (agent) في `service.py` الخاص بـ `QAR-BDT`. تسأل جلسة مراجعة جديدة هل يمكن للخدمة أن تختار معرّف قالب (template id) غير موجود في `notify.TEMPLATES` بالإنجليزية أو بالعربية، فيُرفع `UnknownTemplate` بعد تسجيل القيد في دفتر الأستاذ (ledger). ما الاستجابة السليمة؟"
       },
       "o": {
         "en": [

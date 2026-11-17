@@ -20,13 +20,13 @@
      "إعادة صياغة جملة التذكرة (ticket) نفسها بكلمات أكثر رسمية (formal words) تحت عنوان الهدف (Goal).",
      "قائمة خطوات (step-by-step list) بالأسطر في `limits.py` التي ينبغي للوكيل (agent) أن يعدّلها بالترتيب.",
      "جدول أمثلة تطبيقية (worked examples) بمبالغ دقيقة (exact amounts)، يشمل الحد 3,000.00 بالضبط.",
-     "جملة ختامية (closing sentence) تقول إن التغيير صحيح ومختبَر ومراجَع (correct, tested and reviewed)."
+     "جملة ختامية (closing sentence) تقول إن التغيير صحيح ومختبَر ومراجَع."
     ]
    },
    "a": 2,
    "why": {
     "en": "Behaviour pins the numbers: worked examples with exact amounts and edges are what a test can prove or refute. Restating the ticket (A) adds nothing it left out, and prescribing the lines to edit (B) makes the agent obey the letter of the how.",
-    "ar": "يثبّت قسم السلوك (Behaviour) الأرقام: الأمثلة التطبيقية (worked examples) بمبالغ دقيقة وحدود واضحة هي ما يستطيع الاختبار (test) إثباته أو نقضه. وإعادة صياغة التذكرة (A) لا تضيف ما أغفلته، ووصف الأسطر المطلوب تعديلها (B) يجعل الوكيل (agent) يطيع حرفية الكيفية (how)."
+    "ar": "يثبّت قسم السلوك (Behaviour) الأرقام: الأمثلة التطبيقية (worked examples) بمبالغ دقيقة وحدود واضحة هي ما يستطيع الاختبار (test) إثباته أو نقضه. وإعادة صياغة التذكرة لا تضيف ما أغفلته، ووصف الأسطر المطلوب تعديلها (B) يجعل الوكيل (agent) يطيع حرفية الكيفية."
    }
   },
   {
@@ -63,7 +63,7 @@
    "lesson": "3.2",
    "q": {
     "en": "Lujain gives her finished T3 spec to a fresh read-only session and asks which decisions it would have to guess. The session lists eleven: two change behaviour, one contradicts the code, and eight are matters of wording or taste. What should she do?",
-    "ar": "تعطي لجين مواصفة (spec) T3 المنتهية لجلسة جديدة للقراءة فقط (fresh read-only session) وتسألها عن القرارات (decisions) التي كان عليها تخمينها (guess). تذكر الجلسة إحدى عشرة نقطة: اثنتان تغيّران السلوك (behaviour)، وواحدة تناقض الشيفرة (code)، وثماني منها مسائل صياغة أو ذوق (wording or taste). ماذا ينبغي لها أن تفعل؟"
+    "ar": "تعطي لجين مواصفة (spec) T3 المنتهية لجلسة جديدة للقراءة فقط وتسألها عن القرارات (decisions) التي كان عليها تخمينها (guess). تذكر الجلسة إحدى عشرة نقطة: اثنتان تغيّران السلوك (behaviour)، وواحدة تناقض الشيفرة (code)، وثماني منها مسائل صياغة أو ذوق. ماذا ينبغي لها أن تفعل؟"
    },
    "o": {
     "en": [
@@ -82,7 +82,7 @@
    "a": 3,
    "why": {
     "en": "The audit lists guesses, but only gaps that change behaviour or contradict the spec's own words are worth keeping; the conflict with the code is fixed because the code wins, and noise is dismissed with a reason. Answering all eleven (A) is the tempting mistake, since reviewers report some items even when the work is sound.",
-    "ar": "يعدّد التدقيق (audit) التخمينات، لكن الثغرات (gaps) التي تغيّر السلوك (behaviour) أو تناقض كلام المواصفة (spec) نفسها وحدها تستحق الإبقاء؛ ويُصحَّح التعارض مع الشيفرة (code) لأن الشيفرة هي التي تحسم، ويُرفض الضجيج (noise) مع ذكر السبب. والإجابة عن الإحدى عشرة كلها (A) هي الخطأ المغري، فالمراجعون (reviewers) يبلّغون عن بعض الأمور حتى حين يكون العمل سليمًا."
+    "ar": "يعدّد التدقيق (audit) التخمينات، لكن الثغرات (gaps) التي تغيّر السلوك (behaviour) أو تناقض كلام المواصفة (spec) نفسها وحدها تستحق الإبقاء؛ ويُصحَّح التعارض مع الشيفرة (code) لأن الشيفرة هي التي تحسم، ويُرفض الضجيج (noise) مع ذكر السبب. والإجابة عن الإحدى عشرة كلها هي الخطأ المغري، فالمراجعون (reviewers) يبلّغون عن بعض الأمور حتى حين يكون العمل سليمًا."
    }
   },
   {
@@ -103,14 +103,14 @@
     "ar": [
      "المُقيِّم (grader) معطوب (faulty)، لأن مواصفة (spec) فيها رقم خاطئ (wrong figure) لا ينبغي أن تنجح أصلًا.",
      "المُقيِّم (grader) يفحص الشكل والحقائق القابلة للتحقق (checkable facts)، فلا يثبت الرقم إلا تشغيل الشيفرة (code).",
-     "اللوم على الوكيل (agent)، ولو حُسب الجدول (table) يدويًا (by hand) لجاء دقيقًا (exact) تمامًا.",
+     "اللوم على الوكيل (agent)، ولو حُسب الجدول (table) يدويًا لجاء دقيقًا (exact) تمامًا.",
      "تحتاج المواصفة (spec) إلى صفوف أكثر (more rows)، لأن أمثلة إضافية (extra examples) كانت ستكشف السنت (cent) الخاطئ."
     ]
    },
    "a": 1,
    "why": {
     "en": "The grader never runs the examples, so a wrong fee can pass; the author must get each figure by running the code. Blaming the agent (C) misses that the grader cannot see who wrote the file and that hand-worked numbers carry the same risk.",
-    "ar": "لا يشغّل المُقيِّم (grader) الأمثلة (examples) أبدًا، فقد يمرّ رسم (fee) خاطئ، وعلى الكاتب أن يستخرج كل رقم بتشغيل الشيفرة (code). واللوم على الوكيل (C) يغفل أن المُقيِّم لا يرى من كتب الملف (file)، وأن الأرقام المحسوبة يدويًا (by hand) تحمل الخطر نفسه."
+    "ar": "لا يشغّل المُقيِّم (grader) الأمثلة (examples) أبدًا، فقد يمرّ رسم (fee) خاطئ، وعلى الكاتب أن يستخرج كل رقم بتشغيل الشيفرة (code). واللوم على الوكيل (C) يغفل أن المُقيِّم لا يرى من كتب الملف (file)، وأن الأرقام المحسوبة يدويًا تحمل الخطر نفسه."
    }
   }
  ],

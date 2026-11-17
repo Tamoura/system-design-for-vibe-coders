@@ -26,7 +26,7 @@
       "a": 2,
       "why": {
         "en": "Deploying puts new code on servers and releasing lets users reach it, so traffic shifting and feature flags can expose it gradually and switch it off in seconds. The second option mixes up the CI build step with release; building the artefact says nothing about who can see a feature.",
-        "ar": "النشر (deploying) يضع الشيفرة الجديدة على الخوادم (servers)، والإطلاق (releasing) يتيح للمستخدمين (users) الوصول إليها، لذا يستطيع تحويل حركة المرور (traffic shifting) وأعلام الميزات (feature flags) كشفها تدريجيًا (gradually) وإيقافها في ثوانٍ (in seconds). أما الخيار الثاني فيخلط بين خطوة البناء (build) في التكامل المستمر (CI) وبين الإطلاق؛ فبناء الأثر البرمجي (artefact) لا يحدد مَن يرى الميزة (feature)."
+        "ar": "النشر (deploying) يضع الشيفرة الجديدة على الخوادم (servers)، والإطلاق (releasing) يتيح للمستخدمين (users) الوصول إليها، لذا يستطيع تحويل حركة المرور (traffic shifting) وأعلام الميزات (feature flags) كشفها تدريجيًا (gradually) وإيقافها في ثوانٍ. أما الخيار الثاني فيخلط بين خطوة البناء (build) في التكامل المستمر (CI) وبين الإطلاق؛ فبناء الأثر البرمجي (artefact) لا يحدد مَن يرى الميزة (feature)."
       }
     },
     {
@@ -54,7 +54,7 @@
       "a": 0,
       "why": {
         "en": "A merge queue tests each PR against the PRs ahead of it, so two changes that break only together are caught before they reach `main`. Retrying until green hides the failure instead of preventing it, and larger weekly PRs bring back the batching that CI is meant to end.",
-        "ar": "طابور الدمج (merge queue) يختبر كل طلب سحب (PR) مع طلبات السحب التي تسبقه، فيُكتشَف التغييران اللذان لا ينكسران إلا معًا (break only together) قبل وصولهما إلى الفرع `main`. أما إعادة التشغيل حتى الأخضر (re-run until green) فتخفي العطل (failure) ولا تمنعه، وطلبات السحب الأسبوعية الأكبر تعيد تجميع العمل (batching) الذي جاء التكامل المستمر (CI) لإنهائه."
+        "ar": "طابور الدمج (merge queue) يختبر كل طلب سحب (PR) مع طلبات السحب التي تسبقه، فيُكتشَف التغييران اللذان لا ينكسران إلا معًا قبل وصولهما إلى الفرع `main`. أما إعادة التشغيل حتى الأخضر فتخفي العطل (failure) ولا تمنعه، وطلبات السحب الأسبوعية الأكبر تعيد تجميع العمل (batching) الذي جاء التكامل المستمر (CI) لإنهائه."
       }
     },
     {
@@ -63,7 +63,7 @@
       "lesson": "4.3",
       "q": {
         "en": "Noura reviews the OIDC trust policy on the Mobile API push role. It accepts only tokens whose subject is `repo:najm-bank/mobile-api:environment:production`. She worries that a job on a feature branch could still assume the role. What closes that gap?",
-        "ar": "تراجع نورة سياسة الثقة (trust policy) الخاصة بـ OIDC على دور الدفع (push role) لواجهة برمجة تطبيق نجم للهاتف (Mobile API). لا تقبل السياسة إلا الرموز (tokens) التي يكون موضوعها (subject) هو `repo:najm-bank/mobile-api:environment:production`. وتخشى أن تتمكن مهمة (job) على فرع ميزة (feature branch) من تولّي الدور (assume the role) رغم ذلك. ما الذي يسدّ هذه الثغرة؟"
+        "ar": "تراجع نورة سياسة الثقة (trust policy) الخاصة بـ OIDC على دور الدفع (push role) لواجهة برمجة تطبيق نجم للهاتف (Mobile API). لا تقبل السياسة إلا الرموز (tokens) التي يكون موضوعها (subject) هو `repo:najm-bank/mobile-api:environment:production`. وتخشى أن تتمكن مهمة (job) على فرع ميزة (feature branch) من تولّي الدور رغم ذلك. ما الذي يسدّ هذه الثغرة؟"
       },
       "o": {
         "en": [
@@ -75,14 +75,14 @@
         "ar": [
           "منح صلاحية `id-token: write` على مستوى سير العمل (workflow level) بدلًا من كل مهمة (per job)",
           "تثبيت `configure-aws-credentials` على بصمة إيداع كاملة (full commit SHA) في تلك المهمة (job)",
-          "حفظ مفتاح وصول احتياطي (backup access key) للدور في بيئة الإنتاج (production environment)",
+          "حفظ مفتاح وصول احتياطي للدور في بيئة الإنتاج (production environment)",
           "حصر فروع النشر (deployment branches) لبيئة الإنتاج (production environment) في الفرع `main`"
         ]
       },
       "a": 3,
       "why": {
         "en": "The token's subject names the environment, not the branch, so any branch allowed to use the production environment could assume the role; limiting that environment's deployment branches to `main` closes the gap. SHA pinning is good practice, but it controls which action code runs, not which branch gets credentials.",
-        "ar": "موضوع الرمز (token subject) يسمّي البيئة (environment) لا الفرع (branch)، فأي فرع مسموح له باستخدام بيئة الإنتاج (production environment) يستطيع تولّي الدور (assume the role)؛ وحصر فروع النشر (deployment branches) لتلك البيئة في `main` يسدّ الثغرة. أما التثبيت ببصمة الإيداع (SHA pinning) فممارسة جيدة، لكنه يتحكم في شيفرة الإجراء (action) التي تعمل، لا في الفرع الذي يحصل على بيانات الاعتماد (credentials)."
+        "ar": "موضوع الرمز (token subject) يسمّي البيئة (environment) لا الفرع (branch)، فأي فرع مسموح له باستخدام بيئة الإنتاج (production environment) يستطيع تولّي الدور؛ وحصر فروع النشر (deployment branches) لتلك البيئة في `main` يسدّ الثغرة. أما التثبيت ببصمة الإيداع (SHA pinning) فممارسة جيدة، لكنه يتحكم في شيفرة الإجراء (action) التي تعمل، لا في الفرع الذي يحصل على بيانات الاعتماد (credentials)."
       }
     },
     {
@@ -91,7 +91,7 @@
       "lesson": "4.2",
       "q": {
         "en": "A Payments release finished its canary steps and has served 100% of traffic for an hour. Error-budget burn is now far above the previous version's, almost all of it on the new instant-transfer path, which sits behind a release flag switched on this morning. Najm runs Argo CD with automated sync and self-heal. What should Maha do first?",
-        "ar": "أنهى إصدار (release) من خدمة المدفوعات (Payments service) خطوات الكناري (canary steps)، ويخدم 100% من حركة المرور (traffic) منذ ساعة. صار معدل استهلاك ميزانية الأخطاء (error budget burn rate) الآن أعلى بكثير من الإصدار السابق (previous version)، ومعظمه في مسار التحويل الفوري (instant-transfer path) الجديد، الموجود خلف علم إطلاق (release flag) فُعِّل هذا الصباح. يعمل بنك نجم (Najm Bank) بـ Argo CD مع المزامنة التلقائية (automated sync) والإصلاح الذاتي (self-heal). ما أول ما ينبغي أن تفعله مها؟"
+        "ar": "أنهى إصدار (release) من خدمة المدفوعات (Payments service) خطوات الكناري (canary steps)، ويخدم 100% من حركة المرور (traffic) منذ ساعة. صار معدل استهلاك ميزانية الأخطاء الآن أعلى بكثير من الإصدار السابق (previous version)، ومعظمه في مسار التحويل الفوري (instant-transfer path) الجديد، الموجود خلف علم إطلاق (release flag) فُعِّل هذا الصباح. يعمل بنك نجم (Najm Bank) بـ Argo CD مع المزامنة التلقائية (automated sync) والإصلاح الذاتي (self-heal). ما أول ما ينبغي أن تفعله مها؟"
       },
       "o": {
         "en": [
@@ -120,7 +120,7 @@
       "lesson": "4.2",
       "text": {
         "en": "I have converted a Deployment to an Argo Rollouts canary with an AnalysisTemplate on success rate, and watched it abort by itself and return traffic to stable when I released a faulty version.",
-        "ar": "حوّلتُ نشرًا (Deployment) إلى إطلاق كناري (canary) عبر Argo Rollouts مع قالب تحليل (AnalysisTemplate) على معدل النجاح (success rate)، وشاهدتُه يُجهَض تلقائيًا (abort by itself) ويعيد حركة المرور (traffic) إلى النسخة المستقرة (stable) حين أطلقتُ إصدارًا معيبًا (faulty version)."
+        "ar": "حوّلتُ نشرًا (Deployment) إلى إطلاق كناري (canary) عبر Argo Rollouts مع قالب تحليل (AnalysisTemplate) على معدل النجاح (success rate)، وشاهدتُه يُجهَض تلقائيًا ويعيد حركة المرور (traffic) إلى النسخة المستقرة (stable) حين أطلقتُ إصدارًا معيبًا (faulty version)."
       }
     },
     {
@@ -128,7 +128,7 @@
       "lesson": "4.3",
       "text": {
         "en": "I have audited my workflows so that each one declares read-only default permissions and every third-party action is pinned to a full 40-character commit SHA.",
-        "ar": "دقّقتُ سير العمل (workflows) لديّ بحيث يعلن كلٌّ منها صلاحيات افتراضية للقراءة فقط (read-only default permissions)، وتُثبَّت كل إجراءات الطرف الثالث (third-party actions) على بصمة إيداع كاملة (full commit SHA) من 40 حرفًا."
+        "ar": "دقّقتُ سير العمل (workflows) لديّ بحيث يعلن كلٌّ منها صلاحيات افتراضية للقراءة فقط، وتُثبَّت كل إجراءات الطرف الثالث (third-party actions) على بصمة إيداع كاملة (full commit SHA) من 40 حرفًا."
       }
     }
   ]

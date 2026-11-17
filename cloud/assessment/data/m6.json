@@ -7,7 +7,7 @@
       "lesson": "6.3",
       "q": {
         "en": "Two Najm Assist features call the same managed model API about the same number of times a day, yet one costs several times more than the other. What best explains the gap?",
-        "ar": "تستدعي ميزتان من نجم أسيست (Najm Assist) واجهة برمجة النموذج المُدارة (managed model API) نفسها بعدد مرات يومي متقارب، ومع ذلك تكلّف إحداهما أضعاف الأخرى. ما التفسير الأرجح لهذا الفرق؟"
+        "ar": "تستدعي ميزتان من نجم أسيست (Najm Assist) واجهة برمجة النموذج المُدارة نفسها بعدد مرات يومي متقارب، ومع ذلك تكلّف إحداهما أضعاف الأخرى. ما التفسير الأرجح لهذا الفرق؟"
       },
       "o": {
         "en": [
@@ -18,7 +18,7 @@
         ],
         "ar": [
           "لأنها ترسل طلبات أكثر في الثانية (requests per second)، والمزوّدون يحاسبون على كل طلب مُرسَل (per request)",
-          "لأن التكلفة تتبع الرموز الداخلة والخارجة (tokens in and out)، فالمُوجِّهات (prompts) والإجابات الأطول تكلّف أكثر",
+          "لأن التكلفة تتبع الرموز الداخلة والخارجة، فالمُوجِّهات (prompts) والإجابات الأطول تكلّف أكثر",
           "لأنها تعمل في ساعات الذروة (peak hours)، حين تكون وحدات معالجة الرسوميات (GPUs) لدى المزوّد في أشدّ انشغالها",
           "لأن الواجهات المُدارة (managed APIs) تحاسب على وقت وحدة معالجة الرسوميات (GPU time)، فالإجابات الأبطأ تكلّف أكثر في كل مرة"
         ]
@@ -26,7 +26,7 @@
       "a": 1,
       "why": {
         "en": "Managed model APIs charge per input and output token, so a feature that stuffs many retrieved documents or long history into every prompt costs far more for the same number of calls. Billing per request is the tempting assumption, but the call count is the same here and tokens are the unit of cost.",
-        "ar": "تحاسب واجهات النماذج المُدارة (managed model APIs) على كل رمز إدخال وإخراج (input and output token)، فالميزة التي تحشو كل مُوجِّه (prompt) بوثائق مسترجَعة كثيرة (retrieved documents) أو سجلّ محادثة طويل (history) تكلّف أكثر بكثير للعدد نفسه من الاستدعاءات. أما المحاسبة لكل طلب (per request) فهي الافتراض المغري، لكن عدد الاستدعاءات هنا متساوٍ، والرموز (tokens) هي وحدة التكلفة (unit of cost)."
+        "ar": "تحاسب واجهات النماذج المُدارة على كل رمز إدخال وإخراج، فالميزة التي تحشو كل مُوجِّه (prompt) بوثائق مسترجَعة كثيرة (retrieved documents) أو سجلّ محادثة طويل (history) تكلّف أكثر بكثير للعدد نفسه من الاستدعاءات. أما المحاسبة لكل طلب (per request) فهي الافتراض المغري، لكن عدد الاستدعاءات هنا متساوٍ، والرموز (tokens) هي وحدة التكلفة."
       }
     },
     {
@@ -35,7 +35,7 @@
       "lesson": "6.1",
       "q": {
         "en": "On salary day the Najm Mobile API's HPA scales from 6 pods to its maximum of 30, and then errors climb because the PostgreSQL database runs out of connections. What should the platform team change?",
-        "ar": "في يوم صرف الرواتب يوسّع المُوسِّع الأفقي للحجيرات (Horizontal Pod Autoscaler, HPA) واجهة برمجة تطبيق نجم للهاتف (Najm Mobile API) من 6 حجيرات (pods) إلى حدّها الأقصى 30، ثم ترتفع الأخطاء (errors) لأن قاعدة بيانات PostgreSQL تنفد اتصالاتها (runs out of connections). ما الذي ينبغي أن يغيّره فريق المنصة (platform team)؟"
+        "ar": "في يوم صرف الرواتب يوسّع المُوسِّع الأفقي للحجيرات واجهة برمجة تطبيق نجم للهاتف (Najm Mobile API) من 6 حجيرات (pods) إلى حدّها الأقصى 30، ثم ترتفع الأخطاء (errors) لأن قاعدة بيانات PostgreSQL تنفد اتصالاتها. ما الذي ينبغي أن يغيّره فريق المنصة (platform team)؟"
       },
       "o": {
         "en": [
@@ -54,7 +54,7 @@
       "a": 3,
       "why": {
         "en": "Scaling moves the bottleneck: every pod opens connections, so a pooler such as PgBouncer and a maxReplicas set from what the database can take protect it. Raising the ceiling is the tempting shortcut, but more pods open even more connections and turn the spike into a database outage.",
-        "ar": "التوسّع ينقل عنق الزجاجة (scaling moves the bottleneck): كل حجيرة (pod) تفتح اتصالات، لذا يحمي قاعدةَ البيانات مُجمِّعُ اتصالات (connection pooler) مثل PgBouncer وحدٌّ أقصى للنسخ (maxReplicas) يُحدَّد بما تحتمله. أما رفع السقف (ceiling) فهو الاختصار المغري، لكن مزيدًا من الحجيرات يفتح مزيدًا من الاتصالات ويحوّل الذروة (spike) إلى انقطاع في قاعدة البيانات (database outage)."
+        "ar": "التوسّع ينقل عنق الزجاجة: كل حجيرة (pod) تفتح اتصالات، لذا يحمي قاعدةَ البيانات مُجمِّعُ اتصالات (connection pooler) مثل PgBouncer وحدٌّ أقصى للنسخ (maxReplicas) يُحدَّد بما تحتمله. أما رفع السقف (ceiling) فهو الاختصار المغري، لكن مزيدًا من الحجيرات يفتح مزيدًا من الاتصالات ويحوّل الذروة (spike) إلى انقطاع في قاعدة البيانات (database outage)."
       }
     },
     {
@@ -63,7 +63,7 @@
       "lesson": "6.2",
       "q": {
         "en": "After idle resources were deleted and workloads rightsized, the Mobile API's compute never falls below about 40 vCPUs, even at night, and peaks near 120 vCPUs on busy days. Salem wants a one-year savings plan. What should it cover?",
-        "ar": "بعد حذف الموارد الخاملة (idle resources) وضبط حجم أحمال العمل (rightsizing)، لم تعد قدرة الحوسبة (compute) لواجهة Mobile API تنزل عن نحو 40 وحدة معالجة افتراضية (vCPUs) حتى ليلًا، وتبلغ ذروتها (peak) قرابة 120 في الأيام المزدحمة. يريد سالم خطة توفير لمدة سنة (one-year savings plan). ما الذي ينبغي أن تغطيه؟"
+        "ar": "بعد حذف الموارد الخاملة (idle resources) وضبط حجم أحمال العمل (rightsizing)، لم تعد قدرة الحوسبة (compute) لواجهة Mobile API تنزل عن نحو 40 وحدة معالجة افتراضية (vCPUs) حتى ليلًا، وتبلغ ذروتها (peak) قرابة 120 في الأيام المزدحمة. يريد سالم خطة توفير لمدة سنة. ما الذي ينبغي أن تغطيه؟"
       },
       "o": {
         "en": [
@@ -91,7 +91,7 @@
       "lesson": "6.3",
       "q": {
         "en": "To meet its budget, the data science team proposes switching Najm's self-hosted confidential classification model from its 8-bit version to a 4-bit one next week. A load test shows twice the tokens per second on the same GPUs. What should Salem decide?",
-        "ar": "لكي يلتزم فريق علم البيانات (data science team) بميزانيته (budget)، يقترح أن يُحوَّل نموذج التصنيف السرّي المستضاف ذاتيًا (self-hosted confidential classification model) في بنك نجم (Najm Bank) من نسخته ذات 8 بتات (8-bit) إلى نسخة ذات 4 بتات (4-bit) الأسبوع المقبل. ويُظهر اختبار حمل (load test) ضعف عدد الرموز في الثانية (tokens per second) على وحدات معالجة الرسوميات (GPUs) نفسها. ماذا ينبغي أن يقرّر سالم؟"
+        "ar": "لكي يلتزم فريق علم البيانات (data science team) بميزانيته (budget)، يقترح أن يُحوَّل نموذج التصنيف السرّي المستضاف ذاتيًا في بنك نجم (Najm Bank) من نسخته ذات 8 بتات (8-bit) إلى نسخة ذات 4 بتات (4-bit) الأسبوع المقبل. ويُظهر اختبار حمل (load test) ضعف عدد الرموز في الثانية (tokens per second) على وحدات معالجة الرسوميات (GPUs) نفسها. ماذا ينبغي أن يقرّر سالم؟"
       },
       "o": {
         "en": [
@@ -120,7 +120,7 @@
       "lesson": "6.1",
       "text": {
         "en": "I have restored a database backup into a second instance after deliberately dropping a table, measured the actual restore time and data loss against an RTO and RPO I chose, and listed at least two changes that would close the gap",
-        "ar": "استعدتُ نسخة احتياطية لقاعدة بيانات (database backup) إلى مثيل ثانٍ (second instance) بعد حذف جدول عمدًا (dropping a table)، وقستُ زمن الاستعادة الفعلي (actual restore time) والبيانات المفقودة (data loss) مقارنةً بهدفَي RTO وRPO اخترتُهما، وذكرتُ تغييرين على الأقل يسدّان الفجوة (close the gap)"
+        "ar": "استعدتُ نسخة احتياطية لقاعدة بيانات (database backup) إلى مثيل ثانٍ (second instance) بعد حذف جدول عمدًا، وقستُ زمن الاستعادة الفعلي والبيانات المفقودة (data loss) مقارنةً بهدفَي RTO وRPO اخترتُهما، وذكرتُ تغييرين على الأقل يسدّان الفجوة"
       }
     },
     {
@@ -128,7 +128,7 @@
       "lesson": "6.2",
       "text": {
         "en": "I have written a policy-as-code rule that fails an OpenTofu plan containing a resource without owner or environment tags, and shown that it passes once the tags are added",
-        "ar": "كتبتُ قاعدة سياسة بوصفها شيفرة (policy as code) تُفشِل خطة OpenTofu (OpenTofu plan) تحتوي موردًا بلا وسمَي المالك والبيئة (owner or environment tags)، وأثبتُّ أنها تنجح بعد إضافة الوسوم (tags)"
+        "ar": "كتبتُ قاعدة سياسة بوصفها شيفرة (policy as code) تُفشِل خطة OpenTofu (OpenTofu plan) تحتوي موردًا بلا وسمَي المالك والبيئة، وأثبتُّ أنها تنجح بعد إضافة الوسوم (tags)"
       }
     }
   ]

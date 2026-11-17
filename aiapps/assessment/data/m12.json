@@ -7,7 +7,7 @@
       "lesson": "12.1",
       "q": {
         "en": "Lujain's first draft of the Najm Desk eval set has 30 cases, all passing, covering policy answers and ticket status. Hind asks whether the requirement that staff see only their own tickets (GR-02) is covered. Lujain's traceability table links each case to the requirement ids it tests, and GR-02 appears in none of them. The agents also have no way to tell who is asking. How should the eval pack report GR-02?",
-        "ar": "يضم الإصدار الأول من مجموعة التقييم (eval set) التي أعدّتها لجين لنجم ديسك (Najm Desk) ثلاثين حالة (30 cases) تنجح كلها، وتشمل إجابات السياسات (policy answers) والاستعلام عن حالة التذكرة (ticket status). وتسأل هند هل المتطلب (requirement) القاضي بأن يرى الموظف تذاكره وحدها (own tickets only)، وهو GR-02، مغطّى. يربط جدول التتبّع (traceability table) عند لجين كل حالة بمعرّفات المتطلبات التي تختبرها، ولا يظهر GR-02 في أي منها. كما لا يملك الوكلاء (agents) وسيلة لمعرفة من يسأل. كيف تُبلِّغ حزمة التقييم (eval pack) عن GR-02؟"
+        "ar": "يضم الإصدار الأول من مجموعة التقييم (eval set) التي أعدّتها لجين لنجم ديسك (Najm Desk) ثلاثين حالة (30 cases) تنجح كلها، وتشمل إجابات السياسات (policy answers) والاستعلام عن حالة التذكرة (ticket status). وتسأل هند هل المتطلب (requirement) القاضي بأن يرى الموظف تذاكره وحدها، وهو GR-02، مغطّى. يربط جدول التتبّع (traceability table) عند لجين كل حالة بمعرّفات المتطلبات التي تختبرها، ولا يظهر GR-02 في أي منها. كما لا يملك الوكلاء (agents) وسيلة لمعرفة من يسأل. كيف تُبلِّغ حزمة التقييم (eval pack) عن GR-02؟"
       },
       "o": {
         "en": [
@@ -18,15 +18,15 @@
         ],
         "ar": [
           "مغطّى (Covered): حالات الاستعلام عن التذاكر (ticket-status cases) ستكشف تذكرة موظف آخر",
-          "غير مختبَر (Untested): نتيجة مُلاحَظة (a finding) بجانب الدرجة، لا نجاح ولا إخفاق",
+          "غير مختبَر (Untested): نتيجة مُلاحَظة بجانب الدرجة، لا نجاح ولا إخفاق",
           "فاشل (Failing): سجّله بنسبة 0%، لأن الوكلاء (agents) لا يعرفون من يسأل",
-          "لا ينطبق (Not applicable): قاعدة لا يستطيع الوكلاء (agents) فرضها لا تحتاج إلى حالة (case)"
+          "لا ينطبق: قاعدة لا يستطيع الوكلاء (agents) فرضها لا تحتاج إلى حالة (case)"
         ]
       },
       "a": 1,
       "why": {
         "en": "A requirement with no case is untested. A 0% score would claim a measurement nobody made and a pass would claim a protection nobody checked, so the honest report is a finding beside the score. That the agents cannot tell who is asking is a reason to write the cases, not a score.",
-        "ar": "المتطلب (requirement) الذي لا حالة له (no case) غير مختبَر (untested). ونسبة 0% تدّعي قياسًا لم يجرِه أحد، والنجاح (a pass) يدّعي حماية لم يتحقق منها أحد، فالتقرير الصادق هو نتيجة مُلاحَظة (a finding) بجانب الدرجة. وعجز الوكلاء (agents) عن معرفة من يسأل سبب لكتابة الحالات (cases)، لا درجة."
+        "ar": "المتطلب (requirement) الذي لا حالة له غير مختبَر (untested). ونسبة 0% تدّعي قياسًا لم يجرِه أحد، والنجاح يدّعي حماية لم يتحقق منها أحد، فالتقرير الصادق هو نتيجة مُلاحَظة بجانب الدرجة. وعجز الوكلاء (agents) عن معرفة من يسأل سبب لكتابة الحالات (cases)، لا درجة."
       }
     },
     {
@@ -48,7 +48,7 @@
           "أصلح سبب أخطاء الحالات (case errors) وأعد التشغيل (rerun)، فخمس عشرة حالة بلا قياس",
           "ارفع الحد (limit)، فخمس وثلاثون حالة مطابقة تبيّن أن الجودة (quality) لم تتراجع",
           "احسب الأخطاء الخمسة عشر إخفاقات (failures)، فتبلّغ البوابة (gate) عن انحدار (regression) وتخرج برمز 1",
-          "ضع الحالات الخمس عشرة في الحجر (quarantine) مع مالك وتاريخ انتهاء (owner and end date)، ثم أعد تشغيل البوابة"
+          "ضع الحالات الخمس عشرة في الحجر (quarantine) مع مالك وتاريخ انتهاء، ثم أعد تشغيل البوابة"
         ]
       },
       "a": 0,
@@ -76,13 +76,13 @@
           "تخرج برمز 0 (exit 0): الدرجة الإجمالية (overall score) لم تتغير، فلا انحدار (regression)",
           "تخرج برمز 0 مع ملاحظة (note): حالة حرجة فاشلة ليست سوى عيب مفتوح (open defect) يُسجَّل",
           "تخرج برمز 2 (exit 2): الدرجة نفسها من حالات مختلفة (different cases) تعني أن التشغيلين مختلفان",
-          "تخرج برمز 1 (exit 1): حالة حرجة كانت تنجح تفشل الآن، فتمنع الدمج (blocks the merge)"
+          "تخرج برمز 1 (exit 1): حالة حرجة كانت تنجح تفشل الآن، فتمنع الدمج"
         ]
       },
       "a": 3,
       "why": {
         "en": "A critical case that passed in the baseline must still pass whatever the total does: one gain cannot pay for one loss. The open-defect note is only for a case that already failed in the baseline.",
-        "ar": "الحالة الحرجة (critical case) التي نجحت في خط الأساس (baseline) يجب أن تظل ناجحة مهما كان المجموع (the total)، فمكسب واحد لا يسدد خسارة واحدة (one gain cannot pay for one loss). أما ملاحظة العيب المفتوح (open-defect note) فتخص حالة كانت فاشلة أصلًا في خط الأساس."
+        "ar": "الحالة الحرجة (critical case) التي نجحت في خط الأساس (baseline) يجب أن تظل ناجحة مهما كان المجموع، فمكسب واحد لا يسدد خسارة واحدة. أما ملاحظة العيب المفتوح (open-defect note) فتخص حالة كانت فاشلة أصلًا في خط الأساس."
       }
     },
     {
@@ -91,7 +91,7 @@
       "lesson": "12.1",
       "q": {
         "en": "In the pilot, a user asks whether contractors may use their own laptops on the bank network. The policy library says nothing about contractors. Yara's trace shows retrieval returned the staff remote-work passages (word overlap on \"laptops\" and \"network\") and the agent repeated one as its answer. Yara signs \"I don't know\" as the expectation. What is the best fix?",
-        "ar": "في التجربة التشغيلية (pilot) يسأل مستخدم هل يجوز للمتعاقدين (contractors) استخدام حواسيبهم المحمولة الخاصة على شبكة البنك (bank network). مكتبة السياسات (policy library) لا تقول شيئًا عن المتعاقدين. ويُظهر تتبّع (trace) يارا أن الاسترجاع (retrieval) أعاد مقاطع العمل عن بُعد للموظفين (staff remote-work passages) بسبب تشابه الكلمات (word overlap) في «الحواسيب» و«الشبكة»، وأن الوكيل (agent) كرّر أحدها جوابًا. وتعتمد يارا «لا أعرف» (I don't know) توقعًا (expectation). ما أفضل إصلاح (best fix)؟"
+        "ar": "في التجربة التشغيلية (pilot) يسأل مستخدم هل يجوز للمتعاقدين (contractors) استخدام حواسيبهم المحمولة الخاصة على شبكة البنك (bank network). مكتبة السياسات (policy library) لا تقول شيئًا عن المتعاقدين. ويُظهر تتبّع (trace) يارا أن الاسترجاع (retrieval) أعاد مقاطع العمل عن بُعد للموظفين بسبب تشابه الكلمات (word overlap) في «الحواسيب» و«الشبكة»، وأن الوكيل (agent) كرّر أحدها جوابًا. وتعتمد يارا «لا أعرف» (I don't know) توقعًا (expectation). ما أفضل إصلاح (best fix)؟"
       },
       "o": {
         "en": [
@@ -103,14 +103,14 @@
         "ar": [
           "أضف هذا السؤال إلى الموجّه (prompt) مثالًا جوابه «لا أعرف» (I don't know)، ثم أعد تشغيل التقييم (eval)",
           "أضف عشر حالات سياسات قابلة للإجابة (answerable cases) كي يقلّ وزن هذا الإخفاق (miss) في الدرجة الإجمالية (score)",
-          "أضف قاعدة: المقطع يعالج السؤال (a passage must address the question)، ثم حالات شبه مطابقة (near-miss cases)",
-          "اجعل الاسترجاع (retrieval) يستثني هذا السؤال وحده فلا يعيد مقطعًا (passage)، ثم أغلق الحالة (close the case)"
+          "أضف قاعدة: المقطع يعالج السؤال، ثم حالات شبه مطابقة (near-miss cases)",
+          "اجعل الاسترجاع (retrieval) يستثني هذا السؤال وحده فلا يعيد مقطعًا (passage)، ثم أغلق الحالة"
         ]
       },
       "a": 2,
       "why": {
         "en": "The cause is a missing rule, so the fix is the rule plus near-miss cases that test it. Pasting the failing question into the prompt turns the case into an answer key, which is leakage.",
-        "ar": "السبب قاعدة ناقصة (a missing rule)، فالإصلاح هو القاعدة مع حالات شبه مطابقة (near-miss cases) تختبرها. ولصق السؤال الفاشل في الموجّه (prompt) يحوّل الحالة إلى مفتاح إجابات (answer key)، وهذا تسرّب (leakage)."
+        "ar": "السبب قاعدة ناقصة، فالإصلاح هو القاعدة مع حالات شبه مطابقة (near-miss cases) تختبرها. ولصق السؤال الفاشل في الموجّه (prompt) يحوّل الحالة إلى مفتاح إجابات (answer key)، وهذا تسرّب (leakage)."
       }
     }
   ],
@@ -120,7 +120,7 @@
       "lesson": "12.1",
       "text": {
         "en": "I have written ten JSONL cases in the lab set's format from one requirement (GR-02 or another), three of them adversarial, loaded them with `load_cases`, and compared three expectations with a colleague's, with a stated reason for every difference.",
-        "ar": "لقد كتبتُ عشر حالات (ten cases) بصيغة JSONL على نسق مجموعة المختبر من متطلب واحد (one requirement) هو GR-02 أو غيره، ثلاث منها حالات عدائية (adversarial)، وحمّلتها بـ `load_cases`، وقارنتُ ثلاثة توقعات (expectations) بما كتبه زميل، مع سبب مذكور لكل اختلاف (stated reason for every difference)."
+        "ar": "لقد كتبتُ عشر حالات (ten cases) بصيغة JSONL على نسق مجموعة المختبر من متطلب واحد (one requirement) هو GR-02 أو غيره، ثلاث منها حالات عدائية (adversarial)، وحمّلتها بـ `load_cases`، وقارنتُ ثلاثة توقعات (expectations) بما كتبه زميل، مع سبب مذكور لكل اختلاف."
       }
     },
     {
@@ -128,7 +128,7 @@
       "lesson": "12.2",
       "text": {
         "en": "I have run the four gate drills and one of my own, recorded each run's exit code and first reason in a table, and explained why `classify_v4_overfit` scored higher yet did not pass.",
-        "ar": "لقد شغّلتُ تمارين البوابة (gate drills) الأربعة وتمرينًا من عندي، ودوّنتُ في جدول (table) رمز الخروج (exit code) والسبب الأول (first reason) لكل تشغيل، وشرحتُ لماذا حقق `classify_v4_overfit` درجة أعلى (scored higher) ومع ذلك لم يجتز البوابة (did not pass)."
+        "ar": "لقد شغّلتُ تمارين البوابة (gate drills) الأربعة وتمرينًا من عندي، ودوّنتُ في جدول (table) رمز الخروج (exit code) والسبب الأول (first reason) لكل تشغيل، وشرحتُ لماذا حقق `classify_v4_overfit` درجة أعلى (scored higher) ومع ذلك لم يجتز البوابة."
       }
     }
   ]

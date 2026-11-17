@@ -18,7 +18,7 @@
         ],
         "ar": [
           "نعم: سطر في موجّه النظام (system prompt) يقول إن الصفحات بيانات يفصلها عن القواعد (rules) كما يفعل المعامل (parameter) في الاستعلام (query)",
-          "لا: القواعد (rules) ورسائل المستخدم (user messages) والصفحات المسترجعة (retrieved pages) تشترك في تيار نص واحد (one stream of text)، فالنموذج يقرر ما يطيعه",
+          "لا: القواعد (rules) ورسائل المستخدم (user messages) والصفحات المسترجعة (retrieved pages) تشترك في تيار نص واحد، فالنموذج يقرر ما يطيعه",
           "ليس بعد: ما زال التدريب (training) يترك ثغرات، لكن إصدارًا لاحقًا من النموذج (model release) سيزيلها، فينتظر الفريق ولا يضيف ضوابط",
           "نعم: يمنح تغليف كل صفحة بوسوم XML النموذج (model) الضمان نفسه الذي يمنحه الاستعلام ذو المعاملات (parameterised query) لقاعدة البيانات"
         ]
@@ -26,7 +26,7 @@
       "a": 1,
       "why": {
         "en": "A prompt carries rules, user messages and page text as one stream, and the model decides which to follow, so prompting and training lower the risk but never remove it; code must limit what a fooled model can do. A system prompt line or tags around pages are the tempting fixes, but they are requests and more text in the same stream, not controls.",
-        "ar": "يحمل الموجّه (prompt) القواعد (rules) ورسائل المستخدم (user messages) ونص الصفحات (page text) في تيار واحد (one stream) يقرر النموذج (model) أيها يتبع، فالتوجيه والتدريب (prompting and training) يخفضان الخطر ولا يزيلانه، ويجب أن تحدّ الشيفرة (code) مما يستطيع نموذج مخدوع (fooled model) فعله. وسطر موجّه النظام أو الوسوم (tags) حول الصفحات هما الحلان المغريان، لكنهما طلبات ونص إضافي في التيار نفسه، لا ضوابط (controls)."
+        "ar": "يحمل الموجّه (prompt) القواعد (rules) ورسائل المستخدم (user messages) ونص الصفحات (page text) في تيار واحد (one stream) يقرر النموذج (model) أيها يتبع، فالتوجيه والتدريب يخفضان الخطر ولا يزيلانه، ويجب أن تحدّ الشيفرة (code) مما يستطيع نموذج مخدوع (fooled model) فعله. وسطر موجّه النظام أو الوسوم (tags) حول الصفحات هما الحلان المغريان، لكنهما طلبات ونص إضافي في التيار نفسه، لا ضوابط (controls)."
       }
     },
     {
@@ -54,7 +54,7 @@
       "a": 3,
       "why": {
         "en": "A same-provider fallback model covers one model's retirement or overload, and a second provider is a project with its own vendor assessment and fresh eval, not a switch; where risk does not justify one, a tested degraded mode (phone and ticket routes, keyword search, hand-off) is the plan, because untested fallbacks fail on the day. The fallback model is the tempting choice, but it fails when the provider itself is down.",
-        "ar": "النموذج الاحتياطي (fallback model) من المزوّد نفسه يغطي إيقاف نموذج واحد أو ازدحامه (retirement or overload) فقط، والمزوّد الثاني (second provider) مشروع له تقييم موردين (vendor assessment) وتقييم (eval) جديد خاصان به وليس مفتاح تبديل؛ وحين لا تبرّره المخاطر تكون الخطة وضعًا متدهورًا (degraded mode) مُختبَرًا: مسارا الهاتف والتذاكر والبحث بالكلمات المفتاحية والتسليم إلى شخص (hand-off)، لأن البدائل غير المختبرة تفشل يوم الحاجة. والنموذج الاحتياطي هو الخيار المغري، لكنه يفشل حين يتعطل المزوّد نفسه."
+        "ar": "النموذج الاحتياطي (fallback model) من المزوّد نفسه يغطي إيقاف نموذج واحد أو ازدحامه فقط، والمزوّد الثاني (second provider) مشروع له تقييم موردين (vendor assessment) وتقييم (eval) جديد خاصان به وليس مفتاح تبديل؛ وحين لا تبرّره المخاطر تكون الخطة وضعًا متدهورًا (degraded mode) مُختبَرًا: مسارا الهاتف والتذاكر والبحث بالكلمات المفتاحية والتسليم إلى شخص (hand-off)، لأن البدائل غير المختبرة تفشل يوم الحاجة. والنموذج الاحتياطي هو الخيار المغري، لكنه يفشل حين يتعطل المزوّد نفسه."
       }
     },
     {
@@ -63,7 +63,7 @@
       "lesson": "13.1",
       "q": {
         "en": "A month into the pilot, Noura reads the audit log. Lujain's cautious setup asks a Service Desk agent to approve every tool call, and 99% come back as yes within about three seconds. Lujain says this shows the assistant behaves well. What is the best reading and response?",
-        "ar": "بعد شهر من التجربة التشغيلية (pilot)، تقرأ نورة سجل التدقيق (audit log). يطلب إعداد لجين الحذر (cautious setup) من موظف مكتب الخدمة (Service Desk agent) الموافقة (approve) على كل استدعاء أداة (tool call)، وتعود 99% منها بنعم خلال نحو ثلاث ثوانٍ (three seconds). تقول لجين إن هذا يدل على حسن سلوك المساعد (the assistant behaves well). ما أفضل قراءة وأفضل استجابة؟"
+        "ar": "بعد شهر من التجربة التشغيلية (pilot)، تقرأ نورة سجل التدقيق (audit log). يطلب إعداد لجين الحذر (cautious setup) من موظف مكتب الخدمة الموافقة (approve) على كل استدعاء أداة (tool call)، وتعود 99% منها بنعم خلال نحو ثلاث ثوانٍ (three seconds). تقول لجين إن هذا يدل على حسن سلوك المساعد. ما أفضل قراءة وأفضل استجابة؟"
       },
       "o": {
         "en": [
@@ -75,14 +75,14 @@
         "ar": [
           "عادة نقر آلي (click-through habit): تُطلب الموافقة للنتائج الأسوأ (worst outcomes) فقط، ويُعرض الاستدعاء الدقيق على شاشة افتراضيها «لا»",
           "علامة صحية (healthy sign): يوافق الموظفون لأن المساعد يقترح استدعاءات جيدة، فتدخل نسبة الموافقة في الحزمة دليلًا (evidence)",
-          "خطوة زائدة (needless step): بعد شهر من الموافقات بنعم تُزال من كل الأدوات (tools) ويُكتفى بطبقات البوابة الأخرى (other gate layers)",
+          "خطوة زائدة (needless step): بعد شهر من الموافقات بنعم تُزال من كل الأدوات (tools) ويُكتفى بطبقات البوابة الأخرى",
           "نقطة ضعف (weak spot): يُشترط موافق ثانٍ (second approver) على كل استدعاء، فلا تكفي نقرة سريعة واحدة من موظف لتمريره"
         ]
       },
       "a": 0,
       "why": {
         "en": "Approvals on everything train people to click yes, so near-100% approval in seconds is a finding, not a success: gate by worst outcome and build the screen from the exact call with a default of no. Reading the rate as proof of good behaviour is the tempting view, but a rate that high and that fast suggests the screen is no longer being read.",
-        "ar": "الموافقة على كل شيء (approvals on everything) تدرّب الناس على النقر بنعم، فمعدل الموافقة (approval rate) القريب من 100% خلال ثوانٍ نتيجة تستدعي المعالجة (finding) لا نجاح: تُحصر الموافقة في النتائج الأسوأ (worst outcome) وتُبنى الشاشة (screen) من الاستدعاء الدقيق (exact call) مع الافتراضي «لا» (default of no). وقراءة المعدل دليلًا على حسن السلوك (proof of good behaviour) هي المغرية، لكن معدلًا بهذا الارتفاع والسرعة يوحي بأن الشاشة لم تعد تُقرأ."
+        "ar": "الموافقة على كل شيء تدرّب الناس على النقر بنعم، فمعدل الموافقة (approval rate) القريب من 100% خلال ثوانٍ نتيجة تستدعي المعالجة (finding) لا نجاح: تُحصر الموافقة في النتائج الأسوأ (worst outcome) وتُبنى الشاشة (screen) من الاستدعاء الدقيق (exact call) مع الافتراضي «لا». وقراءة المعدل دليلًا على حسن السلوك هي المغرية، لكن معدلًا بهذا الارتفاع والسرعة يوحي بأن الشاشة لم تعد تُقرأ."
       }
     },
     {
@@ -110,7 +110,7 @@
       "a": 2,
       "why": {
         "en": "What cannot be evidenced stays TODO and goes on the risk register as an open item, which is more honest than a smooth sentence. Softening it to “rarely” is the tempting move, but it is still a claim with no evidence, only harder to test; deleting it with no record hides an unknown the risk owners should see.",
-        "ar": "ما لا يمكن إثباته بالدليل (evidence) يبقى TODO ويُدرج بندًا مفتوحًا (open item) في سجل المخاطر (risk register)، وهذا أصدق من جملة ملساء (smooth sentence). والتخفيف إلى «نادرًا» هو التصرف المغري، لكنه يظل ادعاءً بلا دليل (claim with no evidence)، أصعب في الاختبار فحسب؛ وحذفه دون تسجيل يخفي مجهولًا (unknown) ينبغي أن يراه أصحاب المخاطر (risk owners)."
+        "ar": "ما لا يمكن إثباته بالدليل (evidence) يبقى TODO ويُدرج بندًا مفتوحًا (open item) في سجل المخاطر (risk register)، وهذا أصدق من جملة ملساء (smooth sentence). والتخفيف إلى «نادرًا» هو التصرف المغري، لكنه يظل ادعاءً بلا دليل، أصعب في الاختبار فحسب؛ وحذفه دون تسجيل يخفي مجهولًا (unknown) ينبغي أن يراه أصحاب المخاطر (risk owners)."
       }
     }
   ],
@@ -120,7 +120,7 @@
       "lesson": "13.1",
       "text": {
         "en": "I have run the attack table with the guards off and on, then once per layer with `SKIP`, and written in `NOTES.md` what each layer frees and what covers the layers that free nothing.",
-        "ar": "لقد شغّلتُ جدول الهجمات (attack table) مرة والحواجز الوقائية (guards) متوقفة ومرة وهي مفعّلة، ثم مرة لكل طبقة (layer) مع `SKIP`، ودوّنتُ في `NOTES.md` ما تحرره كل طبقة (what each layer frees) وما يغطي الطبقات التي لا تحرر شيئًا (covers the layers that free nothing)."
+        "ar": "لقد شغّلتُ جدول الهجمات (attack table) مرة والحواجز الوقائية (guards) متوقفة ومرة وهي مفعّلة، ثم مرة لكل طبقة (layer) مع `SKIP`، ودوّنتُ في `NOTES.md` ما تحرره كل طبقة وما يغطي الطبقات التي لا تحرر شيئًا."
       }
     },
     {

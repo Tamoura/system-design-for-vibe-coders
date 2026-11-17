@@ -26,7 +26,7 @@
       "a": 2,
       "why": {
         "en": "A failing test built from the report proves the bug exists as you understand it, gives the agent an objective signal and later serves as the regression test. Ranked hypotheses come after it, and a patch that keeps the suite green is the tempting shortcut: a fix for a bug you have not reproduced is a guess.",
-        "ar": "يثبت الاختبار الفاشل (failing test) المبني من التقرير أن الخطأ موجود كما تفهمه، ويمنح الوكيل (agent) إشارة موضوعية (objective signal)، ثم يصير اختبار الانحدار (regression test). وتأتي الفرضيات المرتبة (ranked hypotheses) بعده، أما تعديل يُبقي المجموعة خضراء (green) فهو الاختصار المغري، لكن إصلاح خطأ لم تُعِد إنتاجه (reproduce) مجرد تخمين (a guess)."
+        "ar": "يثبت الاختبار الفاشل (failing test) المبني من التقرير أن الخطأ موجود كما تفهمه، ويمنح الوكيل (agent) إشارة موضوعية (objective signal)، ثم يصير اختبار الانحدار (regression test). وتأتي الفرضيات المرتبة (ranked hypotheses) بعده، أما تعديل يُبقي المجموعة خضراء (green) فهو الاختصار المغري، لكن إصلاح خطأ لم تُعِد إنتاجه (reproduce) مجرد تخمين."
       }
     },
     {
@@ -48,7 +48,7 @@
           "اذكر السبعة بالمعرّف (id)، وبيّن الخمسة المُحمَّلين أكثر من اللازم (overcharged) والاثنين المُحمَّلين أقل منه (undercharged).",
           "اذكر الثلاثة الذين كتبوا إلى الدعم (support) بالمعرّف (id)، وسمِّ الأربعة الآخرين «غير مؤكَّدين» (unconfirmed).",
           "اذكر الخمسة المُحمَّلين أكثر من اللازم (overcharged) بالمعرّف (id)، فالاثنان الآخران ليس لهما ما يُسترَد",
-          "اكتب رقمًا إجماليًا واحدًا (one total) هو سبعة عملاء متأثرين (affected)، لأن مها تحتاج عددًا (a count) لتلصقه في السجل."
+          "اكتب رقمًا إجماليًا واحدًا (one total) هو سبعة عملاء متأثرين (affected)، لأن مها تحتاج عددًا لتلصقه في السجل."
         ]
       },
       "a": 0,
@@ -63,7 +63,7 @@
       "lesson": "6.1",
       "q": {
         "en": "Maha hands Lujain a raw log of several thousand lines from the hour of an incident. Some lines contain customers' e-mail addresses and phone numbers, and Lujain has a log redaction filter that masks personal data and keys. She wants her agent to find the cause. What does she do?",
-        "ar": "تسلّم مها لجين سجلًا خامًا (raw log) من عدة آلاف من الأسطر عن ساعة الحادثة (incident). وبعض أسطره تحوي عناوين بريد إلكتروني (e-mail addresses) وأرقام هواتف (phone numbers) لعملاء، ولدى لجين مرشِّح حجب للسجلات (log redaction filter) يخفي البيانات الشخصية (personal data) والمفاتيح (keys). وتريد أن يجد وكيلها (agent) السبب (cause). ماذا تفعل؟"
+        "ar": "تسلّم مها لجين سجلًا خامًا (raw log) من عدة آلاف من الأسطر عن ساعة الحادثة (incident). وبعض أسطره تحوي عناوين بريد إلكتروني (e-mail addresses) وأرقام هواتف (phone numbers) لعملاء، ولدى لجين مرشِّح حجب للسجلات يخفي البيانات الشخصية (personal data) والمفاتيح (keys). وتريد أن يجد وكيلها (agent) السبب (cause). ماذا تفعل؟"
       },
       "o": {
         "en": [
@@ -74,7 +74,7 @@
         ],
         "ar": [
           "تحجب الساعة كلها بالمرشِّح (redaction filter)، وتقرأها كلها بنفسها، ثم تلصقها ليرى الوكيل (agent) السياق كاملًا.",
-          "تقتطع النافذة المهمة (window that matters)، وتحجبها بالمرشِّح (redaction filter)، ثم تقرأ الناتج (result) بنفسها.",
+          "تقتطع النافذة المهمة، وتحجبها بالمرشِّح (redaction filter)، ثم تقرأ الناتج (result) بنفسها.",
           "تشغّل المرشِّح (filter) وتلصق ناتجه دون قراءته، لأنه يخفي كل البيانات الشخصية (personal data) فعلًا.",
           "تمنح الوكيل (agent) وصولًا للقراءة فقط (read-only access) إلى مخزن السجلات (log store) ليسحب منه ما يحتاج إليه"
         ]
@@ -91,7 +91,7 @@
       "lesson": "6.2",
       "q": {
         "en": "Lujain's new test fails on today's code and passes at the repository's first commit. In the history she sees a commit that \"simplifies\" the tier lookup and deletes two tests in the same change. Her agent calls it the obvious culprit and offers to revert it. What is the sound next move?",
-        "ar": "يفشل اختبار لجين الجديد (new test) على الشيفرة الحالية (today's code) وينجح عند أول إيداع (first commit) في المستودع (repository). وفي تاريخ المستودع (history) ترى إيداعًا «يبسّط» (simplifies) البحث عن الشريحة (tier lookup) ويحذف اختبارين (two tests) في التغيير نفسه. ويصفه وكيلها (agent) بأنه المتهم الواضح (obvious culprit) ويعرض التراجع عنه (revert). ما الخطوة التالية السليمة (sound next move)؟"
+        "ar": "يفشل اختبار لجين الجديد (new test) على الشيفرة الحالية (today's code) وينجح عند أول إيداع (first commit) في المستودع (repository). وفي تاريخ المستودع (history) ترى إيداعًا «يبسّط» (simplifies) البحث عن الشريحة (tier lookup) ويحذف اختبارين (two tests) في التغيير نفسه. ويصفه وكيلها (agent) بأنه المتهم الواضح (obvious culprit) ويعرض التراجع عنه (revert). ما الخطوة التالية السليمة؟"
       },
       "o": {
         "en": [
@@ -110,7 +110,7 @@
       "a": 3,
       "why": {
         "en": "The history is a witness with a motive and the nearest suspect is not always guilty; bisecting with your own test is how you become sure. Reverting the suspicious-looking commit is the tempting move, but a plausible story is not evidence.",
-        "ar": "تاريخ المستودع (history) شاهد له دافع (a witness with a motive) والمشتبه الأقرب (nearest suspect) ليس مذنبًا دائمًا؛ وتقسيم التاريخ بـ `git bisect` باختبارك أنت هو ما يجعلك متأكدة. أما التراجع (revert) عن الإيداع (commit) الذي يبدو مريبًا فهو الحركة المغرية (tempting move)، لكن الرواية المعقولة (plausible story) ليست دليلًا (evidence)."
+        "ar": "تاريخ المستودع (history) شاهد له دافع والمشتبه الأقرب (nearest suspect) ليس مذنبًا دائمًا؛ وتقسيم التاريخ بـ `git bisect` باختبارك أنت هو ما يجعلك متأكدة. أما التراجع (revert) عن الإيداع (commit) الذي يبدو مريبًا فهو الحركة المغرية (tempting move)، لكن الرواية المعقولة (plausible story) ليست دليلًا (evidence)."
       }
     }
   ],
@@ -120,7 +120,7 @@
       "lesson": "6.1",
       "text": {
         "en": "I have checked six claims from an agent's map of `src/remit/notify.py` against the code, with a check command and a verdict for each, and marked one \"could not verify\".",
-        "ar": "لقد تحققتُ من ستة ادعاءات (claims) في خريطة (map) رسمها وكيل (agent) للملف `src/remit/notify.py` مقابل الشيفرة (code)، مع أمر فحص (check command) وحكم (verdict) لكل ادعاء، ووسمتُ أحدها «تعذّر التحقق» (could not verify)."
+        "ar": "لقد تحققتُ من ستة ادعاءات (claims) في خريطة (map) رسمها وكيل (agent) للملف `src/remit/notify.py` مقابل الشيفرة (code)، مع أمر فحص (check command) وحكم (verdict) لكل ادعاء، ووسمتُ أحدها «تعذّر التحقق»."
       }
     },
     {

@@ -26,7 +26,7 @@
       "a": 2,
       "why": {
         "en": "A refactor commit with no behaviour change can be judged by \"the tests did not change\"; the rounding change then gets its own commit and its own visible test edit. One commit with a clear message (A) is tempting because Finance agreed, but a message does not restore that check. A commit that leaves the pinned test failing (D) breaks the rule that every step leaves the tests green.",
-        "ar": "حين يخلو إيداع إعادة الهيكلة (refactoring commit) من أي تغيير في السلوك (behaviour) يستطيع المراجِع (reviewer) الحكم عليه بعبارة «الاختبارات (tests) لم تتغير»؛ ويأخذ تغيير التقريب (rounding change) إيداعه الخاص وتعديل اختباره الظاهر. أما دمج الاثنين في إيداع واحد (A) فمغرٍ (tempting) لأن المالية (Finance) وافقت، لكن الرسالة الواضحة لا تعيد هذا الفحص. وإيداع يترك الاختبار المثبَّت (pinned test) فاشلًا (D) يخرق قاعدة أن كل خطوة تترك الاختبارات خضراء (green)."
+        "ar": "حين يخلو إيداع إعادة الهيكلة (refactoring commit) من أي تغيير في السلوك (behaviour) يستطيع المراجِع (reviewer) الحكم عليه بعبارة «الاختبارات (tests) لم تتغير»؛ ويأخذ تغيير التقريب (rounding change) إيداعه الخاص وتعديل اختباره الظاهر. أما دمج الاثنين في إيداع واحد فمغرٍ (tempting) لأن المالية (Finance) وافقت، لكن الرسالة الواضحة لا تعيد هذا الفحص. وإيداع يترك الاختبار المثبَّت (pinned test) فاشلًا (D) يخرق قاعدة أن كل خطوة تترك الاختبارات خضراء (green)."
       }
     },
     {
@@ -46,7 +46,7 @@
         ],
         "ar": [
           "تراجع التعليمة (instruction)، وتقرأ الاختبارات (tests) كاملة، وتأخذ عيّنة (sample) من أخطر الملفات، وتؤتمت الباقي",
-          "تقرأ كل مقطع (hunk) من الملفات الأربعين بالترتيب (in order)، لأن مقطعًا فائتًا واحدًا يعني عيبًا (defect) فائتًا",
+          "تقرأ كل مقطع (hunk) من الملفات الأربعين بالترتيب، لأن مقطعًا فائتًا واحدًا يعني عيبًا (defect) فائتًا",
           "تشغّل الحلقة (loop) نفسها مرة ثانية مع وكيل (agent) آخر، وتوافق إن طبعت المرتان OK أربعين مرة",
           "تبحث عن الأسماء القديمة (old names)، وتتأكد أن `git diff --stat` يعرض أربعين ملفًا، وتوافق متى اخضرّت المجموعة (suite)"
         ]
@@ -63,7 +63,7 @@
       "lesson": "7.2",
       "q": {
         "en": "Before moving Remit's call sites to najmkit 2, Lujain sees that the visible suite pins one audit line, `transfer.sent`, while Remit writes three events and the fraud team's parser reads the audit files. What should she do first?",
-        "ar": "قبل نقل مواضع الاستدعاء (call sites) في نجم ريميت (Najm Remit) إلى najmkit 2، ترى لجين أن مجموعة الاختبارات الظاهرة (visible suite) تثبّت سطر تدقيق (audit line) واحدًا هو `transfer.sent`، بينما تكتب نجم ريميت ثلاثة أحداث (events) ويقرأ محلِّل فريق مكافحة الاحتيال (fraud team's parser) ملفات التدقيق. ماذا ينبغي أن تفعل أولًا؟"
+        "ar": "قبل نقل مواضع الاستدعاء (call sites) في نجم ريميت (Najm Remit) إلى najmkit 2، ترى لجين أن مجموعة الاختبارات الظاهرة (visible suite) تثبّت سطر تدقيق (audit line) واحدًا هو `transfer.sent`، بينما تكتب نجم ريميت ثلاثة أحداث (events) ويقرأ محلِّل فريق مكافحة الاحتيال ملفات التدقيق. ماذا ينبغي أن تفعل أولًا؟"
       },
       "o": {
         "en": [
@@ -82,7 +82,7 @@
       "a": 3,
       "why": {
         "en": "With the three events pinned first, \"the audit tests did not change\" becomes the migration check. Green commits (A) and warnings as errors (B) are tempting, but neither pins output: the warning flag only flags old names, not changed output, so a tidy conversion stays green wherever no test pins the line. Checking by eye afterwards (C) is a thin sample, not a net.",
-        "ar": "حين تُثبَّت الأحداث الثلاثة أولًا تصبح عبارة «اختبارات التدقيق (audit tests) لم تتغير» هي فحص الترحيل (migration check). والإيداعات الخضراء (A) والتحذيرات المعاملة كأخطاء (warnings as errors) (B) خياران مغريان، لكن أيًّا منهما لا يثبّت المخرجات (output): فالثاني يكشف الأسماء القديمة (old names) لا تغيُّر المخرجات، فيبقى التحويل «المرتَّب» (tidy conversion) أخضر حيث لا اختبار يثبّت السطر. أما الفحص بالعين لاحقًا (C) فعيّنة (sample) ضئيلة لا شبكة أمان (net)."
+        "ar": "حين تُثبَّت الأحداث الثلاثة أولًا تصبح عبارة «اختبارات التدقيق (audit tests) لم تتغير» هي فحص الترحيل (migration check). والإيداعات الخضراء والتحذيرات المعاملة كأخطاء (warnings as errors) (B) خياران مغريان، لكن أيًّا منهما لا يثبّت المخرجات (output): فالثاني يكشف الأسماء القديمة (old names) لا تغيُّر المخرجات، فيبقى التحويل «المرتَّب» (tidy conversion) أخضر حيث لا اختبار يثبّت السطر. أما الفحص بالعين لاحقًا (C) فعيّنة (sample) ضئيلة لا شبكة أمان (net)."
       }
     },
     {
@@ -110,7 +110,7 @@
       "a": 1,
       "why": {
         "en": "A missed copy is a behaviour she has not pinned, so Part 2 could change it with no test noticing, and the grader cannot tell whether a refactor changed a behaviour nobody pinned, so its hidden checks (C) are no substitute. Stopping because the misses are advisory (A) treats the required check as the goal, when the grader is a practice partner, not a gate.",
-        "ar": "النسخة التي فاتت الاختبارات هي سلوك لم تثبّته لجين، فقد يغيّره الجزء الثاني (Part 2) دون أن يلحظه اختبار، والمُقيِّم (grader) لا يعرف إن كانت إعادة الهيكلة (refactor) غيّرت سلوكًا لم يثبّته أحد، فلا تُغني فحوصه الخفية (C) عن ذلك. أما الاكتفاء لأن الفوات استشاري (A) فيجعل الفحص المطلوب (required check) هو الهدف، والمُقيِّم شريك تدريب (practice partner) لا بوابة (gate)."
+        "ar": "النسخة التي فاتت الاختبارات هي سلوك لم تثبّته لجين، فقد يغيّره الجزء الثاني (Part 2) دون أن يلحظه اختبار، والمُقيِّم (grader) لا يعرف إن كانت إعادة الهيكلة (refactor) غيّرت سلوكًا لم يثبّته أحد، فلا تُغني فحوصه الخفية (C) عن ذلك. أما الاكتفاء لأن الفوات استشاري فيجعل الفحص المطلوب (required check) هو الهدف، والمُقيِّم شريك تدريب (practice partner) لا بوابة (gate)."
       }
     }
   ],

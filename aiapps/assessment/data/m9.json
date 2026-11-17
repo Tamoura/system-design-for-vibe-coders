@@ -26,7 +26,7 @@
       "a": 2,
       "why": {
         "en": "The model is a stateless function of its messages list, so anything that seems remembered is text your code stored and put back into the request. The hidden-memory option is the tempting one, but the API keeps nothing between calls, so only your own store can carry the preference.",
-        "ar": "النموذج (model) دالة عديمة الحالة (stateless function) من قائمة رسائله (messages list)، فكل ما يبدو متذكَّرًا هو نص خزّنته شيفرتك (code) وأعادته إلى الطلب (request). والخيار D هو المغري، لكن الواجهة (API) لا تحتفظ بشيء بين الاستدعاءات (calls)، فلا يحمل التفضيل (preference) إلا مخزنك أنت (your own store)."
+        "ar": "النموذج (model) دالة عديمة الحالة (stateless function) من قائمة رسائله (messages list)، فكل ما يبدو متذكَّرًا هو نص خزّنته شيفرتك (code) وأعادته إلى الطلب (request). والخيار D هو المغري، لكن الواجهة (API) لا تحتفظ بشيء بين الاستدعاءات (calls)، فلا يحمل التفضيل (preference) إلا مخزنك أنت."
       }
     },
     {
@@ -48,13 +48,13 @@
           "إبقاء كائن حالة (state object) صغير تحدّثه الشيفرة (code) في كل خطوة وتعرضه في كل موجّه (prompt)",
           "حفظ كل خطوة ذاكرةً طويلة المدى (long-term memory) ليستدعي النموذج (model) القائمة في كل دور",
           "أن يُطلب من النموذج (model) في موجّه النظام (system prompt) أن يحتفظ بقائمة الخطوات المجرَّبة",
-          "تلخيص المحادثة (chat) باستدعاء نموذج ثانٍ (second model call) في كل دور وإرسال الملخّص وحده"
+          "تلخيص المحادثة (chat) باستدعاء نموذج ثانٍ في كل دور وإرسال الملخّص وحده"
         ]
       },
       "a": 0,
       "why": {
         "en": "A small state object that code updates after each step is cheap, testable and ready for hand-over, instead of hoping the model keeps a long task straight. Asking the model to track the list in the system prompt is the tempting shortcut, but it leaves the job to the component that lost the steps.",
-        "ar": "كائن الحالة (state object) الصغير الذي تحدّثه الشيفرة (code) بعد كل خطوة رخيص وقابل للاختبار وجاهز للتسليم (hand-over)، بدل الرجاء بأن يبقي النموذج (model) مهمة طويلة منظَّمة. وطلب تتبّع القائمة من النموذج (model) في موجّه النظام (system prompt) هو الاختصار المغري، لكنه يترك المهمة للمكوّن نفسه الذي أضاع الخطوات."
+        "ar": "كائن الحالة (state object) الصغير الذي تحدّثه الشيفرة (code) بعد كل خطوة رخيص وقابل للاختبار وجاهز للتسليم (hand-over)، بدل الرجاء بأن يبقي النموذج (model) مهمة طويلة منظَّمة. وطلب تتبّع القائمة من النموذج في موجّه النظام (system prompt) هو الاختصار المغري، لكنه يترك المهمة للمكوّن نفسه الذي أضاع الخطوات."
       }
     },
     {
@@ -63,7 +63,7 @@
       "lesson": "9.2",
       "q": {
         "en": "Mid-chat, Rayan asks Najm Desk to forget his laptop. Lujain's forget deletes the memory row and the logged turns and drops the summary, and a test reading the raw database file finds no trace. Yet two messages later the assistant names his laptop model. Why?",
-        "ar": "في منتصف المحادثة، يطلب ريان من نجم ديسك (Najm Desk) أن ينسى جهازه المحمول. يحذف `forget` عند لجين صف الذاكرة (memory row) والأدوار المسجّلة (logged turns) ويُسقط الملخّص (summary)، واختبار يقرأ ملف قاعدة البيانات الخام (raw database file) لا يجد أثرًا. لكن المساعد يذكر طراز جهازه بعد رسالتين. لماذا؟"
+        "ar": "في منتصف المحادثة، يطلب ريان من نجم ديسك (Najm Desk) أن ينسى جهازه المحمول. يحذف `forget` عند لجين صف الذاكرة (memory row) والأدوار المسجّلة (logged turns) ويُسقط الملخّص (summary)، واختبار يقرأ ملف قاعدة البيانات الخام لا يجد أثرًا. لكن المساعد يذكر طراز جهازه بعد رسالتين. لماذا؟"
       },
       "o": {
         "en": [
@@ -128,7 +128,7 @@
       "lesson": "9.2",
       "text": {
         "en": "I have stored a marker fact in my lab memory, run forget on it, and shown by reading the raw database file, not just a SELECT, that the marker is gone from the export, the summary and the file",
-        "ar": "لقد خزّنتُ معلومة علامة (marker fact) في ذاكرة مختبري (lab memory)، ونفّذتُ `forget` عليها، وأثبتُّ بقراءة ملف قاعدة البيانات الخام (raw database file)، لا بمجرد `SELECT`، أن العلامة (marker) اختفت من التصدير (export) ومن الملخّص (summary) ومن الملف"
+        "ar": "لقد خزّنتُ معلومة علامة (marker fact) في ذاكرة مختبري (lab memory)، ونفّذتُ `forget` عليها، وأثبتُّ بقراءة ملف قاعدة البيانات الخام، لا بمجرد `SELECT`، أن العلامة (marker) اختفت من التصدير (export) ومن الملخّص (summary) ومن الملف"
       }
     }
   ]

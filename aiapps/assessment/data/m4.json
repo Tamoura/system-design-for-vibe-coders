@@ -7,7 +7,7 @@
       "lesson": "4.1",
       "q": {
         "en": "Najm Desk must answer from the bank's whole knowledge base: thousands of pages for different audiences, edited every week, and every answer has to name its source. Which design fits best?",
-        "ar": "يجب أن يجيب نجم ديسك (Najm Desk) من قاعدة المعرفة (knowledge base) الكاملة للبنك: آلاف الصفحات لفئات مختلفة (different audiences)، تُحرَّر كل أسبوع (edited every week)، ويجب أن تسمّي كل إجابة مصدرها (source). أي تصميم (design) يناسب أكثر؟"
+        "ar": "يجب أن يجيب نجم ديسك (Najm Desk) من قاعدة المعرفة (knowledge base) الكاملة للبنك: آلاف الصفحات لفئات مختلفة (different audiences)، تُحرَّر كل أسبوع، ويجب أن تسمّي كل إجابة مصدرها (source). أي تصميم (design) يناسب أكثر؟"
       },
       "o": {
         "en": [
@@ -35,7 +35,7 @@
       "lesson": "4.1",
       "q": {
         "en": "Lujain splits the Service Desk how-to pages into fixed 500-character windows. For \"Who approves a high-spec laptop?\" the log shows the right page at rank 1, but its chunk begins mid-sentence and ends before the approval rule. Which change fixes this failure?",
-        "ar": "تقسّم لجين صفحات الإرشادات (how-to pages) في مكتب الخدمة (Service Desk) إلى نوافذ ثابتة (fixed windows) من 500 حرف. وعن سؤال «من يوافق على حاسوب عالي المواصفات» ⁦(Who approves a high-spec laptop?)⁩ يُظهر السجل (log) الصفحة الصحيحة في المرتبة الأولى (rank 1)، لكن مقطعها (chunk) يبدأ في منتصف جملة وينتهي قبل قاعدة الموافقة (approval rule). أي تغيير يعالج هذا الفشل؟"
+        "ar": "تقسّم لجين صفحات الإرشادات (how-to pages) في مكتب الخدمة (Service Desk) إلى نوافذ ثابتة (fixed windows) من 500 حرف. وعن سؤال «من يوافق على حاسوب عالي المواصفات» ⁦⁩ يُظهر السجل (log) الصفحة الصحيحة في المرتبة الأولى (rank 1)، لكن مقطعها (chunk) يبدأ في منتصف جملة وينتهي قبل قاعدة الموافقة (approval rule). أي تغيير يعالج هذا الفشل؟"
       },
       "o": {
         "en": [
@@ -91,7 +91,7 @@
       "lesson": "4.2",
       "q": {
         "en": "Lujain's refusal test passed on the vector retriever: \"What time does the bus leave?\" got the refusal sentence. After she switches to hybrid search, the lab's mock model answers the same question with a citation to the Service Desk hours chunk. The log shows vector search returned nothing and BM25 returned that chunk. What explains it?",
-        "ar": "نجح اختبار الرفض (refusal test) عند لجين مع المسترجِع المتجهي (vector retriever): سؤال «متى تغادر الحافلة» ⁦(What time does the bus leave?)⁩ جاء رده بجملة الرفض (refusal sentence). وبعد أن انتقلت إلى البحث الهجين (hybrid search) صار النموذج التجريبي (mock model) في المختبر يجيب عن السؤال نفسه باستشهاد (citation) من مقطع ساعات مكتب الخدمة (Service Desk hours chunk). ويُظهر السجل (log) أن البحث المتجهي لم يُرجع شيئًا وأن BM25 أرجع ذلك المقطع. ما التفسير؟"
+        "ar": "نجح اختبار الرفض (refusal test) عند لجين مع المسترجِع المتجهي (vector retriever): سؤال «متى تغادر الحافلة» ⁦⁩ جاء رده بجملة الرفض (refusal sentence). وبعد أن انتقلت إلى البحث الهجين (hybrid search) صار النموذج التجريبي (mock model) في المختبر يجيب عن السؤال نفسه باستشهاد (citation) من مقطع ساعات مكتب الخدمة. ويُظهر السجل (log) أن البحث المتجهي لم يُرجع شيئًا وأن BM25 أرجع ذلك المقطع. ما التفسير؟"
       },
       "o": {
         "en": [
@@ -128,7 +128,7 @@
       "lesson": "4.2",
       "text": {
         "en": "I have run compare.py on the ten labelled questions and recorded recall at 3 and MRR for vector, BM25 and hybrid search in NOTES.md, without editing the questions or MIN_SIM to improve the numbers.",
-        "ar": "لقد شغّلتُ `compare.py` على الأسئلة العشرة الموسومة (labelled questions)، ودوّنتُ الاستدعاء عند 3 (recall at 3) ومتوسط الرتبة التبادلية (mean reciprocal rank, MRR) للبحث المتجهي (vector search) وBM25 والبحث الهجين (hybrid search) في `NOTES.md`، من دون تعديل الأسئلة أو `MIN_SIM` لتحسين الأرقام (numbers)."
+        "ar": "لقد شغّلتُ `compare.py` على الأسئلة العشرة الموسومة (labelled questions)، ودوّنتُ الاستدعاء عند 3 (recall at 3) ومتوسط الرتبة التبادلية للبحث المتجهي (vector search) وBM25 والبحث الهجين (hybrid search) في `NOTES.md`، من دون تعديل الأسئلة أو `MIN_SIM` لتحسين الأرقام (numbers)."
       }
     }
   ]

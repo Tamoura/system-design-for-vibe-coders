@@ -7,7 +7,7 @@
    "lesson": "15.1",
    "q": {
     "en": "After a bad Sunday, Maha wants the on-call person to see exactly what changed, and Lujain suggests keeping every prompt and answer in the trace. What should the trace of each production run hold instead?",
-    "ar": "بعد يوم أحد سيئ، تريد مها أن يرى المناوب (on-call person) بالضبط ما الذي تغيّر، ويقترح لجين حفظ كل موجّه (prompt) وكل إجابة في التتبّع (trace). ما المحتوى الذي ينبغي أن يحمله تتبّع (trace) كل تشغيل (run) في الإنتاج (production) بدلًا من ذلك؟"
+    "ar": "بعد يوم أحد سيئ، تريد مها أن يرى المناوب (on-call person) بالضبط ما الذي تغيّر، ويقترح لجين حفظ كل موجّه (prompt) وكل إجابة في التتبّع (trace). ما المحتوى الذي ينبغي أن يحمله تتبّع كل تشغيل (run) في الإنتاج (production) بدلًا من ذلك؟"
    },
    "o": {
     "en": [
@@ -18,7 +18,7 @@
     ],
     "ar": [
      "النص الكامل للموجّه (prompt) والإجابة في كل دور (turn) من التشغيل، ليعيد المناوب (on-call person) تشغيل أي إخفاق (failure) كما حدث تمامًا في الإنتاج (production)",
-     "معرّف موظف مجزَّأ (hashed employee id) ونسخة مقتطعة من كل سؤال (clipped copy)، لتجميع الاتصالات المتكررة (repeat contacts) للشخص الواحد",
+     "معرّف موظف مجزَّأ ونسخة مقتطعة من كل سؤال (clipped copy)، لتجميع الاتصالات المتكررة (repeat contacts) للشخص الواحد",
      "الإصدار (release) ونسخة الموجّه (prompt version) وسبب التوقف (stop reason) والثواني وعدد الرموز (token counts) لكل تشغيل، مع أسماء الأدوات وأحجامها",
      "أحداث الأخطاء (error events) وحدها، مع نسخة كاملة من الطلب الفاشل (failing request)، لأن التشغيلات السليمة (healthy runs) لا تحتاج إلى سجل"
     ]
@@ -54,7 +54,7 @@
    "a": 0,
    "why": {
     "en": "Stopping is cheap and resuming takes judgement, so anyone on the IT on-call rota may press the file-based switch and only L2 or L3 may resume. Waiting for Maha is the tempting caution, but the loop keeps spending while the person who can already stop it waits for permission.",
-    "ar": "الإيقاف رخيص والاستئناف يحتاج إلى حكم، لذلك يستطيع أي مناوب في جدول المناوبة (IT on-call rota) ضغط المفتاح (switch) القائم على ملف (file-based)، ولا يستأنف الخدمة إلا L2 أو L3. وانتظار مها هو الحذر المغري، لكن الحلقة (loop) تواصل الإنفاق بينما ينتظر من يقدر على الإيقاف إذنًا."
+    "ar": "الإيقاف رخيص والاستئناف يحتاج إلى حكم، لذلك يستطيع أي مناوب في جدول المناوبة ضغط المفتاح (switch) القائم على ملف (file-based)، ولا يستأنف الخدمة إلا L2 أو L3. وانتظار مها هو الحذر المغري، لكن الحلقة (loop) تواصل الإنفاق بينما ينتظر من يقدر على الإيقاف إذنًا."
    }
   },
   {
@@ -63,7 +63,7 @@
    "lesson": "15.2",
    "q": {
     "en": "Fahad's team steps back from Najm Desk on Thursday. The documents are delivered and the UAT is signed, but Maha's operators have never run a model-change canary or a kill-switch drill. What should happen first?",
-    "ar": "سيبتعد فريق فهد عن نجم ديسك (Najm Desk) يوم الخميس. سُلّمت الوثائق (documents) ووُقّع اختبار قبول المستخدم (user acceptance test, UAT)، لكن مشغّلي مها (operators) لم يجروا قط إطلاقًا كناريًا (canary release) لتغيير النموذج ولا تمرين مفتاح الإيقاف (kill-switch drill). ماذا ينبغي أن يحدث أولًا؟"
+    "ar": "سيبتعد فريق فهد عن نجم ديسك (Najm Desk) يوم الخميس. سُلّمت الوثائق (documents) ووُقّع اختبار قبول المستخدم، لكن مشغّلي مها (operators) لم يجروا قط إطلاقًا كناريًا (canary release) لتغيير النموذج ولا تمرين مفتاح الإيقاف (kill-switch drill). ماذا ينبغي أن يحدث أولًا؟"
    },
    "o": {
     "en": [
@@ -74,7 +74,7 @@
     ],
     "ar": [
      "إضافة المهمتين إلى قائمة التسليم (handover checklist) بوصفهما بندين مفتوحين (open items) يُنجزهما العميل بعد رحيل البناة (builders)",
-     "إبقاء لجين مناوبًا (on call) لمساندة المشغّلين (operators) إلى أن تقع أول حادثة (incident) حقيقية، ثم تقدير كيف تصرّفوا",
+     "إبقاء لجين مناوبًا لمساندة المشغّلين (operators) إلى أن تقع أول حادثة (incident) حقيقية، ثم تقدير كيف تصرّفوا",
      "تنفيذ البناة (builders) للإطلاق الكناري (canary release) والتمرين (drill) مرة أخرى والمشغّلون (operators) يشاهدون، مع تسجيل (recording) للإعادة",
      "أن ينفّذ المشغّلون (operators) كل مهمة (task) بأنفسهم مرة واحدة، ويكتفي البناة (builders) بالمشاهدة (watching) دون أن يلمسوا شيئًا"
     ]
@@ -101,7 +101,7 @@
      "Treat it as a Minor defect: add it to the backlog, since staff can delete a stray ticket"
     ],
     "ar": [
-     "تصنيفه عيبًا رئيسيًا (Major): توقّع هند تنازلًا (waiver) باسم مالك وتاريخ (owner and date)، ويُطلَق النظام يوم الأحد",
+     "تصنيفه عيبًا رئيسيًا (Major): توقّع هند تنازلًا (waiver) باسم مالك وتاريخ، ويُطلَق النظام يوم الأحد",
      "تصنيفه حاجزًا (Blocker): لا توقيع (sign-off) حتى يُصلَح، ثم تُعاد كل الصفوف (rows) التي قد يمسّها الإصلاح",
      "تصنيفه حاجزًا (Blocker) ثم إصلاحه وإعادة الصف U-14 وحده، لأنه الصف الذي كشف العيب (defect)",
      "تصنيفه عيبًا ثانويًا (Minor): يُضاف إلى المخزون المؤجل (backlog)، لأن الموظفين يحذفون التذكرة الشاردة يدويًا"

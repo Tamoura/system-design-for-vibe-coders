@@ -26,7 +26,7 @@
    "a": 2,
    "why": {
     "en": "Every request starts from the decision it supports and the exact definitions it needs; \"a dashboard\" is a solution, not a request. Reusing an existing query is tempting, but it copies a definition that nobody has agreed or owns.",
-    "ar": "يبدأ كل طلب (request) من القرار الذي يدعمه (decision it supports) ومن التعريفات الدقيقة (exact definitions) التي يحتاجها؛ فعبارة «لوحة معلومات» (dashboard) حلٌّ (solution) وليست طلبًا. إعادة استخدام استعلام قائم (existing query) مغرية، لكنها تنسخ تعريفًا (definition) لم يتفق عليه أحد ولا يملكه أحد (nobody owns)."
+    "ar": "يبدأ كل طلب (request) من القرار الذي يدعمه ومن التعريفات الدقيقة (exact definitions) التي يحتاجها؛ فعبارة «لوحة معلومات» (dashboard) حلٌّ (solution) وليست طلبًا. إعادة استخدام استعلام قائم (existing query) مغرية، لكنها تنسخ تعريفًا (definition) لم يتفق عليه أحد ولا يملكه أحد (nobody owns)."
    }
   },
   {
@@ -54,7 +54,7 @@
    "a": 0,
    "why": {
     "en": "Reprocessing a short window of recent days and using the event's own timestamp (event time) lets late taps land on the day they happened. Counting by arrival day (processing time) stops taps being lost but puts them on the wrong day.",
-    "ar": "إعادة معالجة نافذة قصيرة من الأيام الأخيرة (short window of recent days) واستخدام الطابع الزمني للحدث نفسه (event time) يضعان النقرات المتأخرة (late taps) في اليوم الذي وقعت فيه. أما العدّ بيوم الوصول (processing time) فيمنع فقدان النقرات، لكنه يضعها في اليوم الخطأ."
+    "ar": "إعادة معالجة نافذة قصيرة من الأيام الأخيرة واستخدام الطابع الزمني للحدث نفسه (event time) يضعان النقرات المتأخرة (late taps) في اليوم الذي وقعت فيه. أما العدّ بيوم الوصول (processing time) فيمنع فقدان النقرات، لكنه يضعها في اليوم الخطأ."
    }
   },
   {
@@ -63,7 +63,7 @@
    "lesson": "0.3",
    "q": {
     "en": "Huda wants an intraday branch report, so she plans to query the core banking production database directly every 15 minutes instead of waiting for the nightly load into the raw.core_* tables. Under the onboarding pack, whose agreement does she need first?",
-    "ar": "تريد هدى تقريرًا للفروع خلال اليوم (intraday branch report)، فتخطّط للاستعلام مباشرةً من قاعدة بيانات الخدمات المصرفية الأساسية الإنتاجية (core banking production database) كل 15 دقيقة، بدلًا من انتظار التحميل الليلي (nightly load) إلى جداول raw.core_*. وفق حزمة التهيئة (onboarding pack)، موافقةُ مَن تحتاج إليها أولًا (whose agreement)؟"
+    "ar": "تريد هدى تقريرًا للفروع خلال اليوم، فتخطّط للاستعلام مباشرةً من قاعدة بيانات الخدمات المصرفية الأساسية الإنتاجية كل 15 دقيقة، بدلًا من انتظار التحميل الليلي (nightly load) إلى جداول raw.core_*. وفق حزمة التهيئة (onboarding pack)، موافقةُ مَن تحتاج إليها أولًا (whose agreement)؟"
    },
    "o": {
     "en": [
@@ -82,7 +82,7 @@
    "a": 3,
    "why": {
     "en": "Part A of the onboarding pack names Tariq as the person to ask before changing anything on the core banking database, and his standing question is whether a change will slow down production. Salem's cost concern is real but secondary to the risk of loading the system that runs the bank.",
-    "ar": "يسمّي الجزء A من حزمة التهيئة (Part A of the onboarding pack) طارق بوصفه الشخص الذي يُسأل قبل تغيير أي شيء في قاعدة بيانات الخدمات المصرفية الأساسية (core banking database)، وسؤاله الدائم هو: هل سيُبطئ التغيير بيئة الإنتاج (slow down production)؟ قلق سالم من التكلفة (cost) حقيقي، لكنه ثانوي أمام خطر إثقال النظام (loading the system) الذي يدير البنك."
+    "ar": "يسمّي الجزء A من حزمة التهيئة طارق بوصفه الشخص الذي يُسأل قبل تغيير أي شيء في قاعدة بيانات الخدمات المصرفية الأساسية (core banking database)، وسؤاله الدائم هو: هل سيُبطئ التغيير بيئة الإنتاج؟ قلق سالم من التكلفة (cost) حقيقي، لكنه ثانوي أمام خطر إثقال النظام الذي يدير البنك."
    }
   },
   {
@@ -91,7 +91,7 @@
    "lesson": "0.1",
    "q": {
     "en": "Dana's Smart Alerts prototype performed very well in her notebook on a carefully cleaned extract. From its first day in production, fed by the live pipeline with identical model code, its alerts are clearly worse. What is the most likely diagnosis?",
-    "ar": "حقّق النموذج الأولي (prototype) لنظام التنبيهات الذكية (Smart Alerts) الذي بنته دانة أداءً ممتازًا في دفتر الملاحظات (notebook) على مستخلص منظَّف بعناية (carefully cleaned extract). ومنذ يومه الأول في الإنتاج (production)، حين صار خط البيانات الحي (live pipeline) يغذّيه بشيفرة النموذج نفسها (identical model code)، صارت تنبيهاته أسوأ بوضوح. ما التشخيص (diagnosis) الأرجح؟"
+    "ar": "حقّق النموذج الأولي (prototype) لنظام التنبيهات الذكية (Smart Alerts) الذي بنته دانة أداءً ممتازًا في دفتر الملاحظات (notebook) على مستخلص منظَّف بعناية. ومنذ يومه الأول في الإنتاج (production)، حين صار خط البيانات الحي (live pipeline) يغذّيه بشيفرة النموذج نفسها، صارت تنبيهاته أسوأ بوضوح. ما التشخيص (diagnosis) الأرجح؟"
    },
    "o": {
     "en": [
@@ -110,7 +110,7 @@
    "a": 1,
    "why": {
     "en": "The lesson describes exactly this break: a model trained on a cleaned extract is fed slightly different data by the production pipeline, at the data scientist to ML engineer hand-off. Drift is tempting, but worse results from day one with unchanged code point to mismatched inputs, not a changed world.",
-    "ar": "يصف الدرس هذا الانكسار تحديدًا: نموذج دُرِّب على مستخلص منظَّف (cleaned extract) ثم غذّاه خط الإنتاج (production pipeline) ببيانات مختلفة قليلًا، عند التسليم من عالم البيانات إلى مهندس تعلّم الآلة (data scientist to ML engineer hand-off). الانجراف (drift) مغرٍ، لكن تراجع النتائج منذ اليوم الأول مع شيفرة لم تتغيّر يشير إلى عدم تطابق المدخلات (mismatched inputs) لا إلى تغيّر العالم."
+    "ar": "يصف الدرس هذا الانكسار تحديدًا: نموذج دُرِّب على مستخلص منظَّف (cleaned extract) ثم غذّاه خط الإنتاج (production pipeline) ببيانات مختلفة قليلًا، عند التسليم من عالم البيانات إلى مهندس تعلّم الآلة. الانجراف (drift) مغرٍ، لكن تراجع النتائج منذ اليوم الأول مع شيفرة لم تتغيّر يشير إلى عدم تطابق المدخلات (mismatched inputs) لا إلى تغيّر العالم."
    }
   }
  ],

@@ -45,10 +45,10 @@
           "Run the tests on the real code, then on a copy with the rule changed, where they must fail"
         ],
         "ar": [
-          "اشتراط أربع دوال اختبار جديدة على الأقل (at least four new test functions) في ملف الاختبار، فلا يمرّ ملف فارغ (empty file)",
-          "إضافة حارس (guard) يشغّل مجموعة الاختبارات (test suite) القائمة كلها قبل عمل الأداة (tool) وبعده (before and after) في كل مرة",
+          "اشتراط أربع دوال اختبار جديدة على الأقل في ملف الاختبار، فلا يمرّ ملف فارغ (empty file)",
+          "إضافة حارس (guard) يشغّل مجموعة الاختبارات (test suite) القائمة كلها قبل عمل الأداة (tool) وبعده في كل مرة",
           "تشغيل اختبارات الأداة (tool) ثلاث مرات (three times)، واعتبار المهمة ناجحة (passed) فقط إذا نجحت كل مرة منها بلا استثناء",
-          "تشغيل الاختبارات على الشيفرة الحقيقية (real code)، ثم على نسخة غُيّرت قاعدتها (copy with a changed rule) فيجب أن تفشل"
+          "تشغيل الاختبارات على الشيفرة الحقيقية (real code)، ثم على نسخة غُيّرت قاعدتها فيجب أن تفشل"
         ]
       },
       "a": 3,
@@ -73,7 +73,7 @@
           "Read the diff a second time with the ticket beside her, and tick off each change she can tie to a requirement"
         ],
         "ar": [
-          "أن تغلق الفروقات (diff)، وتشرح كل سطر تغيّر (changed line) من الذاكرة (from memory) كتابةً، ثم تفتحها وتقارن (compare)",
+          "أن تغلق الفروقات (diff)، وتشرح كل سطر تغيّر (changed line) من الذاكرة كتابةً، ثم تفتحها وتقارن (compare)",
           "أن تكتب توقعًا (prediction) بأن الاختبارات ستنجح وبالزمن الذي سيستغرقه ذلك، ثم تشغّلها وتسجّل النتيجة (outcome)",
           "أن تطلب من ندى، المراجِعة الثانية (second reviewer) لمنطق الأموال، أن تمرّ على الفروقات (diff) وتقول ما كانت ستسأل عنه",
           "أن تقرأ الفروقات (diff) مرة ثانية والتذكرة (ticket) بجانبها، وتضع علامة على كل تغيير تربطه بمتطلب (requirement)"
@@ -82,7 +82,7 @@
       "a": 0,
       "why": {
         "en": "Explain-back makes her produce the explanation from memory before the diff can prompt it, so it shows what she does not follow. Re-reading the diff against the ticket, the tempting choice, only recognises what is already on the page. A prediction log calibrates trust in outcomes over many entries, and a second reviewer tests Nada's reading, not hers.",
-        "ar": "يجبرها الشرح العكسي (explain-back) على إنتاج الشرح من الذاكرة (from memory) قبل أن تذكّرها الفروقات (diff) به، فيكشف ما لا تفهمه. أما إعادة قراءة الفروقات مع التذكرة، وهي الخيار المغري (tempting choice)، فلا تتيح إلا التعرّف على ما هو مكتوب أمامها (recognising what is on the page). وسجل التوقعات (calibration log) يعايِر الثقة بالنتائج على مدى إدخالات كثيرة، والمراجِعة الثانية تختبر قراءة ندى لا قراءتها هي."
+        "ar": "يجبرها الشرح العكسي (explain-back) على إنتاج الشرح من الذاكرة قبل أن تذكّرها الفروقات (diff) به، فيكشف ما لا تفهمه. أما إعادة قراءة الفروقات مع التذكرة، وهي الخيار المغري (tempting choice)، فلا تتيح إلا التعرّف على ما هو مكتوب أمامها. وسجل التوقعات (calibration log) يعايِر الثقة بالنتائج على مدى إدخالات كثيرة، والمراجِعة الثانية تختبر قراءة ندى لا قراءتها هي."
       }
     },
     {
@@ -101,8 +101,8 @@
           "Run `baseline` again, since an error like that usually comes from a busy machine, not the check"
         ],
         "ar": [
-          "أن تقبله، فالفشل على المستودع الأصلي (untouched repository) هو الخاصية التي وُجد `baseline` ليثبتها (to prove)",
-          "أن تصلح الانهيار (crash) وتشغّل الفحص (check) يدويًا (by hand) حتى يفشل لأن السلوك (behaviour) ناقص فعلًا",
+          "أن تقبله، فالفشل على المستودع الأصلي (untouched repository) هو الخاصية التي وُجد `baseline` ليثبتها",
+          "أن تصلح الانهيار (crash) وتشغّل الفحص (check) يدويًا حتى يفشل لأن السلوك (behaviour) ناقص فعلًا",
           "أن تضيف حارسًا (guard) إلى T04، ليلتقط الحارس ما يعجز الفحص المنهار (crashing check) عن رؤيته (see)",
           "أن تعيد تشغيل `baseline`، فخطأ كهذا يأتي عادة من جهاز مشغول (busy machine) لا من الفحص (check)"
         ]
@@ -110,7 +110,7 @@
       "a": 1,
       "why": {
         "en": "A check that crashes on a bug of its own also fails on the untouched repository, so its failure says nothing about the task; she must fix it and see it fail because the behaviour is missing. Accepting the failure is tempting because a failure is what `baseline` should show, but the reason is what counts.",
-        "ar": "الفحص (check) الذي ينهار (crashes) بسبب خطأ فيه هو نفسه يفشل على المستودع الأصلي (untouched repository)، فلا يقول فشله شيئًا عن المهمة (task)؛ فعليها إصلاحه حتى يفشل لأن السلوك (behaviour) ناقص. وقبول الفشل مغرٍ (tempting) لأن الفشل هو ما ينبغي أن يظهره `baseline`، لكن السبب (the reason) هو المهم."
+        "ar": "الفحص (check) الذي ينهار (crashes) بسبب خطأ فيه هو نفسه يفشل على المستودع الأصلي (untouched repository)، فلا يقول فشله شيئًا عن المهمة (task)؛ فعليها إصلاحه حتى يفشل لأن السلوك (behaviour) ناقص. وقبول الفشل مغرٍ (tempting) لأن الفشل هو ما ينبغي أن يظهره `baseline`، لكن السبب هو المهم."
       }
     }
   ],

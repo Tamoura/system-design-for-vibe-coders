@@ -63,7 +63,7 @@
    "lesson": "5.2",
    "q": {
     "en": "Lujain's pipeline fact-checks a policy-change notice for Hind in parallel. Of its five claims, three come back supported, one unsupported, and one check misses its deadline. What status does gate 3 give the notice?",
-    "ar": "يتحقق خط الأنابيب (pipeline) الذي بنته لجين من ادعاءات (claims) إشعار تغيير سياسة (policy-change notice) لصالح هند بالتوازي (in parallel). من بين ادعاءاته الخمسة، ثلاثة تعود مدعومة (supported)، وواحد غير مدعوم (unsupported)، وفحص واحد يتجاوز مهلته (deadline). أي حالة (status) تمنحها البوابة الثالثة (gate 3) للإشعار؟"
+    "ar": "يتحقق خط الأنابيب (pipeline) الذي بنته لجين من ادعاءات (claims) إشعار تغيير سياسة (policy-change notice) لصالح هند بالتوازي. من بين ادعاءاته الخمسة، ثلاثة تعود مدعومة (supported)، وواحد غير مدعوم (unsupported)، وفحص واحد يتجاوز مهلته (deadline). أي حالة (status) تمنحها البوابة الثالثة (gate 3) للإشعار؟"
    },
    "o": {
     "en": [
@@ -102,7 +102,7 @@
     ],
     "ar": [
      "اجعل خطوة التلخيص (summarise step) تعيد فحص ادعاءاتها (claims) بنفسها ليلتقط الكاتب ما فاته المدقق",
-     "انتقل إلى موجّه واحد كبير (one big prompt)، لأن فحوص الأنابيب لم توقف ادعاءً مختلَقًا (invented claim)",
+     "انتقل إلى موجّه واحد كبير، لأن فحوص الأنابيب لم توقف ادعاءً مختلَقًا (invented claim)",
      "أبقِ الفحصين (checks)، واحفظ الإشعار حالة فاشلة (failing case)، وخذ عيّنات من إشعارات `ok` يدويًا",
      "اعتبرها حالة معزولة (one-off)، لأن فحصين آليين (automatic checks) نجحا وخط الأنابيب يعمل"
     ]
@@ -120,7 +120,7 @@
    "lesson": "5.1",
    "text": {
     "en": "I have costed my Najm Desk triage workflow card against a six-iteration agent loop, with token counts from `count_tokens`, in a table of calls, tokens, cost and time, and named the assumption that would flip the answer.",
-    "ar": "لقد حسبتُ تكلفة بطاقة سير العمل (workflow card) لفرز نجم ديسك (Najm Desk triage) مقابل حلقة وكيل (agent loop) من ست تكرارات (six iterations)، بأعداد رموز (token counts) من `count_tokens`، في جدول يبيّن الاستدعاءات (calls) والرموز (tokens) والتكلفة (cost) والزمن (time)، وسمّيتُ الافتراض (assumption) الذي قد يقلب الإجابة."
+    "ar": "لقد حسبتُ تكلفة بطاقة سير العمل (workflow card) لفرز نجم ديسك مقابل حلقة وكيل (agent loop) من ست تكرارات (six iterations)، بأعداد رموز (token counts) من `count_tokens`، في جدول يبيّن الاستدعاءات (calls) والرموز (tokens) والتكلفة (cost) والزمن (time)، وسمّيتُ الافتراض (assumption) الذي قد يقلب الإجابة."
    }
   },
   {

@@ -7,7 +7,7 @@
       "lesson": "2.1",
       "q": {
         "en": "In the Najm Desk pilot, a staff member asks whether a work laptop may be taken to a conference abroad. The policy documents say nothing about it, yet the assistant answers with a confident rule it invented. Its whole prompt is: \"You are a helpful IT assistant. Answer questions about IT policy.\" What is the best fix?",
-        "ar": "في التجربة التشغيلية (pilot) لنجم ديسك (Najm Desk)، سأل موظف (staff member) هل يجوز اصطحاب حاسوب العمل المحمول (work laptop) إلى مؤتمر في الخارج. وثائق السياسة (policy documents) لا تقول شيئًا عن ذلك، ومع ذلك أجاب المساعد بقاعدة واثقة اخترعها (invented rule). وكل ما في موجّه النظام (system prompt) عنده هو: «أنت مساعد تقنية معلومات مفيد، أجب عن أسئلة سياسة تقنية المعلومات» ⁦(You are a helpful IT assistant. Answer questions about IT policy.)⁩ ما أفضل إصلاح (best fix)؟"
+        "ar": "في التجربة التشغيلية (pilot) لنجم ديسك (Najm Desk)، سأل موظف (staff member) هل يجوز اصطحاب حاسوب العمل المحمول (work laptop) إلى مؤتمر في الخارج. وثائق السياسة (policy documents) لا تقول شيئًا عن ذلك، ومع ذلك أجاب المساعد بقاعدة واثقة اخترعها (invented rule). وكل ما في موجّه النظام (system prompt) عنده هو: «أنت مساعد تقنية معلومات مفيد، أجب عن أسئلة سياسة تقنية المعلومات» ⁦⁩ ما أفضل إصلاح (best fix)؟"
       },
       "o": {
         "en": [
@@ -26,7 +26,7 @@
       "a": 1,
       "why": {
         "en": "A prompt is a specification and the model guesses whatever it leaves out: here the source of truth and what to do when it cannot answer. Shouted emphasis is the tempting shortcut, but it gives the model no testable rule and no allowed way to say \"I do not know\".",
-        "ar": "الموجّه (prompt) مواصفة (specification)، وكل ما يُغفَل منها يخمّنه النموذج (model): هنا مصدر الحقيقة (source of truth) وما يفعله حين لا يستطيع الإجابة. والتأكيد الصارخ (shouted emphasis) هو الاختصار المغري (tempting shortcut)، لكنه لا يمنح النموذج (model) قاعدة قابلة للاختبار (testable rule) ولا طريقة مسموحة ليقول «لا أعرف» (I do not know)."
+        "ar": "الموجّه (prompt) مواصفة (specification)، وكل ما يُغفَل منها يخمّنه النموذج (model): هنا مصدر الحقيقة (source of truth) وما يفعله حين لا يستطيع الإجابة. والتأكيد الصارخ (shouted emphasis) هو الاختصار المغري (tempting shortcut)، لكنه لا يمنح النموذج قاعدة قابلة للاختبار (testable rule) ولا طريقة مسموحة ليقول «لا أعرف» (I do not know)."
       }
     },
     {
@@ -46,7 +46,7 @@
         ],
         "ar": [
           "أبلغ بنسبة 100%، فالمجموعة المحجوزة (held-out set) هي المعتمدة في القرار، وقد ربح الإصدار الجديد (new version) تذكرتين",
-          "أعد تقسيم التذاكر الثلاثين نفسها عشوائيًا (random re-split)، وأبلغ بنتيجة الإصدار الجديد على المجموعة المحجوزة الجديدة (new held-out set)",
+          "أعد تقسيم التذاكر الثلاثين نفسها عشوائيًا (random re-split)، وأبلغ بنتيجة الإصدار الجديد على المجموعة المحجوزة الجديدة",
           "أعد تشغيل المجموعة المحجوزة (held-out set) بالخيار `--reps 3` للتأكد من أن 100% نتيجة مستقرة (stable)",
           "اعتبر المجموعة المحجوزة (held-out set) القديمة مجموعة تطوير (dev set)، وقيّم الإصدار الجديد على عشر تذاكر جديدة (fresh tickets)"
         ]
@@ -54,7 +54,7 @@
       "a": 3,
       "why": {
         "en": "Once the held-out misses shaped the prompt, that set became dev, so its 100% shows memory, not skill; a decision needs tickets nobody has tuned on. A is the tempting error: held-out counts only while nobody tunes on it, and a random re-split of the same 30 tickets, which the prompt has already been tuned on, would not restore that.",
-        "ar": "حين شكّلت إخفاقات المجموعة المحجوزة (held-out set) الموجّه (prompt) صارت تلك المجموعة مجموعة تطوير (dev set)، فتدل نسبة 100% على الحفظ (memory) لا على المهارة؛ والقرار يحتاج إلى تذاكر لم يضبط عليها أحد الموجّه. والخيار A هو الخطأ المغري (tempting error): فالمجموعة المحجوزة لا قيمة لها إلا ما دام لا يُضبط عليها، وإعادة التقسيم العشوائي (random re-split) للتذاكر الثلاثين نفسها، وقد ضُبط الموجّه (prompt) عليها بالفعل، لا تعيد لها ذلك."
+        "ar": "حين شكّلت إخفاقات المجموعة المحجوزة (held-out set) الموجّه (prompt) صارت تلك المجموعة مجموعة تطوير (dev set)، فتدل نسبة 100% على الحفظ (memory) لا على المهارة؛ والقرار يحتاج إلى تذاكر لم يضبط عليها أحد الموجّه. والخيار A هو الخطأ المغري (tempting error): فالمجموعة المحجوزة لا قيمة لها إلا ما دام لا يُضبط عليها، وإعادة التقسيم العشوائي (random re-split) للتذاكر الثلاثين نفسها، وقد ضُبط الموجّه عليها بالفعل، لا تعيد لها ذلك."
       }
     },
     {
@@ -75,7 +75,7 @@
         "ar": [
           "أن نص موجّه النظام (system prompt) كان واحدًا في اليومين، فليس تعديله هو السبب (cause)",
           "أن النص ربما تغيّر مع ذلك، لأن الإصدار (version) لا يسجّل سوى اسم الملف (file name) لا محتواه",
-          "لا شيء يُعتمد عليه، لأن الإصدار (version) وسم يكتبه الناس يدويًا (typed by hand) وقد يتأخر عن النص",
+          "لا شيء يُعتمد عليه، لأن الإصدار (version) وسم يكتبه الناس يدويًا وقد يتأخر عن النص",
           "أن تقرير يارا خاطئ، لأن الإصدار الواحد للموجّه (prompt version) يعطي الإجابات نفسها (same answers) دائمًا"
         ]
       },
@@ -101,7 +101,7 @@
           "Merge it once the provider's published benchmarks show the cheaper tier suits classification"
         ],
         "ar": [
-          "ادمجه كما هو (as it stands)، لأن `PROMPT_VERSION` لم يتغير ولا يتغير السلوك (behaviour) معه عمليًا أبدًا",
+          "ادمجه كما هو، لأن `PROMPT_VERSION` لم يتغير ولا يتغير السلوك (behaviour) معه عمليًا أبدًا",
           "ادمجه ثم دع أسبوعًا من ملاحظات الموظفين (staff feedback) في التجربة التشغيلية (pilot) يبيّن كفايته للعمل",
           "ادمجه متى نجحت بوابة التقييم (eval gate) على النموذج (model) الجديد، واجعل تغييرات `MODEL` تشغّلها",
           "ادمجه متى أظهرت المقاييس المنشورة (published benchmarks) أن الفئة الأرخص (cheaper tier) تناسب التصنيف (classification)"
@@ -128,7 +128,7 @@
       "lesson": "2.2",
       "text": {
         "en": "I have run classify_v1, classify_v2, classify_v3 and classify_v4_overfit on both the dev and held-out splits, compared v2 with v3 ticket by ticket, recorded the results table in NOTES.md, and seen the gate fail for v2 and pass for v3",
-        "ar": "شغّلتُ `classify_v1` و`classify_v2` و`classify_v3` و`classify_v4_overfit` على مجموعتي التطوير (dev) والمحجوزة (held-out)، وقارنتُ v2 بـ v3 تذكرةً تذكرة (ticket by ticket)، ودوّنتُ جدول النتائج (results table) في `NOTES.md`، ورأيتُ بوابة التقييم (eval gate) تفشل مع v2 وتنجح مع v3"
+        "ar": "شغّلتُ `classify_v1` و`classify_v2` و`classify_v3` و`classify_v4_overfit` على مجموعتي التطوير (dev) والمحجوزة (held-out)، وقارنتُ v2 بـ v3 تذكرةً تذكرة، ودوّنتُ جدول النتائج (results table) في `NOTES.md`، ورأيتُ بوابة التقييم (eval gate) تفشل مع v2 وتنجح مع v3"
       }
     }
   ]

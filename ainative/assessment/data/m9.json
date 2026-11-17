@@ -7,7 +7,7 @@
       "lesson": "9.1",
       "q": {
         "en": "Since Salem's `/review-change` command went live at Najm Bank, Lujain reviews pull requests by running it and approving what it reports. Tariq reminds the team of habit 5, Automate the loop, keep the skill. What does he ask her to do?",
-        "ar": "منذ بدأ العمل بالأمر (command) `/review-change` الذي كتبه سالم في بنك نجم (Najm Bank)، صارت لجين تراجع طلبات الدمج (pull requests) بتشغيله وتوافق على ما يبلغ عنه. يذكّر طارق الفريق بالعادة الخامسة (habit 5): «أتمت الحلقة وحافظ على المهارة» (Automate the loop, keep the skill). ماذا يطلب منها؟"
+        "ar": "منذ بدأ العمل بالأمر (command) `/review-change` الذي كتبه سالم في بنك نجم (Najm Bank)، صارت لجين تراجع طلبات الدمج (pull requests) بتشغيله وتوافق على ما يبلغ عنه. يذكّر طارق الفريق بالعادة الخامسة (habit 5): «أتمت الحلقة وحافظ على المهارة». ماذا يطلب منها؟"
       },
       "o": {
         "en": [
@@ -26,7 +26,7 @@
       "a": 3,
       "why": {
         "en": "Habit 5 means automating the check and keeping the skill: reviewing one pull request a sprint without the command shows what she could not have found, and that is a gap to practise. Retiring the command is the tempting answer, but it throws away a check that works and does not build the skill; reading every diff as well undoes the automation, and a second agent adds trust, not skill.",
-        "ar": "تعني العادة الخامسة (habit 5) أتمتة الفحص (automate the check) مع الاحتفاظ بالمهارة (keep the skill): فمراجعة طلب دمج (pull request) واحد كل دورة عمل (sprint) دون الأمر (command) تكشف ما كانت عاجزة عن اكتشافه، وهذه فجوة (gap) تتدرب عليها. وإيقاف الأمر هو الجواب المغري (tempting answer)، لكنه يهدر فحصًا يعمل جيدًا ولا يبني المهارة؛ وقراءة كل فرق (diff) إضافية تلغي الأتمتة (automation)، ووكيل (agent) ثانٍ يزيد الثقة لا المهارة."
+        "ar": "تعني العادة الخامسة (habit 5) أتمتة الفحص مع الاحتفاظ بالمهارة: فمراجعة طلب دمج (pull request) واحد كل دورة عمل (sprint) دون الأمر (command) تكشف ما كانت عاجزة عن اكتشافه، وهذه فجوة (gap) تتدرب عليها. وإيقاف الأمر هو الجواب المغري (tempting answer)، لكنه يهدر فحصًا يعمل جيدًا ولا يبني المهارة؛ وقراءة كل فرق (diff) إضافية تلغي الأتمتة (automation)، ووكيل (agent) ثانٍ يزيد الثقة لا المهارة."
       }
     },
     {
@@ -82,7 +82,7 @@
       "a": 0,
       "why": {
         "en": "`tools` is an allowlist, so a reviewer that lists only `Read`, `Grep` and `Glob` has no way to write; the sentence in the body is a request on top of that. Adding `Bash` is the tempting convenience, but a shell can write; a denylist of `Edit` and `Write` leaves `Bash` and every other tool available; and a promise in the body does not remove a tool.",
-        "ar": "`tools` قائمة سماح (allowlist)، فالمراجع الذي لا تضم قائمته إلا `Read` و`Grep` و`Glob` لا يملك أي طريقة للكتابة؛ أما الجملة في المتن (body) فطلب إضافي فوق ذلك. وإضافة `Bash` هي الراحة المغرية (tempting convenience)، لكن الصدفة (shell) تستطيع الكتابة؛ وقائمة المنع (denylist) لـ `Edit` و`Write` تُبقي `Bash` وكل أداة أخرى متاحة؛ والوعد في المتن (body) لا يزيل أداة (tool)."
+        "ar": "`tools` قائمة سماح (allowlist)، فالمراجع الذي لا تضم قائمته إلا `Read` و`Grep` و`Glob` لا يملك أي طريقة للكتابة؛ أما الجملة في المتن (body) فطلب إضافي فوق ذلك. وإضافة `Bash` هي الراحة المغرية (tempting convenience)، لكن الصدفة (shell) تستطيع الكتابة؛ وقائمة المنع (denylist) لـ `Edit` و`Write` تُبقي `Bash` وكل أداة أخرى متاحة؛ والوعد في المتن لا يزيل أداة (tool)."
       }
     },
     {
@@ -120,7 +120,7 @@
       "lesson": "9.1",
       "text": {
         "en": "I have filled in three automation decision cards with all eight answers and a decision each, and at least one ends in keep manual or semi-automate for a reason a colleague accepted.",
-        "ar": "لقد ملأتُ ثلاث بطاقات قرار الأتمتة (automation decision cards) بالإجابات الثماني (eight answers) وبقرار (decision) لكل منها، وانتهت واحدة على الأقل بـ «إبقاء يدوي» (keep manual) أو «أتمتة جزئية» (semi-automate) لسبب قبله زميل (colleague)."
+        "ar": "لقد ملأتُ ثلاث بطاقات قرار الأتمتة بالإجابات الثماني (eight answers) وبقرار (decision) لكل منها، وانتهت واحدة على الأقل بـ «إبقاء يدوي» (keep manual) أو «أتمتة جزئية» (semi-automate) لسبب قبله زميل (colleague)."
       }
     },
     {

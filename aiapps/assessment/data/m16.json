@@ -7,7 +7,7 @@
       "lesson": "16.1",
       "q": {
         "en": "Lujain finishes the draft specification (M2) and shows it to Yara in the corridor. Yara glances at it and says, \"Looks fine, carry on.\" What should Fahad ask for before M3 starts?",
-        "ar": "أنهت لجين مسودة المواصفة (draft specification) للمرحلة (milestone) M2 وعرضتها على يارا في الممر (corridor). نظرت يارا إليها سريعًا وقالت: «تبدو جيدة، تابعوا» (Looks fine, carry on). ماذا ينبغي أن يطلب فهد قبل أن تبدأ المرحلة M3؟"
+        "ar": "أنهت لجين مسودة المواصفة (draft specification) للمرحلة (milestone) M2 وعرضتها على يارا في الممر (corridor). نظرت يارا إليها سريعًا وقالت: «تبدو جيدة، تابعوا». ماذا ينبغي أن يطلب فهد قبل أن تبدأ المرحلة M3؟"
       },
       "o": {
         "en": [
@@ -18,7 +18,7 @@
         ],
         "ar": [
           "تدوين إيماءة يارا الشفهية (spoken nod) في سجل تغييرات المواصفة (change log)، لأنها خبيرة المجال (domain expert) في المكتب",
-          "إرسال المواصفة (spec) إلى جميع أفراد فريقها واعتبار الصمت حتى الجمعة (silence until Friday) إجابةً من المالك (owner)",
+          "إرسال المواصفة (spec) إلى جميع أفراد فريقها واعتبار الصمت حتى الجمعة إجابةً من المالك (owner)",
           "إجابة يارا المكتوبة (written answer) عن سؤال البوابة (gate question)، تسمّي بالمعرّف (id) ما لن يتعرّف عليه فريقها",
           "فحص آلي يثبت أن كل حالة بذرة (seed) تذكر معرّفًا لمتطلب (requirement id)، ويُقبل بدلًا من إجابة يارا نفسها"
         ]
@@ -45,16 +45,16 @@
           "A pass rate from a longer mock run of 150 cases, so that the figure rests on a larger sample"
         ],
         "ar": [
-          "الرقم 49 من 50 بوصفه دقة نجم ديسك (Najm Desk accuracy)، لأن النسخة المحاكاة (mock) تعيد الحالات الخمسين نفسها التي سيستخدمها التشغيل الحقيقي",
+          "الرقم 49 من 50 بوصفه دقة نجم ديسك، لأن النسخة المحاكاة (mock) تعيد الحالات الخمسين نفسها التي سيستخدمها التشغيل الحقيقي",
           "الرقم 49 من 50 موسومًا بأنه محاكاة (mock) ودليلًا على أن أداة التشغيل (harness) تعمل، ولا تُدّعى الجودة إلا بعد تشغيل حقيقي (real run)",
-          "الرقم 49 من 50 حدًّا أدنى للدقة (floor for accuracy)، لأن قواعد النسخة المحاكاة (mock) أشد من إجابات نموذج حي (live model)",
+          "الرقم 49 من 50 حدًّا أدنى للدقة، لأن قواعد النسخة المحاكاة (mock) أشد من إجابات نموذج حي (live model)",
           "نسبة نجاح (pass rate) من تشغيل محاكى أطول يضم 150 حالة، ليستند الرقم إلى عيّنة أكبر (larger sample)"
         ]
       },
       "a": 1,
       "why": {
         "en": "The mock replays mechanics, not quality: it passes what its rules allow, so its table shows only that the harness runs. A bigger mock sample is the tempting fix, but more of the same rules still does not measure Najm Desk.",
-        "ar": "تحاكي النسخة المحاكاة (mock) الآليات (mechanics) لا الجودة (quality)؛ فهي تُنجح ما تسمح به قواعدها، فلا يثبت جدولها إلا أن أداة التشغيل (harness) تعمل. وعيّنة محاكاة أكبر (bigger mock sample) هي الحل المغري، لكن المزيد من القواعد نفسها لا يقيس نجم ديسك (Najm Desk)."
+        "ar": "تحاكي النسخة المحاكاة (mock) الآليات (mechanics) لا الجودة (quality)؛ فهي تُنجح ما تسمح به قواعدها، فلا يثبت جدولها إلا أن أداة التشغيل (harness) تعمل. وعيّنة محاكاة أكبر هي الحل المغري، لكن المزيد من القواعد نفسها لا يقيس نجم ديسك (Najm Desk)."
       }
     },
     {
@@ -91,7 +91,7 @@
       "lesson": "16.1",
       "q": {
         "en": "At the go/no-go meeting, two items are open: the M7 cost sheet (Maha answers that gate) quotes an old price page, and Sara has not yet signed her governance pack row. Hind leans towards go with written conditions. Fahad, who chairs, will put only one of these four proposed conditions into docs/go-no-go.md. Which one?",
-        "ar": "في اجتماع قرار الإطلاق (go/no-go meeting) بقي بندان مفتوحان: ورقة التكلفة (cost sheet) للمرحلة M7 (تجيب مها عن بوابتها) ما زالت تستند إلى صفحة أسعار قديمة (old price page)، ولم توقّع سارة بعد سطرها في حزمة الحوكمة (governance pack). تميل هند إلى المضي (go) بشروط مكتوبة (written conditions). لن يدرج فهد، الذي يترأس الاجتماع، في docs/go-no-go.md إلا شرطًا واحدًا من هذه الشروط الأربعة المقترحة. أيّها؟"
+        "ar": "في اجتماع قرار الإطلاق (go/no-go meeting) بقي بندان مفتوحان: ورقة التكلفة (cost sheet) للمرحلة M7 (تجيب مها عن بوابتها) ما زالت تستند إلى صفحة أسعار قديمة، ولم توقّع سارة بعد سطرها في حزمة الحوكمة (governance pack). تميل هند إلى المضي (go) بشروط مكتوبة (written conditions). لن يدرج فهد، الذي يترأس الاجتماع، في docs/go-no-go.md إلا شرطًا واحدًا من هذه الشروط الأربعة المقترحة. أيّها؟"
       },
       "o": {
         "en": [

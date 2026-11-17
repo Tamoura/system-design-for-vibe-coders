@@ -7,7 +7,7 @@
    "lesson": "4.1",
    "q": {
     "en": "Maha's load test at the expected payday peak passed, with p95, p99 and errors all inside the SLO. Rashid now asks a different question: how much more traffic can Transfers take, and what gives out first? Which test answers it?",
-    "ar": "اجتاز اختبار الحِمل (load test) الذي أجرته مها عند ذروة يوم الراتب المتوقعة (expected payday peak) وكانت النسب المئوية (percentiles) p95 وp99 والأخطاء (errors) كلها ضمن هدف مستوى الخدمة (SLO). ويسأل راشد الآن سؤالًا مختلفًا: كم من الحركة (traffic) الإضافية تتحمل خدمة التحويلات (Transfers)، وما الذي ينهار أولًا (gives out first)؟ أي اختبار يجيب عنه؟"
+    "ar": "اجتاز اختبار الحِمل (load test) الذي أجرته مها عند ذروة يوم الراتب المتوقعة وكانت النسب المئوية (percentiles) p95 وp99 والأخطاء (errors) كلها ضمن هدف مستوى الخدمة (SLO). ويسأل راشد الآن سؤالًا مختلفًا: كم من الحركة (traffic) الإضافية تتحمل خدمة التحويلات (Transfers)، وما الذي ينهار أولًا؟ أي اختبار يجيب عنه؟"
    },
    "o": {
     "en": [
@@ -73,8 +73,8 @@
      "Call screening anyway on every request, to notice the moment that it recovers"
     ],
     "ar": [
-     "ارفضه فورًا (at once) مع رسالة واضحة (clear message)، دون استدعاء الفحص (screening) أو قبوله بلا فحص",
-     "اقبله وافحصه لاحقًا (screen it afterwards)، حتى لا يبقى العميل (customer) ينتظر الرد",
+     "ارفضه فورًا مع رسالة واضحة (clear message)، دون استدعاء الفحص (screening) أو قبوله بلا فحص",
+     "اقبله وافحصه لاحقًا، حتى لا يبقى العميل (customer) ينتظر الرد",
      "أعد محاولة الفحص (retry screening) بتأخير أسي (backoff) حتى يرد، ثم أتمّ التحويل (transfer) للعميل",
      "استدعِ خدمة الفحص (screening) مع كل طلب على أي حال، لتلاحظ لحظة تعافيها (recovers) بالضبط"
     ]
@@ -103,7 +103,7 @@
     "ar": [
      "سجّل 600 في الثانية نقطةَ انعطاف (knee) وحدّد حجم مجمّع قاعدة البيانات (database pool) ليتحمل هذا المعدل بأكمله",
      "افتح عيبًا (defect) على التحويلات (Transfers) لأن p99 أعلى بكثير من هدفها (target) في هذا التشغيل نفسه",
-     "ألغِ نتائج التشغيل (discard the run): الأداة لم ترسل في الموعد (on schedule)، فأرقامها تصف الأداة (tool) لا الواجهة (API)",
+     "ألغِ نتائج التشغيل: الأداة لم ترسل في الموعد، فأرقامها تصف الأداة (tool) لا الواجهة (API)",
      "انتقل إلى نموذج مغلق (closed model) بـ600 مستخدم افتراضي (virtual users) كي لا تتأخر الأداة (tool) عن الجدول المحدد أبدًا"
     ]
    },

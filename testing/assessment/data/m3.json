@@ -7,7 +7,7 @@
    "lesson": "3.1",
    "q": {
     "en": "Nada sends `POST /transfers` with the amount `1e30` and the API answers HTTP 500. Tariq says no customer would ever type that amount. How should the result be read?",
-    "ar": "ترسل ندى طلبًا (request) `POST /transfers` بالمبلغ (amount) `1e30` فترد واجهة البرمجة (API) برمز الحالة (status code) HTTP 500. يقول طارق إن أي عميل (customer) لن يكتب هذا المبلغ أبدًا. كيف ينبغي أن تقرأ ندى النتيجة (the result)؟"
+    "ar": "ترسل ندى طلبًا (request) `POST /transfers` بالمبلغ (amount) `1e30` فترد واجهة البرمجة (API) برمز الحالة (status code) HTTP 500. يقول طارق إن أي عميل (customer) لن يكتب هذا المبلغ أبدًا. كيف ينبغي أن تقرأ ندى النتيجة؟"
    },
    "o": {
     "en": [
@@ -18,7 +18,7 @@
     ],
     "ar": [
      "فجوة في التوثيق (documentation gap): بعد إدراج 500 في وثيقة OpenAPI (OpenAPI document) يصبح السلوك (behaviour) صحيحًا",
-     "سلوك صحيح (correct as is): المبلغ يفوق كثيرًا الحد الأقصى 25,000.00، فخطأ الخادم (server error) رفض مقبول",
+     "سلوك صحيح: المبلغ يفوق كثيرًا الحد الأقصى 25,000.00، فخطأ الخادم (server error) رفض مقبول",
      "عيب في الواجهة (API defect): لا يجوز أن ينتج أي إدخال من العميل (client input) حالة 5xx، فيجب رفضه بحالة 4xx",
      "ملاحظة منخفضة الأولوية (low-priority finding): صفحة الويب (web page) تتحقق من المبالغ، فلا يرسلها العملاء الحقيقيون أبدًا"
     ]
@@ -26,7 +26,7 @@
    "a": 2,
    "why": {
     "en": "No client input should produce a 5xx: the API must reject the amount with a 4xx, here 422, whoever sends it. Being over the 25,000.00 maximum is a reason for that 422, never for a crash. The web page's own validation is the tempting excuse, but any caller can send anything to the API, and listing 500 in the OpenAPI document would only make the crash official.",
-    "ar": "لا يجوز أن ينتج أي إدخال من العميل (client input) استجابة (response) 5xx، فيجب أن ترفض الواجهة المبلغ (amount) بحالة 4xx، وهي هنا 422، أيًّا كان المرسِل. وتجاوز الحد الأقصى 25,000.00 سبب لهذه الـ422، لا للانهيار (crash). وتحقق الصفحة الذاتي (the page's own validation) هو العذر المغري، لكن أي مستدعٍ (caller) يستطيع إرسال أي شيء إلى الواجهة (API)، ولن يفعل إدراج 500 في وثيقة OpenAPI (OpenAPI document) سوى أن يجعل الانهيار رسميًا."
+    "ar": "لا يجوز أن ينتج أي إدخال من العميل (client input) استجابة (response) 5xx، فيجب أن ترفض الواجهة المبلغ (amount) بحالة 4xx، وهي هنا 422، أيًّا كان المرسِل. وتجاوز الحد الأقصى 25,000.00 سبب لهذه الـ422، لا للانهيار (crash). وتحقق الصفحة الذاتي هو العذر المغري، لكن أي مستدعٍ (caller) يستطيع إرسال أي شيء إلى الواجهة (API)، ولن يفعل إدراج 500 في وثيقة OpenAPI (OpenAPI document) سوى أن يجعل الانهيار رسميًا."
    }
   },
   {
@@ -45,10 +45,10 @@
      "Assert that the balance fell by at least 250.00, so a parallel debit cannot fail the check"
     ],
     "ar": [
-     "تحقق (assert) فقط مما يملكه كل اختبار (what each test owns)، كالحوالة التي يرسلها، المقروءة بمعرّفها (id)",
+     "تحقق (assert) فقط مما يملكه كل اختبار، كالحوالة التي يرسلها، المقروءة بمعرّفها (id)",
      "اسمح بإعادة محاولة واحدة (one retry) في CI، فينجح التشغيل الفاشل في المرة الثانية ويبقى البناء أخضر (green)",
-     "أضف انتظارًا قصيرًا (short wait) بعد الإرسال، فيكون خصم الاختبار الآخر (the other test's debit) قد استقر قبل الفحص",
-     "تحقق (assert) من أن الرصيد انخفض بمقدار 250.00 على الأقل (at least)، فلا يفشل الفحص بسبب خصم متوازٍ"
+     "أضف انتظارًا قصيرًا (short wait) بعد الإرسال، فيكون خصم الاختبار الآخر قد استقر قبل الفحص",
+     "تحقق (assert) من أن الرصيد انخفض بمقدار 250.00 على الأقل، فلا يفشل الفحص بسبب خصم متوازٍ"
     ]
    },
    "a": 0,
@@ -74,7 +74,7 @@
     ],
     "ar": [
      "هما ثابتان مشروعان (legitimate constants) مثل رموز العملات (currency codes)، فيتجاهلهما الاختبار ببساطة (ignore them)",
-     "هما يفيضان عن التصميم (overflow the layout)، فاقتُطع النص الممدود (stretched text) وقُطعت الأقواس (brackets)",
+     "هما يفيضان عن التصميم، فاقتُطع النص الممدود (stretched text) وقُطعت الأقواس (brackets)",
      "هما نصّان في الفهرس (catalogue) ينقصهما إدخال عربي (Arabic entry)، فعلى المترجم (translator) إضافة إدخال لكل منهما",
      "هما مكتوبان مباشرةً في الصفحة (hard-coded) لا من الفهرس (catalogue)، فيرى مستخدمو العربية (Arabic users) الإنجليزية"
     ]
@@ -91,7 +91,7 @@
    "lesson": "3.1",
    "q": {
     "en": "Hamad's squad wraps a lock around `submit()`. Nada's concurrent double-submit test, parked with `xfail(strict=True)`, now passes and turns the suite red. Maha wants to merge. What is the best response?",
-    "ar": "يضع فريق حمد قفلًا (lock) حول الدالة `submit()`. فيجتاز الآن اختبار ندى للإرسال المزدوج المتزامن (concurrent double-submit test)، الذي علّقته (parked) بـ `xfail(strict=True)`، ويصبح تشغيل مجموعة الاختبارات (test suite) أحمر (red). تريد مها الدمج (merge). ما أفضل استجابة (best response)؟"
+    "ar": "يضع فريق حمد قفلًا (lock) حول الدالة `submit()`. فيجتاز الآن اختبار ندى للإرسال المزدوج المتزامن، الذي علّقته (parked) بـ `xfail(strict=True)`، ويصبح تشغيل مجموعة الاختبارات (test suite) أحمر (red). تريد مها الدمج (merge). ما أفضل استجابة (best response)؟"
    },
    "o": {
     "en": [
@@ -101,7 +101,7 @@
      "Delete the test, since the lock makes the race impossible and the sequential replay test still covers idempotency"
     ],
     "ar": [
-     "أعد وضع `xfail`، فالاختبار الذي ينجح فجأة (unexpectedly passes) غير موثوق ولا ينبغي أن يعطّل الدمج (block the merge)",
+     "أعد وضع `xfail`، فالاختبار الذي ينجح فجأة (unexpectedly passes) غير موثوق ولا ينبغي أن يعطّل الدمج",
      "أزل `xfail` بعد أن تنجح تشغيلات متكررة (repeated runs) ويظل العيب المزروع (seeded bug) يُفشله، ودوّن أن القفل يحمي عملية واحدة",
      "أغلق العيب (defect) على أنه مُصلَح، فالقفل حول `submit()` يزيل سباق التحقق ثم التنفيذ (check-then-act race)",
      "احذف الاختبار، فالقفل يجعل السباق (race) مستحيلًا ويكفي اختبار الإعادة المتسلسلة (sequential replay) لتغطية التكرار"
@@ -110,7 +110,7 @@
    "a": 1,
    "why": {
     "en": "A strict xfail turns the suite red the day the defect is fixed, so removing it is the intended step, provided the test passes repeatedly and still fails with the seeded bug switched on. A lock guards one process while production runs several, so the unique constraint on `(user, key)` is the real fix; closing the defect now would hide that. Deleting the test would also lose the only check that sees the race, because the sequential replay test passes with or without it.",
-    "ar": "يحوّل `xfail` الصارم (strict xfail) المجموعة (suite) إلى الأحمر (red) في اليوم الذي يُصلَح فيه العيب (defect)، فإزالته هي الخطوة المقصودة، بشرط أن ينجح الاختبار مرارًا ويظل يفشل عند تفعيل العيب المزروع (seeded bug). والقفل (lock) يحمي عملية واحدة (one process) بينما يشغّل الإنتاج (production) عدة عمليات، فالإصلاح الحقيقي هو القيد الفريد (unique constraint) على `(user, key)`؛ وإغلاق العيب الآن سيخفي ذلك. كما أن حذف الاختبار يفقدنا الفحص الوحيد الذي يرى السباق، لأن اختبار الإعادة المتسلسلة (sequential replay test) ينجح بوجود السباق وبدونه."
+    "ar": "يحوّل `xfail` الصارم (strict xfail) المجموعة (suite) إلى الأحمر (red) في اليوم الذي يُصلَح فيه العيب (defect)، فإزالته هي الخطوة المقصودة، بشرط أن ينجح الاختبار مرارًا ويظل يفشل عند تفعيل العيب المزروع (seeded bug). والقفل (lock) يحمي عملية واحدة (one process) بينما يشغّل الإنتاج (production) عدة عمليات، فالإصلاح الحقيقي هو القيد الفريد (unique constraint) على `(user, key)`؛ وإغلاق العيب الآن سيخفي ذلك. كما أن حذف الاختبار يفقدنا الفحص الوحيد الذي يرى السباق، لأن اختبار الإعادة المتسلسلة ينجح بوجود السباق وبدونه."
    }
   }
  ],
@@ -128,7 +128,7 @@
    "lesson": "3.3",
    "text": {
     "en": "I have audited `/app` and `/app?lang=ar` with an axe scan plus keyboard, 320 px reflow and contrast checks by hand, and written a table of pass or fail results by WCAG criterion that lists what axe alone missed.",
-    "ar": "دقّقتُ (audited) الصفحتين `/app` و`/app?lang=ar` بفحص axe مع فحوص يدوية (manual checks) للوحة المفاتيح (keyboard) وإعادة التدفق (reflow) عند 320 px والتباين (contrast)، وكتبتُ جدولًا بنتائج النجاح والفشل (pass or fail) حسب معيار WCAG يسرد ما فاته axe وحده (what axe alone missed)."
+    "ar": "دقّقتُ (audited) الصفحتين `/app` و`/app?lang=ar` بفحص axe مع فحوص يدوية (manual checks) للوحة المفاتيح (keyboard) وإعادة التدفق (reflow) عند 320 px والتباين (contrast)، وكتبتُ جدولًا بنتائج النجاح والفشل (pass or fail) حسب معيار WCAG يسرد ما فاته axe وحده."
    }
   }
  ]

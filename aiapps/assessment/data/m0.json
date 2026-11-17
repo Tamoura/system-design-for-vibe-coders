@@ -7,7 +7,7 @@
    "lesson": "0.1",
    "q": {
     "en": "Two teammates argue about whether the Najm Desk ticket helper is an agent. One says \"it calls tools\", the other says \"it remembers the conversation\". Which test does the course use to decide?",
-    "ar": "يختلف زميلان حول ما إذا كان مساعد التذاكر (ticket helper) في نجم ديسك (Najm Desk) وكيلًا (agent). يقول الأول «إنه يستدعي أدوات (tools)»، ويقول الثاني «إنه يتذكر المحادثة (the conversation)». أي اختبار تعتمده الدورة لحسم ذلك؟"
+    "ar": "يختلف زميلان حول ما إذا كان مساعد التذاكر (ticket helper) في نجم ديسك (Najm Desk) وكيلًا (agent). يقول الأول «إنه يستدعي أدوات (tools)»، ويقول الثاني «إنه يتذكر المحادثة». أي اختبار تعتمده الدورة لحسم ذلك؟"
    },
    "o": {
     "en": [
@@ -18,15 +18,15 @@
     ],
     "ar": [
      "ما إذا كان يجري أكثر من استدعاء واحد للنموذج (model call) لإنهاء الطلب الواحد (single request)",
-     "ما إذا كان النموذج (model)، لا شيفرتك (your code)، من يختار كل خطوة تالية (next step)",
+     "ما إذا كان النموذج (model)، لا شيفرتك، من يختار كل خطوة تالية (next step)",
      "ما إذا كان يستدعي أداة (tool) واحدة على الأقل أثناء معالجته للطلب الواحد (single request)",
-     "ما إذا كان يعيد إرسال أدوار المحادثة السابقة (earlier turns of the conversation) في كل استدعاء (call)"
+     "ما إذا كان يعيد إرسال أدوار المحادثة السابقة في كل استدعاء (call)"
     ]
    },
    "a": 1,
    "why": {
     "en": "An agent lets the model direct its own process, picking the next step and deciding when it is done, while a workflow follows a path your code defines. Calling tools is the tempting test, but workflows call tools too, and resending the conversation is what a chatbot does.",
-    "ar": "الوكيل (agent) يترك للنموذج (model) توجيه عمليته بنفسه، فيختار الخطوة التالية ويقرر متى ينتهي، أما سير العمل (workflow) فيتبع مسارًا تحدده شيفرتك (your code). واستدعاء الأدوات (calling tools) هو الاختبار المغري، لكن سير العمل يستدعيها أيضًا، وإعادة إرسال المحادثة (resending the conversation) هي ما يفعله روبوت المحادثة (chatbot)."
+    "ar": "الوكيل (agent) يترك للنموذج (model) توجيه عمليته بنفسه، فيختار الخطوة التالية ويقرر متى ينتهي، أما سير العمل (workflow) فيتبع مسارًا تحدده شيفرتك. واستدعاء الأدوات (calling tools) هو الاختبار المغري، لكن سير العمل يستدعيها أيضًا، وإعادة إرسال المحادثة هي ما يفعله روبوت المحادثة (chatbot)."
    }
   },
   {
@@ -45,10 +45,10 @@
      "Take real counts from the API, then project each turn with the history resent"
     ],
     "ar": [
-     "تضرب رموز استدعاء الجولة الواحدة (single-turn call) في ست جولات (turns) ثم في عدد المحادثات (the conversation count)",
+     "تضرب رموز استدعاء الجولة الواحدة (single-turn call) في ست جولات (turns) ثم في عدد المحادثات",
      "تشغّل محادثة واحدة من ست جولات (turns) على المحاكي (mock) دون اتصال (offline) ثم تكبّر أعداد رموزها",
      "تحسبها بمكتبة tiktoken، وهي مكتبة الترميز (tokenizer library) التي يعرفها أغلب المطوّرين (developers)",
-     "تأخذ أعدادًا فعلية (real counts) من الواجهة (API) ثم تقدّر كل جولة مع إعادة إرسال السجل (the history resent)"
+     "تأخذ أعدادًا فعلية (real counts) من الواجهة (API) ثم تقدّر كل جولة مع إعادة إرسال السجل"
     ]
    },
    "a": 3,
@@ -73,16 +73,16 @@
      "Delegate it in small steps and let each diff stand in for the checks"
     ],
     "ar": [
-     "تحدد كيف ستعرف صحة النتيجة (how she would tell it is right)، ثم تكتب المواصفة (spec) بتلك الفحوص",
-     "تفوّض المهمة الآن (delegate it now) وتقبل النتيجة ما دامت الاختبارات (tests) الحالية تبقى خضراء (green)",
-     "تفوّض المهمة الآن (delegate it now) وتطلب من Claude Code كتابة الاختبارات (tests) التي تثبت نجاحها",
+     "تحدد كيف ستعرف صحة النتيجة، ثم تكتب المواصفة (spec) بتلك الفحوص",
+     "تفوّض المهمة الآن وتقبل النتيجة ما دامت الاختبارات (tests) الحالية تبقى خضراء (green)",
+     "تفوّض المهمة الآن وتطلب من Claude Code كتابة الاختبارات (tests) التي تثبت نجاحها",
      "تفوّضها على خطوات صغيرة (small steps) وتترك كل فرق (diff) يحلّ محل الفحوص المطلوبة (checks)"
     ]
    },
    "a": 0,
    "why": {
     "en": "The method starts with a spec whose checks you can state: if you cannot say how you would know the result is right, do not delegate it yet. Existing tests staying green say nothing about \"smarter\", and small steps (the tempting option) keep diffs readable but cannot tell you what correct means.",
-    "ar": "تبدأ الطريقة بمواصفة (spec) تستطيع أن تصوغ فحوصها (checks): فإن لم تستطع القول كيف ستعرف أن النتيجة صحيحة (the result is right) فلا تفوّض المهمة بعد. واستمرار نجاح الاختبارات (tests) القائمة لا يقول شيئًا عن «الأذكى»، والخطوات الصغيرة (small steps)، وهي الخيار المغري، تُبقي الفروق (diffs) مقروءة لكنها لا تخبرك بمعنى الصحيح (what correct means)."
+    "ar": "تبدأ الطريقة بمواصفة (spec) تستطيع أن تصوغ فحوصها (checks): فإن لم تستطع القول كيف ستعرف أن النتيجة صحيحة فلا تفوّض المهمة بعد. واستمرار نجاح الاختبارات (tests) القائمة لا يقول شيئًا عن «الأذكى»، والخطوات الصغيرة (small steps)، وهي الخيار المغري، تُبقي الفروق (diffs) مقروءة لكنها لا تخبرك بمعنى الصحيح."
    }
   },
   {

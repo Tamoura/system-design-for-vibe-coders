@@ -39,7 +39,7 @@
                   "No retries on payments at all, and a generic error whenever a call fails",
                   "Plain exponential backoff, so every client waits the same longer intervals"],
            "ar": ["أعد المحاولة (retry) فورًا حتى خمس مرات متتالية، ليأخذ المزوّد (provider) البطيء فرصًا أكثر للرد عليك",
-                  "مُهَل (timeouts)، وتراجع بارتعاش (backoff with jitter) للأخطاء القابلة للإعادة فقط، ومفتاح تكرار آمن (idempotency key)",
+                  "مُهَل (timeouts)، وتراجع بارتعاش للأخطاء القابلة للإعادة فقط، ومفتاح تكرار آمن (idempotency key)",
                   "لا إعادة محاولة (retry) على المدفوعات (payments) إطلاقًا، ورسالة خطأ عامة (generic error) للمستخدم كلما فشل أي نداء إلى المزوّد",
                   "تراجع أُسّي (exponential backoff) في إعادة المحاولة، فينتظر كل العملاء (clients) الفترات الأطول نفسها"]},
      "a": 1,
@@ -53,13 +53,13 @@
                   "The iOS build was compiled without the Apple client ID; rebuild and resubmit it",
                   "The backend accepts only the web audience, and the client hides the real error",
                   "The user didn't share an email with Apple; request email permission at sign-in"],
-           "ar": ["خوادم Apple ترفض الطلب الأصلي (native request)؛ أضف إعادة محاولة مع تراجع (retries with backoff) عند تسجيل الدخول",
+           "ar": ["خوادم Apple ترفض الطلب الأصلي (native request)؛ أضف إعادة محاولة مع تراجع عند تسجيل الدخول",
                   "بُني تطبيق iOS بلا معرّف عميل Apple (client ID)؛ أعد البناء (rebuild) وأعد التقديم",
                   "الخادم الخلفي (backend) لا يقبل إلا جمهور الويب (web audience)، والعميل (client) يُخفي الخطأ الحقيقي",
                   "لم يشارك المستخدم بريده مع Apple؛ اطلب إذن البريد (email permission) عند تسجيل الدخول"]},
      "a": 2,
      "why": {"en": "Native iOS tokens carry the app's bundle ID as their audience, so a backend checking only the web client ID rejects them, and a swallowed error body disguised that as a wrong password. A missing client ID shows up differently: the button simply isn't there.",
-             "ar": "رموز iOS الأصلية (native tokens) تحمل معرّف الحزمة (bundle ID) للتطبيق جمهورًا لها (aud)، فالخادم الخلفي (backend) الذي لا يفحص إلا معرّف عميل الويب (web client ID) يرفضها، وجسم الخطأ المُبتلَع (swallowed error body) قنّع ذلك بكلمة مرور خاطئة. أما غياب معرّف العميل (client ID) فيظهر بشكل مختلف: الزر لا يوجد أصلًا."}}
+             "ar": "رموز iOS الأصلية (native tokens) تحمل معرّف الحزمة (bundle ID) للتطبيق جمهورًا لها (aud)، فالخادم الخلفي (backend) الذي لا يفحص إلا معرّف عميل الويب يرفضها، وجسم الخطأ المُبتلَع قنّع ذلك بكلمة مرور خاطئة. أما غياب معرّف العميل (client ID) فيظهر بشكل مختلف: الزر لا يوجد أصلًا."}}
   ],
   "evidence": [
     {"id": "clients-e1", "lesson": "6.6",

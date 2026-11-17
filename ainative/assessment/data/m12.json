@@ -26,7 +26,7 @@
       "a": 1,
       "why": {
         "en": "\"The agent did it\" is never a root cause: the review asks what the agent was allowed to do, who approved the change and which check should have stopped it, then changes one control. Coaching a person, tightening `CLAUDE.md` or rewording the prompt, the tempting fixes, leave the permissions and the missing check in place.",
-        "ar": "«الوكيل فعلها» (The agent did it) ليس سببًا جذريًا (root cause) أبدًا: تسأل المراجعة عمّا كان مسموحًا للوكيل (agent) بفعله، ومن وافق على التغيير، وأي فحص (check) كان ينبغي أن يوقفه، ثم تغيّر ضابطًا (control) واحدًا. أما تدريب شخص أو تشديد `CLAUDE.md` أو إعادة صياغة الموجّه (prompt)، وهي الإصلاحات المغرية، فتترك الصلاحيات (permissions) والفحص المفقود كما هما."
+        "ar": "«الوكيل فعلها» ليس سببًا جذريًا (root cause) أبدًا: تسأل المراجعة عمّا كان مسموحًا للوكيل (agent) بفعله، ومن وافق على التغيير، وأي فحص (check) كان ينبغي أن يوقفه، ثم تغيّر ضابطًا (control) واحدًا. أما تدريب شخص أو تشديد `CLAUDE.md` أو إعادة صياغة الموجّه (prompt)، وهي الإصلاحات المغرية، فتترك الصلاحيات (permissions) والفحص المفقود كما هما."
       }
     },
     {
@@ -102,7 +102,7 @@
         ],
         "ar": [
           "انسخوا دليل منصة المدفوعات (Payments Platform) العملي (playbook) وبدّلوا اسم الفريق وأدواته ومالكيه، ليكون المستند الكامل جاهزًا قبل يوم الجمعة",
-          "كلّفوا مساعدًا (assistant) بملء قالب سياسة عامة (generic policy template) ثم عدّلوه ليناسب الفريق كله",
+          "كلّفوا مساعدًا (assistant) بملء قالب سياسة عامة ثم عدّلوه ليناسب الفريق كله",
           "اكتبوا اتفاقية عمل (working agreement) من صفحة واحدة الآن، وسجّلوا أخطاء الوكلاء (agents) شهرًا، وحوّلوا المتكرر منها إلى قواعد في الدليل العملي (playbook)",
           "أعطوهم ملف `CONTRIBUTING.md` وملف `CLAUDE.md` جيدًا فقط، وأخبروا المدير بأن الاتفاقية المكتوبة مبالغة لفريق بهذه الحداثة"
         ]
@@ -110,7 +110,7 @@
       "a": 2,
       "why": {
         "en": "With no agent logs yet, a full playbook would be written from guesses, so run a one-page working agreement for a month and let real mistakes supply the rules. A copied playbook carries another team's owners and numbers, a generic template is fluent but owned by nobody, and `CONTRIBUTING.md` plus `CLAUDE.md` alone suits a two-person team, not a team of six.",
-        "ar": "لا توجد سجلات وكيل (agent logs) بعد، فسيُكتب الدليل العملي (playbook) الكامل من التخمين؛ لذا تُشغَّل اتفاقية عمل (working agreement) من صفحة واحدة شهرًا وتُترك الأخطاء الحقيقية لتُنتج القواعد. أما الدليل المنسوخ فيحمل مالكي فريق آخر وأرقامه، والقالب العام (generic template) متقن الصياغة (fluent) لكن لا مالك له (owned by nobody)، و`CONTRIBUTING.md` مع `CLAUDE.md` وحدهما يناسبان فريقًا من شخصين لا فريقًا من ستة."
+        "ar": "لا توجد سجلات وكيل (agent logs) بعد، فسيُكتب الدليل العملي (playbook) الكامل من التخمين؛ لذا تُشغَّل اتفاقية عمل (working agreement) من صفحة واحدة شهرًا وتُترك الأخطاء الحقيقية لتُنتج القواعد. أما الدليل المنسوخ فيحمل مالكي فريق آخر وأرقامه، والقالب العام (generic template) متقن الصياغة (fluent) لكن لا مالك له، و`CONTRIBUTING.md` مع `CLAUDE.md` وحدهما يناسبان فريقًا من شخصين لا فريقًا من ستة."
       }
     }
   ],
@@ -120,7 +120,7 @@
       "lesson": "12.1",
       "text": {
         "en": "I have filled in the AI working agreement for a team I know, so that no `<...>` is left and every norm carries a number, a name or a check.",
-        "ar": "لقد ملأتُ اتفاقية العمل بالذكاء الاصطناعي (AI working agreement) لفريق أعرفه، فلم يبقَ فيها أي `<...>`، وصار لكل قاعدة (norm) رقم أو اسم أو فحص (check)."
+        "ar": "لقد ملأتُ اتفاقية العمل بالذكاء الاصطناعي لفريق أعرفه، فلم يبقَ فيها أي `<...>`، وصار لكل قاعدة (norm) رقم أو اسم أو فحص (check)."
       }
     },
     {

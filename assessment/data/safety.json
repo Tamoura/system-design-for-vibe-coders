@@ -7,7 +7,7 @@
       "lesson": "8.1",
       "q": {
         "en": "Your agent branched from a stale base, ran `git add .` and committed, deleting 600+ files. Review caught it this time. Which response actually prevents a repeat?",
-        "ar": "تفرّع وكيلك (agent) من أساس قديم (stale base)، ونفّذ `git add .` ثم أودَع (committed)، فحذف أكثر من 600 ملف (files). وقد كشفته المراجعة (review) هذه المرة. أيّ استجابة تمنع التكرار فعلًا (actually prevents a repeat)؟"
+        "ar": "تفرّع وكيلك (agent) من أساس قديم (stale base)، ونفّذ `git add .` ثم أودَع (committed)، فحذف أكثر من 600 ملف (files). وقد كشفته المراجعة (review) هذه المرة. أيّ استجابة تمنع التكرار فعلًا؟"
       },
       "o": {
         "en": [
@@ -26,7 +26,7 @@
       "a": 1,
       "why": {
         "en": "\"Be careful\" is a wish, not a control: at agent speed only mechanical rules survive, and a hook runs whether anyone remembers it or not. A line in the prompt is English in a chat, which the agent can skip, and a reading habit is just \"be careful\" again.",
-        "ar": "عبارة «كن حذرًا (be careful)» أمنية (wish) لا ضابط (control): بسرعة الوكيل (agent speed) لا تصمد إلا القواعد الآلية (mechanical rules)، والخطّاف (hook) يعمل سواء تذكّره أحد أم لا. أما سطر في الأمر (prompt) فنصٌّ إنجليزي في محادثة (English in a chat) قد يتخطّاه الوكيل، وعادة القراءة ليست إلا «كن حذرًا» من جديد."
+        "ar": "عبارة «كن حذرًا» أمنية (wish) لا ضابط (control): بسرعة الوكيل (agent speed) لا تصمد إلا القواعد الآلية (mechanical rules)، والخطّاف (hook) يعمل سواء تذكّره أحد أم لا. أما سطر في الأمر (prompt) فنصٌّ إنجليزي في محادثة قد يتخطّاه الوكيل، وعادة القراءة ليست إلا «كن حذرًا» من جديد."
       }
     },
     {
@@ -35,7 +35,7 @@
       "lesson": "8.2",
       "q": {
         "en": "Relay has ~1,990 green tests, and most server tests mock the database. Last week a bad migration broke production while every test passed. Your agent suggests adding 300 more tests. What should you do instead?",
-        "ar": "لدى Relay نحو 1990 اختبارًا ناجحًا (green tests)، ومعظم اختبارات الخادم (server tests) تحاكي قاعدة البيانات (mock the database). وفي الأسبوع الماضي كسر ترحيلٌ سيئ (bad migration) بيئة الإنتاج (production) بينما نجحت كل الاختبارات (every test passed). يقترح وكيلك (agent) إضافة 300 اختبار آخر. ماذا تفعل بدلًا من ذلك (instead)؟"
+        "ar": "لدى Relay نحو 1990 اختبارًا ناجحًا (green tests)، ومعظم اختبارات الخادم (server tests) تحاكي قاعدة البيانات. وفي الأسبوع الماضي كسر ترحيلٌ سيئ (bad migration) بيئة الإنتاج (production) بينما نجحت كل الاختبارات. يقترح وكيلك (agent) إضافة 300 اختبار آخر. ماذا تفعل بدلًا من ذلك (instead)؟"
       },
       "o": {
         "en": [
@@ -45,10 +45,10 @@
           "Run the riskiest data-layer suites against a real in-memory database"
         ],
         "ar": [
-          "ارفع هدف التغطية (coverage target) إلى 95% واطلب من الوكيل (agent) سدّ الفجوات (fill in the gaps)",
+          "ارفع هدف التغطية (coverage target) إلى 95% واطلب من الوكيل (agent) سدّ الفجوات",
           "أضف محاكاة (mocks) للترحيل (migration) تتحقق من أن استعلاماته (queries) تُنفَّذ بالترتيب الصحيح (right order)",
           "شغّل الحزمة كاملة (full suite) ليلًا أيضًا (nightly)، كي تظهر الإخفاقات (failures) أبكر",
-          "شغّل أخطر حزم طبقة البيانات (data-layer suites) على قاعدة بيانات حقيقية في الذاكرة (real in-memory database)"
+          "شغّل أخطر حزم طبقة البيانات (data-layer suites) على قاعدة بيانات حقيقية في الذاكرة"
         ]
       },
       "a": 3,
@@ -63,7 +63,7 @@
       "lesson": "8.3",
       "q": {
         "en": "Relay's CI preflight fails on every push because its lockfile check assumes the wrong package manager. The team pushes through the red. Your agent offers to mark it `continue-on-error`. What's the right move?",
-        "ar": "يفشل الفحص المسبق (preflight) في التكامل المستمر (CI) لدى Relay مع كل دفع (push)، لأن فحص ملف القفل (lockfile check) فيه يفترض مدير حِزَم (package manager) خاطئًا. والفريق يدفع عبر الأحمر (pushes through the red). يعرض وكيلك (agent) وسمه بـ `continue-on-error`. ما الخطوة الصحيحة (the right move)؟"
+        "ar": "يفشل الفحص المسبق (preflight) في التكامل المستمر (CI) لدى Relay مع كل دفع (push)، لأن فحص ملف القفل (lockfile check) فيه يفترض مدير حِزَم (package manager) خاطئًا. والفريق يدفع عبر الأحمر. يعرض وكيلك (agent) وسمه بـ `continue-on-error`. ما الخطوة الصحيحة؟"
       },
       "o": {
         "en": [
@@ -73,7 +73,7 @@
           "Add a second check whose job is to flag when the first one is wrong"
         ],
         "ar": [
-          "أصلِح الفحص (fix the check) اليوم وشاهده يفشل وينجح (fail and pass)، أو احذفه اليوم (delete it today)",
+          "أصلِح الفحص اليوم وشاهده يفشل وينجح، أو احذفه اليوم",
           "اقبل عرض الوكيل (agent) كي يبقى الفحص يعمل (still runs) لكنه لا يعود يمنع (blocks) شيئًا",
           "اتركه كما هو (leave it)، فالجميع يعرف أصلًا أنه إنذار كاذب (false alarm)",
           "أضف فحصًا ثانيًا (second check) مهمته أن ينبّه (flag) حين يكون الفحص الأول مخطئًا"
@@ -82,7 +82,7 @@
       "a": 0,
       "why": {
         "en": "A check everyone ignores trains the \"push through the red\" reflex that lets the one real failure through, so the only moves are to fix it (and see it fail and pass) or delete it, today. `continue-on-error` turns it into a check that can never fail: decoration, not a gate.",
-        "ar": "الفحص (check) الذي يتجاهله الجميع يدرّبهم على ردّ الفعل «ادفع عبر الأحمر (push through the red)» الذي يُمرّر الفشل الحقيقي الوحيد (the one real failure)، فلا خطوة إلا إصلاحه — مع رؤيته يفشل وينجح (fail and pass) — أو حذفه، اليوم. ووسمه بـ `continue-on-error` يجعله فحصًا لا يستطيع أن يفشل (can never fail): زينة (decoration) لا بوّابة (gate)."
+        "ar": "الفحص (check) الذي يتجاهله الجميع يدرّبهم على ردّ الفعل «ادفع عبر الأحمر» الذي يُمرّر الفشل الحقيقي الوحيد، فلا خطوة إلا إصلاحه — مع رؤيته يفشل وينجح — أو حذفه، اليوم. ووسمه بـ `continue-on-error` يجعله فحصًا لا يستطيع أن يفشل: زينة (decoration) لا بوّابة (gate)."
       }
     },
     {
@@ -91,7 +91,7 @@
       "lesson": "8.4",
       "q": {
         "en": "Your agent fixes a missing-function error by installing a package you've never heard of. The build is green and the lockfile now records it. How should you judge this?",
-        "ar": "يصلح وكيلك (agent) خطأ دالّة مفقودة (missing-function error) بتثبيت حزمة (package) لم تسمع بها من قبل. البناء أخضر (build is green)، وملف القفل (lockfile) صار يسجّلها. كيف تحكم على ذلك (judge this)؟"
+        "ar": "يصلح وكيلك (agent) خطأ دالّة مفقودة (missing-function error) بتثبيت حزمة (package) لم تسمع بها من قبل. البناء أخضر، وملف القفل (lockfile) صار يسجّلها. كيف تحكم على ذلك (judge this)؟"
       },
       "o": {
         "en": [
@@ -104,7 +104,7 @@
           "لا بأس: ملف القفل (lockfile) يثبّت نسختها الدقيقة (exact version)، فسلسلة التوريد (supply chain) مغطّاة",
           "لا بأس، ما دامت بوّابة التدقيق (audit gate) لا تُبلغ عن ثغرات معروفة (known CVEs) في الحزمة (package)",
           "توقّف: اطلب سببًا من سطر (one-line why)، وافحص التحميلات (downloads) وآخر إصدار (last release) ودقة الاسم (exact name)",
-          "توقّف: احذف ملف القفل (lockfile) كي تجلب التثبيتات اللاحقة (later installs) أحدث نسخة مُرقَّعة (newest patched version)"
+          "توقّف: احذف ملف القفل (lockfile) كي تجلب التثبيتات اللاحقة (later installs) أحدث نسخة مُرقَّعة"
         ]
       },
       "a": 2,
@@ -120,7 +120,7 @@
       "lesson": "8.1",
       "text": {
         "en": "I have watched my pre-commit hook block a 600-file deletion I staged on purpose, and then seen a normal small commit pass through it",
-        "ar": "لقد شاهدت خطّاف ما قبل الإيداع (pre-commit hook) لديّ يمنع حذف 600 ملف (600-file deletion) جهّزته عمدًا (staged on purpose)، ثم رأيت إيداعًا صغيرًا عاديًا (normal small commit) يمرّ عبره"
+        "ar": "لقد شاهدت خطّاف ما قبل الإيداع (pre-commit hook) لديّ يمنع حذف 600 ملف (600-file deletion) جهّزته عمدًا، ثم رأيت إيداعًا صغيرًا عاديًا يمرّ عبره"
       }
     },
     {

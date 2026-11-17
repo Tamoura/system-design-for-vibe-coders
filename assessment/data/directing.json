@@ -63,7 +63,7 @@
       "lesson": "9.2",
       "q": {
         "en": "Half of Relay's test suites mock the database and half don't. You find two instruction files: one says \"never mock the DB,\" the other says \"mock the models so CI runs fast.\" What's the fix?",
-        "ar": "نصف حزم الاختبار (test suites) في Relay تحاكي قاعدة البيانات (mock the database) ونصفها لا. وتجد ملفّي تعليمات (instruction files): أحدهما يقول «لا تحاكِ قاعدة البيانات أبدًا»، والآخر يقول «حاكِ النماذج (models) كي يعمل التكامل المستمر (CI) بسرعة». ما الإصلاح؟"
+        "ar": "نصف حزم الاختبار (test suites) في Relay تحاكي قاعدة البيانات ونصفها لا. وتجد ملفّي تعليمات (instruction files): أحدهما يقول «لا تحاكِ قاعدة البيانات أبدًا»، والآخر يقول «حاكِ النماذج (models) كي يعمل التكامل المستمر (CI) بسرعة». ما الإصلاح؟"
       },
       "o": {
         "en": [

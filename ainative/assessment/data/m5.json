@@ -26,7 +26,7 @@
       "a": 2,
       "why": {
         "en": "Only a test whose expectation comes from the ticket goes red when the digits are wrong. A test that expects the code's own output (A) is a real test that passes, but it blesses whatever the code prints, Western digits included; the green check and the summary read the same whether the change is right or wrong.",
-        "ar": "وحده الاختبار (test) الذي يأتي توقّعه (expectation) من التذكرة (ticket) يصير أحمر (red) حين تكون الأرقام (digits) خاطئة. أما الاختبار الذي يتوقع مخرجات (output) الشيفرة (code) نفسها (A) فهو اختبار حقيقي ينجح، لكنه يقرّ (blesses) كل ما تطبعه الشيفرة بما فيه الأرقام الغربية (Western digits)؛ والعلامة الخضراء (green check) والملخص (summary) يبدوان كما هما سواء كان التغيير (change) صحيحًا أم خاطئًا."
+        "ar": "وحده الاختبار (test) الذي يأتي توقّعه (expectation) من التذكرة (ticket) يصير أحمر (red) حين تكون الأرقام (digits) خاطئة. أما الاختبار الذي يتوقع مخرجات (output) الشيفرة (code) نفسها فهو اختبار حقيقي ينجح، لكنه يقرّ (blesses) كل ما تطبعه الشيفرة بما فيه الأرقام الغربية (Western digits)؛ والعلامة الخضراء (green check) والملخص (summary) يبدوان كما هما سواء كان التغيير (change) صحيحًا أم خاطئًا."
       }
     },
     {
@@ -73,8 +73,8 @@
           "Vary amounts, tiers and flags, and check each fee against your own sums from the ticket's rules"
         ],
         "ar": [
-          "تقرّ الطلب بملاحظات (approve with comments) لأن الأمثلة الأربعة هي اختبار القبول (acceptance test) في التذكرة (ticket) وكلها مطابقة",
-          "تعيد قراءة وصف طلب الدمج (pull request description) لترى ما يدّعيه عن الحالات الطرفية (edge cases) ومستويات الولاء (tiers)",
+          "تقرّ الطلب بملاحظات لأن الأمثلة الأربعة هي اختبار القبول (acceptance test) في التذكرة (ticket) وكلها مطابقة",
+          "تعيد قراءة وصف طلب الدمج لترى ما يدّعيه عن الحالات الطرفية (edge cases) ومستويات الولاء (tiers)",
           "تطلب من الوكيل (agent) كتابة اختبارات (tests) إضافية لشيفرته (code) هو وتشغيلها على الفرع (branch)",
           "تغيّر المبالغ (amounts) ومستويات الولاء (tiers) والخيارات (flags) وتتحقق من كل رسم (fee) بحسابك أنت من قواعد (rules) التذكرة"
         ]
@@ -82,7 +82,7 @@
       "a": 3,
       "why": {
         "en": "The ticket's four examples are the happy path, and defects hide in the inputs it does not list; working out answers yourself from the ticket's rules and comparing them across many inputs finds what one example cannot. Approving on the examples (A) treats a handful of cases as the whole behaviour, the description (B) is the agent's claim, and more tests from the agent (C) share the blind spots of the code it wrote: it wrote the problem.",
-        "ar": "أمثلة التذكرة (ticket) الأربعة هي المسار السعيد (happy path)، وتختبئ العيوب (defects) في المدخلات (inputs) التي لم تذكرها؛ وحساب الإجابات بنفسك من قواعد (rules) التذكرة ومقارنتها عبر مدخلات كثيرة يكشف ما لا يكشفه مثال واحد. أما الاعتماد بناءً على الأمثلة (A) فيعامل حفنة من الحالات (cases) على أنها السلوك (behaviour) كله، والوصف (B) ادّعاء الوكيل (agent)، والاختبارات الإضافية من الوكيل (C) تشاركه نقاطه العمياء (blind spots): هو من كتب المشكلة."
+        "ar": "أمثلة التذكرة (ticket) الأربعة هي المسار السعيد (happy path)، وتختبئ العيوب (defects) في المدخلات (inputs) التي لم تذكرها؛ وحساب الإجابات بنفسك من قواعد (rules) التذكرة ومقارنتها عبر مدخلات كثيرة يكشف ما لا يكشفه مثال واحد. أما الاعتماد بناءً على الأمثلة فيعامل حفنة من الحالات (cases) على أنها السلوك (behaviour) كله، والوصف (B) ادّعاء الوكيل (agent)، والاختبارات الإضافية من الوكيل (C) تشاركه نقاطه العمياء (blind spots): هو من كتب المشكلة."
       }
     },
     {
@@ -101,7 +101,7 @@
           "Run the model again with the ticket named, and request changes only if it finds a problem"
         ],
         "ar": [
-          "تقرّ الطلب بملاحظات (approve with comments) لأن المراجعَين اختلفا والمجموعة (suite) خضراء",
+          "تقرّ الطلب بملاحظات لأن المراجعَين اختلفا والمجموعة (suite) خضراء",
           "تطلب تغييرات (request changes) وتُبقي درجة «مانع» (blocker)، فالضرر (damage) لا يتوقف على ما رآه النموذج (model)",
           "تطلب تغييرات (request changes) لكنك تخفض الرسم (fee) الخاطئ إلى «رئيسية» (major) لأن النموذج (model) لم يره أصلًا",
           "تعيد تشغيل النموذج (model) مع ذكر التذكرة (ticket)، وتطلب تغييرات (request changes) فقط إن وجد مشكلة (problem) حينها"
@@ -110,7 +110,7 @@
       "a": 1,
       "why": {
         "en": "A second model adds questions, not verdicts, and a reviewer given only the diff cannot see what only running shows, so a clean report from it does not clear a wrong fee. Money wrong in a fee is a blocker, rated by the damage if it ships, so the verdict stays request changes. Approving (A) or downgrading (C) lets the model overrule your evidence, and gating the verdict on a rerun (D) makes the model the judge.",
-        "ar": "يضيف النموذج الثاني (second model) أسئلة لا أحكامًا، والمراجع الذي لا يرى إلا الفروقات (diff) لا يستطيع رؤية ما يظهره التشغيل (running) وحده، فلا يبرّئ تقريره الخالي رسمًا (fee) خاطئًا. والمال الخاطئ في الرسم «مانع» (blocker) يُصنَّف بالضرر لو صدر (damage if it ships)، فيبقى الحكم (verdict) طلب تغييرات (request changes). أما الإقرار (A) أو التخفيض (C) فيتركان النموذج (model) يتغلّب على أدلتك (evidence)، وربط الحكم بإعادة التشغيل (D) يجعل النموذج هو القاضي."
+        "ar": "يضيف النموذج الثاني (second model) أسئلة لا أحكامًا، والمراجع الذي لا يرى إلا الفروقات (diff) لا يستطيع رؤية ما يظهره التشغيل (running) وحده، فلا يبرّئ تقريره الخالي رسمًا (fee) خاطئًا. والمال الخاطئ في الرسم «مانع» (blocker) يُصنَّف بالضرر لو صدر، فيبقى الحكم (verdict) طلب تغييرات (request changes). أما الإقرار أو التخفيض (C) فيتركان النموذج (model) يتغلّب على أدلتك (evidence)، وربط الحكم بإعادة التشغيل (D) يجعل النموذج هو القاضي."
       }
     }
   ],

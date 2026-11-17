@@ -42,7 +42,7 @@
                   "فعّل الـTTL أولًا، ثم أعد بناء التجميعات (rollups) من الصفوف (rows) المتبقية بعد الحذف"]},
      "a": 1,
      "why": {"en": "Backfill → verify → expire: never enable a destructive TTL until every reading beyond the window is backed by a verified aggregate. Enabling it first silently deletes the raw rows the dashboards depend on, and a bigger disk only delays the timebomb.",
-             "ar": "املأ ← تحقّق ← أنهِ (backfill → verify → expire): لا تفعّل مدة صلاحية (TTL) مدمِّرة حتى تستند كل قراءةٍ خارج النافذة إلى تجميعٍ (aggregate) متحققٍ منه. وتفعيلها أولًا يحذف بصمتٍ الصفوف الخام التي تعتمد عليها اللوحات، والقرص الأكبر يؤجّل القنبلة الموقوتة (timebomb) فقط."}},
+             "ar": "املأ ← تحقّق ← أنهِ: لا تفعّل مدة صلاحية (TTL) مدمِّرة حتى تستند كل قراءةٍ خارج النافذة إلى تجميعٍ (aggregate) متحققٍ منه. وتفعيلها أولًا يحذف بصمتٍ الصفوف الخام التي تعتمد عليها اللوحات، والقرص الأكبر يؤجّل القنبلة الموقوتة (timebomb) فقط."}},
     {"id": "data-4", "level": 3, "lesson": "2.5",
      "q": {"en": "Every so often the whole product gets slow for a minute or two — every page, for everyone — then recovers. No traffic spike, no deploy. The slowdowns line up with someone loading the admin dashboard, which runs several unbounded scans over your largest collection. What is happening?",
            "ar": "بين حينٍ وآخر يبطؤ المنتج (product) كله دقيقةً أو اثنتين — كل صفحة، لكل الناس — ثم يتعافى. لا ذروة في الحركة (traffic spike)، ولا نشر (deploy). وتتزامن حالات البطء مع فتح أحدهم لوحة المشرف (admin dashboard)، التي تُجري عدة مسوحٍ غير محدودة (unbounded scans) على أكبر مجموعة (collection) لديك. ما الذي يحدث؟"},

@@ -17,7 +17,7 @@
           "`auto` mode, so that a classifier reviews each command before it runs and no injected command gets through"
         ],
         "ar": [
-          "السطر نفسه منقولًا إلى أول الملف (top of the file) ومعلَّمًا بكلمة IMPORTANT ليقرأه النموذج (model) أولًا",
+          "السطر نفسه منقولًا إلى أول الملف ومعلَّمًا بكلمة IMPORTANT ليقرأه النموذج (model) أولًا",
           "خطاف حماية (guard hook) يحلّل كل أمر (command) وبيئة معزولة (sandbox) بلا نطاقات مسموحة، وكلاهما يُفرَض خارج النموذج (model)",
           "قاعدة منع (deny rule) من نوع `Bash(curl *)` وحدها، لأن قاعدة كهذه تلتقط كل صيغة يُكتب بها الأمر",
           "الوضع `auto` (auto mode) ليراجع مصنِّف (classifier) كل أمر قبل تشغيله فلا يمرّ أي أمر محقون (injected)"
@@ -35,7 +35,7 @@
       "lesson": "8.2",
       "q": {
         "en": "Lujain tests her guard hook on four commands from agent sessions, as JSON files, never running them. By the rules of REMIT-258, which command must the guard block?",
-        "ar": "تختبر لجين خطاف الحماية (guard hook) الذي كتبته على أربعة أوامر (commands) من جلسات الوكيل (agent sessions) بوصفها ملفات JSON دون تشغيلها أبدًا. وفق قواعد REMIT-258، أي أمر يجب أن يحجبه الخطاف (must block)؟"
+        "ar": "تختبر لجين خطاف الحماية (guard hook) الذي كتبته على أربعة أوامر (commands) من جلسات الوكيل (agent sessions) بوصفها ملفات JSON دون تشغيلها أبدًا. وفق قواعد REMIT-258، أي أمر يجب أن يحجبه الخطاف؟"
       },
       "o": {
         "en": [
@@ -54,7 +54,7 @@
       "a": 2,
       "why": {
         "en": "`curl` with `-F` sends a local file out, which REMIT-258 lists under sending data out. The other three go through: a message that only mentions `git push` is text, `curl` with no body is fine, and `-C` matters only before `push`. Blocking the commit message is the tempting error, and a guard with that false positive gets switched off.",
-        "ar": "الأمر `curl` مع `-F` يرسل ملفًا محليًا إلى الخارج (sends data out)، وهذا ما تعدّه REMIT-258 إرسالًا للبيانات. أما الثلاثة الأخرى فتمر: رسالة (message) تذكر `git push` اسمًا فقط هي نص (text)، و`curl` دون جسم (body) مقبول، و`-C` لا يهم إلا قبل `push`. وحجب رسالة الإيداع (commit message) هو الخطأ المغري (tempting error)، والخطاف الذي يقع في هذا الإنذار الكاذب (false positive) يُطفأ."
+        "ar": "الأمر `curl` مع `-F` يرسل ملفًا محليًا إلى الخارج، وهذا ما تعدّه REMIT-258 إرسالًا للبيانات. أما الثلاثة الأخرى فتمر: رسالة (message) تذكر `git push` اسمًا فقط هي نص (text)، و`curl` دون جسم (body) مقبول، و`-C` لا يهم إلا قبل `push`. وحجب رسالة الإيداع (commit message) هو الخطأ المغري (tempting error)، والخطاف الذي يقع في هذا الإنذار الكاذب (false positive) يُطفأ."
       }
     },
     {
@@ -120,7 +120,7 @@
       "lesson": "8.1",
       "text": {
         "en": "I have filled in the agent threat-model worksheet for a real agent session of mine, marked the three trifecta legs, picked the one I remove and written the worst case in one sentence.",
-        "ar": "لقد ملأتُ ورقة نمذجة التهديدات للوكيل (agent threat-model worksheet) لجلسة وكيل حقيقية من جلساتي، ووسمتُ أضلاع الثالوث القاتل (lethal trifecta) الثلاثة، واخترتُ الضلع الذي أزيله، وكتبتُ أسوأ حالة (worst case) في جملة واحدة."
+        "ar": "لقد ملأتُ ورقة نمذجة التهديدات للوكيل لجلسة وكيل حقيقية من جلساتي، ووسمتُ أضلاع الثالوث القاتل (lethal trifecta) الثلاثة، واخترتُ الضلع الذي أزيله، وكتبتُ أسوأ حالة (worst case) في جملة واحدة."
       }
     },
     {
