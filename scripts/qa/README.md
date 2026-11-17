@@ -68,10 +68,11 @@ python3 scripts/qa/quiz_cues.py --items aigp/exam/en --strategy longest
 2. **"DPO" uses the word for protection.** Every `DPO` in Arabic text has «حماية» within 100 characters before it or
    60 after it on the same line. In today's sources the word is at most 63 characters before the token, for
    example «مسؤولة حماية البيانات (DPO)».
-3. **English glosses stay.** Every Arabic lesson file has at least a floor of parenthesised English (text in brackets
-   with Latin letters) per 100 Arabic words. The floor is the lowest lesson on the day the check was written
-   (15.8, `aipm/modules/01-ai-literacy.ar.md`) minus a margin of 3, rounded down: 12.5. It is stored in
-   `scripts/qa/arabic-baseline.json`. `--gloss-table` lists every lesson's density.
+3. **English glosses on technical terms only, once per lesson.** The first use of a technical term in a lesson carries
+   its English term in parentheses; plain phrases, repeated terms, product and acronym names do not. Every Arabic
+   lesson file must lie between a floor (0.2 per 100 Arabic words, so glosses are not stripped away) and a ceiling
+   (8 per 100, so they do not return to every phrase). Both are stored in `scripts/qa/arabic-baseline.json`.
+   `--gloss-table` lists every lesson's density; `python3 scripts/qa/trim_glosses.py` applies the rule to files.
 
 Sources: Arabic Markdown files that a builder did not generate, the Arabic fields of the self-assessment items, and
 `about/index.ar.html`. Generated pages repeat the sources and are not scanned again. `agentic/` is a published copy

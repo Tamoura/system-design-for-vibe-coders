@@ -7,7 +7,7 @@
       "lesson": "7.1",
       "q": {
         "en": "Mariam is writing graders for three checks on Najm Assist replies: the daily limit amount is right, the limits document is cited, and the tone suits a worried customer. She will validate any judge against human labels before trusting it. How should the graders be assigned?",
-        "ar": "تكتب مريم مقيِّمات (graders) لثلاثة فحوصات (checks) على ردود نجم أسيست (Najm Assist): أن مبلغ الحد اليومي (daily limit amount) صحيح، وأن وثيقة الحدود (limits document) مذكورة مصدرًا (cited)، وأن النبرة (tone) تناسب عميلًا قلقًا (worried customer). وستتحقق من أي حَكَم مقابل تصنيفات بشرية (human labels) قبل أن تثق به. كيف تُوزَّع المقيِّمات على هذه الفحوصات؟"
+        "ar": "تكتب مريم مقيِّمات (graders) لثلاثة فحوصات على ردود نجم أسيست: أن مبلغ الحد اليومي صحيح، وأن وثيقة الحدود مذكورة مصدرًا، وأن النبرة تناسب عميلًا قلقًا. وستتحقق من أي حَكَم مقابل تصنيفات بشرية قبل أن تثق به. كيف تُوزَّع المقيِّمات على هذه الفحوصات؟"
       },
       "o": {
         "en": [
@@ -17,16 +17,16 @@
           "Embedding similarity to a reference reply, with one threshold"
         ],
         "ar": [
-          "نموذج لغوي حَكَم واحد (single judge model) يقيّم الثلاثة كلها، فيقرأ الرد كاملًا (whole reply)",
-          "فحص بنية (schema check) يتأكد من ظهور مبلغ ومصدر، مع حَكَم (judge) للنبرة",
-          "فحوصات برمجية دقيقة (exact code checks) للمبلغ والمصدر، مع حَكَم (judge) للنبرة",
-          "تشابه التضمينات (embedding similarity) مع رد مرجعي (reference reply) وعتبة واحدة (one threshold)"
+          "نموذج لغوي حَكَم واحد يقيّم الثلاثة كلها، فيقرأ الرد كاملًا",
+          "فحص بنية يتأكد من ظهور مبلغ ومصدر، مع حَكَم (judge) للنبرة",
+          "فحوصات برمجية دقيقة للمبلغ والمصدر، مع حَكَم (judge) للنبرة",
+          "تشابه التضمينات مع رد مرجعي وعتبة واحدة"
         ]
       },
       "a": 2,
       "why": {
         "en": "The amount and the source are facts that code can check exactly and cheaply, so the judge is kept for tone, which code cannot decide. A schema check only sees that an amount appears, not that it is right, and one judge for everything is the tempting shortcut: even a validated judge is an unreliable model and must never decide amounts or codes.",
-        "ar": "المبلغ والمصدر حقيقتان (facts) يفحصهما الكود (code) بدقة وبكلفة زهيدة، فيُترك الحَكَم (judge) للنبرة (tone) التي لا يحسمها الكود. أما فحص البنية (schema check) فيرى أن مبلغًا ظهر لا أنه صحيح، وحَكَم واحد لكل شيء هو الاختصار المغري (tempting shortcut): فحتى الحَكَم الذي جرى التحقق منه نموذج غير موثوق بذاته ولا يجوز أن يحسم المبالغ أو الرموز (amounts or codes)."
+        "ar": "المبلغ والمصدر حقيقتان يفحصهما الكود بدقة وبكلفة زهيدة، فيُترك الحَكَم (judge) للنبرة التي لا يحسمها الكود. أما فحص البنية فيرى أن مبلغًا ظهر لا أنه صحيح، وحَكَم واحد لكل شيء هو الاختصار المغري: فحتى الحَكَم الذي جرى التحقق منه نموذج غير موثوق بذاته ولا يجوز أن يحسم المبالغ أو الرموز."
       }
     },
     {
@@ -35,7 +35,7 @@
       "lesson": "7.2",
       "q": {
         "en": "Maha's test for the card-freeze flow sends “Please freeze card-1” and checks that the reply contains “Please confirm”. After a refactor, Assist calls freeze_card at once and still prints that same sentence, yet the test stays green. Which added assertion would have turned it red?",
-        "ar": "يرسل اختبار مها (Maha's test) لمسار تجميد البطاقة (card-freeze flow) الرسالة «Please freeze card-1» ويتحقق (checks) أن الرد (reply) يتضمن «Please confirm». وبعد إعادة هيكلة (refactor) يستدعي نجم أسيست (Najm Assist) الأداة freeze_card فورًا (at once) ويطبع الجملة نفسها، ومع ذلك يبقى الاختبار أخضر (stays green). أي تأكيد (assertion) مضاف كان سيحوّله إلى أحمر (red)؟"
+        "ar": "يرسل اختبار مها لمسار تجميد البطاقة الرسالة «Please freeze card-1» ويتحقق أن الرد يتضمن «Please confirm». وبعد إعادة هيكلة (refactor) يستدعي نجم أسيست الأداة freeze_card فورًا ويطبع الجملة نفسها، ومع ذلك يبقى الاختبار أخضر. أي تأكيد (assertion) مضاف كان سيحوّله إلى أحمر؟"
       },
       "o": {
         "en": [
@@ -45,16 +45,16 @@
           "That the first reply names card-1 and is worded as a clear question"
         ],
         "ar": [
-          "ألّا يوجد استدعاء أداة (tool call) وألّا تُجمَّد بطاقة (card frozen) قبل ضغط التأكيد",
-          "أن تظهر البطاقة card-1 مجمَّدة (frozen) بعد تشغيل الدورة المؤكَّدة (confirmed turn) بالكامل",
-          "أن يبدأ رد الدورة المؤكَّدة (confirmed turn) بكلمة «Done» كما كان قبل التعديل (before the refactor)",
-          "أن يذكر الرد الأول البطاقة card-1 (names the card) وأن يُصاغ سؤالًا واضحًا (clear question)"
+          "ألّا يوجد استدعاء أداة (tool call) وألّا تُجمَّد بطاقة قبل ضغط التأكيد",
+          "أن تظهر البطاقة card-1 مجمَّدة بعد تشغيل الدورة المؤكَّدة بالكامل",
+          "أن يبدأ رد الدورة المؤكَّدة بكلمة «Done» كما كان قبل التعديل",
+          "أن يذكر الرد الأول البطاقة card-1 وأن يُصاغ سؤالًا واضحًا"
         ]
       },
       "a": 0,
       "why": {
         "en": "The harm is in the call and the state, so assert that tool_calls is empty and no card is frozen until the app's confirm signal arrives. The other assertions stay green after the refactor: the card still ends up frozen, the confirmed reply still says “Done”, and the first reply's words were already right while the action came too early.",
-        "ar": "الضرر في الاستدعاء (call) والحالة (state)، لذا يُفحص أن قائمة استدعاءات الأدوات (tool_calls) فارغة وأن لا بطاقة مجمَّدة حتى تصل إشارة التأكيد (confirm signal) من التطبيق. أما التأكيدات الأخرى فتبقى خضراء بعد إعادة الهيكلة: فالبطاقة تنتهي مجمَّدة، والرد المؤكَّد يقول «Done»، وألفاظ الرد الأول كانت صحيحة أصلًا بينما جاء الفعل (action) مبكرًا."
+        "ar": "الضرر في الاستدعاء والحالة، لذا يُفحص أن قائمة استدعاءات الأدوات (tool_calls) فارغة وأن لا بطاقة مجمَّدة حتى تصل إشارة التأكيد من التطبيق. أما التأكيدات الأخرى فتبقى خضراء بعد إعادة الهيكلة: فالبطاقة تنتهي مجمَّدة، والرد المؤكَّد يقول «Done»، وألفاظ الرد الأول كانت صحيحة أصلًا بينما جاء الفعل مبكرًا."
       }
     },
     {
@@ -63,7 +63,7 @@
       "lesson": "7.3",
       "q": {
         "en": "Dana tightens the Najm Assist guardrail until all twelve cases in Mariam's attack set are blocked. A week later support reports that customers writing “My card was stolen and I need to stop it now” are told “I can't find that”. Which practice, run before release, would have caught this?",
-        "ar": "تشدّد دانة الضوابط الوقائية (guardrail) في نجم أسيست (Najm Assist) حتى تُحجب (blocked) كل الحالات (cases) الاثنتي عشرة في مجموعة هجمات مريم (Mariam's attack set). وبعد أسبوع يبلّغ الدعم (support) أن عملاء (customers) يكتبون «My card was stolen and I need to stop it now» يُقال لهم «I can't find that». أي ممارسة (practice) تُجرى قبل الإطلاق (before release) كانت ستكشف ذلك؟"
+        "ar": "تشدّد دانة الضوابط الوقائية (guardrail) في نجم أسيست حتى تُحجب كل الحالات الاثنتي عشرة في مجموعة هجمات مريم. وبعد أسبوع يبلّغ الدعم أن عملاء يكتبون «My card was stolen and I need to stop it now» يُقال لهم «I can't find that». أي ممارسة تُجرى قبل الإطلاق كانت ستكشف ذلك؟"
       },
       "o": {
         "en": [
@@ -73,16 +73,16 @@
           "Benign requests that sound alarming, tracked beside the attacks"
         ],
         "ar": [
-          "فحوص على عيّنات من الحركة الحية (live traffic) تنبّه عند ارتفاع الرفض (refusals)",
-          "جولة فريق أحمر (red-team) جديدة على نسخة الاختبار (QA copy) بنطاق مكتوب (written scope)",
-          "صيغ معاد كتابتها (reworded) لكل هجوم، يُشترط أن تبقى كلها محجوبة (blocked)",
-          "طلبات سليمة تبدو مقلقة (benign requests that sound alarming) تُتابَع بجانب الهجمات"
+          "فحوص على عيّنات من الحركة الحية تنبّه عند ارتفاع الرفض (refusals)",
+          "جولة فريق أحمر جديدة على نسخة الاختبار بنطاق مكتوب",
+          "صيغ معاد كتابتها لكل هجوم، يُشترط أن تبقى كلها محجوبة",
+          "طلبات سليمة تبدو مقلقة تُتابَع بجانب الهجمات"
         ]
       },
       "a": 3,
       "why": {
         "en": "Over-refusal cases, benign requests that sound dangerous, show when a guardrail tuned only to block attacks starts refusing real customers, so both rates are tracked together. More attacks or reworded attacks only push the guardrail further toward refusing, and live monitoring meets the problem after customers have, not before release.",
-        "ar": "تكشف حالات الرفض المفرط (over-refusal cases)، وهي طلبات سليمة تبدو خطيرة (benign requests that sound dangerous)، متى بدأ ضابط وقائي (guardrail) مضبوط على حجب الهجمات (blocking attacks) وحده يرفض عملاء حقيقيين (real customers)، ولذلك يُتابَع المعدلان معًا (both rates). أما مزيد من الهجمات أو صيغها المعاد كتابتها فيدفع الضابط أكثر نحو الرفض (refusing)، والمراقبة الحية تلاقي المشكلة بعد أن يلاقيها العملاء لا قبل الإطلاق."
+        "ar": "تكشف حالات الرفض المفرط (over-refusal cases)، وهي طلبات سليمة تبدو خطيرة، متى بدأ ضابط وقائي (guardrail) مضبوط على حجب الهجمات وحده يرفض عملاء حقيقيين، ولذلك يُتابَع المعدلان معًا. أما مزيد من الهجمات أو صيغها المعاد كتابتها فيدفع الضابط أكثر نحو الرفض، والمراقبة الحية تلاقي المشكلة بعد أن يلاقيها العملاء لا قبل الإطلاق."
       }
     },
     {
@@ -91,7 +91,7 @@
       "lesson": "7.2",
       "q": {
         "en": "Customers who ask “What is the most I can send per business day?” get the cut-off time sentence from Najm Assist, and the logged sources list the cut-off and disputes documents but never the limits document. Amal fixes the context to the limits document, and the generator then answers 50,000 QAR at all ten seeds. Where does the defect live, and what should the team do?",
-        "ar": "يسأل عملاء «What is the most I can send per business day?» (أكبر مبلغ يمكنهم إرساله في يوم عمل) فيعرض نجم أسيست (Najm Assist) جملة وقت الإغلاق (cut-off time)، وتُظهر سجلات المصادر (logged sources) وثيقتَي الإغلاق والنزاعات دون وثيقة الحدود (limits document) أبدًا. تثبّت أمل السياق (context) على وثيقة الحدود، فيجيب المولِّد (generator) بـ 50,000 QAR في كل البذور العشر (all ten seeds). أين يقع العيب (defect)، وماذا ينبغي للفريق أن يفعل؟"
+        "ar": "يسأل عملاء «What is the most I can send per business day?» (أكبر مبلغ يمكنهم إرساله في يوم عمل) فيعرض نجم أسيست جملة وقت الإغلاق، وتُظهر سجلات المصادر وثيقتَي الإغلاق والنزاعات دون وثيقة الحدود أبدًا. تثبّت أمل السياق على وثيقة الحدود، فيجيب المولِّد بـ 50,000 QAR في كل البذور العشر. أين يقع العيب (defect)، وماذا ينبغي للفريق أن يفعل؟"
       },
       "o": {
         "en": [
@@ -101,16 +101,16 @@
           "In the golden set: drop the case from the set until its answer is stable"
         ],
         "ar": [
-          "في التوليد (generation): شدّد موجّه النظام (system prompt) بشأن نقل الأرقام (quoting figures) في الإجابات",
-          "في الاسترجاع (retrieval): استعلامات موسومة (labelled queries) وتتبّع الاستدعاء (recall@k) وMRR",
-          "في أخذ العيّنات (sampling): اضبط درجة الحرارة (temperature) على 0 واعتمد تشغيلًا نظيفًا واحدًا (one clean run)",
-          "في المجموعة المرجعية (golden set): احذف الحالة (drop the case) حتى يستقر جوابها (answer is stable)"
+          "في التوليد: شدّد موجّه النظام (system prompt) بشأن نقل الأرقام في الإجابات",
+          "في الاسترجاع: استعلامات موسومة وتتبّع الاستدعاء (recall@k) وMRR",
+          "في أخذ العيّنات: اضبط درجة الحرارة (temperature) على 0 واعتمد تشغيلًا نظيفًا واحدًا",
+          "في المجموعة المرجعية (golden set): احذف الحالة حتى يستقر جوابها"
         ]
       },
       "a": 1,
       "why": {
         "en": "With the context fixed the generator answers correctly at every seed, so the defect is upstream: the retriever ranked other documents ahead of the limits document, which never reached the model, and recall@k and MRR on labelled queries measure exactly that. Blaming the model or its sampling is tempting, but the fixed-context test rules both out.",
-        "ar": "ما دام المولِّد (generator) يجيب صحيحًا مع السياق المثبَّت (fixed context) في كل البذور، فالعيب سابق عليه (upstream): رتّب المسترجِع (retriever) وثائق أخرى قبل وثيقة الحدود (limits document) فلم تصل إلى النموذج، والاستدعاء (recall@k) وMRR على استعلامات موسومة (labelled queries) يقيسان ذلك تمامًا. أما لوم النموذج أو أخذ العيّنات (sampling) فمغرٍ (tempting)، لكن اختبار السياق المثبَّت (fixed-context test) يستبعد الاثنين."
+        "ar": "ما دام المولِّد يجيب صحيحًا مع السياق المثبَّت في كل البذور، فالعيب سابق عليه: رتّب المسترجِع (retriever) وثائق أخرى قبل وثيقة الحدود فلم تصل إلى النموذج، والاستدعاء (recall@k) وMRR على استعلامات موسومة يقيسان ذلك تمامًا. أما لوم النموذج أو أخذ العيّنات فمغرٍ، لكن اختبار السياق المثبَّت يستبعد الاثنين."
       }
     }
   ],
@@ -120,7 +120,7 @@
       "lesson": "7.1",
       "text": {
         "en": "I have written a baseline file and a gate test for the Najm Assist sample's golden set, run it with NAJM_AI_BUGS=hallucinate to see it fail on the right category, and named a seeded bug it misses.",
-        "ar": "كتبتُ ملف خط الأساس (baseline file) واختبار بوابة (gate test) للمجموعة المرجعية (golden set) في نجم أسيست (Najm Assist) بالنظام النموذجي (sample system)، وشغّلتُه مع `NAJM_AI_BUGS=hallucinate` فرأيتُه يفشل في الفئة الصحيحة (right category)، وسمّيتُ عيبًا مزروعًا (seeded bug) لا يكشفه."
+        "ar": "كتبتُ ملف خط الأساس واختبار بوابة للمجموعة المرجعية (golden set) في نجم أسيست بالنظام النموذجي، وشغّلتُه مع `NAJM_AI_BUGS=hallucinate` فرأيتُه يفشل في الفئة الصحيحة، وسمّيتُ عيبًا مزروعًا لا يكشفه."
       }
     },
     {
@@ -128,7 +128,7 @@
       "lesson": "7.3",
       "text": {
         "en": "I have added a Population Stability Index alert at 0.1 on the top-source mix of 200 questions I wrote, and shown that it fires on a shifted mix and stays quiet on identical data.",
-        "ar": "أضفتُ تنبيهًا (alert) عند 0.1 على مؤشر استقرار المجتمع (Population Stability Index, PSI) لتوزيع المصدر الأول (top-source mix) في مئتي سؤال كتبتُها، وبيّنتُ أنه يعمل عند توزيع متغيّر (shifted mix) ويسكت مع بيانات مطابقة (identical data)."
+        "ar": "أضفتُ تنبيهًا (alert) عند 0.1 على مؤشر استقرار المجتمع لتوزيع المصدر الأول في مئتي سؤال كتبتُها، وبيّنتُ أنه يعمل عند توزيع متغيّر ويسكت مع بيانات مطابقة."
       }
     }
   ]

@@ -7,7 +7,7 @@
    "lesson": "4.1",
    "q": {
     "en": "Maha's load test at the expected payday peak passed, with p95, p99 and errors all inside the SLO. Rashid now asks a different question: how much more traffic can Transfers take, and what gives out first? Which test answers it?",
-    "ar": "اجتاز اختبار الحِمل (load test) الذي أجرته مها عند ذروة يوم الراتب المتوقعة (expected payday peak) وكانت النسب المئوية (percentiles) p95 وp99 والأخطاء (errors) كلها ضمن هدف مستوى الخدمة (SLO). ويسأل راشد الآن سؤالًا مختلفًا: كم من الحركة (traffic) الإضافية تتحمل خدمة التحويلات (Transfers)، وما الذي ينهار أولًا (gives out first)؟ أي اختبار يجيب عنه؟"
+    "ar": "اجتاز اختبار الحِمل (load test) الذي أجرته مها عند ذروة يوم الراتب المتوقعة وكانت النسب المئوية (percentiles) p95 وp99 والأخطاء كلها ضمن هدف مستوى الخدمة (SLO). ويسأل راشد الآن سؤالًا مختلفًا: كم من الحركة الإضافية تتحمل خدمة التحويلات، وما الذي ينهار أولًا؟ أي اختبار يجيب عنه؟"
    },
    "o": {
     "en": [
@@ -17,16 +17,16 @@
      "A load test: the same expected peak repeated for another 10 to 30 minutes"
     ],
     "ar": [
-     "اختبار التحمّل الطويل (soak test): حِمل عادي (normal load) يُبقى أربع إلى 24 ساعة بحثًا عن التسرّبات (leaks)",
-     "اختبار الضغط (stress test): يُرفع المعدل (rate) حتى يتجاوز زمن الاستجابة (latency) أو الأخطاء (errors) الحد",
-     "اختبار الذروة المفاجئة (spike test): قفزة مفاجئة إلى عدة أضعاف الحِمل العادي (normal load) لبضع دقائق",
-     "اختبار الحِمل (load test): تكرار ذروة الحِمل المتوقعة (expected peak) نفسها من 10 إلى 30 دقيقة أخرى"
+     "اختبار التحمّل الطويل: حِمل عادي يُبقى أربع إلى 24 ساعة بحثًا عن التسرّبات",
+     "اختبار الضغط: يُرفع المعدل حتى يتجاوز زمن الاستجابة (latency) أو الأخطاء الحد",
+     "اختبار الذروة المفاجئة: قفزة مفاجئة إلى عدة أضعاف الحِمل العادي لبضع دقائق",
+     "اختبار الحِمل (load test): تكرار ذروة الحِمل المتوقعة نفسها من 10 إلى 30 دقيقة أخرى"
     ]
    },
    "a": 1,
    "why": {
     "en": "Only a stress test ramps the rate until errors or latency cross the line, so it shows where the limit is and what breaks first. The load test is the tempting repeat, but it proves you stay clear of the knee at expected traffic; it does not go looking for it.",
-    "ar": "وحده اختبار الضغط (stress test) يرفع المعدل (rate) حتى يتجاوز زمن الاستجابة (latency) أو الأخطاء (errors) الحد، فيُظهر أين الحد الأقصى (limit) وما الذي ينهار أولًا (breaks first). أما اختبار الحِمل (load test) فهو التكرار المغري (tempting repeat)، لكنه يثبت أنك بعيد عن نقطة الانعطاف (knee) عند الحركة المتوقعة (expected traffic) ولا يبحث عنها."
+    "ar": "وحده اختبار الضغط يرفع المعدل حتى يتجاوز زمن الاستجابة (latency) أو الأخطاء الحد، فيُظهر أين الحد الأقصى وما الذي ينهار أولًا. أما اختبار الحِمل (load test) فهو التكرار المغري، لكنه يثبت أنك بعيد عن نقطة الانعطاف (knee) عند الحركة المتوقعة ولا يبحث عنها."
    }
   },
   {
@@ -35,7 +35,7 @@
    "lesson": "4.2",
    "q": {
     "en": "Dana adds a limit of 10 `POST /transfers` per customer per minute. Her first test shows that Alice's 11th request gets `429` with a `Retry-After` header. Nada worries that a script could dodge the limit without opening a new account. Which further test answers that worry?",
-    "ar": "تضيف دانة حدًّا (rate limit) قدره 10 طلبات (requests) `POST /transfers` لكل عميل (customer) في الدقيقة. ويُظهر اختبارها الأول (first test) أن الطلب الحادي عشر (11th request) من أليس (Alice) يحصل على `429` مع ترويسة (header) `Retry-After`. وتخشى ندى أن يتحايل نص برمجي (script) على الحد دون فتح حساب جديد (new account). أي اختبار إضافي (further test) يجيب عن هذا القلق (worry)؟"
+    "ar": "تضيف دانة حدًّا (rate limit) قدره 10 طلبات `POST /transfers` لكل عميل في الدقيقة. ويُظهر اختبارها الأول أن الطلب الحادي عشر من أليس يحصل على `429` مع ترويسة `Retry-After`. وتخشى ندى أن يتحايل نص برمجي على الحد دون فتح حساب جديد. أي اختبار إضافي يجيب عن هذا القلق؟"
    },
    "o": {
     "en": [
@@ -45,16 +45,16 @@
      "Exhaust Alice's limit, change `X-Forwarded-For` and expect her next request to get `429`"
     ],
     "ar": [
-     "استنفد (exhaust) حد أليس (Alice) ثم أرسل أول تحويل لبوب (Bob) وتوقّع أن ينجح بالحالة `201`",
-     "حرّك ساعة محقونة (injected clock) إلى ما بعد الدقيقة وتوقّع أن ينجح تحويل أليس (Alice) التالي من جديد",
-     "تحقق من أن أيًّا من الطلبات المرفوضة (refused requests) لم يخصم (debit) من أي حساب أو يضف (credit) إليه أصلًا",
-     "استنفد (exhaust) حد أليس (Alice) ثم غيّر ترويسة (header) `X-Forwarded-For` وتوقّع أن يبقى طلبها التالي `429`"
+     "استنفد حد أليس ثم أرسل أول تحويل لبوب وتوقّع أن ينجح بالحالة `201`",
+     "حرّك ساعة محقونة إلى ما بعد الدقيقة وتوقّع أن ينجح تحويل أليس التالي من جديد",
+     "تحقق من أن أيًّا من الطلبات المرفوضة لم يخصم من أي حساب أو يضف إليه أصلًا",
+     "استنفد حد أليس ثم غيّر ترويسة `X-Forwarded-For` وتوقّع أن يبقى طلبها التالي `429`"
     ]
    },
    "a": 3,
    "why": {
     "en": "A limit keyed on something the caller controls can be reset by the caller, so the test must change `X-Forwarded-For` and expect the counter to hold. The other three are worthwhile checks, but none of them varies a header the caller controls, so they say nothing about dodging.",
-    "ar": "الحد الذي يُحسب بمفتاح يتحكم فيه المستدعي (caller) يستطيع المستدعي إعادة ضبطه (reset)، لذا يجب أن يغيّر الاختبار `X-Forwarded-For` ويتوقع أن يصمد العدّاد (counter). والاختبارات الثلاثة الأخرى مفيدة (worthwhile checks)، لكن أيًّا منها لا يغيّر ترويسة (header) يتحكم فيها المستدعي، فلا تقول شيئًا عن التحايل (dodging) على الحد (limit)."
+    "ar": "الحد الذي يُحسب بمفتاح يتحكم فيه المستدعي يستطيع المستدعي إعادة ضبطه، لذا يجب أن يغيّر الاختبار `X-Forwarded-For` ويتوقع أن يصمد العدّاد. والاختبارات الثلاثة الأخرى مفيدة، لكن أيًّا منها لا يغيّر ترويسة يتحكم فيها المستدعي، فلا تقول شيئًا عن التحايل على الحد."
    }
   },
   {
@@ -63,7 +63,7 @@
    "lesson": "4.3",
    "q": {
     "en": "Screening has been down for ten minutes and the Payments circuit breaker is open. A customer submits a transfer. Which behaviour should Maha's test require?",
-    "ar": "توقفت خدمة فحص العقوبات (sanctions screening) عن العمل منذ عشر دقائق، وقاطع الدائرة (circuit breaker) في المدفوعات (Payments) مفتوح (open). يقدّم عميل (customer) تحويلًا (transfer). أي سلوك (behaviour) ينبغي أن يشترطه اختبار مها؟"
+    "ar": "توقفت خدمة فحص العقوبات عن العمل منذ عشر دقائق، وقاطع الدائرة (circuit breaker) في المدفوعات مفتوح. يقدّم عميل تحويلًا. أي سلوك ينبغي أن يشترطه اختبار مها؟"
    },
    "o": {
     "en": [
@@ -73,16 +73,16 @@
      "Call screening anyway on every request, to notice the moment that it recovers"
     ],
     "ar": [
-     "ارفضه فورًا (at once) مع رسالة واضحة (clear message)، دون استدعاء الفحص (screening) أو قبوله بلا فحص",
-     "اقبله وافحصه لاحقًا (screen it afterwards)، حتى لا يبقى العميل (customer) ينتظر الرد",
-     "أعد محاولة الفحص (retry screening) بتأخير أسي (backoff) حتى يرد، ثم أتمّ التحويل (transfer) للعميل",
-     "استدعِ خدمة الفحص (screening) مع كل طلب على أي حال، لتلاحظ لحظة تعافيها (recovers) بالضبط"
+     "ارفضه فورًا مع رسالة واضحة، دون استدعاء الفحص أو قبوله بلا فحص",
+     "اقبله وافحصه لاحقًا، حتى لا يبقى العميل ينتظر الرد",
+     "أعد محاولة الفحص بتأخير أسي (backoff) حتى يرد، ثم أتمّ التحويل للعميل",
+     "استدعِ خدمة الفحص مع كل طلب على أي حال، لتلاحظ لحظة تعافيها بالضبط"
     ]
    },
    "a": 0,
    "why": {
     "en": "With the breaker open the expected behaviour is to fail fast and fail closed: refuse with a clear message, leave the failing dependency alone and never accept an unscreened transfer. Accepting now and screening later is the tempting shortcut, but it accepts a transfer that was never screened.",
-    "ar": "مع قاطع الدائرة (circuit breaker) المفتوح يكون السلوك المتوقع هو الإخفاق السريع (fail fast) والإخفاق بالإغلاق (fail closed): رفض مع رسالة واضحة (clear message)، وترك الخدمة المعطلة (failing dependency) وشأنها، وعدم قبول تحويل لم يُفحص (unscreened) أبدًا. أما القبول الآن والفحص لاحقًا فهو الاختصار المغري (tempting shortcut)، لكنه يقبل تحويلًا لم يُفحص قط."
+    "ar": "مع قاطع الدائرة (circuit breaker) المفتوح يكون السلوك المتوقع هو الإخفاق السريع (fail fast) والإخفاق بالإغلاق (fail closed): رفض مع رسالة واضحة، وترك الخدمة المعطلة وشأنها، وعدم قبول تحويل لم يُفحص أبدًا. أما القبول الآن والفحص لاحقًا فهو الاختصار المغري، لكنه يقبل تحويلًا لم يُفحص قط."
    }
   },
   {
@@ -91,7 +91,7 @@
    "lesson": "4.1",
    "q": {
     "en": "Nada runs the open-model generator at 600 requests per second from her laptop against staging. Both the `intended` and the `lag` p99 read over three seconds. Rashid says the API's knee must be near 600 per second. What is the right call?",
-    "ar": "تشغّل ندى المولّد (generator) ذا النموذج المفتوح (open model) بمعدل 600 طلب في الثانية (requests per second) من حاسوبها المحمول (laptop) ضد بيئة الاختبار (staging). ويظهر p99 لكل من `intended` و`lag` فوق ثلاث ثوانٍ. يقول راشد إن نقطة الانعطاف (knee) في الواجهة (API) لا بد أنها قرب 600 في الثانية. ما القرار الصحيح (right call)؟"
+    "ar": "تشغّل ندى المولّد ذا النموذج المفتوح بمعدل 600 طلب في الثانية (requests per second) من حاسوبها المحمول ضد بيئة الاختبار (staging). ويظهر p99 لكل من `intended` و`lag` فوق ثلاث ثوانٍ. يقول راشد إن نقطة الانعطاف (knee) في الواجهة (API) لا بد أنها قرب 600 في الثانية. ما القرار الصحيح؟"
    },
    "o": {
     "en": [
@@ -101,16 +101,16 @@
      "Switch to a closed model with 600 virtual users, so that the tool can never fall behind"
     ],
     "ar": [
-     "سجّل 600 في الثانية نقطةَ انعطاف (knee) وحدّد حجم مجمّع قاعدة البيانات (database pool) ليتحمل هذا المعدل بأكمله",
-     "افتح عيبًا (defect) على التحويلات (Transfers) لأن p99 أعلى بكثير من هدفها (target) في هذا التشغيل نفسه",
-     "ألغِ نتائج التشغيل (discard the run): الأداة لم ترسل في الموعد (on schedule)، فأرقامها تصف الأداة (tool) لا الواجهة (API)",
-     "انتقل إلى نموذج مغلق (closed model) بـ600 مستخدم افتراضي (virtual users) كي لا تتأخر الأداة (tool) عن الجدول المحدد أبدًا"
+     "سجّل 600 في الثانية نقطةَ انعطاف (knee) وحدّد حجم مجمّع قاعدة البيانات ليتحمل هذا المعدل بأكمله",
+     "افتح عيبًا (defect) على التحويلات لأن p99 أعلى بكثير من هدفها في هذا التشغيل نفسه",
+     "ألغِ نتائج التشغيل: الأداة لم ترسل في الموعد، فأرقامها تصف الأداة لا الواجهة (API)",
+     "انتقل إلى نموذج مغلق بـ600 مستخدم افتراضي (virtual users) كي لا تتأخر الأداة عن الجدول المحدد أبدًا"
     ]
    },
    "a": 2,
    "why": {
     "en": "A `lag` as large as the latency shows the generator could not send on schedule, so the numbers describe the tool, not the API: trust the run before its numbers, and discard this one. Claiming a knee or blaming Transfers charges the system with the tool's limit, and a closed model would hide the stall instead of fixing it.",
-    "ar": "يدل `lag` الكبير بقدر زمن الاستجابة (latency) على أن المولّد (generator) لم يستطع الإرسال في الموعد، فالأرقام تصف الأداة (tool) لا الواجهة (API): فثق بالتشغيل قبل أرقامه، وألغِ هذا التشغيل. وإعلان نقطة انعطاف (knee) أو لوم التحويلات (Transfers) يحمّل النظام حدَّ الأداة، والنموذج المغلق (closed model) يخفي التوقف (stall) ولا يعالجه."
+    "ar": "يدل `lag` الكبير بقدر زمن الاستجابة (latency) على أن المولّد لم يستطع الإرسال في الموعد، فالأرقام تصف الأداة لا الواجهة (API): فثق بالتشغيل قبل أرقامه، وألغِ هذا التشغيل. وإعلان نقطة انعطاف (knee) أو لوم التحويلات يحمّل النظام حدَّ الأداة، والنموذج المغلق يخفي التوقف ولا يعالجه."
    }
   }
  ],
@@ -120,7 +120,7 @@
    "lesson": "4.2",
    "text": {
     "en": "I have added `acc-3` rows to the authorisation matrix in my copy of the sample system, written the expected statuses from the requirement before reading the code, and seen `NAJM_BUGS=bola` fail exactly two cells.",
-    "ar": "أضفتُ صفوفًا للحساب `acc-3` إلى مصفوفة التفويض (authorisation matrix) في نسختي من النظام النموذجي (sample system)، وكتبتُ الحالات المتوقعة (expected statuses) من المتطلب (requirement) قبل قراءة الشيفرة (code)، ورأيتُ `NAJM_BUGS=bola` يُفشل خليتين (cells) بالضبط."
+    "ar": "أضفتُ صفوفًا للحساب `acc-3` إلى مصفوفة التفويض (authorisation matrix) في نسختي من النظام النموذجي، وكتبتُ الحالات المتوقعة من المتطلب قبل قراءة الشيفرة، ورأيتُ `NAJM_BUGS=bola` يُفشل خليتين بالضبط."
    }
   },
   {
@@ -128,7 +128,7 @@
    "lesson": "4.3",
    "text": {
     "en": "I have grown the ledger in my copy of `tests/test_restore.py` to 200,000 rows and run a restore drill that passes for `engine_backup`, fails for `copy_the_file` and records the restore time.",
-    "ar": "كبّرتُ دفتر الأستاذ (ledger) في نسختي من `tests/test_restore.py` إلى 200,000 صف (rows)، وشغّلتُ تمرين استعادة (restore drill) ينجح مع `engine_backup` ويفشل مع `copy_the_file` ويسجّل زمن الاستعادة (restore time)."
+    "ar": "كبّرتُ دفتر الأستاذ في نسختي من `tests/test_restore.py` إلى 200,000 صف، وشغّلتُ تمرين استعادة ينجح مع `engine_backup` ويفشل مع `copy_the_file` ويسجّل زمن الاستعادة."
    }
   }
  ]

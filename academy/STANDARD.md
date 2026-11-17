@@ -56,7 +56,7 @@ Rule: no label other than "AI-drafted" is shown until its record exists in `acad
 
 - Credential items come from a private bank that is not published. Public items are practice only and are labelled so.
 - Run the answer-cue check on both sides: the correct option must not be identifiable by length, gloss or position, and a wrong option must not be eliminated by those cues either. `npm run qa:cues` does this for the published items.
-- Gloss every option or none of them. Never gloss only the correct one.
+- Treat a term the same way in every option of an item (gloss it in all of them or none). Never gloss only the correct one.
 
 ## 7. Claims
 

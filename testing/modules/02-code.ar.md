@@ -1,39 +1,39 @@
 # الوحدة 2 — اختبار الشيفرة (Testing code)
 
-*علّمتك الوحدة 1 (Module 1) كيف تقرر ما الذي تختبره (decide what to test). وتحوّل هذه الوحدة تلك القرارات إلى شيفرة (code) تعمل مع كل إيداع (commit) في بنك نجم (Najm Bank). يتناول الدرس 2.1 (Lesson 2.1) اختبارات الوحدة (unit tests)، وهي فحوص صغيرة وسريعة (small, fast checks) تجيب المطوّر (developer) في ثوانٍ، ويتناول التطوير الموجَّه بالاختبار (test-driven development, TDD)، أي عادة كتابة الاختبار الفاشل أولًا (writing the failing test first). وينتقل الدرس 2.2 إلى المواضع التي تكفّ فيها كائنات المحاكاة (mocks) عن الصدق (stop being honest): قواعد البيانات (databases) والطوابير (queues) واستدعاءات HTTP إلى الخدمات الأخرى (HTTP calls to other services) والعقود بين الفرق (the contracts between teams). ويطرح الدرس 2.3 السؤال الأهم، وهو أهم حين يكتب وكيل ذكاء اصطناعي (AI agent) اختباراتك: هل هذه الاختبارات جيدة فعلًا؟ ⁦(are these tests any good?)⁩ ستقيس مجموعة الاختبارات (suite) بتغطية الشيفرة (coverage)، وتكسر الشيفرة عمدًا (break the code on purpose) باختبار الطفرات (mutation testing)، وتدع Hypothesis تبحث عن مدخلات لم يفكر فيها أحد (inputs nobody thought of)، وتتعلم كشف الاختبارات غير المستقرة (flaky tests). كل شيء يعمل على [النظام النموذجي للدورة (the course's sample system)](https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/testing/sample)، وهو تحويلات نجم (Najm Transfers)، فتشاهد كيف تلتقط كل تقنية العيوب المزروعة (seeded bugs) أو تُخطئها (catch or miss).*
+*علّمتك الوحدة 1 كيف تقرر ما الذي تختبره. وتحوّل هذه الوحدة تلك القرارات إلى شيفرة تعمل مع كل إيداع في بنك نجم. يتناول الدرس 2.1 اختبارات الوحدة (unit tests)، وهي فحوص صغيرة وسريعة تجيب المطوّر في ثوانٍ، ويتناول التطوير الموجَّه بالاختبار، أي عادة كتابة الاختبار الفاشل أولًا. وينتقل الدرس 2.2 إلى المواضع التي تكفّ فيها كائنات المحاكاة (mocks) عن الصدق: قواعد البيانات والطوابير (queues) واستدعاءات HTTP إلى الخدمات الأخرى والعقود بين الفرق. ويطرح الدرس 2.3 السؤال الأهم، وهو أهم حين يكتب وكيل ذكاء اصطناعي اختباراتك: هل هذه الاختبارات جيدة فعلًا؟ ستقيس مجموعة الاختبارات بتغطية الشيفرة (coverage)، وتكسر الشيفرة عمدًا باختبار الطفرات (mutation testing)، وتدع Hypothesis تبحث عن مدخلات لم يفكر فيها أحد، وتتعلم كشف الاختبارات غير المستقرة (flaky tests). كل شيء يعمل على [النظام النموذجي للدورة](https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/testing/sample)، وهو تحويلات نجم، فتشاهد كيف تلتقط كل تقنية العيوب المزروعة أو تُخطئها.*
 
-> **التركيز (Focus):** Unit, Integration — كتابة اختبارات سريعة وصادقة (fast, honest tests) للشيفرة التي تملكها (the code you own)، وربطها بتبعيات حقيقية (real dependencies)، وإثبات أنها قادرة على الفشل (proving that they can fail).
+> **التركيز:** Unit, Integration — كتابة اختبارات سريعة وصادقة للشيفرة التي تملكها، وربطها بتبعيات حقيقية، وإثبات أنها قادرة على الفشل.
 
 ---
 
-# 2.1 — اختبار الوحدة والتطوير الموجَّه بالاختبار: التجهيز والتنفيذ والتأكيد، والبدائل الاختبارية، والتغذية الراجعة السريعة (Unit testing and TDD: arrange-act-assert, test doubles and fast feedback)
-*المستوى (Level): 🟢 مبتدئ (Beginner)* · *المتطلبات (Prerequisites): 1.1* · *التركيز (Focus): Unit*
+# 2.1 — اختبار الوحدة والتطوير الموجَّه بالاختبار: التجهيز والتنفيذ والتأكيد، والبدائل الاختبارية، والتغذية الراجعة السريعة
+*المستوى: 🟢 مبتدئ* · *المتطلبات: 1.1* · *التركيز: Unit*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
-- يفحص **اختبار الوحدة (unit test)** سلوكًا صغيرًا واحدًا (one small behaviour) في ميلي ثوانٍ (in milliseconds)، دون شبكة (network) أو قاعدة بيانات (database) أو ساعة حقيقية (real clock). ابنِه على نمط **التجهيز والتنفيذ والتأكيد (arrange, act, assert)** وسمِّه باسم القاعدة التي يحميها (name it after the rule it protects).
-- استبدل فقط ما هو بطيء أو عشوائي أو خارج سيطرتك (slow, random or out of your control) **ببديل اختباري (test double)**: الكائن الشكلي (dummy) أو البديل ثابت الاستجابة (stub) أو المراقب (spy) أو كائن المحاكاة (mock) أو البديل المزيّف (fake).
-- فضّل **اختبار الحالة (state testing)**، أي «ما الصحيح بعد ذلك؟» ⁦(what is true afterwards?)⁩، على **اختبار التفاعل (interaction testing)**، أي «أي استدعاءات حدثت؟» ⁦(which calls happened?)⁩. فاستبدال القاعدة المختبَرة بكائن محاكاة (Mocking away the rule under test) يُبقي الاختبار أخضر والنظام معطوبًا (the test green and the system broken).
-- **التطوير الموجَّه بالاختبار (TDD)** حلقة (a loop): اختبار فاشل واحد (أحمر، red)، وأبسط شيفرة تنجح (أخضر، green)، ثم التنظيف (إعادة الهيكلة، refactor). استخدمه للقواعد التي تفهمها، لا للاستكشاف (not for exploration).
-- إشارة القرار (Decision cue): سمِّ العيب الذي سيلتقطه الاختبار، وإلا فهو مجرد زينة (decoration).
+- يفحص **اختبار الوحدة (unit test)** سلوكًا صغيرًا واحدًا في ميلي ثوانٍ، دون شبكة أو قاعدة بيانات أو ساعة حقيقية. ابنِه على نمط **التجهيز والتنفيذ والتأكيد** وسمِّه باسم القاعدة التي يحميها.
+- استبدل فقط ما هو بطيء أو عشوائي أو خارج سيطرتك **ببديل اختباري (test double)**: الكائن الشكلي (dummy) أو البديل ثابت الاستجابة (stub) أو المراقب (spy) أو كائن المحاكاة (mock) أو البديل المزيّف (fake).
+- فضّل **اختبار الحالة (state testing)**، أي «ما الصحيح بعد ذلك؟»، على **اختبار التفاعل**، أي «أي استدعاءات حدثت؟». فاستبدال القاعدة المختبَرة بكائن محاكاة يُبقي الاختبار أخضر والنظام معطوبًا.
+- **التطوير الموجَّه بالاختبار (TDD)** حلقة: اختبار فاشل واحد (أحمر)، وأبسط شيفرة تنجح (أخضر)، ثم التنظيف (إعادة الهيكلة، refactor). استخدمه للقواعد التي تفهمها، لا للاستكشاف.
+- إشارة القرار: سمِّ العيب الذي سيلتقطه الاختبار، وإلا فهو مجرد زينة.
 
-## 🧭 لماذا يهم (Why it matters)
-يوم الثلاثاء (On Tuesday) تفتح ندى (Nada) أول طلب دمج (pull request) لها في بنك نجم (Najm Bank): مكتب `TransferDesk` الذي يرسل تحويلًا (submits a transfer) ويرسل رسالة نصية إلى العميل (texts the customer). فيه أربعة عشر اختبارًا للوحدة (fourteen unit tests)، وكل سطر جديد مغطًّى (every new line covered). يشغّلها بلال (Bilal) وعيب `limit_off_by_one` في النظام النموذجي (the sample system) مفعَّل (switched on). تنجح الأربعة عشر كلها. يُرفض تحويل يجعل إجمالي اليوم 50,000.00 QAR بالضبط رفضًا خاطئًا (wrongly rejected)، ولا يلاحظ أي اختبار ذلك، لأن كل اختبار استبدل `TransferService` بكائن `Mock` يعيد جوابًا جاهزًا (a ready-made answer). تفحص الاختبارات أن المكتب يجري استدعاءات (makes calls). ولا واحد منها يشغّل القاعدة (runs the rule).
+## 🧭 لماذا يهم
+يوم الثلاثاء تفتح ندى أول طلب دمج (pull request) لها في بنك نجم: مكتب `TransferDesk` الذي يرسل تحويلًا ويرسل رسالة نصية إلى العميل. فيه أربعة عشر اختبارًا للوحدة، وكل سطر جديد مغطًّى. يشغّلها بلال وعيب `limit_off_by_one` في النظام النموذجي مفعَّل. تنجح الأربعة عشر كلها. يُرفض تحويل يجعل إجمالي اليوم 50,000.00 QAR بالضبط رفضًا خاطئًا، ولا يلاحظ أي اختبار ذلك، لأن كل اختبار استبدل `TransferService` بكائن `Mock` يعيد جوابًا جاهزًا. تفحص الاختبارات أن المكتب يجري استدعاءات. ولا واحد منها يشغّل القاعدة.
 
-يطلب راشد (Rashid) من ندى أن تسمّي العيب الذي سيلتقطه كل اختبار (name the bug each test would catch). فلا تسمّي أيًّا منها. وهذا الدرس هو عُدّة الإصلاح (the repair kit): اختبارات سريعة ومقروءة وقادرة على الفشل (fast, readable and able to fail)، ومتى تستبدل متعاونًا (collaborator) ببديل مزيّف (fake)، وكيف يجعلك التطوير الموجَّه بالاختبار (TDD) ترى الاختبار يفشل أولًا (watch a test fail first). وفي عصر الذكاء الاصطناعي (AI era) يزداد هذا أهمية: فالوكيل (agent) يستطيع أن يكتب في ثوانٍ اختبارات سلسة مثقلة بكائنات المحاكاة (fluent, mock-heavy tests)، وعليك أنت أن تحكم عليها (judge them).
+يطلب راشد من ندى أن تسمّي العيب الذي سيلتقطه كل اختبار. فلا تسمّي أيًّا منها. وهذا الدرس هو عُدّة الإصلاح: اختبارات سريعة ومقروءة وقادرة على الفشل، ومتى تستبدل متعاونًا ببديل مزيّف، وكيف يجعلك التطوير الموجَّه بالاختبار ترى الاختبار يفشل أولًا. وفي عصر الذكاء الاصطناعي يزداد هذا أهمية: فالوكيل (agent) يستطيع أن يكتب في ثوانٍ اختبارات سلسة مثقلة بكائنات المحاكاة، وعليك أنت أن تحكم عليها.
 
-## 📐 كيف يعمل (How it works)
+## 📐 كيف يعمل
 
-### 🟢 الأساسيات (The essentials)
+### 🟢 الأساسيات
 
-**ما الوحدة (What a unit is).** الوحدة (*unit*) هي أصغر سلوك تستطيع تسميته وفحصه منفردًا (the smallest behaviour you can name and check alone): غالبًا دالة (function) مثل `fee`، وأحيانًا صنف صغير (a small class)، وليست أبدًا «ملفًا» (a file). يعمل **اختبار الوحدة (unit test)** داخل العملية نفسها (in-process)، في ميلي ثوانٍ (in milliseconds)، دون شبكة (network) أو قاعدة بيانات (database) أو ساعة حقيقية (real clock) أو عشوائية (randomness).
+**ما الوحدة.** الوحدة هي أصغر سلوك تستطيع تسميته وفحصه منفردًا: غالبًا دالة مثل `fee`، وأحيانًا صنف صغير، وليست أبدًا «ملفًا». يعمل **اختبار الوحدة (unit test)** داخل العملية نفسها، في ميلي ثوانٍ، دون شبكة أو قاعدة بيانات أو ساعة حقيقية أو عشوائية.
 
-**التجهيز والتنفيذ والتأكيد (Arrange, act, assert, AAA).** يبني *التجهيز (arrange)* المدخلات والكائنات (inputs and objects). ويستدعي *التنفيذ (act)* الشيء الواحد المختبَر (the one thing under test). ويفحص *التأكيد (assert)* النتيجة (the outcome). تنفيذان اثنان (Two acts): اختباران (two tests).
+**التجهيز والتنفيذ والتأكيد (Arrange, act, assert, AAA).** يبني *التجهيز* المدخلات والكائنات. ويستدعي *التنفيذ* الشيء الواحد المختبَر. ويفحص *التأكيد (assert)* النتيجة. تنفيذان اثنان: اختباران.
 
-**التسمية (Naming).** اسم الاختبار (test name) هو أول ما يعرضه البناء الفاشل (a failing build). فالاسم `test_fee` لا يخبر الغريب بشيء (tells a stranger nothing)، أما `test_international_fee_is_rounded_half_up` فيسمّي القاعدة المكسورة (names the broken rule).
+**التسمية.** اسم الاختبار هو أول ما يعرضه البناء الفاشل. فالاسم `test_fee` لا يخبر الغريب بشيء، أما `test_international_fee_is_rounded_half_up` فيسمّي القاعدة المكسورة.
 
-**FIRST.** خمس خصائص لاختبار الوحدة الجيد (Five properties of a good unit test): **سريع (Fast)** أي ميلي ثوانٍ (milliseconds)، فتشغّله باستمرار (so you run it constantly)؛ و**معزول (Isolated)** فلا يحتاج اختبار إلى آخر يعمل قبله (no test needs another to run first)؛ و**قابل للتكرار (Repeatable)** بالنتيجة نفسها على أي جهاز وفي أي يوم (same result on any machine, any day)، لذا مرّر `now` من الخارج (pass now in)؛ و**ذاتي التحقق (Self-validating)** أي `assert` لا `print`؛ و**في الوقت المناسب (Timely)** أي مكتوب مع الشيفرة أو قبلها (written with or before the code).
+**FIRST.** خمس خصائص لاختبار الوحدة الجيد: **سريع** أي ميلي ثوانٍ، فتشغّله باستمرار؛ و**معزول** فلا يحتاج اختبار إلى آخر يعمل قبله؛ و**قابل للتكرار** بالنتيجة نفسها على أي جهاز وفي أي يوم، لذا مرّر `now` من الخارج؛ و**ذاتي التحقق (Self-validating)** أي `assert` لا `print`؛ و**في الوقت المناسب** أي مكتوب مع الشيفرة أو قبلها.
 
-**أساسيات pytest (pytest essentials).** يشغّل pytest الدوال المسماة `test_*` في الملفات المسماة `test_*.py`. أعلام مفيدة (Handy flags): `-q` للوضع الهادئ (quiet)، و`-k rounded` للاختيار بالاسم (select by name)، و`-x` للتوقف عند أول فشل (stop at the first failure)، و`--durations=5` لأبطأ خمسة اختبارات (slowest five). يعرض هذا الملف الميزات السبع التي تحتاجها في اليوم الأول (the seven features you need on day one).
+**أساسيات pytest.** يشغّل pytest الدوال المسماة `test_*` في الملفات المسماة `test_*.py`. أعلام مفيدة: `-q` للوضع الهادئ، و`-k rounded` للاختيار بالاسم، و`-x` للتوقف عند أول فشل، و`--durations=5` لأبطأ خمسة اختبارات. يعرض هذا الملف الميزات السبع التي تحتاجها في اليوم الأول.
 
 ```python
 # tests/test_unit_essentials.py
@@ -87,18 +87,18 @@ def test_the_minimum_can_change_for_one_test(monkeypatch):
         check_transfer("49.99", "QAR", "own")
 ```
 
-سجّل الوسم (Register the marker) في `pytest.ini` (`markers = slow: tests over a second`). يعيد pytest كتابة `assert` العادي (rewrites plain assert) كي يُظهر الفشل الطرفين (a failure shows both sides). شغّل `NAJM_BUGS=float_fee pytest -k rounded` فيظهر عيب الفاصلة العائمة (float bug) في النظام النموذجي فرقًا مقروءًا (a readable diff) (مختصرًا، trimmed):
+سجّل الوسم في `pytest.ini` (`markers = slow: tests over a second`). يعيد pytest كتابة `assert` العادي كي يُظهر الفشل الطرفين. شغّل `NAJM_BUGS=float_fee pytest -k rounded` فيظهر عيب الفاصلة العائمة في النظام النموذجي فرقًا مقروءًا (مختصرًا):
 
 ```text
 >       assert result == Decimal("10.82")
 E       AssertionError: assert Decimal('10.81') == Decimal('10.82')
 ```
 
-تجهيزات الاختبار (Fixtures) ومجلدات `tmp_path` وتعديلات `monkeypatch` كلها لكل اختبار على حدة (per test)، فلا يتسرب شيء (nothing leaks)؛ ويجعل `pytest.raises` الخطأ هو النتيجة المتوقعة (the expected result).
+تجهيزات الاختبار (Fixtures) ومجلدات `tmp_path` وتعديلات `monkeypatch` كلها لكل اختبار على حدة، فلا يتسرب شيء؛ ويجعل `pytest.raises` الخطأ هو النتيجة المتوقعة.
 
 ### 🟡 التعمق أكثر (Going deeper)
 
-**البدائل الاختبارية (Test doubles).** يحل *البديل الاختباري (test double)* محل متعاون حقيقي (a real collaborator)، مثل بديل المشاهد الخطرة في السينما (a stunt double) (الأنواع الخمسة من كتاب *xUnit Test Patterns* لـ Gerard Meszaros؛ وانظر مقال Martin Fowler «Mocks Aren't Stubs»). أضف `TransferDesk` إلى النظام النموذجي (to the sample): يسأل مقيِّم المخاطر (a risk scorer)، ثم يرسل التحويل (submits)، ثم يرسل رسالة نصية (sends an SMS).
+**البدائل الاختبارية (Test doubles).** يحل *البديل الاختباري* محل متعاون حقيقي، مثل بديل المشاهد الخطرة في السينما. أضف `TransferDesk` إلى النظام النموذجي: يسأل مقيِّم المخاطر، ثم يرسل التحويل، ثم يرسل رسالة نصية.
 
 ```python
 # najm/desk.py
@@ -118,15 +118,15 @@ class TransferDesk:
         return transfer
 ```
 
-| البديل (Double) | ماذا يفعل (What it does) | مثال من نجم (Najm example) |
+| البديل | ماذا يفعل | مثال من نجم |
 |---|---|---|
-| **الكائن الشكلي (Dummy)** | يملأ معاملًا (parameter) لا يُقصد استخدامه أبدًا (never meant to be used) | كائن `object()` مجرد بدل المُخطِر (notifier): أي استخدام له يفشل بصوت عالٍ (fails loudly) |
-| **البديل ثابت الاستجابة (Stub)** | يعيد إجابات جاهزة (canned answers) | يفرض `StubRisk(0.95)` حالة «خطورة عالية» (high risk) |
-| **المراقب (Spy)** | يسجّل ما حدث ليفحصه المختبِر (records what happened, for you to inspect) | `SpyNotifier.sent` |
-| **كائن المحاكاة (Mock)** | يحمل توقعات ويتحقق منها بنفسه (holds expectations and checks them itself) | `notifier.sms.assert_called_once()` |
-| **البديل المزيّف (Fake)** | بديل يعمل فعلًا وخفيف الوزن (a working, lightweight stand-in) | `TransferService` الذي في الذاكرة (in-memory) بوصفه دفتر الحسابات (the ledger) |
+| **الكائن الشكلي (Dummy)** | يملأ معاملًا لا يُقصد استخدامه أبدًا | كائن `object()` مجرد بدل المُخطِر: أي استخدام له يفشل بصوت عالٍ |
+| **البديل ثابت الاستجابة (Stub)** | يعيد إجابات جاهزة | يفرض `StubRisk(0.95)` حالة «خطورة عالية» |
+| **المراقب (Spy)** | يسجّل ما حدث ليفحصه المختبِر | `SpyNotifier.sent` |
+| **كائن المحاكاة (Mock)** | يحمل توقعات ويتحقق منها بنفسه | `notifier.sms.assert_called_once()` |
+| **البديل المزيّف (Fake)** | بديل يعمل فعلًا وخفيف الوزن | `TransferService` الذي في الذاكرة (in-memory) بوصفه دفتر الحسابات |
 
-يستطيع `unittest.mock.Mock` في Python أن يؤدي دور البديل ثابت الاستجابة (stub) أو المراقب (spy) أو كائن المحاكاة (mock) بحسب الاستخدام (depending on use): المهم هو الدور (the role)، لا الصنف (the class).
+يستطيع `unittest.mock.Mock` في Python أن يؤدي دور البديل ثابت الاستجابة أو المراقب أو كائن المحاكاة بحسب الاستخدام: المهم هو الدور، لا الصنف.
 
 ```python
 # tests/test_doubles.py
@@ -172,9 +172,9 @@ def test_an_accepted_transfer_texts_the_customer_once():
     assert spy.sent == [("alice", "Sent 100.00 QAR (ref tr-0001)")]         # interaction
 ```
 
-يفحص الاختبار الأول *الحالة (state)* (الرصيد لم يتحرك، the balance did not move). ويفحص الثاني *تفاعلًا (interaction)* عبر مراقب (a spy): الوعد هو «أُخبر العميل مرة واحدة بالضبط، حتى عند إعادة المحاولة» (told exactly once, even on a retry).
+يفحص الاختبار الأول *الحالة*. ويفحص الثاني *تفاعلًا* عبر مراقب: الوعد هو «أُخبر العميل مرة واحدة بالضبط، حتى عند إعادة المحاولة».
 
-**ساعة تتحكم بها (A clock you can control).** تأخذ `value_date(now)` و`submit(..., now)` الوقتَ معاملًا (take the time as a parameter). وهذا هو *الحقن (injection)*: يصبح موعد الإغلاق (cut-off) في الثالثة عصرًا (15:00) بتوقيت قطر بيانات اختبار (test data). وحين لا تستطيع تغيير التوقيع (the signature)، تجمّد `freezegun` الدالة `datetime.now()` بدلًا من ذلك (instead).
+**ساعة تتحكم بها.** تأخذ `value_date(now)` و`submit(..., now)` الوقتَ معاملًا. وهذا هو *الحقن (injection)*: يصبح موعد الإغلاق في الثالثة عصرًا (15:00) بتوقيت قطر بيانات اختبار (test data). وحين لا تستطيع تغيير التوقيع، تجمّد `freezegun` الدالة `datetime.now()` بدلًا من ذلك.
 
 ```python
 # tests/test_clock.py
@@ -201,9 +201,9 @@ def test_cutoff_with_freezegun():
     assert transfer["value_date"] == "2026-10-06"
 ```
 
-الحقن أبسط وأرخص بكثير (simpler and far cheaper): هنا استغرقت 1,000 استدعاء محقون (injected calls) بضع ميلي ثوانٍ (a few milliseconds)، واستغرقت 1,000 كتلة `freeze_time` نحو ثانيتين (about two seconds) (وستختلف نتائجك، yours will differ). وهو أيضًا زوج **ضعيف مقابل قوي (weak versus strong)**. يستخدم اختبار موعد الإغلاق في المجموعة الابتدائية (the starter suite's cut-off test) الساعة 10:00 بتوقيت قطر، فينجح حتى تحت `NAJM_BUGS=tz_cutoff`. أما حالتا 15:00 و15:30 فتفشلان تحته، لأن ذلك العيب يقرأ موعد الإغلاق بالتوقيت العالمي UTC: فهما قادرتان على الفشل (they can fail)، ولذلك فلهما معنى (they mean something).
+الحقن أبسط وأرخص بكثير: هنا استغرقت 1,000 استدعاء محقون بضع ميلي ثوانٍ، واستغرقت 1,000 كتلة `freeze_time` نحو ثانيتين. وهو أيضًا زوج **ضعيف مقابل قوي**. يستخدم اختبار موعد الإغلاق في المجموعة الابتدائية الساعة 10:00 بتوقيت قطر، فينجح حتى تحت `NAJM_BUGS=tz_cutoff`. أما حالتا 15:00 و15:30 فتفشلان تحته، لأن ذلك العيب يقرأ موعد الإغلاق بالتوقيت العالمي UTC: فهما قادرتان على الفشل، ولذلك فلهما معنى.
 
-**الحالة مقابل التفاعل، والإفراط في المحاكاة (State versus interaction, and over-mocking).** يؤكد *اختبار الحالة (state testing)* النتائج والتغييرات (results and changes). ويؤكد *اختبار التفاعل (interaction testing)* الاستدعاءات الموجهة إلى المتعاونين (calls to collaborators): وهو مناسب للآثار الجانبية التي تغادر نظامك (side effects that leave your system) مثل الرسالة النصية، ومحفوف بالمخاطر في غيرها، لأنه يثبّت *كيف* تعمل الشيفرة (pins how the code works). وأسوأ الحالات أن تستبدل المتعاون الذي يحمل القاعدة (replaces the collaborator that holds the rule). اختباران لوعد واحد (Two tests of one promise)، هو «آخر ريال من السقف اليومي مقبول» (the last riyal of the daily limit is accepted):
+**الحالة مقابل التفاعل، والإفراط في المحاكاة.** يؤكد *اختبار الحالة* النتائج والتغييرات. ويؤكد *اختبار التفاعل* الاستدعاءات الموجهة إلى المتعاونين: وهو مناسب للآثار الجانبية التي تغادر نظامك مثل الرسالة النصية، ومحفوف بالمخاطر في غيرها، لأنه يثبّت *كيف* تعمل الشيفرة. وأسوأ الحالات أن تستبدل المتعاون الذي يحمل القاعدة. اختباران لوعد واحد، هو «آخر ريال من السقف اليومي مقبول»:
 
 ```python
 # tests/test_overmocked.py
@@ -240,20 +240,20 @@ def test_the_last_riyal_is_accepted():                 # runs the real rules
     assert desk.send("alice", own("1000.00"), "k3")["status"] == "accepted"      # total: exactly 50,000
 ```
 
-| التشغيل (Run) | الاختبار المفرط في المحاكاة (Over-mocked test) | اختبار القواعد الحقيقية (Real-rules test) |
+| التشغيل | الاختبار المفرط في المحاكاة | اختبار القواعد الحقيقية |
 |---|---|---|
-| النظام النموذجي النظيف (Clean sample) | ينجح (passes) | ينجح (passes) |
-| `NAJM_BUGS=limit_off_by_one` | **ينجح (passes)** | **يفشل (fails)** |
+| النظام النموذجي النظيف | ينجح | ينجح |
+| `NAJM_BUGS=limit_off_by_one` | **ينجح** | **يفشل** |
 
-لا يثبت الاختبار الأول إلا أن `Mock` يعيد ما أخبرته به (returns what you told it)، ومع ذلك يبدو سليمًا في المراجعة (looks right in review). استخدم بديلًا مزيّفًا (a fake) أو الكائن الحقيقي (the real object) لكل ما يحمل قاعدة (anything holding a rule)، واحتفظ بكائنات المحاكاة (mocks) للحواف (edges) مثل الشبكة والرسائل النصية (network and SMS).
+لا يثبت الاختبار الأول إلا أن `Mock` يعيد ما أخبرته به، ومع ذلك يبدو سليمًا في المراجعة. استخدم بديلًا مزيّفًا أو الكائن الحقيقي لكل ما يحمل قاعدة، واحتفظ بكائنات المحاكاة للحواف مثل الشبكة والرسائل النصية.
 
-**روائح اختبار الوحدة (Unit test smells).** *المنطق داخل الاختبار (Logic in the test)* (الحلقات ومعادلة الشيفرة الإنتاجية، loops, the production formula) قد يخطئ بالطريقة نفسها التي تخطئ بها الشيفرة: استخدم قيمًا متوقعة حرفية (literal expected values). و*الحالة المتغيرة المشتركة (Shared mutable state)* (مثل `SERVICE` على مستوى الوحدة البرمجية، a module-level) تجعل النتائج تعتمد على الترتيب (depend on order): استخدم تجهيزًا (fixture). و*اختبار التفاصيل الخاصة (Testing private details)* (`svc._sent_today`) ينكسر عند إعادة الهيكلة (breaks on refactoring): أكّد السلوك العام (assert public behaviour). و*غياب التأكيد (No assertion)*، أو `assert result is not None`، لا يثبت إلا أن شيئًا لم ينهَر (nothing crashed). و*الإفراط في التحديد (Over-specification)* (نص الرسالة بالحرف، exact message text): أكّد `code` المستقر (assert the stable code).
+**روائح اختبار الوحدة.** *المنطق داخل الاختبار* قد يخطئ بالطريقة نفسها التي تخطئ بها الشيفرة: استخدم قيمًا متوقعة حرفية. و*الحالة المتغيرة المشتركة* (مثل `SERVICE` على مستوى الوحدة البرمجية) تجعل النتائج تعتمد على الترتيب: استخدم تجهيزًا (fixture). و*اختبار التفاصيل الخاصة* (`svc._sent_today`) ينكسر عند إعادة الهيكلة: أكّد السلوك العام. و*غياب التأكيد*، أو `assert result is not None`، لا يثبت إلا أن شيئًا لم ينهَر. و*الإفراط في التحديد*: أكّد `code` المستقر.
 
-**ميزانيات السرعة (Speed budgets).** ميزانية نجم (Najm's budget): اختبار الوحدة أقل من 100 ms، والمجموعة (the suite) أقل من 60 ثانية على حاسوب محمول (a laptop)، وكل ما هو أبطأ يوسَم بـ`slow` (marked). يصنّف كتاب *Software Engineering at Google* الاختبارات بحسب ما يجوز لها لمسه (sizes tests by what they may touch) (الاختبار الصغير يبقى في عملية واحدة، دون شبكة أو انتظار ثابت، a small test stays in one process, with no network or sleeping). وللاطلاع على خطوط التكامل والتسليم المستمرين (pipelines)، انظر [*السحابة وDevOps (Cloud & DevOps)*، الدرس 4.1 — التكامل المستمر (Continuous integration): خطوط التكامل والتسليم المستمرين (pipelines) والاختبارات (tests) والمخرجات (artefacts) والتغذية الراجعة السريعة (fast feedback)](../cloud/index.ar.html#/4.1).
+**ميزانيات السرعة.** ميزانية نجم: اختبار الوحدة أقل من 100 ms، والمجموعة أقل من 60 ثانية على حاسوب محمول، وكل ما هو أبطأ يوسَم بـ`slow`. يصنّف كتاب *Software Engineering at Google* الاختبارات بحسب ما يجوز لها لمسه. وللاطلاع على خطوط التكامل والتسليم المستمرين، انظر [*السحابة وDevOps*، الدرس 4.1 — التكامل المستمر: خطوط التكامل والتسليم المستمرين والاختبارات والمخرجات (artefacts) والتغذية الراجعة السريعة](../cloud/index.ar.html#/4.1).
 
 ### 🔴 نظرة الخبير (Expert view)
 
-**مثال تطبيقي على التطوير الموجَّه بالاختبار (TDD worked example).** يكرر *التطوير الموجَّه بالاختبار (test-driven development)* (Kent Beck، *Test-Driven Development: By Example*، 2002) حلقة في دورات صغيرة (repeats a loop in small cycles).
+**مثال تطبيقي على التطوير الموجَّه بالاختبار.** يكرر *التطوير الموجَّه بالاختبار (test-driven development)* (Kent Beck، *Test-Driven Development: By Example*، 2002) حلقة في دورات صغيرة.
 
 ```mermaid
 flowchart RL
@@ -262,27 +262,27 @@ flowchart RL
     F --> R
 ```
 
-القصة (Story) TRF-240: *يرسل عملاء نجم بلس (Najm Plus) التحويلات المحلية مجانًا ويدفعون نصف رسم التحويل الدولي (pay half the international fee).* تبدأ ندى `najm/plus.py` هيكلًا (a skeleton) يعيد الرسم القياسي (the standard fee)، فيتعلق أول فشل بالسلوك لا باسم مفقود (about behaviour, not a missing name).
+القصة TRF-240: *يرسل عملاء نجم بلس التحويلات المحلية مجانًا ويدفعون نصف رسم التحويل الدولي.* تبدأ ندى `najm/plus.py` هيكلًا يعيد الرسم القياسي، فيتعلق أول فشل بالسلوك لا باسم مفقود.
 
-*الدورة 1، أحمر (Cycle 1, red):* يجب أن يكلّف تحويل محلي بنجم بلس بمبلغ 5,000 رسمًا قدره `0.00` (a Plus domestic transfer).
+*الدورة 1، أحمر:* يجب أن يكلّف تحويل محلي بنجم بلس بمبلغ 5,000 رسمًا قدره `0.00`.
 
 ```text
 E       AssertionError: assert Decimal('2.00') == Decimal('0.00')
 ```
 
-*أخضر (Green):* أعد صفرًا للنوع `domestic`. *الدورة 2، أحمر (Cycle 2, red):* يجب أن يكلّف التحويل الدولي على 5,000 رسم `8.75`، أي نصف الرسم القياسي 17.50 (half of the standard).
+*أخضر:* أعد صفرًا للنوع `domestic`. *الدورة 2، أحمر:* يجب أن يكلّف التحويل الدولي على 5,000 رسم `8.75`، أي نصف الرسم القياسي 17.50.
 
 ```text
 E       AssertionError: assert Decimal('17.50') == Decimal('8.75')
 ```
 
-*أخضر (Green):* نصّف الرسم (halve the fee)، `quantize(fee(amount, currency, kind) / 2, currency)`. *الدورة 3، أحمر (Cycle 3, red).* يسأل راشد: هل نصّف الرسم المقرَّب (the rounded fee) 10.83، أم الرسم الدقيق (the exact one) 10.82599؟ المال يُقرَّب مرة واحدة في النهاية (Money is rounded once, at the end). تحسب ندى 3,093.14 يدويًا (by hand): نصف 10.82599 هو 5.412995، فالنتيجة 5.41.
+*أخضر:* نصّف الرسم، `quantize(fee(amount, currency, kind) / 2, currency)`. *الدورة 3، أحمر.* يسأل راشد: هل نصّف الرسم المقرَّب 10.83، أم الرسم الدقيق 10.82599؟ المال يُقرَّب مرة واحدة في النهاية. تحسب ندى 3,093.14 يدويًا: نصف 10.82599 هو 5.412995، فالنتيجة 5.41.
 
 ```text
 E       AssertionError: assert Decimal('5.42') == Decimal('5.41')
 ```
 
-نصّفت شيفرة الدورة 2 عددًا مقرَّبًا (halved a rounded number)، و5.415 يُقرَّب إلى الأعلى فيصير 5.42، فوجد الاختبار الجديد عيبًا حقيقيًا (a real bug) في شيفرة كانت ناجحة أصلًا (code that already passed). ثم *أخضر (Green)*، ثم *إعادة الهيكلة (refactor)* والاختبارات الثلاثة كلها تراقب (with all three tests watching). الاختبارات، واحد لكل دورة، والشيفرة النهائية (the final code):
+نصّفت شيفرة الدورة 2 عددًا مقرَّبًا، و5.415 يُقرَّب إلى الأعلى فيصير 5.42، فوجد الاختبار الجديد عيبًا حقيقيًا في شيفرة كانت ناجحة أصلًا. ثم *أخضر*، ثم *إعادة الهيكلة (refactor)* والاختبارات الثلاثة كلها تراقب. الاختبارات، واحد لكل دورة، والشيفرة النهائية:
 
 ```python
 # tests/test_plus.py
@@ -322,9 +322,9 @@ def plus_fee(amount, currency, kind):
     return fee(amount, currency, kind)
 ```
 
-**أين يتألق التطوير الموجَّه بالاختبار وأين لا (Where TDD shines, and where not).** يتألق في القواعد التي تستطيع صياغتها أمثلةً (rules you can state as examples) (الرسوم والسقوف ومواعيد الإغلاق، fees, limits, cut-offs) وفي إصلاح العيوب (bug fixes): اكتب أولًا الاختبار الذي يعيد إنتاج العيب (reproduces the bug) واحتفظ به. ولا يناسب الاستكشاف (exploration) (جرّب وتعلّم وتخلَّص، ثم طوّر النسخة الحقيقية موجَّهًا بالاختبار، spike, learn, discard, then test-drive the real version)، ولا شيفرة الربط الرقيقة (thin glue code)، ولا واجهة المستخدم على مستوى البكسل (pixel-level UI)، ولا الشيفرة بلا نقاط فصل (code with no seams)، حيث تكتب أولًا اختبارات توصيفية (characterisation tests) (الدرس 2.3). ومع وكلاء البرمجة (coding agents) يصبح التطوير الموجَّه بالاختبار ضابطًا (a control): أنت تكتب الاختبار الفاشل أو تعتمده (write or approve the failing test)، والوكيل يجعله أخضر (the agent makes it green) (الدرس 6.2؛ [*تصميم الأنظمة لمبرمجي الفايب (System Design for Vibe Coders)*، الدرس 8.2 — الاختبارات بوصفها المواصفة التي لا يستطيع الوكيل تجاهلها (Tests as the spec the agent can't ignore)](../vibe/index.ar.html#l8-2)).
+**أين يتألق التطوير الموجَّه بالاختبار وأين لا.** يتألق في القواعد التي تستطيع صياغتها أمثلةً وفي إصلاح العيوب: اكتب أولًا الاختبار الذي يعيد إنتاج العيب واحتفظ به. ولا يناسب الاستكشاف، ولا شيفرة الربط الرقيقة، ولا واجهة المستخدم على مستوى البكسل، ولا الشيفرة بلا نقاط فصل، حيث تكتب أولًا اختبارات توصيفية (characterisation tests) (الدرس 2.3). ومع وكلاء البرمجة يصبح التطوير الموجَّه بالاختبار ضابطًا: أنت تكتب الاختبار الفاشل أو تعتمده، والوكيل يجعله أخضر (الدرس 6.2؛ [*تصميم الأنظمة لمبرمجي الفايب*، الدرس 8.2 — الاختبارات بوصفها المواصفة التي لا يستطيع الوكيل تجاهلها](../vibe/index.ar.html#l8-2)).
 
-**الأفكار نفسها في TypeScript (The same ideas in TypeScript).** ينسّق عميل الويب في تطبيق نجم للهاتف (Najm Mobile) المال للعرض على الشاشة (formats money for the screen)؛ وداخل العميل تكون المبالغ وحدات صغرى كاملة (whole minor units) لا أعدادًا عشرية عائمة (never floats). ولدى Vitest الشكل نفسه الذي لدى pytest (has the same shape):
+**الأفكار نفسها في TypeScript.** ينسّق عميل الويب في تطبيق نجم للهاتف المال للعرض على الشاشة؛ وداخل العميل تكون المبالغ وحدات صغرى كاملة لا أعدادًا عشرية عائمة. ولدى Vitest الشكل نفسه الذي لدى pytest:
 
 ```typescript
 // money.ts
@@ -360,59 +360,59 @@ it("rejects fractions and negatives instead of guessing", () => {
 });
 ```
 
-شغّل `npm install -D vitest`، ثم `npx vitest run` والمخرجات مختصرة (output trimmed):
+شغّل `npm install -D vitest`، ثم `npx vitest run` والمخرجات مختصرة:
 
 ```text
  Test Files  1 passed (1)
       Tests  4 passed (4)
 ```
 
-## 🧰 الأدوات (The toolkit)
-| الأداة أو الممارسة أو التقنية (Tool, practice or technique) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
+## 🧰 الأدوات
+| الأداة أو الممارسة أو التقنية | ما هي وماذا تفعل | متى تلجأ إليها |
 |---|---|---|
-| **pytest** | مشغّل اختبارات Python بـ`assert` عادي وتجهيزات وتحديد معاملات ووسوم (Python runner with plain assert, fixtures, parametrize and markers) | أي اختبار وحدة أو تكامل بلغة Python (Any Python unit or integration test) |
-| **Vitest** | مشغّل سريع لـ TypeScript/JavaScript بواجهة شبيهة بواجهة Jest (Fast TypeScript/JavaScript runner with a Jest-like API) | اختبارات الوحدة لشيفرة الويب وNode (Unit tests for web and Node code) |
-| **Test doubles** (Meszaros) | الكائن الشكلي والبديل ثابت الاستجابة والمراقب وكائن المحاكاة والبديل المزيّف (Dummy, stub, spy, mock and fake stand-ins) | الحواف التي لا تتحكم بها: الشبكة والرسائل النصية والساعة (Edges you cannot control: network, SMS, clock) |
-| **freezegun** | يجمّد `datetime.now()` للشيفرة المختبَرة (for the code under test) | قارئو الساعة الذين لا تستطيع تغييرهم (Clock readers you cannot change) |
-| **Test-driven development** (Beck) | أحمر وأخضر وإعادة هيكلة في دورات صغيرة (Red, green, refactor in small cycles) | القواعد المصوغة أمثلةً وكل إصلاح لعيب (Rules stated as examples; every bug fix) |
+| **pytest** | مشغّل اختبارات Python بـ`assert` عادي وتجهيزات وتحديد معاملات ووسوم | أي اختبار وحدة أو تكامل بلغة Python |
+| **Vitest** | مشغّل سريع لـ TypeScript/JavaScript بواجهة شبيهة بواجهة Jest | اختبارات الوحدة لشيفرة الويب وNode |
+| **Test doubles** (Meszaros) | الكائن الشكلي والبديل ثابت الاستجابة والمراقب وكائن المحاكاة والبديل المزيّف | الحواف التي لا تتحكم بها: الشبكة والرسائل النصية والساعة |
+| **freezegun** | يجمّد `datetime.now()` للشيفرة المختبَرة | قارئو الساعة الذين لا تستطيع تغييرهم |
+| **Test-driven development** | أحمر وأخضر وإعادة هيكلة في دورات صغيرة | القواعد المصوغة أمثلةً وكل إصلاح لعيب |
 
-## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-يحوّل بلال أسئلة راشد إلى **معيار نجم لاختبار الوحدة، الإصدار 1 (Najm Unit Test Standard v1)**، وهو قائمة تحقق (a checklist) لكل طلب دمج (pull request) يخص التحويلات، سواء كتبه إنسان أو ذكاء اصطناعي (human or AI).
+## 🏛️ عمليًا في بنك نجم
+يحوّل بلال أسئلة راشد إلى **معيار نجم لاختبار الوحدة، الإصدار 1**، وهو قائمة تحقق لكل طلب دمج يخص التحويلات، سواء كتبه إنسان أو ذكاء اصطناعي.
 
-| # | القاعدة (Rule) | كيف يتحقق منها المراجع (How a reviewer checks it) |
+| # | القاعدة | كيف يتحقق منها المراجع |
 |---|---|---|
-| 1 | قاعدة واحدة لكل اختبار، ويحمل اسمها؛ تجهيز وتنفيذ وتأكيد (arrange, act, assert) | السطر الفاشل يشرح المشكلة وحده (The failing line explains the problem alone) |
-| 2 | القيم المتوقعة قيم حرفية من مواصفة أو حساب يدوي (literals from a spec or hand calculation) | لا اختبار يعيد استخدام المعادلة (No test reuses the formula) |
-| 3 | كائنات حقيقية أو بدائل مزيّفة للقواعد؛ وكائنات المحاكاة عند الحواف فقط (Real objects or fakes for rules; mocks only at the edges) | برّر كل `Mock(` في التعديلات المقترحة (Justify each Mock in the diff) |
-| 4 | الساعة معامل (parameter)؛ لا `sleep` ولا شبكة ولا حالة مشتركة (shared state) | ينجح منفردًا وبأي ترتيب (Passes alone and in any order) |
-| 5 | القواعد الجديدة تنال اختبارات حدّية على الجانبين (boundary tests on both sides) | اربطها بجدول الدرس 1.2 (Link the lesson 1.2 table) |
-| 6 | **اكسره لتثق به (Break it to trust it):** يُظهر المؤلف الاختبار وهو يفشل مرة واحدة (the author shows the test failing once) | يلصق طلب الدمج المخرجات الحمراء (The PR pastes the red output) |
-| 7 | أقل من 100 ms لكل اختبار؛ والأبطأ يوسَم `slow` (Under 100 ms per test) | `--durations=5` في مخرجات التكامل المستمر (CI output) |
+| 1 | قاعدة واحدة لكل اختبار، ويحمل اسمها؛ تجهيز وتنفيذ وتأكيد | السطر الفاشل يشرح المشكلة وحده |
+| 2 | القيم المتوقعة قيم حرفية من مواصفة أو حساب يدوي | لا اختبار يعيد استخدام المعادلة |
+| 3 | كائنات حقيقية أو بدائل مزيّفة للقواعد؛ وكائنات المحاكاة عند الحواف فقط | برّر كل `Mock(` في التعديلات المقترحة |
+| 4 | الساعة معامل؛ لا `sleep` ولا شبكة ولا حالة مشتركة | ينجح منفردًا وبأي ترتيب |
+| 5 | القواعد الجديدة تنال اختبارات حدّية على الجانبين | اربطها بجدول الدرس 1.2 |
+| 6 | **اكسره لتثق به:** يُظهر المؤلف الاختبار وهو يفشل مرة واحدة | يلصق طلب الدمج المخرجات الحمراء |
+| 7 | أقل من 100 ms لكل اختبار؛ والأبطأ يوسَم `slow` | `--durations=5` في مخرجات التكامل المستمر |
 
 ## 🛠️ التمارين (Exercises)
-انسخ النظام النموذجي (Copy the sample) (`cp -r testing/sample ~/najm-sample`)، وأنشئ بيئة افتراضية (virtual environment) ونفّذ `pip install -r requirements.txt freezegun`.
+انسخ النظام النموذجي (`cp -r testing/sample ~/najm-sample`)، وأنشئ بيئة افتراضية ونفّذ `pip install -r requirements.txt freezegun`.
 
-- 🟢 **سمِّه واكسره (Name it and break it).** اكتب ستة اختبارات مُحدَّدة بمعاملات (six parametrized tests) للدالة `fee`: محلي (domestic) عند 1000 و1000.01، ودولي (international) عند 100 و3090، وبين حساباتك (own) عند 500، والسقف (the cap) (`fee("100000", "QAR", "international")`)، ولكل منها `id` مقروء (a readable id). *يكتمل عندما (Done when):* تنص الأسماء على القاعدة (names state the rule)، ويُظهر `pytest -v` المعرّفات (the ids)، وتغيير `<=` إلى `<` في قاعدة التحويل المحلي يدويًا (by hand) يُفشل اختبارًا واحدًا بالضبط (exactly one test fail) (ثم أعدها، then restore it).
-- 🟡 **بدائل وساعة (Doubles and a clock).** أضف `najm/desk.py` واختبره: المقيِّم يحتجز التحويل عند 0.8 بالضبط ولا يحتجزه عند 0.79 (holds a transfer at exactly 0.8 but not at 0.79) (بدائل ثابتة الاستجابة، stubs)، والتحويل المحتجز لا يرسل رسالة نصية (a held transfer sends no SMS) (كائن شكلي، dummy)، والمقبول يرسل واحدة (an accepted one sends one) (مراقب، spy)، وموعد الإغلاق يصمد عند 14:59 و15:00 و15:30 بتوقيت قطر (the cut-off holds) (ساعة محقونة، injected clock). *يكتمل عندما (Done when):* تكون المجموعة خضراء على النظام النموذجي النظيف (green on the clean sample)، وتفشل تحت `NAJM_BUGS=tz_cutoff`، ولا تستخدم كائن محاكاة بدل `TransferService` أبدًا (never mocks).
-- 🔴 **طوّر قاعدة موجَّهًا بالاختبار، ثم اصطد الإفراط في المحاكاة (Test-drive a rule, then trap an over-mock).** طوّر TRF-241 موجَّهًا بالاختبار: «سقف نجم بلس اليومي يساوي 1.5 مثل السقف القياسي؛ أما الحد الأقصى للتحويل الواحد فلا يتغير» (the Najm Plus daily limit is 1.5 times the standard one; the per-transfer maximum is unchanged)، في ثلاث دورات أحمر–أخضر (three red-green cycles)، مع حفظ كل رسالة حمراء (saving each red message). ثم اكتب نسخة مفرطة في المحاكاة (over-mocked version) من أحد الاختبارات. *يكتمل عندما (Done when):* تقتبس ملاحظاتك ثلاث رسائل حمراء، وبعد أن تكسر قاعدتك يدويًا (`>` إلى `>=`) يظل الاختبار المفرط في المحاكاة ناجحًا بينما يفشل الاختبار الحقيقي (while the real one fails).
+- 🟢 **سمِّه واكسره.** اكتب ستة اختبارات مُحدَّدة بمعاملات للدالة `fee`: محلي عند 1000 و1000.01، ودولي عند 100 و3090، وبين حساباتك عند 500، والسقف (`fee("100000", "QAR", "international")`)، ولكل منها `id` مقروء. *يكتمل عندما:* تنص الأسماء على القاعدة، ويُظهر `pytest -v` المعرّفات، وتغيير `<=` إلى `<` في قاعدة التحويل المحلي يدويًا يُفشل اختبارًا واحدًا بالضبط.
+- 🟡 **بدائل وساعة.** أضف `najm/desk.py` واختبره: المقيِّم يحتجز التحويل عند 0.8 بالضبط ولا يحتجزه عند 0.79 (بدائل ثابتة الاستجابة، stubs)، والتحويل المحتجز لا يرسل رسالة نصية (كائن شكلي، dummy)، والمقبول يرسل واحدة (مراقب، spy)، وموعد الإغلاق يصمد عند 14:59 و15:00 و15:30 بتوقيت قطر (ساعة محقونة). *يكتمل عندما:* تكون المجموعة خضراء على النظام النموذجي النظيف، وتفشل تحت `NAJM_BUGS=tz_cutoff`، ولا تستخدم كائن محاكاة بدل `TransferService` أبدًا.
+- 🔴 **طوّر قاعدة موجَّهًا بالاختبار، ثم اصطد الإفراط في المحاكاة.** طوّر TRF-241 موجَّهًا بالاختبار: «سقف نجم بلس اليومي يساوي 1.5 مثل السقف القياسي؛ أما الحد الأقصى للتحويل الواحد فلا يتغير»، في ثلاث دورات أحمر–أخضر، مع حفظ كل رسالة حمراء. ثم اكتب نسخة مفرطة في المحاكاة من أحد الاختبارات. *يكتمل عندما:* تقتبس ملاحظاتك ثلاث رسائل حمراء، وبعد أن تكسر قاعدتك يدويًا (`>` إلى `>=`) يظل الاختبار المفرط في المحاكاة ناجحًا بينما يفشل الاختبار الحقيقي.
 
 ## ⚠️ أخطاء وفخاخ (Mistakes and traps)
-- **محاكاة الشيء الذي تختبره (Mocking the thing you test).** الاختبار يثبت أن كائن المحاكاة يعمل (The test proves the mock works).
-- **التأكيد على الاستدعاءات لا على النتائج (Asserting on calls, not results).** يثبّت `assert_called_with` الربط (wiring) لا الوعد (the promise).
-- **قيم متوقعة منسوخة من مخرجات الشيفرة (Expected values copied from the code's output).** يعيد الاختبار صياغة التنفيذ (The test restates the implementation) (الدرس 1.1). استخدم سياسة أو حسابك الخاص (a policy or your own arithmetic).
-- **ساعة حقيقية أو عشوائية أو حالة مشتركة (Real clock, randomness or shared state).** تنجح الاختبارات اليوم وتفشل يوم الجمعة (pass today, fail on Friday). احقن أو ثبّت البذرة أو أعد البناء (Inject, seed or rebuild).
-- **ألّا ترى الاختبار يفشل أبدًا (Never seeing the test fail).** الاختبار الذي لم يكن أحمر قط قد لا يصير أحمر أبدًا (A test that has never been red may never go red). نفّذ خطوة الأحمر في التطوير الموجَّه بالاختبار (the TDD red step) أو بدّل مفتاح عيب مرة واحدة (flip a bug switch once).
+- **محاكاة الشيء الذي تختبره.** الاختبار يثبت أن كائن المحاكاة يعمل.
+- **التأكيد على الاستدعاءات لا على النتائج.** يثبّت `assert_called_with` الربط لا الوعد.
+- **قيم متوقعة منسوخة من مخرجات الشيفرة.** يعيد الاختبار صياغة التنفيذ (الدرس 1.1). استخدم سياسة أو حسابك الخاص.
+- **ساعة حقيقية أو عشوائية أو حالة مشتركة.** تنجح الاختبارات اليوم وتفشل يوم الجمعة. احقن أو ثبّت البذرة أو أعد البناء.
+- **ألّا ترى الاختبار يفشل أبدًا.** الاختبار الذي لم يكن أحمر قط قد لا يصير أحمر أبدًا. نفّذ خطوة الأحمر في التطوير الموجَّه بالاختبار أو بدّل مفتاح عيب مرة واحدة.
 
 ## 🧾 الخلاصة (Recap)
-- اختبار الوحدة (A unit test) يفحص سلوكًا واحدًا، بسرعة، بصيغة التجهيز والتنفيذ والتأكيد (arrange-act-assert)، باسم يذكر القاعدة (a name that states the rule).
-- FIRST هو معيار الجودة (the quality bar)؛ والاختبار البطيء أو المعتمد على الترتيب عيب (a defect).
-- كائنات حقيقية أو بدائل مزيّفة للقواعد (Real objects or fakes for rules)، وكائنات المحاكاة للحواف (mocks for edges)؛ احقن الساعة (inject the clock) قبل أن تلجأ إلى freezegun.
-- فحوص الحالة تصمد أمام إعادة الهيكلة (State checks survive refactoring)؛ وفحوص التفاعل تثبّت الربط (interaction checks pin wiring)؛ والإفراط في المحاكاة ينجح على نظام معطوب (over-mocking passes on a broken system).
-- التطوير الموجَّه بالاختبار (TDD): شاهد الاختبار يفشل لسبب صحيح (for the right reason)، واكتب أصغر شيفرة، وأعد الهيكلة وأنت على الأخضر (refactor on green).
+- اختبار الوحدة يفحص سلوكًا واحدًا، بسرعة، بصيغة التجهيز والتنفيذ والتأكيد (arrange-act-assert)، باسم يذكر القاعدة.
+- FIRST هو معيار الجودة؛ والاختبار البطيء أو المعتمد على الترتيب عيب.
+- كائنات حقيقية أو بدائل مزيّفة للقواعد، وكائنات المحاكاة للحواف؛ احقن الساعة قبل أن تلجأ إلى freezegun.
+- فحوص الحالة تصمد أمام إعادة الهيكلة؛ وفحوص التفاعل تثبّت الربط؛ والإفراط في المحاكاة ينجح على نظام معطوب.
+- التطوير الموجَّه بالاختبار: شاهد الاختبار يفشل لسبب صحيح، واكتب أصغر شيفرة، وأعد الهيكلة وأنت على الأخضر.
 
 ## ✍️ اختبر نفسك (Check yourself)
 
-**1. يجب ألا يرسل التحويل المحتجز (held transfer) أي رسالة نصية. ويجب أن يعيد المقيِّم (scorer) 0.95، وأن يفشل المُخطِر (notifier) إن لُمس. أي البدائل (doubles) تناسب؟**
+**1. يجب ألا يرسل التحويل المحتجز أي رسالة نصية. ويجب أن يعيد المقيِّم 0.95، وأن يفشل المُخطِر إن لُمس. أي البدائل تناسب؟**
 
 - A. كائن محاكاة (mock) للمقيِّم وبديل مزيّف (fake) للمُخطِر
 - B. بديل ثابت الاستجابة (stub) للمقيِّم وكائن شكلي (dummy) للمُخطِر
@@ -421,65 +421,65 @@ it("rejects fractions and negatives instead of guessing", () => {
 
 <details><summary>الإجابة</summary>
 
-**B.** يعيد البديل ثابت الاستجابة (stub) القيمة الجاهزة 0.95 (the canned 0.95)؛ ويفشل الكائن الشكلي (dummy) بصوت عالٍ إن استُخدم (fails loudly if used)، فيثبت أنه لم تُحاوَل أي رسالة نصية (no SMS was attempted). أما كائن المحاكاة (mock) أو المراقب (spy) فيسجّل الاستدعاءات (records calls). (🟡 البدائل الاختبارية، Test doubles).
+**B.** يعيد البديل ثابت الاستجابة (stub) القيمة الجاهزة 0.95؛ ويفشل الكائن الشكلي (dummy) بصوت عالٍ إن استُخدم، فيثبت أنه لم تُحاوَل أي رسالة نصية. أما كائن المحاكاة (mock) أو المراقب (spy) فيسجّل الاستدعاءات. (🟡 البدائل الاختبارية).
 
 </details>
 
-**2. مع تفعيل `limit_off_by_one` ما زالت اختبارات مكتب ندى (Nada's desk tests) الأربعة عشر كلها تنجح. ما السبب الأرجح؟**
+**2. مع تفعيل `limit_off_by_one` ما زالت اختبارات مكتب ندى الأربعة عشر كلها تنجح. ما السبب الأرجح؟**
 
-- A. لا تستطيع اختبارات الوحدة أبدًا العثور على عيوب الحدود في قواعد العمل (boundary bugs in business rules)
-- B. شُغّلت المجموعة بسرعة أكبر من أن يظهر العيب في الوقت المناسب (ran too quickly)
-- C. كل اختبار حاكى `TransferService` وأعاد جوابًا ثابتًا (returned a fixed answer)
+- A. لا تستطيع اختبارات الوحدة أبدًا العثور على عيوب الحدود في قواعد العمل
+- B. شُغّلت المجموعة بسرعة أكبر من أن يظهر العيب في الوقت المناسب
+- C. كل اختبار حاكى `TransferService` وأعاد جوابًا ثابتًا
 - D. بقيت تغطية الأسطر (line coverage) للملف الجديد دون مئة بالمئة إجمالًا
 
 <details><summary>الإجابة</summary>
 
-**C.** مع محاكاة الخدمة لا تعمل قاعدة السقف (the limit rule never runs)، فلا يستطيع العيب أن يظهر. (🟡 الإفراط في المحاكاة، Over-mocking).
+**C.** مع محاكاة الخدمة لا تعمل قاعدة السقف، فلا يستطيع العيب أن يظهر. (🟡 الإفراط في المحاكاة).
 
 </details>
 
-**3. يستدعي اختبار `submit(...)` دون `now` ويتوقع تاريخ القيمة لليوم (today's value date). ويفشل حين يعمل التكامل المستمر (CI) بعد الساعة 15:00 بتوقيت قطر. ما أفضل إصلاح؟**
+**3. يستدعي اختبار `submit(...)` دون `now` ويتوقع تاريخ القيمة لليوم. ويفشل حين يعمل التكامل المستمر (CI) بعد الساعة 15:00 بتوقيت قطر. ما أفضل إصلاح؟**
 
-- A. تمرير قيمة `now` ثابتة وتأكيد تاريخ مفحوص يدويًا (a hand-checked date)
-- B. إضافة `time.sleep(2)` قبل تأكيد التاريخ (before the date assertion runs)
-- C. إعادة تشغيل الاختبار تلقائيًا حتى ينجح في CI (Retry the test automatically)
-- D. تخفيف التأكيد ليقبل أي تاريخ في أكتوبر (Loosen the assertion)
+- A. تمرير قيمة `now` ثابتة وتأكيد تاريخ مفحوص يدويًا
+- B. إضافة `time.sleep(2)` قبل تأكيد التاريخ
+- C. إعادة تشغيل الاختبار تلقائيًا حتى ينجح في CI كل مرة
+- D. تخفيف التأكيد ليقبل أي تاريخ في أكتوبر
 
 <details><summary>الإجابة</summary>
 
-**A.** المدخل الخفي (hidden input) هو الساعة. حقنها يجعل الاختبار قابلًا للتكرار (repeatable). أما الانتظار الثابت وإعادة المحاولة فيخفيان التبعية (hide the dependency). (🟡 ساعة تتحكم بها، A clock you can control).
+**A.** المدخل الخفي هو الساعة. حقنها يجعل الاختبار قابلًا للتكرار. أما الانتظار الثابت وإعادة المحاولة فيخفيان التبعية..
 
 </details>
 
-**4. في الدورة 3 من التطوير الموجَّه بالاختبار (TDD cycle 3) يفشل الاختبار الجديد بالرسالة `5.42 != 5.41`. ماذا بعد؟**
+**4. في الدورة 3 من التطوير الموجَّه بالاختبار يفشل الاختبار الجديد بالرسالة `5.42 != 5.41`. ماذا بعد؟**
 
-- A. تغيير القيمة المتوقعة إلى 5.42 لتصير المجموعة كلها خضراء (so the whole suite goes green)
-- B. حذف الاختبار (Delete the test)، لأن الاختبارين الأولين ينجحان أصلًا (already pass)
-- C. إعادة كتابة الدالة كلها (Rewrite the whole function) قبل تشغيل أي اختبار من جديد
-- D. إجراء أصغر تغيير ينجح به الاختبار، ثم إعادة الهيكلة على الأخضر (refactor on green)
+- A. تغيير القيمة المتوقعة إلى 5.42 لتصير المجموعة كلها خضراء
+- B. حذف الاختبار، لأن الاختبارين الأولين ينجحان أصلًا
+- C. إعادة كتابة الدالة كلها قبل تشغيل أي اختبار من جديد
+- D. إجراء أصغر تغيير ينجح به الاختبار، ثم إعادة الهيكلة على الأخضر
 
 <details><summary>الإجابة</summary>
 
-**D.** الاختبار الأحمر لسبب صحيح (A red test for the right reason) يستدعي أصغر تغيير ناجح، ثم إعادة هيكلة على الأخضر. أما تعديل التوقع فيدفن عيبًا حقيقيًا (would bury a real bug). (🔴 مثال تطبيقي على التطوير الموجَّه بالاختبار، TDD worked example).
+**D.** الاختبار الأحمر لسبب صحيح يستدعي أصغر تغيير ناجح، ثم إعادة هيكلة على الأخضر. أما تعديل التوقع فيدفن عيبًا حقيقيًا..
 
 </details>
 
-**5. يقرأ اختبار الحقل `svc._sent_today`. وبعد إعادة تسمية غير ضارة (a harmless rename) تفشل تسعة اختبارات. أي رائحة (smell) هذه؟**
+**5. يقرأ اختبار الحقل `svc._sent_today`. وبعد إعادة تسمية غير ضارة تفشل تسعة اختبارات. أي رائحة هذه؟**
 
-- A. اختبار بلا تأكيد (An assertion-free test) يشغّل الشيفرة ولا يفحص شيئًا
-- B. حالة متغيرة مشتركة (Shared mutable state) بين اختبارات كثيرة (across many tests) في ملف واحد (in one file)
-- C. اختبار التفاصيل الخاصة بالصنف (Testing private details of the class)
-- D. منطق داخل جسم الاختبار (Logic inside the test body)، مثل الحلقات والفروع (loops and branches)
+- A. اختبار بلا تأكيد يشغّل الشيفرة ولا يفحص شيئًا
+- B. حالة متغيرة مشتركة بين اختبارات كثيرة في ملف واحد
+- C. اختبار التفاصيل الخاصة بالصنف
+- D. منطق داخل جسم الاختبار، مثل الحلقات والفروع
 
 <details><summary>الإجابة</summary>
 
-**C.** قراءة الحقول الخاصة (private fields) تكسر الاختبارات عند إعادة الهيكلة. أكّد السلوك العام (public behaviour)، مثل الرصيد (the balance) أو رمز الرفض (the rejection code). (🟡 روائح اختبار الوحدة، Unit test smells).
+**C.** قراءة الحقول الخاصة تكسر الاختبارات عند إعادة الهيكلة. أكّد السلوك العام، مثل الرصيد أو رمز الرفض..
 
 </details>
 
 ## 📚 المراجع (References)
 - توثيق pytest (pytest documentation) — https://docs.pytest.org/
-- وحدة `unittest.mock` في Python (Python unittest.mock) — https://docs.python.org/3/library/unittest.mock.html
+- وحدة `unittest.mock` في Python — https://docs.python.org/3/library/unittest.mock.html
 - Martin Fowler، «Mocks Aren't Stubs» — https://martinfowler.com/articles/mocksArentStubs.html
 - Martin Fowler، «Test Double» — https://martinfowler.com/bliki/TestDouble.html
 - Vitest — https://vitest.dev/
@@ -488,30 +488,30 @@ it("rejects fractions and negatives instead of guessing", () => {
 
 ---
 
-# 2.2 — اختبار التكامل: قواعد البيانات والطوابير وبيانات الاختبار واختبارات العقد (Integration testing: databases, queues, test data and contract tests)
-*المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 2.1* · *التركيز (Focus): Integration*
+# 2.2 — اختبار التكامل: قواعد البيانات والطوابير وبيانات الاختبار واختبارات العقد
+*المستوى: 🟡 متوسط* · *المتطلبات: 2.1* · *التركيز: Integration*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
-- يشغّل **اختبار التكامل (integration test)** شيفرتك مقابل جار حقيقي (a real neighbour) من قاعدة بيانات أو طابور أو خدمة HTTP أو واجهة برمجة فريق آخر (database, queue, HTTP service, another team's API) ليفحص الوصلة (the join) لا المنطق (not the logic).
-- كائن المحاكاة (mock) يوافق افتراضاتك (agrees with your assumptions)؛ والجار الحقيقي وحده يستطيع أن يخالفها (can disagree). اختبر حيث تنكسر الأمور (Test where they break): SQL والأنواع (types) وإعادة المحاولات (retries) والعقود (contracts).
-- أبقِها سريعة ومعزولة (fast and isolated): تراجع (rollback) لكل اختبار، وبيانات فريدة (unique data)، ولا `sleep`، وساعة يمكن التحكم بها (a controllable clock).
-- يفحص **اختبار العقد (contract test)** الشكل الذي اتفق عليه فريقان (the shape two teams agreed on) دون نشر الخدمتين معًا (without deploying both). وفي العقود **التي يقودها المستهلك (consumer-driven)** (Pact) يعلن المستهلك (consumer) احتياجاته ويثبتها المزوِّد (provider proves them).
-- إشارة القرار (Decision cue): إن كان بإمكان عيب أن يسكن الوصلة (live in the join)، فلن يجده اختبار الوحدة (a unit test cannot find it).
+- يشغّل **اختبار التكامل (integration test)** شيفرتك مقابل جار حقيقي من قاعدة بيانات أو طابور أو خدمة HTTP أو واجهة برمجة فريق آخر ليفحص الوصلة لا المنطق.
+- كائن المحاكاة يوافق افتراضاتك؛ والجار الحقيقي وحده يستطيع أن يخالفها. اختبر حيث تنكسر الأمور: SQL والأنواع وإعادة المحاولات (retries) والعقود.
+- أبقِها سريعة ومعزولة: تراجع (rollback) لكل اختبار، وبيانات فريدة، ولا `sleep`، وساعة يمكن التحكم بها.
+- يفحص **اختبار العقد** الشكل الذي اتفق عليه فريقان دون نشر الخدمتين معًا. وفي العقود **التي يقودها المستهلك (consumer-driven)** (Pact) يعلن المستهلك احتياجاته ويثبتها المزوِّد.
+- إشارة القرار: إن كان بإمكان عيب أن يسكن الوصلة، فلن يجده اختبار الوحدة.
 
-## 🧭 لماذا يهم (Why it matters)
-إصدار `TransferRepository` يوم الجمعة (Friday's release) فيه 300 اختبار وحدة خضراء (green unit tests)، يستبدل كل منها قاعدة البيانات بقاموس (swapping the database for a dict). وفي بيئة ضمان الجودة (In QA) يظهر إجمالي اليوم لثلاثة تحويلات بقيمة 0.10 QAR هو 0.30000000000000004، لأن مطوّرًا عرّف عمود المبلغ (the amount column) بالنوع `REAL`. ولا يستطيع كائن المحاكاة (A mock) أن يعرف ماذا تفعل قاعدة البيانات بالعدد (what a database does with a number). وفي ظهيرة اليوم نفسه يعيد التطبيق محاولة طلب POST ضاع ردّه (retries a POST whose reply was lost)، فيُخصم من العميل مرتين (the customer is debited twice).
+## 🧭 لماذا يهم
+إصدار `TransferRepository` يوم الجمعة فيه 300 اختبار وحدة خضراء، يستبدل كل منها قاعدة البيانات بقاموس. وفي بيئة ضمان الجودة يظهر إجمالي اليوم لثلاثة تحويلات بقيمة 0.10 QAR هو 0.30000000000000004، لأن مطوّرًا عرّف عمود المبلغ بالنوع `REAL`. ولا يستطيع كائن المحاكاة أن يعرف ماذا تفعل قاعدة البيانات بالعدد. وفي ظهيرة اليوم نفسه يعيد التطبيق محاولة طلب POST ضاع ردّه، فيُخصم من العميل مرتين.
 
-يقول راشد (Rashid): «تقول اختبارات الوحدة إن الأجزاء صحيحة (the parts are right)؛ وتقول اختبارات التكامل إنها موصولة صوابًا (connected right).» وقد يضيف وكيل ذكاء اصطناعي (AI agent) يكتب مستودعًا (a repository) اتصالًا من نوع `MagicMock`: اسأل أين الحدّ الحقيقي (where the real boundary is).
+يقول راشد: «تقول اختبارات الوحدة إن الأجزاء صحيحة؛ وتقول اختبارات التكامل إنها موصولة صوابًا.» وقد يضيف وكيل ذكاء اصطناعي يكتب مستودعًا اتصالًا من نوع `MagicMock`: اسأل أين الحدّ الحقيقي.
 
-## 📐 كيف يعمل (How it works)
+## 📐 كيف يعمل
 
-### 🟢 الأساسيات (The essentials)
+### 🟢 الأساسيات
 
-**لماذا لا تكفي كائنات المحاكاة (Why mocks are not enough).** يخفي كائن المحاكاة (A mock) ما يفعله الجار فعلًا (what the neighbour really does): الأنواع والقيود (types and constraints) في قاعدة البيانات، والترتيب والتوقيت (ordering and timing) في الطابور، ورموز الحالة (status codes) ومهلات الانتظار (timeouts) في خدمة HTTP، والانجراف بين الإصدارات (drift between releases) في واجهة فريق آخر. استخدم الشيء الحقيقي حيث يكون رخيصًا، وبديلًا ثابت الاستجابة (a stub) أو عقدًا (contract) حيث لا يكون.
+**لماذا لا تكفي كائنات المحاكاة.** يخفي كائن المحاكاة ما يفعله الجار فعلًا: الأنواع والقيود في قاعدة البيانات، والترتيب والتوقيت في الطابور، ورموز الحالة ومهلات الانتظار (timeouts) في خدمة HTTP، والانجراف بين الإصدارات في واجهة فريق آخر. استخدم الشيء الحقيقي حيث يكون رخيصًا، وبديلًا ثابت الاستجابة أو عقدًا (contract) حيث لا يكون.
 
-**الهرم والكأس وخلية النحل (Pyramid, trophy, honeycomb).** يريد *هرم الاختبار (test pyramid)* (Mike Cohn؛ Martin Fowler) اختبارات وحدة كثيرة (many unit tests)، واختبارات تكامل أقل (fewer integration tests)، واختبارات شاملة من البداية إلى النهاية قليلة (few end-to-end tests). أما *الكأس (trophy)* عند Kent C. Dodds فتمنح اختبارات التكامل أكبر وزن (weights integration tests most)؛ و*خلية النحل (honeycomb)* عند Spotify، للخدمات المصغّرة (microservices)، تضع أكبر وزن على نقاط تكامل الخدمة (a service's integration points). وهي تختلف في التشديد لا في المبدأ (emphasis, not principle): اختبر حيث تعيش العيوب (test where bugs live) (انظر الدرس 5.1).
+**الهرم والكأس وخلية النحل.** يريد *هرم الاختبار (test pyramid)* (Mike Cohn؛ Martin Fowler) اختبارات وحدة كثيرة، واختبارات تكامل أقل، واختبارات شاملة من البداية إلى النهاية قليلة. أما *الكأس* عند Kent C. Dodds فتمنح اختبارات التكامل أكبر وزن؛ و*خلية النحل* عند Spotify، للخدمات المصغّرة، تضع أكبر وزن على نقاط تكامل الخدمة. وهي تختلف في التشديد لا في المبدأ: اختبر حيث تعيش العيوب (انظر الدرس 5.1).
 
-**قاعدة بيانات حقيقية بسرعة اختبار الوحدة (A real database at unit speed).** تُخزَّن المبالغ وحدات صغرى كاملة (whole minor units)، لا `REAL` أبدًا. فيما يلي المستودع (The repository)، وتجهيزات (fixtures) تمنح كل اختبار قاعدة SQLite في الذاكرة (in-memory) داخل معاملة (transaction) يُتراجع عنها بعد ذلك (rolled back afterwards)، ومُنشئ (builder) بقيم افتراضية صالحة ومعرّفات فريدة (valid defaults and unique ids) (Faker، ببذرة ثابتة، seeded):
+**قاعدة بيانات حقيقية بسرعة اختبار الوحدة.** تُخزَّن المبالغ وحدات صغرى كاملة، لا `REAL` أبدًا. فيما يلي المستودع، وتجهيزات تمنح كل اختبار قاعدة SQLite في الذاكرة داخل معاملة يُتراجع عنها بعد ذلك، ومُنشئ بقيم افتراضية صالحة ومعرّفات فريدة (Faker، ببذرة ثابتة):
 
 ```python
 # najm/repository.py
@@ -620,13 +620,13 @@ def test_the_database_refuses_a_repeated_idempotency_key(repo):
     repo.add(a_transfer(owner="bob", idem_key="k1"))                          # another customer may reuse the key
 ```
 
-اختبار المجموع زوج **ضعيف مقابل قوي (weak versus strong)**. اتصال محاكى بإجمالي ثابت الاستجابة (A mocked connection with a stubbed total) ينجح أيًّا كان نظام التخزين (whatever the storage scheme). أما هذا الاختبار فيفشل أمام تصميم يوم الجمعة (Friday's design)، وهو عمود `REAL` يُملأ بـ`float(t["amount"])`: إذ يعطي `SELECT 0.1+0.1+0.1` في SQLite القيمة `0.30000000000000004`. أما تصميمنا فيخزّن وحدات صغرى كاملة في عمود `INTEGER`، والأعداد الصحيحة تُجمع جمعًا دقيقًا (integers add exactly). وهناك فخ واحد (One trap): ينكسر العزل بالتراجع (rollback isolation) حين تُثبّت الشيفرة المختبَرة التغييرات (commits). فالاختبار الذي ينفّذ `COMMIT` يترك صفه خلفه (leaves its row behind)، ويُصدر `ROLLBACK` في التجهيز خطأً (errors) (`cannot rollback - no transaction is active`)، ويرى الاختبار التالي صفًا واحدًا. احذف الصفوف بعد كل اختبار (Delete rows after each test)، أو استخدم وضع نقاط الحفظ (savepoint mode) في مكتبة ORM، حيث لا يفعل تثبيت الشيفرة (the code's commit) سوى تحرير نقطة الحفظ (only releases the savepoint).
+اختبار المجموع زوج **ضعيف مقابل قوي**. اتصال محاكى بإجمالي ثابت الاستجابة ينجح أيًّا كان نظام التخزين. أما هذا الاختبار فيفشل أمام تصميم يوم الجمعة، وهو عمود `REAL` يُملأ بـ`float(t["amount"])`: إذ يعطي `SELECT 0.1+0.1+0.1` في SQLite القيمة `0.30000000000000004`. أما تصميمنا فيخزّن وحدات صغرى كاملة في عمود `INTEGER`، والأعداد الصحيحة تُجمع جمعًا دقيقًا. وهناك فخ واحد: ينكسر العزل بالتراجع (rollback isolation) حين تُثبّت الشيفرة المختبَرة التغييرات. فالاختبار الذي ينفّذ `COMMIT` يترك صفه خلفه، ويُصدر `ROLLBACK` في التجهيز خطأً (`cannot rollback - no transaction is active`)، ويرى الاختبار التالي صفًا واحدًا. احذف الصفوف بعد كل اختبار، أو استخدم وضع نقاط الحفظ (savepoint mode) في مكتبة ORM، حيث لا يفعل تثبيت الشيفرة سوى تحرير نقطة الحفظ.
 
-### 🟡 التعمق أكثر (Going deeper)
+### 🟡 التعمق أكثر
 
-**SQLite ليست PostgreSQL (SQLite is not PostgreSQL).** تناسب SQLite الفحوص السريعة (fast checks) للشيفرة المحايدة تجاه لهجة SQL (dialect-neutral code) لكنها تختلف حيث تتأذى البنوك. *الأنواع (Types):* مرنة التنميط (loosely typed) (جاءت الجداول الصارمة في الإصدار 3.37، strict tables)، في مقابل `numeric(18, 3)` الدقيق في PostgreSQL. *التزامن (Concurrency):* كاتب واحد في كل مرة (one writer at a time)، في مقابل أقفال الصفوف (row locks) و`SELECT ... FOR UPDATE`. *القيود (Constraints):* المفاتيح الأجنبية (foreign keys) معطّلة حتى تُفعَّل لكل اتصال (off until enabled per connection).
+**SQLite ليست PostgreSQL.** تناسب SQLite الفحوص السريعة للشيفرة المحايدة تجاه لهجة SQL لكنها تختلف حيث تتأذى البنوك. *الأنواع:* مرنة التنميط (جاءت الجداول الصارمة في الإصدار 3.37)، في مقابل `numeric(18, 3)` الدقيق في PostgreSQL. *التزامن (Concurrency):* كاتب واحد في كل مرة، في مقابل أقفال الصفوف (row locks) و`SELECT ... FOR UPDATE`. *القيود:* المفاتيح الأجنبية (foreign keys) معطّلة حتى تُفعَّل لكل اتصال.
 
-استخدم SQLite للأغلبية الرخيصة (the cheap majority)، و**Testcontainers** (يشغّل حاوية Docker مؤقتة، it starts a throwaway Docker container) للأقفال و`numeric` والترحيلات (migrations) ولهجة SQL (dialect). هذه النسخة **غير منفَّذة هنا (not executed here)** (فهي تحتاج Docker؛ `pip install "testcontainers[postgres]" "psycopg[binary]"`)، وتختلف مسارات الاستيراد (import paths) بين إصدارات testcontainers-python.
+استخدم SQLite للأغلبية الرخيصة، و**Testcontainers** للأقفال و`numeric` والترحيلات ولهجة SQL. هذه النسخة **غير منفَّذة هنا** (فهي تحتاج Docker؛ `pip install "testcontainers[postgres]" "psycopg[binary]"`)، وتختلف مسارات الاستيراد بين إصدارات testcontainers-python.
 
 ```python
 # tests/test_transfers_postgres.py
@@ -659,11 +659,11 @@ def test_numeric_sums_are_exact(pg_conn):
     assert total == Decimal("0.30")
 ```
 
-**بيانات الاختبار (Test data).** يمنح *المُنشئ (builder)* كل حقل قيمة افتراضية صالحة (a valid default)، فيسمّي الاختبار ما يهم فقط: `a_transfer(amount="0.10")`. أربع استراتيجيات للعزل (isolation strategies): *التراجع لكل اختبار (roll back per test)* (الافتراضي؛ ينكسر إن ثبّتت الشيفرة التغييرات (commits) أو استخدمت اتصالات أو خيوطًا أخرى، other connections or threads)، و*الحذف أو التفريغ بعد كل اختبار (delete or truncate after each test)* (للشيفرة التي تثبّت التغييرات؛ وهو أبطأ، slower)، و*بيانات فريدة لكل اختبار (unique data per test)* (للبيئات المشتركة؛ وتترك بقايا، leaves leftovers)، و*قاعدة بيانات جديدة لكل وحدة (fresh database per module)* (الأبطأ، slowest).
+**بيانات الاختبار (Test data).** يمنح *المُنشئ* كل حقل قيمة افتراضية صالحة، فيسمّي الاختبار ما يهم فقط: `a_transfer(amount="0.10")`. أربع استراتيجيات للعزل: *التراجع لكل اختبار* (الافتراضي؛ ينكسر إن ثبّتت الشيفرة التغييرات أو استخدمت اتصالات أو خيوطًا أخرى)، و*الحذف أو التفريغ بعد كل اختبار* (للشيفرة التي تثبّت التغييرات؛ وهو أبطأ)، و*بيانات فريدة لكل اختبار* (للبيئات المشتركة؛ وتترك بقايا)، و*قاعدة بيانات جديدة لكل وحدة* (الأبطأ).
 
-ابنِ قاعدة بيانات الاختبار بتشغيل **ترحيلاتك الحقيقية (real migrations)** من الفراغ (from empty)، لا بمخطط منسوخ يدويًا (never a hand-copied schema)، وأضف اختبار ترقية (upgrade test): أنشئها بالإصدار N−1، وأدخل صفوفًا، ورحِّل إلى N، وتحقق أنها نجت (check they survive) ([*لبنات بناء SaaS (SaaS Building Blocks)*، الدرس 2.1 — طبقة البيانات: Postgres وORMs والترحيلات والبيانات الأولية (The data layer: Postgres, ORMs, migrations and seeds)](../saas/index.ar.html#/2.1)). بيانات الاختبار اصطناعية أو مقنَّعة (synthetic or masked)، لا بيانات عملاء أبدًا (never customer data)؛ و`Faker("ar_AA")` تولّد أسماء عربية (Arabic names).
+ابنِ قاعدة بيانات الاختبار بتشغيل **ترحيلاتك الحقيقية** من الفراغ، لا بمخطط منسوخ يدويًا، وأضف اختبار ترقية: أنشئها بالإصدار N−1، وأدخل صفوفًا، ورحِّل إلى N، وتحقق أنها نجت ([*لبنات بناء SaaS*، الدرس 2.1 — طبقة البيانات: Postgres وORMs والترحيلات والبيانات الأولية](../saas/index.ar.html#/2.1)). بيانات الاختبار اصطناعية أو مقنَّعة، لا بيانات عملاء أبدًا؛ و`Faker("ar_AA")` تولّد أسماء عربية.
 
-**العمل غير المتزامن والطوابير: لا تنتظر مدة ثابتة وتأمل (Async and queues: never sleep and hope).** يستدعي الاختبار الضعيف `time.sleep(2)` ثم يؤكد: قصير جدًا على CI البطيء (too short on slow CI)، وبطيء جدًا في غيره (too slow elsewhere). وثلاث أدوات تحل محله. **نقطة الفصل (seam)**، وهي موضع تبديل السلوك دون تعديل الشيفرة (a place to swap behaviour without editing the code)، تتيح لك اختبار منطق المعالج (the handler's logic) بشكل متزامن (synchronously)، مع اختبار واحد متعدد الخيوط (one threaded test) للربط (wiring). و**مساعد الانتظار (waiting helper)** يستطلع الحالة حتى مهلة محددة (polls against a deadline). و**الساعة المزيّفة (fake clock)** تسجّل التأخيرات بدل الانتظار (records delays instead of waiting) (انظر اختبار إعادة المحاولة، see the retry test).
+**العمل غير المتزامن والطوابير: لا تنتظر مدة ثابتة وتأمل.** يستدعي الاختبار الضعيف `time.sleep(2)` ثم يؤكد: قصير جدًا على CI البطيء، وبطيء جدًا في غيره. وثلاث أدوات تحل محله. **نقطة الفصل (seam)**، وهي موضع تبديل السلوك دون تعديل الشيفرة، تتيح لك اختبار منطق المعالج بشكل متزامن، مع اختبار واحد متعدد الخيوط للربط. و**مساعد الانتظار** يستطلع الحالة حتى مهلة محددة. و**الساعة المزيّفة (fake clock)** تسجّل التأخيرات بدل الانتظار.
 
 ```python
 # najm/worker.py
@@ -703,7 +703,7 @@ def test_the_worker_delivers_in_order_without_a_fixed_sleep():
     assert [text for _, text in sent] == ["message 0", "message 1", "message 2"]
 ```
 
-**حدود HTTP (HTTP boundaries).** لا تستطيع أن تجعل خدمة شريك تنقضي مهلتها عند الطلب (make a partner's service time out on demand)، فاستبدل بها بديلًا ثابت الاستجابة (stub it). تحاكي `respx` المكتبة `httpx`؛ أما WireMock فخادم مستقل (standalone server) يصلح لأي لغة (for any language).
+**حدود HTTP.** لا تستطيع أن تجعل خدمة شريك تنقضي مهلتها عند الطلب، فاستبدل بها بديلًا ثابت الاستجابة. تحاكي `respx` المكتبة `httpx`؛ أما WireMock فخادم مستقل يصلح لأي لغة.
 
 ```python
 # najm/fx.py
@@ -749,11 +749,11 @@ def test_a_broken_fx_service_becomes_one_clear_error(failure):
         rate(URL, "QAR", "EUR")
 ```
 
-أدوات *التسجيل وإعادة التشغيل (Record and replay)* (أشرطة بأسلوب VCR وتسجيل WireMock، VCR-style cassettes, WireMock recording) تلتقط الحركة الحقيقية (real traffic) مرة واحدة، لكن التسجيل يظل ناجحًا بعد أن يتغير المزوِّد (keeps passing after the provider changes)، وقد يحمل رموزًا (tokens) أو بيانات عملاء، ويجمّد المسار السعيد (freezes the happy path). استخدم البدائل ثابتة الاستجابة (stubs) للإخفاقات (for failures)، والعقود (contracts) للشكل (for shape).
+أدوات *التسجيل وإعادة التشغيل* تلتقط الحركة الحقيقية مرة واحدة، لكن التسجيل يظل ناجحًا بعد أن يتغير المزوِّد، وقد يحمل رموزًا (tokens) أو بيانات عملاء، ويجمّد المسار السعيد. استخدم البدائل ثابتة الاستجابة (stubs) للإخفاقات، والعقود للشكل.
 
-### 🔴 نظرة الخبير (Expert view)
+### 🔴 نظرة الخبير
 
-**العقود التي يقودها المستهلك مع Pact (Consumer-driven contracts with Pact).** الخلفية (backend) لتطبيق نجم للهاتف (Najm Mobile) وواجهة التحويلات (Transfers API) تتبعان فريقين مختلفين (different squads)؛ والفحوص الشاملة من البداية إلى النهاية (end-to-end checks) لكل إصدار بطيئة وغير مستقرة (slow and flaky). ومع **Pact** تسجّل اختبارات المستهلك احتياجاتها في ملف *ميثاق (pact)*، ويعيد المزوِّد تشغيله على الواجهة الحقيقية (replays it against the real API)، ويتتبع *وسيط (broker)* أي الإصدارات متوافقة (which versions are compatible).
+**العقود التي يقودها المستهلك مع Pact.** الخلفية لتطبيق نجم للهاتف وواجهة التحويلات تتبعان فريقين مختلفين؛ والفحوص الشاملة من البداية إلى النهاية لكل إصدار بطيئة وغير مستقرة. ومع **Pact** تسجّل اختبارات المستهلك احتياجاتها في ملف *ميثاق*، ويعيد المزوِّد تشغيله على الواجهة الحقيقية، ويتتبع *وسيط* أي الإصدارات متوافقة.
 
 ```mermaid
 sequenceDiagram
@@ -769,7 +769,7 @@ sequenceDiagram
     B-->>C: نعم أو لا (Yes or no)
 ```
 
-يستخدم الملفان واجهة pact-python 3 (`pip install pact-python`؛ اختلف الإصدار 2.x؛ واختُبرا مع 3.4). احفظهما في جذر النظام النموذجي (the sample root)؛ وشغّل `pytest consumer_test.py` ثم `pytest provider_test.py` (قد تعكس إضافة الخلط ترتيبهما، a shuffling plugin could reverse them). يبدأ اختبار المزوِّد (The provider test) الواجهة الحقيقية ويعيد تشغيل الميثاق (replays the pact):
+يستخدم الملفان واجهة pact-python 3 (`pip install pact-python`؛ اختلف الإصدار 2.x؛ واختُبرا مع 3.4). احفظهما في جذر النظام النموذجي؛ وشغّل `pytest consumer_test.py` ثم `pytest provider_test.py`. يبدأ اختبار المزوِّد الواجهة الحقيقية ويعيد تشغيل الميثاق:
 
 ```python
 # consumer_test.py
@@ -839,20 +839,20 @@ def test_the_transfers_api_honours_the_najm_mobile_pact():
         thread.join(timeout=5)
 ```
 
-الآن ينظّف فريق المزوِّد (provider squad) `value_date` فيجعله `valueDate`. لا يفشل أي اختبار وحدة في المزوِّد (No provider unit test fails)، لأنها تختبر تصور المزوِّد نفسه لشكله (the provider's own idea of its shape). أما التحقق (The verification) فيفشل (مختصرًا، trimmed):
+الآن ينظّف فريق المزوِّد `value_date` فيجعله `valueDate`. لا يفشل أي اختبار وحدة في المزوِّد، لأنها تختبر تصور المزوِّد نفسه لشكله. أما التحقق فيفشل:
 
 ```text
 has a matching body (FAILED)
 $ -> Actual map is missing the following keys: value_date
 ```
 
-في التكامل المستمر (In CI) ينشر المستهلك الميثاق إلى وسيط (publishes the pact to a broker) (`pact-broker publish`) ويعمل `can-i-deploy` بوابةً تُجيز كل إصدار أو تمنعه (gates each release). لم يُشغَّل هنا (Not run here) (لا وسيط، no broker)؛ راجع docs.pact.io لمعرفة الأعلام الحالية (current flags).
+في التكامل المستمر ينشر المستهلك الميثاق إلى وسيط (`pact-broker publish`) ويعمل `can-i-deploy` بوابةً تُجيز كل إصدار أو تمنعه. لم يُشغَّل هنا؛ راجع docs.pact.io لمعرفة الأعلام الحالية.
 
 ```bash
 pact-broker can-i-deploy --pacticipant najm-mobile --version "$GIT_SHA" --to-environment production
 ```
 
-**فحص مخطط قابل للتنفيذ (An executable schema check).** مع فريق واحد، أو واجهة برمجة عامة بمستهلكين مجهولين (a public API with unknown consumers)، يكون فحص JSON Schema (أو OpenAPI) أبسط (simpler) (`pip install jsonschema`):
+**فحص مخطط قابل للتنفيذ.** مع فريق واحد، أو واجهة برمجة عامة بمستهلكين مجهولين، يكون فحص JSON Schema (أو OpenAPI) أبسط (`pip install jsonschema`):
 
 ```python
 # tests/test_contract_schema.py
@@ -885,9 +885,9 @@ def test_the_check_can_fail():
         validate(drifted, TRANSFER_V1)
 ```
 
-يحذف المخطط `additionalProperties: false`، فيجوز للمزوِّد إضافة حقول، وهذا هو القارئ المتسامح (a tolerant reader). تفحص العقود *الشكل (shape)* لا الصحة (correctness): فرسم خاطئ بالشكل الصحيح (a wrong fee of the right shape) (`10.81` بدل `10.82`، عيب `float_fee`) يجتاز أي مخطط كهذا. اقرن العقود باختبارات الخصائص (property tests) في الدرس 2.3.
+يحذف المخطط `additionalProperties: false`، فيجوز للمزوِّد إضافة حقول، وهذا هو القارئ المتسامح. تفحص العقود *الشكل* لا الصحة: فرسم خاطئ بالشكل الصحيح (`10.81` بدل `10.82`، عيب `float_fee`) يجتاز أي مخطط كهذا. اقرن العقود باختبارات الخصائص (property tests) في الدرس 2.3.
 
-**خاصية عدم التكرار وإعادة المحاولات (Idempotency and retries).** نبدأ بالرد الضائع من القصة الافتتاحية (the lost reply from the opening story): يعيد العميل المحاولة بالمفتاح نفسه (retries with the same key)، فيجب أن يعيد الخادم تقديم النتيجة لا تكرار العملية (replay, not repeat). ويسجّل `sleep` مزيّف التراجع الأسي (a fake sleep records the backoff):
+**خاصية عدم التكرار وإعادة المحاولات.** نبدأ بالرد الضائع من القصة الافتتاحية: يعيد العميل المحاولة بالمفتاح نفسه، فيجب أن يعيد الخادم تقديم النتيجة لا تكرار العملية. ويسجّل `sleep` مزيّف التراجع الأسي:
 
 ```python
 # najm/retry.py
@@ -927,13 +927,13 @@ def test_a_retry_after_a_lost_reply_moves_the_money_once():
     assert (delays, response.status_code) == ([1.0], 200)
 ```
 
-تحت `NAJM_BUGS=no_idempotency` يروي التأكيد الأول القصة (the first assertion tells the story):
+تحت `NAJM_BUGS=no_idempotency` يروي التأكيد الأول القصة:
 
 ```text
 E       AssertionError: assert '11500.00' == '11750.00'
 ```
 
-الآن طلبان بمفتاح واحد يصلان *معًا (together)*. نادرًا ما تظهر حالات التسابق (Races) من تلقاء نفسها، لذا يفرض الاختبار واحدة: دالة `check_transfer` مُرقَّعة (patched) تجعل كل خيط (thread) ينتظر عند `Barrier` داخل `submit` حتى يكون الاثنان قد بحثا عن المفتاح (looked up the key).
+الآن طلبان بمفتاح واحد يصلان *معًا*. نادرًا ما تظهر حالات التسابق من تلقاء نفسها، لذا يفرض الاختبار واحدة: دالة `check_transfer` مُرقَّعة تجعل كل خيط ينتظر عند `Barrier` داخل `submit` حتى يكون الاثنان قد بحثا عن المفتاح.
 
 ```python
 # tests/test_double_submit.py
@@ -968,155 +968,155 @@ def test_the_in_memory_service_survives_a_double_submit(monkeypatch):
     assert str(service.accounts["acc-1"]["balance"]) == "11900.00"               # debited once
 ```
 
-على النظام النموذجي كما شُحن (On the sample as shipped) يفشل:
+على النظام النموذجي كما شُحن يفشل:
 
 ```text
 E       assert [True, True] == [False, True]
 ```
 
-هذه نتيجة اكتُشفت (a finding)، لا عيب مزروع (not a seeded bug): تفحص `submit` المفتاح وتسجّله لاحقًا، دون شيء ذري بينهما (nothing atomic between). لا ضرر في خيط واحد (Harmless in one thread)، لكنه خصم مزدوج (a double debit) في مجمع خيوط (a thread pool). ويصلحه حجز ذري (An atomic claim) (قفل هنا، وقيد فريد (unique constraint) في قاعدة بيانات)، ويبقى هذا الاختبار اختبار انحدار (the regression test).
+هذه نتيجة اكتُشفت، لا عيب مزروع: تفحص `submit` المفتاح وتسجّله لاحقًا، دون شيء ذري بينهما. لا ضرر في خيط واحد، لكنه خصم مزدوج في مجمع خيوط. ويصلحه حجز ذري (قفل هنا، وقيد فريد (unique constraint) في قاعدة بيانات)، ويبقى هذا الاختبار اختبار انحدار.
 
-## 🧰 الأدوات (The toolkit)
-| الأداة أو الممارسة أو التقنية (Tool, practice or technique) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
+## 🧰 الأدوات
+| الأداة أو الممارسة أو التقنية | ما هي وماذا تفعل | متى تلجأ إليها |
 |---|---|---|
-| **SQLite fixture with rollback** | قاعدة بيانات في الذاكرة داخل معاملة لكل اختبار (In-memory database in a transaction per test) | فحوص سريعة للشيفرة المحايدة تجاه لهجة SQL (Fast checks of dialect-neutral code) |
-| **Testcontainers** | يشغّل خدمات حقيقية مثل PostgreSQL في Docker (Starts real services such as PostgreSQL in Docker) | الأقفال و`numeric` والترحيلات (Locks, migrations) |
-| **Test data builders** (Faker) | دوال تعيد كائنات صالحة بمعرّفات فريدة (Functions returning valid objects with unique ids) | أي اختبار يحتاج صفوفًا (Any test needing rows) |
-| **respx** | يحاكي استدعاءات `httpx` ومهلاتها وأخطاءها (Mocks calls, timeouts and errors) | أنماط فشل HTTP، وWireMock في غيرها (HTTP failure modes) |
-| **Pact** | عقود يقودها المستهلك ووسيط و`can-i-deploy` (Consumer-driven contracts, broker) | الخدمات التي تملكها فرق مختلفة (Services owned by different teams) |
-| **JSON Schema** (`jsonschema`) | شكل استجابة يفحصه الحاسوب آليًا (Machine-checked response shape) | فحوص المزوِّد والواجهات العامة (Provider checks, public APIs) |
+| **SQLite fixture with rollback** | قاعدة بيانات في الذاكرة داخل معاملة لكل اختبار | فحوص سريعة للشيفرة المحايدة تجاه لهجة SQL |
+| **Testcontainers** | يشغّل خدمات حقيقية مثل PostgreSQL في Docker | الأقفال و`numeric` والترحيلات |
+| **Test data builders** (Faker) | دوال تعيد كائنات صالحة بمعرّفات فريدة | أي اختبار يحتاج صفوفًا |
+| **respx** | يحاكي استدعاءات `httpx` ومهلاتها وأخطاءها | أنماط فشل HTTP، وWireMock في غيرها |
+| **Pact** | عقود يقودها المستهلك ووسيط و`can-i-deploy` | الخدمات التي تملكها فرق مختلفة |
+| **JSON Schema** (`jsonschema`) | شكل استجابة يفحصه الحاسوب آليًا | فحوص المزوِّد والواجهات العامة |
 
-## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-ينشر بلال (Bilal) وفريق المدفوعات (Payments squad) **خطة اختبار تكامل التحويلات، الإصدار 1 (Transfers Integration Test Plan v1)**.
+## 🏛️ عمليًا في بنك نجم
+ينشر بلال وفريق المدفوعات **خطة اختبار تكامل التحويلات، الإصدار 1**.
 
-| المعرّف (ID) | الحدّ الفاصل (Boundary) | الاختبار (Test) | الأداة (Tool) | التشغيل (Runs) |
+| المعرّف (ID) | الحدّ الفاصل (Boundary) | الاختبار | الأداة | التشغيل |
 |---|---|---|---|---|
-| IT-1 | من المستودع إلى قاعدة البيانات (Repository to database) | مبالغ دقيقة؛ ورفض المفاتيح المكررة (Exact amounts; duplicate keys refused) | SQLite؛ وTestcontainers لكل طلب دمج (per pull request) | مع كل إيداع (Every commit) |
-| IT-2 | إعادة محاولة التطبيق إلى الواجهة (App retry to API) | رد ضائع مع إعادة محاولة يخصم مرة واحدة (Lost reply plus retry debits once) | دالة انتظار مزيّفة (Fake sleep) | مع كل إيداع (Every commit) |
-| IT-3 | طلبان بمفتاح واحد (Two requests, one key) | تحويل واحد بالضبط (Exactly one transfer) | حاجز وخيوط (Barrier, threads) | مع كل إيداع (Every commit) |
-| IT-4 | من تطبيق الهاتف إلى واجهة التحويلات (Mobile to Transfers API) | التحقق من الميثاق ونجاح `can-i-deploy` (Pact verified; passes) | وسيط Pact (Pact Broker) | قبل كل نشر (Before each deploy) |
+| IT-1 | من المستودع إلى قاعدة البيانات | مبالغ دقيقة؛ ورفض المفاتيح المكررة | SQLite؛ وTestcontainers لكل طلب دمج | مع كل إيداع |
+| IT-2 | إعادة محاولة التطبيق إلى الواجهة | رد ضائع مع إعادة محاولة يخصم مرة واحدة | دالة انتظار مزيّفة | مع كل إيداع |
+| IT-3 | طلبان بمفتاح واحد | تحويل واحد بالضبط | حاجز وخيوط | مع كل إيداع |
+| IT-4 | من تطبيق الهاتف إلى واجهة التحويلات | التحقق من الميثاق ونجاح `can-i-deploy` | وسيط Pact (Pact Broker) | قبل كل نشر |
 
-لا يُعدّ منجزًا (is not done) أي طلب دمج (pull request) يضيف مستودعًا أو عميلًا (a repository or client) دون صف IT.
+لا يُعدّ منجزًا أي طلب دمج يضيف مستودعًا أو عميلًا دون صف IT.
 
-## 🛠️ التمارين (Exercises)
-انسخ النظام النموذجي (Copy the sample)، وأضف ملفات هذا الدرس (this lesson's files)، ونفّذ `pip install faker respx jsonschema pytest-randomly`.
+## 🛠️ التمارين
+انسخ النظام النموذجي، وأضف ملفات هذا الدرس، ونفّذ `pip install faker respx jsonschema pytest-randomly`.
 
-- 🟢 **مستودع تثق به (A repository you can trust).** أضف `find_by_key(owner, key)` إلى `TransferRepository` واختبره بالمُنشئ (builder) (المبلغ يعود نصًا، amount back as a string؛ والمفتاح المجهول يعطي `None`، unknown key). *يكتمل عندما (Done when):* تنجح الاختبارات في خمس تشغيلات مخلوطة الترتيب (five shuffled runs) (تفعل `pytest-randomly` ذلك افتراضيًا، by default) ويفشل تصميم يوم الجمعة ذو الفاصلة العائمة (Friday's float design) في اختبار المجموع (the sum test) (ثم أعده، then restore).
-- 🟡 **عقد ثانٍ (A second contract).** اكتب JSON Schema للمسار `GET /accounts/{id}/balance`. *يكتمل عندما (Done when):* تنجح الاستجابة الحقيقية (the real response passes)، وتفشل المنجرفة (a drifted one) (`balance` عددًا) فشلًا مقروءًا (fails readably)، ويظل الحقل الإضافي ناجحًا (an extra field still passes)، وتستطيع أن تقول لماذا لا يلتقط أي مخطط (schema) قيمة خاطئة بالشكل الصحيح (a wrong value in the right shape).
-- 🔴 **أغلق التسابق (Close the race).** احفظ فشل الإرسال المزدوج (the double-submit failure). في صنف فرعي (a subclass)، لفّ `submit` بـ`threading.Lock` حتى ينجح. ثم اكتب نسخة قاعدة البيانات (the database version): خيطان (two threads)، لكل منهما اتصال SQLite خاص به بملف (its own SQLite connection to a file)، يُدخلان مفتاحًا واحدًا في جدول فيه `UNIQUE (owner, idem_key)`، مع حالة ضابطة (a control) بلا القيد (without the constraint). *يكتمل عندما (Done when):* ينجح الاختبار المصلَح 20 تشغيلة متتالية (20 runs in a row)، ويقبل اختبار قاعدة البيانات إدخالًا واحدًا (the control, two) (والحالة الضابطة اثنين)، ويبيّن جدول أي قيم `NAJM_BUGS` تلتقطها اختباراتك (which your tests catch).
+- 🟢 **مستودع تثق به.** أضف `find_by_key(owner, key)` إلى `TransferRepository` واختبره بالمُنشئ (المبلغ يعود نصًا، amount back as a string؛ والمفتاح المجهول يعطي `None`). *يكتمل عندما:* تنجح الاختبارات في خمس تشغيلات مخلوطة الترتيب (تفعل `pytest-randomly` ذلك افتراضيًا) ويفشل تصميم يوم الجمعة ذو الفاصلة العائمة في اختبار المجموع (ثم أعده).
+- 🟡 **عقد ثانٍ.** اكتب JSON Schema للمسار `GET /accounts/{id}/balance`. *يكتمل عندما:* تنجح الاستجابة الحقيقية، وتفشل المنجرفة (`balance` عددًا) فشلًا مقروءًا، ويظل الحقل الإضافي ناجحًا، وتستطيع أن تقول لماذا لا يلتقط أي مخطط (schema) قيمة خاطئة بالشكل الصحيح.
+- 🔴 **أغلق التسابق.** احفظ فشل الإرسال المزدوج. في صنف فرعي، لفّ `submit` بـ`threading.Lock` حتى ينجح. ثم اكتب نسخة قاعدة البيانات: خيطان، لكل منهما اتصال SQLite خاص به بملف، يُدخلان مفتاحًا واحدًا في جدول فيه `UNIQUE (owner, idem_key)`، مع حالة ضابطة بلا القيد. *يكتمل عندما:* ينجح الاختبار المصلَح 20 تشغيلة متتالية، ويقبل اختبار قاعدة البيانات إدخالًا واحدًا (والحالة الضابطة اثنين)، ويبيّن جدول أي قيم `NAJM_BUGS` تلتقطها اختباراتك.
 
-## ⚠️ أخطاء وفخاخ (Mistakes and traps)
-- **محاكاة قاعدة البيانات «لإبقاء الاختبارات سريعة» (Mocking the database "to keep tests fast").** تخسر العيوب الكامنة في الأنواع والقيود (the bugs in types and constraints).
-- **استخدام `sleep` بدل الانتظار (instead of waiting).** بطيء حين ينجح، وغير مستقر حين يفشل (Slow when it passes, flaky when it fails).
-- **بيانات اختبار مشتركة (Shared test data).** تنجح الاختبارات منفردة وتفشل مجتمعة (pass alone, fail together).
-- **التسجيل وإعادة التشغيل وحدهما (Record and replay alone).** تتقادم الأشرطة بصمت (Cassettes go stale silently).
-- **قراءة العقد الأخضر على أنه صحة (Reading a green contract as correctness).** هو يثبت الشكل لا القيمة (It proves shape, not value).
+## ⚠️ أخطاء وفخاخ
+- **محاكاة قاعدة البيانات «لإبقاء الاختبارات سريعة».** تخسر العيوب الكامنة في الأنواع والقيود.
+- **استخدام `sleep` بدل الانتظار.** بطيء حين ينجح، وغير مستقر حين يفشل.
+- **بيانات اختبار مشتركة.** تنجح الاختبارات منفردة وتفشل مجتمعة.
+- **التسجيل وإعادة التشغيل وحدهما.** تتقادم الأشرطة بصمت.
+- **قراءة العقد الأخضر على أنه صحة.** هو يثبت الشكل لا القيمة.
 
-## 🧾 الخلاصة (Recap)
-- اختبارات التكامل (Integration tests) تفحص الوصلات التي لا تفحصها كائنات المحاكاة: قاعدة البيانات والطابور وHTTP وواجهات الفرق الأخرى (database, queue, HTTP, other teams' APIs).
-- تراجع لكل اختبار (Roll back per test)، واستخدم المُنشئات (builders) والترحيلات الحقيقية (real migrations)، واعرف أين تختلف SQLite عن PostgreSQL.
-- استبدل `sleep` بنقاط الفصل (seams) والمهل (deadlines) والساعات المزيّفة (fake clocks).
-- تتيح العقود التي يقودها المستهلك (Consumer-driven contracts) للفرق أن تصدر إصداراتها باستقلال (release independently)؛ وهي تثبت الشكل لا الحقيقة (shape, not truth).
-- افرض حالات التسابق بالحواجز (Force races with barriers)؛ ويحكم بينها قفل أو قيد فريد (a lock or unique constraint arbitrates).
+## 🧾 الخلاصة
+- اختبارات التكامل (Integration tests) تفحص الوصلات التي لا تفحصها كائنات المحاكاة: قاعدة البيانات والطابور وHTTP وواجهات الفرق الأخرى.
+- تراجع لكل اختبار، واستخدم المُنشئات والترحيلات الحقيقية، واعرف أين تختلف SQLite عن PostgreSQL.
+- استبدل `sleep` بنقاط الفصل والمهل والساعات المزيّفة (fake clocks).
+- تتيح العقود التي يقودها المستهلك (Consumer-driven contracts) للفرق أن تصدر إصداراتها باستقلال؛ وهي تثبت الشكل لا الحقيقة.
+- افرض حالات التسابق بالحواجز؛ ويحكم بينها قفل أو قيد فريد.
 
-## ✍️ اختبر نفسك (Check yourself)
+## ✍️ اختبر نفسك
 
-**1. تنجح اختبارات المستودع (Repository tests) على SQLite في الذاكرة، لكن أعمدة المال تسيء التصرف في قاعدة بيانات PostgreSQL للتجهيز (staging). ما السبب الأرجح؟**
+**1. تنجح اختبارات المستودع على SQLite في الذاكرة، لكن أعمدة المال تسيء التصرف في قاعدة بيانات PostgreSQL للتجهيز (staging). ما السبب الأرجح؟**
 
-- A. SQLite أبطأ من PostgreSQL على جداول المال الكبيرة (on large tables of money)
-- B. لا تستطيع SQLite العمل داخل معاملة قاعدة بيانات (database transaction) أصلًا، حتى في الاختبارات (even for tests)
-- C. أخفى التنميط المرن في SQLite (SQLite's loose typing) عدم تطابق في النوع أو الدقة
-- D. تتجاهل PostgreSQL قيود `CHECK` (CHECK constraints) افتراضيًا (by default)، فلا تعمل أبدًا (never fire)
-
-<details><summary>الإجابة</summary>
-
-**C.** تعامل SQLite نوع العمود تلميحًا (treats a column type as a hint)، فيمر عدم التطابق بصمت؛ أما `numeric(18, 3)` الصارم في PostgreSQL فيفرض الدقة (enforces precision). (🟡 SQLite ليست PostgreSQL، SQLite is not PostgreSQL).
-
-</details>
-
-**2. يعيد المزوِّد (provider) تسمية `value_date` إلى `valueDate`؛ وتنجح اختباراته الخاصة. ما الذي يلتقط الكسر قبل الإصدار دون نشر الخدمتين معًا؟**
-
-- A. التحقق من ميثاق المستهلك (the consumer's pact) مقابل المزوِّد في التكامل المستمر (in CI)
-- B. رفع تغطية الأسطر (line coverage) لوحدة المسلسِل (serialiser) إلى 100 بالمئة
-- C. لقطة (snapshot) لأصناف النموذج الداخلي للمزوِّد (internal model classes)
-- D. إضافة `time.sleep` قبل تأكيد المستهلك (before the consumer's assertion)
+- A. SQLite أبطأ من PostgreSQL على جداول المال الكبيرة
+- B. لا تستطيع SQLite العمل داخل معاملة قاعدة بيانات أصلًا، حتى في الاختبارات
+- C. أخفى التنميط المرن في SQLite عدم تطابق في النوع أو الدقة
+- D. تتجاهل PostgreSQL قيود `CHECK` (CHECK constraints) افتراضيًا، فلا تعمل أبدًا
 
 <details><summary>الإجابة</summary>
 
-**A.** يسجّل الميثاق (pact) ما يقرؤه المستهلك (what the consumer reads)؛ وإعادة تشغيله على المزوِّد الحقيقي تفشل عند الحقل المفقود (fails on the missing field). (🔴 العقود التي يقودها المستهلك، Consumer-driven contracts).
+**C.** تعامل SQLite نوع العمود تلميحًا، فيمر عدم التطابق بصمت؛ أما `numeric(18, 3)` الصارم في PostgreSQL فيفرض الدقة..
 
 </details>
 
-**3. يستخدم اختبار عامل (worker test) الدالة `time.sleep(2)` ويفشل على مشغِّلات CI البطيئة. ما أفضل تغيير؟**
+**2. يعيد المزوِّد تسمية `value_date` إلى `valueDate`؛ وتنجح اختباراته الخاصة. ما الذي يلتقط الكسر قبل الإصدار دون نشر الخدمتين معًا؟**
 
-- A. رفع مدة الانتظار الثابت من ثانيتين إلى عشر ثوانٍ (Raise the sleep from two seconds to ten seconds)
-- B. إعادة تشغيل الاختبار الفاشل في CI حتى ينجح تشغيل واحد (Rerun the failed test)
-- C. استبدال العامل الحقيقي بكائن `Mock` في الاختبار (Replace the real worker)
-- D. استطلاع النتيجة المتوقعة حتى مهلة محددة (Poll for the expected result against a deadline)
+- A. التحقق من ميثاق المستهلك مقابل المزوِّد في التكامل المستمر
+- B. رفع تغطية الأسطر (line coverage) لوحدة المسلسِل إلى 100 بالمئة
+- C. لقطة (snapshot) لأصناف النموذج الداخلي للمزوِّد
+- D. إضافة `time.sleep` قبل تأكيد المستهلك
 
 <details><summary>الإجابة</summary>
 
-**D.** يعود الاستطلاع (Polling) حين يتحقق الشرط ويفشل بوضوح عند المهلة (fails clearly at the deadline). أما الانتظار الثابت الأطول فيخفي عدم الاستقرار (hides the flake). (🟡 العمل غير المتزامن والطوابير، Async and queues).
+**A.** يسجّل الميثاق (pact) ما يقرؤه المستهلك؛ وإعادة تشغيله على المزوِّد الحقيقي تفشل عند الحقل المفقود. (🔴 العقود التي يقودها المستهلك).
 
 </details>
 
-**4. تثبّت الشيفرة المختبَرة التغييرات (commits)، فيترك التراجع لكل اختبار (rollback-per-test) صفوفًا للاختبارات اللاحقة. ماذا يفعل الفريق؟**
+**3. يستخدم اختبار عامل الدالة `time.sleep(2)` ويفشل على مشغِّلات CI البطيئة. ما أفضل تغيير؟**
 
-- A. إبقاء التراجع (rollback) وتشغيل الاختبارات بترتيب ثابت (in a fixed order) دائمًا
-- B. حذف الجداول أو تفريغها بعد كل اختبار (Delete or truncate the tables after each test)
-- C. مشاركة مجموعة صفوف واحدة (Share one set of rows) بين كل الاختبارات التي تلمس الجدول (that touch the table)
-- D. تحويل كل اختبار إلى اتصال محاكى (a mocked connection) بقاعدة البيانات (to the database)
+- A. رفع مدة الانتظار الثابت من ثانيتين إلى عشر ثوانٍ
+- B. إعادة تشغيل الاختبار الفاشل في CI حتى ينجح تشغيل واحد
+- C. استبدال العامل الحقيقي بكائن `Mock` في الاختبار
+- D. استطلاع النتيجة المتوقعة حتى مهلة محددة
 
 <details><summary>الإجابة</summary>
 
-**B.** لا يستطيع التراجع (A rollback) أن يلغي تثبيتًا (cannot undo a commit). والحذف أو التفريغ بعد كل اختبار يعيد العزل (restores isolation). (🟢 قاعدة بيانات حقيقية، A real database).
+**D.** يعود الاستطلاع حين يتحقق الشرط ويفشل بوضوح عند المهلة. أما الانتظار الثابت الأطول فيخفي عدم الاستقرار..
 
 </details>
 
-**5. يُظهر اختبار تداخل مفروض (forced-interleaving test) تحويلين أُنشئا من مفتاح واحد لخاصية عدم التكرار (one idempotency key). ما الاستجابة الصحيحة؟**
+**4. تثبّت الشيفرة المختبَرة التغييرات، فيترك التراجع لكل اختبار صفوفًا للاختبارات اللاحقة. ماذا يفعل الفريق؟**
 
-- A. إضافة إعادة محاولة في جانب العميل (client-side retry) بتأخير أطول بين المحاولات (between attempts)
-- B. تقليل عدد الخيوط (Reduce the thread count) في الاختبار حتى يصطدم أقل (so it hits less often)
-- C. جعل حجز المفتاح ذريًا مع الإبقاء على الاختبار (Make claiming the key atomic, and keep the test)
-- D. حذف الاختبار (Delete the test)، لأن الحركة الحقيقية نادرًا ما تكون بهذا التزامن (rarely that concurrent) في الإنتاج
+- A. إبقاء التراجع (rollback) وتشغيل الاختبارات بترتيب ثابت دائمًا
+- B. حذف الجداول أو تفريغها بعد كل اختبار
+- C. مشاركة مجموعة صفوف واحدة بين كل الاختبارات التي تلمس الجدول
+- D. تحويل كل اختبار إلى اتصال محاكى بقاعدة البيانات
 
 <details><summary>الإجابة</summary>
 
-**C.** فحص المفتاح وتسجيله خطوتان منفصلتان (separate steps): وهذا تسابق حقيقي (a real race). والحجز الذري (An atomic claim) (قفل أو قيد فريد، lock or unique constraint) يغلقه؛ والاختبار يُبقيه مغلقًا (keeps it closed). (🔴 خاصية عدم التكرار وإعادة المحاولات، Idempotency and retries).
+**B.** لا يستطيع التراجع أن يلغي تثبيتًا. والحذف أو التفريغ بعد كل اختبار يعيد العزل..
 
 </details>
 
-## 📚 المراجع (References)
+**5. يُظهر اختبار تداخل مفروض (forced-interleaving test) تحويلين أُنشئا من مفتاح واحد لخاصية عدم التكرار. ما الاستجابة الصحيحة؟**
+
+- A. إضافة إعادة محاولة في جانب العميل بتأخير أطول بين المحاولات
+- B. تقليل عدد الخيوط في الاختبار حتى يصطدم أقل
+- C. جعل حجز المفتاح ذريًا مع الإبقاء على الاختبار
+- D. حذف الاختبار، لأن الحركة الحقيقية نادرًا ما تكون بهذا التزامن في الإنتاج
+
+<details><summary>الإجابة</summary>
+
+**C.** فحص المفتاح وتسجيله خطوتان منفصلتان: وهذا تسابق حقيقي. والحجز الذري يغلقه؛ والاختبار يُبقيه مغلقًا..
+
+</details>
+
+## 📚 المراجع
 - Testcontainers — https://testcontainers.com/
-- توثيق Pact (Pact documentation)، بما فيه Pact Broker و`can-i-deploy` — https://docs.pact.io/
-- وحدة `sqlite3` في Python (Python sqlite3) — https://docs.python.org/3/library/sqlite3.html
+- توثيق Pact، بما فيه Pact Broker و`can-i-deploy` — https://docs.pact.io/
+- وحدة `sqlite3` في Python — https://docs.python.org/3/library/sqlite3.html
 - Martin Fowler، «The Practical Test Pyramid» (Ham Vocke) — https://martinfowler.com/articles/practical-test-pyramid.html
-- توثيق pytest (pytest documentation) — https://docs.pytest.org/
+- توثيق pytest — https://docs.pytest.org/
 
 ---
 
-# 2.3 — هل اختباراتك جيدة؟ التغطية واختبار الطفرات والاختبار القائم على الخصائص والاختبارات غير المستقرة (Are your tests any good? Coverage, mutation testing, property-based testing and flaky tests)
-*المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 2.1، 2.2* · *التركيز (Focus): Unit, Strategy*
+# 2.3 — هل اختباراتك جيدة؟ التغطية واختبار الطفرات والاختبار القائم على الخصائص والاختبارات غير المستقرة
+*المستوى: 🟡 متوسط* · *المتطلبات: 2.1، 2.2* · *التركيز: Unit, Strategy*
 
 ## ⚡ الدرس في دقيقة (In 60 seconds)
-- مجموعة اختبارات ناجحة (A passing suite) لا تثبت إلا القليل ما لم يكن بإمكانها أن تفشل (unless it could have failed). أربع أدوات تختبر الاختبارات (test the tests): **تغطية الشيفرة (coverage)** ما الذي نُفِّذ (what ran)؛ و**اختبار الطفرات (mutation testing)** هل ستلاحظ المجموعة عيبًا مزروعًا؟ ⁦(would the suite notice a planted bug?)⁩؛ و**الاختبار القائم على الخصائص (property-based testing)** هل تصمد القاعدة على مدخلات غير متوقعة؟ ⁦(does the rule hold on unforeseen inputs?)⁩؛ و**صيد الاختبارات غير المستقرة (flaky-test hunting)** هل يتوقف الحكم على الحظ؟ ⁦(does the verdict depend on luck?)⁩
-- تكشف التغطية (Coverage) الشيفرة التي لم تُنفَّذ قط (finds code that never ran)، لا الشيفرة التي فُحصت (code that was checked): يمكن لمجموعة أن تشغّل كل سطر ولا تلتقط أي عيب (run every line and catch no bug).
-- يزرع اختبار الطفرات (mutation testing) عيوبًا صغيرة (plants small bugs) ويعدّ كم منها تلتقطه اختباراتك؛ والطفرة الناجية (a survivor) غالبًا اختبار ناقص (a missing test).
-- اختبارات الخصائص (Property tests) بجودة مولِّداتها فقط (only as good as their generators). والاختبارات غير المستقرة (Flaky tests) عيوب في المجموعة (suite bugs): أصلحها أو احجرها (quarantine) بمالك وموعد نهائي (with an owner and deadline).
-- إشارة القرار (Decision cue)، لكل اختبار: **هل يمكن أن يفشل هذا، وأي عيب سيلتقط؟** ⁦(could this fail, and what bug would it catch?)⁩
+- مجموعة اختبارات ناجحة لا تثبت إلا القليل ما لم يكن بإمكانها أن تفشل. أربع أدوات تختبر الاختبارات: **تغطية الشيفرة (coverage)** ما الذي نُفِّذ؛ و**اختبار الطفرات (mutation testing)** هل ستلاحظ المجموعة عيبًا مزروعًا؟؛ و**الاختبار القائم على الخصائص (property-based testing)** هل تصمد القاعدة على مدخلات غير متوقعة؟؛ و**صيد الاختبارات غير المستقرة** هل يتوقف الحكم على الحظ؟
+- تكشف التغطية الشيفرة التي لم تُنفَّذ قط، لا الشيفرة التي فُحصت: يمكن لمجموعة أن تشغّل كل سطر ولا تلتقط أي عيب.
+- يزرع اختبار الطفرات عيوبًا صغيرة ويعدّ كم منها تلتقطه اختباراتك؛ والطفرة الناجية غالبًا اختبار ناقص.
+- اختبارات الخصائص بجودة مولِّداتها فقط. والاختبارات غير المستقرة عيوب في المجموعة: أصلحها أو احجرها (quarantine) بمالك وموعد نهائي.
+- إشارة القرار، لكل اختبار: **هل يمكن أن يفشل هذا، وأي عيب سيلتقط؟**
 
-## 🧭 لماذا يهم (Why it matters)
-يضيف طلب الدمج الثاني لندى (Nada's second pull request) 72 اختبارًا للدالة `check_transfer`. وتقرير التغطية (coverage report) مثالي: يُنفَّذ كل سطر وكل فرع في الدالة (every line and branch of the function runs). يفعّل راشد (Rashid) العيوب الخمسة المزروعة (five seeded bugs) في النظام النموذجي واحدًا بعد الآخر (one at a time). وتنجح الاختبارات الـ72 كلها في كل مرة: فهي لا تؤكد إلا أن الدالة أعادت شيئًا أو أطلقت شيئًا (returned something or raised something). يقول: «التغطية خريطة للأماكن التي مررتَ بها (a map of where you have been)، لا للأماكن التي كنتَ فيها حذرًا (where you were careful).»
+## 🧭 لماذا يهم
+يضيف طلب الدمج الثاني لندى 72 اختبارًا للدالة `check_transfer`. وتقرير التغطية مثالي: يُنفَّذ كل سطر وكل فرع في الدالة. يفعّل راشد العيوب الخمسة المزروعة في النظام النموذجي واحدًا بعد الآخر. وتنجح الاختبارات الـ72 كلها في كل مرة: فهي لا تؤكد إلا أن الدالة أعادت شيئًا أو أطلقت شيئًا. يقول: «التغطية خريطة للأماكن التي مررتَ بها، لا للأماكن التي كنتَ فيها حذرًا.»
 
-هذا قانون Goodhart (Goodhart's law): حين يصبح المقياس هدفًا يتوقف عن كونه مقياسًا جيدًا (when a measure becomes a target, it stops being a good measure). قل لوكيل برمجة (coding agent) «ارفع التغطية إلى 100%» (raise coverage to 100%) فيستطيع أن يلبّي في دقائق، باختبارات تشغّل كل شيء ولا تتحقق من شيء (run everything and verify nothing).
+هذا قانون Goodhart: حين يصبح المقياس هدفًا يتوقف عن كونه مقياسًا جيدًا. قل لوكيل برمجة «ارفع التغطية إلى 100%» فيستطيع أن يلبّي في دقائق، باختبارات تشغّل كل شيء ولا تتحقق من شيء.
 
-## 📐 كيف يعمل (How it works)
+## 📐 كيف يعمل
 
-### 🟢 الأساسيات (The essentials)
+### 🟢 الأساسيات
 
-**مهارة القراءة (The reading skill).** قبل أن تثق باختبار، اسأل أربعة أسئلة (ask four things). (1) *أي عيب سيحوّل هذا الاختبار إلى الأحمر؟* ⁦(what bug would turn this red?)⁩ (2) *لو كسرتُ الشيفرة عمدًا، فأي تأكيد سيفشل؟* ⁦(if I broke the code on purpose, which assertion would fail?)⁩ (3) *هل تأتي القيمة المتوقعة من خارج الشيفرة، مثل سياسة أو حساب يدوي؟* ⁦(does the expected value come from outside the code, such as a policy or a hand calculation?)⁩ (4) *هل سينجح لو أعادت الدالة ثابتًا؟* ⁦(would it pass if the function returned a constant?)⁩ الاختبار الذي يخفق في السؤال 1 مجرد زينة (decoration).
+**مهارة القراءة.** قبل أن تثق باختبار، اسأل أربعة أسئلة. (1) *أي عيب سيحوّل هذا الاختبار إلى الأحمر؟* (2) *لو كسرتُ الشيفرة عمدًا، فأي تأكيد سيفشل؟* (3) *هل تأتي القيمة المتوقعة من خارج الشيفرة، مثل سياسة أو حساب يدوي؟* (4) *هل سينجح لو أعادت الدالة ثابتًا؟* الاختبار الذي يخفق في السؤال 1 مجرد زينة.
 
-**التغطية: الأسطر مقابل الفروع (Coverage: line versus branch).** *تغطية الأسطر (Line coverage)* هي نسبة الأسطر التي نُفِّذت (the share of lines that ran)؛ و*تغطية الفروع (branch coverage)* تسأل هل مضى كل `if` في الاتجاهين (went both ways). مع pytest-cov: `pytest --cov=najm.transfers --cov-branch --cov-report=term-missing`. وهذا «مسرح التغطية» (coverage theatre)، مبني لإرضاء هدف رقمي (built to satisfy a target):
+**التغطية: الأسطر مقابل الفروع.** *تغطية الأسطر (Line coverage)* هي نسبة الأسطر التي نُفِّذت؛ و*تغطية الفروع (branch coverage)* تسأل هل مضى كل `if` في الاتجاهين. مع pytest-cov: `pytest --cov=najm.transfers --cov-branch --cov-report=term-missing`. وهذا «مسرح التغطية»، مبني لإرضاء هدف رقمي:
 
 ```python
 # tests/test_theatre.py
@@ -1140,11 +1140,11 @@ Name                Stmts   Miss Branch BrPart  Cover   Missing
 najm/transfers.py     114     52     46      3    51%   45, 53, 60, 92-94, 100-104, 118-122, 128-156, ...
 ```
 
-تقع الدالة `check_transfer` في الأسطر من 70 إلى 88، ولا سطر منها في عمود Missing (الأسطر الفائتة): فالدالة مغطاة بالكامل (fully covered). ومع ذلك تجتاز هذه المجموعة العيوب الخمسة المزروعة كلها (all five seeded bugs)، ومنها `limit_off_by_one` و`float_fee`، لأنها لا تؤكد إلا `is not None` أو أن للاستثناء رمزًا (an exception has a code). التأكيد الضعيف (A weak assertion) يمرّر أي سلوك (lets any behaviour through)؛ والقوي (a strong one) يثبّت قيمة مستمدة من القاعدة (pins a value from the rule).
+تقع الدالة `check_transfer` في الأسطر من 70 إلى 88، ولا سطر منها في عمود Missing (الأسطر الفائتة): فالدالة مغطاة بالكامل. ومع ذلك تجتاز هذه المجموعة العيوب الخمسة المزروعة كلها، ومنها `limit_off_by_one` و`float_fee`، لأنها لا تؤكد إلا `is not None` أو أن للاستثناء رمزًا. التأكيد الضعيف يمرّر أي سلوك؛ والقوي يثبّت قيمة مستمدة من القاعدة.
 
-### 🟡 التعمق أكثر (Going deeper)
+### 🟡 التعمق أكثر
 
-**اختبار الطفرات (Mutation testing).** تنسخ أداة الطفرات (A mutation tool) شيفرتك، وتُجري تغييرًا صغيرًا واحدًا (one small change) (*طفرة (mutant)*: يصير `>` إلى `>=`، أو يتحرك ثابت (a constant shifts)، أو تتغير رسالة)، وتشغّل الاختبارات. إن فشل اختبار فالطفرة *قُتلت (killed)*؛ وإن نجحت كلها فقد *نجت (survived)*، ولن تلاحظ مجموعتك ذلك العيب. و*درجة الطفرات (mutation score)* هي المقتولة مقسومة على المجموع (killed divided by total). في Python توجد `mutmut`؛ وفي Java توجد PIT؛ وفي JavaScript وTypeScript و.NET توجد Stryker.
+**اختبار الطفرات (Mutation testing).** تنسخ أداة الطفرات شيفرتك، وتُجري تغييرًا صغيرًا واحدًا (*طفرة (mutant)*: يصير `>` إلى `>=`، أو يتحرك ثابت، أو تتغير رسالة)، وتشغّل الاختبارات. إن فشل اختبار فالطفرة *قُتلت (killed)*؛ وإن نجحت كلها فقد *نجت (survived)*، ولن تلاحظ مجموعتك ذلك العيب. و*درجة الطفرات (mutation score)* هي المقتولة مقسومة على المجموع. في Python توجد `mutmut`؛ وفي Java توجد PIT؛ وفي JavaScript وTypeScript و.NET توجد Stryker.
 
 ```mermaid
 flowchart RL
@@ -1155,7 +1155,7 @@ flowchart RL
     D --> F["مكافئة: دوّنها<br/>(Equivalent: list it)"]
 ```
 
-اضبط mutmut 3 في `pyproject.toml`، علمًا بأن أسماء المفاتيح تغيّرت عبر إصدارات 3.x (key names changed across 3.x releases):
+اضبط mutmut 3 في `pyproject.toml`، علمًا بأن أسماء المفاتيح تغيّرت عبر إصدارات 3.x:
 
 ```toml
 [tool.mutmut]
@@ -1170,25 +1170,25 @@ mutmut results | grep survived                           # survivors (--all true
 mutmut show najm.transfers.x_check_transfer__mutmut_45   # one mutant's diff
 ```
 
-من دون `also_copy` تستورد الاختبارات `najm` غير المطفَّرة (the unmutated)، فتتوقف mutmut برسالة "could not find any test case for any mutant". يولّد التشغيل 60 طفرة في نحو 7 ثوانٍ (60 mutants in about 7 seconds). قارن ثلاث مجموعات (Compare three suites):
+من دون `also_copy` تستورد الاختبارات `najm` غير المطفَّرة، فتتوقف mutmut برسالة "could not find any test case for any mutant". يولّد التشغيل 60 طفرة في نحو 7 ثوانٍ. قارن ثلاث مجموعات:
 
-| المجموعة (Suite) | الاختبارات (Tests) | أسطر `check_transfer` المنفَّذة (Lines run) | الطفرات المقتولة (Mutants killed) | العيوب المزروعة الملتقطة (Seeded bugs caught) |
+| المجموعة | الاختبارات | أسطر `check_transfer` المنفَّذة | الطفرات المقتولة | العيوب المزروعة الملتقطة |
 |---|---|---|---|---|
-| مسرح التغطية (Coverage theatre) | 72 | 100% | 28 من 60 (47%) | لا شيء (none) |
-| المجموعة الابتدائية (Starter suite) | 24 | 83% | 37 من 60 (62%) | 2 من 5 |
-| الابتدائية مع اختبارات الحدود (Starter plus boundary tests) | 32 | 100% | 52 من 60 (87%) | 3 من 5 |
+| مسرح التغطية | 72 | 100% | 28 من 60 (47%) | لا شيء |
+| المجموعة الابتدائية | 24 | 83% | 37 من 60 (62%) | 2 من 5 |
+| الابتدائية مع اختبارات الحدود | 32 | 100% | 52 من 60 (87%) | 3 من 5 |
 
-لا تستطيع التغطية أن تفرّق بين الصفين الأول والثالث (cannot tell rows one and three apart) (كلاهما يشغّل كل سطر)؛ أما اختبار الطفرات فيستطيع. والناجيات في المجموعة الابتدائية (The starter's survivors) قائمة مهام (a to-do list):
+لا تستطيع التغطية أن تفرّق بين الصفين الأول والثالث (كلاهما يشغّل كل سطر)؛ أما اختبار الطفرات فيستطيع. والناجيات في المجموعة الابتدائية قائمة مهام:
 
-| الطفرة (Mutant) في تشغيلنا (our run) | التغيير (Change) | الحكم (Verdict) |
+| الطفرة في تشغيلنا | التغيير | الحكم |
 |---|---|---|
-| 26، 30 | `<` إلى `<=` عند الحد الأدنى (at the minimum)؛ و`>` إلى `>=` عند الحد الأقصى (at the maximum) | ثغرة حقيقية (Real gap): القيم الحدّية غير مختبَرة (boundary values untested) |
-| 40، 44، 45 | كل منها يجعل فحص السقف اليومي (daily-limit check) يستخدم `>=`: وهو عيب `limit_off_by_one` المزروع (the seeded bug) | ثغرة حقيقية (Real gap) |
-| 9، 11، 13، 14، 23 إلى 25، 27 إلى 29 | يتغير رمز الرفض (A rejection code is altered) | ثغرة حقيقية (Real gap): لا تأكيد للرموز أبدًا (codes never asserted) |
-| 39، 41، 42، 43 | تعديلات على سطر مفتاح العيوب في النظام النموذجي نفسه (the sample's own bug-switch line) | **مكافئة (Equivalent)**: والمفتاح مطفأ لا يتغير السلوك (with the switch off, behaviour cannot change) |
-| 3، 5، 10، 12 | يتغير نص الرسالة لا الرمز (Message text changes, not the code) | مقبولة (Accepted): العقد هو `code` المستقر (the stable contract) |
+| 26، 30 | `<` إلى `<=` عند الحد الأدنى؛ و`>` إلى `>=` عند الحد الأقصى | ثغرة حقيقية: القيم الحدّية غير مختبَرة |
+| 40، 44، 45 | كل منها يجعل فحص السقف اليومي يستخدم `>=`: وهو عيب `limit_off_by_one` المزروع | ثغرة حقيقية |
+| 9، 11، 13، 14، 23 إلى 25، 27 إلى 29 | يتغير رمز الرفض | ثغرة حقيقية: لا تأكيد للرموز أبدًا |
+| 39، 41، 42، 43 | تعديلات على سطر مفتاح العيوب في النظام النموذجي نفسه | **مكافئة (Equivalent)**: والمفتاح مطفأ لا يتغير السلوك |
+| 3، 5، 10، 12 | يتغير نص الرسالة لا الرمز | مقبولة: العقد هو `code` المستقر |
 
-*الطفرة المكافئة (equivalent mutant)* تغيّر الشيفرة لا سلوكها، فلا يستطيع أي اختبار قتلها. راجعها ودوّنها (Review and list them)، واستبعدها من الدرجة (leave them out of the score). وهذه الاختبارات تقتل الثغرات الحقيقية (kill the real gaps):
+*الطفرة المكافئة (equivalent mutant)* تغيّر الشيفرة لا سلوكها، فلا يستطيع أي اختبار قتلها. راجعها ودوّنها، واستبعدها من الدرجة. وهذه الاختبارات تقتل الثغرات الحقيقية:
 
 ```python
 # tests/test_check_transfer_rules.py
@@ -1221,11 +1221,11 @@ def test_the_boundary_itself_is_accepted(amount, sent_today):
     assert check_transfer(amount, "QAR", "own", sent_today).total == Decimal(amount)
 ```
 
-إعادة تشغيل الأمر تختبر الناجيات من جديد (retests the survivors): 52 من 60 مقتولة (87%)، أو 52 من 56 غير مكافئة (non-equivalent) (93%). والناجيات الأربع الخاصة بالرسائل اختيار واعٍ (a conscious choice)، وصار `limit_off_by_one` ملتقطًا الآن (now caught).
+إعادة تشغيل الأمر تختبر الناجيات من جديد: 52 من 60 مقتولة (87%)، أو 52 من 56 غير مكافئة (93%). والناجيات الأربع الخاصة بالرسائل اختيار واعٍ، وصار `limit_off_by_one` ملتقطًا الآن.
 
-*ضبط الكلفة (Cost control).* استغرقت الطفرات الـ377 كلها (all 377 mutants) في `transfers.py` نحو 18 ثانية هنا مع مجموعة صغيرة (with a small suite)؛ أما المجموعات الكبيرة فتستغرق وقتًا أطول بكثير (take far longer). لذا طفِّر الشيفرة المتغيّرة فقط (mutate changed code only): اختر الطفرات بالاسم (select mutants by name)، وضيّق `only_mutate`، وشغّل الملفات التي يمسّها طلب الدمج (the files a pull request touches)، وشغّل كل شيء ليلًا (everything nightly). وتوفّر Stryker وPIT تشغيلات تزايدية (incremental runs) (راجع التوثيق الحالي، check current docs).
+*ضبط الكلفة.* استغرقت الطفرات الـ377 كلها في `transfers.py` نحو 18 ثانية هنا مع مجموعة صغيرة؛ أما المجموعات الكبيرة فتستغرق وقتًا أطول بكثير. لذا طفِّر الشيفرة المتغيّرة فقط: اختر الطفرات بالاسم، وضيّق `only_mutate`، وشغّل الملفات التي يمسّها طلب الدمج، وشغّل كل شيء ليلًا. وتوفّر Stryker وPIT تشغيلات تزايدية.
 
-**الاختبار القائم على الخصائص (Property-based testing).** بدل الأمثلة، صُغ قاعدة تصدق على كل المدخلات (state a rule that holds for all inputs) ودع مكتبة تولّد مئات الحالات (generate hundreds of cases). الفكرة من QuickCheck (Claessen وHughes، 2000)؛ وفي Python توجد **Hypothesis**، وفي JavaScript وTypeScript توجد **fast-check**، وفي Java توجد jqwik. الخصائص الجيدة (Good properties): *خاصية عدم التكرار (idempotence)* (`quantize` مرتين تساوي مرة واحدة)، و*الثوابت (invariants)* (يبقى الرسم بين 10.00 و100.00)، و*الذهاب والإياب (round trips)* (يصمد الرسم أمام JSON)، و*مراجع النتيجة المتوقعة (oracles)* (قارن بحساب بسيط صحيح بوضوح، plain, obviously right arithmetic).
+**الاختبار القائم على الخصائص (Property-based testing).** بدل الأمثلة، صُغ قاعدة تصدق على كل المدخلات ودع مكتبة تولّد مئات الحالات. الفكرة من QuickCheck (Claessen وHughes، 2000)؛ وفي Python توجد **Hypothesis**، وفي JavaScript وTypeScript توجد **fast-check**، وفي Java توجد jqwik. الخصائص الجيدة: *خاصية عدم التكرار (idempotence)* (`quantize` مرتين تساوي مرة واحدة)، و*الثوابت (invariants)* (يبقى الرسم بين 10.00 و100.00)، و*الذهاب والإياب (round trips)* (يصمد الرسم أمام JSON)، و*مراجع النتيجة المتوقعة (oracles)*.
 
 ```python
 # tests/test_properties.py
@@ -1274,16 +1274,16 @@ def test_fee_matches_exact_arithmetic_on_whole_amounts(amount):
     assert fee(amount, "QAR", "international") == exact_fee(amount)
 ```
 
-على النظام النموذجي النظيف تنجح الخمسة كلها (all five pass). وتحت `NAJM_BUGS=float_fee` **يظل ينجح** اختبار مرجع النتيجة المتوقعة ذو الخانتين العشريتين (the two-decimal oracle test still passes) ويفشل اختبار المبالغ الصحيحة (the whole-amount test fails) (مختصرًا، trimmed):
+على النظام النموذجي النظيف تنجح الخمسة كلها. وتحت `NAJM_BUGS=float_fee` **يظل ينجح** اختبار مرجع النتيجة المتوقعة ذو الخانتين العشريتين ويفشل اختبار المبالغ الصحيحة:
 
 ```text
 amount = Decimal('2990')
 E       AssertionError: assert Decimal('10.46') == Decimal('10.47')
 ```
 
-407 مبالغ فقط من 2,499,901 مبلغًا بخانتين عشريتين من 1.00 إلى 25,000.00 تصطدم بتعادل في التقريب (a rounding tie) تخطئ فيه الأعداد العائمة (floats get wrong)، وكل الـ407 أعداد صحيحة (whole numbers)، وهي مما يندر أن يسحبه التوليد بخانتين عشريتين (rarely draws). وفي تشغيلاتنا وجدت 100 مثال بمبالغ صحيحة العيب لنحو نصف 30 بذرة (about half of 30 seeds)، ووجدته 1,000 مثال في 20 من 20. **اختبار الخصائص الناجح بقوة مولِّده فقط (A passing property test is only as strong as its generator)**: صوّب نحو التعادلات والحدود والأطراف القصوى (aim at ties, boundaries and extremes)، وارفع `max_examples` للمال. وتقوم Hypothesis أيضًا بـ*التقليص (shrinks)*: تبسّط المدخل الفاشل ما دام يفشل، فتحصل على مثال مضاد صغير (a small counterexample) (وسيختلف مثالك، yours will differ)، وتعيد أولًا تشغيل الإخفاقات المحفوظة من `.hypothesis/` (replays saved failures).
+407 مبالغ فقط من 2,499,901 مبلغًا بخانتين عشريتين من 1.00 إلى 25,000.00 تصطدم بتعادل في التقريب تخطئ فيه الأعداد العائمة، وكل الـ407 أعداد صحيحة، وهي مما يندر أن يسحبه التوليد بخانتين عشريتين. وفي تشغيلاتنا وجدت 100 مثال بمبالغ صحيحة العيب لنحو نصف 30 بذرة، ووجدته 1,000 مثال في 20 من 20. **اختبار الخصائص الناجح بقوة مولِّده فقط**: صوّب نحو التعادلات والحدود والأطراف القصوى، وارفع `max_examples` للمال. وتقوم Hypothesis أيضًا بـ*التقليص*: تبسّط المدخل الفاشل ما دام يفشل، فتحصل على مثال مضاد صغير، وتعيد أولًا تشغيل الإخفاقات المحفوظة من `.hypothesis/`.
 
-الفكرة نفسها في TypeScript مع fast-check (`npm install -D vitest fast-check`، ثم `npx vitest run`)، وستختلف بذرتك ومثالك المضاد (your seed and counterexample will differ):
+الفكرة نفسها في TypeScript مع fast-check (`npm install -D vitest fast-check`، ثم `npx vitest run`)، وستختلف بذرتك ومثالك المضاد:
 
 ```typescript
 // fee.ts
@@ -1319,9 +1319,9 @@ Counterexample: [11190]
 Caused by: AssertionError: expected '39.16' to be '39.17'
 ```
 
-### 🔴 نظرة الخبير (Expert view)
+### 🔴 نظرة الخبير
 
-**اختبارات اللقطة والنسخة المرجعية الذهبية والتوصيف (Snapshot, golden-master and characterisation tests).** تخزّن *النسخة المرجعية الذهبية (golden master)* المخرجات الحالية (stores current output) وتفشل حين تتغير. وللشيفرة القديمة بلا اختبارات (legacy code without tests) تكون *اختبار توصيف (characterisation test)* (Michael Feathers، *Working Effectively with Legacy Code*، 2004): تسجّل ما تفعله الشيفرة، صوابًا كان أم خطأ (right or wrong)، لتعيد الهيكلة بأمان (refactor safely).
+**اختبارات اللقطة والنسخة المرجعية الذهبية والتوصيف.** تخزّن *النسخة المرجعية الذهبية (golden master)* المخرجات الحالية وتفشل حين تتغير. وللشيفرة القديمة بلا اختبارات تكون *اختبار توصيف (characterisation test)* (Michael Feathers، *Working Effectively with Legacy Code*، 2004): تسجّل ما تفعله الشيفرة، صوابًا كان أم خطأ، لتعيد الهيكلة بأمان.
 
 ```python
 # tests/test_quote_golden.py
@@ -1345,27 +1345,27 @@ def test_quotes_match_the_golden_master():
     assert render() == GOLDEN.read_text()
 ```
 
-بعد تسجيلها مرة واحدة على النظام النموذجي النظيف (Recorded once on the clean sample) (`UPDATE_GOLDEN=1 pytest`) يحتوي الملف `3090 QAR international fee=10.82`. ومع تفعيل `float_fee` يفشل الاختبار بفرق (a diff) (مبسَّط، simplified):
+بعد تسجيلها مرة واحدة على النظام النموذجي النظيف (`UPDATE_GOLDEN=1 pytest`) يحتوي الملف `3090 QAR international fee=10.82`. ومع تفعيل `float_fee` يفشل الاختبار بفرق (مبسَّط):
 
 ```text
 -  fee=10.82
 +  fee=10.81
 ```
 
-الفخ هو المفتاح (The trap is the switch): يتحول `UPDATE_GOLDEN=1 NAJM_BUGS=float_fee pytest` إلى الأخضر ويثبّت العيب جوابًا متوقعًا (pins the bug as the expected answer)، أي «حدّث اللقطات حتى تخضر» (update snapshots until green). الدفاعات (Defences): راجع فرق اللقطة كما تراجع الشيفرة (review a snapshot diff like code)، واحمِ الملفات الذهبية بـ CODEOWNERS (protect golden files)، ولا تعد التوليد أبدًا من أجل أحمر لا تستطيع تفسيره (never regenerate for a red you cannot explain).
+الفخ هو المفتاح: يتحول `UPDATE_GOLDEN=1 NAJM_BUGS=float_fee pytest` إلى الأخضر ويثبّت العيب جوابًا متوقعًا، أي «حدّث اللقطات حتى تخضر». الدفاعات: راجع فرق اللقطة كما تراجع الشيفرة، واحمِ الملفات الذهبية بـ CODEOWNERS، ولا تعد التوليد أبدًا من أجل أحمر لا تستطيع تفسيره.
 
-**الاختبارات غير المستقرة (Flaky tests).** *الاختبار غير المستقر (flaky test)* ينجح ويفشل على الشيفرة نفسها (passes and fails on the same code). الأسباب والإصلاحات (Causes and fixes):
+**الاختبارات غير المستقرة (Flaky tests).** *الاختبار غير المستقر (flaky test)* ينجح ويفشل على الشيفرة نفسها. الأسباب والإصلاحات:
 
-| السبب (Cause) | مثال من نجم (Najm example) | الإصلاح (Fix) |
+| السبب | مثال من نجم | الإصلاح |
 |---|---|---|
-| الوقت والتواريخ (Time and dates) | تأكيد تاريخ القيمة لليوم (Asserting today's value date) | احقن الساعة (Inject the clock) (الدرس 2.1) |
-| الترتيب والحالة المشتركة (Order and shared state) | `SERVICE` على مستوى الوحدة البرمجية (module-level) | تجهيزات جديدة (Fresh fixtures)؛ وترتيب عشوائي (random order) |
-| التوقيت غير المتزامن (Async timing) | `sleep(2)` | انتظر شرطًا (Wait for a condition) (الدرس 2.2) |
-| العشوائية (Randomness) | بيانات مولَّدة بلا بذرة (Unseeded generated data) | ثبّت البذرة (Seed it)؛ واطبعها (print the seed) |
-| الشبكة والبيئة (Network, environment) | خدمة صرف عملات حية (A live FX service) | استبدل بها بديلًا ثابت الاستجابة (Stub it)؛ وفحص مجدول واحد في بيئة تجريبية (one scheduled sandbox check) |
-| التزامن (Concurrency) | سباق الإرسال المزدوج (The double-submit race) | افرض التداخل (Force the interleaving)؛ وأصلح الشيفرة (fix the code) |
+| الوقت والتواريخ | تأكيد تاريخ القيمة لليوم | احقن الساعة (الدرس 2.1) |
+| الترتيب والحالة المشتركة | `SERVICE` على مستوى الوحدة البرمجية | تجهيزات جديدة؛ وترتيب عشوائي |
+| التوقيت غير المتزامن | `sleep(2)` | انتظر شرطًا (الدرس 2.2) |
+| العشوائية | بيانات مولَّدة بلا بذرة | ثبّت البذرة؛ واطبعها |
+| الشبكة والبيئة | خدمة صرف عملات حية | استبدل بها بديلًا ثابت الاستجابة؛ وفحص مجدول واحد في بيئة تجريبية |
+| التزامن | سباق الإرسال المزدوج | افرض التداخل؛ وأصلح الشيفرة |
 
-*اختبار يعتمد على الوقت (A time-dependent test)* يفشل بعد الساعة 15:00 بتوقيت قطر وفي عطلات نهاية الأسبوع (at weekends). وتجميد الساعة عند ثلاث لحظات (Freezing the clock at three moments) يعيد إنتاج «عدم الاستقرار» (the "flake") عند الطلب (on demand)؛ والإصلاح هو إصلاح الدرس 2.1: احقن `now` (inject).
+*اختبار يعتمد على الوقت* يفشل بعد الساعة 15:00 بتوقيت قطر وفي عطلات نهاية الأسبوع. وتجميد الساعة عند ثلاث لحظات يعيد إنتاج «عدم الاستقرار» عند الطلب؛ والإصلاح هو إصلاح الدرس 2.1: احقن `now`.
 
 ```python
 # flaky/test_time_flaky.py
@@ -1400,7 +1400,7 @@ test_replayed_at_three_moments[2026-10-05 12:30:00]  FAILED  '2026-10-06' == '20
 test_replayed_at_three_moments[2026-10-09 07:00:00]  FAILED  '2026-10-11' == '2026-10-09'
 ```
 
-*اختبار يعتمد على الترتيب (An order-dependent test).* يخلط `pytest-randomly` الاختبارات ويطبع بذرته (shuffles tests and prints its seed)؛ وقد أعاد `--randomly-seed=5` إنتاج فشل في تشغيلنا (replayed a failure)، وتختلف البذور بحسب المسار والإصدار (seeds differ by path and version):
+*اختبار يعتمد على الترتيب.* يخلط `pytest-randomly` الاختبارات ويطبع بذرته؛ وقد أعاد `--randomly-seed=5` إنتاج فشل في تشغيلنا، وتختلف البذور بحسب المسار والإصدار:
 
 ```python
 # flaky/test_order_flaky.py
@@ -1424,9 +1424,9 @@ E   najm.transfers.TransferRejected: not_found
 FAILED flaky/test_order_flaky.py::test_2_alice_reads_it_back
 ```
 
-في ثلاث دفعات من 20 تشغيلة عشوائية (three batches of 20 random runs) فشل نحو النصف (9 و13 و9): هذا هو **الكشف بالتشغيل المتكرر (detection by repeated runs)** (تنفع حلقة في سطر الأوامر، a shell loop works؛ وتضيف الإضافة `pytest-repeat` الخيار `--count=50`). والإصلاح: تجهيز يبني ما يحتاجه كل اختبار (a fixture that builds what each test needs).
+في ثلاث دفعات من 20 تشغيلة عشوائية فشل نحو النصف (9 و13 و9): هذا هو **الكشف بالتشغيل المتكرر** (تنفع حلقة في سطر الأوامر، a shell loop works؛ وتضيف الإضافة `pytest-repeat` الخيار `--count=50`). والإصلاح: تجهيز يبني ما يحتاجه كل اختبار.
 
-*السياسة (Policy).* الاختبار المشتبه بعدم استقراره (A suspected-flaky test) **يُحجر خلال يوم عمل واحد (quarantined within one working day)**: يستمر في العمل ويُبلَّغ عنه لكنه لا يستطيع منع الدمج (cannot block merges)، ويحتاج إلى مالك وتذكرة وموعد نهائي (an owner, a ticket and a deadline). وبعد الموعد النهائي يعود فيمنع الدمج (blocks again)، فيصلحه أحدهم أو يحذفه (someone fixes or deletes it). وهذا بصيغة شيفرة (As code):
+*السياسة.* الاختبار المشتبه بعدم استقراره **يُحجر خلال يوم عمل واحد**: يستمر في العمل ويُبلَّغ عنه لكنه لا يستطيع منع الدمج، ويحتاج إلى مالك وتذكرة وموعد نهائي. وبعد الموعد النهائي يعود فيمنع الدمج، فيصلحه أحدهم أو يحذفه. وهذا بصيغة شيفرة:
 
 ```python
 # flaky/conftest.py
@@ -1451,7 +1451,7 @@ def pytest_collection_modifyitems(items):
 def test_fx_rate_is_cached(): ...
 ```
 
-*يجب الإبلاغ عن إعادة المحاولات (Retries must be reported).* تخفي إعادات التشغيل التلقائية (Automatic reruns) (`pytest-rerunfailures`، `--reruns 2`) عدم الاستقرار ما لم تقرأ التقرير (hide flakiness unless you read the report). ومع `-rR` يطبع الاختبار الذي يفشل مرة ثم ينجح (a test that fails once, then passes):
+*يجب الإبلاغ عن إعادة المحاولات.* تخفي إعادات التشغيل التلقائية (`pytest-rerunfailures`، `--reruns 2`) عدم الاستقرار ما لم تقرأ التقرير. ومع `-rR` يطبع الاختبار الذي يفشل مرة ثم ينجح:
 
 ```text
 RERUN test_rr.py::test_fails_on_the_first_attempt_only
@@ -1459,121 +1459,121 @@ PASSED test_rr.py::test_fails_on_the_first_attempt_only
 ========================== 1 passed, 1 rerun in 0.02s ==========================
 ```
 
-إعادة التشغيل التي تحوّل الأحمر إلى أخضر تقرير عيب لا نجاح (is a defect report, not a pass): عُدّها (count it). وللاطلاع على منظور التكامل المستمر (For the CI view)، انظر [*تصميم الأنظمة لمبرمجي الفايب (System Design for Vibe Coders)*، الدرس 8.3 — الفحص التمهيدي في التكامل المستمر وفحص «الراعي الكذاب» (CI preflight and the boy-who-cried-wolf check)](../vibe/index.ar.html#l8-3)، والدرس 5.2.
+إعادة التشغيل التي تحوّل الأحمر إلى أخضر تقرير عيب لا نجاح: عُدّها. وللاطلاع على منظور التكامل المستمر، انظر [*تصميم الأنظمة لمبرمجي الفايب*، الدرس 8.3 — الفحص التمهيدي في التكامل المستمر وفحص «الراعي الكذاب»](../vibe/index.ar.html#l8-3)، والدرس 5.2.
 
-## 🧰 الأدوات (The toolkit)
-| الأداة أو الممارسة أو التقنية (Tool, practice or technique) | ما هي وماذا تفعل (What it is and does) | متى تلجأ إليها (When to reach for it) |
+## 🧰 الأدوات
+| الأداة أو الممارسة أو التقنية | ما هي وماذا تفعل | متى تلجأ إليها |
 |---|---|---|
-| **pytest-cov** (coverage.py; JaCoCo, Istanbul elsewhere) | تقارير تغطية الأسطر والفروع (Line and branch coverage reports) | إيجاد الشيفرة التي لا يشغّلها أي اختبار؛ وليست هدفًا أبدًا (Finding code no test runs; never a target) |
-| **Mutation testing** (mutmut, PIT, Stryker) | يزرع عيوبًا صغيرة ويعدّ كم منها تلتقطه الاختبارات (Plants small bugs, counts how many tests catch) | الشيفرة الغنية بالقواعد؛ والحكم على الاختبارات التي يكتبها الذكاء الاصطناعي (Rule-heavy code; judging AI-written tests) (الدرس 6.2) |
-| **Hypothesis** | الاختبار القائم على الخصائص لـ Python مع التقليص (Property-based testing for Python, with shrinking) | المال والتواريخ والمحلِّلات وأي قاعدة يمكن صياغتها (Money, dates, parsers, any stateable rule) |
-| **fast-check** | الاختبار القائم على الخصائص لـ JavaScript وTypeScript (Property-based testing for JavaScript and TypeScript) | القواعد نفسها في عميل الويب (The same rules on the web client) |
-| **Golden master** (snapshot and approval tests) | يخزّن المخرجات الحالية ويقارن بها (Stores current output, diffs against it) | توصيف الشيفرة القديمة قبل إعادة هيكلتها (Characterising legacy code before refactoring) |
+| **pytest-cov** | تقارير تغطية الأسطر والفروع | إيجاد الشيفرة التي لا يشغّلها أي اختبار؛ وليست هدفًا أبدًا |
+| **Mutation testing** (mutmut, PIT, Stryker) | يزرع عيوبًا صغيرة ويعدّ كم منها تلتقطه الاختبارات | الشيفرة الغنية بالقواعد؛ والحكم على الاختبارات التي يكتبها الذكاء الاصطناعي (الدرس 6.2) |
+| **Hypothesis** | الاختبار القائم على الخصائص لـ Python مع التقليص | المال والتواريخ والمحلِّلات وأي قاعدة يمكن صياغتها |
+| **fast-check** | الاختبار القائم على الخصائص لـ JavaScript وTypeScript | القواعد نفسها في عميل الويب |
+| **Golden master** | يخزّن المخرجات الحالية ويقارن بها | توصيف الشيفرة القديمة قبل إعادة هيكلتها |
 
-## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-ينشر راشد وبلال **بوابة جودة الاختبارات في نجم، الإصدار 1 (Najm Test-Quality Gate v1)**. أول ناتج لها (artefact) مصفوفة عيوب (a bug matrix) يُعاد توليدها عند تغيّر المجموعة: تبيّن كل خلية هل تصير المجموعة حمراء مع تفعيل ذلك العيب المزروع (with that seeded bug switched on) (مقيسًا على النظام النموذجي، measured on the sample).
+## 🏛️ عمليًا في بنك نجم
+ينشر راشد وبلال **بوابة جودة الاختبارات في نجم، الإصدار 1**. أول ناتج لها (artefact) مصفوفة عيوب يُعاد توليدها عند تغيّر المجموعة: تبيّن كل خلية هل تصير المجموعة حمراء مع تفعيل ذلك العيب المزروع.
 
-| المجموعة (Suite) | limit_off_by_one | float_fee | tz_cutoff | no_idempotency | bola |
+| المجموعة | limit_off_by_one | float_fee | tz_cutoff | no_idempotency | bola |
 |---|---|---|---|---|---|
-| مسرح التغطية (Coverage theatre) | ينجح (passes) | ينجح (passes) | ينجح (passes) | ينجح (passes) | ينجح (passes) |
-| المجموعة الابتدائية (Starter) | ينجح (passes) | ينجح (passes) | ينجح (passes) | **يُلتقط (caught)** | **يُلتقط (caught)** |
-| مع اختبارات الحدود (Plus boundary tests) | **يُلتقط (caught)** | ينجح (passes) | ينجح (passes) | **يُلتقط (caught)** | **يُلتقط (caught)** |
-| مع اختبار الخصائص (Plus property test) | **يُلتقط (caught)** | **يُلتقط (caught)** | ينجح (passes) | **يُلتقط (caught)** | **يُلتقط (caught)** |
-| مع اختبارات الساعة (Plus clock tests) (الدرس 2.1) | **يُلتقط (caught)** | **يُلتقط (caught)** | **يُلتقط (caught)** | **يُلتقط (caught)** | **يُلتقط (caught)** |
+| مسرح التغطية | ينجح | ينجح | ينجح | ينجح | ينجح |
+| المجموعة الابتدائية | ينجح | ينجح | ينجح | **يُلتقط** | **يُلتقط** |
+| مع اختبارات الحدود | **يُلتقط** | ينجح | ينجح | **يُلتقط** | **يُلتقط** |
+| مع اختبار الخصائص | **يُلتقط** | **يُلتقط** | ينجح | **يُلتقط** | **يُلتقط** |
+| مع اختبارات الساعة (الدرس 2.1) | **يُلتقط** | **يُلتقط** | **يُلتقط** | **يُلتقط** | **يُلتقط** |
 
-القواعد (The rules): (1) تُعرض التغطية للإحاطة ولا تكون هدفًا أبدًا (coverage is reported, never a target)؛ (2) تحتاج التغييرات على السقوف أو الرسوم أو التواريخ إلى درجة طفرات لا تقل عن 80% على الدوال المتغيّرة (a mutation score of at least 80%)، مع تصنيف كل ناجية (every survivor classed)؛ (3) لكل دالة مال اختبار خصائص بمرجع دقيق (a property test with an exact oracle)؛ (4) يحتاج تحديث ملف ذهبي إلى سبب مكتوب ومراجعة CODEOWNERS (a written reason and CODEOWNERS review)؛ (5) يُحجر الاختبار غير المستقر (a flaky test is quarantined) خلال يوم عمل واحد (within one working day)، بمالك وموعد نهائي مدته 14 يومًا (an owner and a 14-day deadline)؛ (6) يُبلَّغ عن إعادات المحاولة (retries are reported).
+القواعد: (1) تُعرض التغطية للإحاطة ولا تكون هدفًا أبدًا؛ (2) تحتاج التغييرات على السقوف أو الرسوم أو التواريخ إلى درجة طفرات لا تقل عن 80% على الدوال المتغيّرة، مع تصنيف كل ناجية؛ (3) لكل دالة مال اختبار خصائص بمرجع دقيق؛ (4) يحتاج تحديث ملف ذهبي إلى سبب مكتوب ومراجعة CODEOWNERS؛ (5) يُحجر الاختبار غير المستقر خلال يوم عمل واحد، بمالك وموعد نهائي مدته 14 يومًا؛ (6) يُبلَّغ عن إعادات المحاولة.
 
-## 🛠️ التمارين (Exercises)
-انسخ النظام النموذجي (Copy the sample) ونفّذ `pip install mutmut hypothesis pytest-cov pytest-randomly freezegun`.
+## 🛠️ التمارين
+انسخ النظام النموذجي ونفّذ `pip install mutmut hypothesis pytest-cov pytest-randomly freezegun`.
 
-- 🟢 **قِس ثم تشكّك (Measure, then be suspicious).** شغّل المجموعة الابتدائية (the starter suite) مع `--cov-branch`، ثم مع كل قيمة من `NAJM_BUGS`. *يكتمل عندما (Done when):* يبيّن جدول التغطية والعيوب الملتقطة (coverage and the bugs caught)، وتستطيع أن تشرح كيف تجتمع تغطية عالية مع صفر عيوب ملتقطة (high coverage and zero caught bugs coexist).
-- 🟡 **اقتل الطفرات في `value_date` (Kill the mutants in value_date).** شغّل mutmut على `'najm.transfers.x_value_date*'`. *يكتمل عندما (Done when):* تُصنَّف كل ناجية ثغرةً حقيقية أو مكافئة أو مقبولة (real gap, equivalent or accepted)، ولكل ثغرة حقيقية اختبار، وتُعرض الدرجة قبل وبعد (reported before and after)، ويُلتقط `tz_cutoff`.
-- 🔴 **اعثر على عيب بخاصية، ثم اضبط الاختبارات غير المستقرة (Find a bug with a property, then police the flakes).** اكتب خاصيتين بـ Hypothesis للدالة `value_date` (لا تقع أبدًا في عطلة نهاية الأسبوع؛ وبعد موعد الإغلاق تقع في يوم لاحق، after the cut-off, a later day) باستخدام `st.datetimes(timezones=st.just(ZoneInfo("Asia/Qatar")))`. *يكتمل عندما (Done when):* تنجح الخاصيتان على النظام النظيف (both pass clean)، وتفشل خاصية موعد الإغلاق تحت `tz_cutoff` بمثال مقلَّص تستطيع تفسيره (a shrunk example you can explain)، وقد شغّلت اختبارًا غير مستقر 20 مرة بترتيب عشوائي وحجرته (quarantined it).
+- 🟢 **قِس ثم تشكّك.** شغّل المجموعة الابتدائية مع `--cov-branch`، ثم مع كل قيمة من `NAJM_BUGS`. *يكتمل عندما:* يبيّن جدول التغطية والعيوب الملتقطة، وتستطيع أن تشرح كيف تجتمع تغطية عالية مع صفر عيوب ملتقطة.
+- 🟡 **اقتل الطفرات في `value_date` (Kill the mutants in value_date).** شغّل mutmut على `'najm.transfers.x_value_date*'`. *يكتمل عندما:* تُصنَّف كل ناجية ثغرةً حقيقية أو مكافئة أو مقبولة، ولكل ثغرة حقيقية اختبار، وتُعرض الدرجة قبل وبعد، ويُلتقط `tz_cutoff`.
+- 🔴 **اعثر على عيب بخاصية، ثم اضبط الاختبارات غير المستقرة.** اكتب خاصيتين بـ Hypothesis للدالة `value_date` باستخدام `st.datetimes(timezones=st.just(ZoneInfo("Asia/Qatar")))`. *يكتمل عندما:* تنجح الخاصيتان على النظام النظيف، وتفشل خاصية موعد الإغلاق تحت `tz_cutoff` بمثال مقلَّص تستطيع تفسيره، وقد شغّلت اختبارًا غير مستقر 20 مرة بترتيب عشوائي وحجرته.
 
-## ⚠️ أخطاء وفخاخ (Mistakes and traps)
-- **التغطية هدفًا (Coverage as a target).** تبلغ الفرق الرقم ولا تتحقق من شيء (hit the number and verify nothing). أبلغ عنها ولا تضع حدًا أدنى (set no threshold).
-- **درجة دون قراءة الناجيات (A score without reading survivors).** القيمة في كل ناجية (The value is in each survivor).
-- **مولِّد كسول (A lazy generator).** نجحت الخاصية لأنها لم تصل إلى العيب قط (never reached the bug). صوّب نحو التعادلات والحدود والأطراف القصوى (Aim at ties, boundaries and extremes).
-- **تحديث اللقطات حتى تخضر (Updating snapshots until green).** لقد ثبّتَّ العيب (You pinned the bug).
-- **إعادة تشغيل الاختبارات غير المستقرة بصمت (Rerunning flaky tests quietly).** النجاح بعد إعادة المحاولة تشغيل أول فاشل (A pass after a retry is a failed first run).
+## ⚠️ أخطاء وفخاخ
+- **التغطية هدفًا.** تبلغ الفرق الرقم ولا تتحقق من شيء. أبلغ عنها ولا تضع حدًا أدنى.
+- **درجة دون قراءة الناجيات.** القيمة في كل ناجية.
+- **مولِّد كسول.** نجحت الخاصية لأنها لم تصل إلى العيب قط. صوّب نحو التعادلات والحدود والأطراف القصوى.
+- **تحديث اللقطات حتى تخضر.** لقد ثبّتَّ العيب.
+- **إعادة تشغيل الاختبارات غير المستقرة بصمت.** النجاح بعد إعادة المحاولة تشغيل أول فاشل.
 
-## 🧾 الخلاصة (Recap)
-- اسأل عن كل اختبار (Ask of every test): هل يمكن أن يفشل، وأي عيب سيلتقط؟
-- تُظهر التغطية الشيفرة التي لم تُنفَّذ قط، لا التي فُحصت (code that was checked)؛ ويقيس اختبار الطفرات هل تلاحظ المجموعة التغيير (notices change).
-- الناجيات قائمة مهام (Survivors are a to-do list): الثغرات الحقيقية تنال اختبارات (real gaps get tests)، والطفرات المكافئة تُدوَّن (equivalent mutants are listed)، والضجيج يُقبَل (noise is accepted).
-- اختبارات الخصائص (Property tests) تجد ما تفوّته الأمثلة (what examples miss)، بقدر ما تبلغه مولِّداتها (as far as their generators reach).
-- النسخ المرجعية الذهبية (Golden masters) تثبّت السلوك الحالي بعيوبه (pin current behaviour, bugs included). احجر الاختبارات غير المستقرة بمالك وموعد نهائي (Quarantine flaky tests with an owner and a deadline)؛ وأبلغ عن إعادات المحاولة (report retries).
+## 🧾 الخلاصة
+- اسأل عن كل اختبار: هل يمكن أن يفشل، وأي عيب سيلتقط؟
+- تُظهر التغطية الشيفرة التي لم تُنفَّذ قط، لا التي فُحصت؛ ويقيس اختبار الطفرات هل تلاحظ المجموعة التغيير.
+- الناجيات قائمة مهام: الثغرات الحقيقية تنال اختبارات، والطفرات المكافئة تُدوَّن، والضجيج يُقبَل.
+- اختبارات الخصائص تجد ما تفوّته الأمثلة، بقدر ما تبلغه مولِّداتها.
+- النسخ المرجعية الذهبية (Golden masters) تثبّت السلوك الحالي بعيوبه. احجر الاختبارات غير المستقرة بمالك وموعد نهائي؛ وأبلغ عن إعادات المحاولة.
 
-## ✍️ اختبر نفسك (Check yourself)
+## ✍️ اختبر نفسك
 
 **1. يرفع طلب دمج (pull request) تغطية `check_transfer` من 83% إلى 100% بـ72 اختبارًا لا تؤكد إلا `result is not None`. ماذا يخبرك هذا الرقم؟**
 
-- A. صارت الدالة محمية جيدًا من عيوب الحدود (protected against boundary bugs) بعد هذه الاختبارات (these tests)
-- B. نُفِّذ كل سطر، لكن لا شيء يبيّن أن السلوك فُحص (nothing shows behaviour was checked)
-- C. الاختبارات بطيئة (The tests are slow) وينبغي حذفها (should be removed) لتسريع البناء
-- D. تغطية الفروع (Branch coverage) 100% أيضًا، فالمجموعة قوية بما يكفي (strong enough)
+- A. صارت الدالة محمية جيدًا من عيوب الحدود بعد هذه الاختبارات
+- B. نُفِّذ كل سطر، لكن لا شيء يبيّن أن السلوك فُحص
+- C. الاختبارات بطيئة وينبغي حذفها لتسريع البناء
+- D. تغطية الفروع (Branch coverage) 100% أيضًا، فالمجموعة قوية بما يكفي
 
 <details><summary>الإجابة</summary>
 
-**B.** تقيس التغطية التنفيذ لا التحقق (measures execution, not verification)؛ والتأكيدات الضعيفة (weak assertions) تمرّر كل عيب مزروع. (🟢 التغطية، Coverage).
+**B.** تقيس التغطية التنفيذ لا التحقق؛ والتأكيدات الضعيفة تمرّر كل عيب مزروع. (🟢 التغطية، Coverage).
 
 </details>
 
-**2. في تشغيل mutmut على `check_transfer` نجت الطفرة 45 (mutant 45 survived)، وهي تغيير `>` إلى `>=` في فحص السقف اليومي (the daily-limit check). ماذا يعني ذلك؟**
+**2. في تشغيل mutmut على `check_transfer` نجت الطفرة 45، وهي تغيير `>` إلى `>=` في فحص السقف اليومي. ماذا يعني ذلك؟**
 
-- A. في mutmut عيب هنا، فتُتجاهل الطفرة (should be ignored)
+- A. في mutmut عيب هنا، فتُتجاهل الطفرة
 - B. الطفرة مكافئة (equivalent)، فلا يستطيع أي اختبار كشفها أبدًا
-- C. لا اختبار يصيب السقف بالضبط، فينقص اختبار حدّي (a boundary test is missing)
-- D. الدالة صحيحة أصلًا للإجماليات التي تساوي السقف بالضبط (totals at exactly the limit)
+- C. لا اختبار يصيب السقف بالضبط، فينقص اختبار حدّي
+- D. الدالة صحيحة أصلًا للإجماليات التي تساوي السقف بالضبط
 
 <details><summary>الإجابة</summary>
 
-**C.** يتغير السلوك حين يساوي إجمالي اليوم السقف، ولا اختبار يفحص تلك القيمة: ثغرة حقيقية (a real gap)، وهي عيب `limit_off_by_one` المزروع. (🟡 اختبار الطفرات، Mutation testing).
+**C.** يتغير السلوك حين يساوي إجمالي اليوم السقف، ولا اختبار يفحص تلك القيمة: ثغرة حقيقية، وهي عيب `limit_off_by_one` المزروع. (🟡 اختبار الطفرات).
 
 </details>
 
-**3. يجتاز اختبار مرجع النتيجة المتوقعة (oracle test) المكتوب بـ Hypothesis على `fee` مئة مثال بخانتين عشريتين (100 two-decimal examples) تحت `float_fee`. ما الخطوة التالية الأفضل؟**
+**3. يجتاز اختبار مرجع النتيجة المتوقعة المكتوب بـ Hypothesis على `fee` مئة مثال بخانتين عشريتين تحت `float_fee`. ما الخطوة التالية الأفضل؟**
 
-- A. الاستنتاج أن عيب الفاصلة العائمة غير ضار (harmless) للمبالغ ذات الخانتين العشريتين (two-decimal amounts)
-- B. حذف الخاصية (Delete the property)، لأن الأمثلة تغطيها أصلًا (examples already cover it) بالكامل
-- C. تشغيله مرة أخرى وقبول نتيجة خضراء ثانية (accept a second green result) دليلًا
-- D. توجيه المولِّد نحو المبالغ الصحيحة، حيث تقع التعادلات (Aim the generator at whole amounts)
+- A. الاستنتاج أن عيب الفاصلة العائمة غير ضار للمبالغ ذات الخانتين العشريتين
+- B. حذف الخاصية، لأن الأمثلة تغطيها أصلًا بالكامل
+- C. تشغيله مرة أخرى وقبول نتيجة خضراء ثانية دليلًا
+- D. توجيه المولِّد نحو المبالغ الصحيحة، حيث تقع التعادلات
 
 <details><summary>الإجابة</summary>
 
-**D.** المبالغ الفاشلة الـ407 كلها أعداد صحيحة (whole numbers)، وهي مما لا يسحبه التوليد بخانتين عشريتين تقريبًا أبدًا. الأخضر يعني أن المولِّد أخطأ العيب (the generator missed it). (🟡 الاختبار القائم على الخصائص، Property-based testing).
+**D.** المبالغ الفاشلة الـ407 كلها أعداد صحيحة، وهي مما لا يسحبه التوليد بخانتين عشريتين تقريبًا أبدًا. الأخضر يعني أن المولِّد أخطأ العيب. (🟡 الاختبار القائم على الخصائص).
 
 </details>
 
-**4. يصير اختبار لقطة (snapshot test) أحمر بعد إعادة هيكلة بلال؛ ويُظهر الفرق (diff) أن `fee=10.82` حلّ محله `fee=10.81`. ماذا يفعل؟**
+**4. يصير اختبار لقطة (snapshot test) أحمر بعد إعادة هيكلة بلال؛ ويُظهر الفرق أن `fee=10.82` حلّ محله `fee=10.81`. ماذا يفعل؟**
 
-- A. يعيد توليد اللقطة، لأن إعادة الهيكلة سليمة على الأرجح (probably fine)
+- A. يعيد توليد اللقطة، لأن إعادة الهيكلة سليمة على الأرجح هنا
 - B. يعامله انحدارًا (regression)، ويجد السبب ويصلح الشيفرة
-- C. يعلّم الاختبار غير مستقر ويحجره (Mark the test flaky and quarantine it)
-- D. يعيد تشغيله حتى ينجح (Rerun it until it passes)
+- C. يعلّم الاختبار غير مستقر ويحجره
+- D. يعيد تشغيله حتى ينجح
 
 <details><summary>الإجابة</summary>
 
-**B.** يُظهر الفرق تغيّرًا حقيقيًا في السلوك (a real behaviour change) (تقريب الأعداد العائمة، float rounding)؛ وتحديث اللقطة سيثبّت العيب (would pin the bug). (🔴 اختبارات اللقطة والنسخة الذهبية، Snapshot and golden-master tests).
+**B.** يُظهر الفرق تغيّرًا حقيقيًا في السلوك (تقريب الأعداد العائمة)؛ وتحديث اللقطة سيثبّت العيب..
 
 </details>
 
-**5. يفشل اختبار في نحو تشغيلة من كل ثلاث؛ ويعيد خط التكامل والتسليم المستمرين (pipeline) محاولة الإخفاقات مرتين ويعرض «نجح» (passed). ما السياسة الصحيحة؟**
+**5. يفشل اختبار في نحو تشغيلة من كل ثلاث؛ ويعيد خط التكامل والتسليم المستمرين (pipeline) محاولة الإخفاقات مرتين ويعرض «نجح». ما السياسة الصحيحة؟**
 
-- A. إبقاء إعادات المحاولة (Keep the retries)، لأن الخط الأخضر (a green pipeline) يعني ألّا مشكلة حقيقية (no real problem)
-- B. حذف الاختبار (Delete the test)، لأن الاختبارات غير المستقرة بلا قيمة (flaky tests have no value)
-- C. رفع عدد إعادات المحاولة (Raise the retry count) حتى لا يفشل أبدًا (until it never fails)
-- D. الإبلاغ عن إعادات المحاولة وحجر الاختبار بمالك وموعد نهائي (Report the retries and quarantine the test)
+- A. إبقاء إعادات المحاولة، لأن الخط الأخضر يعني ألّا مشكلة حقيقية
+- B. حذف الاختبار، لأن الاختبارات غير المستقرة بلا قيمة
+- C. رفع عدد إعادات المحاولة حتى لا يفشل أبدًا
+- D. الإبلاغ عن إعادات المحاولة وحجر الاختبار بمالك وموعد نهائي
 
 <details><summary>الإجابة</summary>
 
-**D.** تحوّل إعادات المحاولة تقرير العيب إلى نجاح (turn a defect report into a pass). أبلغ عنها، واحجر الاختبار بمالك وموعد نهائي، وأصلح السبب (fix the cause). (🔴 الاختبارات غير المستقرة، Flaky tests).
+**D.** تحوّل إعادات المحاولة تقرير العيب إلى نجاح. أبلغ عنها، واحجر الاختبار بمالك وموعد نهائي، وأصلح السبب. (🔴 الاختبارات غير المستقرة).
 
 </details>
 
-## 📚 المراجع (References)
+## 📚 المراجع
 - Hypothesis — https://hypothesis.readthedocs.io/
-- توثيق pytest (pytest documentation) — https://docs.pytest.org/
+- توثيق pytest — https://docs.pytest.org/
 - Vitest — https://vitest.dev/
 - *Software Engineering at Google* (2020) — https://abseil.io/resources/swe-book
-- Claessen وHughes، «QuickCheck: a lightweight tool for random testing of Haskell programs» (ICFP 2000)؛ Michael Feathers، *Working Effectively with Legacy Code* (2004)
+- Claessen وHughes، «QuickCheck: a lightweight tool for random testing of Haskell programs»؛ Michael Feathers، *Working Effectively with Legacy Code* (2004)

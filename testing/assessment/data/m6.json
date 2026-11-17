@@ -7,7 +7,7 @@
    "lesson": "6.2",
    "q": {
     "en": "Bilal's agent turns all eight value-date spec tests green. In review, Amal finds that a Thursday 16:30 submission is dated Friday, a weekend day, and none of the eight tests sends that time. In the spec-first loop, what happens next?",
-    "ar": "يجعل وكيل بلال (Bilal's agent) اختبارات المواصفة (spec tests) الثمانية لتاريخ القيمة (value date) خضراء (green). وفي المراجعة (review) تكتشف أمل (Amal) أن تحويلًا مقدَّمًا الخميس الساعة 16:30 (Thursday 16:30 submission) يُؤرَّخ يوم الجمعة (Friday)، وهو يوم عطلة (weekend day)، ولا يرسل أي من الاختبارات الثمانية هذا الوقت (none of the eight tests sends that time). في حلقة المواصفة أولًا (spec-first loop)، ما الخطوة التالية؟"
+    "ar": "يجعل وكيل بلال اختبارات المواصفة الثمانية لتاريخ القيمة خضراء. وفي المراجعة تكتشف أمل أن تحويلًا مقدَّمًا الخميس الساعة 16:30 يُؤرَّخ يوم الجمعة، وهو يوم عطلة، ولا يرسل أي من الاختبارات الثمانية هذا الوقت. في حلقة المواصفة أولًا، ما الخطوة التالية؟"
    },
    "o": {
     "en": [
@@ -17,16 +17,16 @@
      "Describe the Thursday case in the prompt and ask the agent to handle it"
     ],
     "ar": [
-     "أصلح الشيفرة (the code) يدويًا أثناء المراجعة (the review)، ثم أضف لها اختبارًا لاحقًا (a test afterwards)",
-     "اطلب من الوكيل (the agent) إصلاح الشيفرة (the code) وتعديل أي اختبار (any test) لا يتفق معها",
-     "اكتب أولًا اختبار الخميس (the Thursday test) الفاشل (failing)، ثم دع الوكيل (the agent) يجعله ينجح",
-     "صِف حالة الخميس (the Thursday case) في التوجيه (the prompt)، واطلب من الوكيل (the agent) معالجتها"
+     "أصلح الشيفرة يدويًا أثناء المراجعة، ثم أضف لها اختبارًا لاحقًا",
+     "اطلب من الوكيل إصلاح الشيفرة وتعديل أي اختبار لا يتفق معها",
+     "اكتب أولًا اختبار الخميس الفاشل، ثم دع الوكيل يجعله ينجح",
+     "صِف حالة الخميس في التوجيه، واطلب من الوكيل معالجتها"
     ]
    },
    "a": 2,
    "why": {
     "en": "A gap found in review becomes a test first: a human-owned failing test records the rule where the agent cannot edit it, and proves the fix. The tempting shortcut, letting the agent update tests that disagree, lets it edit its way to green, and a hand patch or a prose description leaves nothing that turns red if the bug returns.",
-    "ar": "تتحول الفجوة المكتشفة في المراجعة (a gap found in review) إلى اختبار أولًا (a test first): فالاختبار الفاشل الذي يملكه إنسان (a human-owned failing test) يسجّل القاعدة حيث لا يستطيع الوكيل (the agent) تعديله، ويثبت صحة الإصلاح. أما الاختصار المغري (tempting shortcut)، وهو ترك الوكيل يحدّث الاختبارات المخالفة، فيتيح له أن يعدّل طريقه نحو اللون الأخضر (edit its way to green)، والتصحيح اليدوي أو الوصف النثري (prose description) لا يُبقيان ما يحمرّ إن عاد العيب."
+    "ar": "تتحول الفجوة المكتشفة في المراجعة إلى اختبار أولًا: فالاختبار الفاشل الذي يملكه إنسان يسجّل القاعدة حيث لا يستطيع الوكيل تعديله، ويثبت صحة الإصلاح. أما الاختصار المغري، وهو ترك الوكيل يحدّث الاختبارات المخالفة، فيتيح له أن يعدّل طريقه نحو اللون الأخضر، والتصحيح اليدوي أو الوصف النثري لا يُبقيان ما يحمرّ إن عاد العيب."
    }
   },
   {
@@ -35,7 +35,7 @@
    "lesson": "6.1",
    "q": {
     "en": "Hamad's squad asks an agent to \"simplify\" the transfer checks. Its diff replaces the `too_many_decimals` rejection with quiet rounding of the amount. All 24 starter tests still pass, and ruff and mypy report nothing. Which addition would have turned the run red?",
-    "ar": "يطلب فريق حمد (Hamad's squad) من وكيل (agent) «تبسيط» فحوص التحويل (transfer checks). ويستبدل التغيير الذي يقدمه (its diff) رمز الرفض (rejection code) `too_many_decimals` بتقريب صامت للمبلغ (quiet rounding of the amount). وتبقى اختبارات المجموعة الابتدائية (starter suite) الأربعة والعشرون ناجحة (all 24 pass)، ولا يُبلغ ruff ولا mypy عن شيء. أي إضافة كانت ستجعل التشغيل أحمر (turned the run red)؟"
+    "ar": "يطلب فريق حمد من وكيل (agent) «تبسيط» فحوص التحويل. ويستبدل التغيير الذي يقدمه رمز الرفض `too_many_decimals` بتقريب صامت للمبلغ. وتبقى اختبارات المجموعة الابتدائية الأربعة والعشرون ناجحة، ولا يُبلغ ruff ولا mypy عن شيء. أي إضافة كانت ستجعل التشغيل أحمر؟"
    },
    "o": {
     "en": [
@@ -45,16 +45,16 @@
      "Running mypy in strict mode, with every function in the file annotated"
     ],
     "ar": [
-     "اختبار (a test) يرسل المبلغ `10.005` ويتوقع رفضه برمز `too_many_decimals` (rejection code)",
-     "تقرير تغطية (coverage report) يبيّن أن الاختبارات تنفّذ الأسطر المتغيرة (changed lines)",
-     "اختبار (a test) يرسل المبلغ `10.00` ويتوقع قبول التحويل (accepted) على أنه صالح (valid)",
-     "تشغيل mypy في الوضع الصارم (strict mode) مع توصيف أنواع كل دالة (annotating every function)"
+     "اختبار يرسل المبلغ `10.005` ويتوقع رفضه برمز `too_many_decimals`",
+     "تقرير تغطية يبيّن أن الاختبارات تنفّذ الأسطر المتغيرة",
+     "اختبار يرسل المبلغ `10.00` ويتوقع قبول التحويل على أنه صالح",
+     "تشغيل mypy في الوضع الصارم مع توصيف أنواع كل دالة"
     ]
    },
    "a": 0,
    "why": {
     "en": "The new code is valid and runs, so only a test aimed at the rule can notice it is gone: one test per rejection code sends `10.005` and expects `too_many_decimals`. Coverage shows the lines run, not that anything checks them, and meanwhile the sender is debited 10.01 and the recipient credited 10.005, so the ledger stops balancing.",
-    "ar": "الشيفرة الجديدة (the new code) صالحة وتعمل (valid and runs)، فلا يلاحظ غياب القاعدة (the rule is gone) إلا اختبار موجَّه إليها (a test aimed at the rule): اختبار واحد لكل رمز رفض (one test per rejection code) يرسل `10.005` ويتوقع `too_many_decimals`. أما تقرير التغطية (coverage report) فيُظهر أن الأسطر نُفِّذت لا أن شيئًا يتحقق منها، بينما يُخصم 10.01 من المُرسِل (sender) ويُضاف 10.005 إلى المستلِم (recipient) فيختل توازن دفتر الأستاذ (the ledger stops balancing)."
+    "ar": "الشيفرة الجديدة صالحة وتعمل، فلا يلاحظ غياب القاعدة إلا اختبار موجَّه إليها: اختبار واحد لكل رمز رفض يرسل `10.005` ويتوقع `too_many_decimals`. أما تقرير التغطية فيُظهر أن الأسطر نُفِّذت لا أن شيئًا يتحقق منها، بينما يُخصم 10.01 من المُرسِل ويُضاف 10.005 إلى المستلِم فيختل توازن دفتر الأستاذ."
    }
   },
   {
@@ -63,7 +63,7 @@
    "lesson": "6.3",
    "q": {
     "en": "Rashid points the Playwright planner and generator at the sample app. They explore the transfer form and write 12 tests, all passing. Bilal wants to commit them as the regression suite. Before that happens, what is the most important thing for Rashid to check?",
-    "ar": "يوجّه راشد (Rashid) وكيلَي الاختبار (test agents) المخطِّط (planner) والمولِّد (generator) في Playwright إلى تطبيق العيّنة (sample app). يستكشفان نموذج التحويل (transfer form) ويكتبان 12 اختبارًا تنجح كلها (all passing). يريد بلال (Bilal) اعتمادها مجموعةَ اختبارات انحدار (regression suite). ما أهم ما ينبغي لراشد فحصه قبل ذلك؟"
+    "ar": "يوجّه راشد وكيلَي الاختبار المخطِّط والمولِّد في Playwright إلى تطبيق العيّنة. يستكشفان نموذج التحويل ويكتبان 12 اختبارًا تنجح كلها. يريد بلال اعتمادها مجموعةَ اختبارات انحدار (regression suite). ما أهم ما ينبغي لراشد فحصه قبل ذلك؟"
    },
    "o": {
     "en": [
@@ -73,16 +73,16 @@
      "That each expected value comes from the rules and not the app's output"
     ],
     "ar": [
-     "أن يراجع نموذج ذكاء اصطناعي ثانٍ (a second AI model) كل الاختبارات ويعتمدها",
-     "أن يكون المُصلِح (healer) مفعّلًا، فتُصلح المحدِّدات المعطوبة (broken locators) نفسها",
-     "أن يبلغ العدد (the count) أربعة وعشرين كما في المجموعة الابتدائية (starter suite)",
-     "أن تأتي كل قيمة متوقعة (expected value) من القواعد (the rules) لا من مخرجات التطبيق (output)"
+     "أن يراجع نموذج ذكاء اصطناعي ثانٍ كل الاختبارات ويعتمدها",
+     "أن يكون المُصلِح مفعّلًا، فتُصلح المحدِّدات المعطوبة نفسها",
+     "أن يبلغ العدد أربعة وعشرين كما في المجموعة الابتدائية",
+     "أن تأتي كل قيمة متوقعة من القواعد لا من مخرجات التطبيق"
     ]
    },
    "a": 3,
    "why": {
     "en": "A generated test records what the app does today, bugs included, so every expected value must be checked against the rules before it becomes a regression test. A second model's agreement is weak comfort because its errors can correlate with the first one's, and a test count says nothing about what the tests catch.",
-    "ar": "يسجّل الاختبار المولَّد (a generated test) ما يفعله التطبيق اليوم بما فيه من عيوب (bugs included)، فيجب فحص كل قيمة متوقعة (expected value) مقابل القواعد قبل أن يصبح اختبار انحدار (regression test). أما موافقة نموذج ثانٍ (a second model) فراحة ضعيفة لأن أخطاءه قد تتلازم مع أخطاء الأول (errors can correlate)، وعدد الاختبارات (test count) لا يقول شيئًا عمّا تلتقطه."
+    "ar": "يسجّل الاختبار المولَّد ما يفعله التطبيق اليوم بما فيه من عيوب، فيجب فحص كل قيمة متوقعة مقابل القواعد قبل أن يصبح اختبار انحدار (regression test). أما موافقة نموذج ثانٍ فراحة ضعيفة لأن أخطاءه قد تتلازم مع أخطاء الأول، وعدد الاختبارات لا يقول شيئًا عمّا تلتقطه."
    }
   },
   {
@@ -91,7 +91,7 @@
    "lesson": "6.2",
    "q": {
     "en": "Nada's agent writes tests for an honest `value_date`, and `mutmut` kills 22 of 24 mutants (91.7%), above Najm's 80% gate. Of the two survivors, one rewords the `ValueError` message and the other turns `>= CUTOFF` into `> CUTOFF`. What is the best call?",
-    "ar": "يكتب وكيل ندى (Nada's agent) اختبارات لدالة `value_date` سليمة (honest)، ويقتل `mutmut` 22 طفرة (mutants) من أصل 24 أي 91.7%، وهي درجة أعلى من بوابة 80% (80% gate) في بنك نجم (Najm Bank). ومن بين الطفرتين الناجيتين (survivors) تعيد إحداهما صياغة رسالة `ValueError` (reword the message)، وتحوّل الأخرى `>= CUTOFF` إلى `> CUTOFF`. ما أفضل قرار (best call)؟"
+    "ar": "يكتب وكيل ندى اختبارات لدالة `value_date` سليمة، ويقتل `mutmut` 22 طفرة (mutants) من أصل 24 أي 91.7%، وهي درجة أعلى من بوابة 80% في بنك نجم. ومن بين الطفرتين الناجيتين (survivors) تعيد إحداهما صياغة رسالة `ValueError`، وتحوّل الأخرى `>= CUTOFF` إلى `> CUTOFF`. ما أفضل قرار؟"
    },
    "o": {
     "en": [
@@ -101,16 +101,16 @@
      "Let the agent edit `value_date` so that the cut-off mutant cannot occur"
     ],
     "ar": [
-     "ادمج الآن (merge now): الدرجة (the score) تتجاوز البوابة، فلا تحتاج أي طفرة ناجية (survivor) إلى نظرة",
-     "اقبل الطفرة الخاصة بالرسالة (message survivor) واطلب اختبارًا يقتل طفرة وقت الإغلاق (cut-off)",
-     "أعد الاثنتين (send both back) حتى تُقتل كل طفرة (every mutant dies) وتبلغ الدرجة 100%",
-     "دع الوكيل (the agent) يعدّل `value_date` حتى تتعذر طفرة وقت الإغلاق (the cut-off mutant)"
+     "ادمج الآن: الدرجة تتجاوز البوابة، فلا تحتاج أي طفرة ناجية (survivor) إلى نظرة",
+     "اقبل الطفرة الخاصة بالرسالة واطلب اختبارًا يقتل طفرة وقت الإغلاق",
+     "أعد الاثنتين حتى تُقتل كل طفرة وتبلغ الدرجة 100%",
+     "دع الوكيل يعدّل `value_date` حتى تتعذر طفرة وقت الإغلاق"
     ]
    },
    "a": 1,
    "why": {
     "en": "Each survivor is triaged on its own: the exception type is the contract, so rewording its message is acceptable, but `>=` versus `>` at 15:00 is the rule's boundary and nothing notices it changed. Merging on the score alone treats a threshold as a verdict, and chasing 100% invites tests on message wording.",
-    "ar": "تخضع كل طفرة ناجية (survivor) للفرز (triage) على حدة: نوع الاستثناء (the exception type) هو العقد (the contract)، فلا ضير في إعادة صياغة رسالته، أما `>=` مقابل `>` عند 15:00 فهو حدّ القاعدة (the rule's boundary) ولا شيء ينتبه إلى تغيّره. والدمج بالدرجة وحدها (merging on the score alone) يعامل العتبة (threshold) كأنها حكم (verdict)، وملاحقة 100% تستدعي اختبارات على صياغة الرسالة (message wording)."
+    "ar": "تخضع كل طفرة ناجية (survivor) للفرز (triage) على حدة: نوع الاستثناء هو العقد، فلا ضير في إعادة صياغة رسالته، أما `>=` مقابل `>` عند 15:00 فهو حدّ القاعدة ولا شيء ينتبه إلى تغيّره. والدمج بالدرجة وحدها يعامل العتبة كأنها حكم، وملاحقة 100% تستدعي اختبارات على صياغة الرسالة."
    }
   }
  ],
@@ -120,7 +120,7 @@
    "lesson": "6.1",
    "text": {
     "en": "I have written one boundary test and two Hypothesis property tests that each fail on an agent-written `fee()` and pass on the sample's own, with every test named after the bug it found.",
-    "ar": "كتبتُ اختبار حدّ (boundary test) واحدًا واختباري خصائص (property tests) باستخدام Hypothesis يفشل كلٌّ منها على دالة `fee()` كتبها وكيل (agent-written) وينجح على دالة نظام العيّنة (the sample's own)، وسمّيتُ كل اختبار باسم العيب الذي كشفه (named after the bug it found)."
+    "ar": "كتبتُ اختبار حدّ واحدًا واختباري خصائص (property tests) باستخدام Hypothesis يفشل كلٌّ منها على دالة `fee()` كتبها وكيل وينجح على دالة نظام العيّنة، وسمّيتُ كل اختبار باسم العيب الذي كشفه."
    }
   },
   {
@@ -128,7 +128,7 @@
    "lesson": "6.3",
    "text": {
     "en": "I have run the catch matrix on my copy of the sample for the starter suite and an assistant's generated tests, and recorded which of the nine seeded bugs each one catches.",
-    "ar": "شغّلتُ مصفوفة اصطياد العيوب (catch matrix) على نسختي من نظام العيّنة (sample system) للمجموعة الابتدائية (starter suite) ولاختبارات ولّدها مساعد ذكاء اصطناعي (an assistant's generated tests)، وسجّلتُ أيًّا من العيوب التسعة المزروعة (nine seeded bugs) تلتقطه كل مجموعة (each suite catches)."
+    "ar": "شغّلتُ مصفوفة اصطياد العيوب (catch matrix) على نسختي من نظام العيّنة للمجموعة الابتدائية ولاختبارات ولّدها مساعد ذكاء اصطناعي، وسجّلتُ أيًّا من العيوب التسعة المزروعة تلتقطه كل مجموعة."
    }
   }
  ]

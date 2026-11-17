@@ -1,50 +1,50 @@
 # الوحدة 5 — البيانات والتشفير والأسرار (Data, cryptography and secrets)
 
-*التشفير (Cryptography) والأسرار (secrets) والبيانات الشخصية (personal data) هي المواضع التي تتحول فيها النوايا الحسنة (good intentions) في أغلب الأحيان إلى طمأنينةٍ زائفة (false comfort). فكلمة مرورٍ «تُجزَّأ» ("hashed") بالدالة الخطأ (wrong function). ومفتاحٌ «يُخفى» ("hidden") داخل تطبيقٍ للهاتف (mobile app). وسطرٌ في السجل (log line) ينسخ بهدوء رقم حساب كل عميل (every customer's account number) إلى أداةٍ يستطيع نصف الشركة البحث فيها (a tool that half the company can search). تمنح هذه الوحدة البنّائين (builders) القرارات لا الرياضيات (the decisions, not the maths). فهي تغطي أيّ أداةٍ تشفيرية (cryptographic tool) تناسب أيّ مهمة (which job) وأين يجب أن تعيش مفاتيحها (where its keys must live)؛ وكيف تُبقي مفاتيح واجهات البرمجة (API keys) والرموز المميزة (tokens) وكلمات المرور (passwords) بعيدةً عن الأماكن التي تتسرّب منها (the places they leak)، وما الذي تفعله في الساعة الأولى بعد أن يتسرّب أحدها (the first hour after one does)؛ وكيف تجمع وتسجّل وتحتفظ وتحذف (collect, log, keep and delete) البيانات الشخصية التي يحتاجها البنك فعلًا فحسب (only the personal data the bank actually needs)، بما في ذلك النسخ الجديدة (new copies) التي تُنشئها ميزات النماذج اللغوية الكبيرة (LLM features). ستتابع فريق أمن التطبيقات والذكاء الاصطناعي (Application & AI Security team) في بنك نجم (Najm Bank) بينما تفكّك نورة أول مراجعةٍ تشفيرية (first crypto review) يُجريها علي على بوابة الشركات الصغيرة (SME Portal)، ويطارد جاسم مفتاحًا مسرّبًا (leaked key) عبر خط إنتاج (pipeline) نجم أسيست (Najm Assist)، وتطرح سارة، مسؤولة حماية البيانات (DPO)، سؤالًا لا يستطيع أحدٌ الإجابة عنه: «أين بيانات هذا العميل؟» ⁦("Where is this customer's data?")⁩*
+*التشفير والأسرار والبيانات الشخصية هي المواضع التي تتحول فيها النوايا الحسنة في أغلب الأحيان إلى طمأنينةٍ زائفة. فكلمة مرورٍ «تُجزَّأ» بالدالة الخطأ. ومفتاحٌ «يُخفى» داخل تطبيقٍ للهاتف. وسطرٌ في السجل ينسخ بهدوء رقم حساب كل عميل إلى أداةٍ يستطيع نصف الشركة البحث فيها. تمنح هذه الوحدة البنّائين القرارات لا الرياضيات. فهي تغطي أيّ أداةٍ تشفيرية (cryptographic tool) تناسب أيّ مهمة وأين يجب أن تعيش مفاتيحها؛ وكيف تُبقي مفاتيح واجهات البرمجة (API keys) والرموز المميزة (tokens) وكلمات المرور بعيدةً عن الأماكن التي تتسرّب منها، وما الذي تفعله في الساعة الأولى بعد أن يتسرّب أحدها؛ وكيف تجمع وتسجّل وتحتفظ وتحذف البيانات الشخصية التي يحتاجها البنك فعلًا فحسب، بما في ذلك النسخ الجديدة التي تُنشئها ميزات النماذج اللغوية الكبيرة. ستتابع فريق أمن التطبيقات والذكاء الاصطناعي في بنك نجم بينما تفكّك نورة أول مراجعةٍ تشفيرية يُجريها علي على بوابة الشركات الصغيرة، ويطارد جاسم مفتاحًا مسرّبًا عبر خط إنتاج نجم أسيست، وتطرح سارة، مسؤولة حماية البيانات (DPO)، سؤالًا لا يستطيع أحدٌ الإجابة عنه: «أين بيانات هذا العميل؟»*
 
-> **المراحل (Phases):** Design, Build, Operate — اختيار تشفيرٍ سليم (sound cryptography) وإدارة مفاتيح سليمة (key management)، وإبقاء الأسرار خارج الشيفرة والتطبيقات العميلة والموجّهات (out of code, clients and prompts)، وهندسة التعامل مع البيانات الشخصية (engineering personal-data handling) بحيث يعمل تقليل البيانات (minimisation) والتسجيل (logging) والحذف (deletion) عمليًّا (in practice).
+> **المراحل:** Design, Build, Operate — اختيار تشفيرٍ سليم وإدارة مفاتيح سليمة، وإبقاء الأسرار خارج الشيفرة والتطبيقات العميلة والموجّهات، وهندسة التعامل مع البيانات الشخصية بحيث يعمل تقليل البيانات والتسجيل والحذف عمليًّا.
 
 ---
 
-# 5.1 — التشفير للبنّائين: TLS والتجزئة والتشفير والمفاتيح (Cryptography for builders: TLS, hashing, encryption and keys)
-*المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 1.2، 3.1* · *المرحلة (Phase): Design, Build*
+# 5.1 — التشفير للبنّائين: TLS والتجزئة والتشفير والمفاتيح
+*المستوى: 🟡 متوسط* · *المتطلبات: 1.2، 3.1* · *المرحلة: Design, Build*
 
-## ⚡ الدرس في دقيقة (In 60 seconds)
-- يمنح التشفير (Cryptography) البنّائين (builders) **السرية (confidentiality)**، أي لا يستطيع القراءة إلا الطرف الصحيح (only the right party can read)، و**السلامة (integrity)**، أي يُكتشف العبث (tampering is detected)، و**الأصالة (authenticity)**، أي تعرف من أنتج البيانات (you know who produced it). اختر الأداة حسب الخاصية التي تحتاجها (choose the tool by the property you need).
-- القاعدة الأولى (Rule one): **لا تبتكر تشفيرك بنفسك أبدًا (never roll your own crypto)**. استخدم TLS 1.3 أثناء النقل (in transit)؛ وArgon2id أو scrypt أو bcrypt لكلمات المرور (for passwords)؛ وAES-GCM أو ChaCha20-Poly1305 عبر مكتبةٍ عالية المستوى (high-level library) للبيانات المخزّنة (at rest)؛ وخدمةً لإدارة المفاتيح (key management service) للمفاتيح (for keys).
-- التجزئة (Hashing) ليست تشفيرًا (is not encryption). كلمات المرور تُجزَّأ (passwords are hashed) باتجاهٍ واحد (one-way)؛ أمّا البيانات المصرفية التي يجب أن تقرأها لاحقًا (bank details you must read back) فتُشفَّر أو تُرمَّز (encrypted or tokenised).
-- لا يكون التشفير (Encryption) أقوى من إدارة مفاتيحه (only as strong as its key management): أين يعيش المفتاح (where the key lives)، ومن يستطيع استخدامه (who can use it)، وكيف يُسجَّل الاستخدام (how use is logged)، وكيف يُدوَّر (how it rotates).
-- مؤشر القرار (Decision cue): لكل حقلٍ حساس (sensitive field)، اسأل «من يجب أن يقرأ هذا بنصٍّ صريح، وما الذي يوقفه التشفير في *هذه* الطبقة؟» ⁦("who must read this in clear, and what does encryption at this layer stop?")⁩
-- أكبر فخ (Biggest trap): «مُشفَّر أثناء التخزين» ("encrypted at rest") بوصفه الجواب عن كل شيء (the answer to everything). فتشفير القرص (Disk encryption) يوقف قرصًا مسروقًا (a stolen disk)، لا حقن SQL (SQL injection) عبر تطبيقك نفسه (through your own app).
+## ⚡ الدرس في دقيقة
+- يمنح التشفير البنّائين **السرية (confidentiality)**، أي لا يستطيع القراءة إلا الطرف الصحيح، و**السلامة (integrity)**، أي يُكتشف العبث، و**الأصالة**، أي تعرف من أنتج البيانات. اختر الأداة حسب الخاصية التي تحتاجها.
+- القاعدة الأولى: **لا تبتكر تشفيرك بنفسك أبدًا**. استخدم TLS 1.3 أثناء النقل؛ وArgon2id أو scrypt أو bcrypt لكلمات المرور؛ وAES-GCM أو ChaCha20-Poly1305 عبر مكتبةٍ عالية المستوى للبيانات المخزّنة؛ وخدمةً لإدارة المفاتيح للمفاتيح.
+- التجزئة (Hashing) ليست تشفيرًا. كلمات المرور تُجزَّأ باتجاهٍ واحد؛ أمّا البيانات المصرفية التي يجب أن تقرأها لاحقًا فتُشفَّر أو تُرمَّز.
+- لا يكون التشفير (Encryption) أقوى من إدارة مفاتيحه: أين يعيش المفتاح، ومن يستطيع استخدامه، وكيف يُسجَّل الاستخدام، وكيف يُدوَّر.
+- مؤشر القرار: لكل حقلٍ حساس، اسأل «من يجب أن يقرأ هذا بنصٍّ صريح، وما الذي يوقفه التشفير في *هذه* الطبقة؟»
+- أكبر فخ: «مُشفَّر أثناء التخزين» بوصفه الجواب عن كل شيء. فتشفير القرص يوقف قرصًا مسروقًا، لا حقن SQL عبر تطبيقك نفسه.
 
-## 🧭 لماذا يهم (Why it matters)
-أول مراجعةٍ للشيفرة (first code review) يُجريها علي في بنك نجم (Najm Bank) هي طلب سحب (pull request) لميزة «دعوة زميل» ("invite a colleague") في بوابة الشركات الصغيرة (SME Portal). فيوافق عليه (He approves it): «كل ما هو حساس مُجزَّأ أو مُشفَّر» ⁦("Everything sensitive is hashed or encrypted.")⁩. تعيد نورة فتحه (reopens it) وتُبرز ثلاثة أسطر (highlights three lines). كلمات مرور المستخدمين الجدد (new users' passwords) مخزّنةٌ بصيغة `sha256(password)`. واستدعاءٌ إلى شريك الفوترة الإلكترونية (e-invoicing partner) يضبط `verify=False` «لأن شهادة الاختبار ظلّت تفشل» ("because the test certificate kept failing"). والبيانات المصرفية للفواتير (invoice bank details) مُشفَّرةٌ بمفتاح AES مكتوبٍ داخل ملف الشيفرة المصدرية (an AES key written into the source file)، بنمطٍ يُسمّى ECB (a mode called ECB). وكان تعليقها (Her comment): «الثلاثة كلها تشفير. ولا واحد منها يحمي شيئًا» ⁦("All three are cryptography. None of the three protects anything.")⁩.
+## 🧭 لماذا يهم
+أول مراجعةٍ للشيفرة يُجريها علي في بنك نجم هي طلب سحب لميزة «دعوة زميل» في بوابة الشركات الصغيرة. فيوافق عليه: «كل ما هو حساس مُجزَّأ أو مُشفَّر». تعيد نورة فتحه وتُبرز ثلاثة أسطر. كلمات مرور المستخدمين الجدد مخزّنةٌ بصيغة `sha256(password)`. واستدعاءٌ إلى شريك الفوترة الإلكترونية يضبط `verify=False` «لأن شهادة الاختبار ظلّت تفشل». والبيانات المصرفية للفواتير مُشفَّرةٌ بمفتاح AES مكتوبٍ داخل ملف الشيفرة المصدرية، بنمطٍ يُسمّى ECB. وكان تعليقها: «الثلاثة كلها تشفير. ولا واحد منها يحمي شيئًا».
 
-تُفرد قائمة OWASP Top 10، في إصدار 2021 (2021 edition)، لهذا النمط فئةً خاصة به (its own category)، هي *الإخفاقات التشفيرية (Cryptographic Failures)*، وقد نشرت OWASP منذ ذلك الحين تحديثًا لعام 2025 (a 2025 update)، فتحقّق من القائمة الحالية (check the current list) بدل الاعتماد على الترقيم (rather than relying on numbering). ونادرًا ما تنطوي هذه الإخفاقات على رياضياتٍ مكسورة (broken mathematics). إنها تنطوي على الأداة الخطأ (the wrong tool)، أو فحصٍ مُعطَّل (a disabled check)، أو مفتاحٍ في المكان الخطأ (a key in the wrong place). والعمليات (Operations) مهمةٌ أيضًا: فقد وصفت مراجعةٌ أجراها مكتب المساءلة الحكومية الأمريكي (US Government Accountability Office) لاختراق Equifax عام 2017 (the 2017 Equifax breach) كيف أن شهادةً منتهية الصلاحية (expired certificate) على جهاز فحص حركة المرور (traffic-inspection device) تركت حركة المرور المشفّرة دون فحص (left encrypted traffic uninspected)؛ ولوحظت حركة المرور المريبة (suspicious traffic was noticed) بعد تجديدها (after it was renewed).
+تُفرد قائمة OWASP Top 10، في إصدار 2021، لهذا النمط فئةً خاصة به، هي *الإخفاقات التشفيرية (Cryptographic Failures)*، وقد نشرت OWASP منذ ذلك الحين تحديثًا لعام 2025، فتحقّق من القائمة الحالية بدل الاعتماد على الترقيم. ونادرًا ما تنطوي هذه الإخفاقات على رياضياتٍ مكسورة. إنها تنطوي على الأداة الخطأ، أو فحصٍ مُعطَّل، أو مفتاحٍ في المكان الخطأ. والعمليات مهمةٌ أيضًا: فقد وصفت مراجعةٌ أجراها مكتب المساءلة الحكومية الأمريكي لاختراق Equifax عام 2017 كيف أن شهادةً منتهية الصلاحية على جهاز فحص حركة المرور تركت حركة المرور المشفّرة دون فحص؛ ولوحظت حركة المرور المريبة بعد تجديدها.
 
-## 📐 كيف يعمل (How it works)
+## 📐 كيف يعمل
 
-### 🟢 الأساسيات (The essentials)
+### 🟢 الأساسيات
 
-**المفردات (Vocabulary).** **النص الصريح (Plaintext)** بياناتٌ مقروءة (readable data)؛ و**النص المشفّر (ciphertext)** صيغتها المشفّرة (its encrypted form)؛ و**المفتاح (key)** هو السرّ (the secret) الذي يتحكم في التشفير أو التوقيع (controls encryption or signing). و**الملح (salt)** قيمةٌ عشوائية غير سرية (a random, non-secret value) تُمزج في التجزئة (mixed into a hash)؛ و**القيمة الآنية (nonce)**، أي «رقمٌ يُستخدم مرةً واحدة» ("number used once")، يجب ألّا تتكرر أبدًا تحت المفتاح نفسه (must never repeat under the same key).
+**المفردات.** **النص الصريح** بياناتٌ مقروءة؛ و**النص المشفّر** صيغتها المشفّرة؛ و**المفتاح** هو السرّ الذي يتحكم في التشفير أو التوقيع. و**الملح (salt)** قيمةٌ عشوائية غير سرية تُمزج في التجزئة؛ و**القيمة الآنية (nonce)**، أي «رقمٌ يُستخدم مرةً واحدة»، يجب ألّا تتكرر أبدًا تحت المفتاح نفسه.
 
-**خمس أدوات، خمس مهام (Five tools, five jobs).**
+**خمس أدوات، خمس مهام.**
 
-| الأداة (Tool) | ماذا تفعل (What it does) | قابلة للعكس؟ ⁦(Reversible?)⁩ | الاستخدام النموذجي في بنك نجم (Typical use at Najm Bank) |
+| الأداة (Tool) | ماذا تفعل | قابلة للعكس؟ | الاستخدام النموذجي في بنك نجم |
 |---|---|---|---|
-| **التجزئة (Hash)** (SHA-256 وSHA-3) | بصمةٌ ثابتة الطول (fixed-length fingerprint)؛ وأي تغييرٍ يبدّلها (any change alters it) | لا (No) | سلامة الملفات (File integrity) |
-| **تجزئة كلمات المرور (Password hash)** (Argon2id وscrypt وbcrypt) | تجزئةٌ بطيئةٌ عمدًا ومملّحة (deliberately slow, salted hash) | لا (No) | تخزين كلمات المرور (Storing passwords) |
-| **رمز مصادقة الرسائل (MAC, message authentication code)**، مثل HMAC-SHA256 | تجزئةٌ بمفتاحٍ سري (hash with a secret key): تُثبت أن حامل المفتاح (a key holder) أنتج البيانات دون تغيير (produced the data unchanged) | لا (No) | خطافات الويب للشركاء (Partner webhooks)، وملفات تعريف الارتباط الموقّعة (signed cookies) |
-| **التشفير المتماثل (Symmetric encryption)** (AES-GCM وChaCha20-Poly1305) | مفتاحٌ واحد يشفّر ويفكّ التشفير (one key encrypts and decrypts)؛ وهذه الأنماط تكتشف العبث أيضًا (these modes also detect tampering) | نعم، بالمفتاح (Yes, with the key) | الحقول والملفات الحساسة المخزّنة (Sensitive fields and files at rest) |
-| **التشفير بالمفتاح العام (Public-key cryptography)** (RSA وECDSA وEd25519) | زوج مفاتيح (key pair): المفتاح العام يُشارَك (public key shared)، والمفتاح الخاص لا يغادر مالكه أبدًا (private key never leaves its owner) | التوقيعات يُتحقَّق منها، ولا تُعكَس (Signatures are verified, not reversed) | شهادات TLS (TLS certificates)، وتوقيع الرموز المميزة والشيفرة (token and code signing) |
+| **التجزئة (Hash)** | بصمةٌ ثابتة الطول؛ وأي تغييرٍ يبدّلها | لا | سلامة الملفات (File integrity) |
+| **تجزئة كلمات المرور (Password hash)** | تجزئةٌ بطيئةٌ عمدًا ومملّحة | لا | تخزين كلمات المرور |
+| **رمز مصادقة الرسائل**، مثل HMAC-SHA256 | تجزئةٌ بمفتاحٍ سري: تُثبت أن حامل المفتاح أنتج البيانات دون تغيير | لا | خطافات الويب للشركاء، وملفات تعريف الارتباط الموقّعة |
+| **التشفير المتماثل (Symmetric encryption)** | مفتاحٌ واحد يشفّر ويفكّ التشفير؛ وهذه الأنماط تكتشف العبث أيضًا | نعم، بالمفتاح | الحقول والملفات الحساسة المخزّنة |
+| **التشفير بالمفتاح العام (Public-key cryptography)** | زوج مفاتيح (key pair): المفتاح العام يُشارَك، والمفتاح الخاص لا يغادر مالكه أبدًا | التوقيعات يُتحقَّق منها، ولا تُعكَس | شهادات TLS، وتوقيع الرموز المميزة والشيفرة |
 
-**لا تبتكر تشفيرك بنفسك أبدًا (Never roll your own crypto)** يعني (means): لا خوارزمياتٍ مخترعة (no invented algorithms)، ولا مخططاتٍ مُجمَّعة يدويًّا (no home-assembled schemes)، ولا معايير مُنفَّذة باليد (no hand-implemented standards). استخدم الواجهة عالية المستوى (high-level interface) لمكتبةٍ مُراجَعة جيدًا (well-reviewed library) وإعداداتها الافتراضية (defaults). فكل إخفاقٍ في طلب السحب الخاص بعلي (Ali's pull request) استخدم خوارزميةً حقيقية بالطريقة الخطأ (a real algorithm the wrong way).
+**لا تبتكر تشفيرك بنفسك أبدًا** يعني: لا خوارزمياتٍ مخترعة، ولا مخططاتٍ مُجمَّعة يدويًّا، ولا معايير مُنفَّذة باليد. استخدم الواجهة عالية المستوى لمكتبةٍ مُراجَعة جيدًا وإعداداتها الافتراضية. فكل إخفاقٍ في طلب السحب الخاص بعلي استخدم خوارزميةً حقيقية بالطريقة الخطأ.
 
-**البيانات أثناء النقل: TLS (Data in transit: TLS).** يمنح TLS، أي أمن طبقة النقل (Transport Layer Security)، وهو حرف «S» في HTTPS (the "S" in HTTPS)، الاتصالَ السريةَ والسلامةَ ومصادقةَ الخادم (confidentiality, integrity and server authentication). ويُثبت الخادم هويته (proves who it is) بـ **شهادة (certificate)** موقّعةٍ من **سلطة شهادات (certificate authority)** (CA) يثق بها العميل (the client trusts)، تربط اسم نطاق (domain name) بمفتاحٍ عام (public key). استخدم **TLS 1.3** (RFC 8446)؛ واسمح بـ TLS 1.2 مع مجموعات تشفيرٍ حديثة (modern cipher suites) فقط حيث يحتاجه عميل (where a client needs it)؛ أمّا TLS 1.0 و1.1 فقد أُوقِف اعتمادهما رسميًّا (formally deprecated) (RFC 8996). ثلاث قواعد (Three rules):
+**البيانات أثناء النقل: TLS.** يمنح TLS، أي أمن طبقة النقل، وهو حرف «S» في HTTPS، الاتصالَ السريةَ والسلامةَ ومصادقةَ الخادم. ويُثبت الخادم هويته بـ **شهادة (certificate)** موقّعةٍ من **سلطة شهادات (certificate authority)** يثق بها العميل، تربط اسم نطاق بمفتاحٍ عام (public key). استخدم **TLS 1.3**؛ واسمح بـ TLS 1.2 مع مجموعات تشفيرٍ حديثة فقط حيث يحتاجه عميل؛ أمّا TLS 1.0 و1.1 فقد أُوقِف اعتمادهما رسميًّا. ثلاث قواعد:
 
-1. لا تعطّل التحقق من الشهادات أبدًا (Never disable certificate verification). فمن دونه، يشفّر TLS حركة مرورك إلى أيٍّ كان من يجيب (to whoever answers)، بما في ذلك مهاجمٌ في المنتصف (an attacker in the middle).
-2. HTTPS في كل مكان (HTTPS everywhere)، مع HSTS، أي أمن النقل الصارم لـ HTTP (HTTP Strict Transport Security) وفق RFC 6797، كي ترفض المتصفحات HTTP الصريح (browsers refuse plain HTTP) (انظر 2.2).
-3. حركة المرور الداخلية أيضًا (Internal traffic too): انعدام الثقة (zero trust) (1.2) يعني أن الاستدعاءات بين الخدمات (service-to-service calls) تستخدم TLS، ويُفضَّل **TLS المتبادل (mutual TLS)** (mTLS)، حيث يقدّم الطرفان كلاهما شهاداتٍ (both sides present certificates).
+1. لا تعطّل التحقق من الشهادات أبدًا. فمن دونه، يشفّر TLS حركة مرورك إلى أيٍّ كان من يجيب، بما في ذلك مهاجمٌ في المنتصف.
+2. HTTPS في كل مكان، مع HSTS، أي أمن النقل الصارم لـ HTTP وفق RFC 6797، كي ترفض المتصفحات HTTP الصريح (انظر 2.2).
+3. حركة المرور الداخلية أيضًا: انعدام الثقة (zero trust) (1.2) يعني أن الاستدعاءات بين الخدمات تستخدم TLS، ويُفضَّل **TLS المتبادل (mutual TLS)** (mTLS)، حيث يقدّم الطرفان كلاهما شهاداتٍ.
 
 ```python
 # Vulnerable: any certificate accepted; a machine in the middle can read and alter invoices
@@ -54,7 +54,7 @@ requests.post(PARTNER_URL, json=invoice, verify=False)
 requests.post(PARTNER_TEST_URL, json=invoice, timeout=10, verify="certs/partner-test-ca.pem")
 ```
 
-**كلمات المرور: تجزئاتٌ بطيئة ومملّحة (Passwords: slow, salted hashes).** صُمِّمت SHA-256 لتكون سريعة (built to be fast)، فبعد التسرّب (after a leak) يستطيع المهاجم اختبار قوائم هائلة من كلمات المرور المرجّحة (huge lists of likely passwords) على كل صف (against every row)؛ ومن دون أملاح (without salts)، تتشارك كلمات المرور المتطابقة التجزئةَ نفسها (identical passwords share a hash) وتنجح الجداول المحسوبة مسبقًا (precomputed tables work). تضيف **دوال تجزئة كلمات المرور (Password hashing functions)** ملحًا فريدًا لكل مستخدم (a unique salt per user) وهي بطيئةٌ عمدًا (deliberately slow). كما أن **Argon2id** (RFC 9106) وscrypt *مُكلفتان للذاكرة (memory-hard)*، ما يُضعف عتاد الكسر المتخصص (blunts specialised cracking hardware). ويبقى bcrypt مقبولًا (remains acceptable)، فهو لا يستخدم إلا أول 72 بايتًا من المدخلات (only the first 72 bytes of input)؛ أمّا PBKDF2 فهو الخيار حيث لا يُسمح إلا بالخوارزميات المعتمدة وفق FIPS (only FIPS-approved algorithms are allowed). وتخزّن المكتبات الجيدة الخوارزميةَ والمعاملاتِ والملحَ (algorithm, parameters and salt) داخل سلسلة التجزئة (in the hash string)، فتستطيع رفع التكلفة لاحقًا (raise the cost later) وترقية التجزئات عند تسجيل الدخول (upgrade hashes at login).
+**كلمات المرور: تجزئاتٌ بطيئة ومملّحة.** صُمِّمت SHA-256 لتكون سريعة، فبعد التسرّب يستطيع المهاجم اختبار قوائم هائلة من كلمات المرور المرجّحة على كل صف؛ ومن دون أملاح، تتشارك كلمات المرور المتطابقة التجزئةَ نفسها وتنجح الجداول المحسوبة مسبقًا. تضيف **دوال تجزئة كلمات المرور (Password hashing functions)** ملحًا فريدًا لكل مستخدم وهي بطيئةٌ عمدًا. كما أن **Argon2id** وscrypt *مُكلفتان للذاكرة (memory-hard)*، ما يُضعف عتاد الكسر المتخصص. ويبقى bcrypt مقبولًا، فهو لا يستخدم إلا أول 72 بايتًا من المدخلات؛ أمّا PBKDF2 فهو الخيار حيث لا يُسمح إلا بالخوارزميات المعتمدة وفق FIPS. وتخزّن المكتبات الجيدة الخوارزميةَ والمعاملاتِ والملحَ داخل سلسلة التجزئة، فتستطيع رفع التكلفة لاحقًا وترقية التجزئات عند تسجيل الدخول.
 
 ```python
 # Vulnerable: fast and unsalted
@@ -69,9 +69,9 @@ if ph.check_needs_rehash(stored):       # cost settings were raised since this h
     save_hash(user_id, ph.hash(attempt))
 ```
 
-وقت الكتابة (At the time of writing) عام 2026، تقترح ورقة OWASP المختصرة لتخزين كلمات المرور (OWASP Password Storage Cheat Sheet) حدودًا دنيا (minimums) مثل Argon2id بذاكرة 19 MiB وتكرارين (two iterations) ودرجة توازٍ واحدة (parallelism of one)، أو عامل عمل (work factor) لـ bcrypt قدره 10. تحقّق من الورقة الحالية (check the current sheet)، ثم اضبط المعاملات (tune) بحيث تستغرق التجزئة الواحدة جزءًا من الثانية على خوادمك (a fraction of a second on your servers).
+وقت الكتابة عام 2026، تقترح ورقة OWASP المختصرة لتخزين كلمات المرور حدودًا دنيا مثل Argon2id بذاكرة 19 MiB وتكرارين ودرجة توازٍ واحدة، أو عامل عمل لـ bcrypt قدره 10. تحقّق من الورقة الحالية، ثم اضبط المعاملات بحيث تستغرق التجزئة الواحدة جزءًا من الثانية على خوادمك.
 
-**البيانات المخزّنة: التشفير الموثَّق (Data at rest: authenticated encryption).** استخدم نمط **AEAD**، أي التشفير الموثَّق مع البيانات المرتبطة (authenticated encryption with associated data)، مثل AES-GCM أو ChaCha20-Poly1305، الذي يشفّر ويكتشف أيضًا أي تغييرٍ في النص المشفّر (detects any change to the ciphertext). وتجنّب نمط **ECB** (Avoid ECB mode): فالكتل المتطابقة تُشفَّر إلى نصٍّ مشفّر متطابق (identical blocks encrypt to identical ciphertext)، فتتسرّب الأنماط (leaking patterns). وفي GCM، تؤدي إعادة استخدام القيمة الآنية تحت المفتاح نفسه (reusing a nonce under the same key) إلى كسر السرية والسلامة كلتيهما (breaks both confidentiality and integrity).
+**البيانات المخزّنة: التشفير الموثَّق.** استخدم نمط **AEAD**، أي التشفير الموثَّق مع البيانات المرتبطة، مثل AES-GCM أو ChaCha20-Poly1305، الذي يشفّر ويكتشف أيضًا أي تغييرٍ في النص المشفّر. وتجنّب نمط **ECB**: فالكتل المتطابقة تُشفَّر إلى نصٍّ مشفّر متطابق، فتتسرّب الأنماط. وفي GCM، تؤدي إعادة استخدام القيمة الآنية تحت المفتاح نفسه إلى كسر السرية والسلامة كلتيهما.
 
 ```python
 # Vulnerable: key in source code, ECB mode, no tamper detection
@@ -84,13 +84,13 @@ aad = f"sme-invoice:{invoice_id}".encode()            # binds ciphertext to this
 save(invoice_id, nonce + AESGCM(data_key).encrypt(nonce, iban.encode(), aad))
 ```
 
-**البيانات المرتبطة (associated data)** موثَّقةٌ لا مشفّرة (authenticated, not encrypted): فهي تربط النص المشفّر بفاتورةٍ واحدة (ties the ciphertext to one invoice)، فيؤدي لصق البيانات المصرفية المشفّرة لشركةٍ ما على فاتورة شركةٍ أخرى (pasting one company's encrypted bank details onto another's invoice) إلى فشل فك التشفير (makes decryption fail).
+**البيانات المرتبطة** موثَّقةٌ لا مشفّرة: فهي تربط النص المشفّر بفاتورةٍ واحدة، فيؤدي لصق البيانات المصرفية المشفّرة لشركةٍ ما على فاتورة شركةٍ أخرى إلى فشل فك التشفير.
 
-**العشوائية (Randomness).** تحتاج معرّفات الجلسات (session IDs) ورموز إعادة التعيين (reset tokens) والقيم الآنية (nonces) إلى **مولّد أرقامٍ عشوائية آمنٍ تشفيريًّا (cryptographically secure random number generator)** (CSPRNG): مثل `secrets` في Python، و`crypto.randomBytes()` في Node. ولا تستخدم أبدًا `random` أو `Math.random()` أو الطوابع الزمنية (timestamps).
+**العشوائية.** تحتاج معرّفات الجلسات ورموز إعادة التعيين والقيم الآنية (nonces) إلى **مولّد أرقامٍ عشوائية آمنٍ تشفيريًّا**: مثل `secrets` في Python، و`crypto.randomBytes()` في Node. ولا تستخدم أبدًا `random` أو `Math.random()` أو الطوابع الزمنية.
 
-### 🟡 التعمق أكثر (Going deeper)
+### 🟡 التعمق أكثر
 
-**المفاتيح هي الأصل الحقيقي: التشفير المغلَّف (Keys are the real asset: envelope encryption).** كان مفتاح علي المكتوب في الشيفرة (hard-coded key) يعني أن أي شخصٍ يستطيع قراءة المستودع (read the repository) يستطيع فك تشفير كل فاتورة (decrypt every invoice). والتصميم المعياري (standard design) هو **التشفير المغلَّف (envelope encryption)**. يُشفَّر كل سجلٍّ أو ملف (each record or file) بـ **مفتاح تشفير البيانات (data encryption key)** (DEK) الخاص به. ويُشفَّر مفتاح DEK، أي «يُغلَّف» ("wrapped")، بـ **مفتاح تشفير المفاتيح (key encryption key)** (KEK) الذي لا يغادر أبدًا **خدمة إدارة المفاتيح (key management service)** (KMS): وهي خدمةٌ مُدارة (managed service) تحفظ المفاتيح الرئيسية (master keys) داخل **وحدات أمن العتاد (hardware security modules)** (HSMs)، وهي أجهزةٌ مقاومة للعبث (tamper-resistant devices) تستخدم المفاتيح دون أن تُفرج عنها (use keys without releasing them).
+**المفاتيح هي الأصل الحقيقي: التشفير المغلَّف.** كان مفتاح علي المكتوب في الشيفرة يعني أن أي شخصٍ يستطيع قراءة المستودع يستطيع فك تشفير كل فاتورة. والتصميم المعياري هو **التشفير المغلَّف (envelope encryption)**. يُشفَّر كل سجلٍّ أو ملف بـ **مفتاح تشفير البيانات (data encryption key)** الخاص به. ويُشفَّر مفتاح DEK، أي «يُغلَّف»، بـ **مفتاح تشفير المفاتيح** الذي لا يغادر أبدًا **خدمة إدارة المفاتيح** (KMS): وهي خدمةٌ مُدارة تحفظ المفاتيح الرئيسية داخل **وحدات أمن العتاد** (HSMs)، وهي أجهزةٌ مقاومة للعبث تستخدم المفاتيح دون أن تُفرج عنها.
 
 ```mermaid
 flowchart TD
@@ -105,17 +105,17 @@ flowchart TD
     H -->|"لا، مع التسجيل (No, logged)"| J["رفض وتنبيه<br/>(Denied and alerted)"]
 ```
 
-ما الذي يشتريه هذا التصميم (What this buys): التفريغ المسروق (a stolen dump) عديم الفائدة دون الوصول إلى خدمة إدارة المفاتيح (without KMS access)؛ وكل عملية فك تشفير (every decryption) تخضع لفحص السياسة وتُسجَّل (policy-checked and logged)؛ وتدوير مفتاح KEK (rotating the KEK) يعيد تغليف مفاتيح صغيرة (re-wraps small keys) بدل إعادة تشفير البيانات (instead of re-encrypting data)؛ وإتلاف مفتاحٍ (destroying a key) يجعل بياناته غير قابلةٍ للقراءة (makes its data unreadable)، وهو ما يُسمّى **الإتلاف التشفيري (crypto-shredding)** (انظر 5.3).
+ما الذي يشتريه هذا التصميم: التفريغ المسروق عديم الفائدة دون الوصول إلى خدمة إدارة المفاتيح؛ وكل عملية فك تشفير تخضع لفحص السياسة وتُسجَّل؛ وتدوير مفتاح KEK يعيد تغليف مفاتيح صغيرة بدل إعادة تشفير البيانات؛ وإتلاف مفتاحٍ يجعل بياناته غير قابلةٍ للقراءة، وهو ما يُسمّى **الإتلاف التشفيري (crypto-shredding)** (انظر 5.3).
 
-**ما الذي توقفه كل طبقة؟ ⁦(What does each layer stop?)⁩** هذا هو السؤال الذي تخطّاه علي (the question Ali skipped).
+**ما الذي توقفه كل طبقة؟** هذا هو السؤال الذي تخطّاه علي.
 
-| الطبقة (Layer) | توقف (Stops) | لا توقف (Does not stop) |
+| الطبقة | توقف | لا توقف |
 |---|---|---|
-| تشفير التخزين أو القرص (Storage or disk encryption)، وهو افتراضيٌّ في معظم السحب (default in most clouds) | الأقراص المسروقة (Stolen disks)، والعتاد المُخرَج من الخدمة (decommissioned hardware) | أي شخصٍ يقرأ عبر قاعدة البيانات أو التطبيق (Anyone reading through the database or app) |
-| التشفير على مستوى الحقل بمفاتيح خدمة إدارة المفاتيح (Field-level encryption with KMS keys) | مسؤولو قواعد البيانات (Database administrators)، والتفريغات (dumps)، ومعظم عمليات القراءة عبر الحقن لذلك الحقل (most injection reads of that field) | خدمةٌ مخترقة مسموحٌ لها بفك التشفير (A compromised service allowed to decrypt) |
-| **الترميز (Tokenisation)**: رمزٌ عشوائي يحلّ محلّ القيمة (a random token replaces the value)، وخزنةٌ تحتفظ بالربط (a vault keeps the mapping) | كل نظامٍ لا يرى إلا الرموز (Every system that only sees tokens)؛ ويقلّص نطاق بيانات البطاقات (shrinks card-data scope) | اختراق الخزنة (Compromise of the vault) |
+| تشفير التخزين أو القرص، وهو افتراضيٌّ في معظم السحب | الأقراص المسروقة، والعتاد المُخرَج من الخدمة | أي شخصٍ يقرأ عبر قاعدة البيانات أو التطبيق |
+| التشفير على مستوى الحقل بمفاتيح خدمة إدارة المفاتيح | مسؤولو قواعد البيانات (Database administrators)، والتفريغات، ومعظم عمليات القراءة عبر الحقن لذلك الحقل | خدمةٌ مخترقة مسموحٌ لها بفك التشفير |
+| **الترميز (Tokenisation)**: رمزٌ عشوائي يحلّ محلّ القيمة، وخزنةٌ تحتفظ بالربط | كل نظامٍ لا يرى إلا الرموز؛ ويقلّص نطاق بيانات البطاقات | اختراق الخزنة |
 
-**السلامة بين الأنظمة (Integrity between systems).** حين يستدعي شريك الفوترة الإلكترونية (e-invoicing partner) خطاف الويب (webhook) الخاص بنجم، تُثبت قيمة **HMAC** محسوبةٌ على جسم الطلب (over the body) أنه أصلي (genuine). احسبها على البايتات المستلمة بالضبط (the exact bytes received)، لا على نسخةٍ أُعيد تسلسلها (a re-serialised copy)؛ وقارن في زمنٍ ثابت (compare in constant time)، فالمقارنة `==` قد تُسرّب عبر التوقيت (leak through timing) مقدار ما تطابق (how much matched)؛ ووقّع طابعًا زمنيًّا (sign a timestamp) وارفض الطوابع القديمة (reject stale ones) للحدّ من إعادة التشغيل (to limit replays).
+**السلامة بين الأنظمة (Integrity between systems).** حين يستدعي شريك الفوترة الإلكترونية خطاف الويب (webhook) الخاص بنجم، تُثبت قيمة **HMAC** محسوبةٌ على جسم الطلب أنه أصلي. احسبها على البايتات المستلمة بالضبط، لا على نسخةٍ أُعيد تسلسلها؛ وقارن في زمنٍ ثابت، فالمقارنة `==` قد تُسرّب عبر التوقيت مقدار ما تطابق؛ ووقّع طابعًا زمنيًّا وارفض الطوابع القديمة للحدّ من إعادة التشغيل.
 
 ```python
 msg = ts.encode() + b"." + raw_body                    # raw_body: the exact bytes received
@@ -124,203 +124,203 @@ if abs(time.time() - int(ts)) > 300 or not hmac.compare_digest(expected, receive
     raise Unauthorized()
 ```
 
-استخدم **التوقيعات (signatures)** (Ed25519 وECDSA وRSA-PSS) حين يجب ألّا يستطيع المتحقّقون إنشاء الرسائل (verifiers must not be able to create messages): فخدمة الهوية في نجم (Najm's identity service) توقّع رموز الوصول (access tokens) بمفتاحٍ خاص (private key)، وتتحقق واجهات البرمجة (APIs verify) بالمفتاح العام (public key) (انظر 3.2).
+استخدم **التوقيعات** حين يجب ألّا يستطيع المتحقّقون إنشاء الرسائل: فخدمة الهوية في نجم توقّع رموز الوصول (access tokens) بمفتاحٍ خاص، وتتحقق واجهات البرمجة بالمفتاح العام (انظر 3.2).
 
-**الشهادات عملياتٌ تشغيلية (Certificates are operations).** الشهادة المنتهية الصلاحية (An expired certificate) تعطّل خدمةً (breaks a service) أو، كما في Equifax، تُعمي ضابطًا بصمت (silently blinds a control). أتمِت التجديد (automate renewal) باستخدام ACME (RFC 8555)، واجرد الشهادات مع مالكيها (inventory certificates with owners)، ونبِّه قبل انتهاء الصلاحية (alert before expiry). ووقت الكتابة (at the time of writing) عام 2026، وافق منتدى CA/Browser Forum على تقصير الحدّ الأقصى لأعمار الشهادات العامة (shorten maximum public certificate lifetimes) على مراحل (in phases)، فلن يعود التجديد اليدوي (manual renewal) مجديًا (viable)؛ تحقّق من الجدول الزمني الحالي (check the current schedule).
+**الشهادات عملياتٌ تشغيلية.** الشهادة المنتهية الصلاحية تعطّل خدمةً أو، كما في Equifax، تُعمي ضابطًا بصمت. أتمِت التجديد باستخدام ACME، واجرد الشهادات مع مالكيها، ونبِّه قبل انتهاء الصلاحية. ووقت الكتابة عام 2026، وافق منتدى CA/Browser Forum على تقصير الحدّ الأقصى لأعمار الشهادات العامة على مراحل، فلن يعود التجديد اليدوي مجديًا؛ تحقّق من الجدول الزمني الحالي.
 
-**البحث في الحقول المشفّرة (Searching encrypted fields).** للعثور على شركةٍ برقم تسجيلٍ مشفّر (encrypted registration number)، خزّن **فهرسًا أعمى (blind index)**: قيمة HMAC للقيمة تحت مفتاحٍ منفصل (an HMAC of the value under a separate key). ولا تكفي SHA-256 صريحة (A plain SHA-256 will not do): فأرقام الهوية الوطنية (national IDs) وأرقام الهواتف (phone numbers) لها فضاءات مدخلاتٍ صغيرة (small input spaces)، فيستطيع أي شخصٍ يملك الجدول (anyone with the table) تجزئة كل قيمةٍ ممكنة (hash every possible value).
+**البحث في الحقول المشفّرة.** للعثور على شركةٍ برقم تسجيلٍ مشفّر، خزّن **فهرسًا أعمى**: قيمة HMAC للقيمة تحت مفتاحٍ منفصل. ولا تكفي SHA-256 صريحة: فأرقام الهوية الوطنية وأرقام الهواتف لها فضاءات مدخلاتٍ صغيرة، فيستطيع أي شخصٍ يملك الجدول تجزئة كل قيمةٍ ممكنة.
 
-### 🔴 نظرة الخبير (Expert view)
+### 🔴 نظرة الخبير
 
-**المرونة التشفيرية (Crypto-agility).** تتقادم الخوارزميات (Algorithms age)، فاجعل تغيير إحداها تغييرًا في الإعدادات (a configuration change): مكتبة تشفيرٍ داخلية واحدة (one internal crypto library)، والخوارزمية وإصدار المفتاح (the algorithm and key version) مخزّنان مع كل نصٍّ مشفّر (stored with every ciphertext)، ببادئةٍ (prefix) مثل `v2:key-id:`، و**جرد تشفيري (cryptographic inventory)** لكل نظام (per system). ويتضمن CycloneDX، وهو صيغةٌ لقوائم مكوّنات البرمجيات (an SBOM format)، قائمةَ مكوّناتٍ تشفيرية (cryptography bill of materials) (CBOM) لهذا الغرض.
+**المرونة التشفيرية.** تتقادم الخوارزميات، فاجعل تغيير إحداها تغييرًا في الإعدادات: مكتبة تشفيرٍ داخلية واحدة، والخوارزمية وإصدار المفتاح مخزّنان مع كل نصٍّ مشفّر، ببادئةٍ مثل `v2:key-id:`، و**جرد تشفيري (cryptographic inventory)** لكل نظام. ويتضمن CycloneDX، وهو صيغةٌ لقوائم مكوّنات البرمجيات، قائمةَ مكوّناتٍ تشفيرية لهذا الغرض.
 
-**فصل المفاتيح (Key separation).** مفتاحٌ واحد لكل غرض (one key per purpose)، أي التشفير (encryption) وMAC والفهرس الأعمى (blind index)، ولكل بيئة (per environment)؛ والمفاتيح الخاصة بكل عميل (per-customer keys) تضيّق نطاق الضرر (narrow the blast radius) وتجعل الإتلاف التشفيري دقيقًا (make crypto-shredding precise). وينبغي ألّا يستطيع مسؤولو سياسات المفاتيح (key-policy administrators) قراءة البيانات (read the data).
+**فصل المفاتيح.** مفتاحٌ واحد لكل غرض، أي التشفير وMAC والفهرس الأعمى، ولكل بيئة؛ والمفاتيح الخاصة بكل عميل تضيّق نطاق الضرر وتجعل الإتلاف التشفيري دقيقًا. وينبغي ألّا يستطيع مسؤولو سياسات المفاتيح قراءة البيانات.
 
-**الحدود ومقاومة سوء الاستخدام (Limits and misuse resistance).** تحدّد وثيقة NIST SP 800-38D عدد الرسائل التي يجوز لمفتاح GCM واحد (one GCM key) تشفيرها بقيمٍ آنية عشوائية (with random nonces) بـ 2³²؛ والمفاتيح الخاصة بكل سجل (per-record data keys) تتجاوز هذا القيد (sidestep this). ويتحمّل AES-GCM-SIV (RFC 8452) أخطاء القيم الآنية بصورةٍ أفضل (tolerates nonce mistakes better). أمّا **الفلفل (pepper)**، وهو سرٌّ يُمزج في تجزئة كلمات المرور (a secret mixed into password hashing) ويُحفظ في خدمة إدارة المفاتيح (kept in the KMS)، فيمنع كسر تسرّبٍ يقتصر على قاعدة البيانات (a database-only leak) دون اتصال (offline): إنه طبقةٌ إضافية، لا بديل (an extra layer, not a substitute).
+**الحدود ومقاومة سوء الاستخدام.** تحدّد وثيقة NIST SP 800-38D عدد الرسائل التي يجوز لمفتاح GCM واحد تشفيرها بقيمٍ آنية عشوائية بـ 2³²؛ والمفاتيح الخاصة بكل سجل تتجاوز هذا القيد. ويتحمّل AES-GCM-SIV أخطاء القيم الآنية بصورةٍ أفضل. أمّا **الفلفل (pepper)**، وهو سرٌّ يُمزج في تجزئة كلمات المرور ويُحفظ في خدمة إدارة المفاتيح، فيمنع كسر تسرّبٍ يقتصر على قاعدة البيانات دون اتصال: إنه طبقةٌ إضافية، لا بديل.
 
-**تفاصيل TLS 1.3 لبنك (TLS 1.3 details for a bank).** كل مصافحةٍ كاملة (every full handshake) تمنح **السرية الأمامية (forward secrecy)**: فالمفتاح الخاص المسروق لاحقًا (a private key stolen later) لا يستطيع فك تشفير الجلسات المسجّلة (recorded sessions). ويمكن إعادة تشغيل (can be replayed) البيانات المبكرة الاختيارية «0-RTT» (optional "0-RTT" early data)، وتحذّر RFC 8446 من ذلك (RFC 8446 warns of this)، فلا تقبلها أبدًا (never accept it) للطلبات التي تغيّر الحالة (state-changing requests) مثل التحويلات (transfers).
+**تفاصيل TLS 1.3 لبنك.** كل مصافحةٍ كاملة تمنح **السرية الأمامية**: فالمفتاح الخاص المسروق لاحقًا لا يستطيع فك تشفير الجلسات المسجّلة. ويمكن إعادة تشغيل البيانات المبكرة الاختيارية «0-RTT»، وتحذّر RFC 8446 من ذلك، فلا تقبلها أبدًا للطلبات التي تغيّر الحالة مثل التحويلات.
 
-**التخطيط لما بعد الكمّ (Post-quantum planning).** سيكسر حاسوبٌ كمّي كبير (A large quantum computer) خوارزميات المفتاح العام الحالية (today's public-key algorithms)، أي RSA والمنحنيات الإهليلجية (elliptic curves)، لكنه لن يكسر، عمليًّا (in practice)، AES-256 أو SHA-256. ونشرت NIST في أغسطس 2024 المعيار FIPS 203 (ML-KEM) لإنشاء المفاتيح (key establishment)، والمعيارين FIPS 204 (ML-DSA) وFIPS 205 (SLH-DSA)، وكلاهما للتوقيعات (both for signatures). والخطر القريب (near-term risk) هو «احصد الآن، وفُكّ التشفير لاحقًا» ("harvest now, decrypt later"): حركة مرورٍ تُسجَّل اليوم (traffic recorded today) ويُفك تشفيرها في المستقبل (decrypted in future). لذا فهي مهمة تخطيط (a planning task): الجرد (inventory)، وإعطاء الأولوية للبيانات السرية طويلة العمر (prioritise long-lived confidential data)، واعتماد تبادل المفاتيح الهجين لما بعد الكمّ (hybrid post-quantum key exchange) حين تدعمه المنصات (as platforms support it)، وهو ما بدأت المتصفحات الرئيسية ومكتبات TLS (major browsers and TLS libraries) بفعله وقت الكتابة (at the time of writing) عام 2026.
+**التخطيط لما بعد الكمّ.** سيكسر حاسوبٌ كمّي كبير خوارزميات المفتاح العام الحالية، أي RSA والمنحنيات الإهليلجية، لكنه لن يكسر، عمليًّا، AES-256 أو SHA-256. ونشرت NIST في أغسطس 2024 المعيار FIPS 203 لإنشاء المفاتيح، والمعيارين FIPS 204 وFIPS 205، وكلاهما للتوقيعات. والخطر القريب هو «احصد الآن، وفُكّ التشفير لاحقًا»: حركة مرورٍ تُسجَّل اليوم ويُفك تشفيرها في المستقبل. لذا فهي مهمة تخطيط: الجرد (inventory)، وإعطاء الأولوية للبيانات السرية طويلة العمر، واعتماد تبادل المفاتيح الهجين لما بعد الكمّ حين تدعمه المنصات، وهو ما بدأت المتصفحات الرئيسية ومكتبات TLS بفعله وقت الكتابة عام 2026.
 
-**وكلاء البرمجة بالذكاء الاصطناعي (AI coding agents)** يعيدون إنتاج عادات الشيفرة العامة القديمة (old public-code habits): MD5 لكلمات المرور (for passwords)، وECB، و`verify=False` لإسكات خطأ SSL (to silence an SSL error). تعامل مع التشفير الذي يكتبه الوكيل (agent-written crypto) على أنه غير مُراجَع (unreviewed)، وأضِف قواعد تحليلٍ ساكن (static-analysis rules) (6.1، 6.3).
+**وكلاء البرمجة بالذكاء الاصطناعي** يعيدون إنتاج عادات الشيفرة العامة القديمة: MD5 لكلمات المرور، وECB، و`verify=False` لإسكات خطأ SSL. تعامل مع التشفير الذي يكتبه الوكيل على أنه غير مُراجَع، وأضِف قواعد تحليلٍ ساكن (6.1، 6.3).
 
-## 🧰 الأدوات (The toolkit)
-| الضابط أو المعيار أو الأداة (Control, standard or tool) | ما هو وماذا يفعل (What it is and does) | متى تلجأ إليه (When to reach for it) |
+## 🧰 الأدوات
+| الضابط أو المعيار أو الأداة | ما هو وماذا يفعل | متى تلجأ إليه |
 |---|---|---|
-| **TLS 1.3** — وفق RFC 8446 | يشفّر الاتصالات ويوثّقها (encrypts and authenticates connections) مع السرية الأمامية (with forward secrecy) | كل اتصال (Every connection)؛ وTLS المتبادل (mTLS) بين الخدمات (between services) |
-| **Argon2id** — وفق RFC 9106 | تجزئة كلمات مرورٍ بطيئة ومملّحة ومُكلفة للذاكرة (slow, salted, memory-hard password hashing)؛ وscrypt وbcrypt بديلان مقبولان (acceptable alternatives) | أي كلمة مرورٍ أو سرٍّ لا تحتاج إلا إلى التحقق منه (any password or secret you only need to verify) |
-| **AES-GCM** — معيار التشفير المتقدم بنمط GCM | تشفيرٌ موثَّق (authenticated encryption): سريةٌ مع اكتشاف العبث (confidentiality plus tamper detection) | تشفير الحقول والملفات (Field and file encryption)، عبر مكتبةٍ عالية المستوى (through a high-level library) |
-| **Envelope encryption** — التشفير المغلَّف | مفاتيح بياناتٍ لكل سجل (per-record data keys) مغلّفةٌ بمفتاحٍ رئيسي يبقى في خدمة إدارة المفاتيح (wrapped by a master key that stays in the KMS) | أي بياناتٍ حساسة يجب أن تخزّنها وتقرأها لاحقًا (any sensitive data you must store and read back) |
-| **Key management service** — خدمة إدارة المفاتيح (KMS)، المدعومة بوحدات أمن العتاد (HSM-backed) | تحفظ المفاتيح الرئيسية في العتاد (holds master keys in hardware)، وتفرض السياسة (enforces policy)، وتسجّل الاستخدام (logs use)، وتدوّر المفاتيح (rotates) | جميع مفاتيح بيئة الإنتاج (All production keys) |
-| **HMAC** — وفق RFC 2104 | تجزئةٌ بمفتاح (keyed hash) تُثبت السلامة والمصدر (integrity and origin) بين أطرافٍ تتشارك سرًّا (between parties sharing a secret) | خطافات الويب (Webhooks)، والاستدعاءات الراجعة (callbacks)، والفهارس العمياء (blind indexes) |
-| **Google Tink and libsodium** — مكتبتا Google Tink وlibsodium | مكتبات تشفيرٍ عالية المستوى مقاومةٌ لسوء الاستخدام (high-level, misuse-resistant crypto libraries) | كلما أغراك اختيار الأنماط أو القيم الآنية بنفسك (whenever you are tempted to choose modes or nonces yourself) |
-| **OWASP Cryptographic Storage Cheat Sheet** — ورقة OWASP المختصرة للتخزين التشفيري | إرشاداتٌ للبنّائين حول الخوارزميات والأنماط والمفاتيح (builder guidance on algorithms, modes and keys) | كتابة معيارٍ للتشفير (Writing a crypto standard)؛ ومراجعة شيفرة التشفير (reviewing crypto code) |
+| **TLS 1.3** — وفق RFC 8446 | يشفّر الاتصالات ويوثّقها مع السرية الأمامية | كل اتصال؛ وTLS المتبادل بين الخدمات |
+| **Argon2id** — وفق RFC 9106 | تجزئة كلمات مرورٍ بطيئة ومملّحة ومُكلفة للذاكرة؛ وscrypt وbcrypt بديلان مقبولان | أي كلمة مرورٍ أو سرٍّ لا تحتاج إلا إلى التحقق منه |
+| **AES-GCM** — معيار التشفير المتقدم بنمط GCM | تشفيرٌ موثَّق: سريةٌ مع اكتشاف العبث | تشفير الحقول والملفات، عبر مكتبةٍ عالية المستوى |
+| **Envelope encryption** — التشفير المغلَّف | مفاتيح بياناتٍ لكل سجل مغلّفةٌ بمفتاحٍ رئيسي يبقى في خدمة إدارة المفاتيح | أي بياناتٍ حساسة يجب أن تخزّنها وتقرأها لاحقًا |
+| **Key management service** — خدمة إدارة المفاتيح، المدعومة بوحدات أمن العتاد (HSM-backed) | تحفظ المفاتيح الرئيسية في العتاد، وتفرض السياسة، وتسجّل الاستخدام، وتدوّر المفاتيح | جميع مفاتيح بيئة الإنتاج |
+| **HMAC** — وفق RFC 2104 | تجزئةٌ بمفتاح (keyed hash) تُثبت السلامة والمصدر بين أطرافٍ تتشارك سرًّا | خطافات الويب (Webhooks)، والاستدعاءات الراجعة، والفهارس العمياء |
+| **Google Tink and libsodium** — مكتبتا Google Tink وlibsodium | مكتبات تشفيرٍ عالية المستوى مقاومةٌ لسوء الاستخدام | كلما أغراك اختيار الأنماط أو القيم الآنية بنفسك |
+| **OWASP Cryptographic Storage Cheat Sheet** — ورقة OWASP المختصرة للتخزين التشفيري | إرشاداتٌ للبنّائين حول الخوارزميات والأنماط والمفاتيح | كتابة معيارٍ للتشفير؛ ومراجعة شيفرة التشفير |
 
-## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-يحوّل علي مراجعته (Ali turns his review) إلى **معيار التشفير للبنّائين في البنك، الإصدار 1، مقتطف (Cryptography Standard for Builders, v1, excerpt)**.
+## 🏛️ عمليًا في بنك نجم
+يحوّل علي مراجعته إلى **معيار التشفير للبنّائين في البنك، الإصدار 1، مقتطف**.
 
-| المهمة (Job) | المعتمَد (Approved) | المحظور (Forbidden) | ملاحظات (Notes) |
+| المهمة | المعتمَد | المحظور | ملاحظات |
 |---|---|---|---|
-| النقل (Transport) | TLS 1.3؛ وTLS 1.2 مع مجموعات AEAD للشركاء المدرجين فقط (with AEAD suites for listed partners only)؛ وTLS المتبادل (mTLS) داخل الشبكة الخدمية (inside the mesh) | TLS 1.0 و1.1، والتحقق المعطَّل (disabled verification)، وHTTP الصريح بين الخدمات (plain HTTP between services) | HSTS على نطاقات الويب (on web domains)؛ وجرد الشهادات مع مالكيها (certificate inventory with owners) |
-| كلمات المرور (Passwords) | Argon2id عند الحدود الدنيا لـ OWASP أو فوقها (at or above OWASP minimums)؛ وbcrypt للأنظمة القديمة (for legacy)، مع الترقية عند تسجيل الدخول (upgraded at login) | MD5 وSHA-1 وSHA-256 الصريحة (plain SHA-256) والتشفير القابل للعكس (reversible encryption) | فحص إعادة التجزئة عند كل تسجيل دخول (Rehash check on each login) |
-| الحقول الحساسة (Sensitive fields): IBAN ورقم الهوية الوطنية (national ID) والراتب (salary) | AES-256-GCM عبر مكتبة التشفير في نجم (via the Najm crypto library)، والتشفير المغلَّف (envelope encryption) | ECB، والمفاتيح في الشيفرة أو الإعدادات (keys in code or config)، والمخططات محلية الصنع (home-made schemes) | معرّف السجل بوصفه بياناتٍ مرتبطة (Record ID as associated data)؛ وتخزين إصدار المفتاح (key version stored) |
-| البحث عن المعرّفات المشفّرة (Lookup of encrypted identifiers) | فهرسٌ أعمى بـ HMAC-SHA256 (HMAC-SHA256 blind index) بمفتاحٍ خاص به (own key) | تجزئةٌ صريحة لرقم هويةٍ وطنية أو رقم هاتف (Plain hash of a national ID or phone number) | |
-| أرقام البطاقات (Card numbers) | الترميز عبر خزنة البطاقات (Tokenisation through the card vault) | أرقام البطاقات خارج الخزنة (Card numbers outside the vault) | بوابة الشركات الصغيرة (SME Portal) ونجم أسيست (Najm Assist) لا تحتفظان إلا بالرموز (hold tokens only) |
-| المفاتيح (Keys) | خدمة إدارة المفاتيح (KMS)، بمفتاحٍ واحد لكل غرضٍ وبيئة (one key per purpose and environment) | المفاتيح الرئيسية القابلة للتصدير (Exportable master keys)، والمفاتيح المشتركة بين بيئتي التطوير والإنتاج (shared dev and prod keys) | مالكٌ مسمّى (Named owner)؛ وتدويرٌ تلقائي (automatic rotation)؛ وتسجيل عمليات فك التشفير (decrypts logged) |
+| النقل | TLS 1.3؛ وTLS 1.2 مع مجموعات AEAD للشركاء المدرجين فقط؛ وTLS المتبادل داخل الشبكة الخدمية | TLS 1.0 و1.1، والتحقق المعطَّل، وHTTP الصريح بين الخدمات | HSTS على نطاقات الويب؛ وجرد الشهادات مع مالكيها |
+| كلمات المرور | Argon2id عند الحدود الدنيا لـ OWASP أو فوقها؛ وbcrypt للأنظمة القديمة، مع الترقية عند تسجيل الدخول | MD5 وSHA-1 وSHA-256 الصريحة والتشفير القابل للعكس | فحص إعادة التجزئة عند كل تسجيل دخول |
+| الحقول الحساسة: IBAN ورقم الهوية الوطنية والراتب | AES-256-GCM عبر مكتبة التشفير في نجم، والتشفير المغلَّف | ECB، والمفاتيح في الشيفرة أو الإعدادات، والمخططات محلية الصنع | معرّف السجل بوصفه بياناتٍ مرتبطة؛ وتخزين إصدار المفتاح |
+| البحث عن المعرّفات المشفّرة | فهرسٌ أعمى بـ HMAC-SHA256 بمفتاحٍ خاص به | تجزئةٌ صريحة لرقم هويةٍ وطنية أو رقم هاتف | |
+| أرقام البطاقات | الترميز عبر خزنة البطاقات | أرقام البطاقات خارج الخزنة | بوابة الشركات الصغيرة ونجم أسيست لا تحتفظان إلا بالرموز |
+| المفاتيح | خدمة إدارة المفاتيح، بمفتاحٍ واحد لكل غرضٍ وبيئة | المفاتيح الرئيسية القابلة للتصدير، والمفاتيح المشتركة بين بيئتي التطوير والإنتاج | مالكٌ مسمّى؛ وتدويرٌ تلقائي؛ وتسجيل عمليات فك التشفير |
 
-**أسئلةٌ لأي طلب سحبٍ يمسّ التشفير (Questions for any pull request that touches cryptography)**
+**أسئلةٌ لأي طلب سحبٍ يمسّ التشفير**
 
-1. ما الخاصية المطلوبة (Which property is needed)، وهل توفّرها هذه الأداة (does this tool provide it)؟
-2. هل هي بنيةٌ معيارية (a standard construction) من المكتبة المعتمدة (the approved library)، بإعداداتها الافتراضية (with defaults)؟
-3. من أين يأتي المفتاح (Where does the key come from)، ومن غيرك يستطيع استخدامه (who else can use it)، وهل يُسجَّل الاستخدام (is use logged)؟
-4. هل عُطِّل أي فحص (any check disabled)، أو ثُبِّتت أي قيمةٍ آنية (any nonce fixed)، أو قورن أي سرٍّ (any secret compared) باستخدام `==`؟
-5. لو اضطررنا إلى تغيير هذه الخوارزمية (If this algorithm had to change)، فكم ملفًا سيتغيّر (how many files would change)؟
+1. ما الخاصية المطلوبة، وهل توفّرها هذه الأداة؟
+2. هل هي بنيةٌ معيارية من المكتبة المعتمدة، بإعداداتها الافتراضية؟
+3. من أين يأتي المفتاح، ومن غيرك يستطيع استخدامه، وهل يُسجَّل الاستخدام؟
+4. هل عُطِّل أي فحص، أو ثُبِّتت أي قيمةٍ آنية، أو قورن أي سرٍّ باستخدام `==`؟
+5. لو اضطررنا إلى تغيير هذه الخوارزمية، فكم ملفًا سيتغيّر؟
 
-## 🛠️ التمارين (Exercises)
-- 🟢 اربط كل عنصرٍ بأداةٍ من هذا الدرس (Map each item to a tool from this lesson)، أي إحدى الأدوات الخمس (one of the five tools) أو الترميز (tokenisation) أو مولّد CSPRNG، مع سببٍ في سطرٍ واحد (a one-line reason): كلمة مرور مستخدمٍ في الشركات الصغيرة (an SME user's password)، ورقم IBAN لصرف المدفوعات (the payout IBAN)، والمجموع الاختباري لكشف حساب (a statement's checksum)، وخطاف ويب لشريك (a partner webhook)، ورمز إعادة تعيين كلمة المرور (a password-reset token)، ورقم بطاقة (a card number)، ومعرّف جلسة (a session ID)، والبحث برقم الهوية الوطنية (a lookup by national ID)، وأرشيف نسخةٍ احتياطية (a backup archive)، ورمز وصولٍ لواجهة برمجة (an API access token). *يكتمل عندما (Done when):* تُربط العناصر العشرة كلها (all ten are mapped) ويذكر كل عنصرٍ يحتاج إلى مفتاح أين يعيش ذلك المفتاح (says where that key lives).
-- 🟡 في مشروعك الخاص (your own project) أو في تطبيق مختبرٍ محلي (a local lab app)، استبدل تجزئة كلمات مرورٍ سريعة أو غير مملّحة (a fast or unsalted password hash) بـ Argon2id، مع ترقية التجزئات القديمة عند تسجيل الدخول (upgrading old hashes at login). *يكتمل عندما (Done when):* يُظهر اختبارٌ (a test shows) أن تجزئةً قديمة يُتحقَّق منها مرةً واحدة (an old hash verifies once) ثم تُستبدل بتجزئة Argon2id (is replaced by an Argon2id hash)، وأن كلمة المرور الخاطئة تفشل قبل ذلك وبعده (a wrong password fails before and after).
-- 🔴 أنشئ نموذجًا أوليًّا (Prototype) للتشفير المغلَّف (envelope encryption) لحقلٍ واحد في شيفرتك الخاصة (one field in your own code)، باستخدام خدمة إدارة المفاتيح السحابية (your cloud KMS) في حسابٍ تجريبي شخصي (personal sandbox account) أو بديلٍ محلي (a local stand-in): مفاتيح لكل سجل (per-record keys)، ومعرّف السجل بوصفه بياناتٍ مرتبطة (record ID as associated data)، وبادئةٌ لإصدار المفتاح (a key-version prefix). *يكتمل عندما (Done when):* يفشل فك تشفير نصٍّ مشفّر منسوخٍ من السجل A إلى السجل B (a ciphertext copied from record A to record B fails to decrypt)، ولا يحتاج تدوير المفتاح الرئيسي إلى إعادة تشفير البيانات (master-key rotation needs no data re-encryption)، وتوضّح ملاحظةٌ قصيرة (a short note) من يستطيع فك التشفير وأين يُسجَّل ذلك (who can decrypt and where that is logged).
+## 🛠️ التمارين
+- 🟢 اربط كل عنصرٍ بأداةٍ من هذا الدرس، أي إحدى الأدوات الخمس أو الترميز أو مولّد CSPRNG، مع سببٍ في سطرٍ واحد: كلمة مرور مستخدمٍ في الشركات الصغيرة، ورقم IBAN لصرف المدفوعات، والمجموع الاختباري لكشف حساب، وخطاف ويب لشريك، ورمز إعادة تعيين كلمة المرور، ورقم بطاقة، ومعرّف جلسة، والبحث برقم الهوية الوطنية، وأرشيف نسخةٍ احتياطية، ورمز وصولٍ لواجهة برمجة. *يكتمل عندما:* تُربط العناصر العشرة كلها ويذكر كل عنصرٍ يحتاج إلى مفتاح أين يعيش ذلك المفتاح.
+- 🟡 في مشروعك الخاص أو في تطبيق مختبرٍ محلي، استبدل تجزئة كلمات مرورٍ سريعة أو غير مملّحة بـ Argon2id، مع ترقية التجزئات القديمة عند تسجيل الدخول. *يكتمل عندما:* يُظهر اختبارٌ أن تجزئةً قديمة يُتحقَّق منها مرةً واحدة ثم تُستبدل بتجزئة Argon2id، وأن كلمة المرور الخاطئة تفشل قبل ذلك وبعده.
+- 🔴 أنشئ نموذجًا أوليًّا للتشفير المغلَّف لحقلٍ واحد في شيفرتك الخاصة، باستخدام خدمة إدارة المفاتيح السحابية في حسابٍ تجريبي شخصي أو بديلٍ محلي: مفاتيح لكل سجل، ومعرّف السجل بوصفه بياناتٍ مرتبطة، وبادئةٌ لإصدار المفتاح. *يكتمل عندما:* يفشل فك تشفير نصٍّ مشفّر منسوخٍ من السجل A إلى السجل B، ولا يحتاج تدوير المفتاح الرئيسي إلى إعادة تشفير البيانات، وتوضّح ملاحظةٌ قصيرة من يستطيع فك التشفير وأين يُسجَّل ذلك.
 
-## ⚠️ أخطاء وفخاخ (Mistakes and traps)
-- **تعطيل التحقق لإصلاح خطأ TLS (Turning off verification to fix a TLS error).** فهو ينتشر إلى بيئة الإنتاج (It spreads to production). ثِق بسلطة شهادات الاختبار المحددة (Trust the specific test CA) وأبقِ التحقق مفعّلًا (keep verification on).
-- **التجزئات السريعة لكلمات المرور (Fast hashes for passwords).** الملح لا يعالج السرعة (A salt does not fix speed). استخدم Argon2id أو scrypt أو bcrypt.
-- **«إنها مشفّرة أثناء التخزين» بوصفها جوابًا شاملًا ("It's encrypted at rest" as a universal answer).** سمِّ التهديد (Name the threat)، ثم اختر الطبقة (then pick the layer).
-- **المفاتيح بجوار البيانات (Keys next to the data).** المفتاح في الشيفرة أو الإعدادات أو في قاعدة البيانات نفسها (in code, config or the same database) هو كلمة مرورٍ ملصقةٌ على الخزنة (a password taped to the safe). استخدم خدمة إدارة المفاتيح (Use a KMS).
-- **تجميع مخططك الخاص (Assembling your own scheme).** الأنماط والقيم الآنية المختارة يدويًّا (Hand-picked modes and nonces) تؤدي إلى ECB وإعادة استخدام القيم الآنية (nonce reuse). استخدم AEAD عبر مكتبةٍ عالية المستوى (through a high-level library).
-- **نسيان الشهادات حتى تنتهي صلاحيتها (Forgetting certificates until they expire).** أتمِت التجديد (Automate renewal) ونبِّه قبل انتهاء الصلاحية (alert before expiry).
+## ⚠️ أخطاء وفخاخ
+- **تعطيل التحقق لإصلاح خطأ TLS.** فهو ينتشر إلى بيئة الإنتاج. ثِق بسلطة شهادات الاختبار المحددة وأبقِ التحقق مفعّلًا.
+- **التجزئات السريعة لكلمات المرور.** الملح لا يعالج السرعة. استخدم Argon2id أو scrypt أو bcrypt.
+- **«إنها مشفّرة أثناء التخزين» بوصفها جوابًا شاملًا.** سمِّ التهديد، ثم اختر الطبقة.
+- **المفاتيح بجوار البيانات.** المفتاح في الشيفرة أو الإعدادات أو في قاعدة البيانات نفسها هو كلمة مرورٍ ملصقةٌ على الخزنة. استخدم خدمة إدارة المفاتيح.
+- **تجميع مخططك الخاص.** الأنماط والقيم الآنية المختارة يدويًّا تؤدي إلى ECB وإعادة استخدام القيم الآنية (nonce reuse). استخدم AEAD عبر مكتبةٍ عالية المستوى.
+- **نسيان الشهادات حتى تنتهي صلاحيتها.** أتمِت التجديد ونبِّه قبل انتهاء الصلاحية.
 
-## 🧾 الخلاصة (Recap)
-- اختر الأداة حسب الخاصية (Pick the tool by property): تجزئات كلمات المرور لكلمات المرور (password hashes for passwords)، ورموز MAC والتوقيعات للسلامة والمصدر (MACs and signatures for integrity and origin)، وAEAD للسرية مع اكتشاف العبث (for confidentiality with tamper detection).
-- TLS 1.3 في كل مكان (everywhere)، والتحقق مفعّلٌ دائمًا (verification always on)، وHSTS على الويب (on the web)، وTLS المتبادل (mTLS) في الداخل (inside).
-- كلمات المرور (Passwords): Argon2id (أو scrypt أو bcrypt) مع إعادة التجزئة عند تسجيل الدخول (rehash-on-login)؛ ولا تجزئات سريعة ولا تشفير قابلًا للعكس أبدًا (never fast hashes or reversible encryption).
-- تعيش المفاتيح في خدمة إدارة المفاتيح (Keys live in a KMS)؛ ويمنح التشفير المغلَّف (envelope encryption) التحكم في الوصول (access control) والتدقيق (audit) والتدوير الرخيص (cheap rotation) والإتلاف التشفيري (crypto-shredding).
-- اسأل ما الذي توقفه كل طبقة (Ask what each layer stops)؛ وخطِّط للمرونة التشفيرية (plan for crypto-agility) والشهادات الأقصر عمرًا (shorter certificates) والانتقال إلى ما بعد الكمّ (post-quantum migration).
+## 🧾 الخلاصة
+- اختر الأداة حسب الخاصية: تجزئات كلمات المرور لكلمات المرور، ورموز MAC والتوقيعات للسلامة والمصدر، وAEAD للسرية مع اكتشاف العبث.
+- TLS 1.3 في كل مكان، والتحقق مفعّلٌ دائمًا، وHSTS على الويب، وTLS المتبادل في الداخل.
+- كلمات المرور: Argon2id مع إعادة التجزئة عند تسجيل الدخول (rehash-on-login)؛ ولا تجزئات سريعة ولا تشفير قابلًا للعكس أبدًا.
+- تعيش المفاتيح في خدمة إدارة المفاتيح؛ ويمنح التشفير المغلَّف التحكم في الوصول (access control) والتدقيق والتدوير الرخيص والإتلاف التشفيري.
+- اسأل ما الذي توقفه كل طبقة؛ وخطِّط للمرونة التشفيرية والشهادات الأقصر عمرًا والانتقال إلى ما بعد الكمّ.
 
-## ✍️ اختبر نفسك (Check yourself)
+## ✍️ اختبر نفسك
 
-**1. يقترح علي تخزين كلمات مرور بوابة الشركات الصغيرة (SME Portal) بتجزئة SHA-256 مع ملحٍ عشوائي لكل مستخدم (random per-user salt): «مملّحة، إذن لا بأس» ⁦("Salted, so it's fine.")⁩. ما الرد الأفضل (best response)؟**
+**1. يقترح علي تخزين كلمات مرور بوابة الشركات الصغيرة بتجزئة SHA-256 مع ملحٍ عشوائي لكل مستخدم: «مملّحة، إذن لا بأس». ما الرد الأفضل؟**
 
-- A. اقبله، لأن التمليح يحلّ المشكلة (salting solves the problem)
-- B. شفّر كلمات المرور بـ AES-GCM (Encrypt passwords with AES-GCM) كي يستطيع الدعم الفني استعادة المنسيّ منها (so support can recover forgotten ones)، مع حفظ المفتاح في خزنة لا يفتحها إلا قائد الدعم وفريق التدقيق (a vault that only the support lead and the audit team can open)
-- C. استخدم Argon2id (أو scrypt أو bcrypt): فالملح يهزم الجداول المحسوبة مسبقًا (defeats precomputed tables)، لكن SHA-256 تبقى سريعةً بما يكفي للتخمين واسع النطاق بعد التسرّب (fast enough for large-scale guessing after a leak)
-- D. جزّئ كلمة المرور مرتين بـ SHA-256 (hash the password twice)
-
-<details><summary>الإجابة</summary>
-
-**C.** يجب أن تكون تجزئات كلمات المرور (Password hashes) بطيئةً إضافةً إلى كونها مملّحة (must be slow as well as salted). وB أسوأ (is worse): فمن يحصل على المفتاح يعكسها (whoever gets the key reverses it). وD تبقى سريعة (is still fast). انظر: 🟢 الأساسيات (The essentials).
-
-</details>
-
-**2. في قاعدة البيانات المُدارة (managed database) لدى بنك نجم (Najm Bank) يكون تشفير التخزين (storage encryption) مفعّلًا افتراضيًّا. يقول طارق إن التشفير على مستوى الحقل (field-level encryption) لأرقام الهوية الوطنية (national IDs)، بمفاتيح خدمة إدارة المفاتيح (KMS keys) ومع قصر فك التشفير على خدمةٍ واحدة (decryption limited to one service)، لا يضيف شيئًا. ما التهديد الذي يعالجه ولا يعالجه تشفير التخزين (Which threat does it address that storage encryption does not)؟**
-
-- A. قرصٌ مسروق من مركز بيانات المزوّد (disk stolen from the provider's data centre)
-- B. حقن SQL (SQL injection) في نقطة نهايةٍ للتقارير (reporting endpoint)، أو مسؤولٌ يستعلم عن الجدول (administrator querying the table)، فتُعاد أرقام هويةٍ وطنية مقروءة (returning readable national IDs)
-- C. مهاجمٌ استولى على الخدمة الوحيدة المسموح لها بفك تشفير أرقام الهوية الوطنية (taken over the one service that is allowed to decrypt national IDs) ويستطيع أن يطلب منها (can ask it to) فك تشفير أي سجل (decrypt any record) على الإطلاق (at all) من دون قيد (without any limit)
-- D. محرّك أقراصٍ مُخرَج من الخدمة يُعاد بيعه (decommissioned drive being resold)
+- A. اقبله، لأن التمليح يحلّ المشكلة
+- B. شفّر كلمات المرور بـ AES-GCM كي يستطيع الدعم الفني استعادة المنسيّ منها، مع حفظ المفتاح في خزنة لا يفتحها إلا قائد الدعم وفريق التدقيق
+- C. استخدم Argon2id: فالملح يهزم الجداول المحسوبة مسبقًا، لكن SHA-256 تبقى سريعةً بما يكفي للتخمين واسع النطاق بعد التسرّب
+- D. جزّئ كلمة المرور مرتين بـ SHA-256
 
 <details><summary>الإجابة</summary>
 
-**B.** تشفير التخزين شفافٌ (transparent) لأي شخصٍ يقرأ عبر قاعدة البيانات (reading through the database)؛ أمّا التشفير على مستوى الحقل فلا يترك له إلا نصًّا مشفّرًا (only ciphertext). وA وD هما ما يغطيه تشفير التخزين أصلًا (already covers)؛ وC تهزم الطبقتين كلتيهما (defeats both layers)، لأن الخدمة المسموح لها بفك التشفير تستطيع قراءة البيانات (because a service allowed to decrypt can read the data). انظر: 🟡 التعمق أكثر (Going deeper).
+**C.** يجب أن تكون تجزئات كلمات المرور (Password hashes) بطيئةً إضافةً إلى كونها مملّحة. وB أسوأ: فمن يحصل على المفتاح يعكسها. وD تبقى سريعة. انظر: 🟢 الأساسيات.
 
 </details>
 
-**3. يفشل استدعاءٌ إلى بيئة الاختبار (test environment) لدى شريك الفوترة الإلكترونية (e-invoicing partner) في التحقق من صحة الشهادة (certificate validation). أيّ إصلاحٍ هو الصحيح؟**
+**2. في قاعدة البيانات المُدارة لدى بنك نجم يكون تشفير التخزين مفعّلًا افتراضيًّا. يقول طارق إن التشفير على مستوى الحقل لأرقام الهوية الوطنية، بمفاتيح خدمة إدارة المفاتيح ومع قصر فك التشفير على خدمةٍ واحدة، لا يضيف شيئًا. ما التهديد الذي يعالجه ولا يعالجه تشفير التخزين؟**
 
-- A. اضبط `verify=False` في بيئة الاختبار فقط (in test only)، خلف متغير بيئة (behind an environment variable)، وأضف تعليقًا ليُزال الإعداد قبل الإصدار (add a comment so the setting is removed before release)
-- B. استخدم HTTP الصريح (plain HTTP) لتكامل الاختبار (test integration)
-- C. ثِق بشهادة سلطة الشهادات الاختبارية للشريك (partner's test CA certificate) في بيئة الاختبار، وأبقِ التحقق مفعّلًا (keep verification on)، واترك بيئة الإنتاج دون تغيير (leave production unchanged)
-- D. عطّل التحقق من اسم المضيف (disable hostname checking) لكن أبقِ التحقق من السلسلة (keep chain validation)
+- A. قرصٌ مسروق من مركز بيانات المزوّد
+- B. حقن SQL في نقطة نهايةٍ للتقارير، أو مسؤولٌ يستعلم عن الجدول، فتُعاد أرقام هويةٍ وطنية مقروءة
+- C. مهاجمٌ استولى على الخدمة الوحيدة المسموح لها بفك تشفير أرقام الهوية الوطنية ويستطيع أن يطلب منها فك تشفير أي سجل على الإطلاق من دون قيد
+- D. محرّك أقراصٍ مُخرَج من الخدمة يُعاد بيعه
 
 <details><summary>الإجابة</summary>
 
-**C.** إنه يعالج السبب الحقيقي (fixes the real cause) دون إضعاف TLS (without weakening TLS). وA هو الفخ الكلاسيكي (classic trap): فمثل هذه المبدِّلات (such switches) تتسرّب إلى بيئة الإنتاج (leak into production). انظر: 🟢 الأساسيات (The essentials).
+**B.** تشفير التخزين شفافٌ لأي شخصٍ يقرأ عبر قاعدة البيانات؛ أمّا التشفير على مستوى الحقل فلا يترك له إلا نصًّا مشفّرًا. وA وD هما ما يغطيه تشفير التخزين أصلًا؛ وC تهزم الطبقتين كلتيهما، لأن الخدمة المسموح لها بفك التشفير تستطيع قراءة البيانات. انظر: 🟡 التعمق أكثر.
 
 </details>
 
-**4. أيّ عبارةٍ عن التشفير المغلَّف (envelope encryption) صحيحة (TRUE)؟**
+**3. يفشل استدعاءٌ إلى بيئة الاختبار لدى شريك الفوترة الإلكترونية في التحقق من صحة الشهادة. أيّ إصلاحٍ هو الصحيح؟**
 
-- A. يحتفظ التطبيق بالمفتاح الرئيسي في ملف إعداداته (keeps the master key in its configuration file) لفك التشفير بسرعة (to decrypt quickly)، ويقرؤه مرةً واحدة عند التشغيل (reads it once at start-up) ويبقيه في الذاكرة (holds it in memory)، ويعيد تحميله كلما تغيّر الملف على القرص (reloads it whenever the file on disk changes) ويستخدمه لكل طلب (and uses it for every request)
-- B. إنه ميزةٌ في TLS لتأمين الاتصالات (TLS feature for securing connections)
-- C. إنه يلغي الحاجة إلى التحكم في الوصول إلى قاعدة البيانات (removes the need for database access control)
-- D. مفاتيح البيانات (data keys) مغلّفةٌ بمفتاحٍ رئيسي يبقى في خدمة إدارة المفاتيح (wrapped by a master key that stays in the KMS)، فتكون كل عملية فك تشفير استدعاءً مفحوص الوصول ومسجَّلًا (access-checked, logged call)، ولا يحتاج تدوير المفتاح الرئيسي إلى إعادة تشفيرٍ جماعية (no bulk re-encryption)
+- A. اضبط `verify=False` في بيئة الاختبار فقط، خلف متغير بيئة، وأضف تعليقًا ليُزال الإعداد قبل الإصدار
+- B. استخدم HTTP الصريح لتكامل الاختبار مؤقتًا، فلا توجد بيانات حقيقية في بيئة الاختبار لدى الشريك
+- C. ثِق بسلطة الشهادات الاختبارية للشريك في بيئة الاختبار، وأبقِ التحقق مفعّلًا، واترك الإنتاج
+- D. عطّل التحقق من اسم المضيف لكن أبقِ التحقق من السلسلة، فهذا يكفي لإنجاح الاستدعاء في بيئة الاختبار، ويبقى الإنتاج كما هو
 
 <details><summary>الإجابة</summary>
 
-**D.** A يُفسد الغرض (defeats the purpose)؛ وC يخلط بين الطبقات (confuses layers)؛ وB لا علاقة له بالموضوع (is unrelated). انظر: 🟡 التعمق أكثر (Going deeper).
+**C.** إنه يعالج السبب الحقيقي دون إضعاف TLS. وA هو الفخ الكلاسيكي: فمثل هذه المبدِّلات تتسرّب إلى بيئة الإنتاج. انظر: 🟢 الأساسيات.
 
 </details>
 
-**5. يسأل حمد، كبير مسؤولي أمن المعلومات (CISO)، عمّا يجب أن يفعله بنك نجم (Najm Bank) بشأن التشفير لما بعد الكمّ (post-quantum cryptography) هذا العام. ما الإجابة الأفضل؟**
+**4. أيّ عبارةٍ عن التشفير المغلَّف صحيحة (TRUE)؟**
 
-- A. لا شيء حتى توجد حواسيب كمّية كبيرة (until large quantum computers exist)
-- B. استبدل AES-256 في كل مكان بخوارزميةٍ لما بعد الكمّ (post-quantum algorithm) الآن، وأعد تشفير كل سجلٍّ مخزَّن هذا الربع (re-encrypt every stored record this quarter)، واستغنِ عن TLS 1.3 بنقلٍ مخصّص آمنٍ كميًّا (custom quantum-safe transport) لجميع القنوات (for all channels)
-- C. أنشئ جردًا تشفيريًّا (cryptographic inventory)، وصمّم للمرونة التشفيرية (design for crypto-agility)، وأعطِ الأولوية للبيانات السرية طويلة العمر (long-lived confidential data)، واعتمد FIPS 203 و204 و205 عبر المنصات والمكتبات (through platforms and libraries) حين تدعمها
-- D. صمّم خوارزميةً لما بعد الكمّ خاصةً بنجم (Najm-specific post-quantum algorithm)
+- A. يحتفظ التطبيق بالمفتاح الرئيسي في ملف إعداداته ليفك التشفير بسرعة، فيقرؤه عند التشغيل ويبقيه في الذاكرة ويستخدمه لكل طلب، ولا يعيد تحميله إلا عند إعادة التشغيل
+- B. إنه ميزةٌ في TLS لتأمين الاتصالات بين الخدمات، فهو يشفّر كل رسالة بمفتاحٍ جديد في كل مرة
+- C. إنه يلغي الحاجة إلى التحكم في الوصول إلى قاعدة البيانات، لأن البيانات تبقى مشفَّرة مهما كان من يقرؤها
+- D. مفاتيح البيانات مغلّفةٌ بمفتاحٍ رئيسي يبقى في خدمة إدارة المفاتيح، فكل فك تشفير استدعاءٌ مفحوص الوصول ومسجَّل، وتدوير الرئيسي لا يحتاج إعادة تشفير جماعية
 
 <details><summary>الإجابة</summary>
 
-**C.** إنها مهمة تخطيطٍ الآن (a planning task now). وA يتجاهل «احصد الآن، وفُكّ التشفير لاحقًا» ("harvest now, decrypt later")؛ وB يستهدف الشيء الخطأ (targets the wrong thing)، لأن خوارزميات المفتاح العام (public-key algorithms) هي موضع التعرّض (the exposure)؛ وD يخرق القاعدة الأولى (breaks rule one). انظر: 🔴 نظرة الخبير (Expert view).
+**D.** A يُفسد الغرض؛ وC يخلط بين الطبقات؛ وB لا علاقة له بالموضوع. انظر: 🟡 التعمق أكثر.
 
 </details>
 
-## 📚 المراجع (References)
+**5. يسأل حمد، كبير مسؤولي أمن المعلومات (CISO)، عمّا يجب أن يفعله بنك نجم بشأن التشفير لما بعد الكمّ (post-quantum cryptography) هذا العام. ما الإجابة الأفضل؟**
+
+- A. لا شيء حتى توجد حواسيب كمّية كبيرة
+- B. استبدل AES-256 في كل مكان بخوارزميةٍ لما بعد الكمّ الآن، وأعد تشفير كل سجلٍّ مخزَّن هذا الربع، واستغنِ عن TLS 1.3 بنقلٍ مخصّص آمنٍ كميًّا لجميع القنوات
+- C. أنشئ جردًا تشفيريًّا، وصمّم للمرونة التشفيرية، وأعطِ الأولوية للبيانات السرية طويلة العمر، واعتمد FIPS 203 و204 و205 عبر المنصات والمكتبات حين تدعمها
+- D. صمّم خوارزميةً لما بعد الكمّ خاصةً بنجم
+
+<details><summary>الإجابة</summary>
+
+**C.** إنها مهمة تخطيطٍ الآن. وA يتجاهل «احصد الآن، وفُكّ التشفير لاحقًا»؛ وB يستهدف الشيء الخطأ، لأن خوارزميات المفتاح العام (public-key algorithms) هي موضع التعرّض؛ وD يخرق القاعدة الأولى. انظر: 🔴 نظرة الخبير.
+
+</details>
+
+## 📚 المراجع
 - IETF، وثيقة RFC 8446: بروتوكول TLS 1.3 — https://www.rfc-editor.org/rfc/rfc8446
-- IETF، وثيقة RFC 8996: إيقاف اعتماد TLS 1.0 وTLS 1.1 (Deprecating TLS 1.0 and TLS 1.1) — https://www.rfc-editor.org/rfc/rfc8996
+- IETF، وثيقة RFC 8996: إيقاف اعتماد TLS 1.0 وTLS 1.1 — https://www.rfc-editor.org/rfc/rfc8996
 - IETF، وثيقة RFC 9106: خوارزمية Argon2 — https://www.rfc-editor.org/rfc/rfc9106
-- سلسلة أوراق OWASP المختصرة (OWASP Cheat Sheet Series): تخزين كلمات المرور (Password Storage)، والتخزين التشفيري (Cryptographic Storage)، وإدارة المفاتيح (Key Management)، وأمن طبقة النقل (Transport Layer Security) — https://cheatsheetseries.owasp.org/
-- قائمة OWASP Top 10، فئة الإخفاقات التشفيرية (Cryptographic Failures) — https://owasp.org/Top10/
-- وثيقة NIST SP 800-38D، نمط غالوا/العدّاد (Galois/Counter Mode) — https://csrc.nist.gov/pubs/sp/800/38/d/final
-- وثيقة NIST SP 800-57 الجزء 1، المراجعة 5 (Part 1 Rev. 5)، توصيةٌ لإدارة المفاتيح (Recommendation for Key Management) — https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final
-- مشروع NIST للتشفير لما بعد الكمّ (Post-Quantum Cryptography project): FIPS 203 و204 و205 — https://csrc.nist.gov/projects/post-quantum-cryptography
-- مكتب المساءلة الحكومية الأمريكي (US GAO)، التقرير GAO-18-559، حول اختراق Equifax عام 2017 (on the 2017 Equifax breach) — https://www.gao.gov/products/gao-18-559
+- سلسلة أوراق OWASP المختصرة (OWASP Cheat Sheet Series): تخزين كلمات المرور، والتخزين التشفيري (Cryptographic Storage)، وإدارة المفاتيح، وأمن طبقة النقل — https://cheatsheetseries.owasp.org/
+- قائمة OWASP Top 10، فئة الإخفاقات التشفيرية — https://owasp.org/Top10/
+- وثيقة NIST SP 800-38D، نمط غالوا/العدّاد — https://csrc.nist.gov/pubs/sp/800/38/d/final
+- وثيقة NIST SP 800-57 الجزء 1، المراجعة 5، توصيةٌ لإدارة المفاتيح — https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final
+- مشروع NIST للتشفير لما بعد الكمّ: FIPS 203 و204 و205 — https://csrc.nist.gov/projects/post-quantum-cryptography
+- مكتب المساءلة الحكومية الأمريكي، التقرير GAO-18-559، حول اختراق Equifax عام 2017 — https://www.gao.gov/products/gao-18-559
 
 ---
 
-# 5.2 — إدارة الأسرار: المفاتيح والرموز المميزة وأين تتسرّب (Secrets management: keys, tokens and where they leak)
-*المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 3.2، 5.1* · *المرحلة (Phase): Build, Operate*
+# 5.2 — إدارة الأسرار: المفاتيح والرموز المميزة وأين تتسرّب
+*المستوى: 🟡 متوسط* · *المتطلبات: 3.2، 5.1* · *المرحلة: Build, Operate*
 
-## ⚡ الدرس في دقيقة (In 60 seconds)
-- **السرّ (secret)** هو أي قيمةٍ تمنح الوصول بمفردها (grants access on its own): كلمات المرور (passwords)، ومفاتيح واجهات البرمجة (API keys)، والرموز المميزة (tokens)، والمفاتيح الخاصة (private keys)، وسلاسل الاتصال (connection strings). ومن يحمله *هو* أنت (*is* you)، بقدر ما يستطيع النظام أن يعرف (as far as the system can tell).
-- تتسرّب الأسرار عبر قنواتٍ عادية (ordinary channels): سجلّ git (git history)، وملفات `.env`، وصور الحاويات (container images)، وسجلات CI (CI logs)، وحزم تطبيقات الهاتف والمتصفح (mobile and browser bundles)، وصفحات الأخطاء (error pages)، والتذاكر (tickets) والمحادثات (chat)، والآن موجّهات أدوات الذكاء الاصطناعي وسياقها (the prompts and context of AI tools).
-- النمط (The pattern): تعيش الأسرار في **مدير أسرار (secrets manager)**، وتُجلب وقت التشغيل (fetched at runtime) بهوية عبء العمل (by a workload identity)، وتُحصر في أقل الصلاحيات (scoped to least privilege)، وتكون قصيرة العمر (short-lived). وأفضل سرٍّ هو الذي لا تخزّنه أبدًا (The best secret is one you never store).
-- افحص في ثلاث نقاط (Scan at three points): قبل الإيداع (before commit)، وعند الدفع (at push)، وعبر كل ما نُشر بالفعل (across everything already published)، أي السجل التاريخي (history) والصور (images) والسجلات (logs).
-- مؤشر القرار (Decision cue): حين يتسرّب سرّ، **أبطِله ودوِّره أولًا (revoke and rotate first)**، ثم حقّق (then investigate). فحذف الإيداع (Deleting the commit) لا يُلغي التسرّب (does not un-leak it).
-- أكبر فخ (Biggest trap): وضع سرٍّ حيث يستطيع طرفٌ غير موثوق قراءته (where an untrusted party can read it)، كتطبيق هاتف (a mobile app) أو حزمة متصفح (a browser bundle) أو موجّه النظام لنموذجٍ لغوي كبير (an LLM system prompt)، ثم وصفه بأنه مخفيّ (calling it hidden).
+## ⚡ الدرس في دقيقة
+- **السرّ (secret)** هو أي قيمةٍ تمنح الوصول بمفردها: كلمات المرور، ومفاتيح واجهات البرمجة، والرموز المميزة، والمفاتيح الخاصة، وسلاسل الاتصال. ومن يحمله *هو* أنت، بقدر ما يستطيع النظام أن يعرف.
+- تتسرّب الأسرار عبر قنواتٍ عادية: سجلّ git، وملفات `.env`، وصور الحاويات، وسجلات CI، وحزم تطبيقات الهاتف والمتصفح، وصفحات الأخطاء، والتذاكر والمحادثات، والآن موجّهات أدوات الذكاء الاصطناعي وسياقها.
+- النمط: تعيش الأسرار في **مدير أسرار (secrets manager)**، وتُجلب وقت التشغيل بهوية عبء العمل، وتُحصر في أقل الصلاحيات، وتكون قصيرة العمر. وأفضل سرٍّ هو الذي لا تخزّنه أبدًا.
+- افحص في ثلاث نقاط: قبل الإيداع، وعند الدفع، وعبر كل ما نُشر بالفعل، أي السجل التاريخي والصور والسجلات.
+- مؤشر القرار: حين يتسرّب سرّ، **أبطِله ودوِّره أولًا**، ثم حقّق. فحذف الإيداع لا يُلغي التسرّب.
+- أكبر فخ: وضع سرٍّ حيث يستطيع طرفٌ غير موثوق قراءته، كتطبيق هاتف أو حزمة متصفح أو موجّه النظام لنموذجٍ لغوي كبير، ثم وصفه بأنه مخفيّ.
 
-## 🧭 لماذا يهم (Why it matters)
-الأربعاء، الساعة 16:40. يُفشل ماسح الأسرار في CI (CI secret scanner) عملية بناءٍ (build) لنجم أسيست (Najm Assist): مفتاحٌ حيّ (live key) لخدمة الرسوم الداخلية (internal fee service) موجودٌ في ملف بيانات اختبار (test fixture). كان المطوّر قد طلب من وكيل برمجةٍ بالذكاء الاصطناعي (AI coding agent) أن «يجعل اختبار البحث عن الرسوم ينجح» ("get the fee-lookup test passing")؛ فقرأ الوكيل ملف `.env` المحلي (local file) ونسخ المفتاح إلى ملف بيانات الاختبار (into the fixture). يحذف المطوّر السطر ويدفع مجددًا (pushes again). لكن جاسم، قائد مركز العمليات الأمنية (SOC lead)، لا يطمئن (is not reassured). فالإيداع لا يزال في السجل التاريخي (still in history)، ومهمة CI الفاشلة (failed CI job) طبعت ملف بيانات الاختبار في سجلها (printed the fixture in its log)، وكان المطوّر قد لصق الخطأ، بما فيه المفتاح (key included)، في محادثة الفريق (team chat) طالبًا المساعدة. قاعدة نورة (Noura's rule): «السرّ الذي وُجد في أي مكانٍ لا تتحكم فيه هو سرٌّ لم تعد تملكه. دوِّره، ثم ابدأ البحث» ⁦("A secret that has been anywhere you don't control is a secret you no longer own. Rotate it, then go looking.")⁩.
+## 🧭 لماذا يهم
+الأربعاء، الساعة 16:40. يُفشل ماسح الأسرار في CI عملية بناءٍ لنجم أسيست: مفتاحٌ حيّ لخدمة الرسوم الداخلية موجودٌ في ملف بيانات اختبار. كان المطوّر قد طلب من وكيل برمجةٍ بالذكاء الاصطناعي أن «يجعل اختبار البحث عن الرسوم ينجح»؛ فقرأ الوكيل ملف `.env` المحلي ونسخ المفتاح إلى ملف بيانات الاختبار. يحذف المطوّر السطر ويدفع مجددًا. لكن جاسم، قائد مركز العمليات الأمنية، لا يطمئن. فالإيداع لا يزال في السجل التاريخي، ومهمة CI الفاشلة طبعت ملف بيانات الاختبار في سجلها، وكان المطوّر قد لصق الخطأ، بما فيه المفتاح، في محادثة الفريق طالبًا المساعدة. قاعدة نورة: «السرّ الذي وُجد في أي مكانٍ لا تتحكم فيه هو سرٌّ لم تعد تملكه. دوِّره، ثم ابدأ البحث».
 
-قبل ذلك بشهر، وفي اختبارٍ مُصرَّح به (authorised test) لنسخةٍ أولية من نجم أسيست (Najm Assist prototype build)، كان الفريق الأحمر (red team) التابع لمريم قد وجد مفتاح واجهة البرمجة الخاص بمزوّد النموذج اللغوي الكبير (LLM provider's API key) داخل إعدادات تطبيق الهاتف (mobile app's configuration)، «مُموَّهًا» ("obfuscated"). وكان بإمكان أي شخصٍ لديه التطبيق استخراجه (extracted it) وتكبيد التكاليف باسم نجم (run up costs in Najm's name). وتُظهر الحالات الحقيقية حجم الرهان (Real cases show the stakes). فالتقارير العامة (Public reports) عن اختراق Capital One عام 2019 تصف مهاجمًا استخدم تزوير الطلبات من جهة الخادم (SSRF) للحصول على بيانات اعتمادٍ سحابية مؤقتة (temporary cloud credentials) من خدمة البيانات الوصفية للمثيل (instance metadata service)، لدورٍ يستطيع قراءة العديد من حاويات التخزين (a role that could read many storage buckets). كانت بيانات الاعتماد قصيرة العمر (short-lived)، كما ينبغي، لكنها مفرطة الصلاحيات (over-privileged). بعض التسرّبات حتميّ (Some leaks are inevitable)؛ والضرر يتوقف على النطاق (scope) وعلى سرعة الإبطال (how fast you revoke).
+قبل ذلك بشهر، وفي اختبارٍ مُصرَّح به لنسخةٍ أولية من نجم أسيست، كان الفريق الأحمر (red team) التابع لمريم قد وجد مفتاح واجهة البرمجة الخاص بمزوّد النموذج اللغوي الكبير داخل إعدادات تطبيق الهاتف، «مُموَّهًا». وكان بإمكان أي شخصٍ لديه التطبيق استخراجه وتكبيد التكاليف باسم نجم. وتُظهر الحالات الحقيقية حجم الرهان. فالتقارير العامة عن اختراق Capital One عام 2019 تصف مهاجمًا استخدم تزوير الطلبات من جهة الخادم (SSRF) للحصول على بيانات اعتمادٍ سحابية مؤقتة من خدمة البيانات الوصفية للمثيل (instance metadata service)، لدورٍ يستطيع قراءة العديد من حاويات التخزين. كانت بيانات الاعتماد قصيرة العمر، كما ينبغي، لكنها مفرطة الصلاحيات. بعض التسرّبات حتميّ؛ والضرر يتوقف على النطاق وعلى سرعة الإبطال.
 
-## 📐 كيف يعمل (How it works)
+## 📐 كيف يعمل
 
-### 🟢 الأساسيات (The essentials)
+### 🟢 الأساسيات
 
-**ما الذي يُعدّ سرًّا (What counts as a secret).** *المعرِّف (identifier)* يقول من تدّعي أنك هو (who you claim to be)، مثل اسم المستخدم (a username) أو معرّف عميل OAuth (an OAuth client ID) أو المفتاح العام (a public key)، ويجوز أن يكون علنيًّا (may be public). أمّا *أداة المصادقة (authenticator)* فتُثبت ذلك (proves it) ويجب أن تبقى سرية (must stay secret).
+**ما الذي يُعدّ سرًّا.** *المعرِّف* يقول من تدّعي أنك هو، مثل اسم المستخدم أو معرّف عميل OAuth أو المفتاح العام، ويجوز أن يكون علنيًّا. أمّا *أداة المصادقة (authenticator)* فتُثبت ذلك ويجب أن تبقى سرية.
 
-| نوع السرّ (Secret type) | أمثلةٌ في بنك نجم (Examples at Najm Bank) | ما الذي يمنحه (What it grants) |
+| نوع السرّ | أمثلةٌ في بنك نجم | ما الذي يمنحه |
 |---|---|---|
-| بيانات اعتماد الآلات (Machine credentials) | كلمات مرور قواعد البيانات (Database passwords)، ومفاتيح واجهات برمجة الخدمات (service API keys)، ومفاتيح الوصول السحابية (cloud access keys) | وصولٌ مباشر إلى البيانات أو البنية التحتية (Direct access to data or infrastructure) |
-| الرموز المميزة (Tokens) | رموز التحديث في OAuth (OAuth refresh tokens)، ورموز الوصول الشخصية (personal access tokens)، ورموز CI (CI tokens) | التصرف بصفة مستخدمٍ أو مطوّرٍ أو خط إنتاج (Acting as a user, developer or pipeline) |
-| المفاتيح التشفيرية (Cryptographic keys) | مفاتيح TLS الخاصة (TLS private keys)، ومفاتيح توقيع الرموز المميزة (token-signing keys)، ومفاتيح التشفير (encryption keys) | انتحال صفة الخدمات (Impersonating services)، وتزوير الرموز المميزة (forging tokens)، وقراءة البيانات (reading data) |
-| أسرار التكامل (Integration secrets) | أسرار خطافات الويب (Webhook secrets)، وبيانات اعتماد الشركاء (partner credentials)، ومفاتيح مزوّدي النماذج اللغوية الكبيرة (LLM provider keys) | انتحال صفة الشركاء (Impersonating partners)؛ وإنفاق المال (spending money) |
+| بيانات اعتماد الآلات | كلمات مرور قواعد البيانات، ومفاتيح واجهات برمجة الخدمات، ومفاتيح الوصول السحابية | وصولٌ مباشر إلى البيانات أو البنية التحتية |
+| الرموز المميزة | رموز التحديث في OAuth، ورموز الوصول الشخصية، ورموز CI | التصرف بصفة مستخدمٍ أو مطوّرٍ أو خط إنتاج |
+| المفاتيح التشفيرية (Cryptographic keys) | مفاتيح TLS الخاصة، ومفاتيح توقيع الرموز المميزة، ومفاتيح التشفير (encryption keys) | انتحال صفة الخدمات، وتزوير الرموز المميزة، وقراءة البيانات |
+| أسرار التكامل | أسرار خطافات الويب، وبيانات اعتماد الشركاء، ومفاتيح مزوّدي النماذج اللغوية الكبيرة | انتحال صفة الشركاء؛ وإنفاق المال |
 
-**أين تتسرّب الأسرار، والدفاع لكلٍّ منها (Where secrets leak, and the defence for each).**
+**أين تتسرّب الأسرار، والدفاع لكلٍّ منها.**
 
-| المكان (Place) | كيف يحدث (How it happens) | الدفاع (Defence) |
+| المكان | كيف يحدث | الدفاع |
 |---|---|---|
-| الشيفرة المصدرية وسجلّ git (Source code and git history) | مفتاحٌ «مؤقت» مكتوبٌ في الشيفرة (A "temporary" hard-coded key)؛ وملف `.env` مُودَع (committed)؛ وإيداعٌ لاحق يزيله (a later commit removes it) لكن السجل التاريخي يحتفظ به (history keeps it) | لا تكتب الأسرار في الشيفرة أبدًا (Never hard-code)؛ وتجاهل `.env` في git (ignore)؛ وافحص قبل الإيداع وعند الدفع (scan before commit and at push) |
-| تطبيقات الهاتف وحزم المتصفح (Mobile apps and browser bundles) | مفاتيح مُدمجة في التطبيق أو في بناء الواجهة الأمامية (Keys compiled into the app or front-end build) | لا تشحن الأسرار إلى التطبيقات العميلة أبدًا (Never ship secrets to clients) (انظر 4.3) |
-| صور الحاويات (Container images) | `ENV API_KEY=…`، وملفات `.env` منسوخة (copied files)، ووسائط البناء المحفوظة في سجل الصورة (build arguments kept in image history) | تركيب الأسرار وقت البناء (Build-time secret mounts)؛ والحقن وقت التشغيل (inject at runtime)؛ وفحص الصور (scan images) |
-| خطوط CI/CD (CI/CD) | `echo $TOKEN`، ووضع التصحيح (debug mode)، ومفاتيح سحابية طويلة العمر في متغيرات خط الإنتاج (long-lived cloud keys in pipeline variables) | إخفاء القيم في السجلات (Log masking)، والاتحاد عبر OIDC (OIDC federation) |
-| السجلات وصفحات الأخطاء (Logs and error pages) | ترويسات `Authorization` مسجَّلة (Logged headers)؛ وتتبّعات المكدّس التي تُفرغ متغيرات البيئة (stack traces that dump environment variables) | تنقيح السجلات (Log redaction) (5.3)، وصفحات أخطاءٍ عامة (generic error pages) |
-| أدوات التعاون (Collaboration tools) | مفاتيح ملصوقة في التذاكر والمحادثات وصفحات الويكي والبريد الإلكتروني (Keys pasted into tickets, chat, wikis, email) | شارِك الوصول عبر الخزنة، لا القيمة أبدًا (Share access through the vault, never the value) |
-| ملفات البنية التحتية (Infrastructure files) | حالة Terraform (Terraform state)، وبيانات Kubernetes التعريفية (Kubernetes manifests)، وقيم Helm (Helm values) | حالةٌ بعيدة مشفّرة (Encrypted remote state)؛ وأشِر إلى الأسرار ولا تُضمّنها أبدًا (reference secrets, never embed them) |
-| أدوات الذكاء الاصطناعي والوكلاء (AI tools and agents) | وكيلٌ ينسخ قيم `.env` إلى الشيفرة أو السجلات أو الموجّهات (An agent copies values into code, logs or prompts)؛ وأسرارٌ في موجّهات النظام (secrets in system prompts)؛ ورموزٌ بنصٍّ صريح في إعدادات الأدوات المحلية (plaintext tokens in local tool configs) | امنع الوكلاء من ملفات الأسرار (Deny agents secret files)؛ ولا أسرار في الموجّهات (no secrets in prompts)؛ والأدوات تحتفظ ببيانات الاعتماد على الخادم (tools hold credentials server-side) |
+| الشيفرة المصدرية وسجلّ git | مفتاحٌ «مؤقت» مكتوبٌ في الشيفرة؛ وملف `.env` مُودَع؛ وإيداعٌ لاحق يزيله لكن السجل التاريخي يحتفظ به | لا تكتب الأسرار في الشيفرة أبدًا؛ وتجاهل `.env` في git؛ وافحص قبل الإيداع وعند الدفع |
+| تطبيقات الهاتف وحزم المتصفح | مفاتيح مُدمجة في التطبيق أو في بناء الواجهة الأمامية | لا تشحن الأسرار إلى التطبيقات العميلة أبدًا (انظر 4.3) |
+| صور الحاويات | `ENV API_KEY=…`، وملفات `.env` منسوخة، ووسائط البناء المحفوظة في سجل الصورة | تركيب الأسرار وقت البناء؛ والحقن وقت التشغيل؛ وفحص الصور |
+| خطوط CI/CD | `echo $TOKEN`، ووضع التصحيح، ومفاتيح سحابية طويلة العمر في متغيرات خط الإنتاج | إخفاء القيم في السجلات، والاتحاد عبر OIDC |
+| السجلات وصفحات الأخطاء | ترويسات `Authorization` مسجَّلة؛ وتتبّعات المكدّس التي تُفرغ متغيرات البيئة | تنقيح السجلات (5.3)، وصفحات أخطاءٍ عامة |
+| أدوات التعاون | مفاتيح ملصوقة في التذاكر والمحادثات وصفحات الويكي والبريد الإلكتروني | شارِك الوصول عبر الخزنة، لا القيمة أبدًا |
+| ملفات البنية التحتية | حالة Terraform، وبيانات Kubernetes التعريفية (Kubernetes manifests)، وقيم Helm | حالةٌ بعيدة مشفّرة؛ وأشِر إلى الأسرار ولا تُضمّنها أبدًا |
+| أدوات الذكاء الاصطناعي والوكلاء | وكيلٌ ينسخ قيم `.env` إلى الشيفرة أو السجلات أو الموجّهات؛ وأسرارٌ في موجّهات النظام؛ ورموزٌ بنصٍّ صريح في إعدادات الأدوات المحلية | امنع الوكلاء من ملفات الأسرار؛ ولا أسرار في الموجّهات؛ والأدوات تحتفظ ببيانات الاعتماد على الخادم |
 
-يصنّف إطار MITRE ATT&CK سلوك المهاجم (catalogues the attacker behaviour) تحت اسم *بيانات الاعتماد غير المؤمَّنة (Unsecured Credentials)* (T1552): فالمهاجمون يبحثون في هذه الأماكن بالضبط (look in exactly these places)، ولذلك ينبغي أن يبحث المدافعون فيها أولًا (defenders should look first).
+يصنّف إطار MITRE ATT&CK سلوك المهاجم تحت اسم *بيانات الاعتماد غير المؤمَّنة*: فالمهاجمون يبحثون في هذه الأماكن بالضبط، ولذلك ينبغي أن يبحث المدافعون فيها أولًا.
 
-**النمط الأساسي (The basic pattern).** تحمل الشيفرة *مرجعًا (reference)* إلى السرّ، لا قيمته أبدًا (never its value). ووقت التشغيل (At runtime) يُثبت عبء العمل هويته (the workload proves its identity) لـ **مدير أسرار (secrets manager)**، أي خدمةٍ تخزّن الأسرار مشفّرة (stores secrets encrypted)، وتتحكم في كل قراءةٍ وتسجّلها (controls and logs every read)، وتدعم التدوير (supports rotation)، ثم يجلب ما يحتاجه (fetches what it needs).
+**النمط الأساسي.** تحمل الشيفرة *مرجعًا* إلى السرّ، لا قيمته أبدًا. ووقت التشغيل يُثبت عبء العمل هويته لـ **مدير أسرار**، أي خدمةٍ تخزّن الأسرار مشفّرة، وتتحكم في كل قراءةٍ وتسجّلها، وتدعم التدوير، ثم يجلب ما يحتاجه.
 
 ```python
 # Vulnerable: in source, shared by every environment, never rotated, readable by anyone with repo access
@@ -330,9 +330,9 @@ FEES_API_KEY = "fee_live_9f2c4e..."
 FEES_API_KEY = secret_manager.get(f"najm-assist/{ENV}/fees-api-key")
 ```
 
-**لا تشحن سرًّا إلى تطبيقٍ عميل أبدًا (Never ship a secret to a client).** يعمل تطبيق الهاتف أو صفحة الويب (A mobile app or web page) على جهازٍ لا تتحكم فيه (a device you do not control)؛ والتمويه (obfuscation) يُبطئ الاستخراج (slows extraction) لكنه لا يمنعه (does not prevent it). في نجم أسيست (Najm Assist)، يُصادق التطبيق *العميلَ (customer)* لدى واجهة برمجة نجم (Najm's API)، والواجهة الخلفية (the backend) تحتفظ بمفتاح مزوّد النموذج اللغوي الكبير (LLM provider key)، وتطبّق حدود المعدّل لكل عميل (per-customer rate limits) وسقوف الإنفاق (spending caps) (انظر 4.2)، وتستدعي المزوّد (calls the provider). والمفتاح المستخرَج (The extracted key) يُدوَّر، لا «يُعاد إخفاؤه» ("re-hidden").
+**لا تشحن سرًّا إلى تطبيقٍ عميل أبدًا.** يعمل تطبيق الهاتف أو صفحة الويب على جهازٍ لا تتحكم فيه؛ والتمويه (obfuscation) يُبطئ الاستخراج لكنه لا يمنعه. في نجم أسيست، يُصادق التطبيق *العميلَ* لدى واجهة برمجة نجم، والواجهة الخلفية تحتفظ بمفتاح مزوّد النموذج اللغوي الكبير، وتطبّق حدود المعدّل لكل عميل وسقوف الإنفاق (انظر 4.2)، وتستدعي المزوّد. والمفتاح المستخرَج يُدوَّر، لا «يُعاد إخفاؤه».
 
-**افحص مبكرًا وكثيرًا (Scan early and often).** شغّل ماسح أسرار (secret scanner) بوصفه خطافًا قبل الإيداع (as a pre-commit hook)، واحظر عمليات الدفع التي تحتوي على أسرار (block pushes that contain secrets)، وهو ما يُسمّى **حماية الدفع (push protection)**، وافحص السجل التاريخي الكامل (full history) والصور (images) والسجلات (logs) وفق جدولٍ زمني (on a schedule).
+**افحص مبكرًا وكثيرًا.** شغّل ماسح أسرار بوصفه خطافًا قبل الإيداع، واحظر عمليات الدفع التي تحتوي على أسرار، وهو ما يُسمّى **حماية الدفع**، وافحص السجل التاريخي الكامل والصور والسجلات وفق جدولٍ زمني.
 
 ```yaml
 # .pre-commit-config.yaml: stop secrets before they reach a commit
@@ -343,11 +343,11 @@ repos:
       - id: gitleaks
 ```
 
-### 🟡 التعمق أكثر (Going deeper)
+### 🟡 التعمق أكثر
 
-**دورة حياة السرّ (The secret life cycle).** أنشئه بمولّد CSPRNG (Create with a CSPRNG) (5.1)؛ وخزّنه في مدير الأسرار فقط (store only in the secrets manager)؛ ووزّعه بالهوية، لا بالنسخ واللصق أبدًا (distribute by identity, never by copy-paste)؛ واحصره في خدمةٍ واحدة وبيئةٍ واحدة (scope to one service and one environment)؛ ودوِّره تلقائيًّا (rotate automatically)؛ وأبطِله فورًا عند الاشتباه (revoke immediately on suspicion)؛ ودقّق عمليات القراءة ونبِّه على الحالات الشاذة (audit reads and alert on anomalies). وامنح كل سرٍّ مالكًا مسمّى (a named owner)، وإلّا فلن يدوّره أحد (nobody will rotate it).
+**دورة حياة السرّ.** أنشئه بمولّد CSPRNG (5.1)؛ وخزّنه في مدير الأسرار فقط؛ ووزّعه بالهوية، لا بالنسخ واللصق أبدًا؛ واحصره في خدمةٍ واحدة وبيئةٍ واحدة؛ ودوِّره تلقائيًّا؛ وأبطِله فورًا عند الاشتباه؛ ودقّق عمليات القراءة ونبِّه على الحالات الشاذة. وامنح كل سرٍّ مالكًا مسمّى، وإلّا فلن يدوّره أحد.
 
-**قصير العمر يتفوّق على طويل العمر: هوية عبء العمل (Short-lived beats long-lived: workload identity).** مع **اتحاد هوية عبء العمل (workload identity federation)**، يُثبت عبء العمل من هو (proves who it is) برمزٍ قصير العمر توقّعه منصته (a short-lived token signed by its platform)، وتستبدله السحابة ببيانات اعتمادٍ مؤقتة ومحصورة النطاق (temporary, scoped credentials). ويمكن ربط حسابات خدمة Kubernetes (Kubernetes service accounts) اتحاديًّا بأدوار IAM السحابية (federated to cloud IAM roles). وتستطيع أنظمة CI مثل GitHub Actions وGitLab CI إصدار رمز OIDC (an OIDC token)، أي OpenID Connect (انظر 3.2)، لكل مهمة (per job)، فلا يبقى أي مفتاحٍ سحابي في إعدادات خط الإنتاج (no cloud key sits in pipeline settings). ولا يثق الدور السحابي (The cloud role) إلا بالرموز ذات موضوعٍ محدد (a specific subject)، مثل موضوع GitHub بالصيغة `repo:najm-bank/sme-portal:ref:refs/heads/main`، فلا يستطيع خط إنتاجٍ على فرعٍ آخر (a pipeline on another branch) تولّي هذا الدور (assume it).
+**قصير العمر يتفوّق على طويل العمر: هوية عبء العمل.** مع **اتحاد هوية عبء العمل**، يُثبت عبء العمل من هو برمزٍ قصير العمر توقّعه منصته، وتستبدله السحابة ببيانات اعتمادٍ مؤقتة ومحصورة النطاق. ويمكن ربط حسابات خدمة Kubernetes اتحاديًّا بأدوار IAM السحابية. وتستطيع أنظمة CI مثل GitHub Actions وGitLab CI إصدار رمز OIDC، أي OpenID Connect (انظر 3.2)، لكل مهمة، فلا يبقى أي مفتاحٍ سحابي في إعدادات خط الإنتاج. ولا يثق الدور السحابي إلا بالرموز ذات موضوعٍ محدد، مثل موضوع GitHub بالصيغة `repo:najm-bank/sme-portal:ref:refs/heads/main`، فلا يستطيع خط إنتاجٍ على فرعٍ آخر تولّي هذا الدور.
 
 ```mermaid
 flowchart RL
@@ -359,13 +359,13 @@ flowchart RL
     P -->|"الاستدعاء بالمفتاح من جهة الخادم (call with key, server side)"| F["خدمة الرسوم<br/>(Fee service)"]
 ```
 
-**الأسرار الديناميكية (Dynamic secrets).** بعض مديري الأسرار (secrets managers)، مثل HashiCorp Vault وفرعه المفتوح المصدر (open-source fork) OpenBao، يُنشئون مستخدم قاعدة بياناتٍ لكل عبء عمل (a database user per workload) عند الطلب (on request)، بعقد إيجار (lease) مدته دقائق أو ساعات، ويحذفونه عند انتهاء العقد (when the lease ends). فتنتهي صلاحية بيانات الاعتماد المسرّبة من تلقاء نفسها (A leaked credential expires by itself)، ويُطابَق كل بيانات اعتمادٍ مع عبء عملٍ واحد في سجل التدقيق (each credential maps to one workload in the audit log).
+**الأسرار الديناميكية.** بعض مديري الأسرار (secrets managers)، مثل HashiCorp Vault وفرعه المفتوح المصدر OpenBao، يُنشئون مستخدم قاعدة بياناتٍ لكل عبء عمل عند الطلب، بعقد إيجار مدته دقائق أو ساعات، ويحذفونه عند انتهاء العقد. فتنتهي صلاحية بيانات الاعتماد المسرّبة من تلقاء نفسها، ويُطابَق كل بيانات اعتمادٍ مع عبء عملٍ واحد في سجل التدقيق.
 
-**أسرار Kubernetes ليست خزنة (Kubernetes Secrets are not a vault).** في Kubernetes الأصلي (upstream Kubernetes)، وافتراضيًّا (by default)، تُرمَّز القيم بصيغة base64 (base64-encoded)، وهذا ترميزٌ لا تشفير (an encoding, not encryption)، وتُخزَّن دون تشفير في مخزن بيانات العنقود (stored unencrypted in the cluster datastore)، أي etcd، ما لم يُضبط التشفير أثناء التخزين (unless encryption at rest is configured)، ويستطيع أي شخصٍ مسموحٍ له بإنشاء حاويات pod في نطاق أسماء (allowed to create pods in a namespace) قراءة أسراره (read its secrets). وتضيف بعض الخدمات المُدارة (managed services) الآن تشفيرًا على مستوى المزوّد (provider-level encryption)؛ فتحقّق مما تفعله خدمتك (check what yours does)، لأن ذلك لا يغيّر من يستطيع قراءتها (it does not change who can read them). فعّل التشفير أثناء التخزين بمزوّد KMS (Enable encryption at rest with a KMS provider)، وشدّد RBAC (tighten RBAC)، وفضّل المزامنة من مدير أسرارٍ خارجي (prefer syncing from an external secrets manager) (انظر 7.2).
+**أسرار Kubernetes ليست خزنة.** في Kubernetes الأصلي، وافتراضيًّا، تُرمَّز القيم بصيغة base64، وهذا ترميزٌ لا تشفير، وتُخزَّن دون تشفير في مخزن بيانات العنقود، أي etcd، ما لم يُضبط التشفير أثناء التخزين، ويستطيع أي شخصٍ مسموحٍ له بإنشاء حاويات pod في نطاق أسماء قراءة أسراره. وتضيف بعض الخدمات المُدارة الآن تشفيرًا على مستوى المزوّد؛ فتحقّق مما تفعله خدمتك، لأن ذلك لا يغيّر من يستطيع قراءتها. فعّل التشفير أثناء التخزين بمزوّد KMS، وشدّد RBAC، وفضّل المزامنة من مدير أسرارٍ خارجي (انظر 7.2).
 
-**متغيرات البيئة مقايضة (Environment variables are a trade-off).** إنها أفضل من الشيفرة المصدرية (They beat source code)، لكن العمليات الفرعية ترثها (child processes inherit them)، وأدوات الإبلاغ عن الأعطال وصفحات التصحيح (crash reporters and debug pages) تُفرغها (dump them). فضّل الملفات المركّبة من مدير الأسرار (files mounted from the secrets manager)، أو الجلب وقت التشغيل (fetching at runtime)، ولا تسجّل البيئة أبدًا (never log the environment).
+**متغيرات البيئة مقايضة.** إنها أفضل من الشيفرة المصدرية، لكن العمليات الفرعية ترثها، وأدوات الإبلاغ عن الأعطال وصفحات التصحيح تُفرغها. فضّل الملفات المركّبة من مدير الأسرار، أو الجلب وقت التشغيل، ولا تسجّل البيئة أبدًا.
 
-**الحاويات (Containers).** تُسجَّل وسائط البناء (Build arguments) وأسطر `ENV` في سجل الصورة (image history). استخدم تركيب الأسرار وقت البناء (build-time secret mounts):
+**الحاويات (Containers).** تُسجَّل وسائط البناء وأسطر `ENV` في سجل الصورة. استخدم تركيب الأسرار وقت البناء:
 
 ```dockerfile
 # Vulnerable: the token ends up in image history and in a layer
@@ -376,213 +376,213 @@ RUN echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc && npm ci
 RUN --mount=type=secret,id=npmrc,target=/root/.npmrc npm ci
 ```
 
-**حين يتسرّب سرّ: أبطِله أولًا (When a secret leaks: revoke first).**
+**حين يتسرّب سرّ: أبطِله أولًا.**
 
-1. **أبطِله أو دوِّره (Revoke or rotate)** الآن. افترض الاختراق (Assume compromise) منذ اللحظة التي وصل فيها إلى أي مكانٍ لا تتحكم فيه (anywhere you do not control)؛ فالماسحات الآلية (automated scanners) تراقب المستودعات العامة باستمرار (watch public repositories continuously).
-2. **حدّد نطاق الضرر (Scope the blast radius):** ماذا كان يستطيع أن يفعل، وأين، ومنذ متى؟ ⁦(what could it do, where, and since when?)⁩
-3. **افحص سجلات الاستخدام (Check usage logs)**، لدى المزوّد (provider) ومدير الأسرار (secrets manager) وبوابة واجهات البرمجة (API gateway)، خلال نافذة التعرّض (for the exposure window).
-4. **نظّف (Clean up)** الشيفرة، والسجل التاريخي (history)، مثلًا باستخدام `git filter-repo`، والسجلات (logs)، والتذاكر (tickets)، والمحادثات (chat). فهذه نظافةٌ لا معالجة (hygiene, not remediation)، ولذلك تأتي بعد التدوير (after rotation).
-5. **أصلِح السبب (Fix the cause)** و**سجّله (record it)** عبر عملية إدارة الحوادث (incident process) (10.2).
+1. **أبطِله أو دوِّره** الآن. افترض الاختراق منذ اللحظة التي وصل فيها إلى أي مكانٍ لا تتحكم فيه؛ فالماسحات الآلية تراقب المستودعات العامة باستمرار.
+2. **حدّد نطاق الضرر:** ماذا كان يستطيع أن يفعل، وأين، ومنذ متى؟
+3. **افحص سجلات الاستخدام**، لدى المزوّد ومدير الأسرار وبوابة واجهات البرمجة (API gateway)، خلال نافذة التعرّض.
+4. **نظّف** الشيفرة، والسجل التاريخي، مثلًا باستخدام `git filter-repo`، والسجلات، والتذاكر، والمحادثات. فهذه نظافةٌ لا معالجة، ولذلك تأتي بعد التدوير.
+5. **أصلِح السبب** و**سجّله** عبر عملية إدارة الحوادث (10.2).
 
-### 🔴 نظرة الخبير (Expert view)
+### 🔴 نظرة الخبير
 
-**مشكلة «السرّ الصفري» (The "secret zero" problem).** لجلب الأسرار، يجب أن يُصادق عبء العمل (a workload must authenticate)؛ فإن فعل ذلك بسرٍّ مخزَّن (a stored secret)، فأنت لم تفعل سوى نقل المشكلة (only moved the problem). والحل هو الهوية التي تشهد بها المنصة (platform-attested identity): هوية مثيل السحابة (cloud instance identity)، أو رموز حسابات خدمة Kubernetes (Kubernetes service-account tokens)، أو SPIFFE، وهو معيارٌ مفتوح لهوية عبء العمل (an open standard for workload identity)، مع تطبيقه SPIRE (its SPIRE implementation) الذي يُصدر شهاداتٍ قصيرة العمر (short-lived certificates). فالهوية تأتي من مكان عبء العمل وماهيته (where and what the workload is)، لا من قيمةٍ يحملها (not from a value it carries).
+**مشكلة «السرّ الصفري».** لجلب الأسرار، يجب أن يُصادق عبء العمل؛ فإن فعل ذلك بسرٍّ مخزَّن، فأنت لم تفعل سوى نقل المشكلة. والحل هو الهوية التي تشهد بها المنصة: هوية مثيل السحابة، أو رموز حسابات خدمة Kubernetes، أو SPIFFE، وهو معيارٌ مفتوح لهوية عبء العمل، مع تطبيقه SPIRE الذي يُصدر شهاداتٍ قصيرة العمر. فالهوية تأتي من مكان عبء العمل وماهيته، لا من قيمةٍ يحملها.
 
-**صمّم لنطاق الضرر (Design for blast radius).** سرٌّ واحد لكل خدمةٍ لكل بيئة (One secret per service per environment)؛ ولا مفتاح «تكاملٍ» مشتركًا (no shared "integration" key)؛ وأضيق النطاقات التي يدعمها المزوّد (the narrowest scopes the provider supports)؛ وحدود إنفاقٍ على مفاتيح مزوّدي النماذج اللغوية الكبيرة (spending limits on LLM provider keys). ودرس Capital One ينطبق هنا (The Capital One lesson applies): قِصَر العمر لا يكفي إذا كان الدور الذي خلفه مفرط الصلاحيات (short-lived is not enough if the role behind it is over-privileged) (انظر 7.1).
+**صمّم لنطاق الضرر.** سرٌّ واحد لكل خدمةٍ لكل بيئة؛ ولا مفتاح «تكاملٍ» مشتركًا؛ وأضيق النطاقات التي يدعمها المزوّد؛ وحدود إنفاقٍ على مفاتيح مزوّدي النماذج اللغوية الكبيرة. ودرس Capital One ينطبق هنا: قِصَر العمر لا يكفي إذا كان الدور الذي خلفه مفرط الصلاحيات (انظر 7.1).
 
-**تدويرٌ يمكنك الوثوق به (Rotation you can trust).** اقبل سرّين صالحين في آنٍ واحد (Accept two valid secrets at once)، القديم والجديد (old and new)، كي لا يحتاج التدوير إلى توقّف الخدمة (no downtime)؛ وأتمِته (automate it)؛ وتدرّب عليه (rehearse it). فالسرّ الذي لم يُدوَّر قط (never been rotated) لا يمكن تدويره بأمانٍ في حالة طوارئ (cannot be rotated safely in an emergency). وتُدوَّر مفاتيح التوقيع (Signing keys) عبر معرّفات المفاتيح (key IDs): انشر المفتاح العام الجديد (publish the new public key)، ووقّع به (sign with it)، وأوقِف القديم (retire the old one) حين تنتهي صلاحية رموزه (once its tokens expire).
+**تدويرٌ يمكنك الوثوق به.** اقبل سرّين صالحين في آنٍ واحد، القديم والجديد، كي لا يحتاج التدوير إلى توقّف الخدمة؛ وأتمِته؛ وتدرّب عليه. فالسرّ الذي لم يُدوَّر قط لا يمكن تدويره بأمانٍ في حالة طوارئ. وتُدوَّر مفاتيح التوقيع عبر معرّفات المفاتيح: انشر المفتاح العام الجديد، ووقّع به، وأوقِف القديم حين تنتهي صلاحية رموزه.
 
-**اجعل أسرارك قابلةً للرصد (Make your own secrets detectable).** امنح الرموز الداخلية بادئةً مميزة (a recognisable prefix)، مثل `najm_pat_`، ومجموعًا اختباريًّا (a checksum)، كي تعثر عليها الماسحات بقليلٍ من الإيجابيات الكاذبة (with few false positives)؛ وقد نقلت GitHub رموزها إلى صيغٍ ذات بادئات (prefixed formats) مثل `ghp_` لهذا السبب جزئيًّا (partly for this reason). وتستطيع بعض الماسحات، مثل TruffleHog، اختبار ما إذا كانت بيانات الاعتماد المكتشفة حيّة (whether a found credential is live) باستدعاء المزوّد (by calling the provider)؛ فلا تفعل ذلك إلا لمستودعاتك وبيانات اعتمادك أنت (only for your own repositories and credentials).
+**اجعل أسرارك قابلةً للرصد.** امنح الرموز الداخلية بادئةً مميزة، مثل `najm_pat_`، ومجموعًا اختباريًّا، كي تعثر عليها الماسحات بقليلٍ من الإيجابيات الكاذبة؛ وقد نقلت GitHub رموزها إلى صيغٍ ذات بادئات مثل `ghp_` لهذا السبب جزئيًّا. وتستطيع بعض الماسحات، مثل TruffleHog، اختبار ما إذا كانت بيانات الاعتماد المكتشفة حيّة باستدعاء المزوّد؛ فلا تفعل ذلك إلا لمستودعاتك وبيانات اعتمادك أنت.
 
-**وكلاء الذكاء الاصطناعي يغيّرون نموذج التهديدات (AI agents change the threat model).** يستطيع وكيل البرمجة بالذكاء الاصطناعي (An AI coding agent) الذي يملك وصولًا إلى الصدفة (shell access) قراءة أي ملفٍ يستطيع مطوّره قراءته (any file its developer can)، بما في ذلك ملفات `.env` وأدلة بيانات الاعتماد السحابية (cloud credential directories)، ويمكن توجيه وكيلٍ تعرّض لحقن الموجّهات (a prompt-injected agent) (8.2) لإرسالها إلى الخارج (to send them out). وتُسمّي «الثلاثية القاتلة» ("lethal trifecta") التي صاغها سايمون ويليسون (Simon Willison) عام 2025 التركيبةَ الخطرة (the dangerous combination): البيانات الخاصة (private data)، والمحتوى غير الموثوق (untrusted content)، ووسيلةٌ للتواصل الخارجي (a way to communicate externally) (انظر 9.2). امنع الوكلاء من الوصول إلى ملفات الأسرار (Deny agents access to secret files)، وامنحهم رموزًا محصورة وقصيرة العمر (scoped short-lived tokens)، وأبقِ بيانات اعتماد الإنتاج بعيدًا عن أجهزة المطوّرين (keep production credentials off developer machines). وبالنسبة لتطبيقات النماذج اللغوية الكبيرة (For LLM applications)، يحذّر بند *تسرّب موجّه النظام (System Prompt Leakage)* (LLM07) في قائمة OWASP Top 10 for LLM Applications (2025) من وضع بيانات الاعتماد في موجّهات النظام (putting credentials in system prompts): افترض أن الموجّه سيُستخرَج (assume the prompt will be extracted). تعمل أدوات نجم أسيست (Najm Assist's tools) على الخادم (server-side) ببيانات اعتمادٍ مربوطةٍ بجلسة العميل (bound to the customer's session)؛ ولا يرى النموذج أي مفتاحٍ أبدًا (the model never sees a key).
+**وكلاء الذكاء الاصطناعي يغيّرون نموذج التهديدات.** يستطيع وكيل البرمجة بالذكاء الاصطناعي الذي يملك وصولًا إلى الصدفة قراءة أي ملفٍ يستطيع مطوّره قراءته، بما في ذلك ملفات `.env` وأدلة بيانات الاعتماد السحابية، ويمكن توجيه وكيلٍ تعرّض لحقن الموجّهات (8.2) لإرسالها إلى الخارج. وتُسمّي «الثلاثية القاتلة» ("lethal trifecta") التي صاغها سايمون ويليسون عام 2025 التركيبةَ الخطرة: البيانات الخاصة، والمحتوى غير الموثوق، ووسيلةٌ للتواصل الخارجي (انظر 9.2). امنع الوكلاء من الوصول إلى ملفات الأسرار، وامنحهم رموزًا محصورة وقصيرة العمر، وأبقِ بيانات اعتماد الإنتاج بعيدًا عن أجهزة المطوّرين. وبالنسبة لتطبيقات النماذج اللغوية الكبيرة، يحذّر بند *تسرّب موجّه النظام (System Prompt Leakage)* (LLM07) في قائمة OWASP Top 10 for LLM Applications (2025) من وضع بيانات الاعتماد في موجّهات النظام: افترض أن الموجّه سيُستخرَج. تعمل أدوات نجم أسيست على الخادم ببيانات اعتمادٍ مربوطةٍ بجلسة العميل؛ ولا يرى النموذج أي مفتاحٍ أبدًا.
 
-## 🧰 الأدوات (The toolkit)
-| الضابط أو المعيار أو الأداة (Control, standard or tool) | ما هو وماذا يفعل (What it is and does) | متى تلجأ إليه (When to reach for it) |
+## 🧰 الأدوات
+| الضابط أو المعيار أو الأداة | ما هو وماذا يفعل | متى تلجأ إليه |
 |---|---|---|
-| **Secrets manager** — مدير الأسرار: HashiCorp Vault وOpenBao ومديرو الأسرار السحابيون (cloud secrets managers) | يخزّن الأسرار مشفّرة (Stores secrets encrypted)، ويتحكم في عمليات القراءة ويسجّلها (controls and logs reads)، ويدعم التدوير (supports rotation) | كل سرٍّ يحتاجه عبء عملٍ وقت التشغيل (Every secret a workload needs at runtime) |
-| **Workload identity federation** — اتحاد هوية عبء العمل | يستبدل رمز عبء عملٍ أو رمز CI موقَّعًا من المنصة (a platform-signed workload or CI token) ببيانات اعتمادٍ سحابية قصيرة العمر ومحصورة (short-lived, scoped cloud credentials) | استبدال المفاتيح السحابية طويلة العمر (Replacing long-lived cloud keys) في حاويات pod وخطوط الإنتاج (in pods and pipelines) |
-| **Dynamic secrets** — الأسرار الديناميكية | بيانات اعتمادٍ تُنشأ عند الطلب بعقد إيجار (Credentials created on demand with a lease)، وتُبطَل تلقائيًّا (revoked automatically) | الوصول إلى قواعد البيانات والسحابة للخدمات (Database and cloud access for services) |
-| **Secret scanning** — فحص الأسرار: gitleaks وTruffleHog وdetect-secrets | يعثر على الأسرار في الإيداعات والسجل التاريخي والصور والسجلات (Finds secrets in commits, history, images and logs) | قبل الإيداع (Pre-commit)، وفي CI، والفحوص المجدولة (scheduled scans) |
-| **Push protection** — حماية الدفع | تحظر منصة استضافة الشيفرة (The code host) عمليات الدفع التي تحتوي على أسرارٍ معروفة (blocks pushes containing recognised secrets) | كل مستودع (Every repository)، ولا سيما المستودعات العامة (especially public ones) |
-| **External Secrets Operator** — مشغّل الأسرار الخارجية | يزامن الأسرار من مديرٍ خارجي إلى Kubernetes (Syncs secrets from an external manager into Kubernetes) | العناقيد التي تحتاج إلى أسرار دون تخزينها في البيانات التعريفية (Clusters that need secrets without storing them in manifests) |
-| **SPIFFE/SPIRE** — معيارٌ وتطبيقه لهوية عبء العمل | معيارٌ وتطبيقٌ لهويات عبء عملٍ مُثبَتة بالشهادة وقصيرة العمر (Standard and implementation for attested, short-lived workload identities) | حلّ مشكلة «السرّ الصفري» عبر الخدمات (Solving "secret zero" across services) |
-| **OWASP Secrets Management Cheat Sheet** — ورقة OWASP المختصرة لإدارة الأسرار | إرشاداتٌ حول دورة حياة السرّ والأدوات والرصد (Guidance on the secret life cycle, tooling and detection) | كتابة معيارٍ للأسرار (Writing a secrets standard) أو مراجعة تصميم (reviewing a design) |
+| **Secrets manager** — مدير الأسرار: HashiCorp Vault وOpenBao ومديرو الأسرار السحابيون | يخزّن الأسرار مشفّرة، ويتحكم في عمليات القراءة ويسجّلها، ويدعم التدوير | كل سرٍّ يحتاجه عبء عملٍ وقت التشغيل |
+| **Workload identity federation** — اتحاد هوية عبء العمل | يستبدل رمز عبء عملٍ أو رمز CI موقَّعًا من المنصة ببيانات اعتمادٍ سحابية قصيرة العمر ومحصورة | استبدال المفاتيح السحابية طويلة العمر في حاويات pod وخطوط الإنتاج |
+| **Dynamic secrets** — الأسرار الديناميكية | بيانات اعتمادٍ تُنشأ عند الطلب بعقد إيجار، وتُبطَل تلقائيًّا | الوصول إلى قواعد البيانات والسحابة للخدمات |
+| **Secret scanning** — فحص الأسرار: gitleaks وTruffleHog وdetect-secrets | يعثر على الأسرار في الإيداعات والسجل التاريخي والصور والسجلات | قبل الإيداع، وفي CI، والفحوص المجدولة |
+| **Push protection** — حماية الدفع | تحظر منصة استضافة الشيفرة عمليات الدفع التي تحتوي على أسرارٍ معروفة | كل مستودع، ولا سيما المستودعات العامة |
+| **External Secrets Operator** — مشغّل الأسرار الخارجية | يزامن الأسرار من مديرٍ خارجي إلى Kubernetes | العناقيد التي تحتاج إلى أسرار دون تخزينها في البيانات التعريفية |
+| **SPIFFE/SPIRE** — معيارٌ وتطبيقه لهوية عبء العمل | معيارٌ وتطبيقٌ لهويات عبء عملٍ مُثبَتة بالشهادة وقصيرة العمر | حلّ مشكلة «السرّ الصفري» عبر الخدمات |
+| **OWASP Secrets Management Cheat Sheet** — ورقة OWASP المختصرة لإدارة الأسرار | إرشاداتٌ حول دورة حياة السرّ والأدوات والرصد | كتابة معيارٍ للأسرار أو مراجعة تصميم |
 
-## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-تنشر نورة وجاسم **معيار إدارة الأسرار، الإصدار 1، مقتطف (Secrets Management Standard, v1, excerpt)** مع **دليل التشغيل الخاص بالأسرار المسرّبة (leaked-secret runbook)**. والأعمار والأهداف الواردة توضيحية (Lifetimes and targets are illustrative).
+## 🏛️ عمليًا في بنك نجم
+تنشر نورة وجاسم **معيار إدارة الأسرار، الإصدار 1، مقتطف** مع **دليل التشغيل الخاص بالأسرار المسرّبة**. والأعمار والأهداف الواردة توضيحية.
 
-| فئة السرّ (Secret class) | أين يعيش (Where it lives) | كيف تحصل عليه أعباء العمل (How workloads get it) | العمر والتدوير (Lifetime and rotation) | المالك (Owner) |
+| فئة السرّ | أين يعيش | كيف تحصل عليه أعباء العمل | العمر والتدوير | المالك |
 |---|---|---|---|---|
-| الوصول السحابي للخدمات وCI (Cloud access for services and CI) | لا مكان (Nowhere): هوية عبء العمل والاتحاد عبر OIDC (workload identity and OIDC federation) | بيانات اعتمادٍ قصيرة العمر (Short-lived credentials)؛ وأدوار CI مربوطة بالمستودع والفرع (CI roles bound to repository and branch) | من دقائق إلى ساعة (Minutes to an hour)؛ ولا مفاتيح طويلة العمر (no long-lived keys) | فريق المنصة (Platform team) |
-| بيانات اعتماد قواعد البيانات (Database credentials) | مدير الأسرار، بمحرّكٍ ديناميكي (Secrets manager, dynamic engine) | مؤجَّرةٌ لكل عبء عمل (Leased per workload) | ساعات (Hours)؛ وتُبطَل تلقائيًّا (auto-revoked) | مالك الخدمة (Service owner) |
-| مفاتيح الأطراف الثالثة ومزوّدي النماذج اللغوية الكبيرة (Third-party and LLM provider keys) | مدير الأسرار (Secrets manager) | تجلبها الواجهة الخلفية وحدها وقت التشغيل (Fetched at runtime by the backend only) | 90 يومًا وعند أي اشتباه (90 days and on any suspicion)؛ وسقوف إنفاق (spending caps) | مالك الخدمة (Service owner) |
-| مفاتيح التوقيع والتشفير (Signing and encryption keys) | خدمة إدارة المفاتيح (KMS) أو وحدة أمن العتاد (HSM)، غير قابلة للتصدير (non-exportable) | تُستخدم عبر واجهة خدمة إدارة المفاتيح (Used through the KMS interface) | وفق سياسة المفتاح (Per key policy) (5.1) | هندسة الأمن (Security engineering) |
-| بيانات اعتماد كسر الزجاج (Break-glass credentials) | مدير الأسرار، مختومة (Secrets manager, sealed) | موافقة شخصين (Two-person approval)؛ وتنبيهٌ عند الاستخدام (alert on use) | تُدوَّر بعد كل استخدام (Rotated after every use) | مكتب كبير مسؤولي أمن المعلومات (CISO office) |
+| الوصول السحابي للخدمات وCI | لا مكان: هوية عبء العمل والاتحاد عبر OIDC | بيانات اعتمادٍ قصيرة العمر؛ وأدوار CI مربوطة بالمستودع والفرع | من دقائق إلى ساعة؛ ولا مفاتيح طويلة العمر | فريق المنصة |
+| بيانات اعتماد قواعد البيانات | مدير الأسرار، بمحرّكٍ ديناميكي | مؤجَّرةٌ لكل عبء عمل | ساعات؛ وتُبطَل تلقائيًّا | مالك الخدمة |
+| مفاتيح الأطراف الثالثة ومزوّدي النماذج اللغوية الكبيرة | مدير الأسرار | تجلبها الواجهة الخلفية وحدها وقت التشغيل | 90 يومًا وعند أي اشتباه؛ وسقوف إنفاق | مالك الخدمة |
+| مفاتيح التوقيع والتشفير | خدمة إدارة المفاتيح أو وحدة أمن العتاد (HSM)، غير قابلة للتصدير | تُستخدم عبر واجهة خدمة إدارة المفاتيح | وفق سياسة المفتاح (5.1) | هندسة الأمن |
+| بيانات اعتماد كسر الزجاج | مدير الأسرار، مختومة | موافقة شخصين؛ وتنبيهٌ عند الاستخدام | تُدوَّر بعد كل استخدام | مكتب كبير مسؤولي أمن المعلومات (CISO office) |
 
-محظورٌ في كل مكان (Forbidden everywhere): الأسرار في الشيفرة المصدرية (source code)، والصور (images)، وحزم الهاتف أو الويب (mobile or web bundles)، والتذاكر (tickets)، والمحادثات (chat)، وموجّهات النماذج اللغوية الكبيرة (LLM prompts)، أو في أي ملفٍ يستطيع الوكيل قراءته على جهاز مطوّر (any agent-readable file on a developer machine).
+محظورٌ في كل مكان: الأسرار في الشيفرة المصدرية، والصور، وحزم الهاتف أو الويب، والتذاكر، والمحادثات، وموجّهات النماذج اللغوية الكبيرة، أو في أي ملفٍ يستطيع الوكيل قراءته على جهاز مطوّر.
 
-| خطوة دليل التشغيل (Runbook step) | المسؤول (Who) | الهدف (Target) |
+| خطوة دليل التشغيل | المسؤول | الهدف |
 |---|---|---|
-| الإبطال أو التدوير (Revoke or rotate) | مالك الخدمة (Service owner)، ومناوب مركز العمليات الأمنية (SOC on call) | خلال ساعةٍ واحدة من الرصد (Within 1 hour of detection) |
-| تحديد ما يمنحه السرّ ومنذ متى (Scope what it grants and since when) | مالك الخدمة (Service owner)، وفريق جاسم (Jassim's team) | خلال 4 ساعات (Within 4 hours) |
-| البحث في سجلات الاستخدام خلال نافذة التعرّض (Search usage logs for the exposure window) | مركز العمليات الأمنية (SOC) | خلال 24 ساعة (Within 24 hours) |
-| تنظيف الشيفرة والسجل التاريخي والسجلات والتذاكر والمحادثات (Clean code, history, logs, tickets, chat) | مالك الخدمة (Service owner) | خلال 3 أيام (Within 3 days) |
-| السبب الجذري وإصلاح الضابط، مسجَّلًا بوصفه حادثة (Root cause and control fix, recorded as an incident) | مالك الخدمة (Service owner)، وفريق أمن التطبيقات (AppSec) | خلال أسبوعين (Within 2 weeks) |
+| الإبطال أو التدوير | مالك الخدمة، ومناوب مركز العمليات الأمنية | خلال ساعةٍ واحدة من الرصد |
+| تحديد ما يمنحه السرّ ومنذ متى | مالك الخدمة، وفريق جاسم | خلال 4 ساعات |
+| البحث في سجلات الاستخدام خلال نافذة التعرّض | مركز العمليات الأمنية (SOC) | خلال 24 ساعة |
+| تنظيف الشيفرة والسجل التاريخي والسجلات والتذاكر والمحادثات | مالك الخدمة | خلال 3 أيام |
+| السبب الجذري وإصلاح الضابط، مسجَّلًا بوصفه حادثة | مالك الخدمة، وفريق أمن التطبيقات | خلال أسبوعين |
 
-## 🛠️ التمارين (Exercises)
-- 🟢 اجرد الأسرار في أحد مشاريعك الخاصة (Inventory the secrets in one of your own projects): ما الذي يمنحه كلٌّ منها (what each grants)، وأين يعيش (where it lives)، ومن يملكه (who owns it)، ومتى دُوِّر آخر مرة (when it was last rotated). *يكتمل عندما (Done when):* يكون لكل سرٍّ مالك (an owner) وسطرٌ يوضح «ما الذي يستطيع فعله» ("what it can do")، وتكون قد علّمت سرًّا واحدًا على الأقل يمكن لهوية عبء العمل أن تُلغيه (that workload identity could eliminate).
-- 🟡 في مستودعك الخاص (your own repository)، أضِف gitleaks (أو ماسحًا آخر (another scanner)) خطافًا قبل الإيداع (pre-commit hook) وخطوةً في CI (CI step). أودِع مفتاحًا مزيّفًا بوضوح وغير صالحٍ للعمل (a clearly fake, non-working key) على فرع اختبار (test branch) وتأكّد من حظره (confirm it is blocked)؛ ثم افحص السجل التاريخي الكامل (scan the full history). *يكتمل عندما (Done when):* يفشل CI على المفتاح المزيّف المزروع (fails on the planted fake)، ويُفرز كل اكتشافٍ في السجل التاريخي (every history finding is triaged) على أنه إمّا حقيقي (real) فيُدوَّر (and rotated)، وإمّا إيجابيٌّ كاذب (a false positive).
-- 🔴 في حسابٍ سحابي تجريبي شخصي (personal sandbox cloud account)، استبدل مفتاحًا سحابيًّا طويل العمر (a long-lived cloud key) في خط إنتاج CI الخاص بك (your own CI pipeline) بالاتحاد عبر OIDC (OIDC federation) المحصور في مستودعٍ واحد وفرعٍ واحد (scoped to one repository and branch)، ثم نفّذ تمرينًا نظريًّا (tabletop) مدته 30 دقيقة على دليل تشغيل الأسرار المسرّبة (leaked-secret runbook). *يكتمل عندما (Done when):* ينشر خط الإنتاج دون أي مفاتيح سحابية مخزّنة (deploys with no stored cloud keys)، ويُرفض تشغيلٌ من فرعٍ آخر (a run from another branch is refused)، ويُنتج التمرين النظري إصلاحًا واحدًا على الأقل (at least one fix).
+## 🛠️ التمارين
+- 🟢 اجرد الأسرار في أحد مشاريعك الخاصة: ما الذي يمنحه كلٌّ منها، وأين يعيش، ومن يملكه، ومتى دُوِّر آخر مرة. *يكتمل عندما:* يكون لكل سرٍّ مالك وسطرٌ يوضح «ما الذي يستطيع فعله»، وتكون قد علّمت سرًّا واحدًا على الأقل يمكن لهوية عبء العمل أن تُلغيه.
+- 🟡 في مستودعك الخاص، أضِف gitleaks (أو ماسحًا آخر) خطافًا قبل الإيداع وخطوةً في CI. أودِع مفتاحًا مزيّفًا بوضوح وغير صالحٍ للعمل على فرع اختبار وتأكّد من حظره؛ ثم افحص السجل التاريخي الكامل. *يكتمل عندما:* يفشل CI على المفتاح المزيّف المزروع، ويُفرز كل اكتشافٍ في السجل التاريخي على أنه إمّا حقيقي فيُدوَّر، وإمّا إيجابيٌّ كاذب.
+- 🔴 في حسابٍ سحابي تجريبي شخصي، استبدل مفتاحًا سحابيًّا طويل العمر في خط إنتاج CI الخاص بك بالاتحاد عبر OIDC المحصور في مستودعٍ واحد وفرعٍ واحد، ثم نفّذ تمرينًا نظريًّا (tabletop) مدته 30 دقيقة على دليل تشغيل الأسرار المسرّبة. *يكتمل عندما:* ينشر خط الإنتاج دون أي مفاتيح سحابية مخزّنة، ويُرفض تشغيلٌ من فرعٍ آخر، ويُنتج التمرين النظري إصلاحًا واحدًا على الأقل.
 
-## ⚠️ أخطاء وفخاخ (Mistakes and traps)
-- **حذف الإيداع واعتبار المشكلة محلولة (Deleting the commit and calling it fixed).** فالسجل التاريخي (History) والنسخ المتفرعة (forks) وذاكرات التخزين المؤقت (caches) والسجلات (logs) تحتفظ به. أبطِله ودوِّره أولًا (Revoke and rotate first).
-- **المفاتيح «المخفية» في التطبيقات والواجهات الأمامية ("Hidden" keys in apps and front ends).** كل ما يُشحن إلى تطبيقٍ عميل علنيّ (Anything shipped to a client is public). أبقِ المفاتيح على الخادم (Keep keys server-side).
-- **مفتاحٌ واحد مشترك بين الخدمات والبيئات (One key shared across services and environments).** فيصير تسرّبٌ واحد تسرّبًا في كل نظام (One leak becomes every system). احصر النطاق لكل خدمةٍ وبيئة (Scope per service and environment).
-- **الأسرار في موجّهات النظام (Secrets in system prompts).** افترض أن الموجّهات تتسرّب (Assume prompts leak). أبقِ بيانات الاعتماد في طبقة الأدوات (Keep credentials in the tool layer).
-- **أسرارٌ لم تُدوَّر قط (Never-rotated secrets).** التدوير غير المختبَر يفشل في حالات الطوارئ (Untested rotation fails in an emergency). أتمِته وتدرّب عليه (Automate and rehearse it).
-- **وكلاءٌ يملكون مفاتيح كل شيء (Agents with the keys to everything).** امنع وكلاء البرمجة بالذكاء الاصطناعي من ملفات الأسرار (Deny AI coding agents secret files)؛ وامنحهم رموزًا محصورة وقصيرة العمر (scoped, short-lived tokens).
+## ⚠️ أخطاء وفخاخ
+- **حذف الإيداع واعتبار المشكلة محلولة.** فالسجل التاريخي والنسخ المتفرعة وذاكرات التخزين المؤقت والسجلات تحتفظ به. أبطِله ودوِّره أولًا.
+- **المفاتيح «المخفية» في التطبيقات والواجهات الأمامية.** كل ما يُشحن إلى تطبيقٍ عميل علنيّ. أبقِ المفاتيح على الخادم.
+- **مفتاحٌ واحد مشترك بين الخدمات والبيئات.** فيصير تسرّبٌ واحد تسرّبًا في كل نظام. احصر النطاق لكل خدمةٍ وبيئة.
+- **الأسرار في موجّهات النظام.** افترض أن الموجّهات تتسرّب. أبقِ بيانات الاعتماد في طبقة الأدوات.
+- **أسرارٌ لم تُدوَّر قط.** التدوير غير المختبَر يفشل في حالات الطوارئ. أتمِته وتدرّب عليه.
+- **وكلاءٌ يملكون مفاتيح كل شيء.** امنع وكلاء البرمجة بالذكاء الاصطناعي من ملفات الأسرار؛ وامنحهم رموزًا محصورة وقصيرة العمر.
 
-## 🧾 الخلاصة (Recap)
-- يمنح السرّ الوصول بمفرده (A secret grants access by itself)؛ ويتسرّب عبر الشيفرة والسجل التاريخي والصور وCI والسجلات والتطبيقات العميلة والمحادثات وأدوات الذكاء الاصطناعي (through code, history, images, CI, logs, clients, chat and AI tools).
-- تحمل الشيفرة المراجع (Code holds references)؛ ويحمل مدير الأسرار القيم (a secrets manager holds values)؛ وتجلبها أعباء العمل بالهوية وقت التشغيل (workloads fetch them by identity at runtime).
-- فضّل بيانات الاعتماد قصيرة العمر والمحصورة (Prefer short-lived, scoped credentials): هوية عبء العمل (workload identity)، والاتحاد عبر OIDC (OIDC federation)، والأسرار الديناميكية (dynamic secrets).
-- افحص قبل الإيداع (Scan before commit)، وعند الدفع (at push)، وعبر السجل التاريخي والصور والسجلات (across history, images and logs).
-- عند التسرّب (On a leak): أبطِل أولًا (revoke first)، وحدّد النطاق (scope)، وافحص الاستخدام (check usage)، ونظّف (clean up)، وأصلِح السبب (fix the cause).
+## 🧾 الخلاصة
+- يمنح السرّ الوصول بمفرده؛ ويتسرّب عبر الشيفرة والسجل التاريخي والصور وCI والسجلات والتطبيقات العميلة والمحادثات وأدوات الذكاء الاصطناعي.
+- تحمل الشيفرة المراجع؛ ويحمل مدير الأسرار القيم؛ وتجلبها أعباء العمل بالهوية وقت التشغيل.
+- فضّل بيانات الاعتماد قصيرة العمر والمحصورة: هوية عبء العمل، والاتحاد عبر OIDC، والأسرار الديناميكية.
+- افحص قبل الإيداع، وعند الدفع، وعبر السجل التاريخي والصور والسجلات.
+- عند التسرّب: أبطِل أولًا، وحدّد النطاق، وافحص الاستخدام، ونظّف، وأصلِح السبب.
 
-## ✍️ اختبر نفسك (Check yourself)
+## ✍️ اختبر نفسك
 
-**1. يدرك مطوّرٌ أنه دفع (pushed) مفتاح واجهة برمجةٍ حيًّا لشريك مدفوعات (live payment-partner API key) إلى مستودعٍ داخلي (internal repository) قبل ثلاثة أيام، وقد نفّذ بالفعل دفعًا قسريًّا (force-pushed) لإزالة الإيداع. ما الذي يجب أن يحدث أولًا؟**
+**1. يدرك مطوّرٌ أنه دفع مفتاح واجهة برمجةٍ حيًّا لشريك مدفوعات إلى مستودعٍ داخلي قبل ثلاثة أيام، وقد نفّذ بالفعل دفعًا قسريًّا لإزالة الإيداع. ما الذي يجب أن يحدث أولًا؟**
 
-- A. لا شيء أكثر: فالإيداع قد زال (the commit is gone)، لأن الفرع حُذف ولم يُدمج طلب السحب قط (the branch was deleted and the pull request was never merged at all)
-- B. أبطِل المفتاح أو دوِّره الآن (revoke or rotate the key now)، ثم افحص سجلات استخدام الشريك (the partner's usage logs) خلال نافذة التعرّض (for the exposure window)
-- C. أعِد كتابة السجل التاريخي لكل فرع (rewrite the history of every branch) وادفعه بالقوة (force-push)، ثم قرّر ما إذا كان المفتاح يحتاج إلى تدوير أصلًا (whether the key needs to be rotated at all)
-- D. افتح تذكرةً للدورة التالية (open a ticket for the next sprint) واطلب من المطوّر إزالة المفتاح من الملف عندما يناسبه ذلك (ask the developer to remove the key from the file when convenient)
-
-<details><summary>الإجابة</summary>
-
-**B.** افترض الاختراق ودوِّر أولًا (Assume compromise and rotate first)؛ فالنسخ المستنسخة (clones) وذاكرات التخزين المؤقت (caches) وسجلات CI (CI logs) قد تظل تحتفظ بالمفتاح (may still hold the key). وC تنظيفٌ يأتي بعد التدوير (clean-up that comes after rotation)؛ وA وD يتركان مفتاحًا حيًّا مكشوفًا (leave a live key exposed). انظر: 🟡 التعمق أكثر (Going deeper).
-
-</details>
-
-**2. في اختبارٍ مُصرَّح به (authorised test)، تستخرج مريم مفتاح مزوّد النموذج اللغوي الكبير (LLM provider key) من نسخةٍ أولية لتطبيق نجم أسيست (Najm Assist prototype app)، حيث كان «مُموَّهًا» ("obfuscated"). ما الإصلاح الصحيح (right fix)؟**
-
-- A. تمويهٌ أقوى (Stronger obfuscation)
-- B. اطلب من العملاء ألّا يفحصوا التطبيق (ask customers not to inspect the app)
-- C. خزّن المفتاح في التخزين الآمن للجهاز (the device's secure storage) بعد التشغيل الأول (after first launch)، بعد جلبه مرةً واحدة من خادم لنجم (fetched once from a Najm server) يتحقق من إصدار التطبيق وطراز الجهاز (checks the app version and the device model) قبل إرساله إليه (before sending it), ويبقى المفتاح بعد ذلك على الجهاز وحده (and the key then stays on the device alone)
-- D. انقل استدعاء المزوّد إلى الواجهة الخلفية لنجم (move the provider call to Najm's backend)، التي تحتفظ بالمفتاح، وتُصادق العميل (authenticates the customer)، وتطبّق حدود المعدّل وسقوف الإنفاق (rate limits and spending caps)؛ ودوِّر المفتاح المستخرَج (rotate the extracted key)
+- A. لا شيء أكثر: فالإيداع قد زال، لأن الفرع حُذف ولم يُدمج طلب السحب قط
+- B. أبطِل المفتاح أو دوِّره الآن، ثم افحص سجلات استخدام الشريك
+- C. أعِد كتابة السجل التاريخي لكل فرع وادفعه بالقوة، ثم قرّر ما إذا كان المفتاح يحتاج إلى تدوير أصلًا
+- D. افتح تذكرةً للدورة التالية واطلب من المطوّر إزالة المفتاح من الملف عندما يناسبه ذلك
 
 <details><summary>الإجابة</summary>
 
-**D.** الأسرار المشحونة إلى تطبيقٍ عميل علنيّة (Secrets shipped to a client are public). وA وC لا يفعلان سوى إبطاء الاستخراج (only slow extraction)، لأن التطبيق يجب أن يظل قادرًا على قراءة المفتاح (must still be able to read the key)؛ وB ليس ضابطًا (is not a control). انظر: 🟢 الأساسيات (The essentials).
+**B.** افترض الاختراق ودوِّر أولًا؛ فالنسخ المستنسخة وذاكرات التخزين المؤقت وسجلات CI قد تظل تحتفظ بالمفتاح. وC تنظيفٌ يأتي بعد التدوير؛ وA وD يتركان مفتاحًا حيًّا مكشوفًا. انظر: 🟡 التعمق أكثر.
 
 </details>
 
-**3. ينشر خط إنتاج بوابة الشركات الصغيرة (SME Portal pipeline) باستخدام مفتاح وصولٍ سحابي طويل العمر (long-lived cloud access key) مخزّنٍ بوصفه متغيرًا في CI (CI variable). ما التحسين الأقوى (strongest improvement)؟**
+**2. في اختبارٍ مُصرَّح به، تستخرج مريم مفتاح مزوّد النموذج اللغوي الكبير من نسخةٍ أولية لتطبيق نجم أسيست، حيث كان «مُموَّهًا». ما الإصلاح الصحيح؟**
 
-- A. دوِّر المفتاح مرةً في السنة (rotate the key once a year)
-- B. رمّز المفتاح بصيغة base64 في المتغير (Base64-encode the key in the variable)
-- C. الاتحاد عبر OIDC (OIDC federation): تحصل كل مهمة (each job) على رمزٍ قصير العمر تستبدله السحابة ببيانات اعتماد (exchanges for credentials)، لدورٍ لا يثق إلا بهذا المستودع وهذا الفرع (trusts only this repository and branch)
-- D. أودِع المفتاح في المستودع الخاص (private repository) كي يخضع لإدارة الإصدارات والمراجعة (so it is versioned and reviewed)، وقيّد صلاحية القراءة بفريق خط الإنتاج ومدير الإصدار والمهندسين المناوبين (restrict read access to the pipeline team, the release manager and the on-call engineers)
+- A. تمويهٌ أقوى
+- B. اطلب من العملاء ألّا يفحصوا التطبيق
+- C. خزّن المفتاح في التخزين الآمن للجهاز بعد التشغيل الأول، بعد جلبه مرةً واحدة من خادم لنجم يتحقق من إصدار التطبيق وطراز الجهاز قبل إرساله إليه, ويبقى المفتاح بعد ذلك على الجهاز وحده
+- D. انقل استدعاء المزوّد إلى الواجهة الخلفية لنجم، التي تحتفظ بالمفتاح، وتُصادق العميل، وتطبّق حدود المعدّل وسقوف الإنفاق؛ ودوِّر المفتاح المستخرَج
 
 <details><summary>الإجابة</summary>
 
-**C.** إنه يزيل السرّ المخزَّن (removes the stored secret) ويربط الوصول بخط إنتاجٍ واحد (binds access to one pipeline). وA يساعد قليلًا (helps a little)؛ وB ترميزٌ لا حماية (encoding, not protection)؛ وD تسرّب (is a leak). انظر: 🟡 التعمق أكثر (Going deeper).
+**D.** الأسرار المشحونة إلى تطبيقٍ عميل علنيّة. وA وC لا يفعلان سوى إبطاء الاستخراج، لأن التطبيق يجب أن يظل قادرًا على قراءة المفتاح؛ وB ليس ضابطًا. انظر: 🟢 الأساسيات.
 
 </details>
 
-**4. أيّ عبارةٍ عن أسرار Kubernetes (Kubernetes Secrets) صحيحة (TRUE) افتراضيًّا في Kubernetes الأصلي (upstream Kubernetes)؟**
+**3. ينشر خط إنتاج بوابة الشركات الصغيرة باستخدام مفتاح وصولٍ سحابي طويل العمر مخزّنٍ بوصفه متغيرًا في CI. ما التحسين الأقوى؟**
 
-- A. تُرمَّز القيم بصيغة base64 (base64-encoded)، وتُخزَّن دون تشفير في etcd (stored unencrypted in etcd) ما لم يُضبط التشفير أثناء التخزين (unless encryption at rest is configured)، ويستطيع قراءتها أي شخصٍ يستطيع إنشاء حاويات pod في نطاق الأسماء (anyone who can create pods in the namespace)
-- B. تُشفَّر القيم تشفيرًا قويًّا بمفتاحٍ لكل عنقود (strongly encrypted with a per-cluster key) يدوّره مزوّد السحابة (that the cloud provider rotates)، فلا يستطيع قراءتها كنصٍّ واضح (in clear text) إلا خادم الواجهة البرمجية والمتحكمات (only the API server and the controllers) في أي ظرف من الظروف (in any circumstance)، حتى لو أُنشئت حاويات في الفضاء نفسه (even if pods are created in the same namespace)
-- C. لا يستطيع قراءتها إلا مسؤولو العنقود (only cluster administrators) على الإطلاق
-- D. تُدوَّر تلقائيًّا كل 24 ساعة (rotate automatically every 24 hours)
+- A. دوِّر المفتاح مرةً في السنة
+- B. رمّز المفتاح بصيغة base64 في المتغير
+- C. الاتحاد عبر OIDC: تحصل كل مهمة على رمزٍ قصير العمر تستبدله السحابة ببيانات اعتماد، لدورٍ لا يثق إلا بهذا المستودع وهذا الفرع
+- D. أودِع المفتاح في المستودع الخاص كي يخضع لإدارة الإصدارات والمراجعة، وقيّد صلاحية القراءة بفريق خط الإنتاج ومدير الإصدار والمهندسين المناوبين
 
 <details><summary>الإجابة</summary>
 
-**A.** ومن هنا الحاجة إلى التشفير أثناء التخزين (encryption at rest)، وRBAC محكم (tight RBAC)، ومديرٍ خارجي (an external manager). وB يخلط بين الترميز والتشفير (confuses encoding with encryption)؛ وC وD خاطئان (are false). انظر: 🟡 التعمق أكثر (Going deeper).
+**C.** إنه يزيل السرّ المخزَّن ويربط الوصول بخط إنتاجٍ واحد. وA يساعد قليلًا؛ وB ترميزٌ لا حماية؛ وD تسرّب. انظر: 🟡 التعمق أكثر.
 
 </details>
 
-**5. يقترح مطوّرٌ وضع مفتاح واجهة برمجة خدمة الرسوم (fee-service API key) في موجّه النظام لنجم أسيست (Najm Assist's system prompt) «كي يتمكن النموذج من استدعاء الأداة» ("so the model can call the tool"). لماذا هذا خطأ؟**
+**4. أيّ عبارةٍ عن أسرار Kubernetes صحيحة (TRUE) افتراضيًّا في Kubernetes الأصلي؟**
 
-- A. لموجّهات النظام حدٌّ للطول (System prompts have a length limit)
-- B. النماذج ترفض استخدام المفاتيح (Models refuse to use keys)
-- C. لا بأس (It is fine) إذا قال الموجّه (if the prompt says) «لا تكشف هذا المفتاح أبدًا» ("never reveal this key")
-- D. افترض أن موجّه النظام يمكن استخراجه (the system prompt can be extracted) (OWASP LLM07) أو أن النموذج يمكن توجيهه بحقن الموجّهات (steered by prompt injection)؛ فمكان بيانات الاعتماد هو طبقة الأدوات على الخادم (the server-side tool layer)، مربوطةً بجلسة العميل (bound to the customer's session)
+- A. تُرمَّز القيم بصيغة base64، وتُخزَّن دون تشفير في etcd ما لم يُضبط التشفير أثناء التخزين، ويستطيع قراءتها أي شخصٍ يستطيع إنشاء حاويات pod في نطاق الأسماء
+- B. تُشفَّر القيم تشفيرًا قويًّا بمفتاحٍ لكل عنقود يدوّره مزوّد السحابة، فلا يستطيع قراءتها كنصٍّ واضح إلا خادم الواجهة البرمجية والمتحكمات في أي ظرف من الظروف، حتى لو أُنشئت حاويات في الفضاء نفسه
+- C. لا يستطيع قراءتها إلا مسؤولو العنقود على الإطلاق
+- D. تُدوَّر تلقائيًّا كل 24 ساعة
 
 <details><summary>الإجابة</summary>
 
-**D.** الموجّه ليس مخزنًا آمنًا (A prompt is not a secure store). وC يعتمد على امتثال النموذج (relies on the model obeying)، وهو ما يهزمه حقن الموجّهات (which prompt injection defeats). انظر: 🔴 نظرة الخبير (Expert view).
+**A.** ومن هنا الحاجة إلى التشفير أثناء التخزين، وRBAC محكم، ومديرٍ خارجي. وB يخلط بين الترميز والتشفير؛ وC وD خاطئان. انظر: 🟡 التعمق أكثر.
 
 </details>
 
-## 📚 المراجع (References)
-- ورقة OWASP المختصرة لإدارة الأسرار (OWASP Secrets Management Cheat Sheet) — https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html
-- قائمة OWASP لأهم عشرة مخاطر في تطبيقات النماذج اللغوية الكبيرة لعام 2025 (OWASP Top 10 for LLM Applications 2025)، البند LLM07، تسرّب موجّه النظام (System Prompt Leakage) — https://genai.owasp.org/llm-top-10/
-- MITRE ATT&CK T1552، بيانات الاعتماد غير المؤمَّنة (Unsecured Credentials) — https://attack.mitre.org/techniques/T1552/
-- MITRE CWE-798، استخدام بيانات اعتمادٍ مكتوبة في الشيفرة (Use of Hard-coded Credentials) — https://cwe.mitre.org/data/definitions/798.html
-- توثيق Kubernetes (Kubernetes documentation)، الأسرار (Secrets) — https://kubernetes.io/docs/concepts/configuration/secret/
-- توثيق Kubernetes (Kubernetes documentation)، تشفير البيانات السرية أثناء التخزين (Encrypting Confidential Data at Rest) — https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/
-- توثيق GitHub (GitHub Docs)، فحص الأسرار وحماية الدفع (secret scanning and push protection) — https://docs.github.com/en/code-security/secret-scanning
+**5. يقترح مطوّرٌ وضع مفتاح واجهة برمجة خدمة الرسوم في موجّه النظام لنجم أسيست «كي يتمكن النموذج من استدعاء الأداة». لماذا هذا خطأ؟**
+
+- A. لموجّهات النظام حدٌّ للطول، وإضافة مفتاحٍ طويل إليها قد تدفع التعليمات المهمة خارج النافذة السياقية
+- B. النماذج ترفض استخدام المفاتيح، ولذلك لن تنجح أي أداة تحتاج إلى مفتاح يصل إليها عبر الموجّه
+- C. لا بأس إذا قال الموجّه «لا تكشف هذا المفتاح أبدًا»، فالنموذج ينفّذ تعليمات النظام دائمًا بدقة
+- D. افترض أن الموجّه يمكن استخراجه أو أن النموذج يمكن توجيهه بحقن الموجّهات؛ فمكان بيانات الاعتماد طبقة الأدوات على الخادم، مربوطةً بجلسة العميل
+
+<details><summary>الإجابة</summary>
+
+**D.** الموجّه ليس مخزنًا آمنًا. وC يعتمد على امتثال النموذج، وهو ما يهزمه حقن الموجّهات. انظر: 🔴 نظرة الخبير.
+
+</details>
+
+## 📚 المراجع
+- ورقة OWASP المختصرة لإدارة الأسرار — https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html
+- قائمة OWASP لأهم عشرة مخاطر في تطبيقات النماذج اللغوية الكبيرة لعام 2025، البند LLM07، تسرّب موجّه النظام — https://genai.owasp.org/llm-top-10/
+- MITRE ATT&CK T1552، بيانات الاعتماد غير المؤمَّنة — https://attack.mitre.org/techniques/T1552/
+- MITRE CWE-798، استخدام بيانات اعتمادٍ مكتوبة في الشيفرة — https://cwe.mitre.org/data/definitions/798.html
+- توثيق Kubernetes، الأسرار — https://kubernetes.io/docs/concepts/configuration/secret/
+- توثيق Kubernetes، تشفير البيانات السرية أثناء التخزين — https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/
+- توثيق GitHub، فحص الأسرار وحماية الدفع — https://docs.github.com/en/code-security/secret-scanning
 - SPIFFE — https://spiffe.io/
-- سايمون ويليسون (Simon Willison) (2025)، «الثلاثية القاتلة لوكلاء الذكاء الاصطناعي» ("The lethal trifecta for AI agents") — https://simonwillison.net/
+- سايمون ويليسون (2025)، «الثلاثية القاتلة لوكلاء الذكاء الاصطناعي» — https://simonwillison.net/
 
 ---
 
-# 5.3 — حماية البيانات الشخصية: تقليل البيانات والتسجيل وهندسة الخصوصية (Protecting personal data: minimisation, logging and privacy engineering)
-*المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 1.1، 5.1* · *المرحلة (Phase): Design, Build*
+# 5.3 — حماية البيانات الشخصية: تقليل البيانات والتسجيل وهندسة الخصوصية
+*المستوى: 🟡 متوسط* · *المتطلبات: 1.1، 5.1* · *المرحلة: Design, Build*
 
-## ⚡ الدرس في دقيقة (In 60 seconds)
-- **البيانات الشخصية (Personal data)** هي أي معلوماتٍ عن شخصٍ يمكن تحديد هويته (any information about an identifiable person). وأكثر البيانات الشخصية أمانًا هي التي لم تجمعها قط (data you never collected)؛ وتليها في الأمان البيانات التي حذفتها بالفعل (data you have already deleted).
-- **هندسة الخصوصية (Privacy engineering)** تحوّل المبادئ إلى تصميم (turns principles into design): جرد البيانات (a data inventory)، وتصنيف الحقول (field classification)، وتقليل البيانات (minimisation)، والحجب (masking)، والترميز (tokenisation)، والتسمية المستعارة (pseudonymisation)، ومهام الاحتفاظ (retention jobs)، وتسجيل الوصول (access logging).
-- تنتشر البيانات الشخصية دون أن يلاحظها أحد (spreads unnoticed) عبر السجلات (logs) والتحليلات (analytics) والنسخ الاحتياطية (backups) ونسخ الاختبار (test copies) وموجّهات الذكاء الاصطناعي (AI prompts). سجّل وفق **قائمة سماح (allowlist)**، ولا تسجّل بتفريغ الطلب أبدًا (never by dumping the request).
-- ميزات النماذج اللغوية الكبيرة (LLM features) تضاعف النسخ (multiply copies): الموجّهات (prompts)، ونصوص المحادثات (transcripts)، والتتبّعات (traces)، وفهارس الاسترجاع (retrieval indexes)، ومجموعات التقييم (evaluation sets)، والسجلات لدى المزوّد (provider-side logs). وكلٌّ منها يحتاج إلى غرض (a purpose) وفترة احتفاظ (a retention period) ومسار حذف (a deletion path).
-- مؤشر القرار (Decision cue): لكل حقل، اسأل «ما الغرض منه، ومن يحتاجه بنصٍّ صريح، ومتى يموت؟» ⁦("what is it for, who needs it in clear, and when does it die?")⁩
-- أكبر فخ (Biggest trap): وصف البيانات المجزّأة أو ذات الأسماء المستعارة (hashed or pseudonymised data) بأنها «مجهولة الهوية» ("anonymous"). فإن أمكن ربطها بشخصٍ (linked back to a person)، فهي لا تزال بياناتٍ شخصية (still personal data).
+## ⚡ الدرس في دقيقة
+- **البيانات الشخصية** هي أي معلوماتٍ عن شخصٍ يمكن تحديد هويته. وأكثر البيانات الشخصية أمانًا هي التي لم تجمعها قط؛ وتليها في الأمان البيانات التي حذفتها بالفعل.
+- **هندسة الخصوصية** تحوّل المبادئ إلى تصميم: جرد البيانات، وتصنيف الحقول، وتقليل البيانات، والحجب، والترميز، والتسمية المستعارة، ومهام الاحتفاظ، وتسجيل الوصول.
+- تنتشر البيانات الشخصية دون أن يلاحظها أحد عبر السجلات والتحليلات والنسخ الاحتياطية ونسخ الاختبار وموجّهات الذكاء الاصطناعي. سجّل وفق **قائمة سماح (allowlist)**، ولا تسجّل بتفريغ الطلب أبدًا.
+- ميزات النماذج اللغوية الكبيرة تضاعف النسخ: الموجّهات (prompts)، ونصوص المحادثات، والتتبّعات، وفهارس الاسترجاع، ومجموعات التقييم، والسجلات لدى المزوّد. وكلٌّ منها يحتاج إلى غرض وفترة احتفاظ ومسار حذف.
+- مؤشر القرار: لكل حقل، اسأل «ما الغرض منه، ومن يحتاجه بنصٍّ صريح، ومتى يموت؟»
+- أكبر فخ: وصف البيانات المجزّأة أو ذات الأسماء المستعارة بأنها «مجهولة الهوية». فإن أمكن ربطها بشخصٍ، فهي لا تزال بياناتٍ شخصية.
 
-## 🧭 لماذا يهم (Why it matters)
-تتلقى سارة، مسؤولة حماية البيانات (Data Protection Officer, DPO) في بنك نجم (Najm Bank)، طلبًا من عميلةٍ مقيمة في الاتحاد الأوروبي (EU-resident customer): نسخةً من كل ما يحتفظ به البنك (a copy of everything the bank holds) من محادثاتها مع نجم أسيست (Najm Assist)، ثم حذفه (its deletion). تطرح سارة على الفريق سؤالًا واحدًا: «أين بياناتها؟» ⁦("Where is her data?")⁩ واستغرقت الإجابة أسبوعين (two weeks). فنصوص المحادثات (transcripts) موجودةٌ في قاعدة بيانات التطبيق (app database)، كما هو متوقع. لكن الموجّهات الكاملة (full prompts)، بما فيها أرقام الحسابات (account numbers included)، موجودةٌ أيضًا في منصة المراقبة الشاملة (observability platform)، لأن إعدادًا للتصحيح (debug setting) لم يُطفأ قط. وبنى فريق دانة مجموعة تقييم (evaluation set) من محادثاتٍ حقيقية (real conversations). ويحتوي فهرس الاسترجاع (retrieval index) على أجزاءٍ من مستنداتٍ رفعتها (chunks of documents she uploaded). ويحتفظ مزوّد النموذج اللغوي الكبير (LLM provider) بسجلات الطلبات (request logs) لفترةٍ يحدّدها عقدٌ لم يقرأه أحدٌ في الفريق (a contract nobody on the team had read).
+## 🧭 لماذا يهم
+تتلقى سارة، مسؤولة حماية البيانات (Data Protection Officer, DPO) في بنك نجم، طلبًا من عميلةٍ مقيمة في الاتحاد الأوروبي: نسخةً من كل ما يحتفظ به البنك من محادثاتها مع نجم أسيست، ثم حذفه. تطرح سارة على الفريق سؤالًا واحدًا: «أين بياناتها؟» واستغرقت الإجابة أسبوعين. فنصوص المحادثات موجودةٌ في قاعدة بيانات التطبيق، كما هو متوقع. لكن الموجّهات الكاملة، بما فيها أرقام الحسابات، موجودةٌ أيضًا في منصة المراقبة الشاملة، لأن إعدادًا للتصحيح لم يُطفأ قط. وبنى فريق دانة مجموعة تقييم من محادثاتٍ حقيقية. ويحتوي فهرس الاسترجاع على أجزاءٍ من مستنداتٍ رفعتها. ويحتفظ مزوّد النموذج اللغوي الكبير بسجلات الطلبات لفترةٍ يحدّدها عقدٌ لم يقرأه أحدٌ في الفريق.
 
-لم يكن أيٌّ من ذلك اختراقًا (None of this was a hack). بل كان هندسةً عادية دون خريطة بيانات (ordinary engineering without a data map). وتتسرّب البيانات أيضًا عبر أدوات الذكاء الاصطناعي (through AI tools): ففي عام 2023 أُفيد على نطاقٍ واسع (widely reported) بأن موظفين في Samsung لصقوا شيفرةً مصدرية سرية وملاحظاتٍ داخلية (confidential source code and internal notes) في روبوت محادثةٍ عام (a public chatbot)، فقيّدت الشركة بعدها مثل هذه الأدوات (restricted such tools). وحين تعبر البيانات ذلك الحدّ (crosses that boundary)، لا تعود ضوابط الاحتفاظ والحذف لديك (your retention and deletion controls) تصل إليها. ويلتقي الأمن والخصوصية هنا (Security and privacy meet here): فالضوابط التي تحدّ من الاختراق (the controls that limit a breach)، أي التقليل والتشفير والتقييد وتسجيل الوصول (minimise, encrypt, restrict, log access)، هي نفسها التي تتيح لك الإجابة عن سؤال سارة (answer Sara's question).
+لم يكن أيٌّ من ذلك اختراقًا. بل كان هندسةً عادية دون خريطة بيانات. وتتسرّب البيانات أيضًا عبر أدوات الذكاء الاصطناعي: ففي عام 2023 أُفيد على نطاقٍ واسع بأن موظفين في Samsung لصقوا شيفرةً مصدرية سرية وملاحظاتٍ داخلية في روبوت محادثةٍ عام، فقيّدت الشركة بعدها مثل هذه الأدوات. وحين تعبر البيانات ذلك الحدّ، لا تعود ضوابط الاحتفاظ والحذف لديك تصل إليها. ويلتقي الأمن والخصوصية هنا: فالضوابط التي تحدّ من الاختراق، أي التقليل والتشفير والتقييد وتسجيل الوصول، هي نفسها التي تتيح لك الإجابة عن سؤال سارة.
 
-## 📐 كيف يعمل (How it works)
+## 📐 كيف يعمل
 
-### 🟢 الأساسيات (The essentials)
+### 🟢 الأساسيات
 
-**ما البيانات الشخصية؟ ⁦(What is personal data?)⁩** وفق اللائحة العامة لحماية البيانات في الاتحاد الأوروبي (EU GDPR)، المادة 4(1) (Art. 4(1))، هي أي معلوماتٍ تتعلق بشخصٍ طبيعي محدَّد الهوية أو قابلٍ لتحديد هويته (any information relating to an identified or identifiable natural person): الأسماء وأرقام الهوية الوطنية (names and national IDs)، وكذلك أرقام الحسابات (account numbers)، ومعرّفات الأجهزة (device IDs)، وعناوين IP (IP addresses)، والتسجيلات الصوتية (voice recordings)، ورسائل المحادثة (chat messages). وتحظى بعض الفئات بحمايةٍ إضافية (extra protection)، وهي «الفئات الخاصة» في المادة 9 (Art. 9 "special categories")، مثل البيانات الصحية (health data). ولبيانات البطاقات (Card data) دليل قواعدها الخاص (its own rulebook)، وهو PCI DSS، في الإصدار 4.0.1 وقت الكتابة (at the time of writing) عام 2026. وفي قطر، لقانون حماية خصوصية البيانات الشخصية (Qatar's Personal Data Privacy Protection Law)، أي القانون رقم 13 لسنة 2016 (Law No. 13 of 2016, PDPPL)، قواعده الخاصة، بما في ذلك ما يتعلق بالبيانات الحساسة (sensitive data) والاختراقات (breaches). تتولى سارة القراءة القانونية (owns the legal reading)؛ ويغطي هذا الدرس الجانب الهندسي (the engineering)، أمّا القانون بالتفصيل (law in depth) ففي 11.2 وفي دورة *AI Governance: Zero to Hero*.
+**ما البيانات الشخصية؟** وفق اللائحة العامة لحماية البيانات في الاتحاد الأوروبي (EU GDPR)، المادة 4(1)، هي أي معلوماتٍ تتعلق بشخصٍ طبيعي محدَّد الهوية أو قابلٍ لتحديد هويته: الأسماء وأرقام الهوية الوطنية، وكذلك أرقام الحسابات، ومعرّفات الأجهزة، وعناوين IP، والتسجيلات الصوتية، ورسائل المحادثة. وتحظى بعض الفئات بحمايةٍ إضافية، وهي «الفئات الخاصة» في المادة 9، مثل البيانات الصحية. ولبيانات البطاقات دليل قواعدها الخاص، وهو PCI DSS، في الإصدار 4.0.1 وقت الكتابة عام 2026. وفي قطر، لقانون حماية خصوصية البيانات الشخصية، أي القانون رقم 13 لسنة 2016، قواعده الخاصة، بما في ذلك ما يتعلق بالبيانات الحساسة والاختراقات. تتولى سارة القراءة القانونية؛ ويغطي هذا الدرس الجانب الهندسي، أمّا القانون بالتفصيل ففي 11.2 وفي دورة *AI Governance: Zero to Hero*.
 
-**المبادئ تصبح ضوابط (Principles become controls).**
+**المبادئ تصبح ضوابط.**
 
-| المبدأ، وفق المادتين 5 و25 من GDPR (Principle, GDPR Arts. 5 and 25) | الضابط الهندسي (Engineering control) |
+| المبدأ، وفق المادتين 5 و25 من GDPR | الضابط الهندسي |
 |---|---|
-| **تقليل البيانات (Data minimisation)**: مقصورةٌ على ما هو ضروري (limited to what is necessary) | لا تجمعها (Don't collect it)؛ أو اجمع صيغةً أقل دقة (collect a coarser form)، كالفئة العمرية لا تاريخ الميلاد (age band, not birth date)؛ وأسقِط الحقول عند الحافة (drop fields at the edge) |
-| **تحديد الغرض (Purpose limitation)** | وسِم كل حقلٍ بغرضه (Tag each field with its purpose)؛ ومخازن منفصلة (separate stores)؛ ووصولٌ يُمنح لكل غرض (access granted per purpose) |
-| **تحديد مدة التخزين (Storage limitation)** | فترة احتفاظٍ لكل نوعٍ من البيانات (A retention period per data type)، تُفرض بمهام الحذف لا بالوثائق (enforced by deletion jobs, not documents) |
-| **السلامة والسرية (Integrity and confidentiality)**، والمادة 32 أيضًا (also Art. 32) | التشفير (Encryption) (5.1)، والتحكم في الوصول (access control) (3.3)، وتسجيل الوصول (access logging) |
-| **حماية البيانات بالتصميم وبالإعداد الافتراضي (Data protection by design and by default)** | إعداداتٌ افتراضية خاصة (Private defaults)؛ وأقل قدرٍ من الظهور (least visibility)؛ ومراجعة الخصوصية في التصميم (privacy review in design) (1.1) |
+| **تقليل البيانات**: مقصورةٌ على ما هو ضروري | لا تجمعها؛ أو اجمع صيغةً أقل دقة، كالفئة العمرية لا تاريخ الميلاد؛ وأسقِط الحقول عند الحافة |
+| **تحديد الغرض (Purpose limitation)** | وسِم كل حقلٍ بغرضه؛ ومخازن منفصلة؛ ووصولٌ يُمنح لكل غرض |
+| **تحديد مدة التخزين (Storage limitation)** | فترة احتفاظٍ لكل نوعٍ من البيانات، تُفرض بمهام الحذف لا بالوثائق |
+| **السلامة والسرية (Integrity and confidentiality)**، والمادة 32 أيضًا | التشفير (5.1)، والتحكم في الوصول (3.3)، وتسجيل الوصول |
+| **حماية البيانات بالتصميم وبالإعداد الافتراضي (Data protection by design and by default)** | إعداداتٌ افتراضية خاصة؛ وأقل قدرٍ من الظهور؛ ومراجعة الخصوصية في التصميم (1.1) |
 
-**ابدأ بجرد البيانات (Start with a data inventory).** لا يمكنك حماية ما لا تستطيع العثور عليه أو تصديره أو حذفه (You cannot protect, export or delete what you cannot find). يسرد **جرد البيانات (data inventory)**، أو خريطة البيانات (data map)، لكل نظام (per system)، كل حقلٍ من حقول البيانات الشخصية (each personal data field) مع تصنيفه (classification)، وغرضه (purpose)، ومصدره (source)، وكل مكانٍ تستقر فيه نسخةٌ منه (every place a copy lands)، كالسجلات (logs) وذاكرات التخزين المؤقت (caches) والتحليلات (analytics) والنسخ الاحتياطية (backups) وأدوات الذكاء الاصطناعي (AI tools)، ومن يستطيع الوصول إليه (who can access it)، وفترة الاحتفاظ به (its retention period)، وكيف يُحذف (how it is deleted). وتتطلب المادة 30 من GDPR (GDPR Art. 30) أصلًا سجلاتٍ لأنشطة المعالجة (records of processing)؛ أمّا النسخة الهندسية (the engineering version) فتنزل إلى مستوى الحقول والنسخ (down to fields and copies).
+**ابدأ بجرد البيانات.** لا يمكنك حماية ما لا تستطيع العثور عليه أو تصديره أو حذفه. يسرد **جرد البيانات**، أو خريطة البيانات، لكل نظام، كل حقلٍ من حقول البيانات الشخصية مع تصنيفه، وغرضه، ومصدره، وكل مكانٍ تستقر فيه نسخةٌ منه، كالسجلات وذاكرات التخزين المؤقت والتحليلات والنسخ الاحتياطية وأدوات الذكاء الاصطناعي، ومن يستطيع الوصول إليه، وفترة الاحتفاظ به، وكيف يُحذف. وتتطلب المادة 30 من GDPR أصلًا سجلاتٍ لأنشطة المعالجة؛ أمّا النسخة الهندسية فتنزل إلى مستوى الحقول والنسخ.
 
-**صنّف، ثم دع الفئة تقود الضوابط (Classify, then let the class drive controls).** يستخدم بنك نجم (Najm Bank) الفئات: عام (Public)، وداخلي (Internal)، وسرّي (Confidential)، وتشمل معظم بيانات العملاء (most customer data)، ومقيَّد (Restricted)، ويشمل بيانات الاعتماد (credentials) وبيانات البطاقات (card data) وأرقام الهوية الوطنية (national IDs) والبيانات الحيوية (biometrics) والفئات الخاصة (special categories). وتُشفَّر البيانات المقيَّدة على مستوى الحقل أو تُرمَّز (encrypted at field level or tokenised)، ولا تُسجَّل أبدًا (never logged)، ولا تظهر بنصٍّ صريح إلا لأدوارٍ مسمّاة (visible in clear only to named roles).
+**صنّف، ثم دع الفئة تقود الضوابط.** يستخدم بنك نجم الفئات: عام، وداخلي، وسرّي، وتشمل معظم بيانات العملاء، ومقيَّد، ويشمل بيانات الاعتماد (credentials) وبيانات البطاقات وأرقام الهوية الوطنية والبيانات الحيوية والفئات الخاصة. وتُشفَّر البيانات المقيَّدة على مستوى الحقل أو تُرمَّز، ولا تُسجَّل أبدًا، ولا تظهر بنصٍّ صريح إلا لأدوارٍ مسمّاة.
 
-**أربع طرقٍ لتقليل التعرّض، وهي ليست الشيء نفسه (Four ways to reduce exposure, which are not the same thing).**
+**أربع طرقٍ لتقليل التعرّض، وهي ليست الشيء نفسه.**
 
-| التقنية (Technique) | ماذا تفعل (What it does) | هل تبقى بياناتٍ شخصية؟ ⁦(Still personal data?)⁩ |
+| التقنية | ماذا تفعل | هل تبقى بياناتٍ شخصية؟ |
 |---|---|---|
-| **الحجب (Masking)** | يُخفي جزءًا من القيمة عند العرض (Hides part of a value on display) (`•••• 4821`)؛ والقيمة الكاملة لا تزال موجودة (the full value still exists) | نعم (Yes) |
-| **الترميز (Tokenisation)** | يستبدل القيمة برمزٍ عشوائي (Replaces the value with a random token)؛ وخزنةٌ تحتفظ بالربط (a vault holds the mapping) | نعم لمن يصل إلى الخزنة (Yes for whoever reaches the vault)؛ والأنظمة التي لا ترى إلا الرموز ترى أقل بكثير (token-only systems see far less) |
-| **التسمية المستعارة (Pseudonymisation)**، وفق المادة 4(5) (Art. 4(5)) | تستبدل المعرّفات (Replaces identifiers) بحيث لا يمكن نسبة البيانات إلى شخصٍ دون معلوماتٍ إضافية تُحفظ منفصلة (data cannot be attributed without extra information kept separately) | **نعم (Yes)**، وفق GDPR (under GDPR) |
-| **إخفاء الهوية (Anonymisation)** | يمنع تحديد الهوية على نحوٍ لا رجعة فيه (Irreversibly prevents identification) بأي وسيلةٍ يُرجَّح استخدامها على نحوٍ معقول (by any means reasonably likely to be used) | لا (No)، وفق الحيثية 26 (Recital 26)، لكن تحقيقه صعبٌ فعلًا (genuinely hard to achieve) |
+| **الحجب (Masking)** | يُخفي جزءًا من القيمة عند العرض (`•••• 4821`)؛ والقيمة الكاملة لا تزال موجودة | نعم |
+| **الترميز (Tokenisation)** | يستبدل القيمة برمزٍ عشوائي؛ وخزنةٌ تحتفظ بالربط | نعم لمن يصل إلى الخزنة؛ والأنظمة التي لا ترى إلا الرموز ترى أقل بكثير |
+| **التسمية المستعارة**، وفق المادة 4(5) | تستبدل المعرّفات بحيث لا يمكن نسبة البيانات إلى شخصٍ دون معلوماتٍ إضافية تُحفظ منفصلة | **نعم**، وفق GDPR |
+| **إخفاء الهوية (Anonymisation)** | يمنع تحديد الهوية على نحوٍ لا رجعة فيه بأي وسيلةٍ يُرجَّح استخدامها على نحوٍ معقول | لا، وفق الحيثية 26، لكن تحقيقه صعبٌ فعلًا |
 
-التجزئة الصريحة (A plain hash) لرقم هاتفٍ أو رقم هويةٍ وطنية *ليست* إخفاءً للهوية (is *not* anonymisation): ففضاء المدخلات صغير (the input space is small)، فيستطيع أي شخصٍ تجزئة كل قيمةٍ ممكنة (hash every possible value) وعكسها (reverse it). وللأسماء المستعارة (For pseudonyms)، استخدم HMAC بمفتاح (a keyed HMAC) مع حفظ المفتاح في خدمة إدارة المفاتيح (the key in the KMS) (5.1)، أو رمزًا عشوائيًّا (a random token).
+التجزئة الصريحة لرقم هاتفٍ أو رقم هويةٍ وطنية *ليست* إخفاءً للهوية: ففضاء المدخلات صغير، فيستطيع أي شخصٍ تجزئة كل قيمةٍ ممكنة وعكسها. وللأسماء المستعارة، استخدم HMAC بمفتاح مع حفظ المفتاح في خدمة إدارة المفاتيح (5.1)، أو رمزًا عشوائيًّا.
 
-**التسجيل دون تسريب (Logging without leaking).** السجلات قاعدة بياناتٍ لم يصمّمها أحد (Logs are a database nobody designed)، تُنسخ إلى أدواتٍ كثيرة (copied to many tools) ويقرؤها أناسٌ كثيرون (read by many people). القواعد (The rules):
+**التسجيل دون تسريب.** السجلات قاعدة بياناتٍ لم يصمّمها أحد، تُنسخ إلى أدواتٍ كثيرة ويقرؤها أناسٌ كثيرون. القواعد:
 
-- لا تسجّل أبدًا (Never log) كلمات المرور (passwords)، ورموز المرور لمرةٍ واحدة (OTPs)، ورموز الجلسات (session tokens)، ومفاتيح واجهات البرمجة (API keys)، وأرقام البطاقات الكاملة (full card numbers)، ورموز أمان البطاقات (card security codes).
-- سجّل المعرّفات لا المحتوى (Log identifiers, not content): مرجعًا داخليًّا للعميل (an internal customer reference)، لا الاسم (the name) أو رقم الهوية الوطنية (national ID) أو نص المحادثة (chat text).
-- سجّل وفق **قائمة سماح (allowlist)**: تسجيلٌ مُهيكل (structured logging) بحقولٍ مختارةٍ صراحةً (explicitly chosen fields)، لا طلباتٍ أو كائناتٍ كاملة أبدًا (never whole requests or objects).
-- أضِف مرشّح تنقيح (a redaction filter) بوصفه شبكة أمان (as a safety net)، لا الضابط الرئيسي (not the main control): فالأنماط تفوّت (patterns miss) الأسماء (names) والعناوين (addresses) والنص الحر (free text) والأرقام المكتوبة بالأرقام العربية المشرقية (numbers written in Arabic-Indic digits).
-- افصل سجلات التدقيق الأمني (security audit logs)، أي من وصل إلى أي عميل (who accessed which customer)، وهي لازمةٌ للرصد (needed for detection) (انظر 10.1)، عن سجلات التصحيح (debug logs)، مع وصولٍ واحتفاظٍ مختلفين (different access and retention).
+- لا تسجّل أبدًا كلمات المرور، ورموز المرور لمرةٍ واحدة، ورموز الجلسات (session tokens)، ومفاتيح واجهات البرمجة، وأرقام البطاقات الكاملة، ورموز أمان البطاقات.
+- سجّل المعرّفات لا المحتوى: مرجعًا داخليًّا للعميل، لا الاسم أو رقم الهوية الوطنية أو نص المحادثة.
+- سجّل وفق **قائمة سماح**: تسجيلٌ مُهيكل بحقولٍ مختارةٍ صراحةً، لا طلباتٍ أو كائناتٍ كاملة أبدًا.
+- أضِف مرشّح تنقيح بوصفه شبكة أمان، لا الضابط الرئيسي: فالأنماط تفوّت الأسماء والعناوين والنص الحر والأرقام المكتوبة بالأرقام العربية المشرقية.
+- افصل سجلات التدقيق الأمني، أي من وصل إلى أي عميل، وهي لازمةٌ للرصد (انظر 10.1)، عن سجلات التصحيح، مع وصولٍ واحتفاظٍ مختلفين.
 
 ```python
 # Vulnerable: dumps headers (Authorization), body (IBAN, national ID) and the customer's message
@@ -598,9 +598,9 @@ log.info("assist_request", extra={
 })
 ```
 
-### 🟡 التعمق أكثر (Going deeper)
+### 🟡 التعمق أكثر
 
-**أين تذهب البيانات الشخصية في ميزةٍ تعتمد على نموذجٍ لغوي كبير (Where personal data goes in an LLM feature).** يمكن لجولةٍ حوارية واحدة (One turn) من نجم أسيست (Najm Assist) أن تُنشئ نسخًا في الموجّه (the prompt)، أي الرسالة إضافةً إلى بيانات الحساب التي يضيفها التطبيق (the message plus account data the app adds)، وفي السياق المسترجَع (retrieved context) (انظر 9.3)، ولدى مزوّد النموذج (the model provider)، من حيث المعالجة (processing)، وربما الاحتفاظ لمراقبة إساءة الاستخدام (possibly retention for abuse monitoring)، وربما التدريب (possibly training)، بحسب العقد والإعدادات (depending on contract and settings)، وفي مخزن نصوص المحادثات (the transcript store)، وأدوات التتبّع التي تلتقط الموجّهات الكاملة (tracing tools that capture full prompts)، ومجموعات التقييم والضبط الدقيق (evaluation and fine-tuning sets)، والفهارس المتجهية (vector indexes). ولهذه الأسباب تُدرج قائمة OWASP Top 10 for LLM Applications (2025) بندَي *الإفصاح عن المعلومات الحساسة (Sensitive Information Disclosure)* (LLM02) و*نقاط ضعف المتجهات والتضمينات (Vector and Embedding Weaknesses)* (LLM08). وقد أظهرت الأبحاث (Research)، مثل عمل Morris وزملائه (Morris and colleagues) عام 2023، أن النص يمكن إعادة بنائه إلى حدٍّ كبير من تضميناته (largely reconstructed from its embeddings) في ظل بعض الظروف (under some conditions)، فتعامل مع تضمينات البيانات الشخصية على أنها بياناتٌ شخصية (treat embeddings of personal data as personal data).
+**أين تذهب البيانات الشخصية في ميزةٍ تعتمد على نموذجٍ لغوي كبير.** يمكن لجولةٍ حوارية واحدة من نجم أسيست أن تُنشئ نسخًا في الموجّه، أي الرسالة إضافةً إلى بيانات الحساب التي يضيفها التطبيق، وفي السياق المسترجَع (انظر 9.3)، ولدى مزوّد النموذج، من حيث المعالجة، وربما الاحتفاظ لمراقبة إساءة الاستخدام، وربما التدريب، بحسب العقد والإعدادات، وفي مخزن نصوص المحادثات، وأدوات التتبّع التي تلتقط الموجّهات الكاملة، ومجموعات التقييم والضبط الدقيق، والفهارس المتجهية. ولهذه الأسباب تُدرج قائمة OWASP Top 10 for LLM Applications (2025) بندَي *الإفصاح عن المعلومات الحساسة (Sensitive Information Disclosure)* (LLM02) و*نقاط ضعف المتجهات والتضمينات* (LLM08). وقد أظهرت الأبحاث، مثل عمل Morris وزملائه عام 2023، أن النص يمكن إعادة بنائه إلى حدٍّ كبير من تضميناته في ظل بعض الظروف، فتعامل مع تضمينات البيانات الشخصية على أنها بياناتٌ شخصية.
 
 ```mermaid
 flowchart RL
@@ -615,154 +615,154 @@ flowchart RL
     D --> E
 ```
 
-الضوابط، مرتّبةً حسب قيمتها (The controls, in order of value):
+الضوابط، مرتّبةً حسب قيمتها:
 
-1. **قلّل الموجّه (Minimise the prompt).** لمعاملةٍ متنازعٍ عليها (For a disputed transaction)، أرسل حقول تلك المعاملة (send that transaction's fields)، لا اثني عشر شهرًا من السجل وملف العميل (not twelve months of history and the customer profile).
-2. **نقِّح أو استخدم الأسماء المستعارة قبل المزوّد (Redact or pseudonymise before the provider).** استبدل أرقام IBAN وأرقام البطاقات وأرقام الهوية الوطنية (IBANs, card numbers and national IDs) بعناصر نائبة (placeholders) مثل `[IBAN_1]`؛ ولا تحلّ طبقة الأدوات على الخادم (the server-side tool layer) القيم الحقيقية إلا حيث يحتاج إليها إجراءٌ ما (only where an action needs them).
-3. **أحكِم شروط المزوّد (Fix provider terms).** اتفاقية معالجة البيانات (Data processing agreement)، وموقع البيانات (data location)، والاحتفاظ (retention)، وإعداد عدم التدريب (a no-training setting)، تتحقق منها سارة وفريق المشتريات (Sara and procurement) قبل الإطلاق (before launch).
-4. **الاحتفاظ لكل نسخة (Retention per copy)**، مفروضًا بالمهام (enforced by jobs)، مع مسار حذفٍ يصل إلى (a deletion path that reaches) نصوص المحادثات (transcripts) والتتبّعات (traces) والفهارس المتجهية (vector indexes) ومجموعات التقييم (evaluation sets).
-5. **لا بيانات عملاء حقيقية في مجموعات التقييم أو التدريب (No real customer data in evaluation or training sets)** دون أساسٍ قانوني (a legal basis) وموافقة مسؤولة حماية البيانات (DPO approval) والحجب (masking)؛ وفضّل البيانات الاصطناعية (prefer synthetic data).
+1. **قلّل الموجّه.** لمعاملةٍ متنازعٍ عليها، أرسل حقول تلك المعاملة، لا اثني عشر شهرًا من السجل وملف العميل.
+2. **نقِّح أو استخدم الأسماء المستعارة قبل المزوّد.** استبدل أرقام IBAN وأرقام البطاقات وأرقام الهوية الوطنية بعناصر نائبة مثل `[IBAN_1]`؛ ولا تحلّ طبقة الأدوات على الخادم القيم الحقيقية إلا حيث يحتاج إليها إجراءٌ ما.
+3. **أحكِم شروط المزوّد.** اتفاقية معالجة البيانات، وموقع البيانات، والاحتفاظ، وإعداد عدم التدريب، تتحقق منها سارة وفريق المشتريات قبل الإطلاق.
+4. **الاحتفاظ لكل نسخة**، مفروضًا بالمهام، مع مسار حذفٍ يصل إلى نصوص المحادثات والتتبّعات والفهارس المتجهية ومجموعات التقييم.
+5. **لا بيانات عملاء حقيقية في مجموعات التقييم أو التدريب** دون أساسٍ قانوني وموافقة مسؤولة حماية البيانات (DPO approval) والحجب؛ وفضّل البيانات الاصطناعية.
 
-**بيانات الاختبار (Test data).** بيانات الإنتاج المنسوخة إلى بيئات الاختبار (Production data copied into test environments) تسرّبٌ كلاسيكي (a classic leak). استخدم بياناتٍ اصطناعية (synthetic data) أو مجموعاتٍ فرعية محجوبةً على نحوٍ لا رجعة فيه (irreversibly masked subsets)، مع موافقة مسؤولة حماية البيانات على الاستثناءات (DPO approval for exceptions).
+**بيانات الاختبار.** بيانات الإنتاج المنسوخة إلى بيئات الاختبار تسرّبٌ كلاسيكي. استخدم بياناتٍ اصطناعية أو مجموعاتٍ فرعية محجوبةً على نحوٍ لا رجعة فيه، مع موافقة مسؤولة حماية البيانات على الاستثناءات.
 
-**هندسة الاحتفاظ والحذف (Retention and deletion engineering).** اكتب جدول احتفاظٍ لكل نوعٍ من البيانات (a retention schedule per data type) مع سارة والإدارة القانونية (Sara and Legal). فالبنوك ملزمةٌ بالاحتفاظ ببعض السجلات لسنوات (must keep some records for years) بموجب القواعد المالية وقواعد مكافحة غسل الأموال (financial and anti-money-laundering rules)، ولحق المحو (right to erasure) في GDPR، المادة 17 (Art. 17)، استثناءاتٌ للالتزامات القانونية (exceptions for legal obligations)، فعبارة «احذف كل شيء» ("delete everything") ليست صحيحةً دائمًا (not always right). ثم افرضه (Then enforce it): إعدادات مدة البقاء (time-to-live settings)، ومهام الحذف المجدولة (scheduled deletion jobs)، والانتشار إلى (propagation to) فهارس البحث (search indexes) وذاكرات التخزين المؤقت (caches) ومستودع البيانات (the data warehouse) والتحليلات (analytics) والمخازن المتجهية (vector stores). وبالنسبة للنسخ الاحتياطية التي لا يمكنك تعديلها (For backups you cannot edit)، يجعل **الإتلاف التشفيري (crypto-shredding)** بمفاتيح لكل عميل (with per-customer keys) (5.1) الحذفَ حقيقيًّا (makes deletion real).
+**هندسة الاحتفاظ والحذف.** اكتب جدول احتفاظٍ لكل نوعٍ من البيانات مع سارة والإدارة القانونية. فالبنوك ملزمةٌ بالاحتفاظ ببعض السجلات لسنوات بموجب القواعد المالية وقواعد مكافحة غسل الأموال، ولحق المحو في GDPR، المادة 17، استثناءاتٌ للالتزامات القانونية، فعبارة «احذف كل شيء» ليست صحيحةً دائمًا. ثم افرضه: إعدادات مدة البقاء، ومهام الحذف المجدولة، والانتشار إلى فهارس البحث وذاكرات التخزين المؤقت ومستودع البيانات والتحليلات والمخازن المتجهية. وبالنسبة للنسخ الاحتياطية التي لا يمكنك تعديلها، يجعل **الإتلاف التشفيري (crypto-shredding)** بمفاتيح لكل عميل (5.1) الحذفَ حقيقيًّا.
 
-**الوصول إلى البيانات الشخصية (Access to personal data).** أقل الصلاحيات حسب الغرض (Least privilege by purpose)، والوصول عند الحاجة فقط للمهندسين (just-in-time access for engineers)، وكسر الزجاج مع التنبيهات (break-glass with alerts)، وسجل تدقيقٍ لمن اطّلع على أي عميل (an audit trail of who viewed which customer): فالمطّلعون من الداخل (insiders) وحسابات الموظفين المخترقة (compromised staff accounts) تهديداتٌ حقيقية (real threats).
+**الوصول إلى البيانات الشخصية.** أقل الصلاحيات حسب الغرض، والوصول عند الحاجة فقط للمهندسين، وكسر الزجاج مع التنبيهات، وسجل تدقيقٍ لمن اطّلع على أي عميل: فالمطّلعون من الداخل وحسابات الموظفين المخترقة تهديداتٌ حقيقية.
 
-### 🔴 نظرة الخبير (Expert view)
+### 🔴 نظرة الخبير
 
-**نمذجة تهديدات الخصوصية باستخدام LINDDUN (Privacy threat modelling with LINDDUN).** يعثر STRIDE (1.1) على التهديدات الأمنية (security threats)؛ أمّا **LINDDUN**، الذي طُوِّر في جامعة KU Leuven، فيعثر على تهديدات الخصوصية (privacy threats): الربط (Linking)، وتحديد الهوية (Identifying)، وعدم الإنكار (Non-repudiation)، والكشف (Detecting)، والإفصاح عن البيانات (Data disclosure)، وعدم الدراية (Unawareness)، ومعه انعدام القدرة على التدخل (and unintervenability)، وعدم الامتثال (Non-compliance). شغّله على مخطط تدفق البيانات نفسه (Run it on the same data-flow diagram). وفي نجم أسيست (For Najm Assist)، يكشف تهديداتٍ يفوّتها STRIDE (threats STRIDE misses)، مثل ربط موضوعات المحادثة (linking chat topics) لاستنتاج المشكلات الصحية أو المالية للعميل (to infer a customer's health or money troubles)، أو عدم دراية العملاء بأن نصوص المحادثات تغذّي التقييم (customers being unaware that transcripts feed evaluation).
+**نمذجة تهديدات الخصوصية باستخدام LINDDUN.** يعثر STRIDE (1.1) على التهديدات الأمنية؛ أمّا **LINDDUN**، الذي طُوِّر في جامعة KU Leuven، فيعثر على تهديدات الخصوصية: الربط، وتحديد الهوية، وعدم الإنكار (Non-repudiation)، والكشف، والإفصاح عن البيانات، وعدم الدراية، ومعه انعدام القدرة على التدخل، وعدم الامتثال. شغّله على مخطط تدفق البيانات نفسه. وفي نجم أسيست، يكشف تهديداتٍ يفوّتها STRIDE، مثل ربط موضوعات المحادثة لاستنتاج المشكلات الصحية أو المالية للعميل، أو عدم دراية العملاء بأن نصوص المحادثات تغذّي التقييم.
 
-**إعادة تحديد الهوية (Re-identification).** كثيرًا ما يمكن إعادة تحديد الهوية في مجموعات البيانات «المجهولة الهوية» ("Anonymised" datasets) بالجمع بين أشباه المعرّفات (by combining quasi-identifiers) مثل تاريخ الميلاد (birth date) والرمز البريدي (postcode) والجنسية (nationality) وجهة العمل (employer). وقد أظهرت أبحاث لاتانيا سويني (Latanya Sweeney's research) كم هي قليلةٌ السماتُ التي تكفي لتمييز الأشخاص (how few attributes can single people out)، وفي المجتمعات الصغيرة (in small populations)، كجنسيةٍ واحدة وجهة عملٍ واحدة ومدينةٍ واحدة (one nationality, one employer, one city)، يكون الخطر أعلى (the risk is higher). ويساعد **إخفاء الهوية من الرتبة k (k-anonymity)**، أي ألّا يمكن تمييز كل سجلٍّ عن k−1 سجلًا آخر على الأقل (each record indistinguishable from at least k−1 others)، لكن له نقاط ضعفٍ معروفة (known weaknesses). أمّا **الخصوصية التفاضلية (Differential privacy)** فتضيف ضجيجًا معايَرًا إلى الإحصاءات (adds calibrated noise to statistics) بحيث لا يمكن استنتاج وجود أي شخصٍ بعينه (no single person's presence can be inferred)؛ وهي تناسب المجاميع المنشورة (published aggregates). ولمعظم الفرق، الخطوة العملية (the practical step) هي التقارير المجمَّعة بحدٍّ أدنى لحجم المجموعات (aggregate reporting with minimum group sizes).
+**إعادة تحديد الهوية.** كثيرًا ما يمكن إعادة تحديد الهوية في مجموعات البيانات «المجهولة الهوية» بالجمع بين أشباه المعرّفات مثل تاريخ الميلاد والرمز البريدي والجنسية وجهة العمل. وقد أظهرت أبحاث لاتانيا سويني كم هي قليلةٌ السماتُ التي تكفي لتمييز الأشخاص، وفي المجتمعات الصغيرة، كجنسيةٍ واحدة وجهة عملٍ واحدة ومدينةٍ واحدة، يكون الخطر أعلى. ويساعد **إخفاء الهوية من الرتبة k (k-anonymity)**، أي ألّا يمكن تمييز كل سجلٍّ عن k−1 سجلًا آخر على الأقل، لكن له نقاط ضعفٍ معروفة. أمّا **الخصوصية التفاضلية (Differential privacy)** فتضيف ضجيجًا معايَرًا إلى الإحصاءات بحيث لا يمكن استنتاج وجود أي شخصٍ بعينه؛ وهي تناسب المجاميع المنشورة. ولمعظم الفرق، الخطوة العملية هي التقارير المجمَّعة بحدٍّ أدنى لحجم المجموعات.
 
-**تقنيات تعزيز الخصوصية (Privacy-enhancing technologies)** مثل الحوسبة السرية (confidential computing) والتعلّم الاتحادي (federated learning) والتشفير المتماثل الشكل (homomorphic encryption) تخدم حالاتٍ متخصصة (specialised cases)؛ فأشرِك المتخصصين قبل الاعتماد عليها (involve specialists before relying on them).
+**تقنيات تعزيز الخصوصية** مثل الحوسبة السرية والتعلّم الاتحادي والتشفير المتماثل الشكل تخدم حالاتٍ متخصصة؛ فأشرِك المتخصصين قبل الاعتماد عليها.
 
-**تقييمات أثر حماية البيانات والاختراقات (DPIAs and breaches).** المعالجة المرجَّح أن تكون عالية المخاطر (Processing likely to be high-risk)، وهو ما تكون عليه غالبًا ميزات الذكاء الاصطناعي التي تتعامل مع بيانات العملاء على نطاقٍ واسع (AI features handling customer data at scale)، تحتاج إلى **تقييم أثر حماية البيانات (data protection impact assessment)** (DPIA)، وفق المادة 35 من GDPR (GDPR Art. 35). يُسهم الأمن (Security contributes) بنموذج التهديدات والضوابط (the threat model and controls)؛ وتتولى سارة التقييم (Sara owns the assessment). وبعد اختراقٍ للبيانات الشخصية (After a personal data breach)، تشترط المادة 33 من GDPR (GDPR Art. 33) إخطار السلطة الإشرافية (notifying the supervisory authority) خلال 72 ساعة حيثما أمكن (within 72 hours where feasible)، ما لم يكن من غير المرجّح أن يعرّض الاختراقُ الأشخاصَ للخطر (unless the breach is unlikely to put people at risk)، وتوثيق كل اختراق (documenting every breach). وتشترط المادة 34 (Art. 34) إبلاغ الأشخاص المتأثرين (telling affected people) حين يكون الخطر عليهم مرتفعًا (when the risk to them is high)، ولكن ليس إذا كانت البيانات غير مفهومةٍ للمهاجم (unintelligible to the attacker)، مثلًا في ظل تشفيرٍ قوي لم يُخترق مفتاحه (strong encryption whose key was not compromised)، وفق المادة 34(3)(أ) (Art. 34(3)(a)). وللقانون PDPPL واجباته الخاصة بشأن الاختراقات (its own breach duties)؛ وتقرّر مسؤولة حماية البيانات (the DPO decides) (انظر 10.2 و11.2).
+**تقييمات أثر حماية البيانات والاختراقات (DPIAs and breaches).** المعالجة المرجَّح أن تكون عالية المخاطر، وهو ما تكون عليه غالبًا ميزات الذكاء الاصطناعي التي تتعامل مع بيانات العملاء على نطاقٍ واسع، تحتاج إلى **تقييم أثر حماية البيانات** (DPIA)، وفق المادة 35 من GDPR. يُسهم الأمن بنموذج التهديدات والضوابط؛ وتتولى سارة التقييم. وبعد اختراقٍ للبيانات الشخصية، تشترط المادة 33 من GDPR إخطار السلطة الإشرافية خلال 72 ساعة حيثما أمكن، ما لم يكن من غير المرجّح أن يعرّض الاختراقُ الأشخاصَ للخطر، وتوثيق كل اختراق. وتشترط المادة 34 إبلاغ الأشخاص المتأثرين حين يكون الخطر عليهم مرتفعًا، ولكن ليس إذا كانت البيانات غير مفهومةٍ للمهاجم، مثلًا في ظل تشفيرٍ قوي لم يُخترق مفتاحه، وفق المادة 34(3)(أ). وللقانون PDPPL واجباته الخاصة بشأن الاختراقات؛ وتقرّر مسؤولة حماية البيانات (انظر 10.2 و11.2).
 
-## 🧰 الأدوات (The toolkit)
-| الضابط أو المعيار أو الأداة (Control, standard or tool) | ما هو وماذا يفعل (What it is and does) | متى تلجأ إليه (When to reach for it) |
+## 🧰 الأدوات
+| الضابط أو المعيار أو الأداة | ما هو وماذا يفعل | متى تلجأ إليه |
 |---|---|---|
-| **Data inventory** — جرد البيانات | خريطةٌ على مستوى الحقول (Field-level map) للبيانات الشخصية وأغراضها ونسخها والوصول إليها والاحتفاظ بها وحذفها (of personal data, purposes, copies, access, retention and deletion) | قبل اعتماد التصميم (Before design sign-off)؛ وتُحدَّث مع كل إصدار (updated with each release) |
-| **Data classification** — تصنيف البيانات | مستوياتٌ مثل عام وداخلي وسرّي ومقيَّد (Levels such as Public, Internal, Confidential, Restricted) تقود الضوابط (that drive controls) | كل حقلٍ وسجلٍّ ومجموعة بياناتٍ وميزة ذكاءٍ اصطناعي جديدة (Every new field, log, dataset and AI feature) |
-| **Tokenisation** — الترميز | رموزٌ عشوائية تحلّ محلّ القيم الحساسة (Random tokens replace sensitive values)؛ وخزنةٌ تحتفظ بالربط (a vault holds the mapping) | أرقام البطاقات والمعرّفات التي لا تحتاجها معظم الأنظمة بنصٍّ صريح أبدًا (Card numbers and identifiers most systems never need in clear) |
-| **Pseudonymisation** — التسمية المستعارة | استبدال المعرّفات بمفتاح (Keyed replacement of identifiers)، ولا يمكن عكسه إلا بمعلوماتٍ محفوظةٍ منفصلة (reversible only with separately held information) | التحليلات (Analytics)، ومجموعات التقييم (evaluation sets)، والسجلات (logs) التي يجب أن تربط بين القيود (that must join records) |
-| **Log redaction** — تنقيح السجلات | تسجيلٌ مُهيكل وفق قائمة سماح (Allowlisted structured logging) مع مرشّح تنقيح بوصفه شبكة أمان (plus a redaction filter as a safety net) | كل خدمة (Every service)، ولا سيما بوابات النماذج اللغوية الكبيرة وواجهات البرمجة (especially LLM gateways and APIs) |
-| **Crypto-shredding** — الإتلاف التشفيري | مفاتيح لكل عميل (Per-customer keys) يجعل إتلافها البيانات، بما فيها النسخ الاحتياطية، غير قابلةٍ للقراءة (whose destruction makes data, backups included, unreadable) | الحذف حيث لا يمكن تعديل النسخ الاحتياطية أو الأرشيفات (Deletion where backups or archives cannot be edited) |
-| **LINDDUN** — من جامعة KU Leuven | إطارٌ لنمذجة تهديدات الخصوصية (Privacy threat-modelling framework) يكمّل STRIDE (that complements STRIDE) | تصميم الميزات التي تعالج البيانات الشخصية (Designing features that process personal data) |
-| **DPIA** — تقييم أثر حماية البيانات، وفق المادة 35 من GDPR (GDPR Art. 35) | تقييمٌ مُهيكل للمعالجة عالية المخاطر وضماناتها (Structured assessment of high-risk processing and its safeguards) | ميزات الذكاء الاصطناعي الجديدة أو معالجة بيانات العملاء على نطاقٍ واسع (New AI features or large-scale customer-data processing) |
+| **Data inventory** — جرد البيانات | خريطةٌ على مستوى الحقول للبيانات الشخصية وأغراضها ونسخها والوصول إليها والاحتفاظ بها وحذفها | قبل اعتماد التصميم؛ وتُحدَّث مع كل إصدار |
+| **Data classification** — تصنيف البيانات | مستوياتٌ مثل عام وداخلي وسرّي ومقيَّد تقود الضوابط | كل حقلٍ وسجلٍّ ومجموعة بياناتٍ وميزة ذكاءٍ اصطناعي جديدة |
+| **Tokenisation** — الترميز | رموزٌ عشوائية تحلّ محلّ القيم الحساسة؛ وخزنةٌ تحتفظ بالربط | أرقام البطاقات والمعرّفات التي لا تحتاجها معظم الأنظمة بنصٍّ صريح أبدًا |
+| **Pseudonymisation** — التسمية المستعارة | استبدال المعرّفات بمفتاح، ولا يمكن عكسه إلا بمعلوماتٍ محفوظةٍ منفصلة | التحليلات، ومجموعات التقييم، والسجلات التي يجب أن تربط بين القيود |
+| **Log redaction** — تنقيح السجلات | تسجيلٌ مُهيكل وفق قائمة سماح مع مرشّح تنقيح بوصفه شبكة أمان | كل خدمة، ولا سيما بوابات النماذج اللغوية الكبيرة وواجهات البرمجة |
+| **Crypto-shredding** — الإتلاف التشفيري | مفاتيح لكل عميل يجعل إتلافها البيانات، بما فيها النسخ الاحتياطية، غير قابلةٍ للقراءة | الحذف حيث لا يمكن تعديل النسخ الاحتياطية أو الأرشيفات |
+| **LINDDUN** — من جامعة KU Leuven | إطارٌ لنمذجة تهديدات الخصوصية يكمّل STRIDE | تصميم الميزات التي تعالج البيانات الشخصية |
+| **DPIA** — تقييم أثر حماية البيانات، وفق المادة 35 من GDPR | تقييمٌ مُهيكل للمعالجة عالية المخاطر وضماناتها | ميزات الذكاء الاصطناعي الجديدة أو معالجة بيانات العملاء على نطاقٍ واسع |
 
-## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)
-بعد طلب المحو (After the erasure request)، تنشر سارة ونورة **خريطة البيانات الشخصية لنجم أسيست، الإصدار 1، مقتطف (Najm Assist personal-data map, v1, excerpt)** وقاعدةً للتسجيل (a logging rule). وفترات الاحتفاظ توضيحية وتُحدَّد مع الإدارة القانونية (Retention periods are illustrative and set with Legal).
+## 🏛️ عمليًا في بنك نجم
+بعد طلب المحو، تنشر سارة ونورة **خريطة البيانات الشخصية لنجم أسيست، الإصدار 1، مقتطف** وقاعدةً للتسجيل. وفترات الاحتفاظ توضيحية وتُحدَّد مع الإدارة القانونية.
 
-| عنصر البيانات (Data item) | الفئة (Class) | المواقع المسموح بها (Allowed locations) | في السجلات؟ ⁦(In logs?)⁩ | الاحتفاظ (Retention) | مسار الحذف (Deletion path) |
+| عنصر البيانات | الفئة | المواقع المسموح بها | في السجلات؟ | الاحتفاظ | مسار الحذف |
 |---|---|---|---|---|---|
-| نص رسالة العميل (Customer message text) | سرّي (Confidential) | البوابة (Gateway)؛ والمزوّد بعد التنقيح (provider after redaction)؛ ومخزن نصوص المحادثات (transcript store) | الطول فقط (Length only) | نصوص المحادثات 90 يومًا (Transcripts 90 days) | مهمة حذف (Deletion job)؛ وسير عمل المحو (erasure workflow) |
-| معرّفات الحسابات والبطاقات (Account and card identifiers) | مقيَّد (Restricted) | طبقة الأدوات فقط، بوصفها رموزًا (Tool layer only, as tokens) | مرجع الرمز فقط (Token reference only) | مع سجل الحساب (With the account record) | خزنة البطاقات وقواعد الأنظمة المصرفية الأساسية (Card vault and core banking rules) |
-| رقم الهوية الوطنية (National ID) | مقيَّد (Restricted) | خدمة الهوية فقط (Identity service only) | أبدًا (Never) | الاحتفاظ القانوني (Legal retention) | مالك خدمة الهوية (Identity service owner) |
-| الموجّهات والمخرجات (Prompts and outputs) | سرّي (Confidential) | أداة التتبّع، بعد التنقيح (Tracing tool, redacted) | المنقَّحة فقط (Redacted only) | 14 يومًا (14 days) | مدة البقاء في أداة التتبّع (Time-to-live in tracing tool) |
-| أجزاء المستندات المسترجَعة (Retrieved document chunks) | سرّي (Confidential) | الفهرس المتجهي، محصورًا لكل عميل (Vector index, scoped per customer) | لا (No) | كالمستند المصدر (As source document) | إعادة الفهرسة عند حذف المصدر (Re-index on source deletion) |
-| حالات التقييم (Evaluation cases) | داخلي بعد الحجب (Internal once masked) | مخزن التقييم (Evaluation store) | لا (No) | تُراجَع ربع سنويًّا (Reviewed quarterly) | اصطناعية أو محجوبة فقط (Synthetic or masked only)؛ وموافقة مسؤولة حماية البيانات (DPO approval) |
-| سجلات طلبات المزوّد (Provider request logs) | سرّي (Confidential) | لدى المزوّد، بموجب العقد (Provider, under contract) | لا ينطبق (n/a) | أقصر مدةٍ يسمح بها العقد (Shortest the contract allows) | بندٌ في العقد (Contract clause)؛ ويُتحقَّق منه سنويًّا (checked yearly) |
+| نص رسالة العميل | سرّي | البوابة؛ والمزوّد بعد التنقيح؛ ومخزن نصوص المحادثات | الطول فقط | نصوص المحادثات 90 يومًا | مهمة حذف؛ وسير عمل المحو |
+| معرّفات الحسابات والبطاقات | مقيَّد | طبقة الأدوات فقط، بوصفها رموزًا | مرجع الرمز فقط | مع سجل الحساب | خزنة البطاقات وقواعد الأنظمة المصرفية الأساسية |
+| رقم الهوية الوطنية | مقيَّد | خدمة الهوية فقط | أبدًا | الاحتفاظ القانوني | مالك خدمة الهوية |
+| الموجّهات والمخرجات | سرّي | أداة التتبّع، بعد التنقيح | المنقَّحة فقط | 14 يومًا | مدة البقاء في أداة التتبّع |
+| أجزاء المستندات المسترجَعة | سرّي | الفهرس المتجهي، محصورًا لكل عميل | لا | كالمستند المصدر | إعادة الفهرسة عند حذف المصدر |
+| حالات التقييم | داخلي بعد الحجب | مخزن التقييم | لا | تُراجَع ربع سنويًّا | اصطناعية أو محجوبة فقط؛ وموافقة مسؤولة حماية البيانات |
+| سجلات طلبات المزوّد | سرّي | لدى المزوّد، بموجب العقد | لا ينطبق | أقصر مدةٍ يسمح بها العقد | بندٌ في العقد؛ ويُتحقَّق منه سنويًّا |
 
-**قاعدة التسجيل LOG-01، لجميع الخدمات (Logging rule LOG-01, all services).** تستخدم السجلات حقولًا مُهيكلة وفق قائمة سماح (Logs use structured, allowlisted fields). ولا تُسجَّل أبدًا (are never logged) بيانات الاعتماد (Credentials)، ورموز المرور لمرةٍ واحدة (OTPs)، ورموز الجلسات (session tokens)، وأرقام البطاقات الكاملة (full card numbers)، ورموز أمان البطاقات (card security codes)، وأرقام الهوية الوطنية (national IDs)؛ ولا يُسجَّل محتوى العميل إلا بوصفه حجمًا أو فئة (customer content is logged only as size or category). ولكل خدمةٍ اختبار وحدة (a unit test) يفشل إذا ظهر رقم بطاقةٍ اختباري (a test card number) أو ترويسة `Authorization` في مخرجات السجل (log output). ويحتاج التقاط المحتوى على مستوى التصحيح (Debug-level content capture) إلى موافقة فريق أمن التطبيقات ومسؤولة حماية البيانات (AppSec and DPO approval)، ويكون منقَّحًا ومقيَّد الوصول (redacted and access-restricted)، ويُطفئ نفسه بعد سبعة أيام (switches itself off after seven days).
+**قاعدة التسجيل LOG-01، لجميع الخدمات.** تستخدم السجلات حقولًا مُهيكلة وفق قائمة سماح. ولا تُسجَّل أبدًا بيانات الاعتماد، ورموز المرور لمرةٍ واحدة، ورموز الجلسات، وأرقام البطاقات الكاملة، ورموز أمان البطاقات، وأرقام الهوية الوطنية؛ ولا يُسجَّل محتوى العميل إلا بوصفه حجمًا أو فئة. ولكل خدمةٍ اختبار وحدة يفشل إذا ظهر رقم بطاقةٍ اختباري أو ترويسة `Authorization` في مخرجات السجل. ويحتاج التقاط المحتوى على مستوى التصحيح إلى موافقة فريق أمن التطبيقات ومسؤولة حماية البيانات، ويكون منقَّحًا ومقيَّد الوصول، ويُطفئ نفسه بعد سبعة أيام.
 
-## 🛠️ التمارين (Exercises)
-- 🟢 ارسم خريطة البيانات الشخصية (Map the personal data) في ميزةٍ واحدة تبنيها أو تستخدمها في العمل (one feature you build or use at work): كل حقلٍ وكل مكانٍ تستقر فيه نسخة (every field and every place a copy lands)، بما في ذلك السجلات والتحليلات والنسخ الاحتياطية وأدوات الذكاء الاصطناعي (logs, analytics, backups and AI tools). *يكتمل عندما (Done when):* يكون لكل نسخةٍ غرض (a purpose) وفترة احتفاظ (a retention period) وطريقة حذف (a deletion method)، وتكون قد وجدت نسخةً واحدة على الأقل لم يُدرجها أحد (at least one copy nobody had listed).
-- 🟡 في تطبيقك الخاص (your own application)، حوّل نقطة نهايةٍ واحدة (one endpoint) إلى التسجيل المُهيكل وفق قائمة سماح (allowlisted structured logging) مع مرشّح تنقيح (a redaction filter)، وأضِف اختبار وحدة (a unit test) يفشل إذا وصل رقم بطاقةٍ اختباري معياري (a standard test card number) مثل `4111 1111 1111 1111` أو ترويسة `Authorization` إلى مخرجات السجل (log output). *يكتمل عندما (Done when):* ينجح الاختبار (the test passes)، ولا يعثر البحث في سجلات يومٍ محلية (a search of a day's local logs) على أي أسرارٍ أو معرّفاتٍ كاملة (no secrets or full identifiers).
-- 🔴 نفّذ نمذجة تهديداتٍ للخصوصية على طريقة LINDDUN (a LINDDUN-style privacy threat model) على نجم أسيست (Najm Assist)، أو على ميزة ذكاءٍ اصطناعي خاصة بك (an AI feature of your own)، وقدّمها مُدخلًا لتقييم أثر حماية البيانات (package it as input to a DPIA). *يكتمل عندما (Done when):* يكون لكل تهديدٍ ضابطٌ ومالك (a control and an owner)، ويغطي مسار الحذف (the deletion path covers) نصوص المحادثات والتتبّعات والفهرس المتجهي ومجموعات التقييم (transcripts, traces, the vector index and evaluation sets)، وتُكتب المخاطر المتبقية (residual risks are written) كي تقبلها مسؤولة حماية البيانات أو ترفضها (for the DPO to accept or reject).
+## 🛠️ التمارين
+- 🟢 ارسم خريطة البيانات الشخصية في ميزةٍ واحدة تبنيها أو تستخدمها في العمل: كل حقلٍ وكل مكانٍ تستقر فيه نسخة، بما في ذلك السجلات والتحليلات والنسخ الاحتياطية وأدوات الذكاء الاصطناعي. *يكتمل عندما:* يكون لكل نسخةٍ غرض وفترة احتفاظ وطريقة حذف، وتكون قد وجدت نسخةً واحدة على الأقل لم يُدرجها أحد.
+- 🟡 في تطبيقك الخاص، حوّل نقطة نهايةٍ واحدة إلى التسجيل المُهيكل وفق قائمة سماح مع مرشّح تنقيح، وأضِف اختبار وحدة يفشل إذا وصل رقم بطاقةٍ اختباري معياري مثل `4111 1111 1111 1111` أو ترويسة `Authorization` إلى مخرجات السجل. *يكتمل عندما:* ينجح الاختبار، ولا يعثر البحث في سجلات يومٍ محلية على أي أسرارٍ أو معرّفاتٍ كاملة.
+- 🔴 نفّذ نمذجة تهديداتٍ للخصوصية على طريقة LINDDUN على نجم أسيست، أو على ميزة ذكاءٍ اصطناعي خاصة بك، وقدّمها مُدخلًا لتقييم أثر حماية البيانات. *يكتمل عندما:* يكون لكل تهديدٍ ضابطٌ ومالك، ويغطي مسار الحذف نصوص المحادثات والتتبّعات والفهرس المتجهي ومجموعات التقييم، وتُكتب المخاطر المتبقية كي تقبلها مسؤولة حماية البيانات أو ترفضها.
 
-## ⚠️ أخطاء وفخاخ (Mistakes and traps)
-- **«إنها مجزّأة، إذن فهي مجهولة الهوية» ("It's hashed, so it's anonymous").** يمكن عكس المعرّفات المجزّأة بتجربة كل قيمة (Hashed identifiers can be reversed by trying every value). استخدم أسماءً مستعارة بمفتاح (Use keyed pseudonyms) وتعامل مع الناتج على أنه بياناتٌ شخصية (treat the result as personal data).
-- **تسجيل الطلب كاملًا «مؤقتًا فقط» (Logging the whole request "just for now").** تسجيل التصحيح يعيش أطول من الخلل (Debug logging outlives the bug). اعتمد قائمة سماحٍ للحقول (Allowlist fields)؛ وحدّد مدةً زمنية لأي التقاطٍ للمحتوى (time-box any content capture).
-- **بيانات الإنتاج في الاختبار (Production data in test).** ضوابط أضعف وقرّاء أكثر (Weaker controls, more readers). استخدم بياناتٍ اصطناعية أو محجوبة (Use synthetic or masked data).
-- **حذفٌ يتوقف عند قاعدة البيانات الرئيسية (Deletion that stops at the main database).** التتبّعات والفهارس وذاكرات التخزين المؤقت والتحليلات ومجموعات التقييم والنسخ الاحتياطية (Traces, indexes, caches, analytics, evaluation sets and backups) تحتفظ بنسخ (hold copies). انشر الحذف إليها (Propagate deletion).
-- **إرسال كل شيءٍ إلى النموذج (Sending everything to the model).** قلّل الموجّه (Minimise the prompt) ونقِّح المعرّفات قبل المزوّد (redact identifiers before the provider).
-- **عقد مزوّد ذكاءٍ اصطناعي لم يقرأه أحد (An AI provider contract nobody read).** إعدادات الاحتفاظ والموقع والتدريب ضوابط خصوصية (Retention, location and training settings are privacy controls). تحقّق منها قبل الإطلاق (Check them before launch).
+## ⚠️ أخطاء وفخاخ
+- **«إنها مجزّأة، إذن فهي مجهولة الهوية».** يمكن عكس المعرّفات المجزّأة بتجربة كل قيمة. استخدم أسماءً مستعارة بمفتاح وتعامل مع الناتج على أنه بياناتٌ شخصية.
+- **تسجيل الطلب كاملًا «مؤقتًا فقط».** تسجيل التصحيح يعيش أطول من الخلل. اعتمد قائمة سماحٍ للحقول (Allowlist fields)؛ وحدّد مدةً زمنية لأي التقاطٍ للمحتوى.
+- **بيانات الإنتاج في الاختبار.** ضوابط أضعف وقرّاء أكثر. استخدم بياناتٍ اصطناعية أو محجوبة.
+- **حذفٌ يتوقف عند قاعدة البيانات الرئيسية.** التتبّعات والفهارس وذاكرات التخزين المؤقت والتحليلات ومجموعات التقييم والنسخ الاحتياطية تحتفظ بنسخ. انشر الحذف إليها.
+- **إرسال كل شيءٍ إلى النموذج.** قلّل الموجّه ونقِّح المعرّفات قبل المزوّد.
+- **عقد مزوّد ذكاءٍ اصطناعي لم يقرأه أحد.** إعدادات الاحتفاظ والموقع والتدريب ضوابط خصوصية. تحقّق منها قبل الإطلاق.
 
-## 🧾 الخلاصة (Recap)
-- قلّل أولًا (Minimise first): فالبيانات التي لم تُجمع قط لا يمكن أن تتسرّب (data never collected cannot leak)، والبيانات المحذوفة لا يمكن اختراقها (deleted data cannot be breached).
-- اجرد وصنّف كل حقلٍ وكل نسخة (Inventory and classify every field and every copy)؛ ودع الفئة تقود التشفير والتسجيل والوصول (let the class drive encryption, logging and access).
-- الحجب والترميز والتسمية المستعارة وإخفاء الهوية أمورٌ مختلفة (Masking, tokenisation, pseudonymisation and anonymisation differ)؛ والبيانات ذات الأسماء المستعارة لا تزال بياناتٍ شخصية (pseudonymised data is still personal data).
-- سجّل وفق قائمة سماح (Log by allowlist)، واستخدم التنقيح شبكة أمان (redact as a safety net)، وافصل سجلات التدقيق عن سجلات التصحيح (keep audit logs separate from debug logs).
-- تُنشئ ميزات النماذج اللغوية الكبيرة نسخًا جديدة (LLM features create new copies)؛ وكلٌّ منها يحتاج إلى غرضٍ وفترة احتفاظٍ ومسار حذف (a purpose, a retention period and a deletion path).
+## 🧾 الخلاصة
+- قلّل أولًا: فالبيانات التي لم تُجمع قط لا يمكن أن تتسرّب، والبيانات المحذوفة لا يمكن اختراقها.
+- اجرد وصنّف كل حقلٍ وكل نسخة؛ ودع الفئة تقود التشفير والتسجيل والوصول.
+- الحجب والترميز والتسمية المستعارة وإخفاء الهوية أمورٌ مختلفة؛ والبيانات ذات الأسماء المستعارة لا تزال بياناتٍ شخصية.
+- سجّل وفق قائمة سماح، واستخدم التنقيح شبكة أمان، وافصل سجلات التدقيق عن سجلات التصحيح.
+- تُنشئ ميزات النماذج اللغوية الكبيرة نسخًا جديدة؛ وكلٌّ منها يحتاج إلى غرضٍ وفترة احتفاظٍ ومسار حذف.
 
-## ✍️ اختبر نفسك (Check yourself)
+## ✍️ اختبر نفسك
 
-**1. يبني فريق دانة مجموعة تقييم (evaluation set) من نصوص محادثات نجم أسيست الحقيقية (real Najm Assist transcripts)، ويستبدل أرقام هواتف العملاء بتجزئاتها بـ SHA-256 (SHA-256 hashes)، ويصفها بأنها «مجهولة الهوية» ("anonymous"). ما الرد الأفضل (best response)؟**
+**1. يبني فريق دانة مجموعة تقييم من نصوص محادثات نجم أسيست الحقيقية، ويستبدل أرقام هواتف العملاء بتجزئاتها بـ SHA-256، ويصفها بأنها «مجهولة الهوية». ما الرد الأفضل؟**
 
-- A. وافق عليها: فالتجزئة لا يمكن عكسها (hashing is irreversible)، إذن البيانات مجهولة الهوية (the data is anonymous)
-- B. إنها ليست مجهولة الهوية (It is not anonymous): يمكن استعادة أرقام الهواتف بتجزئة كل رقمٍ ممكن (by hashing every possible number)، ونصوص المحادثات تحتوي على معرّفاتٍ أخرى (transcripts hold other identifiers). فضّل البيانات الاصطناعية أو المحجوبة على نحوٍ سليم (synthetic or properly masked data)، واستخدم أسماءً مستعارة بمفتاح (keyed pseudonyms) حيث يلزم الربط (where linking is needed)، واحصل على موافقة مسؤولة حماية البيانات (DPO approval)
-- C. شفّر مجموعة البيانات وصِفها بأنها مجهولة الهوية (Encrypt the dataset and call it anonymous)
-- D. أزِل أرقام الهواتف واحتفظ بكل ما عداها (Remove the phone numbers and keep everything else)
-
-<details><summary>الإجابة</summary>
-
-**B.** تجزئة فضاءات المدخلات الصغيرة قابلةٌ للعكس (Hashing small input spaces is reversible)، والبيانات ذات الأسماء المستعارة تبقى بياناتٍ شخصية (pseudonymised data remains personal data). وC يحمي لكنه لا يُخفي الهوية (protects but does not anonymise)؛ وD يترك الأسماء وتفاصيل الحسابات والنص الحر (leaves names, account details and free text). انظر: 🟢 الأساسيات (The essentials).
-
-</details>
-
-**2. يطارد فريق بوابة الشركات الصغيرة (SME Portal team) إخفاقًا متقطعًا في رفع الملفات (intermittent upload failure). ويقترح مطوّرٌ تسجيل ترويسات الطلبات وأجسامها كاملةً (logging full request headers and bodies) «لأسبوعٍ واحد فقط» ("for one week only"). ما النهج الأفضل (best approach)؟**
-
-- A. وافق، فهو أسبوعٌ واحد فقط (since it is only one week)
-- B. أطفئ التسجيل لنقطة النهاية لحماية الخصوصية (Turn off logging for the endpoint to protect privacy)
-- C. سجّل كل شيء (Log everything)، لكن اقصر أداة السجلات على فريق بوابة الشركات الصغيرة (limit the log tool to the SME Portal team)
-- D. سجّل حقولًا وفق قائمة سماح (Log allowlisted fields)، مثل مرجع الشركة (company reference) وحجم الملف ونوعه (file size and type) ورمز الخطأ (error code) ومعرّف التتبّع (trace ID)، وأعِد إنتاج المشكلة ببيانات اختبار (reproduce with test data)؛ وإن كان التقاط المحتوى لازمًا حقًّا (if content capture is truly needed)، فاجعله منقَّحًا ومقيَّد الوصول ومعتمَدًا وذاتيّ الانتهاء (redacted, access-restricted, approved and self-expiring)
+- A. وافق عليها: فالتجزئة لا يمكن عكسها، فالبيانات مجهولة الهوية، ولا حاجة إلى أي إجراءٍ إضافي قبل مشاركتها مع الفريق
+- B. ليست مجهولة الهوية: يمكن استعادة الأرقام بتجزئة كل رقمٍ ممكن، والنصوص تحوي معرّفاتٍ أخرى. فضّل البيانات الاصطناعية أو أسماءً مستعارة بمفتاح، وخذ موافقة مسؤولة حماية البيانات
+- C. شفّر مجموعة البيانات وصِفها بأنها مجهولة الهوية، فالتشفير بمفتاحٍ قوي يحقق شروط عدم القابلية للتعرّف على الأشخاص
+- D. أزِل أرقام الهواتف واحتفظ بكل ما عداها، فالهواتف هي المعرّف الوحيد في النصوص ولا يبقى بعدها ما يدل على أحد
 
 <details><summary>الإجابة</summary>
 
-**D.** إنه يحصل على إشارة التصحيح (the debugging signal) دون نسخ بيانات الاعتماد والبيانات الشخصية إلى السجلات (without copying credentials and personal data into logs). وA وC هما الطريقة التي يعيش بها تسجيل التصحيح أطول من الخلل (how debug logging outlives the bug)؛ وB يزيل بياناتٍ لازمةً للرصد (removes data needed for detection). انظر: 🟢 الأساسيات (The essentials).
+**B.** تجزئة فضاءات المدخلات الصغيرة قابلةٌ للعكس، والبيانات ذات الأسماء المستعارة تبقى بياناتٍ شخصية. وC يحمي لكنه لا يُخفي الهوية؛ وD يترك الأسماء وتفاصيل الحسابات والنص الحر. انظر: 🟢 الأساسيات.
 
 </details>
 
-**3. تطلب عميلةٌ مقيمة في الاتحاد الأوروبي (EU-resident customer) من بنك نجم (Najm Bank) محو بياناتها في نجم أسيست (erase her Najm Assist data). أيّ خطةٍ تُظهر أن الفريق يعرف أين تعيش البيانات (knows where the data lives)؟**
+**2. يطارد فريق بوابة الشركات الصغيرة إخفاقًا متقطعًا في رفع الملفات. ويقترح مطوّرٌ تسجيل ترويسات الطلبات وأجسامها كاملةً «لأسبوعٍ واحد فقط». ما النهج الأفضل؟**
 
-- A. احذف صفوفها في جدول نصوص المحادثات (Delete her rows in the transcript table)
-- B. احذف كل ما يتعلق بها (Delete everything about her) في كل مكان، فورًا (everywhere, immediately)، بما في ذلك سجلات الأنظمة المصرفية الأساسية (including core banking records)
-- C. اتبع خريطة البيانات (Follow the data map) إلى نصوص المحادثات والتتبّعات والفهرس المتجهي ومجموعات التقييم وذاكرات التخزين المؤقت والتحليلات (transcripts, traces, the vector index, evaluation sets, caches and analytics)؛ وطبّق استثناءات الاحتفاظ المطلوبة قانونًا (legally required retention exceptions) وفق ما تقرّره مسؤولة حماية البيانات (as the DPO decides)؛ وأتلِف النسخ الاحتياطية تشفيريًّا (crypto-shred backups)؛ وتعامل مع سجلات المزوّد بموجب العقد (handle provider logs under the contract)
-- D. ارفض، لأن نموذج ذكاءٍ اصطناعي كان مشاركًا (because an AI model was involved)
+- A. وافق، فهو أسبوعٌ واحد فقط، وسيُحذف السجل بعد انتهائه، ولا ضرر في احتفاظ الفريق بالبيانات مدة قصيرة
+- B. أطفئ التسجيل لنقطة النهاية كلها لحماية الخصوصية، وتتبّع الإخفاق بالتخمين من حالة الخادم وحدها
+- C. سجّل كل شيء، لكن اقصر أداة السجلات على فريق بوابة الشركات الصغيرة وحده، وامنع أي فريق آخر من فتحها
+- D. سجّل حقولًا وفق قائمة سماح، كمرجع الشركة وحجم الملف ورمز الخطأ ومعرّف التتبّع، وأعِد إنتاج المشكلة ببيانات اختبار؛ وإن لزم محتوى فاجعله منقَّحًا ومقيَّد الوصول وذاتيّ الانتهاء
 
 <details><summary>الإجابة</summary>
 
-**C.** يجب أن يصل الحذف إلى كل نسخة (Deletion must reach every copy) مع احترام واجبات الاحتفاظ القانونية (while respecting legal retention duties). وA يفوّت معظم النسخ (misses most copies)؛ وB يتجاهل الالتزامات بالاحتفاظ بسجلاتٍ مصرفية معينة (ignores obligations to keep certain banking records)؛ وD لا أساس له (has no basis). انظر: 🟡 التعمق أكثر (Going deeper).
+**D.** إنه يحصل على إشارة التصحيح دون نسخ بيانات الاعتماد والبيانات الشخصية إلى السجلات. وA وC هما الطريقة التي يعيش بها تسجيل التصحيح أطول من الخلل؛ وB يزيل بياناتٍ لازمةً للرصد. انظر: 🟢 الأساسيات.
 
 </details>
 
-**4. سُرق حاسوبٌ محمول لنجم (A Najm laptop) يحتوي على تصديرٍ لبيانات العملاء (customer-data export). كان مزوّدًا بتشفيرٍ قوي للقرص الكامل (strong full-disk encryption) ولا توجد أي علامةٍ على اختراق المفتاح (no sign the key was compromised). أيّ عبارةٍ هي الأقرب إلى الصحة وفق GDPR (closest to correct under GDPR)؟**
+**3. تطلب عميلةٌ مقيمة في الاتحاد الأوروبي من بنك نجم محو بياناتها في نجم أسيست. أيّ خطةٍ تُظهر أن الفريق يعرف أين تعيش البيانات؟**
 
-- A. تقيّم مسؤولة حماية البيانات الاختراق وتوثّقه (The DPO assesses and documents the breach)؛ ولأن البيانات غير مفهومةٍ للسارق (unintelligible to the thief)، فمن المرجّح ألّا يكون إبلاغ العملاء المتأثرين مطلوبًا (telling affected customers is likely not required)، وفق المادة 34(3)(أ) (Art. 34(3)(a))، ويُقيَّم أيضًا ما إذا كان يجب إخطار السلطة (whether to notify the authority)
-- B. التشفير يعني أنها ليست حادثة (it is not an incident)، فلا يُسجَّل شيء (nothing is recorded)
-- C. يجب إخطار كل عميلٍ (Every customer must be notified) خلال 72 ساعة مهما كان الأمر (within 72 hours regardless)
-- D. لا يحتاج إلى التحديث إلا سجل أصول تقنية المعلومات (Only the IT asset register needs updating)
+- A. احذف صفوفها في جدول نصوص المحادثات وأبلغها بأن البيانات حُذفت، فهذا هو المكان الذي تُخزَّن فيه بياناتها
+- B. احذف كل ما يتعلق بها في كل مكان، فورًا، بما في ذلك سجلات الأنظمة المصرفية الأساسية التي يفرض القانون الاحتفاظ بها
+- C. اتبع خريطة البيانات إلى نصوص المحادثات والتتبّعات والفهرس المتجهي ومجموعات التقييم والتحليلات؛ وطبّق استثناءات الاحتفاظ القانونية، وأتلِف النسخ الاحتياطية تشفيريًّا، وعالج سجلات المزوّد بموجب العقد
+- D. ارفض الطلب، لأن نموذج ذكاءٍ اصطناعي كان مشاركًا في المحادثة، ولا يمكن تحديد ما حفظه النموذج من بيانات
 
 <details><summary>الإجابة</summary>
 
-**A.** كل اختراقٍ يُوثَّق ويُقيَّم (Every breach is documented and assessed)؛ والتشفير القوي بمفتاحٍ غير مخترق (strong encryption with an uncompromised key) يمكن أن يُلغي الحاجة إلى إبلاغ الأفراد (remove the need to tell individuals). وB وD يتخطّيان التقييم (skip the assessment)؛ وC يخلط بين مهلة الـ 72 ساعة لإخطار السلطة (the 72-hour authority deadline) وإبلاغ الأفراد (notifying individuals). انظر: 🔴 نظرة الخبير (Expert view).
+**C.** يجب أن يصل الحذف إلى كل نسخة مع احترام واجبات الاحتفاظ القانونية. وA يفوّت معظم النسخ؛ وB يتجاهل الالتزامات بالاحتفاظ بسجلاتٍ مصرفية معينة؛ وD لا أساس له. انظر: 🟡 التعمق أكثر.
 
 </details>
 
-**5. تريد رانيا أن يساعد نجم أسيست (Najm Assist) العملاء على الاعتراض على معاملات البطاقات (dispute card transactions). أيّ تصميمٍ يطبّق تقليل البيانات (data minimisation) على أفضل وجه؟**
+**4. سُرق حاسوبٌ محمول لنجم يحتوي على تصديرٍ لبيانات العملاء. كان مزوّدًا بتشفيرٍ قوي للقرص الكامل ولا توجد أي علامةٍ على اختراق المفتاح. أيّ عبارةٍ هي الأقرب إلى الصحة وفق GDPR؟**
 
-- A. أرسل حقول المعاملة المتنازع عليها فقط (only the disputed transaction's fields)، مع استبدال أرقام البطاقات وأرقام IBAN بعناصر نائبة (card numbers and IBANs replaced by placeholders)، ودع طبقة الأدوات على الخادم (the server-side tool layer) تستخدم القيم الحقيقية حين تقدّم الاعتراض (when it files the dispute)
-- B. أرسل إلى النموذج ملف العميل الكامل واثني عشر شهرًا من المعاملات (the customer's full profile and twelve months of transactions) للسياق (for context)، كي يشرح الرسوم (explain the fee) ويقترح منتجات أخرى تناسبها أكثر (suggest other products that suit her better) ويفصّل العرض لها (tailor the offer) بعد أن يطّلع على جميع تفاصيل حسابها (after reading every detail of her account)
-- C. أرسل كل شيء (Send everything)، لكن اطلب من النموذج في موجّه النظام ألّا يكشفه (tell the model in the system prompt not to reveal it)
-- D. اطلب من العميل لصق رقم بطاقته في المحادثة (paste their card number into the chat) من أجل الدقة (for accuracy)
+- A. تقيّم مسؤولة حماية البيانات الاختراق وتوثّقه؛ ولأن البيانات غير مفهومةٍ للسارق فمن المرجّح ألّا يلزم إبلاغ العملاء، وفق المادة 34(3)(أ)، ويُقيَّم أيضًا إخطار السلطة
+- B. التشفير يعني أنها ليست حادثة أصلًا، فلا يُسجَّل شيء ولا يُبلَّغ أحد ولا يُجرى أي تقييم للأثر على العملاء
+- C. يجب إخطار كل عميلٍ خلال 72 ساعة مهما كان الأمر، ومهما كانت حالة البيانات أو حماية القرص الذي سُرق
+- D. لا يحتاج إلى التحديث إلا سجل أصول تقنية المعلومات، ثم تُغلق الحادثة من دون أي إجراء قانوني آخر
 
 <details><summary>الإجابة</summary>
 
-**A.** إنه يحدّ مما يصل إلى المزوّد والسجلات ونصوص المحادثات (limits what reaches the provider, logs and transcripts). وB يُفرط في الجمع (over-collects)؛ وC يعتمد على امتثال النموذج (relies on the model obeying)، وهو ما يهزمه حقن الموجّهات (which prompt injection defeats)؛ وD يجرّ البيانات المقيَّدة إلى كل نسخة (pulls Restricted data into every copy). انظر: 🟡 التعمق أكثر (Going deeper).
+**A.** كل اختراقٍ يُوثَّق ويُقيَّم؛ والتشفير القوي بمفتاحٍ غير مخترق يمكن أن يُلغي الحاجة إلى إبلاغ الأفراد. وB وD يتخطّيان التقييم؛ وC يخلط بين مهلة الـ 72 ساعة لإخطار السلطة وإبلاغ الأفراد. انظر: 🔴 نظرة الخبير.
 
 </details>
 
-## 📚 المراجع (References)
-- اللائحة (EU) 2016/679، اللائحة العامة لحماية البيانات (General Data Protection Regulation) — https://eur-lex.europa.eu/eli/reg/2016/679/oj
+**5. تريد رانيا أن يساعد نجم أسيست العملاء على الاعتراض على معاملات البطاقات. أيّ تصميمٍ يطبّق تقليل البيانات على أفضل وجه؟**
+
+- A. أرسل حقول المعاملة المتنازع عليها فقط، مع استبدال أرقام البطاقات وأرقام IBAN بعناصر نائبة، ودع طبقة الأدوات على الخادم تستخدم القيم الحقيقية حين تقدّم الاعتراض
+- B. أرسل إلى النموذج ملف العميل الكامل واثني عشر شهرًا من المعاملات للسياق، كي يشرح الرسوم ويقترح منتجات أخرى تناسبها أكثر ويفصّل العرض لها بعد أن يطّلع على جميع تفاصيل حسابها
+- C. أرسل كل شيء، لكن اطلب من النموذج في موجّه النظام ألّا يكشفه
+- D. اطلب من العميل لصق رقم بطاقته في المحادثة من أجل الدقة
+
+<details><summary>الإجابة</summary>
+
+**A.** إنه يحدّ مما يصل إلى المزوّد والسجلات ونصوص المحادثات. وB يُفرط في الجمع؛ وC يعتمد على امتثال النموذج، وهو ما يهزمه حقن الموجّهات؛ وD يجرّ البيانات المقيَّدة إلى كل نسخة. انظر: 🟡 التعمق أكثر.
+
+</details>
+
+## 📚 المراجع
+- اللائحة 2016/679، اللائحة العامة لحماية البيانات (General Data Protection Regulation) — https://eur-lex.europa.eu/eli/reg/2016/679/oj
 - ورقة OWASP المختصرة للتسجيل (OWASP Logging Cheat Sheet) — https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html
-- قائمة OWASP لأهم عشرة مخاطر في تطبيقات النماذج اللغوية الكبيرة لعام 2025 (OWASP Top 10 for LLM Applications 2025)، البندان LLM02 وLLM08 — https://genai.owasp.org/llm-top-10/
-- إطار الخصوصية من NIST (NIST Privacy Framework) — https://www.nist.gov/privacy-framework
-- وثيقة NIST SP 800-122، دليل حماية سرية معلومات التعريف الشخصية (Guide to Protecting the Confidentiality of Personally Identifiable Information) — https://csrc.nist.gov/pubs/sp/800/122/final
-- نمذجة تهديدات الخصوصية LINDDUN (LINDDUN privacy threat modelling) — https://linddun.org/
-- مجلس معايير أمن صناعة بطاقات الدفع (PCI Security Standards Council) — https://www.pcisecuritystandards.org/
-- MITRE CWE-532، إدراج معلوماتٍ حساسة في ملف السجل (Insertion of Sensitive Information into Log File) — https://cwe.mitre.org/data/definitions/532.html
+- قائمة OWASP لأهم عشرة مخاطر في تطبيقات النماذج اللغوية الكبيرة لعام 2025، البندان LLM02 وLLM08 — https://genai.owasp.org/llm-top-10/
+- إطار الخصوصية من NIST — https://www.nist.gov/privacy-framework
+- وثيقة NIST SP 800-122، دليل حماية سرية معلومات التعريف الشخصية — https://csrc.nist.gov/pubs/sp/800/122/final
+- نمذجة تهديدات الخصوصية LINDDUN — https://linddun.org/
+- مجلس معايير أمن صناعة بطاقات الدفع — https://www.pcisecuritystandards.org/
+- MITRE CWE-532، إدراج معلوماتٍ حساسة في ملف السجل — https://cwe.mitre.org/data/definitions/532.html
 - Sweeney, L. (2002)، "k-Anonymity: A Model for Protecting Privacy"، *International Journal of Uncertainty, Fuzziness and Knowledge-Based Systems* 10(5)
-- Dwork, C., McSherry, F., Nissim, K. and Smith, A. (2006)، "Calibrating Noise to Sensitivity in Private Data Analysis"، مؤتمر نظرية التشفير (Theory of Cryptography Conference)
-- Morris, J. X., Kuleshov, V., Shmatikov, V. and Rush, A. M. (2023)، "Text Embeddings Reveal (Almost) As Much As Text"، مؤتمر EMNLP 2023 — https://arxiv.org/abs/2310.06816
-- قانون قطر رقم 13 لسنة 2016 بشأن حماية خصوصية البيانات الشخصية (Qatar Law No. 13 of 2016 on Personal Data Privacy Protection, PDPPL) — راجع النص الرسمي وإرشادات الجهة التنظيمية الحالية (consult the official text and current regulator guidance)
+- Dwork, C., McSherry, F., Nissim, K. and Smith, A. (2006)، "Calibrating Noise to Sensitivity in Private Data Analysis"، مؤتمر نظرية التشفير
+- Morris, J. X., Kuleshov, V., Shmatikov, V. and Rush, A. M. (2023)، "Text Embeddings Reveal As Much As Text"، مؤتمر EMNLP 2023 — https://arxiv.org/abs/2310.06816
+- قانون قطر رقم 13 لسنة 2016 بشأن حماية خصوصية البيانات الشخصية — راجع النص الرسمي وإرشادات الجهة التنظيمية الحالية
