@@ -165,7 +165,7 @@ Mona asked what Layla would do if a large salon sent 2,000 reminders. Layla's an
 
 **3. Tick adds a chat assistant that answers salon owners' questions. Which statement about its model cost is most accurate?**
 
-- A. Long chats can cost far more, since earlier text is usually resent with each new message.
+- A. Long chats can cost far more, since earlier text is usually resent with each new message the assistant answers.
 - B. It costs the same per message however long the conversation has run, so only message count matters.
 - C. It costs nothing extra once the first version has been built and tested by Layla.
 - D. It depends only on how many salons have signed up, not on how much each one uses it.
@@ -369,7 +369,7 @@ She also wrote down what the test could not tell her: twelve people is a small g
 
 **2. Which pricing test gives Layla the strongest evidence about a 29 price?**
 
-- A. Asking a salon owner for a first month paid in advance at 29.
+- A. Asking a salon owner to prepay one month at 29.
 - B. Asking a salon owner whether 29 sounds fair for the service.
 - C. Asking a friend to guess what other salon owners would pay.
 - D. Reading a competitor's page and assuming 29 is about right for her.
@@ -410,7 +410,7 @@ She also wrote down what the test could not tell her: twelve people is a small g
 
 - A. Change the amount on the next invoice and explain only if someone complains about it.
 - B. Raise the price only for the customer who argues least about it.
-- C. Give plain notice with the price, date and reason, after checking her terms.
+- C. Give plain notice with the price, date and reason, after checking her terms and what she promised.
 - D. Wait until every customer cancels, then start again with the new price.
 
 <details><summary>Answer</summary>
@@ -580,7 +580,7 @@ She sent Hana a one-page list: the cash table, a sample invoice, her vendor list
 **1. Layla's customers have been invoiced for the month but none has paid yet. How should she treat this in her cash table?**
 
 - A. As cash already received, since the invoice has been sent and the work is done.
-- B. As revenue owed to her, shown in cash only on the day the money arrives.
+- B. As revenue owed to her, in cash only when paid.
 - C. As a cost, because sending invoices takes up her time during that month.
 - D. As profit that she can spend freely, because the amounts are all agreed.
 
@@ -594,7 +594,7 @@ She sent Hana a one-page list: the cash table, a sample invoice, her vendor list
 
 - A. About 2,632 months, because cash is the largest number in the sum.
 - B. About 167 months, because burn is the number that sets the limit.
-- C. About 15.7 months, which is how long the cash lasts at that burn.
+- C. About 15.7 months, how long her cash lasts.
 - D. About 0.06 months, because she has far more burn than cash.
 
 <details><summary>Answer</summary>
@@ -606,7 +606,7 @@ She sent Hana a one-page list: the cash table, a sample invoice, her vendor list
 **3. Nadia's accountant asks for a formal invoice. What should Layla do?**
 
 - A. Copy the layout of an invoice from a template she found online for another country.
-- B. Ask her accountant what an invoice must contain there, then fill in the template.
+- B. Ask her accountant what an invoice must contain.
 - C. Send the payment provider's receipt and assume it counts as an invoice.
 - D. Write whatever looks professional, as only the amount really matters.
 
@@ -621,7 +621,7 @@ She sent Hana a one-page list: the cash table, a sample invoice, her vendor list
 - A. Ignore it, since the table's base case already looks comfortable enough for her.
 - B. Take a larger customer discount, so that the gap closes immediately.
 - C. Stop recording payments, so that the gap no longer appears in the table.
-- D. Set a threshold and an action in advance, such as cutting a cost or her own pay.
+- D. Set a threshold and an action in advance, such as cutting a cost or her own pay, before the gap opens.
 
 <details><summary>Answer</summary>
 
@@ -631,7 +631,7 @@ She sent Hana a one-page list: the cash table, a sample invoice, her vendor list
 
 **5. Which question belongs on Layla's list for the accountant?**
 
-- A. Do I need to register for sales tax or VAT, and from what level of sales in my country?
+- A. Do I need to register for sales tax or VAT, and from what level of sales in my country this year?
 - B. Which investors should I approach first, and how much should I ask them for this year?
 - C. What is the right price for Tick, given that Nadia is happy to pay 29 each month?
 - D. Will Tick reach break-even by month 12, if she keeps growing at the same pace as her table?

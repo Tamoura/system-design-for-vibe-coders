@@ -152,7 +152,7 @@ She also started a built-versus-learned log. After the weekend, the "built" colu
 **1. Layla has a working Tick demo and ten friends say they love it. What does this show?**
 
 - A. The product has demand, so she should add the features they mention.
-- B. The software runs, but demand and willingness to pay are still unproven.
+- B. The software runs, but demand and willingness to pay are still unproven with real customers.
 - C. The product is ready to launch to the public without further testing.
 - D. The price is right, since friends would not praise a product that is too costly.
 
@@ -177,7 +177,7 @@ She also started a built-versus-learned log. After the weekend, the "built" colu
 
 **3. Layla's agent added a loyalty-points screen she did not ask for. What is the best response?**
 
-- A. Ask who wants it or what test would show nobody does; delete it if neither.
+- A. Ask who wants it or what test would show nobody does; delete it if neither answer turns up.
 - B. Keep it, since extra features make the product more attractive to many buyers.
 - C. Ask the agent to add three more features so that the product looks complete.
 - D. Leave it in place, because removing code the agent wrote could break the whole app.
@@ -192,7 +192,7 @@ She also started a built-versus-learned log. After the weekend, the "built" colu
 
 - A. Layla has made excellent progress, since progress is measured in features.
 - B. Layla should simply build more items, because learning follows later.
-- C. Layla is drifting, since progress means learning who pays and why.
+- C. Layla is drifting; progress means learning who pays.
 - D. Layla should delete the log, because it slows down the build.
 
 <details><summary>Answer</summary>
@@ -398,7 +398,7 @@ Notice that she did not delete the logo forever. She postponed it behind a cheap
 
 - A. Launching early is always forbidden by the course rules, whatever the situation.
 - B. Investors require a validated idea before any meeting.
-- C. Cheap questions come first, so a wrong answer there costs least to learn.
+- C. Cheap questions come first, so errors cost least.
 - D. Validation is the only step that matters, and the rest are optional.
 
 <details><summary>Answer</summary>
@@ -448,7 +448,7 @@ Notice that she did not delete the logo forever. She postponed it behind a cheap
 
 **5. A two-person team finishes Validate and Scope, and each assumes the other will handle terms and privacy. Which tool from this lesson addresses the problem?**
 
-- A. The step owner table, which gives each step a named person.
+- A. The step owner table, which names one person per step.
 - B. The loop-back log, which records every time a step is repeated.
 - C. The cast crib sheet, which reminds readers who each character is.
 - D. The stall note, which records where a founder feels stuck.
@@ -646,7 +646,7 @@ She sent Rashid the table and a one-paragraph description, three days before the
 - A. It has been reviewed by experts, so its legal points can be relied on.
 - B. It teaches the legal rules that apply in every country.
 - C. It guarantees that following all lessons will lead to paying customers.
-- D. It is education, and does not replace a qualified professional locally.
+- D. It is education and does not replace a professional.
 
 <details><summary>Answer</summary>
 
@@ -657,7 +657,7 @@ She sent Rashid the table and a one-paragraph description, three days before the
 **3. Before meeting Rashid, what should Layla bring?**
 
 - A. A request that he decide her business model, her pricing and her launch date.
-- B. A short description of Tick, its data, her promises, and ranked questions.
+- B. A short description of Tick, its data, her promises, and ranked questions for him.
 - C. Nothing, so that his advice is not influenced by her own thinking.
 - D. A copy of another business's terms, to be signed as her own work.
 
@@ -685,7 +685,7 @@ She sent Rashid the table and a one-paragraph description, three days before the
 - A. Never contact anyone about Tick, in order to avoid making mistakes.
 - B. Never ask a professional anything at all, in order to keep costs low.
 - C. Never mention AI use to customers, in order to look more established.
-- D. Never invent reviews or traction; disclose AI use where it matters.
+- D. Never invent reviews or traction; disclose AI use where it matters to customers.
 
 <details><summary>Answer</summary>
 

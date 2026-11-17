@@ -12,13 +12,13 @@
       "o": {
         "en": [
           "Add the features the friends mention, since their praise shows there is demand",
-          "Ask three non-friends whether they have the problem and have tried to fix it",
+          "Ask three non-friends whether they have the problem and tried to fix it",
           "Plan a public launch while the excitement lasts, since the build is already finished",
           "Copy a competitor's price onto the page and see whether anyone objects to it"
         ],
         "ar": [
           "تضيف الميزات التي يذكرها الأصدقاء، لأن مديحهم يدل على وجود طلب فعلي",
-          "تسأل ثلاثة أشخاص ليسوا أصدقاء هل يعانون من المشكلة وحاولوا حلّها",
+          "تسأل ثلاثة غير أصدقاء هل لديهم المشكلة وجرّبوا حلّها",
           "تخطط لإطلاق علني ما دام الحماس قائمًا، لأن البناء انتهى فعلًا",
           "تنسخ سعر منافس إلى الصفحة وتنتظر لترى هل سيعترض عليه أحد"
         ]
@@ -69,13 +69,13 @@
         "en": [
           "Start with the tasks that feel most like visible progress, then move to the harder ones",
           "Start with the tasks that take least time, so the list shrinks quickly and morale stays up",
-          "Pick the task tied to the earliest step still lacking its proof, and defer later ones",
+          "Pick the task tied to the earliest step still lacking its proof, and defer the later ones until then",
           "Pick the tasks an investor would be likely to ask about first, then work backwards"
         ],
         "ar": [
           "تبدأ بالمهام التي تبدو أكثر تقدّمًا ظاهرًا، ثم تنتقل إلى الأصعب منها",
           "تبدأ بالمهام الأقصر وقتًا، فتتقلص القائمة بسرعة ويبقى الحماس مرتفعًا",
-          "تختار مهمة أبكر خطوة ما زال ينقصها ناتجها، وتؤجّل ما بعدها من المهام",
+          "تختار مهمة أبكر خطوة ما زال ينقصها ناتجها، وتؤجّل ما بعدها من المهام إلى حينه",
           "تختار المهام التي يرجَّح أن يسأل عنها مستثمر أولًا، ثم تعمل عكسيًا"
         ]
       },
