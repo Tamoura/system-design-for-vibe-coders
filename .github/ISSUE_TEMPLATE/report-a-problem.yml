@@ -24,6 +24,7 @@ body:
         - "Software Testing: Zero to Hero in the AI Era (testing)"
         - "Building AI Applications & Agents: Zero to Hero (aiapps)"
         - A Practical Guide to Becoming an AI-Native Engineer (ainative)
+        - "Founder's Playbook for AI-First Builders (founder)"
         - The landing page or the whole site
     validations:
       required: true

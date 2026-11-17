@@ -31,6 +31,8 @@
     "aiapps:check": "node scripts/build-aiapps.mjs --check",
     "ainative:build": "node scripts/build-ainative.mjs",
     "ainative:check": "node scripts/build-ainative.mjs --check",
+    "founder:build": "node scripts/build-founder.mjs",
+    "founder:check": "node scripts/build-founder.mjs --check",
     "videos:build": "node scripts/build-videos.mjs",
     "videos:check": "node scripts/build-videos.mjs --check",
     "videos:render": "node scripts/build-videos.mjs --render",

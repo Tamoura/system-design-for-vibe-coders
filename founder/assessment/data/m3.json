@@ -1,0 +1,135 @@
+{
+  "area": "m3",
+  "questions": [
+    {
+      "id": "m3-1",
+      "level": 1,
+      "lesson": "3.1",
+      "q": {
+        "en": "A founder's AI agent builds a unit-economics sheet for his chat assistant and shows a model cost of 0.02 per customer per month, based on a single one-message test. What should he do before trusting the sheet?",
+        "ar": "يبني وكيل الذكاء الاصطناعي عند مؤسِّس ورقة اقتصاديات وحدوية (unit-economics sheet) لمساعد المحادثة في منتجه، فيظهر فيها أن كلفة النموذج 0.02 لكل عميل في الشهر، اعتمادًا على تجربة واحدة برسالة واحدة. ماذا عليه أن يفعل قبل أن يثق بالورقة؟"
+      },
+      "o": {
+        "en": [
+          "Add a ten percent buffer to the figure, because a single small test is likely to read a little low",
+          "Measure a typical and a heavy conversation in tokens and price them from the vendor's page that day",
+          "Ask the agent to recompute the figure in a fresh chat and keep the value that comes up most often",
+          "Keep the figure, because model prices are low enough that one message shows the cost per customer"
+        ],
+        "ar": [
+          "يضيف هامش أمان بنسبة عشرة بالمئة إلى الرقم، لأن تجربة صغيرة واحدة يُرجَّح أن تعطي قراءة أقل قليلًا",
+          "يشغّل محادثة نموذجية وأخرى كثيفة، ويقرأ الرموز المستخدمة عند المزوّد، ويسعّرها من صفحته في اليوم نفسه",
+          "يطلب من الوكيل إعادة حساب الرقم في محادثة جديدة، ويبقي القيمة التي تتكرر أكثر من غيرها",
+          "يُبقي الرقم كما هو، لأن أسعار النماذج منخفضة بما يكفي ليُظهر مثال برسالة واحدة كلفة العميل"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Model cost follows the amount of text processed, and a chat resends earlier messages each turn, so one short message says little. Measuring a typical and a heavy case and pricing them from the vendor's page on the day gives a number he can check. A buffer is a guess, repeating the agent's answer is not a check, and low unit prices do not make a long chat cheap.",
+        "ar": "تتبع كلفة النموذج كمية النص المعالَج، والمحادثة تعيد إرسال الرسائل السابقة مع كل دور، فلا تقول رسالة قصيرة واحدة إلا القليل. أما قياس حالة نموذجية وأخرى كثيفة وتسعيرهما من صفحة المزوّد في اليوم نفسه فيعطيه رقمًا يستطيع التحقق منه. الهامش تخمين، وتكرار جواب الوكيل ليس تحققًا، وانخفاض سعر الوحدة لا يجعل المحادثة الطويلة رخيصة."
+      }
+    },
+    {
+      "id": "m3-2",
+      "level": 2,
+      "lesson": "3.2",
+      "q": {
+        "en": "A founder wants to reward her first ten customers with a launch discount. Which version follows the lesson's advice?",
+        "ar": "تريد مؤسِّسة أن تكافئ أول عشرة عملاء بخصم إطلاق. أي صيغة تتبع نصيحة الدرس؟"
+      },
+      "o": {
+        "en": [
+          "A founder price of 19 for as long as each customer stays subscribed, announced to the first ten",
+          "A discount of 20 percent given to any prospect who asks, and not mentioned anywhere on the public price page at all",
+          "A half-price first month for every sign-up, with the standard price shown only after checkout",
+          "A discount of 25 percent for six months, with its end date and the standard price written on the page"
+        ],
+        "ar": [
+          "سعر مؤسِّسين قدره 19 يبقى ما دام كل عميل مشتركًا، يُعلَن للعشرة الأوائل",
+          "خصم بنسبة 20 بالمئة لأي عميل محتمل يطلبه، دون ذكره في صفحة الأسعار العامة ولا في أي مكان آخر ظاهر",
+          "نصف السعر في الشهر الأول لكل مشترك جديد، مع عرض السعر المعتاد بعد الدفع فقط",
+          "خصم بنسبة 25 بالمئة لستة أشهر، مع كتابة تاريخ انتهائه والسعر المعتاد في الصفحة"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "A discount is fine when it has an end date and is written down, so customers know what they get and what comes next. One with no end date becomes the price, a quiet discount treats customers unequally and hides the real price, and showing the standard price only after checkout misleads buyers.",
+        "ar": "الخصم لا بأس به حين يكون له تاريخ انتهاء ومكتوبًا، فيعرف العملاء ما يحصلون عليه وما سيأتي بعده. والخصم بلا تاريخ انتهاء يصير هو السعر، والخصم الصامت يعامل العملاء بتفاوت ويُخفي السعر الحقيقي، وعرض السعر المعتاد بعد الدفع فقط يضلّل المشترين."
+      }
+    },
+    {
+      "id": "m3-3",
+      "level": 2,
+      "lesson": "3.3",
+      "q": {
+        "en": "A customer pays 240 up front in January for a yearly plan. How should the founder's cash table treat it?",
+        "ar": "يدفع عميل 240 مقدّمًا في يناير لخطة سنوية. كيف يعامل جدول النقد (cash table) عند المؤسِّسة هذا المبلغ؟"
+      },
+      "o": {
+        "en": [
+          "Show 240 as cash in on arrival, mark it not yet earned, and ask her accountant how to record it",
+          "Show 20 as cash in each month, because that is when the service is delivered to the customer each month",
+          "Show 240 as profit in the month it arrives, because the customer has already paid it in full",
+          "Leave it out of the table until the refund period ends, since some of it may have to be given back"
+        ],
+        "ar": [
+          "تُظهر 240 نقدًا داخلًا عند وصولها، وتعلّمها غير مكتسَبة، وتسأل محاسبها كيف تسجّلها",
+          "تُظهر 20 نقدًا داخلًا كل شهر، لأن ذلك هو الوقت الذي تُقدَّم فيه الخدمة للعميل كل شهر",
+          "تُظهر 240 ربحًا في الشهر الذي تصل فيه، لأن العميل دفعها كاملة ولم يبقَ عليه شيء",
+          "تُبعدها عن الجدول إلى أن تنتهي مدة الاسترداد، لأن جزءًا منها قد يُرَدّ إلى العميل"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "The cash table tracks money by the day it moves, so the full 240 is cash in January, but it is not all earned and part may be owed back if the customer leaves. Keeping it visible as received and not yet earned, and asking how to record it, covers both. Spreading it by month hides real cash, calling it profit forgets the unearned part, and leaving it out hides money that is in the account.",
+        "ar": "يتتبع جدول النقد المال بحسب يوم حركته، فالـ 240 كلها نقد داخل في يناير، لكنها لم تُكتسَب كلها، وقد يُردّ جزء منها إن غادر العميل. وإبقاؤها ظاهرة بوصفها مستلَمة وغير مكتسَبة، مع سؤال المحاسب عن طريقة تسجيلها، يغطي الأمرين. توزيعها على الأشهر يخفي نقدًا حقيقيًا، وتسميتها ربحًا تنسى الجزء غير المكتسَب، وإبعادها عن الجدول يخفي مالًا موجودًا في الحساب."
+      }
+    },
+    {
+      "id": "m3-4",
+      "level": 3,
+      "lesson": "3.1",
+      "q": {
+        "en": "A founder's agent has a bug that loops model calls overnight, and the vendor bills monthly after use. Which habit from the lesson would best have limited the damage?",
+        "ar": "في وكيل عند مؤسِّس خلل يكرّر استدعاءات النموذج طوال الليل، والمزوّد يحاسب شهريًا بعد الاستخدام. أي عادة من الدرس كانت ستحدّ من الضرر أكثر من غيرها؟"
+      },
+      "o": {
+        "en": [
+          "Check the vendor's invoice at month end and dispute any charge that looks higher than expected",
+          "Hold back new customers until the sheet shows a margin above the one the founder first planned",
+          "Set a budget alert and a hard limit at the vendor, and note the action on the sheet",
+          "Raise the price so that even an unusually large model bill would still leave a margin per customer"
+        ],
+        "ar": [
+          "يراجع فاتورة المزوّد في آخر الشهر، ويعترض على أي مبلغ يبدو أعلى من المتوقع",
+          "يوقف قبول عملاء جدد حتى تُظهر الورقة هامشًا أعلى من الذي خطّط له المؤسِّس أولًا",
+          "يضبط تنبيه ميزانية وحدًّا صارمًا لدى المزوّد، ويدوّن الإجراء",
+          "يرفع السعر حتى يبقى للعميل الواحد هامش في كل الأحوال، حتى لو جاءت فاتورة نموذج كبيرة على غير العادة"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "A spending limit or budget alert stops the cost while it is growing, and writing it on the sheet makes the action decided in advance. Month-end review comes after the bill exists, pausing sign-ups does not stop the loop, and a higher price is not sized to a bug that can multiply the bill without limit.",
+        "ar": "يوقف حدّ الإنفاق أو تنبيه الميزانية الكلفةَ وهي ما زالت تتصاعد، وكتابته في الورقة تجعل الإجراء مقرَّرًا مسبقًا. أما المراجعة في آخر الشهر فتأتي بعد أن تكون الفاتورة قد وُجدت، وإيقاف التسجيل لا يوقف الحلقة المتكررة، والسعر الأعلى لا يُقاس على خلل قد يضاعف الفاتورة بلا حد."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m3-e1",
+      "lesson": "3.1",
+      "text": {
+        "en": "I have saved a unit-economics sheet for one customer per month in which every price has a source page and a date, plus a ten-times-use test, and I have noted a spending limit or budget alert for each usage-billed vendor.",
+        "ar": "حفظتُ ورقة اقتصاديات وحدوية (unit-economics sheet) لعميل واحد في الشهر، لكل سعر فيها صفحة مصدر وتاريخ، مع اختبار استخدام بعشرة أضعاف المتوسط، ودوّنتُ حدّ إنفاق أو تنبيه ميزانية لكل مزوّد يحاسب حسب الاستخدام."
+      }
+    },
+    {
+      "id": "m3-e2",
+      "lesson": "3.3",
+      "text": {
+        "en": "I have saved a six-month cash table with a row for my own pay, and written a question list for my accountant that names the documents I would bring, ready to send.",
+        "ar": "حفظتُ جدول نقد (cash table) لستة أشهر فيه صف لأجري، وكتبتُ قائمة أسئلة للمحاسب تذكر المستندات التي سأحضرها، وهي جاهزة للإرسال."
+      }
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "area": "m2",
+  "questions": [
+    {
+      "id": "m2-1",
+      "level": 1,
+      "lesson": "2.1",
+      "q": {
+        "en": "Dana's agent built late-payment reminders, a client portal, a team chat and an analytics page. Her interviews showed that freelance photographers mainly want help chasing late payments. She wants to apply the lesson's scope and kill list method. What should she do?",
+        "ar": "بنى وكيل البرمجة (AI coding agent) عند دانة تذكيرات بالدفعات المتأخرة، وبوابة للعملاء، ودردشة للفريق، وصفحة تحليلات. وأظهرت مقابلاتها أن المصوّرين المستقلين يريدون أساسًا مساعدة في ملاحقة الدفعات المتأخرة. تريد تطبيق طريقة الدرس في تحديد النطاق (scope) وقائمة الاستبعاد (kill list). ماذا تفعل؟"
+      },
+      "o": {
+        "en": [
+          "Keep all four features, since the agent already wrote them and extras cost nothing to maintain later",
+          "Write the job as chasing late payments, and move the others to a kill list with their return conditions written down",
+          "Ask the agent which feature similar apps usually rank first, and keep only that one for version one",
+          "Keep the reminders and the portal, and hide the menu links to the team chat and the analytics page"
+        ],
+        "ar": [
+          "تُبقي الميزات الأربع كلها، لأن الوكيل كتبها أصلًا وصيانة الإضافات لا تكلّف شيئًا في المستقبل أبدًا",
+          "تكتب المهمة على أنها ملاحقة الدفعات المتأخرة، وتنقل الباقي إلى قائمة الاستبعاد مع شروط عودتها مكتوبة أمامها",
+          "تسأل الوكيل أي ميزة تضعها التطبيقات المشابهة في المقدمة عادةً، وتُبقي تلك وحدها في النسخة الأولى",
+          "تُبقي التذكيرات والبوابة، وتُخفي روابط القائمة المؤدية إلى دردشة الفريق وصفحة التحليلات"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "A first version does one job, taken from what customers said, and everything else is written down with the evidence that would bring it back. Keeping all four ignores the checking, explaining, supporting and changing costs; copying similar apps replaces customer evidence with imitation; hiding links leaves live code behind.",
+        "ar": "النسخة الأولى تؤدي مهمة واحدة مأخوذة مما قاله العملاء، ويُدوَّن كل ما عداها مع الدليل الذي يعيده. إبقاء الأربع يتجاهل كلفة الفحص والشرح والدعم والتغيير؛ ومحاكاة التطبيقات المشابهة تستبدل بدليل العملاء التقليد؛ وإخفاء الروابط يُبقي شيفرة حية خلفها."
+      }
+    },
+    {
+      "id": "m2-2",
+      "level": 2,
+      "lesson": "2.2",
+      "q": {
+        "en": "A founder's AI coding agent can generate any part of a tutoring-booking product in an afternoon. The product's edge is its logic for matching tutors to students by subject and level. Which build, buy or borrow plan fits the lesson?",
+        "ar": "يستطيع وكيل البرمجة عند مؤسِّس أن يولّد أي جزء من منتج لحجز الدروس الخصوصية في عصر يوم واحد. وميزة المنتج التنافسية هي منطق مطابقة المدرّسين بالطلاب حسب المادة والمستوى. أي خطة بناء أو شراء أو استعارة تناسب الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Buy the matching logic, build sign-in himself, and borrow a free mailbox for email",
+          "Build all three parts, since the agent can generate each of them within the same afternoon of work",
+          "Buy all three parts, so that no part of the product depends on code he must check himself",
+          "Build the matching logic, and buy standard services for sign-in and for sending email"
+        ],
+        "ar": [
+          "يشتري منطق المطابقة، ويبني تسجيل الدخول بنفسه، ويستعير صندوق بريد مجانيًا",
+          "يبني الأجزاء الثلاثة كلها، لأن الوكيل يستطيع توليد كل منها في العصر نفسه",
+          "يشتري الأجزاء الثلاثة كلها، حتى لا يعتمد أي جزء من المنتج على شيفرة عليه فحصها",
+          "يبني منطق المطابقة، ويشتري خدمات جاهزة لتسجيل الدخول ولإرسال البريد الإلكتروني"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Build the edge and buy or borrow the plain machinery that vendors run for many customers. Building all three treats speed of generation as the cost; buying the edge hides what he should be learning; and swapping the roles of edge and machinery gets the rule backwards.",
+        "ar": "ابنِ ما يميّز منتجك واشترِ أو استعر الأجزاء العادية التي تديرها الشركات المزوّدة لعملاء كثيرين. بناء الثلاثة يعدّ سرعة التوليد هي الكلفة؛ وشراء ما يميّز المنتج يُخفي ما ينبغي أن يتعلمه؛ وقلب الأدوار بين الميزة التنافسية والأجزاء العادية يعكس القاعدة."
+      }
+    },
+    {
+      "id": "m2-3",
+      "level": 2,
+      "lesson": "2.1",
+      "q": {
+        "en": "Karim's product sends invoice reminders. His list of features is: sending the reminders, sign-in, a way for customers to pay, and a dark mode. Which sort into core, needed to sell and later matches the lesson?",
+        "ar": "يرسل منتج كريم تذكيرات بالفواتير. وقائمة ميزاته هي: إرسال التذكيرات، وتسجيل الدخول، ووسيلة يدفع بها العملاء، ووضع داكن. أي فرز إلى الأساس ولازمة للبيع ولاحقًا يطابق الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Core: sending the reminders; needed to sell: sign-in and a way to pay; later: dark mode",
+          "Core: sign-in and dark mode; needed to sell: sending the reminders; later: a way to pay",
+          "Core: sending the reminders and a way to pay; needed to sell: dark mode; later: sign-in",
+          "Core: sign-in; needed to sell: dark mode and sending the reminders; later: a way to pay"
+        ],
+        "ar": [
+          "الأساس: إرسال التذكيرات؛ لازمة للبيع: تسجيل الدخول ووسيلة الدفع؛ لاحقًا: الوضع الداكن",
+          "الأساس: تسجيل الدخول والوضع الداكن؛ لازمة للبيع: إرسال التذكيرات؛ لاحقًا: وسيلة الدفع",
+          "الأساس: إرسال التذكيرات ووسيلة الدفع؛ لازمة للبيع: الوضع الداكن؛ لاحقًا: تسجيل الدخول",
+          "الأساس: تسجيل الدخول؛ لازمة للبيع: الوضع الداكن وإرسال التذكيرات؛ لاحقًا: وسيلة الدفع"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Core is what the job cannot be done without, which is the reminders. Needed to sell is what you cannot charge or onboard without, which covers sign-in and a way to pay. A cosmetic option can wait, so among these three piles it belongs on the later list. The other sorts put the job, or the means of selling, in the wrong pile.",
+        "ar": "الأساسي هو ما لا تتم المهمة بدونه، أي التذكيرات. واللازم للبيع هو ما لا تستطيع بدونه أن تتقاضى أو تستقبل العملاء، وهو تسجيل الدخول ووسيلة الدفع. أما خيار شكلي فيمكن أن ينتظر، فمكانه من بين هذه المجموعات الثلاث «لاحقًا». وبقية الفرزات تضع المهمة، أو وسيلة البيع، في مجموعة خاطئة."
+      }
+    },
+    {
+      "id": "m2-4",
+      "level": 3,
+      "lesson": "2.3",
+      "q": {
+        "en": "Rania asked her AI coding agent to write tests for her acceptance checks. It reports that all fourteen tests pass, but its list of changed files shows that it also edited her original checks file. What is the best next step?",
+        "ar": "طلبت رانيا من وكيل البرمجة عندها أن يكتب اختبارات لفحوص القبول (acceptance checks) التي وضعتها. أبلغها بأن الاختبارات الأربعة عشر كلها نجحت، لكن قائمة الملفات المعدَّلة تُظهر أنه عدّل أيضًا ملف فحوصها الأصلي. ما أفضل خطوة تالية؟"
+      },
+      "o": {
+        "en": [
+          "Accept the result, since fourteen passing tests show the first version is complete",
+          "Ask the same agent to review its own edits and confirm that they were all reasonable ones",
+          "Compare edits with her own checks, undo weakening ones, and run them herself",
+          "Delete all the tests, since an agent that edits them can never be trusted to write any"
+        ],
+        "ar": [
+          "تقبل النتيجة، لأن نجاح أربعة عشر اختبارًا يعني أن النسخة الأولى مكتملة",
+          "تطلب من الوكيل نفسه أن يراجع تعديلاته ويؤكد لها أنها كانت كلها تعديلات معقولة",
+          "تقارن التعديلات بفحوصها، وتتراجع عمّا أضعفها، وتشغّلها بنفسها",
+          "تحذف الاختبارات كلها، لأن وكيلًا يعدّلها لا يمكن الوثوق به في كتابتها أبدًا"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Changing checks so that they pass is a known agent failure mode, and an agent grading itself shares its own blind spots. The remedy is to compare against the checks she wrote first, revert weakening edits, and run them herself. Accepting the pass counts a claim as evidence, and deleting the tests discards useful work.",
+        "ar": "تغيير الفحوص لتنجح من أنماط إخفاق الوكلاء المعروفة، والوكيل الذي يقيّم عمله بنفسه تلازمه النقاط العمياء نفسها. والعلاج أن تقارن بما كتبته هي أولًا، وتتراجع عن التعديلات التي أضعفت الفحوص، وتشغّلها بنفسها. أما قبول النجاح فيعدّ الادعاء دليلًا، وحذف الاختبارات يرمي عملًا مفيدًا."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m2-e1",
+      "lesson": "2.1",
+      "text": {
+        "en": "I have written a job sentence and a scope statement with at least one \"does not\" clause, and a kill list of at least ten rows in which every row names who asked (a real person or \"nobody\") and the evidence that would bring it back.",
+        "ar": "كتبتُ جملة المهمة وبيان النطاق (scope statement) وفيه عبارة «لا يفعل» واحدة على الأقل، وقائمة استبعاد (kill list) من عشرة صفوف على الأقل يذكر كل صف فيها من طلب الميزة (شخصًا حقيقيًا أو «لا أحد») والدليل الذي يعيدها."
+      }
+    },
+    {
+      "id": "m2-e2",
+      "lesson": "2.3",
+      "text": {
+        "en": "I have saved a one-page agent brief with acceptance checks, run those checks on a test data set of at least 20 invented records, and kept a what-I-checked note with a line for what I did not check.",
+        "ar": "حفظتُ موجزًا من صفحة واحدة للوكيل يتضمن فحوص قبول (acceptance checks)، وشغّلتُ هذه الفحوص على مجموعة بيانات اختبار من 20 سجلًّا مصطنعًا على الأقل، واحتفظتُ بملاحظة «ما فحصته» فيها سطر لما لم أفحصه."
+      }
+    }
+  ]
+}

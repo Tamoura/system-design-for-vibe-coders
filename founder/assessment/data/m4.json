@@ -1,0 +1,135 @@
+{
+  "area": "m4",
+  "questions": [
+    {
+      "id": "m4-1",
+      "level": 1,
+      "lesson": "4.1",
+      "q": {
+        "en": "Layla is filling in her first-ten list. Which row is ready to count as a named prospect, with a reason and a next step?",
+        "ar": "تملأ ليلى قائمة العشرة الأوائل. أيّ صف جاهز ليُحتسب عميلًا محتملًا مسمّى، له سبب وخطوة تالية؟"
+      },
+      "o": {
+        "en": [
+          "Owner E, two-chair salon, circle 3: suggested by Layla's AI assistant as a likely fit for reminders; next step: email her Friday",
+          "Regional salon group, circle 3: hundreds of members who probably need reminders; next step: post an invitation in Tuesday's thread",
+          "Owner F, one-chair salon, circle 2: introduced by Nadia, loses slots to cancellations; next step: two-line note Thursday",
+          "Owner G, a friend, circle 1: said she would support Tick; next step: ask her to pay for a trial as a favour to Layla"
+        ],
+        "ar": [
+          "صاحبة الصالون هـ، صالون بكرسيين، الدائرة 3: رشّحها المساعد الذكي لليلى على أنها مناسبة محتملة لخدمة التذكيرات؛ الخطوة التالية: مراسلتها بالبريد يوم الجمعة",
+          "مجموعة الصالونات الإقليمية، الدائرة 3: مئات الأعضاء ممن يحتاجون التذكيرات غالبًا؛ الخطوة التالية: نشر دعوة في موضوع الثلاثاء",
+          "صاحبة الصالون و، صالون بكرسي واحد، الدائرة 2: قدّمتها نادية وتخسر مواعيد بسبب الإلغاء؛ الخطوة التالية: رسالة من سطرين يوم الخميس",
+          "صاحبة الصالون ز، صديقة، الدائرة 1: قالت إنها ستدعم تيك؛ الخطوة التالية: أن تطلب منها دفع ثمن تجربة معروفًا لليلى"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "A prospect is a named person with a reason they have the problem and a next step. Owner F has a real source, a reason from what she does and a dated step. An assistant's suggestion may be invented, a group is an audience and not a person, and a friend's support does not show she has the problem.",
+        "ar": "العميل المحتمل شخص مسمّى له سبب يجعل المشكلة مشكلته وخطوة تالية. صاحبة الصالون و لها مصدر حقيقي وسبب مستمد من عملها وخطوة بتاريخ. أما ترشيح المساعد فقد يكون مختلقًا، والمجموعة جمهور لا شخص، ودعم الصديقة لا يدل على أن المشكلة مشكلتها."
+      }
+    },
+    {
+      "id": "m4-2",
+      "level": 2,
+      "lesson": "4.2",
+      "q": {
+        "en": "Layla's assistant offers to send personalised outreach to 200 addresses from a scraped list, adding a friendly detail to each and following up until people reply. What fits the lesson best?",
+        "ar": "يعرض مساعد ليلى إرسال رسائل تواصل مباشر (outreach) مخصّصة إلى 200 عنوان من قائمة جُمعت بالكشط، مع إضافة تفصيل ودّي لكل رسالة والمتابعة حتى يردّ الناس. ما أنسب موقف وفق الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Decline it; write short messages herself to named people she has a reason to contact; follow up once and stop",
+          "Accept it, but cut the list to the fifty most promising scraped addresses and keep the invented friendly detail in each",
+          "Accept it, and add a clear unsubscribe line to every message so that the rest of the text can stay as it was drafted",
+          "Accept it only for addresses in countries where she has heard that unsolicited messages are generally tolerated"
+        ],
+        "ar": [
+          "ترفضه، وتكتب لأشخاص مسمّين لها سبب لمراسلتهم، وتتابع مرة واحدة ثم تتوقف",
+          "تقبله، لكنها تقلّص القائمة المكشوطة إلى الخمسين عنوانًا الأكثر ترجيحًا للرد وتُبقي في كل رسالة التفصيل الودّي المختلق",
+          "تقبله، وتضيف إلى كل رسالة سطرًا واضحًا لإلغاء الاشتراك ليبقى باقي النص كما صيغ أصلًا",
+          "تقبله فقط للعناوين في بلدان سمعت أن الرسائل غير المطلوبة فيها مسموح بها عمومًا"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Outreach needs a real reason, an honest message, one small ask and an easy exit, and bulk sending to scraped addresses fails the first test. Fewer addresses still has the invented detail, an unsubscribe line does not fix a fake detail, and the rules vary by country, so she should check them and not rely on hearsay.",
+        "ar": "التواصل المباشر يحتاج سببًا حقيقيًا ورسالة صادقة وطلبًا واحدًا صغيرًا ومخرجًا سهلًا، والإرسال الجماعي إلى عناوين مكشوطة يخفق في الاختبار الأول. تقليص العناوين يُبقي التفصيل المختلق، وسطر إلغاء الاشتراك لا يصلح تفصيلًا زائفًا، والقواعد تختلف من بلد إلى آخر فعليها التحقق منها لا الاعتماد على ما سمعته."
+      }
+    },
+    {
+      "id": "m4-3",
+      "level": 2,
+      "lesson": "4.3",
+      "q": {
+        "en": "A new owner has just said yes to a free two-week trial of Tick on a call. Which plan fits the lesson's approach to onboarding?",
+        "ar": "قالت صاحبة صالون جديدة نعم لتجربة مجانية لتيك مدتها أسبوعان خلال مكالمة. أيّ خطة تناسب نهج الدرس في التهيئة (onboarding) وفي بلوغ النتيجة الأولى؟"
+      },
+      "o": {
+        "en": [
+          "Send the full welcome email covering every setting, then wait for her to reply with any questions she has",
+          "Ask the coding agent for a twelve-step setup wizard, so that nothing is missing from her first session with Tick",
+          "Extend the trial to a month, so that she has more time to find her way around the product on her own",
+          "Agree the first result in writing, set it up with her on a short call with one client, then check the result by Thursday"
+        ],
+        "ar": [
+          "ترسل بريد الترحيب الكامل الذي يشرح كل الإعدادات، ثم تنتظر ردّها بأي أسئلة لديها",
+          "تطلب من وكيل البرمجة معالجًا من اثنتي عشرة خطوة، حتى لا ينقص شيء في جلستها الأولى مع تيك",
+          "تمدّد التجربة إلى شهر، لتتوفر لها مدة أطول كي تتعرف على المنتج بنفسها دون مساعدة",
+          "تتفق كتابةً على النتيجة الأولى، وتجهّزها معها في مكالمة قصيرة بعميلة واحدة، ثم تتحقق يوم الخميس"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Onboarding aims at one checkable first result by an agreed day, with the first customers set up by hand and the path cut to what that result needs. A long welcome email and a long wizard add steps that do not lead to it, and extra time does not remove the confusion that makes new customers stall.",
+        "ar": "تهدف التهيئة إلى نتيجة أولى واحدة يمكن التحقق منها في يوم متفق عليه، مع تجهيز أول العملاء يدويًا وتقليص المسار إلى ما تحتاجه تلك النتيجة. وبريد الترحيب الطويل والمعالج الطويل يضيفان خطوات لا تؤدي إليها، والوقت الإضافي لا يزيل الحيرة التي تجعل العملاء الجدد يتعثرون."
+      }
+    },
+    {
+      "id": "m4-4",
+      "level": 3,
+      "lesson": "4.3",
+      "q": {
+        "en": "Of six trial customers, four reached the first result and two stopped at the calendar step. One said, \"I did not know which calendar to pick.\" What should Layla do next?",
+        "ar": "من بين ستة عملاء في التجربة، بلغ أربعة النتيجة الأولى وتوقف اثنان عند خطوة التقويم. قالت إحداهما: «لم أعرف أي تقويم أختار». ماذا تفعل ليلى بعد ذلك؟"
+      },
+      "o": {
+        "en": [
+          "Rewrite the calendar step, the welcome note and the pricing page together, so that the next customer gets her best version of the path",
+          "Call both stalled customers, record their words, and change only the calendar step, then see whether the next customer gets through",
+          "Report that one third of customers stall and use that rate to forecast next quarter's lost customers and revenue",
+          "Remove the calendar step for every customer, since two stalled customers show that the step is not needed at all"
+        ],
+        "ar": [
+          "تعيد كتابة خطوة التقويم ورسالة الترحيب وصفحة الأسعار معًا، ليحصل العميل التالي على أفضل نسخة من المسار",
+          "تتصل بالعميلتين وتدوّن كلماتهما، وتغيّر خطوة التقويم وحدها، ثم ترى هل يتجاوزها العميل التالي",
+          "تُعلن أن ثلث العملاء يتعثرون وتستخدم هذه النسبة لتوقّع العملاء والإيرادات المفقودة في الربع القادم",
+          "تحذف خطوة التقويم لكل العملاء، لأن تعثر عميلتين يدل على أنها غير لازمة أصلًا"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "A stall is a hypothesis about the path, so she asks stalled customers what happened, records their words and changes one thing at a time. Changing several things hides what worked, six customers are counts and not a rate to forecast from, and the calendar step is needed for the first result, so it should be simplified and not dropped.",
+        "ar": "التعثر فرضية عن المسار، فتسأل العملاء المتعثرين عمّا حدث وتدوّن كلماتهم وتغيّر شيئًا واحدًا في كل مرة. تغيير عدة أشياء معًا يخفي ما نجح، وستة عملاء أعداد لا نسبة يُبنى عليها توقّع، وخطوة التقويم لازمة للنتيجة الأولى فتُبسَّط ولا تُحذف."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m4-e1",
+      "lesson": "4.1",
+      "text": {
+        "en": "I have built a first-ten list of at least thirty named people or businesses, each row with a circle, a source, a reason they might have the problem and a dated next step, and saved it in my founder folder.",
+        "ar": "بنيتُ قائمة العشرة الأوائل من ثلاثين اسمًا على الأقل لأشخاص أو أعمال مسمّين، في كل صف دائرة ومصدر وسبب قد يجعل المشكلة مشكلتهم وخطوة تالية بتاريخ، وحفظتُها في مجلد المؤسس."
+      }
+    },
+    {
+      "id": "m4-e2",
+      "lesson": "4.3",
+      "text": {
+        "en": "I have written a first-result statement and an onboarding checklist for my product, and saved both in my founder folder with the day by which a new customer should reach the result.",
+        "ar": "كتبتُ بيان النتيجة الأولى وقائمة تهيئة لمنتجي، وحفظتُهما معًا في مجلد المؤسس مع اليوم الذي ينبغي أن يبلغ فيه العميل الجديد النتيجة."
+      }
+    }
+  ]
+}

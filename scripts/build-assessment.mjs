@@ -177,6 +177,19 @@ const COURSES = [
         'تعرف الأفكار الأساسية (core ideas) في عدد من الوحدات (modules). الخطوة التالية: أعطِ الوكلاء (agents) السياق (context) والمواصفات (specs)، واعمل بخطوات صغيرة مُتحقَّق منها (verified steps)، ونفّذ المختبرات (labs)، وضع علامات على الأدلة (evidence).',
         'تعرف معظم الوحدات (modules) ومارست عددًا منها: التحقق (verifying)، وتصحيح الأخطاء (debugging)، وإعادة الهيكلة (refactoring)، والتأمين (securing) مع الوكلاء (agents). الخطوة التالية: أغلق الفجوات المتبقية (remaining gaps).',
         'إجاباتك تغطي كل الوحدات (modules)، وتذكر أنك مارست معظمها. هذا فحص ذاتي (self-check)، وليس مؤهلًا (qualification). الخطوة التالية: حافظ على حدّة مهاراتك بالمختبرات (labs)، وراجع الدروس (lessons) التي تقف خلف الأسئلة التي أخطأت فيها.'] } },
+  { id: 'founder', src: 'founder/assessment', out: 'founder', reader: { en: 'index.html', ar: 'index.ar.html' }, mode: 'hash', store: 'founder', theme: 'founder-theme',
+    name: { en: "Founder's Playbook for AI-First Builders", ar: 'دليل المؤسس للبناة بالذكاء الاصطناعي (Founder\'s Playbook for AI-First Builders)' }, brand: "Founder's Playbook",
+    unit: { en: 'module', ens: 'modules', ar: 'وحدة (module)', ars: 'وحدات (modules)' },
+    evidenceHint: { en: 'for real, with something a reviewer could open — a file, a page, a table, a sent message — not just planned', ar: 'فعليًا، مع شيء يستطيع المراجِع فتحه، كملف (file) أو صفحة أو جدول أو رسالة مُرسَلة، لا مجرد خطة' },
+    steps: { // next step for each rung of the shared SCALE: no job titles, no readiness, funding or income claims
+      en: ['Next: see what AI changed for a founder, then pick a problem you can reach and test it before you build. Start with the modules marked Not yet.',
+        'You know the core ideas in several modules. Next: do the exercises — interviews, a smoke test, a kill list, a price test — and tick the evidence.',
+        'You know most modules and have done several of the steps, such as customer interviews, a price test, outreach or a launch checklist. Next: close the remaining gaps.',
+        'Your answers cover every module and you report doing most of the steps. This is a self-check, not a qualification, and it does not predict customers, income or funding. Next: keep testing with real customers, take legal, tax and data questions to a qualified professional, and review the lessons behind any questions you missed.'],
+      ar: ['الخطوة التالية: أن ترى ما غيّره الذكاء الاصطناعي للمؤسس، ثم تختار مشكلة تستطيع الوصول إلى أصحابها وتختبرها قبل أن تبني. ابدأ بالوحدات (modules) الموسومة «ليس بعد (Not yet)».',
+        'تعرف الأفكار الأساسية (core ideas) في عدد من الوحدات (modules). الخطوة التالية: نفّذ التمارين، من مقابلات واختبار دخان (smoke test) وقائمة استبعاد (kill list) واختبار سعر، وضع علامات على الأدلة (evidence).',
+        'تعرف معظم الوحدات (modules) ونفّذت عددًا من الخطوات، مثل مقابلات العملاء أو اختبار السعر أو التواصل أو قائمة تحقق الإطلاق. الخطوة التالية: أغلق الفجوات المتبقية (remaining gaps).',
+        'إجاباتك تغطي كل الوحدات (modules)، وتذكر أنك نفّذت معظم الخطوات. هذا فحص ذاتي (self-check)، وليس مؤهلًا (qualification)، ولا يتنبأ بوجود عملاء أو دخل أو تمويل. الخطوة التالية: واصل الاختبار مع عملاء حقيقيين، واحمل أسئلة القانون والضرائب والبيانات إلى مختص مؤهَّل، وراجع الدروس (lessons) التي تقف خلف الأسئلة التي أخطأت فيها.'] } },
 ];
 
 /* ---------------------------------------------------------------- load + validate */

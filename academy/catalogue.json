@@ -125,6 +125,25 @@
       "flagshipProposed": false
     },
     {
+      "id": "founder",
+      "title": "Founder's Playbook for AI-First Builders",
+      "titleAr": "دليل المؤسس للبناة بالذكاء الاصطناعي (Founder's Playbook for AI-First Builders)",
+      "school": "governance-risk-product",
+      "level": "100-200",
+      "levelProposed": true,
+      "path": "founder",
+      "lessons": 27,
+      "modules": 9,
+      "languages": [
+        "en",
+        "ar"
+      ],
+      "status": "ai-drafted",
+      "estimatedHours": null,
+      "flagship": false,
+      "flagshipProposed": false
+    },
+    {
       "id": "cloud",
       "title": "Cloud & DevOps: Zero to Hero",
       "titleAr": "السحابة وDevOps (Cloud & DevOps): من الصفر إلى الاحتراف",
