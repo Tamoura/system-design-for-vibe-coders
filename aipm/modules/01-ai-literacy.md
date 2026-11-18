@@ -9,6 +9,8 @@
 # 1.1 — Machine learning, generative AI, LLMs and agents: what each is good for
 *Level: 🟢 Beginner* · *Prerequisites: 0.2* · *Stage: Discover*
 
+**After this you can** classify AI features as rules, classic ML, LLM, workflow or agent with a one-line reason each, and redesign an "LLM does everything" idea as a hybrid that states which component decides and which communicates. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - "AI" is an umbrella over four families: **machine learning** (predicts a label or number from examples), **generative AI** (produces new content), **large language models** (generative AI for text, behind most assistants) and **agents** (a model using tools in a loop to finish a task).
 - The idea that matters most: **start from the output the user needs**, not from the technology. A score or yes/no points to classic ML; a draft or answer in words to an LLM; a multi-step task that changes other systems to an agent; fixed logic to plain rules.
@@ -212,6 +214,8 @@ Rania's rule for the card: *"If you cannot fill in 'cost of an error', you are n
 
 # 1.2 — Capabilities and limits: errors, hallucination, context, latency and cost
 *Level: 🟢 Beginner* · *Prerequisites: 1.1* · *Stage: Define, Design*
+
+**After this you can** compute precision and the false-alarm count for an alerting product, and write a limits register in which every high-severity limit has a testable design response. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Every AI system is **wrong some of the time**. The product question is never "is it accurate?" but "how often is it wrong, in which way, for whom, and what happens then?"
@@ -432,6 +436,8 @@ Rania's note at the bottom: *"Every high-severity row needs a design response we
 
 # 1.3 — The build spectrum: prompt, retrieval (RAG), fine-tune, train, or buy
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2* · *Stage: Build*
+
+**After this you can** diagnose which rung of the build spectrum (prompt, RAG, fine-tune, train or buy) fixes a given quality gap, and write a build-path decision record with a rejected option and the condition that would reverse it. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - There are five main ways to put AI into a product, from lightest to heaviest: **prompt** an existing model, add **retrieval (RAG)** so it answers from your documents, **fine-tune** a model on your examples, **train** your own model, or **buy** a finished product.

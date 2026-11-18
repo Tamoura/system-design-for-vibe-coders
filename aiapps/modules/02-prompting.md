@@ -9,6 +9,8 @@
 # 2.1 — System prompts as specifications: role, task, format, constraints, examples and reasoning
 *Level: 🟢 Beginner* · *Prerequisites: 1.1* · *Layer: Applications*
 
+**After this you can** write a versioned system prompt file that covers role, task, context, format, constraints and examples, names an owner and loads with `load_prompt`. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A system prompt is a **specification** the model follows literally on every call. What you omit, it guesses: the users, the source of truth, what to do when it cannot answer.
 - Cover **role, task, context, format, constraints, examples**. Say what to do, and why.
@@ -323,6 +325,8 @@ The artefact is **Najm Desk prompt v1**: `prompts/najm_desk_v1.txt` plus the che
 
 # 2.2 — Lab: from a vague prompt to a versioned, tested prompt with a 20-case eval set
 *Level: 🟢 Beginner* · *Prerequisites: 1.2, 2.1* · *Layer: Applications, Delivery*
+
+**After this you can** score three prompt versions on a labelled eval with a held-out split, read the confusion table, and run a pytest gate that is red for the weaker prompt and green for the better one. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Improve a prompt like code: one change per version, an eval, a diff. The Najm Desk classifier goes from a vague v1 to v2 (labels, one-word answers) to v3 (examples); each is a file.

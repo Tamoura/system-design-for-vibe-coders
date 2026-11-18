@@ -9,6 +9,8 @@
 # 0.1 — What it takes to ship an enterprise-grade agent: the delivery lifecycle, the layers and how this course works
 *Level: 🟢 Beginner* · *Prerequisites: none* · *Layer: Delivery*
 
+**After this you can** write a one-page evidence map of what "enterprise-grade" means for a system you know, where every property names an artefact or says "no evidence", and fill the delivery lifecycle table for a past project with an owner and an artefact per stage. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Shipping an agent is a **lifecycle**, not a build: discover, design, build, evaluate, secure, ship, operate, hand over.
 - **Enterprise-grade** means ten properties you can show evidence for, such as reliable, governed and supportable. "We are careful" is not evidence.
@@ -249,6 +251,8 @@ None of these needs the real API.
 
 # 0.2 — Your lab: setup, the lab kit, the API key and a spending cap
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Layer: Model, Delivery*
+
+**After this you can** set up the lab kit, run the smoke script against the offline mock with its three exit codes saved, and record a spending cap with low, expected and high cost scenarios in `NOTES.md`. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Your lab has two modes and one codebase: an **offline mock** (free, scripted) and the **real API** (billed). Only `ANTHROPIC_BASE_URL` and `ANTHROPIC_API_KEY` change.
@@ -633,6 +637,8 @@ Add CI, Docker or extra features. Do not commit. Plan first and wait for my OK.
 
 # 0.3 — Your build partner: directing Claude Code to build agents (and what you must still understand)
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Layer: Delivery*
+
+**After this you can** find and fix the five planted flaws in `flawed_chat.py` with a test for one, and write a `CLAUDE.md` under 60 lines whose rules a fresh Claude Code session follows unprompted. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Claude Code is your build partner, not your replacement, and not the `anthropic` SDK your agent's code calls. You are the architect and reviewer; the method is **spec, plan, small steps, verify, review the diff, commit**.

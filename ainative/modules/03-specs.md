@@ -9,6 +9,8 @@
 # 3.1 — Spec-driven development: from ticket to acceptance criteria, constraints, non-goals and a plan
 *Level: 🟢 Beginner* · *Prerequisites: 2.1* · *Focus: Workflow*
 
+**After this you can** turn a vague ticket into a spec with acceptance criteria, constraints and non-goals, and review a plan against a checklist. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A ticket states a wish. A **spec** says what done means, so an agent can build from it and you can verify against it: habit two.
 - A spec has ten parts; worked examples and written-down decisions earn their keep.
@@ -18,7 +20,7 @@
 - Biggest trap: a confident spec nobody checked against the code. The code wins.
 
 ## 🧭 Why it matters
-On a Tuesday (a constructed day, not recorded from a real model) Hessa (product owner) writes REMIT-288: *"Customers on the basic tier keep hitting their daily limit. Raise it to 3,000."* Lujain (graduate engineer) gives it to her agent. The diff is one line in `limits.py` and six edited tests. Everything passes. Nada (quality engineering lead) then asks in review: does the monthly limit of 8,000.00 stay, so a T1 customer reaches it in three days? Is exactly 3,000.00 allowed? Which of the six edited tests were meant to change? Why does `docs/ARCHITECTURE.md` say 5,000? The ticket answered none, because Hessa found them obvious, and the agent asked none.
+On a constructed Tuesday Hessa (product owner) writes REMIT-288: *"Customers on the basic tier keep hitting their daily limit. Raise it to 3,000."* Lujain (graduate engineer) gives it to her agent. The diff is one line in `limits.py` and six edited tests. Everything passes. In review Nada (quality engineering lead) asks: does the monthly limit of 8,000.00 stay, so a T1 customer reaches it in three days? Is exactly 3,000.00 allowed? Which of the six edited tests were meant to change? Why does `docs/ARCHITECTURE.md` say 5,000? The ticket answered none (Hessa found them obvious), and the agent asked none.
 
 The price of an unanswered question is the guess: the agent builds one reading as confidently as the right one. In the 2025 Stack Overflow developer survey (self-reported), the top frustration with AI tools was output that is "almost right, but not quite", which is what an unanswered boundary question produces: a limit that refuses 3,000.00 by one cent. A spec asks the questions before the build, when answering is cheap.
 
@@ -28,7 +30,7 @@ The price of an unanswered question is the guess: the agent builds one reading a
 
 **A ticket is not a spec.** A ticket is written for the backlog and leaves open whatever its writer found obvious. A spec is written for whoever builds and whoever verifies: it says what done means, what is out of scope and what to do in the hard cases. A colleague asks "what did you mean?". An agent picks a reading (`misread-requirement`, lesson 1.1) and builds it.
 
-**The anatomy of a spec.** Ten parts: goal, context, behaviour, acceptance criteria, constraints, non-goals, decisions and open questions, risks, a test plan and a plan. Behaviour is a table of worked examples or Given / When / Then lines: *Given a T1 customer who has sent 2,500.00 today, when they try 500.01, then it is refused with `daily_limit_exceeded`.* Behaviour pins the numbers and decisions pin the meaning, so those two do most of the work. The template in the 🏛️ section prompts for each part.
+**The anatomy of a spec.** Ten parts: goal, context, behaviour, acceptance criteria, constraints, non-goals, decisions and open questions, risks, a test plan and a plan. Behaviour is a table of worked examples or Given / When / Then lines: *Given a T1 customer who has sent 2,500.00 today, when they try 500.01, then it is refused with `daily_limit_exceeded`.* Behaviour pins the numbers and decisions pin the meaning, so those two do most of the work.
 
 **Weak and strong.** The weak version is Hessa's ticket. The strong version, cut to its core:
 
@@ -134,7 +136,7 @@ It names no file, does not say which tests may change, and has no command and no
 | Implement | Delegate one slice at a time (Module 4) |
 | Validate | Tests, the diff, running it (Module 5) |
 
-The post says output quality tracks spec quality and recommends a small pilot first. A related Microsoft post on a spec-first backlog adds a caveat this course shares: agents that update design documents can drift from the original specs. This is a company describing its own practice, not independent evidence (read the original, linked below), and it supports a habit, not a tool: Spec Kit's own `/specify`, `/plan` and `/tasks` (not Claude Code's `/plan`) are one way to follow it, a `specs/` folder with plan mode another. Lab 3.2 is your pilot.
+The post says output quality tracks spec quality and recommends a small pilot first. A related Microsoft post on a spec-first backlog adds a caveat: agents that update design documents can drift from the original specs. This is a company describing its own practice, not independent evidence (read the original), and it supports a habit, not a tool: Spec Kit's own `/specify`, `/plan` and `/tasks` (not Claude Code's `/plan`) are one way to follow it, a `specs/` folder with plan mode another. Lab 3.2 is your pilot.
 
 **Where specs go wrong.** Prescribing the how ("use a dict of offsets") when you mean the behaviour: the agent obeys the letter. Contradictions, which get an arbitrary winner. Examples copied from the code's own output, which no test can contradict. And a spec in place of a test: a criterion is a promise only while a test holds it ([*Software Testing*, lesson 6.2 — Tests as the specification for coding agents](../testing/index.html#/6.2)).
 
@@ -309,6 +311,8 @@ And the **Plan checklist**. Save it as `plan-checklist.md` and run it on every p
 # 3.2 — Lab: turn three vague tickets into specs an agent can build from
 *Level: 🟢 Beginner* · *Prerequisites: 2.2, 3.1* · *Focus: Workflow*
 
+**After this you can** write three specs from vague tickets that pass the grader, each open question answered or flagged with an owner. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Lab m03 gives you three vague tickets from Hessa and a template. You write `specs/T1.md` to `T3.md`. Nothing is built.
 - Each ticket hides questions about rounding, boundaries, currency and corridors, fee parts, time and Arabic. The grader checks that each is **answered** in a sentence that names its subject. A question is not an answer.
@@ -317,9 +321,9 @@ And the **Plan checklist**. Save it as `plan-checklist.md` and run it on every p
 - Decision cue: if you cannot say what the code does at an edge, do not write the criterion yet.
 
 ## 🧭 Why it matters
-Last quarter Tariq traced three agent pull requests that "came back wrong" to their tickets (a constructed story). In each, the agent had done exactly what the ticket said, by picking a reading nobody had chosen: a rounding direction, a boundary, a time zone. Since then, nothing that touches money reaches an agent as a ticket; it arrives as a spec.
+Last quarter Tariq traced three agent pull requests that "came back wrong" to their tickets (a constructed story). In each, the agent had done what the ticket said, picking a reading nobody had chosen: a rounding direction, a boundary, a time zone. Since then, money changes reach agents as specs, not tickets.
 
-Hessa has left three new tickets, written in a hurry. Read them as a sceptic, let the code answer what it can, decide the rest in writing, and plan the build in steps small enough to check. The grader plays the colleague who keeps asking "which rounding?" until you answer.
+Hessa has left three new tickets, written in a hurry. Read them as a sceptic, let the code answer what it can and decide the rest in writing. The grader plays the colleague who keeps asking "which rounding?" until you answer.
 
 ## 📐 How it works
 

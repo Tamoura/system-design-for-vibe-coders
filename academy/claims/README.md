@@ -3,7 +3,7 @@
 Every legal or numeric claim in a lesson is listed here, so someone can check it and so it can be re-checked on a date.
 A claim is a statement that could be wrong in a way that matters: a law, a fine, a deadline, a price, a limit, a statistic, a version number.
 
-A row is added only when a person has looked at the source, or, if only a search summary was read, when its method says so.
+A row is added only when a person has looked at the source, or, if only a search summary was read, when its method says so. An **inventory row** (method `not yet checked`) lists a claim the lesson makes before anyone has opened a source; it says so plainly and stays `open`.
 
 ## Where rows go
 
@@ -23,8 +23,8 @@ Put rows in a Markdown file in this folder, one file per course: `academy/claims
 | claim | The claim in one plain sentence, as the lesson states it. |
 | source URL | A link to the primary text (the law, the standard, the vendor documentation page) where one exists. |
 | date checked | The day someone last read the source, as `YYYY-MM-DD`. |
-| method | `primary text` if the person read the source itself, or `search summary` if the fact is only reported by a web search summary. A search summary is "reported", never "verified". |
-| review-by date | The day the claim must be checked again, as `YYYY-MM-DD`. Laws and prices: at most 12 months after the date checked. |
+| method | `primary text` if the person read the source itself, `search summary` if the fact is only reported by a web search summary, or `not yet checked` for an inventory row nobody has checked. A search summary is "reported", never "verified". |
+| review-by date | The day the claim must be checked again, as `YYYY-MM-DD`. Laws and prices: at most 12 months after the date checked. An inventory row gets the day by which it must first be checked (the inventories of 2026-11-18 use 2027-02-18), so the weekly job flags it if nobody does. |
 | status | `open` (not yet checked), `checked` (read against the source), or `changed` (the source changed, the lesson needs an edit). |
 
 ## How to add one

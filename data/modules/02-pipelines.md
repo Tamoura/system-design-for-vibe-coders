@@ -9,6 +9,8 @@
 # 2.1 — Getting data in: ETL vs ELT, connectors, incremental loads and change data capture
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.3* · *Stage: Ingest*
 
+**After this you can** run a high-water-mark incremental load and show with a query exactly which inserts, updates and deletes it caught or missed, then capture the same changes with CDC. *Study time: about 120 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Ingestion** copies data from source systems (databases, SaaS tools, files, APIs, event streams) into your analytical platform. Most modern platforms load the raw data first and transform it inside the warehouse: **ELT** rather than **ETL**.
 - Land raw data **untouched and append-only**, with load metadata (when, from where, which batch). You can always re-derive clean tables from raw; you cannot recover what you threw away on the way in.
@@ -277,6 +279,8 @@ Use synthetic data only. A generator script or a public sample database is fine;
 
 # 2.2 — Orchestration: DAGs, idempotency, retries and backfills
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1* · *Stage: Ingest, Operate*
+
+**After this you can** write a daily load that can be rerun or backfilled for any date without duplicating rows, and prove it with the day's totals before and after three reruns. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - An **orchestrator** runs your pipeline steps in the right order, on a schedule or when data arrives, retries what fails, and records what ran. **Apache Airflow**, **Dagster** and **Prefect** are the common open-source choices.
@@ -614,6 +618,8 @@ Use synthetic data and a local PostgreSQL or DuckDB. Airflow (Docker quick-start
 
 # 2.3 — Streaming: events, Kafka, windows and the exactly-once myth
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 2.2* · *Stage: Ingest, Transform*
+
+**After this you can** build a Kafka consumer that lands every event exactly once in its table despite crashes, using manual commits after writing and an idempotent sink. *Study time: about 120 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Streaming** processes data continuously as **events** (small immutable facts such as "card 4417 was authorised for 120 QAR at 14:02:11") instead of in nightly batches. Use it when a decision loses value within seconds or minutes, like scoring a card payment for fraud.

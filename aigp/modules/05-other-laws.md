@@ -9,6 +9,8 @@
 # 5.1 — Non-discrimination in hiring, credit and services
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 4.2* · *BoK: II.B*
 
+**After this you can** compute selection-rate ratios, say which fail the four-fifths rule of thumb, and list features that could act as proxies for protected characteristics. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Anti-discrimination law is technology-neutral. If an AI system treats people less favourably because of a protected characteristic, or produces unjustified disadvantage for a protected group, the organisation using it can be liable.
 - Two concepts do most of the work: **direct discrimination / disparate treatment** (using the characteristic, or an obvious stand-in, on purpose) and **indirect discrimination / disparate impact** (a neutral-looking rule that disadvantages a group and can't be justified).
@@ -225,6 +227,8 @@ The AI Governance Committee adopts an **Adverse Impact Testing Standard** for al
 # 5.2 — Intellectual property in AI inputs and outputs
 *Level: 🟡 Intermediate* · *Prerequisites: 3.2* · *BoK: II.B*
 
+**After this you can** write a guidance note on AI-generated images covering ownership, infringement risk and controls, and give a go/no-go on two open-weight model licences. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - IP questions arise on both sides of an AI system. **Inputs:** do you have the right to use the training data, prompts and documents the system processes? **Outputs:** who owns what the system generates, and could it infringe someone else's rights?
 - In the EU, text and data mining (TDM) is permitted under the DSM Directive: Art. 3 for research organisations and cultural heritage institutions, Art. 4 for everyone else, but under Art. 4 rights holders can **opt out**, for online content by machine-readable means. The EU AI Act requires general-purpose AI model providers to respect those opt-outs and publish a summary of training content.
@@ -421,6 +425,8 @@ Layla issues an **AI Intellectual Property Clearance Checklist**, required befor
 
 # 5.3 — Consumer protection, product liability and sector rules
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 4.2* · *BoK: II.B*
+
+**After this you can** rewrite AI marketing claims so each is substantiated, and write an incident playbook for a chatbot that gives a customer wrong fee information. *Study time: about 105 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Consumer protection law bans unfair and deceptive practices. It applies to what an AI system says to customers and to what a company says *about* its AI. In the US, the FTC enforces section 5 of the FTC Act; in the EU, the Unfair Commercial Practices Directive does similar work.

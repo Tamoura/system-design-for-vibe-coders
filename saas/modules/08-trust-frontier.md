@@ -10,6 +10,8 @@
 
 *Level: 🔴 Advanced* · *Prerequisites: 1.3, 2.4, 5.2, 7.3*
 
+**After this you can** scan Beacon's full history with gitleaks and block a commit containing a fake key, and build an SSRF-safe fetch that refuses monitors pointing at metadata, loopback or private addresses. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - Security for a SaaS is two things: the engineering that keeps tenants' data safe, and the evidence (SOC 2, ISO 27001, a DPA) that proves it to buyers.
@@ -41,7 +43,7 @@ Security for a SaaS is two things that feed each other: the **engineering** that
 | Status pages | XSS via incident text shown publicly | Output encoding, CSP | this lesson |
 | The whole platform | Vulnerable dependency or base image | Scanning and patching | this lesson |
 
-Two OWASP lists give you a checklist. The **OWASP Top 10** covers web apps. In the 2021 edition, A01 Broken Access Control is #1 and SSRF is A10. Check owasp.org for the latest edition. The **OWASP API Security Top 10 (2023)** is more relevant to a SaaS API: API1 is **Broken Object Level Authorization** (BOLA: changing `/monitors/123` to `/monitors/124` and getting someone else's monitor), and API5 is Broken Function Level Authorization (a Member calling an admin-only endpoint). In multi-tenant SaaS, BOLA across tenants is *the* bug class to design against. It's why lesson 2.4 made tenant scoping structural, not a thing each developer has to remember.
+Two OWASP lists give you a checklist. The **OWASP Top 10** covers web apps. In the 2025 edition, A01 Broken Access Control is still #1, and SSRF (A10 in the 2021 edition) is now folded into it. Check owasp.org for the current list. The **OWASP API Security Top 10 (2023)** is more relevant to a SaaS API: API1 is **Broken Object Level Authorization** (BOLA: changing `/monitors/123` to `/monitors/124` and getting someone else's monitor), and API5 is Broken Function Level Authorization (a Member calling an admin-only endpoint). In multi-tenant SaaS, BOLA across tenants is *the* bug class to design against. It's why lesson 2.4 made tenant scoping structural, not a thing each developer has to remember.
 
 **SSRF defence for Beacon's checker.** Resolve the hostname yourself, then **reject private, loopback, link-local and metadata addresses** (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, 127.0.0.0/8, 169.254.0.0/16, `::1`, `fc00::/7`, and so on). Connect to the IP you checked, so a DNS rebinding answer can't swap it after the check. Don't follow redirects blindly: re-validate each hop. Better still, run check workers in a network segment with no route to your internal services and with IMDSv2 (the token-required metadata service) enforced on AWS.
 
@@ -257,6 +259,8 @@ Two holes. `fetch(url)` resolves DNS again, so a DNS rebinding answer can swap i
 # 8.2 — AI features as a SaaS component
 
 *Level: 🔴 Advanced* · *Prerequisites: 2.4, 3.3, 5.1, 8.1*
+
+**After this you can** build a schema-validated AI incident summary saved as an editable draft, record tokens and cost per org for every model call, and run a CI eval that includes a prompt-injection case. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 

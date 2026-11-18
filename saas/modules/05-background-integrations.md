@@ -10,6 +10,8 @@
 
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 4.1*
 
+**After this you can** move incident notifications into a background job with retries, backoff and a dead-letter destination, and prove that running the same job twice sends each subscriber exactly one email. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - A background job is a durable record of work, stored in a broker and run later by a separate worker that can retry it.
@@ -293,6 +295,8 @@ The task runs three times a night, once per instance, and it stops or shifts on 
 
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 1.3*
 
+**After this you can** ship public monitor endpoints behind hashed, revocable org API keys with cursor pagination, and add plan-aware rate limits that answer 429 with `Retry-After`. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - A public API is a separate product surface with its own contract, usually REST + JSON described by an OpenAPI document.
@@ -570,6 +574,8 @@ Every script at that customer shares one bucket, so they throttle each other, an
 
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1, 5.2*
 
+**After this you can** send webhooks signed to the Standard Webhooks spec with timeouts and retries, refuse targets such as `127.0.0.1` and `169.254.169.254`, and give customers a log of every delivery attempt. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - An outbound webhook is an HTTP POST Beacon sends to a customer's URL when an event happens. It is a delivery system, not a `fetch` call.
@@ -830,6 +836,8 @@ DNS rebinding. The name resolves to a public address at check time and to a priv
 # 5.4 — Workflow engines and durable execution
 
 *Level: 🔴 Advanced* · *Prerequisites: 5.1, 5.3*
+
+**After this you can** move a notification fan-out into a durable workflow with named steps, kill the worker mid-run and show that it resumes without re-sending, and build an escalation that stops on acknowledgement. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 

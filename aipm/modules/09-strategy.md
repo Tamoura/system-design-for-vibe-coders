@@ -9,6 +9,8 @@
 # 9.1 — AI product strategy and defensibility
 *Level: 🔴 Advanced* · *Prerequisites: 2.2, 3.2, 8.2* · *Stage: Lead*
 
+**After this you can** rewrite a slogan-style goal as a strategy kernel of diagnosis, guiding policy and coherent actions, and run a moat audit that names which layer holds a product's value. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A strategy is a **diagnosis** of the situation, a **guiding policy** for dealing with it, and a set of **coherent actions** (Richard Rumelt). A list of AI use cases is not a strategy, and neither is "become AI-first".
 - Access to a capable model is not an advantage, because every competitor can rent the same model on similar terms. Lasting advantage comes from what surrounds the model: proprietary data and outcome labels, a place inside a workflow, distribution, trust and the licence to operate, and how fast the organisation learns.
@@ -240,6 +242,8 @@ Rania replaces the deck with a one-page **AI Product Strategy** the board can ho
 
 # 9.2 — Roadmaps under uncertainty: bets, platforms and model change
 *Level: 🔴 Advanced* · *Prerequisites: 1.3, 6.3, 9.1* · *Stage: Lead, Define*
+
+**After this you can** turn dated feature commitments into Now-Next-Later outcomes, write a bet card with a measurable kill criterion, and draft a model-change playbook with pass thresholds and a fallback. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - An AI roadmap carries three uncertainties at once: **value** (is the problem worth solving?), **feasibility** (can the product reach the quality bar?) and **technology drift** (what will models do, and cost, next quarter?).
@@ -480,6 +484,8 @@ Rania replaces Faisal's timeline with a **Now-Next-Later AI roadmap** and a bet 
 
 # 9.3 — Teams, roles and operating model for AI products
 *Level: 🔴 Advanced* · *Prerequisites: 5.2, 9.1* · *Stage: Lead*
+
+**After this you can** write a decision-rights register in which every decision has exactly one accountable person, and recommend an operating model for AI products with a path-to-production rule. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - An AI product team adds roles to the classic trio of product manager, designer and engineer: data scientists or ML engineers, AI engineers, data engineers, domain experts who judge quality, and a named risk or governance partner.
@@ -730,6 +736,8 @@ Rania's two-page **AI Operating Model**, approved by the steering group:
 
 # 9.4 — Responsible AI and regulation: the PM's part
 *Level: 🔴 Advanced* · *Prerequisites: 3.3, 4.2, 7.1* · *Stage: Lead, Launch*
+
+**After this you can** turn the responsible-AI product levers into testable requirements, each with evidence and one owner, and write the responsible-AI section of a PRD for an agentic action. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Responsible AI is a **product quality**, not a gate at the end. Governance, legal and the DPO say what the rules and limits are. The product manager turns them into requirements, designs, evals, launch criteria and evidence.

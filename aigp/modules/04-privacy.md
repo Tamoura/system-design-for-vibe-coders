@@ -9,6 +9,8 @@
 # 4.1 — Data protection principles meet AI
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.2* · *BoK: II.A*
 
+**After this you can** draft a legitimate interests assessment for training a fraud model, and test the claim that a model is anonymous against EDPB Opinion 28/2024. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Data protection law applies to AI whenever personal data is processed, from training data to outputs about people.
 - The GDPR's seven Art. 5 principles are the backbone, and each creates a specific tension with how machine learning works.
@@ -221,6 +223,8 @@ Committee decision recorded: *"Chat logs are excluded from credit-model training
 
 # 4.2 — Automated decisions, individual rights and transparency
 *Level: 🟡 Intermediate* · *Prerequisites: 4.1* · *BoK: II.A*
+
+**After this you can** decide for each of five AI systems whether GDPR Art. 22 is engaged, and write a decline-letter explanation of the logic involved in under 150 words. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Data subjects keep all their rights when AI is involved: information, access, rectification, erasure, restriction, portability and objection. AI makes some of these technically hard, but hard is not a legal excuse.
@@ -444,6 +448,8 @@ The AI Governance Committee approves a redesign of the retail credit decision fl
 
 # 4.3 — DPIAs and the global privacy map, from the EU to the GCC
 *Level: 🟡 Intermediate* · *Prerequisites: 4.1, 4.2* · *BoK: II.A*
+
+**After this you can** screen AI systems for a DPIA, and draft the risks and measures sections of a DPIA with at least five risks each matched to a measure. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - A Data Protection Impact Assessment (DPIA, GDPR Art. 35) is mandatory before processing that is likely to result in a high risk to people's rights and freedoms. Most significant AI uses of personal data, such as credit scoring, CV screening and large-scale profiling, will need one.

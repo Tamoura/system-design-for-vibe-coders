@@ -9,6 +9,8 @@
 # 6.1 — Quality you can measure: metrics, golden sets and error analysis
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 5.1* · *Stage: Evaluate*
 
+**After this you can** compute precision and recall from raw counts and explain them to a business sponsor without jargon, and run an error analysis on 20 outputs that ranks failure categories and names the first fix. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Evaluation** ("evals") means measuring outputs against an agreed definition of "good", on fixed cases, repeatably after every change.
 - For **predictive** products (fraud alerts, credit pre-approval) use the **confusion matrix**, **precision** and **recall**. For **generative** products (a drafted memo, a chat answer) break "quality" into separate criteria, each with its own check.
@@ -256,6 +258,8 @@ All cases are labelled by credit officers (Arabic speakers for the Arabic slice)
 
 # 6.2 — LLM-as-judge, human review and red-teaming
 *Level: 🟡 Intermediate* · *Prerequisites: 6.1, 4.2* · *Stage: Evaluate*
+
+**After this you can** write a single-criterion PASS/FAIL judge prompt, measure the judge's recall and precision against human labels to decide whether it is fit for use, and plan a red-team exercise with an exit rule. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Every eval needs a **judge** that decides whether an output passed: **code** (cheap, exact, narrow), **a model** (scalable, flexible, biased) or **humans** (the reference standard, slow and costly). Use each where it fits.
@@ -516,6 +520,8 @@ Before the agent features of Najm Assist go to pilot, Faisal, Hessa and Dana pro
 
 # 6.3 — Online evaluation: experiments, A/B tests and staged rollouts
 *Level: 🟡 Intermediate* · *Prerequisites: 6.1, 6.2* · *Stage: Evaluate, Launch*
+
+**After this you can** choose an overall evaluation criterion with guardrail metrics, estimate the sample size an A/B test needs, and design a shadow-mode and staged rollout with a written rule for going live. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Offline evals tell you whether outputs are good. **Online evaluation** tells you whether real users in real workflows get the promised value, without new harm.

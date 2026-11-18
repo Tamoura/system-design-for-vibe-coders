@@ -12,6 +12,8 @@ Every term is defined before use; every lesson ends with something you can see.*
 
 # 7.1 — The Dashboard That Lies and the Metric That Doesn't
 
+**After this you can** define "returning users" by real activity rather than logins, print that definition next to the number on the dashboard, and name one metric that informs no decision. *Study time: about 50 minutes (estimate).*
+
 ## 🔥 The War Story
 
 The retention dashboard looked healthy. "Returning users" was climbing week over
@@ -166,6 +168,8 @@ Finish: *"Commit with the message `07-1-honest-retention-metric`."*
 
 # 7.2 — Errors, Logs, and the Noise Floor
 
+**After this you can** audit your error tracker until its top five issues are all failures users actually felt, and write a "what's running where" runbook you have checked against the live hosts. *Study time: about 50 minutes (estimate).*
+
 ## 🔥 The War Story
 
 When the platform finally got a crash tracker (Sentry, on mobile), the team
@@ -314,6 +318,8 @@ Finish: *"Commit with the message `07-2-noise-floor-and-runbook`."*
 
 # 7.3 — Search Is Telemetry
 
+**After this you can** log zero-result searches with the raw and normalized query, put the miss rate on a dashboard, and fix the top normalization miss behind a known-good-query test. *Study time: about 50 minutes (estimate).*
+
 ## 🔥 The War Story
 
 Search worked. It returned results, the box was fast, nobody had filed a bug.
@@ -457,6 +463,8 @@ Finish: *"Commit with the message `07-3-search-telemetry`."*
 ---
 
 # 7.4 — Background Jobs: The Code Nobody Watches
+
+**After this you can** make a background job safe to fire twice, give it an audit row per run and a delivery reconciliation, and show a stale-job sweep reclaiming a job you killed mid-run. *Study time: about 50 minutes (estimate).*
 
 ## 🔥 The War Story
 
@@ -622,6 +630,8 @@ Finish: *"Commit with the message `07-4-jobs-lock-audit-receipts`."*
 
 # 7.5 — Product Analytics in Practice: GA, Cloudflare, and Owning Your Events
 
+**After this you can** run edge, consent-gated behavioural and first-party analytics side by side, read one week's signup numbers from each, and explain why the three counts differ. *Study time: about 50 minutes (estimate).*
+
 > Tool note: this lesson names today's best defaults — Cloudflare Web Analytics,
 > Google Analytics 4, and first-party events in your own database. The *three
 > tiers* are permanent; the product names get an annual refresh. If you're
@@ -769,6 +779,8 @@ Finish: *"Commit with the message `07-5-three-tier-analytics`."*
 ---
 
 # 7.6 — Your Monitoring Stack: Sentry, Uptime Checks, Metrics, and Alerts
+
+**After this you can** wire error tracking, an uptime check that runs outside your infrastructure, a four-golden-signals dashboard and two phone alerts, then break staging on purpose and show both alerts arriving. *Study time: about 70 minutes (estimate).*
 
 > Tool note: this lesson names today's best defaults — Sentry, UptimeRobot /
 > Better Stack, Grafana/Prometheus, OpenTelemetry. The *four instruments* and the

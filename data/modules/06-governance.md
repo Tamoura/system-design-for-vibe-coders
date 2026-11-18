@@ -9,6 +9,8 @@
 # 6.1 — Data governance that works: ownership, catalogue, lineage and data contracts
 *Level: 🔴 Advanced* · *Prerequisites: 1.2, 3.1, 3.2* · *Stage: Govern*
 
+**After this you can** write an ownership register a colleague can use to find who answers for any dataset, and add a dbt contract that fails the build when a column type changes. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Data governance** is the set of decision rights and accountabilities over data: who decides what a dataset means, who may change it, who may use it and who fixes it when it breaks.
 - It must answer four questions in minutes: *Who owns this? What does it mean? Where does it come from and go? What if it changes?*
@@ -310,6 +312,8 @@ Use synthetic or public open data only.
 # 6.2 — Personal data: classification, masking, minimisation, retention and the law
 *Level: 🔴 Advanced* · *Prerequisites: 1.3, 6.1* · *Stage: Govern, Store*
 
+**After this you can** classify every column of a customer table, build a pseudonymised analyst view with a keyed hash, and show why a plain MD5 hash of an ID can be reversed. *Study time: about 125 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Personal data** is any information about an identifiable person: not just names and IDs, but also account numbers, device IDs or a rare mix of birth date, nationality and branch.
 - **Classify** every column (public, internal, confidential, restricted, plus a personal-data tag), and let the classification drive masking, access and retention automatically.
@@ -584,6 +588,8 @@ Use synthetic data only (for example generated with the Python Faker library). N
 
 # 6.3 — Securing the data platform: access control, secrets, audit and sharing safely
 *Level: 🔴 Advanced* · *Prerequisites: 6.1, 6.2* · *Stage: Govern, Operate*
+
+**After this you can** set up least-privilege PostgreSQL roles and row-level security, prove with test queries that each user sees only their rows, and explain how FORCE and removing superuser close the two bypasses. *Study time: about 125 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - A data platform concentrates the bank's most valuable data in one place, so it needs **least privilege**: every person and every pipeline gets the minimum access its purpose needs, and nothing more.

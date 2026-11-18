@@ -9,6 +9,8 @@
 # 7.1 — What to hand to agents or people, and what to keep
 *Level: 🟡 Intermediate* · *Prerequisites: 5.2, 5.3* · *Step: Run*
 
+**After this you can** sort your recurring tasks into keep, agent drafts, agent acts within limits and hand to a person, and write delegation cards for three of them, each with a limit and a stop condition. *Study time: about 120 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - After this lesson you can sort your company's recurring tasks into four groups (**keep**, **agent drafts and you approve**, **agent acts within limits**, **hand to a person**) and write a one-page **delegation card** for at least three of them, each with a stated limit and a stop condition. Allow about two hours.
 - An **AI agent** here means software driven by an AI model that can take actions (send, change, buy, delete), not only write text. The more it can act, the more a mistake costs.
@@ -210,6 +212,8 @@ The agent now used its own mailbox with draft-only rights. For the first three w
 
 # 7.2 — Costs, vendors and lock-in
 *Level: 🟡 Intermediate* · *Prerequisites: 2.2, 3.1, 7.1* · *Step: Run*
+
+**After this you can** build a vendor register of at least eight rows with data held, cost, owner, renewal and exit route, and run a 30-minute vendor review that ends in three decisions. *Study time: about 120 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can produce a **vendor register** with at least eight rows (what each vendor does for you, what data it holds, what it costs, who pays, when it renews, how you would leave) and run a 30-minute vendor review that ends with three decisions. Allow about two hours.
@@ -421,6 +425,8 @@ Finally she added a line to the agent's standing instructions: "Do not add a ser
 
 # 7.3 — Key-person risk: access, backups and a 30-minute handover pack
 *Level: 🔴 Advanced* · *Prerequisites: 6.3, 7.1, 7.2* · *Step: Run*
+
+**After this you can** write a handover pack with no secrets in it and prove it with a 30-minute drill in which a trusted helper finds six named items using only the pack. *Study time: about 180 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can build a **handover pack** that lets a trusted person keep Tick running safely for two weeks without you, and prove it with a 30-minute drill where that person finds six named items using only the pack. Allow about three hours for the first version.

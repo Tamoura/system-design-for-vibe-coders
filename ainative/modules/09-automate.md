@@ -9,6 +9,8 @@
 # 9.1 — Commands, skills, subagents, hooks, MCP and headless mode: what to automate and what not to
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 8.1* · *Focus: Automate*
 
+**After this you can** decide with a decision card whether a repeated task becomes a command, skill or hook or stays manual, and justify it. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Automate what repeats and has a mechanical success check.** A hook that reports a file that does not parse qualifies; "an agent approves the pull request" is judgement in disguise.
 - **Six places, six jobs:** memory file, skill, subagent, hook, script around `claude -p`, MCP server. A hook is code, so it enforces; prompts only ask.
@@ -47,7 +49,7 @@ flowchart TD
     F -->|"no"| H["Script around claude -p, with limits"]
 ```
 
-**Commands and skills.** **Custom commands have been merged into skills.** `.claude/commands/deploy.md` and `.claude/skills/deploy/SKILL.md` both create `/deploy`; old command files keep working, a skill beats a command of the same name, and the documentation recommends skills for new work. A skill is a folder with `SKILL.md`, whose first line opens YAML frontmatter. Only `description` is recommended, and **unknown keys are ignored**: a misspelt `disable_model_invocation` does nothing and tells nobody. The documented keys at the time of writing: `name`, `description`, `when_to_use`, `argument-hint`, `arguments`, `disable-model-invocation`, `user-invocable`, `allowed-tools`, `disallowed-tools`, `model`, `effort`, `context`, `agent`, `background`, `hooks`, `paths`, `shell`. Claude reads every description at the start and loads a skill when the task matches, or you type `/name`, so the description is the trigger: "Reviews stuff" matches everything and nothing, while the one below says what the skill does and when to use it. `$ARGUMENTS` receives what follows the name. `` !`command` `` runs before Claude sees the text and is replaced by its output; a command that exits non-zero aborts the invocation, so `main...HEAD` below fails if there is no `main`. This skill writes pull request descriptions:
+**Commands and skills.** **Custom commands have been merged into skills.** `.claude/commands/deploy.md` and `.claude/skills/deploy/SKILL.md` both create `/deploy`; old command files keep working, a skill beats a command of the same name, and the documentation recommends skills for new work. A skill is a folder with `SKILL.md`, whose first line opens YAML frontmatter. Only `description` is recommended, and **unknown keys are ignored**: a misspelt `disable_model_invocation` does nothing and tells nobody. The documented keys at the time of writing: `name`, `description`, `when_to_use`, `argument-hint`, `arguments`, `disable-model-invocation`, `user-invocable`, `allowed-tools`, `disallowed-tools`, `model`, `effort`, `context`, `agent`, `background`, `hooks`, `paths`, `shell`. Claude reads every description at the start and loads a skill when the task matches, or you type `/name`, so the description is the trigger: "Reviews stuff" matches everything and nothing. `$ARGUMENTS` receives what follows the name. `` !`command` `` runs before Claude sees the text and is replaced by its output; a command that exits non-zero aborts the invocation, so `main...HEAD` below fails if there is no `main`. This skill writes pull request descriptions:
 
 ```markdown
 ---
@@ -102,7 +104,7 @@ The other kind runs *after* the edit and can only report. The hooks guide's exam
 
 **Cost and reliability** are design inputs. Give every unattended run a tool list, turn limit, budget cap and timeout; retry once at most; make a second run harmless (same input, same output, one result per ticket id); validate what comes back before anything acts on it, because model output is data. In August 2025, as Wiz reported, malicious Nx packages ran AI command-line tools already installed on developers' machines, with safety-bypass flags (the cause: a stolen npm token and a vulnerable CI workflow, not an AI flaw), which shows that an agent CLI is a capability any script can call.
 
-**Meta's map.** Meta reports that a small team built Forum, a Groups app, with an AI agent as a participant, using five components: rules, skills, agents, commands and hooks. In this course's terms: rules are `CLAUDE.md` and `.claude/rules/` (money is `Decimal`); skills and commands are the same files here (`/pr-description`); agents are subagents (`remit-reviewer`); hooks are hooks (the float check). Meta also reports that when the agent repeats a mistake more than twice, the team encodes the correction once, for everyone, and that its biggest gains came from changing code and tooling rather than prompts: one example is tools that let the agent inspect the live view hierarchy, which reduced misdirected edits. Remit's small version: `python -m remit quote QAR 500 INR`, so the agent need not guess the fee. A company describing its own project, not independent evidence: read the original (linked below).
+**Meta's map.** Meta reports that a small team built Forum, a Groups app, with an AI agent as a participant, using five components: rules, skills, agents, commands and hooks. In this course's terms: rules are `CLAUDE.md` and `.claude/rules/` (money is `Decimal`); skills and commands are the same files here (`/pr-description`); agents are subagents (`remit-reviewer`); hooks are hooks (the float check). Meta also reports that when the agent repeats a mistake more than twice, the team encodes the correction once, for everyone, and that its biggest gains came from changing code and tooling rather than prompts. Remit's small version: `python -m remit quote QAR 500 INR`, so the agent need not guess the fee. A company describing its own project, not independent evidence: read the original (linked below).
 
 **Maintenance.** Keep the shared files of `.claude/` in git (not `settings.local.json`) and review them like code: a hook runs with your rights, outside the sandbox. Test hooks on sample documents, never by running what they guard. Give each automation an owner, pin the team's version (`claude --version`; behaviour changes across releases) and delete automations nobody trusts.
 
@@ -278,12 +280,14 @@ Delete the first comment line in your copy: it names the file in the course repo
 ## 📚 References
 - Claude Code documentation: skills https://code.claude.com/docs/en/skills; subagents https://code.claude.com/docs/en/sub-agents; hooks https://code.claude.com/docs/en/hooks; hooks guide https://code.claude.com/docs/en/hooks-guide; MCP https://code.claude.com/docs/en/mcp; headless https://code.claude.com/docs/en/headless; GitHub Actions https://code.claude.com/docs/en/github-actions
 - [*Building AI Applications & Agents*, lesson 10.1 — The Model Context Protocol: servers, tools, resources, authorisation and least privilege](../aiapps/index.html#/10.1); [*Secure AI & Application Security*, lesson 9.2 — Agents and tools: excessive agency, least-privilege tools and MCP](../secai/index.html#/9.2)
-- **Go deeper.** Engineering at Meta, "How Meta Built Forum With AI-Native Engineering": https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/ · OWASP, LLM06 Excessive Agency: https://genai.owasp.org/llm-top-10/ · Invariant Labs, GitHub MCP exploited: https://invariantlabs.ai/blog/mcp-github-vulnerability · Wiz, the s1ngularity supply-chain attack: https://wiz.io/blog/s1ngularity-supply-chain-attack · Model Context Protocol: https://modelcontextprotocol.io
+- **Go deeper.** Engineering at Meta, "How Meta Built Forum With AI-Native Engineering": https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/ · OWASP, LLM06:2025 Excessive Agency: https://genai.owasp.org/llm-top-10/ · Invariant Labs, GitHub MCP exploited: https://invariantlabs.ai/blog/mcp-github-vulnerability · Wiz, the s1ngularity supply-chain attack: https://wiz.io/blog/s1ngularity-supply-chain-attack · Model Context Protocol: https://modelcontextprotocol.io
 
 ---
 
 # 9.2 — Lab: build a project toolkit and a headless triage script
 *Level: 🟡 Intermediate* · *Prerequisites: 9.1, 8.2* · *Focus: Automate*
+
+**After this you can** build a review command, a post-edit hook and a headless triage script that pass the grader. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Lab m09.** Five things in Remit: a review command, a read-only reviewer, a post-edit hook, a headless triage script and three decision cards.
@@ -305,7 +309,7 @@ $ echo "I was charged a fee of 15 QAR twice for one transfer to Manila." | claud
 {"result": "{\"category\": \"bug\", \"severity\": \"high\", \"area\": \"fees\", \"money_logic\": true}", "session_id": "stub-ce71a3aacd0f", "total_cost_usd": 0.001232, "stub": "ailab stand-in for lab m09 (not Claude Code)"}
 ```
 
-Two levels of JSON: the object, and inside `result` the model's answer, which is *text* that happens to be JSON. A failed run (`[stub:error]`) exits 1 and prints the failure as the `result`. `export` lasts for one shell, so have each of your tests put `lab-assets/bin` first on `PATH` itself: then it works anywhere and can never reach a real `claude`.
+Two levels of JSON: the object, and inside `result` the model's answer, which is *text* that happens to be JSON. A failed run (`[stub:error]`) exits 1 and prints the failure as the `result`.
 
 **The five parts.** Parts 1 and 2 are files read as data. Part 3 is the hook of 9.1, registered as shown there: exit 2 when the work is wrong, exit 1 when the hook is broken. Part 4 is a script: `lab-assets/triage_skeleton.py` has the argument parsing, output document and exit codes; `ask_claude` and `read_fields` are yours. Part 5 is the card of 9.1, three times.
 

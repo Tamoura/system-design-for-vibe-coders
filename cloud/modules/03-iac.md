@@ -9,6 +9,8 @@
 # 3.1 — Infrastructure as code with Terraform/OpenTofu: state, modules and plans
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 1.3* · *Phase: Code, Deploy*
 
+**After this you can** write an OpenTofu module with validated inputs, read a plan to tell an in-place update from a replacement, and rename a resource with a `moved` block and zero destroys. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Infrastructure as code (IaC)** means describing servers, networks, databases and permissions in text files that a tool applies for you. The files are reviewed, versioned and repeatable; the console becomes read-only for day-to-day work.
 - **Terraform** and its open-source fork **OpenTofu** are *declarative*: you write the end state you want, and the tool works out which create, update and delete calls to make.
@@ -324,6 +326,8 @@ All three run on your own machine with Docker and OpenTofu. If you choose a clou
 # 3.2 — Environments and GitOps: promoting changes from dev to production
 *Level: 🟡 Intermediate* · *Prerequisites: 2.2, 2.3, 3.1* · *Phase: Release, Deploy*
 
+**After this you can** build Kustomize overlays for dev and prod, promote one image digest from dev to prod by pull request with Argo CD, and roll back a bad promotion with `git revert`. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - An **environment** (dev, staging, production) is a full copy of the system for a purpose. Environments should differ only in configuration and scale, never in code or structure.
 - **Build once, promote the same artefact.** The exact image digest tested in staging is the one that reaches production; nothing is rebuilt along the way.
@@ -593,6 +597,8 @@ Run these on a local cluster (kind or k3d) with a Git repository you own, such a
 
 # 3.3 — Policy as code, drift and guardrails
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 3.2* · *Phase: Test, Operate*
+
+**After this you can** detect drift with `plan -detailed-exitcode`, write tested Conftest policies that block low ports and `latest` tags, and move a Kyverno digest-pinning policy from Audit to Enforce. *Study time: about 115 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Policy as code** writes rules such as "no database open to the internet" or "every resource has an owner tag" as code that a tool checks automatically, on every change, the same way every time.

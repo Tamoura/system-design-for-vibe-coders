@@ -9,6 +9,8 @@
 # 1.1 — SQL that answers business questions: joins, aggregation, CTEs and window functions
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Stage: Model, Analyse*
 
+**After this you can** write a CTE-based SQL query with window functions that answers a business question at the right grain, and explain why the naive join-everything count gives a larger number. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - SQL is how you ask a database a question. Most business questions need four moves: **join** the tables, **filter** the rows, **aggregate** to the level the question asks about, then **rank or compare** with window functions.
 - The rule that matters most: know the **grain** of every table and of every result, meaning what one row represents. "One row per customer" and "one row per transaction" give different answers to the same `COUNT(*)`.
@@ -369,6 +371,8 @@ Use synthetic data only: generate `customers`, `accounts` (one to three per cust
 # 1.2 — Data modelling: normalisation, star schemas, grain and slowly changing dimensions
 *Level: 🟢 Beginner* · *Prerequisites: 1.1* · *Stage: Model*
 
+**After this you can** design a star schema with a written grain statement, and build a Type 2 customer dimension that keeps day-1 exposure by branch unchanged after later loads. *Study time: about 120 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A **data model** decides which tables exist, what one row in each means, and how they connect. It is the most expensive thing to change later, so it deserves the most thought up front.
 - Systems that *run* the bank use **normalised** models: each fact stored once, so updates cannot contradict each other. Systems that *analyse* the bank use **dimensional** models: a **fact table** of measurable events surrounded by **dimension tables** that describe them, a **star schema**.
@@ -659,6 +663,8 @@ Use DuckDB or PostgreSQL with synthetic data.
 
 # 1.3 — Where data lives: OLTP vs OLAP, warehouses, lakes, lakehouses and open table formats
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2* · *Stage: Store*
+
+**After this you can** time the same query on CSV and Parquet and on PostgreSQL and DuckDB, and justify from your timings which storage format and engine suit an OLTP or an OLAP workload. *Study time: about 120 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **OLTP** systems (online transaction processing) run the business: many small reads and writes, each touching a few rows, which must be fast and correct. **OLAP** systems (online analytical processing) analyse it: fewer, larger queries that scan millions of rows but only a few columns.

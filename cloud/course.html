@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="cloud-source" content="ab83de49ef1ebd2d">
+<meta name="cloud-source" content="c01eb158a30a21cb">
 <meta name="description" content="Cloud &amp; DevOps: Zero to Hero — a free, bilingual course: Linux and cloud fundamentals, containers and Kubernetes, infrastructure as code, CI/CD and safe releases, observability and SLOs, incidents, scaling, FinOps and AI infrastructure, with a quiz in every lesson and a 60-question practice exam.">
 <title>Cloud &amp; DevOps: Zero to Hero — Complete Course</title>
 <style>
@@ -429,6 +429,8 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p class="crumb"><a href="#contents">Module 0 — Orientation</a></p>
 <h1><span class="num">0.1</span> What cloud, DevOps, platform engineering and SRE are</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Phase <bdi dir="ltr">Plan</bdi></span> · <span class="prereq">Before this: none</span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a plain-language definition of cloud, DevOps, platform engineering and SRE that a non-technical friend can explain back, and estimate the four DORA metrics for a project from its git history. <em>Study time: about 115 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li><strong>Cloud</strong> is a way of getting computing: you rent servers, storage, networks and managed services on demand, through an API, and pay for what you use. It is less &quot;someone else&#39;s computer&quot; than someone else&#39;s <em>automation</em>.</li>
@@ -779,6 +781,8 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p class="crumb"><a href="#contents">Module 0 — Orientation</a></p>
 <h1><span class="num">0.2</span> The path to production: from a commit to a customer, and everything that can break on the way</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Phase <bdi dir="ltr">Release, Deploy</bdi></span> · <span class="prereq">Before this: <a href="#l0-1">0.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> draw a path-to-production map for your own project with an automated catch and an undo for every stage, and show a CI run that fails on a broken test and passes once it is fixed. <em>Study time: about 115 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>Every change travels the same <strong>path to production</strong>: commit, build, test, package, store, deploy, release to users, observe. Each step either catches problems or lets them through.</li>
@@ -1182,6 +1186,8 @@ jobs:
 <p class="crumb"><a href="#contents">Module 0 — Orientation</a></p>
 <h1><span class="num">0.3</span> Meet Najm Bank's platform team, and how to use this course</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Phase <bdi dir="ltr">Plan</bdi></span> · <span class="prereq">Before this: <a href="#l0-1">0.1</a>, <a href="#l0-2">0.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> set up a lab journal with a verified tool check and a local kind cluster you created and deleted, and write a service card and a personal study plan for this course. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li><strong>Najm Bank</strong> is a fictional mid-sized Gulf bank operating in Qatar, the UAE and the EU. You will follow its <strong>Platform Engineering &amp; SRE</strong> team through a real-shaped cloud migration.</li>
@@ -1654,6 +1660,8 @@ kind delete cluster --name najm-lab
 <p class="crumb"><a href="#contents">Module 1 — Foundations</a></p>
 <h1><span class="num">1.1</span> Linux, the shell and networking essentials: processes, files, ports, DNS, HTTP and TLS</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Phase <bdi dir="ltr">Operate, Monitor</bdi></span> · <span class="prereq">Before this: <a href="#l0-1">0.1</a>, <a href="#l0-2">0.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> label each line of <code>curl -v</code> output as DNS, TCP, TLS or HTTP, and write a script that walks that chain and stops at the first failing hop. <em>Study time: about 115 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>Almost every server, container and cloud function is <strong>Linux</strong> underneath. You need a small set of shell skills: processes, logs, files and permissions, listening ports.</li>
@@ -2022,6 +2030,8 @@ curl -sv https://api.najm.example/health -o /dev/null
 <p class="crumb"><a href="#contents">Module 1 — Foundations</a></p>
 <h1><span class="num">1.2</span> Cloud fundamentals: regions, zones, compute, storage, managed services and shared responsibility</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Phase <bdi dir="ltr">Plan, Deploy</bdi></span> · <span class="prereq">Before this: <a href="#l1-1">1.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> draw a two-zone VPC with subnet ranges, a NAT gateway, a load balancer and port-level firewall rules, and write a placement note that says who patches what and what happens when a zone fails. <em>Study time: about 115 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>A cloud provider rents you computing on demand, through an API, billed by use. <strong>AWS</strong>, <strong>Microsoft Azure</strong> and <strong>Google Cloud</strong> sell similar building blocks under different names.</li>
@@ -2476,6 +2486,8 @@ curl -sv https://api.najm.example/health -o /dev/null
 <p class="crumb"><a href="#contents">Module 1 — Foundations</a></p>
 <h1><span class="num">1.3</span> Identity and access in the cloud: users, roles, policies and workload identity</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Phase <bdi dir="ltr">Plan, Deploy</bdi></span> · <span class="prereq">Before this: <a href="#l1-2">1.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> rewrite a wildcard policy as a least-privilege grant scoped to one prefix of one bucket, and configure GitHub Actions OIDC so the allowed branch gets short-lived credentials and any other branch is denied. <em>Study time: about 115 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>In the cloud, every action is an API call, and every API call is checked against <strong>identity and access management (IAM)</strong>: <em>who</em> is calling (the <strong>principal</strong>), <em>what</em> they want to do (the <strong>action</strong>), on <em>which</em> <strong>resource</strong>, under which <strong>conditions</strong>.</li>
@@ -2859,6 +2871,8 @@ metadata:
 <p class="crumb"><a href="#contents">Module 2 — Containers and Kubernetes</a></p>
 <h1><span class="num">2.1</span> Containers done right: images, layers, Dockerfiles and registries</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Build, Deploy</bdi></span> · <span class="prereq">Before this: <a href="#l1-1">1.1</a>, <a href="#l1-2">1.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> rewrite a naive Dockerfile into a pinned, multi-stage, non-root build, show a leaked secret in the naive image&#39;s layers, and deploy by digest so that moving the tag changes nothing. <em>Study time: about 115 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>A <strong>container</strong> is an ordinary Linux process that the kernel isolates (its own view of files, processes and network) and limits (CPU and memory). A <strong>container image</strong> is the read-only package of files and settings that the process starts from.</li>
@@ -3244,6 +3258,8 @@ __pycache__/
 <p class="crumb"><a href="#contents">Module 2 — Containers and Kubernetes</a></p>
 <h1><span class="num">2.2</span> Kubernetes fundamentals: pods, deployments, services and how the cluster thinks</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Deploy, Operate</bdi></span> · <span class="prereq">Before this: <a href="#l1-1">1.1</a>, <a href="#l1-2">1.2</a>, <a href="#l2-1">2.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> deploy a Deployment and a Service on a local cluster, and diagnose a selector mismatch and a non-existent image digest from <code>kubectl</code> output alone, fixing both in your YAML files. <em>Study time: about 115 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li><strong>Kubernetes</strong> is a system that runs containers across a group of machines (a <strong>cluster</strong>) and keeps them running. You tell it what you want; it works continuously to make reality match.</li>
@@ -3722,6 +3738,8 @@ kubectl -n mobile get events --sort-by=.lastTimestamp
 <p class="crumb"><a href="#contents">Module 2 — Containers and Kubernetes</a></p>
 <h1><span class="num">2.3</span> Kubernetes in practice: config, secrets, health probes, autoscaling and Helm</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Deploy, Operate</bdi></span> · <span class="prereq">Before this: <a href="#l2-1">2.1</a>, <a href="#l2-2">2.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> add a ConfigMap, a Secret and separate liveness and readiness probes to a Deployment, show a not-ready pod leave the endpoints without restarting, and package the app as a Helm chart with an HPA and a PDB. <em>Study time: about 115 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>A manifest that &quot;runs&quot; is not production-ready. Production adds <strong>external configuration</strong>, <strong>safe secrets</strong>, <strong>health probes</strong>, <strong>requests and limits</strong>, <strong>autoscaling</strong>, <strong>graceful shutdown</strong> and a <strong>security context</strong>.</li>
@@ -4151,6 +4169,8 @@ helm rollback mobile-api 3 -n mobile
 <p class="crumb"><a href="#contents">Module 3 — Infrastructure as code</a></p>
 <h1><span class="num">3.1</span> Infrastructure as code with Terraform/OpenTofu: state, modules and plans</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Code, Deploy</bdi></span> · <span class="prereq">Before this: <a href="#l1-2">1.2</a>, <a href="#l1-3">1.3</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write an OpenTofu module with validated inputs, read a plan to tell an in-place update from a replacement, and rename a resource with a <code>moved</code> block and zero destroys. <em>Study time: about 115 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li><strong>Infrastructure as code (IaC)</strong> means describing servers, networks, databases and permissions in text files that a tool applies for you. The files are reviewed, versioned and repeatable; the console becomes read-only for day-to-day work.</li>
@@ -4537,6 +4557,8 @@ tofu apply tfplan         # apply exactly the saved plan, nothing else
 <p class="crumb"><a href="#contents">Module 3 — Infrastructure as code</a></p>
 <h1><span class="num">3.2</span> Environments and GitOps: promoting changes from dev to production</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Release, Deploy</bdi></span> · <span class="prereq">Before this: <a href="#l2-2">2.2</a>, <a href="#l2-3">2.3</a>, <a href="#l3-1">3.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build Kustomize overlays for dev and prod, promote one image digest from dev to prod by pull request with Argo CD, and roll back a bad promotion with <code>git revert</code>. <em>Study time: about 115 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>An <strong>environment</strong> (dev, staging, production) is a full copy of the system for a purpose. Environments should differ only in configuration and scale, never in code or structure.</li>
@@ -4864,6 +4886,8 @@ spec:
 <p class="crumb"><a href="#contents">Module 3 — Infrastructure as code</a></p>
 <h1><span class="num">3.3</span> Policy as code, drift and guardrails</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Test, Operate</bdi></span> · <span class="prereq">Before this: <a href="#l3-1">3.1</a>, <a href="#l3-2">3.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> detect drift with <code>plan -detailed-exitcode</code>, write tested Conftest policies that block low ports and <code>latest</code> tags, and move a Kyverno digest-pinning policy from Audit to Enforce. <em>Study time: about 115 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li><strong>Policy as code</strong> writes rules such as &quot;no database open to the internet&quot; or &quot;every resource has an owner tag&quot; as code that a tool checks automatically, on every change, the same way every time.</li>
@@ -5238,6 +5262,8 @@ spec:
 <p class="crumb"><a href="#contents">Module 4 — CI/CD and safe releases</a></p>
 <h1><span class="num">4.1</span> Continuous integration: pipelines, tests, artefacts and fast feedback</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Build, Test</bdi></span> · <span class="prereq">Before this: <a href="#l2-1">2.1</a>, <a href="#l3-2">3.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build a CI workflow with read-only permissions, timeouts and layer caching that turns red on a failing test, and prove that the digest running in your cluster is the one CI built. <em>Study time: about 115 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li><strong>Continuous integration (CI)</strong> means everyone merges small changes into the main branch often, at least daily, and every change is built and tested automatically before and after it merges.</li>
@@ -5644,6 +5670,8 @@ jobs:
 <p class="crumb"><a href="#contents">Module 4 — CI/CD and safe releases</a></p>
 <h1><span class="num">4.2</span> Release strategies: rolling, blue-green, canary, feature flags and rollback</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Release, Deploy</bdi></span> · <span class="prereq">Before this: <a href="#l2-2">2.2</a>, <a href="#l2-3">2.3</a>, <a href="#l4-1">4.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> run a rolling update and a rollback with zero failed requests, explain why a release with a failing probe stops while one returning HTTP 500 does not, and set up a canary that aborts itself on failed analysis. <em>Study time: about 115 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li><strong>Deploying</strong> puts new code on servers; <strong>releasing</strong> lets users reach it. Separating the two, with feature flags and progressive traffic shifting, is the core of safe delivery.</li>
@@ -6077,6 +6105,8 @@ spec:
 <p class="crumb"><a href="#contents">Module 4 — CI/CD and safe releases</a></p>
 <h1><span class="num">4.3</span> Securing the pipeline: secrets, signed artefacts and least-privilege deploys</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Build, Deploy</bdi></span> · <span class="prereq">Before this: <a href="#l1-3">1.3</a>, <a href="#l3-2">3.2</a>, <a href="#l4-1">4.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> pin every action in a workflow to a commit SHA with least-privilege permissions, sign an image keylessly with cosign, and show verification passing for your workflow identity and failing for another branch. <em>Study time: about 115 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>A CI/CD pipeline can change production, so it is one of the most privileged systems you run. Attackers know this; protect it like production.</li>
@@ -6451,6 +6481,8 @@ cosign verify \
 <p class="crumb"><a href="#contents">Module 5 — Observability and reliability</a></p>
 <h1><span class="num">5.1</span> Telemetry: logs, metrics, traces and OpenTelemetry</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Monitor</bdi></span> · <span class="prereq">Before this: <a href="#l2-2">2.2</a>, <a href="#l4-1">4.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build a RED dashboard from a latency histogram, and follow one request across two services from its trace to its log lines by trace ID. <em>Study time: about 115 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li><strong>Telemetry</strong> is the data a running system emits about itself. The three main signals are <strong>logs</strong> (events, with detail), <strong>metrics</strong> (numbers over time, cheap to keep and alert on) and <strong>traces</strong> (the path of one request across services). <strong>Profiles</strong> (where CPU and memory go inside the code) are a fourth signal that is still maturing.</li>
@@ -6790,6 +6822,8 @@ histogram_quantile(
 <p class="crumb"><a href="#contents">Module 5 — Observability and reliability</a></p>
 <h1><span class="num">5.2</span> SLOs, error budgets, alerting and on-call that people can sustain</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Operate, Monitor</bdi></span> · <span class="prereq">Before this: <a href="#l5-1">5.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write SLIs as good-event ratios with an error budget in minutes and in requests, and configure a multi-window burn-rate alert that pages on a steady error rate but not on a short burst. <em>Study time: about 115 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>An <strong>SLI</strong> (service level indicator) measures what users experience, such as &quot;the share of transfer requests that succeed in under 2 seconds&quot;. An <strong>SLO</strong> (service level objective) is the target for it over a window, such as 99.9% over 30 days. An <strong>SLA</strong> (service level agreement) is a contract with consequences, and should be looser than the SLO.</li>
@@ -7189,6 +7223,8 @@ histogram_quantile(
 <p class="crumb"><a href="#contents">Module 5 — Observability and reliability</a></p>
 <h1><span class="num">5.3</span> Incidents and blameless postmortems</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Operate</bdi></span> · <span class="prereq">Before this: <a href="#l5-1">5.1</a>, <a href="#l5-2">5.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> run a tabletop incident with assigned roles, a timestamped timeline and status updates, and write a blameless postmortem whose action items each change a system or a tool. <em>Study time: about 130 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>An <strong>incident</strong> is an unplanned event that hurts, or threatens to hurt, users or the business, and that needs a coordinated response. Declaring one early is cheap; declaring one late is expensive.</li>
@@ -7504,6 +7540,8 @@ IC: Maha · Ops: Tariq · Comms: Salem · Scribe: Yousef
 <p class="crumb"><a href="#contents">Module 6 — Scale, cost and AI infrastructure</a></p>
 <h1><span class="num">6.1</span> Scaling and resilience: autoscaling, multi-zone, backups and disaster recovery</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Phase <bdi dir="ltr">Operate</bdi></span> · <span class="prereq">Before this: <a href="#l2-3">2.3</a>, <a href="#l3-2">3.2</a>, <a href="#l5-2">5.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> show an HPA scaling out and back under load, keep a service available through a zone drain with spread constraints and a PDB, and measure a real restore against an RTO and an RPO you chose. <em>Study time: about 115 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li><strong>Scaling</strong> handles more load; <strong>resilience</strong> survives failure, through redundancy, backups and recovery plans.</li>
@@ -7891,6 +7929,8 @@ spec:
 <p class="crumb"><a href="#contents">Module 6 — Scale, cost and AI infrastructure</a></p>
 <h1><span class="num">6.2</span> FinOps: understanding, allocating and cutting cloud cost</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Phase <bdi dir="ltr">Operate, Monitor</bdi></span> · <span class="prereq">Before this: <a href="#l1-2">1.2</a>, <a href="#l3-1">3.1</a>, <a href="#l6-1">6.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a tagging policy with a policy-as-code check that fails on missing tags, produce a cost-by-namespace table for a shared cluster, and compute the cost per 1,000 requests for three scenarios. <em>Study time: about 115 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li><strong>FinOps</strong> is the practice of making engineering, finance and the business share responsibility for cloud spending, so cost becomes an engineering signal like latency, not a month-end surprise.</li>
@@ -8232,6 +8272,8 @@ Cost per Najm Assist conversation  = (gateway + model API + GPU cost)
 <p class="crumb"><a href="#contents">Module 6 — Scale, cost and AI infrastructure</a></p>
 <h1><span class="num">6.3</span> Running AI workloads: GPUs, model serving, LLM gateways and their cost</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Phase <bdi dir="ltr">Deploy, Operate</bdi></span> · <span class="prereq">Before this: <a href="#l2-3">2.3</a>, <a href="#l5-1">5.1</a>, <a href="#l6-2">6.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> estimate GPU memory for a model at three precisions, run an LLM gateway with a rate limit and a fallback route, and decide between a managed API and self-hosting from a dated break-even calculation. <em>Study time: about 115 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>AI workloads need scarce, expensive <strong>GPUs</strong>, load large model files before serving, and cost scales with <strong>tokens</strong>, not requests.</li>
@@ -8636,6 +8678,8 @@ Self-hosted cost per 1M tokens = self-hosted per month / (tokens served / 1,000,
 <p class="crumb"><a href="#contents">Module 7 — Hero: capstone and practice exam</a></p>
 <h1><span class="num">7.1</span> Capstone: take a new Najm service from empty repo to production with an SLO</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Phase <bdi dir="ltr">Deploy, Operate</bdi></span> · <span class="prereq">Before this: Modules 0–6</span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> take a small service from an empty repo to a local cluster with a build-once pipeline, GitOps rollback and an SLO with burn-rate alerts, and show each injected failure caught by an alert or the canary. <em>Study time: about 125 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>The capstone takes <strong>Card Controls</strong>, a new Najm service for freezing cards and setting limits, from an empty repository to production through all eight phases.</li>
@@ -8999,6 +9043,8 @@ spec:
 <p class="crumb"><a href="#contents">Module 7 — Hero: capstone and practice exam</a></p>
 <h1><span class="num">7.2</span> The cloud career: roles, certifications, interviews and a portfolio</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Phase <bdi dir="ltr">Plan</bdi></span> · <span class="prereq">Before this: <a href="#l7-1">7.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build a skills table for a target role from real job adverts with your top three gaps, publish a portfolio repository a peer can run from its README alone, and score a mock interview against a scorecard. <em>Study time: about 155 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>&quot;Cloud&quot; is several jobs: cloud, DevOps, platform, site reliability (SRE), cloud security, FinOps and AI infrastructure. They share foundations but own different things. Pick a target role first.</li>
@@ -9394,7 +9440,8 @@ Strong answer, out loud, in order:
 <p class="crumb"><a href="#contents">Module 7 — Hero: capstone and practice exam</a></p>
 <h1><span class="num">7.3</span> Practice exam: 60 scenario questions</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Phase <bdi dir="ltr">Plan</bdi></span> · <span class="prereq">Before this: <a href="#l7-1">7.1</a>, <a href="#l7-2">7.2</a></span></p>
-<section class="sec sec-lead"><blockquote>
+<section class="sec sec-lead"><p><strong>After this you can</strong> sit a 60-question scenario exam in one timed sitting, build a miss log with a cause and an action for each miss, and write new scenario questions with defensible answers for your weakest phase. <em>Study time: about 135 minutes (estimate).</em></p>
+<blockquote>
 <p><strong>Under revision (November 2026).</strong> In many questions in this practice exam the correct option can be spotted by its length or wording, so a high score here does not show readiness for any real exam. Use it to practise reasoning: answer each question in your own words before you read the options, then compare.</p>
 </blockquote>
 </section>

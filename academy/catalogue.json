@@ -44,6 +44,7 @@
         "ar"
       ],
       "status": "ai-drafted",
+      "assurance": "draft",
       "estimatedHours": null,
       "flagship": true,
       "flagshipProposed": true
@@ -63,6 +64,7 @@
         "ar"
       ],
       "status": "ai-drafted",
+      "assurance": "draft",
       "estimatedHours": null,
       "flagship": false,
       "flagshipProposed": false
@@ -82,6 +84,7 @@
         "ar"
       ],
       "status": "ai-drafted",
+      "assurance": "draft",
       "estimatedHours": null,
       "flagship": true,
       "flagshipProposed": true
@@ -101,6 +104,7 @@
         "ar"
       ],
       "status": "ai-drafted",
+      "assurance": "draft",
       "estimatedHours": null,
       "flagship": true,
       "flagshipProposed": true
@@ -120,6 +124,7 @@
         "ar"
       ],
       "status": "ai-drafted",
+      "assurance": "draft",
       "estimatedHours": null,
       "flagship": false,
       "flagshipProposed": false
@@ -139,6 +144,7 @@
         "ar"
       ],
       "status": "ai-drafted",
+      "assurance": "draft",
       "estimatedHours": null,
       "flagship": false,
       "flagshipProposed": false
@@ -158,6 +164,7 @@
         "ar"
       ],
       "status": "ai-drafted",
+      "assurance": "draft",
       "estimatedHours": null,
       "flagship": false,
       "flagshipProposed": false
@@ -177,6 +184,7 @@
         "ar"
       ],
       "status": "ai-drafted",
+      "assurance": "draft",
       "estimatedHours": null,
       "flagship": false,
       "flagshipProposed": false
@@ -196,6 +204,7 @@
         "ar"
       ],
       "status": "ai-drafted",
+      "assurance": "draft",
       "estimatedHours": null,
       "flagship": false,
       "flagshipProposed": false
@@ -215,6 +224,7 @@
         "ar"
       ],
       "status": "ai-drafted",
+      "assurance": "draft",
       "estimatedHours": null,
       "flagship": false,
       "flagshipProposed": false
@@ -228,12 +238,13 @@
       "levelProposed": true,
       "path": "modules",
       "lessons": 69,
-      "modules": 13,
+      "modules": 14,
       "languages": [
         "en",
         "ar"
       ],
       "status": "ai-drafted",
+      "assurance": "draft",
       "estimatedHours": null,
       "flagship": false,
       "flagshipProposed": false
@@ -253,6 +264,7 @@
         "ar"
       ],
       "status": "ai-drafted",
+      "assurance": "draft",
       "estimatedHours": null,
       "flagship": false,
       "flagshipProposed": false

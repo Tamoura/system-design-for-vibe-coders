@@ -9,6 +9,8 @@
 # 0.1 — What AI product management is, and what it is not
 *Level: 🟢 Beginner* · *Prerequisites: none* · *Stage: Discover, Lead*
 
+**After this you can** reframe a technology-first request such as "we need an AI chatbot" into a problem, a measurable outcome, a quality bar, a cost and a first step, and write a role card that says what an AI PM owns and does not own. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **AI product management** is the work of deciding which AI-powered product to build, for whom, to what quality bar, at what cost and risk, and then proving that it creates value once real people use it.
 - It is still product management. You answer the same four questions every product team faces (Marty Cagan's value, usability, feasibility and business viability risks). With AI, each question has new and harder parts.
@@ -244,6 +246,8 @@ Khalid agrees to the outcome, because it is written in his language: calls, sati
 # 0.2 — How AI products differ: probabilistic, data-hungry, costly per use, trust-bound
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Stage: Define, Evaluate*
 
+**After this you can** estimate the monthly model cost of an AI assistant from stated illustrative assumptions, name the assumption the total is most sensitive to, and turn each of the four AI differences into a requirement you could test. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - AI products differ from ordinary software in four ways that change almost every product decision. They are **probabilistic**, **data-hungry**, **costly per use** and **trust-bound**.
 - **Probabilistic:** the same input can give different outputs, and some outputs will be wrong. Quality is a *rate* measured on representative cases, not a yes/no test.
@@ -470,6 +474,8 @@ Faisal's spec line "the assistant answers fee questions correctly" becomes four 
 
 # 0.3 — Meet Najm Bank's AI product team, and how to use this course
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Stage: Discover, Lead*
+
+**After this you can** build a portfolio map of three AI products with a testable open question for each, and write a dated one-page study plan that names the first three artefacts you will produce. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Najm Bank is fictional.** It is a mid-sized Gulf bank headquartered in Doha, with retail, SME and corporate customers in Qatar, the UAE and the EU. You join its **Digital & AI Products** team for the whole course.

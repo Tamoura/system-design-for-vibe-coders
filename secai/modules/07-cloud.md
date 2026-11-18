@@ -9,6 +9,8 @@
 # 7.1 — Cloud security: shared responsibility, IAM and misconfiguration
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 2.3, 5.2* · *Phase: Design, Deploy*
 
+**After this you can** write a shared responsibility table for three cloud systems and cut a wildcard storage role down to least privilege, confirming that read and delete are denied. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - The **shared responsibility model**: the provider secures the cloud itself (buildings, hardware, virtualisation, managed-service internals). You secure what you put in it and how you configure it. The split moves with the type of service.
 - In the cloud, **identity is the perimeter**. Every API call is checked against IAM policy, so an over-privileged role or a leaked key is worth more to an attacker than an open port.
@@ -130,7 +132,7 @@ Each dotted line is an independent control that breaks the chain: defence in dep
 
 **Keys and data location.** Use **customer-managed keys** (5.1) for confidential data, with key administrators separate from data users. Where law limits where data may be stored, region restrictions become a guardrail too (11.2).
 
-**AI services are cloud resources.** Najm Assist's hosted model and Credit Memo Copilot's managed vector store have IAM, network exposure and logs like any other resource. Use private networking for model endpoints where supported, keep LLM API keys in the secrets manager with one key per service and spending limits, and log who called which model. A leaked LLM key is both a data risk and a bill (OWASP LLM10, Unbounded Consumption).
+**AI services are cloud resources.** Najm Assist's hosted model and Credit Memo Copilot's managed vector store have IAM, network exposure and logs like any other resource. Use private networking for model endpoints where supported, keep LLM API keys in the secrets manager with one key per service and spending limits, and log who called which model. A leaked LLM key is both a data risk and a bill (OWASP LLM10:2025, Unbounded Consumption).
 
 ## 🧰 The toolkit
 | Control, standard or tool | What it is and does | When to reach for it |
@@ -250,7 +252,7 @@ Each production role also gets a **role review card**: the workload that assumes
 ## 📚 References
 - AWS, Shared Responsibility Model — https://aws.amazon.com/compliance/shared-responsibility-model/
 - Microsoft, Shared responsibility in the cloud — https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility
-- OWASP Top 10 (2021 edition; check the current list): Security Misconfiguration and Server-Side Request Forgery — https://owasp.org/Top10/
+- OWASP Top 10:2025: A02 Security Misconfiguration, and A01 Broken Access Control, which now covers Server-Side Request Forgery (2021 numbering differed) — https://owasp.org/Top10/2025/
 - OWASP Server-Side Request Forgery Prevention Cheat Sheet — https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html
 - MITRE ATT&CK, Cloud matrix — https://attack.mitre.org/matrices/enterprise/cloud/
 - Center for Internet Security, CIS Benchmarks — https://www.cisecurity.org/cis-benchmarks
@@ -261,6 +263,8 @@ Each production role also gets a **role review card**: the workload that assumes
 
 # 7.2 — Containers, Kubernetes and infrastructure as code
 *Level: 🟡 Intermediate* · *Prerequisites: 6.2, 7.1* · *Phase: Build, Deploy*
+
+**After this you can** harden a Dockerfile to a pinned, non-root, secret-free image and enforce the Restricted pod profile and a default-deny network policy on a local cluster. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - A **container** is an ordinary process isolated by the host's kernel, which it shares with every other container on the machine. It is not a strong security boundary like a virtual machine.
@@ -581,6 +585,8 @@ Tariq and Ali agree the **Najm Kubernetes Workload Baseline v1**, enforced autom
 # 7.3 — Networks and the edge: segmentation, WAFs and DDoS
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 4.2, 7.1* · *Phase: Design, Operate*
 
+**After this you can** draw a zone-and-flow matrix that lists every outbound destination, and tune a WAF in front of a lab app to block a true positive while removing a false positive with a narrow exclusion. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Segmentation** divides the network into zones with explicitly allowed flows, so one compromise cannot reach everything. Deny by default, inbound *and* outbound.
 - **Egress control** (limiting where workloads connect *out* to) is one of the most neglected controls. It blocks SSRF to metadata services, data theft, and agents sending data where they should not.
@@ -652,7 +658,7 @@ So a WAF is a layer, not a fix. Its best use is **virtual patching**: a temporar
 | **Protocol** | Exhausts connection tables, for example SYN floods | Edge services and load balancers built to absorb them |
 | **Application-layer** (layer 7) | Sends real-looking HTTP requests, often to expensive endpoints | Caching, per-client rate limits, bot management, authentication on expensive operations |
 
-For application-layer floods, design matters more than appliances. A statement-export endpoint that runs a heavy query for anonymous users is a gift to an attacker. The OWASP API Security Top 10 calls this **Unrestricted Resource Consumption** (API4). For LLM features it is **Unbounded Consumption** (LLM10), where every request costs real money, sometimes called "denial of wallet".
+For application-layer floods, design matters more than appliances. A statement-export endpoint that runs a heavy query for anonymous users is a gift to an attacker. The OWASP API Security Top 10 calls this **Unrestricted Resource Consumption** (API4). For LLM features it is **Unbounded Consumption** (LLM10:2025), where every request costs real money, sometimes called "denial of wallet".
 
 ### 🟡 Going deeper
 

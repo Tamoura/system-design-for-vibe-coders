@@ -10,6 +10,8 @@
 
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2*
 
+**After this you can** build an org-scoped app shell with a sidebar, org switcher, empty state and split settings, and show that a Member gets 403 from the server when calling an admin-only endpoint directly. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - The app shell is the frame around your product: marketing site, authenticated layout, onboarding, settings, forms, design system and tenant-facing surfaces like custom domains.
@@ -305,6 +307,8 @@ Anyone can point any domain at Beacon's server, and Caddy will request a certifi
 
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 6.1*
 
+**After this you can** write a tracking plan of 8–12 object_action events with no personal data, send key events server-side to PostHog, and build an activation funnel broken down by organization. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - Analytics is three jobs: web analytics (who visits the marketing site), product analytics (what users do in the app) and BI (all your systems joined in a warehouse).
@@ -534,6 +538,8 @@ Logging in isn't value, so retention should be measured by a value event such as
 # 6.3 — Feature flags and experiments
 
 *Level: 🟡 Intermediate* · *Prerequisites: 3.2, 6.2*
+
+**After this you can** build a percentage-rollout flag with per-org overrides, prove with a 1,000-call test that the same org always gets the same answer, and add a kill switch that on-call can flip. *Study time: about 105 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 

@@ -9,6 +9,8 @@
 # 13.1 — Threats and guardrails: prompt injection, tool permissions, PII, approvals and audit logs
 *Level: 🔴 Advanced* · *Prerequisites: 3.2, 8.2, 9.1, 12.1* · *Layer: Agents, Production*
 
+**After this you can** run prompt-injection attacks against layered guardrails and say which layer stops each, and build a hash-chained audit log whose tests fail when a row is edited or deleted. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - The model cannot tell data from orders: pages, comments and your instructions share one stream. Prompting and training lower **prompt injection** risk, never remove it: limit what a fooled model can do.
 - The **lethal trifecta** (Simon Willison's framing): private data, untrusted content, a way out. Cut or gate one leg.
@@ -30,7 +32,7 @@ A **direct** injection comes from the user: "ignore previous instructions and un
 
 **The lethal trifecta** (Willison, one practitioner's framing): private data, untrusted content and a way to communicate outward. With all three, attacker text can read secrets and send them out. Here, tickets are the private data; comments and unreviewed policy drafts are the untrusted text; `add_comment` (comments reach email-to-ticket senders) and the draft's `send_email` are the way out. Cut the cheapest leg, often the outward one.
 
-**Excessive agency** (OWASP LLM06) is too many tools, too broad permissions (a service account that reads any ticket) or too much autonomy. Reads can leak and writes can change things, so a chat that has read text strangers wrote is **tainted** (lesson 9.1): it may read but not write. For each tool ask: can it go, shrink, use the user's rights, or wait for a person?
+**Excessive agency** (OWASP LLM06:2025) is too many tools, too broad permissions (a service account that reads any ticket) or too much autonomy. Reads can leak and writes can change things, so a chat that has read text strangers wrote is **tainted** (lesson 9.1): it may read but not write. For each tool ask: can it go, shrink, use the user's rights, or wait for a person?
 
 ```mermaid
 flowchart LR
@@ -279,7 +281,7 @@ if __name__ == "__main__":
 
 ### 🔴 Expert view
 
-**Input and output.** Schemas (`strict` tools, structured outputs) fix shape, not truth: validate anyway (lesson 3.1). Encode output for where it goes; never build SQL, shell or `eval` input from model text (OWASP LLM05). A markdown image to a stranger's host leaks with no click: allow-list links.
+**Input and output.** Schemas (`strict` tools, structured outputs) fix shape, not truth: validate anyway (lesson 3.1). Encode output for where it goes; never build SQL, shell or `eval` input from model text (OWASP LLM05:2025). A markdown image to a stranger's host leaks with no click: allow-list links.
 
 **Approvals.** Weak: "Approve the assistant's plan?" Strong: `screen`: who, exact arguments, their words, taint flag, default no. A Service Desk agent reads it, never the requester. The taint line matters if you relax v1's refusal. Approvals on everything train people to click yes: gate by worst outcome; near-100% approval in seconds is a finding (lesson 7.1).
 
@@ -312,6 +314,8 @@ The artefact is the **Najm Desk v1 Threat-and-Control Sheet** (Lujain owns it; N
 - **LLM08 Vector and embedding weaknesses:** access filter in the query (lesson 4.1).
 - **LLM09 Misinformation:** citations, eval gate, hand-off (Module 12).
 - **LLM10 Unbounded consumption:** step cap, token budget, quotas (lesson 8.2).
+
+> **Dated note (November 2026).** OWASP published a 2026 edition of the Top 10 for LLM Applications in August 2026. Prompt injection and sensitive information disclosure are still first and second, and excessive agency has moved up to third. This lesson uses the 2025 codes (LLM01:2025 to LLM10:2025) because the full 2026 list was not available to check; check genai.owasp.org for the current list. For risks specific to agents that use tools, OWASP keeps a separate list, the OWASP Top 10 for Agentic Applications (ASI01 to ASI10).
 
 **Weekly deliverable.** Commit `week-13/`: passing `labs/m13/` tests, the `SKIP` tables, a sheet for your agent, `NOTES.md`.
 
@@ -431,6 +435,8 @@ Plan first; small steps; run the tests after each.
 
 # 13.2 — Enterprise controls: agent identity, multi-tenancy, data residency, compliance and the governance pack
 *Level: 🔴 Advanced* · *Prerequisites: 6.2, 7.1, 13.1* · *Layer: Production, Delivery*
+
+**After this you can** draft a system card from the agent's configuration that passes the structure check, and write a degrade-don't-fail handler with a test against an overloaded API. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Three identities meet in every call: the user, the agent, the system behind the tool. **The agent may never do more than the user may**; prefer delegated access to a shared service account.

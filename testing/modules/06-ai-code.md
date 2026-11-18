@@ -9,6 +9,8 @@
 # 6.1 — Verifying AI-generated code: how coding agents fail and a reviewer's checklist
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 2.3* · *Focus: AI, Unit*
 
+**After this you can** review AI-generated code with your own tests, type checks and a linter, find the bugs its "tests pass" report hid, and build a gate that blocks invented or brand-new dependencies. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A **coding agent** writes fluent code by continuing patterns in its context. It cannot reliably run code in its head, so "it reads well" proves nothing.
 - Its failures cluster: plausible but wrong logic, boundary slips, invented functions and packages, missed edge cases, swallowed errors, weakened validation, skipped tests, secrets, style drift and bloat.
@@ -350,6 +352,8 @@ Copy `testing/sample/` to a scratch folder and install `pytest`, `hypothesis`, `
 
 # 6.2 — Tests as the specification for coding agents: test-first workflows, guardrails and mutation as the judge
 *Level: 🔴 Advanced* · *Prerequisites: 2.3, 6.1* · *Focus: AI, Delivery*
+
+**After this you can** write the spec table and property tests an agent's code must pass, reach an 80% mutation score with every survivor triaged, and build a gate that blocks deleted, skipped or weakened tests. *Study time: about 115 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - The **spec-first loop**: acceptance criteria become tests a human writes or approves, the agent implements until they pass, a CI gate re-runs everything, and a human reviews code and tests.
@@ -754,6 +758,8 @@ Copy `testing/sample/`; install `pytest`, `hypothesis` and `mutmut`.
 
 # 6.3 — AI as your testing assistant: test ideas, generated tests and data, agentic test runners, self-healing locators and triage
 *Level: 🟡 Intermediate* · *Prerequisites: 2.3, 3.2, 6.1* · *Focus: AI, Strategy*
+
+**After this you can** check an assistant's generated test data against the real code, compare assistants by the seeded bugs their tests catch, and build a guard that blocks unreviewed self-healing test changes. *Study time: about 115 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - AI is a fast, fluent drafter of test ideas, edge cases, data, boilerplate and triage notes. It is a poor oracle: it cannot know what "correct" means at your bank.

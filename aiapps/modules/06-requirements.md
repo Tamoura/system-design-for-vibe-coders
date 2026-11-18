@@ -9,6 +9,8 @@
 # 6.1 — Discovery: from a business problem to an agent brief: stakeholders, workflows, data, risk and "should this be an agent?"
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 5.1* · *Layer: Delivery*
 
+**After this you can** turn interview notes and documents into discovery notes that pass `check_notes.py`, and a one-page agent brief whose every number cites a source or says "assumption". *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Discovery** is the work between "we should have an AI assistant" and "here is what we build, for whom, and what it must never do". It ends in a one-page **agent brief**.
 - Talk to the sponsor, the people who do the work and the risk owners. Ask about **past behaviour**, not future opinions.
@@ -314,6 +316,8 @@ None needs the real API.
 
 # 6.2 — The agent specification and acceptance criteria: requirements you can test
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1, 6.1* · *Layer: Delivery, Production*
+
+**After this you can** rewrite vague requirements into testable ones, each with an id, a number or condition, a method and an owner, so that `spec_lint.py` finds no vague word, and write acceptance criteria that cite those ids. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - A **specification** says what the agent must and must not do, in sentences a test can pass or fail: the contract between customer, builder and reviewers.

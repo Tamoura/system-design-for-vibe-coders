@@ -8,6 +8,8 @@
 
 *Level: 🟢 Beginner*
 
+**After this you can** sort Beacon's ~25 SaaS components into "v1" or "later" with a reason for each, and make a build, buy or self-host call for five of them that names a concrete product or repo. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - A SaaS is a small **core domain** (the part customers pay for) surrounded by **generic subdomains** that nearly every product shares: auth, orgs, billing, email, jobs, webhooks, audit logs.
@@ -278,6 +280,8 @@ Monitors belong to one person, so there is nothing for teammates to share and no
 
 *Level: 🟢 Beginner*
 
+**After this you can** map at least 15 SaaS components in an unfamiliar open-source repo such as openstatus, citing a file or search for each, and trace one request from the UI form to the database insert with permalinks. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - Big codebases are searched and navigated, not read top to bottom. Start from one written question.
@@ -531,6 +535,8 @@ They trusted a file name over the code path. The file may be dead code while the
 # 0.3 — The reference shelf: the SaaS codebases and starter kits we study
 
 *Level: 🟢 Beginner*
+
+**After this you can** run a reference SaaS repo from the shelf on your machine, fill its row of the component matrix with evidence for every cell, and decide whether Beacon may copy a given piece of code under its licence. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 

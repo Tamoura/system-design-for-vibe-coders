@@ -222,7 +222,7 @@ Why fast code generation makes system design *more* important, not less.
   🤖 Making the agent enumerate every code path that sends mail — and what each one costs when abused.
 
 - **5.6 The OWASP Top 10, mapped to a real app.**
-  🔥 A full security audit of the reference platform scored it against OWASP — and the failures weren't exotic: SSRF in a proxy (A10), secrets falling back to defaults (A05), no server-side error tracking (A09), a credential-bearing CI runner executing untrusted PR code (A08, supply chain), tag-pinned third-party actions.
+  🔥 A full security audit of the reference platform scored it against OWASP — and the failures weren't exotic: SSRF in a proxy (A01 in the 2025 list), secrets falling back to defaults (A02), no server-side error tracking (A09), a credential-bearing CI runner executing untrusted PR code with tag-pinned third-party actions (A03, Software Supply Chain Failures).
   📐 The OWASP Top 10 as a working checklist, not a certification: injection, broken access control, misconfiguration, vulnerable dependencies, SSRF — each mapped to where it actually appears in an agent-built codebase. Supply-chain hygiene: lockfiles, SHA-pinning, dependency audit gates.
   🔨 Run an OWASP-structured self-audit of Relay; fix the top three findings; add a dependency-audit gate to CI.
   🤖 The standing security prompt: "review this diff as an attacker: what can I reach, forge, inject, or exhaust?" — and why security review needs its own pass, separate from correctness review.

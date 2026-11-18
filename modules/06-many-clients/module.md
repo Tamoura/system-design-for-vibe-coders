@@ -16,6 +16,8 @@ product is somebody else's client.*
 
 # 6.1 — The Client Fleet Problem
 
+**After this you can** make every app request carry its version, build a force-update gate, and rehearse the ordering mistake to show why the store build must be live before you raise the minimum version. *Study time: about 50 minutes (estimate).*
+
 ## 🔥 The War Story
 
 The team built a kill switch. If a user's app version fell below a configured
@@ -174,6 +176,8 @@ Finish: *"Commit with the message `06-1-client-fleet-version-gate`."*
 
 # 6.2 — Over-the-Air Updates and the Revert Trap
 
+**After this you can** reproduce the over-the-air revert trap, fix the publishing process so production updates ship only from main, and confirm the fix and the right backend in the running app. *Study time: about 50 minutes (estimate).*
+
 ## 🔥 The War Story
 
 Store review is slow, so mobile frameworks offer an escape hatch:
@@ -319,6 +323,8 @@ Finish: *"Commit with the message `06-2-ota-source-of-truth`."*
 
 # 6.3 — Feature Flags Done Once, Not Five Times
 
+**After this you can** build one runtime flag resolver that shows and hides a link, a route and a promo together, and add a drift-guard test that fails when a second check of the same flag appears. *Study time: about 50 minutes (estimate).*
+
 ## 🔥 The War Story
 
 A **feature flag** is a switch that turns a feature on or off without a new
@@ -462,6 +468,8 @@ Finish: *"Commit with the message `06-3-one-flag-one-resolver`."*
 
 # 6.4 — Deep Links and the Drift Problem
 
+**After this you can** add a drift-guard test that fails when the router and the known-routes list disagree, add a loop breaker, and show a deep link opening in the app and a bad link ending in an honest error. *Study time: about 50 minutes (estimate).*
+
 ## 🔥 The War Story
 
 A **deep link** is a URL that opens a specific screen inside an app — tap a link
@@ -599,6 +607,8 @@ Finish: *"Commit with the message `06-4-deeplink-drift-guard`."*
 ---
 
 # 6.5 — Sign In With Google & Apple, on Every Client
+
+**After this you can** write the platform-to-client-ID audience table, make one backend verify Google and Apple tokens from every client, and show a wrong-audience token surfacing its real error. *Study time: about 65 minutes (estimate).*
 
 ## 🔥 The War Story
 
@@ -758,6 +768,8 @@ Finish: *"Commit with the message `06-5-oauth-many-audiences`."*
 
 # 6.6 — API Design That Survives Its Clients
 
+**After this you can** write an API contract table and prove two of its rows with tests: a retried upload with the same idempotency key leaves one record and no orphans, and cursor pagination skips nothing when rows arrive mid-page. *Study time: about 65 minutes (estimate).*
+
 ## 🔥 The War Story
 
 An admin was bulk-uploading media to Relay's ancestor. Each file went to object
@@ -904,6 +916,8 @@ Finish: *"Commit with the message `06-6-api-contract-idempotent`."*
 ---
 
 # 6.7 — You Are Someone's Client Too: Surviving Third-Party APIs
+
+**After this you can** list every third-party call your app makes, then show it surviving a simulated provider outage with backoff, jitter and a circuit breaker, and charging only once per idempotency key. *Study time: about 65 minutes (estimate).*
 
 ## 🔥 The War Story
 

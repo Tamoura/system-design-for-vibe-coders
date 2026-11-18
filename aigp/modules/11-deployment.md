@@ -9,6 +9,8 @@
 # 11.1 — The deploy decision: context, stakeholders and alternatives
 *Level: 🔴 Advanced* · *Prerequisites: 8.1, 6.1* · *BoK: IV.A*
 
+**After this you can** map the stakeholders of an AI deployment, and compare it with real alternatives on benefits, risks and rough cost. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - The same AI system can be low-risk in one context and high-risk in another. The deploy decision is about **this system, in this context, for these people**, not about the technology in general.
@@ -48,7 +50,7 @@ Layla, Head of AI Governance, sees a different system. Telling people whether th
 
 ### 🟡 Going deeper
 
-**Legal role as deployer.** Under the EU AI Act a **deployer** is a natural or legal person, public authority, agency or other body using an AI system under its authority, except for purely personal non-professional use. Deployers of high-risk systems carry real obligations (Art. 26): use the system according to its instructions for use, assign competent human oversight, ensure input data under their control is relevant and sufficiently representative, monitor operation, keep logs, inform affected workers, inform people that a high-risk system is used in decisions about them, and, for public bodies and credit-scoring and insurance-pricing uses, complete a FRIA (Art. 27). Deployers of certain systems also have transparency duties (Art. 50), and every provider and deployer must take measures to ensure sufficient AI literacy among its staff (Art. 4).
+**Legal role as deployer.** Under the EU AI Act a **deployer** is a natural or legal person, public authority, agency or other body using an AI system under its authority, except for purely personal non-professional use. Deployers of high-risk systems carry real obligations (Art. 26): use the system according to its instructions for use, assign competent human oversight, ensure input data under their control is relevant and sufficiently representative, monitor operation, keep logs, inform affected workers, inform people that a high-risk system is used in decisions about them, and, for public bodies and credit-scoring and insurance-pricing uses, complete a FRIA (Art. 27). Deployers of certain systems also have transparency duties (Art. 50), and every provider and deployer must take measures to support the development of AI literacy of its staff (Art. 4, as replaced by Regulation (EU) 2026/1744; the original 2024 text required "a sufficient level").
 
 **When a deployer becomes a provider.** Art. 25 treats a deployer (or distributor, importer or other third party) as a **provider** of a high-risk system if it:
 
@@ -230,6 +232,8 @@ Layla's team writes a **Deploy Decision Memo** for the committee.
 
 # 11.2 — Buying AI: vendor due diligence and contracts
 *Level: 🔴 Advanced* · *Prerequisites: 3.3, 11.1* · *BoK: IV.A*
+
+**After this you can** write vendor due-diligence questions with red-flag answers, and draft incident- and change-notification clauses a lawyer could redline. *Study time: about 105 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -447,6 +451,8 @@ Yusuf and Layla create a **Vendor AI Due Diligence Scorecard**. Here is the resu
 
 # 11.3 — Assessing the system: impact assessments, audits and assurance
 *Level: 🔴 Advanced* · *Prerequisites: 4.3, 6.2, 11.1* · *BoK: IV.B*
+
+**After this you can** decide which systems need a DPIA, a FRIA or a conformity assessment and who does each, and scope an internal audit an auditor could start from. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -674,6 +680,8 @@ A good assessment record states: who did it and with what independence; the vers
 # 11.4 — Governing use: oversight, transparency and incident response
 *Level: 🔴 Advanced* · *Prerequisites: 11.3, 10.2* · *BoK: IV.C*
 
+**After this you can** write an AI disclosure and contest text under 80 words, and run a paper tabletop exercise that finds two gaps in an incident response. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - Governance does not end at go-live. A deployer's hardest work is making safeguards work **every day**: real human oversight, honest transparency, enforced acceptable use, production monitoring and a tested incident playbook.
@@ -784,7 +792,7 @@ In Qatar and the UAE, similar expectations flow from data protection law and fin
 | **EU AI Act** — Arts 14, 26 | Oversight design that enables understanding, awareness of automation bias, override and interruption; deployers assign competent, trained, empowered overseers, monitor, keep logs, inform, suspend and report | "Human in the loop" must have competence, authority and support |
 | **EU AI Act** — Art. 50 | Disclosure that people are interacting with AI; deepfake and certain content disclosures; emotion-recognition and biometric-categorisation notices | Chatbot must make clear it is AI, unless obvious |
 | **EU AI Act** — Art. 86 | Right to clear and meaningful explanation of the AI system's role and the main elements of certain decisions based on Annex III high-risk systems | Explanation duty sits with the deployer |
-| **EU AI Act** — Art. 4 | Providers and deployers ensure a sufficient level of AI literacy of staff | Applies since 2 February 2025; training is a legal duty |
+| **EU AI Act** — Art. 4 | Providers and deployers take measures to support the AI literacy of staff (2026 wording; the 2024 text required "a sufficient level") | Applies since 2 February 2025; training is a legal duty |
 | **GDPR** — Arts 13–15, 22 | Information about automated decisions and the logic involved; right to human intervention, to express a view and to contest | Contestation must be real, not a form letter |
 | **ECOA / Regulation B** | US creditors must state specific principal reasons for adverse action; regulators have said model complexity is no excuse | "The algorithm decided" is not a reason |
 | **NIST AI 600-1** | Generative AI Profile: risks such as confabulation, information security and data privacy, with suggested actions | Voluntary GenAI companion to the AI RMF |
@@ -875,7 +883,7 @@ After the findings, Najm moved relationship managers onto the enterprise copilot
 **4. A customer declined for a loan by a process relying on an Annex III high-risk AI system asks why. Which EU AI Act provision most directly supports their request?**
 
 - A. Art. 50, transparency for chatbots, which requires users to be told they are talking to an AI system
-- B. Art. 4, AI literacy, which requires staff to have enough knowledge to use AI systems
+- B. Art. 4, AI literacy, which requires measures supporting the AI literacy of staff who use AI systems
 - C. Art. 86, the right to clear and meaningful explanations of the AI system's role and the main elements of the decision
 - D. Art. 43, conformity assessment, which sets the procedures providers follow before placing a high-risk system on the market
 

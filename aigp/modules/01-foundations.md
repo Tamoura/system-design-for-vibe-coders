@@ -9,6 +9,8 @@
 # 1.1 — AI, machine learning, generative AI and agents
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *BoK: I.A*
 
+**After this you can** walk three borderline tools through the AI Act's Art. 3(1) definition, state whether each is an AI system, and name the governance that applies either way. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Artificial intelligence (AI)** is an umbrella term. The definitions that matter for governance (OECD, EU AI Act) describe a **machine-based system that infers from its inputs how to generate outputs** such as predictions, content, recommendations or decisions that can influence physical or virtual environments.
 - **Machine learning (ML)** is the dominant way to build AI today: instead of writing rules, you give a program examples and it *learns* a model from the data.
@@ -243,6 +245,8 @@ Applied to the inventory: credit scoring (supervised ML, AI, high impact); Najm 
 # 1.2 — Risks and harms to people, groups, organisations and society
 *Level: 🟢 Beginner* · *Prerequisites: 1.1* · *BoK: I.A*
 
+**After this you can** write harm-register rows for a GenAI copilot using NIST AI 600-1 risks, each with a source, likelihood, two severities and an action. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A **harm** is an actual negative impact; a **risk** combines how likely a harm is and how severe it would be. Governance manages risks so that harms do not happen, or are caught and remedied fast.
 - The NIST AI RMF groups AI harms into three families: **harm to people** (individuals, groups and communities, society), **harm to an organisation**, and **harm to an ecosystem**.
@@ -459,6 +463,8 @@ Rules: every harm has an owner and an action; a "people" severity of High cannot
 # 1.3 — Why AI is different: the traits that demand governance
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2* · *BoK: I.A*
 
+**After this you can** rate which of the nine AI traits apply to a chatbot, and write a 250-word memo to a CIO showing why existing IT and model-risk controls need extending. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - AI shares many risks with ordinary software (bugs, outages, security flaws), but a set of **traits** makes it different enough to need its own governance.
 - The core traits: behaviour **learned from data**; **opacity**; **probabilistic** and sometimes non-deterministic outputs; **drift** over time; **scale and speed**; growing **autonomy**; **complex supply chains**; **general-purpose and emergent** capabilities; and strong effects on **human behaviour**, such as automation bias.
@@ -565,7 +571,7 @@ flowchart LR
 |---|---|---|
 | **NIST AI RMF** — trustworthy characteristics | Voluntary framework naming seven characteristics of trustworthy AI and explaining how AI risks differ from traditional software risks | Know all seven characteristics and that they involve trade-offs |
 | **EU AI Act** — Art. 14 | High-risk AI must be designed for effective human oversight; overseers must be able to understand limitations, remain aware of automation bias, interpret outputs, and override or stop the system | Oversight must be real and designed in, not nominal |
-| **EU AI Act** — Art. 4 | Providers and deployers must take measures to ensure sufficient AI literacy among staff dealing with AI systems | Human effects are managed partly through literacy |
+| **EU AI Act** — Art. 4 | Providers and deployers must take measures to support the development of AI literacy of their staff (2026 wording; the 2024 text required "a sufficient level") | Human effects are managed partly through literacy |
 | **GDPR** — Art. 25 | Data protection by design and by default | Build privacy into AI systems from design |
 | **ISO/IEC 23894** | Guidance on managing AI-specific risks within an organisation's risk-management process | Integrate AI risk into existing risk management |
 | **OECD AI Principles** | Values-based principles including robustness, security and safety, transparency and explainability, and accountability | International consensus on trustworthy AI; non-binding |

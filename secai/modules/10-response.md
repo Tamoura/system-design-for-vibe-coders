@@ -9,6 +9,8 @@
 # 10.1 — Logging, monitoring and detection engineering
 *Level: 🔴 Advanced* · *Prerequisites: 1.1, 5.3, 9.1* · *Phase: Operate*
 
+**After this you can** list the security events a service should log and write a detection rule kept in git with a positive and a negative test. *Study time: about 125 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Logging** records security-relevant events, **monitoring** watches them, and **detection engineering** turns knowledge of attacker behaviour into tested rules that raise alerts a person acts on.
 - Log the events that matter (sign-ins, access denials, high-value actions, admin changes and, for AI, tool calls, guardrail verdicts and retrieved documents) in a **structured** format, with **UTC** timestamps and a **request ID** that links services.
@@ -20,7 +22,7 @@
 ## 🧭 Why it matters
 Six weeks into Najm Assist's pilot, Jassim (SOC and incident response lead) asks Ali for its logs. Ali finds them in the app team's debug bucket. They hold full conversation text, including card numbers customers typed, but not which tool was called, for whom, or whether it was allowed. Clocks disagree, and everything is deleted after seven days. If Najm Assist froze the wrong card, nobody could prove what happened, and the bucket is now the project's most sensitive data store.
 
-"Security Logging and Monitoring Failures" is a category in the OWASP Top 10 (A09 in the 2021 edition; the 2025 update renames it "Security Logging and Alerting Failures", so check the current list) because breaches are so often found late, and by outsiders. In the Equifax breach of 2017, US government reviews published in 2018 reported that a device for inspecting encrypted traffic had an expired certificate, so it was not inspecting that traffic; once the certificate was renewed, staff noticed the suspicious activity. A monitoring control that silently stops working is worse than none, because everyone believes they are covered.
+A09 "Security Logging and Alerting Failures" is a category in the OWASP Top 10 (2025 edition; "Logging and Monitoring" in 2021) because breaches are so often found late, and by outsiders. In the Equifax breach of 2017, US government reviews published in 2018 reported that a device for inspecting encrypted traffic had an expired certificate, so it was not inspecting that traffic; once the certificate was renewed, staff noticed the suspicious activity. A monitoring control that silently stops working is worse than none, because everyone believes they are covered.
 
 Noura (Head of Application & AI Security) sums it up: "If it isn't logged, it didn't happen. If nobody looks, it still didn't happen. If it's logged with a card number, we've created a second incident."
 
@@ -284,7 +286,7 @@ Noura and Jassim publish the **Najm Bank Security Logging Standard v1** (signed 
 </details>
 
 ## 📚 References
-- OWASP Top 10 (2021 edition, A09 Security Logging and Monitoring Failures; check the current edition) — https://owasp.org/Top10/
+- OWASP Top 10 (2025 edition, A09 Security Logging and Alerting Failures) — https://owasp.org/Top10/2025/
 - OWASP Logging Cheat Sheet — https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html
 - OWASP Logging Vocabulary Cheat Sheet — https://cheatsheetseries.owasp.org/cheatsheets/Logging_Vocabulary_Cheat_Sheet.html
 - NIST SP 800-92, Guide to Computer Security Log Management (2006; a Rev. 1 draft was published in 2023, so check for a final revision) — https://csrc.nist.gov/pubs/sp/800/92/final
@@ -301,6 +303,8 @@ Noura and Jassim publish the **Najm Bank Security Logging Standard v1** (signed 
 
 # 10.2 — Incident response: prepare, detect, contain, recover, learn
 *Level: 🔴 Advanced* · *Prerequisites: 1.3, 10.1* · *Phase: Respond*
+
+**After this you can** write a severity matrix and contact sheet, and run a timed tabletop exercise that produces a decision log and owned gaps. *Study time: about 155 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - A **security incident** actually or potentially harms the confidentiality, integrity or availability of systems or data. **Incident response** (IR) is the practised process for handling one.
@@ -566,6 +570,8 @@ After Thursday night, Jassim rewrites the runbook; Hamad approves it; it is rehe
 # 10.3 — Vulnerability management, disclosure and bug bounties
 *Level: 🔴 Advanced* · *Prerequisites: 1.3, 6.2, 10.2* · *Phase: Operate, Respond*
 
+**After this you can** write a security.txt and a vulnerability disclosure policy, and rank scanner findings with EPSS and KEV, explaining why the top three outrank the highest CVSS score. *Study time: about 125 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Vulnerability management** is the continuous cycle of finding weaknesses in what you run, ranking them, fixing or mitigating them and proving the fix, on top of an accurate **asset inventory**.
 - Prioritise by risk, not severity alone. **CVSS v4.0** describes how bad a flaw is; **EPSS** estimates how likely exploitation is; the **CISA KEV catalogue** lists flaws known to be exploited; your context (internet-facing, customer data) sets the order.
@@ -687,7 +693,7 @@ Canonical: https://najmbank.example/.well-known/security.txt
 
 | Report | Treat as |
 |---|---|
-| Acts on another customer's account, or skips a required confirmation | Security vulnerability, high or critical (LLM06; 3.3) |
+| Acts on another customer's account, or skips a required confirmation | Security vulnerability, high or critical (LLM06:2025; 3.3) |
 | Reveals another customer's data, or secrets from its context | Security vulnerability (LLM02, LLM07) |
 | Outsider-plantable content triggers indirect injection with real impact | Security vulnerability (LLM01) |
 | Jailbreak producing rude text, with no data or action impact | Not a security bug: route to the AI safety channel (Layla's team) |

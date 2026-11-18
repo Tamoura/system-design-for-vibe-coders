@@ -2,6 +2,8 @@
 
 *Module 3: Caching — the Sharpest Knife in the Drawer*
 
+**After this you can** reproduce a cache-poisoning attack, block it with a proxy guard, and write a tripwire test plus a CLAUDE.md rule, then watch the test fail when the guard is removed. *Study time: about 70 minutes (estimate).*
+
 ---
 
 ## 🔥 The War Story
@@ -40,8 +42,8 @@ The framework signals the difference with request headers, and dutifully sets a
 `Vary` header on the response — HTTP's way of telling caches: *"responses for
 this URL differ by these request headers; cache them separately."*
 
-**The CDN ignored it.** Cloudflare — like several large CDNs — does not honor
-arbitrary `Vary` headers for cacheable content. So the first request to hit an
+**The CDN ignored it.** At the time, Cloudflare's default — like that of several
+large CDNs — did not honor arbitrary `Vary` headers for cacheable content. So the first request to hit an
 uncached edge node decided what *everyone* got. If that first request happened
 to be an in-app navigation, the edge cached the flight JSON **as the page** —
 and served raw JSON to every browser that asked, until the TTL expired. Which is
@@ -49,6 +51,13 @@ why the bug "healed itself" just long enough to make you doubt the reports.
 
 Poisoning in one sentence: **the URL was no longer a sufficient cache key, and
 the cache didn't know it.**
+
+Defaults move. A Cloudflare changelog entry dated 2 July 2026 reports that Cache
+Rules can now be set to honor the origin's `Vary` header, on all plans, choosing
+per varied header to normalize, pass through or bypass (`Vary: *` always
+bypasses). It is not automatic: someone has to configure it and test it for each
+response type — and other CDNs behave differently again. The lesson stands:
+know what *your* edge does today, never what it did once.
 
 ### The fix that didn't survive
 
@@ -176,8 +185,8 @@ builds; you watch both the disease and the cure with your own eyes.
    > the test failing; restore it and show me it passing."*
    The tripwire is what makes this fix permanent instead of a timer.
 5. **Write the memory.** Add to CLAUDE.md:
-   > *"Our CDN does NOT honor `Vary` on cacheable responses. Cache-safety guards
-   > live at the proxy layer, keyed on response content-type — never on
+   > *"Check our CDN's current `Vary` behavior and configuration before relying
+   > on it; never assume. Cache-safety guards live at the proxy layer, keyed on response content-type — never on
    > framework request-header internals. The flight-guard block in the deploy
    > config must never be removed."*
 
@@ -206,8 +215,9 @@ No code reading required — accept the lesson only when:
 - [ ] You saw the guard kill it: the same attempt after the proxy rule, failing.
 - [ ] The tripwire test exists **and you watched it fail** when the guard was
       removed in a branch — then pass when restored.
-- [ ] CLAUDE.md carries the CDN/Vary rule, so no future agent session re-learns
-      it by incident.
+- [ ] CLAUDE.md carries the CDN/Vary rule (check the current behavior and
+      configuration, never assume), so no future agent session re-learns it by
+      incident.
 - [ ] You can retell the Steam 2015 story and say which table row (the cookie
       dimension) its cache key was missing.
 
@@ -215,7 +225,7 @@ No code reading required — accept the lesson only when:
 
 - Intermittent + per-user + self-healing + invisible in logs ⇒ suspect a shared cache.
 - Poisoning = response varies by something the cache key doesn't capture.
-- Verify your CDN's actual `Vary` behavior; don't trust the spec — or the docs.
+- Verify your CDN's current `Vary` behavior and configuration; don't trust the spec, the docs or last year's default.
 - Put defenses at the most stable layer that can express them (proxy > framework internals).
 - A defense with no failure alarm is a countdown, not a fix — pair every guard with a tripwire.
 
@@ -224,6 +234,7 @@ No code reading required — accept the lesson only when:
 - RFC 9111, **HTTP Caching** (2022) — the contract; its `Vary` rules are what this incident hinged on.
 - James Kettle (PortSwigger), **"Practical Web Cache Poisoning"** (2018) and sequels — the definitive offensive-security treatment; your attacker has read it.
 - Cloudflare docs, **"Cache behavior / What is cached"** — the actual (not assumed) rules of the CDN in this story.
+- Cloudflare changelog, **"Cache multiple versions of a URL with Vary"** (dated 2 July 2026), https://developers.cloudflare.com/changelog/post/2026-07-02-vary-for-cache-rules/ — the opt-in Cache Rules setting that changes this story's default; read it before trusting it.
 - Valve's statement on the **Steam caching incident** (Dec 25, 2015) and contemporaneous coverage — the identity-leak version of this lesson.
 - The System Design Primer (open source) — the **Cache** section, for the wider map this lesson zooms into.
 - MDN, **HTTP caching** — the plain-language version of every header used here.

@@ -9,6 +9,8 @@
 # 7.1 — Evals: testing LLM applications with datasets, graders, LLM-as-judge, non-determinism and CI gates
 *Level: 🔴 Advanced* · *Prerequisites: 2.3, 5.1* · *Focus: AI, Delivery*
 
+**After this you can** build a golden-set eval with a baseline gate that fails on the right category, and decide whether to trust an LLM judge from its agreement (kappa) with your own labels. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - An **eval** tests behaviour with no single right answer: a **dataset** of inputs with expectations, a **task** that runs your system, a **grader**, a **metric** and a **threshold**.
 - Assert on facts and properties, not wording. Exact match fails good answers; vague checks pass bad ones.
@@ -437,6 +439,8 @@ Use a scratch copy of `testing/sample`. No paid API is needed.
 # 7.2 — Testing RAG, tool use and agents: retrieval metrics, groundedness, trajectories and sandboxes
 *Level: 🔴 Advanced* · *Prerequisites: 2.1, 7.1* · *Focus: AI, Integration*
 
+**After this you can** measure retrieval with recall and precision at k, and write agent tests that fail when a tool skips confirmation or acts on an account the customer does not own. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Retrieval-augmented generation (RAG)** retrieves documents, puts them in the prompt, generates and cites. Test the **retriever** and **generator** separately, then together.
 - Judge the retriever with **recall@k**, **precision@k** and **MRR** on labelled queries. Judge the generator with the context *fixed*: grounded, honest about "no answer", robust to stale or hostile text.
@@ -855,6 +859,8 @@ Use a scratch copy of `testing/sample`.
 # 7.3 — Safety, robustness, fairness and monitoring: red-teaming, metamorphic tests, drift and turning incidents into tests
 *Level: 🔴 Advanced* · *Prerequisites: 7.1, 7.2* · *Focus: AI, Security*
 
+**After this you can** write a balanced red-team set with over-refusal cases, report attack-success and over-refusal rates, and add a drift alert that fires on a shifted input mix. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Plan AI testing from **harms**: wrong answer, leakage, prompt injection, unsafe action, bias, toxicity and **over-refusal** (blocking a legitimate request).
 - **Red-teaming** is authorised, scoped attacking of your own system. Every attack that lands becomes a permanent test, beside benign requests that look dangerous.
@@ -886,6 +892,8 @@ At Najm Bank, in a story we invent, Layla asks Rashid: "If Assist gives a custom
 **Red-teaming: scope first.** A **red team** attacks your system as an adversary would, to find weaknesses first. Before any prompt is sent, agree rules of engagement in writing: authorisation from the system owner, the target (the QA copy of Najm Assist, never production or another organisation's system), allowed techniques, no real customer data, a stop condition and a recipient for findings. Check your model provider's terms: automated attacks can breach them. Never attack a system you neither own nor have written permission to test.
 
 **Taxonomies and tools.** The **OWASP Top 10 for LLM Applications** (2025 edition) names risks such as prompt injection, sensitive information disclosure, excessive agency and misinformation, and **MITRE ATLAS** catalogues adversary tactics against AI systems. Tag tests with them to show gaps. Open-source tools add volume: **garak** (NVIDIA) probes a model with known attack patterns, **PyRIT** (Microsoft) scripts multi-step campaigns, and **promptfoo** has a red-team mode. They find known patterns, cost model calls and need triage. People find creative attacks: role-play ("I am the branch manager"), mid-conversation language switches, text hidden in a document, escalation over several turns. See [*Secure AI & Application Security*, lesson 9.4 — AI red-teaming and security evaluation](../secai/index.html#/9.4).
+
+> **Dated note (November 2026).** OWASP published a 2026 edition of the Top 10 for LLM Applications in August 2026. Prompt injection and sensitive information disclosure are still first and second, and excessive agency has moved up to third. This lesson follows the 2025 edition, whose codes run from LLM01:2025 to LLM10:2025, because the full 2026 list was not available to check; check genai.owasp.org for the current list. For risks specific to agents that use tools, OWASP keeps a separate list, the OWASP Top 10 for Agentic Applications (ASI01 to ASI10).
 
 **Build an adversarial set, and balance it.** Each landed attack becomes a case. Include **over-refusal** cases, benign requests that sound alarming, or a guardrail tuned only to block attacks starts refusing real customers. Three cases in `evals/redteam.jsonl`, run by the lesson 7.1 harness (`python -m evals.harness evals/redteam.jsonl`):
 

@@ -8,6 +8,8 @@ build-vs-buy — the decision that sets how many seams you own.*
 
 # 0.1 — "It Works" Is Not a Property of a System
 
+**After this you can** list the seams in your own product and rewrite your CLAUDE.md definition of "done" as a system claim that says works where, works when and works for whom, with evidence from where users stand. *Study time: about 35 minutes (estimate).*
+
 ## 🔥 The Story: the deploy that lied — twice
 
 From this course's own incident bank: a team shipped a new feature. The deploy
@@ -74,6 +76,24 @@ week's cold start?), and **works *for whom*** (you, logged in, on Wi-Fi — or a
 stranger on old mobile data with last week's version?). Any "done" that can't
 answer all three is a component claim wearing a system costume.
 
+### How you check: three tiers of evidence
+
+This course promises you can check your agent's work without reading code. That
+holds for **what the product visibly does**, within limits. Checking comes in three
+tiers:
+
+1. **Tier 1 — see it yourself.** You click, load or watch the behaviour from where
+   users stand. This is the tier the course trains.
+2. **Tier 2 — automated controls that run every time.** Tests, type and lint checks,
+   CI gates, security scanners. Your agent sets them up; you check they exist and run.
+3. **Tier 3 — independent specialist review** for high-risk changes: login and
+   permissions, payments, keeping one customer's data away from another's, things
+   happening at the same time (concurrency), security settings, database migrations.
+
+Watching it work cannot, by itself, establish that a product is secure, correct
+under concurrency, isolated between customers, or ready for production. That is
+what Tiers 2 and 3 are for.
+
 ## 🎛️ Direct Your Agent
 
 1. > *"List every seam in this project: every place where two things we don't
@@ -114,6 +134,8 @@ answer all three is a component claim wearing a system costume.
 ---
 
 # 0.2 — The Map of Everything That Can Hurt You
+
+**After this you can** draft a one-page `docs/threat-map.md` that names a specific bad day for your product at each of the eight seams, ranks them, and gives the cheapest first action for your top three. *Study time: about 35 minutes (estimate).*
 
 ## 🔥 The Story: eight seams, eight famous disasters
 
@@ -228,6 +250,8 @@ The exercise that turns the map into *your* map:
 ---
 
 # 0.3 — Build vs Buy: the Highest-Leverage Decision You'll Make
+
+**After this you can** build a capabilities table that marks each part of your product build or buy, justify any "build" for auth, payments or email in writing, and name your two or three innovation tokens. *Study time: about 35 minutes (estimate).*
 
 ## 🔥 The Story: the disasters all lived in the built things
 

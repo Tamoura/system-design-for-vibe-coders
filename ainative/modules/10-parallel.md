@@ -9,6 +9,8 @@
 # 10.1 — Working with several agents: worktrees, delegation, the review bottleneck and cost
 *Level: 🔴 Advanced* · *Prerequisites: 4.1, 5.1, 9.1* · *Focus: Workflow, Automate*
 
+**After this you can** split a change into independent tasks with a merge order and set your stream count from measured review minutes. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Parallel agents **pay** when tasks are independent, written down and quickly checked. They **do not** when tasks share files or decisions, or you cannot check results as fast as they arrive.
 - A **git worktree** is another checkout of one repository, in its own folder on its own branch (`git worktree add`, or `claude --worktree <name>`).
@@ -129,7 +131,7 @@ Four tasks take an agent 30, 20, 20 and 15 minutes (fictional): 85 in a row, 30 
 | A CLI command with tests | 20 | 10 | 2 |
 | A change to `limits.py` (money, second reviewer) | 20 | 30 | Under 1: go serial |
 
-*R* includes switching between streams, so leave slack. Measure *A* and *R* in your agent log. In METR's 2025 trial of 16 experienced open-source developers (early-2025 tools, their own mature repositories), people believed AI had sped them up although their tasks took longer: one small study, not a rule, but a reason to use the clock, not the feeling.
+*R* includes switching between streams, so leave slack. Measure *A* and *R* in your agent log, by the clock: in METR's small 2025 trial (lesson 0.1), developers believed AI had sped them up although their tasks took longer.
 
 **Orchestrator and worker.** One session splits the work, launches workers (subagents), and collects their reports. A subagent has its own context window and returns only its final report. It starts with its own system prompt, your task message, `CLAUDE.md` and the git status, but **not** your conversation, so the contract must be inside the message. (Defaults at the time of writing: three levels of nesting, 20 at once; check.) Save a project subagent as `.claude/agents/task-worker.md`:
 
@@ -224,7 +226,7 @@ Why this order:
 - Time box per task:
 ```
 
-For REMIT-350 it is short: S1 and S2 are independent, S3 builds on S1's contract, the merge order is S1, S2, S3, and the one shared file is the usage list in `cli.py`.
+For REMIT-350: S1 and S2 are independent, S3 builds on S1's contract, the merge order is S1, S2, S3, and the one shared file is the usage list in `cli.py`.
 
 ## 🛠️ Exercises
 - 🟢 **Split on paper.** *No agent.* For REMIT-350, mark which tasks depend on another's contract and which share a file. *Done when:* a task graph names three tasks, one dependency edge, the shared file and a merge order with a reason.
@@ -322,13 +324,15 @@ For REMIT-350 it is short: S1 and S2 are independent, S3 builds on S1's contract
 # 10.2 — Lab: split a change across agents and integrate it
 *Level: 🔴 Advanced* · *Prerequisites: 10.1, 4.2, 5.2* · *Focus: Workflow*
 
+**After this you can** build a four-task change on separate branches and merge it into main in an order that keeps the grader green. *Study time: about 150 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - REMIT-361 has four tasks: a notification, two CLI commands and a runbook page. You plan it, build each on its **own branch** (by hand or with agents) and **merge** them into `main`.
 - Two tasks add a command at the same marked place in `cli.py`: the **planted conflict**. After you resolve it, run every command.
 - **Needs an agent: no**, though one is recommended. The grader checks the merged result and history, never who made them or whether your streams overlapped. Your agent log can.
 
 ## 🧭 Why it matters
-A caller on the Customer Care desk (hypothetical) asks why her transfer to Manila is late and what she can still send today. The desk has no command for either, so Hessa wrote REMIT-361. After Lujain's Friday (lesson 10.1), Tariq hands it to you with one rule: the plan comes first. The work is deciding who touches what, and proving the pieces still work once they meet. Nothing makes four agents agree about `cli.py`; that part is yours.
+A caller on the Customer Care desk (hypothetical) asks why her transfer to Manila is late and what she can still send today. The desk has no command for either, so Hessa wrote REMIT-361. After Lujain's Friday (lesson 10.1), Tariq hands it to you with one rule: the plan comes first. The work is deciding who touches what, and proving the pieces work together. Nothing makes four agents agree about `cli.py`; that part is yours.
 
 ## 📐 How it works
 
@@ -380,7 +384,7 @@ Commit in steps (feat(limits): ..., feat(cli): ..., test(limits): ...), then rep
 >>>>>>> feat/limits-command
 ```
 
-Above `=======` is `main` as merged so far; below is the branch you are merging. Both lines belong: keep both, delete the three marker lines. The lines just outside a hunk are shared by both sides. Before committing the merge, read each resolved function as finished code, then run `pytest -q` and every command.
+Above `=======` is `main` as merged so far; below is the branch you are merging. Both lines belong: keep both, delete the three marker lines. The lines just outside a hunk are shared by both sides.
 
 ### 🔴 Expert view
 
@@ -503,7 +507,7 @@ export PYTHONPATH=src    # so python -m remit works; set it in every worktree sh
 
 Use `PYTHONPATH`, not `pip install -e .`: an editable install would run this folder's code from every worktree.
 
-**Your move.** Fill in the plan, commit it on `main` (`docs(docs): plan the parallel work for REMIT-361`) and cut A, B and C from that commit. Hessa's "at the same time" is false for D: it copies real output from B and C. Say so under "Cannot run in parallel" and cut D from `main` once B and C are merged (cut earlier it passes too, but its branch cannot run the commands it quotes). *By hand, no agent:* use way 1 or 2, tests first, small commits, `pytest -q` before every merge; expect 10 to 25 minutes a task. *With agents:* one session per worktree, the brief above adapted per task, plan mode first, then `acceptEdits` inside the worktree (lesson 0.3's level 3), `Bash(pytest *)` allowed and other Bash commands on a prompt. The starter's `CLAUDE.md` (lesson 2.2's reference memory) allows commits only when asked, so your brief must ask. The tasks are small, so an agent may need only minutes each; one session doing them in turn is a fair run if your log says so. Keep every branch until you have graded; log minutes per stream.
+**Your move.** Fill in the plan, commit it on `main` (`docs(docs): plan the parallel work for REMIT-361`) and cut A, B and C from that commit. Hessa's "at the same time" is false for D: it copies real output from B and C. Say so under "Cannot run in parallel" and cut D from `main` once B and C are merged (cut earlier it passes too, but its branch cannot run the commands it quotes). *By hand, no agent:* use way 1 or 2, tests first, small commits, `pytest -q` before every merge; expect 10 to 25 minutes a task. *With agents:* one session per worktree, the brief above adapted per task, plan mode first, then `acceptEdits` inside the worktree (lesson 0.3's level 3), `Bash(pytest *)` allowed and other Bash commands on a prompt. The starter's `CLAUDE.md` (lesson 2.2's reference memory) allows commits only when asked, so your brief must ask. One agent session doing the small tasks in turn is a fair run if your log says so. Keep every branch until you have graded; log minutes per stream.
 
 To try a command by hand, or to copy real output into the runbook, add a customer and a transfer first (`remit.db` is git-ignored):
 

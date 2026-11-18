@@ -10,6 +10,8 @@ edge platform that ties the whole story together.*
 
 # 11.1 — Domains, DNS, and TLS
 
+**After this you can** point a domain at your app with one canonical host, confirm its TLS certificate renews itself, and show the origin refusing a request that skips the CDN. *Study time: about 55 minutes (estimate).*
+
 ## 🔥 The War Story
 
 On October 4, 2021, Facebook, Instagram, and WhatsApp vanished for roughly six
@@ -175,6 +177,8 @@ Finish: *"Commit with the message `11-1-domain-dns-tls`."*
 ---
 
 # 11.2 — Internationalization and RTL
+
+**After this you can** serve an app at `/en/` and `/ar/` with a fully mirrored right-to-left layout, add a translation drift-guard you watch fail, and make a search that differs only by diacritics return the right result. *Study time: about 55 minutes (estimate).*
 
 ## 🔥 The War Story
 
@@ -343,6 +347,8 @@ Finish: *"Commit with the message `11-2-i18n-rtl`."*
 
 # 11.3 — SEO and AEO: Being Found by Crawlers and Cited by Answer Engines
 
+**After this you can** give two page types a chunked dynamic sitemap, canonical and hreflang tags, Open Graph cards and valid structured data, and show the build succeeding while the API is down. *Study time: about 50 minutes (estimate).*
+
 > **Tool-dated lesson.** The *principles* — machine-readable meaning, don't couple
 > builds to runtime data, write to be quoted — outlive the tools. The named
 > products and conventions (Googlebot behavior, `llms.txt`, specific AI crawlers)
@@ -500,6 +506,8 @@ Finish: *"Commit with the message `11-3-seo-aeo`."*
 
 # 11.4 — Cost Engineering
 
+**After this you can** build a cost model with 1×, 10× and 100× columns, name its worst-scaling line, and propose one structural fix for that line before it becomes expensive. *Study time: about 50 minutes (estimate).*
+
 ## 🔥 The War Story
 
 Two cost stories from one platform, and they rhyme.
@@ -640,6 +648,8 @@ Finish: *"Commit the cost model as `11-4-cost-model.md` with the message
 
 # 11.5 — Your Edge Platform in Practice: Cloudflare End to End
 
+**After this you can** put an app behind Cloudflare with a cache rule, WAF and Turnstile, re-run the earlier cache-poisoning and rate-limit tests through the real edge, and keep the edge config in the repo. *Study time: about 55 minutes (estimate).*
+
 > **Tool-dated lesson.** Cloudflare is this course's reference edge, and the named
 > features (Turnstile, R2, Workers, the specific dashboard toggles) are current
 > best defaults on an annual refresh. The *principle* — **the edge is
@@ -652,8 +662,8 @@ Finish: *"Commit the cost model as `11-4-cost-model.md` with the message
 Every earlier module left a mark on the same edge platform. Gathered in one place,
 they tell a single story:
 
-- **The `Vary` it ignored (3.2).** The CDN did not honor the `Vary` header, so it
-  cached a data response as the page — global cache poisoning. The durable fix
+- **The `Vary` it ignored (3.2).** The CDN's default at the time did not honor
+  the `Vary` header, so it cached a data response as the page — global cache poisoning. The durable fix
   lived at the proxy layer, *below* the edge's defaults.
 - **The client-IP header it provides (5.2).** Behind the edge, every request
   arrives from a CDN IP; rate limiting had to key on the CDN's `CF-Connecting-IP`
@@ -703,7 +713,8 @@ flowchart LR
 
 The single most misunderstood edge control is *how the cache treats your origin's
 `Cache-Control` and `Vary` headers.* The default is not always "do what my app
-says." Lesson 3.2 exists because a CDN's default ignored `Vary`. So the rule is
+says." Lesson 3.2 exists because a CDN's default at the time ignored `Vary`, and
+defaults move (Cache Rules can now be set to honor it). So the rule is
 concrete: **know, per platform, exactly which of your headers the edge honors and
 which it overrides — and defend at the layer you control** (the proxy) rather than
 the layer whose defaults you're guessing at.
@@ -763,7 +774,8 @@ Finish: *"Commit with the message `11-5-edge-cloudflare`."*
 > 🔧 **Under the hood** (optional): Cloudflare's config exports via Terraform
 > (`cloudflare_ruleset`, `cloudflare_record`) and Workers via Wrangler; the
 > proxy/grey-cloud state is per-DNS-record; cache and Vary behavior is governed by
-> Cache Rules and the "respect existing headers" setting.
+> Cache Rules (including any opt-in `Vary` handling) and the "respect existing
+> headers" setting — check the current configuration rather than assuming.
 
 ## ✅ Verify It
 

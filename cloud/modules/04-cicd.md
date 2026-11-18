@@ -9,6 +9,8 @@
 # 4.1 — Continuous integration: pipelines, tests, artefacts and fast feedback
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 3.2* · *Phase: Build, Test*
 
+**After this you can** build a CI workflow with read-only permissions, timeouts and layer caching that turns red on a failing test, and prove that the digest running in your cluster is the one CI built. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Continuous integration (CI)** means everyone merges small changes into the main branch often, at least daily, and every change is built and tested automatically before and after it merges.
 - The pipeline's job is to answer one question quickly and honestly: "Is this change safe to merge?" A slow answer, or an answer people do not trust, makes CI pointless.
@@ -306,6 +308,8 @@ Use your own GitHub account and a public practice repository; never an employer'
 
 # 4.2 — Release strategies: rolling, blue-green, canary, feature flags and rollback
 *Level: 🟡 Intermediate* · *Prerequisites: 2.2, 2.3, 4.1* · *Phase: Release, Deploy*
+
+**After this you can** run a rolling update and a rollback with zero failed requests, explain why a release with a failing probe stops while one returning HTTP 500 does not, and set up a canary that aborts itself on failed analysis. *Study time: about 115 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Deploying** puts new code on servers; **releasing** lets users reach it. Separating the two, with feature flags and progressive traffic shifting, is the core of safe delivery.
@@ -619,6 +623,8 @@ Run these on a local kind or k3d cluster.
 
 # 4.3 — Securing the pipeline: secrets, signed artefacts and least-privilege deploys
 *Level: 🟡 Intermediate* · *Prerequisites: 1.3, 3.2, 4.1* · *Phase: Build, Deploy*
+
+**After this you can** pin every action in a workflow to a commit SHA with least-privilege permissions, sign an image keylessly with cosign, and show verification passing for your workflow identity and failing for another branch. *Study time: about 115 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - A CI/CD pipeline can change production, so it is one of the most privileged systems you run. Attackers know this; protect it like production.

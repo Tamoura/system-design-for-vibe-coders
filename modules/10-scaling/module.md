@@ -14,6 +14,8 @@ first use; the [Glossary](../../GLOSSARY.md) has the rest.*
 
 *Module 10: Scaling Beyond One Server*
 
+**After this you can** run two instances behind a load balancer, find and remove the process state that breaks across them, and show a health check draining a killed instance with zero failed requests. *Study time: about 70 minutes (estimate).*
+
 ---
 
 ## 🔥 The War Story
@@ -53,13 +55,13 @@ There are two ways to handle more load:
 | | Scale **up** (vertical) | Scale **out** (horizontal) |
 |---|---|---|
 | What you do | Bigger machine (more CPU/RAM) | More machines, same size |
-| Ceiling | The biggest box money buys | Effectively none |
+| Ceiling | The biggest box money buys | Much higher, but set by the shared parts |
 | Failure | One box down = all down | One box down = others carry on |
 | Requires | Nothing special | **Stateless app instances** |
 
 Scaling up is easy and boring and you should do it first (lesson 10.3 revisits
 this). But it has a ceiling and a single point of failure. Scaling *out* — many
-identical instances — has no ceiling and survives one machine dying. Its one
+identical instances — has a much higher ceiling and survives one machine dying. Its one
 hard requirement: **every instance must be interchangeable.** A request must land
 on *any* instance and get the right answer. That is only possible if instances
 share nothing that matters.
@@ -67,6 +69,15 @@ share nothing that matters.
 Stack Overflow served a top-100 audience for years on about nine web servers
 (lesson F.2) — few, but *interchangeable*, fronted by a load balancer, with all
 the real state in shared databases and caches. Small and boring and horizontal.
+
+**Scaling a service is not scaling the system.** Ten stateless instances are ten
+times the web tier, not ten times the product. They all still talk to one
+database (and its connection limit), the same shared dependencies — the cache,
+the queue, a third-party API with its own rate limit — the same network links,
+and every extra instance adds coordination overhead and cost. Each scaling step
+*moves* the bottleneck rather than removing it: add instances and the database
+connection pool may be the next thing to bend. So after each step, measure where
+the bottleneck went before you add more of anything.
 
 ### 2. The three kinds of process state that bite
 
@@ -186,6 +197,9 @@ Finish: *"Commit with the message `10-1-stateless-services`."*
       with zero failed requests.
 - [ ] You can retell the rate-limit-counter story and name the two ways process
       state broke it (reset on deploy; multiplied across instances).
+- [ ] You doubled the instance count under a load test, then named the shared
+      part that limited throughput next (DB connections, cache, queue, or an
+      external API's rate limit) with the number that showed it.
 
 ## 🧾 Recap card
 
@@ -210,6 +224,8 @@ Finish: *"Commit with the message `10-1-stateless-services`."*
 # 10.2 — Queues and Asynchronous Work
 
 *Module 10: Scaling Beyond One Server*
+
+**After this you can** move slow work onto a queue with an idempotent consumer, a dead-letter queue and a stale-job sweep, and show a job delivered twice taking effect exactly once. *Study time: about 70 minutes (estimate).*
 
 ---
 
@@ -427,6 +443,8 @@ Finish: *"Commit with the message `10-2-queues-async-work`."*
 
 *Module 10: Scaling Beyond One Server*
 
+**After this you can** decide and justify whether you need a read replica, route reads between primary and replica, and show both replication lag and why a replica is not a backup. *Study time: about 70 minutes (estimate).*
+
 ---
 
 ## 🔥 The War Story
@@ -615,6 +633,8 @@ Finish: *"Commit with the message `10-3-scaling-the-database`."*
 # 10.4 — Realtime: Presence, Websockets, and Heartbeats
 
 *Module 10: Scaling Beyond One Server · **app track***
+
+**After this you can** build a "who's online" presence feature that heals itself after its store is wiped and that a client sending fake heartbeats cannot inflate. *Study time: about 70 minutes (estimate).*
 
 ---
 
@@ -806,6 +826,8 @@ Finish: *"Commit with the message `10-4-realtime-presence`."*
 # 10.5 — Performance and Capacity
 
 *Module 10: Scaling Beyond One Server*
+
+**After this you can** load-test an app to its breaking point, record that number as its capacity, fix the first bottleneck, and prove with a re-run that the ceiling moved and p99 fell. *Study time: about 70 minutes (estimate).*
 
 ---
 

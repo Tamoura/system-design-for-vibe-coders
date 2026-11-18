@@ -9,6 +9,8 @@
 # 6.1 — Understanding unfamiliar code and debugging with an agent: reproduce first, hypotheses, root cause
 *Level: 🟡 Intermediate* · *Prerequisites: 4.1, 5.1* · *Focus: Workflow*
 
+**After this you can** reproduce a bug first, list hypotheses each with a disproof, and find the breaking commit with a bisect. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Two jobs, one rule: get oriented in code you did not write, and find the *cause* of a bug, not a patch that hides it. **Everything an agent says about code is a hypothesis until you have opened the file or run the command.**
 - Onboard in five moves: a read-only map that cites files, five claims checked, the tests run, the gaps asked about, `docs/onboarding.md` written by you.
@@ -62,7 +64,7 @@ flowchart TD
     G --> H["Root-cause note"]
 ```
 
-- **Reproduce first.** A failing test proves the bug exists as you understand it, gives the agent an objective signal (the best-practices page suggests this), becomes the regression test and makes bisecting possible. From a log, build the smallest input with exact timestamps. If you cannot reproduce it, you do not understand it yet.
+- **Reproduce first.** A failing test proves the bug exists as you understand it, gives the agent an objective signal, becomes the regression test and makes bisecting possible. From a log, build the smallest input with exact timestamps. If you cannot reproduce it, you do not understand it yet.
 - **Ranked hypotheses**: at least three, each with its evidence, its cheapest check, and *what result would disprove it*. A hypothesis nothing could disprove is not testable.
 - **Instrument.** Print values, not conclusions, where expected and actual should agree; then remove the print.
 - **Bisect.** If it used to work: `git bisect start <bad> <good>`, then `git bisect run <command>`. The command exits 0 for good, 1 to 127 (not 125) for bad, 125 to skip; 128 or more aborts. The judge must be deterministic and exist at every commit, so keep a new test file untracked. `start` never runs it on the good commit: run it there by hand (it must pass) and on the bad one (it must fail) first, or a wrong test misleads it. When it names a commit, run `git bisect reset`.
@@ -88,9 +90,9 @@ flowchart TD
 |---|---|
 | "The threshold is too strict, isn't it? Lower it so the alias matches." | "Do not edit files. Give four ranked hypotheses for why this alias is not held, each with the evidence, the cheapest check and what would disprove it. Include one that contradicts the threshold theory." |
 
-Ask for alternatives and falsifiers (an agent argues well for a position; make it attack one) and for evidence you can reproduce, not "are you sure?". Review in a fresh context, asking only about correctness and the stated requirement: the best-practices page warns that reviewers "will usually report some, even when the work is sound".
+Ask for alternatives and falsifiers (an agent argues well for a position; make it attack one) and for evidence you can reproduce, not "are you sure?". Review in a fresh context, asking only about correctness and the stated requirement.
 
-**When the agent is stuck.** The signs: the same fix twice, edits growing, the failing test being "adjusted" (the best-practices page names "Correcting over and over"). Stop; undo (`/rewind` or `git restore`; checkpoints do not track shell commands and are no substitute for git); write what is ruled out and the smallest failing test into a file; `/clear` and restart from it; send long exploration to a read-only subagent; or take the keyboard.
+**When the agent is stuck.** The signs: the same fix twice, edits growing, the failing test being "adjusted". Stop; undo (`/rewind` or `git restore`; checkpoints do not track shell commands and are no substitute for git); write what is ruled out and the smallest failing test into a file; `/clear` and restart from it; send long exploration to a read-only subagent; or take the keyboard.
 
 **When not to bring an agent.** When you already know the line, when the evidence cannot leave production, or when the point is to learn. In one randomised trial (METR, 2025; 16 experienced open-source developers in their own mature repositories, early-2025 tools) tasks took longer with AI allowed, though the developers believed it had helped; METR says other settings and newer tools may differ.
 
@@ -286,6 +288,8 @@ What you could not verify.
 
 # 6.2 — Lab: onboard to the codebase and fix a production bug from its logs
 *Level: 🟡 Intermediate* · *Prerequisites: 6.1* · *Focus: Workflow, Verify*
+
+**After this you can** write an onboarding note for unfamiliar code and fix a production bug from its logs, starting with a failing test. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Lab m06 on Najm Remit: write `docs/onboarding.md`, then fix incident REMIT-231 from `lab-assets/prod.log` with a failing test of your own (it becomes the regression test), a minimal fix and a root-cause note.

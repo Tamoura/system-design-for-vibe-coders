@@ -9,6 +9,8 @@
 # 5.1 — A launch you can undo
 *Level: 🟡 Intermediate* · *Prerequisites: 2.3, 4.3* · *Step: Launch*
 
+**After this you can** write a one-page launch checklist with a check, a numeric stop rule and an undo step for every rung, and time one undo drill in minutes. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - After this lesson you can write a **launch checklist** of one page that lists, for each launch step, what you will check, what would make you stop, and exactly how you would undo it, and you can run a first launch to no more than five customers before anyone else sees the product.
 - A launch is not a date. It is a **ladder of steps**: you, then a few trusted customers, then more, then everyone. At each rung you look at what happened before you climb.
@@ -222,6 +224,8 @@ On rung 1, Nadia reports that one client received a reminder 30 minutes late. La
 # 5.2 — Support at one-person scale with AI: boundaries, escalation, disclosure
 *Level: 🟡 Intermediate* · *Prerequisites: 4.3, 5.1* · *Step: Launch*
 
+**After this you can** write a one-page support policy that sets a response time, what an AI assistant may and may never answer, when it hands over to you and how customers are told, and test it on ten real or role-played messages. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - After this lesson you can write a **support policy** of one page that says what you answer, how fast, which questions an AI assistant may answer alone, which it may never answer, when it must pass the customer to you, and how customers are told that AI is involved. You can test it against ten real or role-played messages.
 - Support is a product feature. For a one-person company it is also the best research you will get, because every message tells you where the product confused someone.
@@ -417,6 +421,8 @@ The next week, Nadia writes: "Are you a robot?" The reply says yes, an AI assist
 
 # 5.3 — When something breaks: telling customers, and the post-incident note
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1, 5.2* · *Step: Launch*
+
+**After this you can** write a three-level severity table, keep a timestamped timeline through a role-played incident, and write a one-page post-incident note that names causes, not people, with two or three owned and dated actions. *Study time: about 115 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can run a small **incident** from first report to closing note: send a first message to affected customers within a time you set in advance, keep a timeline, send an update on schedule, and write a **post-incident note** of one page that names causes, not people, and ends in two or three concrete actions with owners and dates.

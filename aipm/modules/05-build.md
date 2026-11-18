@@ -9,6 +9,8 @@
 # 5.1 — The AI product spec: behaviour, quality bars and evals as requirements
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 4.1, 4.2* · *Stage: Define, Build*
 
+**After this you can** rewrite a vague requirement as a behaviour example, a quality bar and a must-never item that a colleague can mark pass or fail, and draft a spec an engineer could build the eval suite from. *Study time: about 125 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - An AI product spec describes **behaviour**, not just features. Because the output is probabilistic, a requirement reads "does X in at least N% of cases like these, and never does Y", not "does X".
 - The core of the spec is three linked parts: **behaviour by example** (inputs with good and bad outputs), **quality bars** (measurable thresholds per quality dimension), and **evals** (the tests that show whether the bars are met).
@@ -234,6 +236,8 @@ Faisal adds a page of twenty behaviour examples below the table. One row: *Input
 # 5.2 — Prototyping fast and working with ML and AI engineers
 *Level: 🟡 Intermediate* · *Prerequisites: 1.3, 5.1* · *Stage: Build*
 
+**After this you can** pick the cheapest prototype that answers a given product question, and write a two-week spike with its question, the evidence it will produce and a kill criterion. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - An AI prototype exists to **retire a specific risk** cheaply: is it valuable, usable, feasible, viable? Pick the prototype that answers the question you have, not the one that impresses most.
 - The ladder runs from cheap to expensive: **scripted mock-up → Wizard of Oz → prompt prototype on real data → thin slice → shadow mode → pilot**. Each rung needs a question and a kill criterion.
@@ -453,6 +457,8 @@ Faisal replaces the executive demo with a four-week prototype plan for Najm Assi
 
 # 5.3 — Prompts, context and tools as product surface
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 4.3, 5.1* · *Stage: Build, Design*
+
+**After this you can** write the scope and hard-limit blocks of a system prompt and seven-field tool contracts, and design prompt-injection defences in which no control depends only on the model obeying its instructions. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - In a GenAI product, much of the behaviour users experience is set by three things the PM can read and shape: the **prompt** (instructions), the **context** (what information the model sees) and the **tools** (what actions it can take).

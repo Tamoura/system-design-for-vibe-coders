@@ -9,6 +9,8 @@
 # 9.1 — Sourcing, lineage and rights to use data
 *Level: 🔴 Advanced* · *Prerequisites: 3.2, 4.1, 5.2* · *BoK: III.B*
 
+**After this you can** classify datasets by source type and rights issue, and run a GDPR Art. 6(4) compatibility assessment that reaches a reasoned conclusion with safeguards. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Training data comes from five main sources: **first-party** (your own records), **purchased or licensed**, **scraped** from the web, **synthetic** (generated), and **public datasets**. Each has a different rights and risk profile.
 - **Lineage** records where data came from and every transformation it went through. **Provenance** is the evidence of its origin and authenticity. Without them you cannot prove your rights, reproduce your model or honour a deletion request.
@@ -201,6 +203,8 @@ Standing rule adopted by the committee: *"No dataset may be used to train, fine-
 
 # 9.2 — Quality, representativeness and bias
 *Level: 🔴 Advanced* · *Prerequisites: 9.1, 5.1* · *BoK: III.B*
+
+**After this you can** locate where six bias types enter a pipeline, and write a one-page annotator guide with definitions, worked examples, an unsure rule and an agreement check. *Study time: about 105 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Data quality** has several dimensions: accuracy, completeness, consistency, timeliness, validity, uniqueness. It also has **fitness for purpose**, which is the dimension that matters most.
@@ -412,6 +416,8 @@ Describe it carefully: it is **not** a general licence to collect sensitive data
 
 # 9.3 — Testing, evaluation, validation and red-teaming
 *Level: 🔴 Advanced* · *Prerequisites: 9.2, 8.2* · *BoK: III.B*
+
+**After this you can** explain to a business owner why accuracy misleads on rare events, compute fairness metrics from a confusion matrix, and design a red-team plan with exit criteria. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **TEVV** (test, evaluation, verification and validation) is how you get evidence that a system works as intended, for the people it affects, under the conditions it will face. *Verification*: did we build it right (to spec)? *Validation*: did we build the right thing (fit for real use)?

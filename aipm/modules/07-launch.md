@@ -9,6 +9,8 @@
 # 7.1 — Launch readiness: guardrails, governance gates and support
 *Level: 🔴 Advanced* · *Prerequisites: 5.1, 6.2, 6.3* · *Stage: Launch*
 
+**After this you can** write a launch-readiness checklist with blocking items, owners and evidence, and design layered guardrails in which every control names the failure it catches and how to test it. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Launch readiness** is evidence, not optimism: conditions, each with an owner and proof, that must be true before more users are exposed.
 - Four areas: **quality** (evals pass), **guardrails** (it fails safely), **governance** (approvals on file) and **operations and support** (someone notices problems, can switch it off, and knows what to tell customers).
@@ -238,6 +240,8 @@ Go/no-go outcome: *"No-go this week on G1. Go at 5% once the false-block fix is 
 # 7.2 — Go-to-market: positioning, pricing signals and enablement
 *Level: 🔴 Advanced* · *Prerequisites: 2.1, 4.2, 7.1* · *Stage: Launch*
 
+**After this you can** fill in a positioning canvas and a claims register in which every claim links to an eval or rollout metric, and compare pricing patterns by signal and risk to recommend one. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Go-to-market (GTM)** is how a product reaches the people it is for: who it is for, what it promises, how it is priced or funded, and how the people who sell and support it are equipped.
 - For AI products, **positioning is expectation-setting**. The promise you make decides whether a 90%-accurate product feels impressive or broken. Lead with the job the customer gets done, not with "AI".
@@ -460,6 +464,8 @@ Faisal's revised **SME Instant Finance GTM One-Pager**, approved by Khalid and r
 
 # 7.3 — Adoption and change management inside the enterprise
 *Level: 🔴 Advanced* · *Prerequisites: 4.1, 7.1, 7.2* · *Stage: Launch, Grow*
+
+**After this you can** diagnose an internal tool's adoption with ADKAR, design an adoption funnel with a metric per stage and a counter-metric, and write a plan that says how you will know within 60 days whether it worked. *Study time: about 125 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - An internal AI product succeeds only when people change how they work. Launch gives access; **adoption** is the change in behaviour; **value** is the change in outcomes. Measure all three separately.

@@ -9,6 +9,8 @@
 # 2.1 — From principles to strategy and risk appetite
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 1.3* · *BoK: I.B*
 
+**After this you can** draft an AI risk-appetite table with an appetite level, a measurable tolerance and an owner for each risk category. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - AI governance starts from the top: **principles** (what we value) drive an **AI strategy** (what we will use AI for), which is bounded by a **risk appetite** (how much AI risk we accept) and **risk tolerances** (the measurable limits around it).
 - Principles only matter once they are translated into commitments someone can test: "fair" becomes "we measure approval-rate gaps across groups before launch and monthly after".
@@ -249,6 +251,8 @@ Najm's corporate banking division wants to run its own AI governance because "th
 
 # 2.2 — Roles, accountability and the AI governance committee
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1* · *BoK: I.B*
+
+**After this you can** write an AI governance committee charter that states membership, quorum and decision rights, and find two independence risks in a RACI with a fix for each. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Every AI system needs a single **accountable owner** in the business, not in IT or data science. Governance roles support that owner; they do not replace them.
@@ -491,10 +495,12 @@ Review the RACI above and identify two independence or conflict-of-interest risk
 # 2.3 — AI literacy, training and culture
 *Level: 🟡 Intermediate* · *Prerequisites: 2.2* · *BoK: I.B*
 
+**After this you can** design a 60-minute oversight training session with a competence check, and draft a role-based answer to a regulator on the AI Act's AI-literacy duty. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **AI literacy** is the skills, knowledge and understanding that let people use and oversee AI in an informed way and understand its opportunities, risks and possible harms.
-- Under **EU AI Act Art. 4**, providers and deployers must take measures to ensure, to their best extent, a sufficient level of AI literacy among their staff and others operating or using AI systems on their behalf. It has applied since **2 February 2025**.
-- The duty is proportionate: it depends on people's technical knowledge, experience, education and training, the context of use, and who the AI is used on. One-size-fits-all e-learning does not meet it well.
+- Under **EU AI Act Art. 4**, providers and deployers must take measures to support the development of AI literacy among their staff, with no duty to guarantee any specific level. Art. 4 sits in Chapter I, which has applied since **2 February 2025**.
+- Good measures are proportionate: they depend on people's technical knowledge, experience, education and training, the context of use, and who the AI is used on. One-size-fits-all e-learning rarely achieves this.
 - Effective programmes are **role-based**: board, executives, business owners, builders, overseers, control functions and all staff each need different depth.
 - Culture decides whether any of this works: incentives that reward safe behaviour, psychological safety, and protected channels for speaking up.
 - Biggest trap: treating literacy as a one-off course with a completion rate. Regulators and the exam care about whether people can actually do their role safely.
@@ -508,15 +514,15 @@ None of these are technology failures. The first is a literacy gap that creates 
 
 ### 🟢 The essentials
 
-**What the law says.** Article 4 of the EU AI Act requires providers and deployers of AI systems to take measures to ensure, to their best extent, a sufficient level of AI literacy of their staff and other persons dealing with the operation and use of AI systems on their behalf. In doing so they must take into account those people's technical knowledge, experience, education and training, the context the AI systems are to be used in, and the persons or groups on whom the systems are to be used. The Act defines AI literacy as the skills, knowledge and understanding that allow providers, deployers and affected persons to make an informed deployment of AI systems and to gain awareness of the opportunities and risks of AI and the possible harm it can cause.
+**What the law says.** Article 4 of the EU AI Act, as replaced by Regulation (EU) 2026/1744, says providers and deployers of AI systems "shall take measures to support the development of AI literacy" of their staff. The amending act states that this does not require them to guarantee any specific level of AI literacy. The original 2024 wording went further: measures to ensure, to their best extent, a sufficient level of AI literacy of staff and other persons dealing with the operation and use of AI systems on their behalf, taking into account their technical knowledge, experience, education and training, the context of use, and the persons or groups on whom the systems are used. Those factors are still the best guide to designing the measures, and the exam may still test the original wording. The Act defines AI literacy as the skills, knowledge and understanding that allow providers, deployers and affected persons to make an informed deployment of AI systems and to gain awareness of the opportunities and risks of AI and the possible harm it can cause.
 
 Key points to remember:
 
 - **Who:** providers and deployers, which covers almost any organisation using AI in a professional capacity within the Act's scope, not just those with high-risk systems.
-- **Whom:** staff, plus "other persons" acting on the organisation's behalf, such as contractors and service providers operating its AI.
-- **When:** from 2 February 2025, alongside the prohibited practices.
-- **How much:** "sufficient" and "to their best extent", judged in context. There is no mandated curriculum or certificate in the Act. The European Commission has published questions and answers on AI literacy; at the time of writing that guidance indicates that no specific certification is required and that organisations can keep internal records of their measures. Check the current guidance.
-- **Status:** the Commission's November 2025 "Digital Omnibus" proposal included changes to how the AI-literacy duty is framed. Reports say it was adopted as Regulation (EU) 2026/1744 (last checked 12 November 2026), but sources differ on the final wording of Art. 4 and we have not read the official text. Check EUR-Lex; the exam may still test the original Act.
+- **Whom:** staff. The original text also named "other persons" acting on the organisation's behalf, such as contractors and service providers operating its AI. Check the current text for its exact reach, and include them in practice: they run your AI.
+- **When:** Art. 4 is in Chapter I, which has applied since 2 February 2025, alongside the prohibited practices. Regulation (EU) 2026/1744 sets no separate date for the new wording.
+- **How much:** measures that support literacy, judged in context; the current text guarantees no specific level. There is no mandated curriculum or certificate in the Act. The European Commission has published questions and answers on AI literacy; at the time of writing that guidance indicates that no specific certification is required and that organisations can keep internal records of their measures. Check the current guidance.
+- **Status (checked against the act on 18 November 2026):** the Commission's November 2025 "Digital Omnibus" proposal led to Regulation (EU) 2026/1744, which replaced Art. 4 with the wording above: https://eur-lex.europa.eu/eli/reg/2026/1744/oj. The exam may still test the original Act; check the current exam guidance.
 
 **Beyond the EU.** Other instruments point the same way. **ISO/IEC 42001** requires the organisation to determine the competence needed by people doing work that affects AI performance, ensure they are competent through education, training or experience, and make people aware of the AI policy and their contribution (its competence and awareness clauses). The **NIST AI RMF** Govern function expects personnel and partners to receive AI risk management training so they can perform their duties. For deployers of high-risk systems, **EU AI Act Art. 26** adds a specific requirement that people assigned to human oversight have the necessary competence, training and authority.
 
@@ -556,14 +562,14 @@ Three design rules make this work:
 
 **Whistleblowing law.** In the EU, the Whistleblower Protection Directive (EU) 2019/1937 protects people who report breaches of EU law through internal or external channels, and the EU AI Act provides that this Directive applies to reports of infringements of the AI Act. Organisations in scope should make sure their whistleblowing channels explicitly cover AI concerns. In the GCC, whistleblowing frameworks vary by country and sector; banks usually have regulator-driven internal channels, so the practical step is to confirm that AI issues are in scope.
 
-**Evidence for regulators and auditors.** Because the literacy duty is principles-based, the question in an inspection or audit will be: "What did you do, why was it sufficient for these people and these systems, and how do you know it worked?" Keep a literacy register: roles mapped to training, completion and competency evidence, refresh triggers, and effectiveness metrics. **ISO/IEC 42001** certification auditors will also look for documented evidence of competence.
+**Evidence for regulators and auditors.** Because the literacy duty is principles-based, the question in an inspection or audit will be: "What did you do, why was it proportionate for these people and these systems, and how do you know it worked?" Keep a literacy register: roles mapped to training, completion and competency evidence, refresh triggers, and effectiveness metrics. **ISO/IEC 42001** certification auditors will also look for documented evidence of competence.
 
 **The limits of literacy.** Training cannot fix a badly designed system. If a model's explanations are unreadable, no amount of overseer training will make oversight meaningful. If a GenAI tool has no enterprise controls, telling staff to be careful is a weak control. Treat literacy as one layer of defence alongside technical controls (data loss prevention, access control, interface design) and process controls (review, sampling, escalation).
 
 ## ⚖️ The instruments
 | Instrument | What it requires or recommends | Exam cue |
 |---|---|---|
-| **EU AI Act** — Art. 4 | Providers and deployers must ensure, to their best extent, a sufficient level of AI literacy of staff and others operating AI on their behalf, taking context into account; applies from 2 Feb 2025 | Applies to all providers and deployers, not only high-risk; proportionate, no fixed curriculum |
+| **EU AI Act** — Art. 4 | Providers and deployers take measures to support the development of AI literacy of their staff, with no specific level guaranteed (wording since Regulation (EU) 2026/1744); in Chapter I, applies from 2 Feb 2025 | Applies to all providers and deployers, not only high-risk; proportionate, no fixed curriculum |
 | **EU AI Act** — Art. 14 and Art. 26 | High-risk systems designed for effective human oversight; deployers assign oversight to people with competence, training and authority | Oversight training must address automation bias and overriding |
 | **ISO/IEC 42001** — Clauses 7.2 and 7.3 | Determine and ensure competence; make people aware of the AI policy and their role | Keep documented evidence of competence |
 | **NIST AI RMF** — Govern function | AI risk management training for personnel and partners; a critical-thinking, safety-first culture | Culture is part of governance, not an HR extra |
@@ -596,20 +602,20 @@ Design a 60-minute training session for credit officers who oversee the credit-s
 *Done when:* the session explicitly covers the model's intended purpose, known limitations, automation bias, how to override, and when to escalate.
 
 ### 🔴 Advanced
-A regulator asks Najm's Frankfurt branch how it complies with the EU AI Act's AI-literacy duty. Draft a one-page response describing the measures, why they are sufficient for the people and systems involved, and the evidence held.
-*Done when:* your response is proportionate by role, cites the factors Article 4 says to take into account, and points to records rather than just completion rates.
+A regulator asks Najm's Frankfurt branch how it complies with the EU AI Act's AI-literacy duty. Draft a one-page response describing the measures, why they are proportionate for the people and systems involved, and the evidence held.
+*Done when:* your response is proportionate by role, uses the context factors the original Article 4 listed, and points to records rather than just completion rates.
 
 ## ⚠️ Mistakes and exam traps
 - **"Only high-risk systems trigger AI literacy."** Article 4 applies to providers and deployers of AI systems generally. Do not limit it to high-risk.
-- **"A certificate is required."** The Act does not prescribe a certificate or curriculum; it requires sufficient literacy in context. Choose answers that tailor training to roles and context.
+- **"A certificate is required."** The Act does not prescribe a certificate or curriculum; it requires measures that support literacy, judged in context. Choose answers that tailor training to roles and context.
 - **Completion rate as proof.** 100% completion of a generic e-learning module is weak evidence. Prefer answers that measure behaviour and competence.
-- **Forgetting contractors.** The duty extends to other persons operating or using AI on the organisation's behalf.
+- **Forgetting contractors.** The original text expressly covered other persons operating or using AI on the organisation's behalf, and a programme that skips them leaves the people running your AI untrained.
 - **Training instead of design.** When a scenario shows oversight failing because the interface hides key information, the better answer fixes the system, not just the training.
 - **Silence as compliance.** No reported concerns is not evidence of a healthy culture; it may mean there is no safe channel.
 
 ## 🧾 Recap
 - AI literacy is the knowledge and understanding needed to use and oversee AI in an informed way and to understand its risks and harms.
-- EU AI Act Art. 4 has applied since 2 February 2025 to providers and deployers; it is proportionate to people's background and context, with no fixed curriculum. The Digital Omnibus is reported to have changed it; read the current text.
+- EU AI Act Art. 4 requires providers and deployers to take measures to support their staff's AI literacy, with no specific level guaranteed since the 2026 amendment. It sits in Chapter I, applying since 2 February 2025, and good measures are proportionate to people's background and context, with no fixed curriculum.
 - Build role-based training, tie it to system access, refresh it on change and measure behaviour.
 - Human overseers need specific training on limitations, automation bias and overriding.
 - Culture (incentives, psychological safety, tone from the top) and protected speak-up channels make the rest work.
@@ -664,7 +670,7 @@ A regulator asks Najm's Frankfurt branch how it complies with the EU AI Act's AI
 
 <details><summary>Answer</summary>
 
-**A.** The duty is about sufficient literacy in context; behavioural and competence evidence is stronger. B, C and D are false. (See 🟡 Going deeper and ⚠️ Mistakes.)
+**A.** The duty is about measures that build literacy in context; behavioural and competence evidence is stronger. B, C and D are false. (See 🟡 Going deeper and ⚠️ Mistakes.)
 
 </details>
 

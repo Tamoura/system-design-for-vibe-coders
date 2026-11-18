@@ -9,6 +9,8 @@
 # 3.1 — Transformations as code: dbt, layers, tests and version control
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.2, 2.1, 2.2* · *Stage: Transform*
 
+**After this you can** build a dbt project with staging, intermediate and mart models whose tests fail on a planted duplicate and pass again once you fix the deduplication. *Study time: about 125 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A **transformation** turns loaded raw data into cleaned, joined, business-ready tables. In ELT (2.1) it runs inside the warehouse, as SQL.
 - **Transformations as code** means every one of those SQL steps lives in a file, in version control, reviewed and tested like application code, not in saved queries on someone's laptop.
@@ -383,6 +385,8 @@ Use synthetic data only. Generate fake customers, accounts and transactions with
 # 3.2 — Data quality: tests, contracts and observability
 *Level: 🟡 Intermediate* · *Prerequisites: 2.2, 3.1* · *Stage: Transform, Operate*
 
+**After this you can** write a data contract and a validation script that rejects each bad file with a message naming the breach, and set a severity and owner for one check per quality dimension. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Data quality** means data is fit for the decision it supports: complete, valid, unique, consistent, accurate and on time.
 - Three layers of defence: **tests** check known assumptions in your pipeline; **data contracts** agree schema, meaning and timeliness with the teams that produce data; **data observability** watches freshness, volume, schema and distribution for problems nobody wrote a test for.
@@ -683,6 +687,8 @@ Use synthetic data only.
 
 # 3.3 — Performance and cost: partitioning, clustering, incremental models and query plans
 *Level: 🟡 Intermediate* · *Prerequisites: 1.3, 3.1* · *Stage: Store, Operate*
+
+**After this you can** show from query plans that a partitioned table or a half-open date filter reads less data, and build an incremental model whose lookback window keeps it equal to a full refresh. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - In analytical systems, **cost and speed are mostly about how much data a query reads**. Read less and you pay less and wait less.

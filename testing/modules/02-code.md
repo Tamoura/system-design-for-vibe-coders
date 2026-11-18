@@ -9,6 +9,8 @@
 # 2.1 — Unit testing and TDD: arrange-act-assert, test doubles and fast feedback
 *Level: 🟢 Beginner* · *Prerequisites: 1.1* · *Focus: Unit*
 
+**After this you can** write named, parametrised unit tests with stubs, spies and an injected clock, and show that a one-character change to a rule turns exactly one of them red. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A **unit test** checks one small behaviour in milliseconds, with no network, database or real clock. Build it as **arrange, act, assert** and name it after the rule it protects.
 - Replace only what is slow, random or out of your control with a **test double**: dummy, stub, spy, mock or fake.
@@ -491,6 +493,8 @@ Copy the sample (`cp -r testing/sample ~/najm-sample`), create a virtual environ
 
 # 2.2 — Integration testing: databases, queues, test data and contract tests
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1* · *Focus: Integration*
+
+**After this you can** test a repository against a real database, write a JSON Schema contract check that fails on a drifted response, and show a database constraint closing a double-submit race. *Study time: about 115 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - An **integration test** runs your code against a real neighbour (database, queue, HTTP service, another team's API) to check the join, not the logic.
@@ -1098,6 +1102,8 @@ Copy the sample, add this lesson's files and `pip install faker respx jsonschema
 
 # 2.3 — Are your tests any good? Coverage, mutation testing, property-based testing and flaky tests
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 2.2* · *Focus: Unit, Strategy*
+
+**After this you can** measure a suite with branch coverage and mutation testing, classify every surviving mutant, and write a property-based test that catches the seeded cut-off bug. *Study time: about 115 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - A passing suite proves little unless it could have failed. Four tools test the tests: **coverage** (what ran), **mutation testing** (would the suite notice a planted bug?), **property-based testing** (does the rule hold on unforeseen inputs?) and **flaky-test hunting** (does the verdict depend on luck?).

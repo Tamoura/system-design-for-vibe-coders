@@ -40,6 +40,9 @@
     "qa:cues": "python3 scripts/qa/quiz_cues.py",
     "qa:arabic": "python3 scripts/qa/arabic_rules.py",
     "qa:claims": "python3 scripts/qa/claims_lint.py",
+    "qa:counts": "python3 scripts/qa/site_counts.py",
+    "qa:outcomes": "python3 scripts/qa/lesson_outcomes.py",
+    "qa:links": "python3 scripts/qa/site_links.py _site",
     "qa:ar": "python3 scripts/qa/check_ar_all.py",
     "test:assess": "node scripts/tests/assessment-group.test.mjs"
   },

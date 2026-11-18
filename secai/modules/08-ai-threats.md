@@ -9,6 +9,8 @@
 # 8.1 — The AI attack surface: OWASP Top 10 for LLM Applications and MITRE ATLAS
 *Level: 🔴 Advanced* · *Prerequisites: 1.1, 1.3* · *Phase: Design*
 
+**After this you can** draw the data flow of an LLM feature, tag every boundary-crossing threat with an OWASP LLM ID and an ATLAS technique, and state whether the lethal trifecta is present. *Study time: about 125 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - An AI system is ordinary software plus new parts: the model, prompts, training data, retrieved documents, tools and an AI supply chain. Each one is attack surface.
 - A large language model (LLM) reads instructions and data in one stream of text and cannot reliably tell them apart. Anything it reads can steer it, so anything it writes is untrusted.
@@ -62,6 +64,8 @@ The working rule: **design as if any text the model reads might be written by an
 | LLM10 Unbounded Consumption | Runaway cost, denial of service, or copying the model by mass querying | A bot floods Assist with long prompts |
 
 It is a **builder's checklist**, not a threat model, and its **numbering changes** between versions, so cite name, ID and version. The same project also publishes **agentic AI** guidance, including, at the time of writing, a separate Top 10 for agentic applications; check genai.owasp.org for current versions.
+
+> **Dated note (November 2026).** OWASP published a 2026 edition of the Top 10 for LLM Applications in August 2026. Prompt injection and sensitive information disclosure are still first and second, and excessive agency has moved up to third. This lesson uses the 2025 codes (LLM01:2025 to LLM10:2025) because the full 2026 list was not available to check; check genai.owasp.org for the current list. For risks specific to agents that use tools, OWASP keeps a separate list, the OWASP Top 10 for Agentic Applications (ASI01 to ASI10).
 
 ### 🟡 Going deeper
 
@@ -259,6 +263,8 @@ Ali, Noura and Mariam produce the **Najm Assist AI Threat Register v1** (excerpt
 # 8.2 — Prompt injection and jailbreaks, direct and indirect
 *Level: 🔴 Advanced* · *Prerequisites: 8.1, 2.1* · *Phase: Design, Test*
 
+**After this you can** measure how often a planted canary instruction hijacks a summariser before and after spotlighting, and redesign an assistant's tools so no component holds all three legs of the lethal trifecta. *Study time: about 125 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Prompt injection**: attacker-controlled text changes what an LLM application does. **Direct** injection comes from the person typing; **indirect** injection hides in content the system reads, such as documents, emails, transaction descriptions or tool results.
 - A **jailbreak** gets a model to break its own safety training. Injection attacks the application's trust in the model; a jailbreak attacks the model's rules.
@@ -315,7 +321,7 @@ Indirect injection is more dangerous: the user is not the attacker and has no re
 
 **What attackers want.** Perez and Ribeiro (2022) named two early goals, "goal hijacking" and "prompt leaking". The full range depends on what the system can reach:
 
-| Goal | What it looks like | OWASP LLM |
+| Goal | What it looks like | OWASP LLM (2025) |
 |---|---|---|
 | Goal hijacking | The attacker's task replaces the user's | LLM01 |
 | Data exfiltration | Private data leaves through a link, an image or a tool | LLM01, LLM02 |
@@ -545,6 +551,8 @@ Under PI-3 and PI-4, Najm Assist's tools are tiered:
 # 8.3 — Attacks on data and models: poisoning, evasion, extraction and inference
 *Level: 🔴 Advanced* · *Prerequisites: 8.1, 5.3, 6.2* · *Phase: Build, Operate*
 
+**After this you can** classify an AI attack as poisoning, evasion, extraction or inference, and measure in a lab how label flipping lowers a classifier's recall with and without a defence. *Study time: about 125 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Four families of attack target the model and its data. **Poisoning** corrupts what a model learns, **evasion** crafts inputs it gets wrong, **extraction** copies it, and **inference** (privacy) attacks learn about its training data.
 - In NIST AI 100-2's terms, poisoning and evasion attack **integrity** (poisoning can also attack **availability**), while extraction and inference are **privacy** attacks; extraction also breaks the **confidentiality** of the model itself.
@@ -584,7 +592,7 @@ flowchart LR
     X5["Theft of model files"] -.-> D
 ```
 
-**Poisoning.** **Data poisoning** means manipulating training or fine-tuning data so the model learns what the attacker wants. **Availability poisoning** degrades the model overall. **Targeted poisoning** makes it wrong on specific inputs, such as one fraud ring's pattern. **Label manipulation** keeps the data genuine but makes its labels wrong, as in the Smart Alerts story. A **backdoor** teaches the model a hidden **trigger**, an input pattern that produces the attacker's chosen output while the model behaves normally otherwise. "BadNets" (Gu and colleagues, 2017) showed backdoors in image classifiers, and "Sleeper Agents" (Hubinger and colleagues, 2024) showed backdoored language models whose hidden behaviour persisted through standard safety training. For LLM systems, poisoning also reaches **retrieval stores** (LLM08), **fine-tuning data** and **models from untrusted sources** (LLM03, LLM04). Carlini and colleagues (2023) showed that poisoning web-scale training sets is practical, for example via expired domains that datasets still point to.
+**Poisoning.** **Data poisoning** means manipulating training or fine-tuning data so the model learns what the attacker wants. **Availability poisoning** degrades the model overall. **Targeted poisoning** makes it wrong on specific inputs, such as one fraud ring's pattern. **Label manipulation** keeps the data genuine but makes its labels wrong, as in the Smart Alerts story. A **backdoor** teaches the model a hidden **trigger**, an input pattern that produces the attacker's chosen output while the model behaves normally otherwise. "BadNets" (Gu and colleagues, 2017) showed backdoors in image classifiers, and "Sleeper Agents" (Hubinger and colleagues, 2024) showed backdoored language models whose hidden behaviour persisted through standard safety training. For LLM systems, poisoning also reaches **retrieval stores** (LLM08:2025), **fine-tuning data** and **models from untrusted sources** (LLM03, LLM04). Carlini and colleagues (2023) showed that poisoning web-scale training sets is practical, for example via expired domains that datasets still point to.
 
 **Evasion.** An **evasion attack** feeds a deployed model inputs crafted so that it makes a mistake, without changing the model. The classic examples are **adversarial examples**: Szegedy and colleagues (2013) and Goodfellow and colleagues (2014) showed that changes people cannot see can flip an image classifier's answer, and Eykholt and colleagues (2018) did it with stickers on a real road sign. In banking the attackers are less exotic and more persistent: fraudsters and money mules change what they control (amounts, timing, merchants, devices) until the model stops flagging them, learning from every decline.
 

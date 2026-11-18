@@ -2,6 +2,8 @@
 
 *Module 1: Anatomy of a Real App*
 
+**After this you can** wire an error tracker and an outside uptime check, then throw a test error and kill staging on purpose to show both alarms reach your phone. *Study time: about 50 minutes (estimate).*
+
 > Tool note: this lesson names today's best defaults (Sentry, UptimeRobot /
 > Better Stack). The principles are permanent; the product names get an annual
 > refresh. If you're reading this in the future, substitute freely — the shape

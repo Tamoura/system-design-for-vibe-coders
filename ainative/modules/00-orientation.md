@@ -9,6 +9,8 @@
 # 0.1 — What an AI-native engineer is (and is not): the shift, five habits and the evidence
 *Level: 🟢 Beginner* · *Prerequisites: none* · *Focus: Mindset*
 
+**After this you can** score your own baseline on the five habits and trace one claim about AI productivity to its source, with two caveats. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - The **shift**: you type less and do more directing, verifying and owning. The agent drafts; you answer for every line.
 - AI use is a **spectrum**, from autocomplete to parallel agents, not a ladder. Pick the point that fits the task and what you can check.
@@ -18,9 +20,9 @@
 - Decision cue: before delegating, ask "could I tell if this were wrong?"
 
 ## 🧭 Why it matters
-On Thursday afternoon Lujain, the graduate engineer on the Payments Platform team, closes ticket REMIT-209 in fifteen minutes. Her agent wrote the change, reported "all tests pass" and she committed. On Friday morning the support team opens the history in their spreadsheet and the fee column shows the wrong numbers. Tariq, the engineering lead, asks Lujain one question: "Who is the author of this change?" She says the agent wrote it. Tariq says no: the author is whoever's name is on the commit, and that person has to explain every line.
+On Thursday Lujain, the graduate engineer, closes ticket REMIT-209 in fifteen minutes. Her agent wrote the change, reported "all tests pass" and she committed. On Friday the support team's spreadsheet shows the wrong fees. Tariq, the engineering lead, asks one question: "Who is the author of this change?" She says the agent did. Tariq says no: the author is whoever's name is on the commit, and that person has to explain every line.
 
-Nothing in that story is about a bad tool. It is a missing way of working: no context about who reads the output, no definition of done, no look at the diff. This course builds that way of working over fourteen weeks on one small codebase.
+The tool was not the problem; a way of working was missing: no context about who reads the output, no definition of done, no look at the diff. This course builds it over fourteen weeks on one small codebase.
 
 ## 📐 How it works
 
@@ -272,6 +274,8 @@ Would I delegate it again?     Yes, with the same spec
 # 0.2 — Your setup: tools, safe configuration, the Najm Remit repo and the ailab kit
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Focus: Workflow, Secure*
 
+**After this you can** set up the ailab kit and a safe permission configuration, then pass lab m00 with a logged commit. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Setup is four things: an approved tool, a permission mode that fits the risk, a clean place to work, and the `ailab` kit.
 - Start in Manual (`default`) mode. Never use `bypassPermissions` where real credentials live. Auto mode is a classifier's judgement, not a wall.
@@ -281,9 +285,9 @@ Would I delegate it again?     Yes, with the same spec
 - Lab m00 (in 🏛️): fix a typo, run the tests, commit as `type(scope): subject`. Needs an agent: no.
 
 ## 🧭 Why it matters
-On her second day Lujain tires of permission prompts and switches her agent to bypass mode. Her laptop holds a VPN profile, a cloud login and an old project's `.env`. Nothing happens. That is the trap: the bad day is rare, so safety feels like friction. Noura (application and AI security) has a rule for week zero: the agent has your hands. Whatever you can read, delete or push, it can.
+On day two Lujain, tired of permission prompts, switches her agent to bypass mode. Her laptop holds a VPN profile, a cloud login and an old project's `.env`. Nothing happens. That is the trap: the bad day is rare, so safety feels like friction. Noura (application and AI security) sets a week-zero rule: the agent has your hands. Whatever you can read, delete or push, it can.
 
-Public reports show what rare looks like: one user said Google's Antigravity agent, in "Turbo mode", deleted a drive's contents (November 2025); a founder said a Replit agent deleted a production database during a code freeze (July 2025). Both are unaudited single accounts, so hold the details loosely. The pattern is OWASP's excessive agency (LLM06): too much functionality, permission or autonomy.
+Rare does happen: one user said Google's Antigravity agent, in "Turbo mode", deleted a drive's contents (November 2025); a founder said a Replit agent deleted a production database during a code freeze (July 2025). Both are unaudited single accounts, so hold the details loosely. The pattern is OWASP's excessive agency (LLM06:2025): too much functionality, permission or autonomy.
 
 ## 📐 How it works
 
@@ -438,7 +442,7 @@ First tell me the file and line that cause it. Wait for my OK before editing.
 
 You commit, with a message you checked against `CONTRIBUTING.md` yourself: you are the author of record. Do not run `/init` or add a `CLAUDE.md` here: extra files fail the scope check, and memory files are Module 2.
 
-**What the grader checks.** `doctor` and the repo's tests pass. Hidden checks on the message in English and Arabic, and that the wrong spelling is gone from every Python file under `src/` (a comment counts, and so does a fix applied only when the message is built). The tests neither edited nor added. Only the template file changed, and tiny: it equals the starter with the one word corrected. Exactly one new commit on the checked-out branch (a merge commit does not count), shaped as `CONTRIBUTING.md` says, with type `fix`, the module as scope, an imperative subject of a few words and no ending punctuation. Nothing left uncommitted; no secrets. It cannot tell who made the change, whether you read the diff, or whether your message is good beyond its form.
+**What the grader checks.** `doctor` and the repo's tests pass. Hidden checks on the message in English and Arabic, and that the wrong spelling is gone from every Python file under `src/` (a comment counts, and so does a fix applied only when the message is built). The tests neither edited nor added. Only the template file changed: the starter with the one word corrected. Exactly one new commit on the checked-out branch (a merge commit does not count), shaped as `CONTRIBUTING.md` says (type `fix`, the module as scope). Nothing left uncommitted; no secrets. It cannot tell who made the change, whether you read the diff, or whether your message is good beyond its form.
 
 **Grade.** Grade on the branch that holds your commit: the grader reads whichever branch is checked out, under any name (`main` works too).
 
@@ -576,6 +580,8 @@ A right fix committed as `fixed the typo` fails one line, `Commit messages follo
 
 # 0.3 — The AI-native loop: specify, delegate, verify, integrate, and who stays accountable
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Focus: Mindset, Workflow*
+
+**After this you can** fill in a delegation card for a real ticket and give each task an autonomy level and a named check. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - The loop is **specify, delegate, verify, integrate**, with **context** feeding every step and **safety** wrapping all of it. One lap is one small step, not one project.

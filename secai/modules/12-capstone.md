@@ -9,6 +9,8 @@
 # 12.1 — Capstone: secure Najm Assist from threat model to incident drill
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–11* · *Phase: Plan, Design, Build, Test, Deploy, Operate, Respond, Govern*
 
+**After this you can** threat-model an AI assistant end to end and prove with tests that its card and dispute tools enforce session-bound identity and confirmation, then run an incident drill on it. *Study time: about 125 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - The capstone takes **Najm Assist** through all eight phases as it becomes an agent that looks up fees, freezes cards and opens disputes, reusing an artefact from every earlier module.
 - The output is a **security case file**: linked artefacts arguing, with evidence, that Assist is secure enough, and saying what happens when it is not.
@@ -274,6 +276,8 @@ The main finding is typical: output handling covered links but not phone numbers
 
 # 12.2 — The security career: roles, certifications and portfolio
 *Level: 🔴 Advanced* · *Prerequisites: 12.1* · *Phase: Govern*
+
+**After this you can** build a skills-gap table for a security role you choose, based on five current job adverts, and produce one portfolio piece in which every finding ends with a fix and a test. *Study time: about 125 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - "Security" is many jobs: application, AI and cloud security, detection and response, offensive testing, and governance, risk and compliance (GRC). Pick a target role before you pick a course or a certificate.
@@ -543,6 +547,8 @@ Ali's **12-month development plan**, agreed with Noura:
 
 # 12.3 — Practice exam: 60 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–11* · *Phase: Plan, Design, Build, Test, Deploy, Operate, Respond, Govern*
+
+**After this you can** answer 60 scenario questions in 90 minutes and turn every wrong or guessed answer into an error-log row that names the trap and the section to re-read. *Study time: about 150 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - This is a **60-question practice exam** covering Modules 0–11, grouped by the eight security life cycle phases: Plan, Design, Build, Test, Deploy, Operate, Respond and Govern (7–9 questions each). Every module has about five questions; Module 9 has six. Most questions are short scenarios at Najm Bank or a neutral company.
@@ -829,7 +835,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**B.** In retrieval-augmented generation (RAG), access control happens at retrieval time: each chunk carries the permissions of its source document, and the search returns only what the signed-in user may see. If a document never enters the prompt, the model cannot leak it. D, like Dana's idea, is tempting because it looks like a rule, but it asks the model to enforce access control; a rephrased or injected question gets around it, and the data is already in the context. This is the territory of LLM08 Vector and Embedding Weaknesses and LLM02 Sensitive Information Disclosure. A sorts documents by type, not by who may read them, so every manager still reaches every borrower; C protects against a different threat. *(Design · 9.3)*
+**B.** In retrieval-augmented generation (RAG), access control happens at retrieval time: each chunk carries the permissions of its source document, and the search returns only what the signed-in user may see. If a document never enters the prompt, the model cannot leak it. D, like Dana's idea, is tempting because it looks like a rule, but it asks the model to enforce access control; a rephrased or injected question gets around it, and the data is already in the context. This is the territory of LLM08:2025 Vector and Embedding Weaknesses and LLM02 Sensitive Information Disclosure. A sorts documents by type, not by who may read them, so every manager still reaches every borrower; C protects against a different threat. *(Design · 9.3)*
 
 </details>
 
@@ -1214,7 +1220,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**D.** When attackers can influence the data a model learns from, they can shift what it treats as normal: data poisoning (LLM04 Data and Model Poisoning covers the LLM variant; MITRE ATLAS and NIST AI 100-2 cover machine learning generally). Controls include knowing where labels come from, flagging unusual clusters in new training data, limiting the influence of any one source, and refusing to promote a retrained model that does worse on a trusted, held-out set. A is tempting because the ring's goal is to avoid detection, but the mechanism here is corrupted training labels, which inference-time evasion controls do not touch. *(Operate · 8.3)*
+**D.** When attackers can influence the data a model learns from, they can shift what it treats as normal: data poisoning (LLM04:2025 Data and Model Poisoning covers the LLM variant; MITRE ATLAS and NIST AI 100-2 cover machine learning generally). Controls include knowing where labels come from, flagging unusual clusters in new training data, limiting the influence of any one source, and refusing to promote a retrained model that does worse on a trusted, held-out set. A is tempting because the ring's goal is to avoid detection, but the mechanism here is corrupted training labels, which inference-time evasion controls do not touch. *(Operate · 8.3)*
 
 </details>
 

@@ -9,6 +9,8 @@
 # 12.1 — Capstone: governing Najm's credit copilot end to end
 *Level: 🔴 Advanced* · *Prerequisites: Modules 1–11* · *BoK: I.A–I.C, II.A–II.D, III.A–III.C, IV.A–IV.C*
 
+**After this you can** produce a governance file for a GenAI credit copilot, with a classification memo, a DPIA and FRIA table, vendor clauses and a red-team plan, and present it to a colleague acting as the committee. *Study time: about 130 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - The **credit memo copilot** is a generative AI system that Najm builds on a third-party foundation model, with retrieval over internal credit files, to draft credit memos for relationship managers (RMs) in retail and SME lending, including EU customers served from Frankfurt.
 - Because it helps evaluate the creditworthiness of natural persons and profiles them, Najm should treat it as **high-risk under the EU AI Act (Annex III)**. Najm is both the **provider** (it builds the system and puts it into service under its own name) and the **deployer** (it uses it).
@@ -84,7 +86,7 @@ flowchart TD
 
 **What that means for Najm as deployer.** Use the system according to its instructions; assign human oversight to people with the competence, training and authority to do it; make sure input data is relevant; monitor operation and report risks and serious incidents; keep the automatically generated logs under its control for at least six months (longer if other law requires); inform affected people that a high-risk system is used in decisions about them; carry out a **FRIA** before first use, because credit scoring is one of the uses for which the Act requires one; and be ready to give affected persons an explanation of the role the AI system played in a decision (Art. 86).
 
-**Timing.** Annex III obligations apply from 2 August 2026 under the Act as adopted. The Commission's November 2025 "Digital Omnibus" proposal would postpone some high-risk deadlines; at the time of writing (2026), check the current status. Najm builds to the requirements now: retrofitting is harder.
+**Timing.** Annex III obligations applied from 2 August 2026 under the Act as first adopted. The "Digital Omnibus on AI", proposed by the Commission in November 2025 and adopted as Regulation (EU) 2026/1744 in July 2026, moved them to 2 December 2027; the exam may still test the original date. Najm builds to the requirements now: retrofitting is harder.
 
 **The GPAI layer.** The vendor provides a general-purpose AI model. Under the AI Act, GPAI model providers must keep technical documentation, give downstream providers the information they need to comply, have a copyright policy and publish a summary of training content. If the model is presumed to have systemic risk (above 10^25 FLOPs of training compute, or designated by the Commission), the vendor must also evaluate and adversarially test it, track and report serious incidents, and ensure cybersecurity. The GPAI Code of Practice (July 2025) is one way vendors show compliance. None of this moves Najm's duties onto the vendor: as a *downstream provider*, Najm relies on the vendor's documentation but answers for the system it builds.
 
@@ -220,16 +222,16 @@ These exercises build a portfolio piece: a governance file for a GenAI credit co
 
 </details>
 
-**2. Dana argues the copilot only performs a "preparatory task", so it falls outside high-risk under Art. 6(3). What is the strongest reply?**
+**2. Dana argues the copilot only performs a "preparatory task", so it falls outside high-risk under Art. 6(3) as first adopted in 2024. What is the strongest reply?**
 
 - A. Art. 6(3) applies only to public authorities, so it can never help a private bank such as Najm that lends to consumers
 - B. The copilot profiles natural persons, and an Annex III system that performs profiling is always high-risk
-- C. Art. 6(3) was repealed by the Digital Omnibus, so the derogation no longer exists for any system placed on the market
+- C. Art. 6(3) covers only systems that process no personal data, so a credit copilot can never rely on the derogation
 - D. Preparatory tasks are prohibited practices under Art. 5 of the AI Act, so the copilot would be banned outright
 
 <details><summary>Answer</summary>
 
-**B.** The derogation is not available where the system profiles natural persons. A and D are wrong on the law. C is wrong because a proposal is not a repeal, and the Omnibus concerns timing. (🟡 Going deeper)
+**B.** Under Art. 6(3) as first adopted, the derogation is not available where the system profiles natural persons. A, C and D are wrong on the law: the derogation is not limited to public authorities or to systems without personal data, and preparatory tasks are not prohibited practices. (🟡 Going deeper)
 
 </details>
 
@@ -287,6 +289,8 @@ These exercises build a portfolio piece: a governance file for a GenAI credit co
 
 # 12.2 — Exam strategy and the traps that cost marks
 *Level: 🔴 Advanced* · *Prerequisites: 0.2, Modules 1–11* · *BoK: All domains (I–IV)*
+
+**After this you can** write the role, jurisdiction, life-cycle stage and qualifier of a scenario question in under 20 seconds, and name your top three traps with a rule for each. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - At the time of writing (2026), the AIGP exam has **100 multiple-choice questions** (85 scored, 15 unscored pilot questions you cannot identify) in **2 hours 45 minutes**, scored on a scale of 100–500 with **300 to pass**. Check IAPP's current candidate information before you book.
@@ -366,7 +370,7 @@ Grouped by domain. For each: the trap, and what to answer instead.
 1. **Governance as a legal function.** AI governance is cross-functional. Accountability sits with named business owners and senior management, with legal, privacy, risk, security and data science contributing.
 2. **Accountable vs responsible.** In a RACI, one person is *accountable* (owns the outcome); several may be *responsible* (do the work). An answer that makes a committee collectively accountable for a use case is weaker than one naming an owner.
 3. **Principles as governance.** Ethics principles are the start. Questions reward operationalising them: policies, roles, controls, metrics, training.
-4. **AI literacy as optional.** Under the EU AI Act, providers and deployers must take measures to ensure sufficient AI literacy of their staff and others operating AI for them, from 2 February 2025. It is not limited to high-risk systems.
+4. **AI literacy as optional.** Under the EU AI Act, providers and deployers must take measures to support the AI literacy of their staff (Art. 4, in Chapter I, applying from 2 February 2025; since the 2026 amendment no specific level must be guaranteed). It is not limited to high-risk systems.
 5. **"We bought it, so it's the vendor's problem."** Third-party AI remains the buyer's risk. Due diligence, contracts and monitoring are the buyer's controls.
 6. **The inventory as a one-off.** An AI inventory is living: new systems, changes and retirements all update it. "Build an inventory" is often the right *first* step for an organisation with no programme.
 
@@ -380,7 +384,7 @@ Grouped by domain. For each: the trap, and what to answer instead.
 12. **NIST function order.** Govern, Map, Measure, Manage. Govern is cross-cutting and informs the others. "Identify, Protect, Detect, Respond, Recover" is the Cybersecurity Framework, not the AI RMF. "Plan-Do-Check-Act" is the ISO management-system cycle.
 13. **Provider vs deployer.** Providers: risk management system, data governance, technical documentation, conformity assessment, CE marking, registration, post-market monitoring. Deployers: use per instructions, human oversight, input data relevance, logs, informing people, FRIA where required. A deployer that puts its name on a high-risk system, makes a substantial modification, or changes its intended purpose so that it becomes high-risk is treated as a provider.
 14. **GPAI vs GPAI with systemic risk.** All GPAI model providers have documentation, downstream-information and copyright-policy duties and must publish a training-content summary. Models presumed to have systemic risk (training compute above 10^25 FLOPs, or designated by the Commission) add evaluations, adversarial testing, serious-incident reporting and cybersecurity.
-15. **The timeline.** In force 1 August 2024; prohibitions and AI literacy 2 February 2025; GPAI and penalties 2 August 2025; most rules including Annex III high-risk 2 August 2026; Annex I product-embedded high-risk 2 August 2027. The Digital Omnibus proposal may change some dates; the exam tests the Act as adopted.
+15. **The timeline.** In force 1 August 2024; prohibitions and AI literacy 2 February 2025; GPAI and penalties 2 August 2025; most rules including Annex III high-risk 2 August 2026; Annex I product-embedded high-risk 2 August 2027. Regulation (EU) 2026/1744 (the Digital Omnibus on AI, adopted July 2026) moved the last two to 2 December 2027 and 2 August 2028; the exam may still test the Act as first adopted.
 16. **Fine tiers.** AI Act: up to €35m or 7% (prohibited practices), €15m or 3% (most other obligations), €7.5m or 1% (incorrect information), whichever is higher (for SMEs, whichever is lower). Do not mix these up with GDPR's €20m or 4% and €10m or 2%.
 17. **Credit scoring vs fraud detection.** Creditworthiness evaluation of natural persons is Annex III high-risk. AI used to detect financial fraud is expressly excluded from that entry.
 18. **Transparency obligations are not high-risk.** Chatbots, deepfakes and synthetic content trigger Art. 50 transparency duties. That is a separate tier from high-risk.
@@ -424,7 +428,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 | Exam | 100 questions (85 scored, 15 pilot); 2 h 45 min; scaled 100–500; pass 300 (at the time of writing, 2026) |
 | BoK v2.1 domains | I Foundations (16–20 questions); II Laws, standards, frameworks (19–23); III Development (21–25); IV Deployment and use (21–25) |
 | AI Act | Regulation (EU) 2024/1689; in force 1 Aug 2024 |
-| AI Act dates | 2 Feb 2025 prohibitions and AI literacy · 2 Aug 2025 GPAI, governance, penalties · 2 Aug 2026 most rules incl. Annex III · 2 Aug 2027 Annex I products (check Digital Omnibus status) |
+| AI Act dates | 2 Feb 2025 prohibitions and AI literacy · 2 Aug 2025 GPAI, governance, penalties · 2 Aug 2026 most rules incl. Annex III · 2 Aug 2027 Annex I products (original dates; Reg. (EU) 2026/1744 moved Annex III to 2 Dec 2027 and Annex I to 2 Aug 2028) |
 | AI Act fines | €35m/7% · €15m/3% · €7.5m/1% |
 | GPAI systemic risk | Presumed above 10^25 FLOPs training compute; Code of Practice July 2025 |
 | AI Act roles | Provider, deployer, importer, distributor, authorised representative, product manufacturer |
@@ -548,10 +552,12 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 # 12.3 — Full mock exam: 100 questions
 *Level: 🔴 Advanced* · *Prerequisites: 12.2* · *BoK: All domains (I–IV)*
 
-> **Under revision (November 2026).** In many questions in this practice exam the correct option can be spotted by its length or wording, so a high score here does not show readiness for any real exam. Use it to practise reasoning: answer each question in your own words before you read the options, then compare.
+**After this you can** sit a timed 100-question practice exam, then use each wrong answer's competency ID to list the lessons you will revisit. *Study time: about 210 minutes (estimate).*
+
+> **Practice only.** The answer options were rewritten in November 2026 so the correct answer can no longer be spotted by its length. But no assessment expert has reviewed these items, and the mix of domains is this course's own, not the official exam blueprint. A high score here is practice, not evidence that you are ready for the real exam. Answer each question in your own words before you read the options, then compare.
 
 ## ⚡ In 60 seconds
-- This is a full-length practice exam: **100 original questions** across all four domains, in roughly blueprint proportion (Domain I 18, Domain II 22, Domain III 30, Domain IV 30). About a third are scenario-based, several in sets that share one scenario. None is a real exam item.
+- This is a full-length practice exam: **100 original questions** across all four domains, in a mix chosen by this course (Domain I 18, Domain II 22, Domain III 30, Domain IV 30). About a third are scenario-based, several in sets that share one scenario. None is a real exam item.
 - **Time yourself: 2 hours 45 minutes**, one sitting, no notes. Use the pacing plan from 12.2: one full pass, then flagged questions, then a final check.
 - Write your answers down before opening any answer block. **Your score is the number you got right.**
 - **Your score here does not predict your result on the real exam.** Use it to find weak areas, not to decide whether to book. The real exam uses a scaled score (100–500, pass 300) that IAPP does not publish as a percentage.
@@ -655,13 +661,13 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 **8. Which statement about the EU AI Act's AI-literacy duty is correct?**
 
 - A. It applies only to providers of high-risk AI systems, and only once their conformity assessment is complete and signed off
-- B. It requires providers and deployers to ensure sufficient AI literacy of staff; it has applied since 2 February 2025
+- B. It requires providers and deployers to take measures supporting staff AI literacy; it has applied since 2 February 2025
 - C. It requires every employee to pass an accredited certification exam before they may use any AI system at work
 - D. It applies only from 2 August 2027, together with the rules for high-risk systems in regulated products
 
 <details><summary>Answer</summary>
 
-**B.** The literacy duty covers providers and deployers of AI systems generally, not only high-risk ones, and applied with the prohibitions from 2 February 2025. The Act does not require certification exams. *Competency: I.B*
+**B.** The literacy duty covers providers and deployers of AI systems generally, not only high-risk ones, and applies with the rest of Chapter I from 2 February 2025; Regulation (EU) 2026/1744 reworded it without setting a new date. The Act does not require certification exams. *Competency: I.B*
 
 </details>
 
@@ -981,7 +987,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**33. Under the EU AI Act as adopted, from when do most obligations for Annex III high-risk AI systems apply?**
+**33. Under the EU AI Act as first adopted in 2024, from when do most obligations for Annex III high-risk AI systems apply?**
 
 - A. 2 February 2025
 - B. 2 August 2026
@@ -990,7 +996,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 <details><summary>Answer</summary>
 
-**B.** 1 August 2024 is entry into force, 2 February 2025 the prohibitions, 2 August 2025 the GPAI rules. The Digital Omnibus proposal of November 2025 would postpone some high-risk deadlines, so check the current status; the exam tests the Act as adopted. *Competency: II.C*
+**B.** 1 August 2024 is entry into force, 2 February 2025 the prohibitions, 2 August 2025 the GPAI rules. The Digital Omnibus on AI, proposed in November 2025 and adopted as Regulation (EU) 2026/1744 in July 2026, moved this date to 2 December 2027; the exam may still test the 2024 text. *Competency: II.C*
 
 </details>
 

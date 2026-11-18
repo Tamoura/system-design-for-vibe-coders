@@ -9,6 +9,8 @@
 # 3.1 — The AI life cycle and the policy stack
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 2.2* · *BoK: I.C*
 
+**After this you can** write a complete inventory record for an AI system, with a reasoned risk tier and AI Act role, and draft an exception procedure that blocks permanent silent exceptions. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - The **AI life cycle** runs from planning and design, through data and model building, verification and validation, deployment, operation and monitoring, to retirement. Governance applies at every stage, not only at launch.
 - Standard life-cycle references: the **OECD** and **NIST AI RMF** life-cycle stages, **ISO/IEC 22989** (concepts and stages) and **ISO/IEC 5338** (life-cycle processes).
@@ -253,6 +255,8 @@ Draft Najm's AI exception procedure in under 400 words: who can request, what th
 # 3.2 — Data governance and intellectual-property policies for AI
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1* · *BoK: I.C*
 
+**After this you can** draft a data card for training data, and write a decision memo on unlicensed retrieval content that separates contract risk from copyright risk. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - AI systems inherit the strengths and flaws of their data. Data governance for AI covers **provenance** (where data came from), **lineage** (how it moved and changed), **quality and representativeness**, **retention**, and **lawful use** (legal basis, purpose, rights).
 - For high-risk systems, **EU AI Act Art. 10** requires data governance practices for training, validation and testing data, including examination for possible biases. **GDPR** principles (purpose limitation, minimisation, storage limitation) still apply to personal data used in AI.
@@ -464,6 +468,8 @@ The research reports already in the credit copilot's retrieval library may not b
 
 # 3.3 — Third-party and supply-chain risk
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 3.2* · *BoK: I.C*
+
+**After this you can** write ten contract clauses for a foundation-model provider, and decide and justify whether rebranding and retraining a vendor tool makes the bank a provider under the AI Act. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Most organisations buy far more AI than they build: vendor AI products, AI features embedded in existing software, foundation-model APIs, open-source or open-weight models, data and labelling services.

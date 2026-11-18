@@ -9,6 +9,8 @@
 # 2.1 — One job, one customer: scope and the kill list
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2* · *Step: Scope*
 
+**After this you can** write a one-sentence scope statement for your product and a kill list of at least ten features you will not build yet, each with a reason. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - After this lesson you can write a one-sentence scope statement for your product and a kill list of at least ten features you have decided not to build yet, each with a reason, in about an hour.
 - A **job** is the specific thing a customer is trying to get done, in their words ("stop clients forgetting their appointments"), not a feature list. A first version does one job for one kind of customer.
@@ -223,6 +225,8 @@ She asked the agent to remove the loyalty and referral features and to list ever
 # 2.2 — Build, buy or borrow
 *Level: 🟢 Beginner* · *Prerequisites: 2.1* · *Step: Scope*
 
+**After this you can** mark every line of your core and needed-to-sell lists as build, buy or borrow, with a written reason and a cost-per-customer estimate a mentor could check. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - After this lesson you can take the "core" and "needed to sell" lists from lesson 2.1 and, for each line, choose build, buy or borrow, with a written reason and a cost-per-customer estimate you could show a mentor.
 - **Build** means you (or your agent) write it. **Buy** means you pay a vendor for a ready-made service. **Borrow** means you reuse something free or already available: an open-source component, a template, a no-code tool, a spreadsheet, or a manual step you do by hand.
@@ -426,6 +430,8 @@ Mona read the table and asked one question: "Which row would hurt most if the ve
 
 # 2.3 — Directing an agent to a first version, and checking it
 *Level: 🟢 Beginner* · *Prerequisites: 2.1, 2.2* · *Step: Scope*
+
+**After this you can** write a one-page agent brief with scope, non-goals and acceptance checks, run the 30-minute check on at least 20 realistic records, and record what passed, what failed and what you did not check. *Study time: about 115 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can write a one-page brief for an AI coding agent (scope, non-goals, acceptance checks), run a 30-minute check with realistic data, and write a short "what I checked" note that a peer could repeat.

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="data-source" content="08d0906d5cb2105f">
+<meta name="data-source" content="39d57c86df63df84">
 <meta name="description" content="Data Engineering &amp; Analytics: Zero to Hero — a free, bilingual course: SQL and modelling, pipelines and streaming, dbt and data quality, trusted metrics and experiments, ML and LLM data in production, and data governance, with a quiz in every lesson and a 60-question practice exam.">
 <title>Data Engineering &amp; Analytics: Zero to Hero</title>
 <style>
@@ -818,6 +818,8 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p class="crumb"><a href="#/map">Module 0 — Orientation</a></p>
 <h1><span class="num">0.1</span> What data engineering, analytics and data science are — and how they fit together</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Stage <bdi dir="ltr">Analyse, Serve</bdi></span> · <span class="prereq">Before this: None</span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a data request intake card for a published metric (decision, definition, source, owner, freshness and three quality checks) and point to two places where the number could quietly mean different things. <em>Study time: about 105 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li><strong>Data engineering</strong> builds and runs the systems that move, store and prepare data reliably. <strong>Analytics engineering</strong> turns raw data into clean, tested, documented tables and agreed metrics. <strong>Data analysis</strong> answers business questions with those tables. <strong>Data science</strong> builds models that predict or explain. <strong>ML engineering</strong> keeps those models running in production.</li>
@@ -1168,6 +1170,8 @@ WHERE t.initiated_by = &#39;customer&#39;
 <p class="crumb"><a href="#/map">Module 0 — Orientation</a></p>
 <h1><span class="num">0.2</span> The modern data stack end to end: from a tap in the app to a number on a dashboard</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Stage <bdi dir="ltr">Ingest, Serve</bdi></span> · <span class="prereq">Before this: <a href="#/0.1">0.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> draw the path of one app action from the tap to a dashboard number, label each hop with its life-cycle stage, and name one thing at each hop that could change the number. <em>Study time: about 120 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>The <strong>modern data stack</strong> is the usual chain of components: sources → ingestion → storage → transformation → serving (dashboards, models, apps), with orchestration, quality checks and governance running alongside.</li>
@@ -1522,6 +1526,8 @@ ORDER BY 1;
 <p class="crumb"><a href="#/map">Module 0 — Orientation</a></p>
 <h1><span class="num">0.3</span> Meet Najm Bank's data platform team, and how to use this course</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Stage <bdi dir="ltr">Operate, Govern</bdi></span> · <span class="prereq">Before this: <a href="#/0.1">0.1</a>, <a href="#/0.2">0.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> set up a lab repository whose fresh clone regenerates the same synthetic Najm data, and write three stakeholder queries against it, each under a one-line business question. <em>Study time: about 105 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li><strong>Najm Bank is fictional.</strong> It is a mid-sized Gulf bank (retail, SME and corporate lending) with customers in Qatar, the UAE and the EU, used across this library of courses. You join its <strong>Data Platform &amp; Analytics</strong> team.</li>
@@ -2040,6 +2046,8 @@ ORDER BY c.segment;
 <p class="crumb"><a href="#/map">Module 1 — SQL and data modelling</a></p>
 <h1><span class="num">1.1</span> SQL that answers business questions: joins, aggregation, CTEs and window functions</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Stage <bdi dir="ltr">Model, Analyse</bdi></span> · <span class="prereq">Before this: <a href="#/0.1">0.1</a>, <a href="#/0.2">0.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a CTE-based SQL query with window functions that answers a business question at the right grain, and explain why the naive join-everything count gives a larger number. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>SQL is how you ask a database a question. Most business questions need four moves: <strong>join</strong> the tables, <strong>filter</strong> the rows, <strong>aggregate</strong> to the level the question asks about, then <strong>rank or compare</strong> with window functions.</li>
@@ -2449,6 +2457,8 @@ Checks       : grain unique OK; debit total reconciles to GL report within 0.1%,
 <p class="crumb"><a href="#/map">Module 1 — SQL and data modelling</a></p>
 <h1><span class="num">1.2</span> Data modelling: normalisation, star schemas, grain and slowly changing dimensions</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Stage <bdi dir="ltr">Model</bdi></span> · <span class="prereq">Before this: <a href="#/1.1">1.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> design a star schema with a written grain statement, and build a Type 2 customer dimension that keeps day-1 exposure by branch unchanged after later loads. <em>Study time: about 120 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>A <strong>data model</strong> decides which tables exist, what one row in each means, and how they connect. It is the most expensive thing to change later, so it deserves the most thought up front.</li>
@@ -2905,6 +2915,8 @@ GROUP BY d.branch_code;
 <p class="crumb"><a href="#/map">Module 1 — SQL and data modelling</a></p>
 <h1><span class="num">1.3</span> Where data lives: OLTP vs OLAP, warehouses, lakes, lakehouses and open table formats</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Stage <bdi dir="ltr">Store</bdi></span> · <span class="prereq">Before this: <a href="#/1.1">1.1</a>, <a href="#/1.2">1.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> time the same query on CSV and Parquet and on PostgreSQL and DuckDB, and justify from your timings which storage format and engine suit an OLTP or an OLAP workload. <em>Study time: about 120 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li><strong>OLTP</strong> systems (online transaction processing) run the business: many small reads and writes, each touching a few rows, which must be fast and correct. <strong>OLAP</strong> systems (online analytical processing) analyse it: fewer, larger queries that scan millions of rows but only a few columns.</li>
@@ -3258,6 +3270,8 @@ GROUP BY channel;
 <p class="crumb"><a href="#/map">Module 2 — Ingestion and pipelines</a></p>
 <h1><span class="num">2.1</span> Getting data in: ETL vs ELT, connectors, incremental loads and change data capture</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Ingest</bdi></span> · <span class="prereq">Before this: <a href="#/1.1">1.1</a>, <a href="#/1.3">1.3</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> run a high-water-mark incremental load and show with a query exactly which inserts, updates and deletes it caught or missed, then capture the same changes with CDC. <em>Study time: about 120 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li><strong>Ingestion</strong> copies data from source systems (databases, SaaS tools, files, APIs, event streams) into your analytical platform. Most modern platforms load the raw data first and transform it inside the warehouse: <strong>ELT</strong> rather than <strong>ETL</strong>.</li>
@@ -3589,6 +3603,8 @@ WHERE rn = 1
 <p class="crumb"><a href="#/map">Module 2 — Ingestion and pipelines</a></p>
 <h1><span class="num">2.2</span> Orchestration: DAGs, idempotency, retries and backfills</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Ingest, Operate</bdi></span> · <span class="prereq">Before this: <a href="#/2.1">2.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a daily load that can be rerun or backfilled for any date without duplicating rows, and prove it with the day&#39;s totals before and after three reruns. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>An <strong>orchestrator</strong> runs your pipeline steps in the right order, on a schedule or when data arrives, retries what fails, and records what ran. <strong>Apache Airflow</strong>, <strong>Dagster</strong> and <strong>Prefect</strong> are the common open-source choices.</li>
@@ -3954,6 +3970,8 @@ Approved by:      Faisal
 <p class="crumb"><a href="#/map">Module 2 — Ingestion and pipelines</a></p>
 <h1><span class="num">2.3</span> Streaming: events, Kafka, windows and the exactly-once myth</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Ingest, Transform</bdi></span> · <span class="prereq">Before this: <a href="#/2.1">2.1</a>, <a href="#/2.2">2.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build a Kafka consumer that lands every event exactly once in its table despite crashes, using manual commits after writing and an idempotent sink. <em>Study time: about 120 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li><strong>Streaming</strong> processes data continuously as <strong>events</strong> (small immutable facts such as &quot;card 4417 was authorised for 120 QAR at 14:02:11&quot;) instead of in nightly batches. Use it when a decision loses value within seconds or minutes, like scoring a card payment for fraud.</li>
@@ -4345,6 +4363,8 @@ GROUP BY card_id, window_start, window_end;
 <p class="crumb"><a href="#/map">Module 3 — Transformation and quality</a></p>
 <h1><span class="num">3.1</span> Transformations as code: dbt, layers, tests and version control</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Transform</bdi></span> · <span class="prereq">Before this: <a href="#/1.1">1.1</a>, <a href="#/1.2">1.2</a>, <a href="#/2.1">2.1</a>, <a href="#/2.2">2.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build a dbt project with staging, intermediate and mart models whose tests fail on a planted duplicate and pass again once you fix the deduplication. <em>Study time: about 125 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>A <strong>transformation</strong> turns loaded raw data into cleaned, joined, business-ready tables. In ELT (<a class="xref" href="#/2.1">2.1</a>) it runs inside the warehouse, as SQL.</li>
@@ -4806,6 +4826,8 @@ from {{ source(&#39;core_banking&#39;, &#39;customers&#39;) }}
 <p class="crumb"><a href="#/map">Module 3 — Transformation and quality</a></p>
 <h1><span class="num">3.2</span> Data quality: tests, contracts and observability</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Transform, Operate</bdi></span> · <span class="prereq">Before this: <a href="#/2.2">2.2</a>, <a href="#/3.1">3.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a data contract and a validation script that rejects each bad file with a message naming the breach, and set a severity and owner for one check per quality dimension. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li><strong>Data quality</strong> means data is fit for the decision it supports: complete, valid, unique, consistent, accurate and on time.</li>
@@ -5250,6 +5272,8 @@ where d = current_date - 1
 <p class="crumb"><a href="#/map">Module 3 — Transformation and quality</a></p>
 <h1><span class="num">3.3</span> Performance and cost: partitioning, clustering, incremental models and query plans</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Store, Operate</bdi></span> · <span class="prereq">Before this: <a href="#/1.3">1.3</a>, <a href="#/3.1">3.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> show from query plans that a partitioned table or a half-open date filter reads less data, and build an incremental model whose lookback window keeps it equal to a full refresh. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>In analytical systems, <strong>cost and speed are mostly about how much data a query reads</strong>. Read less and you pay less and wait less.</li>
@@ -5622,6 +5646,8 @@ group by account_id;
 <p class="crumb"><a href="#/map">Module 4 — Analytics people trust</a></p>
 <h1><span class="num">4.1</span> Defining metrics: one definition, a semantic layer and a metrics catalogue</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Model, Serve</bdi></span> · <span class="prereq">Before this: <a href="#/1.2">1.2</a>, <a href="#/3.1">3.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a metric card that resolves three conflicting active-customer definitions, and explain each difference between their numbers row by row. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>A <strong>metric</strong> is a number the business tracks over time, such as monthly active customers or card spend. A metric is only useful if everyone computes it the same way.</li>
@@ -6026,6 +6052,8 @@ metrics:
 <p class="crumb"><a href="#/map">Module 4 — Analytics people trust</a></p>
 <h1><span class="num">4.2</span> Dashboards and data storytelling that lead to decisions</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Serve, Analyse</bdi></span> · <span class="prereq">Before this: <a href="#/4.1">4.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a dashboard spec that names its decision, cadence and questions, and build a layout from which a colleague can answer those questions in under two minutes. <em>Study time: about 105 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>A dashboard exists to support a <strong>decision</strong> or an <strong>action</strong>. Start from &quot;who decides what, how often, using which numbers?&quot; and design backwards. If you cannot name the decision, you are building a display, not a dashboard.</li>
@@ -6378,6 +6406,8 @@ metrics:
 <p class="crumb"><a href="#/map">Module 4 — Analytics people trust</a></p>
 <h1><span class="num">4.3</span> Experiments and statistics for analysts: A/B tests and the traps that fool smart people</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Analyse</bdi></span> · <span class="prereq">Before this: <a href="#/1.1">1.1</a>, <a href="#/4.1">4.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> calculate an A/B test&#39;s sample size, explain to a product manager why it cannot finish early, and show with a simulation how peeking raises the false-positive rate. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>An <strong>A/B test</strong> (a randomised controlled experiment) splits users at random into a control group and one or more treatment groups, so that the only systematic difference between the groups is the change being tested. It is the most reliable way to learn whether a change <em>caused</em> an effect.</li>
@@ -6677,6 +6707,8 @@ print(round(stat, 1), p)              # 14.4, p about 0.00015
 <p class="crumb"><a href="#/map">Module 5 — Data science and ML in production</a></p>
 <h1><span class="num">5.1</span> From notebook to pipeline: features, training, reproducibility and feature stores</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Transform, Serve</bdi></span> · <span class="prereq">Before this: <a href="#/1.2">1.2</a>, <a href="#/2.2">2.2</a>, <a href="#/3.1">3.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build a point-in-time feature that avoids label leakage, and a training script whose two runs from the same commit and data log identical metrics. <em>Study time: about 120 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>A model learns from <strong>training examples</strong>: rows pairing <strong>features</strong> (inputs known at prediction time) with a <strong>label</strong> (the outcome to predict). Building those rows is data engineering.</li>
@@ -7002,6 +7034,8 @@ def train(train_df, valid_df, features, cfg, snapshot_id, git_sha):
 <p class="crumb"><a href="#/map">Module 5 — Data science and ML in production</a></p>
 <h1><span class="num">5.2</span> Evaluating models and monitoring drift (MLOps basics)</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Operate, Analyse</bdi></span> · <span class="prereq">Before this: <a href="#/4.3">4.3</a>, <a href="#/5.1">5.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> pick and justify a fraud-model threshold from precision, recall and review capacity, and build a PSI report that flags a shifted feature and a broken one, and say which is real drift and which is an upstream data break. <em>Study time: about 120 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>Judge a model by the decision it drives. For rare events such as fraud, <strong>accuracy</strong> misleads; use <strong>precision</strong> (how many alerts are real), <strong>recall</strong> (how much fraud is caught) and the <strong>precision-recall curve</strong>.</li>
@@ -7341,6 +7375,8 @@ def psi(baseline, current, bins=10, eps=1e-6):
 <p class="crumb"><a href="#/map">Module 5 — Data science and ML in production</a></p>
 <h1><span class="num">5.3</span> Data for LLM applications: documents, chunking, embeddings, vector search and evaluation</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Store, Serve</bdi></span> · <span class="prereq">Before this: <a href="#/1.3">1.3</a>, <a href="#/3.2">3.2</a>, <a href="#/5.2">5.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build hybrid vector and keyword retrieval over chunked documents, measure it with recall@5 and MRR on a golden question set, and justify which configuration you would ship. <em>Study time: about 125 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li><strong>Retrieval-augmented generation (RAG)</strong> finds relevant passages in your documents, then has an LLM answer from them. The retrieval half is a data pipeline.</li>
@@ -7693,6 +7729,8 @@ def mrr(results, golden):
 <p class="crumb"><a href="#/map">Module 6 — Governance, privacy and security</a></p>
 <h1><span class="num">6.1</span> Data governance that works: ownership, catalogue, lineage and data contracts</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Stage <bdi dir="ltr">Govern</bdi></span> · <span class="prereq">Before this: <a href="#/1.2">1.2</a>, <a href="#/3.1">3.1</a>, <a href="#/3.2">3.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write an ownership register a colleague can use to find who answers for any dataset, and add a dbt contract that fails the build when a column type changes. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li><strong>Data governance</strong> is the set of decision rights and accountabilities over data: who decides what a dataset means, who may change it, who may use it and who fixes it when it breaks.</li>
@@ -8085,6 +8123,8 @@ ORDER BY depth, node;
 <p class="crumb"><a href="#/map">Module 6 — Governance, privacy and security</a></p>
 <h1><span class="num">6.2</span> Personal data: classification, masking, minimisation, retention and the law</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Stage <bdi dir="ltr">Govern, Store</bdi></span> · <span class="prereq">Before this: <a href="#/1.3">1.3</a>, <a href="#/6.1">6.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> classify every column of a customer table, build a pseudonymised analyst view with a keyed hash, and show why a plain MD5 hash of an ID can be reversed. <em>Study time: about 125 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li><strong>Personal data</strong> is any information about an identifiable person: not just names and IDs, but also account numbers, device IDs or a rare mix of birth date, nationality and branch.</li>
@@ -8523,6 +8563,8 @@ FROM marts.customer_360;
 <p class="crumb"><a href="#/map">Module 6 — Governance, privacy and security</a></p>
 <h1><span class="num">6.3</span> Securing the data platform: access control, secrets, audit and sharing safely</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Stage <bdi dir="ltr">Govern, Operate</bdi></span> · <span class="prereq">Before this: <a href="#/6.1">6.1</a>, <a href="#/6.2">6.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> set up least-privilege PostgreSQL roles and row-level security, prove with test queries that each user sees only their rows, and explain how FORCE and removing superuser close the two bypasses. <em>Study time: about 125 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>A data platform concentrates the bank&#39;s most valuable data in one place, so it needs <strong>least privilege</strong>: every person and every pipeline gets the minimum access its purpose needs, and nothing more.</li>
@@ -8872,6 +8914,8 @@ GRANT SELECT ON core.customers TO auditor;
 <p class="crumb"><a href="#/map">Module 7 — Hero: capstone and practice exam</a></p>
 <h1><span class="num">7.1</span> Capstone: build Najm's credit-risk data mart end to end</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Stage <bdi dir="ltr">Model, Operate</bdi></span> · <span class="prereq">Before this: Modules 0–6</span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build a tested, reconciled credit-risk mart and document it well enough that a peer can trace one NPL figure back to its source rows. <em>Study time: about 125 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>The capstone builds the <strong>credit-risk mart</strong>: a daily, tested, reconciled record of every loan&#39;s balance and days past due, for dashboards, regulators and models.</li>
@@ -9339,6 +9383,8 @@ where m.mart_total is null
 <p class="crumb"><a href="#/map">Module 7 — Hero: capstone and practice exam</a></p>
 <h1><span class="num">7.2</span> The data career: roles, interviews, portfolio and growth</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Stage <bdi dir="ltr">Govern</bdi></span> · <span class="prereq">Before this: <a href="#/0.1">0.1</a>, <a href="#/7.1">7.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> map a target data role&#39;s requirements against your own evidence on one page, and publish a portfolio project a friend can clone and run from its README. <em>Study time: about 175 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>&quot;Data&quot; is several jobs: <strong>data engineer</strong>, <strong>analytics engineer</strong>, <strong>data analyst</strong>, <strong>data scientist</strong> and <strong>ML engineer</strong>, plus platform and governance roles. Titles vary by employer, so read the job description, not the title.</li>
@@ -9759,7 +9805,8 @@ where rn = 1;
 <p class="crumb"><a href="#/map">Module 7 — Hero: capstone and practice exam</a></p>
 <h1><span class="num">7.3</span> Practice exam: 60 scenario questions</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Stage <bdi dir="ltr">Analyse</bdi></span> · <span class="prereq">Before this: <a href="#/7.1">7.1</a>, <a href="#/7.2">7.2</a></span></p>
-<section class="sec sec-lead"><blockquote>
+<section class="sec sec-lead"><p><strong>After this you can</strong> sit a timed 60-question practice exam with a confidence mark on every answer, and turn the result into a review sheet that names your weakest stage and the next action for it. <em>Study time: about 120 minutes (estimate).</em></p>
+<blockquote>
 <p><strong>Under revision (November 2026).</strong> In many questions in this practice exam the correct option can be spotted by its length or wording, so a high score here does not show readiness for any real exam. Use it to practise reasoning: answer each question in your own words before you read the options, then compare.</p>
 </blockquote>
 </section>

@@ -9,6 +9,8 @@ you didn't write.*
 
 # 8.1 — The 600-File Near-Miss
 
+**After this you can** install a pre-commit guard that blocks a 600-file deletion you stage on purpose while letting a normal small commit through, and write the CLAUDE.md rules that ban `git add .` and check the base branch. *Study time: about 55 minutes (estimate).*
+
 ## 🔥 The War Story
 
 One ordinary afternoon, an agent finished a small feature and made a commit. The
@@ -184,6 +186,8 @@ No code reading required — accept the lesson only when:
 ---
 
 # 8.2 — Tests as the Spec the Agent Can't Ignore
+
+**After this you can** move a mocked test suite onto a real database, show a once-green test going red on a constraint the mock hid, and make CI block a pull request while a test is red. *Study time: about 70 minutes (estimate).*
 
 ## 🔥 The War Story
 
@@ -376,6 +380,8 @@ Finish: *"Commit with the message `08-2-test-pyramid`."*
 
 # 8.3 — CI Preflight and the Boy Who Cried Wolf
 
+**After this you can** add a fast preflight that runs on every push, show each check going red on a planted problem and green when fixed, and fix or delete any check that always fails or can never fail. *Study time: about 55 minutes (estimate).*
+
 ## 🔥 The War Story
 
 Every push to the project ran a **preflight check** — a quick script in
@@ -539,6 +545,8 @@ Finish: *"Commit with the message `08-3-honest-preflight`."*
 ---
 
 # 8.4 — The Software You Didn't Write: Dependencies and Supply Chain
+
+**After this you can** write a dependency ledger that justifies each direct dependency, remove one you don't need, and show an audit gate going red on a planted known-bad version. *Study time: about 55 minutes (estimate).*
 
 ## 🔥 The War Story
 
@@ -717,7 +725,7 @@ Finish: *"Commit with the message `08-4-supply-chain-gate`."*
 ## 📚 References & further wandering
 
 - **The left-pad incident** (Mar 2016) — Quartz's "How one programmer broke the internet…" and npm's response post; the eleven lines themselves are worth a look.
-- **OWASP Top 10: A06 Vulnerable and Outdated Components** (owasp.org) — the supply-chain risk in the industry-standard checklist (revisited in 5.6).
+- **OWASP Top 10: A03 Software Supply Chain Failures (2025)** (owasp.org) — the supply-chain risk in the industry-standard checklist; it extends the 2021 edition's A06 Vulnerable and Outdated Components (revisited in 5.6).
 - **npm audit** / **GitHub Dependabot** docs — the free audit tools this lesson wires into CI.
 - **SLSA framework** (slsa.dev) — the current model for build/supply-chain integrity, including why you pin by digest not tag.
 - Uber 2016 (5.7) and the **personal-Mac CI** incident (our bank) — what happens when untrusted code meets standing credentials.

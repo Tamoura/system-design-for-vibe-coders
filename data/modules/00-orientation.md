@@ -9,6 +9,8 @@
 # 0.1 — What data engineering, analytics and data science are — and how they fit together
 *Level: 🟢 Beginner* · *Prerequisites: None* · *Stage: Analyse, Serve*
 
+**After this you can** write a data request intake card for a published metric (decision, definition, source, owner, freshness and three quality checks) and point to two places where the number could quietly mean different things. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Data engineering** builds and runs the systems that move, store and prepare data reliably. **Analytics engineering** turns raw data into clean, tested, documented tables and agreed metrics. **Data analysis** answers business questions with those tables. **Data science** builds models that predict or explain. **ML engineering** keeps those models running in production.
 - They are not separate worlds. They are stages of one chain, and a business question usually needs all of them.
@@ -244,6 +246,8 @@ The card is short on purpose. Its job is to force the two conversations that pre
 
 # 0.2 — The modern data stack end to end: from a tap in the app to a number on a dashboard
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Stage: Ingest, Serve*
+
+**After this you can** draw the path of one app action from the tap to a dashboard number, label each hop with its life-cycle stage, and name one thing at each hop that could change the number. *Study time: about 120 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - The **modern data stack** is the usual chain of components: sources → ingestion → storage → transformation → serving (dashboards, models, apps), with orchestration, quality checks and governance running alongside.
@@ -494,6 +498,8 @@ Huda writes the team's first **data flow sheet** for one dashboard number. Faisa
 
 # 0.3 — Meet Najm Bank's data platform team, and how to use this course
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Stage: Operate, Govern*
+
+**After this you can** set up a lab repository whose fresh clone regenerates the same synthetic Najm data, and write three stakeholder queries against it, each under a one-line business question. *Study time: about 105 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Najm Bank is fictional.** It is a mid-sized Gulf bank (retail, SME and corporate lending) with customers in Qatar, the UAE and the EU, used across this library of courses. You join its **Data Platform & Analytics** team.

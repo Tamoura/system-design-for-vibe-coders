@@ -9,6 +9,8 @@
 # 3.1 — Schemas and tools: how the model "calls" a function (you do), validation and retries
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 2.1* · *Layer: Applications*
 
+**After this you can** write a Pydantic contract for a tool, generate its schema, and show in a table which layer, schema, validator or nothing, catches each of ten valid and invalid inputs. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A **tool** is a name, a description and a JSON Schema: all the model knows. It never runs it: it replies with a `tool_use` block (`stop_reason == "tool_use"`), and **your code** validates, runs and answers in the next user message.
 - **Every `tool_use` id needs a `tool_result`**, all in one user message. Report failures with `is_error: true` and a message that helps recovery.
@@ -289,6 +291,8 @@ Fahad's review questions: (1) Can a newcomer tell when to call it from the descr
 
 # 3.2 — Lab: three tools, every call traced, errors handled
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 3.1* · *Layer: Applications, Agents*
+
+**After this you can** build a three-tool agent loop that turns every error into an `is_error` tool result, and answer from its JSONL trace alone how many model calls ran, which failed and where the cap fired. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Three tools (calculator, weather, ticket lookup), one generic loop with a **step cap**, and a **JSONL trace** (one JSON object per line) of every model call, tool call and result.

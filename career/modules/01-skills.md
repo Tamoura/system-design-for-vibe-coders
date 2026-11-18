@@ -9,6 +9,8 @@
 # 1.1 — The junior baseline: Git, reading code, debugging, testing and writing it down
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Step: Learn, Build*
 
+**After this you can** make small Git commits a classmate can follow, find a planted bug with `git bisect`, and fix it in a pull request whose regression test fails before the fix and passes after it. *Study time: about 125 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Whatever the role (software, AI, data, platform or security), employers expect five everyday skills from a junior: **Git**, **reading code**, **debugging**, **testing** and **writing it down**.
 - None of them is advanced. Together they show that you can work safely in someone else's codebase, and that is what a hiring manager is really asking about.
@@ -262,6 +264,8 @@ Khalid's review questions for each row: "Could a stranger verify this in two min
 
 # 1.2 — Building with AI coding agents without being carried by them
 *Level: 🟢 Beginner* · *Prerequisites: 1.1* · *Step: Learn, Build*
+
+**After this you can** build a small feature test-first with an AI coding agent, review its diff with a checklist, and record in the pull request which changes you rejected or edited and why. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Many employers expect developers to use AI coding tools well. They check whether **your judgement** is visible: you specify, read, verify and can explain.
@@ -522,6 +526,8 @@ Tariq's comment: "I can see where the agent helped, where you overruled it, and 
 
 # 1.3 — Production thinking: the gap between "it runs on my laptop" and "it runs for users"
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2* · *Step: Learn, Build*
+
+**After this you can** answer the ten production questions for one of your projects and deploy it with config from the environment, a `/health` endpoint, an uptime check and an error tracker. *Study time: about 125 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Production** is where real users and data are. Working on your laptop is one test; production asks more: two users at once, a slow database, hostile input, a restart, a bad release.

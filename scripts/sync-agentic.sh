@@ -12,41 +12,35 @@
 #   2. scripts/agentic-nav.mjs      adds the site navigation
 #
 # Usage:
-#   1. In the AI-agents repo:  cd <framework folder> && npm run docs:html
-#   2. Here:  AGENTIC_DOCS=/path/to/AI-agents/<framework folder>/docs ./scripts/sync-agentic.sh
-#      (AGENTIC_DOCS defaults to a sibling checkout: ../AI-agents/qdb-agent-framework/docs)
+#   1. In the source repository, build the agentic pages (npm run docs:html in its framework folder).
+#   2. Here:  AGENTIC_DOCS=/path/to/the/built/docs ./scripts/sync-agentic.sh
+#      AGENTIC_DOCS is required; the source location is kept out of this public file on purpose.
 #   3. Review `git diff agentic/`, then commit and push to publish.
+#
+# The text that must not be published (BLOCKED below) and the organisation-name rules are stored
+# base64-encoded in scripts/blocked-text.b64 and read through scripts/blocked_text.py, so they do not
+# appear here in plain text. That is obfuscation, not secrecy.
 set -euo pipefail
-AGENTIC_DOCS="${AGENTIC_DOCS:-../AI-agents/qdb-agent-framework/docs}"
+if [ -z "${AGENTIC_DOCS:-}" ]; then
+  echo "error: set AGENTIC_DOCS to the folder that holds the built agentic pages." >&2
+  exit 1
+fi
 FILES=(index.html on-ramp-poster.html learning-path.html production-playbook.html assessment.html
        index.ar.html on-ramp-poster.ar.html learning-path.ar.html production-playbook.ar.html assessment.ar.html)
 
 if [ ! -d "$AGENTIC_DOCS" ]; then
   echo "error: AGENTIC_DOCS directory not found: $AGENTIC_DOCS" >&2
-  echo "Point AGENTIC_DOCS at AI-agents/qdb-agent-framework/docs (run 'npm run docs:html' there first)." >&2
   exit 1
 fi
 
-# Text that must not be published here. These pages carry a real organisation's name, and an earlier
-# version listed that organisation's regulatory mapping and its control gaps. That content was removed from
-# this copy; if it comes back from the source, the sync stops and the previous pages are put back.
-BLOCKED=(
-  "Regulatory mapping for QDB"
-  "regulatory-mapping-for-qdb"
-  "remain gaps"
-  "Gap in current framework"
-  "largest current gap"
-  "largest gap between the current framework"
-  "biggest real gap"
-  "current framework gap"
-  "المواءمة التنظيمية (regulatory mapping) لبنك قطر للتنمية"
-  "لا تزال عدة ضوابط (controls) فجوات"
-  "فجوة في الإطار (framework) الحالي"
-  "أكبر فجوة حالية"
-  "أكبر فجوة بين الإطار (framework) الحالي"
-  "أكبر فجوة حقيقية في الإطار"
-  "الفجوة (gap) الحالية في الإطار"
-)
+# Text that must not be published here: organisation-specific regulatory mapping and control-gap
+# statements that an earlier version carried. If any comes back from the source, the sync stops and the
+# previous pages are put back.
+mapfile -t BLOCKED < <(python3 "$(dirname "$0")/blocked_text.py" --blocked)
+if [ "${#BLOCKED[@]}" -eq 0 ]; then
+  echo "error: could not read the blocked-text list (scripts/blocked-text.b64)." >&2
+  exit 1
+fi
 
 mkdir -p agentic
 BACKUP="$(mktemp -d)"

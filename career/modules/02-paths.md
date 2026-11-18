@@ -9,6 +9,8 @@
 # 2.1 — Software and full-stack engineer
 *Level: 🟢 Beginner* · *Prerequisites: 0.2, 1.1, 1.3* · *Step: Explore, Learn*
 
+**After this you can** mark the software study path against the proof you can show today and turn the gaps into a one-page eight-week plan with one proof per week. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A junior software engineer is trusted to take a small, well-described change, build it with tests, get it reviewed, ship it safely, and explain what it does. In 2026 that often means directing an AI coding agent and checking its work.
 - The hiring bar is **one stack, deep enough to ship**: one language, HTTP and APIs, one relational database, tests, Git, a deploy and basic monitoring. It is not "every framework on the job ad".
@@ -240,6 +242,8 @@ Khalid's three rules for the table:
 
 # 2.2 — AI application engineer
 *Level: 🟢 Beginner* · *Prerequisites: 1.2, 2.1* · *Step: Explore, Learn*
+
+**After this you can** write a three-sentence quality bar for an AI feature and build a golden set of at least 30 cases whose evaluation reruns with one command. *Study time: about 125 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - An **AI application engineer** builds product features on top of existing AI models, usually through an API: prompts, retrieval over company documents, tool use, agents, guardrails and evaluation. They rarely train models from scratch.
@@ -475,6 +479,8 @@ After the interview, Najm offers Reem a place in the programme's software track,
 
 # 2.3 — Data engineer, analyst and data scientist
 *Level: 🟢 Beginner* · *Prerequisites: 0.2, 1.1* · *Step: Explore, Learn*
+
+**After this you can** choose a data role from written evidence and write SQL joins and window functions on a public dataset, recording row counts to catch a join that changes them unexpectedly. *Study time: about 120 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Three different jobs share the word "data". A **data analyst** answers business questions with SQL, metrics and dashboards. A **data engineer** builds the pipelines and models that make data reliable. A **data scientist** builds models and experiments to predict or explain.
@@ -741,6 +747,8 @@ Dana's rule: "Every week ends with a row count you checked by hand."
 
 # 2.4 — Cloud, platform, DevOps and security engineer
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.3* · *Step: Explore, Learn*
+
+**After this you can** trace a request to a public website command by command, and rebuild a small service from infrastructure as code with a budget alert set first. *Study time: about 120 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Cloud, DevOps, site reliability (SRE) and platform engineers** build and run the systems other engineers ship on: servers, networks, containers, pipelines, monitoring. **Security engineers** protect those systems and the software on them.

@@ -7,7 +7,7 @@ A sign-off record is the evidence that a named person reviewed part of a course.
 `academy/reviews/<course>/<role>-<date>.md`
 
 - `<course>` is the course folder name, for example `cloud`.
-- `<role>` is one of `subject-expert`, `assessment-lead`, `arabic-editor`, `pilot`.
+- `<role>` is one of `subject-expert`, `assessment-lead`, `arabic-editor`, `pilot`, `assessor` (see the assurance levels in `academy/STANDARD.md` section 5).
 - `<date>` is the day of the sign-off, `YYYY-MM-DD`.
 
 Start from `TEMPLATE.md` in this folder. One file per reviewer, per scope, per date.

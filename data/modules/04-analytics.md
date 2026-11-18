@@ -9,6 +9,8 @@
 # 4.1 — Defining metrics: one definition, a semantic layer and a metrics catalogue
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 3.1* · *Stage: Model, Serve*
 
+**After this you can** write a metric card that resolves three conflicting active-customer definitions, and explain each difference between their numbers row by row. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A **metric** is a number the business tracks over time, such as monthly active customers or card spend. A metric is only useful if everyone computes it the same way.
 - The rule that matters most: **one metric, one written definition, one owner, one place where it is computed.** Every dashboard, notebook and report reads it from there.
@@ -299,6 +301,8 @@ Use DuckDB or PostgreSQL with a synthetic table of 1,000 customers and 50,000 ev
 # 4.2 — Dashboards and data storytelling that lead to decisions
 *Level: 🟡 Intermediate* · *Prerequisites: 4.1* · *Stage: Serve, Analyse*
 
+**After this you can** write a dashboard spec that names its decision, cadence and questions, and build a layout from which a colleague can answer those questions in under two minutes. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A dashboard exists to support a **decision** or an **action**. Start from "who decides what, how often, using which numbers?" and design backwards. If you cannot name the decision, you are building a display, not a dashboard.
 - Three kinds serve different needs: **strategic** (a few certified metrics, monthly or weekly, for leaders), **operational** (near real time, for people who act today) and **analytical** (exploration, for analysts).
@@ -532,6 +536,8 @@ Run Metabase or Apache Superset locally in Docker against DuckDB or PostgreSQL w
 
 # 4.3 — Experiments and statistics for analysts: A/B tests and the traps that fool smart people
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 4.1* · *Stage: Analyse*
+
+**After this you can** calculate an A/B test's sample size, explain to a product manager why it cannot finish early, and show with a simulation how peeking raises the false-positive rate. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - An **A/B test** (a randomised controlled experiment) splits users at random into a control group and one or more treatment groups, so that the only systematic difference between the groups is the change being tested. It is the most reliable way to learn whether a change *caused* an effect.

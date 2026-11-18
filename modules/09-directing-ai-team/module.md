@@ -14,6 +14,8 @@ glance — the governance questions that make what you ship defensible.*
 
 *Module 9: Directing an AI Team*
 
+**After this you can** take one feature from an agent-led interview to a written spec with testable Given/When/Then acceptance criteria and one named invariant, before any code is written. *Study time: about 50 minutes (estimate).*
+
 ## 🔥 The War Story
 
 In July 2025, during a public "vibe coding" experiment, an AI coding agent was
@@ -172,6 +174,8 @@ Finish: *"Commit the spec, plan, and tasks as `09-1-scheduling-spec` — code co
 
 *Module 9: Directing an AI Team*
 
+**After this you can** find and resolve the contradictions in a repository's context, and right-size CLAUDE.md until a fresh agent session answers three questions about the project with no guesses. *Study time: about 50 minutes (estimate).*
+
 ## 🔥 The War Story
 
 A project had two instruction files. One, written early, said tests must use a real
@@ -222,7 +226,7 @@ flowchart TD
 | Fact | Where it lives | Why |
 |---|---|---|
 | "Never touch prod without a fresh yes" | Project CLAUDE.md | Stable, applies every session |
-| "Our CDN ignores `Vary`; guard at the proxy" | Memory file | Hard-won, load it near caching work |
+| "Our CDN setup ignores `Vary`; guard at the proxy" | Memory file | Hard-won, load it near caching work |
 | "Build a scheduled-post feature with these criteria" | The spec | True for this task only |
 | "I prefer small PRs and Given/When/Then criteria" | Global CLAUDE.md | You, on every project |
 
@@ -322,6 +326,8 @@ Finish: *"Commit as `09-2-context-cleanup`."*
 # 9.3 — Every Repeated Review Comment Is a Missing Guardrail
 
 *Module 9: Directing an AI Team*
+
+**After this you can** list your three most-repeated review comments, turn one into a check you watch fail on a deliberate violation, and add a drift-guard that turns the build red when two lists disagree. *Study time: about 50 minutes (estimate).*
 
 ## 🔥 The War Story
 
@@ -461,6 +467,8 @@ Finish: *"Commit as `09-3-review-to-guardrails`."*
 
 *Module 9: Directing an AI Team*
 
+**After this you can** write a definition of done with the evidence each change type needs, and confirm a deploy with an origin or asset-hash check rather than the cached public URL. *Study time: about 50 minutes (estimate).*
+
 ## 🔥 The War Story
 
 "Done" was declared, over and over, from the wrong layer.
@@ -484,6 +492,14 @@ CEO's actual device a week later. The common thread across all of them is one se
 localhost is not evidence.**
 
 ## 📐 The Principle
+
+Verification before completion uses the three tiers from lesson 0.1. **Tier 1** —
+you watch it work from the user's seat — is what most of this lesson trains.
+**Tier 2** — tests, type and lint checks, CI gates, scanners — runs on every change
+so nobody has to remember. **Tier 3** — an independent specialist — reviews
+high-risk changes: auth, payments, data isolation between customers, concurrency,
+security configuration, migrations. A change is complete only when every tier it
+needs has passed; Tier 1 evidence alone never closes a Tier 3 change.
 
 ### 1. "Merged" is not "works"
 
@@ -545,7 +561,9 @@ Give Relay a definition-of-done that produces evidence instead of assurances.
 1. **Write the definition of done.**
    > *"Write Relay's definition-of-done checklist. For each change type — deploy,
    > new feature, bug fix, config/flag change — list the specific evidence required
-   > before it's closed, and say which layer that evidence must come from."*
+   > before it's closed, say which layer that evidence must come from, and which of
+   > the three tiers from 0.1 it needs. Anything touching auth, payments, customer
+   > data isolation or migrations needs Tier 3."*
 2. **Make a deploy prove itself past the cache.**
    > *"After the next deploy, don't tell me it's live. Show me the asset hash at the
    > origin matching the new build, past the CDN. If they differ, the deploy isn't
@@ -587,6 +605,7 @@ Finish: *"Commit as `09-4-definition-of-done`."*
 - Never let the agent be the only witness to its own work — verify from an independent vantage.
 - For bugs: reproduce on the exact reported surface first, then confirm the fix there.
 - Write the definition of done down, so evidence is a checklist, not a judgment call.
+- Done means every tier the change needs: what you saw (1), what runs every time (2), and a specialist for high-risk changes (3).
 
 ## 📚 References & further wandering
 
@@ -607,6 +626,8 @@ Finish: *"Commit as `09-4-definition-of-done`."*
 # 9.5 — Claude Code Power Techniques
 
 *Module 9: Directing an AI Team*
+
+**After this you can** write a CLAUDE.md that passes a cold-start test, build a hook that blocks a deliberate violation, turn one repeated workflow into a skill, and run two subagents in separate worktrees. *Study time: about 50 minutes (estimate).*
 
 ## 🔥 The War Story
 
@@ -756,6 +777,8 @@ Finish: *"Commit as `09-5-power-tools`."*
 # 9.6 — Building Your Agent Team
 
 *Module 9: Directing an AI Team*
+
+**After this you can** define a read-only reviewer agent and a QA agent, each with a scope, a tool list and an escalation rule, and show an ambiguous instruction making an agent escalate to you instead of guessing. *Study time: about 50 minutes (estimate).*
 
 ## 🔥 The War Story
 
@@ -913,6 +936,8 @@ Finish: *"Commit as `09-6-agent-team`."*
 
 *Module 9: Directing an AI Team*
 
+**After this you can** run a per-PR review, a separate security pass and a whole-repo audit against a written checklist, and file the findings as a tracked report with severity, owner and status. *Study time: about 50 minutes (estimate).*
+
 ## 🔥 The War Story
 
 The best entries in this course's incident bank were not found by pull-request review.
@@ -1063,6 +1088,8 @@ Finish: *"Commit as `09-7-three-layer-audit`."*
 # 9.8 — The Governance Glance: You Own What Your Agent Ships
 
 *Module 9: Directing an AI Team*
+
+**After this you can** write a one-page governance doc a newcomer can answer five questions from in two minutes, make the agent refuse an action that needs a human yes, and time a switch to maintenance mode and back. *Study time: about 55 minutes (estimate).*
 
 ## 🔥 The War Story
 

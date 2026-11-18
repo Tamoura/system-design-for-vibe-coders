@@ -9,6 +9,8 @@
 # 8.1 — Use-case intake, business case and risk tiering
 *Level: 🔴 Advanced* · *Prerequisites: 3.1, 4.3, 6.1* · *BoK: III.A*
 
+**After this you can** write a use-case intake, classify a vendor tool under the AI Act, GDPR and a GCC law, and assign a provisional risk tier with a one-line justification. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Every AI idea enters governance through one door: a **use-case intake**. It captures purpose, people affected, data, decision impact, vendor and jurisdictions, *before* money is spent.
 - The first governance question is not "is it safe?" but "**is AI needed at all**, and is it proportionate?" A rule, a checklist or a simpler model may meet the goal with less risk.
@@ -102,7 +104,7 @@ flowchart TD
 - *Aggregation.* Several Tier 2 tools feeding one decision may add up to Tier 1 impact.
 - *Jurisdictional drift.* A tool built for Qatar is later rolled out to EU customers through the Frankfurt branch. Scope changes must re-trigger triage.
 - *The "human in the loop" fig leaf.* A reviewer approving 99.8% of outputs in eight seconds each is nominal oversight (see 8.2).
-- *Post-2025 regulatory change.* In November 2025 the European Commission proposed a "Digital Omnibus" package to adjust some AI Act timelines, including for high-risk obligations. Reports say it was adopted as Regulation (EU) 2026/1744 (last checked 12 November 2026; official text not opened). Check the current text. For the exam, apply the original Act unless told otherwise.
+- *Post-2025 regulatory change.* In November 2025 the European Commission proposed a "Digital Omnibus" package to adjust some AI Act timelines, including for high-risk obligations. It was adopted on 8 July 2026 as Regulation (EU) 2026/1744 (in force 27 July 2026; checked against the Official Journal text on 18 November 2026), which moves Annex III high-risk obligations to 2 December 2027 and Art. 6(1)/Annex I ones to 2 August 2028. For the exam, apply the original Act unless told otherwise; check the current exam guidance.
 
 **Proportionality cuts both ways:** over-governing low-risk tools teaches staff to avoid intake.
 
@@ -240,6 +242,8 @@ Committee decision recorded for the copilot: *"Approved for design at Tier 2. Sc
 # 8.2 — Designing for trustworthiness
 *Level: 🔴 Advanced* · *Prerequisites: 8.1, 4.2, 6.2* · *BoK: III.A*
 
+**After this you can** choose and justify an oversight pattern, write reason codes for customers and underwriters, and threat-model an LLM copilot with an attack, control and test per risk. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Trustworthiness is **designed in as requirements**, written before build and tested before release. It covers human oversight, explainability, fairness, privacy, security, robustness and, for GenAI, grounding and guardrails.
 - **Human oversight** comes in three patterns: human-*in*-the-loop (a person approves each output), human-*on*-the-loop (a person monitors and can intervene), human-*over*-the-loop (a person governs the system and decides when and how it is used). It only counts if the human has the competence, time, information and authority to disagree.
@@ -305,6 +309,8 @@ When groups have different base rates, these metrics cannot all be satisfied at 
 - **Evasion / adversarial examples:** inputs crafted to be misclassified, such as a fraudster tuning transactions just under the model's thresholds.
 
 The **OWASP Top 10 for LLM Applications** (2025 edition at the time of writing; check the current list) is the most widely used checklist. It covers prompt injection, sensitive information disclosure, supply-chain vulnerabilities, data and model poisoning, improper output handling, excessive agency (an LLM given too many permissions or tools), system prompt leakage, vector and embedding weaknesses, misinformation, and unbounded consumption. MITRE ATLAS catalogues adversary tactics against AI systems. The EU AI Act's accuracy, robustness and cybersecurity article expects high-risk systems to resist attempts to exploit vulnerabilities, naming data poisoning, model poisoning, adversarial examples and confidentiality attacks among the AI-specific threats.
+
+> **Dated note (November 2026).** OWASP published a 2026 edition of the Top 10 for LLM Applications in August 2026. Prompt injection and sensitive information disclosure are still first and second, and excessive agency has moved up to third. This lesson follows the 2025 edition, whose codes run from LLM01:2025 to LLM10:2025, because the full 2026 list was not available to check; check genai.owasp.org for the current list. For risks specific to agents that use tools, OWASP keeps a separate list, the OWASP Top 10 for Agentic Applications (ASI01 to ASI10).
 
 Design controls include: treat all model output as untrusted input to downstream systems; least-privilege tool access for agents; separate instructions from retrieved content; input and output filtering; rate limiting and query monitoring (against extraction); provenance and integrity checks on training data; and red-teaming before release (9.3).
 
@@ -448,6 +454,8 @@ For Najm's copilot, Layla's team adds a critical design rule: **every financial 
 
 # 8.3 — Documentation, and build versus buy
 *Level: 🔴 Advanced* · *Prerequisites: 8.2, 3.3, 6.3* · *BoK: III.A*
+
+**After this you can** draft a model card whose intended and out-of-scope uses make misuse recognisable, and write decision-log entries with alternatives, rationale, approver and evidence. *Study time: about 105 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Documentation is how governance becomes **evidence**. If a decision, test or limitation is not written down, auditors and regulators will treat it as never having happened.

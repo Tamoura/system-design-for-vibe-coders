@@ -9,6 +9,8 @@
 # 2.1 — Discovery for AI: jobs, workflows and where AI fits
 *Level: 🟡 Intermediate* · *Prerequisites: 0.2, 1.1* · *Stage: Discover*
 
+**After this you can** write technology-free job statements, map a five-to-eight-step workflow, and mark at most two steps where AI fits with a reason for each. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Discovery for AI starts with the **problem, not the model**. First ask "what job is this person trying to get done, and where does it hurt?" Only then ask "could AI help here?"
 - **Jobs to be Done** frames needs as progress a person wants to make in a situation. **Workflow mapping** breaks the job into steps so you can see where the time, errors and waiting actually are.
@@ -220,6 +222,8 @@ On Thursday Faisal shows Khalid no demo. He shows where the five hours go, and w
 
 # 2.2 — Scoring and choosing use cases: value, feasibility, risk
 *Level: 🟡 Intermediate* · *Prerequisites: 1.3, 2.1* · *Stage: Discover, Define*
+
+**After this you can** size a use case's annual value from labelled illustrative inputs, re-score it on value, feasibility and risk, and write a short memo recommending a ranking and the evidence that would raise your confidence. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Discovery gives you more good ideas than you can build. Choosing is a separate skill: compare candidates on **value, feasibility and risk**, openly and in the same units.
@@ -448,6 +452,8 @@ Weighted score = 0.40 × value + 0.35 × feasibility + 0.25 × risk. Faisal adds
 
 # 2.3 — When not to use AI, and killing ideas early
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 2.2* · *Stage: Discover*
+
+**After this you can** name the simplest non-AI alternative for a proposed feature, write kill criteria with a metric, threshold and date each, and run a pre-mortem whose top causes link to early tests. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Knowing when **not** to use AI is a core AI product skill. It is not a lack of ambition. Many "AI problems" are really rules, search, template, data or process problems.

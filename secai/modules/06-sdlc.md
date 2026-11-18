@@ -9,6 +9,8 @@
 # 6.1 — A secure development life cycle: requirements, review and testing (SAST, DAST, SCA)
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.3, 2.1* · *Phase: Build, Test*
 
+**After this you can** write security acceptance criteria that someone else can turn into pass/fail tests, and triage SAST and SCA findings with a one-line reason each. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A **secure development life cycle** (secure SDLC) adds small security activities to every step of delivery instead of relying on one penetration test at the end.
 - Start with **security requirements**: testable statements, taken from threat models and **OWASP ASVS**, that sit in the user story next to the functional ones.
@@ -58,7 +60,7 @@ flowchart LR
 | **Secret scanning** | Code, commits and history | Keys, passwords and tokens committed by mistake (5.2) | Secrets stored outside the repository |
 | **Security tests you write** | Your own unit and integration tests | Authorisation, tenant isolation, business rules | Anything nobody thought to test |
 
-Look at the last row. Scanners are poor at broken access control, the top category in the OWASP Top 10 (2021, and again in the 2025 update), because they do not know that invoice 77 belongs to company 12. Only a test that encodes your rules can check that.
+Look at the last row. Scanners are poor at broken access control, A01 and the top category in the OWASP Top 10:2025 (as in 2021), because they do not know that invoice 77 belongs to company 12. Only a test that encodes your rules can check that.
 
 ```python
 # A security integration test that encodes the rule
@@ -276,6 +278,8 @@ Run hands-on work only against your own code, a local lab, or a deliberately vul
 # 6.2 — The software supply chain: dependencies, SBOMs, SLSA and signing
 *Level: 🟡 Intermediate* · *Prerequisites: 5.2, 6.1* · *Phase: Build, Deploy*
 
+**After this you can** generate and read an SBOM for your own project and harden a CI workflow with SHA-pinned actions, least-privilege permissions and OIDC, explaining the threat each change addresses. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Your **software supply chain** is everything between a developer's keyboard and production: source, third-party packages, registries, build tools, CI/CD pipelines, base images and, increasingly, AI models.
 - It carries three kinds of risk: **vulnerable** components (honest bugs, like Log4Shell), **malicious** components (typosquatting, dependency confusion, hijacked maintainer accounts) and **compromised pipelines** (SolarWinds).
@@ -408,7 +412,7 @@ Also: required reviews on pipeline files, separate build and deploy identities, 
 
 **Vendors and regulation.** Ask suppliers for SBOMs, VEX statements, evidence of a secure development process (an SSDF-style attestation) and a commitment to notify you of vulnerabilities, and write these into contracts. Regulation agrees: US Executive Order 14028 (2021) pushed SBOMs into federal procurement. The EU **Cyber Resilience Act** (Regulation (EU) 2024/2847) places security duties on manufacturers of products with digital elements, with vulnerability reporting from September 2026 and most obligations from December 2027. **DORA** requires EU financial entities to manage ICT third-party risk. Check the current texts (2026); lesson 11.2 and *AI Governance: Zero to Hero* cover the legal detail.
 
-**Models and datasets are dependencies too.** Some model file formats, notably Python's pickle, can execute code when loaded. For Credit Memo Copilot and Smart Alerts, prefer formats such as safetensors, pin model revisions by hash, and record models and datasets in an AI bill of materials (CycloneDX supports machine-learning components). This is LLM03 Supply Chain in the OWASP Top 10 for LLM Applications; Module 8 goes deeper.
+**Models and datasets are dependencies too.** Some model file formats, notably Python's pickle, can execute code when loaded. For Credit Memo Copilot and Smart Alerts, prefer formats such as safetensors, pin model revisions by hash, and record models and datasets in an AI bill of materials (CycloneDX supports machine-learning components). This is LLM03:2025 Supply Chain in the OWASP Top 10 for LLM Applications; Module 8 goes deeper.
 
 ## 🧰 The toolkit
 | Control, standard or tool | What it is and does | When to reach for it |
@@ -556,6 +560,8 @@ Run hands-on work only on your own repositories and in a local lab on your own m
 # 6.3 — Securing AI-generated code: what coding agents get wrong
 *Level: 🟡 Intermediate* · *Prerequisites: 6.1, 6.2* · *Phase: Build, Test*
 
+**After this you can** review AI-generated endpoints against a security checklist, and write a rules file and Semgrep rules that flag the insecure version but not the fixed one. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - AI coding assistants and agents write code fast and fluently, but their output is **untrusted input**. It reproduces insecure patterns from public code, does not know your authorisation model, and sometimes names packages that do not exist.
 - The developer who merges the code owns it. AI-written code passes the same secure SDLC gates as human code (6.1), plus checks aimed at the ways AI fails.
@@ -578,7 +584,7 @@ Research agrees. In "Asleep at the Keyboard?" (Pearce et al., 2022), about 40% o
 
 ### 🟢 The essentials
 
-**The mental model.** Treat an AI coding assistant as a very fast, well-read new colleague who has never seen your threat model, rarely says "I'm not sure", and learned from a lot of insecure public code. Its output is untrusted input: the "never trust model output" principle (9.1), and LLM05 Improper Output Handling in the OWASP Top 10 for LLM Applications. Two consequences follow:
+**The mental model.** Treat an AI coding assistant as a very fast, well-read new colleague who has never seen your threat model, rarely says "I'm not sure", and learned from a lot of insecure public code. Its output is untrusted input: the "never trust model output" principle (9.1), and LLM05:2025 Improper Output Handling in the OWASP Top 10 for LLM Applications. Two consequences follow:
 - **Accountability does not move.** The engineer who accepts the change is its author for review, incident and audit purposes.
 - **The gates do not relax.** Everything in 6.1 and 6.2 still applies, and some gates matter more than before.
 

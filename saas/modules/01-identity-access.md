@@ -10,6 +10,8 @@
 
 *Level: 🟢 Beginner*
 
+**After this you can** add email-and-password login with hashed passwords and a server-side session to Beacon, plus GitHub sign-in with PKCE and a password reset that answers the same way for known and unknown emails. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - Authentication proves who is making a request. It is a set of flows (sign-up, login, verification, reset, MFA, logout), and an attacker picks the weakest one.
@@ -293,6 +295,8 @@ This is account enumeration: attackers can find out which emails are Beacon cust
 # 1.2 — Users, organizations & invitations: the multi-tenant skeleton
 
 *Level: 🟢 Beginner* · *Prerequisites: 1.1*
+
+**After this you can** move Beacon's monitors to organization ownership, build hashed invitations that expire and cannot be reused, and show that a non-member gets 404 on another org's pages. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -607,6 +611,8 @@ The org slug is a claim, not a fact, and the query ignores it, so anyone can rea
 
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.2*
 
+**After this you can** write a `requirePermission()` check for the owner, admin, member and viewer roles, and prove with `curl` that a viewer gets 403 when deleting a monitor and that a request body cannot change its org or role. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - Authorization decides whether a subject may perform an action on a specific resource. The server asks it on every request, and never takes the answer from the client.
@@ -894,6 +900,8 @@ This is mass assignment, the 2012 GitHub bug: a plain member can send `{"role": 
 # 1.4 — Enterprise identity: SSO, SAML, OIDC and SCIM
 
 *Level: 🔴 Advanced* · *Prerequisites: 1.1, 1.2, 1.3*
+
+**After this you can** connect a Beacon org to a local identity provider so a user signs in through SSO without a Beacon password, and show that a tampered or expired SAML response is rejected. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 

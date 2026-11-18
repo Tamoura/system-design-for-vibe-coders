@@ -9,6 +9,8 @@
 # 14.1 — Capstone: take a change to Najm Remit through the full AI-native cycle
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0-13* · *Focus: Workflow, Verify, Secure*
 
+**After this you can** take one ticket from spec to reviewed, graded change with an agent and defend every line in a demo. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **One ticket, the whole cycle.** REMIT-414 opens a Bangladesh corridor: five small code edits, graded with the evidence around them.
 - **Ten pieces of evidence** (memory, spec, plan, ADR, tests, review, settings and hook, docs, agent log, retrospective) must agree with the code and each other.
@@ -55,7 +57,7 @@ for quarter in range(400, 605):  # amounts 100.00 to 151.00 on a 0.25 grid
 Try the rate (`useful_tie(mid * (1 - margin), 4)`) and the receive amount the same way. An agent may draft the tests; the expected values come from you.
 
 ### 🟡 Going deeper
-**Delegate the draft, keep the decision.** The agent interviews you for the spec, drafts tests from your values and takes one plan step per prompt. A fresh-context reviewer (the **Second-model review** of lesson 5.1: a second session or `/code-review`) adds questions; verify each, because reviewers usually report something even when the work is sound (best-practices page). The vague prompt is "Add a Bangladesh corridor to Remit"; the specified one, for step 2, is a task contract (lesson 10.1).
+**Delegate the draft, keep the decision.** The agent interviews you for the spec, drafts tests from your values and takes one plan step per prompt. A fresh-context reviewer (the **Second-model review** of lesson 5.1: a second session or `/code-review`) adds questions; verify each, because reviewers usually report something even when the work is sound. The vague prompt is "Add a Bangladesh corridor to Remit"; the specified one, for step 2, is a task contract (lesson 10.1).
 
 ```text
 Do step 2 of specs/REMIT-414-plan.md; read it, the spec and CLAUDE.md first.
@@ -84,7 +86,7 @@ Then commit: feat(fees): add the STD-C fee schedule for Bangladesh
 | **Retrospective template** | Six sections citing minutes, commits, habits | After any ticket worth remembering |
 
 ## 🏛️ In practice at Najm Bank
-*Needs an agent: no, but recommended: the capstone is about working with one. No-agent path: write every document and test yourself, in the same order.*
+*Needs an agent: no, but recommended.*
 
 **The ticket.** This is `TASK.md` in your work directory, as Hessa wrote it.
 
@@ -165,7 +167,7 @@ python3 .claude/hooks/guard.py < lab-assets/hook-samples/block-rm-rf.json; echo 
 
 Exit code 2 with a reason on standard error blocks; any other non-zero code is a non-blocking error, so a guard must block what it cannot read. (3) Tests first, then one step per commit. CONTRIBUTING.md wants a green suite at every commit: one commit of red tests alone is a deliberate exception here, or commit each step's tests with its code. (4) Review your own diff, then ask a fresh session; if you cannot start one, write "self-review" and put your questions for the humans under Second reviewer. (5) Write the ADR, the corridors page and the architecture fix from the code. (6) Log, then write the retrospective last, from `lab-assets/templates/retrospective.md`; it quotes a commit hash, so copy one again after any rebase or amend. *No agent:* the same order; budget a week of part-time study.
 
-**What the grader checks.** *The change:* five groups of hidden acceptance tests (corridor, fees, rate, wording, the send path); no old test weakened; only the expected files touched; your new tests must fail without your change and notice at least four of six deliberate defects (one agreed number broken at a time). *The evidence:* each document keeps its template's headings, has no `TODO` placeholder, names only files that exist and is checked against the code and the other documents (the hook runs on 18 sample inputs); `lab-assets/README.md` lists every minimum. *Hygiene and security:* Conventional Commits, one kind of change per commit, no secrets, no float or clock shortcuts, no new dependency. *Advisory:* tests before or with the code, a history that follows the plan, small commits, a hook that sees through `bash -lc`, ask rules for the money files.
+**What the grader checks.** *The change:* five groups of hidden acceptance tests (corridor, fees, rate, wording, the send path); no old test weakened; only the expected files touched; your new tests must fail without your change and notice at least four of six deliberate defects (one agreed number broken at a time). *The evidence:* each document keeps its template's headings, has no `TODO` placeholder, names only files that exist and is checked against the code and the other documents (the hook runs on 18 sample inputs). *Hygiene and security:* Conventional Commits, one kind of change per commit, no secrets, no float or clock shortcuts, no new dependency. *Advisory:* tests before or with the code, a history that follows the plan, small commits, a hook that sees through `bash -lc`, ask rules for the money files.
 
 **Grade.**
 
@@ -174,7 +176,7 @@ cd ~/system-design-for-vibe-coders/ainative/ailab      # with the virtual enviro
 python -m ailab grade m14 --dir ~/ainative/m14
 ```
 
-On the starter state the real output includes these lines (others omitted):
+On the starter the output includes these lines:
 
 ```text
 [PASS] Your tests pass: 99 passed
@@ -306,6 +308,8 @@ Total minutes: 0
 
 # 14.2 — Practice exam: 60 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0-14* · *Focus: Mindset, Context, Workflow, Verify, Secure, Automate, Team*
+
+**After this you can** answer sixty scenario questions in about 90 minutes and tag each miss with its lesson and trap. *Study time: about 120 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Sixty scenario questions** from all fifteen modules (0 to 14), mixed and numbered 1 to 60. Most are short scenes on the Payments Platform team. Each has one best answer.

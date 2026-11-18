@@ -21,7 +21,7 @@ Every lesson has the same four pillars:
 1. **🔥 The War Story** — a real incident: the symptoms as they appeared, the wrong theories, the actual root cause, the fix that shipped.
 2. **📐 The Principle** — the system-design concept the incident teaches, in plain language and diagrams, every term defined before it's used (backed by the [Glossary](./GLOSSARY.md)).
 3. **🎛️ Direct Your Agent** — you apply the principle to **Relay**, a deliberately generic product (accounts, creator content, media uploads, feeds, email, a mobile client) built across the course from prototype to zero-downtime production — by telling your agent *what* to build: the exact prompts to give, the context that makes it build the right thing, and the guardrail to install so the rule outlives the chat. Apply every step to your own app instead if you have one.
-4. **✅ Verify It** — the pillar that makes vibe coding safe: an evidence checklist proving the step actually worked, written so checking it requires **zero code reading** — things you can see, click, or make the agent demonstrate from the layer users touch.
+4. **✅ Verify It** — the pillar that makes vibe coding safe: an evidence checklist proving the step actually worked, written so checking it requires **zero code reading** — things you can see, click, or make the agent demonstrate from the layer users touch. That covers what the product visibly does. On its own it cannot establish security, correctness when things happen at the same time, separation between customers' data, or production readiness, so the course pairs it with automated checks that run every time and, for high-risk changes, independent specialist review (the three tiers of evidence, introduced in lesson 0.1).
 
 ## Who it's for
 

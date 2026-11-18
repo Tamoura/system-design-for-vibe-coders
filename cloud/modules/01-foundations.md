@@ -9,6 +9,8 @@
 # 1.1 — Linux, the shell and networking essentials: processes, files, ports, DNS, HTTP and TLS
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Phase: Operate, Monitor*
 
+**After this you can** label each line of `curl -v` output as DNS, TCP, TLS or HTTP, and write a script that walks that chain and stops at the first failing hop. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Almost every server, container and cloud function is **Linux** underneath. You need a small set of shell skills: processes, logs, files and permissions, listening ports.
 - A request to `api.najm.example` crosses a fixed chain of hops: **DNS** turns the name into an address, **TCP** opens a connection to a port, **TLS** proves the server's identity and encrypts the traffic, **HTTP** carries the request and the response.
@@ -282,6 +284,8 @@ All exercises run on your own machine with Docker and a terminal.
 # 1.2 — Cloud fundamentals: regions, zones, compute, storage, managed services and shared responsibility
 *Level: 🟢 Beginner* · *Prerequisites: 1.1* · *Phase: Plan, Deploy*
 
+**After this you can** draw a two-zone VPC with subnet ranges, a NAT gateway, a load balancer and port-level firewall rules, and write a placement note that says who patches what and what happens when a zone fails. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A cloud provider rents you computing on demand, through an API, billed by use. **AWS**, **Microsoft Azure** and **Google Cloud** sell similar building blocks under different names.
 - The physical layout is the first design decision: a **region** is a geographic area; an **availability zone** is one or more separate data centres inside it. Spread production across **at least two zones**; consider a second region only for a clear recovery or residency reason.
@@ -538,6 +542,8 @@ If you use a cloud account, use your own free-tier account and **set a budget al
 
 # 1.3 — Identity and access in the cloud: users, roles, policies and workload identity
 *Level: 🟢 Beginner* · *Prerequisites: 1.2* · *Phase: Plan, Deploy*
+
+**After this you can** rewrite a wildcard policy as a least-privilege grant scoped to one prefix of one bucket, and configure GitHub Actions OIDC so the allowed branch gets short-lived credentials and any other branch is denied. *Study time: about 115 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - In the cloud, every action is an API call, and every API call is checked against **identity and access management (IAM)**: *who* is calling (the **principal**), *what* they want to do (the **action**), on *which* **resource**, under which **conditions**.
