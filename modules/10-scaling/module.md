@@ -14,7 +14,7 @@ first use; the [Glossary](../../GLOSSARY.md) has the rest.*
 
 *Module 10: Scaling Beyond One Server*
 
-**After this you can** run two instances behind a load balancer, find and remove the process state that breaks across them, and show a health check draining a killed instance with zero failed requests. *Study time: about 70 minutes (estimate).*
+**After this you can** run two instances behind a load balancer, find and remove the process state that breaks across them, and show a health check draining a killed instance with zero failed requests. *Study time: reading about 10 min, hands-on about 120 min (estimate).*
 
 ---
 
@@ -67,7 +67,7 @@ on *any* instance and get the right answer. That is only possible if instances
 share nothing that matters.
 
 Stack Overflow served a top-100 audience for years on about nine web servers
-(lesson F.2) — few, but *interchangeable*, fronted by a load balancer, with all
+(lesson F.2) — few, but *interchangeable*, fronted by a load balancer (a traffic director that spreads requests across the copies), with all
 the real state in shared databases and caches. Small and boring and horizontal.
 
 **Scaling a service is not scaling the system.** Ten stateless instances are ten
@@ -225,7 +225,7 @@ Finish: *"Commit with the message `10-1-stateless-services`."*
 
 *Module 10: Scaling Beyond One Server*
 
-**After this you can** move slow work onto a queue with an idempotent consumer, a dead-letter queue and a stale-job sweep, and show a job delivered twice taking effect exactly once. *Study time: about 70 minutes (estimate).*
+**After this you can** move slow work onto a queue with an idempotent consumer, a dead-letter queue and a stale-job sweep, and show a job delivered twice taking effect exactly once. *Study time: reading about 10 min, hands-on about 120 min (estimate).*
 
 ---
 
@@ -443,7 +443,7 @@ Finish: *"Commit with the message `10-2-queues-async-work`."*
 
 *Module 10: Scaling Beyond One Server*
 
-**After this you can** decide and justify whether you need a read replica, route reads between primary and replica, and show both replication lag and why a replica is not a backup. *Study time: about 70 minutes (estimate).*
+**After this you can** decide and justify whether you need a read replica, route reads between primary and replica, and show both replication lag and why a replica is not a backup. *Study time: reading about 10 min, hands-on about 120 min (estimate).*
 
 ---
 
@@ -634,7 +634,7 @@ Finish: *"Commit with the message `10-3-scaling-the-database`."*
 
 *Module 10: Scaling Beyond One Server · **app track***
 
-**After this you can** build a "who's online" presence feature that heals itself after its store is wiped and that a client sending fake heartbeats cannot inflate. *Study time: about 70 minutes (estimate).*
+**After this you can** build a "who's online" presence feature that heals itself after its store is wiped and that a client sending fake heartbeats cannot inflate. *Study time: reading about 10 min, hands-on about 120 min (estimate).*
 
 ---
 
@@ -827,25 +827,22 @@ Finish: *"Commit with the message `10-4-realtime-presence`."*
 
 *Module 10: Scaling Beyond One Server*
 
-**After this you can** load-test an app to its breaking point, record that number as its capacity, fix the first bottleneck, and prove with a re-run that the ceiling moved and p99 fell. *Study time: about 70 minutes (estimate).*
+**After this you can** load-test an app to its breaking point, record that number as its capacity, fix the first bottleneck, and prove with a re-run that the ceiling moved and p99 fell. *Study time: reading about 10 min, hands-on about 120 min (estimate).*
 
 ---
 
 ## 🔥 The War Story
 
-One admin dashboard in Relay's ancestor loaded fine — for months. Then, without
-any code change, the whole site started feeling sluggish at busy hours, and
-nobody could see why. The dashboard still worked. The app still worked. It was
-just… slow, for everyone, sometimes.
+You met this dashboard in lesson 2.5: the admin page whose **eight unbounded
+scans** dragged the largest collection through memory and **evicted the hot
+catalog data** every normal request relied on. Lesson 2.5 told it as a query
+story. Here is the question it left open: why did it take *months* to show?
 
-The cause was the dashboard itself. Opening it ran **eight unbounded
-whole-collection scans** over the largest table — reading every row, every time,
-to compute its charts (lesson 2.5). At low traffic that was invisible: one admin,
-once in a while, a slow page nobody minded. But those scans dragged the entire
-largest table through memory — **evicting the hot catalog data** that every normal
-user request actually served from. So one admin opening one page cold-flushed the
-cache that kept the *whole site* fast, and everyone else paid for it in latency
-until the working set warmed back up.
+For months the dashboard loaded fine. At low traffic the scans were invisible:
+one admin, once in a while, a slow page nobody minded, and the working set had
+quiet minutes to warm back up. Then, without any code change, the table grew and
+busy hours got busier. Now each eviction landed on a site with no slack, and the
+whole product felt sluggish at peak while nobody could see why.
 
 Here's the part that makes it a *capacity* story, not just a slow-query story: the
 dashboard's own load time barely moved. The damage showed up **somewhere else**,

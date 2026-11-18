@@ -2,7 +2,7 @@
 
 *Module 1: Anatomy of a Real App*
 
-**After this you can** trace one click through its request ID to its log trail, reproduce the prefix trap live, and record a dated latency baseline that compares cached and uncached responses. *Study time: about 70 minutes (estimate).*
+**After this you can** trace one click through its request ID to its log trail, reproduce the prefix trap live, and record a dated latency baseline that compares Relay on your machine with your live F.5 page. *Study time: reading about 10 min, hands-on about 90 min (estimate).*
 
 ---
 
@@ -127,6 +127,12 @@ flowchart TD
     DATA -->|"no"| STORE["Stale cache or bad data:<br/>invalidation, migrations<br/><small>incidents 3.3, 2.2</small>"]
 ```
 
+Two words in the tree, defined once for the whole course. The **origin** is your
+own public server as the CDN reaches it: through your reverse proxy. The **app
+port** is the app process behind that proxy (for example `localhost:3000`),
+reached without the proxy. A clean origin clears the CDN; a clean app port clears
+the app but not the proxy in front of it.
+
 Memorize the shape, not the boxes: **bisect by layer, always testing the layer
 beneath before blaming the layer you wrote.** The incident bank is full of days
 lost to the opposite order.
@@ -169,8 +175,11 @@ You direct; the agent builds; you watch the evidence arrive.
    > show me the wrong response, fix the slash, show me the right one."*
    Watching the before-and-after once beats reading about it ten times.
 5. **Record the latency baseline.**
-   > *"Measure one cached and one uncached request (DNS, TLS, total). Write the
-   > numbers to `docs/latency-baseline.md` with today's date."*
+   > *"Measure Relay's home page on this machine, a first load and an immediate
+   > repeat (total time). Then measure my live F.5 page the same way, with DNS,
+   > TLS and total. Write all the numbers to `docs/latency-baseline.md` with
+   > today's date."*
+   Relay has no CDN, cache or TLS yet, so this baseline is the before picture.
    Every performance conversation for the rest of the course compares to this file.
 
 Finish: *"Commit with the message `01-2-journey-traced`."*
@@ -186,7 +195,8 @@ because the code is what it can see. It will happily refactor a handler for an
 hour when the actual problem is a proxy rewrite it has no way to observe. You own
 the layers the agent can't see; say so explicitly.
 
-**Context to give:**
+**Context to give** (Relay today is browser → app on port 3000; this example is
+the reference platform's full path, so adapt it as each layer arrives):
 
 > The request path is: browser → Cloudflare → nginx (configs in /etc/nginx/sites-*)
 > → app on port 3000. When debugging any "request fails / wrong response" issue,
@@ -216,8 +226,9 @@ No code reading required — accept the lesson only when:
       request's** log trail, found by the ID from the response header you saw.
 - [ ] You watched the prefix trap live: the wrong answer before the slash, the right
       answer after. You saw both responses yourself — not a summary of them.
-- [ ] `docs/latency-baseline.md` exists, is dated, and the cached number is clearly
-      smaller than the uncached one. You can say *why* in one sentence.
+- [ ] `docs/latency-baseline.md` exists, is dated, and holds both sets of numbers.
+      You can say in one sentence why the live page has DNS and TLS time that
+      Relay on your machine does not.
 - [ ] Using the sequence diagram, you can narrate the eleven stops from memory —
       and name which stops belong to you and which belong to someone else.
 - [ ] The routing-table guardrail runs in CI: ask the agent to break the routing on

@@ -9,7 +9,7 @@
 # 3.1 — Authentication: passwords, MFA, passkeys and sessions
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.2* · *Phase: Design, Build*
 
-**After this you can** test login, sign-up and password reset for account enumeration, and store passwords with Argon2id plus a test that proves rehashing when parameters change. *Study time: about 110 minutes (estimate).*
+**After this you can** test login, sign-up and password reset for account enumeration, and store passwords with Argon2id plus a test that proves rehashing when parameters change. *Study time: reading about 20 min, hands-on about 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Authentication** answers "who is this?"; **authorisation** (3.3) answers "what may they do?". Keep them apart in design and in code.
@@ -164,6 +164,13 @@ After the stuffing wave, Noura and Ali write the **Najm Authentication Standard 
 - 🟢 On an app you own, or a local OWASP Juice Shop, try login, sign-up and password reset with one email that exists and one that does not, recording message, status code and rough response time. *Done when:* your six-case table shows an outsider cannot tell which accounts exist, or you have written a fix for each leak.
 - 🟡 In a small local app of your own, store passwords with Argon2id (or bcrypt), rehash on login when parameters change, and check new passwords against a breached list (k-anonymity range API or a downloaded file). *Done when:* stored values start with `$argon2id$` (or `$2b$`), a test proves raised parameters trigger a rehash at next login, and a publicly breached password is refused.
 - 🔴 Add passkey sign-in to a local demo app on `localhost` with a maintained WebAuthn library, then write a one-page recovery design. *Done when:* tests prove the server rejects a reused challenge and a wrong origin, and the design says how a user who lost every device gets back in, at what assurance and with what delay.
+- 📝 **Paper route (no code).** Review this sign-in design: passwords stored as an unsalted `sha256`; the messages "Wrong password" and "No account with that email"; SMS one-time codes for every customer, including for adding a payee; sessions that last until the customer logs out. *Done when:* each of the four choices has its attack and the replacement you would require.
+
+<details><summary>Check your work</summary>
+
+**📝 Model answer.** A fast, unsalted hash lets a stolen table be cracked at speed; require Argon2id with rehashing when parameters rise. Two different messages tell an attacker which emails have accounts; require one generic message with similar timing. SMS codes fall to SIM swaps and relay phishing; require passkeys or in-app approval for high-risk actions such as adding a payee. Endless sessions keep a stolen cookie useful; require idle and absolute timeouts, server-side logout and revocation on password reset.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Calling SMS codes "MFA done".** SIM swaps and relay phishing defeat them. Keep them as a fallback; move risky actions to passkeys or device keys.
@@ -196,10 +203,10 @@ After the stuffing wave, Noura and Ali write the **Najm Authentication Standard 
 
 **2. Ali finds that the SME Portal stores passwords as SHA-256 with one salt shared by every user. What is the BEST fix?**
 
-- A. Switch to SHA-512 and keep the shared salt
-- B. Encrypt the password column with AES so it can be decrypted if needed
-- C. Move to Argon2id (or bcrypt or scrypt) with a unique salt per password, rehashing each user's password at their next successful login
-- D. Force every user to change their password every 90 days
+- A. Switch to SHA-512 and keep the shared salt, because a longer hash makes the passwords much harder to crack
+- B. Encrypt the password column with AES so it can be decrypted to check passwords at login, keeping a stolen table protected from attackers
+- C. Move to Argon2id (or bcrypt or scrypt) with a unique salt per password, rehashing each password at the user's next login
+- D. Force every user to change their password every 90 days, which limits how long any stolen hash stays useful
 
 <details><summary>Answer</summary>
 
@@ -235,10 +242,10 @@ After the stuffing wave, Noura and Ali write the **Najm Authentication Standard 
 
 **5. Tariq's team wants customers to change their registered phone number in Najm Mobile with one tap, to cut contact-centre calls. What should Noura's team recommend?**
 
-- A. Allow it with step-up using an existing strong factor, a notification to the old number, and a hold before the new number can authorise payees or limit changes
-- B. Allow it, because the customer is already signed in
-- C. Remove phone changes from the app and require a branch visit for everyone
-- D. Allow it, with an SMS code sent to the new number
+- A. Allow it with step-up on an existing strong factor, an alert to the old number, and a hold on new payees and limit changes
+- B. Allow it straight away, because the customer is already signed in and the session proves who they are
+- C. Remove phone changes from the app and require a branch visit for everyone, however many customers that affects
+- D. Allow it, with an SMS code sent to the new number to confirm the customer owns it and can receive messages
 
 <details><summary>Answer</summary>
 
@@ -262,7 +269,7 @@ After the stuffing wave, Noura and Ali write the **Najm Authentication Standard 
 # 3.2 — OAuth 2.0, OpenID Connect and token pitfalls
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1* · *Phase: Design, Build*
 
-**After this you can** write a token-verification function whose tests reject seven bad tokens, from alg none to an unknown kid, each for the right reason. *Study time: about 110 minutes (estimate).*
+**After this you can** write a token-verification function whose tests reject seven bad tokens, from alg none to an unknown kid, each for the right reason. *Study time: reading about 15 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **OAuth 2.0** is for **delegated authorisation**: an app calls an API on a user's behalf, with limited rights, without seeing their password. It does not say who the user is.
@@ -515,8 +522,8 @@ Noura and Tariq publish the **Najm Identity and Token Standard v1**. Every new c
 
 **4. The SME Portal now accepts sign-ins from customers' own identity providers. How should it decide which portal account a federated user belongs to?**
 
-- A. By the `email` claim, because it is human-readable
-- B. By the user's display name
+- A. By the `email` claim, because it is human-readable and the same address usually appears at every provider
+- B. By the user's display name, since that is the easiest thing for staff to match by hand when reviewing accounts
 - C. By the `iss` + `sub` pair, linking to an existing account only after the user signs in to both
 - D. By whichever account was most recently active, since that is the one the user is likely to want
 
@@ -528,10 +535,10 @@ Noura and Tariq publish the **Najm Identity and Token Standard v1**. Every new c
 
 **5. Najm Assist must freeze cards on customers' behalf. Which design best limits the damage if the model is manipulated?**
 
-- A. A service account token with full card permissions, with the model choosing the card
-- B. The customer's own long-lived refresh token, stored by Assist
-- C. A shared API key for all Assist actions, rotated monthly
-- D. Token exchange for a five-minute token for the cards API, scoped to freezing, about the customer and naming Assist as actor, with the cards API checking the card belongs to that customer
+- A. A service account token with full card permissions, with the model choosing the card and every call logged for later review
+- B. The customer's own long-lived refresh token, stored by Assist, used on every request and renewed automatically
+- C. A shared API key for all Assist actions, rotated monthly and kept in a secrets manager developers cannot reach
+- D. A five-minute exchanged token scoped to freezing, for this customer, naming Assist as actor; the cards API checks card ownership
 
 <details><summary>Answer</summary>
 
@@ -556,7 +563,7 @@ Noura and Tariq publish the **Najm Identity and Token Standard v1**. Every new c
 # 3.3 — Authorisation: broken access control, IDOR and multi-tenancy
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 3.1* · *Phase: Build, Test*
 
-**After this you can** write an access-control matrix for an app and enforce tenant isolation with PostgreSQL row-level security, proven by queries that cannot see or insert another company's rows. *Study time: about 110 minutes (estimate).*
+**After this you can** write an access-control matrix for an app and enforce tenant isolation with PostgreSQL row-level security, proven by queries that cannot see or insert another company's rows. *Study time: reading about 15 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Authorisation** decides what an authenticated user may do, and to which object. Broken access control tops the OWASP Top 10 (A01 in the 2025 edition, as in 2021), and **Broken Object Level Authorization (BOLA)** leads the OWASP API Security Top 10 (2023).
@@ -571,7 +578,7 @@ Before a new SME Portal release, Mariam's red team runs an authorised test again
 
 "But they all had to be logged in," says Ali, who reviewed the code. That is the point: authentication worked every time. All three are authorisation failures, invisible to functional tests in which users only click what the interface shows.
 
-Public reporting on the 2022 Optus breach in Australia described customer records exposed through an internet-facing API that reportedly did not require authentication. Details vary between reports, so treat it as an illustration: every endpoint that returns data must check who is asking and whether they may see that record (4.1). Noura's rule: **no endpoint ships without a row in the access-control matrix and a test proving that another user, and another tenant, is refused.**
+The 2022 Optus breach in Australia (4.1) exposed customer records through an internet-facing API that, in public reporting, did not require authentication. The lesson: every endpoint that returns data must check who is asking and whether they may see that record (4.1). Noura's rule: **no endpoint ships without a row in the access-control matrix and a test proving that another user, and another tenant, is refused.**
 
 ## 📐 How it works
 
@@ -798,10 +805,10 @@ After Mariam's test, Ali and Tariq write the **SME Portal Access-Control Matrix 
 
 **2. The approve-payment button is hidden for Viewers, but a Viewer who sends the request directly gets a 200 response. What kind of flaw is this?**
 
-- A. Broken function level authorization: the server does not check whether the role may call the operation
-- B. Cross-site request forgery
-- C. Session fixation
-- D. Broken object property level authorization
+- A. Broken function level authorization: the server never checks whether this role may call the requested operation at all
+- B. Cross-site request forgery, because the request reaches the server from another page with the user's own rights
+- C. Session fixation, because the attacker forces a session ID they know on the victim before sign-in
+- D. Broken object property level authorization, because the server exposes fields this role may not see
 
 <details><summary>Answer</summary>
 
@@ -824,10 +831,10 @@ After Mariam's test, Ali and Tariq write the **SME Portal Access-Control Matrix 
 
 **4. Tariq's team enables PostgreSQL row-level security on `invoices`, but a query without a company filter still returns every company's rows. The application connects as the role that owns the table. What is the most likely cause?**
 
-- A. Row-level security only works on views
-- B. Table owners bypass row-level security unless `FORCE ROW LEVEL SECURITY` is set, so the app should also connect as a separate non-owner role
-- C. The policy has to be written in application code instead
-- D. Row-level security does not support UUID columns
+- A. Row-level security only works on views, so it has no effect on the base tables the app connects to
+- B. Table owners bypass row-level security unless `FORCE ROW LEVEL SECURITY` is set, so the app should connect as a separate non-owner role
+- C. The policy has to be written in application code instead, because the database itself has no way to know which company is making each request
+- D. Row-level security does not support UUID columns, so it ignores the policy when filtering by company ID
 
 <details><summary>Answer</summary>
 

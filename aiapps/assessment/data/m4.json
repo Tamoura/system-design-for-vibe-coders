@@ -45,10 +45,10 @@
           "Split at headings and list items, add overlap and put the title in the chunk text"
         ],
         "ar": [
-          "إضافة BM25 ودمج ترتيبه مع ترتيب البحث المتجهي (vector search) بدمج الرتب التبادلي (RRF)",
+          "إضافة BM25 ودمج ترتيبه مع ترتيب البحث المتجهي بدمج مقلوب الرتب (RRF)",
           "إضافة مُعيد ترتيب (reranker) يُبقي الأفضل من أعلى 20 مرشحًا للموجّه",
-          "تشديد الموجّه (prompt) ليجيب النموذج من الوثائق المعطاة فقط ويستشهد بمعرّفاتها (ids)",
-          "التقسيم عند العناوين والقوائم مع تداخل ووضع العنوان في نص المقطع"
+          "تشديد الموجّه ليجيب النموذج من الوثائق فقط ويستشهد بمعرّفاتها",
+          "التقسيم عند العناوين وعناصر القوائم، مع إضافة تداخل ووضع العنوان في نص المقطع"
         ]
       },
       "a": 3,
@@ -128,7 +128,7 @@
       "lesson": "4.2",
       "text": {
         "en": "I have run compare.py on the ten labelled questions and recorded recall at 3 and MRR for vector, BM25 and hybrid search in NOTES.md, without editing the questions or MIN_SIM to improve the numbers.",
-        "ar": "لقد شغّلتُ `compare.py` على الأسئلة العشرة الموسومة، ودوّنتُ الاستدعاء عند 3 (recall at 3) ومتوسط الرتبة التبادلية للبحث المتجهي (vector search) وBM25 والبحث الهجين (hybrid search) في `NOTES.md`، من دون تعديل الأسئلة أو `MIN_SIM` لتحسين الأرقام."
+        "ar": "لقد شغّلتُ `compare.py` على الأسئلة العشرة الموسومة، ودوّنتُ الشمول عند 3 (recall at 3) وMRR للبحث المتجهي (vector search) وBM25 والبحث الهجين (hybrid search) في `NOTES.md`، من دون تعديل الأسئلة أو `MIN_SIM` لتحسين الأرقام."
       }
     }
   ]

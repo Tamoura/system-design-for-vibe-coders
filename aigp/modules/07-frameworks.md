@@ -9,7 +9,7 @@
 # 7.1 — OECD principles and the NIST AI RMF
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 2.1, 6.1* · *BoK: II.D*
 
-**After this you can** assign governance activities to the NIST AI RMF functions, and build a chatbot risk register that rates all twelve NIST AI 600-1 risks. *Study time: about 110 minutes (estimate).*
+**After this you can** assign governance activities to the NIST AI RMF functions, and build a chatbot risk register that rates all twelve NIST AI 600-1 risks. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -304,7 +304,7 @@ Decision recorded: *"The copilot remains in pilot for 20 relationship managers u
 # 7.2 — ISO/IEC 42001 and the AI standards family
 *Level: 🟡 Intermediate* · *Prerequisites: 7.1, 6.2* · *BoK: II.D*
 
-**After this you can** map activities to ISO/IEC 42001 clauses, draft a Statement of Applicability outline, and write five questions that test a vendor's 42001 certificate. *Study time: about 105 minutes (estimate).*
+**After this you can** map activities to ISO/IEC 42001 clauses, draft a Statement of Applicability outline, and write five questions that test a vendor's 42001 certificate. *Study time: reading about 15 min, hands-on about 100 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -547,7 +547,7 @@ A **vendor-certificate rule** is added to the procurement standard:
 # 7.3 — The global map: other frameworks that shape practice
 *Level: 🟡 Intermediate* · *Prerequisites: 7.1, 7.2* · *BoK: II.D*
 
-**After this you can** sort AI instruments by how binding they are, and map one human-oversight control to at least five framework references with the evidence and gaps. *Study time: about 110 minutes (estimate).*
+**After this you can** sort AI instruments by how binding they are, and map one human-oversight control to at least five framework references with the evidence and gaps. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -601,7 +601,7 @@ Eleven **policy action areas** follow, supported by a **Readiness Assessment Met
 
 Regulators such as the ICO (data protection), the FCA and the Bank of England (financial services), the CMA (competition) and Ofcom interpret these for their sectors. The government created an AI Safety Institute, renamed the **AI Security Institute** in 2025. The UK GDPR still applies, and the **Data (Use and Access) Act 2025** revised the UK's rules on automated decision-making. Proposals for legislation on the most powerful AI models have been discussed. **Check current status** before relying on any detail.
 
-**United States: no comprehensive federal AI law.** Executive Order 14110 (2023) was **revoked in January 2025**; later federal action has focused on AI leadership and on challenging or pre-empting state AI laws. **Check the current position.** What stays constant is that **existing laws apply to AI**: the FTC Act (unfair or deceptive practices), the Equal Credit Opportunity Act and Regulation B (including specific reasons in adverse-action notices, even when a complex model is used), the Fair Housing Act, Title VII and the ADA in employment. Banking regulators apply model-risk management expectations to AI models. At state level, **NYC Local Law 144** requires bias audits and notices for automated employment decision tools, and the **Colorado AI Act** (SB 24-205) imposes duties on developers and deployers of high-risk AI systems, with its effective date postponed to 30 June 2026; check whether it has taken effect or changed again. The **NIST AI RMF** (7.1) remains the reference framework.
+**United States: no comprehensive federal AI law.** Executive Order 14110 (2023) was **revoked in January 2025**; later federal action has focused on AI leadership and on challenging or pre-empting state AI laws. **Check the current position.** What stays constant is that **existing laws apply to AI**: the FTC Act (unfair or deceptive practices), the Equal Credit Opportunity Act and Regulation B (including specific reasons in adverse-action notices, even when a complex model is used), the Fair Housing Act, Title VII and the ADA in employment. Banking regulators apply model-risk management expectations to AI models. At state level, **NYC Local Law 144** requires bias audits and notices for automated employment decision tools, and the 2024 **Colorado AI Act** (SB 24-205), which would have imposed duties on developers and deployers of high-risk AI systems, was repealed and replaced in May 2026 by **SB 26-189**. The new law covers automated decision-making technology (ADMT) that materially influences consequential decisions, with narrower duties centred on notices, consumer rights and record-keeping, from 1 January 2027; check its current status and any implementing rules. The **NIST AI RMF** (7.1) remains the reference framework.
 
 **China: binding, targeted rules.** China regulates specific AI services through the Cyberspace Administration of China (CAC) and other agencies:
 
@@ -620,7 +620,7 @@ China has also issued an AI Safety Governance Framework and many technical stand
 
 **The GCC.** Gulf states have moved fast on AI strategy and ethics, with binding rules coming mainly through data-protection law and sector regulators. Specifics change often, so treat what follows as orientation and **check official sources**.
 
-- **Qatar.** A **National Artificial Intelligence Strategy** (2019) set out Qatar's ambitions for AI in the economy, education and government. The **Personal Data Privacy Protection Law (Law No. 13 of 2016, PDPPL)** governs personal data. For Najm, the most directly relevant instrument is the **Qatar Central Bank's AI guideline for financial institutions**, which sets supervisory expectations for how licensed institutions govern AI. In general terms it covers governance and accountability, risk management, the fairness and transparency of AI outcomes for customers, data management, and oversight of third-party AI. Najm's AIMS should map each of its requirements to a control. Read the current guideline from QCB rather than relying on summaries.
+- **Qatar.** A **National Artificial Intelligence Strategy** (2019) set out Qatar's ambitions for AI in the economy, education and government. The **Personal Data Privacy Protection Law (Law No. 13 of 2016, PDPPL)** governs personal data. For Najm, the most directly relevant instrument is the **Qatar Central Bank's AI guideline for financial institutions**, issued on 4 September 2024, which sets supervisory expectations for how licensed institutions govern AI and requires QCB approval before certain AI systems, such as new or materially changed ones, are launched (check the current text for which). In general terms it covers governance and accountability, risk management, the fairness and transparency of AI outcomes for customers, data management, and oversight of third-party AI. Najm's AIMS should map each of its requirements to a control. Read the current guideline from QCB rather than relying on summaries.
 - **Saudi Arabia.** The Saudi Data and Artificial Intelligence Authority (**SDAIA**) published **AI Ethics Principles**, covering fairness; privacy and security; humanity; social and environmental benefits; reliability and safety; transparency and explainability; and accountability and responsibility. It has also issued guidance on generative AI. The **Personal Data Protection Law** has been in force since 2023, supervised by SDAIA.
 - **United Arab Emirates.** The UAE appointed a Minister of State for AI in 2017 and published a **National Strategy for Artificial Intelligence 2031**. It has issued a **UAE Charter for the Development and Use of AI** (2024) and AI ethics guidance. Personal data is governed by the federal **PDPL (Federal Decree-Law No. 45 of 2021)**. The **DIFC Data Protection Law**, through **Regulation 10**, adds specific requirements for personal data processed by autonomous and semi-autonomous systems in the DIFC free zone.
 

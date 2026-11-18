@@ -9,7 +9,7 @@
 # 2.1 — Software and full-stack engineer
 *Level: 🟢 Beginner* · *Prerequisites: 0.2, 1.1, 1.3* · *Step: Explore, Learn*
 
-**After this you can** mark the software study path against the proof you can show today and turn the gaps into a one-page eight-week plan with one proof per week. *Study time: about 105 minutes (estimate).*
+**After this you can** mark the software study path against the proof you can show today and turn the gaps into a one-page eight-week plan with one proof per week. *Study time: reading about 20 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A junior software engineer is trusted to take a small, well-described change, build it with tests, get it reviewed, ship it safely, and explain what it does. In 2026 that often means directing an AI coding agent and checking its work.
@@ -243,7 +243,7 @@ Khalid's three rules for the table:
 # 2.2 — AI application engineer
 *Level: 🟢 Beginner* · *Prerequisites: 1.2, 2.1* · *Step: Explore, Learn*
 
-**After this you can** write a three-sentence quality bar for an AI feature and build a golden set of at least 30 cases whose evaluation reruns with one command. *Study time: about 125 minutes (estimate).*
+**After this you can** write a three-sentence quality bar for an AI feature and build a golden set of at least 30 cases whose evaluation reruns with one command. *Study time: reading about 15 min, hands-on about 11 h (estimate).*
 
 ## ⚡ In 60 seconds
 - An **AI application engineer** builds product features on top of existing AI models, usually through an API: prompts, retrieval over company documents, tool use, agents, guardrails and evaluation. They rarely train models from scratch.
@@ -480,7 +480,7 @@ After the interview, Najm offers Reem a place in the programme's software track,
 # 2.3 — Data engineer, analyst and data scientist
 *Level: 🟢 Beginner* · *Prerequisites: 0.2, 1.1* · *Step: Explore, Learn*
 
-**After this you can** choose a data role from written evidence and write SQL joins and window functions on a public dataset, recording row counts to catch a join that changes them unexpectedly. *Study time: about 120 minutes (estimate).*
+**After this you can** choose a data role from written evidence and write SQL joins and window functions on a public dataset, recording row counts to catch a join that changes them unexpectedly. *Study time: reading about 15 min, hands-on about 14 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Three different jobs share the word "data". A **data analyst** answers business questions with SQL, metrics and dashboards. A **data engineer** builds the pipelines and models that make data reliable. A **data scientist** builds models and experiments to predict or explain.
@@ -587,6 +587,8 @@ SELECT n.customer_id, COALESCE(s.spend, 0) AS spend
 FROM new_customers n
 LEFT JOIN spend s ON s.customer_id = n.customer_id;
 ```
+
+Count the rows to see it: a customer with two accounts and 10 transactions gives 20 joined rows in the wrong query, so the sum doubles; in the right one, 10 transactions collapse to 1 spend row before the join, and the customer gets 1 row.
 
 The fix also adds the "last month" filter the wrong version forgot, and keeps customers who spent nothing. Spotting those three issues aloud is exactly what interviewers listen for.
 
@@ -748,13 +750,13 @@ Dana's rule: "Every week ends with a row count you checked by hand."
 # 2.4 — Cloud, platform, DevOps and security engineer
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.3* · *Step: Explore, Learn*
 
-**After this you can** trace a request to a public website command by command, and rebuild a small service from infrastructure as code with a budget alert set first. *Study time: about 120 minutes (estimate).*
+**After this you can** trace a request to a public website command by command, and rebuild a small service from infrastructure as code with a budget alert set first. *Study time: reading about 15 min, hands-on about 15 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Cloud, DevOps, site reliability (SRE) and platform engineers** build and run the systems other engineers ship on: servers, networks, containers, pipelines, monitoring. **Security engineers** protect those systems and the software on them.
 - Both start from the same foundations: Linux, networking, one cloud, identity and access, and automation written as code.
 - The proof that matters most: **a system you can rebuild from a repository**, with a pipeline, monitoring and a runbook. "I set it up in the console once" is not proof.
-- Pure entry-level openings are often fewer here than in software engineering at the time of writing (2026). Common routes in are graduate rotations, operations or support roles, and software roles that take on operational work.
+- Pure entry-level openings are often fewer here than in software engineering (a 2026 observation; check it against your own market scan). Common routes in are graduate rotations, operations or support roles, and software roles that take on operational work.
 - Biggest traps: collecting certifications with nothing running behind them and, for security, testing systems you have no permission to test.
 
 ## 🧭 Why it matters

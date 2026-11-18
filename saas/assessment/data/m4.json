@@ -18,15 +18,15 @@
     ],
     "ar": [
      "انقل الإرسال إلى مهمة في طابور كي يُعاد إرسال التنبيهات الفاشلة لاحقًا",
-     "استخدم مزوّد إرسال، وانشر سجلات SPF وDKIM وDMARC متوافقة مع نطاق From:",
+     "استخدم مزوّد إرسال، وانشر SPF وDKIM وDMARC متوافقة مع نطاق From:",
      "أعد بناء قوالب التنبيهات بـ React Email كي تُعرض جيدًا في Gmail",
      "اطلب من كل عميل أن يضيف alerts@beacon.app إلى دفتر عناوينه"
     ]
    },
    "a": 1,
    "why": {
-    "en": "Delivery is decided by the receiving mailbox provider on domain authentication and reputation, and since 2024 Gmail and Yahoo reject unauthenticated mail, so the fix is a provider plus aligned SPF, DKIM and DMARC. A queue keeps provider outages away from user requests, but a retried alert from an unauthenticated domain still lands in spam.",
-    "ar": "يقرر تسليمَ البريد مزوّدُ صندوق البريد المستقبِل بناءً على مصادقة النطاق والسمعة، ومنذ 2024 ترفض Gmail وYahoo البريد غير المُصادَق، لذا فالحل مزوّد إرسال مع سجلات SPF وDKIM وDMARC متوافقة. أما الطابور فيُبعد أعطال المزوّد عن طلبات المستخدمين، لكن التنبيه المُعاد إرساله من نطاق غير مُصادَق يصل مع ذلك إلى الرسائل غير المرغوب فيها."
+    "en": "Delivery is decided by the receiving mailbox provider on domain authentication and reputation, and since 2024 Gmail and Yahoo have been rejecting more and more unauthenticated mail, so the fix is a provider plus aligned SPF, DKIM and DMARC. A queue keeps provider outages away from user requests, but a retried alert from an unauthenticated domain still lands in spam.",
+    "ar": "يقرر تسليمَ البريد مزوّدُ صندوق البريد المستقبِل بناءً على مصادقة النطاق والسمعة، ومنذ 2024 ترفض Gmail وYahoo قدرًا متزايدًا من البريد غير المُصادَق، لذا فالحل مزوّد إرسال مع سجلات SPF وDKIM وDMARC متوافقة. أما الطابور فيُبعد أعطال المزوّد عن طلبات المستخدمين، لكن التنبيه المُعاد إرساله من نطاق غير مُصادَق يصل مع ذلك إلى الرسائل غير المرغوب فيها."
    }
   },
   {
@@ -39,22 +39,22 @@
    },
    "o": {
     "en": [
-     "A throttle of at most 5 SMS per user per hour, with email fallback",
+     "A throttle of at most 5 SMS per user per hour, with an email fallback",
      "A hysteresis rule of 3 consecutive failed checks before opening",
      "A 30-minute digest window that merges the alerts into one message",
-     "A unique dedupe key for each incident, state and recipient, checked before sending"
+     "A unique dedupe key per incident, state and recipient, checked first"
     ],
     "ar": [
      "تحديد معدل بحد أقصى 5 رسائل SMS لكل مستخدم في الساعة، مع بديل بالبريد",
-     "قاعدة تخلّف تشترط 3 فحوص فاشلة متتالية قبل فتح الحادثة",
-     "نافذة ملخّص مدتها 30 دقيقة تدمج التنبيهات في رسالة واحدة",
-     "مفتاح منع تكرار فريد لكل حادثة وحالة ومستلم"
+     "قاعدة تخلّف تشترط 3 فحوص فاشلة متتالية قبل أن تُفتح أي حادثة",
+     "نافذة ملخّص مدتها 30 دقيقة تدمج هذه التنبيهات في رسالة واحدة",
+     "مفتاح فريد لمنع التكرار لكل حادثة وحالة ومستلم، يُفحص قبل أي إرسال"
     ]
    },
    "a": 3,
    "why": {
     "en": "Dedupe asks \"have I already sent this exact thing?\": a unique dedupeKey per incident, state and recipient makes the retried notify() find the existing notification and skip it. A throttle only asks whether too much was sent recently, so a duplicate under the five-an-hour cap still goes out.",
-    "ar": "منع التكرار (dedupe) يجيب عن سؤال \"هل أرسلتُ هذا الشيء نفسه من قبل؟\" ⁦(have I already sent this exact thing?)⁩: فمفتاح dedupeKey فريد لكل حادثة وحالة ومستلم يجعل notify() المُعاد تشغيلها تجد الإشعار الموجود فتتخطاه. أما تحديد المعدل فيسأل فقط هل أُرسل الكثير مؤخرًا، فالرسالة المكررة تحت سقف الخمس في الساعة تُرسَل مع ذلك."
+    "ar": "منع التكرار (dedupe) يجيب عن سؤال \"هل أرسلتُ هذا الشيء نفسه من قبل؟\": فمفتاح dedupeKey فريد لكل حادثة وحالة ومستلم يجعل notify() المُعاد تشغيلها تجد الإشعار الموجود فتتخطاه. أما تحديد المعدل فيسأل فقط هل أُرسل الكثير مؤخرًا، فالرسالة المكررة تحت سقف الخمس في الساعة تُرسَل مع ذلك."
    }
   },
   {
@@ -63,7 +63,7 @@
    "lesson": "4.3",
    "q": {
     "en": "At Beacon, two engineers save the same monitor's settings from stale browser tabs, and two others type into the same postmortem at the same time. In both cases the later save silently overwrites the earlier one. Which pair of strategies fits?",
-    "ar": "في Beacon، يحفظ مهندسان إعدادات المراقبة نفسها من علامات تبويب قديمة، ويكتب مهندسان آخران في تقرير ما بعد الحادثة نفسه في الوقت ذاته. وفي الحالتين يكتب الحفظ اللاحق فوق السابق بصمت. أي زوج من الاستراتيجيات يناسب الحالتين؟"
+    "ar": "في Beacon، يحفظ مهندسان إعدادات المراقبة نفسها من علامات تبويب قديمة، ويكتب مهندسان آخران في تقرير مراجعة ما بعد الحادثة نفسه في الوقت ذاته. وفي الحالتين يكتب الحفظ اللاحق فوق السابق بصمت. أي زوج من الاستراتيجيات يناسب الحالتين؟"
    },
    "o": {
     "en": [
@@ -73,16 +73,16 @@
      "Optimistic locking for the settings, and a home-built CRDT for the postmortem"
     ],
     "ar": [
-     "القفل المتفائل للإعدادات، وCRDT من Yjs لتقرير ما بعد الحادثة",
-     "القفل المتفائل للاثنين، فيُرفض كل حفظ قديم برمز 409 (409 response)",
+     "القفل المتفائل للإعدادات، وCRDT من Yjs لمحرر تقرير مراجعة ما بعد الحادثة",
+     "القفل المتفائل للاثنين، فيُرفض كل حفظ قديم برمز 409",
      "الكتابة الأخيرة تفوز للاثنين، مع ترتيب الحفظ بطوابع زمنية دقيقة من الخادم",
-     "القفل المتفائل للإعدادات، وCRDT مبني داخليًا لتقرير ما بعد الحادثة"
+     "القفل المتفائل للإعدادات، وCRDT مبني داخليًا لتقرير مراجعة ما بعد الحادثة"
     ]
    },
    "a": 0,
    "why": {
     "en": "A form like monitor settings needs only a version column and a 409 on stale writes, but live shared text needs a CRDT such as Yjs (with Hocuspocus) so concurrent edits merge with none lost. Optimistic locking on the postmortem would keep rejecting one co-author, and a home-built CRDT is the trap the lesson warns against, because its edge cases take years to get right.",
-    "ar": "النموذج مثل إعدادات المراقبة يكفيه عمود إصدار ورمز 409 عند الكتابات القديمة، أما النص المشترك الحي فيحتاج إلى CRDT مثل Yjs (مع Hocuspocus) كي تندمج التعديلات المتزامنة دون ضياع أي منها. أما القفل المتفائل (optimistic locking) على تقرير ما بعد الحادثة فسيظل يرفض أحد الكاتبين المشاركين، وأما CRDT المبني داخليًا فهو الفخ الذي يحذّر منه الدرس، لأن حالاته الحدّية تحتاج سنوات حتى تصبح صحيحة."
+    "ar": "النموذج مثل إعدادات المراقبة يكفيه عمود إصدار ورمز 409 عند الكتابات القديمة، أما النص المشترك الحي فيحتاج إلى CRDT مثل Yjs (مع Hocuspocus) كي تندمج التعديلات المتزامنة دون ضياع أي منها. أما القفل المتفائل (optimistic locking) على تقرير مراجعة ما بعد الحادثة فسيظل يرفض أحد الكاتبين المشاركين، وأما CRDT المبني داخليًا فهو الفخ الذي يحذّر منه الدرس، لأن حالاته الحدّية تحتاج سنوات حتى تصبح صحيحة."
    }
   },
   {

@@ -26,7 +26,7 @@
       "a": 2,
       "why": {
         "en": "`end_turn` only says the model stopped; success is `end_turn` plus a check in code, here that every ticket id in the goal appears in the answer, and a failed check ends in a hand-off. Counting it as done (A) lets a premature finish reach the user as \"Done\", and a model asked to review its own answer (B) brings no new information.",
-        "ar": "`end_turn` يدل على أن النموذج توقف فقط؛ أما النجاح فهو `end_turn` مع فحص في الشيفرة، وهنا أن يرد كل رقم تذكرة من الهدف في الإجابة، والفحص الفاشل ينتهي بتسليم إلى شخص. أما عدّ التشغيل ناجحًا فيترك إنهاءً مبتسرًا يصل إلى المستخدم على أنه «تم»، وأما مراجعة النموذج لإجابته بنفسه (الخيار B) فلا تأتي بمعلومة جديدة."
+        "ar": "`end_turn` يدل على أن النموذج توقف فقط؛ أما النجاح فهو `end_turn` مع فحص في الشيفرة، وهنا أن يرد كل رقم تذكرة من الهدف في الإجابة، والفحص الفاشل ينتهي بتسليم إلى شخص. أما عدّ التشغيل ناجحًا (A) فيترك إنهاءً مبتسرًا يصل إلى المستخدم على أنه «تم»، وأما مراجعة النموذج لإجابته بنفسه (B) فلا تأتي بمعلومة جديدة."
       }
     },
     {
@@ -35,7 +35,7 @@
       "lesson": "8.1",
       "q": {
         "en": "A Najm Desk run asks TicketHub for the status of ticket 4471, and the call returns a 503. The run has 18 seconds left of its 30-second deadline. What should the loop do?",
-        "ar": "تطلب حلقة نجم ديسك من TicketHub حالة التذكرة 4471، فيعيد الاستدعاء الخطأ 503. وقد بقي 18 ثانية من مهلة التشغيل البالغة 30 ثانية. ماذا ينبغي أن تفعل الحلقة؟"
+        "ar": "تطلب حلقة نجم ديسك من TicketHub حالة التذكرة 4471، فيعيد الاستدعاء الخطأ 503. وقد بقي 18 ثانية من الموعد النهائي للتشغيل البالغ 30 ثانية. ماذا ينبغي أن تفعل الحلقة؟"
       },
       "o": {
         "en": [
@@ -45,7 +45,7 @@
           "Retry the call in code at once, again and again, until TicketHub answers"
         ],
         "ar": [
-          "تعيد المحاولة (retry) في الشيفرة بتراجع أسي (backoff) وإزاحة عشوائية (jitter) ضمن المهلة",
+          "تعيد المحاولة (retry) في الشيفرة بتأخير أسي (backoff) وإزاحة عشوائية (jitter) ضمن الموعد النهائي",
           "ترسل إلى النموذج نتيجة `is_error` تقول إن TicketHub مشغول، ويقرر هو",
           "تسلّم التشغيل إلى مكتب الخدمة فورًا، لأن الأداة فشلت",
           "تعيد المحاولة (retry) في الشيفرة فورًا ومرارًا وتكرارًا وبلا توقف حتى يردّ TicketHub"
@@ -54,7 +54,7 @@
       "a": 0,
       "why": {
         "en": "A 503 is a transient fault, and recovering from it is your code's job: retry with growing waits and a random offset inside the deadline, then report the tool unavailable. Leaving it to the model (B) turns every retry into a full model call that re-sends the whole history; retrying at once without limit (D) hammers a struggling service and ignores the deadline.",
-        "ar": "الخطأ 503 عطل عابر، وإصلاحه مهمة شيفرتك: أعد المحاولة بانتظار متزايد وإزاحة عشوائية (backoff and jitter) داخل المهلة، ثم أبلغ أن الأداة غير متاحة. وترك الأمر للنموذج (الخيار B) يحوّل كل إعادة محاولة إلى استدعاء كامل للنموذج يعيد إرسال السجل كله، وإعادة المحاولة فورًا بلا حدّ (الخيار D) تُجهد خدمة متعثرة وتتجاهل المهلة."
+        "ar": "الخطأ 503 عطل عابر، وإصلاحه مهمة شيفرتك: أعد المحاولة بانتظار متزايد وإزاحة عشوائية (backoff and jitter) داخل الموعد النهائي، ثم أبلغ أن الأداة غير متاحة. وترك الأمر للنموذج (B) يحوّل كل إعادة محاولة إلى استدعاء كامل للنموذج يعيد إرسال السجل كله، وإعادة المحاولة فورًا بلا حدّ (D) تُجهد خدمة متعثرة وتتجاهل الموعد النهائي."
       }
     },
     {
@@ -101,8 +101,8 @@
           "Whether an `end_turn` with no text at all ends in a hand-off instead of in `done`"
         ],
         "ar": [
-          "هل يوقف حدّ الخطوات (step cap) تشغيلًا لا يصل فيه النموذج إلى `end_turn` أبدًا مهما طالت الحلقة",
-          "هل يغيّر نموذج حقيقي مدخل استدعاء مكرَّر فيفوت حاجز المطابقة التامة",
+          "هل يوقف حدّ الخطوات تشغيلًا لا يصل فيه النموذج إلى `end_turn` أبدًا",
+          "هل يغيّر نموذج حقيقي مدخل استدعاء مكرَّر، فيفوت ذلك حاجز المطابقة التامة",
           "هل تسرد حزمة التسليم الاستدعاءات التي جُرّبت كلها قبل أن يعمل الحاجز",
           "هل ينتهي `end_turn` بلا أي نص إلى تسليم إلى شخص (hand-off) لا إلى `done`"
         ]
@@ -110,7 +110,7 @@
       "a": 1,
       "why": {
         "en": "Green offline proves your code only: directives simulate failures and the playbook scripts recoveries, so the step cap (A), the packet (C) and the empty-answer check (D) are all shown there. Only the real API shows whether a model changes a repeated call's input and slips past an exact-match guard (B), whether it recovers from an `is_error`, and what latency and tokens really are.",
-        "ar": "النجاح دون اتصال يثبت شيفرتك وحدها: فالتوجيهات تحاكي الإخفاقات، وملف السيناريوهات (playbook) يكتب الاستعادات سلفًا، فيظهر هناك حدّ الخطوات وحزمة التسليم (الخيار C) وفحص الإجابة الفارغة (الخيار D). والواجهة الحقيقية وحدها تُظهر هل يغيّر النموذج مدخل استدعاء مكرَّر فيفوت حاجز المطابقة التامة (الخيار B)، وهل يتعافى من `is_error`، وما الكمون (latency) والرموز (tokens) الفعليان."
+        "ar": "النجاح دون اتصال يثبت شيفرتك وحدها: فالتوجيهات تحاكي الإخفاقات، وملف السيناريوهات (playbook) يكتب الاستعادات سلفًا، فيظهر هناك حدّ الخطوات (A) وحزمة التسليم (C) وفحص الإجابة الفارغة (D). والواجهة الحقيقية وحدها تُظهر هل يغيّر النموذج مدخل استدعاء مكرَّر فيفوت حاجز المطابقة التامة (B)، وهل يتعافى من `is_error`، وما الكمون (latency) والرموز (tokens) الفعليان."
       }
     }
   ],

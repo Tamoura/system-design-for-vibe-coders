@@ -9,7 +9,7 @@
 # 10.1 — Release readiness and conformity
 *Level: 🔴 Advanced* · *Prerequisites: 6.2, 8.3, 9.3* · *BoK: III.C*
 
-**After this you can** write a release checklist naming who provides each piece of evidence, and set measurable go/no-go criteria and rollback triggers for a staged rollout. *Study time: about 110 minutes (estimate).*
+**After this you can** write a release checklist naming who provides each piece of evidence, and set measurable go/no-go criteria and rollback triggers for a staged rollout. *Study time: reading about 20 min, hands-on about 110 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -80,7 +80,7 @@ flowchart LR
 
 **The deployer's readiness steps.** Before using a high-risk system, a deployer must be able to follow the instructions for use, assign human oversight to people with the necessary competence, training, authority and support (Art. 26), ensure input data under its control is relevant and sufficiently representative, and, as an employer, inform workers' representatives and affected workers. Public bodies, and deployers using a system for **credit scoring or life and health insurance pricing**, must complete a **fundamental rights impact assessment (FRIA)** under Art. 27 before first use (see 11.3). Najm, as provider and deployer, needs both sets of steps.
 
-**Outside the EU.** Najm's Qatar and UAE operations need no CE marking, but the discipline still applies. QCB's AI guideline for financial institutions expects governance, testing and ongoing oversight of AI; read the current text on the QCB website. Banks also have **model risk management** policies (the US Federal Reserve and OCC's 2011 guidance, SR 11-7, is the classic reference) requiring independent validation and "effective challenge". An AI release gate should reuse this machinery, not duplicate it.
+**Outside the EU.** Najm's Qatar and UAE operations need no CE marking, but the discipline still applies. QCB's AI guideline for financial institutions expects governance, testing and ongoing oversight of AI; read the current text on the QCB website. Banks also have **model risk management** policies (the US Federal Reserve and OCC's 2011 guidance, SR 11-7, is the classic reference; SR 26-2 replaced it in April 2026) requiring independent validation and "effective challenge". An AI release gate should reuse this machinery, not duplicate it.
 
 ### 🔴 Expert view
 
@@ -129,7 +129,7 @@ Layla's team turns the release gate into a one-page **Release Decision Record**,
 | Evidence | Validation report MV-2026-031 · Bias report DS-117 (now incl. EU portfolio) · Security review SEC-442 · Rollback test RB-19 |
 | Documentation | Technical documentation v2 · Instructions for use v2 (final) · System card · Monitoring plan MP-CS-2 · DPIA v3 (Sara signed) · FRIA v1 |
 | EU conformity | Internal-control assessment complete · Declaration of conformity signed by the CRO · Digital CE marking · Registered in EU database |
-| Rollout plan | 4 weeks shadow → 2-week pilot in Doha retail → 10% canary → full. Rollback triggers: PSI > 0.25 on key inputs, approval-rate ratio < 0.85, complaint spike > 2× baseline |
+| Rollout plan | 4 weeks shadow → 2-week pilot in Doha retail → 10% canary → full. Rollback triggers: PSI (population stability index, a drift measure; see 10.2) > 0.25 on key inputs, approval-rate ratio < 0.85, complaint spike > 2× baseline |
 | Fallback | v1 scorecard kept warm; manual underwriting rota for referrals |
 | Sign-offs | Model owner (Dana) · Independent validation (Model Validation Unit) · DPO (Sara) · CDO (Omar) · Business owner accepting residual risk (Khalid) · AI Governance Committee approval, minute 2026-07 |
 | Conditions | Monitoring dashboard live before pilot (owner: Omar) · Credit-officer training ≥ 95% complete before pilot (owner: Khalid) |
@@ -140,7 +140,7 @@ Khalid lost his Sunday launch; v2 went live six weeks later with a clean file.
 
 - 🟢 List ten release-checklist items for Najm's customer-service chatbot (limited risk under the AI Act), marking which the credit model also needs. *Done when:* each item names who provides the evidence.
 - 🟡 Draft go/no-go criteria for Najm's fraud-detection model, explaining why EU conformity steps do not apply (fraud detection is excluded from the Annex III credit category) but fairness and rollback criteria still do. *Done when:* each of the six areas has a measurable criterion.
-- 🔴 Design a staged rollout for credit-scoring v2 covering EU customers: which stage counts as putting into service, what must be complete before it, and which rollback triggers apply. *Done when:* a regulator could see that no EU applicant was scored by a non-conformant system.
+- 🔴 Design a staged rollout for credit-scoring v2 covering EU customers: which stage counts as putting into service, what must be complete before it, and which rollback triggers apply. *Done when:* your plan shows, stage by stage, which version scored EU applicants, and names the evidence (conformity record, logs) proving none was scored by a non-conformant system.
 
 ## ⚠️ Mistakes and exam traps
 
@@ -240,7 +240,7 @@ Khalid lost his Sunday launch; v2 went live six weeks later with a clean file.
 # 10.2 — Monitoring, drift and incidents
 *Level: 🔴 Advanced* · *Prerequisites: 10.1, 9.3* · *BoK: III.C*
 
-**After this you can** choose monitoring signals that detect drift, quality problems or harm, and build a reporting timeline from awareness to each notification for an AI incident. *Study time: about 110 minutes (estimate).*
+**After this you can** choose monitoring signals that detect drift, quality problems or harm, and build a reporting timeline from awareness to each notification for an AI incident. *Study time: reading about 15 min, hands-on about 110 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -384,7 +384,7 @@ After the employer-field event, Layla and Omar rebuild the credit model's **moni
 ## 🛠️ Exercises
 
 - 🟢 For Najm's customer-service chatbot, list five monitoring signals and say for each whether it detects data drift, concept drift, quality problems or customer harm. *Done when:* each signal has a named owner.
-- 🟡 Draft the monitoring section of the instructions for use Najm (as provider) gives its credit officers (as deployers): what to watch, how to report, when to stop using the score. *Done when:* a branch manager could follow it unaided.
+- 🟡 Draft the monitoring section of the instructions for use Najm (as provider) gives its credit officers (as deployers): what to watch, how to report, when to stop using the score. *Done when:* every instruction is an action with a threshold or an example, and no term is used without a plain explanation.
 - 🔴 A credit model under-scores applicants of one nationality for two months before anyone notices. Decide which reporting regimes may apply, what facts you need and the deadlines. *Done when:* you have a timeline from "aware" to each possible notification, with a named decision-maker.
 
 ## ⚠️ Mistakes and exam traps
@@ -486,7 +486,7 @@ After the employer-field event, Layla and Omar rebuild the credit model's **moni
 # 10.3 — Change management, maintenance and retirement
 *Level: 🔴 Advanced* · *Prerequisites: 10.2, 6.2* · *BoK: III.C*
 
-**After this you can** classify model changes with a change matrix, write a pre-determined changes section an assessor could check, and draft a decommissioning plan with owners and dates. *Study time: about 110 minutes (estimate).*
+**After this you can** classify model changes with a change matrix, write a pre-determined changes section an assessor could check, and draft a decommissioning plan with owners and dates. *Study time: reading about 20 min, hands-on about 110 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -521,7 +521,7 @@ Change and retirement are where good release governance quietly decays. Twelve s
 | Upstream or vendor change | Foundation-model provider releases a new version; data vendor recodes a field | Change arrives from outside, often unannounced |
 | Infrastructure and dependency | Library upgrade, new serving platform | Can alter numeric results or availability |
 
-**Versioning.** A **model registry** records, for every version: the model artefact, the training-data snapshot, the code commit, the configuration (features, thresholds, hyperparameters), validation results and approvals. Decisions are logged with the version that made them (10.2). Together these give **lineage**: the ability to reconstruct any past decision for a complaint, a regulator or a court.
+**Versioning.** A **model registry** records, for every version: the model artefact, the training-data snapshot, the code commit (the exact saved version of the code), the configuration (features, thresholds, and hyperparameters: settings fixed before training, such as how many trees to build), validation results and approvals. Decisions are logged with the version that made them (10.2). Together these give **lineage**: the ability to reconstruct any past decision for a complaint, a regulator or a court.
 
 **Re-validation triggers.** Define in advance what forces a system back through validation and approval:
 
@@ -574,7 +574,7 @@ Note the design choice: a change that "could affect compliance" is treated as si
 2. **Transition.** The replacement or fallback, a cut-over date, parallel running if needed, and staff briefing.
 3. **Notification.** Internal users and, where relevant, customers, the provider or deployers (if you are the provider of a system others use), and regulators if the system was registered or under supervisory review.
 4. **Retention.** Keep what law requires. EU high-risk providers keep technical documentation and the declaration of conformity for 10 years after placing on the market or putting into service (Art. 18). Banking law typically requires decision and customer records to be kept for years. Litigation holds override deletion.
-5. **Disposal.** Delete what is no longer needed. Under the GDPR's storage-limitation principle (Art. 5(1)(e)), personal data must not be kept longer than necessary, and erasure rights (Art. 17) still apply. Training extracts, feature stores, logs past their retention period, test sets and copies on laptops all count.
+5. **Disposal.** Delete what is no longer needed. Under the GDPR's storage-limitation principle (Art. 5(1)(e)), personal data must not be kept longer than necessary, and erasure rights (Art. 17) still apply. Training extracts, feature stores (shared databases of prepared model inputs), logs past their retention period, test sets and copies on laptops all count.
 6. **The model itself.** Models can memorise training data. The EDPB (Opinion 28/2024) has said that an AI model trained on personal data cannot automatically be treated as anonymous, so this must be assessed case by case. If the model is not anonymous, the model file may itself hold personal data and needs the same retention and disposal decision. Where the training data was unlawfully processed, authorities may order the model deleted, as the Everalbum case shows.
 7. **Records and inventory.** Revoke access and credentials, shut down endpoints, update the AI inventory to "retired" with the date and archive location, and record lessons learned.
 
@@ -619,7 +619,7 @@ The AI Governance Committee adopts a **change classification matrix** for all ti
 ## 🛠️ Exercises
 
 - 🟢 Classify these five changes to Najm's chatbot using the matrix: new greeting text; switching to a newer foundation-model version; adding a mortgage-rates FAQ; letting the bot tell customers whether they are likely to qualify for a loan; a security patch. *Done when:* each has a class and a one-line reason.
-- 🟡 Write the "pre-determined changes" section of the credit model's technical documentation so that monthly retraining is planned rather than a substantial modification: data window, fixed features, acceptance tests, rollback and reporting. *Done when:* an assessor could check any retrain against it.
+- 🟡 Write the "pre-determined changes" section of the credit model's technical documentation so that monthly retraining is planned rather than a substantial modification: data window, fixed features, acceptance tests, rollback and reporting. *Done when:* every element is a number, list or pass mark (window length, feature list, test thresholds) that a retrain either meets or fails.
 - 🔴 Najm's vendor CV-screening tool is being replaced. Draft the decommissioning plan: what Najm (the deployer) must obtain from the vendor about data deletion, which candidate records it keeps and for how long (state assumptions), and who is notified. *Done when:* all seven decommissioning elements have an owner and a date.
 
 ## ⚠️ Mistakes and exam traps

@@ -9,13 +9,13 @@
 # 1.1 — The one idea: a stateless function, tokens, the context window and the messages list
 *Level: 🟢 Beginner* · *Prerequisites: 0.2* · *Layer: Model*
 
-**After this you can** write out the exact `system` and `messages` sent on each call of a chat, and build a cost model that reproduces how input tokens and cost grow with every turn. *Study time: about 105 minutes (estimate).*
+**After this you can** write out the exact `system` and `messages` sent on each call of a chat, and build a cost model that reproduces how input tokens and cost grow with every turn. *Study time: reading about 15 min, hands-on about 75 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A large language model (LLM) is a **function**: a list of messages in, the next message out. It keeps nothing between calls, so **memory is what your code resends**. Every chatbot, copilot and agent calls it in a loop and decides what goes into the list.
 - The model reads and writes **tokens**. You pay for input tokens on every call (the whole history, again) and for output tokens (thinking included), so cost grows faster than the number of turns.
 - Know five things on every call: `system` (a parameter, not a message), `messages`, `max_tokens` (leave room for thinking), `stop_reason` and `usage`.
-- You mostly cannot set temperature on current Claude models. Get consistency from precise prompts, structured output and validation; test the shape of an answer, never its bytes.
+- Do not build on a temperature setting (which models accept one is in "How it works"). Get consistency from precise prompts, structured output and validation; test the shape of an answer, never its bytes.
 - Decision cue: when something "forgets", "costs too much" or "gets cut off", print the list, `usage` and `stop_reason` first.
 
 ## 🧭 Why it matters
@@ -41,7 +41,7 @@ sequenceDiagram
 
 > **Statelessness.** Every call starts from zero. "Conversation memory" is an illusion created by your code resending the history each time. It is the fact behind much of the confusion about LLMs, and much of the cost of running them.
 
-**Tokens.** The model reads *tokens*, sub-word chunks: a common English word is often one token, while a rare word, a number or an Arabic word may be several. For English prose, 4 characters per token is a rough rule (750 words is about 1,000 tokens), not a Claude fact. Code, JSON and other languages split differently; Arabic is often quoted at "two to three times" the English count per word. Do not rely on that figure; **measure** with `client.messages.count_tokens(...)` for your model. Counts are model-specific: Anthropic's notes say some newer models count the same text as about 30% more tokens than their predecessors, so an upgrade can change your bill. Never use `tiktoken` for Claude: it is another vendor's tokenizer and undercounts.
+**Tokens.** The model reads *tokens*, sub-word chunks: a common English word is often one token, while a rare word, a number or an Arabic word may be several. The old rule of thumb (4 characters per token, 750 English words per 1,000 tokens) undercounts current Claude models: Anthropic's models overview (checked November 2026) puts 1,000 tokens at roughly 555 English words on the tokenizer introduced with Opus 4.7. Code, JSON and other languages split differently; Arabic is often quoted at "two to three times" the English count per word. Do not rely on that figure; **measure** with `client.messages.count_tokens(...)` for your model. Counts are model-specific: Anthropic's notes say some newer models count the same text as about 30% more tokens than their predecessors, so an upgrade can change your bill. Never use `tiktoken` for Claude: it is another vendor's tokenizer and undercounts.
 
 **The context window** is the most tokens the model can handle in one call. Input and output (thinking included) must fit together.
 
@@ -253,7 +253,7 @@ Grades: 🟢 offline only, 🟡 offline plus a price page, 🔴 a real API key.
 # 1.2 — Lab: a chatbot with memory, break it on purpose, then your first agent loop
 *Level: 🟢 Beginner* · *Prerequisites: 0.2, 1.1* · *Layer: Model, Agents*
 
-**After this you can** build a chatbot with memory, write a tested `trim()` that keeps it inside the context window, and run and bound your first agent loop on the mock. *Study time: about 110 minutes (estimate).*
+**After this you can** build a chatbot with memory, write a tested `trim()` that keeps it inside the context window, and run and bound your first agent loop on the mock. *Study time: reading about 10 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Lab A.** A chatbot is a list plus one function: append your message, send the whole list, append the reply. Send less and it forgets.
@@ -518,7 +518,7 @@ Lab B avoids all three (comments 3, 5a to 5e, and `run_tools`).
 
 **Group session (60 minutes).** Everyone demos Exercise 1.3(c) and their `SYSTEM` sentence, and compares Arabic ratios. Each person draws the loop from memory and points to the line that stops it. Close by arguing "When (and when not) to use agents".
 
-**Build it with Claude Code.** Give this spec to Claude Code in an empty repository, in plan mode (check the current Claude Code documentation), and review its plan before it edits anything:
+**Build it with Claude Code.** *No Claude Code? Do the spec's steps by hand and run its checks yourself (lesson 0.3).* Give this spec to Claude Code in an empty repository, in plan mode (check the current Claude Code documentation), and review its plan before it edits anything:
 
 ```text
 Goal: chat.py (a chatbot with memory), trim.py (trim(history, max_tokens)) and

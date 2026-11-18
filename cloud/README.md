@@ -2,6 +2,10 @@
 
 **Ship it, run it, keep it healthy. A free, bilingual course that takes you from zero to confident cloud, platform, DevOps or site-reliability engineer.**
 
+<!-- study-time -->
+**Study time for the whole course: about 87 hours** (estimate: reading plus hands-on work, summed over every lesson). At about 6 hours a week that is roughly 15 weeks. Each lesson shows its own split; a pilot with real learners will replace these estimates.
+<!-- /study-time -->
+
 ## What this is
 
 Writing the code is the start. Someone has to build it, test it and package it. Then they have to deploy it safely, watch it, scale it and pay for it, and wake up when it breaks. That someone increasingly needs to know Linux, networks, containers, Kubernetes, infrastructure as code, pipelines, observability and cost, and how to run AI models in production too.

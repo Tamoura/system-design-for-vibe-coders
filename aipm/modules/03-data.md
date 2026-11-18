@@ -9,7 +9,7 @@
 # 3.1 — Data readiness: do we have what the product needs?
 *Level: 🟡 Intermediate* · *Prerequisites: 1.3, 2.2* · *Stage: Define, Build*
 
-**After this you can** score a product's data readiness green, amber or red on six questions with evidence, naming at least one representativeness gap and one labelling gap, and propose a phased scope that collects the missing data. *Study time: about 110 minutes (estimate).*
+**After this you can** score a product's data readiness green, amber or red on six questions with evidence, naming at least one representativeness gap and one labelling gap, and propose a phased scope that collects the missing data. *Study time: reading about 20 min, hands-on about 135 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Data readiness** is the evidence that the data an AI product needs exists, can be reached, is good enough, represents the real users, and may legally be used for this purpose. It is a feasibility question, and it belongs in discovery, not in sprint 6.
@@ -133,6 +133,14 @@ Rania's note: *"Two reds, both fixed by changing scope, not reasons to stop. Fai
 - 🟡 Run the six readiness questions for Smart Alerts, Najm's fraud and spending alerts. Assume fraud labels come from customer complaints and chargebacks. *Done when:* each question is scored green, amber or red with one line of evidence, and you have named at least one representativeness gap and one labelling gap.
 - 🔴 Khalid insists SME Instant Finance must launch for all SMEs, including first-time applicants, on the original date. Write him a one-page memo proposing a phased scope. *Done when:* it states what launches first and why, how missing data is collected in phase one, and the evidence that triggers phase two.
 
+<details><summary>Check your work</summary>
+
+**🟢 Model answer (a support chatbot).** Corpus: help-centre articles, owned by the content team. Evaluation: 200 past questions with checked answers, owned by the product team. Runtime inputs: the customer's question and account type, owned by engineering. Labels: agent ratings of sampled answers, owned by the support lead.
+
+**🟡 and 🔴 self-check.** Each of the six questions has a colour and one line of evidence. A typical representativeness gap: complaint-based fraud labels miss customers who never complain. A typical labelling gap: chargebacks arrive weeks after the transaction. Your memo passes if phase one has a clear scope (for example existing customers with repayment history), a way to collect the missing data, and a measurable trigger for phase two.
+
+</details>
+
 ## ⚠️ Mistakes and traps
 - **Counting rows instead of asking questions.** "Hundreds of thousands of rows" says nothing about relevance, labels or coverage. Ask the six questions and demand evidence.
 - **Leaving the data check to engineering.** Gaps found in build arrive as delays with no product decision attached. Check in discovery.
@@ -225,7 +233,7 @@ Rania's note: *"Two reds, both fixed by changing scope, not reasons to stop. Fai
 # 3.2 — Feedback loops, flywheels and learning products
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 1.2* · *Stage: Design, Grow*
 
-**After this you can** write a feedback-loop spec that gives each signal its capture, interpretation, action, verification and owner, and decide with evidence whether a claimed data flywheel belongs in a business case. *Study time: about 110 minutes (estimate).*
+**After this you can** write a feedback-loop spec that gives each signal its capture, interpretation, action, verification and owner, and decide with evidence whether a claimed data flywheel belongs in a business case. *Study time: reading about 20 min, hands-on about 135 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **learning product** gets better because people use it. That only happens if the product is designed to capture **feedback signals**, turn them into **labels** or test cases, and feed them back into prompts, retrieval, models or rules on a schedule someone owns.
@@ -358,6 +366,14 @@ Loop metrics reviewed monthly by Rania: share of memos with a captured signal, m
 - 🟡 Write a feedback loop spec for Najm Assist's question-answering feature, using the five parts (signal, capture, interpretation, action, verification). *Done when:* you have at least four signals in the table format above, including one holdout or audit signal, and every signal has a named owner.
 - 🔴 Khalid wants the SME Instant Finance business case to claim a data flywheel as a competitive advantage. Apply the four-question flywheel test and write a half-page verdict. *Done when:* you answer each question with evidence you would need to collect, name the degenerate loop risk for this product and its remedy, and give a clear recommendation on whether the claim belongs in the business case.
 
+<details><summary>Check your work</summary>
+
+**🟢 Model answer (a music app).** Explicit: thumbs-up; "hide this song". Implicit: skip within 10 seconds; replay. Outcome: still subscribed next month. Example of a wrong reading: a skip may mean "not now", not "I dislike this".
+
+**🟡 and 🔴 self-check.** Your loop spec passes if each signal has all five parts, at least one is a holdout or audit sample checked by a person, and each has a named owner. Your flywheel verdict passes if each of the four questions lists the evidence you would collect, it names the degenerate loop (the model only learns from applicants it approved, so it never learns about those it declined) with a remedy such as a small reviewed exploration sample, and it says plainly whether the claim belongs in the business case.
+
+</details>
+
 ## ⚠️ Mistakes and traps
 - **Collecting feedback nobody reads.** A thumbs button without an owner, a review cadence and a path to action is decoration. Assign an owner and a weekly review before launch.
 - **Treating every edit as an error.** Implicit signals are ambiguous. Combine them with explicit reasons and a sampled human review before acting.
@@ -452,7 +468,7 @@ Loop metrics reviewed monthly by Rania: share of memos with a captured signal, m
 # 3.3 — Privacy, consent and data rights: what the PM must own
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 3.2* · *Stage: Define, Build*
 
-**After this you can** map every place personal data appears in an AI feature with a retention period, and give each proposed data use a proceed, change or reject verdict using the surprise test and purpose limitation. *Study time: about 110 minutes (estimate).*
+**After this you can** map every place personal data appears in an AI feature with a retention period, and give each proposed data use a proceed, change or reject verdict using the surprise test and purpose limitation. *Study time: reading about 20 min, hands-on about 155 min (estimate).*
 
 ## ⚡ In 60 seconds
 - The DPO and legal interpret privacy law, but most privacy outcomes are **product decisions**: what the feature collects, for what, for how long, shared with whom, and what the user is told and can control. The PM owns them.
@@ -582,6 +598,14 @@ Design decisions recorded:
 - 🟢 For an AI feature you know, list every place personal data appears. *Done when:* you have at least six locations, each with a proposed retention period.
 - 🟡 Apply the surprise test and the purpose-limitation check to three proposed uses of Credit Memo Copilot data: (a) improving memo drafts using RM edits, (b) scoring RMs' performance by how much they edit, (c) sharing anonymised memo patterns with a vendor. *Done when:* each use has a verdict (proceed, proceed with changes, or reject), a one-line reason, and the question you would take to Sara.
 - 🔴 Write a one-page recommendation, on privacy and data rights alone, on whether Staff GenAI should be bought from a vendor or run on a model Najm hosts. *Done when:* it covers training use, retention, location, sub-processors, deletion and employee notice, names the evidence Yusuf must obtain, and states what would change your mind.
+
+<details><summary>Check your work</summary>
+
+**🟢 Model answer (a chat assistant).** The chat transcript (90 days), application logs (30 days), the vendor's prompt store (zero retention if the contract allows), evaluation copies (redacted, 12 months), support tickets raised from chats (as for other tickets), analytics events (pseudonymised, 13 months). The periods are examples; yours must come from your own policy.
+
+**🟡 and 🔴 self-check.** Typical verdicts: (a) proceed with changes (tell RMs, limit to drafting quality); (b) reject or redesign (a new purpose that would surprise RMs and could harm them); (c) proceed only with changes, after Sara confirms the patterns really are anonymous. Your recommendation passes if it covers all six topics, lists the documents Yusuf must obtain (data-use terms, sub-processor list, data location), and states what would change your mind.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **"Privacy is legal's job."** Own the data-flow table and bring it to the DPO early.

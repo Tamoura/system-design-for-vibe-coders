@@ -9,7 +9,7 @@ pay for — or get paid by — for years. Terms are defined on first use; the
 
 # 2.1 — The Database Is the Easy Part
 
-**After this you can** design a schema in which every entity has a surrogate key and an explicit uniqueness rule for its real-world identity, and show a test that keeps two legitimate variants while the constraint rejects a true duplicate. *Study time: about 65 minutes (estimate).*
+**After this you can** design a schema in which every entity has a surrogate key and an explicit uniqueness rule for its real-world identity, and show a test that keeps two legitimate variants while the constraint rejects a true duplicate. *Study time: reading about 5 min, hands-on about 75 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -167,7 +167,7 @@ explicit unique constraint — never rely on 'it won't happen.'"*
 
 # 2.2 — Object Storage and the Two-Owner Trap
 
-**After this you can** store file bytes in object storage and pointers in the database, prove a delete removes both, and write a migration runbook with an exit criterion for every phase. *Study time: about 65 minutes (estimate).*
+**After this you can** store file bytes in object storage and pointers in the database, prove a delete removes both, and write a migration runbook with an exit criterion for every phase. *Study time: reading about 5 min, hands-on about 75 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -335,7 +335,7 @@ Finish: *"Commit with the message `02-2-object-storage-migration`."*
 
 # 2.3 — Backups: What, Not Just Whether
 
-**After this you can** back up only state (database, uploads, configs), restore it into an empty environment and see real data come back, and write down the RPO and a measured RTO. *Study time: about 65 minutes (estimate).*
+**After this you can** back up only state (database, uploads, configs), restore it into an empty environment and see real data come back, and write down the RPO and a measured RTO. *Study time: reading about 5 min, hands-on about 90 min (estimate).*
 
 ## 🔥 The War Story — two of them
 
@@ -492,7 +492,7 @@ Finish: *"Commit with the message `02-3-backups-and-restore-drill`."*
 
 # 2.4 — Retention, Deletion, and the Data You Promised to Erase
 
-**After this you can** write a retention table with a decision for every kind of data, switch on a TTL only after backfilling and verifying rollups, and prove a user deletion leaves zero rows behind. *Study time: about 65 minutes (estimate).*
+**After this you can** write a retention table with a decision for every kind of data, switch on a TTL only after backfilling and verifying rollups, and prove a user deletion leaves zero rows behind. *Study time: reading about 5 min, hands-on about 75 min (estimate).*
 
 ## 🔥 The War Story — a timebomb and a broken promise
 
@@ -667,7 +667,7 @@ Finish: *"Commit with the message `02-4-retention-and-erasure`."*
 
 # 2.5 — Indexes, Queries, and the Working Set
 
-**After this you can** read a query plan to tell an index scan from a full scan, add indexes so your two hottest queries use one, and cut an N+1 list from about 51 queries to about 2. *Study time: about 65 minutes (estimate).*
+**After this you can** read a query plan to tell an index scan from a full scan, add indexes so your two hottest queries use one, and cut an N+1 list from about 51 queries to about 2. *Study time: reading about 5 min, hands-on about 75 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -850,7 +850,7 @@ Finish: *"Commit with the message `02-5-indexes-and-queries`."*
 
 # 2.6 — Two Clicks at Once: Races, Transactions, and Idempotent Writes
 
-**After this you can** find your app's read-modify-write spots, fix the worst one atomically, and prove with a 20-at-once test, a double signup and a double-clicked payment that each ends in exactly one correct result. *Study time: about 70 minutes (estimate).*
+**After this you can** find your app's read-modify-write spots, fix the worst one atomically, and prove with a 20-at-once test, a double signup and a double-clicked payment that each ends in exactly one correct result. *Study time: reading about 5 min, hands-on about 90 min (estimate).*
 
 ## 🔥 The War Story
 

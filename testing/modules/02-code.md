@@ -7,9 +7,9 @@
 ---
 
 # 2.1 — Unit testing and TDD: arrange-act-assert, test doubles and fast feedback
-*Level: 🟢 Beginner* · *Prerequisites: 1.1* · *Focus: Unit*
+*Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2* · *Focus: Unit*
 
-**After this you can** write named, parametrised unit tests with stubs, spies and an injected clock, and show that a one-character change to a rule turns exactly one of them red. *Study time: about 115 minutes (estimate).*
+**After this you can** write named, parametrised unit tests with stubs, spies and an injected clock, and show that a one-character change to a rule turns exactly one of them red. *Study time: reading about 15 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **unit test** checks one small behaviour in milliseconds, with no network, database or real clock. Build it as **arrange, act, assert** and name it after the rule it protects.
@@ -494,7 +494,7 @@ Copy the sample (`cp -r testing/sample ~/najm-sample`), create a virtual environ
 # 2.2 — Integration testing: databases, queues, test data and contract tests
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1* · *Focus: Integration*
 
-**After this you can** test a repository against a real database, write a JSON Schema contract check that fails on a drifted response, and show a database constraint closing a double-submit race. *Study time: about 115 minutes (estimate).*
+**After this you can** test a repository against a real database, write a JSON Schema contract check that fails on a drifted response, and show a database constraint closing a double-submit race. *Study time: reading about 10 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - An **integration test** runs your code against a real neighbour (database, queue, HTTP service, another team's API) to check the join, not the logic.
@@ -1103,7 +1103,7 @@ Copy the sample, add this lesson's files and `pip install faker respx jsonschema
 # 2.3 — Are your tests any good? Coverage, mutation testing, property-based testing and flaky tests
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 2.2* · *Focus: Unit, Strategy*
 
-**After this you can** measure a suite with branch coverage and mutation testing, classify every surviving mutant, and write a property-based test that catches the seeded cut-off bug. *Study time: about 115 minutes (estimate).*
+**After this you can** measure a suite with branch coverage and mutation testing, classify every surviving mutant, and write a property-based test that catches the seeded cut-off bug. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A passing suite proves little unless it could have failed. Four tools test the tests: **coverage** (what ran), **mutation testing** (would the suite notice a planted bug?), **property-based testing** (does the rule hold on unforeseen inputs?) and **flaky-test hunting** (does the verdict depend on luck?).
@@ -1113,7 +1113,7 @@ Copy the sample, add this lesson's files and `pip install faker respx jsonschema
 - Decision cue, for every test: **could this fail, and what bug would it catch?**
 
 ## 🧭 Why it matters
-Nada's second pull request adds 72 tests for `check_transfer`. The coverage report is perfect: every line and branch of the function runs. Rashid switches on the sample's five seeded bugs, one at a time. All 72 tests pass every time: they assert only that the function returned something or raised something. "Coverage is a map of where you have been," he says, "not of where you were careful."
+Nada's second pull request adds 72 tests for `check_transfer`. The coverage report is perfect: every line and branch of the function runs. Rashid switches on the sample's five seeded transfer bugs (`NAJM_BUGS`), one at a time. All 72 tests pass every time: they assert only that the function returned something or raised something. "Coverage is a map of where you have been," he says, "not of where you were careful."
 
 This is Goodhart's law: when a measure becomes a target, it stops being a good measure. Tell a coding agent "raise coverage to 100%" and it can oblige in minutes, with tests that run everything and verify nothing.
 
@@ -1147,7 +1147,7 @@ Name                Stmts   Miss Branch BrPart  Cover   Missing
 najm/transfers.py     114     52     46      3    51%   45, 53, 60, 92-94, 100-104, 118-122, 128-156, ...
 ```
 
-`check_transfer` is lines 70 to 88, and none of them is in the Missing column: the function is fully covered. Yet all five seeded bugs, `limit_off_by_one` and `float_fee` included, pass this suite, because it asserts only `is not None` or that an exception has a code. A weak assertion lets any behaviour through; a strong one pins a value from the rule.
+`check_transfer` is lines 70 to 88, and none of them is in the Missing column: the function is fully covered. Yet all five seeded transfer bugs, `limit_off_by_one` and `float_fee` included, pass this suite, because it asserts only `is not None` or that an exception has a code. A weak assertion lets any behaviour through; a strong one pins a value from the rule.
 
 ### 🟡 Going deeper
 

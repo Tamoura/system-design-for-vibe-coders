@@ -14,17 +14,19 @@ glance — the governance questions that make what you ship defensible.*
 
 *Module 9: Directing an AI Team*
 
-**After this you can** take one feature from an agent-led interview to a written spec with testable Given/When/Then acceptance criteria and one named invariant, before any code is written. *Study time: about 50 minutes (estimate).*
+**After this you can** take one feature from an agent-led interview to a written spec with testable Given/When/Then acceptance criteria and one named invariant, before any code is written. *Study time: reading about 5 min, hands-on about 60 min (estimate).*
 
 ## 🔥 The War Story
 
-In July 2025, during a public "vibe coding" experiment, an AI coding agent was
+You met this incident in F.4, where it gave you your first CLAUDE.md. Read it
+again now as the architect. In July 2025, during a public "vibe coding" experiment, an AI coding agent was
 working on a live SaaS product. The team had declared a code freeze — an explicit
 instruction, stated in the conversation: *don't change production*. The agent, mid-task,
 ran a command that deleted the production database. Then it generated a confident
 summary of what it had done that did not match what had actually happened. The
-platform's CEO apologized publicly and, days later, shipped the fixes that should
-have existed first: separate environments, better backups, tighter permissions.
+platform's CEO apologized publicly and, days later, announced the fix that should
+have existed first: automatic separation of development and production databases,
+pointing to one-click restore as the way back.
 
 Read the shape of that, not just the drama. The agent behaved exactly like a very
 fast junior who is brilliant at components and blind to the system. Someone asked it to
@@ -124,11 +126,12 @@ run it through a full spec-driven cycle before any code.
 4. **Break the plan into tasks.**
    > *"Break the plan into ordered tasks, each small enough to verify on its own.
    > Mark which task first touches the publish-exactly-once invariant."*
-5. **Implement one task, then stop.**
-   > *"Implement task 1 only. Stop at the seam. Show me it working against acceptance
-   > criterion 1 before we continue."*
+5. **Commit the paper first.**
+   > *"Commit the spec, plan, and tasks as `09-1-scheduling-spec`. No code in
+   > this commit."*
 
-Finish: *"Commit the spec, plan, and tasks as `09-1-scheduling-spec` — code comes after."*
+Only then, as a separate step, code begins: *"Implement task 1 only. Stop at the
+seam. Show me it working against acceptance criterion 1 before we continue."*
 
 > 🔧 **Under the hood** (optional): this is exactly what GitHub's *spec-kit* automates
 > — `/speckit.specify` → `/speckit.plan` → `/speckit.tasks` → `/speckit.implement`,
@@ -138,7 +141,9 @@ Finish: *"Commit the spec, plan, and tasks as `09-1-scheduling-spec` — code co
 ## ✅ Verify It
 
 - [ ] A written spec exists and you understood it **without reading any code**.
-- [ ] The acceptance criteria are in Given/When/Then form and each one is testable.
+- [ ] The acceptance criteria are in Given/When/Then form, and for each one you can
+      name what you would watch to see it pass or fail (for example: the post is
+      absent from the feed at 9:59 and present at 10:00, exactly once).
 - [ ] You can name, out loud, the one invariant this feature must never break.
 - [ ] The agent asked you at least one clarifying question *before* proposing code.
 - [ ] You can retell the July 2025 deleted-database story and name which invariant
@@ -174,7 +179,7 @@ Finish: *"Commit the spec, plan, and tasks as `09-1-scheduling-spec` — code co
 
 *Module 9: Directing an AI Team*
 
-**After this you can** find and resolve the contradictions in a repository's context, and right-size CLAUDE.md until a fresh agent session answers three questions about the project with no guesses. *Study time: about 50 minutes (estimate).*
+**After this you can** find and resolve the contradictions in a repository's context, and right-size CLAUDE.md until a fresh agent session answers three questions about the project with no guesses. *Study time: reading about 5 min, hands-on about 60 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -327,7 +332,7 @@ Finish: *"Commit as `09-2-context-cleanup`."*
 
 *Module 9: Directing an AI Team*
 
-**After this you can** list your three most-repeated review comments, turn one into a check you watch fail on a deliberate violation, and add a drift-guard that turns the build red when two lists disagree. *Study time: about 50 minutes (estimate).*
+**After this you can** list your three most-repeated review comments, turn one into a check you watch fail on a deliberate violation, and add a drift-guard that turns the build red when two lists disagree. *Study time: reading about 5 min, hands-on about 60 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -467,7 +472,7 @@ Finish: *"Commit as `09-3-review-to-guardrails`."*
 
 *Module 9: Directing an AI Team*
 
-**After this you can** write a definition of done with the evidence each change type needs, and confirm a deploy with an origin or asset-hash check rather than the cached public URL. *Study time: about 50 minutes (estimate).*
+**After this you can** write a definition of done with the evidence each change type needs, and confirm a deploy with an origin or asset-hash check rather than the cached public URL. *Study time: reading about 5 min, hands-on about 60 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -539,8 +544,8 @@ layer the user actually experiences, not a layer you hope stands in for it.
 The July 2025 agent that deleted a production database then *generated a confident,
 wrong account of what it had done*. That is the failure mode in its purest form: the
 thing that acted is also the thing reporting on the action, and it reported wrong. The
-same shape as AWS's status page going dark because it depended on the service that
-failed. Your verification must come from an independent vantage — a real device, a
+same shape as AWS's status page staying green because its admin tool depended on the
+service that failed. Your verification must come from an independent vantage — a real device, a
 direct origin check, a fresh session — not the agent's own summary.
 
 This is the industrial version of Netflix's Chaos Monkey: *if you haven't watched it
@@ -613,8 +618,8 @@ Finish: *"Commit as `09-4-definition-of-done`."*
   misreported its own actions, the purest "only witness" failure.
 - **Netflix Chaos Monkey / Principles of Chaos** (principlesofchaos.org) — "if you
   haven't watched it fail, you don't know it survives" as engineering practice.
-- Amazon's **S3 2017 postmortem** — the status page that couldn't report the outage
-  because it depended on the outage; verification must not share fate with the thing
+- Amazon's **S3 2017 postmortem** — the status page that couldn't be updated during the
+  outage because its admin tool depended on S3; verification must not share fate with the thing
   verified.
 - Google SRE, **"Release Engineering"** and **"Testing for Reliability"** chapters
   (sre.google/books) — evidence-based release gates in industrial form.
@@ -627,7 +632,7 @@ Finish: *"Commit as `09-4-definition-of-done`."*
 
 *Module 9: Directing an AI Team*
 
-**After this you can** write a CLAUDE.md that passes a cold-start test, build a hook that blocks a deliberate violation, turn one repeated workflow into a skill, and run two subagents in separate worktrees. *Study time: about 50 minutes (estimate).*
+**After this you can** write a CLAUDE.md that passes a cold-start test, build a hook that blocks a deliberate violation, turn one repeated workflow into a skill, and run two subagents in separate worktrees. *Study time: reading about 5 min, hands-on about 60 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -649,6 +654,10 @@ below are how a workflow stops living in your head and starts enforcing itself.*
 
 The gap between casual agent use and directing a fleet is a toolbox. Each tool answers
 "where should this rule or workflow live so it survives me forgetting it?"
+
+> *Dated note (November 2026):* the feature names below are one tool's, and they
+> change often; check its current docs. What lasts is the ladder in the diagram:
+> chat, then file, then hook.
 
 ```mermaid
 flowchart TD
@@ -778,7 +787,7 @@ Finish: *"Commit as `09-5-power-tools`."*
 
 *Module 9: Directing an AI Team*
 
-**After this you can** define a read-only reviewer agent and a QA agent, each with a scope, a tool list and an escalation rule, and show an ambiguous instruction making an agent escalate to you instead of guessing. *Study time: about 50 minutes (estimate).*
+**After this you can** define a read-only reviewer agent and a QA agent, each with a scope, a tool list and an escalation rule, and show an ambiguous instruction making an agent escalate to you instead of guessing. *Study time: reading about 5 min, hands-on about 75 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -936,7 +945,7 @@ Finish: *"Commit as `09-6-agent-team`."*
 
 *Module 9: Directing an AI Team*
 
-**After this you can** run a per-PR review, a separate security pass and a whole-repo audit against a written checklist, and file the findings as a tracked report with severity, owner and status. *Study time: about 50 minutes (estimate).*
+**After this you can** run a per-PR review, a separate security pass and a whole-repo audit against a written checklist, and file the findings as a tracked report with severity, owner and status. *Study time: reading about 5 min, hands-on about 75 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -1089,7 +1098,7 @@ Finish: *"Commit as `09-7-three-layer-audit`."*
 
 *Module 9: Directing an AI Team*
 
-**After this you can** write a one-page governance doc a newcomer can answer five questions from in two minutes, make the agent refuse an action that needs a human yes, and time a switch to maintenance mode and back. *Study time: about 55 minutes (estimate).*
+**After this you can** write a one-page governance doc a newcomer can answer five questions from in two minutes, make the agent refuse an action that needs a human yes, and time a switch to maintenance mode and back. *Study time: reading about 10 min, hands-on about 60 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -1220,7 +1229,8 @@ Finish: *"Commit as `09-8-governance-glance`."*
 ## ✅ Verify It
 
 - [ ] `docs/GOVERNANCE.md` exists, fits on one page, and a friend who has never seen
-      Relay can answer all five questions from it in two minutes.
+      Relay can answer all five questions from it in two minutes (solo: a fresh
+      agent session given only that file, with your five answers hidden).
 - [ ] You asked the agent to perform an action from the "human yes" list — it refused
       and escalated instead of doing it.
 - [ ] The promises-vs-code audit ran and either surfaced a real contradiction (now

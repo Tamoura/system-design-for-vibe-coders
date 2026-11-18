@@ -2,6 +2,10 @@
 
 **From your first API call to an enterprise-grade agent running in production for a customer. A free, bilingual course on how to create AI agents, gather requirements, design with customers, and ship, with Claude Code as your build partner.**
 
+<!-- study-time -->
+**Study time for the whole course: about 151 hours** (estimate: reading plus hands-on work, summed over every lesson). At about 6 hours a week that is roughly 25 weeks. Each lesson shows its own split; a pilot with real learners will replace these estimates.
+<!-- /study-time -->
+
 ## What this is
 
 Anyone can get an agent to work in a demo. Shipping one that a bank will rely on is a different job: you have to find out what the customer really needs, decide whether an agent is even the right answer, design how much it may do on its own, build it, prove it works, make it safe, deploy it, run it, and hand it over.
@@ -13,7 +17,7 @@ This course teaches that whole job, in the order you do it:
 - **Agents:** the agent loop, memory and state, connecting to real systems with MCP, and multi-agent systems (and when not to).
 - **Production:** evaluation and CI gates, guardrails, security and governance, deployment, cost and reliability, operations, and handover.
 
-You build with **Claude Code**. So every lab has two parts: a small, complete, commented implementation you read and run (you must understand what ships), and a ready-made spec to give Claude Code, with a checklist to verify what it built. Every lab runs **offline, for free**, against a local mock of the API in the lab kit, and unchanged against the real API when you have a key.
+You build with **Claude Code**. So every lab has two parts: a small, complete, commented implementation you read and run (you must understand what ships), and a ready-made spec to give Claude Code, with a checklist to verify what it built. Every lab runs **offline, for free**, against a local mock of the API in the lab kit, and unchanged against the real API when you have a key. The labs and the mock are free; Claude Code itself needs an account on a paid plan or with API billing, and lesson 0.3 shows how to get it and how to work without it.
 
 ## How every lesson works
 

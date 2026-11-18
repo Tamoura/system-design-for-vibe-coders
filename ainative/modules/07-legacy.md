@@ -9,7 +9,7 @@
 # 7.1 — Changing code you do not understand: characterization tests, seams, incremental refactors and agent-sized migrations
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1, 6.1* · *Focus: Workflow, Verify*
 
-**After this you can** write characterization tests that pin a legacy module's behaviour, quirks included, and show a mutation they catch. *Study time: about 110 minutes (estimate).*
+**After this you can** write characterization tests that pin a legacy module's behaviour, quirks included, and show a mutation they catch. *Study time: reading about 15 min, hands-on about 75 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Legacy is code you cannot change with confidence**, usually because it has no tests. Start by *pinning*: a **characterization test** records what the code does today, quirks included, even those you think wrong.
@@ -300,7 +300,7 @@ Fill it in before the work, a few lines per section; draft section 4 with your a
 # 7.2 — Lab: tame an untested module, refactor it, then migrate a dependency
 *Level: 🟡 Intermediate* · *Prerequisites: 6.2, 7.1* · *Focus: Workflow, Verify*
 
-**After this you can** pin an untested module, refactor it in green commits and migrate a dependency so the grader passes. *Study time: about 110 minutes (estimate).*
+**After this you can** pin an untested module, refactor it in green commits and migrate a dependency so the grader passes. *Study time: reading about 10 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Lab m07** on Najm Remit: the legacy ledger has no tests and keeps module-level books. Three parts: **pin** it with characterization tests, **refactor** it (`class Ledger`, `RemitService(..., ledger=None)`), **migrate** najmkit from version 1 to 2.
@@ -448,7 +448,7 @@ When you think you are done, from the `ailab` folder of the course repository:
 **Start.**
 
 ```bash
-cd ainative/ailab                     # in your clone of the course repository
+cd ~/system-design-for-vibe-coders/ainative/ailab                     # in your clone of the course repository
 python -m ailab start m07 --dir ~/ainative/m07
 cd ~/ainative/m07                     # the lab repository: work, run pytest and commit here
 git log --oneline          # "Lab starting state" on top of "Initial state"

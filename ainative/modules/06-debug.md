@@ -9,7 +9,7 @@
 # 6.1 — Understanding unfamiliar code and debugging with an agent: reproduce first, hypotheses, root cause
 *Level: 🟡 Intermediate* · *Prerequisites: 4.1, 5.1* · *Focus: Workflow*
 
-**After this you can** reproduce a bug first, list hypotheses each with a disproof, and find the breaking commit with a bisect. *Study time: about 110 minutes (estimate).*
+**After this you can** reproduce a bug first, list hypotheses each with a disproof, and find the breaking commit with a bisect. *Study time: reading about 15 min, hands-on about 75 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Two jobs, one rule: get oriented in code you did not write, and find the *cause* of a bug, not a patch that hides it. **Everything an agent says about code is a hypothesis until you have opened the file or run the command.**
@@ -289,7 +289,7 @@ What you could not verify.
 # 6.2 — Lab: onboard to the codebase and fix a production bug from its logs
 *Level: 🟡 Intermediate* · *Prerequisites: 6.1* · *Focus: Workflow, Verify*
 
-**After this you can** write an onboarding note for unfamiliar code and fix a production bug from its logs, starting with a failing test. *Study time: about 110 minutes (estimate).*
+**After this you can** write an onboarding note for unfamiliar code and fix a production bug from its logs, starting with a failing test. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Lab m06 on Najm Remit: write `docs/onboarding.md`, then fix incident REMIT-231 from `lab-assets/prod.log` with a failing test of your own (it becomes the regression test), a minimal fix and a root-cause note.
@@ -429,7 +429,7 @@ from this directory: `python -m ailab grade m06 --dir <this directory>`
 **Start.**
 
 ```bash
-cd ainative/ailab      # with the virtual environment of lesson 0.2 active
+cd ~/system-design-for-vibe-coders/ainative/ailab      # with the virtual environment of lesson 0.2 active
 python -m ailab start m06 --dir ~/ainative/m06
 cd ~/ainative/m06
 ```
@@ -456,7 +456,7 @@ Work directory: /home/you/ainative/m06
 **Grade.**
 
 ```bash
-cd ainative/ailab      # the grader runs from the kit folder, not from your work directory
+cd ~/system-design-for-vibe-coders/ainative/ailab      # the grader runs from the kit folder, not from your work directory
 python -m ailab grade m06 --dir ~/ainative/m06
 ```
 
@@ -493,8 +493,47 @@ When everything passes, the last line reads `Lab m06: 20/20 required checks pass
 
 ## 🛠️ Exercises
 - 🟢 **Read the grader.** Grade the starter and pair each `[FAIL]` with the ticket line it comes from. *Done when:* a table gives, per failure, that line and your first action. Needs an agent: no.
-- 🟡 **Replay the log.** Write a script (in `scripts/` or outside the repository) that feeds `prod.log` through your fixed code with the tiers in `kyc_tiers.csv` and prints the customers whose outcome differs from the log. *Done when:* it lists both kinds of difference and your Impact section matches. Needs an agent: optional; read what it writes.
+- 🟡 **Replay the log.** Write a script (in `scripts/` or outside the repository) that feeds `prod.log` through your fixed code with the tiers in `kyc_tiers.csv` and prints the customers whose outcome differs from the log. *Done when:* it lists both kinds of difference and your Impact section matches. Needs an agent: optional; read what it writes. A starting skeleton follows the exercises.
 - 🔴 **Bisect the history.** In a throw-away worktree (`git worktree add ../m06-bisect lab-start`, then `cd` into it) with your test copied in untracked, run the test at `lab-start` (it must fail) and at the first commit (`git checkout --detach $(git rev-list --max-parents=0 HEAD)`; it must pass). Back at `lab-start`, run `git bisect start lab-start $(git rev-list --max-parents=0 HEAD)`, `git bisect run python -m pytest -q <your test file>` and `git bisect reset`; remove the worktree. *Done when:* your notes name the commit found, the one you suspected first (and whether it was guilty), and a review rule that would have stopped it. Needs an agent: no.
+
+<details><summary>A starting skeleton for 🟡 Replay the log (run it from <code>~/ainative/m06</code> with <code>PYTHONPATH=src</code>; the comparison is yours to write)</summary>
+
+```python
+# scripts/replay.py: run from the lab folder with PYTHONPATH=src
+import csv
+import json
+from datetime import datetime
+from types import SimpleNamespace
+
+from remit.limits import check_limits
+from remit.money import Money
+
+
+def money(text):  # "500.00 QAR" -> Money("500.00", "QAR")
+    amount, currency = text.split()
+    return Money(amount, currency)
+
+
+with open("lab-assets/kyc_tiers.csv") as f:
+    tiers = {row["customer_id"]: row["kyc_tier"] for row in csv.DictReader(f)}
+
+sent = {}  # customer id -> that customer's earlier transfer.sent events
+with open("lab-assets/prod.log") as f:
+    for line in f:  # check first: is the log in time order?
+        event = json.loads(line)
+        if event["event"] not in ("transfer.sent", "transfer.rejected"):
+            continue
+        cid, when = event["customer_id"], datetime.fromisoformat(event["ts"])
+        amount = money(event["send_amount"])
+        answer = check_limits(tiers[cid], sent.get(cid, []), amount, when)
+        was_sent = event["event"] == "transfer.sent"
+        # TODO: compare answer.allowed with was_sent; print the id, the time and
+        # which of the two kinds of difference this is
+        if was_sent:
+            sent.setdefault(cid, []).append(SimpleNamespace(created_at=when, send_amount=amount))
+```
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Copying a document into the tour.** Documents drift; the code wins.

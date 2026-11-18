@@ -9,7 +9,7 @@
 # 6.1 — Quality you can measure: metrics, golden sets and error analysis
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 5.1* · *Stage: Evaluate*
 
-**After this you can** compute precision and recall from raw counts and explain them to a business sponsor without jargon, and run an error analysis on 20 outputs that ranks failure categories and names the first fix. *Study time: about 110 minutes (estimate).*
+**After this you can** compute precision and recall from raw counts and explain them to a business sponsor without jargon, and run an error analysis on 20 outputs that ranks failure categories and names the first fix. *Study time: reading about 20 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Evaluation** ("evals") means measuring outputs against an agreed definition of "good", on fixed cases, repeatably after every change.
@@ -22,7 +22,7 @@
 ## 🧭 Why it matters
 Faisal has run the Credit Memo Copilot prototype on ten credit files he picked himself, and tells Rania it is "about 90% there". Khalid (Head of Retail Lending) wants a pilot date. Dana (lead data scientist) asks three questions: "Ninety percent of what? On which ten files? And what does the other ten percent look like?" Faisal cannot answer. His ten files were recent, in English, from clients with clean audited accounts. The copilot has never seen a scanned Arabic statement or a client with a missing year of accounts.
 
-Public cases show the same gap. In February 2023, a promotional demo of Google's Bard wrongly said the James Webb Space Telescope took the very first pictures of a planet outside our solar system. The error was widely reported and Alphabet's shares fell sharply. One carefully chosen example had been admired, not evaluated.
+Public cases show the same gap. In February 2023, Microsoft's launch demo of its Bing AI chat asked it to summarise a retailer's (Gap's) quarterly earnings release on stage. An independent researcher later checked the summary against the report and found several wrong figures, including the operating margin. One carefully chosen example had been admired, not evaluated.
 
 Rania's rule: **no AI feature goes to pilot without an eval plan the business owner has signed**, stating the cases, metrics, thresholds and what happens when a threshold is missed. This lesson teaches you to write that plan and read its results.
 
@@ -161,7 +161,17 @@ All cases are labelled by credit officers (Arabic speakers for the Arabic slice)
 ## 🛠️ Exercises
 - 🟢 Smart Alerts caught 120 of 150 real frauds last month and raised 900 alerts in total. Compute precision and recall, then write two sentences for Khalid explaining what each number means for customers. *Done when:* you have precision ≈ 13% and recall = 80%, and neither sentence uses the words "precision" or "recall".
 - 🟡 Draft a golden-set composition table for Najm Assist answering card and account questions, with at least five slices and why each is there. *Done when:* it includes an Arabic slice, an out-of-scope slice and a slice where the right answer is "I cannot do that; here is how to reach a person".
-- 🔴 Take 20 outputs from a generative AI tool you use (or a public chatbot answering questions in your field). Run a full error analysis: note each failure, build a taxonomy of four to seven categories, count and rank them by frequency times severity. *Done when:* you can name the first fix, justify it with counts, and list the golden-set cases you would add.
+- 🔴 Take 20 outputs from a generative AI tool you use (or a public chatbot answering questions in your field). Use public or invented questions only: never paste customer, colleague or confidential data into a public tool. Run a full error analysis: note each failure, build a taxonomy of four to seven categories, count and rank them by frequency times severity. *Done when:* you can name the first fix, justify it with counts, and list the golden-set cases you would add.
+
+<details><summary>Check your work</summary>
+
+**🟢 Worked answer.** Precision = 120 ÷ 900 ≈ 13%; recall = 120 ÷ 150 = 80%. For Khalid: "Of every eight alerts we send, only about one is real fraud, so most customers we alert did nothing wrong." "We catch four in every five frauds; one in five still gets through."
+
+**🔴 A worked error analysis (illustrative).** 20 answers, 7 failures: 3 quote an out-of-date fact, 2 miss a needed caveat, 1 refuses an answerable question, 1 has the wrong format. Severity 3, 2, 2, 1. Frequency × severity: out-of-date 9, missing caveat 4, refusal 2, format 1. First fix: source freshness. Add golden-set cases for each recently changed fact.
+
+**🟡 self-check.** Your composition table passes if each slice has a reason and a share, and it includes an Arabic slice, an out-of-scope slice and a "hand over to a person" slice.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Judging by demo.** Hand-picked examples are not evidence. Write the eval plan before promising a pilot date.
@@ -195,10 +205,10 @@ All cases are labelled by credit officers (Arabic speakers for the Arabic slice)
 
 **2. Faisal reports that version 2 of the copilot prompt scored 91% on a 100-case golden set, against 89% for version 1, and proposes shipping it as "clearly better". What is the best response?**
 
-- A. Agree, because any improvement should ship, since waiting for a larger difference would delay value to the relationship managers and cost the bank money in the meantime for no clear reason
-- B. Reject version 2, because the golden set is too small to use at all
-- C. Point out that a 2-point difference on 100 cases is within the noise, and ask for the per-slice results, the critical-failure count and a larger or repeated comparison
-- D. Switch to a public benchmark to settle it
+- A. Agree and ship it, because a higher score on the same golden set is a measured gain and waiting would delay value to the relationship managers
+- B. Reject version 2, because a 100-case golden set is too small to compare two prompt versions in any useful way
+- C. Say that a 2-point gap on 100 cases is within the noise, and ask for per-slice results, the critical-failure count and a repeat run
+- D. Rerun both versions on a public benchmark, since a larger standard test set will settle which prompt is truly better
 
 <details><summary>Answer</summary>
 
@@ -259,7 +269,7 @@ All cases are labelled by credit officers (Arabic speakers for the Arabic slice)
 # 6.2 — LLM-as-judge, human review and red-teaming
 *Level: 🟡 Intermediate* · *Prerequisites: 6.1, 4.2* · *Stage: Evaluate*
 
-**After this you can** write a single-criterion PASS/FAIL judge prompt, measure the judge's recall and precision against human labels to decide whether it is fit for use, and plan a red-team exercise with an exit rule. *Study time: about 110 minutes (estimate).*
+**After this you can** write a single-criterion PASS/FAIL judge prompt, measure the judge's recall and precision against human labels to decide whether it is fit for use, and plan a red-team exercise with an exit rule. *Study time: reading about 20 min, hands-on about 145 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Every eval needs a **judge** that decides whether an output passed: **code** (cheap, exact, narrow), **a model** (scalable, flexible, biased) or **humans** (the reference standard, slow and costly). Use each where it fits.
@@ -272,7 +282,7 @@ All cases are labelled by credit officers (Arabic speakers for the Arabic slice)
 ## 🧭 Why it matters
 Dana's golden set for the Credit Memo Copilot has 230 cases, and code checks cover figures and sections. The "risk narrative" still needs judgement: is the account of the client's risks sound and not misleading? Two credit officers can review about 30 memos a day, and every prompt change needs a full re-run. Faisal's fix: ask a large model to "rate each memo from 1 to 5 for quality". The average is 4.6. A deliberately broken prompt scores 4.4. The judge cannot tell good from bad, and the team nearly shipped on its word.
 
-Meanwhile, Najm Assist is about to start taking actions like freezing a card. Public cases show what happens when a customer-facing assistant meets people who try to break it. In December 2023, users of a Chevrolet dealer's website chatbot got it to "agree" to sell a car for one dollar through prompt manipulation. In January 2024, after an update, DPD's delivery chatbot swore at a customer and criticised the company when asked to. Neither needed advanced skills. Layla (Head of AI Governance) will not approve Najm Assist's agent features until the team has tried to break them first.
+Meanwhile, Najm Assist is about to start taking actions like freezing a card. Public cases show what happens when a customer-facing assistant meets people who try to break it. You met two in 5.3: users talked a Chevrolet dealer's chatbot into "agreeing" to sell a car for one dollar, and a customer got DPD's delivery chatbot to swear and criticise the company. Neither needed advanced skills. Layla (Head of AI Governance) will not approve Najm Assist's agent features until the team has tried to break them first.
 
 ## 📐 How it works
 
@@ -423,6 +433,16 @@ Before the agent features of Najm Assist go to pilot, Faisal, Hessa and Dana pro
 - 🟡 A judge and a credit officer both labelled the same 100 memos. The officer failed 20. The judge failed 25, of which 15 were among the officer's 20. Compute the judge's recall and precision on failures, and decide whether it is fit to screen memos for human review. *Done when:* you have recall = 75% and precision = 60%, and a one-paragraph recommendation that says what happens to the 5 failures the judge missed.
 - 🔴 Plan a two-day red-team exercise for Staff GenAI, the internal employee assistant. Write the threat model, six attack categories with example goals and severities, the team composition and the exit rule. *Done when:* your plan includes at least one insider-threat category and one data-leakage category, and every category has a named owner for fixes.
 
+<details><summary>Check your work</summary>
+
+**🟢 Model answer.** "Read the memo and the source documents. For each risk statement, quote the passage that supports it, or write NONE. Then answer PASS or FAIL. PASS: every risk statement has a supporting passage. FAIL: at least one has none. If a source document is missing, answer CANNOT JUDGE and name it."
+
+**🟡 Worked answer.** Recall on failures = 15 ÷ 20 = 75%; precision = 15 ÷ 25 = 60%. The judge is useful to route memos to reviewers, not to clear them: it misses one real failure in four. Keep human review on every memo it passes until recall improves, or sample those memos and track what the 5 misses had in common.
+
+**🔴 Self-check.** Your plan passes if the threat model names attackers and assets, the six categories include insider misuse and data leakage, each has a goal, a severity and a fix owner, and the exit rule is measurable (for example no open critical finding).
+
+</details>
+
 ## ⚠️ Mistakes and traps
 - **Uncalibrated judges.** A judge whose scores barely move between a good and a broken system is useless. Calibrate against expert labels before using it.
 - **Vague scales.** "Rate 1 to 10" produces noise. Use one criterion per call, binary or anchored levels, and evidence first.
@@ -521,7 +541,7 @@ Before the agent features of Najm Assist go to pilot, Faisal, Hessa and Dana pro
 # 6.3 — Online evaluation: experiments, A/B tests and staged rollouts
 *Level: 🟡 Intermediate* · *Prerequisites: 6.1, 6.2* · *Stage: Evaluate, Launch*
 
-**After this you can** choose an overall evaluation criterion with guardrail metrics, estimate the sample size an A/B test needs, and design a shadow-mode and staged rollout with a written rule for going live. *Study time: about 110 minutes (estimate).*
+**After this you can** choose an overall evaluation criterion with guardrail metrics, estimate the sample size an A/B test needs, and design a shadow-mode and staged rollout with a written rule for going live. *Study time: reading about 20 min, hands-on about 145 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Offline evals tell you whether outputs are good. **Online evaluation** tells you whether real users in real workflows get the promised value, without new harm.
@@ -650,6 +670,16 @@ Faisal rewrites his launch proposal as the **Credit Memo Copilot Rollout and Exp
 - 🟢 For Najm Assist's new "dispute a transaction" feature, choose an OEC and four guardrail metrics. *Done when:* at least one guardrail measures a downstream outcome (for example a repeat contact within seven days) and at least one measures a customer segment.
 - 🟡 Smart Alerts wants to test a new threshold. The metric is false alerts per 1,000 customers per month, with a standard deviation of about 4 (illustrative). The team wants to detect a reduction of 0.5. Use the rule of thumb to estimate the number of customers needed per group, then say whether the test is feasible for a bank with 800,000 card customers. *Done when:* you have n ≈ 1,024 per group and a sentence on the fraud-catch guardrail that must be monitored at the same time.
 - 🔴 Design the online evaluation for replacing SME Instant Finance's current model with a challenger. Cover shadow mode, the leading indicators you will use before defaults are known, what (if anything) you would randomise, and what governance approval you need. *Done when:* your design explains why outcomes arrive late, names at least three leading indicators, and includes a written rule for when the challenger may make live decisions.
+
+<details><summary>Check your work</summary>
+
+**🟢 Model answer.** OEC: disputes completed in the app without a repeat contact within seven days. Guardrails: repeat contact within seven days (downstream), complaints about disputes, handoff rate, and completion rate for Arabic-language users (a segment).
+
+**🟡 Worked answer.** n ≈ 16 × 4² ÷ 0.5² = 16 × 16 ÷ 0.25 = 1,024 customers per group. With 800,000 card customers the test is easily feasible. At the same time, monitor fraud caught (recall on confirmed fraud): fewer false alerts is no win if more fraud gets through.
+
+**🔴 Self-check.** Your design passes if it explains that defaults appear months later, runs the challenger in shadow mode first, names at least three leading indicators (for example early missed payments or agreement with credit officers), says what you would randomise, if anything, and states a written rule and approver for live decisions.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Big-bang launch.** Switching on for everyone makes every failure a public one and leaves you nothing to compare with. Release in stages with gates.

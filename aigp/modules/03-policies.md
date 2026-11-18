@@ -9,7 +9,7 @@
 # 3.1 — The AI life cycle and the policy stack
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 2.2* · *BoK: I.C*
 
-**After this you can** write a complete inventory record for an AI system, with a reasoned risk tier and AI Act role, and draft an exception procedure that blocks permanent silent exceptions. *Study time: about 110 minutes (estimate).*
+**After this you can** write a complete inventory record for an AI system, with a reasoned risk tier and AI Act role, and draft an exception procedure that blocks permanent silent exceptions. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - The **AI life cycle** runs from planning and design, through data and model building, verification and validation, deployment, operation and monitoring, to retirement. Governance applies at every stage, not only at launch.
@@ -94,7 +94,7 @@ At Najm Bank the AI policy stack looks like this:
 
 Finding existing AI is its own project: survey business units, scan procurement records and expense claims for AI subscriptions, ask vendors whether their products include AI features, and check network logs for traffic to public AI services.
 
-**Model risk management.** Banks already have model risk management (MRM) disciplines, and regulators expect them to cover AI models. In the US, the supervisory guidance SR 11-7 (2011) sets expectations for robust model development, independent validation ("effective challenge"), and governance including a model inventory. In the UK, the Prudential Regulation Authority's supervisory statement SS1/23 sets model risk management principles for banks and explicitly contemplates AI and machine-learning models. The QCB's AI guideline for financial institutions carries similar expectations for Qatari banks; check the current text. The governance move is to extend MRM to AI rather than duplicate it: widen the definition of "model" to cover AI systems including GenAI, add AI-specific validation (fairness, robustness, explainability, GenAI evaluation), and add triggers for vendor model changes. In April 2026 the Federal Reserve, the OCC and the FDIC replaced SR 11-7 with **SR 26-2**, *Revised Guidance on Model Risk Management*. It is more principles-based, scales validation to each model's materiality instead of fixed cycles, tightens the definition of a model and holds vendor models to the same standard; read its current text for how it treats generative and agentic AI.
+**Model risk management.** Banks already have model risk management (MRM) disciplines, and regulators expect them to cover AI models. In the US, the supervisory guidance SR 11-7 (2011) sets expectations for robust model development, independent validation ("effective challenge"), and governance including a model inventory. In the UK, the Prudential Regulation Authority's supervisory statement SS1/23 sets model risk management principles for banks and explicitly contemplates AI and machine-learning models. The QCB's AI guideline for financial institutions carries similar expectations for Qatari banks; check the current text. The governance move is to extend MRM to AI rather than duplicate it: widen the definition of "model" to cover AI systems including GenAI, add AI-specific validation (fairness, robustness, explainability, GenAI evaluation), and add triggers for vendor model changes. In April 2026 the Federal Reserve, the OCC and the FDIC replaced SR 11-7 with **SR 26-2**, *Revised Guidance on Model Risk Management*. It is more principles-based, scales validation to each model's materiality instead of fixed cycles, tightens the definition of a model and holds vendor models to the same standard. A footnote leaves generative and agentic AI outside its scope for now, as novel and fast-moving, and the agencies have signalled separate work on them; so SR 26-2 does not dictate how to govern GenAI, but banks must still cover it through their own risk management and controls, and extending MRM is the usual way.
 
 **The exception process.** Rules will sometimes not fit. A good exception process makes deviations visible, time-bound and owned instead of silent:
 
@@ -122,7 +122,7 @@ Finding existing AI is its own project: survey business units, scan procurement 
 | **OECD AI Principles** | AI system definition (updated Nov 2023) and an iterative life-cycle description | EU AI Act definition is based on the OECD's |
 | **ISO/IEC 42001** — Clause 5.2 and Annex A | An AI policy approved by top management; Annex A controls for policies, life cycle, data, third parties and more | Annex A is a practical checklist for the policy stack |
 | **EU AI Act** — Arts 9, 17 and 26 | Life-cycle risk management and quality management for high-risk providers; deployer duties including monitoring and log retention of at least six months | Obligations differ for providers and deployers |
-| **SR 11-7** | (Replaced in April 2026 by **SR 26-2**.) US supervisory guidance on model risk management: sound development, independent validation, governance and inventory | "Effective challenge" and independent validation apply to AI models in banks |
+| **SR 11-7** | (Replaced in April 2026 by **SR 26-2**.) US supervisory guidance on model risk management: sound development, independent validation, governance and inventory | "Effective challenge" and independent validation apply to AI models in banks; SR 26-2 leaves GenAI and agentic AI out for now |
 
 ## 🏛️ In practice at Najm Bank
 Layla's **AI life-cycle control matrix (extract)**, part of the AI Life-cycle Standard:
@@ -255,7 +255,7 @@ Draft Najm's AI exception procedure in under 400 words: who can request, what th
 # 3.2 — Data governance and intellectual-property policies for AI
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1* · *BoK: I.C*
 
-**After this you can** draft a data card for training data, and write a decision memo on unlicensed retrieval content that separates contract risk from copyright risk. *Study time: about 110 minutes (estimate).*
+**After this you can** draft a data card for training data, and write a decision memo on unlicensed retrieval content that separates contract risk from copyright risk. *Study time: reading about 20 min, hands-on about 100 min (estimate).*
 
 ## ⚡ In 60 seconds
 - AI systems inherit the strengths and flaws of their data. Data governance for AI covers **provenance** (where data came from), **lineage** (how it moved and changed), **quality and representativeness**, **retention**, and **lawful use** (legal basis, purpose, rights).
@@ -469,7 +469,7 @@ The research reports already in the credit copilot's retrieval library may not b
 # 3.3 — Third-party and supply-chain risk
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 3.2* · *BoK: I.C*
 
-**After this you can** write ten contract clauses for a foundation-model provider, and decide and justify whether rebranding and retraining a vendor tool makes the bank a provider under the AI Act. *Study time: about 110 minutes (estimate).*
+**After this you can** write ten contract clauses for a foundation-model provider, and decide and justify whether rebranding and retraining a vendor tool makes the bank a provider under the AI Act. *Study time: reading about 20 min, hands-on about 110 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Most organisations buy far more AI than they build: vendor AI products, AI features embedded in existing software, foundation-model APIs, open-source or open-weight models, data and labelling services.

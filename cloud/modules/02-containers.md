@@ -9,7 +9,7 @@
 # 2.1 — Containers done right: images, layers, Dockerfiles and registries
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.2* · *Phase: Build, Deploy*
 
-**After this you can** rewrite a naive Dockerfile into a pinned, multi-stage, non-root build, show a leaked secret in the naive image's layers, and deploy by digest so that moving the tag changes nothing. *Study time: about 115 minutes (estimate).*
+**After this you can** rewrite a naive Dockerfile into a pinned, multi-stage, non-root build, show a leaked secret in the naive image's layers, and deploy by digest so that moving the tag changes nothing. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A **container** is an ordinary Linux process that the kernel isolates (its own view of files, processes and network) and limits (CPU and memory). A **container image** is the read-only package of files and settings that the process starts from.
@@ -22,7 +22,7 @@
 ## 🧭 Why it matters
 Yousef's first task on the platform team is to containerise the **Najm Mobile API**, the Python service behind the retail app. By Thursday it runs. The image is 1.3 GB, builds in nine minutes on every commit, and starts from `python:latest`. The scanner flags hundreds of vulnerabilities, mostly in compilers the API never uses. Then Tariq reports that staging "has the old login bug again": two pipelines pushed different builds to the same tag, `mobile-api:staging`, minutes apart, and the cluster pulled whichever it saw last. Finally Noura finds a test database password inside an image layer: `COPY . .` had copied a local `.env` file, and deleting it in a later step did not remove it from the earlier layer.
 
-Salem shows him a public case of the same root cause at a larger scale. In August 2012 Knight Capital deployed new trading code by hand; according to the US SEC's order, one of eight servers did not receive it, a reused flag woke up old logic there, and the firm lost more than 460 million dollars in about 45 minutes. "We cannot afford to wonder which code is running," Salem says. "The image is how we stop wondering. But only if we build it once, name it by its digest, and deploy exactly that."
+Salem reminds him of the Knight Capital case from lesson 0.2: the firm's loss began with one server out of eight running different code from the rest, and nobody could see it. "We cannot afford to wonder which code is running," Salem says. "The image is how we stop wondering. But only if we build it once, name it by its digest, and deploy exactly that."
 
 This lesson turns Yousef's Thursday image into the bank's standard one.
 
@@ -304,7 +304,7 @@ Work locally with Docker or a compatible tool. Push only to a registry you own, 
 # 2.2 — Kubernetes fundamentals: pods, deployments, services and how the cluster thinks
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.2, 2.1* · *Phase: Deploy, Operate*
 
-**After this you can** deploy a Deployment and a Service on a local cluster, and diagnose a selector mismatch and a non-existent image digest from `kubectl` output alone, fixing both in your YAML files. *Study time: about 115 minutes (estimate).*
+**After this you can** deploy a Deployment and a Service on a local cluster, and diagnose a selector mismatch and a non-existent image digest from `kubectl` output alone, fixing both in your YAML files. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Kubernetes** is a system that runs containers across a group of machines (a **cluster**) and keeps them running. You tell it what you want; it works continuously to make reality match.
@@ -631,7 +631,7 @@ Use a local cluster: install kind or k3d, and create a cluster with `kind create
 # 2.3 — Kubernetes in practice: config, secrets, health probes, autoscaling and Helm
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 2.2* · *Phase: Deploy, Operate*
 
-**After this you can** add a ConfigMap, a Secret and separate liveness and readiness probes to a Deployment, show a not-ready pod leave the endpoints without restarting, and package the app as a Helm chart with an HPA and a PDB. *Study time: about 115 minutes (estimate).*
+**After this you can** add a ConfigMap, a Secret and separate liveness and readiness probes to a Deployment, show a not-ready pod leave the endpoints without restarting, and package the app as a Helm chart with an HPA and a PDB. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A manifest that "runs" is not production-ready. Production adds **external configuration**, **safe secrets**, **health probes**, **requests and limits**, **autoscaling**, **graceful shutdown** and a **security context**.

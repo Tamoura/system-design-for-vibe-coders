@@ -8,7 +8,7 @@ routine thing you do. This module makes it boring — on purpose.*
 
 # 4.1 — Shipping is a system
 
-**After this you can** turn your deploy into one command that records the live version at `/version`, and cause real 502s with an in-place restart under load to show the window it leaves. *Study time: about 70 minutes (estimate).*
+**After this you can** turn your deploy into one command that records the live version at `/version`, and cause real 502s with an in-place restart under load to show the window it leaves. *Study time: reading about 10 min, hands-on about 90 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -40,12 +40,13 @@ transition has a moment in the middle that you are responsible for.**
 
 ### The famous version: Knight Capital, $440M in 45 minutes
 
-On August 1, 2012, the trading firm Knight Capital deployed new code to its
-servers — to seven of its eight. The eighth kept running old code, in which a
-feature flag that now meant one thing used to mean something else. At market
-open, that one server started firing millions of unintended orders. In 45
-minutes it lost about **$440 million**, and the firm — a major player that
-morning — was effectively finished by the afternoon.
+You met Knight Capital in F.3 as a story about copying files by hand. Look at it
+again as a story about the *middle* of a deploy. On August 1, 2012, new code
+reached seven of its eight servers. The eighth kept running old code, in which a
+reused feature flag meant something else, and at market open it fired millions
+of unintended orders. In 45 minutes Knight lost about **$440 million**. Within
+days it needed an emergency rescue that handed most of the company to new
+investors, and within a year it had been absorbed by a rival.
 
 Knight's deploy wasn't "done" when *most* servers had the new code. It was done
 when *every* server did, verified, with no old code able to act. Your Relay
@@ -192,7 +193,7 @@ No code reading required — accept the lesson only when:
 
 # 4.2 — Blue-green and the shared-directory 502s
 
-**After this you can** set up blue-green deploys with a separate build directory for each colour, list every shared writable path, and deploy under a live request stream with zero non-200 responses. *Study time: about 70 minutes (estimate).*
+**After this you can** set up blue-green deploys with a separate build directory for each colour, list every shared writable path, and deploy under a live request stream with zero non-200 responses. *Study time: reading about 5 min, hands-on about 120 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -374,7 +375,7 @@ No code reading required — accept the lesson only when:
 
 # 4.3 — The proxy lies: stale workers and trusting your own verification
 
-**After this you can** end your deploy with a script that checks `/version` and compares origin and edge asset hashes, show it failing on a stale edge, and reproduce 502s by reloading the proxy after a flip, then clear them with a restart. *Study time: about 70 minutes (estimate).*
+**After this you can** end your deploy with a script that checks `/version` and compares origin and edge asset hashes, show it failing on a stale edge, and reproduce 502s by reloading the proxy after a flip, then clear them with a restart. *Study time: reading about 10 min, hands-on about 90 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -455,8 +456,8 @@ system* — but every instrument you observe *with* is itself one of these layer
 Refreshing the page checks the CDN. Curling from the box checks past the CDN but
 still through the proxy. Your own browser may hold its own cache. The famous
 industrial version: during the 2017 **AWS S3 outage**, Amazon's status dashboard
-couldn't show the outage — because the dashboard's own graphics were hosted on
-the S3 that was down. The instrument shared fate with the thing it measured. Your
+kept showing green — because the tool that updates it depended on the S3 that
+was down. The instrument shared fate with the thing it measured. Your
 deploy check has the same failure mode in miniature: *don't verify a layer using
 a tool that lives in that layer.*
 
@@ -553,7 +554,7 @@ No code reading required — accept the lesson only when:
 
 # 4.4 — Rollback, staging, and release gates
 
-**After this you can** add a staging target, roll back a deliberately broken deploy with one command, make uploaded content hidden until published, and switch a feature off with a flag without a deploy. *Study time: about 70 minutes (estimate).*
+**After this you can** add a staging target, roll back a deliberately broken deploy with one command, make uploaded content hidden until published, and switch a feature off with a flag without a deploy. *Study time: reading about 10 min, hands-on about 120 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -736,7 +737,7 @@ No code reading required — accept the lesson only when:
 
 # 4.5 — Verify the artifact, not the source
 
-**After this you can** add a postbuild check that inspects the compiled bundle and fails the build when it contains `localhost` or lacks the production origin, and show it failing on a planted bad file. *Study time: about 70 minutes (estimate).*
+**After this you can** add a postbuild check that inspects the compiled bundle and fails the build when it contains `localhost` or lacks the production origin, and show it failing on a planted bad file. *Study time: reading about 10 min, hands-on about 75 min (estimate).*
 
 ## 🔥 The War Story
 

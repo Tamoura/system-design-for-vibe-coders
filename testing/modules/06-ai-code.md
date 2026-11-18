@@ -9,7 +9,7 @@
 # 6.1 — Verifying AI-generated code: how coding agents fail and a reviewer's checklist
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 2.3* · *Focus: AI, Unit*
 
-**After this you can** review AI-generated code with your own tests, type checks and a linter, find the bugs its "tests pass" report hid, and build a gate that blocks invented or brand-new dependencies. *Study time: about 115 minutes (estimate).*
+**After this you can** review AI-generated code with your own tests, type checks and a linter, find the bugs its "tests pass" report hid, and build a gate that blocks invented or brand-new dependencies. *Study time: reading about 15 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **coding agent** writes fluent code by continuing patterns in its context. It cannot reliably run code in its head, so "it reads well" proves nothing.
@@ -353,7 +353,7 @@ Copy `testing/sample/` to a scratch folder and install `pytest`, `hypothesis`, `
 # 6.2 — Tests as the specification for coding agents: test-first workflows, guardrails and mutation as the judge
 *Level: 🔴 Advanced* · *Prerequisites: 2.3, 6.1* · *Focus: AI, Delivery*
 
-**After this you can** write the spec table and property tests an agent's code must pass, reach an 80% mutation score with every survivor triaged, and build a gate that blocks deleted, skipped or weakened tests. *Study time: about 115 minutes (estimate).*
+**After this you can** write the spec table and property tests an agent's code must pass, reach an 80% mutation score with every survivor triaged, and build a gate that blocks deleted, skipped or weakened tests. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - The **spec-first loop**: acceptance criteria become tests a human writes or approves, the agent implements until they pass, a CI gate re-runs everything, and a human reviews code and tests.
@@ -728,7 +728,7 @@ Copy `testing/sample/`; install `pytest`, `hypothesis` and `mutmut`.
 
 <details><summary>Answer</summary>
 
-**B.** The agent needs each mutant's concrete change and a rule: tests only, not the code or the gate. B and D let it move the goalposts; A is too vague to act on. (🟡 Going deeper.)
+**B.** The agent needs each mutant's concrete change and a rule: tests only, not the code or the gate. C and D let it move the goalposts; A is too vague to act on. (🟡 Going deeper.)
 
 </details>
 
@@ -759,7 +759,7 @@ Copy `testing/sample/`; install `pytest`, `hypothesis` and `mutmut`.
 # 6.3 — AI as your testing assistant: test ideas, generated tests and data, agentic test runners, self-healing locators and triage
 *Level: 🟡 Intermediate* · *Prerequisites: 2.3, 3.2, 6.1* · *Focus: AI, Strategy*
 
-**After this you can** check an assistant's generated test data against the real code, compare assistants by the seeded bugs their tests catch, and build a guard that blocks unreviewed self-healing test changes. *Study time: about 115 minutes (estimate).*
+**After this you can** check an assistant's generated test data against the real code, compare assistants by the seeded bugs their tests catch, and build a guard that blocks unreviewed self-healing test changes. *Study time: reading about 15 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - AI is a fast, fluent drafter of test ideas, edge cases, data, boilerplate and triage notes. It is a poor oracle: it cannot know what "correct" means at your bank.
@@ -806,7 +806,7 @@ The risky uses need judgement: deciding what is *correct* (an oracle decision), 
 
 ### 🟡 Going deeper
 
-**Agentic test runners.** The **Playwright MCP server** (`npx @playwright/mcp@latest`) lets a model drive a real browser through tool calls such as navigate, click and type. By default it describes the page as an accessibility snapshot, a text tree of roles and names, not a screenshot. Playwright can print the same kind of tree:
+**Agentic test runners.** The **Playwright MCP server** (`npx @playwright/mcp@0.0.85`, the release current in November 2026; pin yours) lets a model drive a real browser through tool calls such as navigate, click and type. By default it describes the page as an accessibility snapshot, a text tree of roles and names, not a screenshot. Playwright can print the same kind of tree:
 
 ```typescript
 // snapshot.spec.ts: run the sample first (uvicorn najm.api:app --port 8000)
@@ -832,7 +832,7 @@ test('what a model sees: the accessibility snapshot', async ({ page }) => {
 - button "Send transfer"
 ```
 
-Recent Playwright releases (2025 onwards) add *test agents*: a **planner** that explores the app and writes a test plan, a **generator** that turns it into Playwright tests, and a **healer** that runs failing tests and edits them. `npx playwright init-agents --loop claude` writes the agent definitions for your AI tool (in version 1.64, which we inspected, `--loop` also takes codex, copilot, opencode and two VS Code variants); check the documentation, as this area moves fast.
+Recent Playwright releases (2025 onwards) add *test agents*: a **planner** that explores the app and writes a test plan, a **generator** that turns it into Playwright tests, and a **healer** that runs failing tests and edits them. `npx playwright init-agents --loop claude` writes the agent definitions for your AI tool; other tools have their own `--loop` values, and `npx playwright init-agents --help` lists those your installed version supports. This area moves fast.
 
 Know the failure modes. *The runner tests what the app does, not what it should do*: a generated test records today's behaviour, bugs included. *Runs differ*, so pin the model and review the output. *The healer may change assertions, or park a failing test with `test.fixme()`, a skip by another name* (its instructions allow both), so route its edits through the lesson 6.2 controls and extend the skip check to `test.skip` and `test.fixme`. *Page text is model input*, so a hostile page can carry instructions ([*Secure AI & Application Security*, lesson 8.2 — Prompt injection and jailbreaks, direct and indirect](../secai/index.html#/8.2)): point agents only at systems you own. Explore and draft with them; commit ordinary Playwright tests for regression.
 

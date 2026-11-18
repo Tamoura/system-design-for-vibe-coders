@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="cloud-source" content="c01eb158a30a21cb">
+<meta name="cloud-source" content="d2a135afcb1dbce1">
 <meta name="description" content="Cloud &amp; DevOps: Zero to Hero — a free, bilingual course: Linux and cloud fundamentals, containers and Kubernetes, infrastructure as code, CI/CD and safe releases, observability and SLOs, incidents, scaling, FinOps and AI infrastructure, with a quiz in every lesson and a 60-question practice exam.">
 <title>Cloud &amp; DevOps: Zero to Hero</title>
 <style>
@@ -438,6 +438,10 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <template id="t-about"><section class="page prose">
 <h1>Start here</h1>
 <p><strong>Ship it, run it, keep it healthy. A free, bilingual course that takes you from zero to confident cloud, platform, DevOps or site-reliability engineer.</strong></p>
+<!-- study-time -->
+<p><strong>Study time for the whole course: about 87 hours</strong> (estimate: reading plus hands-on work, summed over every lesson). At about 6 hours a week that is roughly 15 weeks. Each lesson shows its own split; a pilot with real learners will replace these estimates.</p>
+<!-- /study-time -->
+
 <h2>What this is</h2>
 <p>Writing the code is the start. Someone has to build it, test it and package it. Then they have to deploy it safely, watch it, scale it and pay for it, and wake up when it breaks. That someone increasingly needs to know Linux, networks, containers, Kubernetes, infrastructure as code, pipelines, observability and cost, and how to run AI models in production too.</p>
 <p>This course teaches that work, cloud-neutral and hands-on:</p>
@@ -803,7 +807,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p class="crumb"><a href="#/map">Module 0 — Orientation</a></p>
 <h1><span class="num">0.1</span> What cloud, DevOps, platform engineering and SRE are</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Phase <bdi dir="ltr">Plan</bdi></span> · <span class="prereq">Before this: none</span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> write a plain-language definition of cloud, DevOps, platform engineering and SRE that a non-technical friend can explain back, and estimate the four DORA metrics for a project from its git history. <em>Study time: about 115 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a plain-language definition of cloud, DevOps, platform engineering and SRE that a non-technical friend can explain back, and estimate the four DORA metrics for a project from its git history. <em>Study time: reading about 15 min, hands-on about 120 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -889,7 +893,16 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <td>Stability</td>
 </tr>
 </tbody></table></div>
-<p>The research&#39;s most useful finding is that speed and stability are <em>not</em> a trade-off. The best-performing teams are both faster and more stable, because small, frequent, automated changes are easier to test, easier to understand and easier to undo. DORA&#39;s later reports added a reliability measure and refined some names and definitions; check dora.dev for the current set at the time you read this.</p>
+<p>The research&#39;s most useful finding is that speed and stability are <em>not</em> a trade-off. The best-performing teams are both faster and more stable, because small, frequent, automated changes are easier to test, easier to understand and easier to undo. DORA has since refined the set: time to restore is now failed deployment recovery time, and in 2024 it added a fifth measure, deployment rework rate (lesson <a class="xref" href="#/4.1">4.1</a>); check dora.dev for the current definitions.</p>
+<p><strong>Estimating the four keys from git.</strong> A personal or open-source project rarely has a deploy log, so use proxies and say so. Tags or releases stand in for deployments, reverts and hotfix tags for failed changes, and the gap between a commit and the first tag that contains it for lead time:</p>
+<pre><code class="language-bash"># Rough DORA proxies from a repository&#39;s history (run inside the repo)
+git tag --sort=creatordate --format=&#39;%(creatordate:short) %(refname:short)&#39;   # releases, dated
+git log --since=&#39;3 months ago&#39; --oneline --grep=&#39;[Rr]evert&#39; | wc -l          # reverts: failed changes
+git log -1 --format=%cs &lt;commit&gt;                            # when a change was committed...
+git tag --contains &lt;commit&gt; --sort=creatordate | head -1    # ...and the first release that shipped it
+gh release list --limit 20                                  # GitHub Releases, if the project uses them
+</code></pre>
+<p>A tag is not a production deploy and a revert is not every failure, so write down what each number stands for.</p>
 <p><strong>Site reliability engineering.</strong> SRE started at Google and was described publicly in the book <em>Site Reliability Engineering</em> (2016) and <em>The Site Reliability Workbook</em> (2018). Its central ideas:</p>
 <ul>
 <li>A <strong>service level indicator (SLI)</strong> is a measurement of what users experience, for example &quot;the share of API requests that succeed in under 300 milliseconds&quot;.</li>
@@ -1054,7 +1067,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>🟢 Write a one-paragraph definition, in your own words, of cloud, DevOps, platform engineering and SRE, then one sentence on how each relates to the others. Include NIST&#39;s five cloud characteristics and the four DORA metrics. <em>Done when:</em> a friend who is not in tech can read it and explain back the difference between DevOps and SRE.</li>
 <li>🟡 Find five real job postings for cloud, DevOps, platform or SRE roles in your region and map each one&#39;s responsibilities to the &quot;who does what&quot; table. <em>Done when:</em> a table shows which of the four roles each posting really asks for, plus one sentence on what surprised you.</li>
-<li>🔴 Take a project you own that has a git history (a personal project or a public open-source repository). Estimate its DORA metrics for the last three months: deployment or release frequency from tags or releases, lead time from commit date to release date, change failure rate from reverts or hotfix releases, and time to restore from the gap between a bad release and the fix or revert that followed it (use issue timestamps if you have them). <em>Done when:</em> you have the four numbers, the commands or queries you used to get them, and a note on which number was hardest to measure honestly and why.</li>
+<li>🔴 Take a project you own that has a git history (a personal project or a public open-source repository). Estimate its DORA metrics for the last three months with the git commands shown above: deployment or release frequency from tags or releases, lead time from commit date to release date, change failure rate from reverts or hotfix releases, and time to restore from the gap between a bad release and the fix or revert that followed it (use issue timestamps if you have them). <em>Done when:</em> you have the four numbers, the commands or queries you used to get them, and a note on which number was hardest to measure honestly and why.</li>
 </ul>
 </section>
 <section class="sec sec-mistakes"><h2>⚠️ Mistakes and traps</h2>
@@ -1158,7 +1171,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p class="crumb"><a href="#/map">Module 0 — Orientation</a></p>
 <h1><span class="num">0.2</span> The path to production: from a commit to a customer, and everything that can break on the way</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Phase <bdi dir="ltr">Release, Deploy</bdi></span> · <span class="prereq">Before this: <a href="#/0.1">0.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> draw a path-to-production map for your own project with an automated catch and an undo for every stage, and show a CI run that fails on a broken test and passes once it is fixed. <em>Study time: about 115 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> draw a path-to-production map for your own project with an automated catch and an undo for every stage, and show a CI run that fails on a broken test and passes once it is fixed. <em>Study time: reading about 15 min, hands-on about 150 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -1463,7 +1476,7 @@ jobs:
 <ul>
 <li>🟢 Pick a website you use. Run <code>dig +short example.com</code> and <code>curl -sI https://example.com</code> (with the real domain) and note the IP addresses, the HTTP status and headers such as <code>cache-control</code>. Then write the five stages a change would pass through before it shows up on that site. <em>Done when:</em> the output is saved and each of your five stages names one thing that could go wrong.</li>
 <li>🟡 Draw the path-to-production map for a project of your own (or a small open-source project you know), using the same columns as Najm&#39;s map. <em>Done when:</em> every stage has an &quot;automated catch&quot; and an &quot;undo&quot;, and you have marked in a different colour each place where the answer is currently &quot;a person remembers&quot;.</li>
-<li>🔴 In a public repository on your own GitHub account, create a tiny web service with one test and a Dockerfile, and add the CI workflow from this lesson. Push a change that breaks the test and confirm the pipeline fails. Then fix it, let the pipeline build the image, and build and run the same commit locally with <code>docker run</code>. <em>Done when:</em> you can show a failed run, a passing run, and the image tag matching the commit hash that passed.</li>
+<li>🔴 <em>Do this after the lab setup in 0.3 and exercise 1.1 🟡, whose starter <code>server.py</code>, test and Dockerfile you can reuse (Dockerfiles are explained in 2.1); replace <code>make test</code> with <code>python3 -m unittest</code>.</em> In a public repository on your own GitHub account, create a tiny web service with one test and a Dockerfile, and add the CI workflow from this lesson. Push a change that breaks the test and confirm the pipeline fails. Then fix it, let the pipeline build the image, and build and run the same commit locally with <code>docker run</code>. <em>Done when:</em> you can show a failed run, a passing run, and the image tag matching the commit hash that passed.</li>
 </ul>
 </section>
 <section class="sec sec-mistakes"><h2>⚠️ Mistakes and traps</h2>
@@ -1549,9 +1562,9 @@ jobs:
 <ul>
 <li>US SEC, In the Matter of Knight Capital Americas LLC (2013) — <a href="https://www.sec.gov/litigation/admin/2013/34-70694.pdf">https://www.sec.gov/litigation/admin/2013/34-70694.pdf</a></li>
 <li>AWS, Summary of the Amazon S3 Service Disruption in the Northern Virginia (US-EAST-1) Region — <a href="https://aws.amazon.com/message/41926/">https://aws.amazon.com/message/41926/</a></li>
-<li>GitLab, Postmortem of database outage of January 31 — <a href="https://about.gitlab.com/blog/">https://about.gitlab.com/blog/</a></li>
+<li>GitLab, Postmortem of database outage of January 31 — <a href="https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/">https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/</a></li>
 <li>Meta Engineering, More details about the October 4 outage — <a href="https://engineering.fb.com/">https://engineering.fb.com/</a></li>
-<li>CrowdStrike, Falcon content update remediation and guidance hub — <a href="https://www.crowdstrike.com/">https://www.crowdstrike.com/</a></li>
+<li>CrowdStrike, Falcon content update remediation and guidance hub — <a href="https://www.crowdstrike.com/falcon-content-update-remediation-and-guidance-hub/">https://www.crowdstrike.com/falcon-content-update-remediation-and-guidance-hub/</a></li>
 <li>DORA research programme — <a href="https://dora.dev/">https://dora.dev/</a></li>
 <li>GitHub Actions documentation — <a href="https://docs.github.com/actions">https://docs.github.com/actions</a></li>
 <li>The Twelve-Factor App — <a href="https://12factor.net/">https://12factor.net/</a></li>
@@ -1566,7 +1579,7 @@ jobs:
 <p class="crumb"><a href="#/map">Module 0 — Orientation</a></p>
 <h1><span class="num">0.3</span> Meet Najm Bank's platform team, and how to use this course</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Phase <bdi dir="ltr">Plan</bdi></span> · <span class="prereq">Before this: <a href="#/0.1">0.1</a>, <a href="#/0.2">0.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> set up a lab journal with a verified tool check and a local kind cluster you created and deleted, and write a service card and a personal study plan for this course. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> set up a lab journal with a verified tool check and a local kind cluster you created and deleted, and write a service card and a personal study plan for this course. <em>Study time: reading about 15 min, hands-on about 150 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -1722,7 +1735,12 @@ jobs:
 <tr>
 <td>Docker (Docker Desktop, or Docker Engine on Linux)</td>
 <td>Building and running containers</td>
-<td>2.1</td>
+<td>0.2 (🔴), 1.1</td>
+</tr>
+<tr>
+<td>A container registry account (GitHub Container Registry comes with your GitHub account)</td>
+<td>Storing the images your pipelines build</td>
+<td>3.2, 4.1</td>
 </tr>
 <tr>
 <td>kind, k3d or minikube</td>
@@ -1750,6 +1768,14 @@ jobs:
 <td>3.2</td>
 </tr>
 </tbody></table></div>
+<p><strong>Before you start: pick your operating system.</strong></p>
+<ul>
+<li><strong>Linux (Ubuntu or Debian):</strong> install Docker Engine and the tools above directly.</li>
+<li><strong>Windows:</strong> install WSL 2 with Ubuntu, then Docker Desktop with its WSL 2 backend, and run every command in this course in the Ubuntu terminal, not PowerShell.</li>
+<li><strong>macOS:</strong> Docker Desktop runs containers and kind, and the 1.1 exercises run inside containers, so they work as they are. The 1.1 walkthrough commands (<code>systemctl</code>, <code>journalctl</code>, <code>ss</code> on the host) are Linux-only; to follow them, use a Linux virtual machine (Multipass or UTM) or a GitHub Codespace.</li>
+<li>On Ubuntu, Debian or WSL, add Module 1&#39;s network tools: <code>sudo apt-get install -y dnsutils netcat-openbsd iproute2 curl openssl</code>.</li>
+<li><strong>Costs and secrets.</strong> The tools are free; Docker Desktop is free for personal use, education and small businesses, so check its licence before using it at work. Never paste a token, password or private key into a chat, an issue or a commit; keep it in the tool&#39;s secret store (<a class="xref" href="#/4.3">4.3</a>).</li>
+</ul>
 <p>Install each from its official site; installation steps change, so follow the current docs rather than copying commands from an old blog post. When they are installed, check them:</p>
 <pre><code class="language-bash"># Check your lab tools. Each should print a version, not an error.
 git --version
@@ -2034,7 +2060,7 @@ kind delete cluster --name najm-lab
 <p class="crumb"><a href="#/map">Module 1 — Foundations</a></p>
 <h1><span class="num">1.1</span> Linux, the shell and networking essentials: processes, files, ports, DNS, HTTP and TLS</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Phase <bdi dir="ltr">Operate, Monitor</bdi></span> · <span class="prereq">Before this: <a href="#/0.1">0.1</a>, <a href="#/0.2">0.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> label each line of <code>curl -v</code> output as DNS, TCP, TLS or HTTP, and write a script that walks that chain and stops at the first failing hop. <em>Study time: about 115 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> label each line of <code>curl -v</code> output as DNS, TCP, TLS or HTTP, and write a script that walks that chain and stops at the first failing hop. <em>Study time: reading about 15 min, hands-on about 3 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -2202,7 +2228,7 @@ curl -sv https://api.najm.example/health -o /dev/null
 <p><strong>Services with systemd.</strong> On a VM, a systemd <strong>unit file</strong> defines how a service runs: the command, the user it runs as (never root unless it must), and whether to restart it on failure (<code>Restart=on-failure</code>). In containers, the runtime and Kubernetes take systemd&#39;s place, but the ideas carry over: a supervised process, a restart policy, a non-root user.</p>
 <p><strong>Private addresses.</strong> RFC 1918 reserves three IPv4 ranges for private networks: <code>10.0.0.0/8</code>, <code>172.16.0.0/12</code> and <code>192.168.0.0/16</code>. The <code>/16</code> is <strong>CIDR</strong> notation: the first 16 bits name the network, so <code>10.20.0.0/16</code> holds 65,536 addresses and <code>10.20.1.0/24</code> holds 256. Lesson <a class="xref" href="#/1.2">1.2</a> uses these to plan cloud networks.</p>
 <h3>🔴 Expert view</h3>
-<p><strong>Automate certificates, then alert anyway.</strong> Manual yearly renewal is an outage on a timer. Use <strong>ACME</strong> (RFC 8555), the protocol behind Let&#39;s Encrypt, or your provider&#39;s certificate manager (in Kubernetes, a controller such as cert-manager). The CA/Browser Forum has agreed to shorten maximum public certificate lifetimes in steps over the coming years (check the current limit), which makes manual renewal unworkable. Still alert at, say, 14 days before expiry: automation fails quietly when DNS or permissions change.</p>
+<p><strong>Automate certificates, then alert anyway.</strong> Manual yearly renewal is an outage on a timer. Use <strong>ACME</strong> (RFC 8555), the protocol behind Let&#39;s Encrypt, or your provider&#39;s certificate manager (in Kubernetes, a controller such as cert-manager). Under CA/Browser Forum ballot SC-081, the maximum lifetime of a public TLS certificate fell from 398 to 200 days in March 2026 and is scheduled to fall to 100 days in March 2027 and 47 days in March 2029, which makes manual renewal unworkable. Still alert at, say, 14 days before expiry: automation fails quietly when DNS or permissions change.</p>
 <p><strong>DNS is a dependency of everything.</strong> Your monitoring, deploy tools and incident chat may depend on the same DNS and network you are fixing, as Facebook&#39;s 2021 outage showed. Keep an &quot;out-of-band&quot; list of how to reach consoles, runbooks and each other if your own names stop resolving.</p>
 <p><strong>Probe from outside.</strong> Dashboards inside the cluster show healthy pods, not whether customers can reach them. A <strong>synthetic check</strong> (a scheduled request from outside your network, ideally from several places) tests the whole chain from the customer&#39;s side, and would have caught Najm&#39;s expired certificate before the contact centre did. Lesson <a class="xref" href="#/5.2">5.2</a> builds this in.</p>
 <p><strong>Test from where the client is.</strong> Your laptop&#39;s resolver, proxy or VPN route may differ from the customer&#39;s.</p>
@@ -2301,14 +2327,51 @@ curl -sv https://api.najm.example/health -o /dev/null
 <p>All exercises run on your own machine with Docker and a terminal.</p>
 <ul>
 <li>🟢 Run <code>curl -v https://example.com</code> and label each line of output as DNS, TCP, TLS or HTTP. Then use <code>dig</code> and <code>openssl s_client</code> to note the record&#39;s TTL and the certificate&#39;s issuer and expiry date. <em>Done when:</em> you can point to where each hop succeeded and say when the certificate expires.</li>
-<li>🟡 Write a tiny HTTP server that listens on <code>127.0.0.1:8080</code>, run it with <code>docker run -p 8080:8080</code>, and try to reach it from your host. Diagnose with <code>ss -tlnp</code> inside the container, fix the bind address, and confirm. Then make it log &quot;shutting down&quot; on SIGTERM and check that <code>docker stop</code> shows the message. <em>Done when:</em> both behaviours are fixed and you can explain each failure in two sentences.</li>
+<li>🟡 Using the starter files below, run a tiny HTTP server that listens on <code>127.0.0.1:8080</code> with <code>docker run -p 8080:8080</code>, and try to reach it from your host. Diagnose with <code>ss -tlnp</code> inside the container, fix the bind address, and confirm. Then make it log &quot;shutting down&quot; on SIGTERM and check that <code>docker stop</code> shows the message. <em>Done when:</em> both behaviours are fixed and you can explain each failure in two sentences.</li>
 <li>🔴 Write <code>walk-the-chain.sh &lt;hostname&gt;</code>: run the four tests in order, print PASS or FAIL per hop with the key detail (address, certificate expiry, HTTP status) and exit non-zero at the first failure. Test it on a working site, a non-existent name, a closed local port and an expired certificate (badssl.com hosts deliberately broken test sites). <em>Done when:</em> each failure stops at the right hop with a clear message.</li>
 </ul>
+<p><strong>Starter files for the 🟡 exercise.</strong> Put them in an empty folder. The Dockerfile is explained in 2.1; for now, copy it as it is.</p>
+<pre><code class="language-python"># server.py: starter for exercise 1.1 🟡 (it has two deliberate bugs)
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+def body():
+    return b&quot;ok\n&quot;
+
+class Hello(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(body())
+
+if __name__ == &quot;__main__&quot;:
+    print(&quot;listening on 8080&quot;)
+    HTTPServer((&quot;127.0.0.1&quot;, 8080), Hello).serve_forever()
+</code></pre>
+<pre><code class="language-python"># test_server.py: run with python3 -m unittest
+import unittest
+import server
+
+class TestBody(unittest.TestCase):
+    def test_body(self):
+        self.assertEqual(server.body(), b&quot;ok\n&quot;)
+</code></pre>
+<pre><code class="language-dockerfile"># Dockerfile: copy as it is; 2.1 explains each line and how to harden it
+FROM python:3.12-slim
+RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends iproute2
+COPY server.py .
+CMD [&quot;python&quot;, &quot;-u&quot;, &quot;server.py&quot;]
+</code></pre>
+<pre><code class="language-bash">docker build -t lab11 .
+docker run --rm --name lab11 -p 8080:8080 lab11    # terminal 1
+curl -v http://localhost:8080/                      # terminal 2
+docker exec lab11 ss -tlnp                          # what is it bound to?
+time docker stop lab11                              # about 10 s means SIGTERM was ignored
+</code></pre>
 </section>
 <section class="sec sec-mistakes"><h2>⚠️ Mistakes and traps</h2>
 <ul>
 <li><strong>Restarting before diagnosing.</strong> Walk the chain first; restart only when the evidence points at the process.</li>
-<li><strong>Binding to localhost in a container.</strong> The service is unreachable from outside. Bind to <code>0.0.0.0</code> (or the specific interface you mean) and let network policy decide who may connect.</li>
+<li><strong>Binding to localhost in a container.</strong> The service is unreachable from outside. Bind to <code>0.0.0.0</code> (or the specific interface you mean) and let firewall rules (in Kubernetes, network policies, 2.2) decide who may connect.</li>
 <li><strong>Renewing certificates by hand.</strong> Someone forgets and the site goes dark. Automate with ACME and alert before expiry.</li>
 <li><strong>Ignoring SIGTERM.</strong> Every deploy drops requests. Stop taking new work, finish current requests, then exit.</li>
 <li><strong>Running services as root.</strong> One bug becomes full control of the machine. Run as a dedicated user with only the files it needs.</li>
@@ -2407,12 +2470,12 @@ curl -sv https://api.najm.example/health -o /dev/null
 <p class="crumb"><a href="#/map">Module 1 — Foundations</a></p>
 <h1><span class="num">1.2</span> Cloud fundamentals: regions, zones, compute, storage, managed services and shared responsibility</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Phase <bdi dir="ltr">Plan, Deploy</bdi></span> · <span class="prereq">Before this: <a href="#/1.1">1.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> draw a two-zone VPC with subnet ranges, a NAT gateway, a load balancer and port-level firewall rules, and write a placement note that says who patches what and what happens when a zone fails. <em>Study time: about 115 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> draw a two-zone VPC with subnet ranges, a NAT gateway, a load balancer and port-level firewall rules, and write a placement note that says who patches what and what happens when a zone fails. <em>Study time: reading about 15 min, hands-on about 150 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>A cloud provider rents you computing on demand, through an API, billed by use. <strong>AWS</strong>, <strong>Microsoft Azure</strong> and <strong>Google Cloud</strong> sell similar building blocks under different names.</li>
-<li>The physical layout is the first design decision: a <strong>region</strong> is a geographic area; an <strong>availability zone</strong> is one or more separate data centres inside it. Spread production across <strong>at least two zones</strong>; consider a second region only for a clear recovery or residency reason.</li>
+<li>The physical layout is the first design decision: a <strong>region</strong> is a geographic area; an <strong>availability zone</strong> is one or more separate data centres inside it. Spread production across <strong>at least two zones</strong>; decide on a second region from your recovery targets and a regional risk assessment, agreed with Compliance.</li>
 <li>Choose the <strong>most managed</strong> service that meets your needs: you pay to hand over patching, backups and failover.</li>
 <li>Storage comes in three shapes: <strong>object</strong> (files by key over HTTP), <strong>block</strong> (a disk for one machine), <strong>file</strong> (a shared network folder). Pick by access pattern, not habit.</li>
 <li>The <strong>shared responsibility model</strong> says the provider secures the cloud and you secure what you put in it. Configuration, identity and data are always yours.</li>
@@ -2622,8 +2685,8 @@ curl -sv https://api.najm.example/health -o /dev/null
 </tbody></table></div>
 <p><strong>Managed versus self-run.</strong> Najm&#39;s default is &quot;use the managed service unless there is a written reason not to&quot;. Self-running PostgreSQL on VMs means your team owns patching, replication, failover, backups and restore tests. A managed service does most of that, at a price and with less control (not every extension or setting). Valid reasons to self-run: a missing feature, portability or specific performance needs; write the reason down.</p>
 <h3>🔴 Expert view</h3>
-<p><strong>Design for failure domains.</strong> A <strong>failure domain</strong> is the set of things that fail together: a server, a zone, a region, a provider, an account. Multi-zone covers the common physical failures cheaply and is the production default. Multi-region adds much more complexity: data replicated across distance, failover decided and rehearsed. Choose it when a recovery target or regulator requires it, not as a reflex; lesson <a class="xref" href="#/6.1">6.1</a> turns this into RTO and RPO targets. And no zone design protects against a bad deploy, a bad configuration push or an expired certificate: most outages are changes, not hardware.</p>
-<p><strong>Regulation shapes architecture.</strong> GCC financial regulators, such as the Qatar Central Bank, set expectations on cloud outsourcing and on where customer data may be stored and processed; read the current rules with your compliance team. In the EU, the Digital Operational Resilience Act (DORA, Regulation (EU) 2022/2554, applying from January 2025) requires financial entities to manage ICT risk, report major incidents, test resilience and manage third-party ICT providers, including cloud, with exit plans. So your architecture notes must say how you would leave a provider.</p>
+<p><strong>Design for failure domains.</strong> A <strong>failure domain</strong> is the set of things that fail together: a server, a zone, a region, a provider, an account. Multi-zone covers the common physical failures cheaply and is the production minimum. But the zones of one region share a geography: in March 2026 AWS reported that drone strikes during the regional conflict left two of the three zones of its UAE region (ME-CENTRAL-1) significantly impaired and disrupted its Bahrain region (ME-SOUTH-1), and it advised customers to move workloads to other regions. Multi-region adds much more complexity: data replicated across distance, failover decided and rehearsed. Decide it from your recovery targets and a regional risk assessment agreed with Compliance, not as a reflex; lesson <a class="xref" href="#/6.1">6.1</a> turns this into RTO and RPO targets. And no zone design protects against a bad deploy, a bad configuration push or an expired certificate: most outages are changes, not hardware.</p>
+<p><strong>Regulation shapes architecture.</strong> GCC financial regulators, such as the Qatar Central Bank, set expectations on cloud outsourcing and on where customer data may be stored and processed; read the current rules with your compliance team. In the EU, the Digital Operational Resilience Act (DORA, Regulation (EU) 2022/2554, applying from January 2025) requires financial entities to manage ICT risk, report major incidents, test resilience and manage third-party ICT risk, including cloud; for ICT services that support critical or important functions it requires documented, tested exit strategies (Article 28(8)). So the architecture notes for such a service must say how you would leave a provider.</p>
 <p><strong>Well-architected reviews.</strong> AWS, Azure and Google Cloud each publish a Well-Architected Framework, structuring reviews around reliability, security, cost, operations and performance. Use one as a checklist for any new production service.</p>
 <p><strong>Cost is a design input.</strong> Managed services, cross-zone traffic and data leaving the cloud (<strong>egress</strong>) all cost money, and prices vary by region and over time. Use the provider&#39;s calculator and current pricing pages, never memory, and set a budget alert first (lesson <a class="xref" href="#/6.2">6.2</a>).</p>
 </section>
@@ -2726,8 +2789,8 @@ curl -sv https://api.najm.example/health -o /dev/null
 </tr>
 <tr>
 <td>Second region</td>
-<td>Not now; backups copied to a second region; revisit with lesson <a class="xref" href="#/6.1">6.1</a>&#39;s DR targets</td>
-<td>Complexity not yet justified</td>
+<td>Not now; backups copied to a second region; revisit with lesson <a class="xref" href="#/6.1">6.1</a>&#39;s DR targets and a yearly regional risk review with Compliance</td>
+<td>Complexity not yet justified by the agreed targets</td>
 </tr>
 <tr>
 <td>Exit</td>
@@ -2854,6 +2917,7 @@ curl -sv https://api.najm.example/health -o /dev/null
 <li>AWS, Summary of the Amazon S3 Service Disruption in the Northern Virginia (US-EAST-1) Region — <a href="https://aws.amazon.com/message/41926/">https://aws.amazon.com/message/41926/</a></li>
 <li>AWS Well-Architected — <a href="https://aws.amazon.com/architecture/well-architected/">https://aws.amazon.com/architecture/well-architected/</a></li>
 <li>Regulation (EU) 2022/2554 (Digital Operational Resilience Act) — <a href="https://eur-lex.europa.eu/eli/reg/2022/2554/oj">https://eur-lex.europa.eu/eli/reg/2022/2554/oj</a></li>
+<li>The Register, &quot;AWS says drones hit two of its datacenters in UAE&quot; (2 March 2026) — <a href="https://www.theregister.com/2026/03/02/amazon_outages_middle_east/">https://www.theregister.com/2026/03/02/amazon_outages_middle_east/</a></li>
 <li>Going further: <a href="../saas/index.html#/2.2"><em>SaaS Building Blocks</em>, lesson 2.2 — File uploads and object storage</a> and <a href="../vibe/index.en.html#l10-1"><em>System Design for Vibe Coders</em>, lesson 10.1 — Stateless services and load balancing</a></li>
 </ul>
 </section>
@@ -2866,7 +2930,7 @@ curl -sv https://api.najm.example/health -o /dev/null
 <p class="crumb"><a href="#/map">Module 1 — Foundations</a></p>
 <h1><span class="num">1.3</span> Identity and access in the cloud: users, roles, policies and workload identity</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Phase <bdi dir="ltr">Plan, Deploy</bdi></span> · <span class="prereq">Before this: <a href="#/1.2">1.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> rewrite a wildcard policy as a least-privilege grant scoped to one prefix of one bucket, and configure GitHub Actions OIDC so the allowed branch gets short-lived credentials and any other branch is denied. <em>Study time: about 115 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> rewrite a wildcard policy as a least-privilege grant scoped to one prefix of one bucket, and configure GitHub Actions OIDC so the allowed branch gets short-lived credentials and any other branch is denied. <em>Study time: reading about 15 min, hands-on about 150 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -3245,7 +3309,7 @@ metadata:
 <p class="crumb"><a href="#/map">Module 2 — Containers and Kubernetes</a></p>
 <h1><span class="num">2.1</span> Containers done right: images, layers, Dockerfiles and registries</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Build, Deploy</bdi></span> · <span class="prereq">Before this: <a href="#/1.1">1.1</a>, <a href="#/1.2">1.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> rewrite a naive Dockerfile into a pinned, multi-stage, non-root build, show a leaked secret in the naive image&#39;s layers, and deploy by digest so that moving the tag changes nothing. <em>Study time: about 115 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> rewrite a naive Dockerfile into a pinned, multi-stage, non-root build, show a leaked secret in the naive image&#39;s layers, and deploy by digest so that moving the tag changes nothing. <em>Study time: reading about 15 min, hands-on about 3 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -3259,7 +3323,7 @@ metadata:
 </section>
 <section class="sec sec-why"><h2>🧭 Why it matters</h2>
 <p>Yousef&#39;s first task on the platform team is to containerise the <strong>Najm Mobile API</strong>, the Python service behind the retail app. By Thursday it runs. The image is 1.3 GB, builds in nine minutes on every commit, and starts from <code>python:latest</code>. The scanner flags hundreds of vulnerabilities, mostly in compilers the API never uses. Then Tariq reports that staging &quot;has the old login bug again&quot;: two pipelines pushed different builds to the same tag, <code>mobile-api:staging</code>, minutes apart, and the cluster pulled whichever it saw last. Finally Noura finds a test database password inside an image layer: <code>COPY . .</code> had copied a local <code>.env</code> file, and deleting it in a later step did not remove it from the earlier layer.</p>
-<p>Salem shows him a public case of the same root cause at a larger scale. In August 2012 Knight Capital deployed new trading code by hand; according to the US SEC&#39;s order, one of eight servers did not receive it, a reused flag woke up old logic there, and the firm lost more than 460 million dollars in about 45 minutes. &quot;We cannot afford to wonder which code is running,&quot; Salem says. &quot;The image is how we stop wondering. But only if we build it once, name it by its digest, and deploy exactly that.&quot;</p>
+<p>Salem reminds him of the Knight Capital case from lesson <a class="xref" href="#/0.2">0.2</a>: the firm&#39;s loss began with one server out of eight running different code from the rest, and nobody could see it. &quot;We cannot afford to wonder which code is running,&quot; Salem says. &quot;The image is how we stop wondering. But only if we build it once, name it by its digest, and deploy exactly that.&quot;</p>
 <p>This lesson turns Yousef&#39;s Thursday image into the bank&#39;s standard one.</p>
 </section>
 <section class="sec sec-how"><h2>📐 How it works</h2>
@@ -3635,7 +3699,7 @@ __pycache__/
 <p class="crumb"><a href="#/map">Module 2 — Containers and Kubernetes</a></p>
 <h1><span class="num">2.2</span> Kubernetes fundamentals: pods, deployments, services and how the cluster thinks</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Deploy, Operate</bdi></span> · <span class="prereq">Before this: <a href="#/1.1">1.1</a>, <a href="#/1.2">1.2</a>, <a href="#/2.1">2.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> deploy a Deployment and a Service on a local cluster, and diagnose a selector mismatch and a non-existent image digest from <code>kubectl</code> output alone, fixing both in your YAML files. <em>Study time: about 115 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> deploy a Deployment and a Service on a local cluster, and diagnose a selector mismatch and a non-existent image digest from <code>kubectl</code> output alone, fixing both in your YAML files. <em>Study time: reading about 15 min, hands-on about 3 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -4118,7 +4182,7 @@ kubectl -n mobile get events --sort-by=.lastTimestamp
 <p class="crumb"><a href="#/map">Module 2 — Containers and Kubernetes</a></p>
 <h1><span class="num">2.3</span> Kubernetes in practice: config, secrets, health probes, autoscaling and Helm</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Deploy, Operate</bdi></span> · <span class="prereq">Before this: <a href="#/2.1">2.1</a>, <a href="#/2.2">2.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> add a ConfigMap, a Secret and separate liveness and readiness probes to a Deployment, show a not-ready pod leave the endpoints without restarting, and package the app as a Helm chart with an HPA and a PDB. <em>Study time: about 115 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> add a ConfigMap, a Secret and separate liveness and readiness probes to a Deployment, show a not-ready pod leave the endpoints without restarting, and package the app as a Helm chart with an HPA and a PDB. <em>Study time: reading about 15 min, hands-on about 3 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -4543,7 +4607,7 @@ helm rollback mobile-api 3 -n mobile
 <p class="crumb"><a href="#/map">Module 3 — Infrastructure as code</a></p>
 <h1><span class="num">3.1</span> Infrastructure as code with Terraform/OpenTofu: state, modules and plans</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Code, Deploy</bdi></span> · <span class="prereq">Before this: <a href="#/1.2">1.2</a>, <a href="#/1.3">1.3</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> write an OpenTofu module with validated inputs, read a plan to tell an in-place update from a replacement, and rename a resource with a <code>moved</code> block and zero destroys. <em>Study time: about 115 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write an OpenTofu module with validated inputs, read a plan to tell an in-place update from a replacement, and rename a resource with a <code>moved</code> block and zero destroys. <em>Study time: reading about 15 min, hands-on about 3 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -4563,7 +4627,7 @@ helm rollback mobile-api 3 -n mobile
       ...
 Plan: 1 to add, 0 to change, 1 to destroy.
 </code></pre>
-<p>With the AWS provider version the team pins, the identifier cannot be changed in place (newer provider releases can rename it in place; only the plan tells you which you have), so the tool would delete the production payments database and create an empty one. The code was valid, and the plan said exactly what would happen; the only question was whether anyone would read it. Maha blocks the merge. That afternoon Salem adds two rules: every production database carries <code>prevent_destroy</code>, and no production pull request merges until a reviewer confirms the plan summary line.</p>
+<p>The plan says the identifier change forces replacement (whether it does depends on the provider version, which is why you read the plan rather than guess), so the tool would delete the production payments database and create an empty one. The code was valid, and the plan said exactly what would happen; the only question was whether anyone would read it. Maha blocks the merge. That afternoon Salem adds two rules: every production database carries <code>prevent_destroy</code>, and no production pull request merges until a reviewer confirms the plan summary line.</p>
 <p>Why deploys need gates at all is covered in <a href="../vibe/index.en.html#l4-4"><em>System Design for Vibe Coders</em>, lesson 4.4 — Rollback, staging, and release gates</a>; here you learn how the infrastructure underneath is built and changed.</p>
 </section>
 <section class="sec sec-how"><h2>📐 How it works</h2>
@@ -4934,7 +4998,7 @@ tofu apply tfplan         # apply exactly the saved plan, nothing else
 <p class="crumb"><a href="#/map">Module 3 — Infrastructure as code</a></p>
 <h1><span class="num">3.2</span> Environments and GitOps: promoting changes from dev to production</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Release, Deploy</bdi></span> · <span class="prereq">Before this: <a href="#/2.2">2.2</a>, <a href="#/2.3">2.3</a>, <a href="#/3.1">3.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> build Kustomize overlays for dev and prod, promote one image digest from dev to prod by pull request with Argo CD, and roll back a bad promotion with <code>git revert</code>. <em>Study time: about 115 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build Kustomize overlays for dev and prod, promote one image digest from dev to prod by pull request with Argo CD, and roll back a bad promotion with <code>git revert</code>. <em>Study time: reading about 15 min, hands-on about 4 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -4947,8 +5011,7 @@ tofu apply tfplan         # apply exactly the saved plan, nothing else
 </ul>
 </section>
 <section class="sec sec-why"><h2>🧭 Why it matters</h2>
-<p>On 1 August 2012, Knight Capital, a large US market-making firm, deployed new trading code to its servers. According to the US Securities and Exchange Commission&#39;s order on the case, a technician copied the new code to seven of the eight servers but not the eighth, and nobody noticed. The new release reused a flag that, on the eighth server, switched on old, long-unused code. That server sent millions of unintended orders in about 45 minutes, and the firm lost roughly $460 million, according to the SEC. The deployment was manual, there was no automated check that every server ran the same version, and no second person reviewed the result.</p>
-<p>Najm Bank has a smaller version of the same problem. Maha is investigating why a timeout bug fixed in staging keeps happening in production. Production runs an image from the same commit but rebuilt two days later with a newer base image, and someone raised the connection-pool size with <code>kubectl edit</code> during an incident last month. Nothing in Git records either difference, so staging no longer predicts production.</p>
+<p>Maha is investigating why a timeout bug fixed in staging keeps happening in production. Production runs an image from the same commit but rebuilt two days later with a newer base image, and someone raised the connection-pool size with <code>kubectl edit</code> during an incident last month. Nothing in Git records either difference, so staging no longer predicts production. Two questions follow: where is the record of what each environment should run, and what compares that record with what is actually running? (Knight Capital&#39;s missed server in lesson <a class="xref" href="#/0.2">0.2</a> is the expensive public answer to &quot;nowhere, and nothing&quot;.)</p>
 <p>This lesson gives the team one rule and one mechanism. The rule: the same artefact moves through every environment, and only configuration differs. The mechanism: GitOps, where Git is the single record of what should run where, and a controller makes it so and reports any difference.</p>
 </section>
 <section class="sec sec-how"><h2>📐 How it works</h2>
@@ -5162,7 +5225,7 @@ spec:
 <ul>
 <li>🟢 Create <code>base/</code> and <code>overlays/dev</code> and <code>overlays/prod</code> for a small web Deployment, with prod using three replicas and dev one. Render both with <code>kubectl kustomize</code>. <em>Done when:</em> the only differences between the two rendered outputs are the ones you meant, and you can list them.</li>
 <li>🟡 Install Argo CD on a kind cluster, create two <code>Application</code> objects (dev and prod namespaces) pointing at your overlays, with automated sync, prune and self-heal. Change an image digest in dev by pull request, then promote it to prod by a second pull request. Finally, run <code>kubectl scale</code> by hand on the prod Deployment. <em>Done when:</em> both promotions are visible as commits, the manual scale is reverted automatically, and you can show the &quot;OutOfSync&quot; state you saw before it healed.</li>
-<li>🔴 Add a CI workflow (GitHub Actions is fine) to an app repo that builds an image, pushes it to a registry you control, and opens a pull request in the GitOps repo setting the new digest in <code>overlays/dev</code>. Then roll back a bad promotion with <code>git revert</code>. <em>Done when:</em> a code commit results in a dev deployment with no human touching the cluster, the image is referenced by digest rather than tag, and the rollback is a single revert commit.</li>
+<li>🔴 Add a CI workflow (GitHub Actions is fine) to an app repo that builds an image, pushes it to a registry you control, and opens a pull request setting the new digest in <code>overlays/dev</code>. Keep the GitOps folder in the same repository for this lab: the job&#39;s own <code>GITHUB_TOKEN</code> can open that pull request once the job has <code>contents: write</code> and <code>pull-requests: write</code> and the repository settings allow GitHub Actions to create pull requests. A separate GitOps repository needs a fine-grained token or a GitHub App, stored as a repository secret, never in a file or a chat. Then roll back a bad promotion with <code>git revert</code>. <em>Done when:</em> a code commit results in a dev deployment with no human touching the cluster, the image is referenced by digest rather than tag, and the rollback is a single revert commit.</li>
 </ul>
 </section>
 <section class="sec sec-mistakes"><h2>⚠️ Mistakes and traps</h2>
@@ -5252,7 +5315,7 @@ spec:
 <li>Flux documentation — <a href="https://fluxcd.io/flux/">https://fluxcd.io/flux/</a></li>
 <li>Kustomize documentation (Kubernetes) — <a href="https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/">https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/</a></li>
 <li>The Twelve-Factor App, X. Dev/prod parity — <a href="https://12factor.net/dev-prod-parity">https://12factor.net/dev-prod-parity</a></li>
-<li>US SEC, order in the matter of Knight Capital Americas LLC (2013) — <a href="https://www.sec.gov/">https://www.sec.gov/</a></li>
+<li>US SEC, order in the matter of Knight Capital Americas LLC (2013) — <a href="https://www.sec.gov/litigation/admin/2013/34-70694.pdf">https://www.sec.gov/litigation/admin/2013/34-70694.pdf</a></li>
 <li>External Secrets Operator — <a href="https://external-secrets.io/">https://external-secrets.io/</a></li>
 <li>CNCF projects — <a href="https://www.cncf.io/projects/">https://www.cncf.io/projects/</a></li>
 </ul>
@@ -5266,7 +5329,7 @@ spec:
 <p class="crumb"><a href="#/map">Module 3 — Infrastructure as code</a></p>
 <h1><span class="num">3.3</span> Policy as code, drift and guardrails</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Test, Operate</bdi></span> · <span class="prereq">Before this: <a href="#/3.1">3.1</a>, <a href="#/3.2">3.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> detect drift with <code>plan -detailed-exitcode</code>, write tested Conftest policies that block low ports and <code>latest</code> tags, and move a Kyverno digest-pinning policy from Audit to Enforce. <em>Study time: about 115 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> detect drift with <code>plan -detailed-exitcode</code>, write tested Conftest policies that block low ports and <code>latest</code> tags, and move a Kyverno digest-pinning policy from Audit to Enforce. <em>Study time: reading about 15 min, hands-on about 150 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -5636,7 +5699,7 @@ spec:
 <p class="crumb"><a href="#/map">Module 4 — CI/CD and safe releases</a></p>
 <h1><span class="num">4.1</span> Continuous integration: pipelines, tests, artefacts and fast feedback</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Build, Test</bdi></span> · <span class="prereq">Before this: <a href="#/2.1">2.1</a>, <a href="#/3.2">3.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> build a CI workflow with read-only permissions, timeouts and layer caching that turns red on a failing test, and prove that the digest running in your cluster is the one CI built. <em>Study time: about 115 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build a CI workflow with read-only permissions, timeouts and layer caching that turns red on a failing test, and prove that the digest running in your cluster is the one CI built. <em>Study time: reading about 15 min, hands-on about 3 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -5798,7 +5861,7 @@ jobs:
 <p><strong>Labelling the artefact.</strong> Record where the image came from, so anyone can trace a running pod back to a commit. OCI image annotations such as <code>org.opencontainers.image.revision</code> (the commit SHA) and <code>org.opencontainers.image.source</code> (the repository URL) are standard keys. Lesson <a class="xref" href="#/4.3">4.3</a> turns this into signed <strong>provenance</strong>.</p>
 <p><strong>What the pipeline checks besides tests.</strong> A CI pipeline is also where cheap automated checks live: secret scanning, dependency vulnerability scanning (SCA), static security analysis (SAST), Dockerfile and IaC linting, and the policy checks from lesson <a class="xref" href="#/3.3">3.3</a>. Block only on new, high-confidence findings, or developers will learn to ignore the gate. <a href="../secai/index.html#/6.1"><em>Secure AI &amp; Application Security</em>, lesson 6.1 — A secure development life cycle</a> covers how to tune these scanners.</p>
 <h3>🔴 Expert view</h3>
-<p><strong>Measure the outcome, not the pipeline.</strong> The DORA research programme tracks four key delivery measures: <strong>deployment frequency</strong>, <strong>lead time for changes</strong> (commit to production), <strong>change failure rate</strong> and <strong>time to restore service</strong>. DORA has since added a reliability measure and refined some names (for example, recent reports talk about failed deployment recovery time); check dora.dev for the current definitions. A fast pipeline improves lead time; trustworthy tests lower change failure rate. Watch both together: speeding up by deleting tests just moves the cost into incidents.</p>
+<p><strong>Measure the outcome, not the pipeline.</strong> The DORA research programme tracks four key delivery measures: <strong>deployment frequency</strong>, <strong>lead time for changes</strong> (commit to production), <strong>change failure rate</strong> and <strong>time to restore service</strong>. DORA has since renamed time to restore as <strong>failed deployment recovery time</strong> and, in 2024, added a fifth measure, <strong>deployment rework rate</strong> (the share of deployments that are unplanned fixes for a production incident); check dora.dev for the current definitions. A fast pipeline improves lead time; trustworthy tests lower change failure rate. Watch both together: speeding up by deleting tests just moves the cost into incidents.</p>
 <p><strong>The pipeline is a product.</strong> At Najm, product teams do not each write their own pipeline. The platform team publishes a <strong>golden path</strong>: a reusable workflow (in GitHub Actions, a workflow called with <code>uses: najm-bank/platform-workflows/.github/workflows/service-ci.yml@&lt;version&gt;</code>) that does build, scan, test, sign and push in the approved way. Teams pass a few inputs. When the platform team improves caching or adds a scanner, every service gets it. Version it, keep a changelog, and measure adoption and build times.</p>
 <p><strong>Reproducible and hermetic builds.</strong> A <strong>hermetic</strong> build uses only declared, pinned inputs: a base image by digest, dependencies by lock file with hashes, a pinned toolchain, and no undeclared network access. Fully bit-for-bit <strong>reproducible</strong> builds are hard for container images (timestamps, file ordering), but hermetic inputs alone remove the Friday incident: a moving <code>latest</code> tag cannot sneak in.</p>
 <p><strong>Feedback time is a design budget.</strong> Publish a target (Najm&#39;s is below). A new check that would break it must replace something, run in parallel, or run after the merge.</p>
@@ -5941,7 +6004,7 @@ jobs:
 <ul>
 <li>🟢 Take a small app of your own (any language) and add a CI workflow that runs lint and unit tests on every pull request, with read-only permissions, a job timeout and cancellation of outdated runs. Open a PR with a deliberately failing test. <em>Done when:</em> the PR shows a red check that names the failing test, and fixing the test turns it green.</li>
 <li>🟡 Add a container build to the pipeline with layer caching. Reorder the Dockerfile so dependencies install before the source code is copied. Record the build time before and after for a one-line code change. <em>Done when:</em> you have both timings, and a second build after a source-only change reuses the dependency layer (the log shows cached steps).</li>
-<li>🔴 Implement &quot;build once, promote&quot;: on merge to <code>main</code>, push the image to a registry (GitHub Container Registry works for a public repo), output its digest, and have a second job deploy that digest to a local kind cluster or update a manifest in a GitOps folder. Add a test that fails if any deploy job contains a <code>docker build</code> command. <em>Done when:</em> the digest running in your cluster (<code>kubectl get pod -o jsonpath=&#39;{.items[*].status.containerStatuses[*].imageID}&#39;</code>) matches the digest the build job printed.</li>
+<li>🔴 Implement &quot;build once, promote&quot;: on merge to <code>main</code>, push the image to a registry (GitHub Container Registry works for a public repo), output its digest, and have a second job update a manifest in a GitOps folder to that digest, which Argo CD (<a class="xref" href="#/3.2">3.2</a>) syncs into your local kind cluster. A GitHub-hosted runner cannot reach a cluster on your laptop; deploying from the job directly would need a self-hosted runner on your machine. Add a test that fails if any deploy job contains a <code>docker build</code> command. <em>Done when:</em> the digest running in your cluster (<code>kubectl get pod -o jsonpath=&#39;{.items[*].status.containerStatuses[*].imageID}&#39;</code>) matches the digest the build job printed.</li>
 </ul>
 </section>
 <section class="sec sec-mistakes"><h2>⚠️ Mistakes and traps</h2>
@@ -6047,7 +6110,7 @@ jobs:
 <p class="crumb"><a href="#/map">Module 4 — CI/CD and safe releases</a></p>
 <h1><span class="num">4.2</span> Release strategies: rolling, blue-green, canary, feature flags and rollback</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Release, Deploy</bdi></span> · <span class="prereq">Before this: <a href="#/2.2">2.2</a>, <a href="#/2.3">2.3</a>, <a href="#/4.1">4.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> run a rolling update and a rollback with zero failed requests, explain why a release with a failing probe stops while one returning HTTP 500 does not, and set up a canary that aborts itself on failed analysis. <em>Study time: about 115 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> run a rolling update and a rollback with zero failed requests, explain why a release with a failing probe stops while one returning HTTP 500 does not, and set up a canary that aborts itself on failed analysis. <em>Study time: reading about 15 min, hands-on about 4 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -6381,8 +6444,14 @@ spec:
 <ul>
 <li>🟢 Deploy a small web app as a Deployment with 4 replicas, a readiness probe, <code>maxSurge: 1</code>, <code>maxUnavailable: 0</code> and a short <code>preStop</code> sleep so endpoints drain before pods stop. Update the image and watch <code>kubectl rollout status</code>. Then roll back with <code>kubectl rollout undo</code>. <em>Done when:</em> a loop of <code>curl</code> requests against the Service during both the update and the rollback shows no failed requests.</li>
 <li>🟡 Deploy a version whose readiness probe never passes. Observe what the rolling update does and what <code>progressDeadlineSeconds</code> reports. Then deploy a version that starts fine but returns HTTP 500 on one endpoint. <em>Done when:</em> you can explain in three sentences why the first bad version was stopped and the second was not, and what would stop the second.</li>
-<li>🔴 Install Argo Rollouts and Prometheus in your cluster. Convert the Deployment to a Rollout with a canary (10% → 50% → 100%) and an AnalysisTemplate on the success rate. Release a version that returns errors on 20% of requests. <em>Done when:</em> the rollout aborts by itself, traffic returns to stable, and you can show the failed analysis run.</li>
+<li>🔴 <em>Best done after 5.1.</em> Install Argo Rollouts and Prometheus in your cluster with the commands below; your app must expose a request counter that Prometheus scrapes. Convert the Deployment to a Rollout with a canary (10% → 50% → 100%) and an AnalysisTemplate on the success rate. Release a version that returns errors on 20% of requests. <em>Done when:</em> the rollout aborts by itself, traffic returns to stable, and you can show the failed analysis run.</li>
 </ul>
+<pre><code class="language-bash"># Lab installs for the 🔴 exercise (Prometheus itself is taught in 5.1)
+kubectl create namespace argo-rollouts
+kubectl apply -n argo-rollouts -f https://github.com/argoproj/argo-rollouts/releases/latest/download/install.yaml
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm install monitoring prometheus-community/kube-prometheus-stack -n monitoring --create-namespace
+</code></pre>
 </section>
 <section class="sec sec-mistakes"><h2>⚠️ Mistakes and traps</h2>
 <ul>
@@ -6470,8 +6539,8 @@ spec:
 <li>Flagger documentation — <a href="https://docs.flagger.app/">https://docs.flagger.app/</a></li>
 <li>OpenFeature — <a href="https://openfeature.dev/">https://openfeature.dev/</a></li>
 <li>Martin Fowler&#39;s site, Feature Toggles (Pete Hodgson) — <a href="https://martinfowler.com/articles/feature-toggles.html">https://martinfowler.com/articles/feature-toggles.html</a></li>
-<li>CrowdStrike, Channel File 291 incident information and root cause analysis — <a href="https://www.crowdstrike.com/">https://www.crowdstrike.com/</a></li>
-<li>US SEC, administrative proceeding against Knight Capital Americas LLC (2013) — <a href="https://www.sec.gov/">https://www.sec.gov/</a></li>
+<li>CrowdStrike, Channel File 291 incident information and root cause analysis — <a href="https://www.crowdstrike.com/wp-content/uploads/2024/08/Channel-File-291-Incident-Root-Cause-Analysis-08.06.2024.pdf">https://www.crowdstrike.com/wp-content/uploads/2024/08/Channel-File-291-Incident-Root-Cause-Analysis-08.06.2024.pdf</a></li>
+<li>US SEC, administrative proceeding against Knight Capital Americas LLC (2013) — <a href="https://www.sec.gov/litigation/admin/2013/34-70694.pdf">https://www.sec.gov/litigation/admin/2013/34-70694.pdf</a></li>
 <li>Google SRE book, chapter on release engineering — <a href="https://sre.google/sre-book/release-engineering/">https://sre.google/sre-book/release-engineering/</a></li>
 <li>DORA research — <a href="https://dora.dev/">https://dora.dev/</a></li>
 </ul>
@@ -6485,7 +6554,7 @@ spec:
 <p class="crumb"><a href="#/map">Module 4 — CI/CD and safe releases</a></p>
 <h1><span class="num">4.3</span> Securing the pipeline: secrets, signed artefacts and least-privilege deploys</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Build, Deploy</bdi></span> · <span class="prereq">Before this: <a href="#/1.3">1.3</a>, <a href="#/3.2">3.2</a>, <a href="#/4.1">4.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> pin every action in a workflow to a commit SHA with least-privilege permissions, sign an image keylessly with cosign, and show verification passing for your workflow identity and failing for another branch. <em>Study time: about 115 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> pin every action in a workflow to a commit SHA with least-privilege permissions, sign an image keylessly with cosign, and show verification passing for your workflow identity and failing for another branch. <em>Study time: reading about 15 min, hands-on about 3 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -6584,7 +6653,7 @@ cosign verify \
   registry.najm.internal/mobile-api@sha256:&lt;digest&gt;
 </code></pre>
 <p>Sign the <strong>digest</strong>, never a tag. A signature on a tag says nothing once the tag moves.</p>
-<p><strong>Provenance and SBOMs.</strong> <strong>Provenance</strong> is a signed statement of how an artefact was built: which source commit, which workflow, which builder, which inputs. <strong>SLSA</strong> defines build levels (in SLSA v1.0, Build L1 to L3) by how trustworthy that provenance is; at L3 the build runs on a hardened platform that the build&#39;s own steps cannot tamper with. An <strong>SBOM</strong> (software bill of materials) lists the components inside the image, so you can answer &quot;are we affected?&quot; when the next critical vulnerability appears. Docker&#39;s build-push action can attach provenance and an SBOM as attestations, and GitHub offers artifact attestations; at the time of writing (2026), check each tool&#39;s documentation for the exact options.</p>
+<p><strong>Provenance and SBOMs.</strong> <strong>Provenance</strong> is a signed statement of how an artefact was built: which source commit, which workflow, which builder, which inputs. <strong>SLSA</strong> defines build levels (Build L1 to L3) by how trustworthy that provenance is; at L3 the build runs on a hardened platform that the build&#39;s own steps cannot tamper with. SLSA v1.2, current at the time of writing (2026), adds a Source track for how code is changed and reviewed. An <strong>SBOM</strong> (software bill of materials) lists the components inside the image, so you can answer &quot;are we affected?&quot; when the next critical vulnerability appears. Docker&#39;s build-push action can attach provenance and an SBOM as attestations, and GitHub offers artifact attestations; at the time of writing (2026), check each tool&#39;s documentation for the exact options.</p>
 <p><strong>Verify at the door: admission control.</strong> Signing is wasted if nothing checks it. A Kubernetes <strong>admission controller</strong> inspects every new pod before it is created. Policy engines such as <strong>Kyverno</strong> (image verification rules) or Sigstore&#39;s <strong>policy-controller</strong> can reject any image that is not signed by the expected identity, or that lacks provenance. Combine this with the policy-as-code guardrails from lesson <a class="xref" href="#/3.3">3.3</a>: images by digest only, from the internal registry only. Roll out in audit mode first, then enforce, starting with one namespace.</p>
 <p><strong>Least-privilege deploys: push versus pull.</strong></p>
 <div class="table-scroll"><table>
@@ -6839,7 +6908,7 @@ cosign verify \
 <li>Microsoft Entra, workload identity federation — <a href="https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation">https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation</a></li>
 <li>Google Cloud, Workload Identity Federation — <a href="https://cloud.google.com/iam/docs/workload-identity-federation">https://cloud.google.com/iam/docs/workload-identity-federation</a></li>
 <li>Sigstore documentation (cosign, Rekor) — <a href="https://docs.sigstore.dev/">https://docs.sigstore.dev/</a></li>
-<li>SLSA specification — <a href="https://slsa.dev/">https://slsa.dev/</a></li>
+<li>SLSA specification v1.2 — <a href="https://slsa.dev/spec/v1.2/">https://slsa.dev/spec/v1.2/</a></li>
 <li>Kyverno, verify images — <a href="https://kyverno.io/docs/">https://kyverno.io/docs/</a></li>
 <li>Argo CD documentation — <a href="https://argo-cd.readthedocs.io/">https://argo-cd.readthedocs.io/</a></li>
 <li>NVD, CVE-2025-30066 (tj-actions/changed-files) — <a href="https://nvd.nist.gov/vuln/detail/CVE-2025-30066">https://nvd.nist.gov/vuln/detail/CVE-2025-30066</a></li>
@@ -6855,7 +6924,7 @@ cosign verify \
 <p class="crumb"><a href="#/map">Module 5 — Observability and reliability</a></p>
 <h1><span class="num">5.1</span> Telemetry: logs, metrics, traces and OpenTelemetry</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Monitor</bdi></span> · <span class="prereq">Before this: <a href="#/2.2">2.2</a>, <a href="#/4.1">4.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> build a RED dashboard from a latency histogram, and follow one request across two services from its trace to its log lines by trace ID. <em>Study time: about 115 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build a RED dashboard from a latency histogram, and follow one request across two services from its trace to its log lines by trace ID. <em>Study time: reading about 15 min, hands-on about 3 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -7199,7 +7268,7 @@ histogram_quantile(
 <p class="crumb"><a href="#/map">Module 5 — Observability and reliability</a></p>
 <h1><span class="num">5.2</span> SLOs, error budgets, alerting and on-call that people can sustain</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Operate, Monitor</bdi></span> · <span class="prereq">Before this: <a href="#/5.1">5.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> write SLIs as good-event ratios with an error budget in minutes and in requests, and configure a multi-window burn-rate alert that pages on a steady error rate but not on a short burst. <em>Study time: about 115 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write SLIs as good-event ratios with an error budget in minutes and in requests, and configure a multi-window burn-rate alert that pages on a steady error rate but not on a short burst. <em>Study time: reading about 15 min, hands-on about 3 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -7603,7 +7672,7 @@ histogram_quantile(
 <p class="crumb"><a href="#/map">Module 5 — Observability and reliability</a></p>
 <h1><span class="num">5.3</span> Incidents and blameless postmortems</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Phase <bdi dir="ltr">Operate</bdi></span> · <span class="prereq">Before this: <a href="#/5.1">5.1</a>, <a href="#/5.2">5.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> run a tabletop incident with assigned roles, a timestamped timeline and status updates, and write a blameless postmortem whose action items each change a system or a tool. <em>Study time: about 130 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> run a tabletop incident with assigned roles, a timestamped timeline and status updates, and write a blameless postmortem whose action items each change a system or a tool. <em>Study time: reading about 15 min, hands-on about 120 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -7692,7 +7761,7 @@ IC: Maha · Ops: Tariq · Comms: Salem · Scribe: Yousef
 </ul>
 <p>Complex failures usually have several <strong>contributing factors</strong> rather than one root cause. List them all; fix the ones with the most leverage.</p>
 <h3>🔴 Expert view</h3>
-<p><strong>A public example: the Amazon S3 outage of February 2017.</strong> AWS published a summary of a disruption to S3 in its us-east-1 region. An authorised engineer, following an established playbook, ran a command meant to remove a small number of servers from an S3 subsystem; one input was entered incorrectly and a much larger set was removed. AWS&#39;s response focused on the tool rather than the person: it changed the tool to remove capacity more slowly and to refuse to go below a safe minimum. The summary also noted that AWS&#39;s own status dashboard depended on S3, so it could not show the outage at first. The lessons for Najm: build guardrails into dangerous tools, and make sure your incident tooling does not depend on the thing that is failing.</p>
+<p><strong>A public example: the Amazon S3 outage of February 2017.</strong> Lesson <a class="xref" href="#/3.3">3.3</a> told how one mistyped input removed far more S3 capacity in us-east-1 than intended, and how AWS fixed the tool rather than blaming the person. AWS&#39;s summary has a second lesson for incident tooling: the administration console of its own Service Health Dashboard depended on S3, so for the first hours staff could not update the dashboard to show which services were affected. The lesson for Najm: make sure your incident tooling does not depend on the thing that is failing.</p>
 <p><strong>A second example: GitLab, January 2017.</strong> During a late-night effort to fix database replication, an engineer deleted data on the primary database instead of the replica. GitLab&#39;s public postmortem then found that several of its backup and replication mechanisms were not working as expected, and about six hours of production data was lost. The lessons: a backup you have not restored is a hope, not a backup (lesson <a class="xref" href="#/6.1">6.1</a> covers recovery testing), and tired people doing risky manual work at night need tooling that makes the safe action easy.</p>
 <p><strong>Action items that change things.</strong> Weak items (&quot;be more careful&quot;, &quot;add more monitoring&quot;) do not survive the next sprint. Strong items are specific, owned, dated and change the system:</p>
 <div class="table-scroll"><table>
@@ -7881,7 +7950,7 @@ IC: Maha · Ops: Tariq · Comms: Salem · Scribe: Yousef
 <p><strong>C.</strong> It is specific, owned, dated and changes the system so the error cannot recur the same way. A, B and D are vague and untracked. (🔴 Expert view.)</p>
 </details>
 
-<p><strong>5. During the February 2017 S3 disruption, AWS&#39;s own status dashboard could not show the problem at first. What lesson does Najm take from this?</strong></p>
+<p><strong>5. During the February 2017 S3 disruption, AWS staff could not at first update its own status dashboard to show the problem. What lesson does Najm take from this?</strong></p>
 <ul>
 <li>A. Status pages are not useful during incidents and can be dropped</li>
 <li>B. Run every service in a single cloud region to keep things simple</li>
@@ -7890,7 +7959,7 @@ IC: Maha · Ops: Tariq · Comms: Salem · Scribe: Yousef
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>D.</strong> The dashboard depended on S3, so it failed with it; incident tooling, such as the status page and paging, must survive the failure it reports. Banning all production commands (C) is unworkable; AWS&#39;s fix was guardrails in the tool. (🔴 Expert view.)</p>
+<p><strong>D.</strong> The dashboard&#39;s administration console depended on S3, so it failed with it; incident tooling, such as the status page and paging, must survive the failure it reports. Banning all production commands (C) is unworkable; AWS&#39;s fix was guardrails in the tool. (🔴 Expert view.)</p>
 </details>
 </section>
 <section class="sec sec-refs"><h2>📚 References</h2>
@@ -7900,7 +7969,7 @@ IC: Maha · Ops: Tariq · Comms: Salem · Scribe: Yousef
 <li>Google, <em>The Site Reliability Workbook</em>, &quot;Incident Response&quot; — <a href="https://sre.google/workbook/incident-response/">https://sre.google/workbook/incident-response/</a></li>
 <li>Google, <em>The Site Reliability Workbook</em>, &quot;Postmortem Culture&quot; — <a href="https://sre.google/workbook/postmortem-culture/">https://sre.google/workbook/postmortem-culture/</a></li>
 <li>AWS, Summary of the Amazon S3 Service Disruption in the Northern Virginia (US-EAST-1) Region — <a href="https://aws.amazon.com/message/41926/">https://aws.amazon.com/message/41926/</a></li>
-<li>GitLab, Postmortem of database outage of January 31 — <a href="https://about.gitlab.com/blog/">https://about.gitlab.com/blog/</a></li>
+<li>GitLab, Postmortem of database outage of January 31 — <a href="https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/">https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/</a></li>
 <li>DORA research — <a href="https://dora.dev/">https://dora.dev/</a></li>
 <li>Regulation (EU) 2022/2554 (DORA) — <a href="https://eur-lex.europa.eu/eli/reg/2022/2554/oj">https://eur-lex.europa.eu/eli/reg/2022/2554/oj</a></li>
 </ul>
@@ -7914,7 +7983,7 @@ IC: Maha · Ops: Tariq · Comms: Salem · Scribe: Yousef
 <p class="crumb"><a href="#/map">Module 6 — Scale, cost and AI infrastructure</a></p>
 <h1><span class="num">6.1</span> Scaling and resilience: autoscaling, multi-zone, backups and disaster recovery</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Phase <bdi dir="ltr">Operate</bdi></span> · <span class="prereq">Before this: <a href="#/2.3">2.3</a>, <a href="#/3.2">3.2</a>, <a href="#/5.2">5.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> show an HPA scaling out and back under load, keep a service available through a zone drain with spread constraints and a PDB, and measure a real restore against an RTO and an RPO you chose. <em>Study time: about 115 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> show an HPA scaling out and back under load, keep a service available through a zone drain with spread constraints and a PDB, and measure a real restore against an RTO and an RPO you chose. <em>Study time: reading about 15 min, hands-on about 3 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -8097,7 +8166,7 @@ spec:
 <td>Only if the backup is immutable and in a separate account</td>
 </tr>
 </tbody></table></div>
-<p>The bottom two rows are why replication is not backup. <strong>Point-in-time recovery</strong> (PITR), which managed PostgreSQL services offer by keeping base backups plus the write-ahead log, lets you restore to a chosen second before the bad change. Know your retention window and how long a restore of your data size really takes.</p>
+<p>The region-wide row is not theoretical in the Gulf: in March 2026 AWS reported two of three zones in its UAE region impaired by drone strikes (<a class="xref" href="#/1.2">1.2</a>), so agree with the risk and compliance teams where a recovery region may sit under data-residency rules. The bottom two rows are why replication is not backup. <strong>Point-in-time recovery</strong> (PITR), which managed PostgreSQL services offer by keeping base backups plus the write-ahead log, lets you restore to a chosen second before the bad change. Know your retention window and how long a restore of your data size really takes.</p>
 <p><strong>Static stability and the recovery path.</strong> A <em>statically stable</em> system keeps working without needing to change during the failure, for example because capacity is already provisioned in each zone rather than launched mid-outage. Also check that the recovery path does not depend on what failed. In Facebook&#39;s October 2021 outage, a backbone change disconnected data centres and DNS servers withdrew their BGP routes; Facebook&#39;s engineering post notes that the internal tools needed for the fix were affected too. Ask: if our primary region is gone, are the runbooks, the GitOps repo, the CI runners, the secrets and the break-glass accounts still reachable?</p>
 <p><strong>Chaos engineering and game days.</strong> Chaos engineering runs controlled experiments that inject failure (kill pods, drain a zone, add latency) to check that the system behaves as predicted. Start small and in non-production; state a hypothesis (&quot;if one zone is drained, the Mobile API stays within its SLO&quot;); limit the blast radius; keep an abort switch. A <strong>game day</strong> is a scheduled rehearsal of a full scenario, such as a regional failover, with the on-call team, Maha as incident commander and observers timing each step. EU DORA expects resilience testing; game days produce the evidence.</p>
 </section>
@@ -8291,7 +8360,7 @@ spec:
 <li>AWS whitepaper: Disaster recovery of workloads on AWS — <a href="https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-workloads-on-aws.html">https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-workloads-on-aws.html</a></li>
 <li>Azure Well-Architected Framework, reliability — <a href="https://learn.microsoft.com/azure/well-architected/">https://learn.microsoft.com/azure/well-architected/</a></li>
 <li>Google Cloud Architecture Framework — <a href="https://cloud.google.com/architecture/framework">https://cloud.google.com/architecture/framework</a></li>
-<li>GitLab: Postmortem of database outage of January 31 (2017) — <a href="https://about.gitlab.com/blog/">https://about.gitlab.com/blog/</a></li>
+<li>GitLab: Postmortem of database outage of January 31 (2017) — <a href="https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/">https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/</a></li>
 <li>Google SRE books (data integrity, managing critical state) — <a href="https://sre.google/books/">https://sre.google/books/</a></li>
 <li>Regulation (EU) 2022/2554 on digital operational resilience (DORA) — <a href="https://eur-lex.europa.eu/eli/reg/2022/2554/oj">https://eur-lex.europa.eu/eli/reg/2022/2554/oj</a></li>
 <li>Deeper on cloud security controls: <a href="../secai/index.html#/7.1"><em>Secure AI &amp; Application Security</em>, lesson 7.1 — Cloud security: shared responsibility, IAM and misconfiguration</a></li>
@@ -8306,7 +8375,7 @@ spec:
 <p class="crumb"><a href="#/map">Module 6 — Scale, cost and AI infrastructure</a></p>
 <h1><span class="num">6.2</span> FinOps: understanding, allocating and cutting cloud cost</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Phase <bdi dir="ltr">Operate, Monitor</bdi></span> · <span class="prereq">Before this: <a href="#/1.2">1.2</a>, <a href="#/3.1">3.1</a>, <a href="#/6.1">6.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> write a tagging policy with a policy-as-code check that fails on missing tags, produce a cost-by-namespace table for a shared cluster, and compute the cost per 1,000 requests for three scenarios. <em>Study time: about 115 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a tagging policy with a policy-as-code check that fails on missing tags, produce a cost-by-namespace table for a shared cluster, and compute the cost per 1,000 requests for three scenarios. <em>Study time: reading about 15 min, hands-on about 120 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -8610,12 +8679,12 @@ Cost per Najm Assist conversation  = (gateway + model API + GPU cost)
 <ul>
 <li>A. Approve it, because cost reduction is the priority this quarter</li>
 <li>B. Treat it as a resilience change for the service owner and SRE</li>
-<li>C. Approve it quietly and leave risk out of the decision</li>
+<li>C. Approve it if nightly backups are copied to a second zone</li>
 <li>D. Approve it as long as Infracost shows a clear monthly saving</li>
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>B.</strong> Removing zone redundancy changes the RTO and RPO the business signed, so the service owner and SRE decide, and will very likely refuse. A and D look only at money; C undermines governance. (🔴 Expert view.)</p>
+<p><strong>B.</strong> Removing zone redundancy changes the RTO and RPO the business signed, so the service owner and SRE decide, and will very likely refuse. A and D look only at money; C treats a nightly backup as redundancy, but restoring one takes far longer than the RTO and can lose up to a day of data. (🔴 Expert view.)</p>
 </details>
 
 <p><strong>5. Najm&#39;s total cloud bill rose this quarter while customers grew faster. Cost per successful payment fell. How should Mona read this?</strong></p>
@@ -8652,7 +8721,7 @@ Cost per Najm Assist conversation  = (gateway + model API + GPU cost)
 <p class="crumb"><a href="#/map">Module 6 — Scale, cost and AI infrastructure</a></p>
 <h1><span class="num">6.3</span> Running AI workloads: GPUs, model serving, LLM gateways and their cost</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Phase <bdi dir="ltr">Deploy, Operate</bdi></span> · <span class="prereq">Before this: <a href="#/2.3">2.3</a>, <a href="#/5.1">5.1</a>, <a href="#/6.2">6.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> estimate GPU memory for a model at three precisions, run an LLM gateway with a rate limit and a fallback route, and decide between a managed API and self-hosting from a dated break-even calculation. <em>Study time: about 115 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> estimate GPU memory for a model at three precisions, run an LLM gateway with a rate limit and a fallback route, and decide between a managed API and self-hosting from a dated break-even calculation. <em>Study time: reading about 15 min, hands-on about 150 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -8788,7 +8857,7 @@ spec:
             runAsNonRoot: true
             allowPrivilegeEscalation: false
 </code></pre>
-<p>Small workloads can share a GPU with time-slicing or, on some NVIDIA data-centre GPUs, Multi-Instance GPU (MIG), which splits one into isolated slices. Kubernetes&#39; Dynamic Resource Allocation API offers more flexible device requests; check its status in your version.</p>
+<p>Small workloads can share a GPU with time-slicing or, on some NVIDIA data-centre GPUs, Multi-Instance GPU (MIG), which splits one into isolated slices. Kubernetes&#39; Dynamic Resource Allocation API offers more flexible device requests; it has been generally available since Kubernetes 1.34 (August 2025), though it still needs a device driver that supports it.</p>
 <p><strong>Serving engines.</strong> Running a model with a plain script serves one request at a time and leaves the GPU mostly idle, which is what Yousef saw. Serving engines fix this:</p>
 <ul>
 <li><strong>vLLM</strong> is an open-source engine known for <em>PagedAttention</em>, which manages KV-cache memory in pages, and <em>continuous batching</em>, which adds new requests to the running batch as others finish. It exposes an OpenAI-compatible HTTP API.</li>
@@ -9052,7 +9121,7 @@ Self-hosted cost per 1M tokens = self-hosted per month / (tokens served / 1,000,
 <p class="crumb"><a href="#/map">Module 7 — Hero: capstone and practice exam</a></p>
 <h1><span class="num">7.1</span> Capstone: take a new Najm service from empty repo to production with an SLO</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Phase <bdi dir="ltr">Deploy, Operate</bdi></span> · <span class="prereq">Before this: Modules 0–6</span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> take a small service from an empty repo to a local cluster with a build-once pipeline, GitOps rollback and an SLO with burn-rate alerts, and show each injected failure caught by an alert or the canary. <em>Study time: about 125 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> take a small service from an empty repo to a local cluster with a build-once pipeline, GitOps rollback and an SLO with burn-rate alerts, and show each injected failure caught by an alert or the canary, or absorbed by self-healing without a page. <em>Study time: reading about 20 min, hands-on about 12 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -9067,7 +9136,7 @@ Self-hosted cost per 1M tokens = self-hosted per month / (tokens served / 1,000,
 <section class="sec sec-why"><h2>🧭 Why it matters</h2>
 <p>Tariq brings a request to the platform team. The cards team wants a <strong>Card Controls service</strong>: customers freeze a card, block online or overseas use and set a daily limit from the Najm Mobile app. The card processor checks these controls during authorisation, so a wrong answer blocks a customer at a till or lets a stolen card through. The business wants it live in one quarter.</p>
 <p>Salem gives the job to Yousef, with Maha as SRE partner. Yousef&#39;s first plan: copy an old repository, push an image tagged <code>latest</code>, apply manifests by hand, &quot;add monitoring after launch&quot;. Salem asks three questions. &quot;What is the SLO? How do you roll back in under five minutes? What happens if the database zone fails during a payday peak?&quot; Yousef has no answers yet.</p>
-<p>Public history shows why the questions matter. In August 2012 Knight Capital deployed new code to its servers, but one server kept old code behind a reused flag; according to the US SEC&#39;s later order, the firm lost hundreds of millions of dollars in under an hour. In January 2017 GitLab lost hours of production data after a database directory was deleted during an incident, and several backup methods turned out not to work (GitLab&#39;s public postmortem). Each was a missing, untested step on the path to production. This lesson builds the whole path once, properly.</p>
+<p>Public history shows why the questions matter. Knight Capital&#39;s missed server (lesson <a class="xref" href="#/0.2">0.2</a>) is the cost of a deploy nobody verified; GitLab&#39;s 2017 data loss (lesson <a class="xref" href="#/6.1">6.1</a>) is the cost of backups nobody had restored. Each was a missing, untested step on the path to production. This lesson builds the whole path once, properly.</p>
 </section>
 <section class="sec sec-how"><h2>📐 How it works</h2>
 <h3>🟢 The essentials</h3>
@@ -9111,7 +9180,9 @@ Self-hosted cost per 1M tokens = self-hosted per month / (tokens served / 1,000,
 <p><strong>Build: once, by digest, signed.</strong> CI builds the image once per commit, pushes it, records its digest, then generates an SBOM and signs that digest with cosign. Later environments reference the same digest and never rebuild. CI reaches the cloud through <strong>workload identity federation</strong> (OIDC), so no long-lived key sits in the repository (<a class="xref" href="#/1.3">1.3</a>, 4.3):</p>
 <pre><code class="language-yaml"># .github/workflows/ci.yml (excerpt)
 permissions:
-  contents: read
+  contents: write        # bump-dev pushes a branch with the new digest
+  pull-requests: write   # bump-dev opens the pull request
+  packages: write        # push the image to GHCR with GITHUB_TOKEN
   id-token: write        # lets the job request a short-lived OIDC token
 jobs:
   build:
@@ -9121,7 +9192,18 @@ jobs:
       - run: make test                  # unit and contract tests
       - run: make image                 # multi-stage, non-root build
       - run: make push sbom sign        # push, then SBOM and cosign signature on the digest
-      - run: make bump-dev              # opens a PR to the GitOps repo with the new digest
+      - run: make bump-dev              # opens a PR updating overlays/dev with the new digest
+</code></pre>
+<p>The <code>make</code> targets are short wrappers, so the workflow stays readable:</p>
+<pre><code class="language-makefile"># Makefile (excerpt): thin wrappers around the commands from 2.1, 4.1 and 4.3
+IMAGE ?= ghcr.io/najm-example/card-controls
+TAG   ?= $(GITHUB_SHA)
+test:  ; python3 -m pytest
+image: ; docker build -t $(IMAGE):$(TAG) .
+push:  ; docker push $(IMAGE):$(TAG)
+sbom:  ; syft $(IMAGE):$(TAG) -o spdx-json &gt; sbom.spdx.json
+sign:  ; cosign sign --yes $$(docker inspect --format=&#39;{{index .RepoDigests 0}}&#39; $(IMAGE):$(TAG))
+# bump-dev: commits the new digest to overlays/dev on a branch and opens a pull request (3.2)
 </code></pre>
 <p><strong>Deploy: infrastructure and app, both from Git.</strong> The database, backups, cloud role and network rules are one OpenTofu module call, reviewed with a <code>tofu plan</code> on the pull request (<a class="xref" href="#/3.1">3.1</a>). Policy checks (<a class="xref" href="#/3.3">3.3</a>) reject a database without encryption at rest, deletion protection or backup retention. The Kubernetes side lives in the GitOps repository, one folder per environment, reconciled by Argo CD:</p>
 <pre><code class="language-yaml">apiVersion: argoproj.io/v1alpha1
@@ -9310,11 +9392,21 @@ spec:
 </tbody></table></div>
 </section>
 <section class="sec sec-build"><h2>🛠️ Exercises</h2>
+<p>Plan for 8–15 hours of hands-on work over one to two weeks. Use only machines and accounts you own; on a free-tier account, set a budget alert first.</p>
 <ul>
-<li>🟢 Write the SLO document for a small service of your own (say, a URL shortener): two SLIs, an SLO for each over 28 days, the error budget in requests at an assumed traffic level, and the release policy when it runs out. <em>Done when:</em> a peer can say what would page someone and what would freeze releases, without asking you.</li>
-<li>🟡 On your laptop, take that service from an empty repo to a local kind or k3d cluster: multi-stage non-root Dockerfile, a GitHub Actions workflow that builds once and records the digest, and Argo CD syncing from a Git folder you own. <em>Done when:</em> changing the digest in Git rolls the cluster forward, reverting the commit rolls it back, and you have timed both.</li>
-<li>🔴 Add Prometheus and Grafana to your local cluster, define one SLO with fast-burn and slow-burn alerts, then run a one-hour game day with three injected failures (a bad release, a killed pod, a broken config). Use only machines and accounts you own; on a free-tier account, set a budget alert first. <em>Done when:</em> each failure is detected by an alert or the canary, each has a runbook step that worked, and your write-up lists at least two gaps you fixed.</li>
+<li>🟢 Write the SLO document for a small service of your own (say, a URL shortener): two SLIs, an SLO for each over 28 days, the error budget in requests at an assumed traffic level, and the release policy when it runs out. <em>Done when:</em> a peer, or you a day later using the rubric below, can say what would page someone and what would freeze releases, without asking you.</li>
+<li>🟡 On your laptop, take that service from an empty repo to a local kind or k3d cluster: a multi-stage non-root Dockerfile; a GitHub Actions workflow that builds once, pushes to GitHub Container Registry, records the digest and signs it with cosign (<a class="xref" href="#/4.3">4.3</a>); an OpenTofu module for one dependency, such as a bucket or a local Docker resource (<a class="xref" href="#/3.1">3.1</a>); and Argo CD syncing from a GitOps folder in the same repository (<a class="xref" href="#/3.2">3.2</a>). <em>Done when:</em> changing the digest in Git rolls the cluster forward, reverting the commit rolls it back, you have timed both, <code>cosign verify</code> passes for the running digest, and you have kept the <code>tofu plan</code> output.</li>
+<li>🔴 Install Prometheus, Grafana and Argo Rollouts (the commands are in the 🔴 exercise of 4.2) and turn the Deployment into a canary Rollout with an analysis on success rate. Define one SLO with fast-burn and slow-burn alerts, shrinking the windows for the lab (for example 5 and 1 minutes for fast burn, 30 and 5 for slow) so they can fire within the hour, and keep a load generator such as <code>hey</code> or a <code>curl</code> loop running throughout. Then run a one-hour game day with three injected failures: a bad release (the canary analysis should abort it), a broken config (the fast-burn alert should page) and a killed pod (with two or more replicas it should self-heal with no SLO impact and no page). Finish with a readiness file in the format of Najm&#39;s table: for every row, your evidence, including a timed restore of a database dump into a fresh instance and a cost-per-request estimate, or &quot;not done&quot; and why. <em>Done when:</em> the bad release and the broken config are each caught by the canary or an alert, the killed pod is shown to self-heal without a page, each failure has a runbook step that worked, the readiness file has no blank row, and your write-up lists at least two gaps you fixed.</li>
 </ul>
+<details class="model-answer"><summary>Self-check rubric</summary>
+
+<ul>
+<li>SLO document: each SLI is measured where users feel it, the budget is a number of requests, and the release policy says who freezes releases and when they resume.</li>
+<li>Pipeline: no deploy job runs <code>docker build</code>, manifests name the image by its <code>@sha256:</code> digest, and promotion and rollback are single commits.</li>
+<li>Game day: every page you received maps to SLO burn; anything that paged on a cause (CPU, a single pod) is a gap to fix.</li>
+<li>Readiness file: a reviewer could approve or block the launch from it without asking you a question.</li>
+</ul>
+</details>
 </section>
 <section class="sec sec-mistakes"><h2>⚠️ Mistakes and traps</h2>
 <ul>
@@ -9335,16 +9427,16 @@ spec:
 </ul>
 </section>
 <section class="sec sec-quiz"><h2>✍️ Check yourself</h2>
-<p><strong>1. Yousef&#39;s staging pipeline rebuilds the container image from the same Git commit before deploying to production &quot;to be safe&quot;. What is the problem?</strong></p>
+<p><strong>1. During the Card Controls game day, Maha kills one of four read pods. A replacement is ready within 20 seconds, the read SLO does not move, and nobody is paged. What should the write-up record?</strong></p>
 <ul>
-<li>A. Rebuilding is slower, which hurts lead time but is otherwise harmless</li>
-<li>B. Production no longer runs the tested artefact; promote the same digest</li>
-<li>C. Rebuilding is required for production because staging images are unsigned</li>
-<li>D. There is no problem as long as both builds use the same Git commit</li>
+<li>A. A gap: every pod failure should page on-call so a person confirms the replacement</li>
+<li>B. Expected: self-healing absorbed it, and SLO-based paging rightly stayed silent</li>
+<li>C. A gap: the canary analysis should have caught the killed pod and rolled back</li>
+<li>D. Inconclusive: the test must be repeated in production before it counts as evidence</li>
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>B.</strong> A rebuild can pick up different base layers or dependencies, so production runs something nobody tested. D is tempting, but the same commit does not guarantee the same artefact. (🟡 Going deeper.)</p>
+<p><strong>B.</strong> The service pages only on SLO burn (<a class="xref" href="#/5.2">5.2</a>). With spare replicas a killed pod should cost users nothing, so silence is the right result; the evidence is the restart and the flat SLO graph. A pages on a cause, C confuses a release guard with a runtime failure, and D ignores that staging game days exist to produce this evidence. (🔴 Expert view.)</p>
 </details>
 
 <p><strong>2. The Card Controls read SLO is 99.95% over 28 days. What does the error budget tell the team?</strong></p>
@@ -9406,8 +9498,8 @@ spec:
 <li>OpenTelemetry documentation — <a href="https://opentelemetry.io/docs/">https://opentelemetry.io/docs/</a></li>
 <li>Prometheus alerting rules — <a href="https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/">https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/</a></li>
 <li>GitHub Docs, security hardening with OpenID Connect — <a href="https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/about-security-hardening-with-openid-connect">https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/about-security-hardening-with-openid-connect</a></li>
-<li>GitLab, postmortem of the database outage of January 31, 2017 — <a href="https://about.gitlab.com/blog/">https://about.gitlab.com/blog/</a></li>
-<li>US SEC, order in the matter of Knight Capital Americas LLC (2013) — <a href="https://www.sec.gov">https://www.sec.gov</a></li>
+<li>GitLab, postmortem of the database outage of January 31, 2017 — <a href="https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/">https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/</a></li>
+<li>US SEC, order in the matter of Knight Capital Americas LLC (2013) — <a href="https://www.sec.gov/litigation/admin/2013/34-70694.pdf">https://www.sec.gov/litigation/admin/2013/34-70694.pdf</a></li>
 <li>Regulation (EU) 2022/2554 on digital operational resilience for the financial sector (DORA) — <a href="https://eur-lex.europa.eu/eli/reg/2022/2554/oj">https://eur-lex.europa.eu/eli/reg/2022/2554/oj</a></li>
 </ul>
 </section>
@@ -9420,7 +9512,7 @@ spec:
 <p class="crumb"><a href="#/map">Module 7 — Hero: capstone and practice exam</a></p>
 <h1><span class="num">7.2</span> The cloud career: roles, certifications, interviews and a portfolio</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Phase <bdi dir="ltr">Plan</bdi></span> · <span class="prereq">Before this: <a href="#/7.1">7.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> build a skills table for a target role from real job adverts with your top three gaps, publish a portfolio repository a peer can run from its README alone, and score a mock interview against a scorecard. <em>Study time: about 155 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build a skills table for a target role from real job adverts with your top three gaps, publish a portfolio repository a peer can run from its README alone, and score a mock interview against a scorecard. <em>Study time: reading about 15 min, hands-on about 6 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -9820,10 +9912,7 @@ Strong answer, out loud, in order:
 <p class="crumb"><a href="#/map">Module 7 — Hero: capstone and practice exam</a></p>
 <h1><span class="num">7.3</span> Practice exam: 60 scenario questions</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Phase <bdi dir="ltr">Plan</bdi></span> · <span class="prereq">Before this: <a href="#/7.1">7.1</a>, <a href="#/7.2">7.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> sit a 60-question scenario exam in one timed sitting, build a miss log with a cause and an action for each miss, and write new scenario questions with defensible answers for your weakest phase. <em>Study time: about 135 minutes (estimate).</em></p>
-<blockquote>
-<p><strong>Under revision (November 2026).</strong> In many questions in this practice exam the correct option can be spotted by its length or wording, so a high score here does not show readiness for any real exam. Use it to practise reasoning: answer each question in your own words before you read the options, then compare.</p>
-</blockquote>
+<section class="sec sec-lead"><p><strong>After this you can</strong> sit a 60-question scenario exam in one timed sitting, build a miss log with a cause and an action for each miss, and write new scenario questions with defensible answers for your weakest phase. <em>Study time: reading about 55 min, hands-on about 3 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>

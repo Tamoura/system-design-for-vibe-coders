@@ -9,7 +9,7 @@
 # 10.1 — Working with several agents: worktrees, delegation, the review bottleneck and cost
 *Level: 🔴 Advanced* · *Prerequisites: 4.1, 5.1, 9.1* · *Focus: Workflow, Automate*
 
-**After this you can** split a change into independent tasks with a merge order and set your stream count from measured review minutes. *Study time: about 110 minutes (estimate).*
+**After this you can** split a change into independent tasks with a merge order and set your stream count from measured review minutes. *Study time: reading about 15 min, hands-on about 60 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Parallel agents **pay** when tasks are independent, written down and quickly checked. They **do not** when tasks share files or decisions, or you cannot check results as fast as they arrive.
@@ -305,7 +305,7 @@ For REMIT-350: S1 and S2 are independent, S3 builds on S1's contract, the merge 
 - A. 55 minutes, the whole overlap in agent time
 - B. 28 minutes, after setup and integration are paid
 - C. 43 minutes, after setup alone is taken out
-- D. None: parallel work never saves any time
+- D. 40 minutes, after integration alone is taken out
 
 <details><summary>Answer</summary>
 
@@ -324,7 +324,7 @@ For REMIT-350: S1 and S2 are independent, S3 builds on S1's contract, the merge 
 # 10.2 — Lab: split a change across agents and integrate it
 *Level: 🔴 Advanced* · *Prerequisites: 10.1, 4.2, 5.2* · *Focus: Workflow*
 
-**After this you can** build a four-task change on separate branches and merge it into main in an order that keeps the grader green. *Study time: about 150 minutes (estimate).*
+**After this you can** build a four-task change on separate branches and merge it into main in an order that keeps the grader green. *Study time: reading about 10 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - REMIT-361 has four tasks: a notification, two CLI commands and a runbook page. You plan it, build each on its **own branch** (by hand or with agents) and **merge** them into `main`.
@@ -507,7 +507,16 @@ export PYTHONPATH=src    # so python -m remit works; set it in every worktree sh
 
 Use `PYTHONPATH`, not `pip install -e .`: an editable install would run this folder's code from every worktree.
 
-**Your move.** Fill in the plan, commit it on `main` (`docs(docs): plan the parallel work for REMIT-361`) and cut A, B and C from that commit. Hessa's "at the same time" is false for D: it copies real output from B and C. Say so under "Cannot run in parallel" and cut D from `main` once B and C are merged (cut earlier it passes too, but its branch cannot run the commands it quotes). *By hand, no agent:* use way 1 or 2, tests first, small commits, `pytest -q` before every merge; expect 10 to 25 minutes a task. *With agents:* one session per worktree, the brief above adapted per task, plan mode first, then `acceptEdits` inside the worktree (lesson 0.3's level 3), `Bash(pytest *)` allowed and other Bash commands on a prompt. The starter's `CLAUDE.md` (lesson 2.2's reference memory) allows commits only when asked, so your brief must ask. One agent session doing the small tasks in turn is a fair run if your log says so. Keep every branch until you have graded; log minutes per stream.
+**Your move.**
+
+1. Fill in the plan and commit it on `main` (`docs(docs): plan the parallel work for REMIT-361`).
+2. Cut branches A, B and C from that commit.
+3. Hessa's "at the same time" is false for D: it copies real output from B and C. Say so under "Cannot run in parallel".
+4. Build A, B and C (below), then merge them into `main` in your plan's order.
+5. Cut D from `main` once B and C are merged (cut earlier it passes too, but its branch cannot run the commands it quotes), build it and merge it.
+6. Grade, keeping every branch until you have.
+
+*By hand, no agent:* use way 1 or 2, tests first, small commits, `pytest -q` before every merge; expect 10 to 25 minutes a task. *With agents:* one session per worktree, the brief above adapted per task, plan mode first, then `acceptEdits` inside the worktree (lesson 0.3's level 3), `Bash(pytest *)` allowed and other Bash commands on a prompt. The starter's `CLAUDE.md` (lesson 2.2's reference memory) allows commits only when asked, so your brief must ask. One agent session doing the small tasks in turn is a fair run if your log says so. Keep every branch until you have graded; log minutes per stream.
 
 To try a command by hand, or to copy real output into the runbook, add a customer and a transfer first (`remit.db` is git-ignored):
 

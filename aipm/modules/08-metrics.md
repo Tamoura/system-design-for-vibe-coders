@@ -9,7 +9,7 @@
 # 8.1 — Product metrics for AI: value, quality, adoption, trust
 *Level: 🔴 Advanced* · *Prerequisites: 6.1, 6.3, 7.3* · *Stage: Grow*
 
-**After this you can** sort AI product metrics into value, quality, adoption, trust and cost, flag the ones most likely to be gamed, and build a metrics tree with a North Star, input metrics and owned guardrails. *Study time: about 110 minutes (estimate).*
+**After this you can** sort AI product metrics into value, quality, adoption, trust and cost, flag the ones most likely to be gamed, and build a metrics tree with a North Star, input metrics and owned guardrails. *Study time: reading about 20 min, hands-on about 145 min (estimate).*
 
 ## ⚡ In 60 seconds
 - An AI product needs metrics in **four families**: **value** (did the user's job get done better, faster or cheaper?), **quality** (were the outputs right?), **adoption** (do the intended users use it, and keep using it?) and **trust** (do they rely on it the right amount, no more and no less?).
@@ -142,6 +142,14 @@ Retired from the headline: *drafts generated* and *average thumbs rating* (now d
 - 🟡 Build a HEART table for Staff GenAI with one goal, one signal and one metric per dimension. *Done when:* every metric can be computed from data Najm could realistically log, and "Task success" names a specific job.
 - 🔴 Design the metrics tree for Smart Alerts, including a North Star, three input metrics, three guardrails and one lagging outcome with how long its labels take to arrive. *Done when:* the tree shows how you would detect alert fatigue before customers switch alerts off, and each guardrail has an owner.
 
+<details><summary>Check your work</summary>
+
+**🟢 Model answer.** Conversations started: adoption. Containment: value (easily gamed). Resolution within 7 days: value. Answers citing the correct policy page: quality. Monthly active users who used the assistant: adoption. Handoff requests: trust. Thumbs-down rate: trust (gamed if the button is hard to find). The two most gameable: containment and thumbs-down rate.
+
+**🟡 and 🔴 self-check.** Your HEART table passes if each of the five dimensions has a goal, a signal and a metric Najm could log, and "task success" names one job (for example "find the right policy page"). Your metrics tree passes if alert fatigue shows up early (for example falling response rate to alerts, or rising opt-outs, before customers switch alerts off), each guardrail has an owner, and the lagging outcome states its label delay.
+
+</details>
+
 ## ⚠️ Mistakes and traps
 - **Counting activity as value.** Drafts generated, chats handled and tokens used are costs. Put a value metric at the top of the tree and demote activity to diagnostics.
 - **Reporting containment without resolution.** Always pair them, and verify resolution by checking for repeat contact.
@@ -238,7 +246,7 @@ Retired from the headline: *drafts generated* and *average thumbs rating* (now d
 # 8.2 — Unit economics: cost to serve, pricing models and margins
 *Level: 🔴 Advanced* · *Prerequisites: 1.2, 1.3, 7.2, 8.1* · *Stage: Grow*
 
-**After this you can** compute the model cost per request and per resolved conversation from token counts and illustrative prices, and write a break-even comparison of per-seat and per-outcome pricing. *Study time: about 110 minutes (estimate).*
+**After this you can** compute the model cost per request and per resolved conversation from token counts and illustrative prices, and write a break-even comparison of per-seat and per-outcome pricing. *Study time: reading about 20 min, hands-on about 125 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Traditional software costs almost nothing extra per use. AI does not: every request consumes compute, and often retrieval, tool calls, evaluation and human review. **Cost to serve** is a product variable, not an IT line item.
@@ -252,7 +260,7 @@ Tariq brings Najm Assist's first full-month model bill to the product review. It
 
 Nobody can answer: token bill, contact-centre cost and resolution rate (8.1) live in three places. Rania puts them on one sheet. The model bill is real, but human handoffs cost far more. The cheapest model per token turns out to be the most expensive per resolved conversation.
 
-The industry is learning the same thing in public. Vendors have moved some AI features away from flat per-seat prices towards prices tied to units of work. Intercom priced its Fin agent per resolved conversation (from 2023), and Salesforce launched Agentforce with per-conversation pricing (2024). Exact prices change; the lesson holds: when each use has a real cost, the unit you price and measure is a strategic choice.
+The industry is learning the same thing in public. Vendors have moved some AI features away from flat per-seat prices towards prices tied to units of work. Intercom priced its Fin agent per resolved conversation (from 2023), and Salesforce launched Agentforce with per-conversation pricing (2024), then added per-action credits in 2025. Exact prices change; the lesson holds: when each use has a real cost, the unit you price and measure is a strategic choice.
 
 ## 📐 How it works
 
@@ -334,7 +342,7 @@ flowchart LR
 |---|---|---|---|---|
 | **Per seat** | Flat fee per user per month | Seller: heavy users can cost more than they pay | Usage is predictable; value is per person | Many enterprise copilots at launch |
 | **Usage-based** | Per token, call or document | Buyer: bills are hard to forecast | Technical buyers; spiky usage | Model APIs |
-| **Per task or outcome** | Per resolved conversation, per completed task | Seller: pays for failures, earns on success | Outcome is clearly defined and verifiable | Intercom Fin (per resolution, from 2023); Salesforce Agentforce (per conversation at launch, 2024) |
+| **Per task or outcome** | Per resolved conversation, per completed task | Seller: pays for failures, earns on success | Outcome is clearly defined and verifiable | Intercom Fin (per resolution, from 2023); Salesforce Agentforce (per conversation at launch, 2024; per action from 2025) |
 | **Premium tier** | AI features in a higher-priced plan | Shared: tier price must cover heavy users | Consumer products with a free core | Duolingo Max (2023) |
 | **Bundled / free** | Included to drive retention or reduce other costs | Seller, funded by retention or savings | Feature defends the core product | A bank's in-app assistant |
 
@@ -383,6 +391,16 @@ Decision rule agreed with Khalid: *"A change that lowers the model bill but rais
 - 🟢 Using the illustrative prices in this lesson, compute the model cost for one Staff GenAI request of 2,000 input and 500 output tokens on the large and the small model. *Done when:* you have both numbers and the ratio between them.
 - 🟡 Recompute the Najm Assist table assuming a handoff costs $2 instead of $4. Does the small model become the cheapest per resolved conversation? *Done when:* all three columns are recomputed and you have written one sentence on what this means for the decision.
 - 🔴 Yusuf has two offers for a customer-service agent platform: per seat for the contact-centre team, or per resolved conversation. Write a one-page recommendation covering who carries the cost risk, how "resolved" must be defined and verified, and a usage scenario in which each option is cheaper. *Done when:* the page includes a break-even calculation with stated illustrative assumptions and a contract clause defining resolution.
+
+<details><summary>Check your work</summary>
+
+**🟢 Worked answer.** Large: 2,000 × $3 ÷ 1,000,000 + 500 × $15 ÷ 1,000,000 = $0.006 + $0.0075 = $0.0135. Small: 2,000 × $0.25 ÷ 1,000,000 + 500 × $1.25 ÷ 1,000,000 = $0.0005 + $0.000625 ≈ $0.0011. The large model costs 12 times as much.
+
+**🟡 Worked answer.** Handoff cost per conversation: $0.50, $0.80 and $0.54. Total per conversation: $0.566, $0.8055 and $0.5576. Per resolved conversation: about $0.87 (large), $1.61 (small) and $0.89 (routed). The small model is still the most expensive per resolved conversation: cheaper handoffs narrow the gap, but resolution rate still decides.
+
+**🔴 Self-check.** Your page passes if the break-even volume is computed from stated assumptions, it says who carries the cost risk under each offer, and the contract clause defines "resolved" so it can be audited (for example no repeat contact within seven days).
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Managing the token bill instead of the outcome.** Compare models on cost per successful outcome, not price per token.
@@ -479,7 +497,7 @@ Decision rule agreed with Khalid: *"A change that lowers the model bill but rais
 # 8.3 — Monitoring, drift and the iteration loop after launch
 *Level: 🔴 Advanced* · *Prerequisites: 6.1, 6.2, 6.3, 8.1* · *Stage: Grow*
 
-**After this you can** name the type of drift behind a scenario and a signal that detects it, and write a dated model-migration plan with a golden-set go/no-go rule and a rollback path. *Study time: about 110 minutes (estimate).*
+**After this you can** name the type of drift behind a scenario and a signal that detects it, and write a dated model-migration plan with a golden-set go/no-go rule and a rollback path. *Study time: reading about 15 min, hands-on about 160 min (estimate).*
 
 ## ⚡ In 60 seconds
 - AI products get worse without anyone touching them. Customers change, fraudsters adapt, policies are updated and model vendors ship new versions. This is **drift**, and it is usually silent: no error message, just slowly worse answers.
@@ -491,7 +509,7 @@ Decision rule agreed with Khalid: *"A change that lowers the model bill but rais
 ## 🧭 Why it matters
 In March, Najm Bank changes its card replacement fee and updates the policy page. Nobody tells the Najm Assist team. For three weeks the assistant, drawing on an old copy of the page in its retrieval index, tells customers the previous fee. The dashboards stay green: latency is normal, errors are zero, containment is up. The problem surfaces when complaints reach the contact centre and a customer posts a screenshot. Layla asks the question every incident review asks: "How would we have known sooner?"
 
-Public cases show similar patterns. In *Moffatt v. Air Canada* (2024), a tribunal held the airline liable for its website chatbot's wrong description of its bereavement fare policy. The company could not disown what its assistant said. In January 2024, the parcel company DPD's customer-service chatbot was widely reported to have sworn at a customer and criticised the company after a system update. A change nobody meant to affect behaviour did exactly that.
+The public cases you have met show the same patterns. Air Canada could not disown what its website chatbot said about bereavement fares (0.2). DPD's chatbot swore at a customer and criticised the company after a system update (5.3): a change nobody meant to affect behaviour did exactly that.
 
 Meanwhile Smart Alerts faces the opposite problem. Its model was trained on last year's fraud. Fraudsters move to new tactics, so recall falls. The risk team responds by loosening thresholds, and false alerts climb. Customers start ignoring alerts. Nothing broke, but the world moved and the product did not. Monitoring and iteration are how a product keeps up.
 
@@ -619,6 +637,14 @@ After the fee incident, Rania asks each product to publish a **monitoring plan a
 - 🟢 For each scenario, name the kind of drift: (a) a new Arabic dialect appears in Najm Assist traffic; (b) the vendor updates its model; (c) fraudsters shift to a new scam; (d) the fee schedule changes. *Done when:* each has one drift type and one signal that would detect it.
 - 🟡 Write the label-delay table for Staff GenAI: true outcome, delay and at least two leading proxies. *Done when:* each proxy can be computed from data Najm logs and you state how you would check later that the proxy was predictive.
 - 🔴 Your vendor announces that the model behind Credit Memo Copilot will be retired in 90 days. Write the migration plan: evaluation, rollout, monitoring, fallback and communication to RMs. *Done when:* the plan has dated steps, a go/no-go rule based on the golden set and 8.1 guardrails, and a rollback path.
+
+<details><summary>Check your work</summary>
+
+**🟢 Model answer.** (a) Data drift: share of messages the language detector cannot place, or a new topic cluster. (b) Dependency drift: regression run on the golden set after the version change. (c) Concept drift: recall on freshly confirmed fraud falls. (d) Knowledge drift: a freshness check finds the retrieved fee page older than the published one.
+
+**🟡 and 🔴 self-check.** Your label-delay table passes if each proxy can be computed from logs (for example "answer copied into a document", "same question asked again within a day") and you say how you will check later that each proxy predicted the true outcome. Your migration plan passes if its steps are dated, the go/no-go rule names golden-set thresholds relative to the current model and the 8.1 guardrails, and the rollback path is tested before the switch.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Monitoring only uptime and latency.** Add quality, input, behaviour and outcome layers. Silent failures are the common ones.

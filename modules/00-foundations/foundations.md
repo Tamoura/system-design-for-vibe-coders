@@ -4,11 +4,34 @@
 Every term used here is in the [Glossary](../../GLOSSARY.md); every lesson ends
 with something you can **see** working.*
 
+> **🧰 Before you start: set up your workbench (once, about 20 minutes)**
+>
+> - **The tool.** Every hands-on step needs an AI agent that can run commands and
+>   edit files *on your own computer*: Claude Code (terminal or desktop app) or
+>   Cursor (an editor with a built-in agent). A browser-only chat will not work:
+>   it cannot measure from your machine, start a server or save a commit. Claude
+>   Code needs a paid Claude plan or API credits; Cursor has a limited free tier.
+>   Check current prices on their sites.
+> - **The computer.** Any recent Windows, macOS or Linux laptop. Install by
+>   following the tool's own install page for your system.
+> - **A project folder.** Make an empty folder (for example `relay`) and open the
+>   agent inside it. Its work stays in that folder.
+> - **Smoke test.** Ask: *"Create hello.txt containing today's date, then list
+>   this folder so I can see it exists."* Then open the folder yourself and find
+>   the file. If the agent says it cannot reach your files, you are in a browser
+>   chat; switch tools.
+> - **Accounts (needed from F.5).** A free GitHub account and one free hosting
+>   account. When a tool needs to log in, it opens a browser page; you click
+>   approve yourself.
+> - **Never paste a password, API key or token into the chat.** The agent should
+>   tell you which login screen or settings file it goes in. If you pasted one by
+>   mistake, revoke it on the provider's site and make a new one.
+
 ---
 
 # F.1 — What Happens When You Open a Website
 
-**After this you can** sketch the four-step trip of opening a website on a napkin, explain it to a friend, and show with measured round-trip times why a faraway site answers more slowly. *Study time: about 35 minutes (estimate).*
+**After this you can** sketch the four-step trip of opening a website on a napkin, explain it to a friend, and show with measured round-trip times why a faraway site answers more slowly. *Study time: reading about 5 min, hands-on about 45 min (estimate).*
 
 ## 🔥 The Story: the day Facebook forgot where it lived
 
@@ -92,12 +115,18 @@ and say, word for word if you like:
 1. > *"Draw me a simple diagram (Mermaid) of what happens when I open
    > wikipedia.org: my device, DNS, any CDN, and the server. Label each arrow in
    > plain language."*
+   (**Mermaid** is a way to write a diagram as plain text; the agent's preview
+   shows it as boxes and arrows. Every diagram in this course is one.)
 2. > *"Now the same diagram for an app I want to build: [describe your dream app
    > in one sentence]. What changes? What stays the same?"*
    (Spoiler: almost nothing changes. That's the point.)
-3. > *"Measure the round-trip time from this machine to three websites: one hosted
-   > near me, one in Europe, one in Asia. Show me the numbers side by side and
-   > explain the differences in one sentence each."*
+3. > *"Measure the round-trip time from this machine to three servers: one near
+   > me, one in Europe, one in Asia. Use servers that are not behind a CDN (a
+   > cloud provider's regional test servers work well) and tell me how you checked.
+   > Show me the numbers side by side and explain the differences in one
+   > sentence each."*
+   (Why the CDN rule: a big site behind a CDN answers from a nearby copy, so all
+   three numbers would look the same.)
 
 ## ✅ Verify It
 
@@ -129,7 +158,7 @@ and say, word for word if you like:
 
 # F.2 — What a Server Actually Is (and What Code Is)
 
-**After this you can** have your agent start, stop and restart a tiny web program while you watch the page work, die and work again, and explain what happened to a non-coder using the recipe, kitchen and notebook analogy. *Study time: about 35 minutes (estimate).*
+**After this you can** have your agent start, stop and restart a tiny web program while you watch the page work, die and work again, and explain what happened to a non-coder using the recipe, kitchen and notebook analogy. *Study time: reading about 5 min, hands-on about 30 min (estimate).*
 
 ## 🔥 The Story: one of the world's biggest sites ran on nine computers
 
@@ -229,7 +258,7 @@ of awe; see references.)
 
 # F.3 — Versions, Repos, and Deploys: How Software Moves
 
-**After this you can** direct your agent to commit two versions of a page, show you the diff, and restore v1 and then v2 with proof, and say which version is live from the history. *Study time: about 35 minutes (estimate).*
+**After this you can** direct your agent to commit two versions of a page, show you the diff, and restore v1 and then v2 with proof, and say which version is live from the history. *Study time: reading about 5 min, hands-on about 40 min (estimate).*
 
 ## 🔥 The Story: the company that lost $440 million in 45 minutes
 
@@ -240,8 +269,10 @@ servers by hand… to **seven of the eight**.
 The eighth server still ran old code, in which an old, repurposed switch meant
 something completely different. When markets opened, that one forgotten machine
 started firing millions of unintended orders. In 45 minutes, Knight lost about
-**$440 million** — more than the company's whole year of profit. Within days it
-had effectively ceased to exist as an independent firm.
+**$440 million** (the SEC's 2013 order puts it at more than $460 million) — more
+than the company's whole year of profit. Within days it needed an emergency rescue
+that handed most of the company to new investors, and within a year it had been
+absorbed by a rival.
 
 Every part of this story is about *how software moves*: versions, copies,
 which machine runs what, and how you get back to yesterday when today goes wrong.
@@ -333,7 +364,7 @@ that was almost complete, verified by no one.
 
 # F.4 — Meet Your Agent: Directing a Builder You Can't Watch
 
-**After this you can** write a first CLAUDE.md with a production-data rule and an evidence rule, and prove it with a cold-start test in which a fresh agent session answers three questions about your product correctly. *Study time: about 50 minutes (estimate).*
+**After this you can** write a first CLAUDE.md with a production-data rule and an evidence rule, and prove it with a cold-start test in which a fresh agent session answers three questions about your product correctly. *Study time: reading about 5 min, hands-on about 45 min (estimate).*
 
 ## 🔥 The Story: the agent that deleted a company's database — then misled its boss
 
@@ -343,8 +374,8 @@ an explicit instruction that a code freeze was in effect, the agent ran a
 destructive command against the **production database** — the live one, with
 real records — and wiped it. Worse: its subsequent output *misrepresented what
 had happened*, describing the loss in ways that didn't match reality until
-pressed. The platform's CEO publicly apologized; within days the product shipped
-stronger environment separation and backup restores.
+pressed. The platform's CEO publicly apologized and, within days, announced automatic
+separation of development and production databases and pointed to one-click restore.
 
 Six months earlier, Andrej Karpathy had coined the term **vibe coding** — building
 by "fully giving in to the vibes," talking to an AI and accepting what comes back.
@@ -422,11 +453,16 @@ agent asks before deleting, overwriting, or spending. Set them; test them.
    versions to the agent:
    > *"Compare these two instructions. Tell me honestly what you would have
    > guessed at in the first one."*
-3. **Test the brakes.**
-   > *"What would you do if I asked you to delete this project's data folder
-   > right now? Walk me through what happens before anything is destroyed."*
-   The correct answer includes: *ask you first*. If it isn't, fix your
-   permission settings before continuing this course.
+3. **Test the brakes, for real.** Make a throwaway folder `brakes-test/` with one
+   file in it, then say:
+   > *"Delete the brakes-test folder."*
+   The pass is not the agent's words: it is the **tool's own permission prompt**
+   appearing and waiting for your click. Click no; the folder must still be
+   there. If the folder vanished with no prompt, fix your settings before
+   continuing: in Claude Code, the `/permissions` command or the `permissions`
+   section of `settings.json`; in Cursor, its agent settings, where commands
+   should need your approval rather than auto-run (menu names change between
+   versions).
 
 ## ✅ Verify It
 
@@ -435,7 +471,8 @@ agent asks before deleting, overwriting, or spending. Set them; test them.
       forbidden? how do I want evidence?). Three correct answers, zero re-explaining.
 - [ ] Your CLAUDE.md contains the production-data rule and the evidence rule,
       verbatim or better.
-- [ ] You tested the brakes and watched the agent *ask* instead of act.
+- [ ] You tested the brakes: the tool's permission prompt appeared, you said no,
+      and `brakes-test/` is still there.
 - [ ] You've rewritten one real instruction into the three-part form and felt the
       difference in what came back.
 
@@ -457,7 +494,7 @@ agent asks before deleting, overwriting, or spending. Set them; test them.
 
 # F.5 — Your First Live Page, With Proof
 
-**After this you can** have your agent deploy a one-page site, check v2 on your own phone against the evidence it promised in advance, and write a rollback runbook that names the exact version it returns to. *Study time: about 50 minutes (estimate).*
+**After this you can** have your agent deploy a one-page site, check v2 on your own phone against the evidence it promised in advance, and write a rollback runbook that names the exact version it returns to. *Study time: reading about 5 min, hands-on about 75 min (estimate).*
 
 ## 🔥 The Story: the typo that turned off the internet's dashboard
 
@@ -465,8 +502,8 @@ On February 28, 2017, an Amazon engineer doing routine maintenance typed a
 command with one parameter wrong. Instead of removing a few servers from a
 storage system, it removed *a lot* — and for about four hours, a large piece of
 the internet (which quietly depends on that storage) sputtered. The final irony:
-**AWS's own status dashboard couldn't show the outage**, because the dashboard
-itself depended on the broken system. The world's most sophisticated
+**AWS's own status dashboard kept showing green**, because the tool that
+updates it depended on the broken system. The world's most sophisticated
 infrastructure company was reduced to announcing updates on Twitter.
 
 Two morals, both yours to keep:
@@ -518,6 +555,10 @@ The graduation exercise. All five foundation lessons, one run:
    > today's date printed on the page. Repo with a clean v1 commit."*
 2. > *"Deploy it to a managed host (your choice — explain the choice in one
    > sentence). Give me the real URL."*
+   Before this step, have the two free accounts from the workbench box (GitHub
+   and the host). When the agent's tool opens a browser login, approve it
+   yourself. If it asks you to paste a token into the chat, refuse: ask it to
+   use the tool's login command or the host's settings page instead.
 3. > *"Before I look: tell me exactly what I should see, so I can check you."*
    (Making the builder state the expected evidence *first* — professional habit,
    thirty seconds.)
@@ -527,11 +568,13 @@ The graduation exercise. All five foundation lessons, one run:
    helpful middlemen keeping old copies. First taste of Module 3.)
 6. > *"If v2 were a disaster, exactly what would we do to put v1 back? Don't do
    > it — write the steps in the README as our first runbook."*
+   (A **runbook** is a written step-by-step for a known emergency, so anyone
+   can follow it calmly.)
 
 ## ✅ Verify It
 
 - [ ] The URL opens **on your phone**, and on a friend's phone in another
-      network, showing v2.
+      network (solo: your phone on mobile data with Wi-Fi off), showing v2.
 - [ ] The repo history shows v1 and v2 with honest messages; you can say which
       is live and prove it (the date on the page helps).
 - [ ] The rollback runbook exists and names the exact draft it returns to.

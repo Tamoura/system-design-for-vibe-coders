@@ -9,7 +9,7 @@
 # 2.1 — Getting data in: ETL vs ELT, connectors, incremental loads and change data capture
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.3* · *Stage: Ingest*
 
-**After this you can** run a high-water-mark incremental load and show with a query exactly which inserts, updates and deletes it caught or missed, then capture the same changes with CDC. *Study time: about 120 minutes (estimate).*
+**After this you can** run a high-water-mark incremental load and show with a query exactly which inserts, updates and deletes it caught or missed, then capture the same changes with CDC. *Study time: reading about 15 min, hands-on about 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Ingestion** copies data from source systems (databases, SaaS tools, files, APIs, event streams) into your analytical platform. Most modern platforms load the raw data first and transform it inside the warehouse: **ELT** rather than **ETL**.
@@ -180,6 +180,8 @@ Every new pipeline must also tick: *raw append-only with load metadata; deletes 
 ## 🛠️ Exercises
 Use synthetic data only. A generator script or a public sample database is fine; never real customer data.
 
+**Before the 🟡 exercise.** Kafka is taught properly in lesson 2.3; here you need only four words. A *topic* is a named log of events, a *producer* writes to it, a *consumer* reads it, and Kafka Connect runs connectors such as Debezium between a database and a topic. Start from the PostgreSQL Docker Compose file in the `tutorial` folder of Debezium's examples repository on GitHub, which starts a PostgreSQL already set up for logical decoding, Kafka and Kafka Connect together. Give Docker at least 4 GB of memory (lesson 0.3, *Will my laptop cope?*).
+
 - 🟢 In PostgreSQL or DuckDB, create a synthetic `accounts` table (1,000 rows with `updated_at`) and copy it to `raw_accounts` with `_loaded_at` and `_batch_id`. Then update 50 rows, delete 10, insert 20 and run a high-water-mark incremental load. *Done when:* you can show, with a query, exactly which changes the incremental load caught and which it missed, and explain why.
 - 🟡 Run PostgreSQL with `wal_level = logical`, Kafka (or Redpanda) and Kafka Connect with the Debezium PostgreSQL connector in Docker, following the Debezium tutorial. Capture one table, then insert, update and delete rows. *Done when:* you can show the `c`, `u` and `d` events in the topic, and a SQL query over the landed events that rebuilds the current table state exactly.
 - 🔴 Write an ingestion design note, using the Najm template, for your synthetic `transactions` table, with a reconciliation query. Stop the CDC connector for an hour while generating writes. *Done when:* you can show the slot's retained WAL growing, a clean catch-up after restart (no lost or duplicated rows) and the reconciliation passing.
@@ -280,7 +282,7 @@ Use synthetic data only. A generator script or a public sample database is fine;
 # 2.2 — Orchestration: DAGs, idempotency, retries and backfills
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1* · *Stage: Ingest, Operate*
 
-**After this you can** write a daily load that can be rerun or backfilled for any date without duplicating rows, and prove it with the day's totals before and after three reruns. *Study time: about 110 minutes (estimate).*
+**After this you can** write a daily load that can be rerun or backfilled for any date without duplicating rows, and prove it with the day's totals before and after three reruns. *Study time: reading about 15 min, hands-on about 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 - An **orchestrator** runs your pipeline steps in the right order, on a schedule or when data arrives, retries what fails, and records what ran. **Apache Airflow**, **Dagster** and **Prefect** are the common open-source choices.
@@ -596,7 +598,7 @@ Use synthetic data and a local PostgreSQL or DuckDB. Airflow (Docker quick-start
 
 - A. Move the schedule to 05:00 and hope the end-of-day batch is never that late
 - B. Trigger on a readiness signal from core end-of-day, with a timeout and an alert
-- C. Retry the build every five minutes until the totals look right to the risk team
+- C. Retry the build every five minutes until the totals look right
 - D. Build twice a day and let users pick whichever version looks better
 
 <details><summary>Answer</summary>
@@ -619,12 +621,12 @@ Use synthetic data and a local PostgreSQL or DuckDB. Airflow (Docker quick-start
 # 2.3 — Streaming: events, Kafka, windows and the exactly-once myth
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 2.2* · *Stage: Ingest, Transform*
 
-**After this you can** build a Kafka consumer that lands every event exactly once in its table despite crashes, using manual commits after writing and an idempotent sink. *Study time: about 120 minutes (estimate).*
+**After this you can** build a Kafka consumer that lands every event exactly once in its table despite crashes, using manual commits after writing and an idempotent sink. *Study time: reading about 15 min, hands-on about 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Streaming** processes data continuously as **events** (small immutable facts such as "card 4417 was authorised for 120 QAR at 14:02:11") instead of in nightly batches. Use it when a decision loses value within seconds or minutes, like scoring a card payment for fraud.
 - **Apache Kafka** stores events in **topics**, split into **partitions**. Order is guaranteed only within a partition, so choose the **key** (for example the card ID) that keeps related events together.
-- Consumers track their position with **offsets**. When you commit the offset relative to doing the work decides whether you get **at-most-once** (may lose) or **at-least-once** (may duplicate) delivery.
+- Consumers track their position with **offsets**. Whether you commit the offset before or after doing the work decides whether you get **at-most-once** (may lose) or **at-least-once** (may duplicate) delivery.
 - Kafka offers **exactly-once within Kafka** through idempotent producers and transactions. End to end, exactly-once needs an **idempotent sink**: design for duplicates, and make them harmless.
 - Aggregate by **event time**, not arrival time, using **windows** (tumbling, sliding, session) and **watermarks** that say how long to wait for late events.
 - Biggest trap: auto-committing offsets before the work is done, so a crash silently drops events.

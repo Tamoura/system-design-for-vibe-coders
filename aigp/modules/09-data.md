@@ -9,7 +9,7 @@
 # 9.1 — Sourcing, lineage and rights to use data
 *Level: 🔴 Advanced* · *Prerequisites: 3.2, 4.1, 5.2* · *BoK: III.B*
 
-**After this you can** classify datasets by source type and rights issue, and run a GDPR Art. 6(4) compatibility assessment that reaches a reasoned conclusion with safeguards. *Study time: about 105 minutes (estimate).*
+**After this you can** classify datasets by source type and rights issue, and run a GDPR Art. 6(4) compatibility assessment that reaches a reasoned conclusion with safeguards. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Training data comes from five main sources: **first-party** (your own records), **purchased or licensed**, **scraped** from the web, **synthetic** (generated), and **public datasets**. Each has a different rights and risk profile.
@@ -204,7 +204,7 @@ Standing rule adopted by the committee: *"No dataset may be used to train, fine-
 # 9.2 — Quality, representativeness and bias
 *Level: 🔴 Advanced* · *Prerequisites: 9.1, 5.1* · *BoK: III.B*
 
-**After this you can** locate where six bias types enter a pipeline, and write a one-page annotator guide with definitions, worked examples, an unsure rule and an agreement check. *Study time: about 105 minutes (estimate).*
+**After this you can** locate where six bias types enter a pipeline, and write a one-page annotator guide with definitions, worked examples, an unsure rule and an agreement check. *Study time: reading about 15 min, hands-on about 100 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Data quality** has several dimensions: accuracy, completeness, consistency, timeliness, validity, uniqueness. It also has **fitness for purpose**, which is the dimension that matters most.
@@ -417,7 +417,7 @@ Describe it carefully: it is **not** a general licence to collect sensitive data
 # 9.3 — Testing, evaluation, validation and red-teaming
 *Level: 🔴 Advanced* · *Prerequisites: 9.2, 8.2* · *BoK: III.B*
 
-**After this you can** explain to a business owner why accuracy misleads on rare events, compute fairness metrics from a confusion matrix, and design a red-team plan with exit criteria. *Study time: about 110 minutes (estimate).*
+**After this you can** explain to a business owner why accuracy misleads on rare events, compute fairness metrics from a confusion matrix, and design a red-team plan with exit criteria. *Study time: reading about 20 min, hands-on about 110 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **TEVV** (test, evaluation, verification and validation) is how you get evidence that a system works as intended, for the people it affects, under the conditions it will face. *Verification*: did we build it right (to spec)? *Validation*: did we build the right thing (fit for real use)?
@@ -517,7 +517,7 @@ Good red-teams are **diverse** (security, domain, language, affected-community p
 - **LLM-as-judge** scoring for scale. This is useful, but the judge model has its own biases and errors, so calibrate it against humans and never rely on it alone for high-stakes checks;
 - **human evaluation** by credit experts with a written rubric, blind to which system produced the draft where possible, with inter-rater agreement checked (9.2).
 
-**Independent validation and model risk management (MRM).** Banks have a head start here. US supervisory guidance **SR 11-7** (Federal Reserve, 2011, adopted by the OCC) defines model risk and requires sound development, **independent validation** and governance. Its core idea is **effective challenge**: critical analysis by objective, informed parties who have the competence, influence and incentives to identify limitations and get changes made. The UK PRA's **SS1/23** sets model risk management principles for banks and explicitly brings AI and machine-learning models into scope. Many GCC banks apply similar principles. Najm should also check QCB's AI guideline for current expectations. An independent validation of an AI system typically reviews: conceptual soundness (is the approach appropriate? are the data and features justified?); data quality and lineage; replication of key results; outcomes analysis and benchmarking against alternatives; fairness and explainability tests; robustness; implementation testing (does production match what was validated?); and the monitoring plan. The validator reports to the second line (risk), not to the model's builders. In April 2026 the Federal Reserve, the OCC and the FDIC replaced SR 11-7 with **SR 26-2**, *Revised Guidance on Model Risk Management*. It is more principles-based, scales validation to each model's materiality instead of fixed cycles, tightens the definition of a model and holds vendor models to the same standard; read its current text for how it treats generative and agentic AI.
+**Independent validation and model risk management (MRM).** Banks have a head start here. US supervisory guidance **SR 11-7** (Federal Reserve, 2011, adopted by the OCC) defines model risk and requires sound development, **independent validation** and governance. Its core idea is **effective challenge**: critical analysis by objective, informed parties who have the competence, influence and incentives to identify limitations and get changes made. The UK PRA's **SS1/23** sets model risk management principles for banks and explicitly brings AI and machine-learning models into scope. Many GCC banks apply similar principles. Najm should also check QCB's AI guideline for current expectations. An independent validation of an AI system typically reviews: conceptual soundness (is the approach appropriate? are the data and features justified?); data quality and lineage; replication of key results; outcomes analysis and benchmarking against alternatives; fairness and explainability tests; robustness; implementation testing (does production match what was validated?); and the monitoring plan. The validator reports to the second line (risk), not to the model's builders. In April 2026 the Federal Reserve, the OCC and the FDIC replaced SR 11-7 with **SR 26-2**, *Revised Guidance on Model Risk Management*. It is more principles-based, scales validation to each model's materiality instead of fixed cycles, tightens the definition of a model and holds vendor models to the same standard. A footnote leaves generative and agentic AI outside its scope for now, as novel and fast-moving, and the agencies have signalled separate work on them; so SR 26-2 does not dictate how to govern GenAI, but banks must still cover it through their own risk management and controls, and extending MRM is the usual way.
 
 **Acceptance criteria and sign-off.** Before testing begins, the owner, the developers, the validator and governance agree **acceptance criteria**: metrics, thresholds, groups, test sets and the consequence of failing. Example: "AUC on out-of-time data ≥ agreed floor; calibration within tolerance in each country; approval-rate ratio ≥ 0.8 or a documented justification approved by the committee; TPR gap ≤ 3 points; no critical red-team findings open; reason-code faithfulness check passed." Results are then compared against criteria fixed in advance, which prevents moving the goalposts. Sign-off follows the tier from 8.1. For a Tier 1 system at Najm that means the business owner, the independent validator, the DPO (for DPIA residual risk) and the AI Governance Committee. Conditions and accepted residual risks are recorded in the decision log. For high-risk systems under the EU AI Act, testing against prior defined metrics and probabilistic thresholds is part of the provider's risk-management system. Its results feed the Annex IV file and the conformity assessment (Module 10).
 
@@ -553,6 +553,13 @@ Good red-teams are **diverse** (security, domain, language, affected-community p
 ## 🛠️ Exercises
 - 🟢 A fraud model flags 1% of transactions; fraud is 0.2% of transactions. Explain in plain words why accuracy is a poor metric here and which two metrics you would report instead. *Done when:* you can explain precision and recall to Khalid in two sentences each.
 - 🟡 Using the worked example, compute the approval-rate ratio and FPR gap if Group B's approvals rise to 450 (400 good, 50 bad). *Done when:* you state which fairness metrics improve, which worsen, and what the business owner must accept.
+
+<details class="model"><summary>Check your answer</summary>
+
+Group B's approval rate becomes 450/1,000 = 45%, so the ratio is 45% ÷ 54% = 0.83, above 0.8: demographic parity now passes. B's false positive rate is 50/600 = 8.3% against A's 10%, so the FPR gap narrows from 5 to about 1.7 points. But B's true positive rate becomes 400/400 = 100% against A's 83%, so equal opportunity now fails the other way, and B's precision falls to 400/450 = 89% against 93%. The business owner must accept about 20 more bad loans in Group B (50 instead of 30) and a new gap in equal opportunity, and record why this trade-off fits the lending purpose.
+
+</details>
+
 - 🔴 Design a red-team plan for the credit memo copilot: scope, team composition, ten test scenarios (at least three in Arabic), severity scale, and exit criteria. *Done when:* each scenario maps to an OWASP LLM risk or a trustworthiness requirement from 8.2, and the exit criteria are tied to sign-off.
 
 ## ⚠️ Mistakes and exam traps

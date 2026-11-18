@@ -9,7 +9,7 @@
 # 5.1 — A launch you can undo
 *Level: 🟡 Intermediate* · *Prerequisites: 2.3, 4.3* · *Step: Launch*
 
-**After this you can** write a one-page launch checklist with a check, a numeric stop rule and an undo step for every rung, and time one undo drill in minutes. *Study time: about 115 minutes (estimate).*
+**After this you can** write a one-page launch checklist with a check, a numeric stop rule and an undo step for every rung, and time one undo drill in minutes. *Study time: reading about 20 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can write a **launch checklist** of one page that lists, for each launch step, what you will check, what would make you stop, and exactly how you would undo it, and you can run a first launch to no more than five customers before anyone else sees the product.
@@ -224,7 +224,7 @@ On rung 1, Nadia reports that one client received a reminder 30 minutes late. La
 # 5.2 — Support at one-person scale with AI: boundaries, escalation, disclosure
 *Level: 🟡 Intermediate* · *Prerequisites: 4.3, 5.1* · *Step: Launch*
 
-**After this you can** write a one-page support policy that sets a response time, what an AI assistant may and may never answer, when it hands over to you and how customers are told, and test it on ten real or role-played messages. *Study time: about 115 minutes (estimate).*
+**After this you can** write a one-page support policy that sets a response time, what an AI assistant may and may never answer, when it hands over to you and how customers are told, and test it on ten real or role-played messages. *Study time: reading about 20 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can write a **support policy** of one page that says what you answer, how fast, which questions an AI assistant may answer alone, which it may never answer, when it must pass the customer to you, and how customers are told that AI is involved. You can test it against ten real or role-played messages.
@@ -240,7 +240,7 @@ By the end of the launch ladder, Tick has nine customers and Layla is answering 
 
 She does what many founders do. She connects an AI assistant to the support inbox, gives it the help pages and a line, "answer customers politely and solve their problems", and switches on automatic replies. For two days it is wonderful: replies in seconds, in the customer's language, friendly. On the third day, a salon owner asks whether she can get her money back for the month because Tick missed a weekend. The assistant, trying to be helpful, replies that a full refund will be issued and that Tick guarantees 99.9% delivery of reminders. Layla has no such guarantee in her terms, and no refund process promised. The customer, reasonably, writes back with the screenshot.
 
-The question is not whether the assistant is clever. It is who is allowed to speak for the company, about what. A public example reported in the press: a 2024 tribunal ruling held an airline responsible for its website chatbot's refund advice. Rules differ elsewhere, and this is not legal advice, but the lesson for a founder is plain: **what your assistant tells customers may be treated as something you told them.** The References say how to find the ruling; read it yourself before you rely on this summary.
+The question is not whether the assistant is clever. It is who is allowed to speak for the company, about what. A public example: in *Moffatt v. Air Canada* (February 2024), a Canadian small-claims tribunal held the airline responsible for its website chatbot's wrong refund advice. Rules differ elsewhere, and this is not legal advice, but the lesson for a founder is plain: **what your assistant tells customers may be treated as something you told them.** It is a tribunal decision, not binding precedent; the References link to it, so read it before you rely on this summary.
 
 The founder's job is to set the boundaries before the assistant speaks, not after the screenshot. Engineering of the inbox and admin tools is in [*SaaS Building Blocks*, lesson 7.1 — The admin panel: support tools and impersonation](../saas/index.html#/7.1); the product view of designing for trust is in [*AI Product Management*, lesson 4.2 — Designing for trust: expectations, explanations, errors and recovery](../aipm/index.html#/4.2). This lesson is the policy you write.
 
@@ -272,7 +272,7 @@ Write the tiers down as your **support policy**. The assistant's instructions th
 
 **Escalation.** **Escalation** means passing a message to a person with more authority. The assistant must escalate in three situations: the message matches a red topic, the assistant is not sure, or the customer asks for a human. The last one must always work, without argument. A customer who says "I want to talk to a person" gets one, or a clear time when one will reply.
 
-**Disclosure.** Tell customers when they are talking to an AI. Say it in plain words in the first reply, not in the terms: "I'm Tick's AI assistant. A person reviews anything about your account or money, and you can ask for one at any time." Disclosure matters for honesty and trust, and some places have rules that require it for certain kinds of AI systems (for example, the EU's AI Act has transparency rules for systems that interact with people; whether they apply to you is a question for a qualified professional). Never let an assistant pretend to be a person with a human name and picture.
+**Disclosure.** Tell customers when they are talking to an AI. Say it in plain words in the first reply, not in the terms: "I'm Tick's AI assistant. A person reviews anything about your account or money, and you can ask for one at any time." Disclosure matters for honesty and trust, and some places have rules that require it for certain kinds of AI systems (for example, since 2 August 2026 Article 50 of the EU AI Act requires telling people they are interacting with an AI system unless that is obvious; if you have EU customers, assume it covers a support assistant and confirm with a qualified professional). Never let an assistant pretend to be a person with a human name and picture.
 
 ### 🟡 Going deeper
 
@@ -382,7 +382,7 @@ The next week, Nadia writes: "Are you a robot?" The reply says yes, an AI assist
 
 <details><summary>Answer</summary>
 
-**D.** Honest, early disclosure with an easy route to a person protects trust and may be required in some places. A hides it in a document nobody reads, B waits to be caught, and C is a larger change than the problem needs. (See "Disclosure".)
+**D.** Honest, early disclosure with an easy route to a person protects trust and is required in some places, such as the EU under the AI Act. A hides it in a document nobody reads, B waits to be caught, and C is a larger change than the problem needs. (See "Disclosure".)
 
 </details>
 
@@ -413,8 +413,8 @@ The next week, Nadia writes: "Are you a robot?" The reply says yes, an AI assist
 </details>
 
 ## 📚 References
-- A 2024 ruling by a Canadian tribunal on an airline's responsibility for refund information given by its website chatbot, as reported in the press. Not opened in this session, so no case name or URL is given; search for the published decision, read it before relying on the summary above, and ask a qualified professional what applies where you operate.
-- European Union, Regulation (EU) 2024/1689 (the AI Act), Article 50, transparency obligations for certain AI systems, including systems that interact with people. Cited by title and article only; not opened in this session. Whether and how it applies to a given product is a question for a qualified professional.
+- *Moffatt v. Air Canada*, 2024 BCCRT 149, Civil Resolution Tribunal of British Columbia, 14 February 2024: the airline was held responsible for wrong refund information from its website chatbot. A small-claims tribunal decision, not binding precedent. https://decisions.civilresolutionbc.ca/crt/crtd/en/525448/1/document.do (citation and date checked by web search on 2026-11-18; ask a qualified professional what applies where you operate).
+- European Union, Regulation (EU) 2024/1689 (the AI Act), Article 50, transparency obligations for certain AI systems, including systems that interact with people; applies from 2 August 2026, a date the 2026 AI Omnibus amendments did not move for this duty (checked by web search on 2026-11-18; the official text was not opened). Whether and how it applies to a given product is a question for a qualified professional.
 - Your AI tool vendor's current terms and data-use documentation. Read the pages for the tool you use before sending any customer data to it.
 
 ---
@@ -422,7 +422,7 @@ The next week, Nadia writes: "Are you a robot?" The reply says yes, an AI assist
 # 5.3 — When something breaks: telling customers, and the post-incident note
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1, 5.2* · *Step: Launch*
 
-**After this you can** write a three-level severity table, keep a timestamped timeline through a role-played incident, and write a one-page post-incident note that names causes, not people, with two or three owned and dated actions. *Study time: about 115 minutes (estimate).*
+**After this you can** write a three-level severity table, keep a timestamped timeline through a role-played incident, and write a one-page post-incident note that names causes, not people, with two or three owned and dated actions. *Study time: reading about 20 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can run a small **incident** from first report to closing note: send a first message to affected customers within a time you set in advance, keep a timeline, send an update on schedule, and write a **post-incident note** of one page that names causes, not people, and ends in two or three concrete actions with owners and dates.
@@ -481,7 +481,7 @@ Compare a weak and a strong message:
 
 The weak version says nothing a customer can act on. The strong one is plain about what is known and not known. Apologise once, briefly, and do not blame a person or a tool in the message.
 
-**Contributing causes.** An incident rarely has one cause. List every contributing cause in the system (design, detection, knowledge, communication) rather than one "root cause" that points at the last person who touched something.
+**Contributing causes.** An incident rarely has one cause. List every contributing cause in the system (design, detection, access, knowledge, communication) rather than one "root cause" that points at the last person who touched something.
 
 **The update promise.** Say when you will write again and then do, even if the update is "no change". A customer who knows when the next message will come stops checking and stops worrying.
 
@@ -498,7 +498,7 @@ The weak version says nothing a customer can act on. The strong one is plain abo
 
 Rule: **you confirm every factual sentence in a customer message.** If the AI wrote "a third-party provider outage", and the cause was Sam's setting change, the message is false, and a customer who later learns the truth trusts you less.
 
-**When data may be involved.** If the incident might involve **personal data** (information about an identifiable person, such as clients' names and phone numbers) being lost, exposed or changed, it is a different kind of incident. Many places have data protection laws, such as the EU GDPR or a national equivalent, that can require notifying a regulator and sometimes affected people, within a short time that varies by law. In some laws the time starts when you become aware, and which rule applies to you is a question for a qualified professional. As a founder you cannot decide this alone and should not guess. Do three things: **stop the cause** (go back, switch off, change the access), **write down what you know and when you learned it**, and **contact a qualified professional promptly**. Keep a one-line note in your launch checklist saying who that person is, so that you do not search for one at 19:00. Rashid, the lawyer, appears in lesson 6.2 for this reason.
+**When data may be involved.** If the incident might involve **personal data** (information about an identifiable person, such as clients' names and phone numbers) being lost, exposed or changed, it is a different kind of incident. Many places have data protection laws, such as the EU GDPR or a national equivalent, that can require notifying a regulator and sometimes affected people, within a short time that varies by law (the GDPR, for example, asks for notice to the regulator without undue delay and, where feasible, within 72 hours). In some laws the time starts when you become aware, and which rule applies to you is a question for a qualified professional. As a founder you cannot decide this alone and should not guess. Do three things: **stop the cause** (go back, switch off, change the access), **write down what you know and when you learned it**, and **contact a qualified professional promptly**. Keep a one-line note in your launch checklist saying who that person is, so that you do not search for one at 19:00. Rashid, the lawyer, appears in lesson 6.2 for this reason.
 
 ### 🔴 Expert view
 
@@ -527,9 +527,11 @@ Layla's first **post-incident note** for the Thursday outage, written the next m
 
 **Timeline.** 14:10 setting changed. 16:30 Nadia reports. 16:38 confirmed reminders queued but not sent. 16:50 first message to all customers with tomorrow's client list. 17:25 previous setting restored, queue sent. 18:00 update sent. 18:20 Layla confirms tomorrow's reminders against calendars.
 
+**Contributing causes.** *Design:* one setting controlled both the landing page and the live reminders (action b). *Detection:* no alert watched reminders sent, so a customer found the fault after 2 hours 20 minutes (action a). *Access:* a contractor could change live settings in the shared account (action b). *Knowledge:* no written "ask first" list, and no ready message template or severity table (actions b and c).
+
 **What went well.** The first message went out 12 minutes after confirmation (20 minutes after Nadia's report), with a list customers could use. The update at 18:00 was sent on time.
 
-**Actions.** (a) Layla: alert when no reminder is sent for 30 minutes in working hours, by Friday. (b) Layla and Sam: separate the page setting from the reminder setting, and list the "ask first" settings, by next Wednesday. (c) Layla: add a severity table, the first-message template and the credit rule to the support policy, and name the lawyer to call if personal data is ever involved, by next Friday. (d) Layla: give Sam his own login, limited to the landing page, and remove his access to the SMS provider account, by Friday.
+**Actions.** (a) Layla: alert when no reminder is sent for 30 minutes in working hours, by Friday. (b) Layla and Sam: separate the page setting from the reminder setting, give Sam his own login limited to the landing page, remove his access to the SMS provider account, and list the "ask first" settings, by next Wednesday. (c) Layla: add a severity table, the first-message template and the credit rule to the support policy, and name the lawyer to call if personal data is ever involved, by next Friday.
 
 She sends a three-sentence version to the nine salons. Mona's one question: "How long did it take to find out, and who told you?" Two hours twenty minutes, and Nadia. That is why action (a) comes first.
 
@@ -629,5 +631,5 @@ She sends a three-sentence version to the nine salons. Mona's one question: "How
 
 ## 📚 References
 - Beyer, Betsy, Chris Jones, Jennifer Petoff and Niall Richard Murphy (eds.). *Site Reliability Engineering: How Google Runs Production Systems* (O'Reilly, 2016), chapter 15, "Postmortem Culture: Learning from Failure". Source for the blameless post-incident approach. Cited by title; not opened in this session, so no URL is given.
-- Your data protection regulator's guidance pages on personal data breaches, and the text of the data protection law that applies where you and your customers are (for example the EU GDPR or a national equivalent). Read them with a qualified professional; the course does not state the rule.
+- Your data protection regulator's guidance pages on personal data breaches, and the text of the data protection law that applies where you and your customers are (for example the EU GDPR or a national equivalent). One anchor: GDPR Article 33 asks a controller to notify the regulator without undue delay and, where feasible, within 72 hours of becoming aware of a breach. Read the rule that applies to you with a qualified professional.
 - Your hosting, SMS or email provider's own status and incident documentation for the tools you use.

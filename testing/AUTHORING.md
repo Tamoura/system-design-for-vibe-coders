@@ -181,3 +181,10 @@ Official docs and primary sources only. Allowed sites (plain top-level or well-k
 - Lengths: 2,000–3,500 words per lesson (8.3 excepted). Every lesson's five questions must be answerable from that lesson.
 - Use the running cast consistently. Do not start any non-quiz line with `**N.` (bold number + dot).
 - Cross-course references: the reader auto-links any bare "lesson N.M", "lessons N.M", "see N.M", "(N.M" to a lesson of THIS course, so another course's lesson number may only appear inside a markdown link's text, e.g. `[*Cloud & DevOps*, lesson 4.1 — Continuous integration](../cloud/index.html#/4.1)`.
+
+## Deferred: video production backlog
+
+Tracked from the 2026-11 content audit, not dropped. Address these when short videos are produced.
+
+- **testing-11:** lessons bundle several topics (e.g. 3.3 covers mobile, accessibility, cross-browser and localisation), so one 60–90 s video per lesson cannot carry them. Plan videos per concept, not per lesson.
+- **testing-12:** the "⚡ In 60 seconds" blocks are definition lists that work as text but have no visual arc. Write a one-line video seed per concept when scripting.

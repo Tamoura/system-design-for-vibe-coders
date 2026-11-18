@@ -9,7 +9,7 @@
 # 2.1 — One job, one customer: scope and the kill list
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2* · *Step: Scope*
 
-**After this you can** write a one-sentence scope statement for your product and a kill list of at least ten features you will not build yet, each with a reason. *Study time: about 115 minutes (estimate).*
+**After this you can** write a one-sentence scope statement for your product and a kill list of at least ten features you will not build yet, each with a reason. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can write a one-sentence scope statement for your product and a kill list of at least ten features you have decided not to build yet, each with a reason, in about an hour.
@@ -225,7 +225,7 @@ She asked the agent to remove the loyalty and referral features and to list ever
 # 2.2 — Build, buy or borrow
 *Level: 🟢 Beginner* · *Prerequisites: 2.1* · *Step: Scope*
 
-**After this you can** mark every line of your core and needed-to-sell lists as build, buy or borrow, with a written reason and a cost-per-customer estimate a mentor could check. *Study time: about 115 minutes (estimate).*
+**After this you can** mark every line of your core and needed-to-sell lists as build, buy or borrow, with a written reason and a cost-per-customer estimate a mentor could check. *Study time: reading about 15 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can take the "core" and "needed to sell" lists from lesson 2.1 and, for each line, choose build, buy or borrow, with a written reason and a cost-per-customer estimate you could show a mentor.
@@ -431,7 +431,7 @@ Mona read the table and asked one question: "Which row would hurt most if the ve
 # 2.3 — Directing an agent to a first version, and checking it
 *Level: 🟢 Beginner* · *Prerequisites: 2.1, 2.2* · *Step: Scope*
 
-**After this you can** write a one-page agent brief with scope, non-goals and acceptance checks, run the 30-minute check on at least 20 realistic records, and record what passed, what failed and what you did not check. *Study time: about 115 minutes (estimate).*
+**After this you can** write a one-page agent brief with scope, non-goals and acceptance checks, run the 30-minute check on at least 20 realistic records, and record what passed, what failed and what you did not check. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can write a one-page brief for an AI coding agent (scope, non-goals, acceptance checks), run a 30-minute check with realistic data, and write a short "what I checked" note that a peer could repeat.
@@ -446,7 +446,7 @@ Layla tells her agent, "Build the reminder sender." An hour later it reports: "D
 
 On the first pilot day, Tick sends reminders for tomorrow's appointments, as intended. It also sends one to a client whose appointment was cancelled that morning, one at 2 a.m. because the server's clock and the salon's clock disagreed, and two copies to a client entered twice with slightly different spellings. Nadia's client is annoyed. Nadia is polite. Layla feels sick.
 
-None of these is exotic. Each is a case Layla never tried because her sample data was twelve clean records. The agent was not lying. It reported that the code did what the code was written to do. Whether that is what the customer needs is Layla's question, and only she can ask it. This lesson gives her a brief that makes the agent's job clear and a check that makes her own job doable. The library's [*System Design for Vibe Coders*, lesson F.4 — Meet your agent: how to direct a builder you can't watch](../vibe/index.en.html#lF-4) teaches directing from the engineering side. Here we keep it to what a founder must decide and verify.
+None of these is exotic. Each is a case Layla never tried because her sample data for the new reminder sender was three clean records she typed herself, not the 12 appointments of her first test. The agent was not lying. It reported that the code did what the code was written to do. Whether that is what the customer needs is Layla's question, and only she can ask it. This lesson gives her a brief that makes the agent's job clear and a check that makes her own job doable. The library's [*System Design for Vibe Coders*, lesson F.4 — Meet your agent: how to direct a builder you can't watch](../vibe/index.en.html#lF-4) teaches directing from the engineering side. Here we keep it to what a founder must decide and verify.
 
 ## 📐 How it works
 

@@ -6,10 +6,10 @@
 
 ---
 
-# 4.1 — A CV that survives the applicant-tracking system and the six-second human scan
+# 4.1 — A CV that survives the applicant-tracking system and the few-second human scan
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 3.2* · *Step: Apply, Prove*
 
-**After this you can** make your CV pass the plain-text paste test, rewrite weak bullets as what, how and what changed, and tailor it to a real job ad in under 20 minutes. *Study time: about 110 minutes (estimate).*
+**After this you can** make your CV pass the plain-text paste test, rewrite weak bullets as what, how and what changed, and tailor it to a real job ad in under 20 minutes. *Study time: reading about 15 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Your CV has two readers before anyone interviews you: an **applicant-tracking system (ATS)**, the software that stores and parses applications, and a **recruiter** who scans the result quickly.
@@ -41,7 +41,7 @@ flowchart LR
 
 Two points matter here. First, **parsing can fail quietly.** Text inside images, text boxes, headers and footers, tables and multi-column layouts is often read in the wrong order or lost. You do not see the parsed result, but the recruiter often does. Second, **most filtering is done by people, helped by search.** Recruiters search for terms ("Python", "SQL", "Kubernetes"), apply the application form's knockout questions (for example right to work or a required degree) and then scan. Do not believe claims that a specific ATS automatically rejects CVs for a specific reason; configurations differ by employer. Do assume that if your skills cannot be found by a search and seen in a scan, they do not exist for this application.
 
-**The six-second scan.** A widely quoted eye-tracking study by the job site Ladders (2012, updated 2018) reported that recruiters spend only a few seconds on an initial scan of a CV. Treat the exact number loosely; it is one company's study. In that first look, a reader checks: what role is this person aiming at, does their most relevant work match the job, and is there a link to proof? If not, they move on.
+**The few-second scan.** A widely quoted eye-tracking study by the job site Ladders reported that recruiters spend only a few seconds on an initial scan of a CV: about 6 seconds in 2012 and about 7.4 seconds in the 2018 update. Treat the exact number loosely; it is one company's study. In that first look, a reader checks: what role is this person aiming at, does their most relevant work match the job, and is there a link to proof? If not, they move on.
 
 **The layout that works for both readers.**
 
@@ -234,7 +234,7 @@ After:
 - MIT Career Advising & Professional Development (resumes and cover letters) — https://capd.mit.edu/
 - Harvard Office of Career Services (resumes and CVs) — https://ocs.fas.harvard.edu/
 - Ladders (publisher of the recruiter eye-tracking study) — https://www.theladders.com/
-- Laszlo Bock, *Work Rules!* (Twelve, 2015); his X-Y-Z formula first appeared in his 2014 LinkedIn articles on résumés
+- Laszlo Bock, *Work Rules!* (Twelve, 2015); his X-Y-Z formula was popularised in his LinkedIn post "My Personal Formula for a Winning Resume" (September 2014)
 - Lesson 3.1 (capstone specs per role), lesson 3.2 (GitHub and READMEs), lesson 1.2 (building with AI coding agents)
 
 ---
@@ -242,7 +242,7 @@ After:
 # 4.2 — LinkedIn, networking and referrals without awkwardness
 *Level: 🟡 Intermediate* · *Prerequisites: 3.2, 4.1* · *Step: Apply*
 
-**After this you can** align your LinkedIn headline and About section with your CV, and send three specific outreach messages of under 100 words, each logged with a follow-up date. *Study time: about 110 minutes (estimate).*
+**After this you can** align your LinkedIn headline and About section with your CV, and send three specific outreach messages of under 100 words, each logged with a follow-up date. *Study time: reading about 15 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Many jobs are filled through people who already know, or were told about, the candidate. A **referral** — an employee putting your name forward — usually gets your application read by a human.
@@ -476,7 +476,7 @@ Faisal forwarded it with one line: "Met Huda at the alumni evening; she took my 
 # 4.3 — Where the jobs are: graduate programmes, job boards, startups, the public sector and the GCC market
 *Level: 🟡 Intermediate* · *Prerequisites: 0.2, 4.1, 4.2* · *Step: Explore, Apply*
 
-**After this you can** build a target list of at least 20 employers across three or more channels and a 12-month graduate programme calendar with a source link for every programme. *Study time: about 110 minutes (estimate).*
+**After this you can** build a target list of at least 20 employers across three or more channels and a 12-month graduate programme calendar with a source link for every programme. *Study time: reading about 15 min, hands-on about 16 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Entry-level jobs come from several channels with different calendars and rules: **graduate programmes**, **direct job ads**, **startups**, the **public sector and national programmes**, **recruiters**, and **referrals**.
@@ -517,7 +517,7 @@ Mohammed's problem was different. As a career-switcher without a computing degre
 At Najm, Aisha explains the fictional Najm Tech Graduate Programme's cycle: applications open once a year, online coding and reasoning tests follow, then a technical interview with Tariq, Dana or Salem depending on the track, and an assessment day. Offers go out months before the September start. "Yousef's profile was fine," she tells Khalid. "He just arrived after the window closed."
 
 **The GCC market: what shapes hiring.** Four forces matter for graduates in the region:
-- **Workforce nationalisation.** Each GCC country has policies to raise the share of citizens in private-sector jobs: Qatarization in Qatar, Emiratisation in the UAE (with the Nafis programme supporting Emiratis in private-sector careers), Saudization in Saudi Arabia (with the Nitaqat classification system), and similar programmes in Oman, Kuwait and Bahrain. They shape which roles are reserved, targeted or supported, and they fund training and graduate programmes for nationals. Rules and targets change; read the current official pages rather than relying on forum posts.
+- **Workforce nationalisation.** Each GCC country has policies to raise the share of citizens in private-sector jobs: Qatarization in Qatar, Emiratisation in the UAE (with the Nafis programme supporting Emiratis in private-sector careers), Saudization in Saudi Arabia (with the Nitaqat classification system), and similar programmes in Oman, Kuwait and Bahrain. They shape which roles are reserved, targeted or supported, and they fund training and graduate programmes for nationals. Rules and targets change (programme names checked November 2026); read the current official pages rather than relying on forum posts.
 - **Large regulated employers.** Banks, energy companies, telecoms, government entities and healthcare are major employers of tech graduates. They value security, data protection and governance awareness — for example Qatar's personal data protection law (Law No. 13 of 2016) — and they move more carefully than startups. [*Secure AI & Application Security*, lesson 11.2 — Regulation that touches security: GDPR, PDPPL, the EU AI Act and financial-sector rules](../secai/index.html#/11.2) is the place to build that awareness.
 - **Growing startup and digital ecosystems.** Government-backed hubs and incubators (for example Qatar Science & Technology Park in Doha and Hub71 in Abu Dhabi) and regional fintech activity create junior roles at smaller firms. These change quickly; check current programmes.
 - **Language.** Bilingual Arabic and English technical communication — writing a clear incident note or explaining a dashboard to a manager in either language — is a real advantage for many roles.

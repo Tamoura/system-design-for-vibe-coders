@@ -10,11 +10,12 @@ edge platform that ties the whole story together.*
 
 # 11.1 — Domains, DNS, and TLS
 
-**After this you can** point a domain at your app with one canonical host, confirm its TLS certificate renews itself, and show the origin refusing a request that skips the CDN. *Study time: about 55 minutes (estimate).*
+**After this you can** point a domain at your app with one canonical host, confirm its TLS certificate renews itself, and show the origin refusing a request that skips the CDN. *Study time: reading about 10 min, hands-on about 90 min (estimate).*
 
 ## 🔥 The War Story
 
-On October 4, 2021, Facebook, Instagram, and WhatsApp vanished for roughly six
+You met this outage in F.1 as a story about the trip a request takes. Read it
+again now as the owner of a name. On October 4, 2021, Facebook, Instagram, and WhatsApp vanished for roughly six
 hours — not "slow," *gone*, for billions of people. Nobody hacked anything. No
 server caught fire. During routine maintenance, a command withdrew the **BGP
 routes** — the internet's directions — that tell the rest of the world where
@@ -82,8 +83,9 @@ sequenceDiagram
 **TLS** (the `https://` padlock; the successor to SSL) does two jobs: it encrypts
 the connection so nobody between you and the user can read it, and it proves the
 server answering really owns that name, via a **certificate** signed by an
-authority the browser trusts. A certificate is not forever — it *expires*, often
-every 90 days. The classic outage is dumb and universal: **a certificate nobody
+authority the browser trusts. A certificate is not forever — it *expires*, and
+lifetimes are shrinking: industry rules cap them at 200 days from March 2026, falling
+to 47 days by 2029, and Let's Encrypt plans 45 days by 2028. The classic outage is dumb and universal: **a certificate nobody
 renewed lapsed, and every browser on earth threw a full-page security warning.**
 The fix is never "remember to renew." It's automated renewal (ACME / Let's
 Encrypt, or your CDN handling it) plus an expiry alarm as the backstop — because,
@@ -178,7 +180,7 @@ Finish: *"Commit with the message `11-1-domain-dns-tls`."*
 
 # 11.2 — Internationalization and RTL
 
-**After this you can** serve an app at `/en/` and `/ar/` with a fully mirrored right-to-left layout, add a translation drift-guard you watch fail, and make a search that differs only by diacritics return the right result. *Study time: about 55 minutes (estimate).*
+**After this you can** serve an app at `/en/` and `/ar/` with a fully mirrored right-to-left layout, add a translation drift-guard you watch fail, and make a search that differs only by diacritics return the right result. *Study time: reading about 10 min, hands-on about 90 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -347,7 +349,7 @@ Finish: *"Commit with the message `11-2-i18n-rtl`."*
 
 # 11.3 — SEO and AEO: Being Found by Crawlers and Cited by Answer Engines
 
-**After this you can** give two page types a chunked dynamic sitemap, canonical and hreflang tags, Open Graph cards and valid structured data, and show the build succeeding while the API is down. *Study time: about 50 minutes (estimate).*
+**After this you can** give two page types a chunked dynamic sitemap, canonical and hreflang tags, Open Graph cards and valid structured data, and show the build succeeding while the API is down. *Study time: reading about 5 min, hands-on about 60 min (estimate).*
 
 > **Tool-dated lesson.** The *principles* — machine-readable meaning, don't couple
 > builds to runtime data, write to be quoted — outlive the tools. The named
@@ -506,7 +508,7 @@ Finish: *"Commit with the message `11-3-seo-aeo`."*
 
 # 11.4 — Cost Engineering
 
-**After this you can** build a cost model with 1×, 10× and 100× columns, name its worst-scaling line, and propose one structural fix for that line before it becomes expensive. *Study time: about 50 minutes (estimate).*
+**After this you can** build a cost model with 1×, 10× and 100× columns, name its worst-scaling line, and propose one structural fix for that line before it becomes expensive. *Study time: reading about 5 min, hands-on about 60 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -648,7 +650,7 @@ Finish: *"Commit the cost model as `11-4-cost-model.md` with the message
 
 # 11.5 — Your Edge Platform in Practice: Cloudflare End to End
 
-**After this you can** put an app behind Cloudflare with a cache rule, WAF and Turnstile, re-run the earlier cache-poisoning and rate-limit tests through the real edge, and keep the edge config in the repo. *Study time: about 55 minutes (estimate).*
+**After this you can** put an app behind Cloudflare with a cache rule, WAF and Turnstile, re-run the earlier cache-poisoning and rate-limit tests through the real edge, and keep the edge config in the repo. *Study time: reading about 10 min, hands-on about 90 min (estimate).*
 
 > **Tool-dated lesson.** Cloudflare is this course's reference edge, and the named
 > features (Turnstile, R2, Workers, the specific dashboard toggles) are current

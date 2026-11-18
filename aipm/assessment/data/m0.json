@@ -7,7 +7,7 @@
    "lesson": "0.1",
    "q": {
     "en": "In the Credit Memo Copilot pilot, relationship managers say the idea is great and the screens are easy to use, yet they rewrite every draft because they do not trust its figures, so no time is saved. Which of Cagan’s four risks has the pilot exposed?",
-    "ar": "في الإطلاق التجريبي لمساعد مذكرات الائتمان (Credit Memo Copilot)، يقول مديرو العلاقات إن الفكرة رائعة وإن الشاشات سهلة الاستخدام، لكنهم يعيدون كتابة كل مسودة لأنهم لا يثقون بأرقامها، فلا يُوفَّر أي وقت. أي مخاطرة من مخاطر كيغان الأربع كشفها الإطلاق التجريبي؟"
+    "ar": "في التجربة التشغيلية لمساعد مذكرات الائتمان (Credit Memo Copilot)، يقول مديرو العلاقات إن الفكرة رائعة وإن الشاشات سهلة الاستخدام، لكنهم يعيدون كتابة كل مسودة لأنهم لا يثقون بأرقامها، فلا يُوفَّر أي وقت. أي مخاطرة من مخاطر كيغان الأربع كشفتها التجربة التشغيلية؟"
    },
    "o": {
     "en": [
@@ -35,7 +35,7 @@
    "lesson": "0.2",
    "q": {
     "en": "A month into the Najm Assist pilot, Najm raises its international transfer fee. Customers start getting the old fee from the assistant, although the model, prompt and vendor have not changed. What is the most likely cause, and the product fix?",
-    "ar": "بعد شهر من الإطلاق التجريبي لنجم أسيست (Najm Assist)، يرفع نجم رسوم التحويل الدولي. فيبدأ العملاء بتلقي الرسوم القديمة من المساعد، مع أن النموذج والموجّه والمورّد لم تتغير. ما السبب الأرجح، وما الإصلاح على مستوى المنتج؟"
+    "ar": "بعد شهر من التجربة التشغيلية لنجم أسيست (Najm Assist)، يرفع نجم رسوم التحويل الدولي. فيبدأ العملاء بتلقي الرسوم القديمة من المساعد، مع أن النموذج والموجّه والمورّد لم تتغير. ما السبب الأرجح، وما الإصلاح على مستوى المنتج؟"
    },
    "o": {
     "en": [

@@ -9,12 +9,12 @@
 # 4.1 — Transactional email that actually arrives
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2*
 
-**After this you can** send verify, invitation and incident emails through one `sendEmail()` function, authenticate a sending domain with SPF, DKIM and DMARC, and stop sending to addresses that bounced or complained. *Study time: about 105 minutes (estimate).*
+**After this you can** send verify, invitation and incident emails through one `sendEmail()` function, authenticate a sending domain with SPF, DKIM and DMARC, and stop sending to addresses that bounced or complained. *Study time: reading about 15 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 
 - Transactional email (password resets, invites, incident alerts) is triggered by a user action. Its delivery is decided by the receiving mailbox provider, based on your domain's authentication and reputation.
-- The rule that matters most: publish SPF, DKIM and DMARC with an aligned `From:` domain. Since 2024 Gmail and Yahoo reject unauthenticated mail.
+- The rule that matters most: publish SPF, DKIM and DMARC with an aligned `From:` domain. Since 2024 Gmail and Yahoo have been turning away unauthenticated mail, and Gmail stepped up enforcement in November 2025.
 - The v1 default: a provider (Resend, Postmark, SES), templates in React Email or MJML, sending from a queued job, and Mailpit catching everything in development.
 - Keep marketing and transactional mail on separate streams or subdomains, so a bad campaign can't sink your password resets.
 - The biggest trap: ignoring bounces and complaints. Handle the provider's webhooks and check a suppression list before every send.
@@ -23,7 +23,7 @@
 
 Beacon's first email code is six lines of Nodemailer pointed at the SMTP server of whatever host the app runs on, sending from `alerts@beacon.app`. Nobody set up DNS records for it. In development everything "works", because the developer's own inbox is forgiving. In production, password-reset emails show up twenty minutes late or not at all, and signups stall at "verify your email". Then a customer's API goes down at 3 a.m. and Beacon's incident alert lands in Gmail's spam folder. The customer finds out from their own customers.
 
-Nothing in the code is wrong. Email delivery is decided by the *receiving* mailbox provider (Gmail, Outlook, Yahoo, corporate filters), and they judge you on whether your domain is **authenticated** and whether your sending **reputation** is good. Since February 2024, Gmail and Yahoo have *required* authentication for everyone and stricter rules for bulk senders, so unauthenticated mail isn't just less likely to arrive. It gets rejected.
+Nothing in the code is wrong. Email delivery is decided by the *receiving* mailbox provider (Gmail, Outlook, Yahoo, corporate filters), and they judge you on whether your domain is **authenticated** and whether your sending **reputation** is good. Since February 2024, Gmail and Yahoo have *required* authentication for everyone and stricter rules for bulk senders. Enforcement came in stages: temporary errors first, rejection of part of non-compliant traffic from April 2024, and stricter enforcement from November 2025. So unauthenticated mail isn't just less likely to arrive. More and more of it gets rejected.
 
 Every SaaS sends the same core set: verify email, magic link, password reset, invitation, receipt, "your trial ends in 3 days". Beacon adds incident alerts and status-page subscriber updates on top. None of these are optional.
 
@@ -39,7 +39,7 @@ Every SaaS sends the same core set: verify email, magic link, password reset, in
 |---|---|---|
 | Triggered by | A user action or account event | You, sent to a list |
 | Examples | Password reset, invite, incident alert, receipt | Newsletter, product launch, "we miss you" |
-| Consent | Implied by using the service | Needs opt-in (GDPR) or at least opt-out (CAN-SPAM) |
+| Consent | Implied by using the service | EU/UK: opt-in for individuals under ePrivacy/PECR (soft opt-in for existing customers; B2B rules vary); US: opt-out (CAN-SPAM) |
 | Unsubscribe | Not required for truly transactional mail | Required, and one-click for bulk senders |
 | Where to send from | `mail.beacon.app` or your transactional stream | A *separate* subdomain or stream, e.g. `news.beacon.app` |
 
@@ -51,7 +51,7 @@ Keep them apart so that a marketing campaign with a bad complaint rate can't sin
 |---|---|---|
 | **SPF** (RFC 7208) | Which servers may send mail for the domain in the envelope sender | `TXT "v=spf1 include:amazonses.com ~all"` |
 | **DKIM** (RFC 6376) | The message was signed by the domain owner and not altered. The public key lives in DNS | `TXT` at `selector._domainkey.mail.beacon.app` |
-| **DMARC** (RFC 7489) | What receivers should do when SPF/DKIM fail or don't *align* with the visible `From:` domain, and where to send reports | `TXT` at `_dmarc.beacon.app`: `"v=DMARC1; p=none; rua=mailto:…"` |
+| **DMARC** (RFC 9989, which replaced RFC 7489 in 2026; `v=DMARC1` records still work, the `pct` tag is gone) | What receivers should do when SPF/DKIM fail or don't *align* with the visible `From:` domain, and where to send reports | `TXT` at `_dmarc.beacon.app`: `"v=DMARC1; p=none; rua=mailto:…"` |
 
 *Alignment* means the domain that passed SPF or DKIM matches the domain in the `From:` header the human sees. Your provider's setup screen gives you the exact records. Your job is to add them and wait until they verify.
 
@@ -269,7 +269,7 @@ Provider latency becomes signup latency, and a provider outage turns signups int
 - Google, Email sender guidelines: https://support.google.com/mail/answer/81126
 - RFC 7208 (SPF): https://www.rfc-editor.org/rfc/rfc7208
 - RFC 6376 (DKIM): https://www.rfc-editor.org/rfc/rfc6376
-- RFC 7489 (DMARC): https://www.rfc-editor.org/rfc/rfc7489
+- RFC 9989 (DMARC; replaces RFC 7489): https://www.rfc-editor.org/rfc/rfc9989
 - RFC 8058 (one-click unsubscribe): https://www.rfc-editor.org/rfc/rfc8058
 - React Email docs: https://react.email/docs
 - Mailpit docs: https://mailpit.axllent.org
@@ -280,7 +280,7 @@ Provider latency becomes signup latency, and a provider outage turns signups int
 # 4.2 — Notifications: in-app, push, Slack, SMS — and preferences
 *Level: 🟡 Intermediate* · *Prerequisites: 4.1, 1.2*
 
-**After this you can** build an in-app inbox and a channel router with per-user preferences, and show that an incident creates exactly one notification per eligible member even when `notify()` runs twice. *Study time: about 105 minutes (estimate).*
+**After this you can** build an in-app inbox and a channel router with per-user preferences, and show that an incident creates exactly one notification per eligible member even when `notify()` runs twice. *Study time: reading about 15 min, hands-on about 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -593,7 +593,7 @@ People reading on their phone can't unsubscribe easily, so they click "Report sp
 # 4.3 — Real-time and collaboration: WebSockets to CRDTs
 *Level: 🔴 Advanced* · *Prerequisites: 4.2, 2.4*
 
-**After this you can** replace dashboard polling with server-sent events fanned out through Redis, and show a monitor turning red on an open dashboard within about a second, even when the event was published on another app instance. *Study time: about 110 minutes (estimate).*
+**After this you can** replace dashboard polling with server-sent events fanned out through Redis, and show a monitor turning red on an open dashboard within about a second, even when the event was published on another app instance. *Study time: reading about 15 min, hands-on about 8 h (estimate).*
 
 ## ⚡ In 60 seconds
 

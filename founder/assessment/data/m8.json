@@ -17,10 +17,10 @@
      "Unrated, because a price cannot be judged without a professional"
     ],
     "ar": [
-     "أخضر، لأن المخرَج موجود وعليه تاريخ حديث",
-     "أحمر، لأن السعر المبني على الرأي كالسعر الغائب",
-     "برتقالي، لأنه موجود لكنه يستند في معظمه إلى رأيها",
-     "غير مقيَّم، لأن السعر لا يُحكم عليه دون مختص"
+     "أخضر، لأن المخرَج موجود ويحمل تاريخًا حديثًا",
+     "أحمر، لأن السعر المبني على رأي هو والسعر الغائب سواء",
+     "برتقالي، لأنه موجود لكنه يستند غالبًا إلى رأيها",
+     "غير مقيَّم، لأن السعر لا يمكن الحكم عليه دون مختص"
     ]
    },
    "a": 2,
@@ -96,7 +96,7 @@
    "o": {
     "en": [
      "Ask an AI tool to compare the terms with typical deals, and reply if they look similar to them",
-     "Bring the term sheet, file and written questions to a qualified professional before replying, since terms can bind for years",
+     "Bring the term sheet, her file and written questions to a qualified professional before replying",
      "Turn the two red rows amber with fresh wording, so the file looks stronger when it is shared",
      "Reply quickly with the file as it stands, since the funder will explain each term later"
     ],

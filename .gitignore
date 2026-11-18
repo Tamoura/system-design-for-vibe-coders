@@ -11,3 +11,6 @@ videos/build/
 __pycache__/
 *.pyc
 .pytest_cache/
+
+# Logs written by the SecAI starter lab when it runs
+secai/lab/logs/

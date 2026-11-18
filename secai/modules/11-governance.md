@@ -9,7 +9,7 @@
 # 11.1 — Frameworks: NIST CSF 2.0, ISO/IEC 27001, NIST SSDF and OWASP SAMM
 *Level: 🔴 Advanced* · *Prerequisites: 1.3, 6.1* · *Phase: Govern*
 
-**After this you can** map an application's controls to the NIST CSF 2.0 Functions and score your team's SAMM practices with evidence and risk-based targets. *Study time: about 125 minutes (estimate).*
+**After this you can** map an application's controls to the NIST CSF 2.0 Functions and score your team's SAMM practices with evidence and risk-based targets. *Study time: reading about 15 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A **security framework** is a published, structured set of outcomes, requirements or practices. It helps you find gaps and gives you a shared language with auditors, regulators and customers. It is a map of security, not security itself.
@@ -23,7 +23,7 @@ Hamad (CISO) receives three requests in one week. The board audit committee want
 
 Ali's first plan has four workstreams, one per framework, each with its own spreadsheet. Noura (Head of Application & AI Security) picks one row from each draft. All four describe the same control: every change to the payments API is reviewed and scanned before merge. "If we maintain that control four times, we will prove it four times and improve it zero times. Write it once, give it an owner and evidence, then map it."
 
-The public record shows why running a control matters more than wording it. In 2017 Equifax was breached through a known Apache Struts vulnerability (CVE-2017-5638) for which a fix had already been published. Every mainstream framework already required timely vulnerability management. Public investigations described a patching process that failed to find and fix the vulnerable system. The control existed on paper, not in practice.
+The public record shows why running a control matters more than wording it. Take Equifax (0.1), breached in 2017 through a known Struts flaw whose fix was already published. Every mainstream framework already required timely vulnerability management. Public investigations described a patching process that failed to find and fix the vulnerable system. The control existed on paper, not in practice.
 
 ## 📐 How it works
 
@@ -204,10 +204,10 @@ Noura's team publishes **Najm Unified Control Set v1: AppSec and AI extract**. E
 
 **3. What did version 2.0 of the NIST Cybersecurity Framework add that matters most to security leaders?**
 
-- A. A certification scheme run by NIST
-- B. A Govern function covering strategy, roles, policy, oversight and supply-chain risk, and an audience widened to all organisations
-- C. Mandatory tools for each subcategory
-- D. Maturity scores in place of profiles
+- A. A certification scheme run by NIST, so organisations can show compliance formally
+- B. A Govern function for strategy, roles, policy and supply chain, and a wider audience
+- C. Mandatory tools for each subcategory, chosen so organisations use the same products
+- D. Maturity scores in place of profiles, so every organisation is ranked on one scale
 
 <details><summary>Answer</summary>
 
@@ -257,7 +257,7 @@ Noura's team publishes **Najm Unified Control Set v1: AppSec and AI extract**. E
 # 11.2 — Regulation that touches security: GDPR, PDPPL, the EU AI Act and financial-sector rules
 *Level: 🔴 Advanced* · *Prerequisites: 5.3, 10.2, 11.1* · *Phase: Govern, Respond*
 
-**After this you can** list which data protection and AI regimes plausibly apply to an application, each with a named decision owner, and work an incident's notification clocks to their due times. *Study time: about 125 minutes (estimate).*
+**After this you can** list which data protection and AI regimes plausibly apply to an application, each with a named decision owner, and work an incident's notification clocks to their due times. *Study time: reading about 20 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Most security law states an **outcome** (appropriate security, resilience, timely notification) and makes you **accountable**: you must show what you did and why. It rarely names a tool.
@@ -289,7 +289,7 @@ Regulators judge security failures against what an organisation could and should
 |---|---|---|---|
 | **GDPR**, Regulation (EU) 2016/679 | Processing in the context of the Frankfurt branch, and some processing about people in the EU | Art. 25 by design and by default; Art. 32 security; Art. 35 DPIA | Art. 33: authority, where feasible within 72 hours of awareness, unless unlikely to result in risk. Art. 34: individuals, if high risk |
 | **Qatar PDPPL**, Law No. 13 of 2016 | Personal data processed in Qatar | Precautions against loss, damage, alteration, disclosure and unlawful access | Breaches that may cause serious damage: competent authority and people affected; timings per current guidance |
-| **QCB and NCSA requirements** | Licensed by the Qatar Central Bank; national standards from the National Cyber Security Agency | QCB circulars on technology and cyber risk, and its 2024 AI guideline; national information assurance standards | As the current texts require |
+| **QCB and NCSA requirements** | Licensed by the Qatar Central Bank; national standards from the National Cyber Security Agency | QCB circulars on technology and cyber risk, and its AI Guideline for licensed entities (4 September 2024); national information assurance standards | As the current texts require |
 | **EU AI Act**, Regulation (EU) 2024/1689 | AI used in the EU; high-risk uses include creditworthiness of natural persons (Annex III) | Art. 15 accuracy, robustness, cybersecurity; Art. 12 logging; Art. 50 chatbot transparency | Providers report serious incidents (Art. 73) |
 | **DORA**, Regulation (EU) 2022/2554 | EU financial entities, including credit institutions, since 17 January 2025 | ICT risk management, resilience testing, third-party risk | Major ICT incidents: initial, intermediate and final reports |
 | **PCI DSS** v4.0.1 | Card data is stored, processed or transmitted | Twelve requirements; Requirement 6 covers secure software | Per card-brand and acquirer agreements |
@@ -439,10 +439,10 @@ Rule: Jassim, as incident commander, records the awareness time in the ticket, a
 
 **2. Dana asks what the EU AI Act requires on security for a credit-scoring model Najm would build for EU applicants. Which answer is MOST accurate?**
 
-- A. Only a notice telling applicants that AI is used
-- B. Art. 15: appropriate accuracy, robustness and cybersecurity, including resilience against poisoning, adversarial examples, confidentiality attacks and model flaws
-- C. An ISO/IEC 27001 certificate for the data science platform
-- D. Nothing, because the Act regulates only general-purpose models
+- A. Only a notice telling applicants that AI is used in the decision about their credit
+- B. Art. 15: accuracy, robustness and cybersecurity, including resilience to poisoning and adversarial examples
+- C. An ISO/IEC 27001 certificate for the data science platform that trains and hosts the model
+- D. Nothing, because the Act regulates only general-purpose models, not models a bank builds
 
 <details><summary>Answer</summary>
 
@@ -465,10 +465,10 @@ Rule: Jassim, as incident commander, records the awareness time in the ticket, a
 
 **4. Najm Assist calls an external LLM API. For Najm's EU operations, how does DORA treat the API provider?**
 
-- A. Out of scope, because only the AI Act regulates AI
+- A. Out of scope, because only the AI Act regulates AI systems and the firms behind them
 - B. Only the provider has duties, under the AI Act's general-purpose AI rules
-- C. Najm only needs the provider's ISO/IEC 27001 certificate
-- D. As an ICT third-party service provider, needing a register entry, contract terms and, if it supports a critical or important function, a tested exit strategy
+- C. Najm only needs the provider's ISO/IEC 27001 certificate on file before the service goes live
+- D. An ICT third-party provider: register entry, contract terms, and a tested exit plan if critical or important
 
 <details><summary>Answer</summary>
 
@@ -498,7 +498,7 @@ Rule: Jassim, as incident commander, records the awareness time in the ticket, a
 - Cyber Resilience Act, Regulation (EU) 2024/2847 — https://eur-lex.europa.eu/eli/reg/2024/2847/oj
 - Qatar legal portal Al Meezan (Law No. 13 of 2016, PDPPL) — https://www.almeezan.qa/
 - Qatar National Cyber Security Agency — https://www.ncsa.gov.qa/
-- Qatar Central Bank — https://www.qcb.gov.qa/
+- Qatar Central Bank (circulars; Artificial Intelligence Guideline on Regulating the Use of AI by QCB Licensed Entities, 4 September 2024) — https://www.qcb.gov.qa/
 - PCI Security Standards Council (PCI DSS) — https://www.pcisecuritystandards.org/
 - UK Information Commissioner's Office (enforcement notices) — https://ico.org.uk/
 
@@ -507,7 +507,7 @@ Rule: Jassim, as incident commander, records the awareness time in the ticket, a
 # 11.3 — Building a security programme and culture: champions, metrics and budgets
 *Level: 🔴 Advanced* · *Prerequisites: 10.3, 11.1, 11.2* · *Phase: Plan, Govern*
 
-**After this you can** define security metrics with a formula, data source, owner and an anti-gaming pair, and write a one-page budget case with three options. *Study time: about 125 minutes (estimate).*
+**After this you can** define security metrics with a formula, data source, owner and an anti-gaming pair, and write a one-page budget case with three options. *Study time: reading about 15 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A **security programme** is the standing system of people, roles, services, platforms, metrics and budget that keeps controls working while the organisation changes. Projects end; a programme does not.
@@ -733,10 +733,10 @@ Each line of option B cites its risk-register entry: agent tool misuse, vulnerab
 
 **4. Most of Najm's forty product teams now write code with AI coding agents, and volume has outgrown AppSec's review capacity. Which response scales best?**
 
-- A. AppSec reviews every pull request by hand
-- B. Ban AI coding agents
-- C. Hire enough AppSec engineers to review all new code
-- D. A paved road: approved sandboxed agents, secure service templates and a required pipeline with SAST, SCA, secret scanning and signed builds, supported by champions
+- A. AppSec reviews every pull request by hand, however long the queue grows and releases wait
+- B. Ban AI coding agents across the bank until AppSec can review all of their output
+- C. Hire enough AppSec engineers to review all new code, whatever the volume grows to
+- D. A paved road: approved sandboxed agents, secure templates and a required scanning pipeline with signed builds
 
 <details><summary>Answer</summary>
 

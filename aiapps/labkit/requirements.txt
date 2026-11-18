@@ -3,7 +3,7 @@ python-dotenv
 pydantic>=2
 fastapi
 uvicorn
-chromadb
+chromadb>=1.5,<1.6
 rank-bm25
 mcp>=2,<3
 pytest

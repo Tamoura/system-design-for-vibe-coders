@@ -9,7 +9,7 @@
 # 2.1 — Discovery for AI: jobs, workflows and where AI fits
 *Level: 🟡 Intermediate* · *Prerequisites: 0.2, 1.1* · *Stage: Discover*
 
-**After this you can** write technology-free job statements, map a five-to-eight-step workflow, and mark at most two steps where AI fits with a reason for each. *Study time: about 110 minutes (estimate).*
+**After this you can** write technology-free job statements, map a five-to-eight-step workflow, and mark at most two steps where AI fits with a reason for each. *Study time: reading about 20 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Discovery for AI starts with the **problem, not the model**. First ask "what job is this person trying to get done, and where does it hurt?" Only then ask "could AI help here?"
@@ -24,7 +24,7 @@ Faisal's first week at Najm Bank begins with a one-line request from Khalid, Hea
 
 Rania, Head of AI Products, stops him. "What does a relationship manager actually spend their day on? Which part of the memo takes longest? Which part gets sent back by the credit team? You don't know yet, and neither does the model." She sends him to sit with two relationship managers (RMs) in the SME team for two days.
 
-What Faisal finds changes the product. The narrative sections of the memo, the part his demo wrote so well, are not where the time goes. The time goes into finding the latest documents in email and the shared drive, retyping figures from audited statements into the financial spreading template, and reworking the memo after the credit team questions a number. The demo solved one of the shortest steps. This is a common failure in AI products, and the public record has bigger versions of it. IBM invested heavily in Watson Health and sold those units in 2022, and a widely discussed lesson from that story is the gap between an impressive demo and a tool that fits clinical workflow. Discovery is how you close that gap before you build, not after.
+What Faisal finds changes the product. The narrative sections of the memo, the part his demo wrote so well, are not where the time goes. The time goes into finding the latest documents in email and the shared drive, retyping figures from audited statements into the financial spreading template, and reworking the memo after the credit team questions a number. The demo solved one of the shortest steps. This is a common failure in AI products, and the public record has bigger versions of it. IBM invested heavily in Watson Health and in 2022 sold its data and analytics assets, and a widely discussed lesson from that story is the gap between an impressive demo and a tool that fits clinical workflow. Discovery is how you close that gap before you build, not after.
 
 ## 📐 How it works
 
@@ -130,6 +130,14 @@ On Thursday Faisal shows Khalid no demo. He shows where the five hours go, and w
 - 🟡 Map the as-is workflow for one job you know well at work (for example handling a customer complaint), with five to eight steps. Fill in the five step attributes and apply the step-level AI fit test to each step. *Done when:* you have a table with one row per step, and you have named at most two steps where AI fits and explained why the others do not.
 - 🔴 Build an Opportunity Solution Tree for Smart Alerts with the outcome "reduce fraud losses without raising customer complaints about alerts". Include at least three opportunities, two solutions per opportunity (at least one non-AI) and one assumption test for your two favourite solutions. *Done when:* every solution traces to an opportunity phrased from the customer's or fraud analyst's side, and each test states what result would make you drop the idea.
 
+<details><summary>Check your work</summary>
+
+**🟢 Model answer.** Dispute: "When I see a card payment I don't recognise, I want to stop further charges and get my money back, so I can feel my account is safe." Travel: "When I land in another country, I want to know my card will work and what it will cost, so I can pay without worrying." Small business: "When a supplier says they have not been paid, I want to prove when the transfer left and where it is, so I can keep the relationship." None mentions AI, chat or the app.
+
+**🟡 and 🔴 self-check.** Your workflow table passes if every step has all five attributes and the AI-fit test is answered per step, with at most two steps marked as fits. Your tree passes if every opportunity is phrased as a customer or analyst pain (not a feature), each has a non-AI solution, and each assumption test states the result that would make you drop the idea.
+
+</details>
+
 ## ⚠️ Mistakes and traps
 - **Starting from the demo.** A fluent demo proves the model can produce text. It does not prove the text saves anyone time. Map the workflow first and find where the time and errors are.
 - **Asking users what AI they want.** People cannot judge imagined AI features. Ask about the last time they did the work, and watch them if you can.
@@ -223,7 +231,7 @@ On Thursday Faisal shows Khalid no demo. He shows where the five hours go, and w
 # 2.2 — Scoring and choosing use cases: value, feasibility, risk
 *Level: 🟡 Intermediate* · *Prerequisites: 1.3, 2.1* · *Stage: Discover, Define*
 
-**After this you can** size a use case's annual value from labelled illustrative inputs, re-score it on value, feasibility and risk, and write a short memo recommending a ranking and the evidence that would raise your confidence. *Study time: about 110 minutes (estimate).*
+**After this you can** size a use case's annual value from labelled illustrative inputs, re-score it on value, feasibility and risk, and write a short memo recommending a ranking and the evidence that would raise your confidence. *Study time: reading about 20 min, hands-on about 140 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Discovery gives you more good ideas than you can build. Choosing is a separate skill: compare candidates on **value, feasibility and risk**, openly and in the same units.
@@ -324,7 +332,7 @@ flowchart LR
 
 **Platform effects change the maths.** Some use cases build shared capability. The Credit Memo Copilot needs document ingestion, retrieval over client files and an evaluation harness. Najm Assist and Staff GenAI will need the same. Ranking each idea alone undervalues the first one that builds the platform. Show dependencies explicitly. Do not hide them in "strategic value".
 
-**Risk is not only a minus.** Risk scores often become a penalty that pushes every customer-facing idea down the list. A better approach is to ask what it would take to **reduce** the risk (a human review step, a narrower scope, internal users first). Then score the *mitigated* design and add the cost of the mitigation to effort. Najm Assist answering fee questions from a controlled knowledge base, with hand-off to an agent, is a different risk from Najm Assist answering anything. Air Canada learned this in *Moffatt v. Air Canada* (2024): a tribunal held the airline responsible for what its website chatbot told a customer about fares. The risk depends on scope and design, not on "chatbot" as a category.
+**Risk is not only a minus.** Risk scores often become a penalty that pushes every customer-facing idea down the list. A better approach is to ask what it would take to **reduce** the risk (a human review step, a narrower scope, internal users first). Then score the *mitigated* design and count the cost of the mitigation in feasibility, under integration effort (the scorecard has no separate effort column). Najm Assist answering fee questions from a controlled knowledge base, with hand-off to an agent, is a different risk from Najm Assist answering anything. Air Canada learned this in *Moffatt v. Air Canada* (2024): a tribunal held the airline responsible for what its website chatbot told a customer about fares. The risk depends on scope and design, not on "chatbot" as a category.
 
 **Gaming and politics.** Scorecards get gamed. Sponsors inflate reach, and teams deflate effort for favoured ideas. Useful defences: score in a group with the evidence visible, have Dana and Tariq own the feasibility scores and the sponsor own the value scores, and revisit scores after the spike. When an executive overrides the ranking, record the override and the reason. That is legitimate, and it is their call, but it should be visible.
 
@@ -356,7 +364,17 @@ Weighted score = 0.40 × value + 0.35 × feasibility + 0.25 × risk. Faisal adds
 ## 🛠️ Exercises
 - 🟢 Write the 1-to-5 level descriptions for one criterion, "data readiness", so that two people scoring independently would give the same score. *Done when:* each level describes something observable (for example "labelled examples exist for the main case"), not a feeling.
 - 🟡 Size the annual value of Najm Assist answering fee questions using volume × value per unit × improvement × adoption. Invent clearly labelled illustrative inputs, then state which input you are least sure of and how you would test it within two weeks. *Done when:* the calculation is shown step by step, every input is labelled illustrative, and you name one concrete test.
-- 🔴 Take the scorecard above and change one thing: Layla says SME Instant Finance could start as a "recommend, human decides" tool for invoices under a small limit. Re-score it with the mitigated design, add the mitigation cost to effort, and write a three-sentence memo to Rania on whether the ranking should change. *Done when:* you show the before and after scores, name what evidence would raise your confidence, and state a clear recommendation.
+- 🔴 Take the scorecard above and change one thing: Layla says SME Instant Finance could start as a "recommend, human decides" tool for invoices under a small limit. Re-score it with the mitigated design, count the mitigation cost in the feasibility score (integration effort), and write a three-sentence memo to Rania on whether the ranking should change. *Done when:* you show the before and after scores, name what evidence would raise your confidence, and state a clear recommendation.
+
+<details><summary>Check your work</summary>
+
+**🟢 Model answer (data readiness).** 1: no relevant data identified. 2: data exists, but no access agreed. 3: access agreed and a sample checked, but no labels. 4: labelled examples exist for the main case and a sample passed a quality check. 5: labelled, current examples for main and edge cases, with a named owner. Each level is something two people can see, not a feeling.
+
+**🟡 Worked check (illustrative).** 40,000 fee questions a month × $3 per agent contact × 50% answered without a contact × 30% adoption = $18,000 a month, about $216,000 a year. Adoption is the shakiest input; a two-week in-app pilot on fee pages measures it.
+
+**🔴 Self-check.** Before and after scores appear side by side, the feasibility score falls to reflect the mitigation cost, the memo names the evidence that would raise confidence (for example a shadow-mode run on past invoices), and it ends with one clear recommendation.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Scoring before gating.** An idea with no data or no owner can still score well on paper. Run the knock-out gates first.
@@ -429,14 +447,14 @@ Weighted score = 0.40 × value + 0.35 × feasibility + 0.25 × risk. Faisal adds
 
 **5. The risk team gives Najm Assist a poor risk score because "customer chatbots can say wrong things". What is the best PM response?**
 
-- A. Accept the score and drop the idea, because the risk team owns the decision and a chatbot that can say wrong things should not be built at this bank, whatever mitigation is proposed
-- B. Argue that chatbots are low risk
-- C. Define a mitigated design (answers only from approved content, hand-off to agents, internal pilot first), score that design, and add the mitigation cost to effort
-- D. Remove risk from the scorecard
+- A. Accept the score and drop the idea, since the risk team owns risk scores and a chatbot that can say wrong things has no place at a bank
+- B. Keep the score but ask Khalid to override the ranking, since the contact-centre savings are large enough to outweigh a poor risk score on their own
+- C. Define a mitigated design (approved answers, hand-off to agents, staff pilot first), score that design, and count its cost in feasibility
+- D. Average the risk team's score with the product team's own estimate, so that no single group's view of chatbot risk decides the ranking
 
 <details><summary>Answer</summary>
 
-**C.** Risk depends on scope and design. Scoring the mitigated design, and paying for the mitigation, is honest in both directions. B ignores real cases such as *Moffatt v. Air Canada* (2024), where the company was held responsible for its chatbot's answer. (🔴 Expert view.)
+**C.** Risk depends on scope and design. Scoring the mitigated design, and paying for the mitigation, is honest in both directions. A treats raw risk as fixed. B and D move the number without changing the design, so the risk shown in *Moffatt v. Air Canada* (2024), where the company was held responsible for its chatbot's answer, is still there. (🔴 Expert view.)
 
 </details>
 
@@ -453,7 +471,7 @@ Weighted score = 0.40 × value + 0.35 × feasibility + 0.25 × risk. Faisal adds
 # 2.3 — When not to use AI, and killing ideas early
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 2.2* · *Stage: Discover*
 
-**After this you can** name the simplest non-AI alternative for a proposed feature, write kill criteria with a metric, threshold and date each, and run a pre-mortem whose top causes link to early tests. *Study time: about 110 minutes (estimate).*
+**After this you can** name the simplest non-AI alternative for a proposed feature, write kill criteria with a metric, threshold and date each, and run a pre-mortem whose top causes link to early tests. *Study time: reading about 20 min, hands-on about 145 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Knowing when **not** to use AI is a core AI product skill. It is not a lack of ambition. Many "AI problems" are really rules, search, template, data or process problems.
@@ -576,6 +594,14 @@ Khalid pushes back on stopping the predictor: "We've spent six months on it." Ra
 - 🟢 For each of these, name the simplest alternative to AI and say in one sentence whether AI is still justified: (a) routing emails to the right team by keyword, (b) answering "what is my card limit?", (c) summarising 200-page syndicated loan agreements for credit analysts. *Done when:* each answer names a specific alternative and gives one reason tied to the warning signs.
 - 🟡 Write kill criteria for a Najm Assist pilot answering fee questions, covering quality, adoption and one safety measure. *Done when:* each criterion has a metric, a threshold and a date, and you state what you will do instead if each one is missed.
 - 🔴 Run a written pre-mortem for SME Instant Finance: it is a year from now and the product has been withdrawn. List at least six plausible causes across value, feasibility, viability and trust. Turn the top three into kill criteria or early tests. *Done when:* each of your top three causes is linked to a test you could run in the first eight weeks, and at least one cause concerns regulation or fairness.
+
+<details><summary>Check your work</summary>
+
+**🟢 Model answer.** (a) Keyword rules or a simple classifier; AI is not justified unless the rules keep failing on messy wording. (b) A direct lookup from the card system; AI adds error to a single exact number. (c) Section templates and search help, but AI summaries are justified: long, messy text and a reader who checks the output against the source.
+
+**🟡 and 🔴 self-check.** Each kill criterion has a metric, a threshold and a date ("fewer than 90% of sampled fee answers correct by week 6"), plus the action if it is missed. Your pre-mortem passes if its six causes span value, feasibility, viability and trust, one concerns regulation or fairness, and each of the top three is linked to a test you could run within eight weeks.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Treating "not AI" as failure.** Picking rules or a template when they work is good product judgement. Evaluate the alternative with the same care as the AI option.

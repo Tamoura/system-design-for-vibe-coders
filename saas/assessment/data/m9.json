@@ -34,27 +34,27 @@
    "level": 2,
    "lesson": "9.1",
    "q": {
-    "en": "An engineer adds a Redis cache in front of Beacon's recent-incidents widget, keyed incidents:recent. The API route checks that the caller belongs to the org before it reads the cache, and the PR's tests pass. What should the review ask for?",
-    "ar": "يضيف مهندس كاش Redis أمام عنصر الحوادث الأخيرة في Beacon، بمفتاح هو incidents:recent. ويتحقق مسار الواجهة البرمجية من أن المستدعي ينتمي إلى المؤسسة قبل أن يقرأ من الكاش، وتنجح اختبارات طلب الدمج. ما الذي يجب أن تطلبه المراجعة؟"
+    "en": "A customer's admin removes a departed engineer in their identity provider. Beacon's SCIM handler deactivates the membership and deletes the engineer's sessions, and its test passes. A week later, a nightly script the engineer wrote still reads the org's incidents through Beacon's API. What did the design miss?",
+    "ar": "يحذف مسؤول لدى أحد العملاء مهندسًا غادر الشركة من مزوّد الهوية لديهم. فيعطّل معالج SCIM في Beacon العضوية ويحذف جلسات المهندس، وينجح اختبار ذلك. وبعد أسبوع، ما زال سكربت ليلي كتبه المهندس يقرأ حوادث المنظمة عبر الواجهة البرمجية لـ Beacon. ما الذي فات التصميم؟"
    },
    "o": {
     "en": [
-     "Nothing more, since the route already checks the caller's org membership",
-     "A shorter TTL, so that any wrong entry expires within a few seconds",
-     "Dropping the cache, since only Postgres can enforce RLS on these rows",
-     "The org id in the cache key, since every internal store must carry it"
+     "Deleting the user row in the SCIM handler, so every foreign key to it fails",
+     "An hourly SCIM sync, since the provider's push events can arrive hours late",
+     "A shorter session lifetime, so a removed user's cookie expires within an hour",
+     "Revoking the user's API keys in that org, too, in the same deprovision step"
     ],
     "ar": [
-     "لا شيء آخر، لأن المسار يتحقق أصلًا من عضوية المستدعي في المؤسسة",
-     "مدة صلاحية أقصر، كي تنتهي صلاحية أي مدخل خاطئ خلال ثوانٍ قليلة",
-     "إزالة الكاش، لأن Postgres وحدها تستطيع فرض سياسات RLS على هذه الصفوف",
-     "معرّف المؤسسة في مفتاح الكاش، لأن كل مخزن داخلي يجب أن يحمله"
+     "حذف صف المستخدم في معالج SCIM، كي يفشل كل مفتاح أجنبي يشير إلى صفه",
+     "مزامنة SCIM كل ساعة، لأن أحداث المزوّد قد تصل متأخرة ساعات",
+     "مدة جلسة أقصر، كي تنتهي صلاحية كوكي المستخدم المحذوف خلال ساعة",
+     "إلغاء مفاتيح API التي أنشأها المستخدم في خطوة إلغاء التزويد نفسها"
     ]
    },
    "a": 3,
    "why": {
-    "en": "The tenant id must travel into every row, job payload, log line and cache key; with incidents:recent, whichever org fills the cache first is served to every other org, and the membership check only proves the caller belongs to their own org. A shorter TTL just makes the cross-tenant leak briefer.",
-    "ar": "يجب أن ينتقل معرّف المستأجر إلى كل صف وحمولة مهمة وسطر سجل ومفتاح كاش؛ ومع المفتاح incidents:recent تُعرض حوادث أول مؤسسة تملأ الكاش على كل المؤسسات الأخرى، أما التحقق من العضوية فيثبت فقط أن المستدعي ينتمي إلى مؤسسته. ومدة الصلاحية الأقصر تجعل التسريب بين المستأجرين أقصر فقط."
+    "en": "Identity lifecycle crosses every credential, not just sessions: the deprovision step from 1.4 must also revoke, in the same transaction, the API keys the user created (or hand them to a named service account). Deleting the user row destroys audit history, and shorter sessions or faster syncs never touch an API key that does not expire.",
+    "ar": "دورة حياة الهوية تمر بكل بيانات الاعتماد، لا بالجلسات وحدها: يجب أن تلغي خطوة إلغاء التزويد من الدرس 1.4، في المعاملة نفسها، مفاتيح API التي أنشأها المستخدم (أو تنقلها إلى حساب خدمة له مالك معروف). أما حذف صف المستخدم فيمحو تاريخ التدقيق، والجلسات الأقصر أو المزامنة الأسرع لا تمس مفتاح API لا تنتهي صلاحيته."
    }
   },
   {
@@ -91,7 +91,7 @@
    "lesson": "9.1",
    "q": {
     "en": "An enterprise prospect's security team asks Beacon to prove that \"export all our data, then delete our account\" works. Beacon's deletion job removes every Postgres row carrying the org's id, and a test shows none remain. What is the best call before the review?",
-    "ar": "يطلب فريق الأمن لدى عميل مؤسسي محتمل من Beacon أن يثبت أن طلب \"صدّروا كل بياناتنا، ثم احذفوا حسابنا\" يعمل. ومهمة الحذف في Beacon تزيل كل صف في Postgres يحمل معرّف المؤسسة، ويُظهر اختبار أنه لم يبقَ أي صف. ما القرار الأفضل قبل المراجعة؟"
+    "ar": "يطلب فريق الأمن لدى عميل مؤسسي محتمل من Beacon أن يثبت أن طلب \"صدّروا كل بياناتنا، ثم احذفوا حسابنا\" يعمل. ومهمة الحذف في Beacon تزيل كل صف في Postgres يحمل معرّف المنظمة، ويُظهر اختبار أنه لم يبقَ أي صف. ما القرار الأفضل قبل المراجعة؟"
    },
    "o": {
     "en": [
@@ -101,10 +101,10 @@
      "Also delete the org in Stripe, since that is the only other system holding its data"
     ],
     "ar": [
-     "عرضه على أنه منجز: كل صف للمستأجر يحمل معرّف المؤسسة، واختبار يُظهر أنه لم يبقَ صف",
+     "عرضه على أنه منجز: كل صف للمستأجر يحمل معرّف المنظمة، واختبار يُظهر أنه لم يبقَ صف",
      "تتبّع التصدير والحذف عبر الملفات المرفوعة والبحث والمهام والسجلات، وسدّ الثغرات",
      "عرض مخطط المعمارية وسجلات القرارات المعمارية، لأن المراجعة تدور حول التصميم",
-     "حذف المؤسسة من Stripe أيضًا، لأنه النظام الآخر الوحيد الذي يحمل بياناتها"
+     "حذف المنظمة من Stripe أيضًا، لأنه النظام الآخر الوحيد الذي يحمل بياناتها"
     ]
    },
    "a": 1,
@@ -128,7 +128,7 @@
    "lesson": "9.1",
    "text": {
     "en": "I have traced \"a customer's admin removes an employee through their identity provider\" across SCIM, sessions, API keys, audit log and billing seats, and fixed at least one gap with a test that proves it",
-    "ar": "تتبّعتُ إجراء \"مسؤول لدى العميل يحذف موظفًا عبر مزوّد الهوية\" عبر SCIM والجلسات ومفاتيح API (API keys) وسجل التدقيق (audit log) ومقاعد الفوترة، وأصلحتُ ثغرة واحدة على الأقل باختبار يثبت الإصلاح"
+    "ar": "تتبّعتُ إجراء \"مسؤول لدى العميل يحذف موظفًا عبر مزوّد الهوية\" عبر SCIM والجلسات ومفاتيح API وسجل التدقيق (audit log) ومقاعد الفوترة، وأصلحتُ ثغرة واحدة على الأقل باختبار يثبت الإصلاح"
    }
   }
  ]

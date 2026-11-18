@@ -9,7 +9,7 @@
 # 2.1 — From principles to strategy and risk appetite
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 1.3* · *BoK: I.B*
 
-**After this you can** draft an AI risk-appetite table with an appetite level, a measurable tolerance and an owner for each risk category. *Study time: about 110 minutes (estimate).*
+**After this you can** draft an AI risk-appetite table with an appetite level, a measurable tolerance and an owner for each risk category. *Study time: reading about 20 min, hands-on about 100 min (estimate).*
 
 ## ⚡ In 60 seconds
 - AI governance starts from the top: **principles** (what we value) drive an **AI strategy** (what we will use AI for), which is bounded by a **risk appetite** (how much AI risk we accept) and **risk tolerances** (the measurable limits around it).
@@ -252,7 +252,7 @@ Najm's corporate banking division wants to run its own AI governance because "th
 # 2.2 — Roles, accountability and the AI governance committee
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1* · *BoK: I.B*
 
-**After this you can** write an AI governance committee charter that states membership, quorum and decision rights, and find two independence risks in a RACI with a fix for each. *Study time: about 110 minutes (estimate).*
+**After this you can** write an AI governance committee charter that states membership, quorum and decision rights, and find two independence risks in a RACI with a fix for each. *Study time: reading about 15 min, hands-on about 110 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Every AI system needs a single **accountable owner** in the business, not in IT or data science. Governance roles support that owner; they do not replace them.
@@ -265,7 +265,7 @@ Najm's corporate banking division wants to run its own AI governance because "th
 ## 🧭 Why it matters
 The customer-service chatbot went live at Najm Bank on a Thursday. By Sunday it had told three customers that a late-payment fee would be waived, which it would not. One customer posted the screenshot. The question in Monday's crisis meeting was simple: "Who owns this?" Dana said her team had only fine-tuned the model. IT said it only hosted it. The vendor pointed to its terms of service. Khalid said he had never approved the final prompt. Marketing had written the welcome message. Everyone had touched it; no one owned it.
 
-A tribunal in Canada faced the same question in *Moffatt v. Air Canada* (2024). The airline's chatbot had given a customer wrong information about bereavement fares. The airline argued, in effect, that the chatbot was responsible for its own statements. The tribunal rejected that and held the airline liable: the organisation is responsible for all the information on its website, whether it comes from a static page or a chatbot. Legal responsibility landed on the organisation. Internally, Najm Bank needs to know which *person* carries it, before the next incident, not after.
+The law has already answered the outside half of that question. In *Moffatt v. Air Canada* (2024; the full story is in 5.3), a tribunal held the airline, not its chatbot, responsible for what the chatbot told a customer. Legal responsibility landed on the organisation. Internally, Najm Bank needs to know which *person* carries it, before the next incident, not after.
 
 ## 📐 How it works
 
@@ -341,7 +341,7 @@ Rules that keep a RACI useful: one A per row; every row has at least one R; avoi
 
 **Shared and vendor systems.** When a system serves several business lines (a group-wide chatbot platform) or comes from a vendor (the CV-screening tool), ownership still has to be singular for each *use*. The platform can have a technical owner, but each deployment of it (retail FAQs, HR queries) has its own business owner. Buying a system transfers some work to the vendor, never the accountability for how you use it.
 
-**Independence and conflicts.** The second and third lines lose value if they build what they review. If Layla's team also develops prompts for the chatbot, someone else must review them. If model risk validators report to the Chief Data Officer whose team built the models, validation independence is questionable. Banks already know this from model risk management practice, such as the US supervisory guidance SR 11-7, which expects model validation to be independent of development. Carry the same logic into AI.
+**Independence and conflicts.** The second and third lines lose value if they build what they review. If Layla's team also develops prompts for the chatbot, someone else must review them. If model risk validators report to the Chief Data Officer whose team built the models, validation independence is questionable. Banks already know this from model risk management practice, such as the US supervisory guidance SR 11-7 (replaced in 2026 by SR 26-2), which expected model validation to be independent of development. Carry the same logic into AI.
 
 **Standards expectations.** **ISO/IEC 42001** requires top management to assign and communicate responsibilities and authorities for the AI management system, and its Annex A includes controls on internal organisation, including roles and responsibilities and a process for reporting concerns. The **NIST AI RMF** Govern function expects accountability structures so that the appropriate teams are empowered, responsible and trained, and it lists engagement with relevant AI actors and third-party risk as part of governance. Singapore's **Model AI Governance Framework** similarly starts with internal governance structures and measures: clear roles, responsibilities and risk controls.
 
@@ -392,7 +392,7 @@ List the roles that should be involved in approving Najm's CV-screening tool and
 
 ### 🟡 Intermediate
 Write a one-page charter for Najm's AI Governance Committee: purpose, scope, membership, quorum, decision rights, delegated authority for low-tier systems, reporting line and record-keeping.
-*Done when:* someone who has never met Layla could tell from the charter what the committee can and cannot decide.
+*Done when:* the charter has an explicit list of what the committee decides, what it delegates and what it must escalate to the board, with no decision left to "as appropriate".
 
 ### 🔴 Advanced
 Review the RACI above and identify two independence or conflict-of-interest risks. Propose changes and explain how you would evidence independence to an internal auditor.
@@ -458,7 +458,7 @@ Review the RACI above and identify two independence or conflict-of-interest risk
 
 - A. Nothing; oversight is only the provider's duty, so deployers have no obligation to assign it to anyone
 - B. Assign oversight to natural persons who have the necessary competence, training and authority
-- C. Appoint an external auditor to supervise the system and report to the board every quarter, so staff need no training, no authority and no particular competence
+- C. Rely on the oversight tools the provider built in, with the IT team reviewing the system's logs every quarter
 - D. Register each overseer with the AI Office before the system is first used, and renew the entry every year
 
 <details><summary>Answer</summary>
@@ -495,7 +495,7 @@ Review the RACI above and identify two independence or conflict-of-interest risk
 # 2.3 — AI literacy, training and culture
 *Level: 🟡 Intermediate* · *Prerequisites: 2.2* · *BoK: I.B*
 
-**After this you can** design a 60-minute oversight training session with a competence check, and draft a role-based answer to a regulator on the AI Act's AI-literacy duty. *Study time: about 105 minutes (estimate).*
+**After this you can** design a 60-minute oversight training session with a competence check, and draft a role-based answer to a regulator on the AI Act's AI-literacy duty. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **AI literacy** is the skills, knowledge and understanding that let people use and oversee AI in an informed way and understand its opportunities, risks and possible harms.

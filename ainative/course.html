@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="ainative-source" content="f3df938d77421584">
+<meta name="ainative-source" content="b8a1723ec2de1374">
 <meta name="description" content="A Practical Guide to Becoming an AI-Native Engineer — a free, bilingual course for engineers who code: how coding agents work, context engineering, spec-driven development, the daily loop, verifying AI-written code, debugging, legacy code, security, hooks, skills and subagents, parallel agents, team playbooks and staying sharp, with graded offline labs, a quiz in every lesson and a 60-question practice exam.">
 <title>A Practical Guide to Becoming an AI-Native Engineer — Complete Course</title>
 <style>
@@ -207,10 +207,14 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="page prose" id="start">
 <h1>Start here</h1>
 <p><strong>A free, bilingual, hands-on course for software engineers who want to work well with AI coding agents: give them context, specify the work, verify what they produce, secure your setup, automate the loop, and stay accountable for everything that ships. Every lab is a real task with an offline grader.</strong></p>
+<!-- study-time -->
+<p><strong>Study time for the whole course: about 76 hours</strong> (estimate: reading plus hands-on work, summed over every lesson). At about 6 hours a week that is roughly 13 weeks. Each lesson shows its own split; a pilot with real learners will replace these estimates.</p>
+<!-- /study-time -->
+
 <h2>What this is</h2>
 <p>Almost every engineer now has an AI agent that can read a repository, edit files, run commands and open a pull request. Using one is easy. Using one <em>well</em> is a skill: the engineers who get the most from agents are not the ones who type the least, but the ones who give the right context, write down what &quot;done&quot; means, work in small verified steps, and notice when the confident answer is wrong.</p>
 <p>This course teaches that skill by practice. You join the <strong>Payments Platform</strong> team at <strong>Najm Bank</strong> (a fictional bank used across this library) and work through one codebase, <strong>Najm Remit</strong>, for fourteen weeks: onboarding to unfamiliar code, shipping features, reviewing an agent&#39;s pull request, fixing a production bug from its logs, taming legacy code, hardening your setup, automating your agent with hooks, skills and subagents, running agents in parallel, and writing your team&#39;s playbook.</p>
-<p>You do not need an API key to do the labs. The lab kit (<code>ailab</code>) starts each task, and its hidden tests and checks grade your result offline. Use <strong>Claude Code</strong> (the course&#39;s worked example), any other agentic tool, or no agent at all: the grader only sees the work.</p>
+<p>You do not need an API key to do the labs. The lab kit (<code>ailab</code>) starts each task, and its hidden tests and checks grade your result offline. Use <strong>Claude Code</strong> (the course&#39;s worked example), any other agentic tool, or no agent at all: the grader only sees the work. Agent tools usually cost money: at the time of writing (November 2026) Claude Code needs a paid plan or pay-per-use API billing, not the free Claude plan, so check current pricing first. The no-agent path costs nothing.</p>
 <h2>The five habits</h2>
 <ol>
 <li><strong>Context first.</strong> Tell the agent what it needs to know before you tell it what to do.</li>
@@ -303,6 +307,8 @@ python -m ailab grade m04 --dir ~/ainative/m04   # hidden tests and checks, offl
 <td>Run agents in parallel, set team practice and metrics, keep your own skills sharp, and take a change through the whole cycle.</td>
 </tr>
 </tbody></table></div>
+<p><strong>How long it takes.</strong> Each module is one week. Plan on 5 to 8 hours a week in all: the reading, 3 to 5 hours of exercises and lab (the lab is the bigger part; lab 5.2, for example, takes about three hours), and the 60-minute group session. Module 0 includes setup, so allow an extra hour. The capstone week is the exception: 8 to 12 hours of hands-on work plus a 90-minute demo, so give it a week or two. Each lesson&#39;s header gives its own estimate; for the capstone, the hands-on hours above come on top of it.</p>
+<p><strong>Studying alone.</strong> The group sessions assume a study group, but none is required. On your own, do each session&#39;s steps in writing in your notes repository: where it says &quot;swap with a partner&quot;, put your work aside for a day and review it cold, or have a fresh agent session review it against the lesson&#39;s checklist and decide which of its points you accept. For the capstone demo, record yourself answering its questions, and play it to a colleague when you can: an agent session does not replace their questions.</p>
 <h2>Companion courses</h2>
 <p><em>Building AI Applications &amp; Agents</em> (if you build AI products rather than work with AI tools), <em>Software Testing: Zero to Hero in the AI Era</em>, <em>Secure AI &amp; Application Security</em>, <em>Running AI Agents in Production</em>, <em>System Design for Vibe Coders</em>, <em>Cloud &amp; DevOps</em>, <em>AI Governance</em>, <em>AI Product Management</em> and <em>From Graduate to Hired</em>.</p>
 <h2>Two languages</h2>
@@ -514,7 +520,7 @@ python -m ailab grade m04 --dir ~/ainative/m04   # hidden tests and checks, offl
 <p class="crumb"><a href="#contents">Module 0 — Orientation: becoming AI-native</a></p>
 <h1><span class="num">0.1</span> What an AI-native engineer is (and is not): the shift, five habits and the evidence</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Focus <bdi dir="ltr">Mindset</bdi></span> · <span class="prereq">Before this: none</span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> score your own baseline on the five habits and trace one claim about AI productivity to its source, with two caveats. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> score your own baseline on the five habits and trace one claim about AI productivity to its source, with two caveats. <em>Study time: reading about 15 min, hands-on about 60 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -741,7 +747,7 @@ Process: plan first, then write the failing test and show me it fails, then make
 <blockquote>
 <p>An AI-native engineer routinely directs AI tools in daily work and stays accountable for the result. They supply context, define done before delegating, work in small verified steps, judge output by evidence, and automate what repeats without letting their own skill lapse.</p>
 </blockquote>
-<p><strong>Two companies describing their own practice.</strong> Microsoft&#39;s post <a href="https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/">&quot;Spec-Driven Development: A Spec-First Approach to AI-Native Engineering&quot;</a> argues that teams should agree on intent before an AI generates code, and offers its open-source GitHub Spec Kit for the job. Spec-first is part of how Microsoft uses &quot;AI-native&quot;; your second habit makes the same bet, and Module 3 returns to it. Meta reports in <a href="https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/">&quot;How Meta Built Forum With AI-Native Engineering&quot;</a> that a small team built Forum, a standalone Groups app, with an AI agent as a participant. Its target is &quot;human-on-the-loop&quot;: the agent runs the plan, build, test and correct cycle while an engineer sets the goal and approves the result. Meta calls it a target, not a finished state, and sets the bar for done at verification (automated tests and visual checks), not compilation; Lujain&#39;s Thursday had green tests and no look at the real output. Each is a company&#39;s account of its own work, not independent evidence; read the originals.</p>
+<p><strong>Two companies describing their own practice.</strong> Microsoft&#39;s post <a href="https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/">&quot;Spec-Driven Development: A Spec-First Approach to AI-Native Engineering&quot;</a> argues that teams should agree on intent before an AI generates code, and offers GitHub&#39;s open-source Spec Kit for the job. Spec-first is part of how Microsoft uses &quot;AI-native&quot;; your second habit makes the same bet, and Module 3 returns to it. Meta reports in <a href="https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/">&quot;How Meta Built Forum With AI-Native Engineering&quot;</a> that a small team built Forum, a standalone Groups app, with an AI agent as a participant. Its target is &quot;human-on-the-loop&quot;: the agent runs the plan, build, test and correct cycle while an engineer sets the goal and approves the result. Meta calls it a target, not a finished state, and sets the bar for done at verification (automated tests and visual checks), not compilation; Lujain&#39;s Thursday had green tests and no look at the real output. Each is a company&#39;s account of its own work, not independent evidence; read the originals.</p>
 <p><strong>How the course works.</strong> One module a week (Modules 0 to 13), then the capstone; each has a concept lesson and a lab or workshop. Labs run on <strong>Najm Remit</strong>, a small Python service, graded by <strong><code>ailab</code></strong>, an offline kit: no API key, no network, no agent required. Use Claude Code, another tool or none; the grader looks at the result. Each lab ends with a deliverable, a group session and an <strong>agent log</strong>. <strong>Najm Bank is fictional</strong>, as are its customers, rates and limits. Your team: <strong>Tariq</strong> (your mentor, who runs the weekly &quot;AI-native clinic&quot;), <strong>Lujain</strong> (enthusiastic, over-trusting) and <strong>Hessa</strong> (product owner, writes the tickets). Colleagues in quality, security, SRE, governance and platform join in their own modules.</p>
 <p><strong>Honest limits.</strong> The course cannot promise you will be faster. Tools change fast: its Claude Code details were checked in October 2026, so check the current documentation. The labs are small and fictional, and the grader checks results, not understanding. The aim is to help you tell when an agent is wrong.</p>
 </section>
@@ -909,7 +915,7 @@ Would I delegate it again?     Yes, with the same spec
 <p class="crumb"><a href="#contents">Module 0 — Orientation: becoming AI-native</a></p>
 <h1><span class="num">0.2</span> Your setup: tools, safe configuration, the Najm Remit repo and the ailab kit</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Focus <bdi dir="ltr">Workflow, Secure</bdi></span> · <span class="prereq">Before this: <a href="#l0-1">0.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> set up the ailab kit and a safe permission configuration, then pass lab m00 with a logged commit. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> set up the ailab kit and a safe permission configuration, then pass lab m00 with a logged commit. <em>Study time: reading about 15 min, hands-on about 120 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -923,10 +929,13 @@ Would I delegate it again?     Yes, with the same spec
 </section>
 <section class="sec sec-why"><h2>🧭 Why it matters</h2>
 <p>On day two Lujain, tired of permission prompts, switches her agent to bypass mode. Her laptop holds a VPN profile, a cloud login and an old project&#39;s <code>.env</code>. Nothing happens. That is the trap: the bad day is rare, so safety feels like friction. Noura (application and AI security) sets a week-zero rule: the agent has your hands. Whatever you can read, delete or push, it can.</p>
-<p>Rare does happen: one user said Google&#39;s Antigravity agent, in &quot;Turbo mode&quot;, deleted a drive&#39;s contents (November 2025); a founder said a Replit agent deleted a production database during a code freeze (July 2025). Both are unaudited single accounts, so hold the details loosely. The pattern is OWASP&#39;s excessive agency (LLM06:2025): too much functionality, permission or autonomy.</p>
+<p>Rare does happen: one user said Google&#39;s Antigravity agent, in &quot;Turbo mode&quot;, deleted a drive&#39;s contents (November 2025); a founder said a Replit agent deleted a production database during a code freeze (July 2025). Both are unaudited single accounts, so hold the details loosely. The pattern is OWASP&#39;s excessive agency: too much functionality, permission or autonomy. It is LLM06 in the 2025 list and LLM03 in the 2026 edition (August 2026), so the code you see depends on which list you open.</p>
 </section>
 <section class="sec sec-how"><h2>📐 How it works</h2>
 <h3>🟢 The essentials</h3>
+<blockquote>
+<p><strong>Before you start.</strong> You need Python 3.11 or newer, git and a terminal. The commands are written for a bash shell (macOS, Linux); on Windows, use WSL or Git Bash, or translate them. An agent tool usually needs a paid plan (the README says more); the no-agent path costs nothing. Sign in through the tool&#39;s own flow, and never paste an API key or token into a chat or prompt.</p>
+</blockquote>
 <p><strong>Tools.</strong> Alphabetical, not ranked: <a href="https://aider.chat/docs/">Aider</a>, <a href="https://code.claude.com/docs/en/overview">Claude Code</a>, <a href="https://cursor.com/docs/agent/overview">Cursor</a>, <a href="https://geminicli.com/docs/">Gemini CLI</a>, <a href="https://docs.github.com/en/copilot/how-tos/copilot-in-your-ide/use-copilot-agents/use-agent-mode">GitHub Copilot agent mode</a> and <a href="https://developers.openai.com/codex">OpenAI Codex CLI</a>.</p>
 <p>The examples use Claude Code; the habits do not depend on one tool, and the grader never knows which you used.</p>
 <p><strong>Install and start Claude Code.</strong> Follow the official setup page linked above, not a command from a blog or a chat answer; <code>claude --version</code> then prints your version. <code>cd</code> into your work directory and run <code>claude</code>; expect a sign-in step (at Najm, the approved one).</p>
@@ -987,7 +996,12 @@ Would I delegate it again?     Yes, with the same spec
   }
 }
 </code></pre>
-<p>Keep it out of the lab folder: a committed <code>.claude/settings.json</code> fails m00&#39;s scope check (<code>.claude/settings.local.json</code> is ignored). A <code>deny</code> beats an <code>allow</code> in any scope. There is no <code>allow</code> for <code>pytest</code> on purpose: tests are code, and a user-level rule would reach repositories you have not read. In one you trust, choose &quot;don&#39;t ask again&quot; once; the rule is saved to <code>.claude/settings.local.json</code>. These are guard rails, not walls: <code>Bash(git push *)</code> does not stop <code>git -C . push</code>. The sandbox (<code>/sandbox</code>, off by default) and hooks enforce (Module 8).</p>
+<p>Three things to know about this file:</p>
+<ul>
+<li><strong>Where it lives.</strong> Keep it out of the lab folder: a committed <code>.claude/settings.json</code> fails m00&#39;s scope check (<code>.claude/settings.local.json</code> is ignored).</li>
+<li><strong>How rules combine.</strong> A <code>deny</code> beats an <code>allow</code> in any scope. There is no <code>allow</code> for <code>pytest</code> on purpose: tests are code, and a user-level rule would reach repositories you have not read. In one you trust, choose &quot;don&#39;t ask again&quot; once; the rule is saved to <code>.claude/settings.local.json</code>.</li>
+<li><strong>What it cannot do.</strong> These are guard rails, not walls: <code>Bash(git push *)</code> does not stop <code>git -C . push</code>. The sandbox (<code>/sandbox</code>, off by default) and hooks enforce (Module 8).</li>
+</ul>
 <p><strong>Secrets and <code>.env</code>.</strong> Remit takes settings from environment variables and never loads a <code>.env</code> file; <code>.gitignore</code> already ignores it. Assume everything the agent reads is in its context and a transcript: Claude Code keeps local transcripts as plain text under <code>~/.claude/projects/</code>, for 30 days by default. If a secret reaches a prompt, treat it as leaked and rotate it.</p>
 <p><strong>What never goes into a prompt.</strong> Najm&#39;s rules: approved tools and environments only; no Confidential or Restricted data and no secrets in prompts or agent contexts.</p>
 <div class="table-scroll"><table>
@@ -1237,7 +1251,7 @@ Lab m00: 4/10 required checks passed: NOT YET
 <li>Claude Code documentation: permission modes <a href="https://code.claude.com/docs/en/permission-modes">https://code.claude.com/docs/en/permission-modes</a>, permissions <a href="https://code.claude.com/docs/en/permissions">https://code.claude.com/docs/en/permissions</a>, security <a href="https://code.claude.com/docs/en/security">https://code.claude.com/docs/en/security</a>, data usage <a href="https://code.claude.com/docs/en/data-usage">https://code.claude.com/docs/en/data-usage</a>, costs <a href="https://code.claude.com/docs/en/costs">https://code.claude.com/docs/en/costs</a>, sandboxing <a href="https://code.claude.com/docs/en/sandboxing">https://code.claude.com/docs/en/sandboxing</a>, settings <a href="https://code.claude.com/docs/en/settings">https://code.claude.com/docs/en/settings</a></li>
 <li>The lab kit: <a href="https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/ainative/ailab">https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/ainative/ailab</a>. Conventional Commits: <a href="https://www.conventionalcommits.org">https://www.conventionalcommits.org</a>. Git: <a href="https://git-scm.com">https://git-scm.com</a>.</li>
 <li>Incident reports used above (single-user accounts, not audited): Fortune on the Replit deletion <a href="https://fortune.com/2025/07/23/ai-coding-tool-replit-wiped-database-called-it-a-catastrophic-failure/">https://fortune.com/2025/07/23/ai-coding-tool-replit-wiped-database-called-it-a-catastrophic-failure/</a> ; AI Incident Database on the Antigravity deletion <a href="https://incidentdatabase.ai/cite/1433/">https://incidentdatabase.ai/cite/1433/</a></li>
-<li>OWASP Top 10 for LLM Applications 2025 (LLM06, Excessive Agency): <a href="https://genai.owasp.org/llm-top-10/">https://genai.owasp.org/llm-top-10/</a></li>
+<li>OWASP Top 10 for LLM Applications 2025, LLM06:2025 Excessive Agency (LLM03 in the 2026 edition): <a href="https://genai.owasp.org/llmrisk/llm062025-excessive-agency/">https://genai.owasp.org/llmrisk/llm062025-excessive-agency/</a></li>
 <li><a href="../secai/index.html#/9.2"><em>Secure AI &amp; Application Security</em>, lesson 9.2 — Agents and tools: excessive agency, least-privilege tools and MCP</a></li>
 </ul>
 </section>
@@ -1247,7 +1261,7 @@ Lab m00: 4/10 required checks passed: NOT YET
 <p class="crumb"><a href="#contents">Module 0 — Orientation: becoming AI-native</a></p>
 <h1><span class="num">0.3</span> The AI-native loop: specify, delegate, verify, integrate, and who stays accountable</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Focus <bdi dir="ltr">Mindset, Workflow</bdi></span> · <span class="prereq">Before this: <a href="#l0-1">0.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> fill in a delegation card for a real ticket and give each task an autonomy level and a named check. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> fill in a delegation card for a real ticket and give each task an autonomy level and a named check. <em>Study time: reading about 15 min, hands-on about 60 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -1675,7 +1689,7 @@ Author of record: me. Label AI-assisted. Second reviewer: not needed (no money l
 <p class="crumb"><a href="#contents">Module 1 — How coding agents work</a></p>
 <h1><span class="num">1.1</span> The mental model: context, tools and the loop, and why agents are brilliant and why they fail</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Focus <bdi dir="ltr">Mindset</bdi></span> · <span class="prereq">Before this: <a href="#l0-3">0.3</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> check an agent&#39;s code against the library docs and write a cheap command that catches one agent failure mode. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> check an agent&#39;s code against the library docs and write a cheap command that catches one agent failure mode. <em>Study time: reading about 15 min, hands-on about 60 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -2011,7 +2025,7 @@ def record_quote(customer_id, amount):
 <p class="crumb"><a href="#contents">Module 1 — How coding agents work</a></p>
 <h1><span class="num">1.2</span> Lab: read three agent sessions, name the failure, then run your own</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Focus <bdi dir="ltr">Mindset, Verify</bdi></span> · <span class="prereq">Before this: <a href="#l0-2">0.2</a>, <a href="#l1-1">1.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> name the failure in an agent session, cite the turn that shows it and propose the cheapest guard against it. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> name the failure in an agent session, cite the turn that shows it and propose the cheapest guard against it. <em>Study time: reading about 10 min, hands-on about 120 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -2349,7 +2363,7 @@ Would I delegate it again?
 <p class="crumb"><a href="#contents">Module 2 — Context engineering</a></p>
 <h1><span class="num">2.1</span> What the agent sees: the context budget, project memory, rules, references, compaction and subagents</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Focus <bdi dir="ltr">Context</bdi></span> · <span class="prereq">Before this: <a href="#l1-1">1.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> prune a project memory file, giving each line a verdict and the command that proves it. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> prune a project memory file, giving each line a verdict and the command that proves it. <em>Study time: reading about 15 min, hands-on about 60 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -2436,7 +2450,7 @@ Would I delegate it again?
 <p>Two tests keep the file honest. The documentation targets <strong>under 200 lines</strong>, because longer files consume more context and reduce adherence. And for every line the best-practices page asks: <strong>would removing this cause the agent to make mistakes?</strong> If not, the line is noise.</p>
 <h3>🟡 Going deeper</h3>
 <p><strong>AGENTS.md.</strong> Other tools read <code>AGENTS.md</code>, an open plain-Markdown &quot;README for agents&quot;. Claude Code reads it directly from v2.1.277, but by default only when no <code>CLAUDE.md</code> or <code>CLAUDE.local.md</code> exists in the working directory or above (the <code>/config</code> setting &quot;Project instructions&quot; changes that). To share one file, write <code>AGENTS.md</code> and put <code>@AGENTS.md</code> inside a <code>CLAUDE.md</code>. These details moved in 2026: check the current documentation.</p>
-<p><strong>The same job under another name.</strong> In <a href="https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/">Spec-Driven Development: A Spec-First Approach to AI-Native Engineering</a>, Microsoft describes a seven-step lifecycle whose first step is a <em>constitution</em>: principles and guardrails. Its companion post on GitHub Spec Kit, Microsoft&#39;s open-source toolkit, explains the constitution file. Here that is project memory&#39;s job: standing rules the agent reads every session. Module 3 covers the other six steps. A company describing its own practice is not independent evidence; it shows the idea is current, not that a constitution improves results. Read the originals (linked below).</p>
+<p><strong>The same job under another name.</strong> In <a href="https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/">Spec-Driven Development: A Spec-First Approach to AI-Native Engineering</a>, Microsoft describes a seven-step lifecycle whose first step is a <em>constitution</em>: principles and guardrails. Its companion post on GitHub&#39;s open-source Spec Kit explains the constitution file. Here that is project memory&#39;s job: standing rules the agent reads every session. Module 3 covers the other six steps. A company describing its own practice is not independent evidence; it shows the idea is current, not that a constitution improves results. Read the originals (linked below).</p>
 <p><strong>Imports.</strong> <code>@path/to/file</code> pulls a file in; imports nest four hops deep and are ignored inside code spans and fences. <strong>Imports do not reduce context cost</strong>: imported files load at launch. <code>@docs/najmkit.md</code> would put the whole page into every session; a plain pointer costs one line and is followed when it matters.</p>
 <p><strong>Rules.</strong> Files in <code>.claude/rules/</code> split memory by topic. One without <code>paths:</code> loads at launch; one with <code>paths:</code> loads only when Claude works on matching files, so a tests rule costs nothing while it edits <code>src/</code> (check the documentation for the exact glob syntax):</p>
 <pre><code class="language-markdown">---
@@ -2733,7 +2747,7 @@ Money-transfer service for the fictional Najm Bank. Python 3.11, standard librar
 <p class="crumb"><a href="#contents">Module 2 — Context engineering</a></p>
 <h1><span class="num">2.2</span> Lab: write the project memory for Najm Remit and measure what it changes</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Focus <bdi dir="ltr">Context</bdi></span> · <span class="prereq">Before this: <a href="#l0-2">0.2</a>, <a href="#l2-1">2.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> write a project memory file that passes the grader&#39;s checks and measure what it changes in a with-and-without run. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a project memory file that passes the grader&#39;s checks and measure what it changes in a with-and-without run. <em>Study time: reading about 15 min, hands-on about 150 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -3040,7 +3054,7 @@ Minutes:      &lt;honest total, including checking&gt;
 <p class="crumb"><a href="#contents">Module 3 — Specifying the work</a></p>
 <h1><span class="num">3.1</span> Spec-driven development: from ticket to acceptance criteria, constraints, non-goals and a plan</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Focus <bdi dir="ltr">Workflow</bdi></span> · <span class="prereq">Before this: <a href="#l2-1">2.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> turn a vague ticket into a spec with acceptance criteria, constraints and non-goals, and review a plan against a checklist. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> turn a vague ticket into a spec with acceptance criteria, constraints and non-goals, and review a plan against a checklist. <em>Study time: reading about 15 min, hands-on about 75 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -3162,7 +3176,7 @@ Me:    The ticket says daily. Keep it, as an assumption for Hessa.
 </tbody></table></div>
 <p><strong>Living or throwaway.</strong> A one-off change can keep its spec in the pull request, because the tests carry the criteria. For rules others will change, such as fees and limits, keep a short spec in <code>specs/</code>, updated with every behaviour change: a stale spec is a second source of truth, as <code>docs/ARCHITECTURE.md</code> now is.</p>
 <h3>🔴 Expert view</h3>
-<p><strong>Spec-driven development as industry practice.</strong> Microsoft&#39;s developer blog (a 2026 post) describes spec-driven development as agreeing intent before an AI generates code, with structured specs as a shared reference for people and AI tools. It offers GitHub Spec Kit, an open-source toolkit Microsoft created, as a way to apply it, and lists a seven-step lifecycle:</p>
+<p><strong>Spec-driven development as industry practice.</strong> Microsoft&#39;s developer blog (a 2026 post) describes spec-driven development as agreeing intent before an AI generates code, with structured specs as a shared reference for people and AI tools. It offers GitHub&#39;s open-source Spec Kit as a way to apply it, and lists a seven-step lifecycle:</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -3400,7 +3414,7 @@ TODO: the files you expect to touch; four to ten numbered steps, each one small 
 <p class="crumb"><a href="#contents">Module 3 — Specifying the work</a></p>
 <h1><span class="num">3.2</span> Lab: turn three vague tickets into specs an agent can build from</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Focus <bdi dir="ltr">Workflow</bdi></span> · <span class="prereq">Before this: <a href="#l2-2">2.2</a>, <a href="#l3-1">3.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> write three specs from vague tickets that pass the grader, each open question answered or flagged with an owner. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write three specs from vague tickets that pass the grader, each open question answered or flagged with an owner. <em>Study time: reading about 15 min, hands-on about 3 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -3696,7 +3710,7 @@ Would I delegate it again?
 
 <p><strong>5. A plan says &quot;1. Implement the discount in <code>fees.py</code>. 2. Write the tests.&quot; The plan check fails. Why?</strong></p>
 <ul>
-<li>A. Plans must have exactly eight steps, never more and never fewer than that.</li>
+<li>A. Each step must name one function, not a whole file such as <code>fees.py</code>.</li>
 <li>B. Plans may not name files, because files change during the build.</li>
 <li>C. The failing test must come before the code that it is meant to cover.</li>
 <li>D. Tests may only be written after a reviewer has approved the code.</li>
@@ -3729,7 +3743,7 @@ Would I delegate it again?
 <p class="crumb"><a href="#contents">Module 4 — The daily loop</a></p>
 <h1><span class="num">4.1</span> Explore, plan, implement, check, commit: small steps, checkpoints and when to take the wheel</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Focus <bdi dir="ltr">Workflow</bdi></span> · <span class="prereq">Before this: <a href="#l3-1">3.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> run the loop on a small change in three or more green commits and name the cue that made you take the wheel. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> run the loop on a small change in three or more green commits and name the cue that made you take the wheel. <em>Study time: reading about 15 min, hands-on about 90 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -3807,7 +3821,7 @@ git commit -m &quot;feat(cli): filter history with --since&quot;
 </ul>
 <p><strong>Plan mode, and when to skip it.</strong> In plan mode the agent explores and proposes but does not edit source files. Use it for work that spans files or code you do not yet understand; skip it for the one-sentence diff.</p>
 <h3>🟡 Going deeper</h3>
-<p><strong>Checkpoints and rewind.</strong> At the time of writing (2026), Claude Code records a checkpoint for each prompt that starts a turn, keeps the 100 most recent and expires them about 30 days after the session&#39;s last snapshot. Open the menu with <code>Esc</code> <code>Esc</code> on an empty prompt, or <code>/rewind</code>: restore code, conversation or both, or summarise. Bash changes (<code>rm</code>, <code>mv</code>, <code>cp</code>), outside edits and other sessions are not tracked, and the documentation says checkpoints are not a substitute for git.</p>
+<p><strong>Checkpoints and rewind.</strong> At the time of writing (2026), Claude Code records a checkpoint for each prompt that starts a turn, keeps the 100 most recent and expires them about 30 days after the session&#39;s last snapshot. Open the menu with <code>Esc</code> <code>Esc</code> on an empty prompt, or <code>/rewind</code>: restore code, conversation or both, or summarise. Not restored: a file changed only by Bash (<code>rm</code>, <code>mv</code>, <code>cp</code>), edits made outside Claude Code or by other sessions, and usually a subagent&#39;s edits. The documentation says checkpoints do not replace git.</p>
 <p><strong>Cues that an agent is going astray.</strong> The card in the 🏛️ section lists six. Stop at the first.</p>
 <p>Anthropic, the maker of Claude Code, found that five assistants consistently showed sycophancy, a pull towards the user&#39;s view, across four text-generation tasks (Sharma and others, ICLR 2024). &quot;You&#39;re right&quot; is not evidence; a test run is (habit 4, <em>Trust evidence, not fluency</em>).</p>
 <p><strong>The intervention ladder</strong> is on the card; use the lowest rung that works. <code>Esc</code> stops the agent in the terminal (check the documentation for your interface); rewinding is <code>/rewind</code>, <code>git restore</code> or a commit. A correction needs a place, a reason and a check. Weak: <em>&quot;That is wrong, try again.&quot;</em> It adds no information, so you get the same attempt reworded. Strong: <em>&quot;<code>history</code> parses <code>since</code> as a naive <code>datetime</code>, which the store rejects. Build it with <code>QATAR_TZ</code> from <code>remit.limits</code>, then run <code>pytest -q tests/test_config_cli.py</code>.&quot;</em></p>
@@ -3966,7 +3980,7 @@ LADDER  1 stop (Esc) and say what you saw    2 correct once: file, line, reason
 <section class="sec sec-build"><h2>🛠️ Exercises</h2>
 <ul>
 <li>🟢 <strong>Mark a timeline.</strong> <em>No agent.</em> Write a six-line timeline of your last AI-assisted session. <em>Done when:</em> each line names a move, and two name a cue you noticed late and the rung you should have used.</li>
-<li>🟡 <strong>Run the loop on a small change.</strong> <em>Agent optional.</em> Make a green sandbox (from the <code>ailab</code> folder: <code>python -m ailab start m00 --dir ~/ainative/sandbox</code>, then <code>python -m ailab solve m00 --dir ~/ainative/sandbox</code>). In the sandbox, on a branch, add <code>--since YYYY-MM-DD</code> to <code>history</code>; a date means the start of that Qatar day. (Try <code>PYTHONPATH=src python -m remit history --customer C001</code> after <code>customer add</code> and <code>send</code>.) <em>Done when:</em> you have three or more green commits in the Remit format, the checklist is ticked with the commands you ran, and one line says what to change.</li>
+<li>🟡 <strong>Run the loop on a small change.</strong> <em>Agent optional.</em> Make a green sandbox (from the <code>ailab</code> folder: <code>python -m ailab start m00 --dir ~/ainative/sandbox</code>, then <code>python -m ailab solve m00 --dir ~/ainative/sandbox</code>). In the sandbox, on a branch, add <code>--since YYYY-MM-DD</code> to <code>history</code>; a date means the start of that Qatar day. (Try <code>PYTHONPATH=src python -m remit history --customer C001</code> after <code>customer add</code> and <code>send</code>.) <em>Done when:</em> you have three or more green commits in the Remit format, the checklist is ticked with the commands you ran, one line names the cue that made you take the wheel (with no agent: the point where you would have stopped one), and one line says what to change.</li>
 <li>🔴 <strong>Rehearse an interruption.</strong> <em>Needs an agent.</em> In the sandbox, give the agent a prompt that invites scope creep (&quot;make the CLI nicer&quot;), with no plan, and watch. <em>Done when:</em> your notes give the first cue and its time, the rung you used and what the two-failure rule would have changed, and the branch is at a green commit.</li>
 </ul>
 </section>
@@ -4015,13 +4029,13 @@ LADDER  1 stop (Esc) and say what you saw    2 correct once: file, line, reason
 <p><strong>3. Lujain says <code>Esc</code> <code>Esc</code> makes commits unnecessary, because she can rewind anything. What is the right reply?</strong></p>
 <ul>
 <li>A. No: Bash changes and outside edits are not tracked, and git is the save point.</li>
-<li>B. Yes: checkpoints keep every change for a year, whichever tool made that change.</li>
+<li>B. Yes: a checkpoint records every file the agent touches, shell commands included.</li>
 <li>C. Yes, as long as the agent only edits files and never runs a shell command at all.</li>
-<li>D. No: checkpoints cover only the main branch and are deleted every night at midnight.</li>
+<li>D. No: rewind restores only the conversation; the files stay as the agent left them.</li>
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>A.</strong> Bash changes and outside edits are untracked, snapshots expire, and git is the real save point. (🟡 Checkpoints and rewind.)</p>
+<p><strong>A.</strong> Bash changes and outside edits are untracked, snapshots expire, and git is the real save point. B is the tempting myth; D is wrong because rewind can restore code too. (🟡 Checkpoints and rewind.)</p>
 </details>
 
 <p><strong>4. Hessa (product owner) files a ticket to fix one misspelt word in an English message. Which approach fits?</strong></p>
@@ -4053,7 +4067,7 @@ LADDER  1 stop (Esc) and say what you saw    2 correct once: file, line, reason
 <li>Claude Code documentation: best practices <a href="https://code.claude.com/docs/en/best-practices">https://code.claude.com/docs/en/best-practices</a>; checkpointing and rewind <a href="https://code.claude.com/docs/en/checkpointing">https://code.claude.com/docs/en/checkpointing</a>; permission modes (plan mode) <a href="https://code.claude.com/docs/en/permission-modes">https://code.claude.com/docs/en/permission-modes</a>; the context window <a href="https://code.claude.com/docs/en/context-window">https://code.claude.com/docs/en/context-window</a></li>
 <li>Git: <a href="https://git-scm.com/docs">https://git-scm.com/docs</a>. Conventional Commits 1.0.0: <a href="https://www.conventionalcommits.org">https://www.conventionalcommits.org</a></li>
 <li><a href="../testing/index.html#/6.2"><em>Software Testing</em>, lesson 6.2 — Tests as the specification for coding agents</a></li>
-<li><strong>Go deeper.</strong> Engineering at Meta, &quot;How Meta Built Forum With AI-Native Engineering&quot;: <a href="https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/">https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/</a> (read the original; this lesson knew it only from a summary). Anthropic, &quot;Towards Understanding Sycophancy in Language Models&quot;: <a href="https://www.anthropic.com/research/towards-understanding-sycophancy-in-language-models">https://www.anthropic.com/research/towards-understanding-sycophancy-in-language-models</a>. DORA, 2024 report: <a href="https://cloud.google.com/blog/products/devops-sre/announcing-the-2024-dora-report">https://cloud.google.com/blog/products/devops-sre/announcing-the-2024-dora-report</a>.</li>
+<li><strong>Go deeper.</strong> Engineering at Meta, &quot;How Meta Built Forum With AI-Native Engineering&quot;: <a href="https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/">https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/</a> (the company&#39;s own account, so read the original). Anthropic, &quot;Towards Understanding Sycophancy in Language Models&quot;: <a href="https://www.anthropic.com/research/towards-understanding-sycophancy-in-language-models">https://www.anthropic.com/research/towards-understanding-sycophancy-in-language-models</a>. DORA, 2024 report: <a href="https://cloud.google.com/blog/products/devops-sre/announcing-the-2024-dora-report">https://cloud.google.com/blog/products/devops-sre/announcing-the-2024-dora-report</a>.</li>
 </ul>
 </section>
 <p class="back"><a href="#contents">↑ Contents</a></p>
@@ -4062,7 +4076,7 @@ LADDER  1 stop (Esc) and say what you saw    2 correct once: file, line, reason
 <p class="crumb"><a href="#contents">Module 4 — The daily loop</a></p>
 <h1><span class="num">4.2</span> Lab: ship a small feature through the whole loop</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Focus <bdi dir="ltr">Workflow</bdi></span> · <span class="prereq">Before this: <a href="#l3-2">3.2</a>, <a href="#l4-1">4.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> ship a small feature through the whole loop in three or more green commits that the grader passes. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> ship a small feature through the whole loop in three or more green commits that the grader passes. <em>Study time: reading about 15 min, hands-on about 3 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -4393,7 +4407,7 @@ Would I delegate it again?
 <p class="crumb"><a href="#contents">Module 5 — Verification</a></p>
 <h1><span class="num">5.1</span> Trust evidence, not fluency: tests as the spec, reading diffs and the ways AI code passes while being wrong</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Focus <bdi dir="ltr">Verify</bdi></span> · <span class="prereq">Before this: <a href="#l4-1">4.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> write a test that fails on a green but wrong pull request and explain from the diff why the suite missed it. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a test that fails on a green but wrong pull request and explain from the diff why the suite missed it. <em>Study time: reading about 15 min, hands-on about 75 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -4738,7 +4752,7 @@ def test_an_arabic_customer_gets_the_rate_in_arabic_digits_from_the_real_send(se
 <p class="crumb"><a href="#contents">Module 5 — Verification</a></p>
 <h1><span class="num">5.2</span> Lab: review a pull request an agent wrote</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Focus <bdi dir="ltr">Verify</bdi></span> · <span class="prereq">Before this: <a href="#l4-2">4.2</a>, <a href="#l5-1">5.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> review an agent&#39;s pull request, record findings with evidence and fix it in small commits that pass the grader. <em>Study time: about 190 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> review an agent&#39;s pull request, record findings with evidence and fix it in small commits that pass the grader. <em>Study time: reading about 15 min, hands-on about 3 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -4892,7 +4906,7 @@ No rubber stamp and no rewrite: I want a review I can act on, then a branch I ca
   `python -m ailab grade m05 --dir &lt;this directory&gt;`
 </code></pre>
 <p><strong>Start.</strong></p>
-<pre><code class="language-bash">cd ainative/ailab
+<pre><code class="language-bash">cd ~/system-design-for-vibe-coders/ainative/ailab
 python -m ailab start m05 --dir ~/ainative/m05
 cd ~/ainative/m05
 git log --oneline main..agent/loyalty-discount
@@ -5050,7 +5064,7 @@ Time spent:      (you / the agent)
 <p class="crumb"><a href="#contents">Module 6 — Debugging and understanding code</a></p>
 <h1><span class="num">6.1</span> Understanding unfamiliar code and debugging with an agent: reproduce first, hypotheses, root cause</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Focus <bdi dir="ltr">Workflow</bdi></span> · <span class="prereq">Before this: <a href="#l4-1">4.1</a>, <a href="#l5-1">5.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> reproduce a bug first, list hypotheses each with a disproof, and find the breaking commit with a bisect. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> reproduce a bug first, list hypotheses each with a disproof, and find the breaking commit with a bisect. <em>Study time: reading about 15 min, hands-on about 75 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -5395,7 +5409,7 @@ What you could not verify.
 <p class="crumb"><a href="#contents">Module 6 — Debugging and understanding code</a></p>
 <h1><span class="num">6.2</span> Lab: onboard to the codebase and fix a production bug from its logs</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Focus <bdi dir="ltr">Workflow, Verify</bdi></span> · <span class="prereq">Before this: <a href="#l6-1">6.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> write an onboarding note for unfamiliar code and fix a production bug from its logs, starting with a failing test. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write an onboarding note for unfamiliar code and fix a production bug from its logs, starting with a failing test. <em>Study time: reading about 15 min, hands-on about 3 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -5545,7 +5559,7 @@ When you think you are done, grade it from the `ainative/ailab` folder of the co
 from this directory: `python -m ailab grade m06 --dir &lt;this directory&gt;`
 </code></pre>
 <p><strong>Start.</strong></p>
-<pre><code class="language-bash">cd ainative/ailab      # with the virtual environment of lesson 0.2 active
+<pre><code class="language-bash">cd ~/system-design-for-vibe-coders/ainative/ailab      # with the virtual environment of lesson 0.2 active
 python -m ailab start m06 --dir ~/ainative/m06
 cd ~/ainative/m06
 </code></pre>
@@ -5569,7 +5583,7 @@ Work directory: /home/you/ainative/m06
 <li><strong>Hygiene:</strong> two or more commits (no maximum), messages as <code>CONTRIBUTING.md</code> says, nothing left over, no secrets; (advisory) tour and fix apart, an agent log.</li>
 </ul>
 <p><strong>Grade.</strong></p>
-<pre><code class="language-bash">cd ainative/ailab      # the grader runs from the kit folder, not from your work directory
+<pre><code class="language-bash">cd ~/system-design-for-vibe-coders/ainative/ailab      # the grader runs from the kit folder, not from your work directory
 python -m ailab grade m06 --dir ~/ainative/m06
 </code></pre>
 <p>The first run, on the untouched starter (excerpt; <code>...</code> marks omitted lines):</p>
@@ -5597,9 +5611,45 @@ Lab m06: 5/20 required checks passed: NOT YET
 <section class="sec sec-build"><h2>🛠️ Exercises</h2>
 <ul>
 <li>🟢 <strong>Read the grader.</strong> Grade the starter and pair each <code>[FAIL]</code> with the ticket line it comes from. <em>Done when:</em> a table gives, per failure, that line and your first action. Needs an agent: no.</li>
-<li>🟡 <strong>Replay the log.</strong> Write a script (in <code>scripts/</code> or outside the repository) that feeds <code>prod.log</code> through your fixed code with the tiers in <code>kyc_tiers.csv</code> and prints the customers whose outcome differs from the log. <em>Done when:</em> it lists both kinds of difference and your Impact section matches. Needs an agent: optional; read what it writes.</li>
+<li>🟡 <strong>Replay the log.</strong> Write a script (in <code>scripts/</code> or outside the repository) that feeds <code>prod.log</code> through your fixed code with the tiers in <code>kyc_tiers.csv</code> and prints the customers whose outcome differs from the log. <em>Done when:</em> it lists both kinds of difference and your Impact section matches. Needs an agent: optional; read what it writes. A starting skeleton follows the exercises.</li>
 <li>🔴 <strong>Bisect the history.</strong> In a throw-away worktree (<code>git worktree add ../m06-bisect lab-start</code>, then <code>cd</code> into it) with your test copied in untracked, run the test at <code>lab-start</code> (it must fail) and at the first commit (<code>git checkout --detach $(git rev-list --max-parents=0 HEAD)</code>; it must pass). Back at <code>lab-start</code>, run <code>git bisect start lab-start $(git rev-list --max-parents=0 HEAD)</code>, <code>git bisect run python -m pytest -q &lt;your test file&gt;</code> and <code>git bisect reset</code>; remove the worktree. <em>Done when:</em> your notes name the commit found, the one you suspected first (and whether it was guilty), and a review rule that would have stopped it. Needs an agent: no.</li>
 </ul>
+<details><summary>A starting skeleton for 🟡 Replay the log (run it from <code>~/ainative/m06</code> with <code>PYTHONPATH=src</code>; the comparison is yours to write)</summary>
+
+<pre><code class="language-python"># scripts/replay.py: run from the lab folder with PYTHONPATH=src
+import csv
+import json
+from datetime import datetime
+from types import SimpleNamespace
+
+from remit.limits import check_limits
+from remit.money import Money
+
+
+def money(text):  # &quot;500.00 QAR&quot; -&gt; Money(&quot;500.00&quot;, &quot;QAR&quot;)
+    amount, currency = text.split()
+    return Money(amount, currency)
+
+
+with open(&quot;lab-assets/kyc_tiers.csv&quot;) as f:
+    tiers = {row[&quot;customer_id&quot;]: row[&quot;kyc_tier&quot;] for row in csv.DictReader(f)}
+
+sent = {}  # customer id -&gt; that customer&#39;s earlier transfer.sent events
+with open(&quot;lab-assets/prod.log&quot;) as f:
+    for line in f:  # check first: is the log in time order?
+        event = json.loads(line)
+        if event[&quot;event&quot;] not in (&quot;transfer.sent&quot;, &quot;transfer.rejected&quot;):
+            continue
+        cid, when = event[&quot;customer_id&quot;], datetime.fromisoformat(event[&quot;ts&quot;])
+        amount = money(event[&quot;send_amount&quot;])
+        answer = check_limits(tiers[cid], sent.get(cid, []), amount, when)
+        was_sent = event[&quot;event&quot;] == &quot;transfer.sent&quot;
+        # TODO: compare answer.allowed with was_sent; print the id, the time and
+        # which of the two kinds of difference this is
+        if was_sent:
+            sent.setdefault(cid, []).append(SimpleNamespace(created_at=when, send_amount=amount))
+</code></pre>
+</details>
 </section>
 <section class="sec sec-mistakes"><h2>⚠️ Mistakes and traps</h2>
 <ul>
@@ -5704,7 +5754,7 @@ Lab m06: 5/20 required checks passed: NOT YET
 <p class="crumb"><a href="#contents">Module 7 — Legacy, refactoring and migration</a></p>
 <h1><span class="num">7.1</span> Changing code you do not understand: characterization tests, seams, incremental refactors and agent-sized migrations</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Focus <bdi dir="ltr">Workflow, Verify</bdi></span> · <span class="prereq">Before this: <a href="#l5-1">5.1</a>, <a href="#l6-1">6.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> write characterization tests that pin a legacy module&#39;s behaviour, quirks included, and show a mutation they catch. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write characterization tests that pin a legacy module&#39;s behaviour, quirks included, and show a mutation they catch. <em>Study time: reading about 15 min, hands-on about 75 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -6034,7 +6084,7 @@ One commit per step, tests green after each. A refactor step never changes behav
 <p class="crumb"><a href="#contents">Module 7 — Legacy, refactoring and migration</a></p>
 <h1><span class="num">7.2</span> Lab: tame an untested module, refactor it, then migrate a dependency</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Focus <bdi dir="ltr">Workflow, Verify</bdi></span> · <span class="prereq">Before this: <a href="#l6-2">6.2</a>, <a href="#l7-1">7.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> pin an untested module, refactor it in green commits and migrate a dependency so the grader passes. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> pin an untested module, refactor it in green commits and migrate a dependency so the grader passes. <em>Study time: reading about 10 min, hands-on about 4 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -6196,7 +6246,7 @@ When you think you are done, from the `ailab` folder of the course repository:
 `python -m ailab grade m07 --dir &lt;this directory&gt;`
 </code></pre>
 <p><strong>Start.</strong></p>
-<pre><code class="language-bash">cd ainative/ailab                     # in your clone of the course repository
+<pre><code class="language-bash">cd ~/system-design-for-vibe-coders/ainative/ailab                     # in your clone of the course repository
 python -m ailab start m07 --dir ~/ainative/m07
 cd ~/ainative/m07                     # the lab repository: work, run pytest and commit here
 git log --oneline          # &quot;Lab starting state&quot; on top of &quot;Initial state&quot;
@@ -6347,7 +6397,7 @@ Time spent:      (you / the agent)
 <p class="crumb"><a href="#contents">Module 8 — Safety and security</a></p>
 <h1><span class="num">8.1</span> When an agent has your keyboard: injection, secrets, destructive commands, hallucinated packages, permissions and sandboxes</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Focus <bdi dir="ltr">Secure</bdi></span> · <span class="prereq">Before this: <a href="#l5-1">5.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> fill in a threat-model worksheet for an agent session and recover a repository from a destructive reset with the reflog. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> fill in a threat-model worksheet for an agent session and recover a repository from a destructive reset with the reflog. <em>Study time: reading about 15 min, hands-on about 75 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -6361,7 +6411,7 @@ Time spent:      (you / the agent)
 <section class="sec sec-why"><h2>🧭 Why it matters</h2>
 <p>Week zero said the agent has your hands. This week asks what happens when it uses them badly, by its own mistake or because text it read told it to. Noura (application and AI security) asks: can you write down the worst it could do in this session, and what stops it?</p>
 <p>At Najm the bad day is smaller. Suppose Lujain (graduate engineer) pastes a vendor README into a session running in bypass mode, with a <code>.env</code> in the folder and <code>curl</code> allowed. The README does not need to be clever; it only needs to be read.</p>
-<p>One public account (hold the details loosely) shows a bigger shape. In April 2026 a founder said a Cursor agent running Claude Opus 4.6 found an over-scoped API token and deleted a production volume in one call; his backups were on the same volume (<a href="https://www.theregister.com/software/2026/04/27/cursor-opus-agent-snuffs-out-startups-production-database/5224442">The Register</a>).</p>
+<p>One public account (hold the details loosely) shows a bigger shape. In April 2026 the founder of PocketOS said a Cursor coding agent found an over-scoped API token and deleted a production volume in one call; his backups were on the same volume. His hosting provider later said the data was recovered (<a href="https://decrypt.co/365897/ai-agent-deletes-startup-database-9-seconds-founder-says">Decrypt</a>).</p>
 </section>
 <section class="sec sec-how"><h2>📐 How it works</h2>
 <h3>🟢 The essentials</h3>
@@ -6451,7 +6501,7 @@ Time spent:      (you / the agent)
 <td>Deny push; ask on <code>curl</code>; sandbox with no allowed domains</td>
 </tr>
 </tbody></table></div>
-<p><strong>Excessive agency</strong> (OWASP LLM06:2025) has three roots: unneeded tools, a token broader than the task, irreversible actions with no human. The Cursor report above shows the last two.</p>
+<p><strong>Excessive agency</strong> (OWASP LLM06:2025; LLM03 in the 2026 edition) has three roots: unneeded tools, a token broader than the task, irreversible actions with no human. The Cursor report above shows the last two.</p>
 <h3>🟡 Going deeper</h3>
 <p><strong>Secrets leak sideways:</strong> into <code>.env</code> files, shell history, logs, fixtures, commits, prompts and transcripts (Claude Code keeps local ones as plain text under <code>~/.claude/projects/</code>, 30 days by default). Keep settings in environment variables, <code>.env</code> out of git and the agent&#39;s reach, and a secret scanner in pre-commit and CI. When one escapes, <strong>rotate first</strong>: rewriting history does not un-leak the key.</p>
 <p><strong>Destructive commands.</strong> <code>git reset --hard</code> discards uncommitted changes (committed work returns from the reflog); <code>git clean -fd</code> deletes untracked files git never had; <code>rm -rf</code> removes the tree; a broad API token destroys whatever it touches in seconds. The commit is the undo: commit before the agent runs, one branch per task (<code>/rewind</code> does not track shell changes such as <code>rm</code>). Keep backups and production credentials out of the agent&#39;s reach.</p>
@@ -6683,7 +6733,7 @@ $ git branch rescue &#39;HEAD@{1}&#39;     # a branch at the lost commit; it del
 <section class="sec sec-refs"><h2>📚 References</h2>
 <ul>
 <li>Claude Code documentation: permissions <a href="https://code.claude.com/docs/en/permissions">https://code.claude.com/docs/en/permissions</a>; permission modes <a href="https://code.claude.com/docs/en/permission-modes">https://code.claude.com/docs/en/permission-modes</a>; sandboxing <a href="https://code.claude.com/docs/en/sandboxing">https://code.claude.com/docs/en/sandboxing</a>; hooks <a href="https://code.claude.com/docs/en/hooks">https://code.claude.com/docs/en/hooks</a>; MCP <a href="https://code.claude.com/docs/en/mcp">https://code.claude.com/docs/en/mcp</a>; security <a href="https://code.claude.com/docs/en/security">https://code.claude.com/docs/en/security</a>; data usage <a href="https://code.claude.com/docs/en/data-usage">https://code.claude.com/docs/en/data-usage</a></li>
-<li>OWASP Top 10 for LLM Applications 2025 (LLM01:2025 Prompt Injection, LLM06:2025 Excessive Agency): <a href="https://genai.owasp.org/llm-top-10/">https://genai.owasp.org/llm-top-10/</a></li>
+<li>OWASP Top 10 for LLM Applications 2025 (LLM01:2025 Prompt Injection, LLM06:2025 Excessive Agency; excessive agency is LLM03 in the 2026 edition): <a href="https://genai.owasp.org/llm-top-10/">https://genai.owasp.org/llm-top-10/</a></li>
 <li><a href="../secai/index.html#/8.2"><em>Secure AI &amp; Application Security</em>, lesson 8.2 — Prompt injection and jailbreaks, direct and indirect</a>; <a href="../secai/index.html#/9.2"><em>Secure AI</em>, lesson 9.2 — Agents and tools: excessive agency, least-privilege tools and MCP</a>; <a href="../secai/index.html#/6.2"><em>Secure AI</em>, lesson 6.2 — The software supply chain: dependencies, SBOMs, SLSA and signing</a>; <a href="../secai/index.html#/6.3"><em>Secure AI</em>, lesson 6.3 — Securing AI-generated code: what coding agents get wrong</a></li>
 <li><strong>Go deeper.</strong> Invariant Labs, tool poisoning: <a href="https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks">https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks</a> · Invariant Labs, GitHub MCP: <a href="https://invariantlabs.ai/blog/mcp-github-vulnerability">https://invariantlabs.ai/blog/mcp-github-vulnerability</a> · Simon Willison, the lethal trifecta: <a href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/">https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/</a> · Spracklen et al.: <a href="https://www.usenix.org/conference/usenixsecurity25/presentation/spracklen">https://www.usenix.org/conference/usenixsecurity25/presentation/spracklen</a> · Pearce et al.: <a href="https://arxiv.org/pdf/2108.09293">https://arxiv.org/pdf/2108.09293</a> · Perry et al.: <a href="https://arxiv.org/pdf/2211.03622">https://arxiv.org/pdf/2211.03622</a></li>
 </ul>
@@ -6694,7 +6744,7 @@ $ git branch rescue &#39;HEAD@{1}&#39;     # a branch at the lost commit; it del
 <p class="crumb"><a href="#contents">Module 8 — Safety and security</a></p>
 <h1><span class="num">8.2</span> Lab: harden your setup with permissions, a guard hook and a dependency check</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Focus <bdi dir="ltr">Secure, Automate</bdi></span> · <span class="prereq">Before this: <a href="#l8-1">8.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> configure agent permissions, a guard hook and a dependency check that each pass the grader. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> configure agent permissions, a guard hook and a dependency check that each pass the grader. <em>Study time: reading about 10 min, hands-on about 150 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -6932,7 +6982,7 @@ CI step in `.github/workflows/` changed; and `python -m ailab grade m08 --dir &l
 `ainative/ailab` folder of the course repository).
 </code></pre>
 <p><strong>Start.</strong></p>
-<pre><code class="language-bash">cd ainative/ailab    # in the course repository
+<pre><code class="language-bash">cd ~/system-design-for-vibe-coders/ainative/ailab    # in the course repository
 python -m ailab start m08 --dir ~/ainative/m08
 cd ~/ainative/m08    # your lab folder
 </code></pre>
@@ -7073,7 +7123,7 @@ Time spent:         (you / the agent)
 <p class="crumb"><a href="#contents">Module 9 — Automating your agent</a></p>
 <h1><span class="num">9.1</span> Commands, skills, subagents, hooks, MCP and headless mode: what to automate and what not to</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Focus <bdi dir="ltr">Automate</bdi></span> · <span class="prereq">Before this: <a href="#l2-1">2.1</a>, <a href="#l8-1">8.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> decide with a decision card whether a repeated task becomes a command, skill or hook or stays manual, and justify it. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> decide with a decision card whether a repeated task becomes a command, skill or hook or stays manual, and justify it. <em>Study time: reading about 15 min, hands-on about 60 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -7188,7 +7238,7 @@ Say what and why, what you ran to check it, and which files touch money logic; i
 </tr>
 <tr>
 <td><strong>Skill</strong></td>
-<td>A <code>SKILL.md</code> prompt you or Claude start; commands live here now</td>
+<td>A <code>SKILL.md</code> prompt you or Claude start; commands live here now (old command files still work and a skill wins a name clash; check the docs)</td>
 <td>A prompt you paste more than twice</td>
 </tr>
 <tr>
@@ -7213,7 +7263,7 @@ Say what and why, what you ran to check it, and which files touch money logic; i
 </tr>
 <tr>
 <td><strong>Run limits</strong></td>
-<td>Tools, turns, budget, timeout, retries</td>
+<td>Tools, turns, budget, timeout, retries (<code>--max-turns</code> has no default limit at the time of writing; check the docs)</td>
 <td>Every unattended run</td>
 </tr>
 </tbody></table></div>
@@ -7307,16 +7357,16 @@ if __name__ == &quot;__main__&quot;:
 </ul>
 </section>
 <section class="sec sec-quiz"><h2>✍️ Check yourself</h2>
-<p><strong>1. Salem finds <code>.claude/commands/deploy.md</code> in one repository and <code>.claude/skills/deploy/SKILL.md</code> in another. What is true?</strong></p>
+<p><strong>1. Salem pastes the same pull-request description prompt three times a week, then reads and edits what comes back. Which form fits the decision card?</strong></p>
 <ul>
-<li>A. Command files are no longer read, so only the skill exists</li>
-<li>B. Both create <code>/deploy</code>, and a skill wins if the names clash</li>
-<li>C. Both run in turn, with the command file first</li>
-<li>D. Commands are typed by people and skills are used only by Claude</li>
+<li>A. A <code>PreToolUse</code> hook that drafts the description before every edit he makes</li>
+<li>B. A skill he starts when he needs it, whose output he reads and edits himself</li>
+<li>C. A nightly headless job that writes each description and opens the pull request</li>
+<li>D. A subagent that writes the description and then approves the pull request itself</li>
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>B.</strong> Commands merged into skills: both paths create <code>/deploy</code>, and the skill wins a name clash. (🟢 Commands and skills.)</p>
+<p><strong>B.</strong> It repeats and a person reads every result, so a skill such as <code>/pr-description</code> fits. A hook (A) fires on every edit, not when needed; C and D act with nobody reading the output. (🟢 The decision rule.)</p>
 </details>
 
 <p><strong>2. Lujain&#39;s reviewer subagent ignores a long explanation she gave earlier in her session. Why?</strong></p>
@@ -7355,23 +7405,23 @@ if __name__ == &quot;__main__&quot;:
 <p><strong>D.</strong> It repeats, and a parser gives pass or fail. A, B and C hand judgement to a model with no mechanical check. (🟢 The decision rule.)</p>
 </details>
 
-<p><strong>5. A nightly job runs <code>claude -p</code> with <code>--allowedTools</code> set but no <code>--max-turns</code>. What does the documentation say about turns?</strong></p>
+<p><strong>5. Tariq approves a nightly <code>claude -p</code> job that labels new tickets by area from a fixed list. What belongs under &quot;Limits?&quot; on its card?</strong></p>
 <ul>
-<li>A. A small default applies, and the run ends with an error</li>
-<li>B. The model sets the limit, stopping when it has finished</li>
-<li>C. <code>--max-budget-usd</code> replaces the turn flag, so none is needed</li>
-<li>D. There is no limit by default, so a confused run can keep going</li>
+<li>A. Tools, turns, budget and timeout set, and each label checked against the list</li>
+<li>B. Tools, turns and budget set, with each label taken as the model returns it</li>
+<li>C. A turn limit and timeout only, since a run that ends cannot overspend</li>
+<li>D. A budget cap only, since <code>--max-budget-usd</code> stands in for every other limit</li>
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>D.</strong> <code>--max-turns</code> has no limit by default. A budget is a separate cap, and only an estimate. (🟡 Headless mode.)</p>
+<p><strong>A.</strong> Every unattended run gets a tool list, turn limit, budget cap and timeout, and its output is validated before anything acts on it. Unchecked labels (B) let a wrong area through, a turn limit and timeout (C) cap length, not spend, tools or output, and the budget is only a client-side estimate (D). (🟡 Headless mode; 🔴 Cost and reliability.)</p>
 </details>
 </section>
 <section class="sec sec-refs"><h2>📚 References</h2>
 <ul>
 <li>Claude Code documentation: skills <a href="https://code.claude.com/docs/en/skills">https://code.claude.com/docs/en/skills</a>; subagents <a href="https://code.claude.com/docs/en/sub-agents">https://code.claude.com/docs/en/sub-agents</a>; hooks <a href="https://code.claude.com/docs/en/hooks">https://code.claude.com/docs/en/hooks</a>; hooks guide <a href="https://code.claude.com/docs/en/hooks-guide">https://code.claude.com/docs/en/hooks-guide</a>; MCP <a href="https://code.claude.com/docs/en/mcp">https://code.claude.com/docs/en/mcp</a>; headless <a href="https://code.claude.com/docs/en/headless">https://code.claude.com/docs/en/headless</a>; GitHub Actions <a href="https://code.claude.com/docs/en/github-actions">https://code.claude.com/docs/en/github-actions</a></li>
 <li><a href="../aiapps/index.html#/10.1"><em>Building AI Applications &amp; Agents</em>, lesson 10.1 — The Model Context Protocol: servers, tools, resources, authorisation and least privilege</a>; <a href="../secai/index.html#/9.2"><em>Secure AI &amp; Application Security</em>, lesson 9.2 — Agents and tools: excessive agency, least-privilege tools and MCP</a></li>
-<li><strong>Go deeper.</strong> Engineering at Meta, &quot;How Meta Built Forum With AI-Native Engineering&quot;: <a href="https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/">https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/</a> · OWASP, LLM06:2025 Excessive Agency: <a href="https://genai.owasp.org/llm-top-10/">https://genai.owasp.org/llm-top-10/</a> · Invariant Labs, GitHub MCP exploited: <a href="https://invariantlabs.ai/blog/mcp-github-vulnerability">https://invariantlabs.ai/blog/mcp-github-vulnerability</a> · Wiz, the s1ngularity supply-chain attack: <a href="https://wiz.io/blog/s1ngularity-supply-chain-attack">https://wiz.io/blog/s1ngularity-supply-chain-attack</a> · Model Context Protocol: <a href="https://modelcontextprotocol.io">https://modelcontextprotocol.io</a></li>
+<li><strong>Go deeper.</strong> Engineering at Meta, &quot;How Meta Built Forum With AI-Native Engineering&quot;: <a href="https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/">https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/</a> · OWASP, LLM06:2025 Excessive Agency (LLM03 in the 2026 edition): <a href="https://genai.owasp.org/llmrisk/llm062025-excessive-agency/">https://genai.owasp.org/llmrisk/llm062025-excessive-agency/</a> · Invariant Labs, GitHub MCP exploited: <a href="https://invariantlabs.ai/blog/mcp-github-vulnerability">https://invariantlabs.ai/blog/mcp-github-vulnerability</a> · Wiz, the s1ngularity supply-chain attack: <a href="https://wiz.io/blog/s1ngularity-supply-chain-attack">https://wiz.io/blog/s1ngularity-supply-chain-attack</a> · Model Context Protocol: <a href="https://modelcontextprotocol.io">https://modelcontextprotocol.io</a></li>
 </ul>
 </section>
 <p class="back"><a href="#contents">↑ Contents</a></p>
@@ -7380,7 +7430,7 @@ if __name__ == &quot;__main__&quot;:
 <p class="crumb"><a href="#contents">Module 9 — Automating your agent</a></p>
 <h1><span class="num">9.2</span> Lab: build a project toolkit and a headless triage script</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Focus <bdi dir="ltr">Automate</bdi></span> · <span class="prereq">Before this: <a href="#l9-1">9.1</a>, <a href="#l8-2">8.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> build a review command, a post-edit hook and a headless triage script that pass the grader. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build a review command, a post-edit hook and a headless triage script that pass the grader. <em>Study time: reading about 10 min, hands-on about 3 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -7553,7 +7603,7 @@ the tests); only `.claude/`, `scripts/`, `docs/`, `.github/`, new files under `t
 directory&gt;` passes (run it from the `ailab` folder of the course repository).
 </code></pre>
 <p><strong>Start.</strong></p>
-<pre><code class="language-bash">cd ainative/ailab
+<pre><code class="language-bash">cd ~/system-design-for-vibe-coders/ainative/ailab
 python -m ailab start m09 --dir ~/ainative/m09
 cd ~/ainative/m09
 export PATH=&quot;$PWD/lab-assets/bin:$PATH&quot;   # the stand-in; macOS, Linux or WSL
@@ -7691,7 +7741,7 @@ Time spent:         (you / the agent)
 <p class="crumb"><a href="#contents">Module 10 — Parallel and multi-agent work</a></p>
 <h1><span class="num">10.1</span> Working with several agents: worktrees, delegation, the review bottleneck and cost</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Focus <bdi dir="ltr">Workflow, Automate</bdi></span> · <span class="prereq">Before this: <a href="#l4-1">4.1</a>, <a href="#l5-1">5.1</a>, <a href="#l9-1">9.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> split a change into independent tasks with a merge order and set your stream count from measured review minutes. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> split a change into independent tasks with a merge order and set your stream count from measured review minutes. <em>Study time: reading about 15 min, hands-on about 60 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -8044,7 +8094,7 @@ Why this order:
 <li>A. 55 minutes, the whole overlap in agent time</li>
 <li>B. 28 minutes, after setup and integration are paid</li>
 <li>C. 43 minutes, after setup alone is taken out</li>
-<li>D. None: parallel work never saves any time</li>
+<li>D. 40 minutes, after integration alone is taken out</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -8065,7 +8115,7 @@ Why this order:
 <p class="crumb"><a href="#contents">Module 10 — Parallel and multi-agent work</a></p>
 <h1><span class="num">10.2</span> Lab: split a change across agents and integrate it</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Focus <bdi dir="ltr">Workflow</bdi></span> · <span class="prereq">Before this: <a href="#l10-1">10.1</a>, <a href="#l4-2">4.2</a>, <a href="#l5-2">5.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> build a four-task change on separate branches and merge it into main in an order that keeps the grader green. <em>Study time: about 150 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build a four-task change on separate branches and merge it into main in an order that keeps the grader green. <em>Study time: reading about 10 min, hands-on about 3 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -8258,7 +8308,16 @@ cp lab-assets/parallel-plan-template.md docs/parallel-plan.md
 export PYTHONPATH=src    # so python -m remit works; set it in every worktree shell too
 </code></pre>
 <p>Use <code>PYTHONPATH</code>, not <code>pip install -e .</code>: an editable install would run this folder&#39;s code from every worktree.</p>
-<p><strong>Your move.</strong> Fill in the plan, commit it on <code>main</code> (<code>docs(docs): plan the parallel work for REMIT-361</code>) and cut A, B and C from that commit. Hessa&#39;s &quot;at the same time&quot; is false for D: it copies real output from B and C. Say so under &quot;Cannot run in parallel&quot; and cut D from <code>main</code> once B and C are merged (cut earlier it passes too, but its branch cannot run the commands it quotes). <em>By hand, no agent:</em> use way 1 or 2, tests first, small commits, <code>pytest -q</code> before every merge; expect 10 to 25 minutes a task. <em>With agents:</em> one session per worktree, the brief above adapted per task, plan mode first, then <code>acceptEdits</code> inside the worktree (lesson <a class="xref" href="#l0-3">0.3</a>&#39;s level 3), <code>Bash(pytest *)</code> allowed and other Bash commands on a prompt. The starter&#39;s <code>CLAUDE.md</code> (lesson <a class="xref" href="#l2-2">2.2</a>&#39;s reference memory) allows commits only when asked, so your brief must ask. One agent session doing the small tasks in turn is a fair run if your log says so. Keep every branch until you have graded; log minutes per stream.</p>
+<p><strong>Your move.</strong></p>
+<ol>
+<li>Fill in the plan and commit it on <code>main</code> (<code>docs(docs): plan the parallel work for REMIT-361</code>).</li>
+<li>Cut branches A, B and C from that commit.</li>
+<li>Hessa&#39;s &quot;at the same time&quot; is false for D: it copies real output from B and C. Say so under &quot;Cannot run in parallel&quot;.</li>
+<li>Build A, B and C (below), then merge them into <code>main</code> in your plan&#39;s order.</li>
+<li>Cut D from <code>main</code> once B and C are merged (cut earlier it passes too, but its branch cannot run the commands it quotes), build it and merge it.</li>
+<li>Grade, keeping every branch until you have.</li>
+</ol>
+<p><em>By hand, no agent:</em> use way 1 or 2, tests first, small commits, <code>pytest -q</code> before every merge; expect 10 to 25 minutes a task. <em>With agents:</em> one session per worktree, the brief above adapted per task, plan mode first, then <code>acceptEdits</code> inside the worktree (lesson <a class="xref" href="#l0-3">0.3</a>&#39;s level 3), <code>Bash(pytest *)</code> allowed and other Bash commands on a prompt. The starter&#39;s <code>CLAUDE.md</code> (lesson <a class="xref" href="#l2-2">2.2</a>&#39;s reference memory) allows commits only when asked, so your brief must ask. One agent session doing the small tasks in turn is a fair run if your log says so. Keep every branch until you have graded; log minutes per stream.</p>
 <p>To try a command by hand, or to copy real output into the runbook, add a customer and a transfer first (<code>remit.db</code> is git-ignored):</p>
 <pre><code class="language-bash">python -m remit customer add --id C001 --name &quot;Aisha Rahman&quot; --kyc T2
 python -m remit send --customer C001 QAR 500 INR --recipient &quot;Ravi Kumar&quot;
@@ -8406,7 +8465,7 @@ Streams at once: 3.  Integration: 20 min.  A ÷ R from this one row: 1.5, so two
 <p class="crumb"><a href="#contents">Module 11 — AI across the lifecycle</a></p>
 <h1><span class="num">11.1</span> Beyond writing code: requirements, design critique, docs, review, incidents and learning</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Focus <bdi dir="ltr">Workflow</bdi></span> · <span class="prereq">Before this: <a href="#l5-1">5.1</a>, <a href="#l6-1">6.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> trace claims in a design document to the code, mark which are refuted, and check an AI critic&#39;s objections. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> trace claims in a design document to the code, mark which are refuted, and check an AI critic&#39;s objections. <em>Study time: reading about 15 min, hands-on about 60 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -8419,7 +8478,7 @@ Streams at once: 3.  Integration: 20 min.  A ÷ R from this one row: 1.5, so two
 </section>
 <section class="sec sec-why"><h2>🧭 Why it matters</h2>
 <p>On Monday Hessa (product owner) asks for a najmkit page for the wiki. Lujain (graduate engineer) types &quot;write the docs for najmkit&quot; into a chat window, with no code. The page that comes back is lovely: <code>ids.generate(prefix, length=8)</code>, <code>clock.utcnow()</code>, <code>audit.write(event, fields)</code>, a note that the library is thread-safe, and <code>pip install najmkit</code>. None of it exists. najmkit is Najm&#39;s internal library, so nothing outside the bank, a model included, has ever seen it. The page was fluent, and every line that mattered was invented.</p>
-<p>In July 2025 Jason Lemkin said a Replit coding agent deleted a production database during a code freeze, then told him a rollback would not work; he recovered the data by hand. Fortune reported it, but the account rests on his own screenshots and nobody has audited it. Still, an agent&#39;s statement about what happened is a claim, not evidence. Habit 4, <strong>Trust evidence, not fluency</strong> (lesson <a class="xref" href="#l5-1">5.1</a>), must reach the rest of the job.</p>
+<p>Lesson <a class="xref" href="#l0-2">0.2</a>&#39;s Replit account has a second lesson in it: after the deletion, the agent told its user a rollback would not work, and the rollback did work (<a href="https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/">The Register</a>). The founder&#39;s account is unaudited, but the point stands: an agent&#39;s statement about what happened is a claim, not evidence. Habit 4, <strong>Trust evidence, not fluency</strong> (lesson <a class="xref" href="#l5-1">5.1</a>), must reach the rest of the job.</p>
 </section>
 <section class="sec sec-how"><h2>📐 How it works</h2>
 <h3>🟢 The essentials</h3>
@@ -8740,7 +8799,7 @@ END
 <p class="crumb"><a href="#contents">Module 11 — AI across the lifecycle</a></p>
 <h1><span class="num">11.2</span> Lab: an ADR with a critic, docs checked against code and a postmortem that sticks to the facts</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Focus <bdi dir="ltr">Workflow, Verify</bdi></span> · <span class="prereq">Before this: <a href="#l11-1">11.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> write an ADR with a critic, a library page checked against code and a factual postmortem that pass the grader. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write an ADR with a critic, a library page checked against code and a factual postmortem that pass the grader. <em>Study time: reading about 15 min, hands-on about 3 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -8897,7 +8956,7 @@ message that follows `CONTRIBUTING.md` (`type(scope): subject`; any lower-case s
 `python -m ailab grade m11 --dir &lt;this directory&gt;`
 </code></pre>
 <p><strong>Start.</strong></p>
-<pre><code class="language-bash">cd ainative/ailab
+<pre><code class="language-bash">cd ~/system-design-for-vibe-coders/ainative/ailab
 python -m ailab start m11 --dir ~/ainative/m11
 cd ~/ainative/m11
 </code></pre>
@@ -9049,7 +9108,7 @@ One thing I will do differently:
 <p class="crumb"><a href="#contents">Module 12 — AI-native teams</a></p>
 <h1><span class="num">12.1</span> Team practice: conventions, review norms, ownership, juniors, metrics and policy</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Focus <bdi dir="ltr">Team</bdi></span> · <span class="prereq">Before this: <a href="#l0-3">0.3</a>, <a href="#l5-1">5.1</a>, <a href="#l10-1">10.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> write a team AI working agreement in which every norm has a number, a name or a check. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a team AI working agreement in which every norm has a number, a name or a check. <em>Study time: reading about 15 min, hands-on about 60 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -9348,7 +9407,7 @@ Owner: &lt;name&gt;.  Version: 1.  Next review: &lt;date, and after any incident
 <p class="crumb"><a href="#contents">Module 12 — AI-native teams</a></p>
 <h1><span class="num">12.2</span> Workshop: write your team's AI engineering playbook</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Focus <bdi dir="ltr">Team</bdi></span> · <span class="prereq">Before this: <a href="#l12-1">12.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> write a team AI engineering playbook of twelve or more checkable rules that passes the grader. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a team AI engineering playbook of twelve or more checkable rules that passes the grader. <em>Study time: reading about 15 min, hands-on about 150 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -9686,7 +9745,7 @@ Lines the grader flagged on the first draft:
 <p class="crumb"><a href="#contents">Module 13 — Staying sharp</a></p>
 <h1><span class="num">13.1</span> Skills that compound: fundamentals, taste, deliberate practice, evaluating tools and avoiding deskilling</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Focus <bdi dir="ltr">Mindset</bdi></span> · <span class="prereq">Before this: <a href="#l5-1">5.1</a>, <a href="#l12-1">12.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> rate your skills with evidence, do a timed practice rep without AI and compare two tools on your own tasks. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> rate your skills with evidence, do a timed practice rep without AI and compare two tools on your own tasks. <em>Study time: reading about 15 min, hands-on about 90 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -9698,7 +9757,7 @@ Lines the grader flagged on the first draft:
 </ul>
 </section>
 <section class="sec sec-why"><h2>🧭 Why it matters</h2>
-<p>Last Tuesday Lujain (graduate engineer) asked her agent to &quot;tidy the rounding in the ledger&quot;. Its diff made the partner&#39;s share of the fee round half up, &quot;like everything else in Remit&quot;. The ledger has no tests of its own, so nothing went red, and she opened a pull request. On Thursday Nada (quality engineering lead), the second reviewer, asks: &quot;Why does the ledger give the partner 3.04 on a fee of 10.15, not 3.05?&quot; Lujain has never opened <code>ledger.py</code>. Its docstring documents the quirk (Q-LED-1) and warns against refactoring the file without characterization tests. The agent skipped that or took it for a bug, and she could not say which.</p>
+<p>Last Tuesday Lujain (graduate engineer) asked her agent to &quot;tidy the rounding in the ledger&quot;. Its diff made the partner&#39;s share of the fee round half up, &quot;like everything else in Remit&quot;. The ledger has no tests of its own, so nothing went red, and she opened a pull request. On Thursday Nada (quality engineering lead), the second reviewer, asks: &quot;Why does the ledger give the partner 3.04 on a fee of 10.15, not 3.05?&quot; It is the quirk lesson <a class="xref" href="#l7-1">7.1</a> pinned, but Lujain has never opened <code>ledger.py</code>. Its docstring documents the quirk (Q-LED-1) and warns against refactoring the file without characterization tests. The agent skipped that or took it for a bug, and she could not say which.</p>
 <p>What was missing was not a prompt trick but a fundamental: reading code and asking why it is the way it is. You practise it less when an agent does the reading. The fifth habit, <strong>Automate the loop, keep the skill</strong>, has two halves: Module 9 built the first, this module the second. A small Anthropic study (below) found juniors who learned a library with an AI assistant scored lower on a later quiz: reason enough to practise on purpose.</p>
 </section>
 <section class="sec sec-how"><h2>📐 How it works</h2>
@@ -9805,7 +9864,7 @@ to a bound stays in the lower tier. I will paste each attempt.
 <p>A public score is a hint about other people&#39;s tasks, not a measurement of yours. A <strong>personal eval</strong> is your own tasks, each with a check that <strong>fails before the tool runs and passes on a solution you trust</strong>, kept hidden from the tool and repeated because output varies. <code>najmkit</code> is the vendored library an agent cannot know from training (lesson <a class="xref" href="#l2-1">2.1</a>), so tasks that use it test reading, not recall. Lesson <a class="xref" href="#l13-2">13.2</a> builds one; <a href="../testing/index.html#/7.1"><em>Software Testing</em>, lesson 7.1 — Evals: testing LLM applications with datasets, graders, LLM-as-judge, non-determinism and CI gates</a> teaches the method for AI products.</p>
 <p><strong>Staying current without chasing.</strong> A cadence beats a feed:</p>
 <ul>
-<li>A fixed 30 minutes a week for the release notes of your tools (Claude Code has published weekly ones; check the current documentation) and for security advisories. In August 2025 a prompt injection could make GitHub Copilot enable its own auto-approve setting (CVE-2025-53773, patched that month).</li>
+<li>A fixed 30 minutes a week for the release notes of your tools (Claude Code lists every release in its changelog: <a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md</a>) and for security advisories. In August 2025 a prompt injection could make GitHub Copilot enable its own auto-approve setting (CVE-2025-53773, patched that month).</li>
 <li>One small experiment a month: a hypothesis, a one-hour time box, one number, a decision. &quot;Plan mode before any change over three files: do corrections fall?&quot;</li>
 <li>The two-source rule (this course&#39;s rule of thumb): change a habit when two trusted sources agree, or your own eval shows it. Prompt tricks expire (in 2026, &quot;think hard&quot; is ordinary text in Claude Code): check the current documentation.</li>
 </ul>
@@ -9966,12 +10025,12 @@ Strong: AI-assisted (label added). The agent drafted the tier change; I wrote th
 <ul>
 <li>A. Move the whole team to it this week, while the advantage is new</li>
 <li>B. Note it, read its notes in your weekly slot, and run your eval before deciding</li>
-<li>C. Ignore every new model for a year, so that the team is not distracted</li>
+<li>C. Stay on your current model until its vendor retires it, so the team stays stable</li>
 <li>D. Wait until it tops a public leaderboard for a month, then adopt it across the team</li>
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>B.</strong> A cadence plus your own eval turns an announcement into a measurement. A demo (A) or a score (D) repeats the leaderboard mistake; ignoring everything (C) misses real gains. (🟡 Staying current.)</p>
+<p><strong>B.</strong> A cadence plus your own eval turns an announcement into a measurement. A demo (A) or a score (D) repeats the leaderboard mistake; staying put by default (C) misses real gains. (🟡 Staying current.)</p>
 </details>
 </section>
 <section class="sec sec-refs"><h2>📚 References</h2>
@@ -9989,7 +10048,7 @@ Strong: AI-assisted (label added). The agent drafted the tier change; I wrote th
 <p class="crumb"><a href="#contents">Module 13 — Staying sharp</a></p>
 <h1><span class="num">13.2</span> Workshop: your personal eval, learning plan and 90-day plan</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Focus <bdi dir="ltr">Mindset, Team</bdi></span> · <span class="prereq">Before this: <a href="#l13-1">13.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> build a personal eval of eight or more checkable tasks and use its results to decide what to delegate. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build a personal eval of eight or more checkable tasks and use its results to decide what to delegate. <em>Study time: reading about 15 min, hands-on about 3 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -10138,7 +10197,7 @@ Only `eval/` and `plan.md` changed, in at least two commits that follow `CONTRIB
 </code></pre>
 <p><strong>Start.</strong></p>
 <pre><code class="language-bash"># from the root of the course repository
-cd ainative/ailab
+cd ~/system-design-for-vibe-coders/ainative/ailab
 python -m ailab start m13 --dir ~/ainative/m13
 cd ~/ainative/m13        # run every eval_runner command from here
 mkdir -p eval/checks eval/setup eval/reference
@@ -10285,7 +10344,7 @@ Checks that passed on nothing:
 <p class="crumb"><a href="#contents">Module 14 — Hero: capstone and practice exam</a></p>
 <h1><span class="num">14.1</span> Capstone: take a change to Najm Remit through the full AI-native cycle</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Focus <bdi dir="ltr">Workflow, Verify, Secure</bdi></span> · <span class="prereq">Before this: Modules 0-13</span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> take one ticket from spec to reviewed, graded change with an agent and defend every line in a demo. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> take one ticket from spec to reviewed, graded change with an agent and defend every line in a demo. <em>Study time: reading about 15 min, hands-on about 10 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -10301,7 +10360,8 @@ Checks that passed on nothing:
 </section>
 <section class="sec sec-how"><h2>📐 How it works</h2>
 <h3>🟢 The essentials</h3>
-<p><strong>The brief.</strong> Eight milestones: context (modules 0-2), spec and plan (3), small steps (4, 5), review (5, 6), security (8), automation (9, 10), documents (11) and retrospective (12, 13). Each leaves something checkable that must refer to something real: files, ids <code>AC1</code>..., commands, the code, a commit. <code>lab-assets/README.md</code> lists what the grader reads in each.</p>
+<p><strong>The brief.</strong> Eight milestones: context (modules 0-2), spec and plan (3), small steps (4, 5), review (5, 6), security (8), automation (9, 10), documents (11) and retrospective (12, 13). Each leaves something checkable that must refer to something real: files, ids <code>AC1</code>..., commands, the code, a commit. <code>lab-assets/README.md</code> lists what the grader reads in each. Module 7 has no milestone: REMIT-414 adds code rather than changing an untested module, though its habit (pin behaviour before you change it) runs through the tests-first step.</p>
+<p><strong>Time.</strong> This is not a one-sitting lesson. The header&#39;s estimate covers reading and planning it; the build itself takes 8 to 12 hours of hands-on work spread over a week or more (roughly: spec and plan 2 h, code and tests 3 to 4 h, review and hardening 2 h, documents and retrospective 2 h), plus the 90-minute group session.</p>
 <p><strong>Providers before the consumer.</strong> A corridor names its fee schedule, and an old test (<code>tests/test_corridors.py</code>) checks that the schedule exists. So the plan adds <code>STD-C</code> in <code>fees.py</code>, then the rate and margin in <code>fx.py</code>, then the corridor, then the wording (<code>notify.py</code>) and the template choice (<code>service.py</code>). No code commit turns an old test red. Fee and rate functions take a <code>Corridor</code>: build one that points at <code>STD-C</code> in your fee tests, and they pass before the real corridor exists.</p>
 <p><strong>Work the money out by hand.</strong> Remit rounds half up, in <code>Decimal</code>. A fee, a rate or a receive amount can land exactly on a tie, which half-even rounding, <code>round()</code> or a float resolves the other way. The base repo pins one:</p>
 <pre><code class="language-text">150.25 on QAR-INR:   150.25 x 2.00% + 2.00 = 5.005    half up 5.01      (half-even or float: 5.00)
@@ -10336,7 +10396,7 @@ Then commit: feat(fees): add the STD-C fee schedule for Bangladesh
 <h3>🔴 Expert view</h3>
 <p><strong>When the ticket&#39;s account of today&#39;s Remit and the code disagree,</strong> the code wins and the ticket gets a question. <strong>When the agent offers a neighbouring fix</strong> (the stale <code>risk.py</code> and daily-limit text of the architecture page), decline it and log a follow-up with an owner. A product question you notice, such as who can ever send the 12,000 maximum under the T1 and T2 daily limits, goes in your spec&#39;s open questions. <strong>Do not delegate</strong> the approved wording or the expected values.</p>
 <p><strong>How much evidence is enough?</strong> Match it to risk. A typo needs one commit and the test that was red; money logic gets all ten pieces and a second human on <code>fees.py</code>, <code>fx.py</code> and <code>service.py</code>.</p>
-<p><strong>What the grader cannot tell.</strong> A model could fill every template in ten minutes and pass: the checks verify shape, truth and references, never sincerity. The demo has you break your own code live. Alone, or inside one agent session, you cannot hold the demo: walk a colleague through the change instead.</p>
+<p><strong>What the grader cannot tell.</strong> A model could fill every template in ten minutes and pass: the checks verify shape, truth and references, never sincerity. The demo has you break your own code live. Its real test is a colleague&#39;s live questions; studying alone, a recorded demo is the fallback, and an agent session on its own never counts as the reviewer.</p>
 </section>
 <section class="sec sec-repos"><h2>🧰 The toolkit</h2>
 <div class="table-scroll"><table>
@@ -10461,7 +10521,7 @@ Lab m14: 7/29 required checks passed: NOT YET
 <li><em>Documents:</em> 1 from memory; 2 match today; 3 cross-refer, checked; 4 drift check automated.</li>
 </ul>
 <p><strong>Weekly deliverable (Module 14).</strong> In a notes folder of your own, commit <code>week-14/</code>: <code>m14-grade.txt</code> (the final grade output), <code>baseline-after.md</code> (the lesson <a class="xref" href="#l0-1">0.1</a> self-check again, if you did one), <code>demo-notes.md</code> and a one-page <code>portfolio.md</code> (what changed, how you know it is right, where AI helped and where you overruled it; fictional, no secrets). The kit does not check these.</p>
-<p><strong>Group session (90 minutes).</strong> Demo in English and Arabic; Hessa asks if Customer Care would sign (15). The trail, spec to <code>git log --oneline</code>; Tariq asks where the plan changed (15). Move the cap by one cent, live (the <strong>Mutation check</strong> of lesson <a class="xref" href="#l5-1">5.1</a>); Nada (quality engineering lead) asks which test fails (20). Make the agent try to read <code>.env</code>, push or install; Noura (application and AI security) asks what the guard cannot see (15). Swap repositories and find the riskiest hunk in <code>git diff lab-start</code> (15). Agree one change to the memory file (10).</p>
+<p><strong>Group session (90 minutes).</strong> Demo in English and Arabic; Hessa asks if Customer Care would sign (15). The trail, spec to <code>git log --oneline</code>; Tariq asks where the plan changed (15). Move the cap by one cent, live (the <strong>Mutation check</strong> of lesson <a class="xref" href="#l5-1">5.1</a>); Nada (quality engineering lead) asks which test fails (20). Make the agent try to read <code>.env</code>, push or install; Noura (application and AI security) asks what the guard cannot see (15). Swap repositories and find the riskiest hunk in <code>git diff lab-start</code> (15). Agree one change to the memory file (10). <em>Alone:</em> record a 15-minute demo answering the four people&#39;s questions, do the one-cent mutation and the <code>.env</code> attempt on camera, have a fresh agent session find the riskiest hunk before you check its answer, and play the recording to a colleague when you can.</p>
 <p><strong>Debrief.</strong> What did the agent get wrong, or nearly? What did your context or spec miss? Which document would you write first?</p>
 <p><strong>Agent log template</strong> (<code>lab-assets/templates/agent-log.md</code>; the retrospective quotes its <code>Total minutes:</code> line):</p>
 <pre><code class="language-markdown"># Agent log: REMIT-414
@@ -10572,7 +10632,7 @@ Total minutes: 0
 <p class="crumb"><a href="#contents">Module 14 — Hero: capstone and practice exam</a></p>
 <h1><span class="num">14.2</span> Practice exam: 60 scenario questions</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Focus <bdi dir="ltr">Mindset, Context, Workflow, Verify, Secure, Automate, Team</bdi></span> · <span class="prereq">Before this: Modules 0-14</span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> answer sixty scenario questions in about 90 minutes and tag each miss with its lesson and trap. <em>Study time: about 120 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> answer sixty scenario questions in about 90 minutes and tag each miss with its lesson and trap. <em>Study time: reading about 65 min, hands-on about 120 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -11659,12 +11719,12 @@ Retake on:               (not before two weeks; aim to beat my own tag score, no
 <h3><a href="#l9-1">9.1 — Commands, skills, subagents, hooks, MCP and headless mode: what to automate and what not to</a></h3>
 <div class="table-scroll"><table><thead><tr><th>Tool, practice or pattern</th><th>What it is and does</th><th>When to reach for it</th></tr></thead><tbody>
 <tr data-q="**automation decision card** eight questions, then a decision before building any automation"><td><strong>Automation decision card</strong></td><td>Eight questions, then a decision</td><td>Before building any automation</td></tr>
-<tr data-q="**skill** a `skill.md` prompt you or claude start; commands live here now a prompt you paste more than twice"><td><strong>Skill</strong></td><td>A <code>SKILL.md</code> prompt you or Claude start; commands live here now</td><td>A prompt you paste more than twice</td></tr>
+<tr data-q="**skill** a `skill.md` prompt you or claude start; commands live here now (old command files still work and a skill wins a name clash; check the docs) a prompt you paste more than twice"><td><strong>Skill</strong></td><td>A <code>SKILL.md</code> prompt you or Claude start; commands live here now (old command files still work and a skill wins a name clash; check the docs)</td><td>A prompt you paste more than twice</td></tr>
 <tr data-q="**subagent** a worker with its own context and tools a noisy search, a fresh-eyes review"><td><strong>Subagent</strong></td><td>A worker with its own context and tools</td><td>A noisy search, a fresh-eyes review</td></tr>
 <tr data-q="**guard hook** a `pretooluse` script that blocks or asks a rule that must hold whatever the model says"><td><strong>Guard hook</strong></td><td>A <code>PreToolUse</code> script that blocks or asks</td><td>A rule that must hold whatever the model says</td></tr>
 <tr data-q="**post-edit hook** a `posttooluse` script that reports on finished work a mechanical check after every edit"><td><strong>Post-edit hook</strong></td><td>A <code>PostToolUse</code> script that reports on finished work</td><td>A mechanical check after every edit</td></tr>
 <tr data-q="**headless run** `claude -p` called by a script or ci job work with a checkable result"><td><strong>Headless run</strong></td><td><code>claude -p</code> called by a script or CI job</td><td>Work with a checkable result</td></tr>
-<tr data-q="**run limits** tools, turns, budget, timeout, retries every unattended run"><td><strong>Run limits</strong></td><td>Tools, turns, budget, timeout, retries</td><td>Every unattended run</td></tr>
+<tr data-q="**run limits** tools, turns, budget, timeout, retries (`--max-turns` has no default limit at the time of writing; check the docs) every unattended run"><td><strong>Run limits</strong></td><td>Tools, turns, budget, timeout, retries (<code>--max-turns</code> has no default limit at the time of writing; check the docs)</td><td>Every unattended run</td></tr>
 </tbody></table></div></section>
 <section class="cat" data-level="i">
 <h3><a href="#l9-2">9.2 — Lab: build a project toolkit and a headless triage script</a></h3>

@@ -25,8 +25,12 @@ Lessons link here the first time a term appears.
 | TLS / Certificate | التشفير / الشهادة | The lock that makes HTTPS private, and the paper that proves the site is really you. |
 | CDN | شبكة توزيع المحتوى | A worldwide chain of helper computers that keep copies of your pages close to users so they load fast — and shield your server. |
 | Edge | الحافة | The CDN's computers near the user (as opposed to your "origin"). |
-| Origin | الخادم الأصل | Your actual server, behind the CDN. |
-| Reverse proxy | الوسيط العكسي | The doorman program on your server (often "nginx") that receives every request and routes it to the right internal program. |
+| Origin | الخادم الأصل | Your actual server as the CDN reaches it: through your reverse proxy. Testing it directly "bypasses the CDN." |
+| App port | منفذ التطبيق | The numbered door (for example 3000) your app program listens on, behind the proxy. Testing it directly skips the proxy too. |
+| Endpoint | نقطة نهاية | One address your API answers at, like `/api/posts`: one door into the server. |
+| Middleware | البرمجية الوسيطة | Code inside your app that every request passes through before your handler: request IDs, login checks, logging. Not the reverse proxy, which is a separate program in front of the app. |
+| BGP | بروتوكول البوابة الحدودية | How networks tell each other which routes lead where: the internet's road signs. Withdraw your routes and nobody can reach you. |
+| Reverse proxy | الخادم الوسيط العكسي | The doorman program on your server (often "nginx") that receives every request and routes it to the right internal program. |
 | Header | ترويسة | A sticky note attached to a request or response — who it's from, how long to keep it, what shape it is. Machines read these. |
 | Latency | الكمون | How long a round trip takes. Measured in milliseconds; felt in patience. |
 
@@ -45,6 +49,9 @@ Lessons link here the first time a term appears.
 | Environment | بيئة | One complete copy of your system: your machine (local), a rehearsal copy (staging), the real one (production). |
 | Env var (environment variable) | متغير بيئة | A named setting the code reads at runtime — like which database to use — different in each environment. |
 | CI | التكامل المستمر | A robot that runs your checks (tests, rules) automatically on every proposed change. |
+| Staging | بيئة التجهيز | A rehearsal copy of production: same shape, no real users, safe to break. Changes run here before the real thing. |
+| Diff | الفروق | The exact changes between two versions: lines removed, lines added. What you review before a change joins. |
+| Mermaid | — | A way to write diagrams as plain text in a markdown file; previews show it as boxes and arrows. This course's diagrams are Mermaid. |
 | Blue-green deploy | النشر الأزرق-الأخضر | Keeping two copies of the app; switch traffic to the new one only after it proves healthy — so deploys don't interrupt users. |
 
 ## Data
@@ -58,8 +65,10 @@ Lessons link here the first time a term appears.
 | Migration | هجرة | A controlled change to the data's shape or home. |
 | Object storage | تخزين الكائنات | A warehouse for big files (audio, images, video) — separate from the database. |
 | Backup | نسخة احتياطية | A copy of the data you could rebuild the product from. Only real once you've practiced restoring it. |
-| Retention / TTL | الاحتفاظ / أجل البقاء | How long data is kept before automatic deletion. TTL = "time to live." |
+| Retention / TTL | الاحتفاظ / مدة البقاء | How long data is kept before automatic deletion. TTL = "time to live." |
 | Cache | الكاش | A fast short-term memory holding copies of recent answers so the slow, true source is asked less. May vanish anytime — by design. |
+| Redis | — | A popular, very fast in-memory store, used mostly as a cache and for short-lived state such as counters and sessions. |
+| Hit rate | نسبة الإصابة | The share of requests the cache answers itself (a hit) instead of asking the slow source (a miss). 90% means 9 in 10 served from cache. |
 | Cache invalidation | إبطال الكاش | Removing a cached answer because the truth changed. One of the two famously hard things. |
 
 ## Accounts and safety
@@ -84,10 +93,14 @@ Lessons link here the first time a term appears.
 | Metric | مقياس | A number tracked over time (requests/minute, errors/hour). |
 | Uptime / Downtime | التشغيل / الانقطاع | The time your product is working / not working. |
 | Incident | حادثة | The window between "something is wrong" and "it's fixed and understood." |
-| Postmortem | تشريح الحادثة | The honest write-up afterward: symptoms, cause, fix, lesson. This course is built from these. |
+| Postmortem | مراجعة ما بعد الحادثة | The honest write-up afterward: symptoms, cause, fix, lesson. This course is built from these. |
+| p99 (99th percentile) | المئين 99 | The time within which 99 of every 100 requests finish. It shows the slow tail that an average hides. |
+| Runbook | دليل تشغيل | A written step-by-step for a known situation (roll back, restore a backup), so anyone can do it calmly at 3am. |
+| Load balancer | موازن الحِمل | A traffic director that spreads requests across several copies of your app and stops sending to a copy that is sick. |
 | Feature flag | مفتاح ميزة | An on/off switch for a feature, controlled without redeploying. |
 | Background job | وظيفة خلفية | Work the system does on its own schedule (send newsletter, clean up) — nobody is watching, so it needs locks, records, and receipts. |
 | Idempotent | آمن التكرار | Safe to run twice: doing it again changes nothing extra. The property that makes retries harmless. |
+| Idempotency key | مفتاح اللاأثر | A unique ID the client sends with a request; a repeat with the same key runs only once. |
 | Queue | طابور | A waiting line for work: requests drop tasks in; workers take them out at a sustainable pace. |
 | Webhook | — | One system ringing another's doorbell when something happens. |
 

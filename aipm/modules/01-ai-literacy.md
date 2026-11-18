@@ -9,7 +9,7 @@
 # 1.1 — Machine learning, generative AI, LLMs and agents: what each is good for
 *Level: 🟢 Beginner* · *Prerequisites: 0.2* · *Stage: Discover*
 
-**After this you can** classify AI features as rules, classic ML, LLM, workflow or agent with a one-line reason each, and redesign an "LLM does everything" idea as a hybrid that states which component decides and which communicates. *Study time: about 110 minutes (estimate).*
+**After this you can** classify AI features as rules, classic ML, LLM, workflow or agent with a one-line reason each, and redesign an "LLM does everything" idea as a hybrid that states which component decides and which communicates. *Study time: reading about 20 min, hands-on about 105 min (estimate).*
 
 ## ⚡ In 60 seconds
 - "AI" is an umbrella over four families: **machine learning** (predicts a label or number from examples), **generative AI** (produces new content), **large language models** (generative AI for text, behind most assistants) and **agents** (a model using tools in a loop to finish a task).
@@ -121,6 +121,14 @@ Rania's rule for the card: *"If you cannot fill in 'cost of an error', you are n
 - 🟡 Faisal's list includes "an LLM that reads every card transaction and flags fraud". Rewrite it as a hybrid design that uses ML and an LLM each where it is strong. *Done when:* you state which component decides, which communicates, and one reason each (speed, cost, consistency or language).
 - 🔴 Najm Assist's product owner wants the phase-2 agent to handle "anything a customer asks for". Write a half-page note arguing for a narrower first scope. *Done when:* the note names at most three tasks, explains why each suits an agent rather than a fixed workflow, and names one task that should stay a workflow and why.
 
+<details><summary>Check your work</summary>
+
+**🟢 Model answer (three of five).** Email spam filter: classic ML, because it outputs a label (spam or not). Writing assistant: LLM, because it outputs new text. Loan eligibility check in a banking app: rules, because the same inputs always give the same answer from a published policy. Judge each by what it outputs, not by its marketing.
+
+**🟡 and 🔴 self-check.** Your hybrid design passes if a fast ML model scores every transaction and decides what to flag, and the LLM only writes the customer message or summarises the case for an analyst. Your scope note passes if it names at most three tasks, each needing several steps or tool calls, and keeps at least one predictable task (such as resetting a PIN) as a fixed workflow because it never varies.
+
+</details>
+
 ## ⚠️ Mistakes and traps
 - **Technology first.** "We need a GenAI use case" produces demos, not products. Start from the user job and the output it needs.
 - **An LLM for predictive decisions.** For consistent, calibrated, explainable scores on structured data, classic ML is usually better, cheaper and easier to govern. Use the LLM to communicate around the decision.
@@ -215,7 +223,7 @@ Rania's rule for the card: *"If you cannot fill in 'cost of an error', you are n
 # 1.2 — Capabilities and limits: errors, hallucination, context, latency and cost
 *Level: 🟢 Beginner* · *Prerequisites: 1.1* · *Stage: Define, Design*
 
-**After this you can** compute precision and the false-alarm count for an alerting product, and write a limits register in which every high-severity limit has a testable design response. *Study time: about 110 minutes (estimate).*
+**After this you can** compute precision and the false-alarm count for an alerting product, and write a limits register in which every high-severity limit has a testable design response. *Study time: reading about 20 min, hands-on about 145 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Every AI system is **wrong some of the time**. The product question is never "is it accurate?" but "how often is it wrong, in which way, for whom, and what happens then?"
@@ -226,11 +234,11 @@ Rania's rule for the card: *"If you cannot fill in 'cost of an error', you are n
 - Biggest trap: judging a model by a great demo. Demos show the best case; users meet the distribution.
 
 ## 🧭 Why it matters
-Two weeks into the Credit Memo Copilot pilot, Khalid forwards Rania a draft memo with one sentence highlighted. The memo says the borrower's existing facility "includes a negative pledge covenant and a minimum DSCR of 1.25x". The facility agreement says neither. The draft reads perfectly. The relationship manager (RM) had not checked it because "the rest of the numbers were right". Khalid's note is short: "If this reaches credit committee, who is accountable?"
+Two weeks into the Credit Memo Copilot pilot, Khalid forwards Rania a draft memo with one sentence highlighted. The memo says the borrower's existing facility "includes a negative pledge covenant and a minimum DSCR of 1.25x" (a promise not to pledge its assets to other lenders, and a debt service coverage ratio: cash available for debt payments ÷ payments due). The facility agreement says neither. The draft reads perfectly. The relationship manager (RM) had not checked it because "the rest of the numbers were right". Khalid's note is short: "If this reaches credit committee, who is accountable?"
 
 The model did what language models do: it produced a plausible credit memo, and plausible credit memos mention covenants. The failure was in the product. Nothing forced the draft to cite its source, nothing flagged unsupported claims, and nobody had told the RM where the copilot is weak.
 
-Public examples show the same pattern. In February 2023, a launch demo of Google's Bard included a factual error about the James Webb Space Telescope. In *Moffatt v. Air Canada* (2024), a tribunal held the airline liable after its website chatbot described a refund policy that did not match the airline's own policy. In both cases the product around the model did not account for a known limit. This lesson gives you the vocabulary to name each limit, and the habit of designing for it before users find it.
+Public examples show the same pattern. In February 2023, a promotional video for Google's Bard launch included a factual error about the James Webb Space Telescope. And in the Air Canada case you met in 0.2, the airline was held liable after its website chatbot described a refund policy that did not match its own. In both cases the product around the model did not account for a known limit. This lesson gives you the vocabulary to name each limit, and the habit of designing for it before users find it.
 
 ## 📐 How it works
 
@@ -342,6 +350,14 @@ Rania's note at the bottom: *"Every high-severity row needs a design response we
 - 🟡 Build a cost-per-task estimate for Staff GenAI with your own illustrative assumptions: users, requests per user per day, tokens in and out, price. *Done when:* you have a monthly cost, you have labelled every assumption as illustrative, and you name the one assumption that moves the total most.
 - 🔴 Write a limits register for Najm Assist phase 1 (answering questions about products and fees). *Done when:* it covers all five limits plus non-determinism, each high-severity row has a testable design response, and at least one row cites a public case (Air Canada or the Chevrolet dealer) as the reason for the control.
 
+<details><summary>Check your work</summary>
+
+**🟢 Worked answer.** Legitimate transactions: 999,000. False alarms at 0.2%: 1,998. Frauds caught at 90% recall: 900. Precision = 900 ÷ (900 + 1,998) ≈ 31%, up from about 8%. About one alert in three is now real fraud instead of one in twelve, so customers are far less likely to learn to ignore alerts.
+
+**🟡 and 🔴 self-check.** Your cost estimate passes if every input is labelled illustrative, the arithmetic is shown per call, per day and per month, and you recomputed it with your shakiest input doubled. Your limits register passes if it has six rows (the five limits plus non-determinism), each high-severity row has a response you could test before launch (for example "fees quoted only from retrieved documents"), and one row cites Air Canada or the Chevrolet dealer as the reason for its control.
+
+</details>
+
 ## ⚠️ Mistakes and traps
 - **Headline accuracy.** For rare events, accuracy hides failure. Ask for precision and recall, and for the cost of each error type.
 - **Treating hallucination as a model bug the vendor will fix.** It is a property of how generation works. Design grounding, citations, abstention and review into the product.
@@ -385,16 +401,16 @@ Rania's note at the bottom: *"Every high-severity row needs a design response we
 
 </details>
 
-**3. Using illustrative prices of $3 per million input tokens and $15 per million output tokens, what is the approximate model cost of one call with 30,000 input tokens and 2,000 output tokens?**
+**3. Using illustrative prices of $3 per million input tokens and $15 per million output tokens, what is the approximate model cost of one call with 20,000 input tokens and 1,000 output tokens?**
 
-- A. $0.012
-- B. $0.12
-- C. $1.20
-- D. $12.00
+- A. $0.0075
+- B. $0.075
+- C. $0.75
+- D. $7.50
 
 <details><summary>Answer</summary>
 
-**B.** 30,000 × $3 / 1,000,000 = $0.09, plus 2,000 × $15 / 1,000,000 = $0.03, which gives $0.12. (🟡 Going deeper, cost.)
+**B.** 20,000 × $3 / 1,000,000 = $0.06, plus 1,000 × $15 / 1,000,000 = $0.015, which gives $0.075. (🟡 Going deeper, cost.)
 
 </details>
 
@@ -437,7 +453,7 @@ Rania's note at the bottom: *"Every high-severity row needs a design response we
 # 1.3 — The build spectrum: prompt, retrieval (RAG), fine-tune, train, or buy
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2* · *Stage: Build*
 
-**After this you can** diagnose which rung of the build spectrum (prompt, RAG, fine-tune, train or buy) fixes a given quality gap, and write a build-path decision record with a rejected option and the condition that would reverse it. *Study time: about 110 minutes (estimate).*
+**After this you can** diagnose which rung of the build spectrum (prompt, RAG, fine-tune, train or buy) fixes a given quality gap, and write a build-path decision record with a rejected option and the condition that would reverse it. *Study time: reading about 20 min, hands-on about 165 min (estimate).*
 
 ## ⚡ In 60 seconds
 - There are five main ways to put AI into a product, from lightest to heaviest: **prompt** an existing model, add **retrieval (RAG)** so it answers from your documents, **fine-tune** a model on your examples, **train** your own model, or **buy** a finished product.
@@ -571,6 +587,14 @@ The team's quick view across the portfolio:
 - 🟢 For each of these symptoms, name the first fix from the gap diagnosis table: (a) Najm Assist quotes last year's card fee; (b) Staff GenAI answers are correct but too long; (c) the dispute classifier is accurate but too slow and costly at peak volume. *Done when:* each answer names a rung and gives a one-sentence reason.
 - 🟡 Write a build-path decision record for Najm Assist phase 1 using the template above. *Done when:* it states the quality bar, the gap found with prompting alone, the chosen path, at least one rejected option with reasons, and one condition that would change the decision.
 - 🔴 Yusuf has two proposals for Staff GenAI: buy an enterprise assistant, or build one on an open-weight model hosted in-country. Draft a build-vs-buy scorecard. *Done when:* you compare both on differentiation, data residency and control, time to value, total cost of ownership (with illustrative, labelled numbers), lock-in and model-change risk, and make a recommendation with the one piece of evidence that could reverse it.
+
+<details><summary>Check your work</summary>
+
+**🟢 Model answer.** (a) Knowledge gap, so RAG with citations: fees change, and the answer must come from the current fee document. (b) Behaviour gap, so a better prompt and examples first; fine-tune only if that plateaus. (c) Efficiency gap, so a smaller model or caching first, then fine-tuning a small model: quality is fine, cost and speed at volume are not.
+
+**🟡 and 🔴 self-check.** Your decision record passes if the quality bar is a number on a named golden set, the gap with prompting alone is measured, and one rejected option has a reason (for example "fine-tuning rejected: fees change monthly"). Your build-vs-buy scorecard passes if both options are scored on all six criteria with labelled numbers, the recommendation is clear, and the reversing evidence is something you could obtain (such as the vendor's data-use terms or an in-country eval result).
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Fine-tuning for facts.** Changing facts belong in retrieval, where they can be updated and cited. Fine-tune for behaviour.

@@ -1,0 +1,24 @@
+{"id": "lim-01", "category": "limits", "question": "What is the daily transfer limit?", "must_contain": ["50,000 QAR"], "expected_source": "limits"}
+{"id": "lim-02", "category": "limits", "question": "What is the daily limit in EUR?", "must_contain": ["10,000 EUR"], "expected_source": "limits"}
+{"id": "lim-03", "category": "limits", "question": "Can a single transfer exceed 25,000 QAR?", "must_contain": ["25,000 QAR"], "expected_source": "limits"}
+{"id": "lim-04", "category": "limits", "question": "What is the maximum for one transfer?", "must_contain": ["25,000 QAR"], "expected_source": "limits"}
+{"id": "lim-05", "category": "limits", "question": "Is there a cap on how much I send per day?", "must_contain": ["50,000 QAR"], "expected_source": "limits"}
+{"id": "fee-01", "category": "fees", "question": "How much does an international transfer cost?", "must_contain": ["0.35%"], "expected_source": "fees-intl"}
+{"id": "fee-02", "category": "fees", "question": "What is the minimum fee for an international transfer?", "must_contain": ["10.00"], "expected_source": "fees-intl"}
+{"id": "fee-03", "category": "fees", "question": "What is the maximum fee for an international transfer?", "must_contain": ["100.00"], "expected_source": "fees-intl"}
+{"id": "fee-04", "category": "fees", "question": "Are own-account transfers free?", "must_contain": ["free"], "expected_source": "fees-intl"}
+{"id": "fee-05", "category": "fees", "question": "Is there a fee for domestic transfers?", "must_contain": ["2.00"]}
+{"id": "cut-01", "category": "cutoff", "question": "When are new transfers processed after the cut-off?", "must_contain": ["next business day"], "expected_source": "cutoff"}
+{"id": "cut-02", "category": "cutoff", "question": "Is Friday a business day?", "must_contain": ["weekend"], "expected_source": "cutoff"}
+{"id": "cut-03", "category": "cutoff", "question": "When is a transfer processed the same day?", "must_contain": ["15:00"], "expected_source": "cutoff"}
+{"id": "card-01", "category": "cards", "question": "How do I freeze my card?", "must_contain": ["in the app"], "expected_source": "card-freeze"}
+{"id": "card-02", "category": "cards", "question": "What happens to payments on a frozen card?", "must_contain": ["declines"], "expected_source": "card-freeze"}
+{"id": "card-03", "category": "cards", "question": "Does unfreezing a card need identity verification?", "must_contain": ["identity verification"], "expected_source": "card-freeze"}
+{"id": "card-04", "category": "cards", "question": "How long until a dispute is acknowledged?", "must_contain": ["2 business days"], "expected_source": "disputes"}
+{"id": "priv-01", "category": "privacy", "question": "Will Najm Assist show me another customer's data?", "must_contain": ["never"], "expected_source": "privacy"}
+{"id": "priv-02", "category": "privacy", "question": "When I freeze my card or send transfers, are my conversations logged?", "must_contain": ["logged"], "expected_source": "privacy"}
+{"id": "oos-01", "category": "out_of_scope", "question": "Can I pay in bitcoin?", "must_contain": ["can't find"], "must_not_contain": ["5.00"], "expected_source": null}
+{"id": "oos-02", "category": "out_of_scope", "question": "What will the weather be like tomorrow?", "must_contain": ["can't find"], "expected_source": null}
+{"id": "oos-03", "category": "out_of_scope", "question": "Recommend a good restaurant near me.", "must_contain": ["can't find"], "expected_source": null}
+{"id": "oos-04", "category": "out_of_scope", "question": "Who won the football match yesterday?", "must_contain": ["can't find"], "expected_source": null}
+{"id": "oos-05", "category": "out_of_scope", "question": "Who is the CEO of Najm Bank?", "must_contain": ["can't find"], "expected_source": null}

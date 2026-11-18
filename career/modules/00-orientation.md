@@ -9,7 +9,7 @@
 # 0.1 — The entry-level tech market in the AI era: what changed and what didn't
 *Level: 🟢 Beginner* · *Prerequisites: None* · *Step: Explore*
 
-**After this you can** build a ten-row market scan of current ads for one junior role and turn it into a half-page market brief that names your top three gaps and your first action. *Study time: about 125 minutes (estimate).*
+**After this you can** build a ten-row market scan of current ads for one junior role and turn it into a half-page market brief that names your top three gaps and your first action. *Study time: reading about 20 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - AI coding agents now do much of the routine work that juniors used to learn on: boilerplate, simple features, first-draft tests, small bug fixes.
@@ -23,7 +23,7 @@ It is October. **Omar**, a computer science graduate with excellent grades and a
 
 Both come to an information session for the **Najm Tech Graduate Programme**. **Khalid**, the engineering manager who hires juniors at Najm Bank, shows a slide with two columns: *What changed* and *What didn't*. "You are not entering a market with no jobs," he says. "You are entering one where the proof needed for the same job has moved. Learn where it moved to, and prepare for that."
 
-The headlines are real enough. Several 2025 analyses reported weaker hiring for early-career workers in occupations most exposed to AI. One widely discussed study, "Canaries in the Coal Mine?" by Erik Brynjolfsson, Bharat Chandar and Ruyu Chen at the Stanford Digital Economy Lab (August 2025), reported a relative decline in employment for the youngest workers in AI-exposed occupations, including software development, while more experienced workers in the same occupations fared better. This lesson shows you how to read such evidence calmly and turn it into a plan.
+The headlines are real enough. Several 2025 analyses reported weaker hiring for early-career workers in occupations most exposed to AI. One widely discussed study, "Canaries in the Coal Mine?" by Erik Brynjolfsson, Bharat Chandar and Ruyu Chen at the Stanford Digital Economy Lab (first published August 2025 and updated since; last checked November 2026), reported a relative decline in employment for the youngest workers in AI-exposed occupations, including software development, while more experienced workers in the same occupations fared better. The August 2026 update put workers aged 22 to 25 in those occupations about 19% below where it would have been had it kept pace with peers in less-exposed occupations, mainly through less hiring; the authors call these early, descriptive signals, not proof that AI caused the gap. This lesson shows you how to read such evidence calmly and turn it into a plan.
 
 ## 📐 How it works
 
@@ -114,7 +114,7 @@ AI tools lower the cost of routine output but raise the risk when the person usi
 | Resource, tool or template | What it is and does | When to reach for it |
 |---|---|---|
 | **Market scan** | A table of ten current job ads for one role and location, with skills counted by frequency | At the start of your search, then again every three months |
-| **"Canaries in the Coal Mine?"** (Brynjolfsson, Chandar and Chen, Stanford Digital Economy Lab, 2025) | A widely cited study of early-career employment in AI-exposed occupations, based on US payroll data | When you want to understand the evidence behind headlines, and its limits |
+| **"Canaries in the Coal Mine?"** (Brynjolfsson, Chandar and Chen, Stanford Digital Economy Lab, 2025, updated 2026) | A widely cited study of early-career employment in AI-exposed occupations, based on US payroll data | When you want to understand the evidence behind headlines, and its limits |
 | **Stack Overflow Developer Survey** | A large annual survey of developers, including how they use AI tools | To see how working developers actually use AI tools, at the time of writing (2026) |
 | **Official labour-market sources** (e.g. US BLS Occupational Outlook Handbook, national statistics offices) | Government descriptions of occupations, typical entry routes and outlook | When you need a sober, sourced view of a role's outlook |
 | **Nationalisation programme sites** (e.g. Nafis in the UAE) | Official information on national workforce programmes and their incentives | If you are a national, or to understand which roles are reserved, at the time of writing (2026) |
@@ -144,7 +144,7 @@ Khalid's comment: "Your gap is not knowledge; it is proof that you can ship. See
 ## 🛠️ Exercises
 - 🟢 Collect ten current ads for one junior role in one or two locations you would really move to or work in, from at least three sources. Fill in the market scan table. *Done when:* your table has ten rows with every column filled, and each row has a working link or a saved copy of the ad.
 - 🟡 From your scan, list your baseline and differentiator skills with their counts, then write a half-page "market brief": what the ads ask for, what surprised you, how AI tools are mentioned, and three actions for the next month. *Done when:* a classmate can read your brief and name your target role, your top three gaps and your first action without asking you.
-- 🔴 Hold two short informational conversations (15–20 minutes) with people in your target role, ideally one with under three years' experience. Ask how AI tools changed their first year and what makes a junior stand out on their team. Lesson 4.2 covers how to ask. *Done when:* you have notes from both and a list of what confirmed or contradicted your scan, with your study plan updated.
+- 🔴 *(Optional now; finding people takes a week or two, so you can also do it after lesson 4.2.)* Hold two short informational conversations (15–20 minutes) with people in your target role, ideally one with under three years' experience. Ask how AI tools changed their first year and what makes a junior stand out on their team. Lesson 4.2 covers how to ask; a two-line message is enough: "I'm a graduate aiming for junior [role] roles and I read your post on [topic]. Could I ask you three questions about your first year, in a 15-minute call or by message?" *Done when:* you have notes from both and a list of what confirmed or contradicted your scan, with your study plan updated.
 
 ## ⚠️ Mistakes and traps
 - **Treating headlines as your market.** National or global averages may not match your city or role. Do the market scan and trust it over the headline.
@@ -191,13 +191,13 @@ Khalid's comment: "Your gap is not knowledge; it is proof that you can ship. See
 **3. A classmate says: "A Stanford study proved that AI destroyed junior developer jobs everywhere." What is the most accurate response?**
 
 - A. "It reported a relative decline for young workers in AI-exposed jobs, on US data; alone, that proves neither cause nor our region."
-- B. "That's right, and since the evidence covers every country and every employer, we should all stop applying for developer roles now."
-- C. "That study is fake; AI has had no measurable effect on hiring anywhere, so we can safely ignore it and carry on."
-- D. "It actually proved the opposite: junior developer hiring has grown everywhere since AI coding tools arrived."
+- B. "It showed that AI tools caused the decline, so graduates in our region should expect the same drop in junior hiring this year and next."
+- C. "It found the same decline for workers of every age in AI-exposed jobs, so being a junior adds no extra risk at all."
+- D. "It reported a decline, but only among software developers, so graduates heading for data or cloud roles can relax."
 
 <details><summary>Answer</summary>
 
-**A.** The lesson's four questions are whose data, correlation or cause, which jobs, and what helps. B over-reads the evidence; C and D dismiss or misstate it. (🟡 Going deeper.)
+**A.** The lesson's four questions are whose data, correlation or cause, which jobs, and what helps. B reads a descriptive signal as proof of cause and of our region; C misses that the gap was concentrated among the youngest workers; D narrows a study that covered many AI-exposed occupations. (🟡 Going deeper.)
 
 </details>
 
@@ -228,7 +228,7 @@ Khalid's comment: "Your gap is not knowledge; it is proof that you can ship. See
 </details>
 
 ## 📚 References
-- Brynjolfsson, E., Chandar, B. and Chen, R., "Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence", Stanford Digital Economy Lab, 2025 — https://digitaleconomy.stanford.edu/
+- Brynjolfsson, E., Chandar, B. and Chen, R., "Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence", Stanford Digital Economy Lab, first published August 2025, updated August 2026 — https://digitaleconomy.stanford.edu/publication/canaries-in-the-coal-mine-six-facts-about-the-recent-employment-effects-of-artificial-intelligence/
 - Stack Overflow Developer Survey — https://survey.stackoverflow.co/
 - U.S. Bureau of Labor Statistics, Occupational Outlook Handbook — https://www.bls.gov/ooh/
 - World Economic Forum, The Future of Jobs Report 2025 — https://www.weforum.org/publications/the-future-of-jobs-report-2025/
@@ -241,7 +241,7 @@ Khalid's comment: "Your gap is not knowledge; it is proof that you can ship. See
 # 0.2 — The roles map: what software, AI, data, platform and security juniors actually do all day
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Step: Explore*
 
-**After this you can** score at least three role families on the role-fit scorecard with a one-line reason for each score, and name either a target role or a tie-break task for your top two. *Study time: about 120 minutes (estimate).*
+**After this you can** score at least three role families on the role-fit scorecard with a one-line reason for each score, and name either a target role or a tie-break task for your top two. *Study time: reading about 15 min, hands-on about 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 - "Tech job" covers several different jobs. Five families hire most graduates: **software and full-stack**, **AI application**, **data**, **cloud and platform**, and **security**.
@@ -475,7 +475,7 @@ Dana's note in the margin: "Good choice for this market. Your modelling backgrou
 # 0.3 — Meet the cohort, and how to use this course and the library
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Step: Explore, Learn*
 
-**After this you can** set up your career folder and a starting audit with a weekly time budget blocked in your calendar, and match each of your top three gaps to a library lesson. *Study time: about 120 minutes (estimate).*
+**After this you can** set up your career folder and a starting audit with a weekly time budget blocked in your calendar, and match each of your top three gaps to a library lesson. *Study time: reading about 20 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - You will follow five graduates in the **Najm Tech Graduate Programme** at **Najm Bank**, a fictional Gulf bank, plus the people who hire and mentor them.
@@ -559,7 +559,18 @@ You do not need all of them. Module 2 gives each role a **study path table**: th
 | **Targeted path** | Graduates already applying, with one urgent need | Do lessons 0.1 and 0.2, then jump to the module you need (for example Module 5 if you have interviews next week), then come back |
 | **Adviser path** | Career-centre advisers, lecturers and hiring managers | Use the 🏛️ artefacts as worksheets, the exercises as assignments and lesson 7.2 as a mock interview bank |
 
+**How long the full path takes.** About 12 weeks at 16 hours a week, about 20 weeks at 10 hours a week, or 24–30 weeks at 6–8 hours a week; the job search itself may run longer (lesson 7.1). Lesson 7.1 is the backbone, but do not wait for it: draft a rough 12-week plan now and refine it there.
+
+| Weeks | Focus | Checkable deliverable |
+|---|---|---|
+| 1–2 | Modules 0–2: target role, skills audit, study path | Target-role statement; audit scored from ten or more postings |
+| 3–8 | Module 3 capstone slice, built in parallel with Module 4 | A deployed slice with one test in CI; a CV and first tailored applications |
+| 9–12 | Modules 5–6, then the 7.2 practice pack | Story bank, two mocks, and an offer comparison or your next plan |
+| 4, 8, 12 | Checkpoints | One written if-yes / if-no decision each |
+
 **The career folder.** Create one folder (a private repository or a cloud folder) and save every artefact in it, named by lesson: `0.1-market-scan`, `0.2-role-fit-scorecard`, `0.3-starting-audit`, and so on. By the end of the course it holds your target role, study plan, project specs, CV, outreach messages, story bank and 90-day plan. It is also the evidence of progress you can show a mentor.
+
+**Checking your work when you study alone.** Many *Done when* lines name a classmate or peer. Each lesson's 🏛️ In practice section is a worked model of its main artefact: compare yours with it line by line. Without a peer, use one of three substitutes: put the artefact aside for a day, then check it against the *Done when* line as if a stranger wrote it; ask your career centre or an online community (many review CVs and READMEs); or give an AI assistant the *Done when* line as a rubric and ask where your work falls short. Treat its view as a draft, and never paste confidential data or keys into it. For spoken practice, record yourself and score the recording with the lesson's rubric.
 
 **Self-assessments.** Several library courses have a self-assessment page, for example [the *System Design for Vibe Coders* self-assessment](../vibe/assessment.html) and [the *Secure AI & Application Security* self-assessment](../secai/assessment.html). Use them to check where you stand before and after a study path.
 

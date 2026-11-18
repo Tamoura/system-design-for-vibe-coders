@@ -9,7 +9,7 @@
 # 1.1 — The junior baseline: Git, reading code, debugging, testing and writing it down
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Step: Learn, Build*
 
-**After this you can** make small Git commits a classmate can follow, find a planted bug with `git bisect`, and fix it in a pull request whose regression test fails before the fix and passes after it. *Study time: about 125 minutes (estimate).*
+**After this you can** make small Git commits a classmate can follow, find a planted bug with `git bisect`, and fix it in a pull request whose regression test fails before the fix and passes after it. *Study time: reading about 20 min, hands-on about 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Whatever the role (software, AI, data, platform or security), employers expect five everyday skills from a junior: **Git**, **reading code**, **debugging**, **testing** and **writing it down**.
@@ -127,6 +127,18 @@ Keep pull requests small: a 50-line change gets a careful review; a 2,000-line c
 
 **Undoing and searching history.** Know the escape routes: `git status` and `git diff` to see where you are, `git restore` to drop uncommitted changes, `git revert` to undo a shared commit with a new one, and `git reflog` to find a "lost" commit. Avoid force-pushing a shared branch. `git bisect` binary-searches history for the commit that introduced a bug; on small commits it points to five lines, on one huge commit to everything.
 
+**A worked `git bisect`.** Omar's date parser broke somewhere in the last eight commits of the Najm categoriser. The release tagged `v1.2` worked; today's `HEAD` does not. `test_dates.py` fails on the bug, so Git can run it at each step:
+
+```bash
+git bisect start
+git bisect bad              # the current commit has the bug
+git bisect good v1.2        # this older commit worked
+git bisect run pytest -q test_dates.py   # Git tests the middle commit, halves the range, repeats
+git bisect reset            # return to where you started
+```
+
+Eight commits take about three test runs, and Git prints the first bad commit with its message and the files it changed. The test file must exist in every commit in the range; if it does not, copy it in with a small script, or a missing file counts as "bad". Without a test, answer `git bisect good` or `git bisect bad` by hand at each step. Try it first on a toy repository: make eight one-line commits, break something in the fifth, and see whether bisect names it.
+
 **Testing beyond the basics.** Juniors extend an existing suite rather than design a strategy. Know the vocabulary: **fixtures** (shared setup), **mocks** (stand-ins for external things such as a payment API), **coverage** (a useful hint, a bad target) and **continuous integration** (CI: tests run automatically on every push). The library's [*System Design for Vibe Coders*, lesson 8.2 — Tests as the spec the agent can't ignore](../vibe/index.en.html#l8-2) shows why tests matter even more when an agent writes the code, and [*System Design for Vibe Coders*, lesson 8.3 — CI preflight and the boy-who-cried-wolf check](../vibe/index.en.html#l8-3) covers CI.
 
 **The baseline by role.** Huda (data science) reads SQL and pipeline code, and her tests include data checks such as "no duplicate rows". Yousef (cloud) reads infrastructure code and logs. Mohammed (bootcamp) has good Git habits; his gap is reading codebases larger than his own. Module 2 maps each role.
@@ -167,7 +179,7 @@ Khalid's review questions for each row: "Could a stranger verify this in two min
 ## 🛠️ Exercises
 - 🟢 Put one existing project in Git and make five small commits that each do one thing: a README with run instructions, a `.gitignore`, one test, one small fix, one tidy-up. *Done when:* `git log --oneline` shows five or more commits whose messages a classmate can understand without opening the code.
 - 🟡 In a small open-source project, use the five-step reading method to trace one user action from entry point to result, and list the files and functions in order on one page. Run its tests, then break one thing on purpose and see which test fails. *Done when:* the note exists, and a peer who follows your list of files can find the same path in under ten minutes.
-- 🔴 Have a friend hide a realistic bug among several small commits in your project. Find it with `git bisect`, fix it with a regression test, and open a pull request using this lesson's template. *Done when:* the pull request shows the failing-then-passing test, the description states the commit that introduced the bug, and someone else can review it without asking you a question.
+- 🔴 Have a friend hide a realistic bug among several small commits in your project (solo: plant it yourself on a branch with eight small commits, then come back a day later). Find it with `git bisect`, fix it with a regression test, and open a pull request using this lesson's template. *Done when:* the pull request shows the failing-then-passing test, the description states the commit that introduced the bug, and someone else can review it without asking you a question.
 
 ## ⚠️ Mistakes and traps
 - **Thinking the baseline is too basic to show.** Interviewers check it directly. Instead, make it visible: clean history, tests, a README, a debugging write-up.
@@ -265,7 +277,7 @@ Khalid's review questions for each row: "Could a stranger verify this in two min
 # 1.2 — Building with AI coding agents without being carried by them
 *Level: 🟢 Beginner* · *Prerequisites: 1.1* · *Step: Learn, Build*
 
-**After this you can** build a small feature test-first with an AI coding agent, review its diff with a checklist, and record in the pull request which changes you rejected or edited and why. *Study time: about 110 minutes (estimate).*
+**After this you can** build a small feature test-first with an AI coding agent, review its diff with a checklist, and record in the pull request which changes you rejected or edited and why. *Study time: reading about 20 min, hands-on about 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Many employers expect developers to use AI coding tools well. They check whether **your judgement** is visible: you specify, read, verify and can explain.
@@ -345,6 +357,15 @@ The practical rule: **ask before every assessment** ("Are AI tools allowed in th
 | Weakened tests | A failing test is changed or deleted until it passes | Treat any test change as suspicious; ask why the test was wrong |
 | Insecure defaults | String-built SQL, missing authorisation checks, secrets in code, overly permissive settings | Use a security checklist; run secret scanning and static analysis |
 | Confident wrong summaries | "All tests pass" when some were skipped | Run the tests yourself and read the output |
+
+**Diff review checklist.** Before you accept an agent's change, answer each line:
+1. Scope: does every changed file belong to the task you gave?
+2. Tests: did any test change? If so, why was the old test wrong?
+3. Run: do the tests pass when you run them yourself, with nothing skipped?
+4. Edges: are empty input, time zones and rounding covered by a test?
+5. APIs: does every new function, package and setting exist in the official docs?
+6. Security: no secrets in code, no string-built SQL, an ownership check on every record it reads?
+7. Explain: could you explain each line to a reviewer without the agent?
 
 The library covers these in depth: [*Secure AI & Application Security*, lesson 6.3 — Securing AI-generated code: what coding agents get wrong](../secai/index.html#/6.3) for the security side, and [*System Design for Vibe Coders*, lesson 9.4 — Verification before completion](../vibe/index.en.html#l9-4) for the habit of proving work is done.
 
@@ -426,8 +447,8 @@ Tariq's comment: "I can see where the agent helped, where you overruled it, and 
 
 ## 🛠️ Exercises
 - 🟢 For three files of a project you built with heavy AI help, do the explain-back test in writing: a sentence or two per function on what it does and why. Mark every gap. *Done when:* the note exists, and every marked gap has either been learned (with a sentence added) or listed as a next study item.
-- 🟡 Choose a small feature for one of your projects. Write the test cases first, then use an agent with a test-first prompt to implement it. Review the diff with the checklist from 🟡 Going deeper and record every change you rejected or edited. *Done when:* the feature is merged through a pull request whose description includes an AI-assistance and verification block like Najm's, and at least one rejected or edited change is recorded with the reason.
-- 🔴 With a friend, each use an agent to add a small feature to the other's project, then plant one realistic flaw (a missing authorisation check, a weakened test, a date off-by-one, a hard-coded secret). Review each other's pull request cold, in 20 minutes. *Done when:* each of you has written review comments, you compare them with the planted flaw, and you note what you missed and why.
+- 🟡 Choose a small feature for one of your projects. Write the test cases first, then use an agent with a test-first prompt to implement it. Review the diff with the seven-line diff review checklist in 🟡 Going deeper and record every change you rejected or edited. *Done when:* the feature is merged through a pull request whose description includes an AI-assistance and verification block like Najm's, and at least one rejected or edited change is recorded with the reason.
+- 🔴 With a friend, each use an agent to add a small feature to the other's project, then plant one realistic flaw (a missing authorisation check, a weakened test, a date off-by-one, a hard-coded secret). Review each other's pull request cold, in 20 minutes. (Solo: ask a fresh agent session to add the feature and secretly plant one flaw from this list, then review its pull request cold.) *Done when:* each of you has written review comments, you compare them with the planted flaw, and you note what you missed and why.
 
 ## ⚠️ Mistakes and traps
 - **Submitting code you cannot explain.** The fastest way to fail a follow-up interview. Do the explain-back test before every commit.
@@ -527,7 +548,7 @@ Tariq's comment: "I can see where the agent helped, where you overruled it, and 
 # 1.3 — Production thinking: the gap between "it runs on my laptop" and "it runs for users"
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2* · *Step: Learn, Build*
 
-**After this you can** answer the ten production questions for one of your projects and deploy it with config from the environment, a `/health` endpoint, an uptime check and an error tracker. *Study time: about 125 minutes (estimate).*
+**After this you can** answer the ten production questions for one of your projects and deploy it with config from the environment, a `/health` endpoint, an uptime check and an error tracker. *Study time: reading about 15 min, hands-on about 13 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Production** is where real users and data are. Working on your laptop is one test; production asks more: two users at once, a slow database, hostile input, a restart, a bad release.
@@ -679,7 +700,7 @@ The README's "Operations" section gives exact commands to *Deploy*, *Roll back* 
 
 ## 🛠️ Exercises
 - 🟢 Take one of your projects and answer the ten production questions for it in a table, honestly, with "not yet" where that is the truth. *Done when:* the table is committed to the repository (for example as `OPERATIONS.md`), and every "not yet" has a one-line plan.
-- 🟡 Deploy one small project with config from the environment, no secrets in history, a `/health` endpoint, an uptime check and an error tracker. *Done when:* a friend can open the live URL, you can show the uptime check's history and a test error captured by the error tracker, and a secret scan of the full history is clean.
+- 🟡 Deploy one small project with config from the environment, no secrets in history, a `/health` endpoint, an uptime check and an error tracker. Plan 4–8 hours the first time, over a weekend. One free path at the time of writing: a host with a free tier for small web services (for example Render, whose free services sleep when idle; check current limits), a free uptime checker and Sentry's free plan; follow [*System Design for Vibe Coders*, lesson 4.1 — Shipping is a system](../vibe/index.en.html#l4-1). Never paste API keys or tokens into an AI chat; put them in the host's environment settings. *Done when:* a friend can open the live URL, you can show the uptime check's history and a test error captured by the error tracker, and a secret scan of the full history is clean.
 - 🔴 Run your own game day: restart the app, make the database unreachable, send malformed and concurrent requests, ship a broken release and roll it back. Write a one-page postmortem of the worst failure and fix it. *Done when:* the postmortem is linked from your README, the fix is in a pull request with a test, and the README's "Operations" section lists exact deploy, rollback and restore steps you have actually run.
 
 ## ⚠️ Mistakes and traps

@@ -1,48 +1,6 @@
 {
- "GLOSSARY.ar.md": {
-  "operator": 2
- },
  "OUTLINE.ar.md": {
-  "operator": 33
- },
- "aiapps/assessment/data/m10.json": {
-  "option letter": 8
- },
- "aiapps/assessment/data/m11.json": {
-  "option letter": 7
- },
- "aiapps/assessment/data/m16.json": {
-  "option letter": 2
- },
- "aiapps/assessment/data/m6.json": {
-  "option letter": 6
- },
- "aiapps/assessment/data/m8.json": {
-  "option letter": 8
- },
- "aiapps/modules/08-agent-loop.ar.md": {
-  "operator": 1
- },
- "aiapps/modules/10-mcp.ar.md": {
-  "citation": 1
- },
- "aiapps/modules/11-multi-agent.ar.md": {
-  "citation": 1
- },
- "aigp/modules/05-other-laws.ar.md": {
-  "citation": 2
- },
- "aigp/modules/08-design-build.ar.md": {
-  "citation": 2
- },
- "aigp/modules/09-data.ar.md": {
-  "citation": 1
- },
- "ainative/modules/14-capstone.ar.md": {
-  "option letter": 28
- },
- "aipm/modules/03-data.ar.md": {
-  "operator": 1
+  "operator": 23
  },
  "aipm/modules/05-build.ar.md": {
   "citation": 1
@@ -53,9 +11,6 @@
  "aipm/modules/10-capstone.ar.md": {
   "citation": 2
  },
- "assessment/data/observability.json": {
-  "operator": 1
- },
  "career/TOOLKIT.ar.md": {
   "citation": 1
  },
@@ -65,112 +20,28 @@
  "career/modules/07-capstone.ar.md": {
   "citation": 1
  },
- "cloud/modules/02-containers.ar.md": {
-  "operator": 1
- },
- "cloud/modules/04-cicd.ar.md": {
-  "citation": 1
- },
- "cloud/modules/05-observability.ar.md": {
-  "option letter": 1
- },
- "cloud/modules/07-capstone.ar.md": {
-  "option letter": 1
- },
- "data/assessment/data/m4.json": {
-  "operator": 1
- },
- "data/modules/04-analytics.ar.md": {
-  "citation": 1
- },
- "modules/0-the-gap/the-gap.ar.md": {
-  "citation": 1
- },
- "modules/01-anatomy-of-a-real-app/lesson-1-draw-the-boxes.ar.md": {
-  "citation": 2,
-  "operator": 3
- },
- "modules/01-anatomy-of-a-real-app/lesson-2-the-requests-journey.ar.md": {
-  "operator": 1
- },
- "modules/02-data-storage-backups/module.ar.md": {
-  "operator": 2
- },
  "modules/03-caching/module.ar.md": {
-  "operator": 5
- },
- "modules/04-deploys/module.ar.md": {
   "operator": 3
- },
- "modules/09-directing-ai-team/module.ar.md": {
-  "operator": 3
- },
- "modules/10-scaling/module.ar.md": {
-  "operator": 2
- },
- "modules/12-capstone/module.ar.md": {
-  "operator": 3
- },
- "saas/README.ar.md": {
-  "operator": 5
  },
  "saas/REPOS.ar.md": {
   "operator": 3
  },
- "saas/modules/00-orientation.ar.md": {
-  "operator": 2
- },
- "saas/modules/02-data.ar.md": {
-  "operator": 1
- },
  "saas/modules/06-product-growth.ar.md": {
-  "operator": 6
+  "operator": 3
  },
  "secai/TOOLKIT.ar.md": {
   "citation": 1
  },
- "secai/modules/01-foundations.ar.md": {
-  "citation": 1,
-  "option letter": 5
- },
  "secai/modules/02-web.ar.md": {
-  "citation": 2
- },
- "secai/modules/03-identity.ar.md": {
-  "operator": 2
- },
- "secai/modules/07-cloud.ar.md": {
-  "option letter": 3
- },
- "secai/modules/08-ai-threats.ar.md": {
-  "option letter": 2
- },
- "secai/modules/09-ai-defence.ar.md": {
-  "option letter": 2
+  "citation": 1
  },
  "secai/modules/10-response.ar.md": {
   "citation": 1
  },
- "secai/modules/11-governance.ar.md": {
-  "option letter": 3
- },
- "secai/modules/12-capstone.ar.md": {
-  "option letter": 7
- },
  "testing/assessment/data/m7.json": {
   "operator": 1
  },
- "testing/assessment/data/m8.json": {
-  "option letter": 5
- },
- "testing/modules/00-orientation.ar.md": {
-  "option letter": 1
- },
  "testing/modules/02-code.ar.md": {
   "citation": 1
- },
- "testing/modules/08-capstone.ar.md": {
-  "operator": 3,
-  "option letter": 16
  }
 }

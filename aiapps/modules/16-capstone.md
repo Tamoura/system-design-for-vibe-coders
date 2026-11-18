@@ -9,7 +9,7 @@
 # 16.1 — Capstone: take Najm Desk from discovery to go-live, with the customer
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–15* · *Layer: Delivery, Production*
 
-**After this you can** take Najm Desk from discovery to a go or no-go decision through eight milestones, with the capstone audit showing zero problems and requirement ids traced into eval cases, UAT rows and runbooks. *Study time: about 20 minutes of reading, plus the four-week project (estimate).*
+**After this you can** take Najm Desk from discovery to a go or no-go decision through eight milestones, with the capstone audit showing zero problems and requirement ids traced into eval cases, UAT rows and runbooks. *Study time: reading about 15 min, hands-on about 40 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Eight milestones, about four weeks; after each, the customer answers a gate question.
@@ -21,7 +21,7 @@
 ## 🧭 Why it matters
 On Thursday Lujain demos her Najm Desk prototype: it answers policy questions and drafts tickets. Hind says, "Go live on Sunday." But nobody agreed a specification and there is no eval set, so nobody can say whether Sunday's build is worse than Thursday's. Layla asks for the system card, Noura for injection results, Maha for who is paged at 07:05.
 
-Fahad: "A demo shows it can work. Go-live shows we know when it doesn't." In *Moffatt v. Air Canada* (2024, British Columbia Civil Resolution Tribunal) an airline was held responsible for its chatbot's answer about a bereavement fare. The capstone closes the gaps in the order the owners ask.
+Fahad: "A demo shows it can work. Go-live shows we know when it doesn't." Behind every gate stands lesson 0.1's rule: the organisation answers for what its assistant says. The capstone closes the gaps in the order the owners ask.
 
 ## 📐 How it works
 
@@ -250,7 +250,7 @@ The artefact is the **Najm Desk capstone repository** (`najm-desk/`): yours, rev
 
 **Group session (60 minutes).** (1) Demo the release candidate from the script (20). (2) Role-play the go/no-go (40).
 
-**Build it with Claude Code.** Give this in plan mode (check the current Claude Code documentation): spec, plan, small steps, verify, review the diff, commit.
+**Build it with Claude Code.** *No Claude Code? Do the spec's steps by hand and run its checks yourself (lesson 0.3).* Give this in plan mode (check the current Claude Code documentation): spec, plan, small steps, verify, review the diff, commit.
 
 ```text
 Goal: build the Najm Desk capstone at tier <1|2|3>, one milestone at a time, stopping at every gate.
@@ -269,9 +269,9 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 - Search the diff for secrets, `temperature`, `budget_tokens`, `content[0]` and filled sign-off rows.
 
 ## 🛠️ Exercises
-- 🟢 **Core path.** Offline on the mock; a real eval run *needs the real API*. Build M1 to M8 at tier 1. *Done when:* the strict audit shows 0 problems, you traced three ids by hand, a peer playing Hind answered the M8 gate, every eval table names its mode, and the retrospective is filled.
+- 🟢 **Core path.** Offline on the mock; a real eval run *needs the real API*. Build M1 to M8 at tier 1. *Done when:* the strict audit shows 0 problems, you traced three ids by hand, a peer playing Hind answered the M8 gate (solo: answer it in writing as Hind, then have a fresh Claude chat challenge each answer, and keep both), every eval table names its mode, and the retrospective is filled.
 - 🟡 **With MCP and the evals gate.** *Needs the real API* and a spending cap. Add the MCP server and CI gate. *Done when:* the tier 2 audit passes, a weakened prompt fails the pull request, MCP scopes match the permissions matrix.
-- 🔴 **Multi-agent and full governance.** *Needs the real API* and a human reviewer. *Done when:* the strict tier 3 audit passes, with every sign-off row filled in by the colleague playing that risk owner, or a refusal keeps it red and `docs/go-no-go.md` records the no-go and what would change it; a second agent has an ADR and an eval showing it beats one (or goes, with a reason); `docs/go-no-go.md` records any conditions.
+- 🔴 **Multi-agent and full governance.** *Needs the real API* and a human reviewer. *Done when:* the strict tier 3 audit passes, with every sign-off row filled in by the colleague playing that risk owner (solo: by you, a day later, each row marked as a rehearsal), or a refusal keeps it red and `docs/go-no-go.md` records the no-go and what would change it; a second agent has an ADR and an eval showing it beats one (or goes, with a reason); `docs/go-no-go.md` records any conditions.
 
 ## ⚠️ Mistakes and traps
 - **Demo first, documents later.** A demo invites a date. Specify first.
@@ -361,7 +361,7 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 # 16.2 — Practice exam: 60 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–16* · *Layer: Model, Applications, Agents, Delivery, Production*
 
-**After this you can** answer 60 mixed scenario questions in one closed-book sitting of about 90 minutes, then name your two weakest Layer tags and the lesson to reread for every miss. *Study time: about 150 minutes (estimate).*
+**After this you can** answer 60 mixed scenario questions in one closed-book sitting of about 90 minutes, then name your two weakest Layer tags and the lesson to reread for every miss. *Study time: reading about 65 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - This is a 60-question practice exam covering every module from 0 to 16. Most questions are scenarios at Najm Bank. They are mixed, as in real work, not grouped by module.
@@ -430,8 +430,8 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 
 ## 🛠️ Exercises
 - 🟢 **Review your misses.** No API needed. Tally every wrong or guessed question by Layer tag in the table above and label each "did not know", "misread" or "tempted". *Done when:* you can name your two weakest tags and the habit behind each, and every miss has a lesson to reread.
-- 🟡 **Write five questions of your own.** No API needed. Choose your weakest tag. Write five scenarios in the exam's format, each with one defensible answer, three tempting wrong ones and an explanation that ends with its tag and lesson. *Done when:* a peer has answered all five, every disagreement is settled in your explanation, and the correct option is not always the longest.
-- 🔴 **Teach one lesson.** Offline on the mock, which shows mechanics, not quality. Teach the lesson behind your weakest tag to a peer in 20 minutes, with one failing-then-passing run from the lab kit. *Done when:* the peer can state the lesson's main rule and one weak-versus-strong pair in their own words, and you have redone anything you could not answer.
+- 🟡 **Write five questions of your own.** No API needed. Choose your weakest tag. Write five scenarios in the exam's format, each with one defensible answer, three tempting wrong ones and an explanation that ends with its tag and lesson. *Done when:* a peer has answered all five (solo: a fresh Claude chat given only the stems and options, a day after you wrote them), every disagreement is settled in your explanation, and the correct option is not always the longest.
+- 🔴 **Teach one lesson.** Offline on the mock, which shows mechanics, not quality. Teach the lesson behind your weakest tag to a peer in 20 minutes (solo: record it and give the transcript to a fresh Claude chat, which then plays the peer), with one failing-then-passing run from the lab kit. *Done when:* the peer can state the lesson's main rule and one weak-versus-strong pair in their own words, and you have redone anything you could not answer.
 
 ## ⚠️ Mistakes and traps
 - **Checking answers as you go.** You learn one answer and lose the measure of the rest. Answer all 60, then check.

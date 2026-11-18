@@ -4,8 +4,9 @@ Not published. Every translator follows this.
 
 ## Language and English terms
 - Modern Standard Arabic, clear and professional, like a well-written university or professional training manual. Faithful: same meaning, structure, emphasis, lists, tables. Never summarise, add or drop content.
-- **English beside every technical term everywhere.** In every paragraph, list item, table cell, heading, quiz question, option and answer, each technical term and key phrase carries its English in parentheses on its first appearance in that unit (a unit = one paragraph, one list item, one table cell, one heading): `اختبار الوحدة (unit testing)`, `تحليل القيم الحدّية (boundary value analysis)`, `اختبار الطفرات (mutation testing)`, `الاختبار القائم على الخصائص (property-based testing)`, `اختبار الأداء (performance testing)`. Aim for roughly one gloss every 4–6 Arabic words in technical text. Gloss whole phrases, never split a construct. A space always separates the Arabic word from `(`. Use the English exactly as the English lesson words it.
-- Key phrases, rules of thumb, labels and framework step names also get their English, e.g. `يكتمل عندما (Done when)`.
+- **English glosses: first use per lesson only.** Add the English in parentheses only after a real technical or business term, and only the first time that term appears in each lesson: `اختبار الوحدة (unit testing)`, `تحليل القيم الحدّية (boundary value analysis)`, `اختبار الطفرات (mutation testing)`. Do not gloss plain words or phrases, do not repeat a gloss already given in the lesson (quiz options and answers included), never gloss whole sentences, and never nest parentheses. Keep product, standard and acronym names in Latin letters with no parentheses. Parentheses that hold formulas, numbers, option letters such as (A) or section pointers such as (🟢 الأساسيات.) are content, not glosses: they always stay. A space always separates the Arabic word from `(`. Use the English exactly as the English lesson words it.
+- Section pointers at the end of quiz answers are translated with the Arabic section name, e.g. `(🟢 The essentials.)` → `(🟢 الأساسيات.)`, `(🟡 A clock you can control.)` → `(🟡 ساعة تتحكم بها.)`. Never drop one; `check_ar.py` compares them.
+- Quiz and exam options: same meaning, detail and length as the English. Do not pad or trim one option so the key stands out by length; run `python3 scripts/qa/quiz_cues.py` after editing items.
 - If a gloss ends in punctuation (`?`, `.`, `!`), wrap it in a left-to-right isolate (the characters U+2066 before `(` and U+2069 after `)`), so it displays correctly in right-to-left text.
 - Names of tools, products, standards, companies, platforms, programming languages and commands stay in their English form (pytest, Hypothesis, Playwright, Selenium, Cypress, Appium, Vitest, Jest, JUnit, k6, JMeter, Pact, Testcontainers, OWASP ZAP, Semgrep, promptfoo, Ragas, garak, PyRIT, GitHub Actions, Docker, Python, TypeScript, JavaScript). On first use in a unit you may add a short Arabic rendering before it.
 - People: Rashid راشد, Nada ندى, Bilal بلال, Amal أمل, Tariq طارق, Maha مها, Noura نورة, Mariam مريم, Dana دانة, Rania رانيا, Hessa حصة, Layla ليلى, Sara سارة, Hamad حمد. Najm Bank → بنك نجم (Najm Bank). Najm Mobile → تطبيق نجم للهاتف (Najm Mobile); Najm Mobile API → واجهة برمجة تطبيق نجم للهاتف (Najm Mobile API); Najm Assist → نجم أسيست (Najm Assist); Quality Engineering team → فريق هندسة الجودة (Quality Engineering).
@@ -52,12 +53,24 @@ Not published. Every translator follows this.
 | LLM-as-judge | النموذج اللغوي حَكَمًا (LLM-as-judge) |
 | retrieval-augmented generation (RAG) | التوليد المعزَّز بالاسترجاع (retrieval-augmented generation, RAG) |
 | groundedness / faithfulness | الاستناد إلى المصادر (groundedness) / الأمانة للمصدر (faithfulness) |
-| agent / tool call / trajectory | الوكيل (agent) / استدعاء أداة (tool call) / مسار التنفيذ (trajectory) |
+| agent / tool call / trajectory | الوكيل (agent) / استدعاء الأداة (tool call), plural استدعاءات الأدوات / مسار التنفيذ (trajectory) |
 | non-determinism | عدم الحتمية (non-determinism) |
 | red teaming / prompt injection | الفريق الأحمر (red teaming) / حقن التوجيه (prompt injection) |
 | metamorphic testing | الاختبار التحويلي (metamorphic testing) |
 | fairness / bias | العدالة (fairness) / التحيّز (bias) |
 | drift | الانجراف (drift) |
+| accuracy / precision / recall | الصحة الإجمالية (accuracy) / الدقة (precision) / الشمول (recall); recall@k → الشمول عند k (recall@k). Never الاستدعاء for recall: استدعاء is only a call (tool, API or function call) |
+| timeout / deadline | المهلة، انتهاء المهلة (timeout) / الموعد النهائي (deadline) |
+| backoff / exponential backoff | التأخير الأسي (backoff) / إعادة المحاولة بتأخير أسي (exponential backoff); never تراجع أسي |
+| rollback | التراجع (rollback); verb: تراجَع عن الإصدار |
+| staging | بيئة ما قبل الإنتاج (staging) |
+| postmortem | مراجعة ما بعد الحادثة (postmortem) |
+| offline / online evaluation | التقييم خارج الإنتاج / التقييم في الإنتاج |
+| false positive / false negative | النتيجة الإيجابية الكاذبة (false positive), plural الإيجابيات الكاذبة / النتيجة السلبية الكاذبة (false negative), plural السلبيات الكاذبة |
+| vendor / provider | المورّد (vendor) / المزوّد (provider, including a Pact provider) |
+| proxy / middleware | الخادم الوسيط (proxy) / البرمجية الوسيطة (middleware); never bare الوسيط |
+| pilot / capstone | التجربة التشغيلية (pilot) / المشروع الختامي (capstone) |
+| TTL | مدة البقاء (TTL) |
 | coding agent / AI-generated code | وكيل البرمجة (coding agent) / الشيفرة المولَّدة بالذكاء الاصطناعي (AI-generated code) |
 
 ## Structure the build depends on (do not break)

@@ -26,7 +26,7 @@
       "a": 2,
       "why": {
         "en": "Parallel independent work is one of the three reasons that justify a team, with context isolation and different permissions per role. Tidy roles (A) are not a failure the single agent has, and a team must buy something. Steps that each need the last result (D) are sequential, so nothing runs in parallel.",
-        "ar": "العمل المستقل المتوازي أحد الأسباب الثلاثة التي تبرر الفريق، ومعه عزل السياق (context isolation) والصلاحيات المختلفة لكل دور. أما ترتيب الأدوار فليس إخفاقًا عند الوكيل الواحد (single agent)، والفريق يجب أن يشتري شيئًا. أما الخطوات التي تحتاج كل منها إلى نتيجة سابقتها (الخيار D) فمتسلسلة فلا شيء فيها يعمل بالتوازي."
+        "ar": "العمل المستقل المتوازي أحد الأسباب الثلاثة التي تبرر الفريق، ومعه عزل السياق (context isolation) والصلاحيات المختلفة لكل دور. أما ترتيب الأدوار (A) فليس إخفاقًا عند الوكيل الواحد (single agent)، والفريق يجب أن يشتري شيئًا. أما الخطوات التي تحتاج كل منها إلى نتيجة سابقتها (D) فمتسلسلة فلا شيء فيها يعمل بالتوازي."
       }
     },
     {
@@ -46,7 +46,7 @@
         ],
         "ar": [
           "خفض حدّ الخطوات (step cap) لكل وكيل من 4 إلى 2 حتى يصير كل دور على حدة أقصر",
-          "إضافة حدّ للجولات (round cap) وميزانية رموز (token budget) للفريق، يفرضهما المشرف (supervisor) في الشيفرة",
+          "إضافة حدّ للجولات وميزانية رموز للفريق، يفرضهما كلاهما المشرف في شيفرته",
           "إضافة سطر في موجّه المراجِع يأمره بالموافقة بعد جولتين على الأكثر",
           "إضافة وكيل مدير (manager agent) مهمته أن يلاحظ حين يدخل الوكيلان الآخران في حلقة تكرار بينهما"
         ]
@@ -54,7 +54,7 @@
       "a": 1,
       "why": {
         "en": "A step cap bounds one agent's turn, not the number of rounds, so the team needs its own limits in the supervisor: a round cap on the loop and a token budget over every agent, checked before each call. A prompt line (C) is only a request, and a manager agent (D) adds one more thing that can loop.",
-        "ar": "حدّ الخطوات يقيّد دور وكيل واحد لا عدد الجولات، فيحتاج الفريق إلى حدود خاصة به في المشرف: حدّ للجولات في الحلقة وميزانية رموز على كل الوكلاء تُفحص قبل كل استدعاء. وسطر الموجّه (الخيار C) طلب فقط، ووكيل المدير (الخيار D) يضيف شيئًا آخر قد يدخل حلقة."
+        "ar": "حدّ الخطوات يقيّد دور وكيل واحد لا عدد الجولات، فيحتاج الفريق إلى حدود خاصة به في المشرف: حدّ للجولات في الحلقة وميزانية رموز على كل الوكلاء تُفحص قبل كل استدعاء. وسطر الموجّه (C) طلب فقط، ووكيل المدير (D) يضيف شيئًا آخر قد يدخل حلقة."
       }
     },
     {
@@ -82,7 +82,7 @@
       "a": 0,
       "why": {
         "en": "A schema can say a quote is a string of the right length, but only code can check that it is word for word in what the search tool returned. The reviewer (C) sees the notes and the draft, not the search results, so it cannot tell that a quote is invented.",
-        "ar": "يستطيع المخطط (schema) أن يقول إن الاقتباس نص بطول صحيح، لكن الشيفرة وحدها تتحقق أنه حرفيًا في ما أعادته أداة البحث. والمراجِع (الخيار C) يرى الملاحظات والمسوّدة لا نتائج البحث، فلا يعرف أن الاقتباس مختلق."
+        "ar": "يستطيع المخطط (schema) أن يقول إن الاقتباس نص بطول صحيح، لكن الشيفرة وحدها تتحقق أنه حرفيًا في ما أعادته أداة البحث. والمراجِع (C) يرى الملاحظات والمسوّدة لا نتائج البحث، فلا يعرف أن الاقتباس مختلق."
       }
     },
     {
@@ -110,7 +110,7 @@
       "a": 3,
       "why": {
         "en": "The single agent, with the same contract and checks, is the baseline a team must beat on the same eval; equal scores at about twice the cost fail the exit criterion, so the team goes. \"A second pair of eyes\" (A) is a claim, and the numbers show the reviewer buying no better score. The baseline keeps the same contract and checks, so dropping them (C) is not the comparison either.",
-        "ar": "الوكيل الواحد بالعقد والفحوص نفسها هو خط الأساس (baseline) الذي يجب أن يتفوق عليه الفريق في مجموعة التقييم (eval) نفسها؛ والنتائج المتساوية بنحو ضعف التكلفة تُخفق في معيار الخروج، فيُترك الفريق. و«العين الثانية» في الخيار A ادعاء فقط، والأرقام تُظهر أن المراجِع لم يرفع الدرجة. وخط الأساس يحتفظ بالعقد والفحوص نفسها، فحذفها (الخيار C) ليس المقارنة الصحيحة أيضًا."
+        "ar": "الوكيل الواحد بالعقد والفحوص نفسها هو خط الأساس (baseline) الذي يجب أن يتفوق عليه الفريق في مجموعة التقييم (eval) نفسها؛ والنتائج المتساوية بنحو ضعف التكلفة تُخفق في معيار الخروج، فيُترك الفريق. و«العين الثانية» (A) ادعاء فقط، والأرقام تُظهر أن المراجِع لم يرفع الدرجة. وخط الأساس يحتفظ بالعقد والفحوص نفسها، فحذفها (C) ليس المقارنة الصحيحة أيضًا."
       }
     }
   ],

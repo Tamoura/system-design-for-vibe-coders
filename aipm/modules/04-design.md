@@ -9,7 +9,7 @@
 # 4.1 — Levels of automation: suggest, draft, decide, act
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 2.1* · *Stage: Design*
 
-**After this you can** choose and justify an automation level (suggest, draft, decide or act) for a task, and write a decision record with a scope fence, a demotion criterion and a way for the customer to undo a wrong action. *Study time: about 110 minutes (estimate).*
+**After this you can** choose and justify an automation level (suggest, draft, decide or act) for a task, and write a decision record with a scope fence, a demotion criterion and a way for the customer to undo a wrong action. *Study time: reading about 20 min, hands-on about 165 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Every AI feature sits somewhere on a ladder of automation. This course uses four working rungs: **suggest** (the AI points, the human does), **draft** (the AI produces, the human edits and owns), **decide** (the AI makes the call, a human can review or override), **act** (the AI changes something in the world).
@@ -145,6 +145,14 @@ Baseline levels across the portfolio:
 - 🟡 Write an Automation Level Decision Record for Smart Alerts' real-time card hold. *Done when:* every field of the SME template is filled, including a scope fence, a demotion criterion and how a customer undoes a wrong hold.
 - 🔴 Khalid insists on automatic declines for SME Instant Finance. Write a one-page memo to him and Layla that offers a path: what evidence, safeguards and customer experience would be needed before automatic declines could even be considered, and what you recommend meanwhile. *Done when:* the memo uses the four-function model, names the regulatory constraint without over-claiming, proposes a shadow-mode test with criteria, and states who owns the decision.
 
+<details><summary>Check your work</summary>
+
+**🟢 Model answer.** Email smart reply: suggest, because a wrong reply is cheap to ignore. Maps rerouting: decide, because the app picks the route but the driver can ignore it. Bank card freeze after a fraud score: act, because speed matters and the customer can unfreeze in one tap.
+
+**🟡 and 🔴 self-check.** Your decision record passes if every template field is filled, the scope fence is specific (for example "card-present transactions above a set amount only"), the demotion criterion is a number, and the customer can undo a wrong hold in the app. Your memo passes if it uses the four-function model, says that automated credit decisions are restricted in some jurisdictions without claiming a ban, proposes a shadow-mode test with pass criteria, and names one accountable owner.
+
+</details>
+
 ## ⚠️ Mistakes and traps
 - **Treating the level as a model property.** "The model is 92% accurate, so automate." Instead, decide per task from cost of error, reversibility, volume, quality where it matters, and accountability.
 - **One level for the whole product.** Instead, state the level per task and use scope fences and threshold routing to mix levels.
@@ -242,7 +250,7 @@ Baseline levels across the portfolio:
 # 4.2 — Designing for trust: expectations, explanations, errors and recovery
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 4.1* · *Stage: Design*
 
-**After this you can** write an error-and-recovery matrix that covers notice, recover, learn and contain for each failure, and rate an AI answer flow against the 18 Microsoft guidelines with the top three fixes justified. *Study time: about 125 minutes (estimate).*
+**After this you can** write an error-and-recovery matrix that covers notice, recover, learn and contain for each failure, and rate an AI answer flow against the 18 Microsoft guidelines with the top three fixes justified. *Study time: reading about 20 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - The goal is **calibrated trust**, not maximum trust: users should rely on the AI when it is right and catch it when it is wrong. Overtrust causes harm; undertrust kills adoption.
@@ -397,6 +405,14 @@ Hessa and Faisal write the **Trust Design Spec** for the Credit Memo Copilot, v1
 - 🟡 Write the error and recovery matrix for Smart Alerts as the customer sees it in the Najm app. *Done when:* the matrix covers false alarm, missed fraud and misunderstood customer reply, and each row has notice, recover, learn and contain filled in.
 - 🔴 Walk Najm Assist's answer flow through all 18 Microsoft guidelines, grouped by moment. For each, write "met", "partly" or "not met", with one design change for each gap. Then pick the three changes with the highest trust impact and justify the choice. *Done when:* the table has 18 rows, the top three are justified against overtrust and undertrust, and at least one change adds deliberate friction.
 
+<details><summary>Check your work</summary>
+
+**🟢 Model answer (a writing assistant).** Expectations: the first-run screen says it may get facts wrong. Explanation: none; it never shows why it chose a phrase. Recovery: undo and "try again" work well. Suggestion for the weakest: mark sentences that state facts so the writer checks them.
+
+**🟡 and 🔴 self-check.** Your matrix passes if each of the three rows has notice, recover, learn and contain filled in, and the missed-fraud row gives the customer a clear dispute path. Your 18-row table passes if each gap has one design change, the top three are justified against both overtrust and undertrust, and at least one adds deliberate friction (for example a confirm step before acting on a fee answer).
+
+</details>
+
 ## ⚠️ Mistakes and traps
 - **Designing for maximum trust.** Instead, design for calibrated trust and measure both overtrust (errors that got through) and undertrust (disuse).
 - **Putting limits only in the terms and conditions.** Instead, state scope and quality in the interface, at the moment of use, with examples.
@@ -493,7 +509,7 @@ Hessa and Faisal write the **Trust Design Spec** for the Credit Memo Copilot, v1
 # 4.3 — Conversational and agentic experiences
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 4.1, 4.2* · *Stage: Design*
 
-**After this you can** decide between chat, a structured screen or a hybrid for a task, and write the preview and handover text for an agentic action whose limits are enforced outside the model. *Study time: about 110 minutes (estimate).*
+**After this you can** decide between chat, a structured screen or a hybrid for a task, and write the preview and handover text for an agentic action whose limits are enforced outside the model. *Study time: reading about 20 min, hands-on about 145 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Chat is an interface choice, not a strategy.** It is good for open-ended questions and varied requests; it is poor for repeated, structured tasks where a button or form is faster and clearer.
@@ -627,6 +643,14 @@ Supporting rules in the spec:
 - 🟢 For five tasks in a banking app (check balance, pay a bill, find a fee, dispute a charge, set a savings goal), decide whether chat, a structured screen, or a hybrid is best. *Done when:* each task has a choice and a one-line reason using the criteria in 🟢 The essentials.
 - 🟡 Write the preview screen text and the handover message for "Report card lost or stolen" in Najm Assist, in plain English (and Arabic if you can). *Done when:* the preview states the consequences, the irreversibility and the replacement card, and the handover message carries identity, card and what was already done.
 - 🔴 Add "pay a saved biller" to the action catalogue. Write its row, three new abuse or failure scenarios (including one indirect prompt injection), and the evidence you would need before promoting it from "prepare" to "perform". *Done when:* limits are enforced outside the model, the scenarios have a designed response each, and promotion criteria are measurable.
+
+<details><summary>Check your work</summary>
+
+**🟢 Model answer.** Check balance: structured screen (one number, faster than typing). Pay a bill: structured screen (exact fields and confirmation). Find a fee: chat or hybrid (questions are worded many ways). Dispute a charge: hybrid (chat to understand, a form to confirm details). Set a savings goal: hybrid (chat to explore, a screen to commit).
+
+**🟡 and 🔴 self-check.** Your preview passes if it says the card stops working now, that this cannot be undone, and when a new card arrives; your handover passes if the agent sees identity status, the card and what was already done. Your catalogue row passes if amount and payee limits are enforced by the app, not the prompt; each of the three scenarios has a designed response; and promotion needs a measurable result (for example zero unconfirmed payments over a set number of prepared ones).
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Chat for everything.** Instead, use conversation to understand intent and structured components to show options and take actions.

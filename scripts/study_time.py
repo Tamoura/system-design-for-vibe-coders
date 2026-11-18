@@ -98,8 +98,9 @@ def main() -> int:
             read, hand = round5(words / WPM), int(hands[key])
             totals[course_of(rel)] = totals.get(course_of(rel), 0) + read + hand
             if hand:
-                lines_en[lid] = f"*Study time: reading about {read} min, hands-on about {hand} min (estimate).*"
-                lines_ar[lid] = f"*مدة الدراسة: قراءة نحو {read} دقيقة، وعمل تطبيقي نحو {hand} دقيقة (تقدير).*"
+                h_en, h_ar = (f"{hand} min", f"{hand} دقيقة") if hand < 180 else (f"{round(hand / 60)} h", f"{round(hand / 60)} ساعة")
+                lines_en[lid] = f"*Study time: reading about {read} min, hands-on about {h_en} (estimate).*"
+                lines_ar[lid] = f"*مدة الدراسة: قراءة نحو {read} دقيقة، وعمل تطبيقي نحو {h_ar} (تقدير).*"
             else:
                 lines_en[lid] = f"*Study time: reading about {read} min, no hands-on work (estimate).*"
                 lines_ar[lid] = f"*مدة الدراسة: قراءة نحو {read} دقيقة، دون عمل تطبيقي (تقدير).*"

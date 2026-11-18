@@ -2,13 +2,21 @@
 
 **You can ship code faster than any generation of programmers before you. This course teaches you the things your AI won't warn you about until production is down.**
 
+<!-- study-time -->
+**Study time for the whole course: about 104 hours** (estimate: reading plus hands-on work, summed over every lesson). At about 6 hours a week that is roughly 17 weeks. Each lesson shows its own split; a pilot with real learners will replace these estimates.
+<!-- /study-time -->
+
 ## What this is
 
 A written course on practical system design for **AI-first builders** — people shipping real products with Claude Code, Cursor, and friends, **whether or not they have ever written code**. If you build by directing an agent, this course teaches the two skills that replace reading code: knowing what to *ask for*, and knowing how to *check it*.
 
-Honest label: this is **production engineering for AI-assisted builders**. It is not a FAANG-interview prep course — no CAP theorem drills, no whiteboard estimation, no designing Twitter on a napkin. If you're preparing for interviews, this is the wrong course; if you're keeping a real product alive, it's the right one. Every lesson in this course is anchored to a **real production incident** from a real product: a real multi-client production platform (web, iOS, Android, and TV, serving a global audience) — built and operated largely *by* AI agents under human direction. The incidents span the whole surface a real product grows: caching and CDNs, data and backups, deploys, auth and OAuth, email and newsletters, feature flags, mobile releases, security and abuse, observability. The scars are real; the fixes shipped.
+Honest label: this is **production engineering for AI-assisted builders**. It is not a FAANG-interview prep course — no CAP theorem drills, no whiteboard estimation, no designing Twitter on a napkin. If you're preparing for interviews, this is the wrong course; if you're keeping a real product alive, it's the right one. Most lessons in this course are anchored to a **real production incident** from a real product (a few concept lessons, such as 3.1 and 6.7, open with a composite scenario instead and are labelled as such): a real multi-client production platform (web, iOS, Android, and TV, serving a global audience) — built and operated largely *by* AI agents under human direction. The incidents span the whole surface a real product grows: caching and CDNs, data and backups, deploys, auth and OAuth, email and newsletters, feature flags, mobile releases, security and abuse, observability. The incident scars are real; the fixes shipped.
 
 ## How the course works
+
+**Time:** 69 lessons, about 70 hours of study in all. A steady pace is three or four lessons a week, which finishes the course in about five months; Part 0 (Foundations) alone takes about three and a half hours.
+
+**What you need:** a computer, an AI agent that can run commands on it (Claude Code or Cursor; Claude Code needs a paid plan or API credits, Cursor has a limited free tier), and, from lesson F.5, free GitHub and hosting accounts. Part 0 opens with a 20-minute setup box. You never paste a password or token into the chat.
 
 **You do not need to know how to code.** In this course you are the architect and
 the safety inspector; your AI agent is the builder. Every hands-on step is written
@@ -18,7 +26,7 @@ boxes with the manual commands and source.
 
 Every lesson has the same four pillars:
 
-1. **🔥 The War Story** — a real incident: the symptoms as they appeared, the wrong theories, the actual root cause, the fix that shipped.
+1. **🔥 The War Story** — a real incident (or, in a few concept lessons, a labelled composite): the symptoms as they appeared, the wrong theories, the actual root cause, the fix that shipped.
 2. **📐 The Principle** — the system-design concept the incident teaches, in plain language and diagrams, every term defined before it's used (backed by the [Glossary](./GLOSSARY.md)).
 3. **🎛️ Direct Your Agent** — you apply the principle to **Relay**, a deliberately generic product (accounts, creator content, media uploads, feeds, email, a mobile client) built across the course from prototype to zero-downtime production — by telling your agent *what* to build: the exact prompts to give, the context that makes it build the right thing, and the guardrail to install so the rule outlives the chat. Apply every step to your own app instead if you have one.
 4. **✅ Verify It** — the pillar that makes vibe coding safe: an evidence checklist proving the step actually worked, written so checking it requires **zero code reading** — things you can see, click, or make the agent demonstrate from the layer users touch. That covers what the product visibly does. On its own it cannot establish security, correctness when things happen at the same time, separation between customers' data, or production readiness, so the course pairs it with automated checks that run every time and, for high-risk changes, independent specialist review (the three tiers of evidence, introduced in lesson 0.1).

@@ -9,7 +9,7 @@
 # 9.1 — Commands, skills, subagents, hooks, MCP and headless mode: what to automate and what not to
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 8.1* · *Focus: Automate*
 
-**After this you can** decide with a decision card whether a repeated task becomes a command, skill or hook or stays manual, and justify it. *Study time: about 110 minutes (estimate).*
+**After this you can** decide with a decision card whether a repeated task becomes a command, skill or hook or stays manual, and justify it. *Study time: reading about 15 min, hands-on about 60 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Automate what repeats and has a mechanical success check.** A hook that reports a file that does not parse qualifies; "an agent approves the pull request" is judgement in disguise.
@@ -114,12 +114,12 @@ The other kind runs *after* the edit and can only report. The hooks guide's exam
 | Tool, practice or pattern | What it is and does | When to reach for it |
 |---|---|---|
 | **Automation decision card** | Eight questions, then a decision | Before building any automation |
-| **Skill** | A `SKILL.md` prompt you or Claude start; commands live here now | A prompt you paste more than twice |
+| **Skill** | A `SKILL.md` prompt you or Claude start; commands live here now (old command files still work and a skill wins a name clash; check the docs) | A prompt you paste more than twice |
 | **Subagent** | A worker with its own context and tools | A noisy search, a fresh-eyes review |
 | **Guard hook** | A `PreToolUse` script that blocks or asks | A rule that must hold whatever the model says |
 | **Post-edit hook** | A `PostToolUse` script that reports on finished work | A mechanical check after every edit |
 | **Headless run** | `claude -p` called by a script or CI job | Work with a checkable result |
-| **Run limits** | Tools, turns, budget, timeout, retries | Every unattended run |
+| **Run limits** | Tools, turns, budget, timeout, retries (`--max-turns` has no default limit at the time of writing; check the docs) | Every unattended run |
 
 ## 🏛️ In practice at Najm Bank
 Tariq (engineering lead) asks for an **Automation decision card** before anything lands in `.claude/` (`lab-assets/automation-card-template.md`, lab m09):
@@ -212,16 +212,16 @@ Delete the first comment line in your copy: it names the file in the course repo
 
 ## ✍️ Check yourself
 
-**1. Salem finds `.claude/commands/deploy.md` in one repository and `.claude/skills/deploy/SKILL.md` in another. What is true?**
+**1. Salem pastes the same pull-request description prompt three times a week, then reads and edits what comes back. Which form fits the decision card?**
 
-- A. Command files are no longer read, so only the skill exists
-- B. Both create `/deploy`, and a skill wins if the names clash
-- C. Both run in turn, with the command file first
-- D. Commands are typed by people and skills are used only by Claude
+- A. A `PreToolUse` hook that drafts the description before every edit he makes
+- B. A skill he starts when he needs it, whose output he reads and edits himself
+- C. A nightly headless job that writes each description and opens the pull request
+- D. A subagent that writes the description and then approves the pull request itself
 
 <details><summary>Answer</summary>
 
-**B.** Commands merged into skills: both paths create `/deploy`, and the skill wins a name clash. (🟢 Commands and skills.)
+**B.** It repeats and a person reads every result, so a skill such as `/pr-description` fits. A hook (A) fires on every edit, not when needed; C and D act with nobody reading the output. (🟢 The decision rule.)
 
 </details>
 
@@ -264,30 +264,30 @@ Delete the first comment line in your copy: it names the file in the course repo
 
 </details>
 
-**5. A nightly job runs `claude -p` with `--allowedTools` set but no `--max-turns`. What does the documentation say about turns?**
+**5. Tariq approves a nightly `claude -p` job that labels new tickets by area from a fixed list. What belongs under "Limits?" on its card?**
 
-- A. A small default applies, and the run ends with an error
-- B. The model sets the limit, stopping when it has finished
-- C. `--max-budget-usd` replaces the turn flag, so none is needed
-- D. There is no limit by default, so a confused run can keep going
+- A. Tools, turns, budget and timeout set, and each label checked against the list
+- B. Tools, turns and budget set, with each label taken as the model returns it
+- C. A turn limit and timeout only, since a run that ends cannot overspend
+- D. A budget cap only, since `--max-budget-usd` stands in for every other limit
 
 <details><summary>Answer</summary>
 
-**D.** `--max-turns` has no limit by default. A budget is a separate cap, and only an estimate. (🟡 Headless mode.)
+**A.** Every unattended run gets a tool list, turn limit, budget cap and timeout, and its output is validated before anything acts on it. Unchecked labels (B) let a wrong area through, a turn limit and timeout (C) cap length, not spend, tools or output, and the budget is only a client-side estimate (D). (🟡 Headless mode; 🔴 Cost and reliability.)
 
 </details>
 
 ## 📚 References
 - Claude Code documentation: skills https://code.claude.com/docs/en/skills; subagents https://code.claude.com/docs/en/sub-agents; hooks https://code.claude.com/docs/en/hooks; hooks guide https://code.claude.com/docs/en/hooks-guide; MCP https://code.claude.com/docs/en/mcp; headless https://code.claude.com/docs/en/headless; GitHub Actions https://code.claude.com/docs/en/github-actions
 - [*Building AI Applications & Agents*, lesson 10.1 — The Model Context Protocol: servers, tools, resources, authorisation and least privilege](../aiapps/index.html#/10.1); [*Secure AI & Application Security*, lesson 9.2 — Agents and tools: excessive agency, least-privilege tools and MCP](../secai/index.html#/9.2)
-- **Go deeper.** Engineering at Meta, "How Meta Built Forum With AI-Native Engineering": https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/ · OWASP, LLM06:2025 Excessive Agency: https://genai.owasp.org/llm-top-10/ · Invariant Labs, GitHub MCP exploited: https://invariantlabs.ai/blog/mcp-github-vulnerability · Wiz, the s1ngularity supply-chain attack: https://wiz.io/blog/s1ngularity-supply-chain-attack · Model Context Protocol: https://modelcontextprotocol.io
+- **Go deeper.** Engineering at Meta, "How Meta Built Forum With AI-Native Engineering": https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/ · OWASP, LLM06:2025 Excessive Agency (LLM03 in the 2026 edition): https://genai.owasp.org/llmrisk/llm062025-excessive-agency/ · Invariant Labs, GitHub MCP exploited: https://invariantlabs.ai/blog/mcp-github-vulnerability · Wiz, the s1ngularity supply-chain attack: https://wiz.io/blog/s1ngularity-supply-chain-attack · Model Context Protocol: https://modelcontextprotocol.io
 
 ---
 
 # 9.2 — Lab: build a project toolkit and a headless triage script
 *Level: 🟡 Intermediate* · *Prerequisites: 9.1, 8.2* · *Focus: Automate*
 
-**After this you can** build a review command, a post-edit hook and a headless triage script that pass the grader. *Study time: about 110 minutes (estimate).*
+**After this you can** build a review command, a post-edit hook and a headless triage script that pass the grader. *Study time: reading about 10 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Lab m09.** Five things in Remit: a review command, a read-only reviewer, a post-edit hook, a headless triage script and three decision cards.
@@ -432,7 +432,7 @@ directory>` passes (run it from the `ailab` folder of the course repository).
 **Start.**
 
 ```bash
-cd ainative/ailab
+cd ~/system-design-for-vibe-coders/ainative/ailab
 python -m ailab start m09 --dir ~/ainative/m09
 cd ~/ainative/m09
 export PATH="$PWD/lab-assets/bin:$PATH"   # the stand-in; macOS, Linux or WSL

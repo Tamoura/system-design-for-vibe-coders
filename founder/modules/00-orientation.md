@@ -9,7 +9,7 @@
 # 0.1 — What changed, and what did not, when AI builds the product
 *Level: 🟢 Beginner* · *Prerequisites: none* · *Step: Explore*
 
-**After this you can** write a one-page "still hard" list for your own idea with at least five items, each with a question you could ask a real person to test it. *Study time: about 115 minutes (estimate).*
+**After this you can** write a one-page "still hard" list for your own idea with at least five items, each with a question you could ask a real person to test it. *Study time: reading about 15 min, hands-on about 45 min (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can write a one-page "still hard" list for your own idea: at least five things that AI tools did not make easier, each with the question that tests it.
@@ -222,7 +222,7 @@ She also started a built-versus-learned log. After the weekend, the "built" colu
 # 0.2 — The founder's map: eight steps and the Tick cast
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Step: Explore*
 
-**After this you can** draw your eight-step journey map on one page, mark the step you are on, and name the artefact that proves each step is done. *Study time: about 115 minutes (estimate).*
+**After this you can** draw your eight-step journey map on one page, mark the step you are on, and name the artefact that proves each step is done. *Study time: reading about 15 min, hands-on about 45 min (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can draw your own journey map with eight steps, mark which step you are on, and name the one artefact that proves you finished it.
@@ -279,7 +279,6 @@ flowchart LR
 
 Protect's first question list comes before Launch; its full work continues after.
 
-Protect's first question list comes before Launch; its full work continues after.
 
 Going back is not failing. It is the map doing its job. A price test that fails is information about validation. A launch that exposes a gap is information about scope.
 
@@ -423,16 +422,16 @@ Notice that she did not delete the logo forever. She postponed it behind a cheap
 
 </details>
 
-**3. Which description of Hana and Rashid is accurate?**
+**3. A reader in another country, Dina, sees Rashid explain that Layla needs a written agreement with Sam about who owns the logo. What should Dina do with this?**
 
-- A. They give Layla the legal and tax answers she should follow in practice.
-- B. They are real professionals whose advice readers can rely on for their business.
-- C. They guarantee that Tick's terms and accounts are fully correct.
-- D. They show what to ask and what to bring to a qualified professional.
+- A. Treat it as the rule for her own country and sign her designer's contract on that basis.
+- B. Copy Rashid's wording into her own contract, since the course has already checked it.
+- C. Skip a lawyer, since the lesson already lists every question a lawyer would ask her.
+- D. Use it as a question list and take it, with her own contract, to a qualified lawyer.
 
 <details><summary>Answer</summary>
 
-**D.** The course is not legal or tax advice. Hana and Rashid are fictional and exist only to show the questions. A and C present them as sources of answers, and B wrongly calls them real. (See "The Tick cast".)
+**D.** The course is not legal or tax advice. Hana and Rashid are fictional and exist only to show the questions and what to bring. A and B treat a fictional character's example as advice for her case, and C drops the professional the questions are for. (See "The Tick cast".)
 
 </details>
 
@@ -473,7 +472,7 @@ Notice that she did not delete the logo forever. She postponed it behind a cheap
 # 0.3 — How to use this course, and what it is not (not legal, tax or investment advice)
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Step: Explore*
 
-**After this you can** write a one-page "how I will use this course" note with your pace, your artefact folder, the professionals you will consult and three limits you will keep. *Study time: about 115 minutes (estimate).*
+**After this you can** write a one-page "how I will use this course" note with your pace, your artefact folder, the professionals you will consult and three limits you will keep. *Study time: reading about 20 min, hands-on about 30 min (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can write a one-page "how I will use this" note: your pace, your artefact folder, your professional list, and three limits you will keep.
@@ -525,9 +524,11 @@ This is the problem the lesson addresses, and it is not unique to law. A fluent 
 
 Read the essentials of a lesson first. Go deeper only when you need it.
 
-**A sensible pace.** There is no fixed schedule. A common pattern for a part-time founder is one lesson a week, with the exercises done in the same week, because the exercises are the point. If you are building quickly, do Module 1 before you build more. If you already have customers, start with the module for the step you are stuck on, then fill in the earlier ones.
+**A sensible pace.** There is no fixed schedule. A common pattern for a part-time founder is one lesson a week, with the exercises done in the same week, because the exercises are the point. For a faster start, read Module 0 in one sitting and begin Module 1 the same week. Some lessons send you into the field (interviews, a smoke test, a price test, outreach), which takes one to two weeks of calendar time; the study time on each lesson does not count that waiting, so start the fieldwork and keep reading while replies come in. If you are building quickly, do Module 1 before you build more. If you already have customers, start with the module for the step you are stuck on, then fill in the earlier ones.
 
 **Your artefact folder.** Create one folder, in any tool, called something like "venture file". Each lesson adds one item to it. By Module 8 it is the file you will turn into a 30-day plan. Keep dates on everything, so you can see what you knew when.
+
+**No peer? Use a cold read.** Where a "Done when" line asks a peer to read your work, a solo learner can put it aside for a day and reread it as a stranger, or give it to an AI tool and ask what it understood and what it would need to ask. Compare that reading with what you meant. Remove customer details first, and never paste passwords, keys or tokens into a chat.
 
 **Library links.** Where this course touches engineering or product management, it links to the library's other courses rather than repeating them. You do not need to read the linked lesson first, but follow the link when the founder's view is not enough.
 

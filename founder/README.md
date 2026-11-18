@@ -2,6 +2,10 @@
 
 **From a product built with AI to a business. A free, bilingual course for solo founders and small teams (up to five people) who build with AI tools and now have to find customers, price, launch, support and run what they built.**
 
+<!-- study-time -->
+**Study time for the whole course: about 91 hours** (estimate: reading plus hands-on work, summed over every lesson). At about 6 hours a week that is roughly 15 weeks. Each lesson shows its own split; a pilot with real learners will replace these estimates.
+<!-- /study-time -->
+
 ## What this is
 
 AI tools have made it much faster to build a product. They have not made it faster to find out whether anyone wants it, what to charge, who your first customers are, what you have promised them, or what happens to the business if you are ill for a week. That is the founder's half of the work, and this course teaches it.

@@ -10,7 +10,7 @@
 
 *Level: 🟢 Beginner*
 
-**After this you can** add email-and-password login with hashed passwords and a server-side session to Beacon, plus GitHub sign-in with PKCE and a password reset that answers the same way for known and unknown emails. *Study time: about 110 minutes (estimate).*
+**After this you can** add email-and-password login with hashed passwords and a server-side session to Beacon, plus GitHub sign-in with PKCE and a password reset that answers the same way for known and unknown emails. *Study time: reading about 20 min, hands-on about 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -52,7 +52,7 @@ Three ideas carry most of the weight: credentials, sessions and cookies.
 
 **Cookies** carry that token. Four attributes matter:
 
-- `HttpOnly`: JavaScript cannot read the cookie, so an XSS bug cannot simply steal it.
+- `HttpOnly`: JavaScript cannot read the cookie, so an XSS (cross-site scripting: an attacker's script running inside your page) bug cannot simply steal it.
 - `Secure`: only sent over HTTPS.
 - `SameSite=Lax`: the browser does not attach the cookie to most cross-site requests, which blocks the classic CSRF (cross-site request forgery) attack where another site submits a form to yours. `Strict` is tighter but breaks "click a link in Slack and arrive logged in".
 - `Path=/` plus the `__Host-` name prefix: the browser then refuses the cookie unless it is `Secure`, has no `Domain` attribute and has `Path=/`, which stops subdomains from overwriting it.
@@ -76,29 +76,30 @@ sequenceDiagram
     A-->>B: 200 monitor list
 ```
 
-The database stores a *hash* of the session token, so a leaked copy of the `sessions` table cannot be used to log in. It is cheap, and most tutorials skip it.
+The database stores a *hash* of the session token, so a leaked copy of the `sessions` table cannot be used to log in. It is cheap, and most tutorials skip it. The sample uses Drizzle, like the Beacon starter; later lessons use a shorter `db.model.method()` style that you translate the same way.
 
 ```ts
 import { randomBytes, createHash } from "node:crypto";
+import { and, eq, gt } from "drizzle-orm";
+import { db } from "@/db";
+import { sessions } from "@/db/schema"; // the sessions table you add in this lesson
 
 const sha256 = (s: string) => createHash("sha256").update(s).digest("hex");
 
 export async function createSession(userId: string) {
   const token = randomBytes(32).toString("base64url"); // 256 bits of randomness
-  await db.session.create({
-    data: {
-      id: sha256(token),                                  // store only the hash
-      userId,
-      expiresAt: new Date(Date.now() + 30 * 24 * 3600 * 1000),
-    },
+  await db.insert(sessions).values({
+    id: sha256(token),                                    // store only the hash
+    userId,
+    expiresAt: new Date(Date.now() + 30 * 24 * 3600 * 1000),
   });
   return token; // goes into the cookie, never logged
 }
 
 export async function validateSession(token: string) {
-  const session = await db.session.findUnique({ where: { id: sha256(token) } });
-  if (!session || session.expiresAt < new Date()) return null;
-  return session; // optionally slide expiresAt forward here
+  const [session] = await db.select().from(sessions)
+    .where(and(eq(sessions.id, sha256(token)), gt(sessions.expiresAt, new Date())));
+  return session ?? null; // optionally slide expiresAt forward here
 }
 ```
 
@@ -192,14 +193,16 @@ Lock-in is mostly about **password hashes and user ids**. Check that the vendor 
 
 ### 🟢 Beginner exercise
 
-Add email-and-password sign-up and login to Beacon using Better Auth (or Devise, django-allauth, or Laravel's starter kits in your stack). Protect the `/monitors` pages so logged-out users are redirected to `/login`. Add a logout button that deletes the server-side session.
+Add email-and-password sign-up and login to Beacon using Better Auth (or Devise, django-allauth, or Laravel's starter kits in your stack). Protect the `/dashboard` pages (the starter's `/dashboard/monitors` included) so logged-out users are redirected to `/login`. Add a logout button that deletes the server-side session.
 
 **Done when:**
-- Passwords are stored as argon2id or bcrypt hashes. Grep your database dump for a test password and find nothing.
+- Passwords are stored as slow, salted hashes (Better Auth's default scrypt, argon2id or bcrypt). Sign up with a test password, then `docker compose exec postgres pg_dump -U beacon beacon | grep -c 'YourTestPassw0rd'` prints `0`.
 - The session cookie is `HttpOnly`, `Secure` in production, and `SameSite=Lax`.
-- After logout, replaying the old cookie with `curl` returns a redirect or 401.
+- After logout, replaying the old cookie returns a redirect or 401. Copy the cookie's name and value from the browser's DevTools (Application → Cookies) before you log out, then run `curl -i -H "Cookie: NAME=VALUE" http://localhost:3000/dashboard/monitors`.
 
 ### 🟡 Intermediate exercise
+
+> **Before you start.** Create a GitHub OAuth App (GitHub → Settings → Developer settings → OAuth Apps → New OAuth App) with homepage `http://localhost:3000` and callback URL `http://localhost:3000/api/auth/callback/github` (Better Auth's default path; other libraries document their own). Put its client ID and secret in `.env.local`, never in Git or a chat with an AI assistant. Send reset emails over SMTP to the Mailpit container the starter already runs (`localhost:1025`) and read them at http://localhost:8025; nothing leaves your machine. Lesson 4.1 covers real email delivery.
 
 Add "Sign in with GitHub" and a password-reset flow. Link a GitHub identity to an existing user only when GitHub reports the email as verified *and* the user confirms by signing in with their existing method. Make the reset request endpoint return the same response for known and unknown emails.
 
@@ -296,7 +299,7 @@ This is account enumeration: attackers can find out which emails are Beacon cust
 
 *Level: 🟢 Beginner* · *Prerequisites: 1.1*
 
-**After this you can** move Beacon's monitors to organization ownership, build hashed invitations that expire and cannot be reused, and show that a non-member gets 404 on another org's pages. *Study time: about 110 minutes (estimate).*
+**After this you can** move Beacon's monitors to organization ownership, build hashed invitations that expire and cannot be reused, and show that a non-member gets 404 on another org's pages. *Study time: reading about 15 min, hands-on about 8 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -611,7 +614,7 @@ The org slug is a claim, not a fact, and the query ignores it, so anyone can rea
 
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.2*
 
-**After this you can** write a `requirePermission()` check for the owner, admin, member and viewer roles, and prove with `curl` that a viewer gets 403 when deleting a monitor and that a request body cannot change its org or role. *Study time: about 110 minutes (estimate).*
+**After this you can** write a `requirePermission()` check for the owner, admin, member and viewer roles, and prove with `curl` that a viewer gets 403 when deleting a monitor and that a request body cannot change its org or role. *Study time: reading about 15 min, hands-on about 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -901,7 +904,7 @@ This is mass assignment, the 2012 GitHub bug: a plain member can send `{"role": 
 
 *Level: 🔴 Advanced* · *Prerequisites: 1.1, 1.2, 1.3*
 
-**After this you can** connect a Beacon org to a local identity provider so a user signs in through SSO without a Beacon password, and show that a tampered or expired SAML response is rejected. *Study time: about 110 minutes (estimate).*
+**After this you can** connect a Beacon org to a local identity provider so a user signs in through SSO without a Beacon password, and show that a tampered or expired SAML response is rejected. *Study time: reading about 20 min, hands-on about 8 h (estimate).*
 
 ## ⚡ In 60 seconds
 

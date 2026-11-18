@@ -9,7 +9,7 @@
 # 9.1 — Short-term, working and long-term memory: what to remember and what never to
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 3.1, 8.1* · *Layer: Agents*
 
-**After this you can** sort candidate memories into keep, never and depends, each with a kind, a retention and a rule, and map every place a stored copy can live with a test for how a forget reaches it. *Study time: about 110 minutes (estimate).*
+**After this you can** sort candidate memories into keep, never and depends, each with a kind, a retention and a rule, and map every place a stored copy can live with a test for how a forget reaches it. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - The model remembers nothing. "Memory" is text your code puts back into the next request, in three tiers: **short-term** (the context window), **working** (a state object) and **long-term** (a store), either **episodic** (what happened) or **semantic** (what is true).
@@ -239,7 +239,7 @@ The artefact is the **Najm Desk v1 Memory Design**, owned by Lujain, reviewed by
 # 9.2 — Lab: persistent memory across sessions, with a "forget" command
 *Level: 🟡 Intermediate* · *Prerequisites: 8.2, 9.1* · *Layer: Agents, Production*
 
-**After this you can** build per-user SQLite memory with remember, recall and forget, and prove with tests that forget removes the data from the store, the summary and the raw file. *Study time: about 110 minutes (estimate).*
+**After this you can** build per-user SQLite memory with remember, recall and forget, and prove with tests that forget removes the data from the store, the summary and the raw file. *Study time: reading about 10 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A per-user SQLite memory (`remember`, `recall`, `forget`, `export`), an agent that remembers across processes and a rolling summary under a token budget. No tool takes a user id.
@@ -558,7 +558,7 @@ The first refusal is the poisoned write; the second shows the taint is sticky. T
 
 **Group session (60 minutes).** (1) In pairs: store a fact, forget it, and let your partner hunt for it in the export, summary and file (30). (2) Write three ticket notes that try to get a memory written: which does the policy stop, which only taint? (30)
 
-**Build it with Claude Code.** Give this spec to Claude Code in plan mode (check the current Claude Code documentation); review the plan before it edits anything:
+**Build it with Claude Code.** *No Claude Code? Do the spec's steps by hand and run its checks yourself (lesson 0.3).* Give this spec to Claude Code in plan mode (check the current Claude Code documentation); review the plan before it edits anything:
 
 ```text
 Goal: labs/m09/memory.py and memory_agent.py as in lesson 9.2 (per-user SQLite memory: remember, recall, forget,

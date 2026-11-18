@@ -9,7 +9,7 @@
 # 6.1 — Data governance that works: ownership, catalogue, lineage and data contracts
 *Level: 🔴 Advanced* · *Prerequisites: 1.2, 3.1, 3.2* · *Stage: Govern*
 
-**After this you can** write an ownership register a colleague can use to find who answers for any dataset, and add a dbt contract that fails the build when a column type changes. *Study time: about 110 minutes (estimate).*
+**After this you can** write an ownership register a colleague can use to find who answers for any dataset, and add a dbt contract that fails the build when a column type changes. *Study time: reading about 15 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Data governance** is the set of decision rights and accountabilities over data: who decides what a dataset means, who may change it, who may use it and who fixes it when it breaks.
@@ -260,9 +260,9 @@ Use synthetic or public open data only.
 
 **3. Huda must find every report affected by a change to `core.accounts.acct_status` before the change ships. What gives her the most reliable answer?**
 
-- A. Current column-level lineage, walked downstream and joined to the ownership register
+- A. Current column-level lineage, walked downstream, plus the ownership register
 - B. Asking in the analytics team's chat channel who uses the accounts table
-- C. Table-level lineage showing every mart and report that reads `core.accounts`
+- C. Table-level lineage showing every report that reads `core.accounts`
 - D. The detailed lineage diagram drawn during last year's architecture review
 
 <details><summary>Answer</summary>
@@ -275,7 +275,7 @@ Use synthetic or public open data only.
 
 - A. Catalogue every table in the warehouse first, then assign owners once the inventory is complete
 - B. Buy a commercial catalogue tool and let adoption grow on its own
-- C. Start with critical data elements and give each an owner, definition, lineage, contract and tests
+- C. Start with critical data elements, each with an owner, definition, lineage and tests
 - D. Write a full governance policy, approve it in committee and wait for teams to adopt it
 
 <details><summary>Answer</summary>
@@ -312,7 +312,7 @@ Use synthetic or public open data only.
 # 6.2 — Personal data: classification, masking, minimisation, retention and the law
 *Level: 🔴 Advanced* · *Prerequisites: 1.3, 6.1* · *Stage: Govern, Store*
 
-**After this you can** classify every column of a customer table, build a pseudonymised analyst view with a keyed hash, and show why a plain MD5 hash of an ID can be reversed. *Study time: about 125 minutes (estimate).*
+**After this you can** classify every column of a customer table, build a pseudonymised analyst view with a keyed hash, and show why a plain MD5 hash of an ID can be reversed. *Study time: reading about 15 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Personal data** is any information about an identifiable person: not just names and IDs, but also account numbers, device IDs or a rare mix of birth date, nationality and branch.
@@ -325,7 +325,7 @@ Use synthetic or public open data only.
 ## 🧭 Why it matters
 Huda wants to know why Najm Assist conversations about card disputes end in complaints. A colleague gives her read access to `core.customers`, and she copies all 38 columns (names, phones, national IDs, birth dates, salaries, addresses) into a personal sandbox schema. Her notebook then exports a sample to a CSV on a shared drive "for Kareem to look at".
 
-Three weeks later Sara, the Data Protection Officer, finds the schema in a routine scan. Huda explains that she hashed the national IDs, so the data was "anonymised". Sara shows her why not: IDs are short numbers with a known structure, so anyone can hash every possible value and match them back. Then she asks the questions the law asks: for what purpose was it copied, was every column needed, who else accessed it, and when will it be deleted?
+Three weeks later Sara, the Data Protection Officer, finds the schema in a routine scan. Huda explains that she hashed the national IDs, so the data was "anonymised". Sara shows her why not: IDs are short numbers with a known structure, so anyone can hash every possible value and match them back. It has happened in public: in 2014 New York City released 173 million taxi trips with driver licence and medallion numbers as unsalted MD5 hashes, and a developer reversed them all within hours. Then she asks the questions the law asks: for what purpose was it copied, was every column needed, who else accessed it, and when will it be deleted?
 
 Nothing leaked outside the bank, and Huda's analysis needed only five columns, none of them identifying. This lesson builds a platform where the safe path (classified data, masked views, purpose-limited copies that expire) is also the easy one.
 
@@ -485,7 +485,7 @@ Sara and Lina publish the **Najm Personal Data Handling Standard v1** for the da
 **Part C: rules.** Sandbox schemas are created by a script that records owner, purpose and expiry; a nightly job drops expired ones. Unclassified new columns fail CI. Lakehouse tables with personal data expire snapshots weekly. The keyed-hash secret rotates only with a re-keying plan, since rotation changes every pseudonym.
 
 ## 🛠️ Exercises
-Use synthetic data only (for example generated with the Python Faker library). Never use real personal data for these exercises.
+Use synthetic data only: start from the lab dataset's `customers` (lesson 0.3) and add personal-looking columns with the Python Faker library. Never use real personal data for these exercises.
 
 - 🟢 Generate a synthetic customer table of 20 columns with Faker. Classify every column with a level, tags and a retention class, and say for an "analyse complaint drivers" purpose which columns are needed. *Done when:* every column is classified and your purpose needs no more than a third of them.
 - 🟡 In PostgreSQL or DuckDB, load your synthetic table and build an analyst view with a keyed-hash customer key, an age band and a masked phone. Then show the weakness of plain hashing: MD5-hash one fake six-digit ID and recover it by hashing all one million candidates. *Done when:* joins on the keyed hash work across two tables, and your script recovers the MD5-hashed ID but not the keyed one.
@@ -510,8 +510,8 @@ Use synthetic data only (for example generated with the Python Faker library). N
 **1. Huda replaces each national ID with its unsalted MD5 hash and labels the table "anonymised". What is the main problem?**
 
 - A. MD5 output is too long to store efficiently in a column used for joins
-- B. Hashing destroys the ability to join tables on the customer
-- C. The hashes can be reversed by hashing every possible ID, so the data is not anonymous
+- B. Hashing destroys the ability to join tables on the same customer later
+- C. Every possible ID can be hashed and matched, so the data is not anonymous
 - D. Hashing personal data is prohibited outright under the GDPR
 
 <details><summary>Answer</summary>
@@ -537,8 +537,8 @@ Use synthetic data only (for example generated with the Python Faker library). N
 
 - A. A row-level export of complaints with customer names so the team can follow up
 - B. A dashboard on the full customer table, filtered at view time
-- C. A dashboard that hides the nationality column
-- D. An aggregated dashboard that suppresses groups smaller than an agreed threshold
+- C. A dashboard by branch only, with the nationality column hidden
+- D. An aggregated dashboard that hides groups under an agreed threshold
 
 <details><summary>Answer</summary>
 
@@ -548,8 +548,8 @@ Use synthetic data only (for example generated with the Python Faker library). N
 
 **4. Lina runs `DELETE` on an Apache Iceberg table for customers whose retention period has ended. What else must happen before the data is physically gone?**
 
-- A. Nothing; in Iceberg a `DELETE` removes the underlying data files immediately
-- B. Expire old snapshots so unreferenced data files are deleted, and clean up copies
+- A. Nothing; in Iceberg a `DELETE` removes the data files immediately
+- B. Expire old snapshots so unreferenced files are removed, and clean up copies
 - C. Rename the table so time-travel queries can no longer find the old rows
 - D. Re-run the dbt models that read the table so downstream marts are rebuilt
 
@@ -562,8 +562,8 @@ Use synthetic data only (for example generated with the Python Faker library). N
 **5. An EU customer of Najm asks for erasure. Some of their transaction records must be kept under banking record-keeping rules. What should the data platform do?**
 
 - A. Delete every record immediately, including those the law requires the bank to keep
-- B. Refuse the whole request, because some of the records must be kept by law
-- C. Find every copy via lineage, erase where no duty to keep applies, restrict the rest and record evidence
+- B. Refuse the whole request, because some of the customer's records must be kept by law
+- C. Trace copies via lineage, erase what need not be kept, restrict the rest, log it
 - D. Delete only the customer's row in `core.customers`, since every mart rebuilds from it
 
 <details><summary>Answer</summary>
@@ -589,7 +589,7 @@ Use synthetic data only (for example generated with the Python Faker library). N
 # 6.3 — Securing the data platform: access control, secrets, audit and sharing safely
 *Level: 🔴 Advanced* · *Prerequisites: 6.1, 6.2* · *Stage: Govern, Operate*
 
-**After this you can** set up least-privilege PostgreSQL roles and row-level security, prove with test queries that each user sees only their rows, and explain how FORCE and removing superuser close the two bypasses. *Study time: about 125 minutes (estimate).*
+**After this you can** set up least-privilege PostgreSQL roles and row-level security, prove with test queries that each user sees only their rows, and explain how FORCE and removing superuser close the two bypasses. *Study time: reading about 15 min, hands-on about 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A data platform concentrates the bank's most valuable data in one place, so it needs **least privilege**: every person and every pipeline gets the minimum access its purpose needs, and nothing more.
@@ -818,7 +818,7 @@ Use synthetic data in a local PostgreSQL (for example the official image in Dock
 - A. Delete the line from the notebook, commit the change and push it
 - B. Rotate the credential, then move the pipeline to the secrets manager
 - C. Make the repository private so no one else can see the password
-- D. Nothing, because the repository is internal to the bank
+- D. Nothing, because the repository is internal to the bank and access is limited
 
 <details><summary>Answer</summary>
 
@@ -828,7 +828,7 @@ Use synthetic data in a local PostgreSQL (for example the official image in Dock
 
 **3. Najm wants analysts to see confidential columns only for customers in their own country, with masking driven by the classification tags of 6.2. Which access model fits best?**
 
-- A. One role per table per country, granted by each data owner
+- A. One role per table per country, each granted by the data owner when asked
 - B. A single shared analyst account with a masked view for everyone
 - C. ABAC on user attributes and column tags, with row-level security
 - D. Giving all analysts `pii_reader` and relying on training
@@ -841,9 +841,9 @@ Use synthetic data in a local PostgreSQL (for example the official image in Dock
 
 **4. Which audit-log setup gives evidence that internal audit can rely on?**
 
-- A. Named-user logs of grants, writes and restricted reads, in a store administrators cannot alter
+- A. Named-user logs of grants, writes and restricted reads, kept where admins cannot edit them
 - B. Detailed logs kept on the warehouse server, editable by the platform administrators
-- C. Logs of failed logins only, kept for seven years
+- C. Logs of failed logins only, kept for seven years in the security team's archive
 - D. Screenshots of the access-control settings, taken once a year for the auditors
 
 <details><summary>Answer</summary>

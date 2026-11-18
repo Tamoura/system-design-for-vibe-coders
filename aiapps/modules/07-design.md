@@ -9,7 +9,7 @@
 # 7.1 — Architecture and autonomy design: workflow or agent, tool surface, human-in-the-loop, failure design, build or buy
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 5.1, 6.2* · *Layer: Delivery, Agents*
 
-**After this you can** draw C4 diagrams for an agent design and write three architecture decision records, each with a cost as a consequence and a trigger to revisit. *Study time: about 105 minutes (estimate).*
+**After this you can** draw C4 diagrams for an agent design and write three architecture decision records, each with a cost as a consequence and a trigger to revisit. *Study time: reading about 15 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Design** turns the specification into decisions a reviewer can read, each traced to a requirement or risk.
@@ -204,7 +204,7 @@ Consequences: One more click for employees, a queue for approvers. A tricked mod
 
 **Weekly deliverable.** Commit `week-07/` with `docs/architecture.md`, `docs/adr/001` to `003` and `NOTES.md` (quiz answers, notes). **Group session (60 minutes).** (1) Draw the container diagram from memory (10). (2) Role-played review, answers from documents only (25). (3) Swap ADRs; attack the consequences (15). (4) Agree one cost table (10).
 
-**Build it with Claude Code.** Ask for a review, not a redesign, in plan mode (check the current documentation):
+**Build it with Claude Code.** *No Claude Code? Do the spec's steps by hand and run its checks yourself (lesson 0.3).* Ask for a review, not a redesign, in plan mode (check the current documentation):
 
 ```text
 Goal: review docs/architecture.md and docs/adr/ against docs/najm-desk-spec.md and list the gaps. Change no design file.
@@ -223,7 +223,7 @@ Constraints: quote, never paraphrase; write "unclear" rather than guess; invent 
 - `git status --short` shows only `?? docs/design-gaps.md`: a second reader's view, not a sign-off.
 
 ## 🛠️ Exercises
-- 🟢 **Draw the C4 diagrams.** Offline. Redraw both in mermaid for your spec. *Done when:* both render, every arrow is labelled, every external system appears, and a colleague can name two v1 omissions.
+- 🟢 **Draw the C4 diagrams.** Offline. Redraw both in mermaid for your spec. *Done when:* both render, every arrow is labelled, every external system appears, and a colleague can name two v1 omissions (solo: a fresh Claude chat given only the diagrams and your spec).
 - 🟡 **Write three ADRs.** Offline. Model tiering, retrieval against long context, write-action policy. *Done when:* each has five parts, a cost as consequence, a trigger to revisit and no unmeasured figures.
 - 🔴 **Cost per conversation, three ways.** Offline with prices from the price page (real `count_tokens` *needs the real API*; the mock only estimates). Fill the formula for low, expected and high assumptions (turns, passage tokens, cached share, retries). *Done when:* a table gives cost per conversation and per 1,000, the assumption that moves it most, and the price date.
 
@@ -318,7 +318,7 @@ Constraints: quote, never paraphrase; write "unclear" rather than guess; invent 
 # 7.2 — Prototype, propose and agree scope: demos, proposals, phased rollout and change control
 *Level: 🟡 Intermediate* · *Prerequisites: 4.2, 6.2, 7.1* · *Layer: Delivery*
 
-**After this you can** run a scripted demo that shows failures on purpose, and draft a proposal and phased rollout plan whose exit criteria each have a number and a decider. *Study time: about 110 minutes (estimate).*
+**After this you can** run a scripted demo that shows failures on purpose, and draft a proposal and phased rollout plan whose exit criteria each have a number and a decider. *Study time: reading about 15 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **prototype ladder** (paper, Wizard of Oz, thin slice, pilot) buys the cheapest evidence first.
@@ -536,7 +536,7 @@ The rollout plan (the numbers are the worked specification's fictional targets; 
 
 **Weekly deliverable.** Commit `week-07/` with the demo, passing tests, `docs/demo-script.md`, `docs/proposal.md`, `docs/rollout-plan.md`, `NOTES.md`. **Group session (60 minutes).** (1) Run the demo live, D6 and D7 included (15). (2) Role-play: Hind asks for password reset mid-demo; run the analysis (20). (3) Attack each other's scope-out lists (15). (4) Agree exit criteria (10).
 
-**Build it with Claude Code.** Plan mode first (check the current Claude Code documentation):
+**Build it with Claude Code.** *No Claude Code? Do the spec's steps by hand and run its checks yourself (lesson 0.3).* Plan mode first (check the current Claude Code documentation):
 
 ```text
 Goal: build labs/m07/demo.py, the thin-slice Najm Desk demo of lesson 7.2: policy Q&A and ticket status, with guards and a hand-off.
@@ -558,7 +558,7 @@ Plan first; small steps; tests after each.
 - `git status --short` lists only `labs/m07/`, its test and the `m07_` data and playbook.
 
 ## 🛠️ Exercises
-- 🟢 **Run the demo, write the sentences.** Offline. Run all seven scenarios and write what you would tell Hind for each, without "model", "token" or "hallucination"; D6's says how the wrong answer was caught. *Done when:* `NOTES.md` holds seven plain sentences a colleague can match to scenarios.
+- 🟢 **Run the demo, write the sentences.** Offline. Run all seven scenarios and write what you would tell Hind for each, without "model", "token" or "hallucination"; D6's says how the wrong answer was caught. *Done when:* `NOTES.md` holds seven plain sentences a colleague can match to scenarios (solo: a fresh Claude chat given the sentences shuffled and the scenario list).
 - 🟡 **Write the proposal and rollout plan.** Offline. Fill both, then analyse "can it also reset passwords?". *Done when:* scope-out names three things including password reset, estimates are ranges with a confidence, each exit criterion has a number and a decider, and the request ends in yes, not yet or no.
 - 🔴 **Find a real failure.** *Needs the real API* (spending cap first, lesson 0.2). Without the playbook, run 20 policy questions of your own (five the library cannot answer) through `rag.ask` in a short loop with `MODEL=claude-sonnet-5-5`, looking for a real failure. *Done when:* `NOTES.md` has the questions, outputs, the failing case, whether the citation gate caught it, the date, the model id and your replacement for D6.
 

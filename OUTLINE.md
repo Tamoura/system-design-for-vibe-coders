@@ -307,7 +307,7 @@ web-only builders may skim them and return. 6.6–6.7 are for everyone.)*
   🤖 Agents love adding events; nobody deletes them. The standing rule: every event has an owner question ("what decision does this inform?") or it doesn't ship.
 
 - **7.6 Your monitoring stack: Sentry, uptime checks, metrics, and alerts.**
-  🔥 The reference platform ran "blind in production" for years — no server-side error tracking, no alerting; 3am failures were discovered by user complaints. When error tracking finally existed (Sentry, mobile), its loudest "error" was a success message (7.2). Famous case: Roblox's 73-hour outage (2021) — their monitoring ran on the same infrastructure that failed, so responders flew blind; same shape as AWS's status page dying with S3.
+  🔥 The reference platform ran "blind in production" for years — no server-side error tracking, no alerting; 3am failures were discovered by user complaints. When error tracking finally existed (Sentry, mobile), its loudest "error" was a success message (7.2). Famous case: Roblox's 73-hour outage (2021) — their monitoring ran on the same infrastructure that failed, one reason recovery was so slow; same shape as AWS's status page staying green because its admin tool depended on S3.
   📐 The four instruments and the question each answers: **error tracking** (Sentry: what broke, for whom, in which release — source maps, release tagging, severity = actionability); **uptime/synthetic checks** (UptimeRobot / Better Stack / Pingdom: "is it up *from the outside*" — lesson F.5's phone-test, industrialized and running every minute from another continent); **metrics & dashboards** (Grafana/Prometheus or hosted: Google SRE's four golden signals — latency, traffic, errors, saturation); **alerting** (route to a phone; alert on symptoms users feel, not causes; every alert actionable or deleted). OpenTelemetry as the vendor-neutral wiring between them. Iron rule from Roblox/AWS: monitoring must never share fate with the thing it monitors.
   🔨 Wire Relay end to end: Sentry on server + web + mobile with release tags; one external uptime check on the real URL; a four-golden-signals dashboard; two alerts (down ≥2 min, error-rate spike). Then break staging on purpose and watch the pager fire.
   🤖 The standing question for every new service the agent adds: "if our server dies right now, what — running on someone else's infrastructure — tells us within five minutes?"
@@ -457,6 +457,9 @@ bank:
 10. A 90-second provider blip becomes a 20-minute retry-storm and a 40× bill. (6.7 + 10.2)
 11. A profile edit shows the old value for a second — read-your-writes under replication lag. (10.3)
 12. Your AI agent reports "done" with a confident, wrong self-summary — what evidence do you demand? (9.4 / 9.8)
+
+Then two unseen pages with model answers, and a solo live drill: the agent
+injects one hidden fault into staging and you diagnose, fix and prove it.
 
 Passing bar: correct layer identified, plausible root cause, a fix that survives
 the follow-up question "and how do you know it worked?"

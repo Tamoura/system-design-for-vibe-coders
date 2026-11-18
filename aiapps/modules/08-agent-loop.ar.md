@@ -1,6 +1,6 @@
 # الوحدة 8 — حلقة الوكيل بإتقان
 
-*خطِّط ونفِّذ ولاحِظ وكرِّر: هذا كل ما يفعله الوكيل، وفي الحلقة نفسها يخطئ الوكلاء. قدّمت لك الوحدة 1 أصغر حلقة وقدّمت الوحدة 3 بروتوكول الأدوات الذي تقوم عليه. وهذه الوحدة هي الفرق بين حلقة تنجح في عرض تجريبي وحلقة تستطيع تركها تعمل في الثانية صباحًا. الدرس 8.1 هو الدرس المفاهيمي: تشريح الحلقة وفق نمط ReAct، وطرق التوقف الست، وما يُفعل مع كل `stop_reason`، والتأمل الذاتي والتخطيط — متى يُجديان ومتى يضيفان كلفة فحسب — وأخطاء الأدوات، وكيف ينمو السياق مع الحساب، وأنماط الإخفاق التي يصادفها المبتدئون أولًا، وقابلية المراقبة التي تحتاجها الحلقة، ومتى تستخدم مشغّل الأدوات في حزمة التطوير أو Claude Agent SDK بدلًا من حلقتك الخاصة، وقائمة فحص الحلقة الآمنة. أما الدرس 8.2 فهو المختبر: حلقة من الصفر بحدّ صارم للخطوات، وميزانية رموز، وأجل بالساعة الفعلية، وكشف انعدام التقدم (no-progress detection)، وسجل تتبّع JSONL، وأداة إعادة تشغيل، وتسليم إلى شخص حين ينطلق أحد الحواجز، واختبار يجعل كل حاجز ينطلق. يعمل المختبر دون اتصال على النسخة المحاكاة في عدّة المختبر وعلى واجهة البرمجة الحقيقية دون أي تغيير. وتحصل استعلامات التذاكر والزملاء في نجم ديسك (Najm Desk) على أول حواجزها.*
+*خطِّط ونفِّذ ولاحِظ وكرِّر: هذا كل ما يفعله الوكيل، وفي الحلقة نفسها يخطئ الوكلاء. قدّمت لك الوحدة 1 أصغر حلقة وقدّمت الوحدة 3 بروتوكول الأدوات الذي تقوم عليه. وهذه الوحدة هي الفرق بين حلقة تنجح في عرض تجريبي وحلقة تستطيع تركها تعمل في الثانية صباحًا. الدرس 8.1 هو الدرس المفاهيمي: تشريح الحلقة وفق نمط ReAct، وطرق التوقف الست، وما يُفعل مع كل `stop_reason`، والتأمل الذاتي والتخطيط — متى يُجديان ومتى يضيفان كلفة فحسب — وأخطاء الأدوات، وكيف ينمو السياق مع الحساب، وأنماط الإخفاق التي يصادفها المبتدئون أولًا، وقابلية المراقبة التي تحتاجها الحلقة، ومتى تستخدم مشغّل الأدوات في حزمة التطوير أو Claude Agent SDK بدلًا من حلقتك الخاصة، وقائمة فحص الحلقة الآمنة. أما الدرس 8.2 فهو المختبر: حلقة من الصفر بحدّ صارم للخطوات، وميزانية رموز، وموعد نهائي بالساعة الفعلية، وكشف انعدام التقدم (no-progress detection)، وسجل تتبّع JSONL، وأداة إعادة تشغيل، وتسليم إلى شخص حين ينطلق أحد الحواجز، واختبار يجعل كل حاجز ينطلق. يعمل المختبر دون اتصال على النسخة المحاكاة في عدّة المختبر وعلى واجهة البرمجة الحقيقية دون أي تغيير. وتحصل استعلامات التذاكر والزملاء في نجم ديسك على أول حواجزها.*
 
 > **الطبقة:** Agents — الحلقة التي تتيح للنموذج أن يتصرف بنفسه، والحدود والفحوص وعمليات التسليم التي تُبقيه آمنًا.
 
@@ -9,11 +9,11 @@
 # 8.1 — خطِّط ونفِّذ ولاحِظ وكرِّر: التأمل الذاتي وشروط التوقف وأولى أنماط الإخفاق
 *المستوى: 🟡 متوسط* · *المتطلبات: 1.2، 3.2* · *الطبقة: Agents*
 
-**بعد هذا الدرس تستطيع** أن تفحص حلقة وكيل بحثًا عن شروط التوقف الستة، وتحدّد حدّ الخطوات وميزانية الرموز من معادلة الرموز، مع جدول للتوقف. *مدة الدراسة: نحو 105 دقيقة (تقدير).*
+**بعد هذا الدرس تستطيع** أن تفحص حلقة وكيل بحثًا عن شروط التوقف الستة، وتحدّد حدّ الخطوات وميزانية الرموز من معادلة الرموز، مع جدول للتوقف. *مدة الدراسة: قراءة نحو 15 دقيقة، وعمل تطبيقي نحو 90 دقيقة (تقدير).*
 
 ## ⚡ الدرس في دقيقة
 - **حلقة الوكيل (agent loop)** تسأل النموذج، وتقرأ `stop_reason`، وتنفّذ الأداة التي طلبها، وتعيد النتيجة، ثم تكرر (asks the model, reads stop_reason, runs the tool it asked for, returns the result and repeats; ReAct, Yao et al., 2022). النموذج يقترح؛ و**شيفرتك أنت تقرر متى تتوقف.**
-- **ستة مخارج:** نجاح متحقَّق منه، وحدّ الخطوات (step cap)، وميزانية الرموز (token budget)، وأجل الساعة الفعلية، وكشف انعدام التقدم، وتسليم إلى شخص. وكل حاجز ينتهي بتسليم لا بانهيار.
+- **ستة مخارج:** نجاح متحقَّق منه، وحدّ الخطوات (step cap)، وميزانية الرموز (token budget)، وموعد نهائي بالساعة الفعلية (wall-clock deadline)، وكشف انعدام التقدم، وتسليم إلى شخص. وكل حاجز ينتهي بتسليم لا بانهيار.
 - عالِج **كل `stop_reason`**؛ وتوقف عند القيم المجهولة؛ ولا تنفّذ أي أداة من دور مقطوع أو مرفوض.
 - تنمو كلفة الإدخال مع **مربّع عدد الخطوات**. قلّص نتائج الأدوات.
 - **التأمل الذاتي (Reflection)** لا يُجدي إلا بمعلومة جديدة؛ و**التخطيط أولًا** يُجدي حين تكون الخطوات متوقعة.
@@ -57,7 +57,7 @@ flowchart TD
 | **النجاح** | هل تحقق الهدف؟ | `end_turn` **و** فحص في الشيفرة: معرّفات التذاكر الواردة في الهدف تظهر في الإجابة؛ ويجتاز JSON التحقق |
 | **حدّ الخطوات** | كم استدعاءً للنموذج؟ | قاعدة عملية: من 1.5 إلى 2 ضعف عدد الخطوات عند المئين 95 في تشغيلات التقييم الناجحة |
 | **ميزانية الرموز** | كم يجوز أن ينفق التشغيل الواحد؟ | الحساب أدناه؛ ويُفحص قبل كل استدعاء |
-| **أجل الساعة الفعلية** | كم سينتظر الشخص؟ | وعد الواجهة، مضافًا إليه مهلة على كل استدعاء وكل أداة |
+| **الموعد النهائي بالساعة الفعلية** | كم سينتظر الشخص؟ | وعد الواجهة، مضافًا إليه مهلة على كل استدعاء وكل أداة |
 | **كشف انعدام التقدم** | هل تتجه إلى مكان ما؟ | الأداة نفسها بالمدخل نفسه مرتين؛ والخطأ نفسه مرتين |
 | **التسليم (Hand-off)** | من يتسلّم الأمر؟ | طابور مسمّى وحزمة: الهدف وسبب التوقف وما جُرِّب |
 
@@ -76,7 +76,7 @@ flowchart TD
 
 ### 🟡 التعمق أكثر
 
-**ينمو السياق وتنمو الكلفة أسرع.** يعيد كل استدعاء إرسال موجّه النظام وتعريفات الأدوات وكل دور سابق — الدرس 1.1. لنأخذ أحجامًا خيالية: *S* = 1,500 رمز لموجّه النظام والأدوات، و*g* = 100 للهدف، و*o* = 150 رمز إخراج في الخطوة، و*r* = عدد الرموز في كل نتيجة أداة. يقرأ الاستدعاء *n* ما مقداره *S* + *g* + (*n* − 1)(*o* + *r*)، فتقرأ *N* خطوة *N*(*S* + *g*) +·*N*(*N* − 1)/2.
+**ينمو السياق وتنمو الكلفة أسرع.** يعيد كل استدعاء إرسال موجّه النظام وتعريفات الأدوات وكل دور سابق — الدرس 1.1. لنأخذ أحجامًا خيالية: *S* = 1,500 رمز لموجّه النظام والأدوات، و*g* = 100 للهدف، و*o* = 150 رمز إخراج في الخطوة، و*r* = عدد الرموز في كل نتيجة أداة. يقرأ الاستدعاء *n* ما مقداره *S* + *g* + (*n* − 1)(*o* + *r*)، فتقرأ *N* خطوة *N*(*S* + *g*) + (*o* + *r*)·*N*(*N* − 1)/2.
 
 | الخطوات *N* | رموز الإدخال (Input tokens) عند *r* = 600 — مقلَّصة | رموز الإدخال عند *r* = 6,000 — خام |
 |---|---|---|
@@ -85,7 +85,7 @@ flowchart TD
 | 20 | 174,500 | 1,200,500 |
 | 50 | 998,750 | 7,613,750 |
 
-تحقق من *N* = 10 و*r* = 600: 10 × 1,600 + 750 × 45 = 49,750. وبأسعار لعبة كما في الدرس 1.1 — دولار واحد لكل مليون رمز إدخال و5 دولارات لكل مليون رمز إخراج؛ وليست سعر أي نموذج — يساوي ذلك 0.057 دولار، مقابل 0.300 دولار مع النتائج الخام: أي 5.2 أضعاف لعشر الخطوات نفسها. ومضاعفة الخطوات من 10 إلى 20 تضرب الإدخال في 3.5، ويكلّف التشغيل ذو الخمسين خطوة 1.04 دولار مقابل 0.014 دولار للتشغيل العادي ذي الأربع خطوات، أي نحو 75 ضعفًا. وتلك كانت محادثة مها.
+تحقق من *N* = 10 و*r* = 600: 10 × 1,600 + 750 × 45 = 49,750. وبالأسعار التوضيحية الافتراضية في الدرس 1.1 — دولار واحد لكل مليون رمز إدخال و5 دولارات لكل مليون رمز إخراج؛ وليست سعر أي نموذج — يساوي ذلك 0.057 دولار، مقابل 0.300 دولار مع النتائج الخام: أي 5.2 ضعف لعشر الخطوات نفسها. ومضاعفة الخطوات من 10 إلى 20 تضرب الإدخال في 3.5، ويكلّف التشغيل ذو الخمسين خطوة 1.04 دولار مقابل 0.014 دولار للتشغيل العادي ذي الأربع خطوات، أي نحو 75 ضعفًا. وتلك كانت محادثة مها.
 
 **النتائج الكبيرة.** قلّص النتيجة *قبل* أن تدخل السجل: اقتطعها وقل ذلك صراحة مثل `[cut: 4,812 characters in all]`، أو أعِد حقولًا لا سجلات كاملة، أو لخِّصها بنموذج رخيص — وهو استدعاء مدفوع قد يُسقط التفصيل الأهم — أو أعِد معرّفًا للصفحة الثانية. ثم اترك السجل بحاله: ففي النماذج الحالية قد يُبطل تعديل الأدوار السابقة كتل التفكير فيها — خطأ 400 حيث يُفرض ذلك — ويُعيد بدء التخزين المؤقت للموجّه؛ ولمسح النتائج القديمة استخدم الإصدارات التجريبية على الخادم: تحرير السياق (context editing) والضغط (compaction). ويخفّض التخزين المؤقت (Caching) — الدرس 14.2 — سعر البادئة المُعاد إرسالها لا السياق ولا الخطوات.
 
@@ -99,7 +99,7 @@ flowchart TD
 |---|---|---|
 | مدخل غير صالح من النموذج | النموذج | `is_error` يسمّي الصالح — ضعيف: `Error`؛ وقوي: `ticket_id must be four digits, like "4471"; you sent "ticket 4471"`؛ وحاجز انعدام التقدم يوقف التكرار |
 | لا شيء موجود | لا أحد: إنها بيانات | `No ticket 9999 found` نتيجة عادية |
-| عابر: انتهاء مهلة أو 503 | **شيفرتك** | أعِد المحاولة بتراجع أسي (backoff) — أي انتظار متزايد — وبعشوائية (jitter) — أي إزاحة عشوائية — ضمن الأجل؛ ثم قل «غير متاح، لا تعد المحاولة» |
+| عابر: انتهاء مهلة أو 503 | **شيفرتك** | أعِد المحاولة بتأخير أسي (backoff) — أي انتظار متزايد — وبعشوائية (jitter) — أي إزاحة عشوائية — ضمن الأجل؛ ثم قل «غير متاح، لا تعد المحاولة» |
 | رفض الصلاحية | شخص | دون إعادة محاولة؛ وسلّم إلى شخص |
 | فشل كتابة | شيفرتك | لا تكرار بلا مفتاح عدم التأثر بالتكرار |
 
@@ -111,7 +111,7 @@ flowchart TD
 
 | الإخفاق | ما يظهره التتبّع | الحاجز أو الإصلاح |
 |---|---|---|
-| **حلقة لا نهائية** | الخطوات تتصاعد حتى السقف؛ والمدخلات تكبر | حدّ الخطوات وميزانية الرموز والأجل |
+| **حلقة لا نهائية** | الخطوات تتصاعد حتى السقف؛ والمدخلات تكبر | حدّ الخطوات وميزانية الرموز والموعد النهائي |
 | **إغراق الأدوات بالاستدعاءات** | أداة واحدة تُستدعى عشرين مرة | سقف لاستدعاءات الأدوات؛ وأداة قائمة |
 | **استسلام صامت** | `end_turn` ونص فارغ؛ والواجهة تقول «تم» | النص الفارغ يفشل؛ وسلّم إلى شخص |
 | **وسائط أدوات مختلَقة** | `is_error` ومعرّفات أو أسماء أدوات مخترعة | تحقق في الشيفرة — `strict: true` يضبط الشكل لا المعرّف |
@@ -123,12 +123,12 @@ flowchart TD
 
 **حلقتك الخاصة أم مشغّل الأدوات أم حزمة تطوير؟**
 - **حلقتك الخاصة** (الدرس 8.2): كل حاجز في شيفرة بسيطة تستطيع اختبارها سطرًا سطرًا، دون اعتماد على إصدار تجريبي؛ وهي نحو مئة سطر تتولى صيانتها.
-- **مشغّل الأدوات التجريبي** (`client.beta.messages.tool_runner` و`@beta_tool`): المسار الذي توصي به حزمة التطوير لوكلاء الأدوات المخصصة. يُنتج كل رسالة قبل تنفيذ أدواتها، فتستطيع أن تسجّل وأن تقيّد الآثار الجانبية داخل دالة الأداة وأن تحدّ الحلقة بـ `max_iterations` — تحقق من حزمة التطوير الحالية. ويستأنف مشغّل Python في الإصدار 1.15 الدور `pause_turn` بنفسه؛ أما إصدارات 0.x فكانت تنهي التشغيل بصمت. وتبقى الميزانية والمهلة وانعدام التقدم والتسليم على عاتقك.
+- **مشغّل الأدوات التجريبي** (`client.beta.messages.tool_runner` و`@beta_tool`): المسار الذي توصي به حزمة التطوير لوكلاء الأدوات المخصصة. يُنتج كل رسالة قبل تنفيذ أدواتها، فتستطيع أن تسجّل وأن تقيّد الآثار الجانبية داخل دالة الأداة وأن تحدّ الحلقة بـ `max_iterations` — تحقق من حزمة التطوير الحالية. ويتوقف استئناف المشغّل للدور `pause_turn` بنفسه على إصدار حزمة التطوير، إذ كانت الإصدارات الأقدم تنهي التشغيل بصمت: راجع [سجل تغييرات حزمة التطوير](https://github.com/anthropics/anthropic-sdk-python/blob/main/CHANGELOG.md). وتبقى الميزانية والموعد النهائي وانعدام التقدم والتسليم على عاتقك.
 - **Claude Agent SDK:** إطار تشغيل Claude Code على هيئة مكتبة، وهي حزمة منفصلة عن `anthropic`، فيها أدوات ملفات وصدفة وصلاحيات وخطافات ووكلاء فرعيون (subagents)؛ وتناسب الوكلاء الذين يعدّلون الملفات وينفّذون الشيفرة في صندوق رملي.
 - **Managed Agents** (تجريبي): تستضيف Anthropic الحلقة والصندوق الرملي. تحقق من التوفر وإقامة البيانات. وأيًّا اخترت، تعلّم الحلقة اليدوية أولًا.
 
 **قائمة فحص الحلقة الآمنة.**
-1. حدّ للخطوات وميزانية رموز تُفحص قبل كل استدعاء وأجل للتشغيل، بأحجام مستمدة من تشغيلات مقيسة؛ ومهلة على كل استدعاء وأداة.
+1. حدّ للخطوات وميزانية رموز تُفحص قبل كل استدعاء وموعد نهائي للتشغيل، بأحجام مستمدة من تشغيلات مقيسة؛ ومهلة على كل استدعاء وأداة.
 2. كشف انعدام التقدم: الاستدعاء نفسه والخطأ نفسه.
 3. معالجة كل `stop_reason`؛ ولا أدوات من دور مقطوع أو مرفوض.
 4. التحقق من النجاح في الشيفرة؛ والإجابة الفارغة تفشل.
@@ -141,7 +141,7 @@ flowchart TD
 |---|---|---|
 | **Step cap** — حدّ الخطوات | حدّ صارم للتكرارات؛ ويقيّد أيضًا إعادات المحاولة | كل حلقة |
 | **Token budget** — ميزانية الرموز | سقف رموز لكل تشغيل يُفحص قبل كل استدعاء | كل حلقة |
-| **Wall-clock deadline** — أجل الساعة الفعلية | حدّ زمني للتشغيل مع مهلة لكل استدعاء وأداة | أي شيء ينتظره شخص |
+| **Wall-clock deadline** — الموعد النهائي بالساعة الفعلية | حدّ زمني للتشغيل مع مهلة لكل استدعاء وأداة | أي شيء ينتظره شخص |
 | **No-progress detector** — كاشف انعدام التقدم | يتوقف حين يعود الاستدعاء نفسه أو الخطأ نفسه | كل حلقة فيها أدوات قراءة |
 | **Human hand-off** — التسليم إلى إنسان | حزمة: الهدف والسبب وما جُرِّب إلى طابور مسمّى | كل حاجز |
 | **Loop card** — بطاقة الحلقة | صفحة واحدة لكل حلقة: الحدود وجدول التوقف والطابور والاختبارات | قبل إطلاق الحلقة |
@@ -153,7 +153,7 @@ flowchart TD
 |---|---|---|
 | حدّ الخطوات | 6 | التشغيلات العادية تأخذ خطوتين أو ثلاثًا؛ وأبطأ تشغيل تقييم ناجح أخذ 4؛ 1.5 × 4 = 6 |
 | ميزانية الرموز | 25,000 | ست خطوات بنتائج من 600 رمز تقرأ 20,850 رمز إدخال، مع نحو 900 رمز إخراج |
-| الأجل | 30 ثانية | وعد نافذة المحادثة؛ ولكل استدعاء مهلته أيضًا |
+| الموعد النهائي | 30 ثانية | وعد نافذة المحادثة؛ ولكل استدعاء مهلته أيضًا |
 | التكرارات | 2 | يُرفض استدعاء القراءة المطابق الثاني: فهو لا يضيف شيئًا |
 | حجم النتيجة | 2,000 حرف | سجل التذكرة نحو 120 |
 
@@ -194,7 +194,7 @@ flowchart TD
 **1. يُظهر تتبّع مها أن `get_ticket_status` استُدعيت سبع مرات متتالية بالمدخل نفسه. حدّ الخطوات 50 وميزانية الرموز 200,000. أي حاجز يوقفها أبكر وأرخص؟**
 
 - A. حدّ الخطوات، مخفَّضًا من 50 إلى 40 خطوة
-- B. أجل الساعة الفعلية البالغ 30 ثانية لكل تشغيل
+- B. الموعد النهائي بالساعة الفعلية البالغ 30 ثانية لكل تشغيل
 - C. فحص انعدام التقدم على الاستدعاءات المتطابقة
 - D. ميزانية الرموز البالغة 200,000 رمز لكل تشغيل
 
@@ -207,9 +207,9 @@ flowchart TD
 **2. يحمل رد `stop_reason: "max_tokens"` وينتهي بكتلة `tool_use` يتوقف مدخلها في منتصف قيمة. ماذا ينبغي أن تفعل الحلقة؟**
 
 - A. توقف دون تنفيذها؛ وارفع الحدّ أو سلّم إلى شخص
-- B. نفّذ الأداة بالمدخل الجزئي على أي حال وانظر ماذا يحدث فعلًا
+- B. نفّذ الأداة بالمدخل الجزئي على أي حال
 - C. أصلح JSON في الشيفرة ثم نفّذ الأداة
-- D. أعد الرد دون تغيير ليكمله النموذج
+- D. أعد إرسال الرد ليكمله النموذج
 
 <details><summary>الإجابة</summary>
 
@@ -233,9 +233,9 @@ flowchart TD
 **4. تضيف نجم ديسك استدعاء «راجع إجابتك» إلى كل تشغيل. درجة التقييم لم تتغير، وكلفة التشغيل ارتفعت بمقدار الثلث. ماذا يقترح الدرس؟**
 
 - A. شغّل المراجعة على نموذج أكبر في كل تشغيل
-- B. شغّل المراجعة مرتين ليُلتقط مزيد من الأخطاء بالفعل
+- B. شغّل المراجعة مرتين، كي يُلتقط عدد أكبر من الأخطاء
 - C. أبقِها لأن فحصًا إضافيًا لا يمكن إلا أن يفيد
-- D. أبقِها فقط حيث يستطيع فحص في الشيفرة تقديم تغذية راجعة
+- D. أبقِها فقط حيث يقدّم فحص في الشيفرة تغذية راجعة
 
 <details><summary>الإجابة</summary>
 
@@ -267,13 +267,13 @@ flowchart TD
 
 ---
 
-# 8.2 — المختبر: حلقة وكيل من الصفر في نحو 80 سطرًا، بحدّ صارم وتسجيل كامل للتتبّع
+# 8.2 — المختبر: حلقة وكيل من الصفر في نحو 95 سطرًا، بحدّ صارم وتسجيل كامل للتتبّع
 *المستوى: 🟡 متوسط* · *المتطلبات: 3.2، 8.1* · *الطبقة: Agents, Production*
 
-**بعد هذا الدرس تستطيع** أن تبني حلقة وكيل في نحو 80 سطرًا بحدّ للخطوات وميزانية للرموز ومهلة زمنية وكشف لانعدام التقدم، ثم تجعل كل حارس يعمل وتُظهره في سجل التتبّع JSONL. *مدة الدراسة: نحو 105 دقيقة (تقدير).*
+**بعد هذا الدرس تستطيع** أن تبني حلقة وكيل في نحو 95 سطرًا بحدّ للخطوات وميزانية للرموز وموعد نهائي (deadline) وكشف لانعدام التقدم، ثم تجعل كل حاجز يعمل وتُظهره في سجل التتبّع JSONL. *مدة الدراسة: قراءة نحو 10 دقيقة، وعمل تطبيقي نحو 6 ساعة (تقدير).*
 
 ## ⚡ الدرس في دقيقة
-- تبني حلقة الدرس 8.1 في ملف واحد دون أي إطار عمل، في نحو 80 سطرًا: **حدّ الخطوات** و**ميزانية الرموز** و**الأجل** و**كشف انعدام التقدم** وكل `stop_reason`، والنجاح تفحصه الشيفرة.
+- تبني حلقة الدرس 8.1 في ملف واحد دون أي إطار عمل، في نحو 95 سطرًا من منطق الحلقة: **حدّ الخطوات** و**ميزانية الرموز** و**الموعد النهائي** و**كشف انعدام التقدم** وكل `stop_reason`، والنجاح تفحصه الشيفرة.
 - يكتب كل تشغيل **سجل تتبّع JSONL (JSONL trace)** — الخطوة والأداة والمدخل وحجم النتيجة والرموز وزمن الاستجابة؛ وتحكيه أداة **إعادة التشغيل** كقصة.
 - ينتهي كل حاجز (guard) بـ**حزمة تسليم**: الهدف وسبب التوقف وما جُرِّب.
 - توجيهات النسخة المحاكاة تجعل الإخفاقات تقع عند الطلب؛ و**اختبار لكل حاجز** يثبت أنه ينطلق.
@@ -313,12 +313,13 @@ run de885b3e: Is ticket 4471 done yet? And what about 4472?   (limits: 6 steps, 
 
 ### 🟡 التعمق أكثر
 
-**الحلقة جزءًا جزءًا.** تضم الأسطر من 59 إلى 133 (75 سطرًا) الدالة `run_tool` وفحص الاكتمال والدالة `run`؛ والباقي إعدادات وتتبّع وسطر أوامر.
+**الحلقة جزءًا جزءًا.** تضم الأسطر من 75 إلى 168 (94 سطرًا) الدالة `run_tool` وفحص الاكتمال والدالة `run`؛ والباقي إعدادات وتتبّع وسطر أوامر. أهذه أول مرة تقابل فيها `@dataclass` أو `namedtuple` أو دالة معرَّفة داخل أخرى مثل `stop`؟ انظر جدول بايثون في الدرس 0.2.
 
 ```python
 # labs/m08/agent_loop.py
-"""Lab 8.2: an agent loop from scratch: four guards, every stop_reason, a JSONL trace, a hand-off to a person.
-  python labs/m08/agent_loop.py "Is ticket 4471 done yet?"     (environment: MAX_STEPS, TOKEN_BUDGET, TIMEOUT_S, TRACE_FILE)"""
+"""Lab 8.2: an agent loop from scratch: four guards, every stop_reason, a JSONL trace, a hand-off.
+  python labs/m08/agent_loop.py "Is ticket 4471 done yet?"
+  environment: MAX_STEPS, TOKEN_BUDGET, TIMEOUT_S, TRACE_FILE"""
 import json
 import os
 import re
@@ -332,28 +333,42 @@ from pathlib import Path
 import anthropic
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-from labkit.tools import get_ticket_status, lookup_employee      # noqa: E402  the kit's fake, read-only tools
+from labkit.tools import get_ticket_status, lookup_employee  # noqa: E402  fake, read-only tools
 
 MODEL = os.environ.get("MODEL", "claude-sonnet-5-5")
-SYSTEM = "You help IT service desk staff. Use the tools for tickets and colleagues; never guess them."
+SYSTEM = ("You help IT service desk staff. "
+          "Use the tools for tickets and colleagues; never guess them.")
 TOOLS = {   # name -> (description, its one argument, function): all the model can make happen
-    "get_ticket_status": ("Look up one IT ticket by number. Call this whenever asked about a ticket.", "ticket_id", get_ticket_status),
-    "lookup_employee": ("Look up a colleague by first name: team and email. Call this for any question about a colleague.", "name", lookup_employee),
+    "get_ticket_status": (
+        "Look up one IT ticket by number. Call this whenever asked about a ticket.",
+        "ticket_id", get_ticket_status),
+    "lookup_employee": (
+        "Look up a colleague by first name: team and email. "
+        "Call this for any question about a colleague.",
+        "name", lookup_employee),
 }
-DEFINITIONS = [{"name": n, "description": d, "input_schema": {"type": "object", "properties": {k: {"type": "string"}}, "required": [k]}}
-               for n, (d, k, _) in TOOLS.items()]
+
+
+def definition(name, description, key):
+    """What the model sees of one tool: name, description, one required string argument."""
+    schema = {"type": "object", "properties": {key: {"type": "string"}}, "required": [key]}
+    return {"name": name, "description": description, "input_schema": schema}
+
+
+DEFINITIONS = [definition(n, d, k) for n, (d, k, _) in TOOLS.items()]
 
 
 @dataclass(frozen=True)
-class Limits:                                                   # every number is a decision
-    max_steps: int = int(os.environ.get("MAX_STEPS", 6))        # guard 1: model calls
-    token_budget: int = int(os.environ.get("TOKEN_BUDGET", 25_000))     # guard 2: input + output tokens, all calls
-    timeout_s: float = float(os.environ.get("TIMEOUT_S", 30))   # guard 3: wall clock for the whole run
-    max_repeats: int = 2                                        # guard 4: the same tool call this often = no progress
-    result_chars: int = 2_000                                   # most a tool result may add to the context
+class Limits:                                    # every number is a decision
+    max_steps: int = int(os.environ.get("MAX_STEPS", 6))             # guard 1: model calls
+    token_budget: int = int(os.environ.get("TOKEN_BUDGET", 25_000))  # guard 2: tokens, all calls
+    timeout_s: float = float(os.environ.get("TIMEOUT_S", 30))        # guard 3: clock, whole run
+    max_repeats: int = 2                         # guard 4: same call this often = no progress
+    result_chars: int = 2_000                    # most a tool result may add to the context
 
 
-Result = namedtuple("Result", "ok reason answer steps tokens handoff")      # handoff: what a person receives
+# A namedtuple is a tuple with named fields: res.ok, res.reason... handoff is what a person receives
+Result = namedtuple("Result", "ok reason answer steps tokens handoff")
 
 
 class Trace:
@@ -364,7 +379,8 @@ class Trace:
 
     def log(self, event, **fields):
         fields = {k: v[:300] if isinstance(v, str) else v for k, v in fields.items()}
-        self.events.append({"run": self.run_id, "seq": len(self.events) + 1, "ts": round(time.time(), 3), "event": event, **fields})
+        head = {"run": self.run_id, "seq": len(self.events) + 1, "ts": round(time.time(), 3)}
+        self.events.append({**head, "event": event, **fields})
         if self.path:
             with open(self.path, "a", encoding="utf-8") as f:
                 f.write(json.dumps(self.events[-1], ensure_ascii=False, default=str) + "\n")
@@ -375,15 +391,16 @@ def ms(since):
 
 
 def run_tool(name, args):
-    """The gap: the model proposes, this function disposes. It never raises: every outcome is text."""
+    """The gap: the model proposes, this function disposes. Never raises: every outcome is text."""
     if name not in TOOLS:
         return f"unknown tool {name!r}; the tools are: {', '.join(TOOLS)}", True
     _, key, fn = TOOLS[name]
     if set(args) != {key} or not isinstance(args[key], str):
-        return f"{name} takes exactly one string argument named {key!r}; got {json.dumps(args)[:80]}", True
+        got = json.dumps(args)[:80]
+        return f"{name} takes exactly one string argument named {key!r}; got {got}", True
     try:
         return str(fn(args[key])), False
-    except Exception as e:                                      # a raising tool must not end the run
+    except Exception as e:                       # a raising tool must not end the run
         return f"{name} failed: {e}", True
 
 
@@ -394,66 +411,85 @@ def mentions_every_ticket(goal, answer):
 
 
 def run(goal, lim=Limits(), client=None, trace=None, check=None):
-    client, trace = client or anthropic.Anthropic(timeout=30.0), trace or Trace()      # the SDK retries transient errors twice
+    client = client or anthropic.Anthropic(timeout=30.0)    # the SDK retries transient errors twice
+    trace = trace or Trace()
     t0, spent, last_in, seen = time.monotonic(), 0, 0, Counter()
     messages = [{"role": "user", "content": goal}]
     trace.log("start", goal=goal, model=MODEL, **asdict(lim))
 
-    def stop(reason, step, text="", why=""):                                     # the only exit: one "stop" line per run
+    def stop(reason, step, text="", why=""):     # the only exit: one "stop" line per run
         ok, secs = reason == "done", round(time.monotonic() - t0, 1)
-        tried = [{k: e[k] for k in ("step", "tool", "input", "result", "refused") if k in e} for e in trace.events if e["event"] == "tool"]
-        packet = None if ok else {"run": trace.run_id, "reason": reason, "why": why, "goal": goal, "steps": step, "tokens": spent,
-                                  "seconds": secs, "tried": tried, "last_text": text[:300]}
-        trace.log("stop", step=step, reason=reason, why=why, tokens=spent, seconds=secs, answer=text, handoff=packet)
-        shown = text if ok else f"I could not finish this ({reason}). I passed it to the Service Desk with everything I tried: ref {trace.run_id}."
-        return Result(ok, reason, shown, step, spent, packet)
+        keys = ("step", "tool", "input", "result", "refused")
+        tried = [{k: e[k] for k in keys if k in e} for e in trace.events if e["event"] == "tool"]
+        packet = None if ok else {"run": trace.run_id, "reason": reason, "why": why, "goal": goal,
+                                  "steps": step, "tokens": spent, "seconds": secs,
+                                  "tried": tried, "last_text": text[:300]}
+        trace.log("stop", step=step, reason=reason, why=why, tokens=spent, seconds=secs,
+                  answer=text, handoff=packet)
+        sorry = (f"I could not finish this ({reason}). I passed it to the Service Desk "
+                 f"with everything I tried: ref {trace.run_id}.")
+        return Result(ok, reason, text if ok else sorry, step, spent, packet)
 
-    for step in range(1, lim.max_steps + 1):                                       # guard 1: the hard cap
-        if time.monotonic() - t0 > lim.timeout_s:                                   # guard 3: before every call
+    for step in range(1, lim.max_steps + 1):                 # guard 1: the hard cap
+        if time.monotonic() - t0 > lim.timeout_s:             # guard 3: before every call
             return stop("timeout", step - 1, why=f"more than {lim.timeout_s} s on the clock")
-        if spent + last_in > lim.token_budget:                                      # guard 2: the next call re-sends at least this much
-            return stop("token_budget", step - 1, why=f"{spent} spent, and the next call needs {last_in}+ of {lim.token_budget}")
+        if spent + last_in > lim.token_budget:                # guard 2: the next call re-sends this
+            why = f"{spent} spent, and the next call needs {last_in}+ of {lim.token_budget}"
+            return stop("token_budget", step - 1, why=why)
         t1 = time.monotonic()
         try:
-            resp = client.messages.create(model=MODEL, max_tokens=1024, output_config={"effort": "low"},
+            resp = client.messages.create(model=MODEL, max_tokens=1024,
+                                          output_config={"effort": "low"},
                                           system=SYSTEM, tools=DEFINITIONS, messages=messages)
-        except anthropic.APIError as e:                                             # the SDK's retries are spent: hand off
-            trace.log("model_error", step=step, error=type(e).__name__, status=getattr(e, "status_code", None), ms=ms(t1))
+        except anthropic.APIError as e:                   # the SDK's retries are spent: hand off
+            trace.log("model_error", step=step, error=type(e).__name__,
+                      status=getattr(e, "status_code", None), ms=ms(t1))
             return stop("model_error", step - 1, why=f"{type(e).__name__} after the SDK's retries")
-        last_in, spent = resp.usage.input_tokens, spent + resp.usage.input_tokens + resp.usage.output_tokens
-        trace.log("model", step=step, stop_reason=resp.stop_reason, input_tokens=resp.usage.input_tokens,
-                  output_tokens=resp.usage.output_tokens, total_tokens=spent, ms=ms(t1), request_id=resp._request_id)
-        messages.append({"role": "assistant", "content": resp.content})            # the WHOLE content list
+        used = resp.usage
+        last_in, spent = used.input_tokens, spent + used.input_tokens + used.output_tokens
+        trace.log("model", step=step, stop_reason=resp.stop_reason, input_tokens=used.input_tokens,
+                  output_tokens=used.output_tokens, total_tokens=spent, ms=ms(t1),
+                  request_id=resp._request_id)
+        messages.append({"role": "assistant", "content": resp.content})   # the WHOLE content list
         text = next((b.text for b in resp.content if b.type == "text"), "")
         if resp.stop_reason == "end_turn":
             if not text.strip():
                 return stop("empty_answer", step, why="end_turn with no text: a silent give-up")
-            problem = check(goal, text) if check else None                          # "done" needs the code to agree
+            problem = check(goal, text) if check else None    # "done" needs the code to agree
             return stop("failed_check" if problem else "done", step, text, why=problem or "")
-        if resp.stop_reason == "pause_turn":                                        # paused: send it back; the cap counts it
+        if resp.stop_reason == "pause_turn":              # paused: send it back; the cap counts it
             continue
-        if resp.stop_reason != "tool_use":                                          # max_tokens, refusal, or a value never seen before
-            return stop(resp.stop_reason if resp.stop_reason in ("max_tokens", "refusal") else "unknown_stop", step, text,
-                        why=f"stop_reason={resp.stop_reason} {resp.stop_details or ''}".strip())
-        results = []                                                                # cut-off and refused turns never get here
+        if resp.stop_reason != "tool_use":                    # max_tokens, refusal, or a new value
+            known = resp.stop_reason in ("max_tokens", "refusal")
+            why = f"stop_reason={resp.stop_reason} {resp.stop_details or ''}".strip()
+            return stop(resp.stop_reason if known else "unknown_stop", step, text, why=why)
+        results = []                                      # cut-off and refused turns never get here
         for block in (b for b in resp.content if b.type == "tool_use"):
             call = (block.name, json.dumps(block.input, sort_keys=True))
             seen[call] += 1
-            if seen[call] >= lim.max_repeats:                                       # guard 4: the same call again is no progress
-                trace.log("tool", step=step, tool=block.name, input=block.input, refused="same call again")
-                return stop("no_progress", step, text, why=f"{block.name} asked for again with the same input")
+            if seen[call] >= lim.max_repeats:                 # guard 4: the same call again
+                trace.log("tool", step=step, tool=block.name, input=block.input,
+                          refused="same call again")
+                why = f"{block.name} asked for again with the same input"
+                return stop("no_progress", step, text, why=why)
             t2 = time.monotonic()
             out, is_error = run_tool(block.name, block.input)
-            trace.log("tool", step=step, tool=block.name, input=block.input, result_chars=len(out), result=out, is_error=is_error, ms=ms(t2))
-            shown = out if len(out) <= lim.result_chars else out[:lim.result_chars] + f" [cut: {len(out)} characters in all]"
-            results.append({"type": "tool_result", "tool_use_id": block.id, "content": shown, "is_error": is_error})
-        messages.append({"role": "user", "content": results})                      # ONE message, a result for EVERY tool_use id
-    return stop("iteration_cap", lim.max_steps, why=f"{lim.max_steps} steps used and no final answer")
+            trace.log("tool", step=step, tool=block.name, input=block.input, result_chars=len(out),
+                      result=out, is_error=is_error, ms=ms(t2))
+            shown = out[:lim.result_chars]
+            if len(out) > lim.result_chars:
+                shown += f" [cut: {len(out)} characters in all]"
+            results.append({"type": "tool_result", "tool_use_id": block.id,
+                            "content": shown, "is_error": is_error})
+        messages.append({"role": "user", "content": results})  # ONE message: a result per tool_use
+    why = f"{lim.max_steps} steps used and no final answer"
+    return stop("iteration_cap", lim.max_steps, why=why)
 
 
 if __name__ == "__main__":
-    res = run(" ".join(sys.argv[1:]) or "Is ticket 4471 done yet? And what about 4472?",
-              trace=Trace(os.environ.get("TRACE_FILE", "m08_trace.jsonl")), check=mentions_every_ticket)
+    goal = " ".join(sys.argv[1:]) or "Is ticket 4471 done yet? And what about 4472?"
+    trace = Trace(os.environ.get("TRACE_FILE", "m08_trace.jsonl"))
+    res = run(goal, trace=trace, check=mentions_every_ticket)
     print(res.answer)
     if res.handoff:
         print(json.dumps(res.handoff, indent=2, ensure_ascii=False))
@@ -461,7 +497,7 @@ if __name__ == "__main__":
 
 1. **`run_tool`** هي الفجوة. لا ترفع استثناءً أبدًا، ولا تعرف سوى أداتي قراءة — بديلان عن TicketHub وPeopleCore — فالنموذج *لا يستطيع* إغلاق تذكرة.
 2. **`stop`** هي المخرج الوحيد؛ والتشغيل الفاشل يبني حزمة التسليم من التتبّع.
-3. **تُنفَّذ الحواجز قبل الاستدعاء**: الحدّ الأقصى هو حلقة `for` نفسها، ثم الأجل، ثم ميزانية الرموز، مع اعتبار مدخل الاستدعاء الأخير حدًّا أدنى لأن السجل لا يفعل سوى أن ينمو. ويُفحص الأجل *بين* الخطوات، فقد يتجاوزه استدعاء بطيء واحد. و`timeout=30.0` الخاص بالعميل يحدّ محاولة واحدة، وتعيد حزمة التطوير المحاولة مرتين افتراضيًا عند انتهاء المهلة، فقد تستغرق الخطوة نحو ثلاثة أمثال ذلك؛ ولتشديده مرّر عميلك الخاص: `run(goal, client=anthropic.Anthropic(timeout=10.0, max_retries=1))`.
+3. **تُنفَّذ الحواجز قبل الاستدعاء**: الحدّ الأقصى هو حلقة `for` نفسها، ثم الموعد النهائي، ثم ميزانية الرموز، مع اعتبار مدخل الاستدعاء الأخير حدًّا أدنى لأن السجل لا يفعل سوى أن ينمو. ويُفحص الموعد النهائي *بين* الخطوات، فقد يتجاوزه استدعاء بطيء واحد. و`timeout=30.0` الخاص بالعميل يحدّ محاولة واحدة، وتعيد حزمة التطوير المحاولة مرتين افتراضيًا عند انتهاء المهلة، فقد تستغرق الخطوة نحو ثلاثة أمثال ذلك؛ ولتشديده مرّر عميلك الخاص: `run(goal, client=anthropic.Anthropic(timeout=10.0, max_retries=1))`.
 4. **لكل `stop_reason` فرع.** غياب النص هو `empty_answer`؛ وفشل فحص الشيفرة هو `failed_check`؛ و`pause_turn` يكرر الحلقة؛ أما `max_tokens` و`refusal` والقيم المجهولة فتتوقف *قبل* أن تعمل أي أداة.
 5. **كشف انعدام التقدم** يعدّ الأزواج المتطابقة من (الأداة، المدخل) ويرفض الثاني *قبل* تنفيذه. وتُقتطع النتائج الطويلة قبل دخولها السياق؛ ويحتفظ التتبّع بالحجم الحقيقي. ويُكتب سطر الأداة بعد عودتها؛ فإن كانت الأدوات قد تتجمّد فسجّل سطرًا قبل الاستدعاء.
 
@@ -550,7 +586,7 @@ run 8e654913: Are tickets 4471 and 4473 resolved? [mock:loop]   (limits: 6 steps
 
 **جلسة المجموعة — 60 دقيقة.** (1) تبادلوا سجل تتبّع؛ ويشرح زميلك التشغيل باستخدام `replay.py` وحده (15). (2) «اهزم الحاجز»: جِد هدفًا يفوّته كشف انعدام التقدم (15). (3) قارنوا نتائج الواجهة الحقيقية (15). (4) اتفقوا على حزمة واحدة (15).
 
-**ابنه باستخدام Claude Code.** أعطِ هذه المواصفة إلى Claude Code في وضع التخطيط — راجع وثائق Claude Code الحالية — وراجع الخطة قبل أن يعدّل أي شيء:
+**ابنه باستخدام Claude Code.** *لا Claude Code لديك؟ نفّذ خطوات المواصفة بيدك وشغّل فحوصها بنفسك (الدرس 0.3).* أعطِ هذه المواصفة إلى Claude Code في وضع التخطيط — راجع وثائق Claude Code الحالية — وراجع الخطة قبل أن يعدّل أي شيء:
 
 ```text
 Goal: refactor labs/m08/agent_loop.py into a small package, labs/m08/agentkit/, with Limits, Trace,
@@ -569,7 +605,7 @@ Plan first; move one module at a time; run the tests after each move.
 ```
 
 **تحقق قبل أن تقبله.**
-- شغّل الاختبارات، ثم **أزل كل حاجز بدوره** — الحدّ الأقصى والأجل والميزانية وانعدام التقدم وفحص الإجابة الفارغة وكل فرع من فروع `stop_reason` — وتأكد من أن اختبارًا يفشل في كل مرة. والحاجز الذي لا يلاحظه أي اختبار ليس حاجزًا.
+- شغّل الاختبارات، ثم **أزل كل حاجز بدوره** — الحدّ الأقصى والموعد النهائي والميزانية وانعدام التقدم وفحص الإجابة الفارغة وكل فرع من فروع `stop_reason` — وتأكد من أن اختبارًا يفشل في كل مرة. والحاجز الذي لا يلاحظه أي اختبار ليس حاجزًا.
 - اقرأ الفرق بحثًا عن حاجز نُقل إلى ما بعد الاستدعاء، و`except Exception` حوله، وحقول تتبّع أُعيدت تسميتها. وأعد تشغيل مصفوفة الإخفاقات وقارن الأعداد.
 
 ## 🛠️ التمارين
@@ -594,8 +630,8 @@ Plan first; move one module at a time; run the tests after each move.
 **1. الميزانية 20,000 رمز. بعد الخطوة 3 أنفقت الحلقة 14,000، وقرأ الاستدعاء الأخير 7,000 رمز إدخال. ماذا يحدث في بداية الخطوة 4؟**
 
 - A. يُنفَّذ الاستدعاء لأن 14,000 دون 20,000
-- B. تتوقف الحلقة بالسبب `token_budget` دون استدعاء
-- C. تقلّص الحلقة السجل ليلائم ثم تستدعي
+- B. تتوقف الحلقة بـ`token_budget` دون استدعاء
+- C. تقلّص الحلقة السجل ليلائم الميزانية ثم تستدعي
 - D. يُنفَّذ الاستدعاء ثم يُفحص المجموع
 
 <details><summary>الإجابة</summary>
@@ -619,10 +655,10 @@ Plan first; move one module at a time; run the tests after each move.
 
 **3. مع `TIMEOUT_S=2` و`[mock:slow]` تُظهر إعادة التشغيل استدعاءً مدته نحو 3,000 ms ثم `STOPPED by timeout`. لماذا لم يُقطع الاستدعاء عند ثانيتين؟**
 
-- A. يُفحص الأجل بين الخطوات فقط
-- B. تتجاهل النسخة المحاكاة إعداد `TIMEOUT_S`
-- C. رفعت حزمة التطوير المهلة لتلائم الاستدعاء
-- D. يعدّ الأجل الرموز لا الثواني
+- A. لا يُفحص الموعد النهائي إلا فيما بين الخطوات
+- B. يتجاهل المحاكي إعداد `TIMEOUT_S`
+- C. رفعت حزمة التطوير المهلة لتناسبه
+- D. يعدّ الموعد النهائي الرموز لا الثواني
 
 <details><summary>الإجابة</summary>
 
@@ -646,7 +682,7 @@ Plan first; move one module at a time; run the tests after each move.
 **5. لا تتلقى يارا سوى «ref 3f2a9c01». ماذا ينبغي أن تحمل الحزمة كي تواصل دون أن يبدأ المستخدم من جديد ودون بيانات شخصية أكثر مما تحتاجه الحالة؟**
 
 - A. السبب وآخر جملة للنموذج فقط
-- B. الهدف والسبب واستدعاءات الأدوات التي جُرّبت
+- B. الهدف والسبب واستدعاءات الأدوات المجرَّبة
 - C. المحادثة كاملة مع كل نتيجة أداة دون اقتطاع
 - D. ملخص يكتبه النموذج بعد الإخفاق
 

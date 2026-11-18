@@ -9,7 +9,7 @@
 # 6.1 — Scope, roles and the risk pyramid
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 4.1* · *BoK: II.C*
 
-**After this you can** assign provider, importer, distributor and deployer roles in an AI supply chain, and write an Art. 6(3) derogation assessment an authority could follow. *Study time: about 110 minutes (estimate).*
+**After this you can** assign provider, importer, distributor and deployer roles in an AI supply chain, and write an Art. 6(3) derogation assessment an authority could follow. *Study time: reading about 20 min, hands-on about 110 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -199,7 +199,7 @@ She adds one clause to Najm's AI policy:
 *Done when:* every party has a role with a one-line justification and you have named at least two Art. 25 triggers.
 
 🔴 **Derogation memo.** Write a one-page Art. 6(3) assessment for the copilot as used for sole traders: the four conditions, the profiling override, the evidence kept, and a conclusion.
-*Done when:* an authority could follow the reasoning and see the registration consequence.
+*Done when:* each of the four conditions and the profiling override has a yes or no with its evidence, and the conclusion states whether and where the system must be registered.
 
 ## ⚠️ Mistakes and exam traps
 
@@ -298,7 +298,7 @@ She adds one clause to Najm's AI policy:
 # 6.2 — High-risk obligations for providers and deployers
 *Level: 🟡 Intermediate* · *Prerequisites: 6.1, 4.3* · *BoK: II.C*
 
-**After this you can** sort high-risk obligations into provider and deployer duties with their articles, and decide whether an incident is serious, who reports it and by when. *Study time: about 110 minutes (estimate).*
+**After this you can** sort high-risk obligations into provider and deployer duties with their articles, and decide whether an incident is serious, who reports it and by when. *Study time: reading about 15 min, hands-on about 110 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -418,7 +418,7 @@ It must describe the deployer's **processes** using the system; the **period and
 
 This is why Yusuf's contract (11.2) must secure instructions, log access, change notices and an incident channel. Suppliers of components integrated into high-risk systems must also agree in writing to give providers the information and access they need (Art. 25(4)).
 
-**Transitional rule.** High-risk systems already on the market before 2 August 2026 are generally covered only after significant design changes, but systems intended for public authorities must comply by 2 August 2030. The Digital Omnibus may shift dates (6.3).
+**Transitional rule.** Under the original Act, high-risk systems already on the market before 2 August 2026 are generally covered only after significant design changes, but systems intended for public authorities must comply by 2 August 2030. Regulation (EU) 2026/1744 (the Digital Omnibus) amended Art. 111 and moved the high-risk dates later, so check the amended Art. 111 for the cut-off that now applies (6.3).
 
 ## ⚖️ The instruments
 
@@ -566,7 +566,7 @@ This is why Yusuf's contract (11.2) must secure instructions, log access, change
 # 6.3 — General-purpose AI, transparency, enforcement and the timeline
 *Level: 🟡 Intermediate* · *Prerequisites: 6.1, 6.2* · *BoK: II.C*
 
-**After this you can** state the AI Act's five key application dates from memory, and audit an organisation's AI outputs for Art. 50 transparency duties with a draft disclosure for each. *Study time: about 110 minutes (estimate).*
+**After this you can** state the AI Act's five key application dates from memory, and audit an organisation's AI outputs for Art. 50 transparency duties with a draft disclosure for each. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -745,7 +745,7 @@ Layla brings a **GenAI and transparency decision record** to the AI Governance C
 - Art. 50 requires AI-interaction disclosure, machine-readable marking of synthetic content, deepfake and public-interest text disclosure, and notices for emotion recognition and biometric categorisation. Art. 4 requires every provider and deployer to take measures that support staff AI literacy.
 - The AI Office enforces GPAI rules; national market-surveillance authorities (financial supervisors for banks) enforce system rules; the AI Board coordinates; a scientific panel advises.
 - Fines reach €35m/7%, €15m/3% and €7.5m/1%. Sandboxes and real-world testing support innovation.
-- Application runs from 2 Feb 2025 to 2 Aug 2027. Regulation (EU) 2026/1744 moves the high-risk dates later; Art. 50 still applies from 2 Aug 2026.
+- Under the original Act, application runs from 2 Feb 2025 to 2 Aug 2027. Regulation (EU) 2026/1744 moves Annex III high-risk duties to 2 Dec 2027 and Annex I to 2 Aug 2028; Art. 50 still applies from 2 Aug 2026.
 
 ## ✍️ Check yourself
 
@@ -810,7 +810,7 @@ Layla brings a **GenAI and transparency decision record** to the AI Governance C
 
 <details><summary>Answer</summary>
 
-**B.** Arts 4 and 5 applied from 2 February 2025. A applied from 2 August 2025, C from 2 August 2026 and D from 2 August 2027, subject to any change adopted through the Digital Omnibus. (See 🔴 Expert view: the timeline.)
+**B.** Arts 4 and 5 applied from 2 February 2025. A applied from 2 August 2025, C from 2 August 2026 and D from 2 August 2027 under the original Act; Regulation (EU) 2026/1744 moves C's high-risk part to 2 December 2027 and D to 2 August 2028. (See 🔴 Expert view: the timeline.)
 
 </details>
 

@@ -11,7 +11,7 @@
 # 8.1 — When an agent has your keyboard: injection, secrets, destructive commands, hallucinated packages, permissions and sandboxes
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1* · *Focus: Secure*
 
-**After this you can** fill in a threat-model worksheet for an agent session and recover a repository from a destructive reset with the reflog. *Study time: about 110 minutes (estimate).*
+**After this you can** fill in a threat-model worksheet for an agent session and recover a repository from a destructive reset with the reflog. *Study time: reading about 15 min, hands-on about 75 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **The agent has your hands.** Whatever your account can read, run, delete, send or push, it can.
@@ -25,7 +25,7 @@ Week zero said the agent has your hands. This week asks what happens when it use
 
 At Najm the bad day is smaller. Suppose Lujain (graduate engineer) pastes a vendor README into a session running in bypass mode, with a `.env` in the folder and `curl` allowed. The README does not need to be clever; it only needs to be read.
 
-One public account (hold the details loosely) shows a bigger shape. In April 2026 a founder said a Cursor agent running Claude Opus 4.6 found an over-scoped API token and deleted a production volume in one call; his backups were on the same volume ([The Register](https://www.theregister.com/software/2026/04/27/cursor-opus-agent-snuffs-out-startups-production-database/5224442)).
+One public account (hold the details loosely) shows a bigger shape. In April 2026 the founder of PocketOS said a Cursor coding agent found an over-scoped API token and deleted a production volume in one call; his backups were on the same volume. His hosting provider later said the data was recovered ([Decrypt](https://decrypt.co/365897/ai-agent-deletes-startup-database-9-seconds-founder-says)).
 
 ## 📐 How it works
 
@@ -60,7 +60,7 @@ These are demonstrations and disclosures, mostly from security vendors, not atta
 | Untrusted content | A vendor README, issue text, web pages | Read it yourself first |
 | A way out | `curl`, `git push`, a pull request, an MCP tool | Deny push; ask on `curl`; sandbox with no allowed domains |
 
-**Excessive agency** (OWASP LLM06:2025) has three roots: unneeded tools, a token broader than the task, irreversible actions with no human. The Cursor report above shows the last two.
+**Excessive agency** (OWASP LLM06:2025; LLM03 in the 2026 edition) has three roots: unneeded tools, a token broader than the task, irreversible actions with no human. The Cursor report above shows the last two.
 
 
 ### 🟡 Going deeper
@@ -293,7 +293,7 @@ Weak entry: "Risk: the agent might do something bad. Control: be careful." Stron
 
 ## 📚 References
 - Claude Code documentation: permissions https://code.claude.com/docs/en/permissions; permission modes https://code.claude.com/docs/en/permission-modes; sandboxing https://code.claude.com/docs/en/sandboxing; hooks https://code.claude.com/docs/en/hooks; MCP https://code.claude.com/docs/en/mcp; security https://code.claude.com/docs/en/security; data usage https://code.claude.com/docs/en/data-usage
-- OWASP Top 10 for LLM Applications 2025 (LLM01:2025 Prompt Injection, LLM06:2025 Excessive Agency): https://genai.owasp.org/llm-top-10/
+- OWASP Top 10 for LLM Applications 2025 (LLM01:2025 Prompt Injection, LLM06:2025 Excessive Agency; excessive agency is LLM03 in the 2026 edition): https://genai.owasp.org/llm-top-10/
 - [*Secure AI & Application Security*, lesson 8.2 — Prompt injection and jailbreaks, direct and indirect](../secai/index.html#/8.2); [*Secure AI*, lesson 9.2 — Agents and tools: excessive agency, least-privilege tools and MCP](../secai/index.html#/9.2); [*Secure AI*, lesson 6.2 — The software supply chain: dependencies, SBOMs, SLSA and signing](../secai/index.html#/6.2); [*Secure AI*, lesson 6.3 — Securing AI-generated code: what coding agents get wrong](../secai/index.html#/6.3)
 - **Go deeper.** Invariant Labs, tool poisoning: https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks · Invariant Labs, GitHub MCP: https://invariantlabs.ai/blog/mcp-github-vulnerability · Simon Willison, the lethal trifecta: https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/ · Spracklen et al.: https://www.usenix.org/conference/usenixsecurity25/presentation/spracklen · Pearce et al.: https://arxiv.org/pdf/2108.09293 · Perry et al.: https://arxiv.org/pdf/2211.03622
 
@@ -302,7 +302,7 @@ Weak entry: "Risk: the agent might do something bad. Control: be careful." Stron
 # 8.2 — Lab: harden your setup with permissions, a guard hook and a dependency check
 *Level: 🟡 Intermediate* · *Prerequisites: 8.1* · *Focus: Secure, Automate*
 
-**After this you can** configure agent permissions, a guard hook and a dependency check that each pass the grader. *Study time: about 110 minutes (estimate).*
+**After this you can** configure agent permissions, a guard hook and a dependency check that each pass the grader. *Study time: reading about 10 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Lab m08, needs an agent: no.** Four things in Remit: `.claude/settings.json`, a guard hook, a dependency check, and notes on a suspicious README. An agent can help with parts 1 to 3.
@@ -534,7 +534,7 @@ CI step in `.github/workflows/` changed; and `python -m ailab grade m08 --dir <t
 **Start.**
 
 ```bash
-cd ainative/ailab    # in the course repository
+cd ~/system-design-for-vibe-coders/ainative/ailab    # in the course repository
 python -m ailab start m08 --dir ~/ainative/m08
 cd ~/ainative/m08    # your lab folder
 ```

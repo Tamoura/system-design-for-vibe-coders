@@ -37,6 +37,23 @@ else:
         if l=='mermaid' and len(a.splitlines())!=len(b.splitlines()): err.append('mermaid line count changed'); break
 if icode(en)!=icode(ar): err.append(f'inline code differs: {list((icode(en)-icode(ar)))[:6]} / {list((icode(ar)-icode(en)))[:6]}')
 if urls(en)!=urls(ar): err.append(f'links differ: {list((urls(en)-urls(ar)))[:4]}')
+cite=lambda s: collections.Counter(re.findall(r'\d+\(\d+\)(?:\([a-z0-9]+\))*',nof(s)))
+if cite(en)!=cite(ar): err.append(f'article citations differ: missing {list((cite(en)-cite(ar)))[:5]} / extra {list((cite(ar)-cite(en)))[:5]}')
+GL=re.compile(r' \((⁦?[A-Za-z][A-Za-z .,’\'/&\-]*[A-Za-z.?!]⁩?)\)')
+rep=[]
+for les in re.split(r'^# ',nof(ar),flags=re.M):
+    seen=set()
+    for g in GL.findall(les):
+        k=re.sub(r'(es|s)$','',g.strip('⁦⁩').lower().rstrip('.?!'))
+        if len(re.sub('[^a-z]','',k))<2: continue
+        if k in seen: rep.append(g)
+        seen.add(k)
+if rep: err.append(f'{len(rep)} English gloss(es) repeated within a lesson (gloss once per lesson): {rep[:5]}')
+LG=re.compile(r'\([^()]*[A-Za-z]{2,}[^()]*\)')
+for m in re.finditer(r'((?:^- [A-D]\. .*\n)+)\s*\n<details><summary>[^<]+</summary>\s*\n\s*\*\*([A-D])\.',ar,flags=re.M):
+    g={k:bool(LG.search(t)) for k,t in re.findall(r'^- ([A-D])\. (.*)$',m.group(1),flags=re.M)}
+    o=[v for k,v in g.items() if k!=m.group(2)]
+    if o and all(v!=g[m.group(2)] for v in o): err.append(f'quiz key {m.group(2)} is the only option {"with" if g[m.group(2)] else "without"} an English gloss (line {ar[:m.start()].count(chr(10))+1})')
 body=re.sub(r'[`|*#\-\[\]()]','',nof(ar)); a=len(re.findall(r'[؀-ۿ]',body)); t=len(re.sub(r'\s','',body))
 if a/max(t,1)<0.45: err.append(f'only {a/max(t,1):.0%} Arabic script')
 if err: print('✗',sys.argv[2]); [print('  -',e) for e in err]; sys.exit(1)

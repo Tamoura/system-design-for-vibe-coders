@@ -12,7 +12,7 @@ These are public, well-documented, and excellent for readers who want to go deep
 - **Source:** Cloudflare's outage analysis (blog.cloudflare.com, "Understanding How Facebook Disappeared from the Internet"); Meta's own postmortem.
 
 ### The AWS S3 typo (Feb 28, 2017) *(→ F.5, 4.x)*
-- **What happened:** during routine debugging, an engineer's command with one wrong parameter removed far more server capacity than intended from S3 in us-east-1. Huge parts of the internet degraded for ~4 hours — including AWS's own status dashboard, which couldn't display the outage because it depended on S3.
+- **What happened:** during routine debugging, an engineer's command with one wrong parameter removed far more server capacity than intended from S3 in us-east-1. Huge parts of the internet degraded for ~4 hours — including AWS's own status dashboard, which kept showing green for hours because the admin tool that updates it depended on S3.
 - **Lesson:** typos happen to the best teams on earth; safety comes from limits and verification, not carefulness. And your status page must not depend on the thing it reports on.
 - **Source:** Amazon's public postmortem ("Summary of the Amazon S3 Service Disruption").
 
@@ -39,7 +39,7 @@ These are public, well-documented, and excellent for readers who want to go deep
 ## Deploys and data loss
 
 ### Knight Capital: $440M in 45 minutes (Aug 1, 2012) *(→ F.3, 4.x)*
-- **What happened:** a deploy copied new trading code to 7 of 8 servers. The 8th kept old code in which a reused feature flag meant something else entirely. At market open, that one server fired millions of unintended orders. Loss: ~$440M; the firm was effectively finished.
+- **What happened:** a deploy copied new trading code to 7 of 8 servers. The 8th kept old code in which a reused feature flag meant something else entirely. At market open, that one server fired millions of unintended orders. Loss: ~$440M (the SEC's 2013 order says more than $460M). Within days it needed an emergency rescue that handed most of the company to new investors, and within a year it had been absorbed by a rival.
 - **Lesson:** a deploy isn't done when *most* servers have the new version; verify every copy. Never repurpose an old flag.
 - **Source:** SEC administrative filing (2013); "The Knight Capital story" writeups.
 
@@ -92,7 +92,7 @@ These are public, well-documented, and excellent for readers who want to go deep
 ## Agents and automation (the new classics)
 
 ### The agent that deleted a production database (Jul 2025) *(→ F.4, 9.x)*
-- **What happened:** during a public "vibe coding day" experiment, an AI coding agent ignored an explicit code freeze, deleted a live production database of a SaaS community's app, then generated misleading output about what it had done; the platform's CEO publicly apologized and shipped environment separation + backup improvements days later.
+- **What happened:** during a public "vibe coding day" experiment, an AI coding agent ignored an explicit code freeze, deleted a live production database of a SaaS community's app, then generated misleading output about what it had done; the platform's CEO publicly apologized and, days later, announced automatic dev/prod database separation and pointed to one-click restore.
 - **Lesson:** agents act at machine speed with your permissions: separate environments, least privilege, mechanical guardrails, and never let the agent be the only witness to what it did. Exactly why ✅ Verify It exists.
 - **Source:** contemporaneous coverage (The Register, Business Insider, Tom's Hardware, Jul 2025) and the platform CEO's public statements.
 

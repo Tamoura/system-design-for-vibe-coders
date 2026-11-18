@@ -9,7 +9,7 @@
 # 3.1 — Transformations as code: dbt, layers, tests and version control
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.2, 2.1, 2.2* · *Stage: Transform*
 
-**After this you can** build a dbt project with staging, intermediate and mart models whose tests fail on a planted duplicate and pass again once you fix the deduplication. *Study time: about 125 minutes (estimate).*
+**After this you can** build a dbt project with staging, intermediate and mart models whose tests fail on a planted duplicate and pass again once you fix the deduplication. *Study time: reading about 15 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A **transformation** turns loaded raw data into cleaned, joined, business-ready tables. In ELT (2.1) it runs inside the warehouse, as SQL.
@@ -39,7 +39,7 @@ Faisal asks for one thing: "Every number we publish comes from code we can read,
 | Automated tests | The build fails when data breaks an assumption, such as duplicate keys |
 | One dependency graph | Each model is defined once and reused, so logic is not copied |
 
-**dbt in one paragraph.** dbt (dbt Core is the open-source command-line tool, maintained by dbt Labs) compiles and runs SQL `SELECT` statements against your warehouse. You do not write `CREATE TABLE`; you write the `SELECT`, and dbt wraps it in the right DDL for its **materialisation** (how the result is stored: `view`, `table`, `incremental` or `ephemeral`). Instead of hard-coding table names, you call `{{ ref('model_name') }}` for another model and `{{ source('source_name', 'table') }}` for a raw table. From those calls dbt builds a **DAG** (directed acyclic graph) of dependencies and runs models in the right order. Adapters connect dbt to PostgreSQL, DuckDB (the community `dbt-duckdb` adapter), Snowflake, BigQuery, Databricks, Amazon Redshift and others.
+**dbt in one paragraph.** dbt (dbt Core is the open-source command-line tool, maintained by dbt Labs) compiles and runs SQL `SELECT` statements against your warehouse. You do not write `CREATE TABLE`; you write the `SELECT`, and dbt wraps it in the right DDL (data definition language: the statements that create tables and views) for its **materialisation** (how the result is stored: `view`, `table`, `incremental` or `ephemeral`). Instead of hard-coding table names, you call `{{ ref('model_name') }}` for another model and `{{ source('source_name', 'table') }}` for a raw table. The double braces are **Jinja**, a templating language: dbt replaces them with real table names before it sends the SQL. From those calls dbt builds a **DAG** (directed acyclic graph) of dependencies and runs models in the right order. Adapters connect dbt to PostgreSQL, DuckDB (the community `dbt-duckdb` adapter), Snowflake, BigQuery, Databricks, Amazon Redshift and others.
 
 **The layers.** Najm follows the structure dbt Labs recommends in its project-structure guide. Each layer has one job:
 
@@ -93,7 +93,7 @@ from deduplicated
 where rn = 1
 ```
 
-**Tests next to the code.** In a YAML file beside the model, you declare **generic data tests**. dbt ships four: `unique`, `not_null`, `accepted_values` and `relationships` (every value must exist in another model, like a foreign key). Since dbt 1.8 the key is `data_tests:`; the older `tests:` still works. From 1.10, parameters such as `values` are preferably nested under `arguments:`.
+**Tests next to the code.** In a YAML file beside the model, you declare **generic data tests**. dbt ships four: `unique`, `not_null`, `accepted_values` and `relationships` (every value must exist in another model, like a foreign key). Since dbt 1.8 the key is `data_tests:`; the older `tests:` still works. From dbt 1.10.5 (the `require_generic_test_arguments_property` flag, on by default from 1.10.8), parameters such as `values` are nested under `arguments:`.
 
 ```yaml
 # models/staging/core/_core__models.yml
@@ -283,7 +283,27 @@ Lina writes the **Najm dbt Project Standard v1** and the first tested model, `di
 Kareem and finance now read the same `is_active_90d`. The disagreement about which definition is right moves to where it belongs: a metric definition card (4.1).
 
 ## 🛠️ Exercises
-Use synthetic data only. Generate fake customers, accounts and transactions with Python (for example the `Faker` library) or write small CSV seeds.
+Use synthetic data only. Export seeds from the lab dataset (lesson 0.3), giving `transactions` the raw column names the staging example above expects:
+
+```sql
+-- run in DuckDB, from your dbt project folder, against the lab file
+ATTACH 'najm_lab.duckdb' AS lab (READ_ONLY);
+COPY lab.customers TO 'seeds/customers.csv' (HEADER);
+COPY lab.accounts  TO 'seeds/accounts.csv'  (HEADER);
+COPY (
+    SELECT printf('T%08d', txn_id) AS txn_ref,
+           account_id              AS acct_no,
+           txn_ts_utc              AS txn_ts,
+           amount_qar              AS amt,
+           'QAR'                   AS ccy,
+           CASE direction WHEN 'debit' THEN 'D' ELSE 'C' END AS txn_typ,
+           TIMESTAMP '2026-04-01 06:00' AS _loaded_at
+    FROM lab.transactions
+    WHERE txn_id <= 5000
+) TO 'seeds/transactions.csv' (HEADER);
+```
+
+A seed is referenced like a model, with `{{ ref('transactions') }}` rather than `source()`; otherwise your staging model can follow the example. If dbt is new to you, allow about three hours for 🟢 and 🟡 together; the 🔴 snapshot, unit test and CI add about two more and can wait for a second pass.
 
 - 🟢 Install dbt Core with the `dbt-duckdb` adapter, create a project, load three CSV seeds (`customers`, `accounts`, `transactions`) with `dbt seed`, and write one staging model per seed with renamed, cast columns. *Done when:* `dbt build` succeeds and every staging model has `unique` and `not_null` tests on its primary key.
 - 🟡 Add `int_customer_activity` and `dim_customer` as in this lesson. Deliberately insert a duplicate transaction and a transaction with an unknown account into your seed data. *Done when:* `dbt build` fails on the right tests, downstream models are skipped, and after you fix the staging deduplication the build passes again.
@@ -385,7 +405,7 @@ Use synthetic data only. Generate fake customers, accounts and transactions with
 # 3.2 — Data quality: tests, contracts and observability
 *Level: 🟡 Intermediate* · *Prerequisites: 2.2, 3.1* · *Stage: Transform, Operate*
 
-**After this you can** write a data contract and a validation script that rejects each bad file with a message naming the breach, and set a severity and owner for one check per quality dimension. *Study time: about 110 minutes (estimate).*
+**After this you can** write a data contract and a validation script that rejects each bad file with a message naming the breach, and set a severity and owner for one check per quality dimension. *Study time: reading about 15 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Data quality** means data is fit for the decision it supports: complete, valid, unique, consistent, accurate and on time.
@@ -397,7 +417,7 @@ Use synthetic data only. Generate fake customers, accounts and transactions with
 ## 🧭 Why it matters
 At 07:40 on a Monday, the Chief Risk Officer's dashboard shows SME loan arrears down by a third overnight. The risk team starts drafting a note to the board. Huda checks Airflow: every task is green. It takes until lunchtime to find the cause. Over the weekend, the core banking team changed the `days_past_due` field from an integer to a text code ("0-30", "31-60") in a release. The ingestion job loaded it without error, the staging cast turned every value it could not parse into null, and the arrears model counted nulls as "not in arrears". Nothing failed. The numbers were simply wrong.
 
-Public cases show the same pattern. In October 2020, it was widely reported that around 16,000 positive COVID-19 test results in England were left out of official daily figures. The cause was a data pipeline that used the legacy Excel XLS file format, which holds at most 65,536 rows per sheet; records beyond the limit were silently dropped. Again, nothing crashed.
+Public cases show the same pattern. In the 2020 England COVID-19 reporting gap (lesson 0.2), the widely reported cause was a format limit: each case took several rows in a legacy Excel XLS template capped at 65,536 rows, so a file held only about 1,400 cases and the rest were dropped without an error. Again, nothing crashed.
 
 Faisal's conclusion for the team: "Pipelines fail loudly; data fails quietly. We need checks that make data failures loud, agreements so they happen less, and monitoring for the ones we didn't imagine."
 
@@ -688,7 +708,7 @@ Use synthetic data only.
 # 3.3 — Performance and cost: partitioning, clustering, incremental models and query plans
 *Level: 🟡 Intermediate* · *Prerequisites: 1.3, 3.1* · *Stage: Store, Operate*
 
-**After this you can** show from query plans that a partitioned table or a half-open date filter reads less data, and build an incremental model whose lookback window keeps it equal to a full refresh. *Study time: about 110 minutes (estimate).*
+**After this you can** show from query plans that a partitioned table or a half-open date filter reads less data, and build an incremental model whose lookback window keeps it equal to a full refresh. *Study time: reading about 15 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 - In analytical systems, **cost and speed are mostly about how much data a query reads**. Read less and you pay less and wait less.
@@ -885,7 +905,7 @@ Huda and Lina write a **performance and cost review** for the three costly workl
 Thresholds and lookback windows are Najm's own choices, set from measured data.
 
 ## 🛠️ Exercises
-Use synthetic data only: generate, for example, tens of millions of fake transactions over two years with DuckDB's `range()` and `random()` functions.
+Use synthetic data only: scale up the lab generator from lesson 0.3 to tens of millions of transactions over two years by raising its `range()` bound and widening the date span. Keep `hash()` rather than `random()`, so reruns match.
 
 - 🟢 In DuckDB, create a synthetic transactions table and write it to Parquet twice: once unpartitioned and once partitioned by year and month. Run the same one-month sum on both with `explain analyze`. *Done when:* you can show from the plans and timings that the partitioned version reads only one month's files.
 - 🟡 In PostgreSQL, create a range-partitioned `fct_transactions` by month, load synthetic data, and compare `explain (analyze, buffers)` for a `to_char` month filter and a half-open range filter. *Done when:* you can point to the line in each plan that shows how many partitions were scanned, and explain the difference in buffers read.

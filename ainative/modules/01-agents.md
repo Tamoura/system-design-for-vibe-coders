@@ -9,7 +9,7 @@
 # 1.1 — The mental model: context, tools and the loop, and why agents are brilliant and why they fail
 *Level: 🟢 Beginner* · *Prerequisites: 0.3* · *Focus: Mindset*
 
-**After this you can** check an agent's code against the library docs and write a cheap command that catches one agent failure mode. *Study time: about 110 minutes (estimate).*
+**After this you can** check an agent's code against the library docs and write a cheap command that catches one agent failure mode. *Study time: reading about 15 min, hands-on about 60 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A model is a **stateless function of its context**: what is not in the context does not exist for it.
@@ -246,7 +246,7 @@ def record_quote(customer_id, amount):
 # 1.2 — Lab: read three agent sessions, name the failure, then run your own
 *Level: 🟢 Beginner* · *Prerequisites: 0.2, 1.1* · *Focus: Mindset, Verify*
 
-**After this you can** name the failure in an agent session, cite the turn that shows it and propose the cheapest guard against it. *Study time: about 110 minutes (estimate).*
+**After this you can** name the failure in an agent session, cite the turn that shows it and propose the cheapest guard against it. *Study time: reading about 10 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Lab m01 gives you three agent sessions on Remit, **constructed for teaching, not recorded from a real model**, and a `diagnosis.json` to fill in: failure mode, turn, prevention, quotation.

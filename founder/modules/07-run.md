@@ -9,7 +9,7 @@
 # 7.1 — What to hand to agents or people, and what to keep
 *Level: 🟡 Intermediate* · *Prerequisites: 5.2, 5.3* · *Step: Run*
 
-**After this you can** sort your recurring tasks into keep, agent drafts, agent acts within limits and hand to a person, and write delegation cards for three of them, each with a limit and a stop condition. *Study time: about 120 minutes (estimate).*
+**After this you can** sort your recurring tasks into keep, agent drafts, agent acts within limits and hand to a person, and write delegation cards for three of them, each with a limit and a stop condition. *Study time: reading about 20 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can sort your company's recurring tasks into four groups (**keep**, **agent drafts and you approve**, **agent acts within limits**, **hand to a person**) and write a one-page **delegation card** for at least three of them, each with a stated limit and a stop condition. Allow about two hours.
@@ -202,7 +202,7 @@ The agent now used its own mailbox with draft-only rights. For the first three w
 </details>
 
 ## 📚 References
-- OWASP Foundation, *OWASP Top 10 for LLM Applications*, the entry "Excessive Agency" (as recalled from the 2025 edition; no URL was checked, so confirm the current edition and entry name on the OWASP website).
+- OWASP GenAI Security Project, *OWASP Top 10 for LLM Applications*, the entry "Excessive Agency" (LLM06 in the 2025 edition; a 2026 edition was published in August 2026 and reorders the entries, so look it up by name). https://genai.owasp.org/llmrisk/llm062025-excessive-agency/ (checked by web search on 2026-11-18).
 - The documentation of each agent tool, mailbox and automation service you connect: its permission, logging and data-handling pages for your plan, read on the day you decide.
 - Library course: [*System Design for Vibe Coders*, lesson 9.8 — The Governance Glance: You Own What Your Agent Ships](../vibe/index.en.html#l9-8).
 - Library course: [*AI Product Management*, lesson 4.1 — Levels of automation: suggest, draft, decide, act](../aipm/index.html#/4.1).
@@ -213,7 +213,7 @@ The agent now used its own mailbox with draft-only rights. For the first three w
 # 7.2 — Costs, vendors and lock-in
 *Level: 🟡 Intermediate* · *Prerequisites: 2.2, 3.1, 7.1* · *Step: Run*
 
-**After this you can** build a vendor register of at least eight rows with data held, cost, owner, renewal and exit route, and run a 30-minute vendor review that ends in three decisions. *Study time: about 120 minutes (estimate).*
+**After this you can** build a vendor register of at least eight rows with data held, cost, owner, renewal and exit route, and run a 30-minute vendor review that ends in three decisions. *Study time: reading about 20 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can produce a **vendor register** with at least eight rows (what each vendor does for you, what data it holds, what it costs, who pays, when it renews, how you would leave) and run a 30-minute vendor review that ends with three decisions. Allow about two hours.
@@ -426,7 +426,7 @@ Finally she added a line to the agent's standing instructions: "Do not add a ser
 # 7.3 — Key-person risk: access, backups and a 30-minute handover pack
 *Level: 🔴 Advanced* · *Prerequisites: 6.3, 7.1, 7.2* · *Step: Run*
 
-**After this you can** write a handover pack with no secrets in it and prove it with a 30-minute drill in which a trusted helper finds six named items using only the pack. *Study time: about 180 minutes (estimate).*
+**After this you can** write a handover pack with no secrets in it and prove it with a 30-minute drill in which a trusted helper finds six named items using only the pack. *Study time: reading about 20 min, hands-on about 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can build a **handover pack** that lets a trusted person keep Tick running safely for two weeks without you, and prove it with a 30-minute drill where that person finds six named items using only the pack. Allow about three hours for the first version.
@@ -467,6 +467,8 @@ It is the ordinary fragility of a one-person company. AI makes it worse in a par
 **The key accounts.** For Tick, these are: the domain registrar, the email on the domain, the hosting and database, the code repository, the payment provider, the message provider, the model vendor, the password manager and the card or bank account that pays for them. Your vendor register from lesson 7.2 already lists them.
 
 **Backups, in a line.** A backup you have not restored is a hope. Know what is backed up (customer data, files, settings, and the code), where the copy is, who can reach it, and how long a restore takes. Do one restore test into a spare place and record it. How backups work is in [*System Design for Vibe Coders*, lesson 2.3 — Backups: What, Not Just Whether](../vibe/index.en.html#l2-3). Keep one copy outside the account that holds the original, because the same account problem that locks you out can lock out the backup.
+
+**A restore test without code, in five steps.** **Never restore over the live system: a mistake there overwrites real customer data.** (1) Export your data (most hosting and database dashboards have an export or download button) and store the file in a separate account. (2) Create a new, empty project in a spare place. (3) Restore the export there, using the vendor's own restore or import steps; ask your AI tool to explain them, but never paste passwords or keys into the chat. (4) Pick five records you know, such as your newest customer, and check that each is present and correct. (5) Write down the date, the time the restore took and anything missing.
 
 **The handover pack.** The pack is a short document, around five pages at most, that a trusted person can use cold. It holds no secrets. It contains:
 
@@ -526,7 +528,7 @@ Then the drill. Mona opened the pack and, in 30 minutes, tried to find six items
 
 ## 🛠️ Exercises
 1. 🟢 **Find your single points.** List your ten most important accounts and, for each, who can currently get in and what device or mailbox they depend on. *Done when:* a list exists, every account has the route written, and you have circled the three where you are the only way in.
-2. 🟡 **Fix access and backups.** For the three circled accounts, add a second route (a second admin, a recovery process or a sealed recovery code) and set up your password manager's recovery. For your data, make one backup that lives outside the original account and do one restore test. *Done when:* each of the three accounts has a second route written in the accounts list, the restore test record is dated, and a trusted person confirms they know where the sealed material is.
+2. 🟡 **Fix access and backups.** For the three circled accounts, add a second route (a second admin, a recovery process or a sealed recovery code) and set up your password manager's recovery. For your data, make one backup that lives outside the original account and do one restore test, following the five steps above. *Done when:* each of the three accounts has a second route written in the accounts list, the restore test record is dated, and a trusted person confirms they know where the sealed material is.
 3. 🔴 **Write the pack and run the drill.** Write the handover pack with all eight sections, with no secrets in it, and ask a helper to find six named items in 30 minutes using only the pack. *Done when:* the pack exists, the helper's result (items found, time taken, gaps) is recorded, the gaps are fixed, the next drill date is in two calendars, and you have a short question list for a lawyer and an accountant about authority if you are unavailable.
 
 ## ⚠️ Mistakes and traps
@@ -613,7 +615,7 @@ Then the drill. Mona opened the pack and, in 30 minutes, tried to find six items
 
 ## 📚 References
 - The account-recovery, administrator-role and two-step sign-in help pages of each vendor and of your password manager, read for your exact plan; no single URL is given because each vendor differs.
-- CISA (the United States Cybersecurity and Infrastructure Security Agency), the "Secure Our World" public guidance on passwords, multifactor authentication and related habits, cited from memory by agency and programme name; no URL was checked, so look up the current pages and what they say about backups.
+- CISA (the United States Cybersecurity and Infrastructure Security Agency), "Secure Our World", public guidance on passwords, multifactor authentication and related habits; for backups, its separate small-business page "Back Up Business Data". https://www.cisa.gov/back-business-data (found by web search on 2026-11-18; page not opened).
 - Your country's company registry and bank, for their published processes when an owner or account holder is unavailable. Ask a lawyer and an accountant what applies; the course states no rule.
 - Library course: [*System Design for Vibe Coders*, lesson 2.3 — Backups: What, Not Just Whether](../vibe/index.en.html#l2-3).
 - Library course: [*System Design for Vibe Coders*, lesson 5.7 — Secrets and Configuration: The Keys to the Kingdom](../vibe/index.en.html#l5-7).

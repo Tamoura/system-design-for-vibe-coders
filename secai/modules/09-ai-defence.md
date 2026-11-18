@@ -9,7 +9,7 @@
 # 9.1 — Guardrails and output handling: never trust model output
 *Level: 🔴 Advanced* · *Prerequisites: 2.1, 2.2, 8.2* · *Phase: Design, Build*
 
-**After this you can** render model output safely and validate an agent action against a strict schema, with tests that reject malformed and malicious outputs and accept valid ones. *Study time: about 125 minutes (estimate).*
+**After this you can** render model output safely and validate an agent action against a strict schema, with tests that reject malformed and malicious outputs and accept valid ones. *Study time: reading about 20 min, hands-on about 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Model output is **untrusted input** to whatever reads it next. Anyone whose text reaches the model (a customer, a document, a web page) can influence it. The 2025 version of the OWASP Top 10 for LLM Applications lists this risk as **LLM05 Improper Output Handling**.
@@ -24,7 +24,7 @@ Najm Assist answers in rich text: fees in bold, steps as lists, links to help pa
 
 Ali's first fix is a line in the system prompt: "Never output images or HTML." Noura (Head of Application & AI Security) rejects it. "That's a request, not a control. The model follows whoever wrote the most persuasive text in its context, and here that might be the attacker." The chat view must be safe *whatever* the model says.
 
-Output is also a liability. In December 2023, users manipulated a Chevrolet dealer's chatbot into "agreeing" to sell a car for one dollar. In *Moffatt v. Air Canada* (2024), a Canadian tribunal held the airline responsible for wrong bereavement-fare information its chatbot gave a customer. Whatever Najm Assist says, Najm Bank said.
+Output is also a liability, as the one-dollar car from 8.1 hinted. In *Moffatt v. Air Canada* (2024), a Canadian tribunal held the airline responsible for wrong bereavement-fare information its chatbot gave a customer. Whatever Najm Assist says, Najm Bank said.
 
 ## 📐 How it works
 
@@ -163,6 +163,13 @@ Noura and Ali write the **Najm Assist Output Handling Standard v1**. Tariq (engi
 - 🟢 In a small chat app of your own (or a local copy of an open-source chat interface), find every place model output is inserted into the page and switch to `textContent` or an allow-list sanitiser. Use **mocked** model responses, so no real model is needed. *Done when:* mocked responses containing `<img src=x onerror=alert(1)>` and a Markdown image pointing at an external host both render as harmless text, with a passing unit test for each.
 - 🟡 Write a strict schema (Pydantic or Zod) for Najm Assist's "open a dispute" action: transaction ID format, a reason from a fixed list, a capped amount, a length-limited note, no extra fields. *Done when:* your tests reject six malformed outputs (wrong enum, extra field, negative amount, oversized note, missing ID, wrong ID format) and accept two valid ones.
 - 🔴 Evaluate an open-source input guardrail running locally. Build a set of 50 genuine customer-style messages (half in Arabic, dialect if you can) and 50 injection-style messages with harmless goals such as "reveal the word CANARY-42". *Done when:* you report false positive and false negative rates per language and recommend, with reasons, whether it should block, flag or log.
+- 📝 **Paper route (no code).** Review two things from 📐 How it works: the line `chatBubble.innerHTML = marked.parse(modelOutput)`, and a model reply of `{"intent": "transfer_money", "amount": 5000}` reaching the `AssistAction` schema. *Done when:* for each you have written what could go wrong, what the code should do, and what gets logged.
+
+<details><summary>Check your work</summary>
+
+**📝 Model answer.** The `innerHTML` line turns model output into live HTML: injected text can add script handlers or a Markdown image that sends data to an outside host. Sanitise with an allow-list (no images, no event handlers, links only to approved hosts), and log what was stripped. The reply fails the schema twice: `transfer_money` is not an allowed intent and `amount` is an unknown field. The app should reject it, show a safe fallback and write a security log event, never "repair" it into an action.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Instructions as controls.** "Never output HTML" in a system prompt does nothing against an attacker. Make the sink safe in code.
@@ -183,10 +190,10 @@ Noura and Ali write the **Najm Assist Output Handling Standard v1**. Tariq (engi
 
 **1. Mariam shows that Najm Assist can be made to output Markdown for an image on an outside server, which the chat view loads automatically. Ali proposes adding "Never output images" to the system prompt. What is the best response?**
 
-- A. Accept it, because the model follows its system prompt
-- B. Switch to a larger model that is harder to manipulate, and keep the prompt line
-- C. Fix the sink in code: a sanitiser that drops images from model output, links only to allow-listed domains, and a Content Security Policy limiting image sources to Najm's domains
-- D. Accept it, and ask the model to double-check each answer for images
+- A. Accept it, because the model follows its system prompt and no other control is needed in code once the rule is clear
+- B. Switch to a larger model that is harder to manipulate, and keep the prompt line, since stronger models ignore injected image instructions
+- C. Fix the sink in code: a sanitiser that drops images from model output, links only to allow-listed domains, and a CSP on images
+- D. Accept it, and ask the model to double-check each answer for images before it is shown to the customer
 
 <details><summary>Answer</summary>
 
@@ -196,10 +203,10 @@ Noura and Ali write the **Najm Assist Output Handling Standard v1**. Tariq (engi
 
 **2. Which statement about guardrails is MOST accurate?**
 
-- A. A good guardrail classifier makes prompt injection impossible
-- B. Guardrail classifiers reduce risk probabilistically; deterministic controls such as schema validation, sanitisation and server-side authorisation must protect sinks with serious consequences
-- C. Guardrails are unnecessary if the system prompt is well written
-- D. Output guardrails are only needed for public chatbots
+- A. A good guardrail classifier makes prompt injection impossible, so switching it on for model input and output is enough
+- B. Classifiers cut risk probabilistically; serious sinks need deterministic controls like schema checks and server-side authorisation
+- C. Guardrails are unnecessary if the system prompt is well written, detailed and clear about what the model may and may not do
+- D. Output guardrails are only needed for public chatbots that any user on the internet can reach
 
 <details><summary>Answer</summary>
 
@@ -209,10 +216,10 @@ Noura and Ali write the **Najm Assist Output Handling Standard v1**. Tariq (engi
 
 **3. A team wants Najm Assist to answer "show my last five card payments" by having the model write SQL that the backend runs. What is the safest design?**
 
-- A. Have the model return a validated intent such as `list_transactions`; code runs a fixed, parameterised query with the customer ID taken from the authenticated session
-- B. Let the model write SQL, and block any query containing the word DROP
-- C. Let the model write SQL, run with the application's normal database account
-- D. Let the model write SQL, and have a second model review it first
+- A. The model returns a validated intent (`list_transactions`); code runs a fixed, parameterised query with the session's customer ID
+- B. Let the model write SQL, and block any query containing DROP or DELETE, which stops every destructive query
+- C. Let the model write SQL, run with the application's normal database account, which already has the rights it needs
+- D. Let the model write SQL, and have a second model review it first and reject anything that looks dangerous
 
 <details><summary>Answer</summary>
 
@@ -260,7 +267,7 @@ Noura and Ali write the **Najm Assist Output Handling Standard v1**. Tariq (engi
 # 9.2 — Agents and tools: excessive agency, least-privilege tools and MCP
 *Level: 🔴 Advanced* · *Prerequisites: 3.2, 3.3, 8.2, 9.1* · *Phase: Design, Build*
 
-**After this you can** tier an agent's tools and build a mock banking tool that refuses, and logs, a model's request to act on another customer's card. *Study time: about 125 minutes (estimate).*
+**After this you can** tier an agent's tools and build a mock banking tool that refuses, and logs, a model's request to act on another customer's card. *Study time: reading about 20 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - An **agent** is a model in a loop that chooses and calls **tools** (functions or APIs). Whatever its tools can do, a successful prompt injection can do.
@@ -408,7 +415,7 @@ Noura, Tariq and Rania agree the **Najm Assist Tool Register v1**. No tool reach
 
 ## 🛠️ Exercises
 - 🟢 Take the tool list of an agent you use or build (or the prototype in 🧭 Why it matters). For each tool, write its tier, which kinds of excess it shows, and a narrower replacement. *Done when:* every tool has a tier, every generic tool has a named narrow replacement, and at least one action moves to "needs confirmation" or "not available to the agent".
-- 🟡 In a local lab, build a tiny agent against a **mock** banking API with two test customers. Implement `freeze_card` with the customer taken from the session and ownership checked in code. Script a mocked model response that asks to freeze the other customer's card. *Done when:* the call is refused, the mock API state is unchanged, and an audit log line records the denied attempt.
+- 🟡 In a local lab, build a tiny agent against a **mock** banking API with two test customers. Implement `freeze_card` with the customer taken from the session and ownership checked in code. Script a mocked model response that asks to freeze the other customer's card. The starter lab `secai/lab/` already has this shape: read its fixed handler, then add the audit-log test. *Done when:* the call is refused, the mock API state is unchanged, and an audit log line records the denied attempt.
 - 🔴 Run a lethal-trifecta review of your own coding-agent setup: list the private data it can reach, the untrusted content it reads, and every channel that can send data out, including links, web requests and pull requests. *Done when:* you have a one-page diagram, at least one leg removed or fenced off for each risky combination (for example an egress allow-list or a removed server), and the configuration change committed to your own repository.
 
 ## ⚠️ Mistakes and traps
@@ -469,10 +476,10 @@ Noura, Tariq and Rania agree the **Najm Assist Tool Register v1**. No tool reach
 
 **4. For "freeze card", the team proposes a confirmation message written by the model: "I'll freeze your card ending 4821. OK?" What is the risk, and the fix?**
 
-- A. An injected model could describe one action while requesting another; render the confirmation in app code from the validated parameters and re-check them on the server
-- B. The model may be slow, so cache the message
-- C. No risk, because the customer confirms anyway
-- D. The message should be longer and more detailed
+- A. An injected model could describe one action while requesting another; render it in app code and re-check on the server
+- B. The model may be slow to write the message, so cache it and reuse it for every customer who freezes a card
+- C. No risk, because the customer confirms before the action runs, so what the model's message says does not matter
+- D. The message should be longer and more detailed, so the customer fully understands what will happen before approving
 
 <details><summary>Answer</summary>
 
@@ -482,10 +489,10 @@ Noura, Tariq and Rania agree the **Najm Assist Tool Register v1**. No tool reach
 
 **5. A developer wants to add a popular community MCP server to their coding agent, which can read a staging database. What should Najm's rules require first?**
 
-- A. Nothing; MCP is a standard protocol, so servers are safe
-- B. Check that the server has many downloads
-- C. Install it and rely on the agent to ignore any instructions in tool descriptions
-- D. An allow-list review: read its tool descriptions, pin the version, run it in the sandboxed dev container with scoped credentials and an egress allow-list, and re-review on change
+- A. Nothing; MCP is a standard protocol, so servers that follow it are safe and need no review one by one
+- B. Check that the server has many downloads and stars in its repository, which is enough proof that it can be trusted
+- C. Install it and rely on the agent to ignore any instructions in tool descriptions, since agents spot injected text easily
+- D. An allow-list review: read its tool descriptions, pin the version, sandbox it with scoped credentials, re-review on change
 
 <details><summary>Answer</summary>
 
@@ -511,7 +518,7 @@ Noura, Tariq and Rania agree the **Najm Assist Tool Register v1**. No tool reach
 # 9.3 — Securing retrieval (RAG): data boundaries and access control
 *Level: 🔴 Advanced* · *Prerequisites: 3.3, 5.3, 8.2, 9.1* · *Phase: Design, Build*
 
-**After this you can** implement permission pre-filtering in a RAG pipeline and prove with persona-by-document tests that no forbidden chunk is ever returned. *Study time: about 120 minutes (estimate).*
+**After this you can** implement permission pre-filtering in a RAG pipeline and prove with persona-by-document tests that no forbidden chunk is ever returned. *Study time: reading about 15 min, hands-on about 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Retrieval-augmented generation (RAG)** finds relevant passages in a document store and puts them in the model's context. Anything that reaches the context can reach the answer.
@@ -682,10 +689,10 @@ The suite runs in CI with 40 ordinary and adversarial queries per persona. One f
 
 **1. An SME relationship manager receives a copilot summary that quotes the special-assets team's restricted notes. What is the BEST fix?**
 
-- A. Add "do not reveal restricted documents" to the system prompt
-- B. Apply the user's entitlements from the session as a pre-filter in the retrieval query, and move special-assets notes to a separate index that only that team's copilot can query
-- C. Ask RMs not to request group-level summaries
-- D. Scan answers for the words "special assets" and block them
+- A. Add "do not reveal restricted documents" to the system prompt, then test that the copilot refuses requests that name them
+- B. Filter retrieval by the user's session entitlements, and keep special-assets notes in an index only that team can query
+- C. Ask RMs not to request group-level summaries and to ask about one company at a time
+- D. Scan answers for the words "special assets" and block them before display, since that phrase appears in every leak
 
 <details><summary>Answer</summary>
 
@@ -721,10 +728,10 @@ The suite runs in CI with 40 ordinary and adversarial queries per persona. One f
 
 **4. What is the most reliable way to test that the copilot respects document permissions?**
 
-- A. Deterministic tests on the retriever: for each persona and seeded document, assert forbidden chunk IDs are never returned for ordinary and adversarial queries, in CI, plus end-to-end canaries
-- B. Have testers read a sample of answers each week
-- C. Ask the model whether it respects permissions
-- D. Check that the system prompt mentions permissions
+- A. Deterministic retriever tests in CI: for each persona, assert forbidden chunk IDs never come back, plus end-to-end canaries
+- B. Have testers read a sample of answers each week and report any answer that looks sensitive or wrong for the user
+- C. Ask the model whether it respects permissions, and record its answer as evidence that it keeps to document limits
+- D. Check that the system prompt mentions permissions explicitly and that every new version keeps the same rules word for word
 
 <details><summary>Answer</summary>
 
@@ -760,7 +767,7 @@ The suite runs in CI with 40 ordinary and adversarial queries per persona. One f
 # 9.4 — AI red-teaming and security evaluation
 *Level: 🔴 Advanced* · *Prerequisites: 1.3, 8.1, 8.2, 9.1, 9.2* · *Phase: Test, Operate*
 
-**After this you can** write red-team test cases with deterministic oracles, run an open-source scanner against a lab app, and report attack success rates with severity. *Study time: about 120 minutes (estimate).*
+**After this you can** write red-team test cases with deterministic oracles, run an open-source scanner against a lab app, and report attack success rates with severity. *Study time: reading about 15 min, hands-on about 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **AI red-teaming** is authorised, scoped adversarial testing of an AI *system* (model, prompts, tools, data, interface) to find security and safety failures before attackers and customers do.
@@ -906,7 +913,7 @@ Mariam writes the **Najm Assist AI Red-Team Charter and Test Plan v1**. Hamad si
 ## 🛠️ Exercises
 - 🟢 Write ten red-team test cases for a chatbot or agent you own (or for Najm Assist, on paper). Map each to an OWASP LLM category, with a harmless goal and a deterministic oracle where possible. *Done when:* every case has an ID, mapping, goal, oracle, run count and severity, and at least six oracles do not depend on anyone's opinion.
 - 🟡 In a local lab, run an open-source scanner (garak or promptfoo) against a local model or an app you built. Reproduce the top findings manually, mark false positives and rate severity with the rubric above. *Done when:* you have a findings table with reproduction rate and severity for at least three findings, and a note on at least one false positive.
-- 🔴 Take your lab agent from 9.2 or 9.3. Measure the ASR of three attack classes over at least 30 runs each, apply one architectural fix, re-measure, and add the cases to a CI job that fails above your thresholds. *Done when:* you can show before-and-after ASR per class, and the CI job fails on a deliberately reintroduced weakness and passes on the fixed code.
+- 🔴 Take your lab agent from 9.2 or 9.3. Measure the ASR of three attack classes over at least 30 runs each, apply one architectural fix, re-measure, and add the cases to a CI job that fails above your thresholds. The starter lab `secai/lab/` also works. *Done when:* you can show before-and-after ASR per class, and the CI job fails on a deliberately reintroduced weakness and passes on the fixed code.
 
 ## ⚠️ Mistakes and traps
 - **Testing production without authorisation.** Write rules of engagement, get sign-off, and use staging with synthetic data.
@@ -927,10 +934,10 @@ Mariam writes the **Najm Assist AI Red-Team Charter and Test Plan v1**. Hamad si
 
 **1. Ali proposes running a public jailbreak list against production Najm Assist on Friday afternoon. What is the MOST important problem?**
 
-- A. Friday afternoons are busy for customer service
-- B. Public lists are too short to be useful
-- C. There is no written authorisation or rules of engagement, real customer data and real effects are at risk, and success is undefined; testing belongs in staging with synthetic customers under a signed charter
-- D. Jailbreaks are not relevant to banks
+- A. Friday afternoons are busy for customer service, and no test should run when the team is under pressure
+- B. Public lists are too short to be useful and cover only a few attacks that appeared years ago
+- C. No written authorisation or rules of engagement, with real customers at risk; test in staging under a signed charter
+- D. Jailbreaks are not relevant to banks, because they target public chat assistants, not banking systems
 
 <details><summary>Answer</summary>
 
@@ -966,10 +973,10 @@ Mariam writes the **Najm Assist AI Red-Team Charter and Test Plan v1**. Hamad si
 
 **4. For a high-severity finding (Assist promises fee waivers when customers mix Arabic and English), the team proposes one new sentence in the system prompt. What should Mariam require?**
 
-- A. Accept the sentence as the full fix
-- B. Accept the prompt change only as an extra layer; require a more durable control such as a commitment-language check with hand-off, add the attacks and variants to the adversarial set, and re-measure ASR by language
-- C. Close the finding, because mixed-language input is rare
-- D. Ban mixed-language messages
+- A. Accept the sentence as the full fix, because the system prompt is the fastest control and best placed to change behaviour across languages
+- B. Treat the prompt line as an extra layer only; add a durable commitment-language check, grow the adversarial set, re-measure by language
+- C. Close the finding, because mixed-language input is rare and not worth extra work from security or developers
+- D. Ban all mixed-language messages in the app, and ask customers to write in one language per conversation
 
 <details><summary>Answer</summary>
 
@@ -979,10 +986,10 @@ Mariam writes the **Najm Assist AI Red-Team Charter and Test Plan v1**. Hamad si
 
 **5. A guardrail vendor says its product cut prompt-injection success to near zero on a public benchmark. How should Najm read this?**
 
-- A. As proof that the guardrail is robust for Najm Assist
-- B. As irrelevant, because benchmarks are always wrong
-- C. As a useful signal only: fixed-set results tend to overstate robustness against adaptive attackers, so test white-box on Najm's own system with iterative attacks, and keep architectural controls carrying the weight
-- D. As a reason to stop red-teaming
+- A. As proof that the guardrail is robust for Najm Assist, since its result on a well-known public benchmark is close to zero
+- B. As irrelevant, because benchmarks are always wrong and cannot give the bank any useful signal
+- C. A useful signal only: fixed sets overstate robustness to adaptive attackers, so test Najm's own system with iterative attacks
+- D. As a reason to stop red-teaming, because once the benchmark reaches zero there is nothing left worth testing
 
 <details><summary>Answer</summary>
 

@@ -7,9 +7,9 @@
 ---
 
 # 6.1 — Discovery: from a business problem to an agent brief: stakeholders, workflows, data, risk and "should this be an agent?"
-*Level: 🟢 Beginner* · *Prerequisites: 0.1, 5.1* · *Layer: Delivery*
+*Level: 🟡 Intermediate* · *Prerequisites: 0.1, 5.1* · *Layer: Delivery*
 
-**After this you can** turn interview notes and documents into discovery notes that pass `check_notes.py`, and a one-page agent brief whose every number cites a source or says "assumption". *Study time: about 110 minutes (estimate).*
+**After this you can** turn interview notes and documents into discovery notes that pass `check_notes.py`, and a one-page agent brief whose every number cites a source or says "assumption". *Study time: reading about 15 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Discovery** is the work between "we should have an AI assistant" and "here is what we build, for whom, and what it must never do". It ends in a one-page **agent brief**.
@@ -201,7 +201,7 @@ Run it from `aiapps/labkit`, keeping your notes in its `docs/` folder and copyin
 
 **Group session (60 minutes).** (1) Find who is missing from each stakeholder map (10). (2) Two learners interview a third, who plays Hind from the transcript; the room scores leading questions (20). (3) Compare contradiction lists (15). (4) Read each "decision requested" aloud (15).
 
-**Build it with Claude Code.** After your own pass, give this to Claude Code in plan mode (check the current Claude Code documentation):
+**Build it with Claude Code.** *No Claude Code? Do the spec's steps by hand and run its checks yourself (lesson 0.3).* After your own pass, give this to Claude Code in plan mode (check the current Claude Code documentation):
 
 ```text
 Goal: draft docs/discovery-notes.md for Najm Desk from labkit/data/m06_interview_hind.md,
@@ -317,7 +317,7 @@ None needs the real API.
 # 6.2 — The agent specification and acceptance criteria: requirements you can test
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1, 6.1* · *Layer: Delivery, Production*
 
-**After this you can** rewrite vague requirements into testable ones, each with an id, a number or condition, a method and an owner, so that `spec_lint.py` finds no vague word, and write acceptance criteria that cite those ids. *Study time: about 110 minutes (estimate).*
+**After this you can** rewrite vague requirements into testable ones, each with an id, a number or condition, a method and an owner, so that `spec_lint.py` finds no vague word, and write acceptance criteria that cite those ids. *Study time: reading about 10 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A **specification** says what the agent must and must not do, in sentences a test can pass or fail: the contract between customer, builder and reviewers.
@@ -523,7 +523,7 @@ v0.1: first draft for the review workshop. Ids are never reused. Sign-off pendin
 
 **Group session (60 minutes).** Run the review workshop with learners as Hind, Yara and Noura: the author presents (10), the room reads five scenarios aloud (15), the customers object (25), the scribe logs changes (10).
 
-**Build it with Claude Code.** Give this to Claude Code in plan mode (check the current documentation):
+**Build it with Claude Code.** *No Claude Code? Do the spec's steps by hand and run its checks yourself (lesson 0.3).* Give this to Claude Code in plan mode (check the current documentation):
 
 ```text
 Goal: review docs/najm-desk-spec.md; write docs/spec-review.md and docs/eval-candidates.jsonl.
@@ -544,7 +544,7 @@ None needs the real API.
 
 - 🟢 **Rewrite eight.** Make these testable: "helpful", "timely", "reliable", "respects privacy", "escalates complex issues", "protects data", "works for all staff", "users are satisfied". *Done when:* each, written as a bullet with an id such as **FR-01**, has a number or condition, a method and an owner, and `spec_lint.py` prints no "vague word" line (ignore its eval-case lines).
 - 🟡 **Matrix and criteria.** Build the permissions matrix for your tools and write ten acceptance criteria. *Done when:* every X names its limit, each criterion cites an id, one trigger and one result, and four say what must not happen.
-- 🔴 **Grow the seed.** Extend the 12 scenarios to 30 in `evals/seed.jsonl`. *Done when:* `spec_lint.py` exits 0 with `--skip NFR`, at least 7 scenarios are adversarial, 5 out of scope and 6 Arabic or mixed, and a colleague finds none without a requirement.
+- 🔴 **Grow the seed.** Extend the 12 scenarios to 30 in `evals/seed.jsonl`. *Done when:* `spec_lint.py` exits 0 with `--skip NFR`, at least 7 scenarios are adversarial, 5 out of scope and 6 Arabic or mixed, and a colleague finds none without a requirement (solo: a fresh Claude chat given the spec and the file).
 
 ## ⚠️ Mistakes and traps
 - **Adjectives as requirements.** "Fast" and "secure" start arguments. Give a number, a method and an owner.

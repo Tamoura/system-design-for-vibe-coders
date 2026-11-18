@@ -35,7 +35,7 @@
    "lesson": "10.1",
    "q": {
     "en": "Khalid wants to pilot credit-scoring v2 at the Frankfurt branch for two weeks, with credit officers double-checking every score it produces, and to complete the conformity assessment and EU registration once the pilot results are in. What should Layla advise?",
-    "ar": "يريد خالد إجراء تجربة للإصدار 2 من نموذج تقييم الجدارة الائتمانية (credit-scoring v2) في فرع فرانكفورت لمدة أسبوعين، على أن يراجع موظفو الائتمان كل درجة يصدرها مراجعةً مزدوجة، وأن يُستكمل تقييم المطابقة (conformity assessment) والتسجيل في قاعدة بيانات الاتحاد الأوروبي بعد ظهور نتائج التجربة. بماذا ينبغي أن تنصح ليلى؟"
+    "ar": "يريد خالد إجراء تجربة تشغيلية للإصدار 2 من نموذج تقييم الجدارة الائتمانية (credit-scoring v2) في فرع فرانكفورت لمدة أسبوعين، على أن يراجع موظفو الائتمان كل درجة يصدرها مراجعةً مزدوجة، وأن يُستكمل تقييم المطابقة (conformity assessment) والتسجيل في قاعدة بيانات الاتحاد الأوروبي بعد ظهور نتائج التجربة التشغيلية. بماذا ينبغي أن تنصح ليلى؟"
    },
    "o": {
     "en": [
@@ -48,13 +48,13 @@
      "امضِ قُدُمًا: فمع المراجعة المزدوجة لكل درجة من الموظفين، يقتصر دور النموذج على المشورة",
      "امضِ قُدُمًا: فالتجربة تُعد اختبارًا في ظروف واقعية (real-world testing) بموجب المادة 60، فيمكن أن تتبعها المطابقة (conformity) لاحقًا",
      "انتظر: فالقرارات الحقيقية بشأن المتقدمين في الاتحاد الأوروبي تعني تشغيل النظام (putting into service)، فالمطابقة (conformity) تأتي أولًا",
-     "انتظر: فتقييم الجدارة الائتمانية (credit scoring) عالي المخاطر (high-risk)، لذا يجب أن تعتمد جهة مُخطَرة (notified body) الإصدار 2 أولًا"
+     "انتظر: فتقييم الجدارة الائتمانية (credit scoring) عالي المخاطر (high-risk)، لذا يجب أن تعتمد هيئة مُخطَرة (notified body) الإصدار 2 أولًا"
     ]
    },
    "a": 2,
    "why": {
     "en": "A pilot that makes real decisions about people in the EU puts the system into service, so the conformity assessment (internal control, with no notified body needed for credit scoring), declaration, CE marking and registration must be complete before it starts, however much human review is added. Art. 60 is the tempting escape, but real-world testing has its own conditions, such as a registered testing plan and informed consent, and is not a way to skip conformity.",
-    "ar": "التجربة التي تتخذ قرارات حقيقية بشأن أشخاص في الاتحاد الأوروبي (EU) تعني تشغيل النظام (putting into service)، لذا يجب أن يكتمل تقييم المطابقة (conformity assessment)، وهو رقابة داخلية لا تحتاج إلى جهة مُخطَرة (notified body) في تقييم الجدارة الائتمانية (credit scoring)، والإعلان وعلامة CE (CE marking) والتسجيل قبل بدئها، مهما أُضيف من مراجعة بشرية. والمادة 60 مخرج مغرٍ، لكن الاختبار في ظروف واقعية (real-world testing) له شروطه الخاصة، مثل خطة اختبار مسجّلة والموافقة المستنيرة (informed consent)، وليس وسيلة لتجاوز المطابقة (skip conformity)."
+    "ar": "التجربة التي تتخذ قرارات حقيقية بشأن أشخاص في الاتحاد الأوروبي (EU) تعني تشغيل النظام (putting into service)، لذا يجب أن يكتمل تقييم المطابقة (conformity assessment)، وهو رقابة داخلية لا تحتاج إلى هيئة مُخطَرة (notified body) في تقييم الجدارة الائتمانية (credit scoring)، والإعلان وعلامة CE (CE marking) والتسجيل قبل بدئها، مهما أُضيف من مراجعة بشرية. والمادة 60 مخرج مغرٍ، لكن الاختبار في ظروف واقعية (real-world testing) له شروطه الخاصة، مثل خطة اختبار مسجّلة والموافقة المستنيرة (informed consent)، وليس وسيلة لتجاوز المطابقة (skip conformity)."
    }
   },
   {

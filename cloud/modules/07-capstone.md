@@ -9,7 +9,7 @@
 # 7.1 — Capstone: take a new Najm service from empty repo to production with an SLO
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–6* · *Phase: Deploy, Operate*
 
-**After this you can** take a small service from an empty repo to a local cluster with a build-once pipeline, GitOps rollback and an SLO with burn-rate alerts, and show each injected failure caught by an alert or the canary. *Study time: about 125 minutes (estimate).*
+**After this you can** take a small service from an empty repo to a local cluster with a build-once pipeline, GitOps rollback and an SLO with burn-rate alerts, and show each injected failure caught by an alert or the canary, or absorbed by self-healing without a page. *Study time: reading about 20 min, hands-on about 12 h (estimate).*
 
 ## ⚡ In 60 seconds
 - The capstone takes **Card Controls**, a new Najm service for freezing cards and setting limits, from an empty repository to production through all eight phases.
@@ -24,7 +24,7 @@ Tariq brings a request to the platform team. The cards team wants a **Card Contr
 
 Salem gives the job to Yousef, with Maha as SRE partner. Yousef's first plan: copy an old repository, push an image tagged `latest`, apply manifests by hand, "add monitoring after launch". Salem asks three questions. "What is the SLO? How do you roll back in under five minutes? What happens if the database zone fails during a payday peak?" Yousef has no answers yet.
 
-Public history shows why the questions matter. In August 2012 Knight Capital deployed new code to its servers, but one server kept old code behind a reused flag; according to the US SEC's later order, the firm lost hundreds of millions of dollars in under an hour. In January 2017 GitLab lost hours of production data after a database directory was deleted during an incident, and several backup methods turned out not to work (GitLab's public postmortem). Each was a missing, untested step on the path to production. This lesson builds the whole path once, properly.
+Public history shows why the questions matter. Knight Capital's missed server (lesson 0.2) is the cost of a deploy nobody verified; GitLab's 2017 data loss (lesson 6.1) is the cost of backups nobody had restored. Each was a missing, untested step on the path to production. This lesson builds the whole path once, properly.
 
 ## 📐 How it works
 
@@ -72,7 +72,9 @@ flowchart LR
 ```yaml
 # .github/workflows/ci.yml (excerpt)
 permissions:
-  contents: read
+  contents: write        # bump-dev pushes a branch with the new digest
+  pull-requests: write   # bump-dev opens the pull request
+  packages: write        # push the image to GHCR with GITHUB_TOKEN
   id-token: write        # lets the job request a short-lived OIDC token
 jobs:
   build:
@@ -82,7 +84,21 @@ jobs:
       - run: make test                  # unit and contract tests
       - run: make image                 # multi-stage, non-root build
       - run: make push sbom sign        # push, then SBOM and cosign signature on the digest
-      - run: make bump-dev              # opens a PR to the GitOps repo with the new digest
+      - run: make bump-dev              # opens a PR updating overlays/dev with the new digest
+```
+
+The `make` targets are short wrappers, so the workflow stays readable:
+
+```makefile
+# Makefile (excerpt): thin wrappers around the commands from 2.1, 4.1 and 4.3
+IMAGE ?= ghcr.io/najm-example/card-controls
+TAG   ?= $(GITHUB_SHA)
+test:  ; python3 -m pytest
+image: ; docker build -t $(IMAGE):$(TAG) .
+push:  ; docker push $(IMAGE):$(TAG)
+sbom:  ; syft $(IMAGE):$(TAG) -o spdx-json > sbom.spdx.json
+sign:  ; cosign sign --yes $$(docker inspect --format='{{index .RepoDigests 0}}' $(IMAGE):$(TAG))
+# bump-dev: commits the new digest to overlays/dev on a branch and opens a pull request (3.2)
 ```
 
 **Deploy: infrastructure and app, both from Git.** The database, backups, cloud role and network rules are one OpenTofu module call, reviewed with a `tofu plan` on the pull request (3.1). Policy checks (3.3) reject a database without encryption at rest, deletion protection or backup retention. The Kubernetes side lives in the GitOps repository, one folder per environment, reconciled by Argo CD:
@@ -182,9 +198,20 @@ The first game day found two gaps: the credentials runbook pointed to a renamed 
 | Monitor | SLO dashboard, burn-rate alerts, cost per request (5.1, 5.2, 6.2) | Pages only on SLO burn | Each alert fired once in a test |
 
 ## 🛠️ Exercises
-- 🟢 Write the SLO document for a small service of your own (say, a URL shortener): two SLIs, an SLO for each over 28 days, the error budget in requests at an assumed traffic level, and the release policy when it runs out. *Done when:* a peer can say what would page someone and what would freeze releases, without asking you.
-- 🟡 On your laptop, take that service from an empty repo to a local kind or k3d cluster: multi-stage non-root Dockerfile, a GitHub Actions workflow that builds once and records the digest, and Argo CD syncing from a Git folder you own. *Done when:* changing the digest in Git rolls the cluster forward, reverting the commit rolls it back, and you have timed both.
-- 🔴 Add Prometheus and Grafana to your local cluster, define one SLO with fast-burn and slow-burn alerts, then run a one-hour game day with three injected failures (a bad release, a killed pod, a broken config). Use only machines and accounts you own; on a free-tier account, set a budget alert first. *Done when:* each failure is detected by an alert or the canary, each has a runbook step that worked, and your write-up lists at least two gaps you fixed.
+Plan for 8–15 hours of hands-on work over one to two weeks. Use only machines and accounts you own; on a free-tier account, set a budget alert first.
+
+- 🟢 Write the SLO document for a small service of your own (say, a URL shortener): two SLIs, an SLO for each over 28 days, the error budget in requests at an assumed traffic level, and the release policy when it runs out. *Done when:* a peer, or you a day later using the rubric below, can say what would page someone and what would freeze releases, without asking you.
+- 🟡 On your laptop, take that service from an empty repo to a local kind or k3d cluster: a multi-stage non-root Dockerfile; a GitHub Actions workflow that builds once, pushes to GitHub Container Registry, records the digest and signs it with cosign (4.3); an OpenTofu module for one dependency, such as a bucket or a local Docker resource (3.1); and Argo CD syncing from a GitOps folder in the same repository (3.2). *Done when:* changing the digest in Git rolls the cluster forward, reverting the commit rolls it back, you have timed both, `cosign verify` passes for the running digest, and you have kept the `tofu plan` output.
+- 🔴 Install Prometheus, Grafana and Argo Rollouts (the commands are in the 🔴 exercise of 4.2) and turn the Deployment into a canary Rollout with an analysis on success rate. Define one SLO with fast-burn and slow-burn alerts, shrinking the windows for the lab (for example 5 and 1 minutes for fast burn, 30 and 5 for slow) so they can fire within the hour, and keep a load generator such as `hey` or a `curl` loop running throughout. Then run a one-hour game day with three injected failures: a bad release (the canary analysis should abort it), a broken config (the fast-burn alert should page) and a killed pod (with two or more replicas it should self-heal with no SLO impact and no page). Finish with a readiness file in the format of Najm's table: for every row, your evidence, including a timed restore of a database dump into a fresh instance and a cost-per-request estimate, or "not done" and why. *Done when:* the bad release and the broken config are each caught by the canary or an alert, the killed pod is shown to self-heal without a page, each failure has a runbook step that worked, the readiness file has no blank row, and your write-up lists at least two gaps you fixed.
+
+<details class="model-answer"><summary>Self-check rubric</summary>
+
+- SLO document: each SLI is measured where users feel it, the budget is a number of requests, and the release policy says who freezes releases and when they resume.
+- Pipeline: no deploy job runs `docker build`, manifests name the image by its `@sha256:` digest, and promotion and rollback are single commits.
+- Game day: every page you received maps to SLO burn; anything that paged on a cause (CPU, a single pod) is a gap to fix.
+- Readiness file: a reviewer could approve or block the launch from it without asking you a question.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **SLO after launch.** Without it, nobody can say which alerts matter or when to stop shipping. Agree it in the Plan phase with the product owner.
@@ -202,16 +229,16 @@ The first game day found two gaps: the credentials runbook pointed to a renamed 
 
 ## ✍️ Check yourself
 
-**1. Yousef's staging pipeline rebuilds the container image from the same Git commit before deploying to production "to be safe". What is the problem?**
+**1. During the Card Controls game day, Maha kills one of four read pods. A replacement is ready within 20 seconds, the read SLO does not move, and nobody is paged. What should the write-up record?**
 
-- A. Rebuilding is slower, which hurts lead time but is otherwise harmless
-- B. Production no longer runs the tested artefact; promote the same digest
-- C. Rebuilding is required for production because staging images are unsigned
-- D. There is no problem as long as both builds use the same Git commit
+- A. A gap: every pod failure should page on-call so a person confirms the replacement
+- B. Expected: self-healing absorbed it, and SLO-based paging rightly stayed silent
+- C. A gap: the canary analysis should have caught the killed pod and rolled back
+- D. Inconclusive: the test must be repeated in production before it counts as evidence
 
 <details><summary>Answer</summary>
 
-**B.** A rebuild can pick up different base layers or dependencies, so production runs something nobody tested. D is tempting, but the same commit does not guarantee the same artefact. (🟡 Going deeper.)
+**B.** The service pages only on SLO burn (5.2). With spare replicas a killed pod should cost users nothing, so silence is the right result; the evidence is the restart and the flat SLO graph. A pages on a cause, C confuses a release guard with a runtime failure, and D ignores that staging game days exist to produce this evidence. (🔴 Expert view.)
 
 </details>
 
@@ -277,8 +304,8 @@ The first game day found two gaps: the credentials runbook pointed to a renamed 
 - OpenTelemetry documentation — https://opentelemetry.io/docs/
 - Prometheus alerting rules — https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/
 - GitHub Docs, security hardening with OpenID Connect — https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/about-security-hardening-with-openid-connect
-- GitLab, postmortem of the database outage of January 31, 2017 — https://about.gitlab.com/blog/
-- US SEC, order in the matter of Knight Capital Americas LLC (2013) — https://www.sec.gov
+- GitLab, postmortem of the database outage of January 31, 2017 — https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/
+- US SEC, order in the matter of Knight Capital Americas LLC (2013) — https://www.sec.gov/litigation/admin/2013/34-70694.pdf
 - Regulation (EU) 2022/2554 on digital operational resilience for the financial sector (DORA) — https://eur-lex.europa.eu/eli/reg/2022/2554/oj
 
 ---
@@ -286,7 +313,7 @@ The first game day found two gaps: the credentials runbook pointed to a renamed 
 # 7.2 — The cloud career: roles, certifications, interviews and a portfolio
 *Level: 🔴 Advanced* · *Prerequisites: 7.1* · *Phase: Plan*
 
-**After this you can** build a skills table for a target role from real job adverts with your top three gaps, publish a portfolio repository a peer can run from its README alone, and score a mock interview against a scorecard. *Study time: about 155 minutes (estimate).*
+**After this you can** build a skills table for a target role from real job adverts with your top three gaps, publish a portfolio repository a peer can run from its README alone, and score a mock interview against a scorecard. *Study time: reading about 15 min, hands-on about 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 - "Cloud" is several jobs: cloud, DevOps, platform, site reliability (SRE), cloud security, FinOps and AI infrastructure. They share foundations but own different things. Pick a target role first.
@@ -539,9 +566,7 @@ Salem's **platform engineer interview scorecard**, used for every candidate:
 # 7.3 — Practice exam: 60 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: 7.1, 7.2* · *Phase: Plan*
 
-**After this you can** sit a 60-question scenario exam in one timed sitting, build a miss log with a cause and an action for each miss, and write new scenario questions with defensible answers for your weakest phase. *Study time: about 135 minutes (estimate).*
-
-> **Under revision (November 2026).** In many questions in this practice exam the correct option can be spotted by its length or wording, so a high score here does not show readiness for any real exam. Use it to practise reasoning: answer each question in your own words before you read the options, then compare.
+**After this you can** sit a 60-question scenario exam in one timed sitting, build a miss log with a cause and an action for each miss, and write new scenario questions with defensible answers for your weakest phase. *Study time: reading about 55 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - This is a 60-question practice exam covering every lesson from 0.1 to 7.2 and all eight phases of the delivery loop. Most questions are scenarios set at Najm Bank. The questions are mixed, as in a real exam, rather than grouped by module.

@@ -35,7 +35,7 @@
       "lesson": "7.2",
       "q": {
         "en": "Tick's message vendor bills per message. Layla set a budget alert at twice last month's bill, and nothing else. A bug starts sending messages in a loop overnight. What does the lesson say the alert does here?",
-        "ar": "يحاسب مزوّد الرسائل لدى تيك على كل رسالة. ضبطت ليلى تنبيه ميزانية عند ضعف فاتورة الشهر الماضي، ولا شيء غيره. بدأ خطأ برمجي يرسل الرسائل في حلقة طوال الليل. ماذا يفعل التنبيه هنا بحسب الدرس؟"
+        "ar": "يحاسب مورّد الرسائل لدى تيك على كل رسالة. ضبطت ليلى تنبيه ميزانية عند ضعف فاتورة الشهر الماضي، ولا شيء غيره. بدأ خطأ برمجي يرسل الرسائل في حلقة طوال الليل. ماذا يفعل التنبيه هنا بحسب الدرس؟"
       },
       "o": {
         "en": [
@@ -54,7 +54,7 @@
       "a": 0,
       "why": {
         "en": "An alert tells you; a cap stops the spend, and some vendors only offer alerts. So she needs to know which one she has, and set a hard limit where the vendor offers it. Neither kind of control refunds charges or predicts the loop.",
-        "ar": "التنبيه يخبرك، أما السقف فيوقف الإنفاق، وبعض المزوّدين يقدّمون التنبيه وحده. لذا عليها أن تعرف أيّهما لديها، وأن تضبط سقفًا صارمًا حيث يتيحه المزوّد. ولا يردّ أيٌّ من النوعين الرسوم ولا يتنبأ بالحلقة."
+        "ar": "التنبيه يخبرك، أما السقف فيوقف الإنفاق، وبعض المورّدين يقدّمون التنبيه وحده. لذا عليها أن تعرف أيّهما لديها، وأن تضبط سقفًا صارمًا حيث يتيحه المورّد. ولا يردّ أيٌّ من النوعين الرسوم ولا يتنبأ بالحلقة."
       }
     },
     {

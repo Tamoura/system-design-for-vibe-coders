@@ -9,7 +9,7 @@
 # 14.1 — Capstone: take a change to Najm Remit through the full AI-native cycle
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0-13* · *Focus: Workflow, Verify, Secure*
 
-**After this you can** take one ticket from spec to reviewed, graded change with an agent and defend every line in a demo. *Study time: about 110 minutes (estimate).*
+**After this you can** take one ticket from spec to reviewed, graded change with an agent and defend every line in a demo. *Study time: reading about 15 min, hands-on about 10 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **One ticket, the whole cycle.** REMIT-414 opens a Bangladesh corridor: five small code edits, graded with the evidence around them.
@@ -25,7 +25,9 @@ The capstone trains the habit behind those questions: a change others can trust 
 ## 📐 How it works
 
 ### 🟢 The essentials
-**The brief.** Eight milestones: context (modules 0-2), spec and plan (3), small steps (4, 5), review (5, 6), security (8), automation (9, 10), documents (11) and retrospective (12, 13). Each leaves something checkable that must refer to something real: files, ids `AC1`..., commands, the code, a commit. `lab-assets/README.md` lists what the grader reads in each.
+**The brief.** Eight milestones: context (modules 0-2), spec and plan (3), small steps (4, 5), review (5, 6), security (8), automation (9, 10), documents (11) and retrospective (12, 13). Each leaves something checkable that must refer to something real: files, ids `AC1`..., commands, the code, a commit. `lab-assets/README.md` lists what the grader reads in each. Module 7 has no milestone: REMIT-414 adds code rather than changing an untested module, though its habit (pin behaviour before you change it) runs through the tests-first step.
+
+**Time.** This is not a one-sitting lesson. The header's estimate covers reading and planning it; the build itself takes 8 to 12 hours of hands-on work spread over a week or more (roughly: spec and plan 2 h, code and tests 3 to 4 h, review and hardening 2 h, documents and retrospective 2 h), plus the 90-minute group session.
 
 **Providers before the consumer.** A corridor names its fee schedule, and an old test (`tests/test_corridors.py`) checks that the schedule exists. So the plan adds `STD-C` in `fees.py`, then the rate and margin in `fx.py`, then the corridor, then the wording (`notify.py`) and the template choice (`service.py`). No code commit turns an old test red. Fee and rate functions take a `Corridor`: build one that points at `STD-C` in your fee tests, and they pass before the real corridor exists.
 
@@ -75,7 +77,7 @@ Then commit: feat(fees): add the STD-C fee schedule for Bangladesh
 
 **How much evidence is enough?** Match it to risk. A typo needs one commit and the test that was red; money logic gets all ten pieces and a second human on `fees.py`, `fx.py` and `service.py`.
 
-**What the grader cannot tell.** A model could fill every template in ten minutes and pass: the checks verify shape, truth and references, never sincerity. The demo has you break your own code live. Alone, or inside one agent session, you cannot hold the demo: walk a colleague through the change instead.
+**What the grader cannot tell.** A model could fill every template in ten minutes and pass: the checks verify shape, truth and references, never sincerity. The demo has you break your own code live. Its real test is a colleague's live questions; studying alone, a recorded demo is the fallback, and an agent session on its own never counts as the reviewer.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
@@ -197,7 +199,7 @@ Pointing Bangladesh at `STD-B` instead of `STD-C` looks plausible, yet fails sev
 
 **Weekly deliverable (Module 14).** In a notes folder of your own, commit `week-14/`: `m14-grade.txt` (the final grade output), `baseline-after.md` (the lesson 0.1 self-check again, if you did one), `demo-notes.md` and a one-page `portfolio.md` (what changed, how you know it is right, where AI helped and where you overruled it; fictional, no secrets). The kit does not check these.
 
-**Group session (90 minutes).** Demo in English and Arabic; Hessa asks if Customer Care would sign (15). The trail, spec to `git log --oneline`; Tariq asks where the plan changed (15). Move the cap by one cent, live (the **Mutation check** of lesson 5.1); Nada (quality engineering lead) asks which test fails (20). Make the agent try to read `.env`, push or install; Noura (application and AI security) asks what the guard cannot see (15). Swap repositories and find the riskiest hunk in `git diff lab-start` (15). Agree one change to the memory file (10).
+**Group session (90 minutes).** Demo in English and Arabic; Hessa asks if Customer Care would sign (15). The trail, spec to `git log --oneline`; Tariq asks where the plan changed (15). Move the cap by one cent, live (the **Mutation check** of lesson 5.1); Nada (quality engineering lead) asks which test fails (20). Make the agent try to read `.env`, push or install; Noura (application and AI security) asks what the guard cannot see (15). Swap repositories and find the riskiest hunk in `git diff lab-start` (15). Agree one change to the memory file (10). *Alone:* record a 15-minute demo answering the four people's questions, do the one-cent mutation and the `.env` attempt on camera, have a fresh agent session find the riskiest hunk before you check its answer, and play the recording to a colleague when you can.
 
 **Debrief.** What did the agent get wrong, or nearly? What did your context or spec miss? Which document would you write first?
 
@@ -309,7 +311,7 @@ Total minutes: 0
 # 14.2 — Practice exam: 60 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0-14* · *Focus: Mindset, Context, Workflow, Verify, Secure, Automate, Team*
 
-**After this you can** answer sixty scenario questions in about 90 minutes and tag each miss with its lesson and trap. *Study time: about 120 minutes (estimate).*
+**After this you can** answer sixty scenario questions in about 90 minutes and tag each miss with its lesson and trap. *Study time: reading about 65 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Sixty scenario questions** from all fifteen modules (0 to 14), mixed and numbered 1 to 60. Most are short scenes on the Payments Platform team. Each has one best answer.

@@ -9,7 +9,7 @@
 # 7.1 — Launch readiness: guardrails, governance gates and support
 *Level: 🔴 Advanced* · *Prerequisites: 5.1, 6.2, 6.3* · *Stage: Launch*
 
-**After this you can** write a launch-readiness checklist with blocking items, owners and evidence, and design layered guardrails in which every control names the failure it catches and how to test it. *Study time: about 110 minutes (estimate).*
+**After this you can** write a launch-readiness checklist with blocking items, owners and evidence, and design layered guardrails in which every control names the failure it catches and how to test it. *Study time: reading about 20 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Launch readiness** is evidence, not optimism: conditions, each with an owner and proof, that must be true before more users are exposed.
@@ -20,7 +20,7 @@
 - Biggest trap: treating launch as the day the feature switches on, instead of the moment you take on responsibility for every answer it gives.
 
 ## 🧭 Why it matters
-In December 2023 a Chevrolet dealer's website chatbot was talked into "agreeing" to sell a car for $1 after users manipulated its instructions. In January 2024, after a system update, DPD's delivery chatbot swore at a customer and wrote a poem criticising the company. Neither failure needed an advanced attack; nothing between the model and the customer stopped them. And *Moffatt v. Air Canada* (2024) shows what follows: the tribunal held the airline responsible for what its chatbot told a customer. Whatever the assistant says, the company has said it.
+Recall the two public failures from 5.3: a Chevrolet dealer's chatbot talked into "agreeing" to sell a car for $1, and DPD's delivery chatbot swearing at a customer after a system update. Neither needed an advanced attack; nothing between the model and the customer stopped them. And as the Air Canada case showed (0.2), the company answers for what its chatbot tells a customer. Whatever the assistant says, the company has said it.
 
 At Najm Bank, Najm Assist v1 has finished its pilot. It answers questions about accounts, fees and cards in Arabic and English, grounded in the bank's product documents, and hands over to a human agent when unsure. Faisal proposes switching it on for all mobile-app customers on Thursday, "since the evals passed". Rania asks four questions. What stops it discussing loan eligibility, which it is not approved for? Who is paged if it gives wrong fee amounts at 2 a.m.? How do we turn it off without an app release? What does the contact centre say when a customer complains about an answer? Faisal cannot answer any of them. The launch moves by three weeks; this lesson is about those three weeks.
 
@@ -128,6 +128,7 @@ Rania's team produced the **Najm Assist v1 Launch Readiness Checklist** for the 
 | V1 | Risk tier confirmed and sign-offs on file | Yes | Faisal with Layla | Governance record | Green |
 | V2 | Privacy assessment complete; log retention agreed | Yes | Faisal with Sara | Assessment record | Green |
 | V3 | AI disclosure in first message and help page approved by legal | Yes | Faisal | Copy sign-off | Green |
+| V4 | QCB approval obtained where the current QCB AI Guideline requires it (check the text) | Yes | Faisal with Layla | QCB approval letter | Green |
 | O1 | Kill switch tested in production: falls back to FAQ search in under 5 minutes | Yes | Tariq | Drill record | Green |
 | O2 | Alerts on grounding, guardrail rate, latency and daily cost, with on-call rota | Yes | Tariq | Dashboard link, rota | Green |
 | O3 | Incident runbook rehearsed with support, governance, DPO and comms | Yes | Faisal | Tabletop notes | Green |
@@ -143,6 +144,14 @@ Go/no-go outcome: *"No-go this week on G1. Go at 5% once the false-block fix is 
 - 🟢 Write a readiness checklist, using the four areas, for an AI feature you use or are building. *Done when:* you have at least ten items, each marked blocking or not, with an owner role and the evidence that would prove it.
 - 🟡 Design the layered guardrails for the Credit Memo Copilot, which drafts internal credit memos from client documents for relationship managers. *Done when:* you have a table with all six layers, at least one control per layer, and for each control the failure it catches and how you would test it.
 - 🔴 Najm Assist v2 will let customers freeze a card and start a transaction dispute. Write the change-class policy and the additional launch gates for v2. *Done when:* your policy sorts at least five kinds of change into classes with the re-testing and approval each needs, v2 is placed in the right class with reasons, and you list the extra guardrails, stop thresholds and support scripts that actions require.
+
+<details><summary>Check your work</summary>
+
+**🟢 Model answer (three of ten).** "Quality bars met on the exact model and prompt version shipping": blocking, owner the PM, evidence the eval report. "Kill switch tested in production": blocking, owner the engineering lead, evidence a drill log. "Support scripts for handoffs": not blocking for a staff pilot, owner the support lead, evidence the published script.
+
+**🟡 and 🔴 self-check.** Your guardrail table passes if all six layers have at least one control, each control names the failure it catches and how you would test it. Your change-class policy passes if at least five kinds of change are sorted into classes with their re-testing and approval, v2 lands in the highest class because it adds actions, and the extra gates include confirmation, stop thresholds and support scripts.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **"The evals passed, so we are ready."** Evals cover the cases you tested. Check all four areas.
@@ -240,7 +249,7 @@ Go/no-go outcome: *"No-go this week on G1. Go at 5% once the false-block fix is 
 # 7.2 — Go-to-market: positioning, pricing signals and enablement
 *Level: 🔴 Advanced* · *Prerequisites: 2.1, 4.2, 7.1* · *Stage: Launch*
 
-**After this you can** fill in a positioning canvas and a claims register in which every claim links to an eval or rollout metric, and compare pricing patterns by signal and risk to recommend one. *Study time: about 110 minutes (estimate).*
+**After this you can** fill in a positioning canvas and a claims register in which every claim links to an eval or rollout metric, and compare pricing patterns by signal and risk to recommend one. *Study time: reading about 20 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Go-to-market (GTM)** is how a product reaches the people it is for: who it is for, what it promises, how it is priced or funded, and how the people who sell and support it are equipped.
@@ -251,7 +260,7 @@ Go/no-go outcome: *"No-go this week on G1. Go at 5% once the false-block fix is 
 - Biggest trap: marketing writes the promise and the product has to live up to it. The PM owns the promise.
 
 ## 🧭 Why it matters
-Google's first public demonstration of Bard, in February 2023, included an answer with a factual error about the James Webb Space Telescope. Reporters spotted it quickly and it was widely covered. The error itself was the kind of mistake every language model makes. What made it costly was the setting: a launch moment, framed as a showcase of accuracy, in front of an audience primed to check. Positioning and launch staging turned an ordinary model error into a story.
+A short promotional video Google posted for Bard in February 2023 included an answer with a factual error about the James Webb Space Telescope. Astronomers pointed it out just before Google's launch event, and it was widely covered. The error itself was the kind of mistake every language model makes. What made it costly was the setting: a launch moment, framed as a showcase of accuracy, in front of an audience primed to check. Positioning and launch staging turned an ordinary model error into a story.
 
 Najm Bank is about to launch SME Instant Finance to small-business customers: invoice-financing requests up to a set limit get a decision in minutes instead of days, driven by an ML model with human review of declines and edge cases. Faisal's first draft of the campaign reads: *"AI approves your invoice finance instantly."* Khalid likes it. Rania does not. "Instantly" is false for the requests that go to review. "Approves" invites complaints from the customers it declines. And "AI approves" puts an automated credit decision in the headline, which is exactly what Layla and Sara have spent months making sure is not the whole story. The product is good. The promise would make it look bad.
 
@@ -292,7 +301,7 @@ The register protects the customer and the bank. Layla's office and legal review
 | **Bundled and free** | "This is part of the service you already have" | Many banking assistants, including Najm Assist |
 | **Premium tier** | "Extra value for those who want more" | Duolingo Max (2023) put GenAI features in a higher-priced subscription |
 | **Usage-based** | "Pay for what you use" | Per-seat or per-request pricing for AI features and APIs |
-| **Outcome-based** | "We only get paid when it works" | Intercom priced its Fin agent per resolved conversation (from 2023); Salesforce launched Agentforce with per-conversation pricing (2024) |
+| **Outcome-based** | "We only get paid when it works" | Intercom priced its Fin agent per resolved conversation (from 2023); Salesforce launched Agentforce at $2 per conversation (2024), then added per-action Flex Credits (2025) |
 
 Outcome-based pricing is a strong signal of confidence, but it forces a hard definition of "outcome". What counts as a resolved conversation? Who decides? It also puts the vendor's revenue in tension with honest measurement. If you use it, agree the definition with customers before launch.
 
@@ -367,6 +376,14 @@ Faisal's revised **SME Instant Finance GTM One-Pager**, approved by Khalid and r
 - 🟢 Rewrite three AI marketing claims you have seen (from any company) so each can be backed by evidence. *Done when:* each rewrite states the job, avoids unbounded words such as "always", "instant" or "knows everything", and names the evidence you would need.
 - 🟡 Fill in the positioning canvas for Najm Assist, then write a claims register with at least five claims. *Done when:* each claim is linked to a specific eval or rollout metric, at least one draft claim is rejected with a reason, and the market category you chose is justified against a competing option.
 - 🔴 Najm is considering offering the Credit Memo Copilot to other banks as a white-label product. Draft the GTM decision memo: segment, positioning, pricing pattern and the risks each pricing pattern creates. *Done when:* you compare at least three pricing patterns by signal and risk, recommend one, define its unit of value precisely, and list the governance questions to raise with Layla.
+
+<details><summary>Check your work</summary>
+
+**🟢 Model answer.** "AI that knows everything about your money" becomes "Answers common questions about your account and fees, with links to the source", backed by the share of sampled answers that were correct and cited. "Instant approvals" becomes "Decisions on most small requests within minutes", backed by the measured share and time.
+
+**🟡 and 🔴 self-check.** Your claims register passes if each claim links to an eval or rollout metric and one draft claim is rejected with a reason. Your GTM memo passes if it compares at least three pricing patterns (per seat, per use, per outcome) by the signal each sends and the risk each creates, recommends one, defines its unit of value so both sides could count it, and lists questions for Layla.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Leading with "AI".** It says nothing about the outcome and raises fears. Lead with the job done and disclose AI plainly where honesty needs it.
@@ -465,7 +482,7 @@ Faisal's revised **SME Instant Finance GTM One-Pager**, approved by Khalid and r
 # 7.3 — Adoption and change management inside the enterprise
 *Level: 🔴 Advanced* · *Prerequisites: 4.1, 7.1, 7.2* · *Stage: Launch, Grow*
 
-**After this you can** diagnose an internal tool's adoption with ADKAR, design an adoption funnel with a metric per stage and a counter-metric, and write a plan that says how you will know within 60 days whether it worked. *Study time: about 125 minutes (estimate).*
+**After this you can** diagnose an internal tool's adoption with ADKAR, design an adoption funnel with a metric per stage and a counter-metric, and write a plan that says how you will know within 60 days whether it worked. *Study time: reading about 20 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - An internal AI product succeeds only when people change how they work. Launch gives access; **adoption** is the change in behaviour; **value** is the change in outcomes. Measure all three separately.
@@ -476,7 +493,7 @@ Faisal's revised **SME Instant Finance GTM One-Pager**, approved by Khalid and r
 - Biggest trap: counting logins. High usage with low value, or with unchecked outputs, is worse than low usage.
 
 ## 🧭 Why it matters
-IBM invested heavily in Watson Health and sold the units in 2022. Public accounts differ on the reasons, but a recurring theme is that fitting the technology into how clinicians actually work was harder than building the demo. A tool that impresses in a pitch but is awkward in real work does not get used.
+IBM invested heavily in Watson Health, and in 2022 sold its Watson Health data and analytics assets. Public accounts differ on the reasons, but a recurring theme is that fitting the technology into how clinicians actually work was harder than building the demo. A tool that impresses in a pitch but is awkward in real work does not get used.
 
 At Najm Bank, the Credit Memo Copilot went live for the corporate banking team in one region six weeks ago. The launch went well by the checklist in 7.1: evals green, guardrails tested, governance on file. Faisal's dashboard shows 85% of relationship managers (RMs) logged in during the first week. Khalid, who funded it, asks a different question: "How many credit memos were drafted with it last month, and did they reach committee faster?" The answer is uncomfortable. Weekly active use has fallen to about a third of RMs. Several senior RMs tried it once, found a draft that misread a covenant, and went back to their own templates. Two junior RMs use it for every memo and paste the drafts almost unchanged, which worries the credit risk team more than non-use. The product works. Adoption does not.
 
@@ -588,6 +605,14 @@ After the six-week review, Rania and Faisal rewrote the rollout as the **Credit 
 - 🟢 Pick an internal tool your organisation introduced (AI or not) and diagnose its adoption with ADKAR. *Done when:* you name the user group, the first missing element, the evidence for that diagnosis, and one action that addresses it.
 - 🟡 Design the adoption funnel for Staff GenAI, the bank's internal assistant for all employees. *Done when:* you have five stages with one metric each, one counter-metric that would reveal harm or over-reliance, and a sentence for each stage on what a drop there would tell you.
 - 🔴 Najm's operations division has low adoption of Staff GenAI and several reports of staff using public AI tools with customer data. Write a two-page plan for Rania and Layla. *Done when:* the plan separates the product causes from the policy issue, uses TAM to identify what to fix in the product, includes a champions approach and a leadership message, and defines how you will know in 60 days whether it worked.
+
+<details><summary>Check your work</summary>
+
+**🟢 Model answer.** A new expense tool, used by finance staff: the first missing element is Knowledge, because people knew why it mattered and wanted it, but the help desk logged many "how do I attach a receipt?" tickets. Action: a two-minute in-tool guide on that step.
+
+**🟡 and 🔴 self-check.** Your funnel passes if it has five stages (for example aware, tried, used weekly, used for real work, recommends), one metric each, and a counter-metric such as the share of answers copied without edits into customer letters. Your plan passes if it separates product causes (usefulness, ease of use) from the policy issue (public tools with customer data), includes champions and a leadership message, and states the 60-day measures that decide whether it worked.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Counting logins.** First-week logins measure curiosity. Track activation, habit, quality use and value, each with a counter-metric.

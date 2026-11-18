@@ -9,14 +9,14 @@
 # 3.1 — Schemas and tools: how the model "calls" a function (you do), validation and retries
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 2.1* · *Layer: Applications*
 
-**After this you can** write a Pydantic contract for a tool, generate its schema, and show in a table which layer, schema, validator or nothing, catches each of ten valid and invalid inputs. *Study time: about 110 minutes (estimate).*
+**After this you can** write a Pydantic contract for a tool, generate its schema, and show in a table which layer, schema, validator or nothing, catches each of ten valid and invalid inputs. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **tool** is a name, a description and a JSON Schema: all the model knows. It never runs it: it replies with a `tool_use` block (`stop_reason == "tool_use"`), and **your code** validates, runs and answers in the next user message.
 - **Every `tool_use` id needs a `tool_result`**, all in one user message. Report failures with `is_error: true` and a message that helps recovery.
 - **The description is a prompt.** Say when to call the tool, not only what it does; keep tools few, narrow and well named, because every definition is billed on every call.
 - A schema guarantees *shape*, never truth: **validate anyway**, and retry with the error as feedback, a few times at most.
-- Some of the newest models (Sonnet 5.5 among them) reject a forced `tool_choice`: use `auto`, an instruction and a check.
+- Do not rely on forcing a call: some models reject a forced `tool_choice` (which ones, under "Tool choice"). Use `auto`, an instruction and a check.
 
 ## 🧭 Why it matters
 In week two of Najm Desk, Hind asks for one thing: "When someone says their account is locked, the assistant should just unlock it." Lujain builds it in an afternoon (hypothetical): a tool `unlock_account(employee_id)` calls Najm ID. The demo is flawless: the model reads "I'm locked out, I'm Rayan", calls the tool, says "Done."
@@ -292,7 +292,7 @@ Fahad's review questions: (1) Can a newcomer tell when to call it from the descr
 # 3.2 — Lab: three tools, every call traced, errors handled
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 3.1* · *Layer: Applications, Agents*
 
-**After this you can** build a three-tool agent loop that turns every error into an `is_error` tool result, and answer from its JSONL trace alone how many model calls ran, which failed and where the cap fired. *Study time: about 110 minutes (estimate).*
+**After this you can** build a three-tool agent loop that turns every error into an `is_error` tool result, and answer from its JSONL trace alone how many model calls ran, which failed and where the cap fired. *Study time: reading about 10 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Three tools (calculator, weather, ticket lookup), one generic loop with a **step cap**, and a **JSONL trace** (one JSON object per line) of every model call, tool call and result.
@@ -623,7 +623,7 @@ The first summary is odd because the mock reads only the last user message, now 
 
 **Group session (60 minutes).** (1) Read one trace line aloud (10). (2) "Break the calculator": anything but arithmetic (20). (3) Compare real-API results (15). (4) Agree one `is_error` style (15).
 
-**Build it with Claude Code.** Give Claude Code this spec in plan mode (check its current documentation) and review the plan before it edits anything:
+**Build it with Claude Code.** *No Claude Code? Do the spec's steps by hand and run its checks yourself (lesson 0.3).* Give Claude Code this spec in plan mode (check its current documentation) and review the plan before it edits anything:
 
 ```text
 Goal: labs/m03/tools_agent.py, trace.py and structured.py as in lesson 3.2, plus pytest tests.

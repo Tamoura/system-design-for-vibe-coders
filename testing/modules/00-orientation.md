@@ -9,12 +9,12 @@
 # 0.1 — What software testing is, and what it is not: quality, risk and the AI-era shift
 *Level: 🟢 Beginner* · *Prerequisites: none* · *Focus: Mindset*
 
-**After this you can** write a quality profile and a ranked list of failure modes for a feature you know, with each risk tied to an observation that would reveal it. *Study time: about 95 minutes (estimate).*
+**After this you can** write a quality profile and a ranked list of failure modes for a feature you know, with each risk tied to an observation that would reveal it. *Study time: reading about 15 min, hands-on about 60 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Software testing** is evaluating software to find defects and to give stakeholders evidence about quality and risk. It produces information, not quality, and it can never prove that no bugs remain.
 - **Debugging** finds a failure's cause and fixes it. **Quality assurance (QA)** is about process, **quality control (QC)** about the product, and **quality engineering** builds quality in across the team. Testing is one activity among them.
-- "Works" is not one property. ISO/IEC 25010 (2011) lists eight quality characteristics; a transfer can be correct yet slow, insecure or unusable in Arabic.
+- "Works" is not one property. ISO/IEC 25010 (2011) lists eight quality characteristics (the 2023 revision has nine); a transfer can be correct yet slow, insecure or unusable in Arabic.
 - Three AI-era threads run through the course: testing code an AI wrote, using AI to test, and testing AI products. In each, ask: *could this test fail?*
 - Decision cue: before you write or accept a test, name the failure it would catch.
 - Biggest trap: reading green as proof. It means "these checks found nothing".
@@ -54,7 +54,7 @@ Testing shows something is wrong; debugging finds why. After a fix, **confirmati
 
 ### 🟡 Going deeper
 
-**What "works" means.** ISO/IEC 25010 describes eight quality characteristics: **functional suitability**, **performance efficiency**, **compatibility**, **usability**, **reliability**, **security**, **maintainability** and **portability**. The 2023 revision renames and extends some (it adds safety); this course uses the familiar 2011 names. It does not say what to test; it stops you forgetting whole families of failure. Ten ways a transfer can fail:
+**What "works" means.** ISO/IEC 25010 describes eight quality characteristics: **functional suitability**, **performance efficiency**, **compatibility**, **usability**, **reliability**, **security**, **maintainability** and **portability**. The 2023 revision has nine: it renames and extends some and adds safety; this course uses the familiar 2011 names. It does not say what to test; it stops you forgetting whole families of failure. Ten ways a transfer can fail:
 
 | # | What goes wrong | Characteristic | Found by |
 |---|---|---|---|
@@ -121,7 +121,7 @@ def test_unknown_kind_raises():
         fee("10", "QAR", "teleport")
 ```
 
-All ten pass and run every line of `fee()` that executes in a normal build. With each transfer bug on, they still pass: they check the *type* and *sign* of the answer, never its value. The remedy is to measure assistants: seed known bugs and count what their tests catch (lesson 6.3).
+The two `parametrize` lines run the first test once per pair of values, 3 kinds × 3 amounts = 9 tests, plus the last test: ten. All ten pass and run every line of `fee()` that executes in a normal build. With each transfer bug on, they still pass: they check the *type* and *sign* of the answer, never its value. The remedy is to measure assistants: seed known bugs and count what their tests catch (lesson 6.3).
 
 *Thread 3: testing AI products.* Najm Assist's wording changes between runs (the sample's `FakeModel` imitates this with a `temperature`). A test must pin the facts, not the sentence:
 
@@ -289,7 +289,7 @@ Every Najm feature starts with a **quality profile**: one page saying what "work
 # 0.2 — How software fails: errors, defects, failures, famous disasters and the economics of finding bugs early
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Focus: Mindset*
 
-**After this you can** trace a seeded bug in the sample from failure to root cause with a five-whys chain, and turn it into a regression test that fails with the bug on and passes without it. *Study time: about 115 minutes (estimate).*
+**After this you can** trace a seeded bug in the sample from failure to root cause with a five-whys chain, and turn it into a regression test that fails with the bug on and passes without it. *Study time: reading about 15 min, hands-on about 75 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A person makes an **error**; it leaves a **defect** (bug, fault) in code, a specification or a setting; when the defect runs under the right conditions the software shows a **failure**. Root-cause analysis works back to the error and to why nothing stopped it.
@@ -549,12 +549,12 @@ Every escape at Najm gets an **escaped-defect card** within two working days, ow
 </details>
 
 ## 📚 References
-- Ariane 5 Flight 501 Failure, Report by the Inquiry Board (1996) — https://www.esa.int/
-- NASA, Mars Climate Orbiter Mishap Investigation Board Phase I Report (1999) — https://www.nasa.gov/
+- Ariane 5 Flight 501 Failure, Report by the Inquiry Board (1996); ESA's summary — https://www.esa.int/Newsroom/Press_Releases/Ariane_501_-_Presentation_of_Inquiry_Board_report
+- NASA, Mars Climate Orbiter Mishap Investigation Board Phase I Report (1999) — https://llis.nasa.gov/llis_lib/pdf/1009464main1_0641-mr.pdf
 - Leveson and Turner, An Investigation of the Therac-25 Accidents, IEEE Computer (1993)
-- US SEC, order against Knight Capital Americas LLC (2013) — https://www.sec.gov/
-- US GAO, Healthcare.gov reports (2014) — https://www.gao.gov/
-- CrowdStrike, Falcon content update root cause analysis (2024) — https://www.crowdstrike.com/
+- US SEC, order against Knight Capital Americas LLC, Release No. 34-70694 (16 October 2013) — https://www.sec.gov/litigation/admin/2013/34-70694.pdf
+- US GAO, Healthcare.gov: Ineffective Planning and Oversight Practices, GAO-14-694 (2014) — https://www.gao.gov/products/gao-14-694
+- CrowdStrike, Channel File 291 Incident Root Cause Analysis (6 August 2024) — https://www.crowdstrike.com/wp-content/uploads/2024/08/Channel-File-291-Incident-Root-Cause-Analysis-08.06.2024.pdf
 - Google SRE book, Postmortem Culture: Learning from Failure — https://sre.google/sre-book/postmortem-culture/
 - ISTQB, Certified Tester Foundation Level syllabus v4.0 (2023) — https://www.istqb.org/
 
@@ -563,7 +563,7 @@ Every escape at Najm gets an **escaped-defect card** within two working days, ow
 # 0.3 — Meet Najm Bank's Quality Engineering team, and how to use this course
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Focus: Mindset*
 
-**After this you can** set up the Najm sample lab, run the starter suite to 24 passing tests, and write one test that catches a seeded bug the starter suite misses. *Study time: about 115 minutes (estimate).*
+**After this you can** set up the Najm sample lab, run the starter suite to 24 passing tests, and write one test that catches a seeded bug the starter suite misses. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Najm Bank is fictional.** You join its **Quality Engineering (QE)** team: Rashid (head, your mentor), Nada (new graduate, your peer, who makes the mistakes), Bilal (SDET lead) and Amal (exploratory and accessibility lead).

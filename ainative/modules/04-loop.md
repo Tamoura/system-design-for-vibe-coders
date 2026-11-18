@@ -9,7 +9,7 @@
 # 4.1 — Explore, plan, implement, check, commit: small steps, checkpoints and when to take the wheel
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1* · *Focus: Workflow*
 
-**After this you can** run the loop on a small change in three or more green commits and name the cue that made you take the wheel. *Study time: about 110 minutes (estimate).*
+**After this you can** run the loop on a small change in three or more green commits and name the cue that made you take the wheel. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - The daily loop has six moves: **explore** (read-only), **plan**, **implement one small step**, **check** it yourself, **read the diff**, **commit**. The unit is the step, not the ticket.
@@ -80,7 +80,7 @@ git commit -m "feat(cli): filter history with --since"
 
 ### 🟡 Going deeper
 
-**Checkpoints and rewind.** At the time of writing (2026), Claude Code records a checkpoint for each prompt that starts a turn, keeps the 100 most recent and expires them about 30 days after the session's last snapshot. Open the menu with `Esc` `Esc` on an empty prompt, or `/rewind`: restore code, conversation or both, or summarise. Bash changes (`rm`, `mv`, `cp`), outside edits and other sessions are not tracked, and the documentation says checkpoints are not a substitute for git.
+**Checkpoints and rewind.** At the time of writing (2026), Claude Code records a checkpoint for each prompt that starts a turn, keeps the 100 most recent and expires them about 30 days after the session's last snapshot. Open the menu with `Esc` `Esc` on an empty prompt, or `/rewind`: restore code, conversation or both, or summarise. Not restored: a file changed only by Bash (`rm`, `mv`, `cp`), edits made outside Claude Code or by other sessions, and usually a subagent's edits. The documentation says checkpoints do not replace git.
 
 **Cues that an agent is going astray.** The card in the 🏛️ section lists six. Stop at the first.
 
@@ -178,7 +178,7 @@ The clinic's rule: no pull request without a filled checklist, and no "the agent
 
 ## 🛠️ Exercises
 - 🟢 **Mark a timeline.** *No agent.* Write a six-line timeline of your last AI-assisted session. *Done when:* each line names a move, and two name a cue you noticed late and the rung you should have used.
-- 🟡 **Run the loop on a small change.** *Agent optional.* Make a green sandbox (from the `ailab` folder: `python -m ailab start m00 --dir ~/ainative/sandbox`, then `python -m ailab solve m00 --dir ~/ainative/sandbox`). In the sandbox, on a branch, add `--since YYYY-MM-DD` to `history`; a date means the start of that Qatar day. (Try `PYTHONPATH=src python -m remit history --customer C001` after `customer add` and `send`.) *Done when:* you have three or more green commits in the Remit format, the checklist is ticked with the commands you ran, and one line says what to change.
+- 🟡 **Run the loop on a small change.** *Agent optional.* Make a green sandbox (from the `ailab` folder: `python -m ailab start m00 --dir ~/ainative/sandbox`, then `python -m ailab solve m00 --dir ~/ainative/sandbox`). In the sandbox, on a branch, add `--since YYYY-MM-DD` to `history`; a date means the start of that Qatar day. (Try `PYTHONPATH=src python -m remit history --customer C001` after `customer add` and `send`.) *Done when:* you have three or more green commits in the Remit format, the checklist is ticked with the commands you ran, one line names the cue that made you take the wheel (with no agent: the point where you would have stopped one), and one line says what to change.
 - 🔴 **Rehearse an interruption.** *Needs an agent.* In the sandbox, give the agent a prompt that invites scope creep ("make the CLI nicer"), with no plan, and watch. *Done when:* your notes give the first cue and its time, the rung you used and what the two-failure rule would have changed, and the branch is at a green commit.
 
 ## ⚠️ Mistakes and traps
@@ -225,13 +225,13 @@ The clinic's rule: no pull request without a filled checklist, and no "the agent
 **3. Lujain says `Esc` `Esc` makes commits unnecessary, because she can rewind anything. What is the right reply?**
 
 - A. No: Bash changes and outside edits are not tracked, and git is the save point.
-- B. Yes: checkpoints keep every change for a year, whichever tool made that change.
+- B. Yes: a checkpoint records every file the agent touches, shell commands included.
 - C. Yes, as long as the agent only edits files and never runs a shell command at all.
-- D. No: checkpoints cover only the main branch and are deleted every night at midnight.
+- D. No: rewind restores only the conversation; the files stay as the agent left them.
 
 <details><summary>Answer</summary>
 
-**A.** Bash changes and outside edits are untracked, snapshots expire, and git is the real save point. (🟡 Checkpoints and rewind.)
+**A.** Bash changes and outside edits are untracked, snapshots expire, and git is the real save point. B is the tempting myth; D is wrong because rewind can restore code too. (🟡 Checkpoints and rewind.)
 
 </details>
 
@@ -265,14 +265,14 @@ The clinic's rule: no pull request without a filled checklist, and no "the agent
 - Claude Code documentation: best practices https://code.claude.com/docs/en/best-practices; checkpointing and rewind https://code.claude.com/docs/en/checkpointing; permission modes (plan mode) https://code.claude.com/docs/en/permission-modes; the context window https://code.claude.com/docs/en/context-window
 - Git: https://git-scm.com/docs. Conventional Commits 1.0.0: https://www.conventionalcommits.org
 - [*Software Testing*, lesson 6.2 — Tests as the specification for coding agents](../testing/index.html#/6.2)
-- **Go deeper.** Engineering at Meta, "How Meta Built Forum With AI-Native Engineering": https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/ (read the original; this lesson knew it only from a summary). Anthropic, "Towards Understanding Sycophancy in Language Models": https://www.anthropic.com/research/towards-understanding-sycophancy-in-language-models. DORA, 2024 report: https://cloud.google.com/blog/products/devops-sre/announcing-the-2024-dora-report.
+- **Go deeper.** Engineering at Meta, "How Meta Built Forum With AI-Native Engineering": https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/ (the company's own account, so read the original). Anthropic, "Towards Understanding Sycophancy in Language Models": https://www.anthropic.com/research/towards-understanding-sycophancy-in-language-models. DORA, 2024 report: https://cloud.google.com/blog/products/devops-sre/announcing-the-2024-dora-report.
 
 ---
 
 # 4.2 — Lab: ship a small feature through the whole loop
 *Level: 🟡 Intermediate* · *Prerequisites: 3.2, 4.1* · *Focus: Workflow*
 
-**After this you can** ship a small feature through the whole loop in three or more green commits that the grader passes. *Study time: about 110 minutes (estimate).*
+**After this you can** ship a small feature through the whole loop in three or more green commits that the grader passes. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Lab m04.** Hessa's ticket REMIT-318: when a successful transfer takes a customer to 80% of their daily limit or more, send a second message, in English or Arabic. About 25 lines of code, and five easy ways to get them wrong.

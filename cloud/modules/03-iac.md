@@ -9,7 +9,7 @@
 # 3.1 — Infrastructure as code with Terraform/OpenTofu: state, modules and plans
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 1.3* · *Phase: Code, Deploy*
 
-**After this you can** write an OpenTofu module with validated inputs, read a plan to tell an in-place update from a replacement, and rename a resource with a `moved` block and zero destroys. *Study time: about 115 minutes (estimate).*
+**After this you can** write an OpenTofu module with validated inputs, read a plan to tell an in-place update from a replacement, and rename a resource with a `moved` block and zero destroys. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Infrastructure as code (IaC)** means describing servers, networks, databases and permissions in text files that a tool applies for you. The files are reviewed, versioned and repeatable; the console becomes read-only for day-to-day work.
@@ -30,7 +30,7 @@ Yousef's first ticket looks small: rename the Payments database from `payments-d
 Plan: 1 to add, 0 to change, 1 to destroy.
 ```
 
-With the AWS provider version the team pins, the identifier cannot be changed in place (newer provider releases can rename it in place; only the plan tells you which you have), so the tool would delete the production payments database and create an empty one. The code was valid, and the plan said exactly what would happen; the only question was whether anyone would read it. Maha blocks the merge. That afternoon Salem adds two rules: every production database carries `prevent_destroy`, and no production pull request merges until a reviewer confirms the plan summary line.
+The plan says the identifier change forces replacement (whether it does depends on the provider version, which is why you read the plan rather than guess), so the tool would delete the production payments database and create an empty one. The code was valid, and the plan said exactly what would happen; the only question was whether anyone would read it. Maha blocks the merge. That afternoon Salem adds two rules: every production database carries `prevent_destroy`, and no production pull request merges until a reviewer confirms the plan summary line.
 
 Why deploys need gates at all is covered in [*System Design for Vibe Coders*, lesson 4.4 — Rollback, staging, and release gates](../vibe/index.en.html#l4-4); here you learn how the infrastructure underneath is built and changed.
 
@@ -326,7 +326,7 @@ All three run on your own machine with Docker and OpenTofu. If you choose a clou
 # 3.2 — Environments and GitOps: promoting changes from dev to production
 *Level: 🟡 Intermediate* · *Prerequisites: 2.2, 2.3, 3.1* · *Phase: Release, Deploy*
 
-**After this you can** build Kustomize overlays for dev and prod, promote one image digest from dev to prod by pull request with Argo CD, and roll back a bad promotion with `git revert`. *Study time: about 115 minutes (estimate).*
+**After this you can** build Kustomize overlays for dev and prod, promote one image digest from dev to prod by pull request with Argo CD, and roll back a bad promotion with `git revert`. *Study time: reading about 15 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - An **environment** (dev, staging, production) is a full copy of the system for a purpose. Environments should differ only in configuration and scale, never in code or structure.
@@ -337,9 +337,7 @@ All three run on your own machine with Docker and OpenTofu. If you choose a clou
 - The biggest trap: long-lived branches per environment, and hand edits with `kubectl` that the next sync silently overwrites, or that nobody ever notices.
 
 ## 🧭 Why it matters
-On 1 August 2012, Knight Capital, a large US market-making firm, deployed new trading code to its servers. According to the US Securities and Exchange Commission's order on the case, a technician copied the new code to seven of the eight servers but not the eighth, and nobody noticed. The new release reused a flag that, on the eighth server, switched on old, long-unused code. That server sent millions of unintended orders in about 45 minutes, and the firm lost roughly $460 million, according to the SEC. The deployment was manual, there was no automated check that every server ran the same version, and no second person reviewed the result.
-
-Najm Bank has a smaller version of the same problem. Maha is investigating why a timeout bug fixed in staging keeps happening in production. Production runs an image from the same commit but rebuilt two days later with a newer base image, and someone raised the connection-pool size with `kubectl edit` during an incident last month. Nothing in Git records either difference, so staging no longer predicts production.
+Maha is investigating why a timeout bug fixed in staging keeps happening in production. Production runs an image from the same commit but rebuilt two days later with a newer base image, and someone raised the connection-pool size with `kubectl edit` during an incident last month. Nothing in Git records either difference, so staging no longer predicts production. Two questions follow: where is the record of what each environment should run, and what compares that record with what is actually running? (Knight Capital's missed server in lesson 0.2 is the expensive public answer to "nowhere, and nothing".)
 
 This lesson gives the team one rule and one mechanism. The rule: the same artefact moves through every environment, and only configuration differs. The mechanism: GitOps, where Git is the single record of what should run where, and a controller makes it so and reports any difference.
 
@@ -499,7 +497,7 @@ Run these on a local cluster (kind or k3d) with a Git repository you own, such a
 
 - 🟢 Create `base/` and `overlays/dev` and `overlays/prod` for a small web Deployment, with prod using three replicas and dev one. Render both with `kubectl kustomize`. *Done when:* the only differences between the two rendered outputs are the ones you meant, and you can list them.
 - 🟡 Install Argo CD on a kind cluster, create two `Application` objects (dev and prod namespaces) pointing at your overlays, with automated sync, prune and self-heal. Change an image digest in dev by pull request, then promote it to prod by a second pull request. Finally, run `kubectl scale` by hand on the prod Deployment. *Done when:* both promotions are visible as commits, the manual scale is reverted automatically, and you can show the "OutOfSync" state you saw before it healed.
-- 🔴 Add a CI workflow (GitHub Actions is fine) to an app repo that builds an image, pushes it to a registry you control, and opens a pull request in the GitOps repo setting the new digest in `overlays/dev`. Then roll back a bad promotion with `git revert`. *Done when:* a code commit results in a dev deployment with no human touching the cluster, the image is referenced by digest rather than tag, and the rollback is a single revert commit.
+- 🔴 Add a CI workflow (GitHub Actions is fine) to an app repo that builds an image, pushes it to a registry you control, and opens a pull request setting the new digest in `overlays/dev`. Keep the GitOps folder in the same repository for this lab: the job's own `GITHUB_TOKEN` can open that pull request once the job has `contents: write` and `pull-requests: write` and the repository settings allow GitHub Actions to create pull requests. A separate GitOps repository needs a fine-grained token or a GitHub App, stored as a repository secret, never in a file or a chat. Then roll back a bad promotion with `git revert`. *Done when:* a code commit results in a dev deployment with no human touching the cluster, the image is referenced by digest rather than tag, and the rollback is a single revert commit.
 
 ## ⚠️ Mistakes and traps
 - **Rebuilding per environment.** A rebuilt image is a different, untested artefact. Build once, reference by digest, promote the digest.
@@ -589,7 +587,7 @@ Run these on a local cluster (kind or k3d) with a Git repository you own, such a
 - Flux documentation — https://fluxcd.io/flux/
 - Kustomize documentation (Kubernetes) — https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/
 - The Twelve-Factor App, X. Dev/prod parity — https://12factor.net/dev-prod-parity
-- US SEC, order in the matter of Knight Capital Americas LLC (2013) — https://www.sec.gov/
+- US SEC, order in the matter of Knight Capital Americas LLC (2013) — https://www.sec.gov/litigation/admin/2013/34-70694.pdf
 - External Secrets Operator — https://external-secrets.io/
 - CNCF projects — https://www.cncf.io/projects/
 
@@ -598,7 +596,7 @@ Run these on a local cluster (kind or k3d) with a Git repository you own, such a
 # 3.3 — Policy as code, drift and guardrails
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 3.2* · *Phase: Test, Operate*
 
-**After this you can** detect drift with `plan -detailed-exitcode`, write tested Conftest policies that block low ports and `latest` tags, and move a Kyverno digest-pinning policy from Audit to Enforce. *Study time: about 115 minutes (estimate).*
+**After this you can** detect drift with `plan -detailed-exitcode`, write tested Conftest policies that block low ports and `latest` tags, and move a Kyverno digest-pinning policy from Audit to Enforce. *Study time: reading about 15 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Policy as code** writes rules such as "no database open to the internet" or "every resource has an owner tag" as code that a tool checks automatically, on every change, the same way every time.

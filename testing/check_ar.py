@@ -36,6 +36,16 @@ else:
         if l!='mermaid' and a!=b: err.append('a code block changed'); break
         if l=='mermaid' and len(a.splitlines())!=len(b.splitlines()): err.append('mermaid line count changed'); break
 if icode(en)!=icode(ar): err.append(f'inline code differs: {list((icode(en)-icode(ar)))[:6]} / {list((icode(ar)-icode(en)))[:6]}')
+def ptrs(s): return [m for m in re.findall(r'\((🟢|🟡|🔴|🏛️|🧭|📐|🛠️|⚠️)\s[^()]*\)',nof(s))]
+if ptrs(en)!=ptrs(ar): err.append(f'section pointers differ: {len(ptrs(ar))} vs {len(ptrs(en))} (restore each "(🟢 …)" pointer)')
+if re.search(r'[^.\s]\.\.\s*$',nof(ar),flags=re.M): err.append('a line ends in ".." (a dropped section pointer?)')
+def longgloss(s):
+    out=[]
+    for l in re.sub(r'`[^`\n]*`','',nof(s)).split('\n'):
+        if 'http' in l or '<br/>' in l or l.startswith('|'): continue
+        out+=[g for g in re.findall(r'\(([A-Za-z][^()؀-ۿ]*)\)',l) if len(g.split())>=7]
+    return out
+if longgloss(ar): err.append(f'sentence-length English left in parentheses (gloss terms, not sentences): {longgloss(ar)[:2]}')
 if urls(en)!=urls(ar): err.append(f'links differ: {list((urls(en)-urls(ar)))[:4]}')
 body=re.sub(r'[`|*#\-\[\]()]','',nof(ar)); a=len(re.findall(r'[؀-ۿ]',body)); t=len(re.sub(r'\s','',body))
 if a/max(t,1)<0.45: err.append(f'only {a/max(t,1):.0%} Arabic script')

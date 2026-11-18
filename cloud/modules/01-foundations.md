@@ -9,7 +9,7 @@
 # 1.1 — Linux, the shell and networking essentials: processes, files, ports, DNS, HTTP and TLS
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Phase: Operate, Monitor*
 
-**After this you can** label each line of `curl -v` output as DNS, TCP, TLS or HTTP, and write a script that walks that chain and stops at the first failing hop. *Study time: about 115 minutes (estimate).*
+**After this you can** label each line of `curl -v` output as DNS, TCP, TLS or HTTP, and write a script that walks that chain and stops at the first failing hop. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Almost every server, container and cloud function is **Linux** underneath. You need a small set of shell skills: processes, logs, files and permissions, listening ports.
@@ -144,7 +144,7 @@ curl -sv https://api.najm.example/health -o /dev/null
 
 ### 🔴 Expert view
 
-**Automate certificates, then alert anyway.** Manual yearly renewal is an outage on a timer. Use **ACME** (RFC 8555), the protocol behind Let's Encrypt, or your provider's certificate manager (in Kubernetes, a controller such as cert-manager). The CA/Browser Forum has agreed to shorten maximum public certificate lifetimes in steps over the coming years (check the current limit), which makes manual renewal unworkable. Still alert at, say, 14 days before expiry: automation fails quietly when DNS or permissions change.
+**Automate certificates, then alert anyway.** Manual yearly renewal is an outage on a timer. Use **ACME** (RFC 8555), the protocol behind Let's Encrypt, or your provider's certificate manager (in Kubernetes, a controller such as cert-manager). Under CA/Browser Forum ballot SC-081, the maximum lifetime of a public TLS certificate fell from 398 to 200 days in March 2026 and is scheduled to fall to 100 days in March 2027 and 47 days in March 2029, which makes manual renewal unworkable. Still alert at, say, 14 days before expiry: automation fails quietly when DNS or permissions change.
 
 **DNS is a dependency of everything.** Your monitoring, deploy tools and incident chat may depend on the same DNS and network you are fixing, as Facebook's 2021 outage showed. Keep an "out-of-band" list of how to reach consoles, runbooks and each other if your own names stop resolving.
 
@@ -183,12 +183,58 @@ After the certificate incident, Maha asks Yousef to write the team's **first-res
 All exercises run on your own machine with Docker and a terminal.
 
 - 🟢 Run `curl -v https://example.com` and label each line of output as DNS, TCP, TLS or HTTP. Then use `dig` and `openssl s_client` to note the record's TTL and the certificate's issuer and expiry date. *Done when:* you can point to where each hop succeeded and say when the certificate expires.
-- 🟡 Write a tiny HTTP server that listens on `127.0.0.1:8080`, run it with `docker run -p 8080:8080`, and try to reach it from your host. Diagnose with `ss -tlnp` inside the container, fix the bind address, and confirm. Then make it log "shutting down" on SIGTERM and check that `docker stop` shows the message. *Done when:* both behaviours are fixed and you can explain each failure in two sentences.
+- 🟡 Using the starter files below, run a tiny HTTP server that listens on `127.0.0.1:8080` with `docker run -p 8080:8080`, and try to reach it from your host. Diagnose with `ss -tlnp` inside the container, fix the bind address, and confirm. Then make it log "shutting down" on SIGTERM and check that `docker stop` shows the message. *Done when:* both behaviours are fixed and you can explain each failure in two sentences.
 - 🔴 Write `walk-the-chain.sh <hostname>`: run the four tests in order, print PASS or FAIL per hop with the key detail (address, certificate expiry, HTTP status) and exit non-zero at the first failure. Test it on a working site, a non-existent name, a closed local port and an expired certificate (badssl.com hosts deliberately broken test sites). *Done when:* each failure stops at the right hop with a clear message.
+
+**Starter files for the 🟡 exercise.** Put them in an empty folder. The Dockerfile is explained in 2.1; for now, copy it as it is.
+
+```python
+# server.py: starter for exercise 1.1 🟡 (it has two deliberate bugs)
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+def body():
+    return b"ok\n"
+
+class Hello(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(body())
+
+if __name__ == "__main__":
+    print("listening on 8080")
+    HTTPServer(("127.0.0.1", 8080), Hello).serve_forever()
+```
+
+```python
+# test_server.py: run with python3 -m unittest
+import unittest
+import server
+
+class TestBody(unittest.TestCase):
+    def test_body(self):
+        self.assertEqual(server.body(), b"ok\n")
+```
+
+```dockerfile
+# Dockerfile: copy as it is; 2.1 explains each line and how to harden it
+FROM python:3.12-slim
+RUN apt-get update && apt-get install -y --no-install-recommends iproute2
+COPY server.py .
+CMD ["python", "-u", "server.py"]
+```
+
+```bash
+docker build -t lab11 .
+docker run --rm --name lab11 -p 8080:8080 lab11    # terminal 1
+curl -v http://localhost:8080/                      # terminal 2
+docker exec lab11 ss -tlnp                          # what is it bound to?
+time docker stop lab11                              # about 10 s means SIGTERM was ignored
+```
 
 ## ⚠️ Mistakes and traps
 - **Restarting before diagnosing.** Walk the chain first; restart only when the evidence points at the process.
-- **Binding to localhost in a container.** The service is unreachable from outside. Bind to `0.0.0.0` (or the specific interface you mean) and let network policy decide who may connect.
+- **Binding to localhost in a container.** The service is unreachable from outside. Bind to `0.0.0.0` (or the specific interface you mean) and let firewall rules (in Kubernetes, network policies, 2.2) decide who may connect.
 - **Renewing certificates by hand.** Someone forgets and the site goes dark. Automate with ACME and alert before expiry.
 - **Ignoring SIGTERM.** Every deploy drops requests. Stop taking new work, finish current requests, then exit.
 - **Running services as root.** One bug becomes full control of the machine. Run as a dedicated user with only the files it needs.
@@ -284,11 +330,11 @@ All exercises run on your own machine with Docker and a terminal.
 # 1.2 — Cloud fundamentals: regions, zones, compute, storage, managed services and shared responsibility
 *Level: 🟢 Beginner* · *Prerequisites: 1.1* · *Phase: Plan, Deploy*
 
-**After this you can** draw a two-zone VPC with subnet ranges, a NAT gateway, a load balancer and port-level firewall rules, and write a placement note that says who patches what and what happens when a zone fails. *Study time: about 115 minutes (estimate).*
+**After this you can** draw a two-zone VPC with subnet ranges, a NAT gateway, a load balancer and port-level firewall rules, and write a placement note that says who patches what and what happens when a zone fails. *Study time: reading about 15 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A cloud provider rents you computing on demand, through an API, billed by use. **AWS**, **Microsoft Azure** and **Google Cloud** sell similar building blocks under different names.
-- The physical layout is the first design decision: a **region** is a geographic area; an **availability zone** is one or more separate data centres inside it. Spread production across **at least two zones**; consider a second region only for a clear recovery or residency reason.
+- The physical layout is the first design decision: a **region** is a geographic area; an **availability zone** is one or more separate data centres inside it. Spread production across **at least two zones**; decide on a second region from your recovery targets and a regional risk assessment, agreed with Compliance.
 - Choose the **most managed** service that meets your needs: you pay to hand over patching, backups and failover.
 - Storage comes in three shapes: **object** (files by key over HTTP), **block** (a disk for one machine), **file** (a shared network folder). Pick by access pattern, not habit.
 - The **shared responsibility model** says the provider secures the cloud and you secure what you put in it. Configuration, identity and data are always yours.
@@ -394,9 +440,9 @@ Every tier spans zones, only the edge faces the internet, and the database fails
 
 ### 🔴 Expert view
 
-**Design for failure domains.** A **failure domain** is the set of things that fail together: a server, a zone, a region, a provider, an account. Multi-zone covers the common physical failures cheaply and is the production default. Multi-region adds much more complexity: data replicated across distance, failover decided and rehearsed. Choose it when a recovery target or regulator requires it, not as a reflex; lesson 6.1 turns this into RTO and RPO targets. And no zone design protects against a bad deploy, a bad configuration push or an expired certificate: most outages are changes, not hardware.
+**Design for failure domains.** A **failure domain** is the set of things that fail together: a server, a zone, a region, a provider, an account. Multi-zone covers the common physical failures cheaply and is the production minimum. But the zones of one region share a geography: in March 2026 AWS reported that drone strikes during the regional conflict left two of the three zones of its UAE region (ME-CENTRAL-1) significantly impaired and disrupted its Bahrain region (ME-SOUTH-1), and it advised customers to move workloads to other regions. Multi-region adds much more complexity: data replicated across distance, failover decided and rehearsed. Decide it from your recovery targets and a regional risk assessment agreed with Compliance, not as a reflex; lesson 6.1 turns this into RTO and RPO targets. And no zone design protects against a bad deploy, a bad configuration push or an expired certificate: most outages are changes, not hardware.
 
-**Regulation shapes architecture.** GCC financial regulators, such as the Qatar Central Bank, set expectations on cloud outsourcing and on where customer data may be stored and processed; read the current rules with your compliance team. In the EU, the Digital Operational Resilience Act (DORA, Regulation (EU) 2022/2554, applying from January 2025) requires financial entities to manage ICT risk, report major incidents, test resilience and manage third-party ICT providers, including cloud, with exit plans. So your architecture notes must say how you would leave a provider.
+**Regulation shapes architecture.** GCC financial regulators, such as the Qatar Central Bank, set expectations on cloud outsourcing and on where customer data may be stored and processed; read the current rules with your compliance team. In the EU, the Digital Operational Resilience Act (DORA, Regulation (EU) 2022/2554, applying from January 2025) requires financial entities to manage ICT risk, report major incidents, test resilience and manage third-party ICT risk, including cloud; for ICT services that support critical or important functions it requires documented, tested exit strategies (Article 28(8)). So the architecture notes for such a service must say how you would leave a provider.
 
 **Well-architected reviews.** AWS, Azure and Google Cloud each publish a Well-Architected Framework, structuring reviews around reliability, security, cost, operations and performance. Use one as a checklist for any new production service.
 
@@ -428,7 +474,7 @@ Yousef's second draft, after Salem's review, becomes the team's template for eve
 | Files | Object storage for statements and uploads; private; versioning on | Scales without capacity planning; versioning protects against overwrites |
 | Edge | CDN and WAF, then an L7 load balancer in public subnets | Only the edge faces the internet |
 | Hybrid | Dedicated private link to the data centre, VPN as backup; address plan agreed with Network team | Core banking stays on-premises |
-| Second region | Not now; backups copied to a second region; revisit with lesson 6.1's DR targets | Complexity not yet justified |
+| Second region | Not now; backups copied to a second region; revisit with lesson 6.1's DR targets and a yearly regional risk review with Compliance | Complexity not yet justified by the agreed targets |
 | Exit | Containers, PostgreSQL and IaC keep migration feasible; exit plan reviewed yearly | EU DORA third-party risk expectations |
 
 **Shared responsibility for this service**
@@ -536,6 +582,7 @@ If you use a cloud account, use your own free-tier account and **set a budget al
 - AWS, Summary of the Amazon S3 Service Disruption in the Northern Virginia (US-EAST-1) Region — https://aws.amazon.com/message/41926/
 - AWS Well-Architected — https://aws.amazon.com/architecture/well-architected/
 - Regulation (EU) 2022/2554 (Digital Operational Resilience Act) — https://eur-lex.europa.eu/eli/reg/2022/2554/oj
+- The Register, "AWS says drones hit two of its datacenters in UAE" (2 March 2026) — https://www.theregister.com/2026/03/02/amazon_outages_middle_east/
 - Going further: [*SaaS Building Blocks*, lesson 2.2 — File uploads and object storage](../saas/index.html#/2.2) and [*System Design for Vibe Coders*, lesson 10.1 — Stateless services and load balancing](../vibe/index.en.html#l10-1)
 
 ---
@@ -543,7 +590,7 @@ If you use a cloud account, use your own free-tier account and **set a budget al
 # 1.3 — Identity and access in the cloud: users, roles, policies and workload identity
 *Level: 🟢 Beginner* · *Prerequisites: 1.2* · *Phase: Plan, Deploy*
 
-**After this you can** rewrite a wildcard policy as a least-privilege grant scoped to one prefix of one bucket, and configure GitHub Actions OIDC so the allowed branch gets short-lived credentials and any other branch is denied. *Study time: about 115 minutes (estimate).*
+**After this you can** rewrite a wildcard policy as a least-privilege grant scoped to one prefix of one bucket, and configure GitHub Actions OIDC so the allowed branch gets short-lived credentials and any other branch is denied. *Study time: reading about 15 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - In the cloud, every action is an API call, and every API call is checked against **identity and access management (IAM)**: *who* is calling (the **principal**), *what* they want to do (the **action**), on *which* **resource**, under which **conditions**.

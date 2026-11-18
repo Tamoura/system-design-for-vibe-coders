@@ -4,7 +4,8 @@ Not published. Every translator follows this.
 
 ## Language and English terms
 - Modern Standard Arabic, clear and professional, like a well-written regulator or bank training manual. Faithful: same meaning, structure, emphasis, lists, tables. Never summarise, add or drop content.
-- **English beside every technical term everywhere**: in every paragraph, list item, table cell, heading and quiz option, each term and key phrase carries its English on its first appearance in that unit: `الحوكمة (governance)`, `مقدّم النظام (provider)`, `المُشغِّل (deployer)`, `هل ما زلنا؟ (Are we still?)`. A space always separates the Arabic word from `(`. Use the English exactly as the English lesson words it. DPO is always `مسؤول حماية البيانات (Data Protection Officer, DPO)` (protection, not privacy).
+- **English glosses: once per lesson.** Add the English in parentheses only after a real technical or business term, and only the first time that term appears in each lesson (`# N.M` section): `الحوكمة (governance)`, `مقدّم النظام (provider)`, `المُشغِّل (deployer)`. Do not gloss plain words, do not repeat a gloss already given in the lesson, and never nest parentheses (inside an Arabic aside, use dashes or a comma: `(Artificial intelligence, AI)`). Keep product, standard and acronym names in Latin letters with no parentheses. Parentheses that hold formulas, numbers, option letters, article sub-points or section pointers are content, not glosses, so they always stay. A space always separates the Arabic word from `(`. Use the English exactly as the English lesson words it. DPO is always `مسؤول حماية البيانات (Data Protection Officer, DPO)` (protection, not privacy).
+- **Quiz and exam options:** gloss all four options the same way or none of them (normally none); options stay close to the English in meaning and length, and the key must never be the only option with, or without, English in parentheses.
 - If a gloss ends in punctuation (`?`, `.`, `!`), wrap it in a left-to-right isolate (U+2066 … U+2069) so it displays correctly in right-to-left text.
 - Names of laws, standards, frameworks, bodies and cases stay in their English form (EU AI Act, GDPR, NIST AI RMF, ISO/IEC 42001, OECD, EDPB, CJEU, QCB, SDAIA, SCHUFA, Moffatt v. Air Canada). On first use in a lesson you may add a short Arabic rendering before it: «قانون الذكاء الاصطناعي الأوروبي (EU AI Act)».
 - Article references stay as written: Art. 22 → «المادة 22 (Art. 22)» on first use, then «المادة 22». Annex III → «الملحق III».
@@ -66,6 +67,20 @@ Not published. Every translator follows this.
 | incident response | الاستجابة للحوادث |
 | decommissioning | الإيقاف والتقاعد |
 | Body of Knowledge (BoK) | مجال المعرفة (BoK) |
+| credit scoring / credit score | التقييم الائتماني / الدرجة الائتمانية |
+| creditworthiness (assessment) | (تقييم) الجدارة الائتمانية |
+| notified body | الهيئة المُخطَرة |
+| accuracy (share of all predictions that are right) | الصحة الإجمالية (data accuracy, GDPR principle: صحة البيانات) |
+| precision / recall | الدقة / الشمول (gloss الشمول (recall) on first use; never الاستدعاء, which means a call) |
+| false positive / false negative | النتيجة الإيجابية الكاذبة / النتيجة السلبية الكاذبة (plural: الإيجابيات / السلبيات الكاذبة) |
+| population stability index (PSI) | مؤشر استقرار المجتمع (PSI) |
+| covariate shift | تحوّل المتغيرات المصاحبة |
+| machine unlearning | محو التعلّم من النموذج |
+| pilot (of a system) | التجربة التشغيلية (exam "pilot questions" stay أسئلة تجريبية) |
+| deadline / reporting clock | الموعد النهائي / المهلة (never «الساعة» for a legal clock) |
+| postmortem | مراجعة ما بعد الحادثة |
+| vendor / provider (cloud, model) | المورّد / المزوّد (EU AI Act provider: مقدّم النظام) |
+| capstone | المشروع الختامي |
 
 ## Structure the build depends on (do not break)
 - Module heading: `# الوحدة N — العنوان` (N unchanged). Lesson heading: `# N.M — العنوان` (numbers unchanged).
@@ -75,7 +90,7 @@ Not published. Every translator follows this.
 - Section headings keep their emoji first, translated: `## ⚡ الدرس في دقيقة`, `## 🧭 لماذا يهم`, `## 📐 كيف يعمل`, `### 🟢 الأساسيات`, `### 🟡 التعمق أكثر`, `### 🔴 نظرة الخبير`, `## ⚖️ الأدوات التنظيمية`, `## 🏛️ عمليًا في بنك نجم`, `## 🛠️ التمارين`, `## ⚠️ أخطاء وفخاخ الامتحان`, `## 🧾 الخلاصة`, `## ✍️ اختبر نفسك`, `## 📚 المراجع` (12.3: `## ✍️ الامتحان التجريبي`). Same number of `#`/`##`/`###` headings in the same order as the English.
 - **⚖️ tables:** the first cell of every row must START with the same bold English instrument name as the English row, exactly (e.g. `**EU AI Act** — المادة 6 والملحق III`, `**GDPR** — المادة 22`). Translate everything after the bold name and the other cells. Header row: `| الأداة | ما تشترطه أو توصي به | إشارة الامتحان |`.
 - **Quizzes:** keep the question numbers; options stay labelled `- A.` `- B.` `- C.` `- D.` in Latin letters and in the same order; `<details><summary>الإجابة</summary>` then a blank line, then `**X.**` with the SAME correct letter as the English; letters cited in explanations stay the same Latin letters. Same number of questions and `<details>` blocks. In 12.3 keep the competency tag as `*الكفاءة: II.C*`.
-- Keep unchanged: fenced code, inline `code`, URLs and link targets, mermaid syntax and node IDs (translate only label text and add the English on a second line: `A["عربي<br/>(English)"]`; flowcharts run `RL` and sequence diagrams list participants right to left), numbers, dates (write dates as in English but you may use Arabic month names: 2 أغسطس 2026), `---` separators, tables' column counts.
+- Keep unchanged: fenced code, inline `code`, URLs and link targets, mermaid syntax and node IDs (translate only label text, Arabic only: no English second line and no glosses on edge labels, so diagrams stay readable on video; flowcharts that run `LR` in English run `RL`, and sequence diagrams list participants right to left), numbers, dates (write dates as in English but you may use Arabic month names: 2 أغسطس 2026), `---` separators, tables' column counts.
 - `**Done when:**`/`*Done when:*` → `*يكتمل عندما:*`.
 
 ## Verify

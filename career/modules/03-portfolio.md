@@ -7,9 +7,9 @@
 ---
 
 # 3.1 — Projects that prove you can do the job: one capstone spec per role
-*Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.3, 2.1, 2.2, 2.3, 2.4* · *Step: Build, Prove*
+*Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.3 and your role path from Module 2 (2.1, 2.2, 2.3 or 2.4)* · *Step: Build, Prove*
 
-**After this you can** rate your repositories on the proof ladder and write a proof project spec for your target role that a reviewer can read in two minutes. *Study time: about 125 minutes (estimate).*
+**After this you can** rate your repositories on the proof ladder and write a proof project spec for your target role that a reviewer can read in two minutes. *Study time: reading about 20 min, hands-on about 28 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A **proof project** answers one reviewer question: "Can this person do the work of the role, at junior level, without being carried?" A tutorial clone cannot, however polished.
@@ -150,7 +150,7 @@ Khalid's verdict: "Now I have six things to ask you, and you know the answers."
 ## 🛠️ Exercises
 - 🟢 Give every public repository a rung from 1 to 6 on the proof ladder. *Done when:* you have a table of repositories and rungs, with one repository (or one new idea) circled as your capstone.
 - 🟡 Fill in the Proof project spec above for your target role, using the matching capstone spec from 🟡 Going deeper. *Done when:* a peer or mentor can read the spec in two minutes and tell you what you are building, for whom, and what will be hard about it.
-- 🔴 Ship the thinnest slice of your capstone, reachable or reproducible with one command, with at least one test in CI and a real user who has tried it. *Done when:* the live link or one-command setup works on someone else's machine, CI is green, and you have written down one thing your first user did that you did not expect.
+- 🔴 *(Runs in parallel over weeks 3–8 of your plan, a few hours a week; on the full path, continue to Module 4 while you build it.)* Ship the thinnest slice of your capstone, reachable or reproducible with one command, with at least one test in CI and a real user who has tried it. *Done when:* the live link or one-command setup works on someone else's machine, CI is green, and you have written down one thing your first user did that you did not expect.
 
 ## ⚠️ Mistakes and traps
 - **Quantity over depth.** Twenty shallow repositories hide your best work. Build one deep capstone and pin it; archive or unpin the rest.
@@ -246,7 +246,7 @@ Khalid's verdict: "Now I have six things to ask you, and you know the answers."
 # 3.2 — Your GitHub, READMEs and writing about your work
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 3.1* · *Step: Prove*
 
-**After this you can** rework your GitHub profile and capstone README so that a stranger can name your target role within 30 seconds and run the project within five minutes. *Study time: about 120 minutes (estimate).*
+**After this you can** rework your GitHub profile and capstone README so that a stranger can name your target role within 30 seconds and run the project within five minutes. *Study time: reading about 15 min, hands-on about 9 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Reviewers do not read your code first. They skim your profile, open one pinned repository, read the top of its README and then look at one or two files. **Design for the skim.**
@@ -508,7 +508,7 @@ Reem's capstone scored 3 of 14 before her rewrite. She rotated the leaked key fi
 # 3.3 — Experience before your first job: internships, open source, freelancing, hackathons and competitions
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 3.2* · *Step: Build, Prove*
 
-**After this you can** keep a brag document of dated, checkable entries and open a small open-source pull request that follows the project's contribution and AI policies. *Study time: about 125 minutes (estimate).*
+**After this you can** keep a brag document of dated, checkable entries and open a small open-source pull request that follows the project's contribution and AI policies. *Study time: reading about 15 min, hands-on about 22 h (estimate).*
 
 ## ⚡ In 60 seconds
 - "Entry-level, one year of experience required" is frustrating but common. You can earn real experience before your first job: **internships, open-source contributions, freelance or volunteer work, hackathons, competitions, research and teaching.**
@@ -588,7 +588,7 @@ flowchart TD
 - **Write down the scope**: what you will deliver, by when, what is out of scope, who owns the code, and what happens after handover.
 - **Keep the system simple to run.** Prefer managed services the client can keep paying for without you.
 - **Do not handle card details yourself.** Use an established payment provider's hosted checkout.
-- **Treat personal data seriously.** Collect the minimum, secure it and agree who is responsible. In Qatar, Law No. 13 of 2016 on personal data protection applies to processing personal data; similar laws exist across the region and in the EU.
+- **Treat personal data seriously.** Collect the minimum, secure it and agree who is responsible. In Qatar, Law No. 13 of 2016 on personal data protection applies to processing personal data outside the Qatar Financial Centre, which has its own data protection rules; similar laws exist across the region and in the EU.
 - **Ask permission** before you show the work publicly (lesson 3.2).
 
 **Hackathons.** Hackathons are good for speed, teamwork and meeting people, including sponsors' engineers who sometimes hire. Their weakness is that many projects are abandoned on Sunday night. The value comes from what you do next: finish the core feature, deploy it, add tests and a README, and write up your part. Read the event's rules on who owns the code, especially at corporate-sponsored events. Major League Hacking (MLH) lists many student hackathons; universities, banks, telecoms and government innovation programmes in the Gulf also run them.

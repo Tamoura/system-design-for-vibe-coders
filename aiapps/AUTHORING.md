@@ -87,7 +87,7 @@ Every lesson is tagged with one or two layers, in English, in both languages, ch
 | 5 Workflow patterns | 05-workflows.md | 5.1 Chaining, routing and parallelisation: when a workflow beats an agent · 5.2 Lab: a document pipeline: classify, route, summarise, fact-check in parallel |
 | 6 Discovery and requirements | 06-requirements.md | 6.1 Discovery: from a business problem to an agent brief: stakeholders, workflows, data, risk and "should this be an agent?" · 6.2 The agent specification and acceptance criteria: requirements you can test |
 | 7 Designing the solution with the customer | 07-design.md | 7.1 Architecture and autonomy design: workflow or agent, tool surface, human-in-the-loop, failure design, build or buy · 7.2 Prototype, propose and agree scope: demos, proposals, phased rollout and change control |
-| 8 The agent loop, properly | 08-agent-loop.md | 8.1 Plan, act, observe, repeat: reflection, stopping conditions and the first failure modes · 8.2 Lab: an agent loop from scratch in about 80 lines, with a hard cap and full trace logging |
+| 8 The agent loop, properly | 08-agent-loop.md | 8.1 Plan, act, observe, repeat: reflection, stopping conditions and the first failure modes · 8.2 Lab: an agent loop from scratch in about 95 lines, with a hard cap and full trace logging |
 | 9 Memory and state | 09-memory.md | 9.1 Short-term, working and long-term memory: what to remember and what never to · 9.2 Lab: persistent memory across sessions, with a "forget" command |
 | 10 MCP and connecting to the real world | 10-mcp.md | 10.1 The Model Context Protocol: servers, tools, resources, authorisation and least privilege · 10.2 Lab: expose the ticket system as an MCP server and let the agent use it |
 | 11 Multi-agent systems | 11-multi-agent.md | 11.1 Supervisors, workers and hand-offs: when multi-agent is the wrong answer · 11.2 Lab: a three-agent team with explicit hand-off contracts |
@@ -97,7 +97,7 @@ Every lesson is tagged with one or two layers, in English, in both languages, ch
 | 15 Operating and handing over | 15-operating.md | 15.1 Running an agent in production: observability, alerts, incidents, runbooks and the improvement loop · 15.2 Handover and adoption: training, support model, acceptance, change management and benefits tracking |
 | 16 Hero: capstone and practice exam | 16-capstone.md | 16.1 Capstone: take Najm Desk from discovery to go-live, with the customer · 16.2 Practice exam: 60 scenario questions |
 
-Levels: 🟢 Beginner for Modules 0–3 (and 6.1), 🟡 Intermediate for Modules 4–5, 6.2–7, 8–11, 12.1, 🔴 Advanced for 12.2, Modules 13–16 (use judgement per lesson).
+Levels: 🟢 Beginner for Modules 0–3, 🟡 Intermediate for Modules 4–7, 8–11, 12.1, 🔴 Advanced for 12.2, Modules 13–16 (use judgement per lesson).
 **Odd-numbered lessons (N.1) are concept lessons; N.2 lessons are labs** (for Modules 1–5 and 8–12 and 14–15 the second lesson is a lab or applied project; Modules 6, 7, 13 and 16 are applied workshops). In every lab lesson, the 🏛️ section carries the weekly **deliverable**, the **group session** agenda and the **"Build it with Claude Code"** box (a fenced `text` block with the spec to give Claude Code, then a "Verify before you accept it" checklist). In every concept lesson, 📚 References carries the **"Read this week"** list from `/home/user/coursework/aiapps-source.md` for that module (keep the owner's chapter mappings as given; no quotes; links only to the sources listed in lesson 0.1's references).
 
 ## Code snippets (they will be run)

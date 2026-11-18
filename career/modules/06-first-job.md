@@ -9,7 +9,7 @@
 # 6.1 — Offers: comparing, negotiating and choosing well
 *Level: 🔴 Advanced* · *Prerequisites: 4.3, 5.1* · *Step: Apply, Start*
 
-**After this you can** list every component and term of an offer letter, calculate your salary floor from a monthly budget, and write a negotiation email with a specific ask, a reason and an alternative. *Study time: about 110 minutes (estimate).*
+**After this you can** list every component and term of an offer letter, calculate your salary floor from a monthly budget, and write a negotiation email with a specific ask, a reason and an alternative. *Study time: reading about 20 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 - An **offer** is a package (pay, allowances, benefits, equity), contract terms (probation, notice, bonds, intellectual-property clauses) and a job (team, mentor, learning).
@@ -55,6 +55,19 @@ Aisha, Najm's talent acquisition lead, has seen this many times. Graduates who c
 - **Crowd-sourced sites** such as Levels.fyi or Glassdoor. GCC entry-level data there is thin; treat it as a rough signal.
 
 Write down a range from several sources, not one number. Then calculate your **floor**: the lowest total package that covers your real costs (rent, transport, family commitments, savings) in that city. Below the floor means "negotiate" or "no".
+
+An illustrative floor, in made-up units; use your own city's figures:
+
+| Monthly cost | Units |
+|---|---|
+| Rent (shared flat) | 40 |
+| Transport | 8 |
+| Food, phone and bills | 22 |
+| Family support | 15 |
+| Savings and emergency fund | 15 |
+| **Floor: guaranteed monthly take-home** | **100** |
+
+Count only guaranteed cash against the floor: base plus fixed allowances. A discretionary bonus or early-stage equity does not pay rent.
 
 **Compare learning, not just money.** Your first two years build the skills every later offer pays for. Ask: Will I have a mentor with time for me? Will I ship real work with code review? Is there structured training? How stable is the team? Does the work build the role I chose in Module 2?
 
@@ -159,8 +172,16 @@ Aisha shares the **offer comparison sheet** Najm's graduate team gives every can
 **Part C: the decision note** (three sentences Omar writes for his future self)
 > I am choosing Najm because the mentorship and code review will build the deployment and production skills I lack (lesson 1.3), and the cash is above my floor. The startup's equity has unknown value and I valued it at zero. I will thank Sadeem Pay by phone today, confirm by email, and ask if I may stay in touch.
 
+<details><summary>A sample offer letter for the 🟢 exercise (fictional, shortened)</summary>
+
+> **Sadeem Pay — Offer of employment.** Dear Omar, we are pleased to offer you the position of Junior Software Engineer, reporting to the CTO, starting on a date to be agreed. Your monthly salary will be [amount], inclusive of all allowances. You will be eligible for share options under the company's plan, vesting over four years with a one-year cliff. You will be on probation for [period], during which either party may end employment with [notice]. All inventions you make during your employment belong to the company. This offer is subject to satisfactory references and is valid for 48 hours.
+
+Some terms are stated, some are unclear and some are missing; that is the point of the exercise.
+
+</details>
+
 ## 🛠️ Exercises
-- 🟢 Take a real or sample offer letter and list every component and term from the anatomy table in 🟢 The essentials. Mark each as "stated", "unclear" or "missing". *Done when:* you have a one-page list and a written set of at least five questions you would send to the employer.
+- 🟢 Take a real or sample offer letter (or the sample just above) and list every component and term from the anatomy table in 🟢 The essentials. Mark each as "stated", "unclear" or "missing". *Done when:* you have a one-page list and a written set of at least five questions you would send to the employer.
 - 🟡 Research the range for one target role in one city using at least three different sources, and calculate your personal floor from a monthly budget. *Done when:* a peer can see your sources, their dates, the range you concluded and your floor calculation, and can follow how you got from one to the other.
 - 🔴 Write a negotiation email for a scenario in which the base salary is fixed by a graduate band but you have one genuine interest (for example a later start date, a certification budget or a relocation cost). Then role-play it with a peer acting as the recruiter, who must say no to your first ask. *Done when:* your email contains thanks, interest, a specific ask with a reason, an alternative and a deadline; and the role-play ended with a clear outcome both of you could write down.
 
@@ -259,7 +280,7 @@ Aisha shares the **offer comparison sheet** Najm's graduate team gives every can
 # 6.2 — Your first 90 days: onboarding, the first pull request and asking good questions
 *Level: 🔴 Advanced* · *Prerequisites: 1.1, 1.2, 6.1* · *Step: Start*
 
-**After this you can** write a 30-60-90 plan with evidence a manager could check, and rewrite a question and a pull request description so a reviewer can follow them without asking you. *Study time: about 110 minutes (estimate).*
+**After this you can** write a 30-60-90 plan with evidence a manager could check, and rewrite a question and a pull request description so a reviewer can follow them without asking you. *Study time: reading about 20 min, hands-on about 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Your first 90 days have three jobs: **learn** the system, the people and how work ships; **contribute** small, safe changes early; **build trust** that you can be given more.
@@ -505,7 +526,7 @@ Najm's **PR checklist for graduates** (pinned in the squad's channel):
 # 6.3 — Growing from junior to mid-level: feedback, ownership and continuous learning
 *Level: 🔴 Advanced* · *Prerequisites: 6.2* · *Step: Grow*
 
-**After this you can** compare two levels of a published career ladder, turn two pieces of feedback into SBI notes with one chosen change, and draft a six-month growth plan with checkable goals. *Study time: about 105 minutes (estimate).*
+**After this you can** compare two levels of a published career ladder, turn two pieces of feedback into SBI notes with one chosen change, and draft a six-month growth plan with checkable goals. *Study time: reading about 15 min, hands-on about 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 - The step from junior to **mid-level** is mostly about **scope and independence**: a junior is given well-defined tasks; a mid-level engineer is given a problem and turns it into tasks, ships them and runs the result.

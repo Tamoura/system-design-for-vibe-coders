@@ -9,7 +9,7 @@
 # 3.1 — Subscriptions and payments: checkout, webhooks, the customer portal
 *Level: 🟢 Beginner* · *Prerequisites: 1.2, 2.1*
 
-**After this you can** wire Stripe Checkout, the Customer Portal and a signature-verified, deduplicated webhook handler into Beacon, and show that sending the same event twice updates the subscription row once. *Study time: about 110 minutes (estimate).*
+**After this you can** wire Stripe Checkout, the Customer Portal and a signature-verified, deduplicated webhook handler into Beacon, and show that sending the same event twice updates the subscription row once. *Study time: reading about 20 min, hands-on about 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -217,13 +217,15 @@ Lemon Squeezy was acquired by Stripe in 2024. Polar is open source (Apache-2.0),
 
 ### 🟢 Beginner exercise
 
+> **Before you start.** You need a Stripe account in test mode, which costs nothing and moves no real money, and the Stripe CLI for the 🟡 exercise. Keep the secret key (`sk_test_…`) in `.env.local`, never in Git or a chat with an AI assistant. If Stripe does not offer accounts in your country, do both exercises in the Paddle sandbox or Polar's sandbox (sandbox.polar.sh): the names change, but the rules (grant access from the webhook, verify the signature, dedupe the event) do not.
+
 Add Stripe Checkout and the Customer Portal to Beacon's billing settings page. Create the Pro Product with a monthly Price in test mode. "Upgrade" creates a Checkout Session with the organization ID in `client_reference_id` or `metadata`. "Manage billing" opens a Portal session for the org's Customer.
 
 **Done when:**
 - An org owner can upgrade with the test card `4242 4242 4242 4242` and land back on Beacon.
 - The success page says "confirming…" and doesn't change the plan itself.
 - "Manage billing" opens the Portal, where the owner can update the card and cancel.
-- Non-owners don't see the billing buttons (reuse your 1.3 permission check).
+- Non-owners don't see the billing buttons, and the server refuses their checkout request. Check `memberships.role = 'owner'` from 1.2; lesson 1.3 later turns this into a `billing.manage` permission.
 
 ### 🟡 Intermediate exercise
 
@@ -321,7 +323,7 @@ Stripe treats the `500` as a failed delivery and retries it for days, and it eve
 # 3.2 — Plans, limits and entitlements: turning pricing into code
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 1.3*
 
-**After this you can** turn Free, Pro and Business pricing into one entitlements module, enforce monitor limits with a structured `limit_exceeded` error, and downgrade an org without deleting any of its data. *Study time: about 105 minutes (estimate).*
+**After this you can** turn Free, Pro and Business pricing into one entitlements module, enforce monitor limits with a structured `limit_exceeded` error, and downgrade an org without deleting any of its data. *Study time: reading about 15 min, hands-on about 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -604,7 +606,7 @@ Both requests read 4, both pass the check, and the org ends up with 6 monitors. 
 # 3.3 — Usage-based billing and metering
 *Level: 🔴 Advanced* · *Prerequisites: 3.1, 3.2*
 
-**After this you can** record one idempotent usage event per SMS, report overage to Stripe meters from a retrying job, and show that replaying the job does not change the invoice. *Study time: about 105 minutes (estimate).*
+**After this you can** record one idempotent usage event per SMS, report overage to Stripe meters from a retrying job, and show that replaying the job does not change the invoice. *Study time: reading about 15 min, hands-on about 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 

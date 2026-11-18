@@ -9,7 +9,7 @@
 # 8.1 — Capstone: the quality strategy and automated suite for a new Najm feature, including an AI feature
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–7* · *Focus: Strategy, AI*
 
-**After this you can** deliver a risk-scored quality strategy and an automated suite for a new feature in which each planted bug turns a pull request red at the gate you predicted. *Study time: about 120 minutes (estimate).*
+**After this you can** deliver a risk-scored quality strategy and an automated suite for a new feature in which each planted bug turns a pull request red at the gate you predicted. *Study time: reading about 15 min, hands-on about 20 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **The brief.** Najm Mobile adds **scheduled and recurring transfers** ("Schedules"); Najm Assist can create one by tool call, only after an explicit yes. You deliver nine artefacts, risks to report.
@@ -179,11 +179,11 @@ Start an **eval set** of about 30 cases: 12 core requests in English and Arabic,
 
 **Integration is the skill.** Keep a traceability matrix with a row per risk: the test that covers it, the gate that runs it and the production signal that shows it failed. Empty cells are gaps; gates with no risk are noise. The silent skip has a date table, a nightly query ("every schedule due yesterday has a run") and an alert.
 
-**Judge the suite by a catch matrix.** Plant three bugs behind switches, as the sample does (`bugs()` in `najm/transfers.py`, `ai_bugs()` in `najm/assist.py`), and add them to the harness from lesson 6.3: the drift bug, a retry that submits without the key, and `skip_confirm` in your own `schedule_tool.py`. A suite that does not go red for all three is not done, whatever its coverage.
+**Judge the suite by a catch matrix.** Plant bugs behind switches, as the sample does (`bugs()` in `najm/transfers.py`, `ai_bugs()` in `najm/assist.py`), and add them to the harness from lesson 6.3. The list grows with the tiers below: the drift bug and a missing holiday (Core), a retry that submits without the key (Standard), and `skip_confirm` in your own `schedule_tool.py` (Full). A suite that does not go red for every bug planted so far is not done, whatever its coverage.
 
 **When not to.** Do not mutation-test the whole repository per pull request; test changed money, limit and date code. Do not add browser journeys because they feel safe (lesson 3.2). Do not ask a judge model to grade what code can compare. Do not chase 100%; explain the survivors.
 
-**The report is a decision, not a diary.** Weak: "All 214 tests pass." Strong: "Ship behind the `schedules` flag to 5% of customers. Silent-skip and double-send risks have tests, a 3-of-3 catch matrix and a nightly check. Accepted gap: no Android 11 run of the date picker; owner Amal; expires at the 25% step." Name the gaps (lesson 8.2).
+**The report is a decision, not a diary.** Weak: "All 214 tests pass." Strong: "Ship behind the `schedules` flag to 5% of customers. Silent-skip and double-send risks have tests, a 4-of-4 catch matrix and a nightly check. Accepted gap: no Android 11 run of the date picker; owner Amal; expires at the 25% step." Name the gaps (lesson 8.2).
 
 ## 🧰 The toolkit
 | Tool, practice or technique | What it is and does | When to reach for it |
@@ -242,14 +242,14 @@ jobs:
 | 5, 6 Qualities, AI | "Performance: fast"; happy path only | Numbers; state-checking tool tests | Measured smoke run; monitoring with owners |
 | 7, 8, 9 Pipeline, release, report | One long job; "we will monitor"; a test count | Gates with owners; flag, canary, kill switch; a recommendation | A red gate shown; incident drill; gaps with owners and expiry dates |
 
-**A reference-solution outline** (compare afterwards). *Top risks:* silent skip or wrong date; double send at a retry or the cut-off; Assist creating without a yes; the Arabic form failing; other customers' schedules. *Suite:* about 60 unit rows, a dozen API tests, one contract check, two journeys, mutation 80% on `schedule.py` and a six-bug catch matrix (the three planted bugs, a missing holiday, `tz_cutoff`, `no_idempotency`).
+**A reference-solution outline** (compare afterwards). *Top risks:* silent skip or wrong date; double send at a retry or the cut-off; Assist creating without a yes; the Arabic form failing; other customers' schedules. *Suite:* about 60 unit rows, a dozen API tests, one contract check, two journeys, mutation 80% on `schedule.py` and a six-bug catch matrix (the four planted bugs, `tz_cutoff`, `no_idempotency`).
 
 ## 🛠️ Exercises
 The tiers nest. Use a copy of `testing/sample`.
 
 - 🟢 **Core.** Deliverables 1 and 2, `schedule.py` and its unit tests. Plant the drift bug and a missing-holiday bug. *Done when:* ten risks are scored, the date table has at least ten rows and goes red for both bugs, and `mutmut run` reaches 80% with each survivor explained.
-- 🟡 **Standard.** Add the API tests, both journeys, a contract check, the CI file and the report. *Done when:* a green CI run is linked, each of three planted bugs turns a pull request red at the gate you predicted, removing `dir="rtl"` fails the Arabic test, and the report names its gaps.
-- 🔴 **Full.** Add the qualities plan, the Assist tool tests, a 30-case eval set, five red-team cases, and the monitoring and release plans. *Done when:* the tool tests go red under `skip_confirm`, a peer's three unseen bugs are caught or become tests, every risk has a test, a gate and a signal, and a simulated incident became a failing test first.
+- 🟡 **Standard.** Add the API tests, both journeys, a contract check, the CI file and the report. Plant the keyless retry too. *Done when:* a green CI run is linked, each of the three bugs planted so far (drift, missing holiday, keyless retry) turns a pull request red at the gate you predicted, removing `dir="rtl"` fails the Arabic test, and the report names its gaps.
+- 🔴 **Full.** Add the qualities plan, the Assist tool tests, a 30-case eval set, five red-team cases, and the monitoring and release plans. Plant `skip_confirm` in `schedule_tool.py`. *Done when:* the catch matrix is red for all four planted bugs, a peer's three unseen bugs are caught or become tests (solo: have a coding agent plant three bugs on a branch whose diff you do not read), every risk has a test, a gate and a signal, and a simulated incident became a failing test first.
 
 ## ⚠️ Mistakes and traps
 - **Building the suite before the risks.** You test what is easy; let the risks set the depth.
@@ -341,7 +341,7 @@ The tiers nest. Use a copy of `testing/sample`.
 # 8.2 — The testing career: roles, certifications, interviews and a portfolio
 *Level: 🔴 Advanced* · *Prerequisites: 8.1* · *Focus: Career*
 
-**After this you can** link each rung of a testing skills ladder to evidence you produced, build a portfolio project with evidence-backed CV bullets, and hold a scored mock interview. *Study time: about 110 minutes (estimate).*
+**After this you can** link each rung of a testing skills ladder to evidence you produced, build a portfolio project with evidence-backed CV bullets, and hold a scored mock interview. *Study time: reading about 15 min, hands-on about 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Testing has many doors: analyst, QA engineer, SDET, quality engineer, performance and security specialists, lead, architect and, newly, AI evaluation. Read the job description, not the title.
@@ -477,7 +477,7 @@ Rashid scores graduate quality-engineer interviews on the **Najm QE interview sc
 ## 🛠️ Exercises
 - 🟢 Fill the skills ladder for yourself: for each rung, link one piece of evidence you produced (a test, a report, a strategy) or write "gap". Name the role you want. *Done when:* the table has at least 12 skills, every row has a link or "gap", and your three biggest gaps name the lessons to redo.
 - 🟡 Build portfolio project 1 and write its README with three CV bullets. *Done when:* the catch matrix shows 5 of 5 `NAJM_BUGS` caught against 2 of 5 for the starter suite, survivors are classed, and each bullet links to the evidence behind its numbers.
-- 🔴 Hold a 45-minute mock interview with a peer: two "how would you test…" questions, the flaky-test question and the AI-test review, with the sample running. *Done when:* you switched `float_fee` on and off during the review, the peer completed the scorecard with a note per criterion, and you wrote three dated actions.
+- 🔴 Hold a 45-minute mock interview with a peer: two "how would you test…" questions, the flaky-test question and the AI-test review, with the sample running (solo: an AI assistant asks the questions, you record your answers, then score the recording yourself). *Done when:* you switched `float_fee` on and off during the review, the peer, or you from the recording, completed the scorecard with a note per criterion, and you wrote three dated actions.
 
 ## ⚠️ Mistakes and traps
 - **Listing tools instead of evidence.** Replace each tool with a result and a link.
@@ -571,7 +571,7 @@ Rashid scores graduate quality-engineer interviews on the **Najm QE interview sc
 # 8.3 — Practice exam: 60 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–8* · *Focus: Strategy*
 
-**After this you can** sit a 60-question scenario exam in about 90 minutes and turn your misses into a study plan by focus tag and lesson. *Study time: about 120 minutes (estimate).*
+**After this you can** sit a 60-question scenario exam in about 90 minutes and turn your misses into a study plan by focus tag and lesson. *Study time: reading about 60 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - This is a 60-question practice exam covering every lesson from 0.1 to 8.2 and all nine modules. Most questions are scenarios set at Najm Bank. They are mixed, as in a real exam, rather than grouped by module.
@@ -643,8 +643,8 @@ Then she writes the plan from the pattern, not from single questions. A wrong "s
 
 ## 🛠️ Exercises
 - 🟢 **Review your misses.** Tally every wrong or guessed question by focus tag in the table above and label each miss "did not know", "misread" or "tempted". *Done when:* you can name your two weakest focus tags and the habit behind each, and every miss has a lesson to reread.
-- 🟡 **Write five questions of your own.** Choose your weakest focus. Write five scenarios in the exam's format, each with one defensible answer, three tempting wrong ones and an explanation that ends with its focus and lesson. *Done when:* a peer has answered all five, every disagreement is resolved in your explanation, and the correct option is not always the longest.
-- 🔴 **Teach one lesson.** Teach the lesson behind your weakest tag to a peer in 20 minutes, with one failing-then-passing run on the sample system. *Done when:* the peer can state the lesson's main rule and one weak-versus-strong pair in their own words, and you have redone anything you could not answer.
+- 🟡 **Write five questions of your own.** Choose your weakest focus. Write five scenarios in the exam's format, each with one defensible answer, three tempting wrong ones and an explanation that ends with its focus and lesson. *Done when:* a peer has answered all five (solo: answer them yourself a week later, or ask an AI assistant to pick an answer and argue for it), every disagreement is resolved in your explanation, and the correct option is not always the longest.
+- 🔴 **Teach one lesson.** Teach the lesson behind your weakest tag to a peer in 20 minutes, with one failing-then-passing run on the sample system (solo: record yourself and watch it back). *Done when:* the peer, or you from the recording, can state the lesson's main rule and one weak-versus-strong pair in their own words, and you have redone anything you could not answer.
 
 ## ⚠️ Mistakes and traps
 - **Checking answers as you go.** You learn one answer and lose the measure of the rest. Answer all 60, then check.

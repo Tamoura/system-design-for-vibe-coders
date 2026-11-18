@@ -7,7 +7,7 @@
    "lesson": "7.1",
    "q": {
     "en": "Beacon's ops lead wants to connect AdminJS straight to the production database, so staff can search customers, view usage and comp a plan by editing its plan field. What is the right v1 setup?",
-    "ar": "يريد مسؤول العمليات في Beacon ربط AdminJS مباشرة بقاعدة بيانات الإنتاج، كي يبحث الموظفون عن العملاء، ويعرضوا الاستخدام، ويمنحوا خطة مجانًا بتعديل حقل الخطة. ما الإعداد الصحيح للنسخة الأولى (v1 setup)؟"
+    "ar": "يريد مسؤول العمليات في Beacon ربط AdminJS مباشرة بقاعدة بيانات الإنتاج، كي يبحث الموظفون عن العملاء، ويعرضوا الاستخدام، ويمنحوا خطة مجانًا بتعديل حقل الخطة. ما الإعداد الصحيح للنسخة الأولى؟"
    },
    "o": {
     "en": [
@@ -20,7 +20,7 @@
      "اسمح لـAdminJS بتعديل كل جدول، لكن فقط للموظفَين اللذين يحملان دور المدير الأعلى",
      "أعطِ الموظفين واجهة SQL للقراءة فقط، ونفّذ كل تغيير في الخطة يدويًا في جلسة psql",
      "اقرأ البيانات عبر شاشات مولَّدة، وامنح الخطط مجانًا عبر إجراء يستدعي خدمة الفوترة",
-     "اسمح لـAdminJS بتعديل حقل الخطة، وأضف مهمة ليلية تزامن التغيير مع Stripe"
+     "اسمح لـAdminJS بتعديل حقل الخطة، وأضف مهمة ليلية تزامن هذا التغيير مع Stripe"
     ]
    },
    "a": 2,
@@ -45,7 +45,7 @@
      "Keep the CPU page, and write a runbook that explains how to read its CPU graph"
     ],
     "ar": [
-     "أرسل تنبيهًا عاجلًا عند الاستنزاف السريع لـSLO تأخر الفحص، مع دليل تشغيل، وخفّض مستوى تنبيه المعالج",
+     "نبّه عاجلًا عند الاستنزاف السريع لـSLO تأخر الفحص، مع دليل تشغيل، وخفّض تنبيه المعالج",
      "ارفع عتبة المعالج إلى 95%، حتى يوقظ التنبيه أحدًا ليلًا بوتيرة أقل",
      "أضف تنبيهات للذاكرة والقرص أيضًا، حتى يطلق كل سبب تنبيهًا عاجلًا قبل أن يلاحظ العملاء",
      "أبقِ التنبيه العاجل للمعالج، واكتب دليل تشغيل يشرح كيف تُقرأ رسمة المعالج البيانية"
@@ -76,7 +76,7 @@
      "استبدل recordAudit() بمشغّلات Postgres على كل جدول، حتى لا يفوت أي تغيير",
      "اعتمد على سجل الخادم في pgaudit، واعرض لكل عميل الإدخالات الخاصة بمنظمته",
      "امنع psql بسياسة مكتوبة، وأبقِ الأحداث على مستوى التطبيق سجل التدقيق الوحيد",
-     "أبقِ الأحداث على مستوى التطبيق، وأضف شبكة أمان من المشغّلات على الجداول الأكثر حساسية"
+     "أبقِ الأحداث على مستوى التطبيق، وأضف مشغّلات احتياطية على أكثر الجداول حساسية"
     ]
    },
    "a": 3,
@@ -90,27 +90,27 @@
    "level": 3,
    "lesson": "7.4",
    "q": {
-    "en": "Beacon's managed Postgres has emailed \"backup succeeded\" every night for a year, and nobody has ever restored one. A bank's contract asks for an RPO of 15 minutes and an RTO of 4 hours, with evidence. What should the team do before signing?",
-    "ar": "يرسل Postgres المُدار في Beacon كل ليلة منذ عام بريدًا يقول \"نجح النسخ الاحتياطي\"، ولم يستعد أحد أي نسخة قط. ويطلب عقد أحد البنوك هدف نقطة استعادة (RPO) قدره 15 دقيقة، وهدف زمن استعادة (RTO) قدره 4 ساعات، مع دليل. ماذا يجب أن يفعل الفريق قبل التوقيع؟"
+    "en": "Beacon's pipeline builds a Docker image and tests it on staging. When someone clicks Deploy, it rebuilds from the same branch for production. One release passed on staging but crashed in production: the rebuild had pulled a newer node:22 base image. What should the pipeline do?",
+    "ar": "يبني خط النشر في Beacon صورة Docker ويختبرها على بيئة staging. وعندما ينقر أحدهم Deploy، يعيد البناء من الفرع نفسه للإنتاج. نجح أحد الإصدارات على staging لكنه انهار في الإنتاج: فقد سحبت إعادة البناء صورة أساس node:22 أحدث. ماذا يجب أن يفعل خط النشر؟"
    },
    "o": {
     "en": [
-     "Switch to hourly snapshots, and attach a year of backup-success emails as evidence",
-     "Turn on point-in-time recovery, then time a restore into a scratch environment",
-     "Write a recovery runbook from the provider's docs, and estimate the RTO from it",
-     "Copy each nightly dump to a second bucket in the same account and the same region"
+     "Pin every dependency in the lockfile and keep rebuilding for production",
+     "Build one image per commit, tag it with the git SHA, and promote that image",
+     "Run the full test suite again against the production build before deploy",
+     "Deploy straight from the branch, so staging and production stay in step"
     ],
     "ar": [
-     "انتقل إلى لقطات كل ساعة، وأرفق رسائل نجاح النسخ الاحتياطي لعام كامل كدليل",
-     "فعّل الاستعادة إلى نقطة زمنية، ثم قِس زمن استعادة فعلية في بيئة مؤقتة",
-     "اكتب دليل تعافٍ من توثيق المزوّد، وقدّر منه زمن الاستعادة",
-     "انسخ كل تفريغ ليلي إلى حاوية تخزين ثانية في الحساب نفسه والمنطقة نفسها"
+     "ثبّت كل الاعتماديات في ملف القفل، واستمر بإعادة بناء الصورة للإنتاج",
+     "ابنِ صورة واحدة لكل إيداع، وسِمها ببصمة git SHA، ثم رقِّ الصورة نفسها",
+     "شغّل مجموعة الاختبارات كاملة مرة ثانية على بناء الإنتاج قبل النشر",
+     "انشر الإنتاج مباشرة من الفرع، كي تبقى staging والإنتاج متطابقتين"
     ]
    },
    "a": 1,
    "why": {
-    "en": "Only a timed restore drill proves you can recover and gives a measured RPO and RTO, and point-in-time recovery brings the RPO down to minutes or less. Hourly snapshots can still lose up to an hour, and success emails prove nothing because backups fail silently.",
-    "ar": "وحده تدريب استعادة مُقاس بالوقت يثبت أنك تستطيع التعافي، ويعطيك قيمتين مُقاستين لـRPO وRTO، والاستعادة إلى نقطة زمنية تخفض RPO إلى دقائق أو أقل. أما لقطات كل ساعة فقد تظل تفقد ما يصل إلى ساعة كاملة، ورسائل النجاح لا تثبت شيئًا لأن النسخ الاحتياطية تفشل بصمت."
+    "en": "Promoting the exact image that passed staging means production runs the bytes you tested; any rebuild can differ through base images, registries or build-time settings. A lockfile pins npm packages but not the node:22 base image, and testing the rebuild twice still ships an artifact staging never ran.",
+    "ar": "ترقية الصورة نفسها التي نجحت على staging تعني أن الإنتاج يشغّل البايتات التي اختبرتها؛ أما أي إعادة بناء فقد تختلف بسبب صور الأساس أو السجلات أو إعدادات وقت البناء. ملف القفل يثبّت حزم npm لكنه لا يثبّت صورة الأساس node:22، واختبار إعادة البناء مرتين ما زال يُطلق نسخة لم تشغّلها staging قط."
    }
   }
  ],
