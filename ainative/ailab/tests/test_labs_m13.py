@@ -47,12 +47,14 @@ def _eval_files_digest(work: Path) -> str:
 @pytest.fixture(autouse=True)
 def memoise_runs(monkeypatch):
     """Running a task's checks costs a second or two. The same task over the same check files gives the same answer,
-    so tests that change one task re-run only that task. (Each distinct task still runs for real once.)"""
+    so tests that change one task re-run only that task. (Each distinct task still runs for real once.) The time limit is
+    part of the key: the two tests that shorten it to 2 s can see a guard time out on a busy runner, and that result must
+    not leak into the tests that run with the normal limit."""
     real = R.evaluate
 
     def memo(repo, base, task, **kwargs):
         key = (json.dumps({k: v for k, v in task.items() if k != "_line"}, sort_keys=True), _eval_files_digest(Path(repo)), base,
-               kwargs.get("run_baseline", True), kwargs.get("run_reference", True))
+               kwargs.get("run_baseline", True), kwargs.get("run_reference", True), R.TIMEOUT)   # a result under a 2 s limit must not be reused under 60 s
         if key not in _MEMO:
             _MEMO[key] = real(repo, base, task, **kwargs)
         return _MEMO[key]
