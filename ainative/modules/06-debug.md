@@ -9,6 +9,8 @@
 # 6.1 — Understanding unfamiliar code and debugging with an agent: reproduce first, hypotheses, root cause
 *Level: 🟡 Intermediate* · *Prerequisites: 4.1, 5.1* · *Focus: Workflow*
 
+**After this you can** reproduce a bug first, list hypotheses each with a disproof, and find the breaking commit with a bisect. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Two jobs, one rule: get oriented in code you did not write, and find the *cause* of a bug, not a patch that hides it. **Everything an agent says about code is a hypothesis until you have opened the file or run the command.**
 - Onboard in five moves: a read-only map that cites files, five claims checked, the tests run, the gaps asked about, `docs/onboarding.md` written by you.
@@ -286,6 +288,8 @@ What you could not verify.
 
 # 6.2 — Lab: onboard to the codebase and fix a production bug from its logs
 *Level: 🟡 Intermediate* · *Prerequisites: 6.1* · *Focus: Workflow, Verify*
+
+**After this you can** write an onboarding note for unfamiliar code and fix a production bug from its logs, starting with a failing test. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Lab m06 on Najm Remit: write `docs/onboarding.md`, then fix incident REMIT-231 from `lab-assets/prod.log` with a failing test of your own (it becomes the regression test), a minimal fix and a root-cause note.

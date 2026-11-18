@@ -9,6 +9,8 @@
 # 13.1 — Skills that compound: fundamentals, taste, deliberate practice, evaluating tools and avoiding deskilling
 *Level: 🔴 Advanced* · *Prerequisites: 5.1, 12.1* · *Focus: Mindset*
 
+**After this you can** rate your skills with evidence, do a timed practice rep without AI and compare two tools on your own tasks. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Tools change every few months. The skills that make AI output safe to ship do not: reading code, debugging, systems thinking, data structures, testing, security basics. You can only **verify** what you can read.
 - Deskilling is a risk to manage, not a verdict: the evidence is one small randomized study, and nothing covers years of agentic work.
@@ -251,6 +253,8 @@ Re-rate every quarter and lift **one** weak skill at a time. A rule of thumb of 
 
 # 13.2 — Workshop: your personal eval, learning plan and 90-day plan
 *Level: 🔴 Advanced* · *Prerequisites: 13.1* · *Focus: Mindset, Team*
+
+**After this you can** build a personal eval of eight or more checkable tasks and use its results to decide what to delegate. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Lab `m13`, on Najm Remit: build a **personal eval** (`eval/tasks.jsonl`, eight or more tasks with checks a script can run) and a **90-day plan** (`plan.md`).

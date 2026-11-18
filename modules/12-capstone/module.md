@@ -2,6 +2,8 @@
 
 *The whole course, turned into twelve pagers.*
 
+**After this you can** diagnose twelve symptom-only incidents by bisecting the request path to the failing layer, and name for each the evidence that proves the fix worked. *Study time: about 205 minutes (estimate).*
+
 ---
 
 You've built Relay from a local prototype to a multi-client production system.

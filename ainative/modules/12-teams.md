@@ -9,6 +9,8 @@
 # 12.1 — Team practice: conventions, review norms, ownership, juniors, metrics and policy
 *Level: 🔴 Advanced* · *Prerequisites: 0.3, 5.1, 10.1* · *Focus: Team*
 
+**After this you can** write a team AI working agreement in which every norm has a number, a name or a check. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A **team practice** is what stays true when your best engineer is away: shared context, review norms, owners, a path for juniors, metrics and policy, each with a check.
 - Review is the bottleneck AI moves but does not remove. **Label** the pull request, keep it **small**, make the **author explain** it, and put a **second human** on money logic.
@@ -257,6 +259,8 @@ Owner: <name>.  Version: 1.  Next review: <date, and after any incident>.
 
 # 12.2 — Workshop: write your team's AI engineering playbook
 *Level: 🔴 Advanced* · *Prerequisites: 12.1* · *Focus: Team*
+
+**After this you can** write a team AI engineering playbook of twelve or more checkable rules that passes the grader. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Lab `m12` (**needs an agent: no**): write `playbook.md` for Payments Platform: ten sections, twelve or more **rules** (`MUST ... Check: ...`), concrete review norms and a **metrics plan**, one block per metric.

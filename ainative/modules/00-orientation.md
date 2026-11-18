@@ -9,6 +9,8 @@
 # 0.1 — What an AI-native engineer is (and is not): the shift, five habits and the evidence
 *Level: 🟢 Beginner* · *Prerequisites: none* · *Focus: Mindset*
 
+**After this you can** score your own baseline on the five habits and trace one claim about AI productivity to its source, with two caveats. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - The **shift**: you type less and do more directing, verifying and owning. The agent drafts; you answer for every line.
 - AI use is a **spectrum**, from autocomplete to parallel agents, not a ladder. Pick the point that fits the task and what you can check.
@@ -271,6 +273,8 @@ Would I delegate it again?     Yes, with the same spec
 
 # 0.2 — Your setup: tools, safe configuration, the Najm Remit repo and the ailab kit
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Focus: Workflow, Secure*
+
+**After this you can** set up the ailab kit and a safe permission configuration, then pass lab m00 with a logged commit. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Setup is four things: an approved tool, a permission mode that fits the risk, a clean place to work, and the `ailab` kit.
@@ -576,6 +580,8 @@ A right fix committed as `fixed the typo` fails one line, `Commit messages follo
 
 # 0.3 — The AI-native loop: specify, delegate, verify, integrate, and who stays accountable
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Focus: Mindset, Workflow*
+
+**After this you can** fill in a delegation card for a real ticket and give each task an autonomy level and a named check. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - The loop is **specify, delegate, verify, integrate**, with **context** feeding every step and **safety** wrapping all of it. One lap is one small step, not one project.

@@ -9,6 +9,8 @@
 # 3.1 — Spec-driven development: from ticket to acceptance criteria, constraints, non-goals and a plan
 *Level: 🟢 Beginner* · *Prerequisites: 2.1* · *Focus: Workflow*
 
+**After this you can** turn a vague ticket into a spec with acceptance criteria, constraints and non-goals, and review a plan against a checklist. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A ticket states a wish. A **spec** says what done means, so an agent can build from it and you can verify against it: habit two.
 - A spec has ten parts; worked examples and written-down decisions earn their keep.
@@ -308,6 +310,8 @@ And the **Plan checklist**. Save it as `plan-checklist.md` and run it on every p
 
 # 3.2 — Lab: turn three vague tickets into specs an agent can build from
 *Level: 🟢 Beginner* · *Prerequisites: 2.2, 3.1* · *Focus: Workflow*
+
+**After this you can** write three specs from vague tickets that pass the grader, each open question settled or assigned to a person. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Lab m03 gives you three vague tickets from Hessa and a template. You write `specs/T1.md` to `T3.md`. Nothing is built.

@@ -15,15 +15,17 @@ jobs:
   links:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0, pinned by commit
 
-      # Same settings and excludes as the link step in publish.yml.
-      - name: Check links in the committed course pages (report only)
+      # External (http/https) links only, with the same settings and excludes as publish.yml. Internal
+      # links are checked on the assembled site by scripts/qa/site_links.py in publish.yml, because the
+      # source tree does not have the published layout (for example /vibe/index.en.html).
+      - name: Check external links in the committed course pages (report only)
         continue-on-error: true
         uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0, pinned by commit
         with:
           args: >-
-            --no-progress --max-concurrency 8 --timeout 20 --max-retries 2
+            --no-progress --scheme https --scheme http --max-concurrency 8 --timeout 20 --max-retries 2
             --accept '200..=299,403,429'
             --exclude-loopback --exclude '^https?://(www\.)?example\.(com|org)'
             --exclude '^https://www\.(qcb\.gov\.qa|almeezan\.qa|canada\.ca|fda\.gov|mol\.gov\.qa|mohre\.gov\.ae|nafis\.gov\.ae|naukrigulf\.com)/'
@@ -36,7 +38,7 @@ jobs:
   stale-claims:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0, pinned by commit
 
       - name: Fail if a claim is past its review-by date
         run: |
@@ -73,9 +75,9 @@ jobs:
   audit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0, pinned by commit
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0, pinned by commit
         with:
           node-version: 22
 

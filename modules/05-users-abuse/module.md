@@ -13,6 +13,8 @@ of the wrong hands.*
 
 # 5.1 — Your First Attacker Is a Script
 
+**After this you can** put a CAPTCHA and per-recipient email limits in front of your anonymous forms, then run a scripted signup flood and show outbound mail capped while a real user can still register. *Study time: about 70 minutes (estimate).*
+
 ## 🔥 The War Story
 
 Over 24 hours, the platform gained 45 new accounts. Every one was named "bob."
@@ -193,6 +195,8 @@ Finish: *"Commit with the message `05-1-abuse-defense`."*
 
 # 5.2 — Rate Limiting That Survives a CDN
 
+**After this you can** fix a rate limiter so it keys on the real client IP behind the CDN, keeps its counters in Redis across a redeploy, and ignores a forged client-IP header. *Study time: about 70 minutes (estimate).*
+
 ## 🔥 The War Story
 
 The rate limiter was working perfectly. That was the problem.
@@ -364,6 +368,8 @@ Finish: *"Commit with the message `05-2-cdn-rate-limit`."*
 
 # 5.3 — Auth That You Can Operate
 
+**After this you can** move auth tokens into httpOnly cookies, show refresh-token reuse detection forcing a re-login, require 2FA for admins, and build an env-var audience table that flags any variable with two audiences. *Study time: about 70 minutes (estimate).*
+
 ## 🔥 The War Story
 
 The auth system worked in every test. Logins succeeded, sessions persisted,
@@ -533,6 +539,8 @@ Finish: *"Commit with the message `05-3-operable-auth`."*
 
 # 5.4 — Input You Didn't Realize You Were Trusting
 
+**After this you can** inventory the inputs your anonymous endpoints trust, route every outbound fetch through one guarded function that refuses internal addresses, and make a missing signing secret stop the app from starting. *Study time: about 70 minutes (estimate).*
+
 ## 🔥 The War Story
 
 A security audit of one app turned up three findings that shared a spine: **the
@@ -700,6 +708,8 @@ Finish: *"Commit with the message `05-4-trusted-input`."*
 
 # 5.5 — Email Is Production Infrastructure
 
+**After this you can** list every code path that sends mail, make reset links point at the public site, and show that a newsletter interrupted mid-run and re-run sends nobody a duplicate. *Study time: about 70 minutes (estimate).*
+
 ## 🔥 The War Story
 
 Three email failures, one platform, and none of them looked like an email problem
@@ -864,6 +874,8 @@ Finish: *"Commit with the message `05-5-email-infra`."*
 
 # 5.6 — The OWASP Top 10, Mapped to a Real App
 
+**After this you can** rate your app against each OWASP Top 10 category, fix the top three findings, and add a CI dependency-audit gate that fails on a planted known-bad version. *Study time: about 70 minutes (estimate).*
+
 ## 🔥 The War Story
 
 A full security audit ran against the reference platform, scored the way a
@@ -1013,6 +1025,8 @@ Finish: *"Commit with the message `05-6-owasp-audit`."*
 ---
 
 # 5.7 — Secrets and Configuration: The Keys to the Kingdom
+
+**After this you can** scan your git history for secrets, add a pre-commit hook that blocks a planted fake key, and rotate a real key end to end in under 15 minutes. *Study time: about 70 minutes (estimate).*
 
 ## 🔥 The War Story
 

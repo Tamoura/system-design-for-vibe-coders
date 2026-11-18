@@ -20,6 +20,7 @@ CHECKS = [
     ("Arabic rules", "arabic_rules.py"),
     ("Claims lint", "claims_lint.py"),
     ("Site counts", "site_counts.py"),
+    ("Lesson outcomes", "lesson_outcomes.py"),
 ]
 
 

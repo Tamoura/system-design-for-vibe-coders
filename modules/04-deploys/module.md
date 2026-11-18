@@ -8,6 +8,8 @@ routine thing you do. This module makes it boring — on purpose.*
 
 # 4.1 — Shipping is a system
 
+**After this you can** turn your deploy into one command that records the live version at `/version`, and cause real 502s with an in-place restart under load to show the window it leaves. *Study time: about 70 minutes (estimate).*
+
 ## 🔥 The War Story
 
 The deploy looked clean. New code, `pm2 restart`, server back up in a few
@@ -190,6 +192,8 @@ No code reading required — accept the lesson only when:
 
 # 4.2 — Blue-green and the shared-directory 502s
 
+**After this you can** set up blue-green deploys with a separate build directory for each colour, list every shared writable path, and deploy under a live request stream with zero non-200 responses. *Study time: about 70 minutes (estimate).*
+
 ## 🔥 The War Story
 
 The team had done the responsible thing. To kill the restart window from lesson
@@ -370,6 +374,8 @@ No code reading required — accept the lesson only when:
 
 # 4.3 — The proxy lies: stale workers and trusting your own verification
 
+**After this you can** end your deploy with a script that checks `/version` and compares origin and edge asset hashes, and show it failing on a stale edge and on a proxy that was reloaded instead of restarted. *Study time: about 70 minutes (estimate).*
+
 ## 🔥 The War Story
 
 Two deploys, two ways the thing you trust to tell you the truth lied to you.
@@ -546,6 +552,8 @@ No code reading required — accept the lesson only when:
 ---
 
 # 4.4 — Rollback, staging, and release gates
+
+**After this you can** add a staging target, roll back a deliberately broken deploy with one command, make uploaded content hidden until published, and switch a feature off with a flag without a deploy. *Study time: about 70 minutes (estimate).*
 
 ## 🔥 The War Story
 
@@ -727,6 +735,8 @@ No code reading required — accept the lesson only when:
 ---
 
 # 4.5 — Verify the artifact, not the source
+
+**After this you can** add a postbuild check that inspects the compiled bundle and fails the build when it contains `localhost` or lacks the production origin, and show it failing on a planted bad file. *Study time: about 70 minutes (estimate).*
 
 ## 🔥 The War Story
 

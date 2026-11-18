@@ -2,6 +2,8 @@
 
 *Module 1: Anatomy of a Real App*
 
+**After this you can** trace one click through its request ID to its log trail, reproduce the prefix trap live, and record a dated latency baseline that compares cached and uncached responses. *Study time: about 70 minutes (estimate).*
+
 ---
 
 ## 🔥 The War Story

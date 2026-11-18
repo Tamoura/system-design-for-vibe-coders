@@ -42,15 +42,34 @@ Four people sign off. Each one writes a record using `academy/reviews/TEMPLATE.m
 
 A sign-off covers the commit named in the record. Later changes need a new record.
 
-## 5. Status labels
+## 5. Assurance levels
 
-A course may carry these labels:
+Every course carries one assurance level in `academy/catalogue.json` (field `assurance`). A level is earned only when
+its records exist in `academy/reviews/<course>/`; `scripts/qa/site_counts.py` fails if a course claims a level
+without them. No level implies accreditation or endorsement by any certification body.
 
-- **AI-drafted**: written with AI, no expert has signed.
-- **expert-reviewed**: the subject expert and the Arabic editor records exist for the current content.
-- **piloted**: a pilot record exists.
+| Level (`assurance`) | Meaning | Records required in `academy/reviews/<course>/` |
+|---|---|---|
+| Draft (`draft`) | The material exists and passes the automated checks. | None. |
+| Technically reviewed (`technically-reviewed`) | A named, qualified subject expert checked correctness and the findings were resolved. | `subject-expert-*.md` |
+| Assessment validated (`assessment-validated`) | Outcomes, rubrics and exam items were examined independently. | the above and `assessment-lead-*.md` |
+| Pilot tested (`pilot-tested`) | Real learners completed the course; results and fixes are recorded. | the above and `pilot-*.md` |
+| Professionally validated (`professionally-validated`) | Learners' practical work was verified by an independent assessor against a published rubric. | the above and `assessor-*.md` |
 
-Rule: no label other than "AI-drafted" is shown until its record exists in `academy/reviews/`. Do not write that anything was reviewed, piloted or accredited unless a record says so.
+The Arabic edition also needs an `arabic-editor-*.md` record before any level above Draft is shown for it. Each record
+names the commit it covers; when the lessons change later, the record covers the old commit only.
+
+Labels shown to learners follow the level: "Drafted with AI, not yet expert-reviewed" for Draft. Do not write that
+anything was reviewed, piloted or accredited unless a record says so.
+
+### What a result shows
+
+Assessment results are reported in three classes, and a page never presents one as another:
+
+- **Knowledge shown**: scored multiple-choice questions with reviewed answer keys.
+- **Practical work declared**: evidence the learner says they produced (self-reported; nobody has checked it).
+- **Competence validated**: an independent assessor reviewed the work against a rubric. The library does not offer
+  this yet.
 
 ## 6. Exam items
 

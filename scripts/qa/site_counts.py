@@ -5,7 +5,9 @@ The catalogue is the one source for how many courses, modules and lessons the li
 This check fails when a hand-written page disagrees with it:
 
 - landing.html: each course card's first two numbers (modules, lessons);
-- about/index.html and about/index.ar.html: the number of courses and the total lesson count.
+- about/index.html and about/index.ar.html: the number of courses and the total lesson count;
+- each course's `assurance` level (academy/STANDARD.md section 5): a level above "draft" needs its sign-off
+  records in academy/reviews/<course>/.
 
 usage: python3 scripts/qa/site_counts.py
 exit status: 0 when every count matches, 1 otherwise.
@@ -48,6 +50,19 @@ def main() -> int:
     for cid in courses:
         if cid not in seen:
             problems.append(f"landing.html: no card for catalogue course '{cid}'")
+
+    levels = ["draft", "technically-reviewed", "assessment-validated", "pilot-tested", "professionally-validated"]
+    needs = {1: "subject-expert", 2: "assessment-lead", 3: "pilot", 4: "assessor"}
+    for cid, c in courses.items():
+        level = c.get("assurance")
+        if level not in levels:
+            problems.append(f"academy/catalogue.json: course '{cid}' has assurance {level!r}; expected one of {levels}")
+            continue
+        for rank in range(1, levels.index(level) + 1):
+            role = needs[rank]
+            if not list((ROOT / "academy" / "reviews" / cid).glob(f"{role}-*.md")):
+                problems.append(f"academy/catalogue.json: course '{cid}' claims '{level}' but academy/reviews/{cid}/ "
+                                f"has no {role}-*.md record")
 
     total = sum(c["lessons"] for c in courses.values())
     count = len(courses)

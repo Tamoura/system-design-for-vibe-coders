@@ -2,9 +2,11 @@
 """Claims lint: fail on wording the library must not publish.
 
 Checked everywhere (sources and generated pages), except agentic/ (a published copy of another
-repository), scripts/sync-agentic.sh (it lists blocked text on purpose) and scripts/qa/ (these checks):
+repository, checked by scripts/agentic-neutral.mjs --check) and scripts/qa/ (these checks):
 
-  - the name of a real organisation: "Qatar Development Bank", the token QDB, «بنك قطر للتنمية»
+  - the name of the real organisation an earlier draft named (English full name, its short token and the
+    Arabic full name). The patterns are read from scripts/blocked-text.b64 so this public file does not
+    spell the name out; decode with python3 scripts/blocked_text.py --show.
   - exam-pass promises: "pass the AIGP", "ready for the AIGP exam", "sit the real exam", and their
     Arabic forms found in the sources on the day this check was written:
       «اجتياز امتحان شهادة (certification exam) AIGP», «اجتز امتحان AIGP», «جاهز لامتحان AIGP»,
@@ -27,16 +29,18 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 EXCLUDE_DIRS = ("agentic/", "scripts/qa/", "node_modules/", ".git/")
-EXCLUDE_FILES = {"scripts/sync-agentic.sh"}
+EXCLUDE_FILES: set[str] = set()
 BINARY = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".ico", ".mp4", ".webm", ".mp3", ".wav", ".pdf", ".epub",
           ".zip", ".gz", ".woff", ".woff2", ".ttf", ".otf", ".pyc", ".sqlite", ".db"}
 
 I = re.I
+sys.path.insert(0, str(ROOT / "scripts"))
+from blocked_text import load as _load_blocked  # noqa: E402
+
+_BLOCKED = _load_blocked()
 # (label, pattern, path prefix it applies to or None for everywhere)
 RULES = [
-    ("organisation name", re.compile(r"Qatar\s+Development\s+Bank", I), None),
-    ("organisation name", re.compile(r"\bQDB\b"), None),
-    ("organisation name", re.compile(r"بنك\s+قطر\s+للتنمية"), None),
+    *(("organisation name", re.compile(pat, I if "i" in flags else 0), None) for pat, flags in _BLOCKED["lint_patterns"]),
     ("exam promise", re.compile(r"\bpass\s+the\s+AIGP\b", I), None),
     ("exam promise", re.compile(r"\bready\s+for\s+the\s+AIGP\s+exam\b", I), None),
     ("exam promise", re.compile(r"\bsit\s+the\s+real\s+exam\b", I), None),
@@ -52,7 +56,7 @@ DIACRITICS = re.compile(r"[ـً-ْٰ]")   # tatweel, harakat, shadda, sukun, dag
 # The Arabic words may carry diacritics between their letters (the sources do write «المقطَّرة»), and
 # the prefilter runs before they are removed, so it lets them through.
 _D = "[ـً-ْٰ]*"
-PREFILTER = re.compile(r"QDB|Qatar|QATAR|qatar|AIGP|Aigp|aigp|[Ee]xam|EXAM|"
+PREFILTER = re.compile(_BLOCKED["lint_prefilter"] + r"|AIGP|Aigp|aigp|[Ee]xam|EXAM|"
                        + _D.join("قطر") + "|" + _D.join("امتحان"))
 HREF = re.compile(r"""\b(?:href|src|action|formaction)\s*=\s*["']([^"']*)["']""", I)
 AGENTIC_LINK = re.compile(r"(?:^|/)agentic(?:/|$|[?#])")

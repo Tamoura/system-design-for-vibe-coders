@@ -14,6 +14,8 @@ first use; the [Glossary](../../GLOSSARY.md) has the rest.*
 
 *Module 10: Scaling Beyond One Server*
 
+**After this you can** run two instances behind a load balancer, find and remove the process state that breaks across them, and show a health check draining a killed instance with zero failed requests. *Study time: about 70 minutes (estimate).*
+
 ---
 
 ## 🔥 The War Story
@@ -222,6 +224,8 @@ Finish: *"Commit with the message `10-1-stateless-services`."*
 # 10.2 — Queues and Asynchronous Work
 
 *Module 10: Scaling Beyond One Server*
+
+**After this you can** move slow work onto a queue with an idempotent consumer, a dead-letter queue and a stale-job sweep, and show a job delivered twice taking effect exactly once. *Study time: about 70 minutes (estimate).*
 
 ---
 
@@ -439,6 +443,8 @@ Finish: *"Commit with the message `10-2-queues-async-work`."*
 
 *Module 10: Scaling Beyond One Server*
 
+**After this you can** decide and justify whether you need a read replica, route reads between primary and replica, and show both replication lag and why a replica is not a backup. *Study time: about 70 minutes (estimate).*
+
 ---
 
 ## 🔥 The War Story
@@ -627,6 +633,8 @@ Finish: *"Commit with the message `10-3-scaling-the-database`."*
 # 10.4 — Realtime: Presence, Websockets, and Heartbeats
 
 *Module 10: Scaling Beyond One Server · **app track***
+
+**After this you can** build a "who's online" presence feature that heals itself after its store is wiped and that a client sending fake heartbeats cannot inflate. *Study time: about 70 minutes (estimate).*
 
 ---
 
@@ -818,6 +826,8 @@ Finish: *"Commit with the message `10-4-realtime-presence`."*
 # 10.5 — Performance and Capacity
 
 *Module 10: Scaling Beyond One Server*
+
+**After this you can** load-test an app to its breaking point, record that number as its capacity, fix the first bottleneck, and prove with a re-run that the ceiling moved and p99 fell. *Study time: about 70 minutes (estimate).*
 
 ---
 

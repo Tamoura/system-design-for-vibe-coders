@@ -14,6 +14,8 @@ glance — the governance questions that make what you ship defensible.*
 
 *Module 9: Directing an AI Team*
 
+**After this you can** take one feature from an agent-led interview to a written spec with testable Given/When/Then acceptance criteria and one named invariant, before any code is written. *Study time: about 50 minutes (estimate).*
+
 ## 🔥 The War Story
 
 In July 2025, during a public "vibe coding" experiment, an AI coding agent was
@@ -172,6 +174,8 @@ Finish: *"Commit the spec, plan, and tasks as `09-1-scheduling-spec` — code co
 
 *Module 9: Directing an AI Team*
 
+**After this you can** find and resolve the contradictions in a repository's context, and right-size CLAUDE.md until a fresh agent session answers three questions about the project with no guesses. *Study time: about 50 minutes (estimate).*
+
 ## 🔥 The War Story
 
 A project had two instruction files. One, written early, said tests must use a real
@@ -323,6 +327,8 @@ Finish: *"Commit as `09-2-context-cleanup`."*
 
 *Module 9: Directing an AI Team*
 
+**After this you can** list your three most-repeated review comments, turn one into a check you watch fail on a deliberate violation, and add a drift-guard that turns the build red when two lists disagree. *Study time: about 50 minutes (estimate).*
+
 ## 🔥 The War Story
 
 Across dozens of agent-written pull requests, the same review notes kept appearing.
@@ -460,6 +466,8 @@ Finish: *"Commit as `09-3-review-to-guardrails`."*
 # 9.4 — Verification Before Completion
 
 *Module 9: Directing an AI Team*
+
+**After this you can** write a definition of done with the evidence each change type needs, and confirm a deploy with an origin or asset-hash check rather than the cached public URL. *Study time: about 50 minutes (estimate).*
 
 ## 🔥 The War Story
 
@@ -619,6 +627,8 @@ Finish: *"Commit as `09-4-definition-of-done`."*
 
 *Module 9: Directing an AI Team*
 
+**After this you can** write a CLAUDE.md that passes a cold-start test, build a hook that blocks a deliberate violation, turn one repeated workflow into a skill, and run two subagents in separate worktrees. *Study time: about 50 minutes (estimate).*
+
 ## 🔥 The War Story
 
 Look at what accumulated in one real project's `.claude/` directory over time: a
@@ -767,6 +777,8 @@ Finish: *"Commit as `09-5-power-tools`."*
 # 9.6 — Building Your Agent Team
 
 *Module 9: Directing an AI Team*
+
+**After this you can** define a read-only reviewer agent and a QA agent, each with a scope, a tool list and an escalation rule, and show an ambiguous instruction making an agent escalate to you instead of guessing. *Study time: about 50 minutes (estimate).*
 
 ## 🔥 The War Story
 
@@ -924,6 +936,8 @@ Finish: *"Commit as `09-6-agent-team`."*
 
 *Module 9: Directing an AI Team*
 
+**After this you can** run a per-PR review, a separate security pass and a whole-repo audit against a written checklist, and file the findings as a tracked report with severity, owner and status. *Study time: about 50 minutes (estimate).*
+
 ## 🔥 The War Story
 
 The best entries in this course's incident bank were not found by pull-request review.
@@ -1074,6 +1088,8 @@ Finish: *"Commit as `09-7-three-layer-audit`."*
 # 9.8 — The Governance Glance: You Own What Your Agent Ships
 
 *Module 9: Directing an AI Team*
+
+**After this you can** write a one-page governance doc a newcomer can answer five questions from in two minutes, make the agent refuse an action that needs a human yes, and time a switch to maintenance mode and back. *Study time: about 55 minutes (estimate).*
 
 ## 🔥 The War Story
 

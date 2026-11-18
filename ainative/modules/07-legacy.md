@@ -9,6 +9,8 @@
 # 7.1 — Changing code you do not understand: characterization tests, seams, incremental refactors and agent-sized migrations
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1, 6.1* · *Focus: Workflow, Verify*
 
+**After this you can** write characterization tests that pin a legacy module's behaviour, quirks included, and show a mutation they catch. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Legacy is code you cannot change with confidence**, usually because it has no tests. Start by *pinning*: a **characterization test** records what the code does today, quirks included, even those you think wrong.
 - **Then move in small steps** through a **seam**, with the strangler fig and expand and contract. A refactor never shares a commit with a behaviour change.
@@ -297,6 +299,8 @@ Fill it in before the work, a few lines per section; draft section 4 with your a
 
 # 7.2 — Lab: tame an untested module, refactor it, then migrate a dependency
 *Level: 🟡 Intermediate* · *Prerequisites: 6.2, 7.1* · *Focus: Workflow, Verify*
+
+**After this you can** pin an untested module, refactor it in green commits and migrate a dependency so the grader passes. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Lab m07** on Najm Remit: the legacy ledger has no tests and keeps module-level books. Three parts: **pin** it with characterization tests, **refactor** it (`class Ledger`, `RemitService(..., ledger=None)`), **migrate** najmkit from version 1 to 2.

@@ -9,6 +9,8 @@
 # 9.1 — Commands, skills, subagents, hooks, MCP and headless mode: what to automate and what not to
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 8.1* · *Focus: Automate*
 
+**After this you can** decide with a decision card whether a repeated task becomes a command, skill or hook or stays manual, and justify it. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Automate what repeats and has a mechanical success check.** A hook that reports a file that does not parse qualifies; "an agent approves the pull request" is judgement in disguise.
 - **Six places, six jobs:** memory file, skill, subagent, hook, script around `claude -p`, MCP server. A hook is code, so it enforces; prompts only ask.
@@ -284,6 +286,8 @@ Delete the first comment line in your copy: it names the file in the course repo
 
 # 9.2 — Lab: build a project toolkit and a headless triage script
 *Level: 🟡 Intermediate* · *Prerequisites: 9.1, 8.2* · *Focus: Automate*
+
+**After this you can** build a review command, a post-edit hook and a headless triage script that pass the grader. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Lab m09.** Five things in Remit: a review command, a read-only reviewer, a post-edit hook, a headless triage script and three decision cards.

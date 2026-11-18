@@ -9,6 +9,8 @@
 # 8.1 — When an agent has your keyboard: injection, secrets, destructive commands, hallucinated packages, permissions and sandboxes
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1* · *Focus: Secure*
 
+**After this you can** fill in a threat-model worksheet for an agent session and recover a repository from a destructive reset with the reflog. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **The agent has your hands.** Whatever your account can read, run, delete, send or push, it can.
 - **Text it reads can be an instruction.** No complete fix is known: make a successful injection cheap.
@@ -296,6 +298,8 @@ Weak entry: "Risk: the agent might do something bad. Control: be careful." Stron
 
 # 8.2 — Lab: harden your setup with permissions, a guard hook and a dependency check
 *Level: 🟡 Intermediate* · *Prerequisites: 8.1* · *Focus: Secure, Automate*
+
+**After this you can** configure agent permissions, a guard hook and a dependency check that each pass the grader. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Lab m08, needs an agent: no.** Four things in Remit: `.claude/settings.json`, a guard hook, a dependency check, and notes on a suspicious README. An agent can help with parts 1 to 3.

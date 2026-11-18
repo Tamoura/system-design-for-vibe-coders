@@ -9,6 +9,8 @@
 # 4.1 — Explore, plan, implement, check, commit: small steps, checkpoints and when to take the wheel
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1* · *Focus: Workflow*
 
+**After this you can** run the loop on a small change in three or more green commits and name the cue that made you take the wheel. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - The daily loop has six moves: **explore** (read-only), **plan**, **implement one small step**, **check** it yourself, **read the diff**, **commit**. The unit is the step, not the ticket.
 - Prepare first: a clean tree, a branch per task, a green baseline, a fresh session.
@@ -269,6 +271,8 @@ The clinic's rule: no pull request without a filled checklist, and no "the agent
 
 # 4.2 — Lab: ship a small feature through the whole loop
 *Level: 🟡 Intermediate* · *Prerequisites: 3.2, 4.1* · *Focus: Workflow*
+
+**After this you can** ship a small feature through the whole loop in three or more green commits that the grader passes. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Lab m04.** Hessa's ticket REMIT-318: when a successful transfer takes a customer to 80% of their daily limit or more, send a second message, in English or Arabic. About 25 lines of code, and five easy ways to get them wrong.

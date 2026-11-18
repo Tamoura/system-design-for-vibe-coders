@@ -10,6 +10,8 @@ edge platform that ties the whole story together.*
 
 # 11.1 — Domains, DNS, and TLS
 
+**After this you can** point a domain at your app with one canonical host, confirm its TLS certificate renews itself, and show the origin refusing a request that skips the CDN. *Study time: about 55 minutes (estimate).*
+
 ## 🔥 The War Story
 
 On October 4, 2021, Facebook, Instagram, and WhatsApp vanished for roughly six
@@ -175,6 +177,8 @@ Finish: *"Commit with the message `11-1-domain-dns-tls`."*
 ---
 
 # 11.2 — Internationalization and RTL
+
+**After this you can** serve an app at `/en/` and `/ar/` with a fully mirrored right-to-left layout, add a translation drift-guard you watch fail, and make a search that differs only by diacritics return the right result. *Study time: about 55 minutes (estimate).*
 
 ## 🔥 The War Story
 
@@ -343,6 +347,8 @@ Finish: *"Commit with the message `11-2-i18n-rtl`."*
 
 # 11.3 — SEO and AEO: Being Found by Crawlers and Cited by Answer Engines
 
+**After this you can** give two page types a chunked dynamic sitemap, canonical and hreflang tags, Open Graph cards and valid structured data, and show the build succeeding while the API is down. *Study time: about 50 minutes (estimate).*
+
 > **Tool-dated lesson.** The *principles* — machine-readable meaning, don't couple
 > builds to runtime data, write to be quoted — outlive the tools. The named
 > products and conventions (Googlebot behavior, `llms.txt`, specific AI crawlers)
@@ -500,6 +506,8 @@ Finish: *"Commit with the message `11-3-seo-aeo`."*
 
 # 11.4 — Cost Engineering
 
+**After this you can** build a cost model with 1×, 10× and 100× columns, name its worst-scaling line, and propose one structural fix for that line before it becomes expensive. *Study time: about 50 minutes (estimate).*
+
 ## 🔥 The War Story
 
 Two cost stories from one platform, and they rhyme.
@@ -639,6 +647,8 @@ Finish: *"Commit the cost model as `11-4-cost-model.md` with the message
 ---
 
 # 11.5 — Your Edge Platform in Practice: Cloudflare End to End
+
+**After this you can** put an app behind Cloudflare with a cache rule, WAF and Turnstile, re-run the earlier cache-poisoning and rate-limit tests through the real edge, and keep the edge config in the repo. *Study time: about 55 minutes (estimate).*
 
 > **Tool-dated lesson.** Cloudflare is this course's reference edge, and the named
 > features (Turnstile, R2, Workers, the specific dashboard toggles) are current

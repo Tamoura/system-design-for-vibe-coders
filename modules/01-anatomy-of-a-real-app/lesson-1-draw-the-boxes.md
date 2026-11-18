@@ -13,6 +13,8 @@ of them breaks. Terms are defined on first use; the
 
 *Module 1: Anatomy of a Real App*
 
+**After this you can** draw your app's seven boxes in `docs/architecture.md`, make the running app match the drawing, and prove with a cold-start test that a fresh agent session knows where uploaded media goes from CLAUDE.md alone. *Study time: about 70 minutes (estimate).*
+
 ---
 
 ## 🔥 The War Story

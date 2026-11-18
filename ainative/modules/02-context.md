@@ -9,6 +9,8 @@
 # 2.1 — What the agent sees: the context budget, project memory, rules, references, compaction and subagents
 *Level: 🟢 Beginner* · *Prerequisites: 1.1* · *Focus: Context*
 
+**After this you can** prune a project memory file, giving each line a verdict and the command that proves it. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - This is the habit **Context first**. The window is a **budget**: system prompt, memory, rules, files, tool output and conversation all spend it, and performance degrades as it fills.
 - **Project memory** (`CLAUDE.md`, or `AGENTS.md`) loads every session. Keep what the agent cannot guess; ask of each line whether removing it would cause a mistake. Stay under 200 lines.
@@ -357,6 +359,8 @@ The commands ran. The `float` rule is stated once, with the one `IMPORTANT`. `na
 
 # 2.2 — Lab: write the project memory for Najm Remit and measure what it changes
 *Level: 🟢 Beginner* · *Prerequisites: 0.2, 2.1* · *Focus: Context*
+
+**After this you can** write a project memory file that passes the grader's checks and measure what it changes in a with-and-without run. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Lab m02: write `CLAUDE.md` (or `AGENTS.md`) for the starter repository, run one small ticket twice, without and with it, and record the difference in `ab-notes.md`.

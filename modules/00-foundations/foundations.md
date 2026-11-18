@@ -8,6 +8,8 @@ with something you can **see** working.*
 
 # F.1 — What Happens When You Open a Website
 
+**After this you can** sketch the four-step trip of opening a website on a napkin, explain it to a friend, and show with measured round-trip times why a faraway site answers more slowly. *Study time: about 35 minutes (estimate).*
+
 ## 🔥 The Story: the day Facebook forgot where it lived
 
 On October 4, 2021, Facebook, Instagram, and WhatsApp vanished from the internet
@@ -127,6 +129,8 @@ and say, word for word if you like:
 
 # F.2 — What a Server Actually Is (and What Code Is)
 
+**After this you can** have your agent start, stop and restart a tiny web program while you watch the page work, die and work again, and explain what happened to a non-coder using the recipe, kitchen and notebook analogy. *Study time: about 35 minutes (estimate).*
+
 ## 🔥 The Story: one of the world's biggest sites ran on nine computers
 
 For years, Stack Overflow — the question-and-answer site nearly every programmer
@@ -224,6 +228,8 @@ of awe; see references.)
 ---
 
 # F.3 — Versions, Repos, and Deploys: How Software Moves
+
+**After this you can** direct your agent to commit two versions of a page, show you the diff, and restore v1 and then v2 with proof, and say which version is live from the history. *Study time: about 35 minutes (estimate).*
 
 ## 🔥 The Story: the company that lost $440 million in 45 minutes
 
@@ -326,6 +332,8 @@ that was almost complete, verified by no one.
 ---
 
 # F.4 — Meet Your Agent: Directing a Builder You Can't Watch
+
+**After this you can** write a first CLAUDE.md with a production-data rule and an evidence rule, and prove it with a cold-start test in which a fresh agent session answers three questions about your product correctly. *Study time: about 50 minutes (estimate).*
 
 ## 🔥 The Story: the agent that deleted a company's database — then misled its boss
 
@@ -448,6 +456,8 @@ agent asks before deleting, overwriting, or spending. Set them; test them.
 ---
 
 # F.5 — Your First Live Page, With Proof
+
+**After this you can** have your agent deploy a one-page site, check v2 on your own phone against the evidence it promised in advance, and write a rollback runbook that names the exact version it returns to. *Study time: about 50 minutes (estimate).*
 
 ## 🔥 The Story: the typo that turned off the internet's dashboard
 

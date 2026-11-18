@@ -9,6 +9,8 @@
 # 10.1 — Working with several agents: worktrees, delegation, the review bottleneck and cost
 *Level: 🔴 Advanced* · *Prerequisites: 4.1, 5.1, 9.1* · *Focus: Workflow, Automate*
 
+**After this you can** split a change into independent tasks with a merge order and set your stream count from measured review minutes. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Parallel agents **pay** when tasks are independent, written down and quickly checked. They **do not** when tasks share files or decisions, or you cannot check results as fast as they arrive.
 - A **git worktree** is another checkout of one repository, in its own folder on its own branch (`git worktree add`, or `claude --worktree <name>`).
@@ -321,6 +323,8 @@ For REMIT-350 it is short: S1 and S2 are independent, S3 builds on S1's contract
 
 # 10.2 — Lab: split a change across agents and integrate it
 *Level: 🔴 Advanced* · *Prerequisites: 10.1, 4.2, 5.2* · *Focus: Workflow*
+
+**After this you can** build a four-task change on separate branches and merge it into main in an order that keeps the grader green. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - REMIT-361 has four tasks: a notification, two CLI commands and a runbook page. You plan it, build each on its **own branch** (by hand or with agents) and **merge** them into `main`.

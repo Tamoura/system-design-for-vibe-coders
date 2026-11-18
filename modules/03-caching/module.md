@@ -13,6 +13,8 @@ Terms are defined on first use; the [Glossary](../../GLOSSARY.md) has the rest.*
 
 *Module 3: Caching — the Sharpest Knife in the Drawer*
 
+**After this you can** cache one hot endpoint in Redis with a written TTL justification, measure cold time, warm time and hit rate, and show that a stale value is served for a bounded time only. *Study time: about 70 minutes (estimate).*
+
 > The flagship lesson of this module — **3.2, the cache-poisoning incident** —
 > sits between 3.1 and 3.3 as its own piece. This file holds **3.1, 3.3, and
 > 3.4**.
@@ -182,6 +184,8 @@ No code reading required — accept the lesson only when:
 ---
 
 # 3.3 — Invalidation in real life
+
+**After this you can** move every cache key into one key module, prove with a round-trip test that a mutation clears the exact key a read fills, and watch a drift-guard fail when an invalidation is missing. *Study time: about 70 minutes (estimate).*
 
 ## 🔥 The War Story
 
@@ -356,6 +360,8 @@ No code reading required — accept the lesson only when:
 ---
 
 # 3.4 — When the cache takes you down
+
+**After this you can** cap Redis memory, cut a 100-request stampede to one database hit with a single-flight lock, and show that killing Redis makes the app slower but not broken. *Study time: about 70 minutes (estimate).*
 
 ## 🔥 The War Story
 

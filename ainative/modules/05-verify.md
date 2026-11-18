@@ -9,6 +9,8 @@
 # 5.1 — Trust evidence, not fluency: tests as the spec, reading diffs and the ways AI code passes while being wrong
 *Level: 🟡 Intermediate* · *Prerequisites: 4.1* · *Focus: Verify*
 
+**After this you can** write a test that fails on a green but wrong pull request and explain from the diff why the suite missed it. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Fluent is not true.** A summary, a diff and "all tests pass" read well either way. Evidence could have come out the other way: a test that can fail, a diff you read, a run you watched.
 - **Tests are the specification.** Approve them from the acceptance criteria *before* the agent implements, commit them, and treat any later edit to them as a finding.
@@ -283,6 +285,8 @@ Use it in proportion: all of it for money modules, Parts 1 and 4 for a copy chan
 
 # 5.2 — Lab: review a pull request an agent wrote
 *Level: 🟡 Intermediate* · *Prerequisites: 4.2, 5.1* · *Focus: Verify*
+
+**After this you can** review an agent's pull request, record findings with evidence and fix it in small commits that pass the grader. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Lab m05.** `ailab start` puts you on the branch `agent/loyalty-discount`: Lujain's agent built Hessa's loyalty-discount ticket (REMIT-229), and the suite is **green**.

@@ -9,9 +9,11 @@ library. CI runs them with Python 3.11 in `.github/workflows/publish.yml`, and e
 | Answer-cue audit | `npm run qa:cues` | Scores content-free strategies on every multiple-choice instrument (see below). | A score rises above the baseline, or a new instrument is too easy to guess. |
 | Arabic rules | `npm run qa:arabic` | The owner's three standing rules for Arabic text (see below). | A violation that is not in the baseline. |
 | Claims lint | `npm run qa:claims` | Looks for wording the library must not publish (see below). | Any hit. There is no baseline. |
-| Site counts | `npm run qa:counts` | Compares the landing cards and about pages with `academy/catalogue.json` (see below). | Any count differs. |
+| Site counts | `npm run qa:counts` | Compares the landing cards and about pages with `academy/catalogue.json`, and each course's assurance level with its sign-off records (see below). | Any count differs, or a level has no record. |
+| Lesson outcomes | `npm run qa:outcomes` | Every lesson (EN and AR) opens with "After this you can ..." and a study-time estimate (`academy/STANDARD.md` section 3). | A lesson lacks either line. |
+| Internal links | `npm run qa:links` | Every internal link and `#anchor` on the assembled `_site/` resolves. Runs in the publish workflow after "Assemble the site". | Any broken internal link. |
 
-`npm run qa` runs all five, keeps going after a failure and prints a summary. Each script also runs on its own:
+`npm run qa` runs the first six (the internal-link check needs the assembled site), keeps going after a failure and prints a summary. Each script also runs on its own:
 `python3 scripts/qa/<name>.py`. Exit status 0 means pass, 1 means fail, 2 means the check could not run.
 
 Two other tools live here:
@@ -44,9 +46,10 @@ For each course, instrument and language it scores these strategies, in percent:
 | `latin` | Arabic only: pick the option with uniquely the most Latin letters (glosses can point at the key). | about 25% |
 | `key` | Share of the most common key letter, with the letter. The self-assessment pages shuffle the options for each reader, so for `self` this only describes the source files. | 25% |
 
-The audit reproduces the numbers found by hand earlier: the longest option is the key in 89 of the 100 AIGP mock-exam
-questions and in 59 of the 60 AI PM exam questions, and in the career, data and cloud exams the key is never the
-longest or the shortest option (so `mid` is 100%).
+**Current scores are never written in this README.** They change whenever an item changes. Run `npm run qa:cues`
+for the live table, or read `scripts/qa/cue-baseline.json`, which the tool writes. (For history only: when this
+audit was first written in November 2026, the longest option was the key in most AIGP and AI PM exam questions;
+those items have since been rewritten.)
 
 **The ratchet.** `scripts/qa/cue-baseline.json` holds every row's scores. The check fails when
 
@@ -54,8 +57,9 @@ longest or the shortest option (so `mid` is 100%).
 - a row that is not in the baseline (a new course, instrument or language) scores above 35% on `longest`,
   `shortest`, `midguess`, `latin` or `key`, or above 62.5% on `mid`.
 
-Today many rows are far above those limits (marked `*` in the table). The ratchet does not make them pass or fail;
-it stops them getting worse while the items are rewritten. To see which items a strategy gets right:
+Rows above those limits are marked `*` in the table. The ratchet does not make them pass or fail; it stops them
+getting worse. A row near chance on every strategy is only free of these particular cues: it says nothing about
+whether the questions measure the right thing, which needs a blind review by an assessment lead and a learner pilot. To see which items a strategy gets right:
 
 ```bash
 python3 scripts/qa/quiz_cues.py --items aigp/exam/en --strategy longest
@@ -82,10 +86,11 @@ exceptions in the baseline is empty.
 
 ## Claims lint (`claims_lint.py`)
 
-Scans every tracked or new text file except `agentic/`, `scripts/sync-agentic.sh` (it lists blocked text on purpose)
-and `scripts/qa/` (these checks). It fails on:
+Scans every tracked or new text file except `agentic/` (checked by `scripts/agentic-neutral.mjs --check`) and
+`scripts/qa/` (these checks). It fails on:
 
-- the name of a real organisation: "Qatar Development Bank", the word `QDB`, «بنك قطر للتنمية»;
+- the name of the real organisation an earlier draft named (English, its short token, Arabic). The patterns live
+  base64-encoded in `scripts/blocked-text.b64` (read through `scripts/blocked_text.py`), so no public file spells it out;
 - exam-pass promises anywhere: "pass the AIGP", "ready for the AIGP exam", "sit the real exam", and their Arabic forms
   from the sources: «اجتياز امتحان شهادة (certification exam) AIGP», «اجتز امتحان AIGP», «جاهز لامتحان AIGP»,
   «تقدّم للامتحان الحقيقي»;

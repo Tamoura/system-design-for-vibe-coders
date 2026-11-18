@@ -9,6 +9,8 @@
 # 14.1 — Capstone: take a change to Najm Remit through the full AI-native cycle
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0-13* · *Focus: Workflow, Verify, Secure*
 
+**After this you can** take one ticket from spec to reviewed, graded change with an agent and defend every line in a demo. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **One ticket, the whole cycle.** REMIT-414 opens a Bangladesh corridor: five small code edits, graded with the evidence around them.
 - **Ten pieces of evidence** (memory, spec, plan, ADR, tests, review, settings and hook, docs, agent log, retrospective) must agree with the code and each other.
@@ -306,6 +308,8 @@ Total minutes: 0
 
 # 14.2 — Practice exam: 60 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0-14* · *Focus: Mindset, Context, Workflow, Verify, Secure, Automate, Team*
+
+**After this you can** answer sixty scenario questions in about 90 minutes and tag each miss with its lesson and trap. *Study time: about 120 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Sixty scenario questions** from all fifteen modules (0 to 14), mixed and numbered 1 to 60. Most are short scenes on the Payments Platform team. Each has one best answer.
