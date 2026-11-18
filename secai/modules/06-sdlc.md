@@ -412,7 +412,7 @@ Also: required reviews on pipeline files, separate build and deploy identities, 
 
 **Vendors and regulation.** Ask suppliers for SBOMs, VEX statements, evidence of a secure development process (an SSDF-style attestation) and a commitment to notify you of vulnerabilities, and write these into contracts. Regulation agrees: US Executive Order 14028 (2021) pushed SBOMs into federal procurement. The EU **Cyber Resilience Act** (Regulation (EU) 2024/2847) places security duties on manufacturers of products with digital elements, with vulnerability reporting from September 2026 and most obligations from December 2027. **DORA** requires EU financial entities to manage ICT third-party risk. Check the current texts (2026); lesson 11.2 and *AI Governance: Zero to Hero* cover the legal detail.
 
-**Models and datasets are dependencies too.** Some model file formats, notably Python's pickle, can execute code when loaded. For Credit Memo Copilot and Smart Alerts, prefer formats such as safetensors, pin model revisions by hash, and record models and datasets in an AI bill of materials (CycloneDX supports machine-learning components). This is LLM03 Supply Chain in the OWASP Top 10 for LLM Applications; Module 8 goes deeper.
+**Models and datasets are dependencies too.** Some model file formats, notably Python's pickle, can execute code when loaded. For Credit Memo Copilot and Smart Alerts, prefer formats such as safetensors, pin model revisions by hash, and record models and datasets in an AI bill of materials (CycloneDX supports machine-learning components). This is LLM03:2025 Supply Chain in the OWASP Top 10 for LLM Applications; Module 8 goes deeper.
 
 ## 🧰 The toolkit
 | Control, standard or tool | What it is and does | When to reach for it |
@@ -584,7 +584,7 @@ Research agrees. In "Asleep at the Keyboard?" (Pearce et al., 2022), about 40% o
 
 ### 🟢 The essentials
 
-**The mental model.** Treat an AI coding assistant as a very fast, well-read new colleague who has never seen your threat model, rarely says "I'm not sure", and learned from a lot of insecure public code. Its output is untrusted input: the "never trust model output" principle (9.1), and LLM05 Improper Output Handling in the OWASP Top 10 for LLM Applications. Two consequences follow:
+**The mental model.** Treat an AI coding assistant as a very fast, well-read new colleague who has never seen your threat model, rarely says "I'm not sure", and learned from a lot of insecure public code. Its output is untrusted input: the "never trust model output" principle (9.1), and LLM05:2025 Improper Output Handling in the OWASP Top 10 for LLM Applications. Two consequences follow:
 - **Accountability does not move.** The engineer who accepts the change is its author for review, incident and audit purposes.
 - **The gates do not relax.** Everything in 6.1 and 6.2 still applies, and some gates matter more than before.
 

@@ -132,7 +132,7 @@ Each dotted line is an independent control that breaks the chain: defence in dep
 
 **Keys and data location.** Use **customer-managed keys** (5.1) for confidential data, with key administrators separate from data users. Where law limits where data may be stored, region restrictions become a guardrail too (11.2).
 
-**AI services are cloud resources.** Najm Assist's hosted model and Credit Memo Copilot's managed vector store have IAM, network exposure and logs like any other resource. Use private networking for model endpoints where supported, keep LLM API keys in the secrets manager with one key per service and spending limits, and log who called which model. A leaked LLM key is both a data risk and a bill (OWASP LLM10, Unbounded Consumption).
+**AI services are cloud resources.** Najm Assist's hosted model and Credit Memo Copilot's managed vector store have IAM, network exposure and logs like any other resource. Use private networking for model endpoints where supported, keep LLM API keys in the secrets manager with one key per service and spending limits, and log who called which model. A leaked LLM key is both a data risk and a bill (OWASP LLM10:2025, Unbounded Consumption).
 
 ## 🧰 The toolkit
 | Control, standard or tool | What it is and does | When to reach for it |
@@ -658,7 +658,7 @@ So a WAF is a layer, not a fix. Its best use is **virtual patching**: a temporar
 | **Protocol** | Exhausts connection tables, for example SYN floods | Edge services and load balancers built to absorb them |
 | **Application-layer** (layer 7) | Sends real-looking HTTP requests, often to expensive endpoints | Caching, per-client rate limits, bot management, authentication on expensive operations |
 
-For application-layer floods, design matters more than appliances. A statement-export endpoint that runs a heavy query for anonymous users is a gift to an attacker. The OWASP API Security Top 10 calls this **Unrestricted Resource Consumption** (API4). For LLM features it is **Unbounded Consumption** (LLM10), where every request costs real money, sometimes called "denial of wallet".
+For application-layer floods, design matters more than appliances. A statement-export endpoint that runs a heavy query for anonymous users is a gift to an attacker. The OWASP API Security Top 10 calls this **Unrestricted Resource Consumption** (API4). For LLM features it is **Unbounded Consumption** (LLM10:2025), where every request costs real money, sometimes called "denial of wallet".
 
 ### 🟡 Going deeper
 

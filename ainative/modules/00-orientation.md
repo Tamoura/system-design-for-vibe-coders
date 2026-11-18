@@ -287,7 +287,7 @@ Would I delegate it again?     Yes, with the same spec
 ## 🧭 Why it matters
 On day two Lujain, tired of permission prompts, switches her agent to bypass mode. Her laptop holds a VPN profile, a cloud login and an old project's `.env`. Nothing happens. That is the trap: the bad day is rare, so safety feels like friction. Noura (application and AI security) sets a week-zero rule: the agent has your hands. Whatever you can read, delete or push, it can.
 
-Rare does happen: one user said Google's Antigravity agent, in "Turbo mode", deleted a drive's contents (November 2025); a founder said a Replit agent deleted a production database during a code freeze (July 2025). Both are unaudited single accounts, so hold the details loosely. The pattern is OWASP's excessive agency (LLM06): too much functionality, permission or autonomy.
+Rare does happen: one user said Google's Antigravity agent, in "Turbo mode", deleted a drive's contents (November 2025); a founder said a Replit agent deleted a production database during a code freeze (July 2025). Both are unaudited single accounts, so hold the details loosely. The pattern is OWASP's excessive agency (LLM06:2025): too much functionality, permission or autonomy.
 
 ## 📐 How it works
 

@@ -58,7 +58,9 @@ These are demonstrations and disclosures, mostly from security vendors, not atta
 | Untrusted content | A vendor README, issue text, web pages | Read it yourself first |
 | A way out | `curl`, `git push`, a pull request, an MCP tool | Deny push; ask on `curl`; sandbox with no allowed domains |
 
-**Excessive agency** (OWASP LLM06) has three roots: unneeded tools, a token broader than the task, irreversible actions with no human. The Cursor report above shows the last two.
+**Excessive agency** (OWASP LLM06:2025) has three roots: unneeded tools, a token broader than the task, irreversible actions with no human. The Cursor report above shows the last two.
+
+> **Dated note (November 2026).** OWASP published a 2026 edition of the Top 10 for LLM Applications in August 2026. Prompt injection and sensitive information disclosure are still first and second, and excessive agency has moved up to third. This lesson uses the 2025 codes (LLM01:2025 to LLM10:2025) because the full 2026 list was not available to check; check genai.owasp.org for the current list. For risks specific to agents that use tools, OWASP keeps a separate list, the OWASP Top 10 for Agentic Applications (ASI01 to ASI10).
 
 ### 🟡 Going deeper
 
@@ -290,7 +292,7 @@ Weak entry: "Risk: the agent might do something bad. Control: be careful." Stron
 
 ## 📚 References
 - Claude Code documentation: permissions https://code.claude.com/docs/en/permissions; permission modes https://code.claude.com/docs/en/permission-modes; sandboxing https://code.claude.com/docs/en/sandboxing; hooks https://code.claude.com/docs/en/hooks; MCP https://code.claude.com/docs/en/mcp; security https://code.claude.com/docs/en/security; data usage https://code.claude.com/docs/en/data-usage
-- OWASP Top 10 for LLM Applications (LLM01 Prompt Injection, LLM06 Excessive Agency): https://genai.owasp.org/llm-top-10/
+- OWASP Top 10 for LLM Applications 2025 (LLM01:2025 Prompt Injection, LLM06:2025 Excessive Agency): https://genai.owasp.org/llm-top-10/
 - [*Secure AI & Application Security*, lesson 8.2 — Prompt injection and jailbreaks, direct and indirect](../secai/index.html#/8.2); [*Secure AI*, lesson 9.2 — Agents and tools: excessive agency, least-privilege tools and MCP](../secai/index.html#/9.2); [*Secure AI*, lesson 6.2 — The software supply chain: dependencies, SBOMs, SLSA and signing](../secai/index.html#/6.2); [*Secure AI*, lesson 6.3 — Securing AI-generated code: what coding agents get wrong](../secai/index.html#/6.3)
 - **Go deeper.** Invariant Labs, tool poisoning: https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks · Invariant Labs, GitHub MCP: https://invariantlabs.ai/blog/mcp-github-vulnerability · Simon Willison, the lethal trifecta: https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/ · Spracklen et al.: https://www.usenix.org/conference/usenixsecurity25/presentation/spracklen · Pearce et al.: https://arxiv.org/pdf/2108.09293 · Perry et al.: https://arxiv.org/pdf/2211.03622
 

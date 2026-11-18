@@ -62,18 +62,18 @@
    "level": 2,
    "lesson": "2.3",
    "q": {
-    "en": "Najm’s Frankfurt branch outsources evening customer support to a contact-centre firm whose agents answer customers with Najm’s GenAI assistant. The branch’s draft literacy plan lists only Najm employees, and the firm says its agents are not Najm staff. What does Article 4 of the EU AI Act mean for these agents?",
-    "ar": "يُسند فرع بنك نجم (Najm Bank) في فرانكفورت دعم العملاء المسائي إلى شركة مركز اتصال يجيب وكلاؤها العملاءَ باستخدام مساعد الذكاء الاصطناعي التوليدي (GenAI assistant) التابع للبنك. ومسودة خطة الإلمام في الفرع لا تذكر إلا موظفي بنك نجم، وتقول الشركة إن وكلاءها ليسوا من موظفي البنك. ماذا تعني المادة 4 من EU AI Act لهؤلاء الوكلاء؟"
+    "en": "Najm’s Frankfurt branch outsources evening customer support to a contact-centre firm whose agents answer customers with Najm’s GenAI assistant. The branch’s draft literacy plan lists only Najm employees, and the firm says its agents are not Najm staff. How should Najm treat these agents under its EU AI Act Article 4 literacy measures?",
+    "ar": "يُسند فرع بنك نجم (Najm Bank) في فرانكفورت دعم العملاء المسائي إلى شركة مركز اتصال يجيب وكلاؤها العملاءَ باستخدام مساعد الذكاء الاصطناعي التوليدي (GenAI assistant) التابع للبنك. ومسودة خطة الإلمام في الفرع لا تذكر إلا موظفي بنك نجم، وتقول الشركة إن وكلاءها ليسوا من موظفي البنك. كيف ينبغي لبنك نجم أن يتعامل مع هؤلاء الوكلاء في تدابير الإلمام التي يتخذها بموجب المادة 4 من EU AI Act؟"
    },
    "o": {
     "en": [
-     "In scope: they use Najm’s AI on its behalf, so measures must reach them",
+     "In scope: they use Najm’s AI on its behalf, so measures should reach them",
      "Out of scope: the duty covers only the bank’s own employees, not suppliers",
      "Out of scope unless the GenAI assistant is classed as a high-risk system",
      "In scope, but each agent must first hold an accredited literacy certificate"
     ],
     "ar": [
-     "مشمولون: فهم يستخدمون الذكاء الاصطناعي لبنك نجم نيابة عنه، فيجب أن تصل إليهم التدابير",
+     "مشمولون: فهم يستخدمون الذكاء الاصطناعي لبنك نجم نيابة عنه، فينبغي أن تصل إليهم التدابير",
      "غير مشمولين: فالواجب يغطي موظفي البنك أنفسهم فقط، لا المورّدين",
      "غير مشمولين ما لم يُصنَّف مساعد الذكاء الاصطناعي التوليدي (GenAI assistant) نظامًا عالي المخاطر (high-risk system)",
      "مشمولون، لكن يجب أولًا أن يحمل كل وكيل شهادة إلمام معتمدة"
@@ -81,8 +81,8 @@
    },
    "a": 0,
    "why": {
-    "en": "Article 4 covers staff and other persons dealing with the operation and use of AI systems on the provider’s or deployer’s behalf, such as contractors, so Najm must take proportionate measures for the agents, for example training before access. The duty is not limited to high-risk systems, and the Act prescribes no certificate.",
-    "ar": "تغطي المادة 4 الموظفين والأشخاص الآخرين الذين يتعاملون مع تشغيل أنظمة الذكاء الاصطناعي (AI systems) واستخدامها نيابة عن مقدّم النظام (provider) أو المُشغِّل (deployer)، مثل المتعاقدين، لذا يجب على بنك نجم (Najm Bank) اتخاذ تدابير متناسبة للوكلاء، كالتدريب قبل منح الوصول. ولا يقتصر الواجب على الأنظمة عالية المخاطر (high-risk systems)، ولا يفرض القانون شهادة."
+    "en": "Article 4 as first adopted named staff and other persons dealing with the operation and use of AI systems on the provider’s or deployer’s behalf, such as contractors. The 2026 wording asks for measures that support the AI literacy of staff rather than a guaranteed level; check the current text for its exact reach. Either way, a programme that skips the people running the assistant leaves it in untrained hands, so Najm should reach the agents, for example with training before access. The duty is not limited to high-risk systems, and the Act prescribes no certificate.",
+    "ar": "كانت المادة 4 بصيغتها الأولى تذكر الموظفين والأشخاص الآخرين الذين يتعاملون مع تشغيل أنظمة الذكاء الاصطناعي (AI systems) واستخدامها نيابة عن مقدّم النظام (provider) أو المُشغِّل (deployer)، مثل المتعاقدين. وتطلب صياغة 2026 تدابير تدعم إلمام الموظفين بدل مستوى مضمون؛ فتحقّق من النص الحالي لمعرفة نطاقه بدقة. وفي الحالتين، البرنامج الذي يتخطى من يشغّلون المساعد يتركه في أيدٍ غير مدرَّبة، لذا ينبغي لبنك نجم (Najm Bank) أن يشمل الوكلاء، كالتدريب قبل منح الوصول. ولا يقتصر الواجب على الأنظمة عالية المخاطر (high-risk systems)، ولا يفرض القانون شهادة."
    }
   },
   {

@@ -693,7 +693,7 @@ Canonical: https://najmbank.example/.well-known/security.txt
 
 | Report | Treat as |
 |---|---|
-| Acts on another customer's account, or skips a required confirmation | Security vulnerability, high or critical (LLM06; 3.3) |
+| Acts on another customer's account, or skips a required confirmation | Security vulnerability, high or critical (LLM06:2025; 3.3) |
 | Reveals another customer's data, or secrets from its context | Security vulnerability (LLM02, LLM07) |
 | Outsider-plantable content triggers indirect injection with real impact | Security vulnerability (LLM01) |
 | Jailbreak producing rude text, with no data or action impact | Not a security bug: route to the AI safety channel (Layla's team) |

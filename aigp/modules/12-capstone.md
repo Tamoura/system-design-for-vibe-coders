@@ -370,7 +370,7 @@ Grouped by domain. For each: the trap, and what to answer instead.
 1. **Governance as a legal function.** AI governance is cross-functional. Accountability sits with named business owners and senior management, with legal, privacy, risk, security and data science contributing.
 2. **Accountable vs responsible.** In a RACI, one person is *accountable* (owns the outcome); several may be *responsible* (do the work). An answer that makes a committee collectively accountable for a use case is weaker than one naming an owner.
 3. **Principles as governance.** Ethics principles are the start. Questions reward operationalising them: policies, roles, controls, metrics, training.
-4. **AI literacy as optional.** Under the EU AI Act, providers and deployers must take measures to ensure sufficient AI literacy of their staff and others operating AI for them, from 2 February 2025. It is not limited to high-risk systems.
+4. **AI literacy as optional.** Under the EU AI Act, providers and deployers must take measures to support the AI literacy of their staff (Art. 4, in Chapter I, applying from 2 February 2025; since the 2026 amendment no specific level must be guaranteed). It is not limited to high-risk systems.
 5. **"We bought it, so it's the vendor's problem."** Third-party AI remains the buyer's risk. Due diligence, contracts and monitoring are the buyer's controls.
 6. **The inventory as a one-off.** An AI inventory is living: new systems, changes and retirements all update it. "Build an inventory" is often the right *first* step for an organisation with no programme.
 
@@ -554,10 +554,10 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 **After this you can** sit a timed 100-question practice exam, then use each wrong answer's competency ID to list the lessons you will revisit. *Study time: about 210 minutes (estimate).*
 
-> **Under revision (November 2026).** In many questions in this practice exam the correct option can be spotted by its length or wording, so a high score here does not show readiness for any real exam. Use it to practise reasoning: answer each question in your own words before you read the options, then compare.
+> **Practice only.** The answer options were rewritten in November 2026 so the correct answer can no longer be spotted by its length. But no assessment expert has reviewed these items, and the mix of domains is this course's own, not the official exam blueprint. A high score here is practice, not evidence that you are ready for the real exam. Answer each question in your own words before you read the options, then compare.
 
 ## ⚡ In 60 seconds
-- This is a full-length practice exam: **100 original questions** across all four domains, in roughly blueprint proportion (Domain I 18, Domain II 22, Domain III 30, Domain IV 30). About a third are scenario-based, several in sets that share one scenario. None is a real exam item.
+- This is a full-length practice exam: **100 original questions** across all four domains, in a mix chosen by this course (Domain I 18, Domain II 22, Domain III 30, Domain IV 30). About a third are scenario-based, several in sets that share one scenario. None is a real exam item.
 - **Time yourself: 2 hours 45 minutes**, one sitting, no notes. Use the pacing plan from 12.2: one full pass, then flagged questions, then a final check.
 - Write your answers down before opening any answer block. **Your score is the number you got right.**
 - **Your score here does not predict your result on the real exam.** Use it to find weak areas, not to decide whether to book. The real exam uses a scaled score (100–500, pass 300) that IAPP does not publish as a percentage.
@@ -661,13 +661,13 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 **8. Which statement about the EU AI Act's AI-literacy duty is correct?**
 
 - A. It applies only to providers of high-risk AI systems, and only once their conformity assessment is complete and signed off
-- B. It requires providers and deployers to ensure sufficient AI literacy of staff; it has applied since 2 February 2025
+- B. It requires providers and deployers to take measures supporting staff AI literacy; it has applied since 2 February 2025
 - C. It requires every employee to pass an accredited certification exam before they may use any AI system at work
 - D. It applies only from 2 August 2027, together with the rules for high-risk systems in regulated products
 
 <details><summary>Answer</summary>
 
-**B.** The literacy duty covers providers and deployers of AI systems generally, not only high-risk ones, and applied with the prohibitions from 2 February 2025. The Act does not require certification exams. *Competency: I.B*
+**B.** The literacy duty covers providers and deployers of AI systems generally, not only high-risk ones, and applies with the rest of Chapter I from 2 February 2025; Regulation (EU) 2026/1744 reworded it without setting a new date. The Act does not require certification exams. *Competency: I.B*
 
 </details>
 

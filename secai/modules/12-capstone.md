@@ -835,7 +835,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**B.** In retrieval-augmented generation (RAG), access control happens at retrieval time: each chunk carries the permissions of its source document, and the search returns only what the signed-in user may see. If a document never enters the prompt, the model cannot leak it. D, like Dana's idea, is tempting because it looks like a rule, but it asks the model to enforce access control; a rephrased or injected question gets around it, and the data is already in the context. This is the territory of LLM08 Vector and Embedding Weaknesses and LLM02 Sensitive Information Disclosure. A sorts documents by type, not by who may read them, so every manager still reaches every borrower; C protects against a different threat. *(Design · 9.3)*
+**B.** In retrieval-augmented generation (RAG), access control happens at retrieval time: each chunk carries the permissions of its source document, and the search returns only what the signed-in user may see. If a document never enters the prompt, the model cannot leak it. D, like Dana's idea, is tempting because it looks like a rule, but it asks the model to enforce access control; a rephrased or injected question gets around it, and the data is already in the context. This is the territory of LLM08:2025 Vector and Embedding Weaknesses and LLM02 Sensitive Information Disclosure. A sorts documents by type, not by who may read them, so every manager still reaches every borrower; C protects against a different threat. *(Design · 9.3)*
 
 </details>
 
@@ -1220,7 +1220,7 @@ Noura runs this exam with every new member of the Application & AI Security team
 
 <details><summary>Answer</summary>
 
-**D.** When attackers can influence the data a model learns from, they can shift what it treats as normal: data poisoning (LLM04 Data and Model Poisoning covers the LLM variant; MITRE ATLAS and NIST AI 100-2 cover machine learning generally). Controls include knowing where labels come from, flagging unusual clusters in new training data, limiting the influence of any one source, and refusing to promote a retrained model that does worse on a trusted, held-out set. A is tempting because the ring's goal is to avoid detection, but the mechanism here is corrupted training labels, which inference-time evasion controls do not touch. *(Operate · 8.3)*
+**D.** When attackers can influence the data a model learns from, they can shift what it treats as normal: data poisoning (LLM04:2025 Data and Model Poisoning covers the LLM variant; MITRE ATLAS and NIST AI 100-2 cover machine learning generally). Controls include knowing where labels come from, flagging unusual clusters in new training data, limiting the influence of any one source, and refusing to promote a retrained model that does worse on a trusted, held-out set. A is tempting because the ring's goal is to avoid detection, but the mechanism here is corrupted training labels, which inference-time evasion controls do not touch. *(Operate · 8.3)*
 
 </details>
 

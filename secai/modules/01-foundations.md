@@ -401,7 +401,7 @@ James Reason's "Swiss cheese" model of accidents is the standard picture: every 
 
 **Principles conflict; judgement settles it.** More layers add complexity, and complexity breeds bugs. Strict least privilege slows teams and invites workarounds. Failing closed can hurt availability. Name the trade-off in the design review and decide by blast radius: the more an action can harm customers or move money, the more friction it earns.
 
-**The model is not a security boundary.** A system prompt saying "never reveal other customers' data" is a request, not a control. Prompt injection can override it, and it can leak (OWASP LLM07, System Prompt Leakage). Every rule that matters is enforced in code outside the model: in the tool, the data layer or the gateway.
+**The model is not a security boundary.** A system prompt saying "never reveal other customers' data" is a request, not a control. Prompt injection can override it, and it can leak (OWASP LLM07:2025, System Prompt Leakage). Every rule that matters is enforced in code outside the model: in the tool, the data layer or the gateway.
 
 **Make principles measurable.** Count service accounts with wildcard permissions, permissions unused for 90 days, unauthenticated internal calls and the median lifetime of credentials. Hamad, the CISO, asks for three of these every quarter.
 

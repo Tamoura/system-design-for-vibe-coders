@@ -58,7 +58,9 @@
 | المحتوى غير الموثوق | README لمورّد ونص البلاغات وصفحات الويب | اقرأه بنفسك أولًا |
 | منفذ إلى الخارج | `curl` و`git push` وطلب دمج وأداة MCP | امنع الدفع؛ واسأل قبل `curl`؛ وبيئة معزولة بلا نطاقات مسموحة |
 
-**الصلاحيات المفرطة للوكيل (Excessive agency)** (OWASP LLM06) لها ثلاثة جذور: أدوات لا حاجة إليها، ورمز وصول أوسع من المهمة، وإجراءات لا رجعة فيها بلا إنسان. ويُظهر تقرير Cursor أعلاه الأخيرين.
+**الصلاحيات المفرطة للوكيل (Excessive agency)** (OWASP LLM06:2025) لها ثلاثة جذور: أدوات لا حاجة إليها، ورمز وصول أوسع من المهمة، وإجراءات لا رجعة فيها بلا إنسان. ويُظهر تقرير Cursor أعلاه الأخيرين.
+
+> **ملاحظة مؤرَّخة، نوفمبر 2026.** نشرت OWASP في أغسطس 2026 إصدارًا لعام 2026 من قائمة Top 10 لتطبيقات النماذج اللغوية الكبيرة. وما زال حقن الموجّه والإفصاح عن المعلومات الحساسة في المرتبتين الأولى والثانية، وصعدت الصلاحيات المفرطة للوكيل إلى المرتبة الثالثة. ويستخدم هذا الدرس رموز إصدار 2025 (من LLM01:2025 إلى LLM10:2025) لأن القائمة الكاملة لعام 2026 لم تكن متاحةً للتحقق منها؛ فراجع genai.owasp.org للاطلاع على القائمة الحالية. وللمخاطر الخاصة بالوكلاء الذين يستخدمون أدوات، تنشر OWASP قائمةً منفصلة هي OWASP Top 10 for Agentic Applications، أي أهم عشرة مخاطر في التطبيقات الوكيلية (من ASI01 إلى ASI10).
 
 ### 🟡 التعمق أكثر
 
@@ -290,7 +292,7 @@ $ git branch rescue 'HEAD@{1}'     # a branch at the lost commit; it deletes not
 
 ## 📚 المراجع
 - وثائق Claude Code: الصلاحيات https://code.claude.com/docs/en/permissions; وأوضاع الصلاحيات (permission modes) https://code.claude.com/docs/en/permission-modes; والعزل (sandboxing) https://code.claude.com/docs/en/sandboxing; والخطافات https://code.claude.com/docs/en/hooks; وMCP https://code.claude.com/docs/en/mcp; والأمان https://code.claude.com/docs/en/security; واستخدام البيانات https://code.claude.com/docs/en/data-usage
-- أهم 10 مخاطر لتطبيقات النماذج اللغوية الكبيرة من OWASP (OWASP Top 10 for LLM Applications) — LLM01 حقن الموجّه وLLM06 الصلاحيات المفرطة: https://genai.owasp.org/llm-top-10/
+- أهم 10 مخاطر لتطبيقات النماذج اللغوية الكبيرة من OWASP (OWASP Top 10 for LLM Applications)، إصدار 2025 — LLM01:2025 حقن الموجّه وLLM06:2025 الصلاحيات المفرطة: https://genai.owasp.org/llm-top-10/
 - [*الذكاء الاصطناعي الآمن وأمان التطبيقات (Secure AI & Application Security)*، الدرس 8.2 — حقن الموجّهات وكسر القيود، المباشر وغير المباشر](../secai/index.ar.html#/8.2)؛ [*الذكاء الاصطناعي الآمن (Secure AI)*، الدرس 9.2 — الوكلاء والأدوات: الصلاحيات المفرطة وأدوات أقل الصلاحيات وMCP](../secai/index.ar.html#/9.2)؛ [*الذكاء الاصطناعي الآمن*، الدرس 6.2 — سلسلة توريد البرمجيات: الاعتماديات وقوائم SBOM وSLSA والتوقيع](../secai/index.ar.html#/6.2)؛ [*الذكاء الاصطناعي الآمن*، الدرس 6.3 — تأمين الشيفرة المولَّدة بالذكاء الاصطناعي: ما الذي يخطئ فيه وكلاء البرمجة](../secai/index.ar.html#/6.3)
 - **تعمّق أكثر.** Invariant Labs، تسميم الأدوات (tool poisoning): https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks · Invariant Labs، GitHub MCP: https://invariantlabs.ai/blog/mcp-github-vulnerability · Simon Willison، الثالوث القاتل: https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/ · Spracklen وآخرون: https://www.usenix.org/conference/usenixsecurity25/presentation/spracklen · Pearce وآخرون: https://arxiv.org/pdf/2108.09293 · Perry وآخرون: https://arxiv.org/pdf/2211.03622
 

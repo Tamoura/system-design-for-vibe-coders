@@ -600,6 +600,8 @@ For the technical controls, see *Production AI Agents*; for the governance view,
 | **OWASP Top 10 for LLM Applications** (OWASP) | Community list of the main security risks for LLM applications, including prompt injection and excessive agency | Risk review of any agent that reads external content or calls tools |
 | **Model Context Protocol (MCP)** (Anthropic, 2024) | Open standard for connecting models to tools and data sources | Conversations with engineering about how the agent reaches systems |
 
+> **Dated note (November 2026).** OWASP published a 2026 edition of the Top 10 for LLM Applications in August 2026. Prompt injection and sensitive information disclosure are still first and second, and excessive agency has moved up to third. This lesson follows the 2025 edition, whose codes run from LLM01:2025 to LLM10:2025, because the full 2026 list was not available to check; check genai.owasp.org for the current list. For risks specific to agents that use tools, OWASP keeps a separate list, the OWASP Top 10 for Agentic Applications (ASI01 to ASI10).
+
 ## 🏛️ In practice at Najm Bank
 Faisal and Hessa produce the **Najm Assist v2 Action Catalogue**, reviewed by Tariq, Layla and the head of the contact centre.
 

@@ -140,6 +140,8 @@ Whatever a customer, document or web page says arrives in the same channel as th
 | **CWE** (MITRE) | Catalogue of software and hardware weakness types | Naming a class of bug so it can be prevented everywhere |
 | **CVE** | Public identifiers for specific disclosed vulnerabilities | Tracking known flaws in the software you run |
 
+> **Dated note (November 2026).** OWASP published a 2026 edition of the Top 10 for LLM Applications in August 2026. Prompt injection and sensitive information disclosure are still first and second, and excessive agency has moved up to third. This lesson uses the 2025 codes (LLM01:2025 to LLM10:2025) because the full 2026 list was not available to check; check genai.owasp.org for the current list. For risks specific to agents that use tools, OWASP keeps a separate list, the OWASP Top 10 for Agentic Applications (ASI01 to ASI10).
+
 ## 🏛️ In practice at Najm Bank
 Noura and Ali produce the **Najm Assist asset register v0.1**, the first artefact her team creates for any new system. Ratings are illustrative.
 
@@ -352,7 +354,7 @@ The fix is one condition; its absence is a one-link chain to every customer's da
 3. The model treats the hidden text as instructions, because it cannot reliably tell data from commands (lesson 0.1).
 4. The model uses a capability it has: it calls a tool, or carries private data out, for example in a link or image address that points to the attacker's server and loads when the reply is displayed.
 
-Simon Willison (2025) named the dangerous combination the **lethal trifecta**: access to private data, exposure to untrusted content, and the ability to communicate externally. If one assistant has all three, assume an attacker can make it leak. Remove one leg (for example, the copilot's output may not load external links or images) and this chain breaks: a design decision, made before code (Module 9). A related failure is **excessive agency** (LLM06): if Najm Assist's card tool can act on any card rather than only the signed-in customer's, a successful injection becomes a successful fraud.
+Simon Willison (2025) named the dangerous combination the **lethal trifecta**: access to private data, exposure to untrusted content, and the ability to communicate externally. If one assistant has all three, assume an attacker can make it leak. Remove one leg (for example, the copilot's output may not load external links or images) and this chain breaks: a design decision, made before code (Module 9). A related failure is **excessive agency** (LLM06:2025): if Najm Assist's card tool can act on any card rather than only the signed-in customer's, a successful injection becomes a successful fraud.
 
 ### 🔴 Expert view
 
@@ -629,7 +631,7 @@ Never practise on your employer's production systems, a public website you use, 
 
 **Build a portfolio as you go.** Each 🏛️ section is a template. Redo it for a system you know, and you finish with an asset register, attack-chain walkthrough, threat model, access-control matrix, detection rule, incident runbook and red-team scope; lesson 12.1 combines them to secure Najm Assist. Keep anything confidential out. Invent a system if you must, as this course invented Najm.
 
-**How the course handles facts.** Lessons name editions (the OWASP Top 10 for LLM Applications 2025 version, CVSS v4.0, NIST CSF 2.0) and say "at the time of writing (2026)" for anything that may move; check the current version. Real cases are limited to well-documented public events. The course is independent: not certification preparation, not affiliated with OWASP, MITRE, NIST, ISO or any certification body, and not legal advice.
+**How the course handles facts.** Lessons name editions (the OWASP Top 10 for LLM Applications 2025 version, CVSS v4.0, NIST CSF 2.0) and say "at the time of writing (2026)" for anything that may move; check the current version. OWASP published a 2026 edition of the LLM list in August 2026; the course keeps the 2025 codes until the full 2026 list can be checked (lesson 0.1). Real cases are limited to well-documented public events. The course is independent: not certification preparation, not affiliated with OWASP, MITRE, NIST, ISO or any certification body, and not legal advice.
 
 ## 🧰 The toolkit
 | Control, standard or tool | What it is and does | When to reach for it |

@@ -290,7 +290,7 @@ Hands-on work runs only against your own code or a local lab such as OWASP crAPI
 
 ## ⚡ In 60 seconds
 - **Abuse** is using legitimate features at a scale, speed or order the designers did not expect. Often every single request is valid.
-- Two OWASP API risks name it: **API4 Unrestricted Resource Consumption** (no limits on volume or cost) and **API6 Unrestricted Access to Sensitive Business Flows** (a valuable flow automated by attackers). For LLM features the equivalent is **LLM10 Unbounded Consumption**.
+- Two OWASP API risks name it: **API4 Unrestricted Resource Consumption** (no limits on volume or cost) and **API6 Unrestricted Access to Sensitive Business Flows** (a valuable flow automated by attackers). For LLM features the equivalent is **LLM10:2025 Unbounded Consumption**.
 - **Business-logic flaws** are rules the code forgot: negative amounts, skipped steps, limits checked per request instead of per day, and **race conditions** where two parallel requests both pass a check.
 - Key rate limits on what the attacker finds scarce (verified accounts, devices, phone numbers, the targeted account), not only on IP addresses, which are cheap.
 - Decision cue for every sensitive flow: "What if a script did this 10,000 times, in parallel, in a different order, from 10,000 addresses?"
