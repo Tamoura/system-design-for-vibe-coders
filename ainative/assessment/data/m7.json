@@ -26,7 +26,7 @@
       "a": 2,
       "why": {
         "en": "A refactor commit with no behaviour change can be judged by \"the tests did not change\"; the rounding change then gets its own commit and its own visible test edit. One commit with a clear message (A) is tempting because Finance agreed, but a message does not restore that check. A commit that leaves the pinned test failing (D) breaks the rule that every step leaves the tests green.",
-        "ar": "حين يخلو إيداع إعادة الهيكلة من أي تغيير في السلوك يستطيع المراجِع الحكم عليه بعبارة «الاختبارات لم تتغير»؛ ويأخذ تغيير التقريب إيداعه الخاص وتعديل اختباره الظاهر. أما دمج الاثنين في إيداع واحد فمغرٍ لأن المالية وافقت، لكن الرسالة الواضحة لا تعيد هذا الفحص. وإيداع يترك الاختبار المثبَّت فاشلًا (D) يخرق قاعدة أن كل خطوة تترك الاختبارات خضراء."
+        "ar": "حين يخلو إيداع إعادة الهيكلة من أي تغيير في السلوك يستطيع المراجِع الحكم عليه بعبارة «الاختبارات لم تتغير»؛ ويأخذ تغيير التقريب إيداعه الخاص وتعديل اختباره الظاهر. أما دمج الاثنين في إيداع واحد (A) فمغرٍ لأن المالية وافقت، لكن الرسالة الواضحة لا تعيد هذا الفحص. وإيداع يترك الاختبار المثبَّت فاشلًا (D) يخرق قاعدة أن كل خطوة تترك الاختبارات خضراء."
       }
     },
     {
@@ -82,7 +82,7 @@
       "a": 3,
       "why": {
         "en": "With the three events pinned first, \"the audit tests did not change\" becomes the migration check. Green commits (A) and warnings as errors (B) are tempting, but neither pins output: the warning flag only flags old names, not changed output, so a tidy conversion stays green wherever no test pins the line. Checking by eye afterwards (C) is a thin sample, not a net.",
-        "ar": "حين تُثبَّت الأحداث الثلاثة أولًا تصبح عبارة «اختبارات التدقيق لم تتغير» هي فحص الترحيل. والإيداعات الخضراء والتحذيرات المعاملة كأخطاء (warnings as errors) (B) خياران مغريان، لكن أيًّا منهما لا يثبّت المخرجات: فالثاني يكشف الأسماء القديمة لا تغيُّر المخرجات، فيبقى التحويل «المرتَّب» أخضر حيث لا اختبار يثبّت السطر. أما الفحص بالعين لاحقًا (C) فعيّنة ضئيلة لا شبكة أمان."
+        "ar": "حين تُثبَّت الأحداث الثلاثة أولًا تصبح عبارة «اختبارات التدقيق لم تتغير» هي فحص الترحيل. والإيداعات الخضراء (A) والتحذيرات المعاملة كأخطاء (warnings as errors) (B) خياران مغريان، لكن أيًّا منهما لا يثبّت المخرجات: فالثاني يكشف الأسماء القديمة لا تغيُّر المخرجات، فيبقى التحويل «المرتَّب» أخضر حيث لا اختبار يثبّت السطر. أما الفحص بالعين لاحقًا (C) فعيّنة ضئيلة لا شبكة أمان."
       }
     },
     {
@@ -110,7 +110,7 @@
       "a": 1,
       "why": {
         "en": "A missed copy is a behaviour she has not pinned, so Part 2 could change it with no test noticing, and the grader cannot tell whether a refactor changed a behaviour nobody pinned, so its hidden checks (C) are no substitute. Stopping because the misses are advisory (A) treats the required check as the goal, when the grader is a practice partner, not a gate.",
-        "ar": "النسخة التي فاتت الاختبارات هي سلوك لم تثبّته لجين، فقد يغيّره الجزء الثاني دون أن يلحظه اختبار، والمُقيِّم لا يعرف إن كانت إعادة الهيكلة غيّرت سلوكًا لم يثبّته أحد، فلا تُغني فحوصه الخفية (C) عن ذلك. أما الاكتفاء لأن الفوات استشاري فيجعل الفحص المطلوب هو الهدف، والمُقيِّم شريك تدريب لا بوابة."
+        "ar": "النسخة التي فاتت الاختبارات هي سلوك لم تثبّته لجين، فقد يغيّره الجزء الثاني دون أن يلحظه اختبار، والمُقيِّم لا يعرف إن كانت إعادة الهيكلة غيّرت سلوكًا لم يثبّته أحد، فلا تُغني فحوصه الخفية (C) عن ذلك. أما الاكتفاء لأن الفوات استشاري (A) فيجعل الفحص المطلوب هو الهدف، والمُقيِّم شريك تدريب لا بوابة."
       }
     }
   ],

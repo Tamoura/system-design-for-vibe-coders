@@ -26,7 +26,7 @@
    "a": 2,
    "why": {
     "en": "Behaviour pins the numbers: worked examples with exact amounts and edges are what a test can prove or refute. Restating the ticket (A) adds nothing it left out, and prescribing the lines to edit (B) makes the agent obey the letter of the how.",
-    "ar": "يثبّت قسم السلوك الأرقام: الأمثلة التطبيقية بمبالغ دقيقة وحدود واضحة هي ما يستطيع الاختبار إثباته أو نقضه. وإعادة صياغة التذكرة لا تضيف ما أغفلته، ووصف الأسطر المطلوب تعديلها (B) يجعل الوكيل (agent) يطيع حرفية الكيفية."
+    "ar": "يثبّت قسم السلوك الأرقام: الأمثلة التطبيقية بمبالغ دقيقة وحدود واضحة هي ما يستطيع الاختبار إثباته أو نقضه. وإعادة صياغة التذكرة (A) لا تضيف ما أغفلته، ووصف الأسطر المطلوب تعديلها (B) يجعل الوكيل (agent) يطيع حرفية الكيفية."
    }
   },
   {
@@ -82,7 +82,7 @@
    "a": 3,
    "why": {
     "en": "The audit lists guesses, but only gaps that change behaviour or contradict the spec's own words are worth keeping; the conflict with the code is fixed because the code wins, and noise is dismissed with a reason. Answering all eleven (A) is the tempting mistake, since reviewers report some items even when the work is sound.",
-    "ar": "يعدّد التدقيق التخمينات، لكن الثغرات التي تغيّر السلوك أو تناقض كلام المواصفة نفسها وحدها تستحق الإبقاء؛ ويُصحَّح التعارض مع الشيفرة لأن الشيفرة هي التي تحسم، ويُرفض الضجيج (noise) مع ذكر السبب. والإجابة عن الإحدى عشرة كلها هي الخطأ المغري، فالمراجعون يبلّغون عن بعض الأمور حتى حين يكون العمل سليمًا."
+    "ar": "يعدّد التدقيق التخمينات، لكن الثغرات التي تغيّر السلوك أو تناقض كلام المواصفة نفسها وحدها تستحق الإبقاء؛ ويُصحَّح التعارض مع الشيفرة لأن الشيفرة هي التي تحسم، ويُرفض الضجيج (noise) مع ذكر السبب. والإجابة عن الإحدى عشرة كلها (A) هي الخطأ المغري، فالمراجعون يبلّغون عن بعض الأمور حتى حين يكون العمل سليمًا."
    }
   },
   {

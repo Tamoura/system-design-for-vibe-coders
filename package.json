@@ -42,6 +42,7 @@
     "qa:claims": "python3 scripts/qa/claims_lint.py",
     "qa:counts": "python3 scripts/qa/site_counts.py",
     "qa:outcomes": "python3 scripts/qa/lesson_outcomes.py",
+    "qa:parity": "python3 scripts/qa/ar_parity.py",
     "qa:links": "python3 scripts/qa/site_links.py _site",
     "qa:ar": "python3 scripts/qa/check_ar_all.py",
     "test:assess": "node scripts/tests/assessment-group.test.mjs"

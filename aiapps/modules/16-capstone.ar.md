@@ -308,7 +308,7 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 
 <details><summary>الإجابة</summary>
 
-**D.** يتحقق من الوجود والروابط فقط: لا من بوابة التقييم، ولا من صحة الوثيقة أو توقيعها (B)؛ و«مذكور» ليس «مُختبَر» (C).
+**D.** يتحقق من الوجود والروابط فقط: لا من بوابة التقييم (not the eval gate) (A)، ولا من صحة الوثيقة أو توقيعها (B)؛ و«مذكور» ليس «مُختبَر» (C).
 
 </details>
 

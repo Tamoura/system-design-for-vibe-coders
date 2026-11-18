@@ -701,7 +701,7 @@ kind delete cluster --name najm-lab
 
 <details><summary>الإجابة</summary>
 
-**A.** يشغّل kind عنقود Kubernetes داخل Docker على جهازه الخاص، وهذا بالضبط ما يحتاجه المختبر. وهو ليس جاهزًا للإنتاج وليس في السحابة؛ ويحتاج kind إلى بيئة تشغيل حاويات (container runtime) مثل Docker كي يعمل أصلًا. (🟡 التعمق أكثر.)
+**A.** يشغّل kind عنقود Kubernetes داخل Docker على جهازه الخاص، وهذا بالضبط ما يحتاجه المختبر. وهو ليس جاهزًا للإنتاج (not production-ready) (B) وليس في السحابة (not in the cloud) (C)؛ ويحتاج kind إلى بيئة تشغيل حاويات (container runtime) مثل Docker كي يعمل أصلًا (D). (🟡 التعمق أكثر.)
 
 </details>
 

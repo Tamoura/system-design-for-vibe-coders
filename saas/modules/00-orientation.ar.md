@@ -142,7 +142,7 @@ flowchart TD
 |---|---|---|---|---|
 | [nextjs/saas-starter](https://github.com/nextjs/saas-starter) | مجموعة بداية رسمية مصغّرة: مصادقة، وStripe، وفرق، وأدوار، وسجل نشاط | Next.js, Postgres, Drizzle, Stripe | MIT | تريد أصغر هيكل مقروء لتتعلم منه |
 | [vercel/next-forge](https://github.com/vercel/next-forge) | قالب Turborepo بمستوى الإنتاج، مع حزم كثيرة موصولة معًا (كان في الأصل `haydenbleasel/next-forge`) | Next.js monorepo, TypeScript | MIT | تريد أن ترى كيف يقسّم مستودع أحادي (Monorepo) جاد المسؤوليات إلى حزم |
-| [wasp-lang/open-saas](https://github.com/wasp-lang/open-saas) | قالب SaaS كامل فيه مصادقة، ومدفوعات، ولوحة إدارة، ومهام، ومثال ذكاء اصطناعي | Wasp | MIT | تريد كل شيء جاهزًا ولا تمانع استخدام إطار عمل |
+| [wasp-lang/open-saas](https://github.com/wasp-lang/open-saas) | قالب SaaS كامل فيه مصادقة، ومدفوعات، ولوحة إدارة، ومهام، ومثال ذكاء اصطناعي | Wasp (React + Node.js + Prisma) | MIT | تريد كل شيء جاهزًا ولا تمانع استخدام إطار عمل |
 | [boxyhq/saas-starter-kit](https://github.com/boxyhq/saas-starter-kit) | مجموعة بداية موجّهة للمؤسسات: SSO، وSCIM، وسجلات تدقيق، وويب هوك (webhook)، وفرق | Next.js, Prisma, Postgres | Apache-2.0 | تبيع لشركات ستطلب SSO من اليوم الأول |
 | [ixartz/SaaS-Boilerplate](https://github.com/ixartz/SaaS-Boilerplate) | قالب Next.js فيه مصادقة، وتعدد مستأجرين، وأدوار، وتعدد لغات (i18n)، وإعداد للاختبارات | Next.js, Drizzle, Tailwind, shadcn/ui | MIT | تريد قاعدة كود مجهّزة جيدًا، فيها الاختبارات والتدقيق الآلي مُعدّة مسبقًا |
 | [t3-oss/create-t3-app](https://github.com/t3-oss/create-t3-app) | أداة سطر أوامر (CLI) تنشئ تطبيقًا متكاملًا آمن الأنواع (وليس SaaS كاملًا) | Next.js, tRPC, Prisma or Drizzle, Tailwind | MIT | تريد قاعدة نظيفة وستضيف مكوّنات SaaS بنفسك |

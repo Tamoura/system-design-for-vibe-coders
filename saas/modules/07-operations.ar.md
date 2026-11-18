@@ -466,7 +466,7 @@ flowchart RL
 
 ### 🟡 تمرين المستوى المتوسط
 
-أضف OpenTelemetry إلى الـ API وعمّال الفحص، مع التصدير إلى مجمِّع محلي وخلفية من اختيارك. مرّر سياق التتبع عبر حمولة مهمة BullMQ. أصدر مقياسين للمنتج: `checks_executed_total` و`check_lag_seconds` (مدرَّج تكراري Histogram).
+أضف OpenTelemetry إلى الـ API وعمّال الفحص، مع التصدير إلى مجمِّع محلي وخلفية من اختيارك (SigNoz أو Grafana + Tempo في Docker Compose). مرّر سياق التتبع عبر حمولة مهمة BullMQ. أصدر مقياسين للمنتج: `checks_executed_total` و`check_lag_seconds` (مدرَّج تكراري Histogram).
 
 **يكتمل عندما:**
 - يُظهر تتبع واحد طلب الـ API الذي أنشأ مراقِبًا، ووضعه في الطابور، وأول تنفيذ للفحص في العامل.
