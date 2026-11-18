@@ -6,6 +6,8 @@
 
 ---
 
+> **Dated note (November 2026).** OWASP's 2026 LLM Top 10 (August 2026) keeps prompt injection first and moves excessive agency to third. This lesson uses the 2025 codes; the full 2026 list was not available to check. Agent-specific risks: OWASP Top 10 for Agentic Applications (ASI).
+
 # 8.1 — When an agent has your keyboard: injection, secrets, destructive commands, hallucinated packages, permissions and sandboxes
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1* · *Focus: Secure*
 
@@ -60,7 +62,6 @@ These are demonstrations and disclosures, mostly from security vendors, not atta
 
 **Excessive agency** (OWASP LLM06:2025) has three roots: unneeded tools, a token broader than the task, irreversible actions with no human. The Cursor report above shows the last two.
 
-> **Dated note (November 2026).** OWASP published a 2026 edition of the Top 10 for LLM Applications in August 2026. Prompt injection and sensitive information disclosure are still first and second, and excessive agency has moved up to third. This lesson uses the 2025 codes (LLM01:2025 to LLM10:2025) because the full 2026 list was not available to check; check genai.owasp.org for the current list. For risks specific to agents that use tools, OWASP keeps a separate list, the OWASP Top 10 for Agentic Applications (ASI01 to ASI10).
 
 ### 🟡 Going deeper
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="saas-source" content="0e532d5a96b4c73c">
+<meta name="saas-source" content="a4820e642bfe5366">
 <meta name="description" content="SaaS Building Blocks — the ~25 components every SaaS shares, taught beginner to advanced, with the best open-source repos to learn each one from.">
 <title>SaaS Building Blocks</title>
 <style>
@@ -1106,6 +1106,8 @@ answers you can reveal, each pointing back to the section that explains it.</li>
 <p class="crumb"><a href="#/map">Module 0 — Orientation: Every SaaS Is the Same App</a></p>
 <h1><span class="num">0.1</span> The 80% nobody sells: the anatomy of every SaaS</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> sort Beacon&#39;s ~25 SaaS components into &quot;v1&quot; or &quot;later&quot; with a reason for each, and make a build, buy or self-host call for five of them that names a concrete product or repo. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>A SaaS is a small <strong>core domain</strong> (the part customers pay for) surrounded by <strong>generic subdomains</strong> that nearly every product shares: auth, orgs, billing, email, jobs, webhooks, audit logs.</li>
@@ -1562,6 +1564,8 @@ answers you can reveal, each pointing back to the section that explains it.</li>
 <p class="crumb"><a href="#/map">Module 0 — Orientation: Every SaaS Is the Same App</a></p>
 <h1><span class="num">0.2</span> How to read a giant open-source codebase without drowning</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> map at least 15 SaaS components in an unfamiliar open-source repo such as openstatus, citing a file or search for each, and trace one request from the UI form to the database insert with permalinks. <em>Study time: about 105 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>Big codebases are searched and navigated, not read top to bottom. Start from one written question.</li>
@@ -1915,6 +1919,8 @@ git log --oneline -S &quot;maxMonitors&quot; -- .
 <p class="crumb"><a href="#/map">Module 0 — Orientation: Every SaaS Is the Same App</a></p>
 <h1><span class="num">0.3</span> The reference shelf: the SaaS codebases and starter kits we study</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> run a reference SaaS repo from the shelf on your machine, fill its row of the component matrix with evidence for every cell, and decide whether Beacon may copy a given piece of code under its licence. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>The reference shelf is a short list of real, production open-source SaaS (openstatus, Cal.com, Documenso, Dub, Sentry, Chatwoot and others) that the course uses to show each component under real load.</li>
@@ -2573,6 +2579,8 @@ git log --oneline -S &quot;maxMonitors&quot; -- .
 <p class="crumb"><a href="#/map">Module 1 — Identity &amp; Access</a></p>
 <h1><span class="num">1.1</span> Authentication: proving who someone is</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> add email-and-password login with hashed passwords and a server-side session to Beacon, plus GitHub sign-in with PKCE and a password reset that answers the same way for known and unknown emails. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>Authentication proves who is making a request. It is a set of flows (sign-up, login, verification, reset, MFA, logout), and an attacker picks the weakest one.</li>
@@ -2921,6 +2929,8 @@ export async function validateSession(token: string) {
 <p class="crumb"><a href="#/map">Module 1 — Identity &amp; Access</a></p>
 <h1><span class="num">1.2</span> Users, organizations &amp; invitations: the multi-tenant skeleton</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="prereq">Before this: <a href="#/1.1">1.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> move Beacon&#39;s monitors to organization ownership, build hashed invitations that expire and cannot be reused, and show that a non-member gets 404 on another org&#39;s pages. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>In B2B SaaS the customer is an organization, not a person. Users join it through memberships that carry a role.</li>
@@ -3230,6 +3240,8 @@ export async function validateSession(token: string) {
 <p class="crumb"><a href="#/map">Module 1 — Identity &amp; Access</a></p>
 <h1><span class="num">1.3</span> Authorization: roles, permissions, and &quot;can this user do this?&quot;</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="prereq">Before this: <a href="#/1.1">1.1</a>, <a href="#/1.2">1.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a <code>requirePermission()</code> check for the owner, admin, member and viewer roles, and prove with <code>curl</code> that a viewer gets 403 when deleting a monitor and that a request body cannot change its org or role. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>Authorization decides whether a subject may perform an action on a specific resource. The server asks it on every request, and never takes the answer from the client.</li>
@@ -3603,6 +3615,8 @@ type status_page
 <p class="crumb"><a href="#/map">Module 1 — Identity &amp; Access</a></p>
 <h1><span class="num">1.4</span> Enterprise identity: SSO, SAML, OIDC and SCIM</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="prereq">Before this: <a href="#/1.1">1.1</a>, <a href="#/1.2">1.2</a>, <a href="#/1.3">1.3</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> connect a Beacon org to a local identity provider so a user signs in through SSO without a Beacon password, and show that a tampered or expired SAML response is rejected. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>SSO (SAML or OIDC) lets the customer&#39;s identity provider handle login. SCIM lets it create and remove users as employees join and leave.</li>
@@ -3941,6 +3955,8 @@ export async function patchScimUser(org: Org, scimId: string, body: ScimPatch) {
 <p class="crumb"><a href="#/map">Module 2 — Data</a></p>
 <h1><span class="num">2.1</span> The data layer: Postgres, ORMs, migrations and seeds</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="prereq">Before this: <a href="#/1.2">1.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a Beacon schema, migration and idempotent seed that one command rebuilds from a fresh clone, and use <code>EXPLAIN ANALYZE</code> to remove an N+1 and get an index scan on the dashboard query. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>The data layer is your relational database plus the tools around it: an ORM or query builder, versioned migrations, and seed scripts.</li>
@@ -4256,6 +4272,8 @@ ORDER BY m.id, c.checked_at DESC;
 <p class="crumb"><a href="#/map">Module 2 — Data</a></p>
 <h1><span class="num">2.2</span> File uploads and object storage</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="prereq">Before this: <a href="#/2.1">2.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build presigned uploads in which the file bytes never pass through your app server, and serve private files through a membership check that returns 404 to users from another org. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>Files (logos, screenshots, PDF reports, exports) belong in S3-compatible object storage, not on app server disks or in the database.</li>
@@ -4552,6 +4570,8 @@ export async function signLogoUpload(orgId: string, fileId: string, type: string
 <p class="crumb"><a href="#/map">Module 2 — Data</a></p>
 <h1><span class="num">2.3</span> Search: from `LIKE '%x%'` to a search engine</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="prereq">Before this: <a href="#/2.1">2.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> add tenant-scoped fuzzy monitor search with <code>pg_trgm</code>, show the index in use with <code>EXPLAIN ANALYZE</code>, and prove with a test that no user receives another org&#39;s results. <em>Study time: about 105 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>Search is a ladder: <code>ILIKE</code>, then <code>pg_trgm</code>, then Postgres full-text search, then a search engine, then hybrid keyword-plus-vector search.</li>
@@ -4838,6 +4858,8 @@ CREATE INDEX incident_update_search_idx ON incident_update USING gin (search);
 <p class="crumb"><a href="#/map">Module 2 — Data</a></p>
 <h1><span class="num">2.4</span> Multi-tenancy deep dive: isolation, noisy neighbours, residency</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="prereq">Before this: <a href="#/1.2">1.2</a>, <a href="#/1.3">1.3</a>, <a href="#/2.1">2.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> route every tenant query through a scoped helper, add Postgres row-level security as a backstop, and write a cross-tenant test that gets 404 for every other org&#39;s resource. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>Multi-tenancy is a spectrum of isolation: pool (shared tables), bridge (a schema per tenant) and silo (a database or stack per tenant).</li>
@@ -5131,6 +5153,8 @@ COMMIT;
 <p class="crumb"><a href="#/map">Module 3 — Money</a></p>
 <h1><span class="num">3.1</span> Subscriptions and payments: checkout, webhooks, the customer portal</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="prereq">Before this: <a href="#/1.2">1.2</a>, <a href="#/2.1">2.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> wire Stripe Checkout, the Customer Portal and a signature-verified, deduplicated webhook handler into Beacon, and show that sending the same event twice updates the subscription row once. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>A subscription is a Customer paying a Price every period. The payment provider owns the truth about money, and your database keeps a copy.</li>
@@ -5539,6 +5563,8 @@ export async function POST(req: Request) {
 <p class="crumb"><a href="#/map">Module 3 — Money</a></p>
 <h1><span class="num">3.2</span> Plans, limits and entitlements: turning pricing into code</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="prereq">Before this: <a href="#/3.1">3.1</a>, <a href="#/1.3">1.3</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> turn Free, Pro and Business pricing into one entitlements module, enforce monitor limits with a structured <code>limit_exceeded</code> error, and downgrade an org without deleting any of its data. <em>Study time: about 105 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>An entitlement is one thing an account may do or have: a feature gate, a limit or a configuration value. A plan is just a named package of them.</li>
@@ -5890,6 +5916,8 @@ export function getEntitlements(org: Org): Entitlements {
 <p class="crumb"><a href="#/map">Module 3 — Money</a></p>
 <h1><span class="num">3.3</span> Usage-based billing and metering</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="prereq">Before this: <a href="#/3.1">3.1</a>, <a href="#/3.2">3.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> record one idempotent usage event per SMS, report overage to Stripe meters from a retrying job, and show that replaying the job does not change the invoice. <em>Study time: about 105 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>Usage billing is a pipeline: usage events → meter → aggregate → rate → invoice line, with a usage view and alerts alongside.</li>
@@ -6263,6 +6291,8 @@ await db.usageEvent.upsert({
 <p class="crumb"><a href="#/map">Module 4 — Communication</a></p>
 <h1><span class="num">4.1</span> Transactional email that actually arrives</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="prereq">Before this: <a href="#/1.1">1.1</a>, <a href="#/1.2">1.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> send verify, invitation and incident emails through one <code>sendEmail()</code> function, authenticate a sending domain with SPF, DKIM and DMARC, and stop sending to addresses that bounced or complained. <em>Study time: about 105 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>Transactional email (password resets, invites, incident alerts) is triggered by a user action. Its delivery is decided by the receiving mailbox provider, based on your domain&#39;s authentication and reputation.</li>
@@ -6605,6 +6635,8 @@ export async function sendInvite(job: { to: string; orgName: string; url: string
 <p class="crumb"><a href="#/map">Module 4 — Communication</a></p>
 <h1><span class="num">4.2</span> Notifications: in-app, push, Slack, SMS — and preferences</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="prereq">Before this: <a href="#/4.1">4.1</a>, <a href="#/1.2">1.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build an in-app inbox and a channel router with per-user preferences, and show that an incident creates exactly one notification per eligible member even when <code>notify()</code> runs twice. <em>Study time: about 105 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>A notification system turns one domain event into the right message, for the right people, on the right channels (in-app, email, push, SMS, Slack, webhooks).</li>
@@ -6947,6 +6979,8 @@ export async function sendInvite(job: { to: string; orgName: string; url: string
 <p class="crumb"><a href="#/map">Module 4 — Communication</a></p>
 <h1><span class="num">4.3</span> Real-time and collaboration: WebSockets to CRDTs</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="prereq">Before this: <a href="#/4.2">4.2</a>, <a href="#/2.4">2.4</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> replace dashboard polling with server-sent events fanned out through Redis, and show a monitor turning red on an open dashboard within about a second, even when the event was published on another app instance. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>Real-time is two separate problems: fan-out (pushing server changes to many clients) and conflicts (many clients editing the same data).</li>
@@ -7320,6 +7354,8 @@ export async function GET(req: Request, { params }: { params: { orgId: string } 
 <p class="crumb"><a href="#/map">Module 5 — Background Work &amp; Integrations</a></p>
 <h1><span class="num">5.1</span> Background jobs, queues and scheduled tasks</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="prereq">Before this: <a href="#/2.1">2.1</a>, <a href="#/4.1">4.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> move incident notifications into a background job with retries, backoff and a dead-letter destination, and prove that running the same job twice sends each subscriber exactly one email. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>A background job is a durable record of work, stored in a broker and run later by a separate worker that can retry it.</li>
@@ -7653,6 +7689,8 @@ RETURNING m.id, m.org_id, m.region;
 <p class="crumb"><a href="#/map">Module 5 — Background Work &amp; Integrations</a></p>
 <h1><span class="num">5.2</span> The public API: API keys, versioning and rate limits</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="prereq">Before this: <a href="#/1.2">1.2</a>, <a href="#/1.3">1.3</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> ship public monitor endpoints behind hashed, revocable org API keys with cursor pagination, and add plan-aware rate limits that answer 429 with <code>Retry-After</code>. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>A public API is a separate product surface with its own contract, usually REST + JSON described by an OpenAPI document.</li>
@@ -7986,6 +8024,8 @@ export async function verifyApiKey(presented: string) {
 <p class="crumb"><a href="#/map">Module 5 — Background Work &amp; Integrations</a></p>
 <h1><span class="num">5.3</span> Outbound webhooks and third-party integrations</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="prereq">Before this: <a href="#/5.1">5.1</a>, <a href="#/5.2">5.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> send webhooks signed to the Standard Webhooks spec with timeouts and retries, refuse targets such as <code>127.0.0.1</code> and <code>169.254.169.254</code>, and give customers a log of every delivery attempt. <em>Study time: about 105 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>An outbound webhook is an HTTP POST Beacon sends to a customer&#39;s URL when an event happens. It is a delivery system, not a <code>fetch</code> call.</li>
@@ -8276,6 +8316,8 @@ export function signStandardWebhook(secret: string, id: string, body: string) {
 <p class="crumb"><a href="#/map">Module 5 — Background Work &amp; Integrations</a></p>
 <h1><span class="num">5.4</span> Workflow engines and durable execution</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="prereq">Before this: <a href="#/5.1">5.1</a>, <a href="#/5.3">5.3</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> move a notification fan-out into a durable workflow with named steps, kill the worker mid-run and show that it resumes without re-sending, and build an escalation that stops on acknowledgement. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>A workflow is a multi-step process with state. Durable execution lets you write it as ordinary code whose progress is persisted step by step.</li>
@@ -8620,6 +8662,8 @@ export function signStandardWebhook(secret: string, id: string, body: string) {
 <p class="crumb"><a href="#/map">Module 6 — Product &amp; Growth</a></p>
 <h1><span class="num">6.1</span> The app shell: marketing site, onboarding, dashboard and settings</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="prereq">Before this: <a href="#/1.1">1.1</a>, <a href="#/1.2">1.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build an org-scoped app shell with a sidebar, org switcher, empty state and split settings, and show that a Member gets 403 from the server when calling an admin-only endpoint directly. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>The app shell is the frame around your product: marketing site, authenticated layout, onboarding, settings, forms, design system and tenant-facing surfaces like custom domains.</li>
@@ -8987,6 +9031,8 @@ https:// {
 <p class="crumb"><a href="#/map">Module 6 — Product &amp; Growth</a></p>
 <h1><span class="num">6.2</span> Analytics: product, web and the event pipeline</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="prereq">Before this: <a href="#/1.2">1.2</a>, <a href="#/6.1">6.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a tracking plan of 8–12 object_action events with no personal data, send key events server-side to PostHog, and build an activation funnel broken down by organization. <em>Study time: about 105 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>Analytics is three jobs: web analytics (who visits the marketing site), product analytics (what users do in the app) and BI (all your systems joined in a warehouse).</li>
@@ -9286,6 +9332,8 @@ https:// {
 <p class="crumb"><a href="#/map">Module 6 — Product &amp; Growth</a></p>
 <h1><span class="num">6.3</span> Feature flags and experiments</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="prereq">Before this: <a href="#/3.2">3.2</a>, <a href="#/6.2">6.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build a percentage-rollout flag with per-org overrides, prove with a 1,000-call test that the same org always gets the same answer, and add a kill switch that on-call can flip. <em>Study time: about 105 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>A feature flag is a runtime <code>if</code> whose condition you control from outside the code. It separates deploying code from releasing it.</li>
@@ -9561,6 +9609,8 @@ return scheduleWithOldEngine(monitor);
 <p class="crumb"><a href="#/map">Module 7 — Operating the SaaS</a></p>
 <h1><span class="num">7.1</span> The admin panel: support tools and impersonation</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="prereq">Before this: <a href="#/1.2">1.2</a>, <a href="#/1.3">1.3</a>, <a href="#/3.2">3.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build a staff-only admin area with customer search and support actions that require a reason and write an audit event, and show that a customer account gets 404 on every admin route. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>An admin panel is the internal app your staff use to find customers, inspect their state, extend trials, comp plans, fix data and impersonate.</li>
@@ -9940,6 +9990,8 @@ export function guardImpersonation(req: Req, session: Session) {
 <p class="crumb"><a href="#/map">Module 7 — Operating the SaaS</a></p>
 <h1><span class="num">7.2</span> Observability: logs, errors, metrics and traces</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="prereq">Before this: <a href="#/5.1">5.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> replace <code>console.log</code> with JSON logs that carry a request id and org id on every line, and follow one trace from an API request through a queued job to the first check. <em>Study time: about 105 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>Observability means you can explain any behavior of production from the data it already emits, without shipping new code to find out.</li>
@@ -10286,6 +10338,8 @@ log().warn({ monitorId, status }, &quot;check.failed&quot;);
 <p class="crumb"><a href="#/map">Module 7 — Operating the SaaS</a></p>
 <h1><span class="num">7.3</span> Audit logs and activity feeds</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="prereq">Before this: <a href="#/1.2">1.2</a>, <a href="#/1.3">1.3</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> record audit events in the same transaction as each change, build an owners-and-admins audit log page with filters and CSV export, and show that a failed change leaves no event. <em>Study time: about 105 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>An audit log is an append-only, customer-facing record of who did what to which thing, when and from where. It is evidence, not debugging output.</li>
@@ -10626,6 +10680,8 @@ END $$ LANGUAGE plpgsql;
 <p class="crumb"><a href="#/map">Module 7 — Operating the SaaS</a></p>
 <h1><span class="num">7.4</span> Deployment, environments and self-hostable SaaS</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="prereq">Before this: <a href="#/2.1">2.1</a>, <a href="#/5.1">5.1</a>, <a href="#/7.2">7.2</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a multi-stage Dockerfile and a compose file that start Beacon from a fresh clone, and build a CI/CD pipeline that promotes the same SHA-tagged image from staging to production. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>Deployment is a pipeline of small, reversible steps from pull request to production.</li>
@@ -10978,6 +11034,8 @@ export async function loadLicense(token?: string) {
 <p class="crumb"><a href="#/map">Module 8 — Trust &amp; the Frontier</a></p>
 <h1><span class="num">8.1</span> Security and compliance: secrets, encryption, SOC 2, GDPR</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="prereq">Before this: <a href="#/1.3">1.3</a>, <a href="#/2.4">2.4</a>, <a href="#/5.2">5.2</a>, <a href="#/7.3">7.3</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> scan Beacon&#39;s full history with gitleaks and block a commit containing a fake key, and build an SSRF-safe fetch that refuses monitors pointing at metadata, loopback or private addresses. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>Security for a SaaS is two things: the engineering that keeps tenants&#39; data safe, and the evidence (SOC 2, ISO 27001, a DPA) that proves it to buyers.</li>
@@ -11307,6 +11365,8 @@ Preferred-Languages: en
 <p class="crumb"><a href="#/map">Module 8 — Trust &amp; the Frontier</a></p>
 <h1><span class="num">8.2</span> AI features as a SaaS component</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="prereq">Before this: <a href="#/2.4">2.4</a>, <a href="#/3.3">3.3</a>, <a href="#/5.1">5.1</a>, <a href="#/8.1">8.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build a schema-validated AI incident summary saved as an editable draft, record tokens and cost per org for every model call, and run a CI eval that includes a prompt-injection case. <em>Study time: about 110 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>An AI feature is a component, not magic: a model gateway, structured outputs, tools, retrieval, evals and metering.</li>
@@ -11614,6 +11674,8 @@ export async function summarizeIncident(orgId: string, incidentId: string) {
 <p class="crumb"><a href="#/map">Module 9 — Capstone</a></p>
 <h1><span class="num">9.1</span> Assemble Beacon: reference architecture, build-vs-buy and a 90-day plan</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="prereq">Before this: <a href="#/0.1">0.1</a>, <a href="#/1.2">1.2</a>, <a href="#/3.1">3.1</a>, <a href="#/5.1">5.1</a></span></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> draw Beacon&#39;s full architecture with a concrete choice for every component, write five ADRs that each name a measurable signal to revisit, and trace one customer action across every component it touches. <em>Study time: about 105 minutes (estimate).</em></p>
+</section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>A SaaS architecture is not a list of components; it is the connections between

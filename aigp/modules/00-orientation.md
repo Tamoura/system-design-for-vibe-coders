@@ -112,7 +112,7 @@ It is a breadth credential. It proves you can sit in a room with lawyers, engine
 ## ⚖️ The instruments
 | Instrument | What it requires or recommends | Exam cue |
 |---|---|---|
-| **EU AI Act** — Art. 4 | Providers and deployers must take measures to ensure a sufficient level of AI literacy among staff dealing with AI systems; applies from 2 February 2025 | AI literacy is a legal duty in the EU, not just good practice, and it applies to deployers too |
+| **EU AI Act** — Art. 4 | Providers and deployers must take measures to support the development of AI literacy of their staff (wording as replaced by Regulation (EU) 2026/1744; the 2024 text required "a sufficient level"); applies from 2 February 2025 | AI literacy is a legal duty in the EU, not just good practice, and it applies to deployers too |
 | **NIST AI RMF** — Govern function | Voluntary US framework; Govern is the cross-cutting function that sets culture, policies, roles and accountability for the other three (Map, Measure, Manage) | Govern runs across the whole life cycle; it is not a step you finish |
 | **ISO/IEC 42001** | Certifiable AI management system standard built on Plan-Do-Check-Act, with Annex A controls | "Management system", "certification", "continual improvement" point here |
 | **ISO/IEC 38507** | Guidance for governing bodies (boards) on the governance implications of using AI | Board-level oversight questions |
@@ -499,7 +499,7 @@ Layla gives Omar and Sara two study plans and lets them choose. Both map directl
 - Biggest trap: counting only what the data science team built, and missing bought, embedded and "shadow" AI.
 
 ## 🧭 Why it matters
-Najm Bank's board meets in six weeks. The Chief Risk Officer wants one page: *what AI do we use, and where is the risk?* Layla has no inventory and no policy. She also has a hard external date on her mind: under the EU AI Act, the rules for high-risk systems listed in Annex III, which include AI used to evaluate the creditworthiness of individuals and AI used in recruitment, apply from 2 August 2026. The Frankfurt branch lends to EU residents. (Reports say a later "Digital Omnibus on AI", Regulation (EU) 2026/1744, moved these dates to 2 December 2027. We have not verified this against the official text; see 6.3. The exam may still test the original dates.)
+Najm Bank's board meets in six weeks. The Chief Risk Officer wants one page: *what AI do we use, and where is the risk?* Layla has no inventory and no policy. She also has a hard external date on her mind: under the EU AI Act, the rules for high-risk systems listed in Annex III, which include AI used to evaluate the creditworthiness of individuals and AI used in recruitment, apply from 2 August 2026. The Frankfurt branch lends to EU residents. (The "Digital Omnibus on AI", adopted as Regulation (EU) 2026/1744 in July 2026, moved the Annex III date to 2 December 2027; see 6.3. The exam may still test the original dates.)
 
 Meanwhile the Qatar Central Bank has issued an AI guideline for financial institutions, Qatar's data protection law (Law No. 13 of 2016, the PDPPL) already covers the customer data in Najm's models, and the UAE operation brings in the UAE's federal data protection law. None of that analysis can start until Layla knows what systems exist.
 

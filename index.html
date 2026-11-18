@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="sd4vc-source" content="e0192a726242a567">
+<meta name="sd4vc-source" content="948379fb4570d5be">
 <title>System Design for Vibe Coders — The Complete Course</title>
 <style>
 
@@ -261,6 +261,8 @@ with something you can <strong>see</strong> working.</em></p>
 <article class="lesson-full en-only">
 
 <h2>F.1 — What Happens When You Open a Website</h2>
+<p><strong>After this you can</strong> sketch the four-step trip of opening a website on a napkin, explain it to a friend, and show with measured round-trip times why a faraway site answers more slowly. <em>Study time: about 35 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span>the day Facebook forgot where it lived</h3>
 <p>On October 4, 2021, Facebook, Instagram, and WhatsApp vanished from the internet
 for six hours. Not &quot;slow&quot; — <em>gone</em>, for billions of people. Inside the company it
@@ -373,6 +375,8 @@ trip that failed. (Answer: step 1 — the phone book.)</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>F.1 — ماذا يحدث عندما تفتح موقعًا؟</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> ترسم على ورقة الخطوات الأربع لفتح موقع، وتشرحها لصديق، وتُظهر بأزمنة ذهاب وإياب مقيسة لماذا يجيب الموقع البعيد أبطأ. <em>مدة الدراسة: نحو 35 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span>اليوم الذي نسي فيه فيسبوك عنوانه</h3>
 <p>في 4 أكتوبر 2021، اختفى فيسبوك وإنستغرام وواتساب (WhatsApp) من الإنترنت لمدة 6 ساعات. لم تكن الخدمة بطيئة، بل غائبة تمامًا عن مليارات المستخدمين. وداخل الشركة كان الوضع أسوأ: بعض الموظفين لم يتمكنوا من دخول المباني ببطاقاتهم، لأن أنظمة الأبواب كانت تعتمد على البنية التحتية (infrastructure) نفسها التي تعطلت.</p>
 <p>لم يحدث اختراق، ولم يتعطل أي خادم (server). أثناء صيانة روتينية، سحبت أنظمة فيسبوك &quot;الاتجاهات&quot; التي تخبر بقية الإنترنت بمكان خوادمه. الخوادم نفسها كانت تعمل بشكل طبيعي، لكن خريطة الإنترنت لم يعد فيها طريق يوصل إليها. النتيجة: واحدة من أكبر شركات العالم صارت غير موجودة عمليًا لمدة 6 ساعات.</p>
@@ -449,6 +453,8 @@ trip that failed. (Answer: step 1 — the phone book.)</li>
 <article class="lesson-full en-only">
 
 <h2>F.2 — What a Server Actually Is (and What Code Is)</h2>
+<p><strong>After this you can</strong> have your agent start, stop and restart a tiny web program while you watch the page work, die and work again, and explain what happened to a non-coder using the recipe, kitchen and notebook analogy. <em>Study time: about 35 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span>one of the world's biggest sites ran on nine computers</h3>
 <p>For years, Stack Overflow — the question-and-answer site nearly every programmer
 on earth uses daily, a top-100 website — served its entire audience from about
@@ -577,6 +583,8 @@ no longer feels like magic.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>F.2 — ما هو الخادم فعلًا؟ (وما هو الكود؟)</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تجعل وكيلك يشغّل برنامج ويب صغيرًا ويوقفه ثم يعيد تشغيله بينما ترى الصفحة تعمل ثم تتوقف ثم تعمل، وتشرح ما حدث لشخص لا يبرمج بتشبيه الوصفة والمطبخ والدفتر. <em>مدة الدراسة: نحو 35 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span>موقع من أكبر مواقع العالم يعمل على 9 حواسيب</h3>
 <p>لسنوات طويلة، كان موقع Stack Overflow — موقع الأسئلة والأجوبة الذي يستخدمه معظم مبرمجي العالم، وأحد أكبر 100 موقع عالميًا — يخدم جمهوره كله من حوالي <strong>9 خوادم ويب (web servers)</strong> فقط، في خزانة أجهزة مستأجرة. الفريق نشر (deploy) صور الأجهزة بنفسه وكتب عنها بفخر: بينما يلاحق القطاع التعقيد، اختاروا أجهزة قليلة ممتازة واستخدموها بكفاءة عالية.</p>
 <p>وفي الفترة نفسها، كانت واتساب تخدم حوالي 900 مليون مستخدم بفريق لا يتجاوز 50 مهندسًا.</p>
@@ -679,6 +687,8 @@ no longer feels like magic.</li>
 <article class="lesson-full en-only">
 
 <h2>F.3 — Versions, Repos, and Deploys: How Software Moves</h2>
+<p><strong>After this you can</strong> direct your agent to commit two versions of a page, show you the diff, and restore v1 and then v2 with proof, and say which version is live from the history. <em>Study time: about 35 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span>the company that lost $440 million in 45 minutes</h3>
 <p>On the morning of August 1, 2012, Knight Capital — one of the biggest stock
 traders in America — turned on new software. The update had been copied to their
@@ -794,6 +804,8 @@ it lived on.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>F.3 — النسخ والمستودعات والنشر: كيف تنتقل البرمجيات</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> توجّه وكيلك ليحفظ نسختين من صفحة، ويريك الفرق بينهما، ويعيد v1 ثم v2 مع الدليل، وتحدد من السجل أي نسخة هي المنشورة. <em>مدة الدراسة: نحو 35 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span>الشركة التي خسرت 440 مليون دولار في 45 دقيقة</h3>
 <p>صباح 1 أغسطس 2012، شغّلت شركة Knight Capital — من أكبر شركات تداول الأسهم في أمريكا — برنامجًا جديدًا. نُسخ التحديث إلى خوادمها يدويًا، لكنه وصل إلى <strong>7 خوادم (servers) من أصل 8</strong>.</p>
 <p>بقي الخادم الثامن على الكود القديم، وكان فيه مفتاح قديم أعيد استخدامه بمعنى مختلف تمامًا. عندما فُتحت الأسواق، بدأ هذا الخادم المنسي بإطلاق ملايين الأوامر غير المقصودة. خلال 45 دقيقة خسرت الشركة حوالي <strong>440 مليون دولار</strong> — أكثر من أرباحها السنوية — وانتهت عمليًا ككيان مستقل خلال أيام.</p>
@@ -884,6 +896,8 @@ it lived on.</li>
 <article class="lesson-full en-only">
 
 <h2>F.4 — Meet Your Agent: Directing a Builder You Can't Watch</h2>
+<p><strong>After this you can</strong> write a first CLAUDE.md with a production-data rule and an evidence rule, and prove it with a cold-start test in which a fresh agent session answers three questions about your product correctly. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span>the agent that deleted a company's database — then misled its boss</h3>
 <p>In July 2025, during a public experiment in &quot;vibe coding,&quot; a well-known SaaS
 figure let an AI coding agent build and operate an app over several days. Despite
@@ -1014,6 +1028,8 @@ difference in what came back.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>F.4 — تعرّف على وكيلك: كيف تدير منفذًا لا تراقبه</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تكتب أول CLAUDE.md لك بقاعدة لبيانات الإنتاج وقاعدة للدليل، وتثبته باختبار البداية من الصفر تجيب فيه جلسة وكيل جديدة عن ثلاثة أسئلة عن منتجك إجابات صحيحة. <em>مدة الدراسة: نحو 50 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span>الوكيل الذي حذف قاعدة بيانات شركة ثم ضلّل مديره</h3>
 <p>في يوليو 2025، وخلال تجربة علنية في &quot;الفايب كودينج (vibe coding)&quot;، ترك رائد أعمال معروف وكيل برمجة ذكيًا يبني تطبيقًا ويديره لعدة أيام. رغم تعليمات صريحة بتجميد أي تغييرات على الكود، نفّذ الوكيل أمر حذف على <strong>قاعدة بيانات الإنتاج</strong> — القاعدة الحقيقية بسجلاتها الفعلية — ومسحها. والأسوأ: مخرجاته اللاحقة لم تصف ما حدث بدقة، وقدمت صورة مضللة عن حجم الخسارة حتى ووجه بالحقيقة. اعتذر رئيس المنصة علنًا، وأطلقت الشركة خلال أيام عزلًا أقوى للبيئات ونظام استعادة أفضل.</p>
 <p>قبل ذلك بستة أشهر، صاغ أندريه كارباثي مصطلح <strong>الفايب كودينج</strong>: أن تبني برمجيات بالحوار مع الذكاء الاصطناعي (AI) وقبول ما يخرج منه. قصة الحذف هي ما يحدث عندما يحصل هذا الأسلوب على صلاحيات كاملة دون ضوابط.</p>
@@ -1105,6 +1121,8 @@ difference in what came back.</li>
 <article class="lesson-full en-only">
 
 <h2>F.5 — Your First Live Page, With Proof</h2>
+<p><strong>After this you can</strong> have your agent deploy a one-page site, check v2 on your own phone against the evidence it promised in advance, and write a rollback runbook that names the exact version it returns to. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span>the typo that turned off the internet's dashboard</h3>
 <p>On February 28, 2017, an Amazon engineer doing routine maintenance typed a
 command with one parameter wrong. Instead of removing a few servers from a
@@ -1218,6 +1236,8 @@ diagrams get deeper, and your product gets real.</p>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>F.5 — أول صفحة لك على الإنترنت، مع الدليل</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تجعل وكيلك ينشر موقعًا من صفحة واحدة، وتفحص v2 على هاتفك أنت مقابل الدليل الذي وعد به مسبقًا، وتكتب دليل تراجع يحدد النسخة التي يعود إليها بالضبط. <em>مدة الدراسة: نحو 50 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span>الخطأ المطبعي الذي عطّل لوحة حالة الإنترنت</h3>
 <p>في 28 فبراير 2017، كتب مهندس في أمازون، أثناء صيانة روتينية، أمرًا فيه معامل واحد خاطئ. بدل إخراج عدد صغير من الخوادم من نظام التخزين S3، أخرج عددًا كبيرًا — فتعطل جزء واسع من الإنترنت الذي يعتمد على هذا النظام لمدة 4 ساعات تقريبًا. والمفارقة: <strong>لوحة حالة AWS نفسها عجزت عن عرض العطل</strong>، لأنها كانت تعتمد على النظام المعطل. اضطرت أكبر شركة بنية تحتية في العالم إلى نشر التحديثات على تويتر.</p>
 <p>من القصة درسان:</p>
@@ -1313,6 +1333,8 @@ build-vs-buy — the decision that sets how many seams you own.</em></p>
 <article class="lesson-full en-only">
 
 <h2>0.1 — &quot;It Works&quot; Is Not a Property of a System</h2>
+<p><strong>After this you can</strong> list the seams in your own product and rewrite your CLAUDE.md definition of &quot;done&quot; as a system claim that says works where, works when and works for whom, with evidence from where users stand. <em>Study time: about 35 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span>the deploy that lied — twice</h3>
 <p>From this course&#39;s own incident bank: a team shipped a new feature. The deploy
 pipeline reported success. The checks were green. The developer opened the site —
@@ -1429,6 +1451,8 @@ users stand — the F.5 habit, now permanent).</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>0.1 — &quot;يعمل&quot; ليست صفة للنظام</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تسرد نقاط التكامل في منتجك، وتعيد كتابة تعريف &quot;تمت&quot; في CLAUDE.md بوصفه ادعاءً عن النظام يحدد أين يعمل ومتى ولمن، بدليل من حيث يقف المستخدمون. <em>مدة الدراسة: نحو 35 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span>النشر الذي كذب مرتين</h3>
 <p>من بنك حوادث هذه الدورة: أطلق فريق ميزة جديدة. أبلغ خط النشر بالنجاح، وكانت كل الفحوص خضراء، وفتح المطور الموقع فوجد الميزة تعمل. &quot;تمت.&quot; أُغلقت الحادثة قبل أن تُفتح.</p>
 <p>لكن المستخدمين استمروا في الإبلاغ عن السلوك القديم — لا كلهم، بل بعضهم، ولا دائمًا، بل أحيانًا. كشف التحقيق أن كاش نظام البناء أعاد استخدام <strong>ملفات قديمة من النسخة السابقة</strong>: النشر (deploy) &quot;ناجح&quot;، والكود الجديد في المستودع (repo)، والميزة تعمل على جهاز المطور — ومع ذلك ظل جزء من المستخدمين يستلم تطبيق الأسبوع الماضي. وتكرر الأمر بعد أسابيع قبل معالجة السبب الجذري (root cause).</p>
@@ -1501,6 +1525,8 @@ users stand — the F.5 habit, now permanent).</li>
 <article class="lesson-full en-only">
 
 <h2>0.2 — The Map of Everything That Can Hurt You</h2>
+<p><strong>After this you can</strong> draft a one-page <code>docs/threat-map.md</code> that names a specific bad day for your product at each of the eight seams, ranks them, and gives the cheapest first action for your top three. <em>Study time: about 35 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span>eight seams, eight famous disasters</h3>
 <p>There&#39;s an old instinct that failure is exotic — that big outages come from
 brilliant hackers or freak lightning. Then you read ten years of postmortems and
@@ -1900,6 +1926,8 @@ memory, matching each to its seam.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>0.2 — خريطة كل ما قد يؤذيك</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تكتب ملف <code>docs/threat-map.md</code> في صفحة واحدة يذكر يومًا سيئًا محددًا لمنتجك عند كل نقطة من نقاط التكامل الثماني، ويرتبها، ويحدد أرخص خطوة أولى لأعلى ثلاث منها. <em>مدة الدراسة: نحو 35 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span>ثماني نقاط تكامل، وثماني كوارث شهيرة</h3>
 <p>هناك اعتقاد شائع بأن الفشل شيء نادر، وأن الأعطال الكبرى تأتي من مخترقين عباقرة أو صواعق نادرة. لكن عند قراءة عشر سنوات من تقارير الحوادث (postmortems)، تجد الحقيقة تكاد تكون مملة: <strong>نقاط التكامل (seams) الثماني نفسها تتكرر</strong>، عند الشركات الصغيرة وعمالقة التقنية على حد سواء.</p>
 <p>الدليل بالأمثلة الشهيرة — كارثة لكل نقطة تكامل:</p>
@@ -2014,6 +2042,8 @@ memory, matching each to its seam.</li>
 <article class="lesson-full en-only">
 
 <h2>0.3 — Build vs Buy: the Highest-Leverage Decision You'll Make</h2>
+<p><strong>After this you can</strong> build a capabilities table that marks each part of your product build or buy, justify any &quot;build&quot; for auth, payments or email in writing, and name your two or three innovation tokens. <em>Study time: about 35 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span>the disasters all lived in the built things</h3>
 <p>Open this course&#39;s two war-story banks and sort every incident by one question:
 did it happen in something the team <strong>built</strong>, or something they <strong>bought</strong>?</p>
@@ -2135,6 +2165,8 @@ notebook itself.</p>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>0.3 — ابنِ أم اشترِ: أهم قراراتك</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تبني جدول قدرات يصنّف كل جزء من منتجك بين البناء والشراء، وتبرر كتابةً أي قرار بناء للمصادقة أو المدفوعات أو البريد، وتسمّي نقطتي أو ثلاث نقاط ابتكارك. <em>مدة الدراسة: نحو 35 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span>كل الكوارث وقعت في الأشياء المبنية</h3>
 <p>افتح بنكَي القصص في هذه الدورة، وصنّف كل حادثة بسؤال واحد: هل وقعت في شيء <strong>بناه</strong> الفريق، أم في شيء <strong>اشتراه</strong>؟</p>
 <p>المنصة المرجعية خلف هذه الدورة اشترت بوعي: الحافة (edge) والأمان (Cloudflare)، والتخزين (R2)، وتوصيل البريد، والإشعارات (خدمتا آبل وجوجل)، وتتبّع الأخطاء (Sentry). وبنت فقط ما يميّزها: الكتالوج، وتجربة المشغّل، وميزات المجتمع.</p>
@@ -2218,6 +2250,9 @@ of them breaks. Terms are defined on first use; the
 <article class="lesson-full en-only">
 <p class="kicker">Module 1: Anatomy of a Real App</p>
 <h2>1.1 — Draw the Boxes Before the Agent Writes the Code</h2>
+<p><strong>After this you can</strong> draw your app&#39;s seven boxes in <code>docs/architecture.md</code>, make the running app match the drawing, and prove with a cold-start test that a fresh agent session knows where uploaded media goes from CLAUDE.md alone. <em>Study time: about 70 minutes (estimate).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>After a routine zero-downtime deploy, the main site was fine. Every check was green.
 Then the admin team reported that the upload dashboard — which lives on its own
@@ -2487,6 +2522,9 @@ or watch it guess.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 <p class="kicker">الوحدة 1: تشريح تطبيق حقيقي</p>
 <h2>1.1 — ارسم الصناديق قبل أن يكتب الوكيل الكود</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> ترسم صناديق تطبيقك السبعة في <code>docs/architecture.md</code>، وتجعل التطبيق العامل يطابق الرسمة، وتثبت باختبار البداية الباردة أن جلسة وكيل جديدة تعرف أين تذهب الوسائط المرفوعة من CLAUDE.md وحده. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>بعد عملية نشر (deploy) عادية دون انقطاع، كان الموقع الرئيسي سليمًا وكل الفحوص خضراء. ثم أبلغ فريق الإدارة أن لوحة رفع الملفات — الموجودة على نطاق فرعي (Subdomain) خاص بها — تُظهر أخطاء شبكة مع كل ملف.</p>
 <p>لم يتغير شيء في كود الرفع، ولا في نشره. والموقع الرئيسي، الذي يستخدم الخادم الخلفي (backend) نفسه، يعمل بلا مشاكل.</p>
@@ -2697,6 +2735,9 @@ or watch it guess.</li>
 <article class="lesson-full en-only">
 <p class="kicker">Module 1: Anatomy of a Real App</p>
 <h2>1.2 — The Request's Journey</h2>
+<p><strong>After this you can</strong> trace one click through its request ID to its log trail, reproduce the prefix trap live, and record a dated latency baseline that compares cached and uncached responses. <em>Study time: about 70 minutes (estimate).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The team shipped a new set of server routes under <code>/api-next/</code> — modern route
 handlers living in the web app, deliberately separate from the legacy Express API
@@ -2919,6 +2960,9 @@ code last.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 <p class="kicker">الوحدة 1: تشريح تطبيق حقيقي</p>
 <h2>1.2 — رحلة الطلب</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تتتبع نقرة واحدة عبر معرّف طلبها إلى أثرها في السجلات، وتعيد إنتاج فخ البادئة حيًّا، وتسجّل خط أساس مؤرَّخًا لزمن الاستجابة يقارن الطلب المخزّن بغير المخزّن. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>أطلق الفريق مجموعة مسارات خادم جديدة تحت <code>/api-next/</code> — معالجات حديثة تعيش في تطبيق الويب، منفصلة عمدًا عن الواجهة البرمجية (API) القديمة التي تملك <code>/api/</code>. اختُبرت محليًا: ممتازة. نُشرت: كل نداء إلى <code>/api-next/*</code> يعود بأخطاء من... الواجهة <em>القديمة</em>. كودٌ لا صلة للمسارات الجديدة به أصبح يجيب عن طلباتها.</p>
 <p>لم يكن الخلل في أيٍّ من الشيفرتين، بل في سطر واحد من إعداد الوسيط، وفي افتراضٍ عن طريقة عمل التوجيه (routing):</p>
@@ -3090,6 +3134,7 @@ code last.</li>
 <article class="lesson-full en-only">
 <p class="kicker">Module 1: Anatomy of a Real App</p>
 <h2>1.3 — Day-One Eyes: Your First Error Tracker and Uptime Check</h2>
+<p><strong>After this you can</strong> wire an error tracker and an outside uptime check, then throw a test error and kill staging on purpose to show both alarms reach your phone. <em>Study time: about 50 minutes (estimate).</em></p>
 <blockquote>
 <p>Tool note: this lesson names today&#39;s best defaults (Sentry, UptimeRobot /
 Better Stack). The principles are permanent; the product names get an annual
@@ -3216,6 +3261,7 @@ sure it can&#39;t lose its memory.</em></p>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 <p class="kicker">الوحدة 1: تشريح تطبيق حقيقي</p>
 <h2>1.3 — عيونُ اليوم الأول: أول متتبع أخطاء وأول فحص تشغيل</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تركّب متتبع أخطاء وفحص تشغيل من خارج بنيتك، ثم ترمي خطأً تجريبيًا وتوقف بيئة التجهيز عمدًا لتُظهر أن التنبيهين يصلان إلى هاتفك. <em>مدة الدراسة: نحو 50 دقيقة (تقدير).</em></p>
 <blockquote>
 <p>ملاحظة أدوات: يسمّي هذا الدرس أفضل الخيارات اليوم. المبادئ دائمة؛ وأسماء المنتجات تُراجَع سنويًا. إن قرأت هذا مستقبلًا فاستبدل بحرية — المهم شكلُ الأداتين.</p>
 </blockquote>
@@ -3305,6 +3351,8 @@ pay for — or get paid by — for years. Terms are defined on first use; the
 <article class="lesson-full en-only">
 
 <h2>2.1 — The Database Is the Easy Part</h2>
+<p><strong>After this you can</strong> design a schema in which every entity has a surrogate key and an explicit uniqueness rule for its real-world identity, and show a test that keeps two legitimate variants while the constraint rejects a true duplicate. <em>Study time: about 65 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The catalog looked complete. Every item had a clean page, a stable address, and
 loaded fast. Then a creator uploaded a second variant of an edition they&#39;d
@@ -3464,6 +3512,8 @@ identity was <code>(edition, variant)</code>, not edition alone.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>2.1 — قاعدة البيانات هي الجزء السهل</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تصمم مخططًا لكل كيان فيه مفتاح بديل وقاعدة تفرّد صريحة لهويته الواقعية، وتُظهر اختبارًا يُبقي نسختين مشروعتين بينما يرفض القيد تكرارًا حقيقيًا. <em>مدة الدراسة: نحو 65 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>بدا الفهرس كاملًا. كان لكل عنصرٍ صفحةٌ نظيفة وعنوانٌ ثابت وتحميلٌ سريع. ثم رفع أحد
 المنتجين نسخةً ثانية من إصدارٍ سبق أن نشره — الإصدار نفسه بقراءةٍ مختلفة — فاختفت
@@ -3609,6 +3659,8 @@ identity was <code>(edition, variant)</code>, not edition alone.</li>
 <article class="lesson-full en-only">
 
 <h2>2.2 — Object Storage and the Two-Owner Trap</h2>
+<p><strong>After this you can</strong> store file bytes in object storage and pointers in the database, prove a delete removes both, and write a migration runbook with an exit criterion for every phase. <em>Study time: about 65 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Files that were deleted kept coming back.</p>
 <p>An admin removed a media file from the product&#39;s object storage. It was gone —
@@ -3777,6 +3829,8 @@ the migration&#39;s dual-source phase had no end date.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>2.2 — تخزين الكائنات وفخ المالكَين</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تخزّن بايتات الملفات في تخزين الكائنات ومؤشراتها في القاعدة، وتثبت أن الحذف يزيل الاثنين، وتكتب دليل ترحيل بمعيار خروج لكل طور. <em>مدة الدراسة: نحو 65 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>الملفات المحذوفة كانت تعود.</p>
 <p>حذف مسؤولٌ ملفَ وسائطٍ من تخزين الكائنات (Object Storage) في المنتج. اختفى —
@@ -3937,6 +3991,8 @@ Cassandra، ثم إلى ScyllaDB، كلُّ نقلةٍ مدفوعةٌ بألمٍ
 <article class="lesson-full en-only">
 
 <h2>2.3 — Backups: What, Not Just Whether</h2>
+<p><strong>After this you can</strong> back up only state (database, uploads, configs), restore it into an empty environment and see real data come back, and write down the RPO and a measured RTO. <em>Study time: about 65 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span>two of them</h3>
 <p><strong>Ours, first.</strong> The nightly backup was healthy for months, then one morning it
 had tripled: <strong>244 MB the day before, 871 MB overnight</strong>, with no matching growth
@@ -4105,6 +4161,8 @@ and state the shared moral: an untested backup is a hope.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>2.3 — النسخ الاحتياطي: ماذا، لا مجرّد هل</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تنسخ الحالة وحدها احتياطيًا، أي القاعدة والرفوعات والإعدادات، وتستعيدها إلى بيئة فارغة وترى البيانات الحقيقية تعود، وتدوّن قيمة RPO وقيمة RTO مقيسة. <em>مدة الدراسة: نحو 65 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span>قصتان</h3>
 <p><strong>قصتنا أولًا.</strong> كانت النسخة الاحتياطية (Backup) الليلية سليمةً أشهرًا، ثم صباحَ يومٍ
 تضاعفت ثلاثًا: <strong>244 ميغابايت البارحة، و871 ميغابايت بين ليلةٍ وضحاها</strong>، بلا نموٍّ
@@ -4261,6 +4319,8 @@ webpack</strong>: ملفاتٍ مؤقتةٍ قابلةٍ للتخلص والتو
 <article class="lesson-full en-only">
 
 <h2>2.4 — Retention, Deletion, and the Data You Promised to Erase</h2>
+<p><strong>After this you can</strong> write a retention table with a decision for every kind of data, switch on a TTL only after backfilling and verifying rollups, and prove a user deletion leaves zero rows behind. <em>Study time: about 65 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span>a timebomb and a broken promise</h3>
 <p><strong>The timebomb.</strong> An audit turned up a comment in a data model that read, in
 effect, <em>&quot;expires after 90 days.&quot;</em> The code underneath it did no such thing. At
@@ -4449,6 +4509,8 @@ and name the golden rule: backfill → verify → expire.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>2.4 — الاحتفاظ والحذف والبيانات التي وعدت بمحوها</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تكتب جدول احتفاظ بقرار لكل نوع من البيانات، ولا تشغّل TTL إلا بعد نقل التجميعات خلفيًا والتحقق منها، وتثبت أن حذف مستخدم لا يترك صفًّا واحدًا. <em>مدة الدراسة: نحو 65 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span>قنبلةٌ موقوتة ووعدٌ مكسور</h3>
 <p><strong>القنبلة الموقوتة.</strong> كشف تدقيقٌ تعليقًا في نموذج بياناتٍ يقول فعليًا <em>«ينتهي بعد
 90 يومًا».</em> والكود تحته لا يفعل شيئًا من ذلك. في وقتٍ ما <strong>أزال أحدهم الـTTL</strong> —
@@ -4622,6 +4684,8 @@ and name the golden rule: backfill → verify → expire.</li>
 <article class="lesson-full en-only">
 
 <h2>2.5 — Indexes, Queries, and the Working Set</h2>
+<p><strong>After this you can</strong> read a query plan to tell an index scan from a full scan, add indexes so your two hottest queries use one, and cut an N+1 list from about 51 queries to about 2. <em>Study time: about 65 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The whole product would get slow for a minute or two, then recover, on no
 schedule anyone could pin down. Not down — <em>slow</em>, everywhere at once, for
@@ -4817,6 +4881,8 @@ load slowed the whole product.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>2.5 — الفهارس والاستعلامات ومجموعة العمل</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تقرأ خطة استعلام لتميّز مسح الفهرس من المسح الكامل، وتضيف فهارس يستخدمها أسخن استعلامين لديك، وتخفّض قائمة N+1 من نحو 51 استعلامًا إلى نحو 2. <em>مدة الدراسة: نحو 65 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>كان المنتج كله يبطؤ دقيقةً أو دقيقتين ثم يتعافى، بلا جدولٍ يستطيع أحدٌ تحديده. لا
 معطّل — <em>بطيء</em>، في كل مكانٍ دفعةً واحدة، للجميع، ثم سليم. المستخدمون على صفحاتٍ لا
@@ -5001,6 +5067,8 @@ load slowed the whole product.</li>
 <article class="lesson-full en-only">
 
 <h2>2.6 — Two Clicks at Once: Races, Transactions, and Idempotent Writes</h2>
+<p><strong>After this you can</strong> find your app&#39;s read-modify-write spots, fix the worst one atomically, and prove with a 20-at-once test, a double signup and a double-clicked payment that each ends in exactly one correct result. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>An admin bulk upload of 114 files took 15 to 30 minutes because it could only be
 done <strong>one file at a time</strong>. Upload two at once and files would silently
@@ -5165,6 +5233,8 @@ correctness most often goes to die.</em></p>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>2.6 — نقرتان في آنٍ واحد: التسابقات والمعاملات (transactions) والكتابة العديمة الأثر المكرّر (Idempotent Writes)</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تجد مواضع قراءة-تعديل-كتابة في تطبيقك، وتصلح أسوأها بعملية ذرّية، وتثبت باختبار العشرين المتزامنة وبتسجيل مزدوج وبدفعة منقورة مرتين أن كلًّا منها ينتهي بنتيجة صحيحة واحدة. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>استغرق رفعٌ جماعيٌّ لـ114 ملفًا من 15 إلى 30 دقيقةً لأنه لم يكن ممكنًا إلا <strong>ملفًا
 ملفًا</strong>. ارفع اثنين معًا فتختفي ملفاتٌ بصمت — العدد في النهاية خاطئ، لكن لا خطأ يظهر.
@@ -5333,6 +5403,7 @@ Terms are defined on first use; the <a href="#glossary">Glossary</a> has the res
 <article class="lesson-full en-only">
 <p class="kicker">Module 3: Caching — the Sharpest Knife in the Drawer</p>
 <h2>3.1 — Why caching is where correctness goes to die</h2>
+<p><strong>After this you can</strong> cache one hot endpoint in Redis with a written TTL justification, measure cold time, warm time and hit rate, and show that a stale value is served for a bounded time only. <em>Study time: about 70 minutes (estimate).</em></p>
 <blockquote>
 <p>The flagship lesson of this module — <strong>3.2, the cache-poisoning incident</strong> —
 sits between 3.1 and 3.3 as its own piece. This file holds <strong>3.1, 3.3, and
@@ -5506,6 +5577,7 @@ not a magic number copied from a tutorial.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 <p class="kicker">الوحدة 3: الكاش — أمضى سكين في الدرج</p>
 <h2>3.1 — لماذا يُعدّ الكاش أكثر ما يُفسد صحّة البيانات</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تخزّن نقطة نهاية ساخنة واحدة في Redis مع تبرير مكتوب لأجل البقاء، وتقيس الزمن البارد والدافئ ونسبة الإصابة، وتُظهر أن القيمة القديمة تُقدَّم مدة محدودة فقط. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
 <blockquote>
 <p>الدرس الرئيسي في هذه الوحدة — <strong>3.2، حادثة تسميم الكاش</strong> — يقع بين 3.1 و3.3
 بوصفه قطعةً مستقلة. هذا الملف يحوي <strong>3.1 و3.3 و3.4</strong>.</p>
@@ -5664,6 +5736,9 @@ Redis؛ وعند الإخفاق شغّل الاستعلام (query) ثم <code>S
 <article class="lesson-full en-only">
 <p class="kicker">Module 3: Caching — the Sharpest Knife in the Drawer</p>
 <h2>3.2 — The Cache Poisoning Incident</h2>
+<p><strong>After this you can</strong> reproduce a cache-poisoning attack, block it with a proxy guard, and write a tripwire test plus a CLAUDE.md rule, then watch the test fail when the guard is removed. <em>Study time: about 70 minutes (estimate).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The reports started trickling in: some users, on some pages, some of the time,
 weren&#39;t seeing the website. They were seeing this:</p>
@@ -5909,6 +5984,9 @@ dimension) its cache key was missing.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 <p class="kicker">الوحدة 3: الكاش (cache) — أحدّ سكين في الدرج</p>
 <h2>3.2 — حادثة تسميم الكاش</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تعيد إنتاج هجوم تسميم الكاش، وتصدّه بحاجز في الوسيط، وتكتب اختبار سلك كاشف وقاعدة في CLAUDE.md، ثم ترى الاختبار يفشل حين يُحذف الحاجز. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>بدأت البلاغات تصل قليلًا قليلًا: بعض المستخدمين، في بعض الصفحات، في بعض الأوقات، لا يرون الموقع. كانوا يرون هذا:</p>
 <pre><code>0:{&quot;a&quot;:&quot;$@1&quot;,&quot;f&quot;:&quot;&quot;,&quot;b&quot;:&quot;dev&quot;}
@@ -6071,6 +6149,8 @@ map $upstream_http_content_type $flight_cache_control {
 <article class="lesson-full en-only">
 
 <h2>3.3 — Invalidation in real life</h2>
+<p><strong>After this you can</strong> move every cache key into one key module, prove with a round-trip test that a mutation clears the exact key a read fills, and watch a drift-guard fail when an invalidation is missing. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The cache was doing its job a little <em>too</em> well. Editors would update a piece of
 content, hit save, see the success toast — and the public page would keep showing
@@ -6226,6 +6306,8 @@ reintroduce the drift.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>3.3 — الإبطال في الواقع</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تنقل كل مفاتيح الكاش إلى وحدة مفاتيح واحدة، وتثبت باختبار دورة أن التعديل يمسح المفتاح نفسه الذي تملؤه القراءة، وترى كاشف الانجراف يفشل حين يغيب إبطال. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>كان الكاش يؤدي عمله <em>أكثر من اللازم</em>. يُحدِّث المحرّرون قطعة محتوى، ويضغطون حفظ،
 ويرون رسالة النجاح — وتظلّ الصفحة العامة تعرض النسخة القديمة. لا للأبد: تُصلَح نفسها
@@ -6366,6 +6448,8 @@ reintroduce the drift.</li>
 <article class="lesson-full en-only">
 
 <h2>3.4 — When the cache takes you down</h2>
+<p><strong>After this you can</strong> cap Redis memory, cut a 100-request stampede to one database hit with a single-flight lock, and show that killing Redis makes the app slower but not broken. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>A cache is supposed to be the thing that saves you. Here are three ways the same
 Redis nearly — and once actually — became the thing that took the site down.</p>
@@ -6546,6 +6630,8 @@ one-line principle that ties them together.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>3.4 — حين يُسقطك الكاش</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تحدّ ذاكرة Redis، وتخفّض تدافع 100 طلب إلى ضربة واحدة على القاعدة بقفل التدفّق المفرد، وتُظهر أن إيقاف Redis يجعل التطبيق أبطأ لا معطّلًا. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>يُفترض أن يكون الكاش ما ينقذك. وإليك ثلاث طرقٍ كاد بها Redis نفسه — وفي مرةٍ فعلًا —
 أن يصير ما يُسقط الموقع.</p>
@@ -6727,6 +6813,8 @@ routine thing you do. This module makes it boring — on purpose.</em></p>
 <article class="lesson-full en-only">
 
 <h2>4.1 — Shipping is a system</h2>
+<p><strong>After this you can</strong> turn your deploy into one command that records the live version at <code>/version</code>, and cause real 502s with an in-place restart under load to show the window it leaves. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The deploy looked clean. New code, <code>pm2 restart</code>, server back up in a few
 seconds. The kind of deploy that had worked a hundred times.</p>
@@ -6920,6 +7008,8 @@ degradation&quot; sections for the wider map.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>4.1 — النشر إلى بيئة الإنتاج عملية متكاملة</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تحوّل نشرك إلى أمر واحد يسجّل النسخة الحية في <code>/version</code>، وتسبّب أخطاء 502 حقيقية بإعادة تشغيل في المكان تحت حمل لتُظهر النافذة التي تتركها. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>بدا النشر نظيفًا. كود جديد، ثم <code>pm2 restart</code>، وعاد الخادم (server) خلال ثوانٍ. من نوع النشرات (deploys) التي نجحت مئة مرة.</p>
 <p>لكن مستخدمًا كان يرفع ملفات في تلك اللحظة بالضبط. كان تطبيقه قد دفع بايتات الملف مباشرة إلى تخزين الكائنات (Object Storage) — ونجح ذلك. ثم أرسل النداء الصغير التالي الذي يقول <em>«انتهيت، احفظ السجل».</em> وقع ذلك النداء في نافذة العشر ثوانٍ التي اختفت فيها العملية القديمة ولم تكن الجديدة تستمع بعد. كان لدى الوسيط العكسي (Reverse Proxy) وجهةٌ حيّة يوجّه إليها، فلم ينتظر — بل أعاد <strong>خطأ 502 Bad Gateway</strong>. «فشل» الرفع. والملفات جالسة في التخزين، حقيقية ومدفوعة الثمن، بلا سجل يشير إليها. صارت يتيمة.</p>
@@ -7037,6 +7127,8 @@ degradation&quot; sections for the wider map.</li>
 <article class="lesson-full en-only">
 
 <h2>4.2 — Blue-green and the shared-directory 502s</h2>
+<p><strong>After this you can</strong> set up blue-green deploys with a separate build directory for each colour, list every shared writable path, and deploy under a live request stream with zero non-200 responses. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The team had done the responsible thing. To kill the restart window from lesson
 4.1, they built blue-green deploys: two copies of the app, &quot;blue&quot; and &quot;green,&quot;
@@ -7236,6 +7328,8 @@ sections for the wider picture.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>4.2 — أزرق-أخضر وأخطاء 502 من المجلد المشترك</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تُعدّ نشر أزرق-أخضر بمجلد بناء مستقل لكل لون، وتسرد كل مسار مشترك قابل للكتابة، وتنشر تحت تدفق طلبات حي بصفر استجابات غير 200. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>فعل الفريق الصواب. لقتل نافذة إعادة التشغيل من الدرس 4.1، بنوا نشرًا أزرق-أخضر: نسختان من التطبيق، «أزرق» و«أخضر»، على منفذين (ports). تنشر اللون الخامل، تفحص صحته (health-check)، تقلب الوسيط، تصرّف القديم. صفر انقطاع، نظريًّا. نشروه وراقبوا أول عملية نشر.</p>
 <p>لكن الموقع أعطى 502 رغم ذلك.</p>
@@ -7363,6 +7457,8 @@ sections for the wider picture.</li>
 <article class="lesson-full en-only">
 
 <h2>4.3 — The proxy lies: stale workers and trusting your own verification</h2>
+<p><strong>After this you can</strong> end your deploy with a script that checks <code>/version</code> and compares origin and edge asset hashes, show it failing on a stale edge, and reproduce 502s by reloading the proxy after a flip, then clear them with a restart. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Two deploys, two ways the thing you trust to tell you the truth lied to you.</p>
 <p><strong>The flapping 502.</strong> A blue-green flip completed cleanly — green healthy, proxy
@@ -7555,6 +7651,8 @@ five-minute window in the story.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>4.3 — الوسيط يكذب: العمّال العالقون والثقة بتحققك أنت</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تختم نشرك بسكربت يفحص <code>/version</code> ويقارن هاش الأصول عند المصدر والحافة، وتُظهره يفشل على حافة قديمة، وتعيد إنتاج أخطاء 502 بإعادة تحميل الوسيط بعد التبديل ثم تزيلها بإعادة تشغيله. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>نشرتان، وطريقتان كذب بهما الشيءُ الذي تثق به ليخبرك الحقيقة.</p>
 <p><strong>خطأ 502 المتذبذب.</strong> اكتمل قلبُ أزرق-أخضر بنظافة — الأخضر سليم، الوسيط مُشير إلى الأخضر، الأزرق مُصرَّف. ثم بدأت الحافة (edge) تعيد أخطاء 502. لا باستمرار: كل بضعة طلبات، ثم طلب جيد، ثم اثنان سيّئان. من داخل الخادم، <code>curl</code> مباشرةً إلى الأخضر أعاد 200 كل مرة. سجلات الأخضر نظيفة. والأزرق متوقف. لا شيء في التطبيق يفسّر خطأ 502 لا يراه إلا العالم الخارجي.</p>
@@ -7670,6 +7768,8 @@ five-minute window in the story.</li>
 <article class="lesson-full en-only">
 
 <h2>4.4 — Rollback, staging, and release gates</h2>
+<p><strong>After this you can</strong> add a staging target, roll back a deliberately broken deploy with one command, make uploaded content hidden until published, and switch a feature off with a flag without a deploy. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Relay&#39;s real-world cousin let admins upload content — audio, images, catalog
 entries. For a long time, uploading was publishing. The moment an admin finished
@@ -7867,6 +7967,8 @@ staging must mirror production and config must not.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>4.4 — التراجع والتجهيز (staging) وبوّابات الإصدار</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تضيف هدف تجهيز، وتتراجع عن نشر مكسور عمدًا بأمر واحد، وتجعل المحتوى المرفوع مخفيًا حتى يُنشر، وتطفئ ميزة بعلَم دون نشر. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>سمح ابنُ عمّ Relay الواقعي للمشرفين برفع محتوى — صوت، صور، مدخلات فهرس. لزمن طويل، كان الرفع نشرًا. في اللحظة التي ينهي فيها المشرف رفعًا، يصير حيًّا، عالميًّا، على الصفحة الأولى. لم <em>يقرّر</em> أحد جعله عامًّا؛ فعلُ إضافته <em>كان</em> فعلَ نشره.</p>
 <p>بدا هذا سليمًا حتى لم يعد كذلك. دفعةٌ (batch) نصف-مكتملة كانت مرئية وهي لا تزال تُجمَّع. ملفٌ خاطئ صار عامًّا للدقائق التي استغرقها ملاحظته وحذفه — و«الحذف» من CDN قصةٌ من خمس دقائق بنفسه. لم تكن هناك لحظة بين «موجود في النظام» و«يستطيع العالم رؤيته». كان للمحتوى حالة واحدة بالضبط، وتلك الحالة <em>حيّة</em>.</p>
@@ -7986,6 +8088,8 @@ staging must mirror production and config must not.</li>
 <article class="lesson-full en-only">
 
 <h2>4.5 — Verify the artifact, not the source</h2>
+<p><strong>After this you can</strong> add a postbuild check that inspects the compiled bundle and fails the build when it contains <code>localhost</code> or lacks the production origin, and show it failing on a planted bad file. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The TV apps were finished. Same codebase as the web app, packaged for two
 platforms&#39; app stores, submitted for review. Then Samsung&#39;s certification bounced
@@ -8181,6 +8285,8 @@ is about to send its first attacker. We start with a script named &quot;bob.&quo
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>4.5 — تحقّق من الأثر، لا المصدر</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تضيف فحصًا بعد البناء يفتش الحزمة المُصرَّفة ويُفشل البناء حين تحتوي <code>localhost</code> أو ينقصها مصدر الإنتاج، وتُظهره يفشل على ملف سيئ مزروع. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>كانت تطبيقات التلفاز جاهزة. القاعدة البرمجية نفسها للتطبيق الويب، مُحزَّمة لمتجرَي تطبيقات منصّتين، مُقدَّمة للمراجعة. ثم أعادها اعتماد Samsung: <strong>«تعذّر تشغيل المحتوى».</strong> غريب — فقد عملت على كل جهاز في المكتب. حمل تقديم LG البناء المطابق بايتيًّا؛ لم يكن قد رُوجع بعد فقط. كان سيُشحَن مكسورًا هو الآخر.</p>
 <p>فكّك الفريق البناء المرفوض ووجدوا المشكلة مخبوزة داخله: كان التطبيق يحاول بلوغ API عند <code>http://localhost:3105</code>. على جهاز مطوّر هذا صحيح — يعمل الـAPI محليًّا على ذلك المنفذ. على تلفاز غريب لا معنى له؛ <code>localhost</code> هو التلفاز نفسه، الذي لا يشغّل أي API. اتصل التطبيق برقم موجود فقط في المكتب.</p>
@@ -8315,6 +8421,8 @@ of the wrong hands.</em></p>
 <article class="lesson-full en-only">
 
 <h2>5.1 — Your First Attacker Is a Script</h2>
+<p><strong>After this you can</strong> put a CAPTCHA and per-recipient email limits in front of your anonymous forms, then run a scripted signup flood and show outbound mail capped while a real user can still register. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Over 24 hours, the platform gained 45 new accounts. Every one was named &quot;bob.&quot;
 None of them were people. Each registration used a <em>different real person&#39;s</em> email
@@ -8496,6 +8604,8 @@ would have handed the attacker a denial-of-service instead of stopping one.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>5.1 — أول مهاجم لك هو سكربت</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تضع CAPTCHA وحدودًا للبريد لكل مستلِم أمام نماذجك المجهولة، ثم تشغّل طوفان تسجيل مؤتمتًا وتُظهر البريد الصادر محدودًا بينما يظل مستخدم حقيقي قادرًا على التسجيل. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>خلال 24 ساعة، ربح المنتج 45 حسابًا جديدًا. كلها باسم «bob». ولم يكن أيٌّ منها
 لشخص حقيقي. كل تسجيل استخدم بريد <em>شخصٍ حقيقيٍّ مختلف</em> — عناوين مكشوطة من مكان آخر —
@@ -8668,6 +8778,8 @@ Reputation)</strong> — درجة الثقة التي تقرر أتصل رسائ
 <article class="lesson-full en-only">
 
 <h2>5.2 — Rate Limiting That Survives a CDN</h2>
+<p><strong>After this you can</strong> fix a rate limiter so it keys on the real client IP behind the CDN, keeps its counters in Redis across a redeploy, and ignores a forged client-IP header. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The rate limiter was working perfectly. That was the problem.</p>
 <p>Reports came in that legitimate users — normal people, modest traffic — were
@@ -8841,6 +8953,8 @@ why CDN-only origin ingress is what makes the header trustworthy.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>5.2 — تحديد معدل ينجو من CDN</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تصلح محدِّد معدل ليربط على عنوان العميل الحقيقي خلف الـCDN، ويحفظ عدّاته في Redis عبر إعادة النشر، ويتجاهل ترويسة عنوان عميل مزوّرة. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>كان مُحدِّد المعدل (rate limiter) يعمل بإتقان. وتلك كانت المشكلة.</p>
 <p>وردت بلاغات أن مستخدمين شرعيين — أناسًا عاديين بحركة متواضعة — يتلقّون
@@ -9004,6 +9118,8 @@ why CDN-only origin ingress is what makes the header trustworthy.</li>
 <article class="lesson-full en-only">
 
 <h2>5.3 — Auth That You Can Operate</h2>
+<p><strong>After this you can</strong> move auth tokens into httpOnly cookies, show refresh-token reuse detection forcing a re-login, require 2FA for admins, and build an env-var audience table that flags any variable with two audiences. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The auth system worked in every test. Logins succeeded, sessions persisted,
 tokens verified. Then a user asked for a password reset in production — and the
@@ -9192,6 +9308,8 @@ browser console and couldn&#39;t.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>5.3 — مصادقة تستطيع تشغيلها</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تنقل رموز المصادقة إلى كوكي httpOnly، وتُظهر كشف إعادة استخدام رمز التحديث يفرض دخولًا جديدًا، وتشترط العامل الثاني للمشرفين، وتبني جدول جمهور للمتغيرات يعلّم أي متغير بجمهورين. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>عمل نظام المصادقة في كل اختبار. نجح تسجيل الدخول، وثبتت الجلسات (sessions)، وتحقّقت الرموز (tokens). ثم
 طلب مستخدم إعادة تعيين كلمة المرور في الإنتاج (production) — فكان الرابط (URL) في الرسالة يشير إلى
@@ -9367,6 +9485,8 @@ JavaScript في الطرفية.»</em></p>
 <article class="lesson-full en-only">
 
 <h2>5.4 — Input You Didn't Realize You Were Trusting</h2>
+<p><strong>After this you can</strong> inventory the inputs your anonymous endpoints trust, route every outbound fetch through one guarded function that refuses internal addresses, and make a missing signing secret stop the app from starting. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>A security audit of one app turned up three findings that shared a spine: <strong>the
 code trusted something the client controlled, without noticing it was trusting
@@ -9523,6 +9643,8 @@ session ID).</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>5.4 — مدخلات لم تدرك أنك تثق بها</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تجرد المدخلات التي تثق بها نقاطك المجهولة، وتمرّر كل جلب صادر عبر دالة محمية واحدة ترفض العناوين الداخلية، وتجعل غياب مفتاح التوقيع يمنع التطبيق من البدء. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>أظهر تدقيق أمني لأحد التطبيقات ثلاثة نتائج تشترك في عمود فقري: <strong>الكود يثق بشيء
 يتحكم فيه العميل، دون أن ينتبه أنه يثق به.</strong></p>
@@ -9664,6 +9786,8 @@ IP، وحدود طول ومخطط، وحدود عدديّة. (ثغرة القي�
 <article class="lesson-full en-only">
 
 <h2>5.5 — Email Is Production Infrastructure</h2>
+<p><strong>After this you can</strong> list every code path that sends mail, make reset links point at the public site, and show that a newsletter interrupted mid-run and re-run sends nobody a duplicate. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Three email failures, one platform, and none of them looked like an email problem
 at first.</p>
@@ -9842,6 +9966,8 @@ in the sense that email broke.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>5.5 — البريد بنية تحتية إنتاجية</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تسرد كل مسار في الكود يرسل بريدًا، وتجعل روابط إعادة التعيين تشير إلى الموقع العام، وتُظهر أن نشرة قُطعت في منتصفها ثم أُعيدت لا ترسل نسخة مكررة لأحد. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>ثلاثة أعطال بريد، منصةٌ واحدة، ولم يبدُ أيٌّ منها مشكلة بريد بادئ الأمر.</p>
 <p>الأول: كان البريد الصادر <strong>يفشل بصمت</strong>. عملت أداة النشرة ولم ترسل شيئًا؛ واختفت
@@ -9995,6 +10121,8 @@ in the sense that email broke.</li>
 <article class="lesson-full en-only">
 
 <h2>5.6 — The OWASP Top 10, Mapped to a Real App</h2>
+<p><strong>After this you can</strong> rate your app against each OWASP Top 10 category, fix the top three findings, and add a CI dependency-audit gate that fails on a planted known-bad version. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>A full security audit ran against the reference platform, scored the way a
 pentester would: against the <strong>OWASP Top 10</strong>, the industry&#39;s consensus list of
@@ -10189,6 +10317,8 @@ belongs to.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>5.6 — قائمة OWASP العشرة (OWASP Top 10)، مُسقَطة على تطبيق حقيقي</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تقيّم تطبيقك مقابل كل فئة من قائمة OWASP العشرة، وتصلح أعلى ثلاث نتائج، وتضيف إلى CI بوابة تدقيق تبعيات تفشل عند نسخة سيئة معروفة مزروعة. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>جرى تدقيق أمني كامل على المنصة المرجعية، قُيّم كما يفعل مختبِر اختراق: مقابل <strong>قائمة
 OWASP العشرة</strong>، وهي إجماع الصناعة على أخطر عشرة مخاطر لتطبيقات الويب. والمدهش لم يكن
@@ -10368,6 +10498,8 @@ OWASP العشرة</strong>، وهي إجماع الصناعة على أخطر �
 <article class="lesson-full en-only">
 
 <h2>5.7 — Secrets and Configuration: The Keys to the Kingdom</h2>
+<p><strong>After this you can</strong> scan your git history for secrets, add a pre-commit hook that blocks a planted fake key, and rotate a real key end to end in under 15 minutes. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>In 2016, Uber engineers left Amazon Web Services credentials inside code stored in
 a <strong>private</strong> GitHub repository. Private felt safe. It wasn&#39;t. Attackers got access
@@ -10520,6 +10652,8 @@ one backend that can&#39;t update them all at the same speed.</em></p>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>5.7 — الأسرار والإعداد: مفاتيح المملكة</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> تمسح سجل git بحثًا عن الأسرار، وتضيف خطاف ما قبل الإيداع يحظر مفتاحًا وهميًا مزروعًا، وتدوّر مفتاحًا حقيقيًا من أوله إلى آخره في أقل من 15 دقيقة. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>في 2016، ترك مهندسو Uber بيانات اعتماد Amazon Web Services داخل كودٍ مخزّن في
 مستودع GitHub <strong>خاص</strong>. بدا «خاص» آمنًا. لم يكن. حصل المهاجمون على وصول للمستودع،
@@ -10679,6 +10813,8 @@ product is somebody else&#39;s client.</em></p>
 <article class="lesson-full en-only">
 
 <h2>6.1 — The Client Fleet Problem</h2>
+<p><strong>After this you can</strong> make every app request carry its version, build a force-update gate, and rehearse the ordering mistake to show why the store build must be live before you raise the minimum version. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The team built a kill switch. If a user&#39;s app version fell below a configured
 minimum, the app would show a full-screen &quot;Please update to continue&quot; wall and
@@ -10848,6 +10984,8 @@ release live and verified <em>first</em>, minimum version <em>second</em>.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>6.1 — مشكلة أسطول العملاء</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تجعل كل طلب من التطبيق يحمل رقم إصداره، وأن تبني بوابة التحديث الإجباري، وأن تعيد تمثيل خطأ الترتيب لتُثبت لماذا يجب أن يكون إصدار المتجر متاحًا قبل رفع الحد الأدنى للإصدار. <em>مدة الدراسة: نحو 50 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>بنى الفريق مفتاح إيقاف (kill switch). إن هبط إصدار تطبيق المستخدم دون حدٍّ أدنى مُعَدّ مسبقًا، عرض
 التطبيق شاشةً كاملة تقول «يرجى التحديث للمتابعة» ورفض العمل — وهذا ما يسمى <strong>بوابة
@@ -10996,6 +11134,8 @@ minSupportedVersion. لا العكس أبدًا. الخادم يخاطب كل إ
 <article class="lesson-full en-only">
 
 <h2>6.2 — Over-the-Air Updates and the Revert Trap</h2>
+<p><strong>After this you can</strong> reproduce the over-the-air revert trap, fix the publishing process so production updates ship only from main, and confirm the fix and the right backend in the running app. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Store review is slow, so mobile frameworks offer an escape hatch:
 <strong>over-the-air (OTA) updates</strong> — ship new JavaScript straight to installed apps
@@ -11150,6 +11290,8 @@ backend URL — not just that the publish command succeeded.&quot;</em></p>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>6.2 — التحديثات عبر الأثير وفخّ التراجع</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تعيد إنتاج فخّ التراجع في التحديثات عبر الأثير، وأن تصلح عملية النشر بحيث لا تُنشر تحديثات الإنتاج إلا من الفرع main، وأن تتحقق من الإصلاح ومن الخادم الصحيح داخل التطبيق العامل. <em>مدة الدراسة: نحو 50 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>مراجعة المتجر بطيئة، لذا تقدّم أطر الموبايل مخرجًا: <strong>التحديثات عبر الأثير (OTA)</strong> — دفع
 JavaScript جديد مباشرةً إلى التطبيقات المثبَّتة دون المرور بمتجر التطبيقات. فإصلاحٌ كان سيأخذ
@@ -11289,6 +11431,8 @@ JavaScript جديد مباشرةً إلى التطبيقات المثبَّتة 
 <article class="lesson-full en-only">
 
 <h2>6.3 — Feature Flags Done Once, Not Five Times</h2>
+<p><strong>After this you can</strong> build one runtime flag resolver that shows and hides a link, a route and a promo together, and add a drift-guard test that fails when a second check of the same flag appears. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>A <strong>feature flag</strong> is a switch that turns a feature on or off without a new
 deploy — config, not code. The team used one to gate a new section of the
@@ -11440,6 +11584,8 @@ that function.</p>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>6.3 — أعلام الميزات (feature flags) مرةً واحدة، لا خمسًا</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تبني محلِّلًا واحدًا لأعلام الميزات وقت التشغيل يُظهر رابطًا ومسارًا وإعلانًا ترويجيًا معًا ويخفيها معًا، وأن تضيف اختبار حارس تباين يفشل حين يظهر فحصٌ ثانٍ للعلم نفسه. <em>مدة الدراسة: نحو 50 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p><strong>علَم الميزة</strong> مفتاحٌ يشغّل ميزةً أو يطفئها دون نشرٍ جديد — إعدادٌ لا كود.
 استخدم الفريق واحدًا لبوابة قسمٍ جديد من المنتج: حين يكون العلَم مضاءً، يظهر رابط تنقّل وتعمل
@@ -11578,6 +11724,8 @@ that function.</p>
 <article class="lesson-full en-only">
 
 <h2>6.4 — Deep Links and the Drift Problem</h2>
+<p><strong>After this you can</strong> add a drift-guard test that fails when the router and the known-routes list disagree, add a loop breaker, and show a deep link opening in the app and a bad link ending in an honest error. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>A <strong>deep link</strong> is a URL that opens a specific screen inside an app — tap a link
 to a creator&#39;s profile in a chat, and the app opens <em>on that profile</em>, not on its
@@ -11731,6 +11879,8 @@ terminal <code>UnresolvableLink</code> after a cap.</p>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>6.4 — الروابط العميقة ومشكلة التباين</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تضيف اختبار حارس تباين يفشل حين تختلف قائمة المسارات المعروفة عن الموجِّه، وأن تضيف كاسرًا للحلقة، وأن تُري رابطًا عميقًا يُفتح في التطبيق ورابطًا سيئًا ينتهي بخطأ صريح. <em>مدة الدراسة: نحو 50 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p><strong>الرابط العميق (Deep Link)</strong> رابطٌ يفتح شاشةً محددة داخل تطبيق — اضغط رابطًا لملف صانعٍ في
 محادثة، فيفتح التطبيق <em>على ذلك الملف</em>، لا على شاشته الرئيسية. ولتقرّر إن كان التطبيق يستطيع
@@ -11866,6 +12016,8 @@ terminal <code>UnresolvableLink</code> after a cap.</p>
 <article class="lesson-full en-only">
 
 <h2>6.5 — Sign In With Google &amp; Apple, on Every Client</h2>
+<p><strong>After this you can</strong> write the platform-to-client-ID audience table, make one backend verify Google and Apple tokens from every client, and show a wrong-audience token surfacing its real error. <em>Study time: about 65 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>One product, three sign-in disasters, all from the same seam: <strong>OAuth across many
 clients against one backend.</strong> (OAuth is the &quot;Sign in with Google/Apple&quot; flow —
@@ -12035,6 +12187,8 @@ required client-ID keys.</p>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>6.5 — سجّل الدخول بـ Google وApple، على كل عميل</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تكتب جدول الجمهور الذي يربط كل منصة بمعرِّف عميلها، وأن تجعل خادمًا خلفيًا واحدًا يتحقق من رموز Google وApple القادمة من كل عميل، وأن تُري رمزًا بجمهور خاطئ يُظهر رسالة خطئه الحقيقية. <em>مدة الدراسة: نحو 65 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>منتجٌ واحد، ثلاث كوارث تسجيل دخول، كلها من نقطة التكامل (seam) نفسها: <strong>OAuth عبر عملاء (clients) كثيرين مقابل خادمٍ (backend)
 خلفي واحد.</strong> (‏OAuth هو تدفّق «سجّل الدخول بـ Google/Apple» — يضمن المزوّد المستخدمَ كي لا تخزّن
@@ -12187,6 +12341,8 @@ Google»</strong> — لا مكسورًا، بل غائبًا. يظهر فقط �
 <article class="lesson-full en-only">
 
 <h2>6.6 — API Design That Survives Its Clients</h2>
+<p><strong>After this you can</strong> write an API contract table and prove two of its rows with tests: a retried upload with the same idempotency key leaves one record and no orphans, and cursor pagination skips nothing when rows arrive mid-page. <em>Study time: about 65 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>An admin was bulk-uploading media to Relay&#39;s ancestor. Each file went to object
 storage first, then a <strong>confirm</strong> call told the backend &quot;this file is now part of
@@ -12354,6 +12510,8 @@ duplicating; cursor pagination encodes the last item&#39;s sort key as an opaque
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>6.6 — تصميم واجهةٍ برمجية ينجو من عملائه</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تكتب جدول عقد الواجهة البرمجية وتُثبت سطرين منه بالاختبارات: رفعٌ مُعاد بمفتاح اللاأثر نفسه يترك سجلًا واحدًا بلا ملفات يتيمة، وترقيم المؤشِّر لا يُسقط شيئًا حين تصل صفوف جديدة في منتصف الصفحة. <em>مدة الدراسة: نحو 65 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>كان مسؤولٌ يرفع وسائط دفعةً واحدة إلى سلف Relay. كل ملفٍ يذهب إلى التخزين الكائني (object storage) أولًا، ثم يخبر
 نداءُ <strong>تأكيد</strong> الخادمَ «هذا الملف صار الآن جزءًا من السجل». وفي منتصف دفعة (batch)، سبّب نشرٌ روتيني
@@ -12501,6 +12659,8 @@ duplicating; cursor pagination encodes the last item&#39;s sort key as an opaque
 <article class="lesson-full en-only">
 
 <h2>6.7 — You Are Someone's Client Too: Surviving Third-Party APIs</h2>
+<p><strong>After this you can</strong> list every third-party call your app makes, then show it surviving a simulated provider outage with backoff, jitter and a circuit breaker, and charging only once per idempotency key. <em>Study time: about 65 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>This is the shape of a thousand first incidents, and it always rhymes. Your app
 calls a provider — payments, an AI model, SMS, maps, email. One day the provider
@@ -12673,6 +12833,8 @@ provider&#39;s event ID stored with a unique index.</p>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>6.7 — أنت عميلُ شخصٍ ما أيضًا: النجاة من الواجهات الخارجية</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تجرد كل استدعاء لطرف ثالث يجريه تطبيقك، ثم تُري التطبيق ينجو من انقطاعٍ مُحاكى عند المزوِّد بفضل التراجع والارتعاش وقاطع الدارة، ولا يخصم المبلغ إلا مرة واحدة لكل مفتاح لاأثر. <em>مدة الدراسة: نحو 65 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>هذا شكل ألف حادثةٍ أولى، وهو يتناغم دائمًا. يستدعي تطبيقك مزوّدًا — دفعًا، أو نموذج ذكاء اصطناعي،
 أو رسائل قصيرة، أو خرائط، أو بريدًا. وذات يومٍ يصير المزوّد <strong>بطيئًا</strong>. لا معطَّلًا — بطيئًا.
@@ -12845,6 +13007,8 @@ Every term is defined before use; every lesson ends with something you can see.<
 <article class="lesson-full en-only">
 
 <h2>7.1 — The Dashboard That Lies and the Metric That Doesn't</h2>
+<p><strong>After this you can</strong> define &quot;returning users&quot; by real activity rather than logins, print that definition next to the number on the dashboard, and name one metric that informs no decision. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The retention dashboard looked healthy. &quot;Returning users&quot; was climbing week over
 week — the one number everyone screenshots for the investor update, trending up
@@ -13013,6 +13177,8 @@ went <em>down</em> when they fixed it — and why that was correct.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>7.1 — لوحة المعلومات التي تكذب والمقياس الذي لا يكذب</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تعرِّف «المستخدمين العائدين» بالنشاط الحقيقي لا بتسجيلات الدخول، وأن تطبع هذا التعريف بجوار الرقم في لوحة المعلومات، وأن تسمّي مقياسًا واحدًا لا يخدم أي قرار. <em>مدة الدراسة: نحو 50 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>بدت لوحة الاحتفاظ (Retention) صحية. كان «المستخدمون العائدون» يرتفعون أسبوعًا بعد
 أسبوع — الرقم الذي يلتقطه الجميع صورةً لتقرير المستثمرين، صاعدًا نحو اليمين والأعلى.
@@ -13168,6 +13334,8 @@ went <em>down</em> when they fixed it — and why that was correct.</li>
 <article class="lesson-full en-only">
 
 <h2>7.2 — Errors, Logs, and the Noise Floor</h2>
+<p><strong>After this you can</strong> audit your error tracker until its top five issues are all failures users actually felt, and write a &quot;what&#39;s running where&quot; runbook you have checked against the live hosts. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>When the platform finally got a crash tracker (Sentry, on mobile), the team
 opened it expecting a map of what was broken. The single largest error group had
@@ -13328,6 +13496,8 @@ the tracker useless.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>7.2 — الأخطاء والسجلات وأرضية الضوضاء</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تراجع متتبّع الأخطاء حتى تصبح أعلى خمس مشكلات فيه أعطالًا شعر بها المستخدمون فعلًا، وأن تكتب دليل تشغيل «ما الذي يعمل وأين» طابقته مع الخوادم الحية. <em>مدة الدراسة: نحو 50 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>حين حصلت المنصة أخيرًا على متتبع أعطال (Sentry، على الموبايل)، فتحه الفريق متوقعًا
 خريطةً لما انكسر. كانت أكبر مجموعة أخطاء تضم نحو <strong>1200 حدث</strong>. نقروا داخلها متأهبين
@@ -13471,6 +13641,8 @@ the tracker useless.</li>
 <article class="lesson-full en-only">
 
 <h2>7.3 — Search Is Telemetry</h2>
+<p><strong>After this you can</strong> log zero-result searches with the raw and normalized query, put the miss rate on a dashboard, and fix the top normalization miss behind a known-good-query test. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Search worked. It returned results, the box was fast, nobody had filed a bug.
 But nobody had ever asked the more uncomfortable question: <strong>how often does
@@ -13621,6 +13793,8 @@ broke.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>7.3 — البحث قياسٌ عن بُعد</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تسجّل عمليات البحث التي لا تعيد نتائج مع الاستعلام الخام والمُطبَّع، وأن تضع معدل الإخفاق في لوحة المعلومات، وأن تصلح أكبر إخفاق في التطبيع وتحميه باختبار استعلامات معروفة النتيجة. <em>مدة الدراسة: نحو 50 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>كان البحث يعمل. يعيد نتائج، والصندوق سريع، ولم يبلّغ أحد عن علة. لكن لم يطرح أحدٌ قط
 السؤال الأكثر إزعاجًا: <strong>كم مرة يبحث أحدهم فلا يحصل على <em>شيء</em>؟</strong></p>
@@ -13758,6 +13932,8 @@ broke.</li>
 <article class="lesson-full en-only">
 
 <h2>7.4 — Background Jobs: The Code Nobody Watches</h2>
+<p><strong>After this you can</strong> make a background job safe to fire twice, give it an audit row per run and a delivery reconciliation, and show a stale-job sweep reclaiming a job you killed mid-run. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The weekly push notification went out on schedule. Then, one week, some users
 got it <strong>twice</strong>. Not a disaster — but a thread pulled, and the whole sweater
@@ -13930,6 +14106,8 @@ pieces caused it.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>7.4 — المهام الخلفية: الكود الذي لا يراقبه أحد</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تجعل مهمة خلفية آمنة إذا أُطلقت مرتين، وأن تمنحها سجل تدقيق لكل تشغيل ومطابقةً للتسليمات، وأن تُري عملية كنس المهام العالقة تستعيد مهمةً أوقفتها في منتصف تشغيلها. <em>مدة الدراسة: نحو 50 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>خرج إشعار الدفع الأسبوعي في موعده. ثم، في أسبوع، وصل بعض المستخدمين <strong>مرتين</strong>. ليس
 كارثة — لكنه خيطٌ سُحب، فتفكّك الصوف كله.</p>
@@ -14083,6 +14261,7 @@ pieces caused it.</li>
 <article class="lesson-full en-only">
 
 <h2>7.5 — Product Analytics in Practice: GA, Cloudflare, and Owning Your Events</h2>
+<p><strong>After this you can</strong> run edge, consent-gated behavioural and first-party analytics side by side, read one week&#39;s signup numbers from each, and explain why the three counts differ. <em>Study time: about 50 minutes (estimate).</em></p>
 <blockquote>
 <p>Tool note: this lesson names today&#39;s best defaults — Cloudflare Web Analytics,
 Google Analytics 4, and first-party events in your own database. The <em>three
@@ -14252,6 +14431,7 @@ users were <em>analytics</em> failures before anything else.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>7.5 — التحليلات في الممارسة: GA وCloudflare وامتلاك أحداثك</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تشغّل التحليلات على ثلاث طبقات معًا (الحافة، والسلوكية المشروطة بالموافقة، والطرف الأول)، وأن تقرأ أرقام التسجيل لأسبوع واحد من كل طبقة، وأن تشرح سبب اختلاف الأعداد الثلاثة. <em>مدة الدراسة: نحو 50 دقيقة (تقدير).</em></p>
 <blockquote>
 <p>ملاحظة أدوات: يسمّي هذا الدرس أفضل الخيارات اليوم — Cloudflare Web Analytics،
 وGoogle Analytics 4، وأحداث الطرف الأول في قاعدة بياناتك (database). الطبقات <em>الثلاث</em> دائمة؛
@@ -14405,6 +14585,7 @@ Google Analytics 34,000. وقال جدول أحداث الطرف الأول 41,0
 <article class="lesson-full en-only">
 
 <h2>7.6 — Your Monitoring Stack: Sentry, Uptime Checks, Metrics, and Alerts</h2>
+<p><strong>After this you can</strong> wire error tracking, an uptime check that runs outside your infrastructure, a four-golden-signals dashboard and two phone alerts, then break staging on purpose and show both alerts arriving. <em>Study time: about 70 minutes (estimate).</em></p>
 <blockquote>
 <p>Tool note: this lesson names today&#39;s best defaults — Sentry, UptimeRobot /
 Better Stack, Grafana/Prometheus, OpenTelemetry. The <em>four instruments</em> and the
@@ -14593,6 +14774,7 @@ time to make it hard for an agent (or you) to break it in the first place.</em><
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>7.6 — رزمة مراقبتك: Sentry وفحوص التشغيل والمقاييس والتنبيهات</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن توصل تتبّع الأخطاء وفحص تشغيل يعمل من خارج بنيتك ولوحة الإشارات الذهبية الأربع وتنبيهين إلى هاتفك، ثم تكسر بيئة التجهيز عمدًا وتُري وصول التنبيهين كليهما. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
 <blockquote>
 <p>ملاحظة أدوات: يسمّي هذا الدرس أفضل الخيارات اليوم — Sentry، وUptimeRobot / Better
 Stack، وGrafana/Prometheus، وOpenTelemetry. الأدوات <em>الأربع</em> والقاعدة الحديدية
@@ -14775,6 +14957,8 @@ you didn&#39;t write.</em></p>
 <article class="lesson-full en-only">
 
 <h2>8.1 — The 600-File Near-Miss</h2>
+<p><strong>After this you can</strong> install a pre-commit guard that blocks a 600-file deletion you stage on purpose while letting a normal small commit through, and write the CLAUDE.md rules that ban <code>git add .</code> and check the base branch. <em>Study time: about 55 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>One ordinary afternoon, an agent finished a small feature and made a commit. The
 commit deleted <strong>600+ files</strong>.</p>
@@ -14954,6 +15138,8 @@ lined up (wrong base + <code>git add .</code>) — and why &quot;be careful&quot
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>8.1 — حادثة الملفات الستمائة (The 600-File Near-Miss)</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تثبّت حارسًا قبل الإيداع يمنع حذف 600 ملف تجهّزه عمدًا ويمرّر إيداعًا صغيرًا عاديًا، وأن تكتب قواعد CLAUDE.md التي تحظر <code>git add .</code> وتفرض التحقق من الفرع الأساسي. <em>مدة الدراسة: نحو 55 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>في ظهيرة عادية، أنهى وكيلٌ ميزةً صغيرة وأنشأ إيداعًا (Commit). حذف الإيداع <strong>أكثر من
 600 ملف</strong>.</p>
@@ -15114,6 +15300,8 @@ lined up (wrong base + <code>git add .</code>) — and why &quot;be careful&quot
 <article class="lesson-full en-only">
 
 <h2>8.2 — Tests as the Spec the Agent Can't Ignore</h2>
+<p><strong>After this you can</strong> move a mocked test suite onto a real database, show a once-green test going red on a constraint the mock hid, and make CI block a pull request while a test is red. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>A codebase had <strong>~1,990 passing tests</strong>. Green across the board, on every pull
 request, for months. It felt like a fortress.</p>
@@ -15315,6 +15503,8 @@ nothing — and what a mock is legitimately <em>for</em>.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>8.2 — الاختبارات بوصفها المواصفة التي لا يستطيع الوكيل تجاهلها</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تنقل مجموعة اختبارات تعتمد على المحاكاة إلى قاعدة بيانات حقيقية، وأن تُري اختبارًا كان أخضر يصبح أحمر بسبب قيدٍ أخفته المحاكاة، وأن تجعل التكامل المستمر يمنع دمج طلب سحب ما دام فيه اختبار أحمر. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>كان في مشروعٍ <strong>نحو 1990 اختبارًا ناجحًا</strong>. أخضر بالكامل، في كل طلب دمج، لشهور. بدا
 حصنًا.</p>
@@ -15499,6 +15689,8 @@ nothing — and what a mock is legitimately <em>for</em>.</li>
 <article class="lesson-full en-only">
 
 <h2>8.3 — CI Preflight and the Boy Who Cried Wolf</h2>
+<p><strong>After this you can</strong> add a fast preflight that runs on every push, show each check going red on a planted problem and green when fixed, and fix or delete any check that always fails or can never fail. <em>Study time: about 55 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Every push to the project ran a <strong>preflight check</strong> — a quick script in
 continuous integration meant to catch obvious mistakes before the real build. And
@@ -15668,6 +15860,8 @@ cry-wolf check is <em>worse</em> than no check at all.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>8.3 — الفحص المسبق والراعي الكاذب</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تضيف فحصًا مسبقًا سريعًا يعمل مع كل دفع، وأن تُري كل فحص يحمرّ على مشكلةٍ زرعتها ويخضرّ عند إصلاحها، وأن تصلح أو تحذف أي فحص يفشل دائمًا أو لا يمكن أن يفشل. <em>مدة الدراسة: نحو 55 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>كان كل دفعٍ إلى المشروع يشغّل <strong>فحصًا مسبقًا</strong> — سكربتًا سريعًا في التكامل
 المستمر يهدف إلى التقاط الأخطاء الواضحة قبل البناء الحقيقي. وكل دفعٍ، كان أحد فحوصه
@@ -15822,6 +16016,8 @@ cry-wolf check is <em>worse</em> than no check at all.</li>
 <article class="lesson-full en-only">
 
 <h2>8.4 — The Software You Didn't Write: Dependencies and Supply Chain</h2>
+<p><strong>After this you can</strong> write a dependency ledger that justifies each direct dependency, remove one you don&#39;t need, and show an audit gate going red on a planted known-bad version. <em>Study time: about 55 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>On March 22, 2016, a developer got into a naming dispute and, in protest,
 <strong>unpublished</strong> his npm packages. One of them was <code>left-pad</code>: <strong>eleven lines of
@@ -16019,6 +16215,8 @@ the seams.</em></p>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>8.4 — الكود الذي لم تكتبه: الاعتماديات وسلسلة التوريد</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تكتب سجلًّا للاعتماديات يبرّر كل اعتمادية مباشرة، وأن تزيل واحدة لا تحتاج إليها، وأن تُري بوابة التدقيق تحمرّ على إصدارٍ معروفِ الضرر زرعته عمدًا. <em>مدة الدراسة: نحو 55 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>في 22 مارس 2016، دخل مطوّر في نزاعٍ حول تسمية، واحتجاجًا <strong>ألغى نشر</strong> حِزَمه على npm.
 كانت إحداها <code>left-pad</code>: <strong>أحد عشر سطرًا</strong> تحشو نصًّا بمسافات على اليسار. تافهة. لكنها،
@@ -16208,6 +16406,8 @@ glance — the governance questions that make what you ship defensible.</em></p>
 <article class="lesson-full en-only">
 <p class="kicker">Module 9: Directing an AI Team</p>
 <h2>9.1 — You Are the Architect Now</h2>
+<p><strong>After this you can</strong> take one feature from an agent-led interview to a written spec with testable Given/When/Then acceptance criteria and one named invariant, before any code is written. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>In July 2025, during a public &quot;vibe coding&quot; experiment, an AI coding agent was
 working on a live SaaS product. The team had declared a code freeze — an explicit
@@ -16377,6 +16577,8 @@ guarantees stated up front, the ancestor of testable acceptance criteria.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 <p class="kicker">الوحدة 9: قيادة فريق من الوكلاء</p>
 <h2>9.1 — أنت المسؤول عن القرارات المعمارية</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تأخذ ميزةً واحدة من مقابلةٍ يجريها معك الوكيل إلى مواصفةٍ مكتوبة بمعايير قبول قابلة للاختبار بصيغة «بمعطى / عندما / إذن» وثابتٍ واحد مسمّى، قبل كتابة أي كود. <em>مدة الدراسة: نحو 50 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>في يوليو 2025، وأثناء تجربة عامة لـ«برمجة الفايب (vibe coding)»، كان وكيل برمجة ذكي يعمل على منتج SaaS حيّ. كان الفريق قد أعلن تجميدًا للكود (Code Freeze) — تعليمة صريحة قيلت في المحادثة: <em>لا تغيّر الإنتاج (production)</em>. لكن الوكيل (agent)، في منتصف مهمته، نفّذ أمرًا حذف قاعدة بيانات الإنتاج. ثم ولّد ملخصًا واثقًا لما فعله لا يطابق ما جرى فعلًا. اعتذر المدير التنفيذي (CEO) للمنصة علنًا، وبعد أيام نشر الإصلاحات التي كان يجب أن توجد أولًا: فصل البيئات، وتحسين النسخ الاحتياطية (backups)، وتضييق الصلاحيات.</p>
 <p>اقرأ شكل الحادثة لا درامَها. تصرّف الوكيل تمامًا كمبتدئ سريع بارع في المكوّنات وأعمى عن النظام. طُلب منه تنفيذ مهمة، ففعل شيئًا على شكل مهمة. أما القاعدة التي كان يجب أن توقفه — «نحن في تجميد، والإنتاج ممنوع» — فقد عاشت في جملة داخل نافذة محادثة، أي إنها لم تعش في مكان يُجبَر الوكيل على طاعته. كان التجميد <strong>نقطةَ تكامل (Seam)</strong> بين «يجوز للوكيل تغيير الكود» و«يُمنع على الوكيل لمس بيانات الإنتاج»، ولم يملك أحدٌ تلك النقطة. لم يملكها الوكيل، ولا يستطيع؛ فهو لا يعرف ماذا يعني الإنتاج لعملك.</p>
@@ -16490,6 +16692,8 @@ guarantees stated up front, the ancestor of testable acceptance criteria.</li>
 <article class="lesson-full en-only">
 <p class="kicker">Module 9: Directing an AI Team</p>
 <h2>9.2 — Context Engineering</h2>
+<p><strong>After this you can</strong> find and resolve the contradictions in a repository&#39;s context, and right-size CLAUDE.md until a fresh agent session answers three questions about the project with no guesses. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>A project had two instruction files. One, written early, said tests must use a real
 database — <em>no mocks, ever; a mock proves nothing about the data layer</em>. The other,
@@ -16657,6 +16861,8 @@ agents) pay interest on without knowing.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 <p class="kicker">الوحدة 9: قيادة فريق من الوكلاء</p>
 <h2>9.2 — هندسة السياق (Context Engineering)</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تجد التناقضات في سياق المستودع وتحسمها، وأن تضبط حجم CLAUDE.md حتى تجيب جلسة وكيل جديدة عن ثلاثة أسئلة حول المشروع دون تخمين. <em>مدة الدراسة: نحو 50 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>كان لمشروعٍ ملفّا تعليمات. الأول، كُتب مبكرًا، يقول إن الاختبارات يجب أن تستخدم قاعدة بيانات حقيقية — <em>لا محاكاة (Mocks) أبدًا؛ المحاكاة لا تثبت شيئًا عن طبقة البيانات</em>. والثاني، أضافه لاحقًا شخصٌ يحلّ مشكلة بطء التكامل المستمر (CI)، يقول العكس: <em>حاكِ النماذج كي تعمل الاختبارات بسرعة دون قاعدة بيانات</em>. كلا الملفين مودَع في المستودع (repo)، وكلاهما «القواعد». ولم يحذف أحدٌ الخاسر لأن أحدًا لم يلحظ أن هناك خلافًا.</p>
 <p>قرأ الوكلاء أيَّ ملفٍ وقع في سياقهم تلك الجلسة (session)، وفعلوا ما يقول تمامًا. فحاكى نصفُ مجموعات الاختبار النماذج، ولم يفعل النصف الآخر. صارت المحاكاة تحصيلًا حاصلًا — المحاكاة تعيد X والاختبار يؤكد X — وأمكن لصنفٍ كامل من أخطاء البيانات (ترحيلات فاسدة، قيود مفقودة، حذف متسلسل مكسور) أن يمرّ عبر مجموعة اختبارات خضراء دون أن يُمَسّ. جلس التناقض في التوثيق أشهرًا، يصدر أوامر متعاكسة بهدوء لكل من يقرؤه.</p>
@@ -16774,6 +16980,8 @@ agents) pay interest on without knowing.</li>
 <article class="lesson-full en-only">
 <p class="kicker">Module 9: Directing an AI Team</p>
 <h2>9.3 — Every Repeated Review Comment Is a Missing Guardrail</h2>
+<p><strong>After this you can</strong> list your three most-repeated review comments, turn one into a check you watch fail on a deliberate violation, and add a drift-guard that turns the build red when two lists disagree. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Across dozens of agent-written pull requests, the same review notes kept appearing.
 <em>&quot;You built a new cache key by hand — route it through the central key function.&quot;</em>
@@ -16929,6 +17137,8 @@ conventions into automation — the review-surface-shrinks idea in the wild.</li
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 <p class="kicker">الوحدة 9: قيادة فريق من الوكلاء</p>
 <h2>9.3 — كل تعليق مراجعة متكرر حاجزٌ مفقود</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تدوّن تعليقات المراجعة الثلاثة الأكثر تكرارًا لديك، وأن تحوّل أحدها إلى فحصٍ تراه يفشل عند مخالفةٍ متعمدة، وأن تضيف حارس انجراف يُفشل البناء حين تختلف قائمتان. <em>مدة الدراسة: نحو 50 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>عبر عشرات طلبات الدمج (pull requests) التي كتبها الوكلاء، ظلّت ملاحظات المراجعة نفسها تظهر. <em>«بنيت مفتاح كاش (cache key) يدويًا — مرّره عبر دالّة المفتاح المركزية.»</em> <em>«قائمة المسارات التي يعرفها التطبيق ستنجرف عن المُوجِّه (router) الحقيقي — أضف اختبار حارس الانجراف.»</em> <em>«هذا المعالج (handler) يثق بقيمة من العميل (client) بلا حدٍّ للطول.»</em> كلٌّ ملاحظة منصفة، وكلٌّ كُتبت من جديد على طلب الدمج التالي الذي ارتكب الخطأ نفسه.</p>
 <p>كان المراجع يبذل عملًا حقيقيًا ولا يصل إلى شيء، لأن العمل يتبخّر لحظة نشره. فالوكيل الذي فتح طلب الدمج رقم 40 لم يرَ قط تعليق طلب الدمج رقم 12. المراجعة بالذاكرة مقابل وكيلٍ بلا ذاكرة سيرٌ على عجلة: تتحرك بلا توقف وتصل إلى لا مكان. لم يقصر طابور المراجعة، وشُحنت الأخطاء الثلاثة نفسها بسرعة التقاطها.</p>
@@ -17042,6 +17252,8 @@ conventions into automation — the review-surface-shrinks idea in the wild.</li
 <article class="lesson-full en-only">
 <p class="kicker">Module 9: Directing an AI Team</p>
 <h2>9.4 — Verification Before Completion</h2>
+<p><strong>After this you can</strong> write a definition of done with the evidence each change type needs, and confirm a deploy with an origin or asset-hash check rather than the cached public URL. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>&quot;Done&quot; was declared, over and over, from the wrong layer.</p>
 <p>A deploy was verified by loading the public URL. It looked live. But the CDN caches
@@ -17214,6 +17426,8 @@ artifact, not the source) — the mechanics behind two of these war stories.</li
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 <p class="kicker">الوحدة 9: قيادة فريق من الوكلاء</p>
 <h2>9.4 — التحقق قبل الإنجاز (Verification Before Completion)</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تكتب تعريفًا للإنجاز يحدد الدليل المطلوب لكل نوع من التغييرات، وأن تؤكد نشرًا بفحص الخادم الأصلي أو بصمة الأصول لا بالرابط العام المخزَّن مؤقتًا. <em>مدة الدراسة: نحو 50 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>أُعلن «الإنجاز»، مرة بعد مرة، من الطبقة الخطأ.</p>
 <p>تُحقّق من نشرٍ (deploy) بتحميل الرابط العام. بدا حيًّا. لكن الـCDN يخزّن (caches) الـHTML نحو خمس دقائق، فكان الناشر ينظر إلى الموقع <em>القديم</em> ويسمّي <em>الجديد</em> مشحونًا. لم ينتشر النشر الحقيقي؛ والفحص تحقّق من كاش لا من الأصل (origin).</p>
@@ -17334,6 +17548,8 @@ artifact, not the source) — the mechanics behind two of these war stories.</li
 <article class="lesson-full en-only">
 <p class="kicker">Module 9: Directing an AI Team</p>
 <h2>9.5 — Claude Code Power Techniques</h2>
+<p><strong>After this you can</strong> write a CLAUDE.md that passes a cold-start test, build a hook that blocks a deliberate violation, turn one repeated workflow into a skill, and run two subagents in separate worktrees. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Look at what accumulated in one real project&#39;s <code>.claude/</code> directory over time: a
 <code>deploy</code> skill, a <code>deploy-staging</code> skill, an <code>audit</code> skill, a set of spec-kit commands
@@ -17494,6 +17710,8 @@ skill idea applied to the whole spec pipeline.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 <p class="kicker">الوحدة 9: قيادة فريق من الوكلاء</p>
 <h2>9.5 — تقنيات Claude Code المتقدمة</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تكتب ملف CLAUDE.md يجتاز اختبار الجلسة الجديدة، وأن تبني خطّافًا يمنع مخالفةً متعمدة، وأن تحوّل سير عمل متكررًا إلى مهارة، وأن تشغّل وكيلين فرعيين في شجرتي عمل منفصلتين. <em>مدة الدراسة: نحو 50 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>انظر إلى ما تراكم في مجلد <code>.claude/</code> لمشروعٍ حقيقي مع الوقت: مهارة (skill) <code>deploy</code>، ومهارة <code>deploy-staging</code>، ومهارة <code>audit</code>، ومجموعة أوامر spec-kit لمواصفة ← خطة ← مهام. لم يوجد أيٌّ منها في البداية. بدأ كلٌّ سلسلةَ خطواتٍ عاشت في رأس شخصٍ واحد — الترتيب الدقيق لبناء نشرٍ أزرق-أخضر وفحص صحته (health-check) وقلبه والتحقق منه؛ وقائمة العشر نقاط التي يجب أن يغطيها التدقيق؛ والأسئلة التي يجب أن تجيبها المواصفة. وكلما عاشت تلك المعرفة في رأسٍ أو محادثةٍ وحدها، كانت على بُعد خطوةٍ منسيّة من حادثة.</p>
 <p>جاء التحوّل من إدراك أن سير عملٍ تشغّله أكثر من مرتين يجب ألا يُعاد كتابته من الذاكرة — بل يجب أن يصير أداة. حين يصير «النشر» مهارة، تحدث الخطوات الاثنتا عشرة الحذرة بالطريقة نفسها كل مرة، مهما شغّلها (أو مهما شغّلها من الوكلاء). وحين تصير قائمة التدقيق أمرًا، لا يُتخطّى بُعدٌ لأن أحدًا كان متعبًا. <strong>التقنيات التالية هي كيف يكفّ سير العمل عن العيش في رأسك ويبدأ بفرض نفسه.</strong></p>
@@ -17607,6 +17825,8 @@ skill idea applied to the whole spec pipeline.</li>
 <article class="lesson-full en-only">
 <p class="kicker">Module 9: Directing an AI Team</p>
 <h2>9.6 — Building Your Agent Team</h2>
+<p><strong>After this you can</strong> define a read-only reviewer agent and a QA agent, each with a scope, a tool list and an escalation rule, and show an ambiguous instruction making an agent escalate to you instead of guessing. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The platform behind this course&#39;s incident bank runs as an AI-first company. There is
 one <strong>Orchestrator</strong> agent that the human talks to; it routes work to specialists —
@@ -17761,6 +17981,8 @@ agent org chart becomes your architecture&#39;s seams.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 <p class="kicker">الوحدة 9: قيادة فريق من الوكلاء</p>
 <h2>9.6 — بناء فريقك من الوكلاء</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تعرّف وكيل مراجعة للقراءة فقط ووكيل ضمان جودة، لكلٍّ منهما نطاقٌ وقائمة أدوات وقاعدة تصعيد، وأن تُري تعليمةً غامضة تجعل الوكيل يصعّد الأمر إليك بدل أن يخمّن. <em>مدة الدراسة: نحو 50 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>تعمل المنصة وراء بنك حوادث هذه الدورة كشركةٍ ذكاءٌ اصطناعيٌّ أولًا (AI-first). هناك وكيل <strong>منسّق</strong> واحد يحدّثه الإنسان؛ وهو يوجّه العمل إلى متخصصين — خلفية (backend)، وواجهة (frontend)، وموبايل، وضمان جودة، وأمن، ومراجع كود، وغيرهم — كلٌّ وكيلٌ منفصل بنطاقٍ محدّد. ويتدفق العمل عبر مسار spec-kit (مواصفة ← خطة ← مهام ← تنفيذ)، ببواباتِ جودةٍ بين المراحل ونقاطِ تفتيشٍ بشرية يقرّر عندها شخصٌ المضيَّ أو التوقف. أنجزت المنصة مئات طلبات الدمج بهذه الطريقة.</p>
 <p>والصادق أن أنماط فشلها (failure modes) كتبت أغلب هذه الوحدة. الدفع غير الموصول، وبناء التلفزيون بـlocalhost، وعمى اختبارات المحاكاة، ووسيط SSRF: كلٌّ كان متخصصًا يؤدي وظيفته الضيقة بالضبط بينما تسقط حقيقةٌ على مستوى النظام بين الأدوار. فريقٌ من الوكلاء لا يزيل نقاط التكامل، بل <em>يضيف</em> نقاط تكامل جديدة، بين الوكلاء أنفسهم. والانضباط الذي يُنجح الفريق ليس الوكلاء — بل العقد بينهم.</p>
@@ -17865,6 +18087,8 @@ agent org chart becomes your architecture&#39;s seams.</li>
 <article class="lesson-full en-only">
 <p class="kicker">Module 9: Directing an AI Team</p>
 <h2>9.7 — Code Audit and Review at Agent Speed</h2>
+<p><strong>After this you can</strong> run a per-PR review, a separate security pass and a whole-repo audit against a written checklist, and file the findings as a tracked report with severity, owner and status. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The best entries in this course&#39;s incident bank were not found by pull-request review.
 They were found by <em>audits</em> — an agent pointed at the entire codebase against a
@@ -18024,6 +18248,8 @@ blind spot), and <strong>8.4</strong> (supply chain) — the audit finds, in dep
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 <p class="kicker">الوحدة 9: قيادة فريق من الوكلاء</p>
 <h2>9.7 — تدقيق الكود ومراجعته بسرعة الوكلاء</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تجري مراجعةً لكل طلب سحب وتمريرةً أمنية منفصلة وتدقيقًا للمستودع كله وفق قائمة مكتوبة، وأن تسجّل النتائج في تقرير متابَع يحدد لكل نتيجة خطورتها ومالكها وحالتها. <em>مدة الدراسة: نحو 50 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>أفضل مدخلات بنك حوادث هذه الدورة لم تُكتشَف بمراجعة طلبات الدمج، بل بـ<em>تدقيقات</em> — وكيلٌ يُوجَّه نحو الكود كله مقابل قائمة تحقّق منظّمة، يبحث عمّا لا يُظهره أي فرقٍ واحد.</p>
 <p>وجدت مراجعة أمنية للمستودع كله نقطة نهاية لوسيط وسائط تتبع إعادة التوجيه (redirects) إلى أي وجهة وتوقّع الروابط الداخلية — أي تزوير طلب من جهة الخادم (SSRF) — مع سرّ توقيع يعود بصمت إلى قيمة تطويرية مكتوبة في الكود. لم يُدخِلها أي طلب دمج بوضوح؛ كانت <em>تراكمَ</em> بضعة تغييرات تبدو معقولة. ووجد تدقيق في البيانات أن كل مجموعة تحليلات فقدت بصمت مهلة احتفاظها — ملايين الصفوف سنويًا تنمو بلا حد نحو عطل امتلاء القرص، بينما لا يزال تعليق في الكود يدّعي «ينتهي بعد 90 يومًا». ووجد تدقيق في الاختبارات أن أغلب مجموعات اختبار الخادم تحاكي قاعدة البيانات، فيمرّ استعلام (query) فاسد أو ترحيل خاطئ عبر كل اختبار وينكسر في الإنتاج فقط. ووجد تدقيق في التكامل المستمر أن المسار كله يعمل على حاسوب شخصي يحمل صلاحيات وينفّذ كود طلبات دمج غير موثوقة.</p>
@@ -18130,6 +18356,8 @@ blind spot), and <strong>8.4</strong> (supply chain) — the audit finds, in dep
 <article class="lesson-full en-only">
 <p class="kicker">Module 9: Directing an AI Team</p>
 <h2>9.8 — The Governance Glance: You Own What Your Agent Ships</h2>
+<p><strong>After this you can</strong> write a one-page governance doc a newcomer can answer five questions from in two minutes, make the agent refuse an action that needs a human yes, and time a switch to maintenance mode and back. <em>Study time: about 55 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>In late 2022, a grieving customer opened Air Canada&#39;s website and asked the support
 chatbot about bereavement fares. The bot answered helpfully and confidently: book the
@@ -18324,6 +18552,8 @@ enough to build it.</p>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 <p class="kicker">الوحدة 9: قيادة فريق من الوكلاء</p>
 <h2>9.8 — نظرة الحوكمة: أنت مسؤول عمّا ينشره وكيل الذكاء الاصطناعي</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تكتب وثيقة حوكمة من صفحة واحدة يجيب منها شخصٌ جديد عن خمسة أسئلة في دقيقتين، وأن تجعل الوكيل يرفض إجراءً يحتاج إلى موافقة بشرية، وأن تقيس زمن التحويل إلى وضع الصيانة والعودة منه. <em>مدة الدراسة: نحو 55 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>في أواخر عام 2022، فتح عميلٌ في حالة حداد موقع Air Canada وسأل روبوت الدردشة عن أسعار سفر الحداد المخفَّضة. أجاب الروبوت (bot) بثقة ووضوح: احجز التذكرة بالسعر الكامل الآن، ثم قدّم طلب استرداد بسعر الحداد خلال 90 يومًا بعد السفر. ففعل الرجل ذلك تمامًا. ثم رفضت الشركة الاسترداد، لأن السياسة الحقيقية — المربوطة من الموقع نفسه — تقول العكس: أسعار الحداد لا تُطبَّق بعد السفر. لقد اخترع الروبوت سياسةً لا وجود لها.</p>
 <p>رفع العميل القضية إلى محكمة تسوية المنازعات المدنية (Civil Resolution Tribunal) في كولومبيا البريطانية. وكان دفاع Air Canada مفاجئًا: قالت الشركة إن روبوت الدردشة «كيان قانوني مستقل مسؤول عن أفعاله». وصفت المحكمة هذا الدفع بأنه لافت، وحكمت بأن ما جرى تحريف ناتج عن إهمال، وألزمت الشركة بالدفع.</p>
@@ -18459,6 +18689,9 @@ first use; the <a href="#glossary">Glossary</a> has the rest.</em></p>
 <article class="lesson-full en-only">
 <p class="kicker">Module 10: Scaling Beyond One Server</p>
 <h2>10.1 — Stateless Services and Load Balancing</h2>
+<p><strong>After this you can</strong> run two instances behind a load balancer, find and remove the process state that breaks across them, and show a health check draining a killed instance with zero failed requests. <em>Study time: about 70 minutes (estimate).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Relay&#39;s ancestor had a rate limiter: no more than 100 requests a minute from one
 IP. It worked in every test. It counted requests in a plain variable in the
@@ -18697,6 +18930,9 @@ external API&#39;s rate limit) with the number that showed it.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 <p class="kicker">الوحدة 10: التوسّع إلى ما بعد خادم واحد</p>
 <h2>10.1 — الخدمات عديمة الحالة وموازنة الحِمل</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تشغّل نسختين خلف موازن حِمل، وأن تجد حالة العملية التي تنكسر بينهما وتُخرجها منهما، وأن تُري الفحص الصحي يُخرج نسخةً أوقفتها من الخدمة دون أي طلب فاشل. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>كان لدى سلف Relay محدِّد معدّل (Rate Limiter): لا أكثر من 100 طلب في الدقيقة من عنوان IP واحد. نجح في كل اختبار. كان يَعُدّ الطلبات في متغيّر بسيط داخل ذاكرة الخادم — عدّاد صغير لكل عنوان، يزيد مع كل طلب، ويُقارَن بالرقم 100. بسيط وصحيح. على آلة واحدة.</p>
 <p>ثم حدث أمران، في يومين مختلفين، وكسر كلٌّ منهما هذا العدّاد بهدوء.</p>
@@ -18859,6 +19095,9 @@ external API&#39;s rate limit) with the number that showed it.</li>
 <article class="lesson-full en-only">
 <p class="kicker">Module 10: Scaling Beyond One Server</p>
 <h2>10.2 — Queues and Asynchronous Work</h2>
+<p><strong>After this you can</strong> move slow work onto a queue with an idempotent consumer, a dead-letter queue and a stale-job sweep, and show a job delivered twice taking effect exactly once. <em>Study time: about 70 minutes (estimate).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Relay&#39;s ancestor sent push notifications on a schedule — a &quot;new content from
 creators you follow&quot; blast every evening. The job looked done: it ran, it sent,
@@ -19075,6 +19314,9 @@ normal, not a bug.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 <p class="kicker">الوحدة 10: التوسّع إلى ما بعد خادم واحد</p>
 <h2>10.2 — الطوابير والعمل غير المتزامن</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تنقل العمل البطيء إلى طابور بمستهلكٍ لا يتكرر أثره وطابورٍ للرسائل الميتة وعملية كنسٍ للمهام العالقة، وأن تُري مهمةً سُلِّمت مرتين يقع أثرها مرة واحدة بالضبط. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>كان سلف Relay يرسل إشعارات دفع على جدول — دفعة «محتوى جديد من مبدعين تتابعهم» كل مساء. بدت المهمة منجَزة: تعمل، وترسل، ويصل الإشعار للمستخدمين. ثم حان أجل ديون الإهمال، دفعةً واحدة، في تدقيق.</p>
 <p>لم يكن للمهمة <strong>قفل (lock)</strong>. فإن أُطلقت مرتين — إعادة محاولة (retry)، تداخل، خادم ثانٍ يشغّل cron أيضًا — أرسلت الدفعة كلها <em>مرتين</em>. وصلت للمستخدمين إشعارات مكررة؛ ولم يستطع أحد أن يعرف، لأن المهمة لم تترك <strong>سجل تدقيق</strong> بما أرسلت. ولم تتحقق قط من <strong>إيصالات</strong> التسليم، فحين فشلت الإرسالات بصمت كان ذلك غير مرئي أيضًا. وظهر الشكل نفسه في مُرسل النشرة (إزالة تكرار غير ذرّية — قد تراسل الشخص نفسه مرتين) وفي طابور معالجة الوسائط (لا إيجار، فمهمة تعطّلت في منتصف المعالجة بقيت «قيد التنفيذ» للأبد وسدّت البقية).</p>
@@ -19208,6 +19450,9 @@ normal, not a bug.</li>
 <article class="lesson-full en-only">
 <p class="kicker">Module 10: Scaling Beyond One Server</p>
 <h2>10.3 — Scaling the Database</h2>
+<p><strong>After this you can</strong> decide and justify whether you need a read replica, route reads between primary and replica, and show both replication lag and why a replica is not a backup. <em>Study time: about 70 minutes (estimate).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Discord&#39;s messages are the most-cited &quot;how a database actually scales&quot; story
 because they never scaled for fashion — only for measured pain.</p>
@@ -19422,6 +19667,9 @@ each move (a measurement, not fashion) and which rung most products stop at.</li
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 <p class="kicker">الوحدة 10: التوسّع إلى ما بعد خادم واحد</p>
 <h2>10.3 — توسيع قاعدة البيانات</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تقرر وتبرر هل تحتاج إلى نسخة قراءة، وأن توجّه القراءات بين القاعدة الأساسية ونسخة القراءة، وأن تُري تأخر النسخ ولماذا لا تُعدّ نسخة القراءة نسخة احتياطية. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>رسائل Discord هي أكثر قصة «كيف تتوسّع قاعدة بيانات فعلًا» استشهادًا، لأنهم لم يتوسّعوا للموضة قط — بل للألم المقاس فقط.</p>
 <p>بدأوا على <strong>MongoDB</strong> (2015). كان جيدًا حتى لم يعد كذلك: مع نمو الرسائل إلى المليارات، كفّت <em>مجموعة العمل (working set)</em> — البيانات المقروءة بنشاط — عن أن تتّسع في الذاكرة، فسقط الأداء من حافة. انتقلوا إلى <strong>Cassandra</strong>، التي وزّعت البيانات على آلات كثيرة واستوعبت الحجم — لسنوات. لكن Cassandra جلبت آلامها الخاصة: «الأقسام الساخنة (hot partitions)» (قنوات مزدحمة قليلة تُرهق عُقدًا (nodes) مفردة)، وتوقفات جمع مهملات طويلة وغير متوقعة جعلت زمن الاستجابة (latency) متقلبًا. فانتقلوا في 2023 مجددًا، بعد قياس تلك المشكلات بالضبط — إلى <strong>ScyllaDB</strong>، مخزن متوافق مع Cassandra مهندَس لقتل توقفات جمع المهملات — ووثّقوا تخزين <em>تريليونات</em> الرسائل.</p>
@@ -19574,6 +19822,9 @@ each move (a measurement, not fashion) and which rung most products stop at.</li
 <article class="lesson-full en-only">
 <p class="kicker">Module 10: Scaling Beyond One Server · **app track**</p>
 <h2>10.4 — Realtime: Presence, Websockets, and Heartbeats</h2>
+<p><strong>After this you can</strong> build a &quot;who&#39;s online&quot; presence feature that heals itself after its store is wiped and that a client sending fake heartbeats cannot inflate. <em>Study time: about 70 minutes (estimate).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Relay&#39;s ancestor had a &quot;who&#39;s listening now&quot; feature — a live count of active
 users, and little presence dots. It ran on Redis: each client sent a <strong>heartbeat</strong>
@@ -19790,6 +20041,9 @@ the client-trusted counter got wrong.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 <p class="kicker">الوحدة 10: التوسّع إلى ما بعد خادم واحد · **مسار التطبيقات**</p>
 <h2>10.4 — اللحظية: الحضور (presence) وWebSockets ونبضات القلب (heartbeats)</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تبني ميزة حضور «من المتصل الآن» تتعافى ذاتيًا بعد مسح مخزنها، ولا يستطيع عميلٌ يرسل نبضات قلب مزيفة أن يضخّم عددها. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>كان لدى سلف Relay ميزة «من يستمع الآن» — عدّاد حيّ للمستخدمين النشطين، ونقاط حضور صغيرة. عملت على Redis: يرسل كل عميل (client) <strong>نبضة قلب</strong> كل بضع ثوانٍ، فتحدّث مجموعة مرتّبة (ZSET) من «مستخدم ← آخر ظهور»؛ وكنسٌ خلفي يسقط من صمت. نظيف ورخيص ولحظي.</p>
 <p>ثم مسح أحدهم الكاش. كان كاش الاستجابة وحالة الحضور يتشاركان قاعدة Redis واحدة، وكان مسح الكاش أمر <strong><code>FLUSHDB</code></strong> فظًّا — يمحو <em>كل شيء</em> في تلك القاعدة. سقط عدّاد الحضور الحيّ إلى <strong>الصفر فورًا</strong>، في منتصف النهار، للجميع. ذعر. هل هناك عطل؟ هل غادر الجميع؟</p>
@@ -19927,6 +20181,9 @@ the client-trusted counter got wrong.</li>
 <article class="lesson-full en-only">
 <p class="kicker">Module 10: Scaling Beyond One Server</p>
 <h2>10.5 — Performance and Capacity</h2>
+<p><strong>After this you can</strong> load-test an app to its breaking point, record that number as its capacity, fix the first bottleneck, and prove with a re-run that the ceiling moved and p99 fell. <em>Study time: about 70 minutes (estimate).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>One admin dashboard in Relay&#39;s ancestor loaded fine — for months. Then, without
 any code change, the whole site started feeling sluggish at busy hours, and
@@ -20153,6 +20410,9 @@ affordable everywhere.</em></p>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 <p class="kicker">الوحدة 10: التوسّع إلى ما بعد خادم واحد</p>
 <h2>10.5 — الأداء والسعة</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تختبر التطبيق تحت الحِمل حتى نقطة انكساره، وأن تسجّل ذلك الرقم بوصفه سعته، وأن تصلح أول عنق زجاجة، وأن تُثبت بإعادة القياس أن السقف ارتفع وأن p99 انخفض. <em>مدة الدراسة: نحو 70 دقيقة (تقدير).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>كانت لوحة إدارة واحدة في سلف Relay تُحمَّل بخير — لأشهر. ثم، دون أي تغيير في الكود، بدأ الموقع كله يشعر بالبطء في الساعات المزدحمة، ولم يستطع أحد رؤية السبب. اللوحة (dashboard) ما زالت تعمل. التطبيق ما زال يعمل. كان فقط… بطيئًا، للجميع، أحيانًا.</p>
 <p>كان السبب اللوحة نفسها. فتحُها يشغّل <strong>ثمانية مسوح كاملة غير محدودة</strong> على أكبر جدول — يقرأ كل صف، كل مرة، ليحسب مخططاته (الدرس 2.5). عند الحركة المنخفضة كان ذلك غير مرئي: مدير واحد، بين الحين والحين، صفحة بطيئة لا يبالي بها أحد. لكن تلك المسوح جرّت أكبر جدول كله عبر الذاكرة — <strong>مزيحةً بيانات الفهرس الساخنة</strong> التي يخدم منها كل طلب مستخدم عادي. فمديرٌ واحد يفتح صفحة واحدة كان يمسح الكاش الذي يبقي <em>الموقع كله</em> سريعًا، ودفع الجميع الثمن زمنَ استجابة حتى تعود مجموعة العمل للتسخين.</p>
@@ -20315,6 +20575,8 @@ edge platform that ties the whole story together.</em></p>
 <article class="lesson-full en-only">
 
 <h2>11.1 — Domains, DNS, and TLS</h2>
+<p><strong>After this you can</strong> point a domain at your app with one canonical host, confirm its TLS certificate renews itself, and show the origin refusing a request that skips the CDN. <em>Study time: about 55 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>On October 4, 2021, Facebook, Instagram, and WhatsApp vanished for roughly six
 hours — not &quot;slow,&quot; <em>gone</em>, for billions of people. Nobody hacked anything. No
@@ -20503,6 +20765,8 @@ systems failed (DNS), and why their own recovery was so slow.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>11.1 — النطاقات ونظام أسماء النطاقات وطبقة النقل الآمنة</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن توجّه نطاقًا إلى تطبيقك بمضيفٍ معياري واحد، وأن تتأكد من أن شهادة TLS تتجدد تلقائيًا، وأن تُري الخادم الأصلي يرفض طلبًا يتجاوز شبكة توصيل المحتوى. <em>مدة الدراسة: نحو 55 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>في 4 أكتوبر 2021، اختفى فيسبوك وإنستغرام وواتساب نحو 6 ساعات — لا «بطيئًا»، بل <em>غائبًا</em> عن مليارات المستخدمين. لم يخترق أحد شيئًا، ولم يحترق خادم (server). أثناء صيانة روتينية، سحب أمرٌ <strong>مسارات BGP</strong> — أي اتجاهات الإنترنت — التي تخبر بقية العالم بمكان شبكة فيسبوك. وحين ذهبت الاتجاهات، صارت <strong>خوادم نظام أسماء النطاقات (DNS)</strong> الخاصة بفيسبوك غير قابلة للوصول أيضًا. ونظام أسماء النطاقات هو دليل العناوين: الخدمة التي تحوّل <code>facebook.com</code> إلى عنوان فعلي. ومع تعذّر الوصول إلى الدليل، لم يعد الاسم يشير إلى شيء. الخوادم كانت سليمة، تعمل وممتلئة بالصور، لكن العالم ببساطة لم يستطع إيجادها.</p>
 <p>وازداد الأمر سوءًا داخل الشركة. فأدوات فيسبوك الداخلية — حتى بعض قارئات بطاقات الأبواب — كانت تعتمد على ترجمة الأسماء نفسها التي اختفت للتو، فتعذّر على من يستطيعون الإصلاح الوصولُ ماديًا إلى الأجهزة.</p>
@@ -20626,6 +20890,8 @@ systems failed (DNS), and why their own recovery was so slow.</li>
 <article class="lesson-full en-only">
 
 <h2>11.2 — Internationalization and RTL</h2>
+<p><strong>After this you can</strong> serve an app at <code>/en/</code> and <code>/ar/</code> with a fully mirrored right-to-left layout, add a translation drift-guard you watch fail, and make a search that differs only by diacritics return the right result. <em>Study time: about 55 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>A bilingual product — English and Arabic, one right-to-left — shipped deep links
 so that tapping a shared article link on a phone would open that article <em>inside
@@ -20806,6 +21072,8 @@ green while the feature was broken (a proxy input skipped the broken step).</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>11.2 — التدويل ومن اليمين لليسار</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تقدّم التطبيق على <code>/en/</code> و<code>/ar/</code> بتخطيط معكوس بالكامل من اليمين إلى اليسار، وأن تضيف حارس انحراف للترجمات تراه يفشل، وأن تجعل البحث يعيد النتيجة الصحيحة حين لا يختلف الاستعلام إلا في التشكيل. <em>مدة الدراسة: نحو 55 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>منتج ثنائي اللغة — إنجليزي وعربي، أحدهما من اليمين لليسار (RTL) — أطلق روابط عميقة تجعل النقر على رابط مقال مشارَك على الهاتف يفتح ذلك المقال <em>داخل التطبيق</em>. عمل في العرض التجريبي. ومجموعة اختبارات الروابط العميقة كانت خضراء. ثم جاءت البلاغات: النقر على رابط موقع حقيقي يفتح التطبيق، لكن على شاشة <strong>الرئيسية</strong> دائمًا، لا على المحتوى المرتبط.</p>
 <p>كان السبب الجذري (root cause) عدم تطابق لم يرسمه أحد. فروابط <strong>الموقع</strong> كانت مسبوقة باللغة وبصيغة الجمع: <code>/en/articles/42</code>، <code>/ar/articles/42</code>. أما مسارات <strong>التطبيق</strong> الداخلية فكانت بلا لغة وبصيغة المفرد: <code>article/42</code>. الروابط <code>https://</code> الحقيقية تحمل شكل الموقع، والتطبيق بلا قاعدة تترجم فضاءً إلى آخر، فسقط كل رابط وارد إلى قيمة افتراضية — الرئيسية. ونجحت الاختبارات لأنها جرّبت مخطط <code>app://</code> <em>المخصص</em> للتطبيق مباشرةً — مُدخَلٌ بديل تخطّى خطوة الترجمة المكسورة نفسها. <strong>أخضر، وخطأ.</strong></p>
@@ -20917,6 +21185,7 @@ green while the feature was broken (a proxy input skipped the broken step).</li>
 <article class="lesson-full en-only">
 
 <h2>11.3 — SEO and AEO: Being Found by Crawlers and Cited by Answer Engines</h2>
+<p><strong>After this you can</strong> give two page types a chunked dynamic sitemap, canonical and hreflang tags, Open Graph cards and valid structured data, and show the build succeeding while the API is down. <em>Study time: about 50 minutes (estimate).</em></p>
 <blockquote>
 <p><strong>Tool-dated lesson.</strong> The <em>principles</em> — machine-readable meaning, don&#39;t couple
 builds to runtime data, write to be quoted — outlive the tools. The named
@@ -21100,6 +21369,7 @@ the coupling that froze the build.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>11.3 — تحسين محركات البحث ومحركات الإجابة: أن تُوجَد وأن تُقتبَس</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تمنح نوعين من الصفحات خريطة موقع ديناميكية مقسّمة، ووسوم canonical وhreflang، وبطاقات Open Graph، وبيانات منظَّمة سليمة، وأن تُري البناء ينجح والواجهة البرمجية متوقفة. <em>مدة الدراسة: نحو 50 دقيقة (تقدير).</em></p>
 <blockquote>
 <p><strong>درس مرتبط بالأدوات.</strong> <em>المبادئ</em> — المعنى المقروء آليًا، وعدم ربط البناء ببيانات وقت التشغيل، والكتابة كي تُقتبَس — تبقى بعد الأدوات. أما المنتجات والأعراف المسمّاة (سلوك Googlebot، و<code>llms.txt</code>، وزواحف ذكاء اصطناعي بعينها) فهي أفضل الافتراضات الحالية وتُحدَّث سنويًا. تعلّم المبدأ، وأعد فحص الأداة.</p>
 </blockquote>
@@ -21224,6 +21494,8 @@ the coupling that froze the build.</li>
 <article class="lesson-full en-only">
 
 <h2>11.4 — Cost Engineering</h2>
+<p><strong>After this you can</strong> build a cost model with 1×, 10× and 100× columns, name its worst-scaling line, and propose one structural fix for that line before it becomes expensive. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Two cost stories from one platform, and they rhyme.</p>
 <p>The first: media storage lived on one cloud provider (GCS). The bytes were cheap
@@ -21381,6 +21653,8 @@ not the bytes), and why the tripled backup was a correctness bug too.</li>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>11.4 — هندسة التكلفة</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تبني نموذج تكلفة بأعمدة 1× و10× و100×، وأن تسمّي البند الأسوأ نموًّا فيه، وأن تقترح إصلاحًا بنيويًا واحدًا له قبل أن يصبح مكلفًا. <em>مدة الدراسة: نحو 50 دقيقة (تقدير).</em></p>
+
 <h3 class="pc-story"><span class="tag">قصة من الميدان</span></h3>
 <p>قصتا تكلفة من منصة واحدة، وهما متجانستان.</p>
 <p>الأولى: عاش تخزين الوسائط على مزوّد سحابي واحد (GCS). كانت البايتات رخيصة <em>التخزين</em> — لكن كلما بثّ مستخدم ملفًا، فرض المزوّد رسوم <strong>الصادر (Egress)</strong>: رسمًا على البيانات المغادِرة لشبكته. ومع جمهور عالمي يبثّ صوتًا طوال اليوم، صار الصادر بهدوء أحدَ أكبر بنود الفاتورة — يقزّم التخزين نفسه. وكان الإصلاح هجرةً (migration) إلى مزوّد (Cloudflare R2) محورُ عرضه <strong>صفر رسوم صادر</strong>. لم تتغير البايتات، بل تغيّر <em>نموذج التسعير</em>، فهبطت الفاتورة بحدة. (تلك الهجرة نفسها هي حيث عاشت علة الملفات التي تعود في الدرس 2.2 — عمل التكلفة وعمل الصواب على السلك نفسه.)</p>
@@ -21491,6 +21765,7 @@ not the bytes), and why the tripled backup was a correctness bug too.</li>
 <article class="lesson-full en-only">
 
 <h2>11.5 — Your Edge Platform in Practice: Cloudflare End to End</h2>
+<p><strong>After this you can</strong> put an app behind Cloudflare with a cache rule, WAF and Turnstile, re-run the earlier cache-poisoning and rate-limit tests through the real edge, and keep the edge config in the repo. <em>Study time: about 55 minutes (estimate).</em></p>
 <blockquote>
 <p><strong>Tool-dated lesson.</strong> Cloudflare is this course&#39;s reference edge, and the named
 features (Turnstile, R2, Workers, the specific dashboard toggles) are current
@@ -21693,6 +21968,7 @@ including several you now recognize from this very module.</em></p>
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 
 <h2>11.5 — منصة حافتك عمليًا: Cloudflare من الطرف إلى الطرف (End to End)</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تضع التطبيق خلف Cloudflare بقاعدة تخزين مؤقت وجدار حماية WAF وTurnstile، وأن تعيد اختبارَي تسميم التخزين المؤقت وتحديد المعدل السابقين عبر الحافة الحقيقية، وأن تحفظ إعدادات الحافة في المستودع. <em>مدة الدراسة: نحو 55 دقيقة (تقدير).</em></p>
 <blockquote>
 <p><strong>درس مرتبط بالأدوات.</strong> Cloudflare حافةُ هذه الدورة المرجعية، والميزات المسمّاة (Turnstile، R2، Workers، مفاتيح اللوحة بعينها) أفضلُ الافتراضات الحالية على تحديث سنوي. أما <em>المبدأ</em> — <strong>الحافة (edge) إعدادٌ تملكه على منصة لا تملكها؛ فأخضِعه للإصدارات، واختبر عبره، ولا تفترض الافتراضات أبدًا</strong> — فيبقى بعد أي مزوّد. بدّل أسماء المنتجات، واحفظ الانضباط.</p>
 </blockquote>
@@ -21838,6 +22114,8 @@ including several you now recognize from this very module.</em></p>
 <article class="lesson-full en-only">
 <p class="kicker">The whole course, turned into twelve pagers.</p>
 <h2>12 — Capstone: You Get Paged</h2>
+<p><strong>After this you can</strong> diagnose twelve symptom-only incidents by bisecting the request path to the failing layer, and name for each the evidence that proves the fix worked. <em>Study time: about 205 minutes (estimate).</em></p>
+<hr>
 <p>You&#39;ve built Relay from a local prototype to a multi-client production system.
 Now you operate it. This module is diagnosis practice: twelve incidents, each
 given the way a real one arrives — <strong>symptoms only.</strong> A user report. A status
@@ -22542,6 +22820,8 @@ full lesson: 3.2, 4.3, 2.3, 5.2, 2.2, 6.2, 4.5, 3.4, 7.6, 6.7 + 10.2, 10.3, 9.4.
 <article class="lesson-full ar-only" lang="ar" dir="rtl">
 <p class="kicker">الدورة كلها، محوَّلة إلى اثني عشر تنبيهًا.</p>
 <h2>12 — المشروع الختامي: يصلك تنبيه</h2>
+<p><strong>بعد هذا الدرس تستطيع</strong> أن تشخّص اثنتي عشرة حادثة لا تصلك منها إلا الأعراض، بتنصيف مسار الطلب حتى تبلغ الطبقة المعطوبة، وأن تسمّي لكل حادثة الدليل الذي يُثبت أن الإصلاح نجح. <em>مدة الدراسة: نحو 205 دقيقة (تقدير).</em></p>
+<hr>
 <p>بنيتَ Relay من نموذج محلي إلى نظام إنتاجي متعدد العملاء، والآن أنت تُشغّله. هذه
 الوحدة تدريبٌ على التشخيص: اثنا عشر حادثًا، كلٌّ منها يصلك كما يصل الحادث الحقيقي —
 <strong>أعراضٌ فقط.</strong> بلاغُ مستخدم، أو رمزُ حالة (Status Code)، أو رسمٌ بياني تحرّك، أو

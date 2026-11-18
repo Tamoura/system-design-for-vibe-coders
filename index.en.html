@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="sd4vc-source" content="e0192a726242a567">
+<meta name="sd4vc-source" content="948379fb4570d5be">
 <title>System Design for Vibe Coders</title>
 <style>
 
@@ -238,6 +238,8 @@ with something you can <strong>see</strong> working.</em></p>
 <article class="lesson-full">
 
 <h2>F.1 — What Happens When You Open a Website</h2>
+<p><strong>After this you can</strong> sketch the four-step trip of opening a website on a napkin, explain it to a friend, and show with measured round-trip times why a faraway site answers more slowly. <em>Study time: about 35 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span>the day Facebook forgot where it lived</h3>
 <p>On October 4, 2021, Facebook, Instagram, and WhatsApp vanished from the internet
 for six hours. Not &quot;slow&quot; — <em>gone</em>, for billions of people. Inside the company it
@@ -352,6 +354,8 @@ trip that failed. (Answer: step 1 — the phone book.)</li>
 <article class="lesson-full">
 
 <h2>F.2 — What a Server Actually Is (and What Code Is)</h2>
+<p><strong>After this you can</strong> have your agent start, stop and restart a tiny web program while you watch the page work, die and work again, and explain what happened to a non-coder using the recipe, kitchen and notebook analogy. <em>Study time: about 35 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span>one of the world's biggest sites ran on nine computers</h3>
 <p>For years, Stack Overflow — the question-and-answer site nearly every programmer
 on earth uses daily, a top-100 website — served its entire audience from about
@@ -482,6 +486,8 @@ no longer feels like magic.</li>
 <article class="lesson-full">
 
 <h2>F.3 — Versions, Repos, and Deploys: How Software Moves</h2>
+<p><strong>After this you can</strong> direct your agent to commit two versions of a page, show you the diff, and restore v1 and then v2 with proof, and say which version is live from the history. <em>Study time: about 35 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span>the company that lost $440 million in 45 minutes</h3>
 <p>On the morning of August 1, 2012, Knight Capital — one of the biggest stock
 traders in America — turned on new software. The update had been copied to their
@@ -599,6 +605,8 @@ it lived on.</li>
 <article class="lesson-full">
 
 <h2>F.4 — Meet Your Agent: Directing a Builder You Can't Watch</h2>
+<p><strong>After this you can</strong> write a first CLAUDE.md with a production-data rule and an evidence rule, and prove it with a cold-start test in which a fresh agent session answers three questions about your product correctly. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span>the agent that deleted a company's database — then misled its boss</h3>
 <p>In July 2025, during a public experiment in &quot;vibe coding,&quot; a well-known SaaS
 figure let an AI coding agent build and operate an app over several days. Despite
@@ -731,6 +739,8 @@ difference in what came back.</li>
 <article class="lesson-full">
 
 <h2>F.5 — Your First Live Page, With Proof</h2>
+<p><strong>After this you can</strong> have your agent deploy a one-page site, check v2 on your own phone against the evidence it promised in advance, and write a rollback runbook that names the exact version it returns to. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span>the typo that turned off the internet's dashboard</h3>
 <p>On February 28, 2017, an Amazon engineer doing routine maintenance typed a
 command with one parameter wrong. Instead of removing a few servers from a
@@ -853,6 +863,8 @@ build-vs-buy — the decision that sets how many seams you own.</em></p>
 <article class="lesson-full">
 
 <h2>0.1 — &quot;It Works&quot; Is Not a Property of a System</h2>
+<p><strong>After this you can</strong> list the seams in your own product and rewrite your CLAUDE.md definition of &quot;done&quot; as a system claim that says works where, works when and works for whom, with evidence from where users stand. <em>Study time: about 35 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span>the deploy that lied — twice</h3>
 <p>From this course&#39;s own incident bank: a team shipped a new feature. The deploy
 pipeline reported success. The checks were green. The developer opened the site —
@@ -971,6 +983,8 @@ users stand — the F.5 habit, now permanent).</li>
 <article class="lesson-full">
 
 <h2>0.2 — The Map of Everything That Can Hurt You</h2>
+<p><strong>After this you can</strong> draft a one-page <code>docs/threat-map.md</code> that names a specific bad day for your product at each of the eight seams, ranks them, and gives the cheapest first action for your top three. <em>Study time: about 35 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span>eight seams, eight famous disasters</h3>
 <p>There&#39;s an old instinct that failure is exotic — that big outages come from
 brilliant hackers or freak lightning. Then you read ten years of postmortems and
@@ -1372,6 +1386,8 @@ memory, matching each to its seam.</li>
 <article class="lesson-full">
 
 <h2>0.3 — Build vs Buy: the Highest-Leverage Decision You'll Make</h2>
+<p><strong>After this you can</strong> build a capabilities table that marks each part of your product build or buy, justify any &quot;build&quot; for auth, payments or email in writing, and name your two or three innovation tokens. <em>Study time: about 35 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span>the disasters all lived in the built things</h3>
 <p>Open this course&#39;s two war-story banks and sort every incident by one question:
 did it happen in something the team <strong>built</strong>, or something they <strong>bought</strong>?</p>
@@ -1505,6 +1521,9 @@ of them breaks. Terms are defined on first use; the
 <article class="lesson-full">
 <p class="kicker">Module 1: Anatomy of a Real App</p>
 <h2>1.1 — Draw the Boxes Before the Agent Writes the Code</h2>
+<p><strong>After this you can</strong> draw your app&#39;s seven boxes in <code>docs/architecture.md</code>, make the running app match the drawing, and prove with a cold-start test that a fresh agent session knows where uploaded media goes from CLAUDE.md alone. <em>Study time: about 70 minutes (estimate).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>After a routine zero-downtime deploy, the main site was fine. Every check was green.
 Then the admin team reported that the upload dashboard — which lives on its own
@@ -1776,6 +1795,9 @@ or watch it guess.</li>
 <article class="lesson-full">
 <p class="kicker">Module 1: Anatomy of a Real App</p>
 <h2>1.2 — The Request's Journey</h2>
+<p><strong>After this you can</strong> trace one click through its request ID to its log trail, reproduce the prefix trap live, and record a dated latency baseline that compares cached and uncached responses. <em>Study time: about 70 minutes (estimate).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The team shipped a new set of server routes under <code>/api-next/</code> — modern route
 handlers living in the web app, deliberately separate from the legacy Express API
@@ -2000,6 +2022,7 @@ code last.</li>
 <article class="lesson-full">
 <p class="kicker">Module 1: Anatomy of a Real App</p>
 <h2>1.3 — Day-One Eyes: Your First Error Tracker and Uptime Check</h2>
+<p><strong>After this you can</strong> wire an error tracker and an outside uptime check, then throw a test error and kill staging on purpose to show both alarms reach your phone. <em>Study time: about 50 minutes (estimate).</em></p>
 <blockquote>
 <p>Tool note: this lesson names today&#39;s best defaults (Sentry, UptimeRobot /
 Better Stack). The principles are permanent; the product names get an annual
@@ -2136,6 +2159,8 @@ pay for — or get paid by — for years. Terms are defined on first use; the
 <article class="lesson-full">
 
 <h2>2.1 — The Database Is the Easy Part</h2>
+<p><strong>After this you can</strong> design a schema in which every entity has a surrogate key and an explicit uniqueness rule for its real-world identity, and show a test that keeps two legitimate variants while the constraint rejects a true duplicate. <em>Study time: about 65 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The catalog looked complete. Every item had a clean page, a stable address, and
 loaded fast. Then a creator uploaded a second variant of an edition they&#39;d
@@ -2297,6 +2322,8 @@ identity was <code>(edition, variant)</code>, not edition alone.</li>
 <article class="lesson-full">
 
 <h2>2.2 — Object Storage and the Two-Owner Trap</h2>
+<p><strong>After this you can</strong> store file bytes in object storage and pointers in the database, prove a delete removes both, and write a migration runbook with an exit criterion for every phase. <em>Study time: about 65 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Files that were deleted kept coming back.</p>
 <p>An admin removed a media file from the product&#39;s object storage. It was gone —
@@ -2467,6 +2494,8 @@ the migration&#39;s dual-source phase had no end date.</li>
 <article class="lesson-full">
 
 <h2>2.3 — Backups: What, Not Just Whether</h2>
+<p><strong>After this you can</strong> back up only state (database, uploads, configs), restore it into an empty environment and see real data come back, and write down the RPO and a measured RTO. <em>Study time: about 65 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span>two of them</h3>
 <p><strong>Ours, first.</strong> The nightly backup was healthy for months, then one morning it
 had tripled: <strong>244 MB the day before, 871 MB overnight</strong>, with no matching growth
@@ -2637,6 +2666,8 @@ and state the shared moral: an untested backup is a hope.</li>
 <article class="lesson-full">
 
 <h2>2.4 — Retention, Deletion, and the Data You Promised to Erase</h2>
+<p><strong>After this you can</strong> write a retention table with a decision for every kind of data, switch on a TTL only after backfilling and verifying rollups, and prove a user deletion leaves zero rows behind. <em>Study time: about 65 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span>a timebomb and a broken promise</h3>
 <p><strong>The timebomb.</strong> An audit turned up a comment in a data model that read, in
 effect, <em>&quot;expires after 90 days.&quot;</em> The code underneath it did no such thing. At
@@ -2827,6 +2858,8 @@ and name the golden rule: backfill → verify → expire.</li>
 <article class="lesson-full">
 
 <h2>2.5 — Indexes, Queries, and the Working Set</h2>
+<p><strong>After this you can</strong> read a query plan to tell an index scan from a full scan, add indexes so your two hottest queries use one, and cut an N+1 list from about 51 queries to about 2. <em>Study time: about 65 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The whole product would get slow for a minute or two, then recover, on no
 schedule anyone could pin down. Not down — <em>slow</em>, everywhere at once, for
@@ -3024,6 +3057,8 @@ load slowed the whole product.</li>
 <article class="lesson-full">
 
 <h2>2.6 — Two Clicks at Once: Races, Transactions, and Idempotent Writes</h2>
+<p><strong>After this you can</strong> find your app&#39;s read-modify-write spots, fix the worst one atomically, and prove with a 20-at-once test, a double signup and a double-clicked payment that each ends in exactly one correct result. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>An admin bulk upload of 114 files took 15 to 30 minutes because it could only be
 done <strong>one file at a time</strong>. Upload two at once and files would silently
@@ -3200,6 +3235,7 @@ Terms are defined on first use; the <a href="#glossary">Glossary</a> has the res
 <article class="lesson-full">
 <p class="kicker">Module 3: Caching — the Sharpest Knife in the Drawer</p>
 <h2>3.1 — Why caching is where correctness goes to die</h2>
+<p><strong>After this you can</strong> cache one hot endpoint in Redis with a written TTL justification, measure cold time, warm time and hit rate, and show that a stale value is served for a bounded time only. <em>Study time: about 70 minutes (estimate).</em></p>
 <blockquote>
 <p>The flagship lesson of this module — <strong>3.2, the cache-poisoning incident</strong> —
 sits between 3.1 and 3.3 as its own piece. This file holds <strong>3.1, 3.3, and
@@ -3375,6 +3411,9 @@ not a magic number copied from a tutorial.</li>
 <article class="lesson-full">
 <p class="kicker">Module 3: Caching — the Sharpest Knife in the Drawer</p>
 <h2>3.2 — The Cache Poisoning Incident</h2>
+<p><strong>After this you can</strong> reproduce a cache-poisoning attack, block it with a proxy guard, and write a tripwire test plus a CLAUDE.md rule, then watch the test fail when the guard is removed. <em>Study time: about 70 minutes (estimate).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The reports started trickling in: some users, on some pages, some of the time,
 weren&#39;t seeing the website. They were seeing this:</p>
@@ -3622,6 +3661,8 @@ dimension) its cache key was missing.</li>
 <article class="lesson-full">
 
 <h2>3.3 — Invalidation in real life</h2>
+<p><strong>After this you can</strong> move every cache key into one key module, prove with a round-trip test that a mutation clears the exact key a read fills, and watch a drift-guard fail when an invalidation is missing. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The cache was doing its job a little <em>too</em> well. Editors would update a piece of
 content, hit save, see the success toast — and the public page would keep showing
@@ -3779,6 +3820,8 @@ reintroduce the drift.</li>
 <article class="lesson-full">
 
 <h2>3.4 — When the cache takes you down</h2>
+<p><strong>After this you can</strong> cap Redis memory, cut a 100-request stampede to one database hit with a single-flight lock, and show that killing Redis makes the app slower but not broken. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>A cache is supposed to be the thing that saves you. Here are three ways the same
 Redis nearly — and once actually — became the thing that took the site down.</p>
@@ -3968,6 +4011,8 @@ routine thing you do. This module makes it boring — on purpose.</em></p>
 <article class="lesson-full">
 
 <h2>4.1 — Shipping is a system</h2>
+<p><strong>After this you can</strong> turn your deploy into one command that records the live version at <code>/version</code>, and cause real 502s with an in-place restart under load to show the window it leaves. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The deploy looked clean. New code, <code>pm2 restart</code>, server back up in a few
 seconds. The kind of deploy that had worked a hundred times.</p>
@@ -4163,6 +4208,8 @@ degradation&quot; sections for the wider map.</li>
 <article class="lesson-full">
 
 <h2>4.2 — Blue-green and the shared-directory 502s</h2>
+<p><strong>After this you can</strong> set up blue-green deploys with a separate build directory for each colour, list every shared writable path, and deploy under a live request stream with zero non-200 responses. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The team had done the responsible thing. To kill the restart window from lesson
 4.1, they built blue-green deploys: two copies of the app, &quot;blue&quot; and &quot;green,&quot;
@@ -4364,6 +4411,8 @@ sections for the wider picture.</li>
 <article class="lesson-full">
 
 <h2>4.3 — The proxy lies: stale workers and trusting your own verification</h2>
+<p><strong>After this you can</strong> end your deploy with a script that checks <code>/version</code> and compares origin and edge asset hashes, show it failing on a stale edge, and reproduce 502s by reloading the proxy after a flip, then clear them with a restart. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Two deploys, two ways the thing you trust to tell you the truth lied to you.</p>
 <p><strong>The flapping 502.</strong> A blue-green flip completed cleanly — green healthy, proxy
@@ -4558,6 +4607,8 @@ five-minute window in the story.</li>
 <article class="lesson-full">
 
 <h2>4.4 — Rollback, staging, and release gates</h2>
+<p><strong>After this you can</strong> add a staging target, roll back a deliberately broken deploy with one command, make uploaded content hidden until published, and switch a feature off with a flag without a deploy. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Relay&#39;s real-world cousin let admins upload content — audio, images, catalog
 entries. For a long time, uploading was publishing. The moment an admin finished
@@ -4757,6 +4808,8 @@ staging must mirror production and config must not.</li>
 <article class="lesson-full">
 
 <h2>4.5 — Verify the artifact, not the source</h2>
+<p><strong>After this you can</strong> add a postbuild check that inspects the compiled bundle and fails the build when it contains <code>localhost</code> or lacks the production origin, and show it failing on a planted bad file. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The TV apps were finished. Same codebase as the web app, packaged for two
 platforms&#39; app stores, submitted for review. Then Samsung&#39;s certification bounced
@@ -4966,6 +5019,8 @@ of the wrong hands.</em></p>
 <article class="lesson-full">
 
 <h2>5.1 — Your First Attacker Is a Script</h2>
+<p><strong>After this you can</strong> put a CAPTCHA and per-recipient email limits in front of your anonymous forms, then run a scripted signup flood and show outbound mail capped while a real user can still register. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Over 24 hours, the platform gained 45 new accounts. Every one was named &quot;bob.&quot;
 None of them were people. Each registration used a <em>different real person&#39;s</em> email
@@ -5149,6 +5204,8 @@ would have handed the attacker a denial-of-service instead of stopping one.</li>
 <article class="lesson-full">
 
 <h2>5.2 — Rate Limiting That Survives a CDN</h2>
+<p><strong>After this you can</strong> fix a rate limiter so it keys on the real client IP behind the CDN, keeps its counters in Redis across a redeploy, and ignores a forged client-IP header. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The rate limiter was working perfectly. That was the problem.</p>
 <p>Reports came in that legitimate users — normal people, modest traffic — were
@@ -5324,6 +5381,8 @@ why CDN-only origin ingress is what makes the header trustworthy.</li>
 <article class="lesson-full">
 
 <h2>5.3 — Auth That You Can Operate</h2>
+<p><strong>After this you can</strong> move auth tokens into httpOnly cookies, show refresh-token reuse detection forcing a re-login, require 2FA for admins, and build an env-var audience table that flags any variable with two audiences. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The auth system worked in every test. Logins succeeded, sessions persisted,
 tokens verified. Then a user asked for a password reset in production — and the
@@ -5514,6 +5573,8 @@ browser console and couldn&#39;t.</li>
 <article class="lesson-full">
 
 <h2>5.4 — Input You Didn't Realize You Were Trusting</h2>
+<p><strong>After this you can</strong> inventory the inputs your anonymous endpoints trust, route every outbound fetch through one guarded function that refuses internal addresses, and make a missing signing secret stop the app from starting. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>A security audit of one app turned up three findings that shared a spine: <strong>the
 code trusted something the client controlled, without noticing it was trusting
@@ -5672,6 +5733,8 @@ session ID).</li>
 <article class="lesson-full">
 
 <h2>5.5 — Email Is Production Infrastructure</h2>
+<p><strong>After this you can</strong> list every code path that sends mail, make reset links point at the public site, and show that a newsletter interrupted mid-run and re-run sends nobody a duplicate. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Three email failures, one platform, and none of them looked like an email problem
 at first.</p>
@@ -5852,6 +5915,8 @@ in the sense that email broke.</li>
 <article class="lesson-full">
 
 <h2>5.6 — The OWASP Top 10, Mapped to a Real App</h2>
+<p><strong>After this you can</strong> rate your app against each OWASP Top 10 category, fix the top three findings, and add a CI dependency-audit gate that fails on a planted known-bad version. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>A full security audit ran against the reference platform, scored the way a
 pentester would: against the <strong>OWASP Top 10</strong>, the industry&#39;s consensus list of
@@ -6048,6 +6113,8 @@ belongs to.</li>
 <article class="lesson-full">
 
 <h2>5.7 — Secrets and Configuration: The Keys to the Kingdom</h2>
+<p><strong>After this you can</strong> scan your git history for secrets, add a pre-commit hook that blocks a planted fake key, and rotate a real key end to end in under 15 minutes. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>In 2016, Uber engineers left Amazon Web Services credentials inside code stored in
 a <strong>private</strong> GitHub repository. Private felt safe. It wasn&#39;t. Attackers got access
@@ -6216,6 +6283,8 @@ product is somebody else&#39;s client.</em></p>
 <article class="lesson-full">
 
 <h2>6.1 — The Client Fleet Problem</h2>
+<p><strong>After this you can</strong> make every app request carry its version, build a force-update gate, and rehearse the ordering mistake to show why the store build must be live before you raise the minimum version. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The team built a kill switch. If a user&#39;s app version fell below a configured
 minimum, the app would show a full-screen &quot;Please update to continue&quot; wall and
@@ -6387,6 +6456,8 @@ release live and verified <em>first</em>, minimum version <em>second</em>.</li>
 <article class="lesson-full">
 
 <h2>6.2 — Over-the-Air Updates and the Revert Trap</h2>
+<p><strong>After this you can</strong> reproduce the over-the-air revert trap, fix the publishing process so production updates ship only from main, and confirm the fix and the right backend in the running app. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Store review is slow, so mobile frameworks offer an escape hatch:
 <strong>over-the-air (OTA) updates</strong> — ship new JavaScript straight to installed apps
@@ -6543,6 +6614,8 @@ backend URL — not just that the publish command succeeded.&quot;</em></p>
 <article class="lesson-full">
 
 <h2>6.3 — Feature Flags Done Once, Not Five Times</h2>
+<p><strong>After this you can</strong> build one runtime flag resolver that shows and hides a link, a route and a promo together, and add a drift-guard test that fails when a second check of the same flag appears. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>A <strong>feature flag</strong> is a switch that turns a feature on or off without a new
 deploy — config, not code. The team used one to gate a new section of the
@@ -6696,6 +6769,8 @@ that function.</p>
 <article class="lesson-full">
 
 <h2>6.4 — Deep Links and the Drift Problem</h2>
+<p><strong>After this you can</strong> add a drift-guard test that fails when the router and the known-routes list disagree, add a loop breaker, and show a deep link opening in the app and a bad link ending in an honest error. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>A <strong>deep link</strong> is a URL that opens a specific screen inside an app — tap a link
 to a creator&#39;s profile in a chat, and the app opens <em>on that profile</em>, not on its
@@ -6851,6 +6926,8 @@ terminal <code>UnresolvableLink</code> after a cap.</p>
 <article class="lesson-full">
 
 <h2>6.5 — Sign In With Google &amp; Apple, on Every Client</h2>
+<p><strong>After this you can</strong> write the platform-to-client-ID audience table, make one backend verify Google and Apple tokens from every client, and show a wrong-audience token surfacing its real error. <em>Study time: about 65 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>One product, three sign-in disasters, all from the same seam: <strong>OAuth across many
 clients against one backend.</strong> (OAuth is the &quot;Sign in with Google/Apple&quot; flow —
@@ -7022,6 +7099,8 @@ required client-ID keys.</p>
 <article class="lesson-full">
 
 <h2>6.6 — API Design That Survives Its Clients</h2>
+<p><strong>After this you can</strong> write an API contract table and prove two of its rows with tests: a retried upload with the same idempotency key leaves one record and no orphans, and cursor pagination skips nothing when rows arrive mid-page. <em>Study time: about 65 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>An admin was bulk-uploading media to Relay&#39;s ancestor. Each file went to object
 storage first, then a <strong>confirm</strong> call told the backend &quot;this file is now part of
@@ -7191,6 +7270,8 @@ duplicating; cursor pagination encodes the last item&#39;s sort key as an opaque
 <article class="lesson-full">
 
 <h2>6.7 — You Are Someone's Client Too: Surviving Third-Party APIs</h2>
+<p><strong>After this you can</strong> list every third-party call your app makes, then show it surviving a simulated provider outage with backoff, jitter and a circuit breaker, and charging only once per idempotency key. <em>Study time: about 65 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>This is the shape of a thousand first incidents, and it always rhymes. Your app
 calls a provider — payments, an AI model, SMS, maps, email. One day the provider
@@ -7376,6 +7457,8 @@ Every term is defined before use; every lesson ends with something you can see.<
 <article class="lesson-full">
 
 <h2>7.1 — The Dashboard That Lies and the Metric That Doesn't</h2>
+<p><strong>After this you can</strong> define &quot;returning users&quot; by real activity rather than logins, print that definition next to the number on the dashboard, and name one metric that informs no decision. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The retention dashboard looked healthy. &quot;Returning users&quot; was climbing week over
 week — the one number everyone screenshots for the investor update, trending up
@@ -7546,6 +7629,8 @@ went <em>down</em> when they fixed it — and why that was correct.</li>
 <article class="lesson-full">
 
 <h2>7.2 — Errors, Logs, and the Noise Floor</h2>
+<p><strong>After this you can</strong> audit your error tracker until its top five issues are all failures users actually felt, and write a &quot;what&#39;s running where&quot; runbook you have checked against the live hosts. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>When the platform finally got a crash tracker (Sentry, on mobile), the team
 opened it expecting a map of what was broken. The single largest error group had
@@ -7708,6 +7793,8 @@ the tracker useless.</li>
 <article class="lesson-full">
 
 <h2>7.3 — Search Is Telemetry</h2>
+<p><strong>After this you can</strong> log zero-result searches with the raw and normalized query, put the miss rate on a dashboard, and fix the top normalization miss behind a known-good-query test. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Search worked. It returned results, the box was fast, nobody had filed a bug.
 But nobody had ever asked the more uncomfortable question: <strong>how often does
@@ -7860,6 +7947,8 @@ broke.</li>
 <article class="lesson-full">
 
 <h2>7.4 — Background Jobs: The Code Nobody Watches</h2>
+<p><strong>After this you can</strong> make a background job safe to fire twice, give it an audit row per run and a delivery reconciliation, and show a stale-job sweep reclaiming a job you killed mid-run. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The weekly push notification went out on schedule. Then, one week, some users
 got it <strong>twice</strong>. Not a disaster — but a thread pulled, and the whole sweater
@@ -8034,6 +8123,7 @@ pieces caused it.</li>
 <article class="lesson-full">
 
 <h2>7.5 — Product Analytics in Practice: GA, Cloudflare, and Owning Your Events</h2>
+<p><strong>After this you can</strong> run edge, consent-gated behavioural and first-party analytics side by side, read one week&#39;s signup numbers from each, and explain why the three counts differ. <em>Study time: about 50 minutes (estimate).</em></p>
 <blockquote>
 <p>Tool note: this lesson names today&#39;s best defaults — Cloudflare Web Analytics,
 Google Analytics 4, and first-party events in your own database. The <em>three
@@ -8205,6 +8295,7 @@ users were <em>analytics</em> failures before anything else.</li>
 <article class="lesson-full">
 
 <h2>7.6 — Your Monitoring Stack: Sentry, Uptime Checks, Metrics, and Alerts</h2>
+<p><strong>After this you can</strong> wire error tracking, an uptime check that runs outside your infrastructure, a four-golden-signals dashboard and two phone alerts, then break staging on purpose and show both alerts arriving. <em>Study time: about 70 minutes (estimate).</em></p>
 <blockquote>
 <p>Tool note: this lesson names today&#39;s best defaults — Sentry, UptimeRobot /
 Better Stack, Grafana/Prometheus, OpenTelemetry. The <em>four instruments</em> and the
@@ -8403,6 +8494,8 @@ you didn&#39;t write.</em></p>
 <article class="lesson-full">
 
 <h2>8.1 — The 600-File Near-Miss</h2>
+<p><strong>After this you can</strong> install a pre-commit guard that blocks a 600-file deletion you stage on purpose while letting a normal small commit through, and write the CLAUDE.md rules that ban <code>git add .</code> and check the base branch. <em>Study time: about 55 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>One ordinary afternoon, an agent finished a small feature and made a commit. The
 commit deleted <strong>600+ files</strong>.</p>
@@ -8584,6 +8677,8 @@ lined up (wrong base + <code>git add .</code>) — and why &quot;be careful&quot
 <article class="lesson-full">
 
 <h2>8.2 — Tests as the Spec the Agent Can't Ignore</h2>
+<p><strong>After this you can</strong> move a mocked test suite onto a real database, show a once-green test going red on a constraint the mock hid, and make CI block a pull request while a test is red. <em>Study time: about 70 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>A codebase had <strong>~1,990 passing tests</strong>. Green across the board, on every pull
 request, for months. It felt like a fortress.</p>
@@ -8787,6 +8882,8 @@ nothing — and what a mock is legitimately <em>for</em>.</li>
 <article class="lesson-full">
 
 <h2>8.3 — CI Preflight and the Boy Who Cried Wolf</h2>
+<p><strong>After this you can</strong> add a fast preflight that runs on every push, show each check going red on a planted problem and green when fixed, and fix or delete any check that always fails or can never fail. <em>Study time: about 55 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Every push to the project ran a <strong>preflight check</strong> — a quick script in
 continuous integration meant to catch obvious mistakes before the real build. And
@@ -8958,6 +9055,8 @@ cry-wolf check is <em>worse</em> than no check at all.</li>
 <article class="lesson-full">
 
 <h2>8.4 — The Software You Didn't Write: Dependencies and Supply Chain</h2>
+<p><strong>After this you can</strong> write a dependency ledger that justifies each direct dependency, remove one you don&#39;t need, and show an audit gate going red on a planted known-bad version. <em>Study time: about 55 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>On March 22, 2016, a developer got into a naming dispute and, in protest,
 <strong>unpublished</strong> his npm packages. One of them was <code>left-pad</code>: <strong>eleven lines of
@@ -9168,6 +9267,8 @@ glance — the governance questions that make what you ship defensible.</em></p>
 <article class="lesson-full">
 <p class="kicker">Module 9: Directing an AI Team</p>
 <h2>9.1 — You Are the Architect Now</h2>
+<p><strong>After this you can</strong> take one feature from an agent-led interview to a written spec with testable Given/When/Then acceptance criteria and one named invariant, before any code is written. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>In July 2025, during a public &quot;vibe coding&quot; experiment, an AI coding agent was
 working on a live SaaS product. The team had declared a code freeze — an explicit
@@ -9339,6 +9440,8 @@ guarantees stated up front, the ancestor of testable acceptance criteria.</li>
 <article class="lesson-full">
 <p class="kicker">Module 9: Directing an AI Team</p>
 <h2>9.2 — Context Engineering</h2>
+<p><strong>After this you can</strong> find and resolve the contradictions in a repository&#39;s context, and right-size CLAUDE.md until a fresh agent session answers three questions about the project with no guesses. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>A project had two instruction files. One, written early, said tests must use a real
 database — <em>no mocks, ever; a mock proves nothing about the data layer</em>. The other,
@@ -9508,6 +9611,8 @@ agents) pay interest on without knowing.</li>
 <article class="lesson-full">
 <p class="kicker">Module 9: Directing an AI Team</p>
 <h2>9.3 — Every Repeated Review Comment Is a Missing Guardrail</h2>
+<p><strong>After this you can</strong> list your three most-repeated review comments, turn one into a check you watch fail on a deliberate violation, and add a drift-guard that turns the build red when two lists disagree. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Across dozens of agent-written pull requests, the same review notes kept appearing.
 <em>&quot;You built a new cache key by hand — route it through the central key function.&quot;</em>
@@ -9665,6 +9770,8 @@ conventions into automation — the review-surface-shrinks idea in the wild.</li
 <article class="lesson-full">
 <p class="kicker">Module 9: Directing an AI Team</p>
 <h2>9.4 — Verification Before Completion</h2>
+<p><strong>After this you can</strong> write a definition of done with the evidence each change type needs, and confirm a deploy with an origin or asset-hash check rather than the cached public URL. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>&quot;Done&quot; was declared, over and over, from the wrong layer.</p>
 <p>A deploy was verified by loading the public URL. It looked live. But the CDN caches
@@ -9839,6 +9946,8 @@ artifact, not the source) — the mechanics behind two of these war stories.</li
 <article class="lesson-full">
 <p class="kicker">Module 9: Directing an AI Team</p>
 <h2>9.5 — Claude Code Power Techniques</h2>
+<p><strong>After this you can</strong> write a CLAUDE.md that passes a cold-start test, build a hook that blocks a deliberate violation, turn one repeated workflow into a skill, and run two subagents in separate worktrees. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Look at what accumulated in one real project&#39;s <code>.claude/</code> directory over time: a
 <code>deploy</code> skill, a <code>deploy-staging</code> skill, an <code>audit</code> skill, a set of spec-kit commands
@@ -10001,6 +10110,8 @@ skill idea applied to the whole spec pipeline.</li>
 <article class="lesson-full">
 <p class="kicker">Module 9: Directing an AI Team</p>
 <h2>9.6 — Building Your Agent Team</h2>
+<p><strong>After this you can</strong> define a read-only reviewer agent and a QA agent, each with a scope, a tool list and an escalation rule, and show an ambiguous instruction making an agent escalate to you instead of guessing. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The platform behind this course&#39;s incident bank runs as an AI-first company. There is
 one <strong>Orchestrator</strong> agent that the human talks to; it routes work to specialists —
@@ -10157,6 +10268,8 @@ agent org chart becomes your architecture&#39;s seams.</li>
 <article class="lesson-full">
 <p class="kicker">Module 9: Directing an AI Team</p>
 <h2>9.7 — Code Audit and Review at Agent Speed</h2>
+<p><strong>After this you can</strong> run a per-PR review, a separate security pass and a whole-repo audit against a written checklist, and file the findings as a tracked report with severity, owner and status. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>The best entries in this course&#39;s incident bank were not found by pull-request review.
 They were found by <em>audits</em> — an agent pointed at the entire codebase against a
@@ -10318,6 +10431,8 @@ blind spot), and <strong>8.4</strong> (supply chain) — the audit finds, in dep
 <article class="lesson-full">
 <p class="kicker">Module 9: Directing an AI Team</p>
 <h2>9.8 — The Governance Glance: You Own What Your Agent Ships</h2>
+<p><strong>After this you can</strong> write a one-page governance doc a newcomer can answer five questions from in two minutes, make the agent refuse an action that needs a human yes, and time a switch to maintenance mode and back. <em>Study time: about 55 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>In late 2022, a grieving customer opened Air Canada&#39;s website and asked the support
 chatbot about bereavement fares. The bot answered helpfully and confidently: book the
@@ -10525,6 +10640,9 @@ first use; the <a href="#glossary">Glossary</a> has the rest.</em></p>
 <article class="lesson-full">
 <p class="kicker">Module 10: Scaling Beyond One Server</p>
 <h2>10.1 — Stateless Services and Load Balancing</h2>
+<p><strong>After this you can</strong> run two instances behind a load balancer, find and remove the process state that breaks across them, and show a health check draining a killed instance with zero failed requests. <em>Study time: about 70 minutes (estimate).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Relay&#39;s ancestor had a rate limiter: no more than 100 requests a minute from one
 IP. It worked in every test. It counted requests in a plain variable in the
@@ -10765,6 +10883,9 @@ external API&#39;s rate limit) with the number that showed it.</li>
 <article class="lesson-full">
 <p class="kicker">Module 10: Scaling Beyond One Server</p>
 <h2>10.2 — Queues and Asynchronous Work</h2>
+<p><strong>After this you can</strong> move slow work onto a queue with an idempotent consumer, a dead-letter queue and a stale-job sweep, and show a job delivered twice taking effect exactly once. <em>Study time: about 70 minutes (estimate).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Relay&#39;s ancestor sent push notifications on a schedule — a &quot;new content from
 creators you follow&quot; blast every evening. The job looked done: it ran, it sent,
@@ -10983,6 +11104,9 @@ normal, not a bug.</li>
 <article class="lesson-full">
 <p class="kicker">Module 10: Scaling Beyond One Server</p>
 <h2>10.3 — Scaling the Database</h2>
+<p><strong>After this you can</strong> decide and justify whether you need a read replica, route reads between primary and replica, and show both replication lag and why a replica is not a backup. <em>Study time: about 70 minutes (estimate).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Discord&#39;s messages are the most-cited &quot;how a database actually scales&quot; story
 because they never scaled for fashion — only for measured pain.</p>
@@ -11199,6 +11323,9 @@ each move (a measurement, not fashion) and which rung most products stop at.</li
 <article class="lesson-full">
 <p class="kicker">Module 10: Scaling Beyond One Server · **app track**</p>
 <h2>10.4 — Realtime: Presence, Websockets, and Heartbeats</h2>
+<p><strong>After this you can</strong> build a &quot;who&#39;s online&quot; presence feature that heals itself after its store is wiped and that a client sending fake heartbeats cannot inflate. <em>Study time: about 70 minutes (estimate).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Relay&#39;s ancestor had a &quot;who&#39;s listening now&quot; feature — a live count of active
 users, and little presence dots. It ran on Redis: each client sent a <strong>heartbeat</strong>
@@ -11417,6 +11544,9 @@ the client-trusted counter got wrong.</li>
 <article class="lesson-full">
 <p class="kicker">Module 10: Scaling Beyond One Server</p>
 <h2>10.5 — Performance and Capacity</h2>
+<p><strong>After this you can</strong> load-test an app to its breaking point, record that number as its capacity, fix the first bottleneck, and prove with a re-run that the ceiling moved and p99 fell. <em>Study time: about 70 minutes (estimate).</em></p>
+<hr>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>One admin dashboard in Relay&#39;s ancestor loaded fine — for months. Then, without
 any code change, the whole site started feeling sluggish at busy hours, and
@@ -11654,6 +11784,8 @@ edge platform that ties the whole story together.</em></p>
 <article class="lesson-full">
 
 <h2>11.1 — Domains, DNS, and TLS</h2>
+<p><strong>After this you can</strong> point a domain at your app with one canonical host, confirm its TLS certificate renews itself, and show the origin refusing a request that skips the CDN. <em>Study time: about 55 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>On October 4, 2021, Facebook, Instagram, and WhatsApp vanished for roughly six
 hours — not &quot;slow,&quot; <em>gone</em>, for billions of people. Nobody hacked anything. No
@@ -11844,6 +11976,8 @@ systems failed (DNS), and why their own recovery was so slow.</li>
 <article class="lesson-full">
 
 <h2>11.2 — Internationalization and RTL</h2>
+<p><strong>After this you can</strong> serve an app at <code>/en/</code> and <code>/ar/</code> with a fully mirrored right-to-left layout, add a translation drift-guard you watch fail, and make a search that differs only by diacritics return the right result. <em>Study time: about 55 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>A bilingual product — English and Arabic, one right-to-left — shipped deep links
 so that tapping a shared article link on a phone would open that article <em>inside
@@ -12026,6 +12160,7 @@ green while the feature was broken (a proxy input skipped the broken step).</li>
 <article class="lesson-full">
 
 <h2>11.3 — SEO and AEO: Being Found by Crawlers and Cited by Answer Engines</h2>
+<p><strong>After this you can</strong> give two page types a chunked dynamic sitemap, canonical and hreflang tags, Open Graph cards and valid structured data, and show the build succeeding while the API is down. <em>Study time: about 50 minutes (estimate).</em></p>
 <blockquote>
 <p><strong>Tool-dated lesson.</strong> The <em>principles</em> — machine-readable meaning, don&#39;t couple
 builds to runtime data, write to be quoted — outlive the tools. The named
@@ -12211,6 +12346,8 @@ the coupling that froze the build.</li>
 <article class="lesson-full">
 
 <h2>11.4 — Cost Engineering</h2>
+<p><strong>After this you can</strong> build a cost model with 1×, 10× and 100× columns, name its worst-scaling line, and propose one structural fix for that line before it becomes expensive. <em>Study time: about 50 minutes (estimate).</em></p>
+
 <h3 class="pc-story"><span class="tag">War Story</span></h3>
 <p>Two cost stories from one platform, and they rhyme.</p>
 <p>The first: media storage lived on one cloud provider (GCS). The bytes were cheap
@@ -12370,6 +12507,7 @@ not the bytes), and why the tripled backup was a correctness bug too.</li>
 <article class="lesson-full">
 
 <h2>11.5 — Your Edge Platform in Practice: Cloudflare End to End</h2>
+<p><strong>After this you can</strong> put an app behind Cloudflare with a cache rule, WAF and Turnstile, re-run the earlier cache-poisoning and rate-limit tests through the real edge, and keep the edge config in the repo. <em>Study time: about 55 minutes (estimate).</em></p>
 <blockquote>
 <p><strong>Tool-dated lesson.</strong> Cloudflare is this course&#39;s reference edge, and the named
 features (Turnstile, R2, Workers, the specific dashboard toggles) are current
@@ -12578,6 +12716,8 @@ including several you now recognize from this very module.</em></p>
 <article class="lesson-full">
 <p class="kicker">The whole course, turned into twelve pagers.</p>
 <h2>12 — Capstone: You Get Paged</h2>
+<p><strong>After this you can</strong> diagnose twelve symptom-only incidents by bisecting the request path to the failing layer, and name for each the evidence that proves the fix worked. <em>Study time: about 205 minutes (estimate).</em></p>
+<hr>
 <p>You&#39;ve built Relay from a local prototype to a multi-client production system.
 Now you operate it. This module is diagnosis practice: twelve incidents, each
 given the way a real one arrives — <strong>symptoms only.</strong> A user report. A status

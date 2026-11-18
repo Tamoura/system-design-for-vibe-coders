@@ -571,7 +571,7 @@ flowchart LR
 |---|---|---|
 | **NIST AI RMF** — trustworthy characteristics | Voluntary framework naming seven characteristics of trustworthy AI and explaining how AI risks differ from traditional software risks | Know all seven characteristics and that they involve trade-offs |
 | **EU AI Act** — Art. 14 | High-risk AI must be designed for effective human oversight; overseers must be able to understand limitations, remain aware of automation bias, interpret outputs, and override or stop the system | Oversight must be real and designed in, not nominal |
-| **EU AI Act** — Art. 4 | Providers and deployers must take measures to ensure sufficient AI literacy among staff dealing with AI systems | Human effects are managed partly through literacy |
+| **EU AI Act** — Art. 4 | Providers and deployers must take measures to support the development of AI literacy of their staff (2026 wording; the 2024 text required "a sufficient level") | Human effects are managed partly through literacy |
 | **GDPR** — Art. 25 | Data protection by design and by default | Build privacy into AI systems from design |
 | **ISO/IEC 23894** | Guidance on managing AI-specific risks within an organisation's risk-management process | Integrate AI risk into existing risk management |
 | **OECD AI Principles** | Values-based principles including robustness, security and safety, transparency and explainability, and accountability | International consensus on trustworthy AI; non-binding |
