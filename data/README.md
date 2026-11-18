@@ -20,7 +20,7 @@ This course teaches the work end to end:
 - Preparing data for LLM applications.
 - Governance, privacy and security for the data platform.
 
-Everything runs on a laptop with free tools: PostgreSQL, DuckDB, Python, dbt, Airflow or Dagster, and Kafka. The container-heavy modules are comfortable with 16 GB of RAM; lesson 0.3 gives the hardware notes, a lighter path for 8 GB, and one shared synthetic dataset that every exercise reuses.
+Everything runs on a laptop with free tools: PostgreSQL, DuckDB, Python, dbt, Airflow or Dagster, and Kafka. The container-heavy modules are comfortable with 16 GB of RAM; lesson 0.3 gives the hardware notes, a lighter path for 8 GB, and one shared synthetic dataset that most exercises reuse.
 
 It is written for data science, computer science and engineering graduates, software engineers moving into data, analysts who want to engineer, and anyone who owns data in a bank, a government body or an enterprise.
 

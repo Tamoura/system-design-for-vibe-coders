@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="data-source" content="aff8846c688280b4">
+<meta name="data-source" content="e560ddcbf592b08f">
 <meta name="description" content="Data Engineering &amp; Analytics: Zero to Hero — a free, bilingual course: SQL and modelling, pipelines and streaming, dbt and data quality, trusted metrics and experiments, ML and LLM data in production, and data governance, with a quiz in every lesson and a 60-question practice exam.">
 <title>Data Engineering &amp; Analytics: Zero to Hero — Complete Course</title>
 <style>
@@ -224,7 +224,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <li>Preparing data for LLM applications.</li>
 <li>Governance, privacy and security for the data platform.</li>
 </ul>
-<p>Everything runs on a laptop with free tools: PostgreSQL, DuckDB, Python, dbt, Airflow or Dagster, and Kafka. The container-heavy modules are comfortable with 16 GB of RAM; lesson <a class="xref" href="#l0-3">0.3</a> gives the hardware notes, a lighter path for 8 GB, and one shared synthetic dataset that every exercise reuses.</p>
+<p>Everything runs on a laptop with free tools: PostgreSQL, DuckDB, Python, dbt, Airflow or Dagster, and Kafka. The container-heavy modules are comfortable with 16 GB of RAM; lesson <a class="xref" href="#l0-3">0.3</a> gives the hardware notes, a lighter path for 8 GB, and one shared synthetic dataset that most exercises reuse.</p>
 <p>It is written for data science, computer science and engineering graduates, software engineers moving into data, analysts who want to engineer, and anyone who owns data in a bank, a government body or an enterprise.</p>
 <h2>How every lesson works</h2>
 <p>Every lesson has the same ten parts, so you always know where you are:</p>
@@ -734,7 +734,7 @@ WHERE t.initiated_by = &#39;customer&#39;
 <li>A. Data scientist, because definitions feed the features of models</li>
 <li>B. ML engineer, because a shared model must be deployed and kept running</li>
 <li>C. Data analyst, because analysts are the people who use the number most</li>
-<li>D. Analytics engineer, because the transformation layer and its tests are their remit</li>
+<li>D. Analytics engineer, because the transformation layer is their remit</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -2542,7 +2542,7 @@ GROUP BY d.branch_code;
 <li>A. Accumulating snapshot: one row per application, updated per milestone</li>
 <li>B. Transaction fact: one row per loan repayment</li>
 <li>C. Periodic snapshot: one row per loan per day</li>
-<li>D. A Type 3 dimension holding the previous and current application status</li>
+<li>D. A Type 3 dimension with the previous and current application status</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -2881,7 +2881,7 @@ GROUP BY channel;
 <li>A. Keep it on the primary but run it at night, when branches are closed</li>
 <li>B. Add more indexes to the primary so the scan finishes faster</li>
 <li>C. Move the workload to a separate analytical store</li>
-<li>D. Export the tables to CSV files on a shared drive</li>
+<li>D. Export the tables to CSV files on a shared network drive</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -3188,12 +3188,12 @@ WHERE rn = 1
 <p>Every new pipeline must also tick: <em>raw append-only with load metadata; deletes handled; overlap or CDC; merge into staging; reconciliation defined; personal data minimised at source; owner and alerts named.</em></p>
 </section>
 <section class="sec sec-build"><h2>🛠️ Exercises</h2>
-<p>Use synthetic data only. A generator script or a public sample database is fine; never real customer data.</p>
+<p>Use synthetic data only: the lab dataset from lesson <a class="xref" href="#l0-3">0.3</a> (its <code>accounts</code> and <code>transactions</code> tables) is the easiest source, and a public sample database is also fine; never real customer data.</p>
 <p><strong>Before the 🟡 exercise.</strong> Kafka is taught properly in lesson <a class="xref" href="#l2-3">2.3</a>; here you need only four words. A <em>topic</em> is a named log of events, a <em>producer</em> writes to it, a <em>consumer</em> reads it, and Kafka Connect runs connectors such as Debezium between a database and a topic. Start from the PostgreSQL Docker Compose file in the <code>tutorial</code> folder of Debezium&#39;s examples repository on GitHub, which starts a PostgreSQL already set up for logical decoding, Kafka and Kafka Connect together. Give Docker at least 4 GB of memory (lesson <a class="xref" href="#l0-3">0.3</a>, <em>Will my laptop cope?</em>).</p>
 <ul>
-<li>🟢 In PostgreSQL or DuckDB, create a synthetic <code>accounts</code> table (1,000 rows with <code>updated_at</code>) and copy it to <code>raw_accounts</code> with <code>_loaded_at</code> and <code>_batch_id</code>. Then update 50 rows, delete 10, insert 20 and run a high-water-mark incremental load. <em>Done when:</em> you can show, with a query, exactly which changes the incremental load caught and which it missed, and explain why.</li>
+<li>🟢 In PostgreSQL or DuckDB, take the lab&#39;s <code>accounts</code> table (1,800 rows), add an <code>updated_at</code> column and copy it to <code>raw_accounts</code> with <code>_loaded_at</code> and <code>_batch_id</code>. Then update 50 rows, delete 10, insert 20 and run a high-water-mark incremental load. <em>Done when:</em> you can show, with a query, exactly which changes the incremental load caught and which it missed, and explain why.</li>
 <li>🟡 Run PostgreSQL with <code>wal_level = logical</code>, Kafka (or Redpanda) and Kafka Connect with the Debezium PostgreSQL connector in Docker, following the Debezium tutorial. Capture one table, then insert, update and delete rows. <em>Done when:</em> you can show the <code>c</code>, <code>u</code> and <code>d</code> events in the topic, and a SQL query over the landed events that rebuilds the current table state exactly.</li>
-<li>🔴 Write an ingestion design note, using the Najm template, for your synthetic <code>transactions</code> table, with a reconciliation query. Stop the CDC connector for an hour while generating writes. <em>Done when:</em> you can show the slot&#39;s retained WAL growing, a clean catch-up after restart (no lost or duplicated rows) and the reconciliation passing.</li>
+<li>🔴 Write an ingestion design note, using the Najm template, for the lab&#39;s <code>transactions</code> table, with a reconciliation query. Stop the CDC connector for an hour while generating writes. <em>Done when:</em> you can show the slot&#39;s retained WAL growing, a clean catch-up after restart (no lost or duplicated rows) and the reconciliation passing.</li>
 </ul>
 </section>
 <section class="sec sec-mistakes"><h2>⚠️ Mistakes and traps</h2>
@@ -3943,9 +3943,9 @@ GROUP BY card_id, window_start, window_end;
 <p>Dana&#39;s go-live test: <em>&quot;Kill the feature job mid-stream, restart it, and show every card&#39;s 10-minute count matches a batch recomputation from the raw archive.&quot;</em></p>
 </section>
 <section class="sec sec-build"><h2>🛠️ Exercises</h2>
-<p>Run Kafka or Redpanda locally in Docker using their official quick-starts, and generate synthetic card events with a small Python script. Never use real card numbers.</p>
+<p>Run Kafka or Redpanda locally in Docker using their official quick-starts, and produce card events with a small Python script that replays rows of the lab dataset&#39;s <code>transactions</code> (lesson <a class="xref" href="#l0-3">0.3</a>), treating each <code>account_id</code> as a card. Never use real card numbers.</p>
 <ul>
-<li>🟢 Create a three-partition topic <code>card.auths</code> and produce 1,000 synthetic events for 20 cards, keyed by <code>card_id</code>. Start two consumers in one group, then a third. <em>Done when:</em> you can show partition ownership before and after the rebalance, and each card&#39;s events in order.</li>
+<li>🟢 Create a three-partition topic <code>card.auths</code> and produce 1,000 of those events for 20 cards, keyed by <code>card_id</code>. Start two consumers in one group, then a third. <em>Done when:</em> you can show partition ownership before and after the rebalance, and each card&#39;s events in order.</li>
 <li>🟡 Write a consumer with auto-commit that sleeps between reading and writing to PostgreSQL, and kill it mid-run. Rewrite it with manual commits after writing and an <code>ON CONFLICT (auth_id) DO NOTHING</code> sink, and kill it again. <em>Done when:</em> you can show events lost by the first version, and every event exactly once in the second version&#39;s table although some were read twice.</li>
 <li>🔴 Using Flink SQL, Spark Structured Streaming or Kafka Streams, compute a 5-minute tumbling count per card by event time with a 30-second watermark. Produce some events with event times two minutes in the past. <em>Done when:</em> you can show those late events handled as you designed (dropped, side output or allowed lateness), explain the trade-off, and fill in a Najm stream design card for your topic.</li>
 </ul>
@@ -4493,10 +4493,10 @@ COPY (
 
 <p><strong>4. A staging model <code>stg_core__transactions</code> has a <code>unique</code> test on <code>transaction_id</code> that fails during <code>dbt build</code>. What happens to <code>fct_transactions</code>, which depends on it?</strong></p>
 <ul>
-<li>A. It builds normally, and the failure is logged for later</li>
+<li>A. It builds normally and the failure is logged for later</li>
 <li>B. It is skipped, so the bad data does not flow downstream</li>
 <li>C. It is dropped from the warehouse</li>
-<li>D. dbt automatically removes the duplicates and rebuilds it</li>
+<li>D. dbt automatically removes duplicates and rebuilds it</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -5655,7 +5655,7 @@ metrics:
 </tbody></table></div>
 </section>
 <section class="sec sec-build"><h2>🛠️ Exercises</h2>
-<p>Use DuckDB or PostgreSQL with a synthetic table of 1,000 customers and 50,000 events that you generate yourself (include a few staff accounts, salary credits and reversals).</p>
+<p>Use DuckDB or PostgreSQL with the lab dataset from lesson <a class="xref" href="#l0-3">0.3</a>: its 1,000 <code>customers</code> and 100,000 <code>transactions</code>. Add a 50,000-row <code>events</code> table of app logins, and flag a few staff accounts, salary credits and reversals, using <code>hash()</code> as in 0.3 so reruns match.</p>
 <ul>
 <li>🟢 Write three different &quot;active customers&quot; queries, matching the retail, finance and risk definitions in 🧭, and run them on the same data. Then write the metric card that resolves them. <em>Done when:</em> the three queries give three different numbers, you can explain each difference row by row, and your card answers every field in the table above.</li>
 <li>🟡 Build a dbt model <code>mart_active_customers_daily</code> at the grain date × segment with an &quot;All&quot; row, plus tests (unique combination, not null, and a custom test that &quot;All&quot; is never less than any segment). Show, in a query, why summing daily rows to get a monthly figure is wrong. <em>Done when:</em> <code>dbt build</code> passes and your wrong-versus-right query pair produces visibly different numbers.</li>
@@ -6006,10 +6006,10 @@ metrics:
 </tbody></table></div>
 </section>
 <section class="sec sec-build"><h2>🛠️ Exercises</h2>
-<p>Run Metabase or Apache Superset locally in Docker against DuckDB or PostgreSQL with synthetic data you generate (at least 52 weeks of weekly figures for four segments and four regions).</p>
+<p>Run Metabase or Apache Superset locally in Docker against DuckDB or PostgreSQL with weekly figures built from the lab dataset (lesson <a class="xref" href="#l0-3">0.3</a>). You need at least 52 weeks for four segments and four regions, so widen its date span and add a fourth segment and region, keeping <code>hash()</code> so reruns match.</p>
 <ul>
 <li>🟢 Take a dashboard you know (or a public one) and write its spec using the six fields above. List every chart that does not answer one of its questions. <em>Done when:</em> your spec names a decision and a cadence, and each remaining chart maps to one question.</li>
-<li>🟡 Build the Retail Weekly layout from the spec with your synthetic data: five KPI tiles with comparisons, small multiples by segment and region, and a campaign table. Rewrite every chart title as a message. <em>Done when:</em> a classmate can answer the four questions in under two minutes without your help, and no bar chart has a non-zero baseline.</li>
+<li>🟡 Build the Retail Weekly layout from the spec with your weekly data: five KPI tiles with comparisons, small multiples by segment and region, and a campaign table. Rewrite every chart title as a message. <em>Done when:</em> a classmate can answer the four questions in under two minutes without your help, and no bar chart has a non-zero baseline.</li>
 <li>🔴 Add a 52-week normal-range band (or control-chart limits) to <code>card_spend</code> and write a four-line Monday note for a week where you injected a real change and a week where you did not. <em>Done when:</em> your note flags the injected change, stays quiet about the ordinary week, and separates measured facts from explanations.</li>
 </ul>
 </section>
@@ -6037,7 +6037,7 @@ metrics:
 <ul>
 <li>A. Add more charts so that it covers every question anyone might ask</li>
 <li>B. Email the dashboard link to the whole retail team every Monday</li>
-<li>C. Move it to a faster, more modern BI tool so that people enjoy opening it</li>
+<li>C. Move it to a faster, modern BI tool so that people enjoy opening it</li>
 <li>D. Ask what she decides and how often, write a spec, and rebuild around it</li>
 </ul>
 <details><summary>Answer</summary>
@@ -6347,7 +6347,7 @@ print(round(stat, 1), p)              # 14.4, p about 0.00015
 <ul>
 <li>A. Treatment is performing worse, because it has fewer users</li>
 <li>B. Nothing important: 1,200 users out of 100,000 is negligible</li>
-<li>C. The test needs a larger minimum detectable effect to be reliable</li>
+<li>C. The test needs a bigger minimum detectable effect to be reliable</li>
 <li>D. Sample ratio mismatch: assignment or logging is probably broken</li>
 </ul>
 <details><summary>Answer</summary>
@@ -6636,9 +6636,9 @@ def train(train_df, valid_df, features, cfg, snapshot_id, git_sha):
 <p>The rebuild test keeps the card honest: each quarter Huda re-runs the pipeline from the recorded commit, snapshot and image. If it fails, something was not recorded, and they learn it before a validation review does.</p>
 </section>
 <section class="sec sec-build"><h2>🛠️ Exercises</h2>
-<p>Use synthetic data only: a short Python script with random card ids, timestamps and a small fraud rate.</p>
+<p>Use synthetic data only: start from the lab dataset&#39;s <code>transactions</code> (lesson <a class="xref" href="#l0-3">0.3</a>), treat each <code>account_id</code> as a card, and add a small fraud rate with <code>hash()</code> so reruns match.</p>
 <ul>
-<li>🟢 In DuckDB, generate 100,000 synthetic card transactions over six months and a <code>chargebacks</code> table dated 5 to 50 days after each fraud. Build one leaky feature (chargebacks per customer, all time) and one point-in-time feature (chargebacks filed before the transaction). <em>Done when:</em> a query shows a fraud row where the leaky feature is non-zero and the point-in-time one is zero, and you can explain why only the second is usable.</li>
+<li>🟢 In DuckDB, flag about 1 in 200 of the lab&#39;s 100,000 transactions as fraud, and build a <code>chargebacks</code> table dated 5 to 50 days after each fraud. Build one leaky feature (chargebacks per customer, all time) and one point-in-time feature (chargebacks filed before the transaction). <em>Done when:</em> a query shows a fraud row where the leaky feature is non-zero and the point-in-time one is zero, and you can explain why only the second is usable.</li>
 <li>🟡 Turn a notebook that trains a scikit-learn model on that data into a script with <code>build_training_set</code>, <code>train</code> and <code>evaluate</code> functions, a time-based split, a <code>Pipeline</code>, and MLflow logging of parameters, metrics, git commit and data file hash. <em>Done when:</em> two runs from the same commit and data give identical metrics in the MLflow UI.</li>
 <li>🔴 Run Feast locally with a file offline store and SQLite online store. Define a <code>card</code> entity and a feature view with two velocity features; retrieve a training set, materialise, and fetch online features. <em>Done when:</em> online and historical values match for one card at the latest timestamp, and an older timestamp returns older values.</li>
 </ul>
@@ -7004,7 +7004,7 @@ def psi(baseline, current, bins=10, eps=1e-6):
 <section class="sec sec-quiz"><h2>✍️ Check yourself</h2>
 <p><strong>1. Smart Alerts v4 shows 99.9% accuracy on a test set where about 0.1% of transactions are fraud. What should Dana ask for instead?</strong></p>
 <ul>
-<li>A. Accuracy on the training set as well, to check that the model has not overfitted</li>
+<li>A. Accuracy on the training set too, to check that the model has not overfitted</li>
 <li>B. ROC-AUC alone, because it does not depend on the threshold chosen</li>
 <li>C. Precision and recall at the proposed threshold, PR-AUC, and a comparison with v3</li>
 <li>D. The number of features, to judge whether the model is too complex</li>
@@ -7781,7 +7781,7 @@ ORDER BY depth, node;
 <li>A. Current column-level lineage, walked downstream, plus the ownership register</li>
 <li>B. Asking in the analytics team&#39;s chat channel who uses the accounts table</li>
 <li>C. Table-level lineage showing every report that reads <code>core.accounts</code></li>
-<li>D. The detailed lineage diagram drawn during last year&#39;s architecture review</li>
+<li>D. The detailed lineage diagram drawn by hand during last year&#39;s architecture review</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -8163,7 +8163,7 @@ FROM marts.customer_360;
 <section class="sec sec-build"><h2>🛠️ Exercises</h2>
 <p>Use synthetic data only: start from the lab dataset&#39;s <code>customers</code> (lesson <a class="xref" href="#l0-3">0.3</a>) and add personal-looking columns with the Python Faker library. Never use real personal data for these exercises.</p>
 <ul>
-<li>🟢 Generate a synthetic customer table of 20 columns with Faker. Classify every column with a level, tags and a retention class, and say for an &quot;analyse complaint drivers&quot; purpose which columns are needed. <em>Done when:</em> every column is classified and your purpose needs no more than a third of them.</li>
+<li>🟢 Extend the lab&#39;s <code>customers</code> table with Faker to 20 columns. Classify every column with a level, tags and a retention class, and say for an &quot;analyse complaint drivers&quot; purpose which columns are needed. <em>Done when:</em> every column is classified and your purpose needs no more than a third of them.</li>
 <li>🟡 In PostgreSQL or DuckDB, load your synthetic table and build an analyst view with a keyed-hash customer key, an age band and a masked phone. Then show the weakness of plain hashing: MD5-hash one fake six-digit ID and recover it by hashing all one million candidates. <em>Done when:</em> joins on the keyed hash work across two tables, and your script recovers the MD5-hashed ID but not the keyed one.</li>
 <li>🔴 Build a retention and erasure job for a PostgreSQL table partitioned by month: drop partitions older than the retention period, and implement an erasure procedure for one customer that pseudonymises them in three tables and writes an evidence record (who, when, which tables, rows affected). <em>Done when:</em> running the job twice gives the same result, the evidence table shows each run, and a k-anonymity check (<code>GROUP BY</code> quasi-identifiers <code>HAVING COUNT(*) &lt; 5</code>) on your released dataset returns no rows.</li>
 </ul>
@@ -8191,7 +8191,7 @@ FROM marts.customer_360;
 <ul>
 <li>A. MD5 output is too long to store efficiently in a column used for joins</li>
 <li>B. Hashing destroys the ability to join tables on the same customer later</li>
-<li>C. Every possible ID can be hashed and matched, so the data is not anonymous</li>
+<li>C. Every possible ID can be hashed and matched, so it is not anonymous</li>
 <li>D. Hashing personal data is prohibited outright under the GDPR</li>
 </ul>
 <details><summary>Answer</summary>
@@ -8228,7 +8228,7 @@ FROM marts.customer_360;
 <li>A. Nothing; in Iceberg a <code>DELETE</code> removes the data files immediately</li>
 <li>B. Expire old snapshots so unreferenced files are removed, and clean up copies</li>
 <li>C. Rename the table so time-travel queries can no longer find the old rows</li>
-<li>D. Re-run the dbt models that read the table so downstream marts are rebuilt</li>
+<li>D. Re-run the dbt models that read the table so all the downstream marts are rebuilt</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -8573,7 +8573,7 @@ GRANT SELECT ON core.customers TO auditor;
 
 <p><strong>4. Which audit-log setup gives evidence that internal audit can rely on?</strong></p>
 <ul>
-<li>A. Named-user logs of grants, writes and restricted reads, kept where admins cannot edit them</li>
+<li>A. Named-user logs of grants, writes and restricted reads that admins cannot edit</li>
 <li>B. Detailed logs kept on the warehouse server, editable by the platform administrators</li>
 <li>C. Logs of failed logins only, kept for seven years in the security team&#39;s archive</li>
 <li>D. Screenshots of the access-control settings, taken once a year for the auditors</li>
@@ -8588,7 +8588,7 @@ GRANT SELECT ON core.customers TO auditor;
 <li>A. Email a daily encrypted CSV of all SME card transactions to the partner</li>
 <li>B. Give the partner a named login to the warehouse with <code>marts_reader</code></li>
 <li>C. Copy the raw card stream into the partner&#39;s cloud account each night</li>
-<li>D. A revocable, read-only aggregated view, shared under a DPO-approved agreement</li>
+<li>D. A revocable, read-only aggregated view under a DPO-approved agreement</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -9472,7 +9472,7 @@ where rn = 1;
 <p><strong>3. In a pipeline interview at a neutral company, the interviewer asks what happens if the daily load runs twice. Which answer scores best?</strong></p>
 <ul>
 <li>A. A MERGE or partition overwrite makes the rerun a no-op; tests catch duplicates if that regresses</li>
-<li>B. The scheduler is configured to prevent concurrent runs, so a double run cannot happen in practice</li>
+<li>B. The scheduler is set to prevent concurrent runs, so a double run cannot happen in practice</li>
 <li>C. We would notice the inflated totals in the dashboard and delete the duplicate rows by hand</li>
 <li>D. Duplicates do not matter much in analytics, because trends stay roughly the same over time</li>
 </ul>

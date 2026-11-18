@@ -581,7 +581,7 @@ If you use a cloud account, use your own free-tier account and **set a budget al
 - Microsoft Azure documentation — https://learn.microsoft.com/azure/
 - AWS, Summary of the Amazon S3 Service Disruption in the Northern Virginia (US-EAST-1) Region — https://aws.amazon.com/message/41926/
 - AWS Well-Architected — https://aws.amazon.com/architecture/well-architected/
-- Regulation (EU) 2022/2554 (Digital Operational Resilience Act) — https://eur-lex.europa.eu/eli/reg/2022/2554/oj
+- Regulation (EU) 2022/2554 on digital operational resilience (DORA) — https://eur-lex.europa.eu/eli/reg/2022/2554/oj
 - The Register, "AWS says drones hit two of its datacenters in UAE" (2 March 2026) — https://www.theregister.com/2026/03/02/amazon_outages_middle_east/
 - Going further: [*SaaS Building Blocks*, lesson 2.2 — File uploads and object storage](../saas/index.html#/2.2) and [*System Design for Vibe Coders*, lesson 10.1 — Stateless services and load balancing](../vibe/index.en.html#l10-1)
 

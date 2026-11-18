@@ -205,9 +205,9 @@ All cases are labelled by credit officers (Arabic speakers for the Arabic slice)
 
 **2. Faisal reports that version 2 of the copilot prompt scored 91% on a 100-case golden set, against 89% for version 1, and proposes shipping it as "clearly better". What is the best response?**
 
-- A. Agree and ship it, because a higher score on the same golden set is a measured gain and waiting would delay value to the relationship managers
+- A. Agree and ship it, because a higher score on the same golden set is a measured gain and waiting delays value
 - B. Reject version 2, because a 100-case golden set is too small to compare two prompt versions in any useful way
-- C. Say that a 2-point gap on 100 cases is within the noise, and ask for per-slice results, the critical-failure count and a repeat run
+- C. Say a 2-point gap on 100 cases is within the noise, and ask for per-slice results, critical failures and a repeat run
 - D. Rerun both versions on a public benchmark, since a larger standard test set will settle which prompt is truly better
 
 <details><summary>Answer</summary>
@@ -231,10 +231,10 @@ All cases are labelled by credit officers (Arabic speakers for the Arabic slice)
 
 **4. The copilot's overall faithfulness score is 97%, above target. Relationship managers still say they "cannot trust the numbers". What should the PM do first?**
 
-- A. Run error analysis on the failures and check faithfulness by slice, for example Arabic and scanned documents
-- B. Tell the RMs that the score is above target
-- C. Raise the target to 99% and wait
-- D. Replace the model with the top model on a public leaderboard
+- A. Run error analysis on the failures and check faithfulness by slice, such as Arabic or scanned files
+- B. Show the RMs the evaluation results so they can see the score is above target
+- C. Raise the faithfulness target to 99% and hold the rollout until the copilot meets it
+- D. Switch to the model that tops a public leaderboard for summarisation and re-run the eval
 
 <details><summary>Answer</summary>
 
@@ -282,7 +282,7 @@ All cases are labelled by credit officers (Arabic speakers for the Arabic slice)
 ## 🧭 Why it matters
 Dana's golden set for the Credit Memo Copilot has 230 cases, and code checks cover figures and sections. The "risk narrative" still needs judgement: is the account of the client's risks sound and not misleading? Two credit officers can review about 30 memos a day, and every prompt change needs a full re-run. Faisal's fix: ask a large model to "rate each memo from 1 to 5 for quality". The average is 4.6. A deliberately broken prompt scores 4.4. The judge cannot tell good from bad, and the team nearly shipped on its word.
 
-Meanwhile, Najm Assist is about to start taking actions like freezing a card. Public cases show what happens when a customer-facing assistant meets people who try to break it. You met two in 5.3: users talked a Chevrolet dealer's chatbot into "agreeing" to sell a car for one dollar, and a customer got DPD's delivery chatbot to swear and criticise the company. Neither needed advanced skills. Layla (Head of AI Governance) will not approve Najm Assist's agent features until the team has tried to break them first.
+Meanwhile, Najm Assist is about to start taking actions like freezing a card. Public cases show what happens when a customer-facing assistant meets people who try to break it. You met two in 5.3: the $1 car and the delivery chatbot that swore at a customer. Neither needed advanced skills. Layla (Head of AI Governance) will not approve Najm Assist's agent features until the team has tried to break them first.
 
 ## 📐 How it works
 
@@ -327,9 +327,9 @@ The study shows model judging *can* work, not that *your* judge works on *your* 
 **Red-teaming.** A **red team** tries to make the system fail. For AI products that includes:
 - **Jailbreaks**: prompts that get the model to ignore its rules.
 - **Prompt injection**: instructions hidden in content the system reads, such as a document, an email or a web page (introduced in *AI Governance: Zero to Hero*).
-- **Harmful or unauthorised commitments**: promising refunds, prices or approvals the business never offered (the Chevrolet case; *Moffatt v. Air Canada*, where an airline was held liable for what its chatbot told a customer).
+- **Harmful or unauthorised commitments**: promising refunds, prices or approvals the business never offered (the $1 car in 5.3; *Moffatt v. Air Canada* in 0.2).
 - **Data leakage**: revealing another customer's data, the system prompt or internal information.
-- **Brand and tone failures**: swearing, mocking, political statements (the DPD case).
+- **Brand and tone failures**: swearing, mocking, political statements (the delivery chatbot in 5.3).
 - **Unsafe actions** for agents: freezing the wrong card, or taking an action without confirmation.
 
 The output is not a report in a folder. Every successful attack becomes a **fix** and an **adversarial test case**, re-tested on every release.
@@ -490,8 +490,8 @@ Before the agent features of Najm Assist go to pilot, Faisal, Hessa and Dana pro
 
 - A. Average their scores and continue
 - B. Use only the stricter reviewer
-- C. Replace both with an LLM judge, because a model applies the same rule to every memo and removes the disagreement between reviewers completely
-- D. Examine the disagreements, clarify the rubric with anchored examples, and escalate any underlying policy question to the business owner
+- C. Replace both with an LLM judge, because a model applies the same rule to every memo and removes the disagreement
+- D. Examine the disagreements, clarify the rubric with anchored examples, and escalate any policy question to the business owner
 
 <details><summary>Answer</summary>
 
@@ -502,9 +502,9 @@ Before the agent features of Najm Assist go to pilot, Faisal, Hessa and Dana pro
 **4. Najm Assist's agent correctly froze the customer's card, but it called the freeze tool before asking the customer to confirm. How should this test case be scored?**
 
 - A. Fail, because the trajectory broke a safety rule even though the final state was correct
-- B. Pass, because the final state was correct
-- C. Pass with a warning, because no harm occurred
-- D. It cannot be scored without a human
+- B. Pass, because the final state matched the expected outcome for this test case
+- C. Pass with a warning, since no harm occurred and the customer wanted the freeze
+- D. Leave it unscored until a human reviewer has read the full conversation
 
 <details><summary>Answer</summary>
 
@@ -713,10 +713,10 @@ Faisal rewrites his launch proposal as the **Credit Memo Copilot Rollout and Exp
 
 **2. An experiment was planned as a 50/50 split, but the data shows 54% of users in control and 46% in treatment. What should the team do?**
 
-- A. Treat it as a sample ratio mismatch, investigate assignment and logging, and not trust the results until the cause is found
-- B. Re-weight the groups and report the result
-- C. Ignore it, because the difference is small
-- D. Stop the experiment and ship the feature
+- A. Treat it as a sample ratio mismatch: check assignment and logging before trusting any result
+- B. Re-weight the two groups to 50/50 in the analysis and report the adjusted result
+- C. Accept it, since a four-point gap is normal noise for a test of this size
+- D. Extend the test until the split evens out, then read the results as planned
 
 <details><summary>Answer</summary>
 
@@ -726,10 +726,10 @@ Faisal rewrites his launch proposal as the **Credit Memo Copilot Rollout and Exp
 
 **3. The Credit Memo Copilot will be used by 140 RMs in 12 teams who share drafts and tips. What is the best experimental design?**
 
-- A. Randomise each memo to copilot or no copilot
-- B. Compare this quarter with last quarter across the whole bank
-- C. Switch everyone on and survey satisfaction
-- D. A staggered rollout by team in random order, comparing switched-on and not-yet-switched-on teams week by week
+- A. Randomise each memo to copilot or no copilot, so both arms have the same mix of cases
+- B. Compare this quarter's memo times with last quarter's across the whole bank
+- C. Switch everyone on and compare each RM's speed with their own history
+- D. Roll out team by team in random order, comparing switched-on and waiting teams each week
 
 <details><summary>Answer</summary>
 

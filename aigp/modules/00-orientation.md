@@ -360,7 +360,7 @@ Extract: EU (Germany), deployer, employment decisions (a high-impact use that th
 ## 🏛️ In practice at Najm Bank
 Layla gives Omar and Sara two study plans and lets them choose. Both map directly to this course.
 
-**Plan A — 6 weeks (for people already working in privacy, risk or data; about 12–14 hours a week)**
+**Plan A — 6 weeks (for people already working in privacy, risk or data; about 16–17 hours a week)**
 
 | Week | Modules | Focus | End-of-week check |
 |---|---|---|---|
@@ -371,7 +371,7 @@ Layla gives Omar and Sara two study plans and lets them choose. Both map directl
 | 5 | 9, 10, 11 | Data, testing, release, monitoring, deployment | Do every 🟡 exercise in Module 11 |
 | 6 | 12 | Capstone, exam strategy, full mock exam twice | Mock score review: re-read every lesson behind a wrong answer |
 
-**Plan B — 12 weeks (for newcomers; about 6–8 hours a week)**
+**Plan B — 12 weeks (for newcomers; about 8–9 hours a week)**
 
 | Week | Modules | Focus |
 |---|---|---|
@@ -388,7 +388,7 @@ Layla gives Omar and Sara two study plans and lets them choose. Both map directl
 | 11 | 11 | Deploying and using AI |
 | 12 | 12 | Capstone, strategy, two sittings of the mock exam, targeted review |
 
-**How much time in total.** The study-time estimates at the top of the lessons add up to roughly 75 hours of reading and questions, including two mock sittings. Portfolio exercises come on top, above all the 12.1 capstone at about 15 hours. If you cannot give that, make a first pass through the 🟢 layers, exercises and questions only, and come back to the 🟡 and 🔴 layers for the modules your error log flags.
+**How much time in total.** The study-time estimates at the top of the lessons add up to about 100 hours: roughly 13 hours of reading and 87 hours of hands-on work (exercises, lesson questions and two mock sittings). That total already includes the 12.1 capstone at about 15 hours. Both plans above are paced for it. If you cannot give that, make a first pass through the 🟢 layers, exercises and questions only, and come back to the 🟡 and 🔴 layers for the modules your error log flags.
 
 **Checking your own exercises.** Most exercises have no single right answer, and you may be studying alone. Mark your work against five points: (1) it meets every part of the *Done when* line; (2) every duty has a named owner or role; (3) every legal claim names the instrument and article; (4) it says what evidence would show the control works; (5) it flags what you would check with counsel. Module 11 and the calculation exercises have model answers to compare with.
 
@@ -658,9 +658,9 @@ Layla presents the inventory to the AI Governance Committee with a short decisio
 **2. Layla asks department heads "Do you use AI?" and most say no. Which discovery step would MOST improve completeness?**
 
 - A. Accept the answers as given and record only the data science team's models in the inventory
-- B. Hire an external firm to certify that no other AI exists anywhere in the bank's business lines
+- B. Hire an external firm to certify that no other AI exists anywhere in any of the bank's business lines
 - C. Ban all software with AI features until the owners declare them and the committee approves each one
-- D. Ask which decisions use a score, ranking, prediction or generated text, and cross-check contracts, existing registers and network logs
+- D. Ask which decisions use a score, prediction or generated text, then check contracts, registers and logs
 
 <details><summary>Answer</summary>
 

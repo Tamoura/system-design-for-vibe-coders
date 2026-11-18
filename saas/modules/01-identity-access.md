@@ -15,7 +15,7 @@
 ## ⚡ In 60 seconds
 
 - Authentication proves who is making a request. It is a set of flows (sign-up, login, verification, reset, MFA, logout), and an attacker picks the weakest one.
-- The one rule: hash passwords with argon2id or bcrypt, and store only hashes of session, reset and magic-link tokens.
+- The one rule: hash passwords with argon2id, scrypt or bcrypt, and store only hashes of session, reset and magic-link tokens.
 - Default for a v1: a library such as Better Auth, Devise or django-allauth, with server-side sessions in an `HttpOnly`, `Secure`, `SameSite=Lax` cookie.
 - Social login means the authorization code flow with PKCE, keyed on the provider's `sub`, never on email alone.
 - Biggest trap: the edges, such as reset links that work twice, "email not found" messages, and a logout that only clears the cookie.
@@ -225,7 +225,7 @@ Add passkeys and TOTP as second factors, a "Signed-in devices" page, and step-up
 ## ⚠️ Mistakes juniors make
 
 - **Storing JWTs in `localStorage`.** Any XSS bug, including one in a third-party script, can read and send it. Use an `HttpOnly` cookie, and for your own web app a server-side session.
-- **Hashing passwords with SHA-256 or MD5, even with a salt.** They are fast, so leaked hashes get cracked in bulk on GPUs. Use argon2id or bcrypt through a maintained library.
+- **Hashing passwords with SHA-256 or MD5, even with a salt.** They are fast, so leaked hashes get cracked in bulk on GPUs. Use argon2id, scrypt or bcrypt through a maintained library.
 - **Matching OAuth accounts by email alone.** Unverified or mutable email claims let an attacker sign in as someone else. Store `(provider, provider_user_id)` and treat email as a hint.
 - **Reset and magic-link tokens that live forever or work twice.** Old emails get forwarded, archived and leaked. Hash them, expire them in minutes, and delete them on use.
 - **Leaking account existence.** "No user with that email" on login or reset gives attackers a free target list. Use one generic message and constant-ish timing.
@@ -234,7 +234,7 @@ Add passkeys and TOTP as second factors, a "Signed-in devices" page, and step-up
 ## 🧾 Recap
 
 - Authentication is a set of flows: sign-up, login, verification, reset, MFA and logout. Secure all of them equally.
-- Hash passwords with argon2id or bcrypt. Store only hashes of session, reset and magic-link tokens.
+- Hash passwords with argon2id, scrypt or bcrypt. Store only hashes of session, reset and magic-link tokens.
 - Server-side sessions in an `HttpOnly`, `Secure`, `SameSite=Lax` cookie are the default. JWTs are for verification across services.
 - Social login means authorization code plus PKCE, keyed on the provider's subject id, never on email alone.
 - Passkeys are phishing-resistant and the future. TOTP with recovery codes is today's solid MFA.

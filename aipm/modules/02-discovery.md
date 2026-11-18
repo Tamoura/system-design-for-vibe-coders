@@ -196,22 +196,22 @@ On Thursday Faisal shows Khalid no demo. He shows where the five hours go, and w
 **4. In an Opportunity Solution Tree, what belongs directly under the outcome?**
 
 - A. Opportunities: unmet needs and pain points heard in research, phrased from the user's side
-- B. The AI model the team has chosen
-- C. Features ranked by effort
-- D. Assumption tests
+- B. Solutions: the AI features the team could build, so the outcome links straight to delivery
+- C. Metrics that break the outcome into input measures the team can move week by week
+- D. Assumption tests, so that the riskiest beliefs behind the outcome are checked first
 
 <details><summary>Answer</summary>
 
-**A.** Outcome, then opportunities, then solutions, then assumption tests. Putting a model or features directly under the outcome (B, C) is exactly the solution-first habit the tree exists to prevent. (🟡 Going deeper.)
+**A.** Outcome, then opportunities, then solutions, then assumption tests. Putting solutions directly under the outcome (B) is exactly the solution-first habit the tree exists to prevent. C describes a metric tree, a different tool, and assumption tests (D) sit at the bottom, under solutions. (🟡 Going deeper.)
 
 </details>
 
 **5. The workflow map shows that a third of memos are sent back because two credit policies contradict each other on collateral. What is the best product response?**
 
-- A. Build an AI that rewrites memos to satisfy both policies
+- A. Build an AI step that checks each memo against both policies and flags the conflict
 - B. Raise the policy conflict with the policy owner and fix it before designing AI support for that step
-- C. Ignore it, because it is not an AI problem
-- D. Fine-tune a model on returned memos
+- C. Leave it to the credit team, since policy conflicts sit outside the product's scope
+- D. Fine-tune a model on the returned memos so drafts learn what reviewers accept
 
 <details><summary>Answer</summary>
 
@@ -332,7 +332,7 @@ flowchart LR
 
 **Platform effects change the maths.** Some use cases build shared capability. The Credit Memo Copilot needs document ingestion, retrieval over client files and an evaluation harness. Najm Assist and Staff GenAI will need the same. Ranking each idea alone undervalues the first one that builds the platform. Show dependencies explicitly. Do not hide them in "strategic value".
 
-**Risk is not only a minus.** Risk scores often become a penalty that pushes every customer-facing idea down the list. A better approach is to ask what it would take to **reduce** the risk (a human review step, a narrower scope, internal users first). Then score the *mitigated* design and count the cost of the mitigation in feasibility, under integration effort (the scorecard has no separate effort column). Najm Assist answering fee questions from a controlled knowledge base, with hand-off to an agent, is a different risk from Najm Assist answering anything. Air Canada learned this in *Moffatt v. Air Canada* (2024): a tribunal held the airline responsible for what its website chatbot told a customer about fares. The risk depends on scope and design, not on "chatbot" as a category.
+**Risk is not only a minus.** Risk scores often become a penalty that pushes every customer-facing idea down the list. A better approach is to ask what it would take to **reduce** the risk (a human review step, a narrower scope, internal users first). Then score the *mitigated* design and count the cost of the mitigation in feasibility, under integration effort (the scorecard has no separate effort column). Najm Assist answering fee questions from a controlled knowledge base, with hand-off to an agent, is a different risk from Najm Assist answering anything. The tribunal case in 0.2 shows the cost of getting this wrong: the airline answered for what its chatbot told a customer. The risk depends on scope and design, not on "chatbot" as a category.
 
 **Gaming and politics.** Scorecards get gamed. Sponsors inflate reach, and teams deflate effort for favoured ideas. Useful defences: score in a group with the evidence visible, have Dana and Tariq own the feasibility scores and the sponsor own the value scores, and revisit scores after the spike. When an executive overrides the ranking, record the override and the reason. That is legitimate, and it is their call, but it should be visible.
 
@@ -421,9 +421,9 @@ Weighted score = 0.40 × value + 0.35 × feasibility + 0.25 × risk. Faisal adds
 
 **3. A business case says: 10,000 users × 2 hours saved a month × 100% adoption from launch. What is the most important challenge a PM should raise?**
 
-- A. The hours saved should be in minutes
-- B. Nothing, business cases are always optimistic
-- C. The volume should be doubled for growth
+- A. Two hours a month is too little to matter; the case should be built on minutes per task
+- B. The user count should leave out staff on leave, which would cut the benefit by a tenth
+- C. The case ignores growth; user volumes should be projected over three years, not one
 - D. The adoption assumption is almost certainly too high and should be conservative and tested
 
 <details><summary>Answer</summary>
@@ -488,7 +488,7 @@ The collections team wants "an AI model to detect when a customer's salary has a
 
 The first is a rule. Salary credits in Najm's core banking system usually carry a payroll code and a regular pattern, so a few conditions will find most of them, and the rest can be handled by asking the customer. The second is a regulated communication. A declined applicant is owed accurate, specific reasons, and a fluent letter that paraphrases or invents reasons is worse than a reviewed template. The third is a zombie. It is too promising to kill, too unused to matter, and it keeps two data scientists busy.
 
-Public cases show what happens when these calls go the wrong way. Zillow wound down its Zillow Offers home-buying business in 2021 after its pricing approach mispriced homes, with large write-downs. The model was only part of that story, but the business had bet on algorithmic accuracy in a volatile market with little room for error. Customer-facing chatbots have made headlines for less. A Chevrolet dealer's website chatbot was manipulated into "agreeing" to sell a car for $1 (December 2023). DPD's delivery chatbot swore and criticised the company after an update (January 2024). New York City's MyCity chatbot was reported in 2024 to give business owners answers that contradicted the law. In each case the question "should AI answer this, in this way, without a check?" deserved more attention than it got.
+Public cases show what happens when these calls go the wrong way. Zillow wound down its Zillow Offers home-buying business in 2021 after its pricing approach mispriced homes, with large write-downs. The model was only part of that story, but the business had bet on algorithmic accuracy in a volatile market with little room for error. Customer-facing chatbots have made headlines for less: you met one in 0.2, and lessons 5.3 and 9.4 add more. In each case the question "should AI answer this, in this way, without a check?" deserved more attention than it got.
 
 ## 📐 How it works
 
@@ -622,10 +622,10 @@ Khalid pushes back on stopping the predictor: "We've spent six months on it." Ra
 
 **1. The collections team asks for "an AI model to detect salary deposits". Salary credits carry a payroll code and arrive on a regular pattern. What should Faisal recommend first?**
 
-- A. Train a classifier on all transactions
-- B. Use an LLM to read transaction descriptions
-- C. Write rules on payroll code, amount and date pattern, and consider AI only for the cases rules miss
-- D. Reject the request because collections is sensitive
+- A. Train a classifier on labelled transactions so it can learn salary patterns across banks
+- B. Use an LLM to read transaction descriptions, since employers label payroll in many ways
+- C. Write rules on payroll code, amount and date pattern; consider AI only for cases rules miss
+- D. Ask for a data protection review of the collections use before choosing any approach
 
 <details><summary>Answer</summary>
 

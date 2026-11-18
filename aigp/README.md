@@ -47,7 +47,7 @@ The whole course follows **Najm Bank**, a fictional mid-sized Gulf bank with cus
 
 ## How the course maps to the AIGP exam
 
-The AIGP exam has 100 multiple-choice questions (85 scored), many of them scenarios, and lasts 2 hours 45 minutes. It is scored from 100 to 500, and you need 300 to pass. Lesson 0.2 explains the exam in detail and gives 6-week and 12-week study plans for about 75 hours of reading and questions; portfolio exercises, above all the 12.1 capstone at about 15 hours, come on top.
+The AIGP exam has 100 multiple-choice questions (85 scored), many of them scenarios, and lasts 2 hours 45 minutes. It is scored from 100 to 500, and you need 300 to pass. Lesson 0.2 explains the exam in detail and gives 6-week and 12-week study plans for the whole course of about 100 hours, which includes the 12.1 capstone at about 15 hours.
 
 | AIGP domain (BoK v2.1) | Exam questions | Course modules |
 |---|---|---|

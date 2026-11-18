@@ -27,7 +27,7 @@ The capstone trains the habit behind those questions: a change others can trust 
 ### 🟢 The essentials
 **The brief.** Eight milestones: context (modules 0-2), spec and plan (3), small steps (4, 5), review (5, 6), security (8), automation (9, 10), documents (11) and retrospective (12, 13). Each leaves something checkable that must refer to something real: files, ids `AC1`..., commands, the code, a commit. `lab-assets/README.md` lists what the grader reads in each. Module 7 has no milestone: REMIT-414 adds code rather than changing an untested module, though its habit (pin behaviour before you change it) runs through the tests-first step.
 
-**Time.** This is not a one-sitting lesson. The header's estimate covers reading and planning it; the build itself takes 8 to 12 hours of hands-on work spread over a week or more (roughly: spec and plan 2 h, code and tests 3 to 4 h, review and hardening 2 h, documents and retrospective 2 h), plus the 90-minute group session.
+**Time.** This is not a one-sitting lesson. The header's hands-on estimate is the build itself: 8 to 12 hours of hands-on work spread over a week or more (roughly: spec and plan 2 h, code and tests 3 to 4 h, review and hardening 2 h, documents and retrospective 2 h), plus the 90-minute group session.
 
 **Providers before the consumer.** A corridor names its fee schedule, and an old test (`tests/test_corridors.py`) checks that the schedule exists. So the plan adds `STD-C` in `fees.py`, then the rate and margin in `fx.py`, then the corridor, then the wording (`notify.py`) and the template choice (`service.py`). No code commit turns an old test red. Fee and rate functions take a `Corridor`: build one that points at `STD-C` in your fee tests, and they pass before the real corridor exists.
 

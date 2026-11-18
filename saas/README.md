@@ -52,6 +52,10 @@ Each lesson has the same ten parts, so you always know where you are:
 Every lesson carries a level badge showing where it *starts*: 🟢 Beginner,
 🟡 Intermediate or 🔴 Advanced. Pick the track that matches you.
 
+The track lengths below and the 12-week plan assume a full-time pace of about 15–17 study hours a
+week: the course estimate above (about 207 hours) spread over 12–14 weeks. At about 6 hours a week,
+plan for roughly 35 weeks instead, or scale each week of the plan to about two and a half weeks.
+
 ### 🟢 Beginner track — "ship a SaaS v1" (≈ 4–5 weeks)
 
 Read Module 0, then lessons 1.1, 1.2, 2.1, 2.2, 3.1, 4.1 and 6.1. Do the 🟢

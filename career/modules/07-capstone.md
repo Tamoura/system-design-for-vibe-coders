@@ -147,7 +147,7 @@ Huda's plan, as she sent it to Khalid. Her audit showed that nearly every postin
 | 10–11 | Practice pack from 7.2; rehearse the two weakest stories; follow-ups | 5.1, 7.2 |
 | 12 | **Checkpoint.** Offer comparison, or the next 12-week plan | 6.1 |
 
-**On 6–8 hours a week.** Huda had finished her degree and could give 16 hours. Her plan is about 190 hours, so with 6–8 keep the same order but spread each week of the table over two (about 24 weeks; nearer 30 at 6 hours). The checkpoints move with it, to about weeks 8, 16 and 24, and applications drop to two good ones a week instead of four. Do not cut the checkpoints or the weekly review; they are what keeps a slower plan honest.
+**On 6–8 hours a week.** Huda had finished her degree and could give 16 hours. Her plan is about 190 hours (less than the whole course, because she kept only the exercises her target role needs), so with 6–8 keep the same order but spread each week of the table over two (about 24 weeks; nearer 30 at 6 hours). The checkpoints move with it, to about weeks 8, 16 and 24, and applications drop to two good ones a week instead of four. Do not cut the checkpoints or the weekly review; they are what keeps a slower plan honest.
 
 **Her weekly review template** (one note, five lines):
 
@@ -262,7 +262,7 @@ At week 8, her tracker showed that applications after a referral or conversation
 
 **After this you can** sit the 40-question pack in 60 minutes, marking each answer sure or guess, and turn your misses and guesses into a review log that names a lesson and an action for each. *Study time: reading about 35 min, hands-on about 6 h (estimate).*
 
-> **Rebalanced (November 2026).** Option lengths and wording in this pack were checked and evened out in November 2026. Answer each question in your own words before you read the options, then compare.
+> **Reviewed (November 2026).** Option lengths and wording in this pack were reviewed in November 2026, but the right answer is still sometimes the longest option, so do not use length as a clue. Answer each question in your own words before you read the options, then compare.
 
 ## ⚡ In 60 seconds
 - This is a 40-question practice pack covering every module, from reading the market to growing after your first year. Most questions are scenarios with the cohort: which project to build, which CV bullet is stronger, how to answer, which offer to take, what to do in week two.
@@ -337,7 +337,7 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 **1. Yousef's market scan of ten junior platform ads finds Linux in seven ads and Terraform in six. How should he read those counts?**
 
 - A. Both are baseline skills, because each of them appears in more than half of the ten ads
-- B. Linux is a baseline skill and Terraform a differentiator, so he proves Linux first, then Terraform
+- B. Linux is a baseline skill and Terraform a differentiator, since the line sits at seven ads
 - C. Both are differentiators, since neither of them appears in eight or more of the ads
 - D. Terraform is the real baseline, because newer tools matter more to employers than old ones
 
@@ -402,8 +402,8 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 **6. In his first week at Najm, Yousef is unsure how long he should try alone before asking for help. Nobody has told him. What should he do?**
 
 - A. Ask Salem in their first 1:1 how long to try alone before asking, as teams differ
-- B. Never ask during probation, so that he looks independent and capable to the team
-- C. Ask immediately whenever anything fails, because every minute stuck is wasted time
+- B. Wait until probation ends to ask, so that he looks independent and capable to the team
+- C. Ask as soon as something fails, because time spent stuck is time the team loses
 - D. Message the most senior engineer privately when stuck, since seniors answer fastest
 
 <details><summary>Answer</summary>
@@ -792,7 +792,7 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 **36. Omar asks whether he should learn six frameworks to look employable in every role family. What does the T-shaped idea suggest?**
 
 - A. Learn the six to a basic level, since breadth across families gets juniors hired
-- B. Go deep in one role family first, and keep working knowledge of the areas next to it
+- B. Go deep in one role family first, and keep a working knowledge of the areas next to it
 - C. Learn algorithms in depth instead, since frameworks change too fast to be worth it
 - D. Apply across the families at once with one CV, then specialise after the first offer
 

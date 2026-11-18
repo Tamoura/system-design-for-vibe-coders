@@ -219,9 +219,9 @@ sent 5 messages | input_tokens=84 output_tokens=9 stop=end_turn
 **4. في نموذج حالي، يعيد استدعاء محادثة بـ `max_tokens=400` القيمة `stop_reason: "max_tokens"` وكتلة نص فارغة. ما أفضل إصلاح؟**
 
 - A. أضف `temperature=0` كي يكفّ النموذج عن الاسترسال حين يبلغ الحد
-- B. غلّف الاستدعاء بحلقة إعادة محاولة، لأن الخطأ عابر فقط
+- B. غلّف الاستدعاء بحلقة لإعادة المحاولة تلقائيًا، لأن هذا الخطأ عابر فقط ولن يتكرر
 - C. اقرأ `content[0].text` وتجاهل كل كتلة أخرى
-- D. ارفع `max_tokens` إلى 1024+ وخفّض `effort` وافحص `stop_reason`
+- D. ارفع `max_tokens` إلى 1024 فأكثر وخفّض `effort` وافحص `stop_reason`
 
 <details><summary>الإجابة</summary>
 

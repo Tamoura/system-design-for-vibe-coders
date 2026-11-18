@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="secai-source" content="cf563296788e0506">
+<meta name="secai-source" content="09e16da82c295a29">
 <meta name="description" content="أمن الذكاء الاصطناعي والتطبيقات من الصفر إلى الاحتراف: دورة مجانية ثنائية اللغة عن نمذجة التهديدات، وأمن الويب والهوية وواجهات API والسحابة وسلسلة التوريد، وتأمين تطبيقات النماذج اللغوية الكبيرة ووكلاء الذكاء الاصطناعي، مع اختبار في كل درس وامتحان تدريبي من 60 سؤالًا.">
 <title>أمن الذكاء الاصطناعي والتطبيقات من الصفر إلى الاحتراف — الدورة كاملة</title>
 <style>
@@ -309,11 +309,11 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 </tr>
 <tr>
 <td>معماري</td>
-<td>الوحدات 0 و1 و3 و7 و8، و9.2 و9.3؛ ونموذج تهديدات لكل نظام تملكه</td>
+<td>الوحدات 0 و1 و3 و7 و8، و9.1–9.3؛ ونموذج تهديدات لكل نظام تملكه</td>
 </tr>
 <tr>
 <td>مدير منتج أو مدير هندسة</td>
-<td>0، 1.3، 6.1، 8.1–8.2، 9.2، 10.2 و11؛ والمسار الورقي للتمارين العملية</td>
+<td>0، 1.3، 6.1، 8.1–8.2، 9.1–9.2، 10.1–10.2 و11؛ والمسار الورقي للتمارين العملية</td>
 </tr>
 <tr>
 <td>محلل أمني ينتقل إلى أمن التطبيقات أو أمن الذكاء الاصطناعي</td>
@@ -321,7 +321,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 </tr>
 <tr>
 <td>مالك نظام في بنك أو جهة حكومية أو مؤسسة</td>
-<td>0، 1، 5.3، 7.1، 10.2 و11؛ والمسار الورقي</td>
+<td>0، 1، 5.3، 7.1، 9.1، 10.1–10.2 و11؛ والمسار الورقي</td>
 </tr>
 </tbody></table></div>
 <p><strong>الوقت.</strong> تستغرق قراءة الدورة كلها نحو 15 ساعة. ومع تمارين 🟢 و🟡 تبلغ نحو 120 ساعة، أي قرابة خمس ساعات في الأسبوع لستة أشهر؛ وتضيف تمارين 🔴 نحو 100 ساعة أخرى. <strong>لا تكتب شيفرة؟</strong> لكل تمرين عملي مسار ورقي: راجع تغييرًا أو مُخرَجًا جاهزًا بدل أن تبنيه. <strong>قبل أن تبدأ</strong>، يجهّز الدرس <a class="xref" href="#l0-3">0.3</a> مختبر التدريب المجاني (OWASP Juice Shop في Docker) و<a href="./lab/README.ar.md">مختبر البداية</a> في الدورة، وهو يعمل دون اتصال، لتمارين الذكاء الاصطناعي.</p>
@@ -536,7 +536,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 </section>
 <section class="sec sec-why"><h2>🧭 لماذا يهم</h2>
 <p>في صباح اليوم الأول لعلي في فريق أمن التطبيقات والذكاء الاصطناعي في بنك نجم، تكلّفه نورة (رئيسة أمن التطبيقات والذكاء الاصطناعي) بمهمة واحدة: «اكتب قائمة بما يجب على نجم أسيست أن يحميه». ونجم أسيست هو المساعد في تطبيق البنك للهاتف المحمول، وهو على وشك أن يكتسب القدرة على تجميد البطاقات وفتح الاعتراضات على المعاملات. يعود علي بعنصرين: «الخادم، وكلمة مرور قاعدة البيانات». أما قائمة نورة ففيها سبعة عناصر، منها أرصدة العملاء، وإجراء تجميد البطاقة (فالمحتال يتمنى أن يسيء استخدامه)، وما يقوله أسيست عن الرسوم (فالإجابة الخاطئة قد تصبح التزامًا يُلزَم به البنك)، وسجلات المحادثات، وبيانات الاعتماد <bdi>(credentials)</bdi> التي يستخدمها أسيست لاستدعاء الأنظمة الداخلية. وتقول: «الخادم هو المكان الذي تقيم فيه الأشياء. أما الأصول فهي ما سيتضرر الناس بفقدانه».</p>
-<p>نادرًا ما تبدأ أشد الاختراقات ضررًا بشيء غريب. ففي عام 2017، دخل المهاجمون شركة Equifax، وهي وكالة أمريكية لتقارير الائتمان، عبر ثغرة معروفة في Apache Struts، وهو إطار عمل للويب، وتحمل المعرّف CVE-2017-5638. وكان الإصلاح قد نُشر قبل دخولهم بأسابيع، لكنه لم يُطبَّق على النظام المتأثر. وأفادت لجنة التجارة الفيدرالية الأمريكية بأن البيانات الشخصية لنحو 147 مليون شخص قد كُشفت. وفي عام 2023، أفادت التقارير بأن موظفين في Samsung لصقوا شيفرة مصدرية سرية ومحاضر اجتماعات في ChatGPT؛ ثم قيّدت الشركة استخدام الموظفين لمثل هذه الأدوات. لم «يخترق» أحدٌ شيئًا في الحالة الثانية: بل عبرت البيانات حدًّا لم يرسمه أحد. إحدى الحالتين أمن تطبيقات كلاسيكي، والأخرى جديدة وذات طابع خاص بالذكاء الاصطناعي. وهذه الدورة تغطي كلتيهما.</p>
+<p>نادرًا ما تبدأ أشد الاختراقات ضررًا بشيء غريب. ففي عام 2017، دخل المهاجمون شركة Equifax، وهي وكالة أمريكية لتقارير الائتمان، عبر ثغرة معروفة في Apache Struts، وهو إطار عمل للويب، وتحمل المعرّف CVE-2017-5638. وكان الإصلاح قد نُشر قبل دخولهم بنحو شهرين، لكنه لم يُطبَّق على النظام المتأثر. وأفادت لجنة التجارة الفيدرالية الأمريكية بأن البيانات الشخصية لنحو 147 مليون شخص قد كُشفت. وفي عام 2023، أفادت التقارير بأن موظفين في Samsung لصقوا شيفرة مصدرية سرية ومحاضر اجتماعات في ChatGPT؛ ثم قيّدت الشركة استخدام الموظفين لمثل هذه الأدوات. لم «يخترق» أحدٌ شيئًا في الحالة الثانية: بل عبرت البيانات حدًّا لم يرسمه أحد. إحدى الحالتين أمن تطبيقات كلاسيكي، والأخرى جديدة وذات طابع خاص بالذكاء الاصطناعي. وهذه الدورة تغطي كلتيهما.</p>
 </section>
 <section class="sec sec-how"><h2>📐 كيف يعمل</h2>
 <h3>🟢 الأساسيات</h3>
@@ -1514,11 +1514,11 @@ app.get(&#39;/api/accounts/:id&#39;, requireLogin, async (req, res) =&gt; {
 </tr>
 <tr>
 <td>معماري</td>
-<td>الوحدات 0 و1 و3 و7 و8، و9.2 و9.3؛ ونموذج تهديدات لكل نظام تملكه</td>
+<td>الوحدات 0 و1 و3 و7 و8، و9.1–9.3؛ ونموذج تهديدات لكل نظام تملكه</td>
 </tr>
 <tr>
 <td>مدير منتج أو مدير هندسة</td>
-<td>0، 1.3، 6.1، 8.1–8.2، 9.2، 10.2 و11؛ ومُخرَجات 🏛️ بوصفها قوالب تطلبها؛ والمسار الورقي</td>
+<td>0، 1.3، 6.1، 8.1–8.2، 9.1–9.2، 10.1–10.2 و11؛ ومُخرَجات 🏛️ بوصفها قوالب تطلبها؛ والمسار الورقي</td>
 </tr>
 <tr>
 <td>محلل أمني ينتقل إلى أمن التطبيقات أو أمن الذكاء الاصطناعي</td>
@@ -1526,7 +1526,7 @@ app.get(&#39;/api/accounts/:id&#39;, requireLogin, async (req, res) =&gt; {
 </tr>
 <tr>
 <td>مالك نظام في بنك أو جهة حكومية أو مؤسسة</td>
-<td>0، 1، 5.3، 7.1، 10.2 و11؛ والمسار الورقي</td>
+<td>0، 1، 5.3، 7.1، 9.1، 10.1–10.2 و11؛ والمسار الورقي</td>
 </tr>
 </tbody></table></div>
 <p><strong>لا تكتب شيفرة؟ اسلك المسار الورقي.</strong> معظم تمارين 🟢 لا تحتاج إلا إلى الورق. وحين يحتاج تمرين إلى مستودع أو حساب سحابي أو مختبر، راجع زوج الشيفرة المعرّضة للثغرة والمُصلَحة في الدرس نفسه، أو مُخرَج 🏛️ فيه، كأن مطوّرًا أرسله إليك لتوافق عليه: سمِّ الثغرة، وما يكسبه المهاجم، والإصلاح الذي ستشترطه، والاختبار الذي يثبته. والدروس التي تحتاج كل تمارينها إلى شيفرة تضيف تمرينًا 📝 للمسار الورقي. <em>يكتمل عندما:</em> يستطيع مطوّر أن يعمل بمراجعتك دون أن يسألك ماذا قصدت.</p>
@@ -2573,7 +2573,7 @@ def can_view_invoice(user, invoice) -&gt; bool:
 <ul>
 <li>A. التصميم المفتوح؛ فينبغي نشر النطاق كي تمكن مراجعته، وبذلك تُحلّ المشكلة من أساسها</li>
 <li>B. أقل الصلاحيات؛ امنح أسيست ما يحتاجه الآن من إجراءات، محصورةً في العميل المسجِّل دخوله، وأضف المزيد بالمراجعة</li>
-<li>C. الاقتصاد في الآلية؛ فاستخدم رموزًا مميزةً أقل، لأن كل رمزٍ مميز إضافي يعقّد التصميم ويترك مجالًا أوسع للخطأ</li>
+<li>C. الاقتصاد في الآلية؛ فاستخدم رموزًا مميزةً أقل، لأن كل رمزٍ مميز إضافي يعقّد التصميم ويترك مجالًا أوسع لوقوع الخطأ</li>
 <li>D. القبول النفسي؛ فذلك سيزعج المطورين ويبطئ عملهم، خلافًا لفكرة الأمن السهل الاستخدام</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -3671,7 +3671,7 @@ const clean = DOMPurify.sanitize(invoice.notes, {
 <p><strong>5. تُعرض إجابات نجم أسيست بصيغة Markdown في عرض الويب داخل التطبيق. وتُظهر مريم أن مستندًا محقونًا بموجّهات يستطيع جعل النموذج يُخرج رابط صورة يحتوي عنوانه URL على بيانات العميل. ما الضابط الأكثر فاعلية؟</strong></p>
 <ul>
 <li>A. أن يُطلب من النموذج في موجّه النظام ألّا يُخرج صورًا أبدًا، وأن تُضاف هذه القاعدة إلى كل تعليمات المحادثة</li>
-<li>B. عرض مجموعةٍ فرعية معقَّمة من Markdown بلا HTML خام، وحظر الصور البعيدة أو تمريرها عبر وسيط، وفرض <code>img-src</code> و<code>connect-src</code> في CSP</li>
+<li>B. عرض مجموعةٍ فرعية معقَّمة من Markdown بلا HTML خام، وحظر الصور البعيدة أو تمريرها عبر خادم وسيط، وفرض <code>img-src</code> و<code>connect-src</code> في CSP</li>
 <li>C. إضافة <code>HttpOnly</code> إلى كل ملفات تعريف الارتباط، فهذا يمنع النص المحقون من إرسال أي بيانات إلى خارج الصفحة</li>
 <li>D. الاعتماد على جدار حماية تطبيقات الويب لحظر الاستجابة التي تحتوي على رابط الصورة قبل وصولها إلى العميل</li>
 </ul>
@@ -3985,10 +3985,10 @@ prefs = PrefsSchema.model_validate_json(request.cookies[&quot;prefs&quot;])
 <section class="sec sec-quiz"><h2>✍️ اختبر نفسك</h2>
 <p><strong>1. يحظر الإصدار الأول من ميزة «استيراد فاتورة من رابط» عناوين URL التي تحتوي على <code>localhost</code> أو <code>127.0.0.1</code> أو <code>169.254</code>. لماذا هذا ضعيف، وما الذي ينبغي أن يحل محله؟</strong></p>
 <ul>
-<li>A. الصيغ البديلة وحيل DNS وإعادة التوجيه تتجاوز فحص السلاسل؛ فاعتمد قائمة سماح، وافحص العناوين المحلولة، وامنع إعادة التوجيه، واستعمل وسيط خروج</li>
-<li>B. إنه كافٍ إذا كان الفحص غير حساسٍ لحالة الأحرف، لأن بقية الصيغ ليست إلا اختلافًا في كتابة الاسم نفسه</li>
-<li>C. استبدله بتعبيرٍ نمطي يحظر أيضًا <code>10.</code> و<code>192.168.</code>، فهذا يغطي كل العناوين الداخلية التي قد يستهدفها المهاجم</li>
-<li>D. اعرض على العملاء صفحة خطأ عامة حين يفشل الجلب، فمنع ظهور تفاصيل الخطأ يعوّض ضعف الفحص نفسه</li>
+<li>A. الصيغ البديلة وحيل DNS وإعادة التوجيه تتجاوز فحص السلاسل؛ فاعتمد قائمة سماح، وافحص العنوان المحلول، وامنع إعادة التوجيه، ومرّر الخروج عبر خادم وسيط</li>
+<li>B. إنه كافٍ ما دام الفحص غير حساسٍ لحالة الأحرف، لأن الصيغ الأخرى كلها ليست إلا طرائق مختلفة لكتابة الاسم نفسه</li>
+<li>C. استبدله بتعبيرٍ نمطي يحظر أيضًا <code>10.</code> و<code>192.168.</code>، فهذا يغطي كل العناوين الداخلية التي يمكن أن يستهدفها أي مهاجم</li>
+<li>D. اعرض على العملاء صفحة خطأ عامة حين يفشل الجلب، لأن إخفاء تفاصيل الخطأ عنهم يعوّض ضعف الفحص نفسه</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -6006,10 +6006,10 @@ CREATE UNIQUE INDEX transfers_idem ON transfers (customer_id, idempotency_key);
 
 <p><strong>4. بين ليلةٍ وضحاها، يتضاعف إنفاق بنك نجم على رسائل التحقق ثلاث مرات، وتنهار نسبة الرموز المُدخَلة، وتذهب معظم الرسائل إلى بلدانٍ ليس لبنك نجم عملاء فيها. ما الذي يحدث على الأرجح، وماذا ينبغي أن يفعل الفريق؟</strong></p>
 <ul>
-<li>A. نجحت حملةٌ تسويقية أطلقها فريق المنتج؛ اشترِ رصيدًا إضافيًا للرسائل النصية حتى لا تتوقف الخدمة</li>
+<li>A. نجحت حملةٌ تسويقية أطلقها فريق المنتج؛ فاشترِ رصيدًا إضافيًا للرسائل النصية حتى لا تتوقف الخدمة عن العملاء</li>
 <li>B. عطلٌ لدى مزوّد الرسائل النصية يكرر الإرسال؛ افتح تذكرةً مع المزوّد وانتظر حتى يصلح العطل</li>
-<li>C. هجوم حجب خدمة على الموقع؛ ضع الموقع خلف شبكة توصيل محتوى تمتص الطلبات الزائدة بسرعة</li>
-<li>D. ضخّ الرسائل النصية؛ احصر الإرسال في البلدان المخدومة وحدّده لكل رقم وحساب، ونبّه على الإنفاق، وانتقل إلى الموافقة داخل التطبيق</li>
+<li>C. هجوم حجب خدمة على الموقع؛ ضع الموقع خلف شبكة توصيل محتوى تمتص الطلبات الزائدة عنه بسرعة</li>
+<li>D. ضخّ الرسائل النصية؛ احصر الإرسال في البلدان المخدومة وحدّده لكل رقم وحساب، ونبّه على الإنفاق، واعتمد الموافقة داخل التطبيق</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -7452,7 +7452,7 @@ log.info(&quot;assist_request&quot;, extra={
 <ul>
 <li>A. وافق، فهو أسبوعٌ واحد فقط، وسيُحذف السجل بعد انتهائه، ولا ضرر في احتفاظ الفريق بالبيانات مدة قصيرة</li>
 <li>B. أطفئ التسجيل لنقطة النهاية كلها لحماية الخصوصية، وتتبّع الإخفاق بالتخمين من حالة الخادم وحدها</li>
-<li>C. سجّل كل شيء، لكن اقصر أداة السجلات على فريق بوابة الشركات الصغيرة وحده، وامنع أي فريق آخر من فتحها</li>
+<li>C. سجّل كل شيء، لكن اقصر الوصول إلى أداة السجلات على فريق بوابة الشركات الصغيرة وحده، وامنع أي فريق آخر من فتحها</li>
 <li>D. سجّل حقولًا من قائمة سماح كرمز الخطأ ومعرّف التتبّع، وأعِد إنتاج المشكلة ببيانات اختبار، واجعل أي التقاطٍ للمحتوى منقَّحًا ومؤقتًا</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -7464,7 +7464,7 @@ log.info(&quot;assist_request&quot;, extra={
 <ul>
 <li>A. احذف صفوفها في جدول نصوص المحادثات وأبلغها بأن البيانات حُذفت، فهناك تُخزَّن بياناتها</li>
 <li>B. احذف كل ما يتعلق بها في كل مكان، فورًا، بما في ذلك سجلات الأنظمة المصرفية الأساسية التي يفرض القانون الاحتفاظ بها</li>
-<li>C. اتبع خريطة البيانات إلى كل نسخة (نصوص المحادثات والتتبّعات والفهرس المتجهي والنسخ الاحتياطية)، واحتفظ فقط بما يفرضه القانون</li>
+<li>C. اتبع خريطة البيانات إلى كل نسخة (نصوص المحادثات والتتبّعات والفهرس المتجهي والذاكرات المؤقتة والنسخ الاحتياطية)، واحتفظ فقط بما يفرضه القانون</li>
 <li>D. ارفض الطلب، لأن نموذج ذكاءٍ اصطناعي كان مشاركًا في المحادثة، ولا يمكن تحديد ما حفظه النموذج من بيانات</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -7695,7 +7695,7 @@ cur.execute(
 <td>كل طلب سحب؛ وتحويل الحوادث إلى قواعد</td>
 </tr>
 <tr>
-<td><strong>ZAP</strong> — ماسحٌ ديناميكي مفتوح المصدر</td>
+<td><strong>ZAP</strong></td>
 <td>خادمٌ وسيط وماسحٌ مفتوح المصدر لـ DAST لتطبيقات الويب وواجهات البرمجة</td>
 <td>فحوص خط الأساس على كل نشرٍ في بيئة الاختبار؛ والفحوص النشطة المجدولة</td>
 </tr>
@@ -7893,7 +7893,7 @@ cur.execute(
 <li>A. ترتيبها بالخطورة وأدلة الاستغلال (CISA KEV وEPSS) وقابلية الوصول، ثم إصلاح كلٍّ منها ضمن مواعيد متفق عليها</li>
 <li>B. إصلاحها بالترتيب الأبجدي لأسماء الحزم، لأن كل فريق فرعي يستطيع أن يتفق على هذا الترتيب ويتابعه</li>
 <li>C. إصلاح ما درجته الأساسية في CVSS هي 10 فقط وترك البقية، لأن درجاتها الأدنى تعني أنها غير مهمة</li>
-<li>D. تجاهل الاعتماديات المتعدّية، لأن الفريق لم يخترها بنفسه ولا يستطيع تحديثها بسهولة من دون أن يكسر البناء</li>
+<li>D. تجاهل الاعتماديات المتعدّية، لأن الفريق لم يخترها بنفسه، ولا يستطيع تحديثها بسهولة من دون أن يكسر عملية البناء</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -8134,7 +8134,7 @@ steps:
 <tr>
 <td>الاعتماديات</td>
 <td>كل عمليات التثبيت عبر الخادم الوسيط لمستودع نجم؛ ونطاقاتٌ داخلية محجوزة؛ وملفات قفلٍ بالتجزئات؛ وسكربتات التثبيت معطّلة ما لم تكن في قائمة السماح</td>
-<td>سياسة الوكيل؛ وسجلات CI</td>
+<td>سياسة الخادم الوسيط؛ وسجلات CI</td>
 <td>فريق المنصة</td>
 </tr>
 <tr>
@@ -8264,7 +8264,7 @@ steps:
 <li>A. انتحال الأسماء بالأخطاء الإملائية؛ ويُصلَح بكتابة اسم الحزمة بعناية</li>
 <li>B. حقن السجلات؛ ويُصلَح بتعقيم السجلات</li>
 <li>C. لا مخاطر، لأن الحزم الداخلية تأخذ الأولوية دائمًا، ولأن أداة البناء تفحص الفهرس الداخلي قبل أي فهرسٍ عام</li>
-<li>D. ارتباك الاعتماديات؛ استخدم فهرس خادمٍ وسيط داخليًّا واحدًا، ونطاقاتٍ محجوزة، وإصداراتٍ مثبّتة بالتجزئات</li>
+<li>D. ارتباك الاعتماديات؛ استخدم فهرسًا داخليًّا واحدًا عبر خادمٍ وسيط، ونطاقاتٍ محجوزة، وإصداراتٍ مثبّتة بالتجزئات</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -9022,7 +9022,7 @@ def export_invoice(invoice_id):
 <li>A. أصلِح ثغرة SSRF بقائمة سماحٍ للوجهات، وألزِم IMDSv2 على المثيل، واحصر دور الآلة في الحدّ الأدنى من الصلاحيات</li>
 <li>B. أضف اختبار CAPTCHA إلى صفحة التقارير، لأن الهجمات الآلية هي ما يستغل هذه الثغرة في العادة</li>
 <li>C. انقل الخدمة إلى نوع مثيلٍ أكبر ذي موارد أعلى، فالثغرة تظهر حين تقلّ الذاكرة والمعالج في الآلة</li>
-<li>D. اعتمد على المزوّد، لأن خدمة البيانات الوصفية من مسؤوليته بموجب نموذج المسؤولية المشتركة، ولا شيء مطلوب منك</li>
+<li>D. اعتمد على المزوّد، لأن خدمة البيانات الوصفية من مسؤولية المزوّد بموجب نموذج المسؤولية المشتركة، ولا شيء مطلوب منك</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -10206,7 +10206,7 @@ def freeze_card(session, card_id):
 <li>A. وافق واقبل الخطر، فنسبة 2% صغيرة ولن يلاحظها العملاء في الاستخدام اليومي لنجم أسيست</li>
 <li>B. قيّمه حسب السلوك المعتاد للنموذج، الذي يكون آمنًا في 98% من الحالات، ولا حاجة إلى النظر في الأثر</li>
 <li>C. انتظر نموذجًا أفضل من المورّد يخفض النسبة إلى الصفر، ثم أطلق الميزة حين تنجح الاختبارات كلها</li>
-<li>D. المحاولات رخيصة فستقع نسبة 2%؛ قيّم الأثر بأداة النزاعات، وأضف فحوص الملكية وتأكيدًا يعرضه التطبيق</li>
+<li>D. المحاولات رخيصة، فستنجح 2% منها حتمًا؛ قيّم الأثر بأداة النزاعات، وأضف فحوص الملكية وتأكيدًا يعرضه التطبيق</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -10253,7 +10253,7 @@ def freeze_card(session, card_id):
 <p class="crumb"><a href="#contents">الوحدة 8 — كيف تُهاجَم أنظمة الذكاء الاصطناعي</a></p>
 <h1><span class="num">8.2</span> حقن الموجّهات وكسر القيود، المباشر وغير المباشر</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 متقدم</span> · <span class="bok">المرحلة <bdi>(Phase)</bdi> <bdi dir="ltr">Design, Test</bdi></span> · <span class="prereq">اقرأ قبله: <a href="#l8-1">8.1</a>، <a href="#l2-1">2.1</a></span></p>
-<section class="sec sec-lead"><p><strong>بعد هذا الدرس تستطيع</strong> أن تقيس كم مرة تختطف تعليمةُ كناري مزروعة أداةَ تلخيص قبل الإبراز <bdi>(spotlighting)</bdi> وبعده، وتعيد تصميم أدوات مساعدٍ بحيث لا يجمع أي مكوّن أركان الثالوث القاتل <bdi>(lethal trifecta)</bdi> الثلاثة. <em>مدة الدراسة: قراءة نحو 15 دقيقة، وعمل تطبيقي نحو 5 ساعة (تقدير).</em></p>
+<section class="sec sec-lead"><p><strong>بعد هذا الدرس تستطيع</strong> أن تقيس كم مرة تختطف تعليمةُ كناري مزروعة أداةَ تلخيص قبل الإبراز وبعده، وتعيد تصميم أدوات مساعدٍ بحيث لا يجمع أي مكوّن أركان الثالوث القاتل الثلاثة. <em>مدة الدراسة: قراءة نحو 15 دقيقة، وعمل تطبيقي نحو 5 ساعة (تقدير).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ الدرس في دقيقة</h2>
 <ul>
@@ -10367,7 +10367,7 @@ messages = [
 <li><strong>المستودعات والتذاكر</strong> التي يقرؤها وكلاء البرمجة لدى المطوّرين (<a class="xref" href="#l6-3">6.3</a>).</li>
 </ul>
 <p><strong>قنوات التهريب.</strong> إذا كان تطبيق العميل يعرض Markdown، فيمكن دفع النموذج إلى إخراج صورةٍ يحمل عنوانها على الويب بياناتٍ خاصة؛ فيجلبها تطبيق العميل تلقائيًا ويسجّلها خادم المهاجم، وهذه هي تقنية LLM Response Rendering في ATLAS. والأدوات التي ترسل البريد، أو تستدعي خطافات الويب، أو تجلب العناوين قنواتٌ أيضًا. وكذلك المستخدم نفسه: «يرجى زيارة…»، أو رقم حسابٍ مزيف يُقدَّم على أنه حقيقة.</p>
-<p><strong>الثالوث القاتل <bdi>(The lethal trifecta)</bdi></strong> (Willison, 2025؛ انظر <a class="xref" href="#l8-1">8.1</a>) هو سبب أهمية القنوات: فحين تجتمع <strong>البيانات الخاصة</strong> و<strong>المحتوى غير الموثوق</strong> و<strong>التواصل الخارجي</strong> في نظامٍ واحد، يستطيع أيّ شخصٍ يمكنه وضع نصٍّ أمامه سرقة البيانات. ولا يوجد مرشّحٌ يجعل هذا آمنًا بموثوقية، فأزِل ركنًا. و«قاعدة الاثنين للوكلاء» من Meta <bdi>(2025)</bdi> مشابهة: ففي الجلسة الواحدة، ينبغي ألّا يحمل الوكيل أكثر من اثنين من: المُدخلات غير الموثوقة، والبيانات أو الأنظمة الحساسة، والقدرة على تغيير الحالة أو التواصل خارجيًا، ما لم يوافق إنسان.</p>
+<p><strong>الثالوث القاتل</strong> (Willison, 2025؛ انظر <a class="xref" href="#l8-1">8.1</a>) هو سبب أهمية القنوات: فحين تجتمع <strong>البيانات الخاصة</strong> و<strong>المحتوى غير الموثوق</strong> و<strong>التواصل الخارجي</strong> في نظامٍ واحد، يستطيع أيّ شخصٍ يمكنه وضع نصٍّ أمامه سرقة البيانات. ولا يوجد مرشّحٌ يجعل هذا آمنًا بموثوقية، فأزِل ركنًا. و«قاعدة الاثنين للوكلاء» من Meta <bdi>(2025)</bdi> مشابهة: ففي الجلسة الواحدة، ينبغي ألّا يحمل الوكيل أكثر من اثنين من: المُدخلات غير الموثوقة، والبيانات أو الأنظمة الحساسة، والقدرة على تغيير الحالة أو التواصل خارجيًا، ما لم يوافق إنسان.</p>
 <div class="diagram" dir="ltr"><svg id="sd63" width="100%" xmlns="http://www.w3.org/2000/svg" class="flowchart" style="max-width: 2378px;" viewBox="0 0 2378 518" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#sd63{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;font-size:16px;fill:#000000;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#sd63 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#sd63 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#sd63 .error-icon{fill:#552222;}#sd63 .error-text{fill:#552222;stroke:#552222;}#sd63 .edge-thickness-normal{stroke-width:1px;}#sd63 .edge-thickness-thick{stroke-width:3.5px;}#sd63 .edge-pattern-solid{stroke-dasharray:0;}#sd63 .edge-thickness-invisible{stroke-width:0;fill:none;}#sd63 .edge-pattern-dashed{stroke-dasharray:3;}#sd63 .edge-pattern-dotted{stroke-dasharray:2;}#sd63 .marker{fill:#666;stroke:#666;}#sd63 .marker.cross{stroke:#666;}#sd63 svg{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;font-size:16px;}#sd63 p{margin:0;}#sd63 .label{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;color:#000000;}#sd63 .cluster-label text{fill:#333;}#sd63 .cluster-label span{color:#333;}#sd63 .cluster-label span p{background-color:transparent;}#sd63 .label text,#sd63 span{fill:#000000;color:#000000;}#sd63 .node rect,#sd63 .node circle,#sd63 .node ellipse,#sd63 .node polygon,#sd63 .node path{fill:#eee;stroke:#999;stroke-width:1px;}#sd63 .rough-node .label text,#sd63 .node .label text,#sd63 .image-shape .label,#sd63 .icon-shape .label{text-anchor:middle;}#sd63 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#sd63 .rough-node .label,#sd63 .node .label,#sd63 .image-shape .label,#sd63 .icon-shape .label{text-align:center;}#sd63 .node.clickable{cursor:pointer;}#sd63 .root .anchor path{fill:#666!important;stroke-width:0;stroke:#666;}#sd63 .arrowheadPath{fill:#333333;}#sd63 .edgePath .path{stroke:#666;stroke-width:1px;}#sd63 .flowchart-link{stroke:#666;fill:none;}#sd63 .edgeLabel{background-color:white;text-align:center;}#sd63 .edgeLabel p{background-color:white;}#sd63 .edgeLabel rect{opacity:0.5;background-color:white;fill:white;}#sd63 .labelBkg{background-color:rgba(255, 255, 255, 0.5);}#sd63 .cluster rect{fill:hsl(0, 0%, 98.9215686275%);stroke:#707070;stroke-width:1px;}#sd63 .cluster text{fill:#333;}#sd63 .cluster span{color:#333;}#sd63 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;font-size:12px;background:hsl(-160, 0%, 93.3333333333%);border:1px solid #707070;border-radius:2px;pointer-events:none;z-index:100;}#sd63 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#000000;}#sd63 rect.text{fill:none;stroke-width:0;}#sd63 .icon-shape,#sd63 .image-shape{background-color:white;text-align:center;}#sd63 .icon-shape p,#sd63 .image-shape p{background-color:white;padding:2px;}#sd63 .icon-shape .label rect,#sd63 .image-shape .label rect{opacity:0.5;background-color:white;fill:white;}#sd63 .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#sd63 .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#sd63 .node .neo-node{stroke:#999;}#sd63 [data-look="neo"].node rect,#sd63 [data-look="neo"].cluster rect,#sd63 [data-look="neo"].node polygon{stroke:url(#sd63-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#sd63 [data-look="neo"].swimlane.cluster rect{filter:none;}#sd63 [data-look="neo"].node path{stroke:url(#sd63-gradient);stroke-width:1px;}#sd63 [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#sd63 [data-look="neo"].node .neo-line path{stroke:#999;filter:none;}#sd63 [data-look="neo"].node circle{stroke:url(#sd63-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#sd63 [data-look="neo"].node circle .state-start{fill:#000000;}#sd63 [data-look="neo"].icon-shape .icon{fill:url(#sd63-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#sd63 [data-look="neo"].icon-shape .icon-neo path{stroke:url(#sd63-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#sd63 :root{--mermaid-font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;}</style><g><marker id="sd63_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="sd63_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="sd63_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></path></marker><marker id="sd63_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></polygon></marker><marker id="sd63_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="sd63_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="sd63_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="sd63_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="sd63_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="sd63_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="sd63_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"></path></marker><marker id="sd63_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M2110,347L2105.833,347C2101.667,347,2093.333,347,2085.667,347C2078,347,2071,347,2067.5,347L2064,347" id="sd63-L_A_B_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_A_B_0" data-points="W3sieCI6MjExMCwieSI6MzQ3fSx7IngiOjIwODUsInkiOjM0N30seyJ4IjoyMDYwLCJ5IjozNDd9XQ==" data-look="classic" marker-end="url(#sd63_flowchart-v2-pointEnd)"></path><path d="M1800,195L1795.833,195C1791.667,195,1783.333,195,1771.267,198.873C1759.202,202.746,1743.403,210.493,1735.504,214.366L1727.605,218.239" id="sd63-L_U_C_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_U_C_0" data-points="W3sieCI6MTgwMCwieSI6MTk1fSx7IngiOjE3NzUsInkiOjE5NX0seyJ4IjoxNzI0LjAxMzE1Nzg5NDczNjksInkiOjIyMH1d" data-look="classic" marker-end="url(#sd63_flowchart-v2-pointEnd)"></path><path d="M1800,347L1795.833,347C1791.667,347,1783.333,347,1771.267,343.127C1759.202,339.254,1743.403,331.507,1735.504,327.634L1727.605,323.761" id="sd63-L_B_C_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_B_C_0" data-points="W3sieCI6MTgwMCwieSI6MzQ3fSx7IngiOjE3NzUsInkiOjM0N30seyJ4IjoxNzI0LjAxMzE1Nzg5NDczNjksInkiOjMyMn1d" data-look="classic" marker-end="url(#sd63_flowchart-v2-pointEnd)"></path><path d="M1490,271L1485.833,271C1481.667,271,1473.333,271,1465.667,271C1458,271,1451,271,1447.5,271L1444,271" id="sd63-L_C_D_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C_D_0" data-points="W3sieCI6MTQ5MCwieSI6MjcxfSx7IngiOjE0NjUsInkiOjI3MX0seyJ4IjoxNDQwLCJ5IjoyNzF9XQ==" data-look="classic" marker-end="url(#sd63_flowchart-v2-pointEnd)"></path><path d="M1180,271L1175.833,271C1171.667,271,1163.333,271,1155.667,271C1148,271,1141,271,1137.5,271L1134,271" id="sd63-L_D_E_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_D_E_0" data-points="W3sieCI6MTE4MCwieSI6MjcxfSx7IngiOjExNTUsInkiOjI3MX0seyJ4IjoxMTMwLCJ5IjoyNzF9XQ==" data-look="classic" marker-end="url(#sd63_flowchart-v2-pointEnd)"></path><path d="M889.181,209.819L858.151,188.682C827.121,167.546,765.06,125.273,713.864,104.136C662.667,83,622.333,83,602.167,83L582,83" id="sd63-L_E_F_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_E_F_0" data-points="W3sieCI6ODg5LjE4MTAzNDQ4Mjc1ODYsInkiOjIwOS44MTg5NjU1MTcyNDEzN30seyJ4Ijo3MDMsInkiOjgzfSx7IngiOjU3OCwieSI6ODN9XQ==" data-look="classic" marker-end="url(#sd63_flowchart-v2-pointEnd)"></path><path d="M828,271L807.167,271C786.333,271,744.667,271,703.667,271C662.667,271,622.333,271,602.167,271L582,271" id="sd63-L_E_G_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_E_G_0" data-points="W3sieCI6ODI4LCJ5IjoyNzF9LHsieCI6NzAzLCJ5IjoyNzF9LHsieCI6NTc4LCJ5IjoyNzF9XQ==" data-look="classic" marker-end="url(#sd63_flowchart-v2-pointEnd)"></path><path d="M886.796,329.796L856.164,349.33C825.531,368.864,764.265,407.932,713.466,427.466C662.667,447,622.333,447,602.167,447L582,447" id="sd63-L_E_H_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_E_H_0" data-points="W3sieCI6ODg2Ljc5NjQ2MDE3Njk5MTEsInkiOjMyOS43OTY0NjAxNzY5OTExNn0seyJ4Ijo3MDMsInkiOjQ0N30seyJ4Ijo1NzgsInkiOjQ0N31d" data-look="classic" marker-end="url(#sd63_flowchart-v2-pointEnd)"></path><path d="M318,83L313.833,83C309.667,83,301.333,83,293.667,83C286,83,279,83,275.5,83L272,83" id="sd63-L_F_I_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_F_I_0" data-points="W3sieCI6MzE4LCJ5Ijo4M30seyJ4IjoyOTMsInkiOjgzfSx7IngiOjI2OCwieSI6ODN9XQ==" data-look="classic" marker-end="url(#sd63_flowchart-v2-pointEnd)"></path><path d="M318,271L313.833,271C309.667,271,301.333,271,290.091,271C278.849,271,264.698,271,257.622,271L250.547,271" id="sd63-L_G_J_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_G_J_0" data-points="W3sieCI6MzE4LCJ5IjoyNzF9LHsieCI6MjkzLCJ5IjoyNzF9LHsieCI6MjQ2LjU0Njg3NSwieSI6MjcxfV0=" data-look="classic" marker-end="url(#sd63_flowchart-v2-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" data-id="L_A_B_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_U_C_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_B_C_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_C_D_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_D_E_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(703, 83)"><g class="label" data-id="L_E_F_0" transform="translate(-100, -24)"><foreignObject width="200" height="48"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="edgeLabel "><p>أداة ذات عواقب (Consequential tool)</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(703, 271)"><g class="label" data-id="L_E_G_0" transform="translate(-100, -24)"><foreignObject width="200" height="48"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="edgeLabel "><p>رابط أو صورة صادرة (Outbound link or image)</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(703, 447)"><g class="label" data-id="L_E_H_0" transform="translate(-72.2421875, -12)"><foreignObject width="144.484375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "><p>نص فقط (Text only)</p></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_F_I_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_G_J_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default  " id="sd63-flowchart-A-0" data-look="classic" transform="translate(2240, 347)"><rect class="basic label-container" style="" x="-130" y="-51" width="260" height="102"></rect><g class="label" style="" transform="translate(-100, -36)"><rect></rect><foreignObject width="200" height="72"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel "><p>المهاجم يزرع نصًّا في مستند<br/>(Attacker plants text in a document)</p></span></div></foreignObject></g></g><g class="node default  " id="sd63-flowchart-B-1" data-look="classic" transform="translate(1930, 347)"><rect class="basic label-container" style="" x="-130" y="-51" width="260" height="102"></rect><g class="label" style="" transform="translate(-100, -36)"><rect></rect><foreignObject width="200" height="72"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel "><p>فهرسة المستند للاسترجاع<br/>(Document indexed for retrieval)</p></span></div></foreignObject></g></g><g class="node default  " id="sd63-flowchart-U-2" data-look="classic" transform="translate(1930, 195)"><rect class="basic label-container" style="" x="-130" y="-51" width="260" height="102"></rect><g class="label" style="" transform="translate(-100, -36)"><rect></rect><foreignObject width="200" height="72"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel "><p>المستخدم يطرح سؤالًا عاديًا<br/>(User asks a normal question)</p></span></div></foreignObject></g></g><g class="node default  " id="sd63-flowchart-C-3" data-look="classic" transform="translate(1620, 271)"><rect class="basic label-container" style="" x="-130" y="-51" width="260" height="102"></rect><g class="label" style="" transform="translate(-100, -36)"><rect></rect><foreignObject width="200" height="72"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel "><p>المنسّق يبني السياق<br/>(Orchestrator builds context)</p></span></div></foreignObject></g></g><g class="node default  " id="sd63-flowchart-D-7" data-look="classic" transform="translate(1310, 271)"><rect class="basic label-container" style="" x="-130" y="-63" width="260" height="126"></rect><g class="label" style="" transform="translate(-100, -48)"><rect></rect><foreignObject width="200" height="96"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel "><p>النموذج يعامل النص المزروع بوصفه تعليمات<br/>(Model treats planted text as instructions)</p></span></div></foreignObject></g></g><g class="node default  " id="sd63-flowchart-E-9" data-look="classic" transform="translate(979, 271)"><polygon points="151,0 302,-151 151,-302 0,-151" class="label-container" transform="translate(-150.5, 151)"></polygon><g class="label" style="" transform="translate(-100, -36)"><rect></rect><foreignObject width="200" height="72"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel "><p>ما الذي يستطيع النموذج بلوغه<br/>(What can the model reach)</p></span></div></foreignObject></g></g><g class="node default  " id="sd63-flowchart-F-11" data-look="classic" transform="translate(448, 83)"><rect class="basic label-container" style="" x="-130" y="-75" width="260" height="150"></rect><g class="label" style="" transform="translate(-100, -60)"><rect></rect><foreignObject width="200" height="120"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel "><p>الشيفرة تفحص الصلاحية والتطبيق يطلب التأكيد<br/>(Code checks authority and app asks user to confirm)</p></span></div></foreignObject></g></g><g class="node default  " id="sd63-flowchart-G-13" data-look="classic" transform="translate(448, 271)"><rect class="basic label-container" style="" x="-130" y="-63" width="260" height="126"></rect><g class="label" style="" transform="translate(-100, -48)"><rect></rect><foreignObject width="200" height="96"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel "><p>العارض يسمح بالنطاقات المعتمدة فقط<br/>(Renderer allows approved domains only)</p></span></div></foreignObject></g></g><g class="node default  " id="sd63-flowchart-H-15" data-look="classic" transform="translate(448, 447)"><rect class="basic label-container" style="" x="-130" y="-63" width="260" height="126"></rect><g class="label" style="" transform="translate(-100, -48)"><rect></rect><foreignObject width="200" height="96"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel "><p>إجابة متلاعب بها تُعرض مع مصادرها<br/>(Manipulated answer shown with its sources)</p></span></div></foreignObject></g></g><g class="node default  " id="sd63-flowchart-I-17" data-look="classic" transform="translate(138, 83)"><rect class="basic label-container" style="" x="-130" y="-51" width="260" height="102"></rect><g class="label" style="" transform="translate(-100, -36)"><rect></rect><foreignObject width="200" height="72"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel "><p>محجوب، أو يؤكده إنسان<br/>(Blocked, or confirmed by a human)</p></span></div></foreignObject></g></g><g class="node default  " id="sd63-flowchart-J-19" data-look="classic" transform="translate(138, 271)"><rect class="basic label-container" style="" x="-108.546875" y="-39" width="217.09375" height="78"></rect><g class="label" style="" transform="translate(-78.546875, -24)"><rect></rect><foreignObject width="157.09375" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel "><p>حجب تهريب البيانات<br/>(Exfiltration blocked)</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="sd63-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"></feDropShadow></filter></defs><defs><filter id="sd63-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"></feDropShadow></filter></defs><linearGradient id="sd63-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="hsl(0, 0%, 83.3333333333%)" stop-opacity="1"></stop><stop offset="100%" stop-color="hsl(0, 0%, 88.9215686275%)" stop-opacity="1"></stop></linearGradient></svg></div><p><strong>الدفاع على طبقات.</strong></p>
 <div class="table-scroll"><table>
 <thead>
@@ -10798,7 +10798,7 @@ weights = load_file(&quot;model.safetensors&quot;)   # tensors only, no code exe
 </tr>
 <tr>
 <td>الاستنتاج والخصوصية</td>
-<td><strong>التقليل</strong> (<a class="xref" href="#l5-3">5.3</a>). <strong>إزالة التكرار</strong>: وجد Kandpal وزملاؤه <bdi>(2022)</bdi> أن التسلسلات المكرّرة أرجح بكثير أن يُعاد توليدها. <strong>الحدّ من فرط التخصيص</strong>، الذي يستغلّه استنتاج العضوية. <strong>الخصوصية التفاضلية <bdi>(Differential privacy)</bdi></strong>، مثل DP-SGD، تحدّ رياضيًا من تأثير أيّ سجلٍّ منفرد، مقابل شيءٍ من الصحة الإجمالية <bdi>(accuracy)</bdi>. <strong>اختبار الكناري</strong>: ازرع سجلاتٍ مزيفة فريدة وافحص ما إذا كان النموذج يعيد إنتاجها. <strong>ترشيح المخرجات</strong> في النهاية (<a class="xref" href="#l9-1">9.1</a>)</td>
+<td><strong>التقليل</strong> (<a class="xref" href="#l5-3">5.3</a>). <strong>إزالة التكرار</strong>: وجد Kandpal وزملاؤه <bdi>(2022)</bdi> أن التسلسلات المكرّرة أرجح بكثير أن يُعاد توليدها. <strong>الحدّ من فرط التخصيص</strong>، الذي يستغلّه استنتاج العضوية. <strong>الخصوصية التفاضلية <bdi>(Differential privacy)</bdi></strong>، مثل DP-SGD ‏(Abadi وزملاؤه، 2016)، تحدّ رياضيًا من تأثير أيّ سجلٍّ منفرد، مقابل شيءٍ من الصحة الإجمالية <bdi>(accuracy)</bdi>. <strong>اختبار الكناري</strong>: ازرع سجلاتٍ مزيفة فريدة وافحص ما إذا كان النموذج يعيد إنتاجها (Carlini وزملاؤه، 2019). <strong>ترشيح المخرجات</strong> في النهاية (<a class="xref" href="#l9-1">9.1</a>)</td>
 </tr>
 </tbody></table></div>
 <h3>🔴 نظرة الخبير</h3>
@@ -12074,7 +12074,7 @@ hits = index.query(
 
 <p><strong>4. ما أكثر الطرق موثوقيةً لاختبار أن المساعد يحترم صلاحيات المستندات؟</strong></p>
 <ul>
-<li>A. اختباراتٌ حتمية للمُسترجِع ضمن التكامل المستمر: لكل شخصية، أكّد أن المقاطع المحظورة لا تُعاد أبدًا، مع كناري شاملة</li>
+<li>A. اختباراتٌ حتمية للمُسترجِع ضمن التكامل المستمر: لكل شخصية، أكّد أن المقاطع المحظورة لا تُعاد أبدًا، مع كناري من البداية إلى النهاية</li>
 <li>B. اجعل المختبِرين يقرؤون عيّنةً من الإجابات كل أسبوع ويبلّغون عن أي إجابةٍ تبدو حساسة أو غير مناسبة للمستخدم</li>
 <li>C. اسأل النموذج هل يحترم الصلاحيات، وسجّل إجابته دليلًا على أنه يلتزم بحدود المستندات</li>
 <li>D. تحقّق من أن موجّه النظام يذكر الصلاحيات صراحةً، وأن كل نسخةٍ جديدة منه تتضمن القواعد نفسها حرفيًا</li>
@@ -12837,7 +12837,7 @@ level: high
 <ul>
 <li>A. الموافقة، لأن النص الكامل هو أفضل دليل، ولا يمكن إعادة بناء ما حدث في الحادثة من البيانات الوصفية وحدها</li>
 <li>B. رفض تسجيل المحادثات كليًا، حمايةً للخصوصية، والاعتماد على سجلات الخادم العادية لتوقيت كل طلب</li>
-<li>C. إرسال بياناتٍ وصفية مُهيكَلة (إصدار الموجّه والمستندات واستدعاءات الأدوات) إلى SIEM، وحفظ النص الكامل مُقنَّعًا في مخزنٍ مقيَّد</li>
+<li>C. إرسال بياناتٍ وصفية مُهيكَلة (إصدار الموجّه والمستندات واستدعاءات الأدوات) إلى SIEM، وحفظ النص الكامل مُقنَّعًا في مخزنٍ مقيَّد مُسجَّل الوصول</li>
 <li>D. تسجيل النص الكامل، ولكن في حاوية التصحيح لدى فريق التطبيق فقط، من دون إرساله إلى منصة SIEM ومن دون حد زمني</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -13222,7 +13222,7 @@ def retrieve(query, session):
 
 <p><strong>2. في الساعة 09:00 يوم الاثنين، تؤكد سارة أن بياناتٍ شخصية لعملاء نجم، بمن فيهم مقيمون في الاتحاد الأوروبي، قد كُشفت. ولم تُعرف كل الوقائع بعد. ما الذي ينطبق بموجب اللائحة العامة لحماية البيانات؟</strong></p>
 <ul>
-<li>A. الإخطار فقط بعد اكتمال التحقيق، مهما طال، كي يكون الإخطار دقيقًا ولا يلزم إبلاغ السلطة مرةً ثانية بعد التصحيحات</li>
+<li>A. الإخطار فقط بعد اكتمال التحقيق، مهما طال، كي يكون الإخطار دقيقًا ولا يلزم إبلاغ السلطة مرةً ثانية بعد إجراء التصحيحات</li>
 <li>B. إخطار السلطة الرقابية دون تأخيرٍ لا مبرّر له، وخلال 72 ساعة من العلم حيثما أمكن؛ ويجوز تقديم المعلومات على مراحل</li>
 <li>C. لا شيء، لأن المقر الرئيسي لنجم ليس في الاتحاد الأوروبي، فلا تشمل اللائحة عملاءه المقيمين فيه</li>
 <li>D. الإخطار فقط إذا كُشفت أرقام البطاقات الكاملة، أما بقية البيانات الشخصية فلا تستدعي إبلاغ أي جهة رقابية</li>
@@ -13260,7 +13260,7 @@ def retrieve(query, session):
 <ul>
 <li>A. «كان على علي أن يكون أكثر حرصًا مع حساب المحتوى، وعليه أن يُراجع كل إجراءٍ يقوم به قبل تنفيذه من الآن فصاعدًا.»</li>
 <li>B. «كان مهاجمٌ متطوّر هو المسؤول عن الحادثة؛ ولا حاجة إلى أي إجراء، فمثل هذا الهجوم لا يمكن لأحد منعه.»</li>
-<li>C. «العوامل المساهمة: لا مصادقة متعددة العوامل، ولا مراجعة للمحتوى، ومفتاحٌ غير موثّق. الإجراءات: المصادقة بحلول 15 أكتوبر (طارق)؛ وتمرين المفتاح بحلول 30 أكتوبر (جاسم).»</li>
+<li>C. «العوامل المساهمة: لا MFA ولا مراجعة للمحتوى، ومفتاحٌ غير موثّق. الإجراءات: MFA بحلول 15 أكتوبر (طارق)؛ وتمرين المفتاح بحلول 30 أكتوبر (جاسم).»</li>
 <li>D. «ينبغي إطفاء نجم أسيست نهائيًا وعدم إعادة تشغيله، بعد أن وقعت حادثةٌ لم يتوقعها أحد.»</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -13562,10 +13562,10 @@ Canonical: https://najmbank.example/.well-known/security.txt
 
 <p><strong>2. تكتب باحثةٌ في رسالة بريد أنها استطاعت رؤية فواتير شركةٍ أخرى في بوابة الشركات الصغيرة بتغيير معرّفٍ في طلبٍ من حسابها الخاص. ما أفضل ردٍّ أول؟</strong></p>
 <ul>
-<li>A. تجاهلها، لأنها لم تكن مخوّلةً بالاختبار، والردّ قد يبدو إذنًا لها بالمتابعة</li>
-<li>B. حذّرها من أن البنك قد يتخذ إجراءً قانونيًا، كي تتوقف عن الاختبار وتحذف ما وجدته</li>
+<li>A. تجاهلها، لأنها لم تكن مخوّلةً بالاختبار أصلًا، والردّ عليها قد يبدو إذنًا لها بالمتابعة</li>
+<li>B. حذّرها من أن البنك قد يتخذ ضدها إجراءً قانونيًا، كي تتوقف عن الاختبار وتحذف كل ما وجدته</li>
 <li>C. أقِرّ بالاستلام سريعًا واشكرها، واطلب التفاصيل وهل احتفظت ببيانات، وافرزها خللًا مرجّحًا في التحكم في الوصول</li>
-<li>D. لا تردّ إلا بعد نشر الإصلاح، كي لا تستغل تفاصيل ردّ البنك ضده</li>
+<li>D. لا تردّ عليها إلا بعد نشر الإصلاح، كي لا تستغل تفاصيل ردّ البنك ضده</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -13588,7 +13588,7 @@ Canonical: https://najmbank.example/.well-known/security.txt
 <ul>
 <li>A. الإطلاق العلني للحصول على أكبر عددٍ من النتائج، فكثرة الباحثين تكشف العيوب أسرع</li>
 <li>B. عدم تشغيل برنامج مكافآت ثغراتٍ في مصرفٍ أبدًا، لأن دعوة مختبرين من الخارج تخالف القواعد المصرفية</li>
-<li>C. إصلاح الأساسيات أولًا، أي سياسة الإفصاح وتغطية الفحص والمواعيد، ثم برنامج مكافآتٍ خاص بنطاقٍ ضيق</li>
+<li>C. إصلاح الأساسيات أولًا، أي سياسة الإفصاح وتغطية الفحص والمواعيد النهائية، ثم برنامج مكافآتٍ خاص بنطاقٍ ضيق</li>
 <li>D. تشغيل البرنامج دون دفع مكافآت، كي لا تكلّف النتائج المتأخرة القديمة شيئًا إضافيًا</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -13699,12 +13699,12 @@ Canonical: https://najmbank.example/.well-known/security.txt
 <p>وتنقسم كل وظيفة إلى <strong>فئات</strong>، عددها 22 فئة إجمالًا، مثل PR.AA، أي «إدارة الهوية والمصادقة والتحكم في الوصول»؛ وتنقسم كل فئة إلى <strong>فئات فرعية</strong>، وهي عبارات نتائج. فمثلًا، تنص PR.PS-06 على أن ممارسات تطوير البرمجيات الآمن مدمجة وأن أداءها مراقَب طوال دورة الحياة. ويحدد الإطار <em>ما</em> ينبغي تحقيقه، لا <em>كيف</em>. كما وسّع الإصدار 2.0 جمهوره من البنية التحتية الحيوية إلى جميع المؤسسات.</p>
 <p>تجعل أداتان الإطارَ مفيدًا. <strong>ملف التعريف</strong> يصف وضعك بمصطلحات الإطار: <strong>ملف التعريف الحالي</strong>، أي أين أنت، و<strong>ملف التعريف المستهدف</strong>، أي أين ينبغي أن تكون. والفجوة بينهما هي خارطة طريقك. أما <strong>المستويات</strong>، وهي 1 جزئي، و2 مستنير بالمخاطر، و3 قابل للتكرار، و4 متكيّف، فتصف مدى صرامة حوكمتك وإدارتك للمخاطر السيبرانية.</p>
 <p><strong>ISO/IEC 27001:2022.</strong> يحدد هذا المعيار <strong>نظام إدارة أمن المعلومات</strong>: السياسات والعمليات والأدوار والسجلات التي تستخدمها المنظمة لإدارة مخاطر الأمن والتحسّن. والبنود من 4 إلى 10 إلزامية: السياق والنطاق، والقيادة، والتخطيط، أي تقييم المخاطر ومعالجتها، والدعم، والتشغيل، وتقييم الأداء، أي المراقبة والتدقيق الداخلي ومراجعة الإدارة، والتحسين. ويسرد <strong>الملحق A</strong> 93 ضابطًا مرجعيًا في أربعة محاور: تنظيمية بعدد 37، وبشرية بعدد 8، ومادية بعدد 14، وتقنية بعدد 34. وعدّة منها تهمّ أمن التطبيقات مباشرة: الضابط 8.25 دورة حياة التطوير الآمن، و8.26 متطلبات أمن التطبيقات، و8.28 البرمجة الآمنة، و8.29 الاختبار الأمني في التطوير والقبول، و8.8 إدارة الثغرات التقنية. وتختار الضوابط عبر معالجة المخاطر، وتبرّر إدراج كلٍّ منها أو استبعاده في <strong>بيان قابلية التطبيق</strong>. والاعتماد تدقيقٌ على مرحلتين، تليه تدقيقات مراقبةٍ سنوية وإعادة اعتمادٍ كل ثلاث سنوات. ويقدّم معيار ISO/IEC 27002 إرشاداتٍ حول تطبيق كل ضابط.</p>
-<p><strong>NIST SSDF.</strong> يجمع إطار تطوير البرمجيات الآمن الممارساتِ في أربع عائلات:</p>
+<p><strong>NIST SSDF ‏<bdi>(SP 800-218)</bdi>.</strong> يجمع إطار تطوير البرمجيات الآمن الممارساتِ في أربع عائلات:</p>
 <ul>
-<li><strong>إعداد المنظمة</strong>: المتطلبات، والأدوار، وسلاسل الأدوات، ومعايير الفحوص الأمنية.</li>
-<li><strong>حماية البرمجيات</strong>: حماية الشيفرة من العبث، وتمكين المستخدمين من التحقق من الإصدارات، وأرشفة كل إصدار.</li>
-<li><strong>إنتاج برمجياتٍ محكمة الأمان</strong>: التصميم الآمن، وإعادة استخدام مكوّناتٍ محكمة الأمان، ومراجعة الشيفرة وتحليلها، واختبار الشيفرة القابلة للتنفيذ، والإعدادات الافتراضية الآمنة.</li>
-<li><strong>الاستجابة للثغرات</strong>: تحديد الثغرات وتأكيدها، وإصلاحها، وتحليل أسبابها الجذرية.</li>
+<li><strong>إعداد المنظمة <bdi>(PO)</bdi></strong>: المتطلبات، والأدوار، وسلاسل الأدوات، ومعايير الفحوص الأمنية <bdi>(PO.4)</bdi>.</li>
+<li><strong>حماية البرمجيات <bdi>(PS)</bdi></strong>: حماية الشيفرة من العبث، وتمكين المستخدمين من التحقق من الإصدارات، وأرشفة كل إصدار.</li>
+<li><strong>إنتاج برمجياتٍ محكمة الأمان <bdi>(PW)</bdi></strong>: التصميم الآمن، وإعادة استخدام مكوّناتٍ محكمة الأمان، ومراجعة الشيفرة وتحليلها <bdi>(PW.7)</bdi>، واختبار الشيفرة القابلة للتنفيذ <bdi>(PW.8)</bdi>، والإعدادات الافتراضية الآمنة.</li>
+<li><strong>الاستجابة للثغرات <bdi>(RV)</bdi></strong>: تحديد الثغرات وتأكيدها <bdi>(RV.1)</bdi>، وإصلاحها <bdi>(RV.2)</bdi>، وتحليل أسبابها الجذرية <bdi>(RV.3)</bdi>.</li>
 </ul>
 <p>وكما هو حال CSF، يصف SSDF النتائجَ لا الأدوات. وتضيف الوثيقة NIST SP 800-218A الصادرة في 2024 ممارساتٍ لتطوير الذكاء الاصطناعي التوليدي والنماذج التأسيسية مزدوجة الاستخدام، مثل حماية بيانات التدريب وأوزان النموذج.</p>
 <p><strong>OWASP SAMM.</strong> لنموذج نضج ضمان البرمجيات خمس <strong>وظائف أعمال</strong>، لكلٍّ منها ثلاث <strong>ممارسات أمنية</strong>:</p>
@@ -14207,7 +14207,7 @@ def due_times(incident_aware_at: datetime,
 <td>سارة، مع نورة</td>
 </tr>
 <tr>
-<td>دقة الذكاء الاصطناعي عالي المخاطر ومتانته وأمنه السيبراني</td>
+<td>الصحة الإجمالية للذكاء الاصطناعي عالي المخاطر ومتانته وأمنه السيبراني</td>
 <td>المادة 15 من قانون الذكاء الاصطناعي</td>
 <td>نموذج تقييم الجدارة الائتمانية المخطط له في الاتحاد الأوروبي</td>
 <td>NAJM-AS-01، 05، إضافةً إلى تتبّع مصدر البيانات</td>
@@ -14336,7 +14336,7 @@ def due_times(incident_aware_at: datetime,
 <p><strong>2. تسأل دانة عمّا يشترطه قانون الذكاء الاصطناعي الأوروبي بشأن الأمن لنموذج تقييم جدارةٍ ائتمانية قد يبنيه بنك نجم للمتقدمين من الاتحاد الأوروبي. أي إجابةٍ هي الأدق؟</strong></p>
 <ul>
 <li>A. مجرد إشعارٍ يبلغ المتقدمين بأن الذكاء الاصطناعي مستخدَم في قرار ائتمانهم</li>
-<li>B. المادة 15: الدقة والمتانة والأمن السيبراني، بما في ذلك المرونة أمام التسميم والأمثلة العدائية</li>
+<li>B. المادة 15: الصحة الإجمالية والمتانة والأمن السيبراني، بما في ذلك المرونة أمام التسميم والأمثلة العدائية</li>
 <li>C. شهادة ISO/IEC 27001 لمنصة علم البيانات التي تدرّب النموذج وتستضيفه</li>
 <li>D. لا شيء، لأن القانون لا ينظّم إلا النماذج ذات الأغراض العامة، لا نماذج البنوك</li>
 </ul>
@@ -14869,7 +14869,7 @@ def freeze_card(args, session):
 <p><strong>اختباراتٌ يمكن أن تفشل، بعتباتٍ صادقة.</strong> يتحوّل كل ضابطٍ إلى فحص: اختبارات معرّفات العملاء المتقاطعة في كل بناء، ويجب أن يُرفض 100% منها؛ وفحص المسار، أي اختبارٌ على تسلسل استدعاءات الأدوات الكامل للوكيل، يتحقق من أنه لا تُنفَّذ أي عملية كتابةٍ دون إجراءٍ معلّق مؤكَّد، بلا أي استثناء؛ ومخرجاتٌ مزروعة بـ HTML وصور markdown وروابط خارج النطاق، فلا يُعرض شيءٌ منها؛ ومراجع التحويلات المحقونة التي أعدّتها مريم. لا يستطيع البنك أن يعد بأن النص المحقون لن يضلّل النموذج أبدًا، ولذا يُتتبَّع ذلك المعدل دون اشتراط أن يكون صفرًا. لكنه يستطيع أن يعد، وأن يختبر، بأن تضليل النموذج لا يمكن أبدًا أن يحرّك أموالًا أو يغيّر حالة الحساب من تلقاء نفسه.</p>
 <p><strong>ارصد ما تراه الضوابط.</strong> كما يُصدر كل ضابطٍ حتمي إشارةً: الارتفاعات الحادة في <code>PermissionDenied</code>، والتأكيدات المرفوضة، وحالات الحجب في معالج المخرجات. وتحمل السجلات المحادثةَ، والعميلَ بهويةٍ مستعارة، والأداةَ <bdi>(tool)</bdi>، والقرارَ، وإصدارَي النموذج والموجّه، ولا تحمل أبدًا أرقام البطاقات الخام (<a class="xref" href="#l5-3">5.3</a>).</p>
 <h3>🔴 نظرة الخبير</h3>
-<p><strong>تمرين الحوادث.</strong> <strong>تمرين الطاولة <bdi>(tabletop exercise)</bdi></strong>، الموصوف في NIST SP 800-84، تمرينٌ قائمٌ على النقاش: يعمل الفريق على سيناريو يُقدَّم في <strong>مستجدّاتٍ</strong> موقوتة، أي معلوماتٍ جديدة، ويقول ما كان سيفعله دون المساس ببيئة الإنتاج. ويضيف جاسم إجراءً حيًّا واحدًا: تفعيل مفتاح الإيقاف الطارئ لأداة الاعتراضات في بيئة التجهيز <bdi>(staging)</bdi>، مع قياس الوقت. وهو يبني السيناريو من نتيجةٍ للفريق الأحمر قبلها حمد بوصفها مخاطر متبقية، فيسبر التمرين المواضع التي يعترف فيها ملف الحجة بالضعف.</p>
+<p><strong>تمرين الحوادث.</strong> <strong>تمرين المحاكاة النظرية <bdi>(tabletop exercise)</bdi></strong>، الموصوف في NIST SP 800-84، تمرينٌ قائمٌ على النقاش: يعمل الفريق على سيناريو يُقدَّم في <strong>مستجدّاتٍ</strong> موقوتة، أي معلوماتٍ جديدة، ويقول ما كان سيفعله دون المساس ببيئة الإنتاج. ويضيف جاسم إجراءً حيًّا واحدًا: تفعيل مفتاح الإيقاف الطارئ لأداة الاعتراضات في بيئة التجهيز <bdi>(staging)</bdi>، مع قياس الوقت. وهو يبني السيناريو من نتيجةٍ للفريق الأحمر قبلها حمد بوصفها مخاطر متبقية، فيسبر التمرين المواضع التي يعترف فيها ملف الحجة بالضعف.</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -14966,7 +14966,7 @@ def freeze_card(args, session):
 <td>مراجعة أي أداةٍ أو مصدر بياناتٍ جديد للوكيل</td>
 </tr>
 <tr>
-<td><strong>Tabletop exercise</strong> <bdi>(NIST SP 800-84)</bdi> — تمرين الطاولة</td>
+<td><strong>Tabletop exercise</strong> <bdi>(NIST SP 800-84)</bdi> — تمرين المحاكاة النظرية</td>
 <td>تمرين حوادث قائمٌ على النقاش مع مستجدّاتٍ موقوتة</td>
 <td>قبل الإطلاق، ثم سنويًا وبعد أي تغييرٍ كبير</td>
 </tr>
@@ -15199,7 +15199,7 @@ def freeze_card(args, session):
 <ul>
 <li>A. أوقف تطبيق نجم للهاتف بالكامل حتى يُعرف السبب ويأمن كل العملاء</li>
 <li>B. عدّل موجّه النظام في بيئة الإنتاج لتطلب من النموذج تجاهل مراجع التحويلات</li>
-<li>C. أوقف أداتَي السجل والاعتراضات بالعلَم، وأبقِ إجابات الرسوم، وتصرّف مع الحساب المرسِل، واحفظ السجلات</li>
+<li>C. أوقف أداتَي السجل والاعتراضات بالعلَم، وأبقِ إجابات الرسوم، وعالج المرسِل، واحفظ السجلات</li>
 <li>D. احذف المحادثات المتأثرة كي لا يرى العملاء الرقم المزيّف مجددًا</li>
 </ul>
 <details><summary>الإجابة</summary>
@@ -16084,7 +16084,7 @@ def get_invoice(invoice_id):
 </ul>
 <details><summary>الإجابة</summary>
 
-<p><strong>A.</strong> هذه هي الصلاحيات المفرطة <bdi>(excessive agency)</bdi>، أي البند LLM06 في OWASP Top 10 for LLM Applications، إصدار 2025: وظائف أكثر من اللازم، وأذوناتٌ أكثر من اللازم، واستقلاليةٌ أكثر من اللازم. والإصلاح معماري: أداةٌ لا تفعل إلا ما يلزم، وتعمل بصلاحيات العميل الذي سجّل الدخول بدل حساب مسؤول، وتطلب من العميل تأكيد الأفعال ذات العواقب. والخيار B مغرٍ، لكن الموجّه تعليمةٌ لنموذجٍ يمكن التلاعب به، لا ضابطٌ أمني؛ وما زال حساب الخدمة قادرًا على إغلاق أي بطاقة. ويساعد C قليلًا، لكن لا يوجد مرشّحٌ كامل. <em><bdi>(Design · 9.2)</bdi></em></p>
+<p><strong>A.</strong> هذه هي الصلاحيات المفرطة <bdi>(excessive agency)</bdi>، أي البند LLM06 في OWASP Top 10 for LLM Applications، 2025: وظائف أكثر من اللازم، وأذوناتٌ أكثر من اللازم، واستقلاليةٌ أكثر من اللازم. والإصلاح معماري: أداةٌ لا تفعل إلا ما يلزم، وتعمل بصلاحيات العميل الذي سجّل الدخول بدل حساب مسؤول، وتطلب من العميل تأكيد الأفعال ذات العواقب. والخيار B مغرٍ، لكن الموجّه تعليمةٌ لنموذجٍ يمكن التلاعب به، لا ضابطٌ أمني؛ وما زال حساب الخدمة قادرًا على إغلاق أي بطاقة. ويساعد C قليلًا، لكن لا يوجد مرشّحٌ كامل. <em><bdi>(Design · 9.2)</bdi></em></p>
 </details>
 
 <p><strong>14. تبني شركةٌ استشارية مساعدًا للبريد الإلكتروني يستطيع قراءة صندوق بريد المستخدم كله، ويعالج كل رسالةٍ واردة من أي شخص، ويستطيع إرسال الرسائل وجلب صفحات الويب. أيّ تغييرٍ يقلّل بأكبر قدرٍ من المباشرة خطرَ سرقة البيانات عبر حقن الموجّهات؟</strong></p>
@@ -16205,7 +16205,7 @@ def get_invoice(invoice_id):
 </ul>
 <details><summary>الإجابة</summary>
 
-<p><strong>D.</strong> تخترع أدوات البرمجة بالذكاء الاصطناعي أحيانًا أسماء حزم، وقد وجد بحثٌ أجراه Spracklen وزملاؤه <bdi>(research, Spracklen et al., 2024)</bdi> أن كثيرًا من الأسماء المخترعة تتكرّر، فيستطيع المهاجم تسجيل أحدها بشيفرةٍ خبيثة ثم الانتظار، وهي ممارسةٌ تُعرف منذ 2025 باسم «انتحال الأسماء المُهلوَسة». ونجاح الاختبارات لا يُظهر إلا أن حزمةً بهذا الاسم موجودة الآن. فيتأكد المراجع من أنها المشروع الحقيقي الراسخ الذي تتوقعه الشيفرة، مع مشرفٍ موثوق وتاريخٍ معروف، وأنها جاءت عبر الخادم الوسيط للسجل الخاص بالفريق وبوابة الاعتماديات الجديدة. والخيار A مغرٍ لأن نجاح الاختبارات يبدو دليلًا، لكن الحزمة الخبيثة قد تعمل كما هو معلن بينما تُحدث ضررًا وقت التثبيت أو التشغيل. ويطلب B من الأداة التي اتخذت الاختيار أن تشهد له، ويثبّت C كل ما نُشر أيًّا كان. <em><bdi>(Build · 6.3)</bdi></em></p>
+<p><strong>D.</strong> تخترع أدوات البرمجة بالذكاء الاصطناعي أحيانًا أسماء حزم، وقد وجد بحثٌ <bdi>(Spracklen et al., 2024)</bdi> أن كثيرًا من الأسماء المخترعة تتكرّر، فيستطيع المهاجم تسجيل أحدها بشيفرةٍ خبيثة ثم الانتظار، وهي ممارسةٌ تُعرف منذ 2025 باسم «انتحال الأسماء المُهلوَسة». ونجاح الاختبارات لا يُظهر إلا أن حزمةً بهذا الاسم موجودة الآن. فيتأكد المراجع من أنها المشروع الحقيقي الراسخ الذي تتوقعه الشيفرة، مع مشرفٍ موثوق وتاريخٍ معروف، وأنها جاءت عبر الخادم الوسيط للسجل الخاص بالفريق وبوابة الاعتماديات الجديدة. والخيار A مغرٍ لأن نجاح الاختبارات يبدو دليلًا، لكن الحزمة الخبيثة قد تعمل كما هو معلن بينما تُحدث ضررًا وقت التثبيت أو التشغيل. ويطلب B من الأداة التي اتخذت الاختيار أن تشهد له، ويثبّت C كل ما نُشر أيًّا كان. <em><bdi>(Build · 6.3)</bdi></em></p>
 </details>
 
 <p><strong>24. تُظهر مريم أن مستندًا يستطيع أن يجعل نجم أسيست ينهي ردّه بصورةٍ بصيغة markdown يحتوي عنوانها على جزءٍ من المحادثة. وحين يعرض التطبيق الرد، يجلب الهاتف ذلك العنوان من خادمٍ خارجي. ما الإصلاح الأكثر فاعلية؟</strong></p>
@@ -16217,7 +16217,7 @@ def get_invoice(invoice_id):
 </ul>
 <details><summary>الإجابة</summary>
 
-<p><strong>C.</strong> هذه هي المعالجة غير السليمة للمخرجات، أي البند LLM05 في OWASP Top 10 for LLM Applications، إصدار 2025: إذ تذهب مخرجات النموذج إلى أداة عرضٍ تتخذ فعلًا، وهو هنا طلبٌ شبكي يحمل البيانات إلى الخارج. فعامل مخرجات النموذج مثل أي مُدخلٍ غير موثوق: رمّزها بحسب سياقها، ولا تسمح بالصور والروابط إلا من نطاقاتٍ تتحكم فيها، واحجب الجلب التلقائي. والخيار A مغرٍ، لكن التعليمة المحقونة تستطيع أن تتغلب على موجّه النظام؛ فيجب أن تفرض أداة العرض القاعدة. ويقلّل D ما يتسرّب دون أن يغلق القناة، ولا أثر أمنيًا لـ B على الإطلاق. <em><bdi>(Build · 9.1)</bdi></em></p>
+<p><strong>C.</strong> هذه هي المعالجة غير السليمة للمخرجات، أي البند LLM05 في OWASP Top 10 for LLM Applications، 2025: إذ تذهب مخرجات النموذج إلى أداة عرضٍ تتخذ فعلًا، وهو هنا طلبٌ شبكي يحمل البيانات إلى الخارج. فعامل مخرجات النموذج مثل أي مُدخلٍ غير موثوق: رمّزها بحسب سياقها، ولا تسمح بالصور والروابط إلا من نطاقاتٍ تتحكم فيها، واحجب الجلب التلقائي. والخيار A مغرٍ، لكن التعليمة المحقونة تستطيع أن تتغلب على موجّه النظام؛ فيجب أن تفرض أداة العرض القاعدة. ويقلّل D ما يتسرّب دون أن يغلق القناة، ولا أثر أمنيًا لـ B على الإطلاق. <em><bdi>(Build · 9.1)</bdi></em></p>
 </details>
 
 <h3>الاختبار</h3>
@@ -16320,7 +16320,7 @@ def get_invoice(invoice_id):
 <h3>النشر</h3>
 <p><strong>33. ستخزّن بوابة الشركات الصغيرة الفواتير الممسوحة ضوئيًا في مخزن الكائنات. ويقترح علي مفتاح AES واحدًا، محفوظًا في ملف إعدادات التطبيق، لتشفير كل الكائنات. ماذا ينبغي أن يستخدم النشر بدلًا من ذلك؟</strong></p>
 <ul>
-<li>A. التشفير المغلَّف: مفاتيح بياناتٍ لكل كائن، مغلّفة بمفتاح تشفير مفاتيح محفوظٍ في خدمة إدارة المفاتيح</li>
+<li>A. التشفير المغلَّف: مفتاح بياناتٍ لكل كائن، يغلّفه مفتاح تشفير مفاتيح في KMS</li>
 <li>B. مفتاح AES الواحد نفسه، لكن بعد نقله من الملف إلى متغيّر بيئة</li>
 <li>C. مخطط تشفيرٍ مخصّص مصمَّم داخليًا، كي لا يستطيع المهاجمون معرفة الخوارزمية</li>
 <li>D. عدم التشفير على مستوى التطبيق، لأن المزوّد يشفّر مخزن الكائنات افتراضيًا</li>
@@ -16371,7 +16371,7 @@ def get_invoice(invoice_id):
 <li>A. نقل مستوى التحكم في العنقود إلى شبكةٍ خاصة، وإبقاء أعباء العمل كما هي</li>
 <li>B. ترقية العنقود إلى أحدث إصدارٍ من Kubernetes، وتفعيل الترقيات التلقائية للعُقد</li>
 <li>C. إضافة جدار حماية تطبيقات الويب أمام متحكّم الدخول لتصفية الطلبات السيئة</li>
-<li>D. تطبيق معيار أمن وحدات التشغيل المقيَّد، وسياسات شبكةٍ ترفض افتراضيًا، وتحكمٍ محكَم في الوصول القائم على الأدوار</li>
+<li>D. تطبيق معيار أمن وحدات التشغيل المقيَّد، وسياسات شبكةٍ ترفض افتراضيًا، وRBAC محكَم</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -16381,7 +16381,7 @@ def get_invoice(invoice_id):
 <p><strong>38. جعل تغييرٌ في Terraform إحدى حاويات تخزين الكائنات التي تحتوي على فواتير الشركات الصغيرة عامّة. ولاحظ ذلك باحثٌ بعد أسابيع. أيّ ضابطٍ كان سيمنعه بأكبر قدرٍ من الموثوقية من بلوغ الإنتاج؟</strong></p>
 <ul>
 <li>A. مراجعةٌ يدوية شهرية لإعدادات الحاويات في وحدة التحكم السحابية</li>
-<li>B. فحوص سياساتٍ على البنية التحتية بوصفها شيفرة في طلبات السحب، مع حظرٍ على مستوى الحساب للحاويات العامة</li>
+<li>B. فحص سياسات IaC في طلبات السحب، مع حظرٍ للحاويات العامة على مستوى الحساب</li>
 <li>C. قاعدةٌ في دليل الهندسة تنص على ألا تُجعل الحاويات عامة أبدًا</li>
 <li>D. وسمٌ على كل حاوية يسجّل تصنيف بياناتها لعمليات التدقيق اللاحقة</li>
 </ul>
@@ -16611,10 +16611,10 @@ def get_invoice(invoice_id):
 
 <p><strong>57. يخبر عميلٌ مؤسسي كبير بنكَ نجم بأن على نجم، كي يحتفظ بأعماله معها، أن تُثبت امتلاكها نظامًا لإدارة أمن المعلومات معتمَدًا من جهةٍ مستقلة. أيّ معيارٍ يناسب ذلك؟</strong></p>
 <ul>
-<li>A. ISO/IEC 27001، الذي يحدّد نظامًا لإدارة أمن المعلومات تستطيع الجهات المعتمَدة منح شهادته</li>
+<li>A. ISO/IEC 27001، الذي يحدّد نظام ISMS تمنح شهادته جهاتٌ معتمَدة</li>
 <li>B. NIST CSF 2.0، الذي ينظّم النتائج الأمنية ضمن وظائف</li>
 <li>C. OWASP SAMM، الذي يقيس نضج برنامج أمن البرمجيات</li>
-<li>D. NIST SP 800-218، الذي يسرد ممارسات التطوير الآمن</li>
+<li>D. NIST SP 800-218 ‏<bdi>(SSDF)</bdi>، الذي يسرد ممارسات التطوير الآمن</li>
 </ul>
 <details><summary>الإجابة</summary>
 
@@ -16905,7 +16905,7 @@ def get_invoice(invoice_id):
 <tr data-q="**nist ssdf** — وثيقة sp 800-218 ممارساتٌ للتطوير الآمن قائمةٌ على النتائج في أربع مجموعات تصميم دورة حياة التطوير لديك أو تدقيقها؛ وربط الأدلة بمتطلبات الجهات التنظيمية"><td><strong>NIST SSDF</strong> — وثيقة SP 800-218</td><td>ممارساتٌ للتطوير الآمن قائمةٌ على النتائج في أربع مجموعات</td><td>تصميم دورة حياة التطوير لديك أو تدقيقها؛ وربط الأدلة بمتطلبات الجهات التنظيمية</td></tr>
 <tr data-q="**owasp asvs** — معيار التحقق من أمن التطبيقات فهرسٌ لمتطلباتٍ أمنية قابلةٍ للاختبار على ثلاثة مستويات كتابة معايير القبول الأمنية وخطط الاختبار"><td><strong>OWASP ASVS</strong> — معيار التحقق من أمن التطبيقات</td><td>فهرسٌ لمتطلباتٍ أمنية قابلةٍ للاختبار على ثلاثة مستويات</td><td>كتابة معايير القبول الأمنية وخطط الاختبار</td></tr>
 <tr data-q="**semgrep** — أداة تحليلٍ ساكن sast قائمٌ على الأنماط (pattern-based sast) بمحرّكٍ مفتوح المصدر وقواعد مخصّصة بسيطة كل طلب سحب؛ وتحويل الحوادث إلى قواعد"><td><strong>Semgrep</strong> — أداة تحليلٍ ساكن</td><td>SAST قائمٌ على الأنماط <bdi>(Pattern-based SAST)</bdi> بمحرّكٍ مفتوح المصدر وقواعد مخصّصة بسيطة</td><td>كل طلب سحب؛ وتحويل الحوادث إلى قواعد</td></tr>
-<tr data-q="**zap** — ماسحٌ ديناميكي مفتوح المصدر خادمٌ وسيط وماسحٌ مفتوح المصدر لـ dast لتطبيقات الويب وواجهات البرمجة فحوص خط الأساس على كل نشرٍ في بيئة الاختبار؛ والفحوص النشطة المجدولة"><td><strong>ZAP</strong> — ماسحٌ ديناميكي مفتوح المصدر</td><td>خادمٌ وسيط وماسحٌ مفتوح المصدر لـ DAST لتطبيقات الويب وواجهات البرمجة</td><td>فحوص خط الأساس على كل نشرٍ في بيئة الاختبار؛ والفحوص النشطة المجدولة</td></tr>
+<tr data-q="**zap** خادمٌ وسيط وماسحٌ مفتوح المصدر لـ dast لتطبيقات الويب وواجهات البرمجة فحوص خط الأساس على كل نشرٍ في بيئة الاختبار؛ والفحوص النشطة المجدولة"><td><strong>ZAP</strong></td><td>خادمٌ وسيط وماسحٌ مفتوح المصدر لـ DAST لتطبيقات الويب وواجهات البرمجة</td><td>فحوص خط الأساس على كل نشرٍ في بيئة الاختبار؛ والفحوص النشطة المجدولة</td></tr>
 <tr data-q="**sca** — مثل osv-scanner وdependabot وowasp dependency-check يجد إصدارات الاعتماديات المعروفة بثغراتها، بما فيها المتعدّية كل عملية بناء، إضافةً إلى التنبيهات عند ظهور تنبيهاتٍ أمنية جديدة"><td><strong>SCA</strong> — مثل OSV-Scanner وDependabot وOWASP Dependency-Check</td><td>يجد إصدارات الاعتماديات المعروفة بثغراتها، بما فيها المتعدّية</td><td>كل عملية بناء، إضافةً إلى التنبيهات عند ظهور تنبيهاتٍ أمنية جديدة</td></tr>
 <tr data-q="**secret scanning** — فحص الأسرار، مثل gitleaks وحماية الرفع (push protection) في المنصّات يكتشف بيانات الاعتماد في الشيفرة وسجلّها، ويُفضَّل أن يكون ذلك قبل رفعها قبل الإيداع وفي كل طلب سحب"><td><strong>Secret scanning</strong> — فحص الأسرار، مثل gitleaks وحماية الرفع <bdi>(push protection)</bdi> في المنصّات</td><td>يكتشف بيانات الاعتماد في الشيفرة وسجلّها، ويُفضَّل أن يكون ذلك قبل رفعها</td><td>قبل الإيداع وفي كل طلب سحب</td></tr>
 <tr data-q="**security unit and integration tests** — اختبارات الوحدات والتكامل الأمنية اختباراتك الخاصة التي تُرمِّز قواعد التحكم في الوصول وقواعد الأعمال كل قصةٍ من الفئتين 1 و2؛ وكل نتيجةٍ من اختبار الاختراق"><td><strong>Security unit and integration tests</strong> — اختبارات الوحدات والتكامل الأمنية</td><td>اختباراتك الخاصة التي تُرمِّز قواعد التحكم في الوصول وقواعد الأعمال</td><td>كل قصةٍ من الفئتين 1 و2؛ وكل نتيجةٍ من اختبار الاختراق</td></tr>
@@ -17127,7 +17127,7 @@ def get_invoice(invoice_id):
 <tr data-q="**mitre atlas** قاعدة معرفةٍ بتقنيات الخصوم ضد أنظمة الذكاء الاصطناعي وصف مسارات هجمات الذكاء الاصطناعي لمركز العمليات الأمنية"><td><strong>MITRE ATLAS</strong></td><td>قاعدة معرفةٍ بتقنيات الخصوم ضد أنظمة الذكاء الاصطناعي</td><td>وصف مسارات هجمات الذكاء الاصطناعي لمركز العمليات الأمنية</td></tr>
 <tr data-q="**least-privilege tools** — أدوات بأقل الصلاحيات أدواتٌ تربط الهوية من الجلسة، وتتحقق من الملكية، وتؤكّد عمليات الكتابة كل أداةٍ للوكيل، قبل إطلاقها"><td><strong>Least-privilege tools</strong> — أدوات بأقل الصلاحيات</td><td>أدواتٌ تربط الهوية من الجلسة، وتتحقق من الملكية، وتؤكّد عمليات الكتابة</td><td>كل أداةٍ للوكيل، قبل إطلاقها</td></tr>
 <tr data-q="**lethal trifecta check** (simon willison، 2025) — فحص الثالوث القاتل البيانات الخاصة مع المحتوى غير الموثوق مع التواصل الخارجي تعني خطر تسريب البيانات مراجعة أي أداةٍ أو مصدر بياناتٍ جديد للوكيل"><td><strong>Lethal trifecta check</strong> (Simon Willison، 2025) — فحص الثالوث القاتل</td><td>البيانات الخاصة مع المحتوى غير الموثوق مع التواصل الخارجي تعني خطر تسريب البيانات</td><td>مراجعة أي أداةٍ أو مصدر بياناتٍ جديد للوكيل</td></tr>
-<tr data-q="**tabletop exercise** (nist sp 800-84) — تمرين الطاولة تمرين حوادث قائمٌ على النقاش مع مستجدّاتٍ موقوتة قبل الإطلاق، ثم سنويًا وبعد أي تغييرٍ كبير"><td><strong>Tabletop exercise</strong> <bdi>(NIST SP 800-84)</bdi> — تمرين الطاولة</td><td>تمرين حوادث قائمٌ على النقاش مع مستجدّاتٍ موقوتة</td><td>قبل الإطلاق، ثم سنويًا وبعد أي تغييرٍ كبير</td></tr>
+<tr data-q="**tabletop exercise** (nist sp 800-84) — تمرين المحاكاة النظرية تمرين حوادث قائمٌ على النقاش مع مستجدّاتٍ موقوتة قبل الإطلاق، ثم سنويًا وبعد أي تغييرٍ كبير"><td><strong>Tabletop exercise</strong> <bdi>(NIST SP 800-84)</bdi> — تمرين المحاكاة النظرية</td><td>تمرين حوادث قائمٌ على النقاش مع مستجدّاتٍ موقوتة</td><td>قبل الإطلاق، ثم سنويًا وبعد أي تغييرٍ كبير</td></tr>
 </tbody></table></div></section>
 <section class="cat" data-level="a">
 <h3><a href="#l12-2">12.2 — مهنة الأمن: الأدوار والشهادات وملف الأعمال</a></h3>

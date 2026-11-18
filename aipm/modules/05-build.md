@@ -194,10 +194,10 @@ Faisal adds a page of twenty behaviour examples below the table. One row: *Input
 
 **3. After the first eval run, the copilot meets its "no invented figures" bar, but memos now leave out many figures entirely. What principle was missing from the spec?**
 
-- A. A counter-measure such as a completeness bar, to guard against optimising one measure at the cost of another
-- B. A higher latency budget
-- C. A larger golden set
-- D. A different risk tier
+- A. A counter-measure such as a completeness bar, so one measure is not optimised at another's cost
+- B. A stricter faithfulness bar, so that every figure in a memo is checked against its source
+- C. A larger golden set, so the bar is tested on more memos before the team trusts it
+- D. A higher risk tier, so memos get a full human review before they reach the committee
 
 <details><summary>Answer</summary>
 
@@ -438,10 +438,10 @@ Faisal replaces the executive demo with a four-week prototype plan for Najm Assi
 
 **4. For SME Instant Finance, Layla wants evidence of how the model would decide on real requests before any customer is affected. Which approach fits?**
 
-- A. Shadow mode: score live requests while credit officers decide as usual, then compare decisions and later outcomes
-- B. A scripted mock-up shown to credit officers
-- C. A board demo on ten selected invoices
-- D. Launch to 5% of customers and monitor complaints
+- A. Shadow mode: score live requests while officers decide as usual, then compare decisions and outcomes
+- B. A clickable prototype with scripted outputs, tested with credit officers on sample files
+- C. A board demo on ten invoices the team selected as typical of the portfolio
+- D. A pilot with 5% of customers, monitoring complaints and default rates
 
 <details><summary>Answer</summary>
 
@@ -451,10 +451,10 @@ Faisal replaces the executive demo with a four-week prototype plan for Najm Assi
 
 **5. Which contribution is most clearly the PM's, rather than the engineers', in choosing a model?**
 
-- A. Choosing the serving infrastructure
-- B. Writing the retrieval code
-- C. Ensuring the comparison uses the product's golden set and bars and weighs quality, latency and cost per task together
-- D. Selecting the model with the highest public benchmark score
+- A. Choosing the serving infrastructure and region so that the product's latency targets can be met at peak
+- B. Writing the retrieval code so that each candidate model gets the same context
+- C. Making sure the comparison uses the product's golden set and bars, weighing quality, latency and cost
+- D. Selecting the model with the highest public benchmark score for this type of summarising task
 
 <details><summary>Answer</summary>
 
@@ -699,10 +699,10 @@ After the fee-waiver incident, Rania asks Faisal to own the **Najm Assist behavi
 
 **4. Faisal wants to add each customer's full two-year transaction history to every Najm Assist request "so it has everything it might need". What is the best response?**
 
-- A. Agree, since more context always improves answers
-- B. Agree, but only for Arabic-speaking customers
-- C. Set a context budget: include only the data the task needs, when a relevant tool is called, to control privacy exposure, cost and latency
-- D. Remove all customer data from the assistant
+- A. Agree, because more context gives the model the best chance of answering any question
+- B. Agree, but summarise the history first so that it fits within the context window
+- C. Set a context budget: include only the data the task needs, when a relevant tool is called
+- D. Remove customer data from the assistant and answer only general product questions
 
 <details><summary>Answer</summary>
 

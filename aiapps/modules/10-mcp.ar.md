@@ -255,7 +255,7 @@ flowchart RL
 - Model Context Protocol، الوثائق والمواصفة، وفيها المراجعات بحسب التاريخ والتفويض وأفضل ممارسات الأمان وحزم التطوير: https://modelcontextprotocol.io/
 - وثائق Claude API، الصفحة الرئيسية، وفيها استخدام الأدوات وموصّل MCP وتوافر المنصة: https://docs.anthropic.com/
 - مستودع Claude Code، ومنه روابط الوثائق: https://github.com/anthropics/claude-code
-- مشروع OWASP لأمن الذكاء الاصطناعي التوليدي (OWASP GenAI Security Project)، وفيه قائمة أخطر عشر مخاطر لتطبيقات النماذج اللغوية (Top 10 for LLM Applications, 2025 edition)، طبعة 2025: https://genai.owasp.org/
+- مشروع OWASP لأمن الذكاء الاصطناعي التوليدي (OWASP GenAI Security Project)، وفيه قائمة أخطر عشر مخاطر لتطبيقات النماذج اللغوية (Top 10 for LLM Applications, 2025 edition): https://genai.owasp.org/
 - **اقرأ هذا الأسبوع، الوحدة 10.** Grokking AI Applications، الفصل 7: https://www.manning.com/books/grokking-ai-applications. Gulli، *Agentic Design Patterns*، الفصل 10 (MCP): المسودة المجانية المذكورة في الدرس 0.1. Microsoft، *AI Agents for Beginners*، الدرس 11: https://github.com/microsoft/ai-agents-for-beginners. ووثائق MCP الرسمية: https://modelcontextprotocol.io/
 
 ---
@@ -636,7 +636,7 @@ Plan first; implement in small steps; run the tests after each.
 **4. غدًا يضيف فريق TicketHub الأداة `delete_ticket` إلى الخادم. ماذا يفعل وكيل المختبر؟**
 
 - A. يقدّم الأداة إلى Claude، لأن الخادم يسردها
-- B. لا يقدّمها أبدًا، ويرفض أي استدعاء لها بوصفها مجهولة
+- B. لا يقدّمها أبدًا، ويرفض استدعاءها بوصفها مجهولة
 - C. يقدّم الأداة لكنه يسأل شخصًا قبل كل استدعاء
 - D. يقدّم الأداة فقط إن قالت وسومها إنها للقراءة فقط
 

@@ -498,7 +498,7 @@ Would I delegate it again?
 
 **1. In the express-cap transcript the tests pass at T06. What does that tell you about the new docstring?**
 
-- A. Nothing: tests do not read docstrings, so green says nothing here.
+- A. Nothing: the tests do not read docstrings, so green says nothing here.
 - B. That it is correct, because the suite covers every fee rule.
 - C. That it is correct, but only if the suite ran twice.
 - D. That the agent changed nothing, since passing tests mean no edits.

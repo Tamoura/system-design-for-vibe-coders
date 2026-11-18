@@ -198,10 +198,10 @@ Rania's note: *"Two reds, both fixed by changing scope, not reasons to stop. Fai
 
 **4. The readiness assessment for SME Instant Finance finds that history covers only RM-served businesses, while the app will reach smaller, newer firms. What is the best product response?**
 
-- A. Cancel the product
-- B. Launch for all SMEs and monitor complaints
-- C. Launch first for the segments the data represents, keep others on the manual path, and collect outcomes to extend scope later
-- D. Remove the size and tenure fields so the model cannot see the difference
+- A. Delay launch until a full year of outcomes for smaller, newer firms has been collected and checked
+- B. Launch for all SMEs, with a lower approval limit for smaller, newer firms, and monitor complaints closely
+- C. Launch for the segments the data represents, keep others manual, and collect outcomes to extend later
+- D. Remove the size and tenure fields so the model treats all firms the same way
 
 <details><summary>Answer</summary>
 
@@ -406,7 +406,7 @@ Loop metrics reviewed monthly by Rania: share of memos with a captured signal, m
 
 **2. RMs edit about 40% of Credit Memo Copilot's drafts. What is the best way to turn this into useful learning?**
 
-- A. Treat every edited section as a model error, retrain the model every month, and report the edit rate to the committee each quarter
+- A. Treat every edited section as a model error, retrain monthly, and report the edit rate to the committee quarterly
 - B. Ignore edits, because they are just personal style
 - C. Remove the ability to edit so the signal is cleaner
 - D. Pair edit data with a short reason picker and a weekly sampled review, then fix patterns in the corpus, prompt or template
@@ -432,10 +432,10 @@ Loop metrics reviewed monthly by Rania: share of memos with a captured signal, m
 
 **4. SME Instant Finance's repayment outcomes arrive 30–120 days after each decision. How should the team report model quality for last month's decisions?**
 
-- A. Report accuracy only on decisions whose outcomes are known, and show the share not yet labelled, using early proxies clearly marked as proxies
-- B. Assume unlabelled decisions were correct
-- C. Wait a year before reporting anything
-- D. Use customer satisfaction scores instead of repayment
+- A. Report quality only where outcomes are known, show the unlabelled share, and mark early proxies as proxies
+- B. Treat decisions without an outcome yet as repaid, since nearly all SME loans are repaid on time
+- C. Hold all reporting until every decision in the month has a final repayment outcome
+- D. Report approval and override rates as the quality measure until repayment outcomes arrive for the month
 
 <details><summary>Answer</summary>
 
@@ -652,10 +652,10 @@ Design decisions recorded:
 
 **3. Why does the lesson recommend keeping customer data in retrievable stores rather than fine-tuning it into a model?**
 
-- A. Retrieval is always cheaper than fine-tuning
-- B. Fine-tuning is illegal under GDPR
-- C. Data in a queryable store can be accessed, corrected and deleted, while removing one person's data from trained weights is hard and still an open research problem
-- D. Models cannot learn from personal data
+- A. Retrieval is always cheaper than fine-tuning, so it is the default for any customer data
+- B. Fine-tuning on personal data is banned under GDPR, so retrieval is the only lawful option for a bank
+- C. A store can be queried, corrected and erased per person; removing one person from trained weights is still hard
+- D. Fine-tuned models forget customer details quickly, so their answers would go stale within a few weeks
 
 <details><summary>Answer</summary>
 
@@ -665,10 +665,10 @@ Design decisions recorded:
 
 **4. For a bank's assistant answering a customer's questions about their own account, which statement about legal basis is most accurate?**
 
-- A. Consent is always required for AI processing of personal data, so the assistant must ask the customer to agree before every conversation and record that agreement
+- A. Consent is always required for AI processing of personal data, so the assistant must ask before every chat and log it
 - B. The PM should choose the legal basis and inform the DPO
 - C. No legal basis is needed if the data stays inside the bank
-- D. Consent is one of several bases and often not the most suitable in a banking relationship; the DPO decides, based on a precise description of purposes from the PM
+- D. Consent is one of several bases and often not the best fit in banking; the DPO decides, from the PM's precise description of purposes
 
 <details><summary>Answer</summary>
 
@@ -678,9 +678,9 @@ Design decisions recorded:
 
 **5. Where does personal data typically appear in an LLM-based assistant?**
 
-- A. Only in the customer database
-- B. Only in the prompt the user types
-- C. Nowhere, if the model vendor does not train on it
+- A. Only in the customer database and the documents the assistant retrieves from it
+- B. Only in the prompt the user types, since the model keeps nothing after it answers
+- C. Nowhere outside Najm, provided the model vendor has agreed not to train on it
 - D. In the prompt, retrieved documents, outputs, logs, feedback data and evaluation sets
 
 <details><summary>Answer</summary>

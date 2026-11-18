@@ -1453,4 +1453,4 @@ Salem uses the exam as one input to **on-call readiness**, alongside shadowing M
 - Prometheus documentation — https://prometheus.io/docs/introduction/overview/
 - FinOps Foundation, FinOps Framework — https://www.finops.org/framework/
 - CNCF projects — https://www.cncf.io/projects/
-- Regulation (EU) 2022/2554 (Digital Operational Resilience Act) — https://eur-lex.europa.eu/eli/reg/2022/2554/oj
+- Regulation (EU) 2022/2554 on digital operational resilience (DORA) — https://eur-lex.europa.eu/eli/reg/2022/2554/oj

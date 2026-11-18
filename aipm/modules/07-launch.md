@@ -20,7 +20,7 @@
 - Biggest trap: treating launch as the day the feature switches on, instead of the moment you take on responsibility for every answer it gives.
 
 ## 🧭 Why it matters
-Recall the two public failures from 5.3: a Chevrolet dealer's chatbot talked into "agreeing" to sell a car for $1, and DPD's delivery chatbot swearing at a customer after a system update. Neither needed an advanced attack; nothing between the model and the customer stopped them. And as the Air Canada case showed (0.2), the company answers for what its chatbot tells a customer. Whatever the assistant says, the company has said it.
+Recall the two public failures from 5.3: a Chevrolet dealer's chatbot talked into "agreeing" to sell a car for $1, and DPD's delivery chatbot swearing at a customer after a system update. Neither needed an advanced attack; nothing between the model and the customer stopped them. And as the tribunal ruling in 0.2 showed, the company answers for what its chatbot tells a customer. Whatever the assistant says, the company has said it.
 
 At Najm Bank, Najm Assist v1 has finished its pilot. It answers questions about accounts, fees and cards in Arabic and English, grounded in the bank's product documents, and hands over to a human agent when unsure. Faisal proposes switching it on for all mobile-app customers on Thursday, "since the evals passed". Rania asks four questions. What stops it discussing loan eligibility, which it is not approved for? Who is paged if it gives wrong fee amounts at 2 a.m.? How do we turn it off without an app release? What does the contact centre say when a customer complains about an answer? Faisal cannot answer any of them. The launch moves by three weeks; this lesson is about those three weeks.
 
@@ -70,7 +70,7 @@ Guardrails have costs: latency, legitimate requests blocked (false positives), a
 **Support readiness** in practice:
 - A one-page **known limitations** note for agents: what the assistant cannot do, failure modes seen in testing, and the approved response to each.
 - **Conversation lookup**, so agents see what the assistant actually said, and **an escalation path** for suspected AI errors, tagged so they can be counted.
-- **Scripts for the hard calls**: "the assistant told me the fee was waived". After Air Canada, "the bot was wrong" is a weak defence, so the business and legal owners should decide before launch whether the bank honours such answers.
+- **Scripts for the hard calls**: "the assistant told me the fee was waived". After the tribunal ruling in 0.2, "the bot was wrong" is a weak defence, so the business and legal owners should decide before launch whether the bank honours such answers.
 
 **Disclosure.** Customers should know they are talking to an AI; in some jurisdictions this is a legal duty (the EU AI Act's transparency obligations). Microsoft's Guidelines for Human-AI Interaction (Amershi et al., 2019) open with the design version: make clear what the system can do, and how well. That becomes launch copy.
 
@@ -157,7 +157,7 @@ Go/no-go outcome: *"No-go this week on G1. Go at 5% once the false-block fix is 
 - **"The evals passed, so we are ready."** Evals cover the cases you tested. Check all four areas.
 - **An untested kill switch.** If it needs a deployment or has never been tried, you do not have one. Drill it before launch.
 - **Guardrails measured only for what they block.** Measure false blocks as well as misses.
-- **Treating updates as maintenance.** DPD's chatbot misbehaved after an update. Agree change classes so every change runs the right level of gate.
+- **Treating updates as maintenance.** The delivery chatbot in 5.3 misbehaved after an update. Agree change classes so every change runs the right level of gate.
 - **Governance or support as an afterthought.** Arriving at Layla's office a week before launch, or letting agents learn failure modes from complaints, means you started too late. Engage both at design time.
 
 ## 🧾 Recap
@@ -171,10 +171,10 @@ Go/no-go outcome: *"No-go this week on G1. Go at 5% once the false-block fix is 
 
 **1. Najm Assist's offline evals meet every quality bar in the spec. Faisal says the product is ready for all customers. What is the strongest reason to disagree?**
 
-- A. Evals are never a reliable signal of quality
-- B. Readiness also requires tested guardrails, governance approvals, monitoring with a kill switch and prepared support
-- C. The product should first be rebuilt on a larger model
-- D. Customers should be surveyed about AI before any launch
+- A. Offline evals cannot predict live behaviour, so the bars say little about readiness
+- B. Readiness also needs tested guardrails, governance approvals, monitoring with a kill switch and support
+- C. The golden set should first be doubled, so the bars are proven on more cases
+- D. Customers should be surveyed about trust in AI before any launch decision
 
 <details><summary>Answer</summary>
 
@@ -217,20 +217,20 @@ Go/no-go outcome: *"No-go this week on G1. Go at 5% once the false-block fix is 
 
 <details><summary>Answer</summary>
 
-**C.** A prompt change can alter behaviour, as the DPD case shows, so it must be re-tested, but it does not change the risk tier, so a full gate (B) is out of proportion. (🔴 Expert view.)
+**C.** A prompt change can alter behaviour, as the delivery chatbot in 5.3 showed, so it must be re-tested, but it does not change the risk tier, so a full gate (B) is out of proportion. (🔴 Expert view.)
 
 </details>
 
 **5. A customer calls to say Najm Assist told them a fee would be waived. It was wrong. What should have been in place before launch?**
 
-- A. A policy, agreed by the business owner and legal, on whether and how the bank honours incorrect assistant answers, plus conversation lookup for agents
+- A. A business and legal policy on whether the bank honours wrong answers, plus conversation lookup for agents
 - B. A disclaimer saying the assistant's answers are not binding, so agents can refuse all such claims
-- C. An instruction to agents to escalate every call to the product team
-- D. Nothing: such cases are too rare to plan for
+- C. An instruction for agents to escalate every such call to the product team, who review the conversation
+- D. A rule that agents apologise and explain that the assistant can make mistakes
 
 <details><summary>Answer</summary>
 
-**A.** After *Moffatt v. Air Canada*, "the bot was wrong" is a weak defence. A disclaimer alone (B) may not protect the bank and damages trust. (🟡 Going deeper.)
+**A.** After the tribunal ruling in 0.2, "the bot was wrong" is a weak defence. A disclaimer alone (B) may not protect the bank and damages trust. (🟡 Going deeper.)
 
 </details>
 
@@ -633,14 +633,14 @@ After the six-week review, Rania and Faisal rewrote the rollout as the **Credit 
 
 **1. Six weeks after launch, 85% of RMs have logged into the Credit Memo Copilot but weekly use has fallen to about a third. Which metric would best tell Khalid whether the product is delivering value?**
 
-- A. Total logins since launch
-- B. Median days from complete application to committee, with the rate of memos returned by credit risk as a counter-metric
-- C. Number of prompts sent per week
-- D. Satisfaction score from the launch-day survey
+- A. Weekly active users as a share of all RMs, tracked against the adoption target set for launch
+- B. Median days from complete application to committee, with credit-risk returns as a counter-metric
+- C. Average memo drafts generated per RM per week, as a sign of how much they rely on it
+- D. RM satisfaction from a quarterly survey, broken down by team
 
 <details><summary>Answer</summary>
 
-**B.** Value is a change in business outcomes against a baseline, paired with a quality counter-metric. Logins and prompts (A, C) measure activity, not value. (🟡 Going deeper, the adoption funnel.)
+**B.** Value is a change in business outcomes against a baseline, paired with a quality counter-metric. Active users and drafts generated (A, C) measure activity, not value. (🟡 Going deeper, the adoption funnel.)
 
 </details>
 
@@ -659,10 +659,10 @@ After the six-week review, Rania and Faisal rewrote the rollout as the **Credit 
 
 **3. Two junior RMs use the copilot for every memo and submit drafts with almost no edits. What is the best response?**
 
-- A. Celebrate them as model users in the next newsletter
-- B. Treat it as possible over-reliance: sample their memos, train on the "check carefully" sections, and add in-product source cues
-- C. Remove their access
-- D. Ignore it, because high usage is the adoption goal
+- A. Ask them to share their workflow with the team, since they get the most out of the copilot
+- B. Treat it as possible over-reliance: sample their memos, coach on checking, and add source cues
+- C. Limit their access to two drafts a week until they show they edit carefully
+- D. Leave it, since heavy use is exactly the adoption the launch was aiming for
 
 <details><summary>Answer</summary>
 

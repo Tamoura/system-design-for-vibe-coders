@@ -254,7 +254,7 @@ Fill it in before the work, a few lines per section; draft section 4 with your a
 
 - A. Once nothing calls the old names any more, in the contract step
 - B. In the expand step, so the new names are unambiguous
-- C. In the first migration commit, so missed call sites fail at once
+- C. In the first migration commit, so missed callers fail at once
 - D. Never, because another service might still use them one day
 
 <details><summary>Answer</summary>

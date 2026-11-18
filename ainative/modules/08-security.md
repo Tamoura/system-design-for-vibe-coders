@@ -629,9 +629,9 @@ Time spent:         (you / the agent)
 **3. `if "rm -rf" in command` blocks `git commit -m "docs: why rm -rf is blocked"`. What is the fix?**
 
 - A. Tokenise the line, find each program, and judge the program and its flags
-- B. Search for `rm -rf` only at the very start of the command line
+- B. Search for `rm -rf` only at the very start of the command line, never inside it
 - C. Add `git commit` to a list of commands that are always allowed
-- D. Lower-case the command so that spellings are compared consistently
+- D. Lower-case the whole command first, so that every spelling is compared consistently
 
 <details><summary>Answer</summary>
 

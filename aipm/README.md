@@ -55,7 +55,7 @@ Reading every lesson takes about 12 hours; the exercises are most of the work. L
 | Manager or sponsor: Modules 0, 2.2–2.3, 7, 8 and 9 with the 🟢 exercises | 12 hours |
 | Working AI PM: the practice exam and error log, then the lessons behind your misses | 3 hours, plus 1–3 hours per lesson you revisit |
 
-The study-time line on each lesson is a rough average; plan by the path totals above. A pilot with real learners will replace these figures.
+The study-time line on each lesson is an estimate for that lesson, and the lines add up to the course total above; plan by the path totals above. A pilot with real learners will replace these figures.
 
 ## Companion courses
 

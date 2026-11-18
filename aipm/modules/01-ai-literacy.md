@@ -147,10 +147,10 @@ Rania's rule for the card: *"If you cannot fill in 'cost of an error', you are n
 
 **1. Najm Bank wants to pre-approve SME invoice-financing requests in seconds, using ten years of labelled repayment history. Which approach best fits the decision itself?**
 
-- A. Ask an LLM to read the application and answer "approve" or "decline"
+- A. Ask an LLM to read each application and answer "approve" or "decline" with a short reason
 - B. Train a classic ML model on the repayment history and set thresholds for approve, refer and decline
-- C. Build an agent that browses the company's website before deciding
-- D. Use embeddings to find similar past memos and copy their decision
+- C. Build an agent that gathers data from the company's website and registries before deciding
+- D. Use embeddings to find the most similar past requests and reuse the decisions made on them
 
 <details><summary>Answer</summary>
 
@@ -160,10 +160,10 @@ Rania's rule for the card: *"If you cannot fill in 'cost of an error', you are n
 
 **2. What best describes what a large language model does when it generates an answer?**
 
-- A. It retrieves the answer from an internal database of verified facts
-- B. It repeatedly predicts the next token based on patterns learned in training and the text in its context
-- C. It runs the rules its developers wrote for each topic
-- D. It searches the internet for every request
+- A. It looks up the answer in an internal store of verified facts that it compiled during its training run
+- B. It repeatedly predicts the next token from patterns learned in training and the text in its context
+- C. It applies the rules and response templates that its developers wrote for each kind of question it gets
+- D. It searches the web for each request and summarises the most relevant pages it finds
 
 <details><summary>Answer</summary>
 
@@ -238,7 +238,7 @@ Two weeks into the Credit Memo Copilot pilot, Khalid forwards Rania a draft memo
 
 The model did what language models do: it produced a plausible credit memo, and plausible credit memos mention covenants. The failure was in the product. Nothing forced the draft to cite its source, nothing flagged unsupported claims, and nobody had told the RM where the copilot is weak.
 
-Public examples show the same pattern. In February 2023, a promotional video for Google's Bard launch included a factual error about the James Webb Space Telescope. And in the Air Canada case you met in 0.2, the airline was held liable after its website chatbot described a refund policy that did not match its own. In both cases the product around the model did not account for a known limit. This lesson gives you the vocabulary to name each limit, and the habit of designing for it before users find it.
+The public cases you met in 0.2 show the same pattern: the Bard launch video with its telescope error, and the airline held liable for a refund policy its chatbot made up. In both, the product around the model did not account for a known limit. This lesson gives you the vocabulary to name each limit, and the habit of designing for it before users find it.
 
 ## 📐 How it works
 
@@ -313,7 +313,7 @@ flowchart LR
 
 **Errors compound in chains.** If each step in an agent succeeds 95% of the time, and failures are independent, a ten-step task succeeds about 0.95¹⁰ ≈ 60% of the time. Real steps are not independent, so treat this as intuition, but the direction holds: long chains need checkpoints, confirmations before risky actions and recovery paths. This is why Najm Assist's dispute agent asks the customer to confirm before filing.
 
-**Untrusted text can steer the model.** Because instructions and data both arrive as text, content the model reads (an email, a web page, a document) can contain instructions that hijack it. This is **prompt injection**. The Chevrolet dealer chatbot that agreed to "sell" a car for $1 after user manipulation (December 2023) is a well-known public example; the stakes there were reputational, but for an agent with tools they are actions. The PM's part is to limit what tools can do, require confirmation for consequential actions and never rely on the prompt alone for security. The *Production AI Agents* course covers defences.
+**Untrusted text can steer the model.** Because instructions and data both arrive as text, content the model reads (an email, a web page, a document) can contain instructions that hijack it. This is **prompt injection**. Lesson 5.3 looks at a public case in which users talked a car dealer's chatbot into a $1 "sale"; the stakes there were reputational, but for an agent with tools they are actions. The PM's part is to limit what tools can do, require confirmation for consequential actions and never rely on the prompt alone for security. The *Production AI Agents* course covers defences.
 
 **Cost is a quality lever, and quality is a cost lever.** Smaller models are often good enough for simple steps, leaving the larger model for the hard step. But a cheap model that fails more often pushes cost into human review and rework. Klarna's AI assistant is a useful caution. The company announced in early 2024 that it was handling a large share of customer chats, and in 2025 said it would bring more human service back. It shows why cost savings must be measured alongside resolution quality and satisfaction.
 
@@ -348,13 +348,13 @@ Rania's note at the bottom: *"Every high-severity row needs a design response we
 ## 🛠️ Exercises
 - 🟢 Recompute Smart Alerts precision if the false-alarm rate on legitimate transactions falls from 1% to 0.2% and recall stays at 90%. *Done when:* you show the number of false alarms, the precision, and one sentence on what this means for alert fatigue.
 - 🟡 Build a cost-per-task estimate for Staff GenAI with your own illustrative assumptions: users, requests per user per day, tokens in and out, price. *Done when:* you have a monthly cost, you have labelled every assumption as illustrative, and you name the one assumption that moves the total most.
-- 🔴 Write a limits register for Najm Assist phase 1 (answering questions about products and fees). *Done when:* it covers all five limits plus non-determinism, each high-severity row has a testable design response, and at least one row cites a public case (Air Canada or the Chevrolet dealer) as the reason for the control.
+- 🔴 Write a limits register for Najm Assist phase 1 (answering questions about products and fees). *Done when:* it covers all five limits plus non-determinism, each high-severity row has a testable design response, and at least one row cites a public case (such as the airline in 0.2) as the reason for the control.
 
 <details><summary>Check your work</summary>
 
 **🟢 Worked answer.** Legitimate transactions: 999,000. False alarms at 0.2%: 1,998. Frauds caught at 90% recall: 900. Precision = 900 ÷ (900 + 1,998) ≈ 31%, up from about 8%. About one alert in three is now real fraud instead of one in twelve, so customers are far less likely to learn to ignore alerts.
 
-**🟡 and 🔴 self-check.** Your cost estimate passes if every input is labelled illustrative, the arithmetic is shown per call, per day and per month, and you recomputed it with your shakiest input doubled. Your limits register passes if it has six rows (the five limits plus non-determinism), each high-severity row has a response you could test before launch (for example "fees quoted only from retrieved documents"), and one row cites Air Canada or the Chevrolet dealer as the reason for its control.
+**🟡 and 🔴 self-check.** Your cost estimate passes if every input is labelled illustrative, the arithmetic is shown per call, per day and per month, and you recomputed it with your shakiest input doubled. Your limits register passes if it has six rows (the five limits plus non-determinism), each high-severity row has a response you could test before launch (for example "fees quoted only from retrieved documents"), and one row cites a public case, such as the airline in 0.2, as the reason for its control.
 
 </details>
 
@@ -393,7 +393,7 @@ Rania's note at the bottom: *"Every high-severity row needs a design response we
 - A. Increase the temperature so the model explores more options
 - B. Add a line to the user guide saying AI can make mistakes
 - C. Require every claim to cite a source passage and flag any claim without one
-- D. Switch to a model with a larger context window
+- D. Switch to a model with a larger context window so the whole agreement fits at once
 
 <details><summary>Answer</summary>
 
@@ -429,10 +429,10 @@ Rania's note at the bottom: *"Every high-severity row needs a design response we
 
 **5. Why can putting an entire 300-page document into a long context window still produce poor answers?**
 
-- A. Models cannot read documents longer than one page
-- B. Models may use information in the middle of long contexts less reliably, and every token adds cost and latency
-- C. Long contexts make models deterministic
-- D. Context windows only count output tokens
+- A. The model reads only the first pages, because anything beyond its training length is cut off
+- B. Models may use the middle of long contexts less reliably, and every token adds cost and latency
+- C. Long contexts switch the model into a summarising mode that drops detail from every page
+- D. The context window counts only output tokens, so the document crowds out the answer
 
 <details><summary>Answer</summary>
 
@@ -641,7 +641,7 @@ The team's quick view across the portfolio:
 
 **3. Testing shows the Staff GenAI assistant gives correct answers, but in the wrong structure and far too long, even after several prompt revisions. Which next step fits the build ladder?**
 
-- A. Add many more documents to retrieval, so the model has more examples of the right structure and length in front of it
+- A. Add many more documents to retrieval, so the model has more examples of the right structure and length
 - B. Train a model from scratch on the bank's own credit memos
 - C. Refine examples in the prompt further, and consider fine-tuning if it still plateaus, since this is a behaviour gap
 - D. Buy a second vendor product that offers a built-in memo template

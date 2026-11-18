@@ -50,10 +50,10 @@ The course follows the **Application & AI Security** team at **Najm Bank**, the 
 | You are… | Suggested path |
 |---|---|
 | A developer, including with AI coding agents | Modules 0–6, then 8.1–8.2 and 9; every 🟡 exercise on your own code or the starter lab |
-| An architect | Modules 0, 1, 3, 7, 8, 9.2 and 9.3; a threat model for each system you own |
-| A product or engineering manager | 0, 1.3, 6.1, 8.1–8.2, 9.2, 10.2 and 11; the paper route for hands-on exercises |
+| An architect | Modules 0, 1, 3, 7, 8 and 9.1–9.3; a threat model for each system you own |
+| A product or engineering manager | 0, 1.3, 6.1, 8.1–8.2, 9.1–9.2, 10.1–10.2 and 11; the paper route for hands-on exercises |
 | A security analyst moving into AppSec or AI security | The 12.3 practice exam first; then deep on 2–4 and 8–9 |
-| A bank, government or enterprise system owner | 0, 1, 5.3, 7.1, 10.2 and 11; the paper route |
+| A bank, government or enterprise system owner | 0, 1, 5.3, 7.1, 9.1, 10.1–10.2 and 11; the paper route |
 
 **Time.** Reading the whole course takes about 15 hours. With the 🟢 and 🟡 exercises it is roughly 120 hours, about five hours a week for six months; the 🔴 exercises add about 100 more. **No code?** Every hands-on exercise has a paper route: review a supplied change or artefact instead of building it. **Before you start**, lesson 0.3 sets up the free practice lab (OWASP Juice Shop in Docker) and the course's offline [starter lab](./lab/README.md) for the AI exercises.
 

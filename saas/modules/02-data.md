@@ -118,24 +118,28 @@ Here is the dashboard query from the 🟡 exercise below, before and after that 
 
 ```text
 -- Before: no index (500 monitors x 1,000 checks)
-Nested Loop Left Join  (actual time=23.916..9967.135 rows=500 loops=1)
-  ->  Seq Scan on monitor m  (actual time=0.007..0.382 rows=500 loops=1)
-  ->  Limit  (actual time=19.929..19.929 rows=1 loops=500)
-        ->  Sort  (actual time=19.926..19.926 rows=1 loops=500)
-              ->  Seq Scan on check_result  (actual time=0.011..19.795 rows=1000 loops=500)
+Nested Loop Left Join  (actual time=112.031..6521.601 rows=500 loops=1)
+  ->  Seq Scan on monitor m  (actual time=97.172..97.557 rows=500 loops=1)
+        Filter: (organization_id = 1)
+  ->  Limit  (actual time=12.844..12.845 rows=1 loops=500)
+        ->  Sort  (actual time=12.842..12.842 rows=1 loops=500)
+              Sort Key: check_result.checked_at DESC
+              ->  Seq Scan on check_result  (actual time=6.284..12.752 rows=1000 loops=500)
+                    Filter: (monitor_id = m.id)
                     Rows Removed by Filter: 499000
-Execution Time: 9967.420 ms
+Execution Time: 6536.568 ms
 
 -- After: CREATE INDEX check_result_monitor_time_idx ...
-Nested Loop Left Join  (actual time=0.017..1.815 rows=500 loops=1)
-  ->  Seq Scan on monitor m  (actual time=0.006..0.044 rows=500 loops=1)
-  ->  Limit  (actual time=0.003..0.003 rows=1 loops=500)
-        ->  Index Scan using check_result_monitor_time_idx on check_result  (actual time=0.003..0.003 rows=1 loops=500)
+Nested Loop Left Join  (actual time=0.056..4.742 rows=500 loops=1)
+  ->  Seq Scan on monitor m  (actual time=0.010..0.159 rows=500 loops=1)
+        Filter: (organization_id = 1)
+  ->  Limit  (actual time=0.009..0.009 rows=1 loops=500)
+        ->  Index Scan using check_result_monitor_time_idx on check_result  (actual time=0.009..0.009 rows=1 loops=500)
               Index Cond: (monitor_id = m.id)
-Execution Time: 1.843 ms
+Execution Time: 4.844 ms
 ```
 
-Read a plan from the most indented line outwards. `actual time` is in milliseconds per loop (first row..last row), and `loops=500` means that step ran once per monitor. Before: a `Seq Scan` on `check_result` ran 500 times and threw away 499,000 rows each time. After: an `Index Scan` reads one row per monitor, and the query drops from about 10 seconds to 2 ms. The `Seq Scan on monitor` is fine: that table holds 500 rows.
+Read a plan from the most indented line outwards. `actual time` is in milliseconds per loop (first row..last row), and `loops=500` means that step ran once per monitor. Before: a `Seq Scan` on `check_result` ran 500 times and threw away 499,000 rows each time. After: an `Index Scan` reads one row per monitor, and the query drops from about 6.5 seconds to under 5 ms. The `Seq Scan on monitor` is fine: that table holds 500 rows.
 
 The N+1 problem from the opening is the classic ORM trap: one query for the list, then N queries for each item's relation. The fix is to fetch relations in one go: `include` in Prisma, `with` in Drizzle's relational queries, `includes`/`preload` in Rails, `select_related`/`prefetch_related` in Django, or a single SQL query with a join, `DISTINCT ON` or `LATERAL`. Query logs and APM traces (lesson 7.2) make it visible.
 
@@ -221,7 +225,7 @@ Create Beacon's schema for `organization`, `user`, `membership`, `monitor` and `
 
 ### 🟡 Intermediate exercise
 
-Build the dashboard query "all monitors in my org with their latest check" and make it fast. Seed 500 monitors with 1,000 checks each, log the queries, fix any N+1, and add the index that makes `EXPLAIN ANALYZE` show an index scan. Use the `LATERAL` form below: the common `DISTINCT ON (m.id) ... ORDER BY m.id, c.checked_at DESC` version still reads all 500,000 checks and took about 400 ms with the index in our test run.
+Build the dashboard query "all monitors in my org with their latest check" and make it fast. Seed 500 monitors with 1,000 checks each, log the queries, fix any N+1, and add the index that makes `EXPLAIN ANALYZE` show an index scan. Use the `LATERAL` form below: the common `DISTINCT ON (m.id) ... ORDER BY m.id, c.checked_at DESC` version still reads all 500,000 checks and took about 250 ms with the index in our test run.
 
 ```sql
 SELECT m.id, m.url, c.status_code, c.checked_at

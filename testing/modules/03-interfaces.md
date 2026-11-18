@@ -474,9 +474,9 @@ flowchart LR
 
 Two ideas remove most flakiness. **Auto-waiting:** before a `click`, `fill` or `check`, Playwright waits until the element is visible, stable, enabled and not covered. **Web-first assertions** such as `toBeVisible`, `toHaveText` and `toHaveValue` retry until they pass or time out (5 seconds by default), instead of reading the page once.
 
-**Project layout and config.** In a copy of `testing/sample`, run `npm install`, `npm install -D @axe-core/playwright` and `npx playwright install chromium`; tests live in `e2e/`. Then give the starter `e2e/playwright.config.ts` CI settings (`forbidOnly`, `retries`, a reporter) and a named browser project:
-
 > **TypeScript you need.** Playwright tests are TypeScript, but four patterns cover this lesson. `import { test, expect } from '@playwright/test'` loads names from a package. `async ({ page }) => { ... }` is an arrow function: a test body that receives a ready `page`. `await` waits for a browser action to finish before the next line runs; a missing `await` is the commonest beginner bug. `{ name: 'Amount' }` is an object of named options.
+
+**Project layout and config.** In a copy of `testing/sample`, run `npm install`, `npm install -D @axe-core/playwright` and `npx playwright install chromium`; tests live in `e2e/`. Then give the starter `e2e/playwright.config.ts` CI settings (`forbidOnly`, `retries`, a reporter) and a named browser project:
 
 ```typescript
 // e2e/playwright.config.ts

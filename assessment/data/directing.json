@@ -54,7 +54,7 @@
       "a": 2,
       "why": {
         "en": "Evidence must come from the layer the user touches, past every cache: the public URL may be serving the old site from the CDN. A merged, green PR is only rung three of the ladder, because \"merged\" is not \"works\".",
-        "ar": "يجب أن يأتي الدليل من الطبقة التي يلمسها المستخدم، متجاوزًا كل ذاكرة تخزين مؤقت (cache): فقد يقدّم الرابط العام الموقع القديم من CDN. وطلب الدمج الأخضر ليس إلا الدرجة الثالثة من السلّم، لأن «مدموج» ليس «يعمل»."
+        "ar": "يجب أن يأتي الدليل من الطبقة التي يلمسها المستخدم، متجاوزًا كل كاش: فقد يقدّم الرابط العام الموقع القديم من CDN. وطلب الدمج الأخضر ليس إلا الدرجة الثالثة من السلّم، لأن «مدموج» ليس «يعمل»."
       }
     },
     {

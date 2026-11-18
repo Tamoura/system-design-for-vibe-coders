@@ -180,10 +180,10 @@ Khalid agrees to the outcome, because it is written in his language: calls, sati
 
 **1. Khalid asks Faisal to "add an AI assistant to the app by Q3". What should Faisal do first?**
 
-- A. Write detailed feature requirements so engineering can start
-- B. Ask Tariq to choose a model vendor
-- C. Reframe the request around a customer problem, a measurable outcome and a quality bar, then run short discovery
-- D. Build a demo to show Khalid within a week
+- A. Write detailed feature requirements now so engineering can size the work and still hit Q3
+- B. Ask Tariq to shortlist model vendors so cost and quality can be compared before scoping
+- C. Reframe it around a customer problem, a measurable outcome and a quality bar, then run short discovery
+- D. Build a working demo within a week so Khalid can react to something real before scoping
 
 <details><summary>Answer</summary>
 
@@ -219,10 +219,10 @@ Khalid agrees to the outcome, because it is written in his language: calls, sati
 
 **4. Which statement best describes the difference between an AI feature PM and an AI platform PM?**
 
-- A. The feature PM manages an AI capability inside a product for end users; the platform PM manages shared AI capabilities that other internal teams build on
-- B. The feature PM works on generative AI; the platform PM works on classic machine learning
-- C. The platform PM only manages vendors
-- D. There is no real difference; the titles are interchangeable
+- A. The feature PM serves end users of one product; the platform PM serves internal teams that build on shared AI capabilities
+- B. The feature PM works on generative AI; the platform PM works on classic machine learning models
+- C. The platform PM owns model vendors and contracts, while the feature PM owns the end-user experience
+- D. The roles are the same job; the titles differ only by which team pays for the work
 
 <details><summary>Answer</summary>
 
@@ -232,10 +232,10 @@ Khalid agrees to the outcome, because it is written in his language: calls, sati
 
 **5. A team says its new AI summariser "works" because it produced good summaries in every demo to leadership. What is the most useful next question from the PM?**
 
-- A. "Can we make the interface more attractive?"
-- B. "How often does it fail on a representative set of real documents, what kinds of failure are they, and who would catch them?"
-- C. "Which competitor has a similar feature?"
-- D. "Can we launch to everyone next week?"
+- A. "Can we run the same demo for the wider business to build support before we invest more?"
+- B. "How often does it fail on a representative set of real documents, what kinds of failure, and who catches them?"
+- C. "Which competitor has a similar feature, and how does our summary quality compare with theirs?"
+- D. "Since leadership liked it, can we launch to all staff next week and gather feedback there?"
 
 <details><summary>Answer</summary>
 
@@ -309,7 +309,7 @@ The product consequence: the more successful the feature, the higher the bill. C
 
 **4. Trust-bound.** An AI product only creates value when people act on its output. If relationship managers do not trust the Credit Memo Copilot, they rewrite every draft and save no time. If they trust it too much, they paste a wrong figure into a credit committee pack. The goal is **calibrated trust**: reliance that matches how reliable the product actually is, case by case. The Google PAIR team's People + AI Guidebook and Microsoft's Guidelines for Human-AI Interaction (Amershi et al., 2019) both treat this as a core design goal. Guidelines such as "make clear how well the system can do what it can do" and "support efficient correction" exist because of it (Module 4).
 
-Trust also breaks in public. A promotional video for Google's Bard launch (February 2023) contained a factual error about the James Webb Space Telescope. In December 2023 users manipulated a Chevrolet dealer's website chatbot into "agreeing" to sell a car for $1. In January 2024 DPD's parcel chatbot swore at a customer after a system update. Each was cheap to cause and costly in reputation.
+Trust also breaks in public. A promotional video for Google's Bard launch (February 2023) contained a factual error about the James Webb Space Telescope. Lesson 5.3 adds two chatbot cases: one talked into a $1 car "deal", one that swore at a customer after a system update. Each was cheap to cause and costly in reputation.
 
 ### 🟡 Going deeper
 
@@ -359,7 +359,7 @@ Each box is a PM decision: which data goes in, which model, how output is shown,
 
 **Errors compound in multi-step products.** When an agent performs several steps in a row, per-step reliability multiplies. As an illustration only, assuming each step succeeds independently 95% of the time, a ten-step task succeeds end to end only about 60% of the time (0.95 to the power of 10 ≈ 0.60). Real steps are not independent, and real rates vary, but the direction holds. It is why Najm Assist starts by answering questions before it is allowed to act (lesson 4.3), and why the companion course *Production AI Agents* spends so much time on checkpoints and recovery.
 
-**The ground moves under you.** Vendors update and retire models, and a prompt that worked last month may behave differently after an update (the DPD incident followed a system update). Pin model versions, test them and upgrade deliberately (lesson 9.2).
+**The ground moves under you.** Vendors update and retire models, and a prompt that worked last month may behave differently after an update (lesson 5.3 has a public case that followed a system update). Pin model versions, test them and upgrade deliberately (lesson 9.2).
 
 **Cost and quality are measured together.** Klarna announced in February 2024 that its AI assistant was handling a large share of its customer-service chats. In 2025 the company said it would bring more human customer service back, with reporting pointing to service quality. The public lesson for PMs: a metric that captures savings but not resolution quality will mislead you. Put quality and trust measures next to cost (Module 8).
 
@@ -382,7 +382,7 @@ After the customer session, Rania asks Faisal to fill in her **AI difference che
 | Probabilistic | What kinds of wrong answer are possible, and which are worst? | Wrong fee amount or condition (worst); outdated information; answering outside its scope; inconsistent answers to the same question | Golden set of about 200 real, anonymised customer questions across fee types and both languages; a stricter bar for fee amounts; must hand over to a human when retrieved content does not cover the question |
 | Data-hungry | Which data does it rely on, and do we have the right to use it? | Approved fee schedules and product terms; anonymised past chats for testing | Content owner for each source; update process when fees change; Sara to confirm whether chat logs may be used for evaluation |
 | Costly per use | What does one conversation cost, and at what volume does it matter? | Illustrative estimate from Tariq, based on expected tokens and calls per conversation | Cost per resolved conversation as a tracked metric; a monthly budget alert |
-| Trust-bound | How will customers know when to rely on it, and how do they recover from errors? | Customers may treat any figure as a commitment by the bank (compare the Air Canada ruling) | Show the source document for every fee answer; one tap to reach a human; clear wording that the assistant answers from Najm's published information |
+| Trust-bound | How will customers know when to rely on it, and how do they recover from errors? | Customers may treat any figure as a commitment by the bank (compare the tribunal ruling above) | Show the source document for every fee answer; one tap to reach a human; clear wording that the assistant answers from Najm's published information |
 
 Faisal's spec line "the assistant answers fee questions correctly" becomes four measurable requirements, and Khalid gets a narrower, safer first version with its quality bar written before build.
 
@@ -629,7 +629,7 @@ The rule of thumb: when the question is "*should* we, for whom, and how good mus
 | A manager or sponsor of AI products | Modules 0, 2.2, 2.3, 7, 8 and 9; 🟢 exercises. Use the 🏛️ artefacts as templates to ask your teams for | 12 hours |
 | Already working as an AI PM | Take the practice exam in 10.3 first as a map of gaps (not a readiness score), then study the lessons behind the questions you missed | 3 hours, plus 1–3 hours per lesson |
 
-**How long the whole course takes.** Reading every lesson takes about 12 hours; the exercises are most of the work. Every exercise, including the 🔴 ones and the full capstone on your own product, comes to about 115–120 hours: roughly five months at 6 hours a week. The 🟢 exercises alone, with the quizzes, come to about 35 hours. The study-time line at the top of each lesson is a rough average, not a per-lesson measurement, so plan by the path totals above.
+**How long the whole course takes.** Reading every lesson takes about 12 hours; the exercises are most of the work. Every exercise, including the 🔴 ones and the full capstone on your own product, comes to about 115–120 hours: roughly five months at 6 hours a week. The 🟢 exercises alone, with the quizzes, come to about 35 hours. The study-time line at the top of each lesson is an estimate for that lesson, and the lines add up to the course total; plan by the path totals above.
 
 **Build a portfolio as you go.** Each 🏛️ section is a template. If you redo it for a product you know (at work, a side project, or a realistic invented one), you end with a set of artefacts: opportunity brief, use-case scorecard, AI spec, eval plan, launch checklist, metrics tree, strategy. Lesson 10.2 shows how to turn these into interview material. Keep anything confidential out of it. Invent a product if you must, the way this course invented Najm.
 

@@ -42,19 +42,19 @@
           "Retry the call in code, with backoff and jitter, but only inside the deadline",
           "Send the model an `is_error` result saying TicketHub is busy; it decides",
           "Hand the run to the Service Desk at once, because the tool has failed",
-          "Retry the call in code at once, again and again, until TicketHub answers"
+          "Retry the call in code at once, again and again with no wait, until TicketHub answers"
         ],
         "ar": [
           "تعيد المحاولة (retry) في الشيفرة بتأخير أسي (backoff) وإزاحة عشوائية (jitter) ضمن الموعد النهائي",
           "ترسل إلى النموذج نتيجة `is_error` تقول إن TicketHub مشغول، ويقرر هو",
           "تسلّم التشغيل إلى مكتب الخدمة فورًا، لأن الأداة فشلت",
-          "تعيد المحاولة (retry) في الشيفرة فورًا ومرارًا وتكرارًا وبلا توقف حتى يردّ TicketHub"
+          "تعيد المحاولة (retry) في الشيفرة فورًا ومرارًا وتكرارًا دون أي انتظار وبلا توقف حتى يردّ TicketHub"
         ]
       },
       "a": 0,
       "why": {
         "en": "A 503 is a transient fault, and recovering from it is your code's job: retry with growing waits and a random offset inside the deadline, then report the tool unavailable. Leaving it to the model (B) turns every retry into a full model call that re-sends the whole history; retrying at once without limit (D) hammers a struggling service and ignores the deadline.",
-        "ar": "الخطأ 503 عطل عابر، وإصلاحه مهمة شيفرتك: أعد المحاولة بانتظار متزايد وإزاحة عشوائية (backoff and jitter) داخل الموعد النهائي، ثم أبلغ أن الأداة غير متاحة. وترك الأمر للنموذج (B) يحوّل كل إعادة محاولة إلى استدعاء كامل للنموذج يعيد إرسال السجل كله، وإعادة المحاولة فورًا بلا حدّ (D) تُجهد خدمة متعثرة وتتجاهل الموعد النهائي."
+        "ar": "الخطأ 503 عطل عابر، وإصلاحه مهمة شيفرتك: أعد المحاولة بتأخير أسي وإزاحة عشوائية داخل الموعد النهائي، ثم أبلغ أن الأداة غير متاحة. وترك الأمر للنموذج (B) يحوّل كل إعادة محاولة إلى استدعاء كامل للنموذج يعيد إرسال السجل كله، وإعادة المحاولة فورًا بلا حدّ (D) تُجهد خدمة متعثرة وتتجاهل الموعد النهائي."
       }
     },
     {

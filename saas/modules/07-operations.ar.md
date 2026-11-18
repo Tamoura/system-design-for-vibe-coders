@@ -145,7 +145,7 @@ sequenceDiagram
 | [filamentphp/filament](https://github.com/filamentphp/filament) | لوحات إدارة ونماذج لـ Laravel فوق Livewire | PHP | MIT | تعمل على Laravel |
 | [appsmithorg/appsmith](https://github.com/appsmithorg/appsmith) | أداة منخفضة الكود لبناء أدوات داخلية فوق قواعد البيانات والـ APIs | Java, React | Apache-2.0 | يحتاج فريق العمليات إلى شاشات ولا تستطيع تخصيص مهندسين |
 | [ToolJet/ToolJet](https://github.com/ToolJet/ToolJet) | أداة منخفضة الكود لبناء الأدوات الداخلية | TS, React | AGPL-3.0 | مثل Appsmith؛ قارن بين الأداتين عمليًا |
-| [directus/directus](https://github.com/directus/directus) | API ولوحة إدارة فورية فوق أي قاعدة بيانات SQL | TS, Vue | Monospace Sustainable Core License (source-available) | يجب أن يحرّر غير المهندسين بيانات في قاعدة بيانات موجودة لديك |
+| [directus/directus](https://github.com/directus/directus) | API ولوحة إدارة فورية فوق أي قاعدة بيانات SQL | TS, Vue | Monospace Sustainable Core License (مصدر متاح) | يجب أن يحرّر غير المهندسين بيانات في قاعدة بيانات موجودة لديك |
 | [payloadcms/payload](https://github.com/payloadcms/payload) | CMS بلا واجهة يبدأ من الكود، مع لوحة إدارة مولَّدة، ويُثبَّت داخل Next.js | TS, React | MIT | لوحة الإدارة لديك هي أيضًا المكتب الخلفي للمحتوى |
 
 يستحق المعرفة أيضًا: [avo-hq/avo](https://github.com/avo-hq/avo) (لوحة إدارة لـ Rails، نواتها بترخيص LGPL-3.0 مع مستويات تجارية) و[thoughtbot/administrate](https://github.com/thoughtbot/administrate) (إطار الإدارة لـ Rails الذي يستخدمه Chatwoot).
@@ -411,7 +411,7 @@ flowchart RL
 | طبقات الاحتفاظ | 7 أيام في التخزين السريع، و30–90 يومًا في تخزين كائنات (object storage) رخيص | استعلامات بطيئة على البيانات القديمة |
 | مقاييس مشتقة من السجلات | العدّ في المجمِّع ثم حذف الأسطر الخام | تفقد الأحداث الفردية |
 
-**صفحة الحالة وعملية إدارة الحوادث.** عندما يتعطل شيء، يحتاج العملاء إلى صفحة حالة لا تشارك بنيتك التحتية. هذا بالضبط ما يبيعه Beacon، ويجب أن يستضيف صفحته الخاصة لدى مزوّد منفصل. اجمع ذلك مع عملية خفيفة لإدارة الحوادث: قائد واحد للحادثة، وقناة، وتحديثات حالة منتظمة، وتحليل ما بعد الحادثة دون لوم ينتج بنود عمل تُتابَع.
+**صفحة الحالة وعملية إدارة الحوادث.** عندما يتعطل شيء، يحتاج العملاء إلى صفحة حالة لا تشارك بنيتك التحتية. هذا بالضبط ما يبيعه Beacon، ويجب أن يستضيف صفحته الخاصة لدى مزوّد منفصل. اجمع ذلك مع عملية خفيفة لإدارة الحوادث: قائد واحد للحادثة، وقناة، وتحديثات حالة منتظمة، ومراجعة ما بعد الحادثة دون لوم تنتج بنود عمل تُتابَع.
 
 ## 🏆 أفضل المستودعات
 

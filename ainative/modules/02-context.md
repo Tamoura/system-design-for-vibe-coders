@@ -614,7 +614,7 @@ Minutes:      <honest total, including checking>
 
 - A. Both files, and the lint counts both.
 - B. Only `AGENTS.md`, the open standard.
-- C. Neither, because two memory files conflict.
+- C. Neither, because two memory files conflict and cancel each other out.
 - D. Only `CLAUDE.md`; the lint says `AGENTS.md` is ignored.
 
 <details><summary>Answer</summary>

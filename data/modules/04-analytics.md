@@ -199,7 +199,7 @@ Lina publishes the first certified entry in the **Najm Metrics Catalogue**. Reta
 | Change log | v1.0: replaces retail, finance and risk local definitions; history backfilled to January 2024 |
 
 ## 🛠️ Exercises
-Use DuckDB or PostgreSQL with a synthetic table of 1,000 customers and 50,000 events that you generate yourself (include a few staff accounts, salary credits and reversals).
+Use DuckDB or PostgreSQL with the lab dataset from lesson 0.3: its 1,000 `customers` and 100,000 `transactions`. Add a 50,000-row `events` table of app logins, and flag a few staff accounts, salary credits and reversals, using `hash()` as in 0.3 so reruns match.
 
 - 🟢 Write three different "active customers" queries, matching the retail, finance and risk definitions in 🧭, and run them on the same data. Then write the metric card that resolves them. *Done when:* the three queries give three different numbers, you can explain each difference row by row, and your card answers every field in the table above.
 - 🟡 Build a dbt model `mart_active_customers_daily` at the grain date × segment with an "All" row, plus tests (unique combination, not null, and a custom test that "All" is never less than any segment). Show, in a query, why summing daily rows to get a monthly figure is wrong. *Done when:* `dbt build` passes and your wrong-versus-right query pair produces visibly different numbers.
@@ -435,10 +435,10 @@ Kareem replaces "Retail Performance" with a spec-first **Retail Weekly** dashboa
 | Retired | "Retail Performance" (40 charts) archived after a 30-day notice; the director's manual spreadsheet stopped |
 
 ## 🛠️ Exercises
-Run Metabase or Apache Superset locally in Docker against DuckDB or PostgreSQL with synthetic data you generate (at least 52 weeks of weekly figures for four segments and four regions).
+Run Metabase or Apache Superset locally in Docker against DuckDB or PostgreSQL with weekly figures built from the lab dataset (lesson 0.3). You need at least 52 weeks for four segments and four regions, so widen its date span and add a fourth segment and region, keeping `hash()` so reruns match.
 
 - 🟢 Take a dashboard you know (or a public one) and write its spec using the six fields above. List every chart that does not answer one of its questions. *Done when:* your spec names a decision and a cadence, and each remaining chart maps to one question.
-- 🟡 Build the Retail Weekly layout from the spec with your synthetic data: five KPI tiles with comparisons, small multiples by segment and region, and a campaign table. Rewrite every chart title as a message. *Done when:* a classmate can answer the four questions in under two minutes without your help, and no bar chart has a non-zero baseline.
+- 🟡 Build the Retail Weekly layout from the spec with your weekly data: five KPI tiles with comparisons, small multiples by segment and region, and a campaign table. Rewrite every chart title as a message. *Done when:* a classmate can answer the four questions in under two minutes without your help, and no bar chart has a non-zero baseline.
 - 🔴 Add a 52-week normal-range band (or control-chart limits) to `card_spend` and write a four-line Monday note for a week where you injected a real change and a week where you did not. *Done when:* your note flags the injected change, stays quiet about the ordinary week, and separates measured facts from explanations.
 
 ## ⚠️ Mistakes and traps
@@ -462,7 +462,7 @@ Run Metabase or Apache Superset locally in Docker against DuckDB or PostgreSQL w
 
 - A. Add more charts so that it covers every question anyone might ask
 - B. Email the dashboard link to the whole retail team every Monday
-- C. Move it to a faster, more modern BI tool so that people enjoy opening it
+- C. Move it to a faster, modern BI tool so that people enjoy opening it
 - D. Ask what she decides and how often, write a spec, and rebuild around it
 
 <details><summary>Answer</summary>
@@ -722,7 +722,7 @@ Use Python with statsmodels and scipy, and simulated data only.
 
 - A. Treatment is performing worse, because it has fewer users
 - B. Nothing important: 1,200 users out of 100,000 is negligible
-- C. The test needs a larger minimum detectable effect to be reliable
+- C. The test needs a bigger minimum detectable effect to be reliable
 - D. Sample ratio mismatch: assignment or logging is probably broken
 
 <details><summary>Answer</summary>

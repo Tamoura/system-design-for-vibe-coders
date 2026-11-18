@@ -187,7 +187,7 @@ The Art. 22 and explanation questions now rest on a model Najm can explain, and 
 **Incident playbook (summary).** Detect (alerts, complaints, sampling). Triage within one business day; Severity 1 covers data leakage, discriminatory patterns or systematic wrong refusals. Contain: switch to manual memos (the kill switch) or disable the feature. Assess which decisions and people were affected. Notify: Sara decides on a GDPR breach notification (72 hours to the supervisory authority where notifiable); Layla decides whether it is an AI Act serious incident, which the provider reports to the market surveillance authority within the Act's deadlines; supervisors such as the QCB are told as their rules require. Remediate affected decisions. Learn: root cause, change control, committee report.
 
 ## 🛠️ Exercises
-These exercises build a portfolio piece: a governance file for a GenAI credit copilot that you could show an employer. They take far longer than the study-time estimate above, which covers the reading: plan roughly 2 hours for 🟢, 4 for 🟡 and 8–10 for 🔴, over several sessions.
+These exercises build a portfolio piece: a governance file for a GenAI credit copilot that you could show an employer. The hands-on estimate above (about 15 hours) breaks down as roughly 2 hours for 🟢, 4 for 🟡 and 8–10 for 🔴; spread them over several sessions.
 
 - 🟢 **Intake and classification memo.** Using the intake table above, write a one-page classification memo covering: AI Act role(s), risk tier and reasoning (including Art. 6(3) and profiling), GPAI layer, GDPR Art. 22 exposure after *SCHUFA*, and which Qatar and UAE rules need legal review. *Done when:* each conclusion states the fact that drives it and names the instrument.
 - 🟡 **Assessments and vendor schedule.** Draft (a) a DPIA and FRIA table with at least eight risks, each with affected group, likelihood, severity, mitigation, owner and residual risk; and (b) a vendor contract schedule of at least ten clauses, each linked to a due diligence finding. *Done when:* a reviewer can trace every high residual risk to an owner who accepted it, and every contract clause to a risk.
@@ -1020,7 +1020,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 - A. Carry out the conformity assessment and draw up the declaration of conformity for the system
 - B. Draw up the technical documentation and keep it up to date through the life of the system
 - C. Affix the CE marking to the system before it is made available to its first customers
-- D. Use the system in line with its instructions, assign human oversight to competent staff and keep the logs
+- D. Use it per its instructions, assign competent human oversight and keep the logs
 
 <details><summary>Answer</summary>
 
@@ -1784,7 +1784,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 **93. Which transparency duty does the EU AI Act place on Najm, as deployer, toward applicants in Frankfurt?**
 
 - A. Publish the tool's source code, so that applicants can examine how it ranks them
-- B. Inform the applicants that they are subject to the use of a high-risk AI system in decisions about them
+- B. Inform applicants that a high-risk AI system is used in decisions about them
 - C. Obtain each applicant's explicit consent before every use of the system in a decision
 - D. None, because the vendor is the provider and so carries all transparency duties
 

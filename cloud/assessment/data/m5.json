@@ -26,7 +26,7 @@
       "a": 2,
       "why": {
         "en": "OpenTelemetry standardises how telemetry is produced and moved (SDKs, OTLP, semantic conventions), so services instrument once and Najm can change back ends by changing the Collector. It is not itself a store: Prometheus, Tempo or a log store keep the data, and Grafana draws the dashboards.",
-        "ar": "يوحّد OpenTelemetry طريقة إنتاج القياس عن بُعد (telemetry) ونقله عبر حِزم التطوير (SDKs) وبروتوكول OTLP والاصطلاحات الدلالية، فتُجهَّز الخدمات مرة واحدة ويستطيع بنك نجم تغيير الواجهة الخلفية بتغيير المُجمِّع. وهو ليس مخزنًا للبيانات بحد ذاته: فـ Prometheus أو Tempo أو مخزن السجلات تحفظ البيانات، وGrafana ترسم لوحات المعلومات."
+        "ar": "يوحّد OpenTelemetry طريقة إنتاج القياس عن بُعد (telemetry) ونقله عبر حِزم التطوير (SDKs) وبروتوكول OTLP والاصطلاحات الدلالية، فتُجهَّز الخدمات مرة واحدة ويستطيع بنك نجم تغيير الواجهة الخلفية بتغيير المُجمِّع. وهو ليس مخزنًا للبيانات بحد ذاته: فـ Prometheus أو Tempo أو مخزن السجلات تحفظ البيانات، وGrafana ترسم لوحات المتابعة."
       }
     },
     {

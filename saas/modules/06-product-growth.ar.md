@@ -612,7 +612,7 @@ sequenceDiagram
 
 **استهدف حسب المنظمة في B2B.** إن طرحت حسب *المستخدم*، يرى زميلان في Acme لوحتي تحكم مختلفتين ويفتحان تذاكر دعم محيّرة. استخدم معرّف المنظمة بوصفه مفتاح الطرح، ومرّر خصائص المنظمة (الخطة، المنطقة، تاريخ الإنشاء) بوصفها سياق استهداف. في PostHog أعلام مبنية على المجموعات لهذا الغرض، وUnleash وFlagsmith وGrowthBook كلها تسمح لك باختيار خاصية الالتصاق أو التجزئة.
 
-**OpenFeature** مشروع تابع لـ CNCF يعرّف واجهة أعلام محايدة تجاه المزوّدين. يستدعي كودك `client.getBooleanValue("new-scheduler", false, { targetingKey: orgId })`، و**مزوّد** يربط Unleash أو Flagsmith أو LaunchDarkly أو flagd أو مزوّدك الخاص. تستطيع تغيير المزوّد دون لمس مواضع الاستدعاء، و**الخطافات** تعطيك مكانًا واحدًا لتسجيل كل تقييم. وفي قاعدة كود جديدة هي طريقة رخيصة لتجنب الارتهان لمزوّد واحد.
+**OpenFeature** مشروع تابع لـ CNCF يعرّف واجهة أعلام محايدة تجاه المورّدين. يستدعي كودك `client.getBooleanValue("new-scheduler", false, { targetingKey: orgId })`، و**مزوّد** يربط Unleash أو Flagsmith أو LaunchDarkly أو flagd أو مزوّدك الخاص. تستطيع تغيير المورّد دون لمس مواضع الاستدعاء، و**الخطافات** تعطيك مكانًا واحدًا لتسجيل كل تقييم. وفي قاعدة كود جديدة هي طريقة رخيصة لتجنب الارتهان لمورّد واحد.
 
 **دَين الأعلام (Flag Debt).** كل علم إطلاق يضاعف عدد المسارات في ذلك الكود. عشرة أعلام قديمة تعني ما يصل إلى 1,024 تركيبة لم يختبرها أحد. وقصة Knight Capital هي دين الأعلام في أسوأ صوره. والحل عملية منظمة:
 
@@ -641,7 +641,7 @@ sequenceDiagram
 |---|---|---|---|---|
 | [Unleash/unleash](https://github.com/Unleash/unleash) | منصة أعلام ميزات مفتوحة المصدر وناضجة | Node.js/TypeScript, Postgres | AGPL-3.0 | أعلام مستضافة ذاتيًا مع استراتيجيات طرح قوية وحزم SDK كثيرة |
 | [Flagsmith/flagsmith](https://github.com/Flagsmith/flagsmith) | أعلام وإعدادات عن بُعد، سحابية أو مستضافة ذاتيًا | Python/Django, React | BSD-3-Clause | تريد أعلامًا مع قيم إعدادات عن بُعد لكل هوية |
-| [growthbook/growthbook](https://github.com/growthbook/growthbook) | أعلام مع منصة تجارب تعمل مباشرة على مستودع البيانات | TypeScript, MongoDB | MIT (core) | تجارب بإحصاء حقيقي على بيانات في مستودعك الخاص |
+| [growthbook/growthbook](https://github.com/growthbook/growthbook) | أعلام مع منصة تجارب تعمل مباشرة على مستودع البيانات | TypeScript, MongoDB | MIT (النواة) | تجارب بإحصاء حقيقي على بيانات في مستودعك الخاص |
 | [flipt-io/flipt](https://github.com/flipt-io/flipt) | خادم أعلام خفيف يناسب GitOps | Go | Fair Core License (FCL-1.0-MIT) | ملف تنفيذي واحد، والأعلام مخزنة بجانب إعداداتك |
 | [open-feature/spec](https://github.com/open-feature/spec) | مواصفة واجهة أعلام الميزات المحايدة تجاه المورّدين | Spec | Apache-2.0 | فهم المعيار الذي يجب أن تتبعه استدعاءات SDK لديك |
 | [open-feature/js-sdk](https://github.com/open-feature/js-sdk) | حزمة OpenFeature SDK لـ JavaScript/TypeScript | TypeScript | Apache-2.0 | كتابة استدعاءات أعلام محايدة تجاه المورّدين في تطبيق Node أو ويب |

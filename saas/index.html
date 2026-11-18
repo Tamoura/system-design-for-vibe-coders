@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="saas-source" content="d9b5e8d8095c4718">
+<meta name="saas-source" content="e124f16cfcb3b9e1">
 <meta name="description" content="SaaS Building Blocks — the ~25 components every SaaS shares, taught beginner to advanced, with the best open-source repos to learn each one from.">
 <title>SaaS Building Blocks</title>
 <style>
@@ -569,6 +569,9 @@ public status pages for teams — chosen because it needs every component.</li>
 <h2>Learning paths</h2>
 <p>Every lesson carries a level badge showing where it <em>starts</em>: 🟢 Beginner,
 🟡 Intermediate or 🔴 Advanced. Pick the track that matches you.</p>
+<p>The track lengths below and the 12-week plan assume a full-time pace of about 15–17 study hours a
+week: the course estimate above (about 207 hours) spread over 12–14 weeks. At about 6 hours a week,
+plan for roughly 35 weeks instead, or scale each week of the plan to about two and a half weeks.</p>
 <h3>🟢 Beginner track — &quot;ship a SaaS v1&quot; (≈ 4–5 weeks)</h3>
 <p>Read Module 0, then lessons <a class="xref" href="#/1.1">1.1</a>, 1.2, 2.1, 2.2, 3.1, 4.1 and 6.1. Do the 🟢
 exercise in each, plus the 🟡 exercise in 1.1 (GitHub sign-in and password reset)
@@ -2601,7 +2604,7 @@ git log --oneline -S &quot;maxMonitors&quot; -- .
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li>Authentication proves who is making a request. It is a set of flows (sign-up, login, verification, reset, MFA, logout), and an attacker picks the weakest one.</li>
-<li>The one rule: hash passwords with argon2id or bcrypt, and store only hashes of session, reset and magic-link tokens.</li>
+<li>The one rule: hash passwords with argon2id, scrypt or bcrypt, and store only hashes of session, reset and magic-link tokens.</li>
 <li>Default for a v1: a library such as Better Auth, Devise or django-allauth, with server-side sessions in an <code>HttpOnly</code>, <code>Secure</code>, <code>SameSite=Lax</code> cookie.</li>
 <li>Social login means the authorization code flow with PKCE, keyed on the provider&#39;s <code>sub</code>, never on email alone.</li>
 <li>Biggest trap: the edges, such as reset links that work twice, &quot;email not found&quot; messages, and a logout that only clears the cookie.</li>
@@ -2881,7 +2884,7 @@ export async function validateSession(token: string) {
 <section class="sec sec-mistakes"><h2>⚠️ Mistakes juniors make</h2>
 <ul>
 <li><strong>Storing JWTs in <code>localStorage</code>.</strong> Any XSS bug, including one in a third-party script, can read and send it. Use an <code>HttpOnly</code> cookie, and for your own web app a server-side session.</li>
-<li><strong>Hashing passwords with SHA-256 or MD5, even with a salt.</strong> They are fast, so leaked hashes get cracked in bulk on GPUs. Use argon2id or bcrypt through a maintained library.</li>
+<li><strong>Hashing passwords with SHA-256 or MD5, even with a salt.</strong> They are fast, so leaked hashes get cracked in bulk on GPUs. Use argon2id, scrypt or bcrypt through a maintained library.</li>
 <li><strong>Matching OAuth accounts by email alone.</strong> Unverified or mutable email claims let an attacker sign in as someone else. Store <code>(provider, provider_user_id)</code> and treat email as a hint.</li>
 <li><strong>Reset and magic-link tokens that live forever or work twice.</strong> Old emails get forwarded, archived and leaked. Hash them, expire them in minutes, and delete them on use.</li>
 <li><strong>Leaking account existence.</strong> &quot;No user with that email&quot; on login or reset gives attackers a free target list. Use one generic message and constant-ish timing.</li>
@@ -2891,7 +2894,7 @@ export async function validateSession(token: string) {
 <section class="sec sec-recap"><h2>🧾 Recap</h2>
 <ul>
 <li>Authentication is a set of flows: sign-up, login, verification, reset, MFA and logout. Secure all of them equally.</li>
-<li>Hash passwords with argon2id or bcrypt. Store only hashes of session, reset and magic-link tokens.</li>
+<li>Hash passwords with argon2id, scrypt or bcrypt. Store only hashes of session, reset and magic-link tokens.</li>
 <li>Server-side sessions in an <code>HttpOnly</code>, <code>Secure</code>, <code>SameSite=Lax</code> cookie are the default. JWTs are for verification across services.</li>
 <li>Social login means authorization code plus PKCE, keyed on the provider&#39;s subject id, never on email alone.</li>
 <li>Passkeys are phishing-resistant and the future. TOTP with recovery codes is today&#39;s solid MFA.</li>
@@ -4083,23 +4086,27 @@ export async function patchScimUser(org: Org, scimId: string, body: ScimPatch) {
 <p>Column order matters: the index serves queries that filter by <code>monitor_id</code> and sort by <code>checked_at</code>, not the other way round. Learn to read <code>EXPLAIN ANALYZE</code> output; a <code>Seq Scan</code> on a big table in a hot path is a bug report waiting to happen. Remember that Postgres does <em>not</em> automatically index foreign key columns.</p>
 <p>Here is the dashboard query from the 🟡 exercise below, before and after that index (Postgres 16, plans trimmed; the Beacon starter names the table <code>check_results</code> and already ships this index, so run <code>DROP INDEX check_results_monitor_time_idx;</code> first to see the &quot;before&quot; plan):</p>
 <pre><code class="language-text">-- Before: no index (500 monitors x 1,000 checks)
-Nested Loop Left Join  (actual time=23.916..9967.135 rows=500 loops=1)
-  -&gt;  Seq Scan on monitor m  (actual time=0.007..0.382 rows=500 loops=1)
-  -&gt;  Limit  (actual time=19.929..19.929 rows=1 loops=500)
-        -&gt;  Sort  (actual time=19.926..19.926 rows=1 loops=500)
-              -&gt;  Seq Scan on check_result  (actual time=0.011..19.795 rows=1000 loops=500)
+Nested Loop Left Join  (actual time=112.031..6521.601 rows=500 loops=1)
+  -&gt;  Seq Scan on monitor m  (actual time=97.172..97.557 rows=500 loops=1)
+        Filter: (organization_id = 1)
+  -&gt;  Limit  (actual time=12.844..12.845 rows=1 loops=500)
+        -&gt;  Sort  (actual time=12.842..12.842 rows=1 loops=500)
+              Sort Key: check_result.checked_at DESC
+              -&gt;  Seq Scan on check_result  (actual time=6.284..12.752 rows=1000 loops=500)
+                    Filter: (monitor_id = m.id)
                     Rows Removed by Filter: 499000
-Execution Time: 9967.420 ms
+Execution Time: 6536.568 ms
 
 -- After: CREATE INDEX check_result_monitor_time_idx ...
-Nested Loop Left Join  (actual time=0.017..1.815 rows=500 loops=1)
-  -&gt;  Seq Scan on monitor m  (actual time=0.006..0.044 rows=500 loops=1)
-  -&gt;  Limit  (actual time=0.003..0.003 rows=1 loops=500)
-        -&gt;  Index Scan using check_result_monitor_time_idx on check_result  (actual time=0.003..0.003 rows=1 loops=500)
+Nested Loop Left Join  (actual time=0.056..4.742 rows=500 loops=1)
+  -&gt;  Seq Scan on monitor m  (actual time=0.010..0.159 rows=500 loops=1)
+        Filter: (organization_id = 1)
+  -&gt;  Limit  (actual time=0.009..0.009 rows=1 loops=500)
+        -&gt;  Index Scan using check_result_monitor_time_idx on check_result  (actual time=0.009..0.009 rows=1 loops=500)
               Index Cond: (monitor_id = m.id)
-Execution Time: 1.843 ms
+Execution Time: 4.844 ms
 </code></pre>
-<p>Read a plan from the most indented line outwards. <code>actual time</code> is in milliseconds per loop (first row..last row), and <code>loops=500</code> means that step ran once per monitor. Before: a <code>Seq Scan</code> on <code>check_result</code> ran 500 times and threw away 499,000 rows each time. After: an <code>Index Scan</code> reads one row per monitor, and the query drops from about 10 seconds to 2 ms. The <code>Seq Scan on monitor</code> is fine: that table holds 500 rows.</p>
+<p>Read a plan from the most indented line outwards. <code>actual time</code> is in milliseconds per loop (first row..last row), and <code>loops=500</code> means that step ran once per monitor. Before: a <code>Seq Scan</code> on <code>check_result</code> ran 500 times and threw away 499,000 rows each time. After: an <code>Index Scan</code> reads one row per monitor, and the query drops from about 6.5 seconds to under 5 ms. The <code>Seq Scan on monitor</code> is fine: that table holds 500 rows.</p>
 <p>The N+1 problem from the opening is the classic ORM trap: one query for the list, then N queries for each item&#39;s relation. The fix is to fetch relations in one go: <code>include</code> in Prisma, <code>with</code> in Drizzle&#39;s relational queries, <code>includes</code>/<code>preload</code> in Rails, <code>select_related</code>/<code>prefetch_related</code> in Django, or a single SQL query with a join, <code>DISTINCT ON</code> or <code>LATERAL</code>. Query logs and APM traces (lesson <a class="xref" href="#/7.2">7.2</a>) make it visible.</p>
 <p><strong>Transactions.</strong> A transaction groups statements so they all succeed or all fail. When Beacon opens an incident it must insert the incident, mark the monitor as down, and enqueue notifications. If the second step fails after the first succeeded, you have an incident for a monitor that looks healthy. Wrap them in one transaction. Keep transactions short and never call external APIs (Stripe, email) inside one. The pattern for &quot;write to DB and reliably trigger a side effect&quot; is the <strong>transactional outbox</strong>: insert an <code>outbox</code> row in the same transaction, and let a background worker (lesson <a class="xref" href="#/5.1">5.1</a>) deliver it.</p>
 <p><strong>Zero-downtime migrations: expand and contract.</strong> During a deploy, old and new versions of your code run at the same time, against one database. So a migration must be compatible with both. Renaming <code>monitor.url</code> to <code>monitor.target</code> safely takes several deploys:</p>
@@ -4219,7 +4226,7 @@ Execution Time: 1.843 ms
 <li>Running the seed twice does not create duplicates.</li>
 </ul>
 <h3>🟡 Intermediate exercise</h3>
-<p>Build the dashboard query &quot;all monitors in my org with their latest check&quot; and make it fast. Seed 500 monitors with 1,000 checks each, log the queries, fix any N+1, and add the index that makes <code>EXPLAIN ANALYZE</code> show an index scan. Use the <code>LATERAL</code> form below: the common <code>DISTINCT ON (m.id) ... ORDER BY m.id, c.checked_at DESC</code> version still reads all 500,000 checks and took about 400 ms with the index in our test run.</p>
+<p>Build the dashboard query &quot;all monitors in my org with their latest check&quot; and make it fast. Seed 500 monitors with 1,000 checks each, log the queries, fix any N+1, and add the index that makes <code>EXPLAIN ANALYZE</code> show an index scan. Use the <code>LATERAL</code> form below: the common <code>DISTINCT ON (m.id) ... ORDER BY m.id, c.checked_at DESC</code> version still reads all 500,000 checks and took about 250 ms with the index in our test run.</p>
 <pre><code class="language-sql">SELECT m.id, m.url, c.status_code, c.checked_at
 FROM monitor m
 LEFT JOIN LATERAL (

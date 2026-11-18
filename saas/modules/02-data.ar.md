@@ -114,28 +114,32 @@ CREATE INDEX check_result_monitor_time_idx
 
 ترتيب الأعمدة مهم: هذا الفهرس يخدم الاستعلامات التي تصفّي حسب `monitor_id` وترتّب حسب `checked_at`، وليس العكس. تعلّم قراءة مخرجات `EXPLAIN ANALYZE`؛ فوجود `Seq Scan` على جدول كبير في مسار ساخن هو بلاغ خطأ ينتظر أن يُكتب. وتذكّر أن Postgres *لا* يفهرس أعمدة المفاتيح الأجنبية تلقائيًا.
 
-هذا استعلام لوحة التحكم من تمرين 🟡 أدناه، قبل ذلك الفهرس وبعده (Postgres 16، مع اختصار الخطط؛ يسمّي مشروع Beacon الابتدائي الجدول `check_results` ويأتي بهذا الفهرس جاهزًا، فشغّل أولًا `DROP INDEX check_results_monitor_time_idx;` لترى خطة «قبل»):
+هذا استعلام لوحة التحكم من تمرين 🟡 أدناه، قبل ذلك الفهرس وبعده (Postgres 16، مع اختصار الخطط؛ تسمّي نسخة البداية من Beacon الجدول `check_results` ويأتي بهذا الفهرس جاهزًا، فشغّل أولًا `DROP INDEX check_results_monitor_time_idx;` لترى خطة «قبل»):
 
 ```text
 -- Before: no index (500 monitors x 1,000 checks)
-Nested Loop Left Join  (actual time=23.916..9967.135 rows=500 loops=1)
-  ->  Seq Scan on monitor m  (actual time=0.007..0.382 rows=500 loops=1)
-  ->  Limit  (actual time=19.929..19.929 rows=1 loops=500)
-        ->  Sort  (actual time=19.926..19.926 rows=1 loops=500)
-              ->  Seq Scan on check_result  (actual time=0.011..19.795 rows=1000 loops=500)
+Nested Loop Left Join  (actual time=112.031..6521.601 rows=500 loops=1)
+  ->  Seq Scan on monitor m  (actual time=97.172..97.557 rows=500 loops=1)
+        Filter: (organization_id = 1)
+  ->  Limit  (actual time=12.844..12.845 rows=1 loops=500)
+        ->  Sort  (actual time=12.842..12.842 rows=1 loops=500)
+              Sort Key: check_result.checked_at DESC
+              ->  Seq Scan on check_result  (actual time=6.284..12.752 rows=1000 loops=500)
+                    Filter: (monitor_id = m.id)
                     Rows Removed by Filter: 499000
-Execution Time: 9967.420 ms
+Execution Time: 6536.568 ms
 
 -- After: CREATE INDEX check_result_monitor_time_idx ...
-Nested Loop Left Join  (actual time=0.017..1.815 rows=500 loops=1)
-  ->  Seq Scan on monitor m  (actual time=0.006..0.044 rows=500 loops=1)
-  ->  Limit  (actual time=0.003..0.003 rows=1 loops=500)
-        ->  Index Scan using check_result_monitor_time_idx on check_result  (actual time=0.003..0.003 rows=1 loops=500)
+Nested Loop Left Join  (actual time=0.056..4.742 rows=500 loops=1)
+  ->  Seq Scan on monitor m  (actual time=0.010..0.159 rows=500 loops=1)
+        Filter: (organization_id = 1)
+  ->  Limit  (actual time=0.009..0.009 rows=1 loops=500)
+        ->  Index Scan using check_result_monitor_time_idx on check_result  (actual time=0.009..0.009 rows=1 loops=500)
               Index Cond: (monitor_id = m.id)
-Execution Time: 1.843 ms
+Execution Time: 4.844 ms
 ```
 
-اقرأ الخطة من السطر الأكثر إزاحة إلى الخارج. القيمة `actual time` بالمللي ثانية لكل دورة (من أول صف إلى آخر صف)، و`loops=500` تعني أن الخطوة نُفّذت مرة لكل مراقِب. قبل الفهرس: نُفّذ `Seq Scan` على `check_result` خمسمئة مرة، وفي كل مرة رمى 499,000 صف. بعده: يقرأ `Index Scan` صفًا واحدًا لكل مراقِب، وينخفض زمن الاستعلام من نحو 10 ثوانٍ إلى 2 مللي ثانية. أما `Seq Scan on monitor` فلا بأس به: فهذا الجدول فيه 500 صف فقط.
+اقرأ الخطة من السطر الأكثر إزاحة إلى الخارج. القيمة `actual time` بالمللي ثانية لكل دورة (من أول صف إلى آخر صف)، و`loops=500` تعني أن الخطوة نُفّذت مرة لكل مراقِب. قبل الفهرس: نُفّذ `Seq Scan` على `check_result` خمسمئة مرة، وفي كل مرة رمى 499,000 صف. بعده: يقرأ `Index Scan` صفًا واحدًا لكل مراقِب، وينخفض زمن الاستعلام من نحو 6.5 ثانية إلى أقل من 5 مللي ثانية. أما `Seq Scan on monitor` فلا بأس به: فهذا الجدول فيه 500 صف فقط.
 
 مشكلة N+1 (N+1 problem) التي رأيناها في البداية هي الفخ الكلاسيكي لأدوات ORM: استعلام واحد للقائمة، ثم N استعلامًا لعلاقة كل عنصر. الحل أن تجلب العلاقات دفعة واحدة: `include` في Prisma، و`with` في الاستعلامات العلائقية في Drizzle، و`includes`/`preload` في Rails، و`select_related`/`prefetch_related` في Django، أو استعلام SQL واحد مع ربط أو `DISTINCT ON` أو `LATERAL`. سجلات الاستعلامات وتتبّعات (traces) APM (الدرس 7.2) تجعلها مرئية.
 
@@ -221,7 +225,7 @@ flowchart RL
 
 ### 🟡 تمرين المستوى المتوسط
 
-ابنِ استعلام لوحة التحكم "كل المراقِبات في منظمتي مع آخر فحص لكل منها" واجعله سريعًا. ازرع 500 مراقِب مع 1,000 فحص لكل منها، وسجّل الاستعلامات، وأصلح أي N+1، وأضف الفهرس الذي يجعل `EXPLAIN ANALYZE` يُظهر مسحًا عبر الفهرس. استخدم صيغة `LATERAL` أدناه: فالصيغة الشائعة `DISTINCT ON (m.id) ... ORDER BY m.id, c.checked_at DESC` تقرأ كل الفحوص الخمسمئة ألف حتى مع الفهرس، واستغرقت نحو 400 مللي ثانية في تجربتنا.
+ابنِ استعلام لوحة التحكم "كل المراقِبات في منظمتي مع آخر فحص لكل منها" واجعله سريعًا. ازرع 500 مراقِب مع 1,000 فحص لكل منها، وسجّل الاستعلامات، وأصلح أي N+1، وأضف الفهرس الذي يجعل `EXPLAIN ANALYZE` يُظهر مسحًا عبر الفهرس. استخدم صيغة `LATERAL` أدناه: فالصيغة الشائعة `DISTINCT ON (m.id) ... ORDER BY m.id, c.checked_at DESC` تقرأ كل الفحوص الخمسمئة ألف حتى مع الفهرس، واستغرقت نحو 250 مللي ثانية في تجربتنا.
 
 ```sql
 SELECT m.id, m.url, c.status_code, c.checked_at
@@ -649,7 +653,7 @@ ORDER BY score DESC
 LIMIT 10;
 ```
 
-**الدرجة 3: البحث النصي الكامل في Postgres.** للنصوص الطويلة (تحديثات الحوادث، وتقارير ما بعد الحوادث، والملاحظات)، يحوّل Postgres النص إلى `tsvector`: قائمة مرتبة من المصطلحات المجذّعة مع مواضعها. وتصبح الاستعلامات `tsquery`. تقبل `websearch_to_tsquery('english', 'certificate -staging')` صيغة شبيهة بـ Google، وترتّب `ts_rank` النتائج، وتبرز `ts_headline` المطابقات. خزّن المتجه في عمود مولَّد مع فهرس GIN:
+**الدرجة 3: البحث النصي الكامل في Postgres.** للنصوص الطويلة (تحديثات الحوادث، وتقارير مراجعة ما بعد الحادثة، والملاحظات)، يحوّل Postgres النص إلى `tsvector`: قائمة مرتبة من المصطلحات المجذّعة مع مواضعها. وتصبح الاستعلامات `tsquery`. تقبل `websearch_to_tsquery('english', 'certificate -staging')` صيغة شبيهة بـ Google، وترتّب `ts_rank` النتائج، وتبرز `ts_headline` المطابقات. خزّن المتجه في عمود مولَّد مع فهرس GIN:
 
 ```sql
 ALTER TABLE incident_update ADD COLUMN search tsvector
@@ -710,10 +714,10 @@ flowchart RL
 
 | المستودع | ما هو | التقنيات | الترخيص | اختره عندما |
 |---|---|---|---|---|
-| [meilisearch/meilisearch](https://github.com/meilisearch/meilisearch) | محرك بحث فوري متسامح مع الأخطاء الإملائية مع رموز المستأجرين | Rust | MIT (Community Edition); Enterprise Edition parts BUSL-1.1 | تريد أفضل تجربة بحث داخل التطبيق بأقل ضبط |
+| [meilisearch/meilisearch](https://github.com/meilisearch/meilisearch) | محرك بحث فوري متسامح مع الأخطاء الإملائية مع رموز المستأجرين | Rust | MIT (نسخة Community Edition)؛ وأجزاء Enterprise Edition بترخيص BUSL-1.1 | تريد أفضل تجربة بحث داخل التطبيق بأقل ضبط |
 | [typesense/typesense](https://github.com/typesense/typesense) | بحث في الذاكرة متسامح مع الأخطاء مع مفاتيح API محددة النطاق وعنقدة | C++ | GPL-3.0 | تريد بحثًا شبيهًا بـ Algolia تستضيفه بنفسك مع توافر عالٍ (high availability) |
 | [opensearch-project/OpenSearch](https://github.com/opensearch-project/OpenSearch) | تفرّع مجتمعي من Elasticsearch، مشروع تابع لـ Linux Foundation | Java | Apache-2.0 | مجموعات بيانات كبيرة، أو تجميعات، أو تعمل على AWS |
-| [elastic/elasticsearch](https://github.com/elastic/elasticsearch) | محرك البحث والتحليل الموزّع الأصلي | Java | AGPL-3.0 / SSPL / ELv2 (choice) | تحتاج منظومته أو تستخدم Elastic Cloud |
+| [elastic/elasticsearch](https://github.com/elastic/elasticsearch) | محرك البحث والتحليل الموزّع الأصلي | Java | AGPL-3.0 / SSPL / ELv2 (للاختيار) | تحتاج منظومته أو تستخدم Elastic Cloud |
 | [paradedb/paradedb](https://github.com/paradedb/paradedb) | بحث نصي كامل بترتيب BM25 كإضافة لـ Postgres | Rust | AGPL-3.0 | تريد ترتيبًا بجودة محرك بحث دون مسار مزامنة |
 | [pgvector/pgvector](https://github.com/pgvector/pgvector) | نوع متجهي وفهارس ANN لـ Postgres | C | PostgreSQL | تضيف بحثًا دلاليًا أو هجينًا وتريد البقاء في Postgres |
 | [quickwit-oss/tantivy](https://github.com/quickwit-oss/tantivy) | مكتبة بحث نصي كامل، المقابل في Rust لـ Lucene | Rust | MIT | تريد فهم طريقة عمل محرك قائم على الفهرس المقلوب |

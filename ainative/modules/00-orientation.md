@@ -22,7 +22,7 @@
 ## 🧭 Why it matters
 On Thursday Lujain, the graduate engineer, closes ticket REMIT-209 in fifteen minutes. Her agent wrote the change, reported "all tests pass" and she committed. On Friday the support team's spreadsheet shows the wrong fees. Tariq, the engineering lead, asks one question: "Who is the author of this change?" She says the agent did. Tariq says no: the author is whoever's name is on the commit, and that person has to explain every line.
 
-The tool was not the problem; a way of working was missing: no context about who reads the output, no definition of done, no look at the diff. This course builds it over fourteen weeks on one small codebase.
+The tool was not the problem; a way of working was missing: no context about who reads the output, no definition of done, no look at the diff. This course builds it over about fifteen weeks on one small codebase.
 
 ## 📐 How it works
 
@@ -240,7 +240,7 @@ Would I delegate it again?     Yes, with the same spec
 
 - A. This course, because it is about working with agents
 - B. *Software Testing*, because every feature needs tests
-- C. *System Design for Vibe Coders*, because it covers agents
+- C. *System Design for Vibe Coders*, as it covers agents
 - D. *Building AI Applications & Agents*, the companion course
 
 <details><summary>Answer</summary>
@@ -552,7 +552,7 @@ A right fix committed as `fixed the typo` fails one line, `Commit messages follo
 **4. `grade` shows every line PASS except the commit-message check, which quotes your message "fixed the typo". What now?**
 
 - A. Amend the commit with a `type(scope): subject` message
-- B. Add a second commit with a better message
+- B. Add a second commit on top, with a message that describes the change
 - C. Edit the hidden test so the message is accepted
 - D. Rerun `ailab doctor`, which re-checks messages
 

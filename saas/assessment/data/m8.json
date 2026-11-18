@@ -45,7 +45,7 @@
      "Purge the exposed list from every store first, then decide whether anyone has to be told about it"
     ],
     "ar": [
-     "أبلغ Acme دون تأخير، لأن أمام Acme 72 ساعة لإبلاغ سلطتها الرقابية",
+     "أبلغ Acme دون تأخير غير مبرر، فأمامها 72 ساعة لإبلاغ سلطتها الرقابية",
      "أبلغ السلطة الرقابية مباشرةً خلال 72 ساعة، لأن الاختراق وقع لدى Beacon",
      "أبلغ Acme خلال 72 ساعة، لأنه الموعد النهائي الذي يمنحه GDPR للمعالج كي يبلّغ عن الاختراق",
      "احذف القائمة المكشوفة من كل مخزن أولًا، ثم قرّر هل يجب إبلاغ أحد بالأمر"
@@ -54,7 +54,7 @@
    "a": 0,
    "why": {
     "en": "As controller, Acme must notify its supervisory authority within 72 hours of becoming aware of the breach (Art. 33), and Beacon, as processor, must tell Acme without undue delay, which is why its incident process needs a clock. Notifying the authority directly is tempting, but that duty sits with the controller, and 72 hours is the controller's deadline, not the processor's.",
-    "ar": "بصفتها متحكمًا، يجب على Acme إبلاغ السلطة الرقابية خلال 72 ساعة من علمها بالاختراق، وفق المادة 33 (Art. 33)، أما Beacon بصفته معالجًا فيجب أن يبلغ Acme دون تأخير غير مبرر، ولهذا تحتاج عملية الاستجابة للحوادث لديه إلى ساعة توقيت. وإبلاغ السلطة مباشرةً مغرٍ، لكنه واجب المتحكم، والـ 72 ساعة هي الموعد النهائي للمتحكم لا للمعالج."
+    "ar": "بصفتها متحكمًا، يجب على Acme إبلاغ السلطة الرقابية خلال 72 ساعة من علمها بالاختراق، وفق المادة 33، أما Beacon بصفته معالجًا فيجب أن يبلغ Acme دون تأخير غير مبرر، ولهذا تحتاج عملية الاستجابة للحوادث لديه إلى ساعة توقيت. وإبلاغ السلطة مباشرةً مغرٍ، لكنه واجب المتحكم، والـ 72 ساعة هي الموعد النهائي للمتحكم لا للمعالج."
    }
   },
   {
@@ -91,7 +91,7 @@
    "lesson": "8.2",
    "q": {
     "en": "Beacon plans an AI responder for Business orgs. It reads new error bodies and incident comments, can search the org's private postmortems, and has a sendWebhook(url, body) tool that posts to any URL the model picks. Security review must decide on it. What is the best call?",
-    "ar": "يخطط Beacon لوكيل استجابة بالذكاء الاصطناعي لمنظمات خطة Business. يقرأ الوكيل نصوص الأخطاء الجديدة وتعليقات الحوادث، ويستطيع البحث في تقارير ما بعد الحادثة الخاصة بالمنظمة، ولديه أداة اسمها sendWebhook ترسل إلى أي رابط يختاره النموذج. ويجب أن تتخذ المراجعة الأمنية قرارًا بشأنه. ما القرار الأفضل؟"
+    "ar": "يخطط Beacon لوكيل استجابة بالذكاء الاصطناعي لمنظمات خطة Business. يقرأ الوكيل نصوص الأخطاء الجديدة وتعليقات الحوادث، ويستطيع البحث في تقارير مراجعة ما بعد الحادثة الخاصة بالمنظمة، ولديه أداة اسمها sendWebhook ترسل إلى أي رابط يختاره النموذج. ويجب أن تتخذ المراجعة الأمنية قرارًا بشأنه. ما القرار الأفضل؟"
    },
    "o": {
     "en": [
@@ -110,7 +110,7 @@
    "a": 3,
    "why": {
     "en": "Private data, untrusted content and the ability to communicate externally together form the lethal trifecta, and because prompt injection has no complete fix, you remove at least one leg: here, the free-form webhook tool, which is also an SSRF risk. A system prompt or a passing eval can't reliably stop injection, and user-scoped tools still let an injected comment send that org's own postmortems out.",
-    "ar": "البيانات الخاصة والمحتوى غير الموثوق والقدرة على التواصل مع الخارج تشكّل معًا الثالوث القاتل (lethal trifecta)، ولأن حقن الموجّهات (prompt injection) ليس له إصلاح كامل، فأنت تزيل واحدًا على الأقل من الثلاثة: وهو هنا أداة الـ webhook المفتوحة، وهي أيضًا خطر SSRF. أما موجّه النظام أو التقييم الناجح فلا يوقفان الحقن بشكل موثوق، والأدوات المقيدة بالمستخدم تسمح مع ذلك لتعليق محقون بإرسال تقارير ما بعد الحادثة الخاصة بالمنظمة نفسها إلى الخارج."
+    "ar": "البيانات الخاصة والمحتوى غير الموثوق والقدرة على التواصل مع الخارج تشكّل معًا الثالوث القاتل (lethal trifecta)، ولأن حقن الموجّهات (prompt injection) ليس له إصلاح كامل، فأنت تزيل واحدًا على الأقل من الثلاثة: وهو هنا أداة الـ webhook المفتوحة، وهي أيضًا خطر SSRF. أما موجّه النظام أو التقييم الناجح فلا يوقفان الحقن بشكل موثوق، والأدوات المقيدة بالمستخدم تسمح مع ذلك لتعليق محقون بإرسال تقارير مراجعة ما بعد الحادثة الخاصة بالمنظمة نفسها إلى الخارج."
    }
   }
  ],

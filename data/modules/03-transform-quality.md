@@ -366,10 +366,10 @@ A seed is referenced like a model, with `{{ ref('transactions') }}` rather than 
 
 **4. A staging model `stg_core__transactions` has a `unique` test on `transaction_id` that fails during `dbt build`. What happens to `fct_transactions`, which depends on it?**
 
-- A. It builds normally, and the failure is logged for later
+- A. It builds normally and the failure is logged for later
 - B. It is skipped, so the bad data does not flow downstream
 - C. It is dropped from the warehouse
-- D. dbt automatically removes the duplicates and rebuilds it
+- D. dbt automatically removes duplicates and rebuilds it
 
 <details><summary>Answer</summary>
 

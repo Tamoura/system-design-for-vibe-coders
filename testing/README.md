@@ -27,7 +27,7 @@ Every exercise runs on a laptop with free tools — no paid AI API key needed. I
 - **Computer:** any recent Windows, macOS or Linux laptop with about 8 GB of memory and 5 GB of free disk. Windows commands differ slightly; the lessons show them.
 - **Costs and accounts:** none are required. A free GitHub account helps for the CI lessons (5.2, 8.1). AI assistants are optional; no lesson needs a paid API key.
 - **Safety:** never paste a real password, token or API key into a chat with an AI assistant. The sample's tokens are fake; keep them that way.
-- **Time (estimates):** about 100 hours in all, most of it hands-on: roughly 2 to 4 hours per lesson in Modules 0 to 7, and 20 hours or more for the capstone. At 6 to 8 hours a week, plan on about four months. The "Study time" line at the top of each lesson is a shorter estimate that does not count all the hands-on exercises; plan your weeks with the figures here.
+- **Time (estimates):** see the study-time line at the top of this page: about 95 hours in all, most of it hands-on, or roughly 16 weeks at about 6 hours a week. The capstone alone takes about 20 hours. The "Study time" line at the top of each lesson splits that lesson into reading and hands-on time; use those lines to plan each week.
 
 ## How every lesson works
 

@@ -14,7 +14,7 @@ Honest label: this is **production engineering for AI-assisted builders**. It is
 
 ## How the course works
 
-**Time:** 69 lessons, about 70 hours of study in all. A steady pace is three or four lessons a week, which finishes the course in about five months; Part 0 (Foundations) alone takes about three and a half hours.
+**Time:** 69 lessons, about 104 hours of study in all (the estimate above). A steady pace is about four lessons, or six hours, a week, which finishes the course in about 17 weeks, roughly four months; Part 0 (Foundations) alone takes a little over four hours.
 
 **What you need:** a computer, an AI agent that can run commands on it (Claude Code or Cursor; Claude Code needs a paid plan or API credits, Cursor has a limited free tier), and, from lesson F.5, free GitHub and hosting accounts. Part 0 opens with a 20-minute setup box. You never paste a password or token into the chat.
 

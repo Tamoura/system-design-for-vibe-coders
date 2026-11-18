@@ -187,7 +187,7 @@ The card is short on purpose. Its job is to force the two conversations that pre
 - A. Data scientist, because definitions feed the features of models
 - B. ML engineer, because a shared model must be deployed and kept running
 - C. Data analyst, because analysts are the people who use the number most
-- D. Analytics engineer, because the transformation layer and its tests are their remit
+- D. Analytics engineer, because the transformation layer is their remit
 
 <details><summary>Answer</summary>
 

@@ -708,9 +708,9 @@ Layla produces a **jurisdiction map** for the AI Governance Committee, showing w
 **1. Which of the following is a legally binding international treaty on AI?**
 
 - A. The Council of Europe Framework Convention on AI and Human Rights, Democracy and the Rule of Law
-- B. The G7 Hiroshima International Code of Conduct
-- C. The UNESCO Recommendation on the Ethics of AI
-- D. The OECD AI Principles
+- B. The G7 Hiroshima Process International Code of Conduct for Organizations Developing Advanced AI Systems
+- C. The UNESCO Recommendation on the Ethics of Artificial Intelligence, adopted in 2021
+- D. The OECD Recommendation of the Council on Artificial Intelligence (the OECD AI Principles)
 
 <details><summary>Answer</summary>
 

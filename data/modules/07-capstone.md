@@ -558,7 +558,7 @@ Kareem's plan targets analytics engineering: his proof is three Monday extracts 
 **3. In a pipeline interview at a neutral company, the interviewer asks what happens if the daily load runs twice. Which answer scores best?**
 
 - A. A MERGE or partition overwrite makes the rerun a no-op; tests catch duplicates if that regresses
-- B. The scheduler is configured to prevent concurrent runs, so a double run cannot happen in practice
+- B. The scheduler is set to prevent concurrent runs, so a double run cannot happen in practice
 - C. We would notice the inflated totals in the dashboard and delete the duplicate rows by hand
 - D. Duplicates do not matter much in analytics, because trends stay roughly the same over time
 

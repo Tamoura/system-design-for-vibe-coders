@@ -178,13 +178,13 @@ After the 312-account gap, Faisal asks Huda to write an **ingestion design note*
 Every new pipeline must also tick: *raw append-only with load metadata; deletes handled; overlap or CDC; merge into staging; reconciliation defined; personal data minimised at source; owner and alerts named.*
 
 ## 🛠️ Exercises
-Use synthetic data only. A generator script or a public sample database is fine; never real customer data.
+Use synthetic data only: the lab dataset from lesson 0.3 (its `accounts` and `transactions` tables) is the easiest source, and a public sample database is also fine; never real customer data.
 
 **Before the 🟡 exercise.** Kafka is taught properly in lesson 2.3; here you need only four words. A *topic* is a named log of events, a *producer* writes to it, a *consumer* reads it, and Kafka Connect runs connectors such as Debezium between a database and a topic. Start from the PostgreSQL Docker Compose file in the `tutorial` folder of Debezium's examples repository on GitHub, which starts a PostgreSQL already set up for logical decoding, Kafka and Kafka Connect together. Give Docker at least 4 GB of memory (lesson 0.3, *Will my laptop cope?*).
 
-- 🟢 In PostgreSQL or DuckDB, create a synthetic `accounts` table (1,000 rows with `updated_at`) and copy it to `raw_accounts` with `_loaded_at` and `_batch_id`. Then update 50 rows, delete 10, insert 20 and run a high-water-mark incremental load. *Done when:* you can show, with a query, exactly which changes the incremental load caught and which it missed, and explain why.
+- 🟢 In PostgreSQL or DuckDB, take the lab's `accounts` table (1,800 rows), add an `updated_at` column and copy it to `raw_accounts` with `_loaded_at` and `_batch_id`. Then update 50 rows, delete 10, insert 20 and run a high-water-mark incremental load. *Done when:* you can show, with a query, exactly which changes the incremental load caught and which it missed, and explain why.
 - 🟡 Run PostgreSQL with `wal_level = logical`, Kafka (or Redpanda) and Kafka Connect with the Debezium PostgreSQL connector in Docker, following the Debezium tutorial. Capture one table, then insert, update and delete rows. *Done when:* you can show the `c`, `u` and `d` events in the topic, and a SQL query over the landed events that rebuilds the current table state exactly.
-- 🔴 Write an ingestion design note, using the Najm template, for your synthetic `transactions` table, with a reconciliation query. Stop the CDC connector for an hour while generating writes. *Done when:* you can show the slot's retained WAL growing, a clean catch-up after restart (no lost or duplicated rows) and the reconciliation passing.
+- 🔴 Write an ingestion design note, using the Najm template, for the lab's `transactions` table, with a reconciliation query. Stop the CDC connector for an hour while generating writes. *Done when:* you can show the slot's retained WAL growing, a clean catch-up after restart (no lost or duplicated rows) and the reconciliation passing.
 
 ## ⚠️ Mistakes and traps
 - **Trusting `updated_at` without checking.** Bulk scripts, triggers and long transactions break it. Ask the source owner, overlap the window, merge on the key, or use CDC.
@@ -828,9 +828,9 @@ Before the card stream feeds Smart Alerts in production, Faisal and Dana write a
 Dana's go-live test: *"Kill the feature job mid-stream, restart it, and show every card's 10-minute count matches a batch recomputation from the raw archive."*
 
 ## 🛠️ Exercises
-Run Kafka or Redpanda locally in Docker using their official quick-starts, and generate synthetic card events with a small Python script. Never use real card numbers.
+Run Kafka or Redpanda locally in Docker using their official quick-starts, and produce card events with a small Python script that replays rows of the lab dataset's `transactions` (lesson 0.3), treating each `account_id` as a card. Never use real card numbers.
 
-- 🟢 Create a three-partition topic `card.auths` and produce 1,000 synthetic events for 20 cards, keyed by `card_id`. Start two consumers in one group, then a third. *Done when:* you can show partition ownership before and after the rebalance, and each card's events in order.
+- 🟢 Create a three-partition topic `card.auths` and produce 1,000 of those events for 20 cards, keyed by `card_id`. Start two consumers in one group, then a third. *Done when:* you can show partition ownership before and after the rebalance, and each card's events in order.
 - 🟡 Write a consumer with auto-commit that sleeps between reading and writing to PostgreSQL, and kill it mid-run. Rewrite it with manual commits after writing and an `ON CONFLICT (auth_id) DO NOTHING` sink, and kill it again. *Done when:* you can show events lost by the first version, and every event exactly once in the second version's table although some were read twice.
 - 🔴 Using Flink SQL, Spark Structured Streaming or Kafka Streams, compute a 5-minute tumbling count per card by event time with a 30-second watermark. Produce some events with event times two minutes in the past. *Done when:* you can show those late events handled as you designed (dropped, side output or allowed lateness), explain the trade-off, and fill in a Najm stream design card for your topic.
 

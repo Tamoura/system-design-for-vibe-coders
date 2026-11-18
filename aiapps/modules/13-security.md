@@ -333,7 +333,7 @@ The last line is the exercise's point: a chain cannot see a missing tail, so kee
 | **Red-team set** | Attacks as data with expected outcomes | Every change, in CI |
 
 ## 🏛️ In practice at Najm Bank
-The artefact is the **Najm Desk v1 Threat-and-Control Sheet** (Lujain owns it; Noura reviews): the OWASP Top 10 for LLM Applications (2025) mapped onto the agent.
+The artefact is the **Najm Desk v1 Threat-and-Control Sheet** (Lujain owns it; Noura reviews): the OWASP Top 10 for LLM Applications mapped onto the agent. The codes below are the **2025 edition's** (LLM01:2025 to LLM10:2025), so LLM03 here is supply chain, not excessive agency's 2026 code.
 
 - **LLM01 Prompt injection:** gate, taint, scoped tools (a01 to a10).
 - **LLM02 Sensitive information disclosure:** masks, owner check (a04, a05, a10).

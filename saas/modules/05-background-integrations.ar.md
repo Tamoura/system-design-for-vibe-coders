@@ -143,7 +143,7 @@ new Worker("notifications", async (job) => {
 | [timgit/pg-boss](https://github.com/timgit/pg-boss) | طابور على Postgres مع cron وإعادة المحاولة والرسائل الميتة | Node/TS, Postgres | MIT | تريد الإضافة ضمن المعاملة دون أي بنية تحتية جديدة |
 | [graphile/worker](https://github.com/graphile/worker) | طابور مهام سريع على Postgres يستخدم LISTEN/NOTIFY وSKIP LOCKED، مع crontab | Node/TS, Postgres | MIT | مهام Postgres منخفضة الكمون، خاصة مع بيئة تتمحور حول Postgres |
 | [rails/solid_queue](https://github.com/rails/solid_queue) | واجهة Active Job خلفية مبنية على قاعدة البيانات، الافتراضية في Rails 8 | Ruby | MIT | تعمل على Rails ولا تريد Redis |
-| [sidekiq/sidekiq](https://github.com/sidekiq/sidekiq) | نظام المهام الخلفية العريق في Ruby | Ruby, Redis | LGPL-3.0 (Pro/Enterprise commercial) | Rails بحجم كبير، ومنظومة ضخمة |
+| [sidekiq/sidekiq](https://github.com/sidekiq/sidekiq) | نظام المهام الخلفية العريق في Ruby | Ruby, Redis | LGPL-3.0 (نسختا Pro وEnterprise تجاريتان) | Rails بحجم كبير، ومنظومة ضخمة |
 | [celery/celery](https://github.com/celery/celery) | طابور مهام موزع مع المجدول beat | Python, Redis/RabbitMQ | BSD-3-Clause | Django/Python، الخيار الافتراضي |
 | [riverqueue/river](https://github.com/riverqueue/river) | طابور مهام على Postgres مع إدخالات ضمن المعاملة | Go, Postgres | MPL-2.0 | خدمات Go تريد المهام في المعاملة نفسها |
 | [hibiken/asynq](https://github.com/hibiken/asynq) | طابور مهام بسيط على Redis مع واجهة ويب | Go, Redis | MIT | Go مع Redis موجود أصلًا |
@@ -429,7 +429,7 @@ sequenceDiagram
 
 | المستودع | ما هو | التقنيات | الترخيص | اختره عندما |
 |---|---|---|---|---|
-| [unkeyed/unkey](https://github.com/unkeyed/unkey) | إدارة مفاتيح API وتحديد المعدل كخدمة | TS, Go | AGPL-3.0 (parts differ; read LICENSE) | تريد إصدار المفاتيح والتحقق منها وحدود لكل مفتاح وتحليلات دون بنائها |
+| [unkeyed/unkey](https://github.com/unkeyed/unkey) | إدارة مفاتيح API وتحديد المعدل كخدمة | TS, Go | AGPL-3.0 (بعض الأجزاء مختلفة؛ اقرأ LICENSE) | تريد إصدار المفاتيح والتحقق منها وحدود لكل مفتاح وتحليلات دون بنائها |
 | [upstash/ratelimit-js](https://github.com/upstash/ratelimit-js) | مكتبة تحديد معدل فوق Redis (نافذة منزلقة وثابتة، ودلو رموز) | TS | MIT | تطبيق Serverless أو Node يحتاج حدود معدل على مستوى التطبيق بسرعة |
 | [arcjet/arcjet-js](https://github.com/arcjet/arcjet-js) | SDK أمني: تحديد المعدل وكشف البوتات والحماية | TS | Apache-2.0 | تريد حدود المعدل مع الحماية من إساءة الاستخدام داخل التطبيق |
 | [Kong/kong](https://github.com/Kong/kong) | بوابة API مع إضافات للمصادقة وحدود المعدل والتسجيل | Lua/Nginx | Apache-2.0 | خدمات كثيرة خلف واجهة API واحدة |

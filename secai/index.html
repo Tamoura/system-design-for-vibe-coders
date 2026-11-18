@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="secai-source" content="cf563296788e0506">
+<meta name="secai-source" content="09e16da82c295a29">
 <meta name="description" content="Secure AI &amp; Application Security: Zero to Hero — a free, bilingual course: threat modelling, web, identity, API, cloud and supply-chain security, and securing LLM apps and AI agents, with a quiz in every lesson and a 60-question practice exam.">
 <title>Secure AI &amp; Application Security: Zero to Hero</title>
 <style>
@@ -672,11 +672,11 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 </tr>
 <tr>
 <td>An architect</td>
-<td>Modules 0, 1, 3, 7, 8, 9.2 and 9.3; a threat model for each system you own</td>
+<td>Modules 0, 1, 3, 7, 8 and 9.1–9.3; a threat model for each system you own</td>
 </tr>
 <tr>
 <td>A product or engineering manager</td>
-<td>0, 1.3, 6.1, 8.1–8.2, 9.2, 10.2 and 11; the paper route for hands-on exercises</td>
+<td>0, 1.3, 6.1, 8.1–8.2, 9.1–9.2, 10.1–10.2 and 11; the paper route for hands-on exercises</td>
 </tr>
 <tr>
 <td>A security analyst moving into AppSec or AI security</td>
@@ -684,7 +684,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 </tr>
 <tr>
 <td>A bank, government or enterprise system owner</td>
-<td>0, 1, 5.3, 7.1, 10.2 and 11; the paper route</td>
+<td>0, 1, 5.3, 7.1, 9.1, 10.1–10.2 and 11; the paper route</td>
 </tr>
 </tbody></table></div>
 <p><strong>Time.</strong> Reading the whole course takes about 15 hours. With the 🟢 and 🟡 exercises it is roughly 120 hours, about five hours a week for six months; the 🔴 exercises add about 100 more. <strong>No code?</strong> Every hands-on exercise has a paper route: review a supplied change or artefact instead of building it. <strong>Before you start</strong>, lesson <a class="xref" href="#/0.3">0.3</a> sets up the free practice lab (OWASP Juice Shop in Docker) and the course&#39;s offline <a href="./lab/README.md">starter lab</a> for the AI exercises.</p>
@@ -1172,7 +1172,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 </section>
 <section class="sec sec-why"><h2>🧭 Why it matters</h2>
 <p>On Ali&#39;s first morning in Najm Bank&#39;s Application &amp; AI Security team, Noura (Head of Application &amp; AI Security) gives him one task: &quot;List what Najm Assist has to protect.&quot; Najm Assist, the assistant in the bank&#39;s mobile app, is about to gain the ability to freeze cards and open disputes. Ali returns with two items: &quot;the server, and the database password&quot;. Noura&#39;s list has seven, including customers&#39; balances, the card-freeze action (a fraudster would love to misuse it), what Assist says about fees (a wrong answer can become a commitment the bank is held to), the conversation logs and the credentials Assist uses to call internal systems. &quot;The server is where things live,&quot; she says. &quot;The assets are what people would be hurt by losing.&quot;</p>
-<p>The most damaging breaches rarely start with anything exotic. In 2017, attackers entered Equifax, a US credit reporting agency, through a known vulnerability in the Apache Struts web framework (CVE-2017-5638). A fix had been published weeks before they got in, but it had not been applied to the affected system. The US Federal Trade Commission reported that the personal data of about 147 million people was exposed. In 2023, staff at Samsung were reported to have pasted confidential source code and meeting notes into ChatGPT; the company then restricted staff use of such tools. Nobody &quot;hacked&quot; anything in the second case: data crossed a boundary nobody had drawn. One case is classic application security, the other new and AI-shaped. This course covers both.</p>
+<p>The most damaging breaches rarely start with anything exotic. In 2017, attackers entered Equifax, a US credit reporting agency, through a known vulnerability in the Apache Struts web framework (CVE-2017-5638). A fix had been published about two months before they got in, but it had not been applied to the affected system. The US Federal Trade Commission reported that the personal data of about 147 million people was exposed. In 2023, staff at Samsung were reported to have pasted confidential source code and meeting notes into ChatGPT; the company then restricted staff use of such tools. Nobody &quot;hacked&quot; anything in the second case: data crossed a boundary nobody had drawn. One case is classic application security, the other new and AI-shaped. This course covers both.</p>
 </section>
 <section class="sec sec-how"><h2>📐 How it works</h2>
 <h3>🟢 The essentials</h3>
@@ -2156,11 +2156,11 @@ app.get(&#39;/api/accounts/:id&#39;, requireLogin, async (req, res) =&gt; {
 </tr>
 <tr>
 <td>An architect</td>
-<td>Modules 0, 1, 3, 7, 8, 9.2 and 9.3; a threat model for each system you own</td>
+<td>Modules 0, 1, 3, 7, 8 and 9.1–9.3; a threat model for each system you own</td>
 </tr>
 <tr>
 <td>A product or engineering manager</td>
-<td>0, 1.3, 6.1, 8.1–8.2, 9.2, 10.2 and 11; the 🏛️ artefacts as templates to ask for; the paper route</td>
+<td>0, 1.3, 6.1, 8.1–8.2, 9.1–9.2, 10.1–10.2 and 11; the 🏛️ artefacts as templates to ask for; the paper route</td>
 </tr>
 <tr>
 <td>A security analyst moving into AppSec or AI security</td>
@@ -2168,7 +2168,7 @@ app.get(&#39;/api/accounts/:id&#39;, requireLogin, async (req, res) =&gt; {
 </tr>
 <tr>
 <td>A bank, government or enterprise system owner</td>
-<td>0, 1, 5.3, 7.1, 10.2 and 11; the paper route</td>
+<td>0, 1, 5.3, 7.1, 9.1, 10.1–10.2 and 11; the paper route</td>
 </tr>
 </tbody></table></div>
 <p><strong>No code? Take the paper route.</strong> Most 🟢 exercises need only paper. When an exercise needs a repository, a cloud account or a lab, review the lesson&#39;s own vulnerable and fixed code pair, or its 🏛️ artefact, as if a developer had sent it to you for approval: name the flaw, what an attacker gains, the fix you would require and the test that would prove it. Lessons whose exercises all need code add a 📝 paper-route exercise. <em>Done when:</em> a developer could act on your review without asking you what you meant.</p>

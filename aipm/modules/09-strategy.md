@@ -65,7 +65,7 @@ A **wrapper** is a product whose value sits almost entirely in the bottom two la
 | **Network economies** | Each user makes the product more valuable to other users | Rare in bank AI. Be sceptical when a deck claims it |
 | **Counter-positioning** | A newcomer adopts a model that incumbents cannot copy without hurting their existing business | This works *against* Najm: an AI-native SME lender with no branch costs. SME Instant Finance is partly a defensive response |
 | **Switching costs** | Leaving costs the customer time, data or risk | Credit Memo Copilot, once it holds templates, past memos and RM habits, is costly to replace |
-| **Branding** | Customers pay more or trust more because of reputation | A reputation for accurate, careful answers is slow to build; the Air Canada case (2024) shows how fast one bad answer becomes a legal problem |
+| **Branding** | Customers pay more or trust more because of reputation | A reputation for accurate, careful answers is slow to build; the tribunal ruling in 0.2 shows how fast one bad answer becomes a legal problem |
 | **Cornered resource** | Preferential access to something valuable | Najm's own credit performance and transaction data, where it has the legal basis to use it (3.3) |
 | **Process power** | Organisational routines that improve cost or quality and take years to copy | A disciplined evaluation and feedback routine: golden sets, weekly error analysis, safe fast releases (Module 6) |
 
@@ -173,10 +173,10 @@ Rania replaces the deck with a one-page **AI Product Strategy** the board can ho
 
 **1. Faisal's draft says: "Our AI strategy is to become the most AI-enabled bank in the Gulf by 2027." Using Rumelt's framework, what is the main problem with it?**
 
-- A. It does not name a specific vendor
-- B. It should say "GenAI" instead of "AI"
-- C. The time horizon is too short
-- D. It is a goal, not a strategy: it has no diagnosis of the challenge and no guiding policy that rules options out
+- A. It names no measure of "AI-enabled", so progress towards it cannot be tracked or reported
+- B. It compares Najm with other banks, when a strategy should start from customers, not competitors
+- C. Its time horizon is too short for a change of this scale across a whole bank
+- D. It is a goal, not a strategy: no diagnosis of the challenge, no guiding policy ruling options out
 
 <details><summary>Answer</summary>
 
@@ -199,10 +199,10 @@ Rania replaces the deck with a one-page **AI Product Strategy** the board can ho
 
 **3. A vendor pitches: "Our product has a data moat: we have collected ten million unlabelled customer chat transcripts." Which question from the data advantage test exposes the biggest weakness?**
 
-- A. Is the data outcome-labelled, so it shows what actually happened?
-- B. Is the data stored in the cloud?
-- C. Was the data collected in the last year?
-- D. Is the data in more than one language?
+- A. Is the data labelled with outcomes, showing what actually happened?
+- B. Is the data stored securely in the vendor's own cloud environment?
+- C. Was the data collected within the last twelve months?
+- D. Does the data cover more than one language and dialect?
 
 <details><summary>Answer</summary>
 
@@ -450,10 +450,10 @@ Rania replaces Faisal's timeline with a **Now-Next-Later AI roadmap** and a bet 
 
 **3. Najm's fraud team, card team and lending team have each built their own logging and vendor integration for LLM calls. Leaders cannot say which products use a model version that is being retired. What does this suggest?**
 
-- A. The capability has passed the rule of three and should become a shared platform, such as a model gateway
-- B. Each team should hire its own vendor manager
-- C. The bank should stop using LLMs
-- D. The platform should have been built before any product existed
+- A. It has passed the rule of three and should become a shared platform, such as a model gateway
+- B. Each team should appoint a vendor manager to track the model versions and retirement dates it depends on
+- C. The bank should standardise on one vendor so that only one integration is needed
+- D. The platform should have been built first, before any product team used an LLM
 
 <details><summary>Answer</summary>
 
@@ -700,13 +700,13 @@ Rania's two-page **AI Operating Model**, approved by the steering group:
 **2. A bank's central AI team built fourteen prototypes in a year and two reached production. Business lines say the prototypes do not fit how they work. Which idea best explains the pattern?**
 
 - A. Conway's law: systems mirror the communication structures of the organisation that builds them
-- B. The Kano model
-- C. Sample ratio mismatch
-- D. The rule of three
+- B. The innovator's dilemma: incumbents underinvest in new ideas their customers do not yet want
+- C. The demo trap: prototypes are judged on demos, not on real tasks and failure rates
+- D. The rule of three: shared capabilities should wait until three products need them
 
 <details><summary>Answer</summary>
 
-**A.** A team that is distant from the business builds products that fit the business poorly. The rule of three (D) is about when to build platforms, not about fit. (🧭 Why it matters.)
+**A.** A team that is distant from the business builds products that fit the business poorly. The demo trap (C) explains weak prototypes, not the mismatch with how business lines work, and the rule of three (D) is about when to build platforms. (🧭 Why it matters.)
 
 </details>
 
@@ -769,10 +769,10 @@ Rania's two-page **AI Operating Model**, approved by the steering group:
 - The PM pulls seven product levers: purpose and scope limits, transparency, human oversight, explanation and contestability, fairness and quality across groups, safety and security, and monitoring with incident response.
 - Bring the **risk tier into discovery**: it decides how much evidence you need, so it belongs in the estimate, not the last sprint.
 - Decision cue: if you cannot explain to an affected customer what the product did, why, and how to challenge it, it is not ready.
-- Biggest trap: acting as if the AI is responsible for what it says. Courts and regulators hold the company responsible, as the Air Canada case showed.
+- Biggest trap: acting as if the AI is responsible for what it says. Courts and regulators hold the company responsible, as the tribunal ruling in 0.2 showed.
 
 ## 🧭 Why it matters
-In March 2024 the news site The Markup reported that New York City's MyCity chatbot, launched to advise business owners, told them they could take a cut of workers' tips and turn away tenants paying with housing vouchers. Both answers were against the law, and the chatbot carried the city's name. You have met the other public cases: Air Canada was held liable for its chatbot's answer (0.2), and the $1 car and DPD's swearing bot (5.3) came from weak limits and an untested update. None of these was an exotic failure. Each came from product decisions: what the bot could answer, how it was grounded, what it was tested against, and what happened after a change.
+In March 2024 the news site The Markup reported that New York City's MyCity chatbot, launched to advise business owners, told them they could take a cut of workers' tips and turn away tenants paying with housing vouchers. Both answers were against the law, and the chatbot carried the city's name. You have met the other public cases: an airline was held liable for its chatbot's answer (0.2), and the $1 car and DPD's swearing bot (5.3) came from weak limits and an untested update. None of these was an exotic failure. Each came from product decisions: what the bot could answer, how it was grounded, what it was tested against, and what happened after a change.
 
 At Najm, SME Instant Finance is moving from pilot to wider launch. Faisal treats responsible AI as "Layla's part", to be reviewed before go-live. Layla raises a problem at once. Many small SME customers are sole proprietors, meaning natural persons, and some are EU residents. Evaluating their creditworthiness brings the product towards the EU AI Act's high-risk category and GDPR Art. 22. The resulting requirements (oversight, explanations, a way to contest, fairness testing, logging, documentation) will reshape the flow, the model's outputs and the roadmap.
 
@@ -816,7 +816,7 @@ Rania's rule: "Layla tells us the limits. Meeting them, and proving it, is our j
 4. **Explanation and contestability.** People need reasons they can act on and a clear route to challenge: for SME Instant Finance, reason codes in Arabic and English and a "request review by a credit officer" path with a response time. A **contestability path** nobody can find does not count.
 5. **Fairness and quality across groups.** An average score hides the groups where the product fails. Run **slice evaluations**: results broken down by language, customer segment, sector, region, and protected characteristics where it is lawful and appropriate to test them. Choose fairness measures for the specific harm with Dana and Layla. Common fairness measures cannot all be satisfied at once when groups have different base rates (Kleinberg, Mullainathan and Raghavan, 2016), so the choice is a documented judgement.
 6. **Safety and security.** GenAI products face prompt injection, data leakage and manipulation, which is how the $1 car happened. Use the OWASP Top 10 for LLM Applications as a checklist with Tariq, red-team before launch (6.2), and limit what agents can do: confirmations, spending limits, reversible actions first, audit logs.
-7. **Monitoring and incident response.** Watch quality, drift, complaints and override rates after launch (8.3). Keep a **kill switch** and a runbook: who switches it off, how customers are told, how affected decisions are reviewed. Re-run evals after every model or prompt change; the DPD incident followed an update.
+7. **Monitoring and incident response.** Watch quality, drift, complaints and override rates after launch (8.3). Keep a **kill switch** and a runbook: who switches it off, how customers are told, how affected decisions are reviewed. Re-run evals after every model or prompt change; the delivery chatbot in 5.3 changed after an update.
 
 **Documentation is part of the product.** A **model card** (Mitchell et al., 2019) records a model's purpose, evaluation, groups tested and limits; a **datasheet for datasets** (Gebru et al., 2018) does the same for data. For GenAI products, version the system prompt, retrieval sources, eval results and guardrail settings, with a decision log. When an auditor asks why the product behaves as it does, the answer should already exist.
 
@@ -952,14 +952,14 @@ Layla's gate review becomes a check of evidence against this table, not a first 
 
 **4. Under GDPR Art. 22, which design best supports the safeguards for a customer affected by a solely automated decision with significant effects?**
 
-- A. A privacy policy link in the app footer
-- B. A monthly fairness report to the board
-- C. A longer model card
-- D. A visible route to request human review, express their view and contest the decision, shown where the decision is communicated
+- A. A clear privacy notice in the app explaining the logic and likely effects of automated decisions
+- B. A monthly fairness report to the board covering all automated credit decisions
+- C. A detailed model card published on the bank's website for customers to read
+- D. A visible way to ask for human review, give their view and contest it, shown with the decision
 
 <details><summary>Answer</summary>
 
-**D.** Art. 22 safeguards include obtaining human intervention, expressing one's view and contesting the decision. C and B are internal documents that do not help the individual. (🟢 The essentials; 🟡 lever 4.)
+**D.** Art. 22 safeguards include obtaining human intervention, expressing one's view and contesting the decision. A, B and C inform or report, but none gives the individual a way to intervene. (🟢 The essentials; 🟡 lever 4.)
 
 </details>
 
@@ -972,7 +972,7 @@ Layla's gate review becomes a check of evidence against this table, not a first 
 
 <details><summary>Answer</summary>
 
-**A.** Buying a model does not transfer accountability for its use; Air Canada shows "the AI said it" is no defence. Contracts manage vendor risk but do not remove Najm's responsibility. (🔴 Expert view; 🧭 Why it matters.)
+**A.** Buying a model does not transfer accountability for its use; the tribunal ruling in 0.2 shows "the AI said it" is no defence. Contracts manage vendor risk but do not remove Najm's responsibility. (🔴 Expert view; 🧭 Why it matters.)
 
 </details>
 

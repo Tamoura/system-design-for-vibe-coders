@@ -169,10 +169,10 @@ Retired from the headline: *drafts generated* and *average thumbs rating* (now d
 
 **1. Najm Assist's containment rate rose from 55% to 70% after a prompt change. What should Faisal check before calling it a win?**
 
-- A. Whether the number of conversations also rose
+- A. Whether conversation volume also rose, so the gain is not just a quiet month
 - B. Whether resolution, measured as no repeat contact on the same topic within seven days, also improved
-- C. Whether the average thumbs-up rating rose
-- D. Whether token cost per conversation fell
+- C. Whether the average thumbs-up rating rose by a similar amount in the same period
+- D. Whether token cost per conversation fell, since contained chats should be cheaper
 
 <details><summary>Answer</summary>
 
@@ -447,10 +447,10 @@ Decision rule agreed with Khalid: *"A change that lowers the model bill but rais
 
 **3. A vendor offers Najm a customer-service agent priced per "resolved conversation." What should the PM insist on first?**
 
-- A. The lowest possible price per resolution
-- B. A contract definition of "resolved" that Najm can verify from its own data, such as no repeat contact within seven days
-- C. A per-seat option as a fallback
-- D. Unlimited free usage in the pilot
+- A. The lowest possible price per resolution, locked in for the full term of the contract
+- B. A contract definition of "resolved" that Najm can verify in its own data, such as no repeat contact
+- C. A per-seat pricing option as a fallback, in case outcome pricing proves too costly
+- D. Unlimited free usage during the pilot, so that Najm can test real volumes without any cost risk
 
 <details><summary>Answer</summary>
 
@@ -509,7 +509,7 @@ Decision rule agreed with Khalid: *"A change that lowers the model bill but rais
 ## 🧭 Why it matters
 In March, Najm Bank changes its card replacement fee and updates the policy page. Nobody tells the Najm Assist team. For three weeks the assistant, drawing on an old copy of the page in its retrieval index, tells customers the previous fee. The dashboards stay green: latency is normal, errors are zero, containment is up. The problem surfaces when complaints reach the contact centre and a customer posts a screenshot. Layla asks the question every incident review asks: "How would we have known sooner?"
 
-The public cases you have met show the same patterns. Air Canada could not disown what its website chatbot said about bereavement fares (0.2). DPD's chatbot swore at a customer and criticised the company after a system update (5.3): a change nobody meant to affect behaviour did exactly that.
+The public cases you have met show the same patterns. The airline in 0.2 could not disown its chatbot's answer. The delivery chatbot in 5.3 began swearing after a system update: a change nobody meant to affect behaviour did exactly that.
 
 Meanwhile Smart Alerts faces the opposite problem. Its model was trained on last year's fraud. Fraudsters move to new tactics, so recall falls. The risk team responds by loosening thresholds, and false alerts climb. Customers start ignoring alerts. Nothing broke, but the world moved and the product did not. Monitoring and iteration are how a product keeps up.
 
@@ -572,7 +572,7 @@ Proxies can mislead, so revisit them when the real labels land: did the proxy pr
 3. **Topic and intent monitoring.** Cluster incoming requests to spot new topics, rising out-of-scope requests and languages or dialects you did not test.
 4. **Source freshness.** For retrieval, track the age of each indexed document and link the index to the content owner's publishing process, so a policy change triggers a re-index and a targeted re-test. That one control would have caught the March fee incident.
 
-**Dependency change management.** Models accessed through an API can change behind the same name, and vendors retire versions on their own schedule. Research by Chen, Zaharia and Zou (2023) documented measurable behaviour changes in widely used hosted models over a few months. The product response: pin to a specific model version where the vendor allows it, and track announced retirement dates on the roadmap (see 9.2). Treat every model, prompt or tool change as a release: run the full golden set, compare against the current version, and roll out in stages. The DPD incident is a reminder that "just an update" can change behaviour in ways nobody tested.
+**Dependency change management.** Models accessed through an API can change behind the same name, and vendors retire versions on their own schedule. Research by Chen, Zaharia and Zou (2023) documented measurable behaviour changes in widely used hosted models over a few months. The product response: pin to a specific model version where the vendor allows it, and track announced retirement dates on the roadmap (see 9.2). Treat every model, prompt or tool change as a release: run the full golden set, compare against the current version, and roll out in stages. The delivery chatbot in 5.3 is a reminder that "just an update" can change behaviour in ways nobody tested.
 
 ### 🔴 Expert view
 
@@ -691,10 +691,10 @@ After the fee incident, Rania asks each product to publish a **monitoring plan a
 
 **3. SME Instant Finance defaults take months to appear. What is the best way to monitor model performance in the meantime?**
 
-- A. Wait for the annual validation
-- B. Retrain every week on all available data
-- C. Use customer satisfaction scores
-- D. Track leading proxies such as early arrears and override rate alongside input and score drift, and later check that the proxies predicted defaults
+- A. Rely on the annual model validation, which is designed to catch performance problems in credit models
+- B. Retrain every week on all available data so the model keeps up with recent behaviour
+- C. Track customer satisfaction with the decision as a stand-in for default outcomes
+- D. Track leading proxies such as early arrears and overrides, plus drift, and later check the proxies held
 
 <details><summary>Answer</summary>
 
@@ -717,14 +717,14 @@ After the fee incident, Rania asks each product to publish a **monitoring plan a
 
 **5. SME Instant Finance learns only from requests it approved. What risk does this create?**
 
-- A. Higher inference cost
-- B. A feedback loop that biases training data towards past decisions, which calls for techniques such as reject inference designed with risk
-- C. Knowledge drift in the retrieval index
-- D. Lower adoption by underwriters
+- A. Concept drift, because approved firms change faster than the market as a whole
+- B. A feedback loop that biases training data towards past decisions, which calls for reject inference
+- C. Knowledge drift, because the policy documents in the retrieval index go stale as rules change
+- D. Lower trust from underwriters, who only ever see the model on the easy cases it approved
 
 <details><summary>Answer</summary>
 
-**B.** Outcomes for declined requests are never seen, so the model can become overconfident in its own history. It is a data-design problem to plan for, not a cost or UX issue. (🔴 Expert view.)
+**B.** Outcomes for declined requests are never seen, so the model can become overconfident in its own history. It is a data-design problem to plan for, not a drift or trust issue. (🔴 Expert view.)
 
 </details>
 

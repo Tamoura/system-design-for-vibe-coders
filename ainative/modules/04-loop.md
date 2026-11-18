@@ -211,14 +211,14 @@ The clinic's rule: no pull request without a filled checklist, and no "the agent
 
 **2. The agent's second attempt at a step failed after your correction. What is the best next move?**
 
-- A. Correct it a third time, using the same words but in capitals so it notices.
+- A. Correct it a third time in the same session, explaining the fix in more detail.
 - B. Rewind everything done today and begin the whole ticket again from scratch.
-- C. Ask the agent to apologise and to promise to be more careful from now on.
+- C. Let it retry in the same session; a third attempt usually gets it right.
 - D. Change the approach: split the step, start fresh or add a missing fact.
 
 <details><summary>Answer</summary>
 
-**D.** After two failures a third try in the same context rarely helps; change the task, the context or the spec. Capitals and apologies add words, not information. (🟡 The two-failure rule.)
+**D.** After two failures a third try in the same context rarely helps; change the task, the context or the spec. A longer correction in the same context adds words, not new information; rewinding the whole day throws away good work. (🟡 The two-failure rule.)
 
 </details>
 

@@ -241,7 +241,7 @@ After the "DevOps access" episode, Salem asks Yousef to draft the team's **respo
 - AWS Well-Architected Framework — https://aws.amazon.com/architecture/well-architected/
 - Microsoft Azure Well-Architected Framework — https://learn.microsoft.com/azure/well-architected/
 - Google Cloud Well-Architected Framework (formerly the Google Cloud Architecture Framework) — https://cloud.google.com/architecture/framework
-- Regulation (EU) 2022/2554 (Digital Operational Resilience Act) — https://eur-lex.europa.eu/eli/reg/2022/2554/oj
+- Regulation (EU) 2022/2554 on digital operational resilience (DORA) — https://eur-lex.europa.eu/eli/reg/2022/2554/oj
 
 ---
 
@@ -575,6 +575,8 @@ You may already know Tariq, Noura, Jassim and Hamad from the *Secure AI & Applic
 | OpenTofu or Terraform | Infrastructure as code | 3.1 |
 | Prometheus, Grafana, OpenTelemetry | Telemetry and dashboards, installed into your local cluster | 5.1 |
 | Argo CD | GitOps deployments into your local cluster | 3.2 |
+| Argo Rollouts | Canary releases with automated analysis | 4.2 (🔴), 7.1 |
+| cosign | Signing and verifying images | 4.3, 7.1 |
 
 **Before you start: pick your operating system.**
 - **Linux (Ubuntu or Debian):** install Docker Engine and the tools above directly.

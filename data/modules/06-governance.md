@@ -263,7 +263,7 @@ Use synthetic or public open data only.
 - A. Current column-level lineage, walked downstream, plus the ownership register
 - B. Asking in the analytics team's chat channel who uses the accounts table
 - C. Table-level lineage showing every report that reads `core.accounts`
-- D. The detailed lineage diagram drawn during last year's architecture review
+- D. The detailed lineage diagram drawn by hand during last year's architecture review
 
 <details><summary>Answer</summary>
 
@@ -487,7 +487,7 @@ Sara and Lina publish the **Najm Personal Data Handling Standard v1** for the da
 ## 🛠️ Exercises
 Use synthetic data only: start from the lab dataset's `customers` (lesson 0.3) and add personal-looking columns with the Python Faker library. Never use real personal data for these exercises.
 
-- 🟢 Generate a synthetic customer table of 20 columns with Faker. Classify every column with a level, tags and a retention class, and say for an "analyse complaint drivers" purpose which columns are needed. *Done when:* every column is classified and your purpose needs no more than a third of them.
+- 🟢 Extend the lab's `customers` table with Faker to 20 columns. Classify every column with a level, tags and a retention class, and say for an "analyse complaint drivers" purpose which columns are needed. *Done when:* every column is classified and your purpose needs no more than a third of them.
 - 🟡 In PostgreSQL or DuckDB, load your synthetic table and build an analyst view with a keyed-hash customer key, an age band and a masked phone. Then show the weakness of plain hashing: MD5-hash one fake six-digit ID and recover it by hashing all one million candidates. *Done when:* joins on the keyed hash work across two tables, and your script recovers the MD5-hashed ID but not the keyed one.
 - 🔴 Build a retention and erasure job for a PostgreSQL table partitioned by month: drop partitions older than the retention period, and implement an erasure procedure for one customer that pseudonymises them in three tables and writes an evidence record (who, when, which tables, rows affected). *Done when:* running the job twice gives the same result, the evidence table shows each run, and a k-anonymity check (`GROUP BY` quasi-identifiers `HAVING COUNT(*) < 5`) on your released dataset returns no rows.
 
@@ -511,7 +511,7 @@ Use synthetic data only: start from the lab dataset's `customers` (lesson 0.3) a
 
 - A. MD5 output is too long to store efficiently in a column used for joins
 - B. Hashing destroys the ability to join tables on the same customer later
-- C. Every possible ID can be hashed and matched, so the data is not anonymous
+- C. Every possible ID can be hashed and matched, so it is not anonymous
 - D. Hashing personal data is prohibited outright under the GDPR
 
 <details><summary>Answer</summary>
@@ -551,7 +551,7 @@ Use synthetic data only: start from the lab dataset's `customers` (lesson 0.3) a
 - A. Nothing; in Iceberg a `DELETE` removes the data files immediately
 - B. Expire old snapshots so unreferenced files are removed, and clean up copies
 - C. Rename the table so time-travel queries can no longer find the old rows
-- D. Re-run the dbt models that read the table so downstream marts are rebuilt
+- D. Re-run the dbt models that read the table so all the downstream marts are rebuilt
 
 <details><summary>Answer</summary>
 
@@ -841,7 +841,7 @@ Use synthetic data in a local PostgreSQL (for example the official image in Dock
 
 **4. Which audit-log setup gives evidence that internal audit can rely on?**
 
-- A. Named-user logs of grants, writes and restricted reads, kept where admins cannot edit them
+- A. Named-user logs of grants, writes and restricted reads that admins cannot edit
 - B. Detailed logs kept on the warehouse server, editable by the platform administrators
 - C. Logs of failed logins only, kept for seven years in the security team's archive
 - D. Screenshots of the access-control settings, taken once a year for the auditors
@@ -857,7 +857,7 @@ Use synthetic data in a local PostgreSQL (for example the official image in Dock
 - A. Email a daily encrypted CSV of all SME card transactions to the partner
 - B. Give the partner a named login to the warehouse with `marts_reader`
 - C. Copy the raw card stream into the partner's cloud account each night
-- D. A revocable, read-only aggregated view, shared under a DPO-approved agreement
+- D. A revocable, read-only aggregated view under a DPO-approved agreement
 
 <details><summary>Answer</summary>
 

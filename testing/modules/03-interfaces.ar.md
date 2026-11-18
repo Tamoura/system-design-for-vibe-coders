@@ -474,9 +474,9 @@ flowchart RL
 
 فكرتان تزيلان معظم عدم الاستقرار. **الانتظار التلقائي (Auto-waiting):** قبل `click` أو `fill` أو `check`، ينتظر Playwright حتى يصبح العنصر مرئيًا ومستقرًا ومفعّلًا وغير مغطًّى. أما **التأكيدات المعاودة (Web-first assertions)** مثل `toBeVisible` و`toHaveText` و`toHaveValue` فتعيد المحاولة حتى تنجح أو تنتهي مهلتها، وهي 5 ثوانٍ افتراضيًا، بدل قراءة الصفحة مرة واحدة.
 
-**هيكل المشروع والإعداد.** في نسخة من `testing/sample`، نفّذ `npm install` و`npm install -D @axe-core/playwright` و`npx playwright install chromium`؛ وتعيش الاختبارات في `e2e/`. ثم أضف إلى ملف `e2e/playwright.config.ts` الابتدائي إعدادات التكامل المستمر (`forbidOnly` و`retries` ومُبلِّغًا) ومشروع متصفح مسمّى:
-
 > **ما تحتاجه من TypeScript.** اختبارات Playwright مكتوبة بلغة TypeScript، لكن أربعة أنماط تكفي لهذا الدرس. السطر `import { test, expect } from '@playwright/test'` يجلب أسماء من حزمة. و`async ({ page }) => { ... }` دالة سهمية (arrow function): جسم اختبار يتسلّم `page` جاهزة. و`await` تنتظر انتهاء فعل المتصفح قبل تنفيذ السطر التالي؛ ونسيان `await` أشيع أخطاء المبتدئين. و`{ name: 'Amount' }` كائن من الخيارات المسمّاة.
+
+**هيكل المشروع والإعداد.** في نسخة من `testing/sample`، نفّذ `npm install` و`npm install -D @axe-core/playwright` و`npx playwright install chromium`؛ وتعيش الاختبارات في `e2e/`. ثم أضف إلى ملف `e2e/playwright.config.ts` الابتدائي إعدادات التكامل المستمر (`forbidOnly` و`retries` ومُبلِّغًا) ومشروع متصفح مسمّى:
 
 ```typescript
 // e2e/playwright.config.ts

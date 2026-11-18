@@ -604,7 +604,7 @@ Use DuckDB or PostgreSQL with synthetic data.
 - A. Accumulating snapshot: one row per application, updated per milestone
 - B. Transaction fact: one row per loan repayment
 - C. Periodic snapshot: one row per loan per day
-- D. A Type 3 dimension holding the previous and current application status
+- D. A Type 3 dimension with the previous and current application status
 
 <details><summary>Answer</summary>
 
@@ -831,7 +831,7 @@ Use synthetic data only.
 - A. Keep it on the primary but run it at night, when branches are closed
 - B. Add more indexes to the primary so the scan finishes faster
 - C. Move the workload to a separate analytical store
-- D. Export the tables to CSV files on a shared drive
+- D. Export the tables to CSV files on a shared network drive
 
 <details><summary>Answer</summary>
 

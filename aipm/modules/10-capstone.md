@@ -24,7 +24,7 @@ It is January. Rania shows the team one slide: most contact-centre calls last ye
 
 Faisal wants a demo by Thursday. Rania: "The demo is easy. The hard part is the decisions between the demo and a product customers trust with their money. Let's make them in order, and write each one down."
 
-Skipped decisions have public costs. In *Moffatt v. Air Canada* (2024), a tribunal held the airline responsible for what its chatbot told a customer about bereavement fares (0.2). DPD's delivery chatbot swore and criticised the company after an update in January 2024 (5.3). Klarna announced in February 2024 that its assistant handled a large share of customer chats, and in 2025 said it would bring more human service back. Each is a failure *between* artefacts: a spec without a grounding rule, an update without a regression gate, a cost metric without a quality counterweight. The capstone is where you practise closing those gaps.
+Skipped decisions have public costs. An airline was held responsible for what its chatbot told a customer (0.2). A delivery chatbot swore at a customer after an update (5.3). Klarna announced in February 2024 that its assistant handled a large share of customer chats, and in 2025 said it would bring more human service back. Each is a failure *between* artefacts: a spec without a grounding rule, an update without a regression gate, a cost metric without a quality counterweight. The capstone is where you practise closing those gaps.
 
 ## 📐 How it works
 
@@ -42,7 +42,7 @@ All numbers below are illustrative.
 
 **Discover.** Hessa and Faisal listen to call recordings (with Sara's approval), read app reviews and shadow five contact-centre agents. They frame the work as **Jobs to be Done** (Clayton Christensen): "when I see a transaction I don't recognise, I want to stop further damage and get my money back." Their **Opportunity Solution Tree** (Teresa Torres) has one outcome (customers resolve common needs in the app without waiting), four opportunities (unknown transactions, lost cards, confusing fees, transfer limits) and candidate solutions under each. Only some need AI: a clearer fee page fixes part of the fee confusion better than any chatbot.
 
-**Define.** The scorecard rates each candidate on value, feasibility and risk. Answering fee and policy questions from the bank's documents scores high on value and feasibility, medium on risk (wrong fee answers are costly, as Air Canada learned). Freezing a card is high value, low risk, because it is reversible. Disputing a transaction is high value but higher risk: it starts a regulated process with deadlines. Personalised investment advice is **killed** (high risk, unclear value, a licensing question), and the reason is recorded so it is not reopened every quarter.
+**Define.** The scorecard rates each candidate on value, feasibility and risk. Answering fee and policy questions from the bank's documents scores high on value and feasibility, medium on risk (wrong fee answers are costly, as the tribunal ruling in 0.2 showed). Freezing a card is high value, low risk, because it is reversible. Disputing a transaction is high value but higher risk: it starts a regulated process with deadlines. Personalised investment advice is **killed** (high risk, unclear value, a licensing question), and the reason is recorded so it is not reopened every quarter.
 
 The data readiness check asks whether the bank has what each use case needs: a current, owned fee and terms corpus (partly — three versions of the fee schedule exist, so Omar's team names one owner); historical conversations for evaluation (yes, after redaction); and card APIs (yes, already used by the app). Sara's data rights note records the lawful basis under Qatar's PDPPL (Law No. 13 of 2016) and GDPR for EU customers, plus retention. Detail belongs to *AI Governance: Zero to Hero*; the PM makes sure the note exists before build.
 
@@ -71,7 +71,7 @@ Before this, Faisal ran a **Wizard of Oz** test (a human behind the chat window)
 **Evaluate.** Dana's eval plan has three layers, matching Module 6:
 
 1. **Offline**: a golden set of redacted real conversations, sliced by job, language (English and Arabic) and difficulty. Error analysis reads failures by hand before anyone tunes a prompt.
-2. **Judged and adversarial**: an **LLM-as-judge** grades grounding and tone at scale, calibrated against human raters because judges have known biases (Zheng et al., 2023). A red-team tries prompt injection, limit overrides, the "$1 car" manipulation seen at a Chevrolet dealer in December 2023, and questions baiting the assistant to state fees it cannot find.
+2. **Judged and adversarial**: an **LLM-as-judge** grades grounding and tone at scale, calibrated against human raters because judges have known biases (Zheng et al., 2023). A red-team tries prompt injection, limit overrides, the "$1 car" manipulation from 5.3, and questions baiting the assistant to state fees it cannot find.
 3. **Online**: a staged rollout (staff, then 1%, 10%, 50% of users) with an **A/B test** against the existing help centre. Following Kohavi, Tang and Xu, the team agrees the **overall evaluation criterion** in advance and adds **guardrail metrics** (complaints, handoff rate, wrong-answer reports) that can stop the rollout on their own.
 
 ```mermaid
@@ -181,7 +181,7 @@ Rania's comment: *"Auditors will ask about rows 3 and 7, Khalid about row 8. Row
 - A. Launch as planned and fix the issue in the next release
 - B. Lower the bar to 90% for the whole assistant, because the rest of the results are strong and the gap is small
 - C. Take that fee type out of scope, route those questions to a person, and launch the rest if all other bars are met
-- D. Cancel the launch and restart discovery from the beginning, because the failure shows the team misread what customers need
+- D. Cancel the launch and restart discovery, because the failure shows the team misread what customers need
 
 <details><summary>Answer</summary>
 
@@ -426,7 +426,7 @@ And Faisal's **one-page portfolio case study**, rewritten with Rania to meet the
 **1. In an interview, Faisal is asked to "design an AI assistant for relationship managers preparing for client meetings". What is the best way to begin?**
 
 - A. Describe the retrieval pipeline and which model to use
-- B. Quote the context window size of the latest models and explain how that size limits how much client material the assistant can read
+- B. Quote the context window of the latest models and explain how it limits the client material the assistant reads
 - C. Propose a pricing model for the assistant, with a price per seat and a rough view of the margin
 - D. Clarify who the RM is, what they do to prepare today and where the pain is, then check whether AI is the right tool
 
@@ -440,7 +440,7 @@ And Faisal's **one-page portfolio case study**, rewritten with Rania to meet the
 
 - A. "We'd track customer ratings after launch and investigate any month in which the average score falls."
 - B. "We'd choose the model that ranks highest on the public leaderboards and re-check the ranking each quarter."
-- C. "A golden set of real tasks sliced by job and language, with error analysis; an LLM judge calibrated against humans plus red-teaming; then a staged rollout with an agreed criterion and guardrail metrics."
+- C. "A sliced golden set with error analysis, a calibrated LLM judge plus red-teaming, then a staged rollout with guardrails."
 - D. "Engineering would run a full set of unit tests on each release and block any build that fails them."
 
 <details><summary>Answer</summary>
@@ -632,7 +632,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **5. Faisal is about to run a four-week pilot of an AI tool that suggests next steps to SME relationship managers. Rania asks him to add one thing to the pilot plan before it starts. What is it most likely to be?**
 
-- A. A list of extra features to add if the pilot goes well, so the team can move quickly into the next phase
+- A. A list of extra features to add if the pilot goes well, so the team can move straight into the next phase without losing momentum
 - B. A draft press release announcing the results, so that marketing is ready to publish as soon as the pilot ends and the numbers look good
 - C. Kill criteria agreed in advance: the result below which the idea stops, such as fewer than a set share of suggestions used
 - D. A longer pilot period, since four weeks is rarely enough to see how relationship managers use an AI tool
@@ -702,7 +702,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 - A. Five years is too little data for any model to learn from, so the team should wait until several more years of history exist
 - B. The data must first be moved to a new cloud platform before any model can be trained on it at all
 - C. Repayment outcomes exist only for approved requests, so the model never sees how rejected applicants would have behaved
-- D. Invoice data is structured, and structured data cannot be used by AI, so the team needs documents instead
+- D. Invoice data is structured, and structured data cannot be used by AI, so the team needs scanned documents and free text instead
 
 <details><summary>Answer</summary>
 
@@ -712,7 +712,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **11. The Credit Memo Copilot must answer questions about Najm's credit policy manual, which is updated several times a year, and it must show which section each answer came from. Which approach from the build spectrum fits best?**
 
-- A. Train a new model from scratch on the policy manual, so that it holds every rule in its own weights
+- A. Train a new model from scratch on the policy manual, so that it holds every rule in its own weights and never has to look anything up
 - B. Retrieval-augmented generation: fetch the relevant policy sections at question time and answer from them, with citations
 - C. Fine-tune a model on the current manual, and fine-tune it again after every update so that the model stays in step with the policy
 - D. Put a summary of the manual in the system prompt so that every answer starts from the policy
@@ -808,7 +808,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 - A. Ask the customer to rate the answer from 1 to 5, so that the team can find the weak spots in the assistant later and fix them
 - B. Apologise and end the conversation, so the customer can start again with a cleaner request
 - C. Make correction easy: show which transaction the assistant understood, and let the customer pick the right one in one tap
-- D. Retry the same answer with different wording, in case the customer simply did not understand it
+- D. Retry the same answer with different wording, in case the customer simply did not understand it the first time it appeared
 
 <details><summary>Answer</summary>
 
@@ -1050,7 +1050,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 <details><summary>Answer</summary>
 
-**D.** Red-teaming is deliberate adversarial testing to find failures that normal evaluation will not show. The Chevrolet dealer chatbot that was talked into "agreeing" to sell a car for $1 (Dec 2023) shows what untested manipulation looks like in public. B is tempting because it is an evaluation, but a golden set checks expected behaviour on normal cases, not what an adversary can make the system do. *(Evaluate · 6.2)*
+**D.** Red-teaming is deliberate adversarial testing to find failures that normal evaluation will not show. The $1 car case from 5.3 shows what untested manipulation looks like in public. B is tempting because it is an evaluation, but a golden set checks expected behaviour on normal cases, not what an adversary can make the system do. *(Evaluate · 6.2)*
 
 </details>
 
@@ -1099,7 +1099,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 - A. The press release, which should be agreed with the communications and legal teams well before the launch day arrives
 - B. Contact-centre readiness: scripts for common AI errors, a view of what the assistant said, and an escalation path
-- C. A launch party for the team, to mark the milestone and thank everyone who worked on the assistant over the year
+- C. A launch party for the team, to mark the milestone and thank everyone who worked on the assistant over the past year
 - D. A new logo for the assistant, so that customers can tell it apart from the old chat service and the app
 
 <details><summary>Answer</summary>
@@ -1149,7 +1149,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **44. Three months after Staff GenAI launched, only a small share of employees use it weekly, and most of them are in IT. What is the best next step?**
 
-- A. Send an all-staff email reminding people that Staff GenAI exists, how to open it, and where to ask for help if needed
+- A. Send an all-staff email reminding people that Staff GenAI exists, how to open it, and where to ask for help when they get stuck
 - B. Find champions in each department, collect concrete use cases for their real tasks, and train people in their own workflows
 - C. Make its use mandatory for all staff, and report each department's usage to senior management every month, as a league table
 - D. Switch to a better model, since low usage suggests the answers are not good enough for most employees
@@ -1297,7 +1297,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 **55. New models appear every few months, and Tariq worries that the team's choices will quickly go out of date. Which roadmap principle helps most?**
 
 - A. Wait for the models to settle before building anything of value, so that no work is thrown away later
-- B. Commit to one vendor for five years to avoid churn, and negotiate a discount for the long-term commitment
+- B. Commit to one vendor for five years to avoid churn, and negotiate a discount in return for the long-term commitment
 - C. Design for a swappable model: a thin layer between product and model, your own eval suite, and a replaceable model
 - D. Rebuild the product each time a new model is released, so that it always uses the latest and most capable model on offer
 
@@ -1309,9 +1309,9 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **56. Rania asks Faisal to redo his 12-month roadmap, which lists ten AI features with fixed delivery dates. What is she most likely asking for?**
 
-- A. More features, to show ambition and give the board a fuller picture of what the team can deliver
+- A. More features, to show ambition and give the board a fuller picture of everything the team can deliver this year
 - B. A roadmap framed as bets: the outcome targeted, the key uncertainty, how it will be tested, and when to continue, change or stop
-- C. Dates moved later to add buffer, so that the team is less likely to miss a delivery commitment made to the board
+- C. Dates moved later to add buffer, so that the team is less likely to miss a delivery commitment it has made to the board
 - D. A single feature, to reduce risk and let the whole team concentrate on one thing and deliver it well
 
 <details><summary>Answer</summary>

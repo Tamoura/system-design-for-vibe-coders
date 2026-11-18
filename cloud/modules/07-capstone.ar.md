@@ -306,7 +306,7 @@ spec:
 - توثيق GitHub، التحصين الأمني باستخدام OpenID Connect — https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/about-security-hardening-with-openid-connect
 - GitLab، مراجعة ما بعد الحادثة لانقطاع قاعدة البيانات في 31 يناير 2017 — https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/
 - هيئة الأوراق المالية الأمريكية (US SEC)، الأمر في قضية Knight Capital Americas LLC (2013) — https://www.sec.gov/litigation/admin/2013/34-70694.pdf
-- اللائحة (EU) 2022/2554 بشأن المرونة التشغيلية الرقمية للقطاع المالي (Regulation 2022/2554 on digital operational resilience for the financial sector) (DORA) — https://eur-lex.europa.eu/eli/reg/2022/2554/oj
+- اللائحة (EU) 2022/2554 بشأن المرونة التشغيلية الرقمية للقطاع المالي (DORA) — https://eur-lex.europa.eu/eli/reg/2022/2554/oj
 
 ---
 
@@ -1453,4 +1453,4 @@ Strong answer, out loud, in order:
 - توثيق Prometheus — https://prometheus.io/docs/introduction/overview/
 - مؤسسة FinOps، إطار عمل FinOps — https://www.finops.org/framework/
 - مشاريع CNCF — https://www.cncf.io/projects/
-- اللائحة (الاتحاد الأوروبي) 2022/2554 (قانون المرونة التشغيلية الرقمية) (Regulation 2022/2554) — https://eur-lex.europa.eu/eli/reg/2022/2554/oj
+- اللائحة (EU) 2022/2554 بشأن المرونة التشغيلية الرقمية (DORA) — https://eur-lex.europa.eu/eli/reg/2022/2554/oj

@@ -22,7 +22,7 @@
 ## 🧭 Why it matters
 On Ali's first morning in Najm Bank's Application & AI Security team, Noura (Head of Application & AI Security) gives him one task: "List what Najm Assist has to protect." Najm Assist, the assistant in the bank's mobile app, is about to gain the ability to freeze cards and open disputes. Ali returns with two items: "the server, and the database password". Noura's list has seven, including customers' balances, the card-freeze action (a fraudster would love to misuse it), what Assist says about fees (a wrong answer can become a commitment the bank is held to), the conversation logs and the credentials Assist uses to call internal systems. "The server is where things live," she says. "The assets are what people would be hurt by losing."
 
-The most damaging breaches rarely start with anything exotic. In 2017, attackers entered Equifax, a US credit reporting agency, through a known vulnerability in the Apache Struts web framework (CVE-2017-5638). A fix had been published weeks before they got in, but it had not been applied to the affected system. The US Federal Trade Commission reported that the personal data of about 147 million people was exposed. In 2023, staff at Samsung were reported to have pasted confidential source code and meeting notes into ChatGPT; the company then restricted staff use of such tools. Nobody "hacked" anything in the second case: data crossed a boundary nobody had drawn. One case is classic application security, the other new and AI-shaped. This course covers both.
+The most damaging breaches rarely start with anything exotic. In 2017, attackers entered Equifax, a US credit reporting agency, through a known vulnerability in the Apache Struts web framework (CVE-2017-5638). A fix had been published about two months before they got in, but it had not been applied to the affected system. The US Federal Trade Commission reported that the personal data of about 147 million people was exposed. In 2023, staff at Samsung were reported to have pasted confidential source code and meeting notes into ChatGPT; the company then restricted staff use of such tools. Nobody "hacked" anything in the second case: data crossed a boundary nobody had drawn. One case is classic application security, the other new and AI-shaped. This course covers both.
 
 ## 📐 How it works
 
@@ -581,10 +581,10 @@ Every arrow from people outside the bank into a system is attack surface. Lesson
 | You are… | Suggested path |
 |---|---|
 | A developer, including with AI coding agents | Modules 0–6, then 8.1–8.2 and 9; every 🟡 exercise on your own code or the starter lab |
-| An architect | Modules 0, 1, 3, 7, 8, 9.2 and 9.3; a threat model for each system you own |
-| A product or engineering manager | 0, 1.3, 6.1, 8.1–8.2, 9.2, 10.2 and 11; the 🏛️ artefacts as templates to ask for; the paper route |
+| An architect | Modules 0, 1, 3, 7, 8 and 9.1–9.3; a threat model for each system you own |
+| A product or engineering manager | 0, 1.3, 6.1, 8.1–8.2, 9.1–9.2, 10.1–10.2 and 11; the 🏛️ artefacts as templates to ask for; the paper route |
 | A security analyst moving into AppSec or AI security | The 12.3 practice exam first; then deep on 2–4 and 8–9 |
-| A bank, government or enterprise system owner | 0, 1, 5.3, 7.1, 10.2 and 11; the paper route |
+| A bank, government or enterprise system owner | 0, 1, 5.3, 7.1, 9.1, 10.1–10.2 and 11; the paper route |
 
 **No code? Take the paper route.** Most 🟢 exercises need only paper. When an exercise needs a repository, a cloud account or a lab, review the lesson's own vulnerable and fixed code pair, or its 🏛️ artefact, as if a developer had sent it to you for approval: name the flaw, what an attacker gains, the fix you would require and the test that would prove it. Lessons whose exercises all need code add a 📝 paper-route exercise. *Done when:* a developer could act on your review without asking you what you meant.
 

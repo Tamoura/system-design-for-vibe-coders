@@ -555,11 +555,11 @@ You do not need all of them. Module 2 gives each role a **study path table**: th
 
 | Path | Who it suits | How |
 |---|---|---|
-| **Full path** | Final-year students and graduates starting from zero | Modules 0 to 7 in order, about 6–10 hours a week, with the capstone plan in lesson 7.1 as the backbone |
+| **Full path** | Final-year students and graduates starting from zero | Modules 0 to 7, with the Module 3 capstone slice built alongside Module 4, about 6–10 hours a week, with the capstone plan in lesson 7.1 as the backbone |
 | **Targeted path** | Graduates already applying, with one urgent need | Do lessons 0.1 and 0.2, then jump to the module you need (for example Module 5 if you have interviews next week), then come back |
 | **Adviser path** | Career-centre advisers, lecturers and hiring managers | Use the 🏛️ artefacts as worksheets, the exercises as assignments and lesson 7.2 as a mock interview bank |
 
-**How long the full path takes.** About 12 weeks at 16 hours a week, about 20 weeks at 10 hours a week, or 24–30 weeks at 6–8 hours a week; the job search itself may run longer (lesson 7.1). Lesson 7.1 is the backbone, but do not wait for it: draft a rough 12-week plan now and refine it there.
+**How long the full path takes.** The study-time lines on the lessons add up to about 250 hours if you do every exercise, including the 🔴 ones: about 16 weeks at 16 hours a week, about 25 weeks at 10 hours a week, or 32–42 weeks at 6–8 hours a week. Huda's 12-week plan in lesson 7.1 is about 190 hours because it keeps only the exercises her target role needs; yours can be shorter in the same way. The job search itself may run longer (lesson 7.1). Lesson 7.1 is the backbone, but do not wait for it: draft a rough 12-week plan now and refine it there.
 
 | Weeks | Focus | Checkable deliverable |
 |---|---|---|
