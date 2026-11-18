@@ -9,6 +9,8 @@
 # 14.1 — Deploying an agent: containers, environments, queues, durable execution, release strategies and rollback
 *Level: 🔴 Advanced* · *Prerequisites: 2.2, 8.2, 12.2, 13.2* · *Layer: Delivery, Production*
 
+**After this you can** run the agent service with idempotency keys, carry out a canary and rollback drill with the counts to prove it, and build a container image with no key in any layer. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A deployed agent is a service around a model call you do not control: expect it slow, wrong, down or costly.
 - Build once, configure per environment: pinned base, non-root user, multi-stage build, no secret in a layer.
@@ -380,6 +382,8 @@ Do not: build images, add dependencies or touch other modules. Plan first; one f
 
 # 14.2 — Cost, latency and reliability engineering: budgets, caching, routing, retries and SLOs
 *Level: 🔴 Advanced* · *Prerequisites: 0.2, 12.2, 14.1* · *Layer: Production, Delivery*
+
+**After this you can** price a conversation from a dated price file and match your hand arithmetic to five decimals, and change an escalation rule test-first while naming one case where the change is wrong. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Cost is tokens times the current price on four meters: input, output, cache write, cache read. Judge it per resolved ticket.

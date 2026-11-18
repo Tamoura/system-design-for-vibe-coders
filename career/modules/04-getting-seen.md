@@ -9,6 +9,8 @@
 # 4.1 — A CV that survives the applicant-tracking system and the six-second human scan
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 3.2* · *Step: Apply, Prove*
 
+**After this you can** make your CV pass the plain-text paste test, rewrite weak bullets as what, how and what changed, and tailor it to a real job ad in under 20 minutes. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Your CV has two readers before anyone interviews you: an **applicant-tracking system (ATS)**, the software that stores and parses applications, and a **recruiter** who scans the result quickly.
 - Design for both with the same choices: one column, standard headings, real text (not images), common file formats, and the job ad's own words where they truthfully describe you.
@@ -239,6 +241,8 @@ After:
 
 # 4.2 — LinkedIn, networking and referrals without awkwardness
 *Level: 🟡 Intermediate* · *Prerequisites: 3.2, 4.1* · *Step: Apply*
+
+**After this you can** align your LinkedIn headline and About section with your CV, and send three specific outreach messages of under 100 words, each logged with a follow-up date. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Many jobs are filled through people who already know, or were told about, the candidate. A **referral** — an employee putting your name forward — usually gets your application read by a human.
@@ -471,6 +475,8 @@ Faisal forwarded it with one line: "Met Huda at the alumni evening; she took my 
 
 # 4.3 — Where the jobs are: graduate programmes, job boards, startups, the public sector and the GCC market
 *Level: 🟡 Intermediate* · *Prerequisites: 0.2, 4.1, 4.2* · *Step: Explore, Apply*
+
+**After this you can** build a target list of at least 20 employers across three or more channels and a 12-month graduate programme calendar with a source link for every programme. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Entry-level jobs come from several channels with different calendars and rules: **graduate programmes**, **direct job ads**, **startups**, the **public sector and national programmes**, **recruiters**, and **referrals**.

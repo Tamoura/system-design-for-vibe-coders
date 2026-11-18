@@ -9,6 +9,8 @@
 # 11.1 — The deploy decision: context, stakeholders and alternatives
 *Level: 🔴 Advanced* · *Prerequisites: 8.1, 6.1* · *BoK: IV.A*
 
+**After this you can** map the stakeholders of an AI deployment, and compare it with real alternatives on benefits, risks and rough cost. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - The same AI system can be low-risk in one context and high-risk in another. The deploy decision is about **this system, in this context, for these people**, not about the technology in general.
@@ -231,6 +233,8 @@ Layla's team writes a **Deploy Decision Memo** for the committee.
 # 11.2 — Buying AI: vendor due diligence and contracts
 *Level: 🔴 Advanced* · *Prerequisites: 3.3, 11.1* · *BoK: IV.A*
 
+**After this you can** write vendor due-diligence questions with red-flag answers, and draft incident- and change-notification clauses a lawyer could redline. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - You can outsource an AI function; you cannot outsource accountability. Buying AI is a governance activity, and procurement is one of your strongest controls.
@@ -447,6 +451,8 @@ Yusuf and Layla create a **Vendor AI Due Diligence Scorecard**. Here is the resu
 
 # 11.3 — Assessing the system: impact assessments, audits and assurance
 *Level: 🔴 Advanced* · *Prerequisites: 4.3, 6.2, 11.1* · *BoK: IV.B*
+
+**After this you can** decide which systems need a DPIA, a FRIA or a conformity assessment and who does each, and scope an internal audit an auditor could start from. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -673,6 +679,8 @@ A good assessment record states: who did it and with what independence; the vers
 
 # 11.4 — Governing use: oversight, transparency and incident response
 *Level: 🔴 Advanced* · *Prerequisites: 11.3, 10.2* · *BoK: IV.C*
+
+**After this you can** write an AI disclosure and contest text under 80 words, and run a paper tabletop exercise that finds two gaps in an incident response. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 

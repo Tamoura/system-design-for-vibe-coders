@@ -9,6 +9,8 @@
 # 8.1 — Use-case intake, business case and risk tiering
 *Level: 🔴 Advanced* · *Prerequisites: 3.1, 4.3, 6.1* · *BoK: III.A*
 
+**After this you can** write a use-case intake, classify a vendor tool under the AI Act, GDPR and a GCC law, and assign a provisional risk tier with a one-line justification. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Every AI idea enters governance through one door: a **use-case intake**. It captures purpose, people affected, data, decision impact, vendor and jurisdictions, *before* money is spent.
 - The first governance question is not "is it safe?" but "**is AI needed at all**, and is it proportionate?" A rule, a checklist or a simpler model may meet the goal with less risk.
@@ -240,6 +242,8 @@ Committee decision recorded for the copilot: *"Approved for design at Tier 2. Sc
 # 8.2 — Designing for trustworthiness
 *Level: 🔴 Advanced* · *Prerequisites: 8.1, 4.2, 6.2* · *BoK: III.A*
 
+**After this you can** choose and justify an oversight pattern, write reason codes for customers and underwriters, and threat-model an LLM copilot with an attack, control and test per risk. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Trustworthiness is **designed in as requirements**, written before build and tested before release. It covers human oversight, explainability, fairness, privacy, security, robustness and, for GenAI, grounding and guardrails.
 - **Human oversight** comes in three patterns: human-*in*-the-loop (a person approves each output), human-*on*-the-loop (a person monitors and can intervene), human-*over*-the-loop (a person governs the system and decides when and how it is used). It only counts if the human has the competence, time, information and authority to disagree.
@@ -448,6 +452,8 @@ For Najm's copilot, Layla's team adds a critical design rule: **every financial 
 
 # 8.3 — Documentation, and build versus buy
 *Level: 🔴 Advanced* · *Prerequisites: 8.2, 3.3, 6.3* · *BoK: III.A*
+
+**After this you can** draft a model card whose intended and out-of-scope uses make misuse recognisable, and write decision-log entries with alternatives, rationale, approver and evidence. *Study time: about 105 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Documentation is how governance becomes **evidence**. If a decision, test or limitation is not written down, auditors and regulators will treat it as never having happened.

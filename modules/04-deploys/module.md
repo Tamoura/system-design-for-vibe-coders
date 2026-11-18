@@ -374,7 +374,7 @@ No code reading required — accept the lesson only when:
 
 # 4.3 — The proxy lies: stale workers and trusting your own verification
 
-**After this you can** end your deploy with a script that checks `/version` and compares origin and edge asset hashes, and show it failing on a stale edge and on a proxy that was reloaded instead of restarted. *Study time: about 70 minutes (estimate).*
+**After this you can** end your deploy with a script that checks `/version` and compares origin and edge asset hashes, show it failing on a stale edge, and reproduce 502s by reloading the proxy after a flip, then clear them with a restart. *Study time: about 70 minutes (estimate).*
 
 ## 🔥 The War Story
 

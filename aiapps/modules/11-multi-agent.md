@@ -9,6 +9,8 @@
 # 11.1 — Supervisors, workers and hand-offs: when multi-agent is the wrong answer
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 5.1, 8.1* · *Layer: Agents*
 
+**After this you can** decide and justify whether a design needs one agent or several, and write Pydantic hand-off contracts that accept three valid inputs and reject three invalid ones as predicted. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A **team** is several agents, each with its own prompt, tools and context, plus a **supervisor** that decides who goes next and **hand-offs** between them.
 - A team is a cost, not a feature: more calls, tokens and latency, compounding errors, lost context.
@@ -260,6 +262,8 @@ Hind needs none of the vocabulary: she asks whether answers are right, fast and 
 
 # 11.2 — Lab: a three-agent team with explicit hand-off contracts
 *Level: 🟡 Intermediate* · *Prerequisites: 3.2, 8.2, 11.1* · *Layer: Agents*
+
+**After this you can** build a three-agent team with allow-list, grounding and budget guards, and add deadline and no-progress escalations with tests that fail without your change. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - A researcher, writer and reviewer run by a supervisor in plain code, each with its own prompt, tools and contract.

@@ -9,6 +9,8 @@
 # 6.1 — Offers: comparing, negotiating and choosing well
 *Level: 🔴 Advanced* · *Prerequisites: 4.3, 5.1* · *Step: Apply, Start*
 
+**After this you can** list every component and term of an offer letter, calculate your salary floor from a monthly budget, and write a negotiation email with a specific ask, a reason and an alternative. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - An **offer** is a package (pay, allowances, benefits, equity), contract terms (probation, notice, bonds, intellectual-property clauses) and a job (team, mentor, learning).
 - **Get every offer in writing before you decide anything.** A verbal "we'd love to have you" is not an offer.
@@ -257,6 +259,8 @@ Aisha shares the **offer comparison sheet** Najm's graduate team gives every can
 # 6.2 — Your first 90 days: onboarding, the first pull request and asking good questions
 *Level: 🔴 Advanced* · *Prerequisites: 1.1, 1.2, 6.1* · *Step: Start*
 
+**After this you can** write a 30-60-90 plan with evidence a manager could check, and rewrite a question and a pull request description so a reviewer can follow them without asking you. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Your first 90 days have three jobs: **learn** the system, the people and how work ships; **contribute** small, safe changes early; **build trust** that you can be given more.
 - Aim for a **small first pull request** in your first week or two. It proves your setup works and teaches you the team's review and release process.
@@ -500,6 +504,8 @@ Najm's **PR checklist for graduates** (pinned in the squad's channel):
 
 # 6.3 — Growing from junior to mid-level: feedback, ownership and continuous learning
 *Level: 🔴 Advanced* · *Prerequisites: 6.2* · *Step: Grow*
+
+**After this you can** compare two levels of a published career ladder, turn two pieces of feedback into SBI notes with one chosen change, and draft a six-month growth plan with checkable goals. *Study time: about 105 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - The step from junior to **mid-level** is mostly about **scope and independence**: a junior is given well-defined tasks; a mid-level engineer is given a problem and turns it into tasks, ships them and runs the result.

@@ -9,6 +9,8 @@
 # 12.1 — Capstone: governing Najm's credit copilot end to end
 *Level: 🔴 Advanced* · *Prerequisites: Modules 1–11* · *BoK: I.A–I.C, II.A–II.D, III.A–III.C, IV.A–IV.C*
 
+**After this you can** produce a governance file for a GenAI credit copilot, with a classification memo, a DPIA and FRIA table, vendor clauses and a red-team plan, and present it to a colleague acting as the committee. *Study time: about 130 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - The **credit memo copilot** is a generative AI system that Najm builds on a third-party foundation model, with retrieval over internal credit files, to draft credit memos for relationship managers (RMs) in retail and SME lending, including EU customers served from Frankfurt.
 - Because it helps evaluate the creditworthiness of natural persons and profiles them, Najm should treat it as **high-risk under the EU AI Act (Annex III)**. Najm is both the **provider** (it builds the system and puts it into service under its own name) and the **deployer** (it uses it).
@@ -288,6 +290,8 @@ These exercises build a portfolio piece: a governance file for a GenAI credit co
 # 12.2 — Exam strategy and the traps that cost marks
 *Level: 🔴 Advanced* · *Prerequisites: 0.2, Modules 1–11* · *BoK: All domains (I–IV)*
 
+**After this you can** write the role, jurisdiction, life-cycle stage and qualifier of a scenario question in under 20 seconds, and name your top three traps with a rule for each. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - At the time of writing (2026), the AIGP exam has **100 multiple-choice questions** (85 scored, 15 unscored pilot questions you cannot identify) in **2 hours 45 minutes**, scored on a scale of 100–500 with **300 to pass**. Check IAPP's current candidate information before you book.
 - Most marks are lost on **reading**, not knowledge. Before looking at the options, identify four things in the stem: the **role** (provider, deployer, controller?), the **jurisdiction**, the **life-cycle stage** and the **qualifier** ("first", "best", "most important", "except").
@@ -547,6 +551,8 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 # 12.3 — Full mock exam: 100 questions
 *Level: 🔴 Advanced* · *Prerequisites: 12.2* · *BoK: All domains (I–IV)*
+
+**After this you can** sit a timed 100-question practice exam, then use each wrong answer's competency ID to list the lessons you will revisit. *Study time: about 210 minutes (estimate).*
 
 > **Under revision (November 2026).** In many questions in this practice exam the correct option can be spotted by its length or wording, so a high score here does not show readiness for any real exam. Use it to practise reasoning: answer each question in your own words before you read the options, then compare.
 

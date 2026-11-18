@@ -20,15 +20,15 @@
 - Biggest trap: reading fluent as correct. Fluency costs the model nothing.
 
 ## 🧭 Why it matters
-On a Monday (a constructed day, not recorded from a real model) Lujain (graduate engineer) points her agent at `screening.py`, the old module with no tests. Six minutes later it has written eighteen well-named characterization tests, and she reads every one. On Tuesday, same agent, she asks for an audit event when a quote is created. It writes `audit.record("quote.created", ...)` and `ids.generate("QUO")`. Neither exists in najmkit, and no test calls the new helper, so the suite stays green.
+On a constructed Monday Lujain (graduate engineer) points her agent at `screening.py`, the old module with no tests. In six minutes it writes eighteen well-named characterization tests; she reads each. On Tuesday she asks for an audit event on each new quote. It writes `audit.record("quote.created", ...)` and `ids.generate("QUO")`. Neither exists in najmkit; no test calls the helper, so the suite stays green.
 
-Tariq (engineering lead) opens the clinic with both stories: "Same tool. Why did it shine on the hard module and fall over on a one-line call?" The answer is a mental model, not luck.
+Tariq (engineering lead) asks: "Same tool. Why did it shine on the hard module and fall over on a one-line call?" The answer is a mental model, not luck.
 
 ## 📐 How it works
 
 ### 🟢 The essentials
 
-**A model is a function of its context.** A language model reads a sequence of text pieces called **tokens** and produces the next ones. It keeps no state between calls: nothing about yesterday or your repository survives unless it is sent again. The program re-sends the conversation every turn, and that feels like memory. Hence the course's central rule: **what is not in the context does not exist for the model**. [*Building AI Applications & Agents*, lesson 1.1 — The one idea: a stateless function, tokens, the context window and the messages list](../aiapps/index.html#/1.1) teaches this from the API side.
+**A model is a function of its context.** A language model reads a sequence of text pieces called **tokens** and produces the next ones. It keeps no state between calls: nothing about yesterday or your repository survives unless sent again. The program re-sends the conversation every turn; that feels like memory. Hence the course's central rule: **what is not in the context does not exist for the model**. [*Building AI Applications & Agents*, lesson 1.1 — The one idea: a stateless function, tokens, the context window and the messages list](../aiapps/index.html#/1.1) teaches this from the API side.
 
 **What fills the context window.** The window is the most text one call can hold. In Claude Code on Remit it fills from five places.
 
@@ -256,7 +256,7 @@ def record_quote(customer_id, amount):
 - Decision cue: when a session ends "all tests pass", find the first turn where a claim lost its evidence.
 
 ## 🧭 Why it matters
-Tariq's clinic has one rule: nobody describes what an agent "felt like". You bring the transcript. Last week Lujain brought the summary instead: "Done, all tests pass." Tariq needed four minutes of scrolling to see that the agent had agreed with a wrong claim at turn 2 and built on it (constructed, like the sessions below).
+Tariq's clinic has one rule: bring the transcript, not what an agent "felt like". Last week Lujain brought the summary instead: "Done, all tests pass." Four minutes of scrolling showed Tariq that the agent had agreed with a wrong claim at turn 2 and built on it (constructed, like the sessions below).
 
 ## 📐 How it works
 
@@ -265,7 +265,7 @@ Tariq's clinic has one rule: nobody describes what an agent "felt like". You bri
 **A transcript is evidence; the summary is a claim.** Each turn is a message from you (`user`), from the agent (`agent`, with at most one tool call), a prompt from the tool (`system`, such as a permission request) or tool output (`result`). Read in three passes.
 1. **The story.** Read the first user turn and the agent's last message. Write one line: what was asked, what is claimed.
 2. **Turn by turn.** For each agent turn ask: *What did it know here?* Only what is above it, plus training. *What did it do, and did what it knew justify that?* *What did it claim, and what in the transcript backs it?*
-3. **Against the repository.** When a claim depends on the repo, check the repo: grep for the function, open the docs, run the command. The agents' edits are not in your copy and their diffs are abridged: check names and commands, do not replay edits.
+3. **Against the repository.** Check claims that depend on the repo: grep for the function, open the docs, run the command. The agents' edits are not in your copy and their diffs are abridged: check names and commands, do not replay edits.
 
 The turn where it went wrong is the first turn where an answer is "no". Practise on a small session that is **not** in the lab.
 
@@ -315,7 +315,7 @@ A fee of 165.00 above a 150.00 cap, by design. T05 and T06 test nothing about a 
 | `injection` and `scope-creep` | Whose idea was it: the agent's own, or text it read? | Text it read: injection. Its own: scope creep |
 | `misread-requirement` and `sycophancy` | Was the request ambiguous, or was a wrong claim accepted? | Ambiguous: misread. Wrong claim: sycophancy |
 
-**Chains and the turn rule.** Failures chain: a loop that cannot reach green may end by weakening the check. List the failures in the order they happen, at most two (the grader checks the order). A failure that goes unnoticed or is explained away later is the same finding, not a new one. A loop has no single turn: any turn from the first attempt that later gets repeated to the last repeat counts, plus one either side. A test edit is gaming only when it weakens a check the ticket did not ask you to change. The turn where an error *shows* is often later than the turn where it *went wrong*: point at where it went wrong.
+**Chains and the turn rule.** Failures chain: a loop that cannot reach green may end by weakening the check. List the failures in the order they happen, at most two (the grader checks the order). A failure unnoticed or explained away later is still the same finding. A loop has no single turn: any turn from the first attempt that later gets repeated to the last repeat counts, plus one either side. A test edit is gaming only when it weakens a check the ticket did not ask you to change. Point at the turn where it *went wrong*, not where the error *shows*.
 
 ### 🔴 Expert view
 

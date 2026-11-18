@@ -9,6 +9,8 @@
 # 8.1 — Plan, act, observe, repeat: reflection, stopping conditions and the first failure modes
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 3.2* · *Layer: Agents*
 
+**After this you can** audit an agent loop for the six stopping conditions, and size its step cap and token budget from the token formula, with a stop table. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - An **agent loop** asks the model, reads `stop_reason`, runs the tool it asked for, returns the result and repeats (ReAct, Yao et al., 2022). The model proposes; **your code decides when to stop.**
 - **Six exits:** verified success, step cap, token budget, deadline, no-progress detection, hand-off to a person. Every guard ends in a hand-off, never a crash.
@@ -267,6 +269,8 @@ The artefact is the **Loop card** for the Najm Desk ticket-and-colleague route, 
 
 # 8.2 — Lab: an agent loop from scratch in about 80 lines, with a hard cap and full trace logging
 *Level: 🟡 Intermediate* · *Prerequisites: 3.2, 8.1* · *Layer: Agents, Production*
+
+**After this you can** build an agent loop of about 80 lines with a step cap, token budget, deadline and no-progress detection, then make each guard fire and show it in the JSONL trace. *Study time: about 105 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - You build lesson 8.1's loop in one file, no framework, in about 80 lines: **step cap**, **token budget**, **deadline**, **no-progress detection**, every `stop_reason`, success checked by code.

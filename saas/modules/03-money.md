@@ -9,6 +9,8 @@
 # 3.1 — Subscriptions and payments: checkout, webhooks, the customer portal
 *Level: 🟢 Beginner* · *Prerequisites: 1.2, 2.1*
 
+**After this you can** wire Stripe Checkout, the Customer Portal and a signature-verified, deduplicated webhook handler into Beacon, and show that sending the same event twice updates the subscription row once. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - A subscription is a Customer paying a Price every period. The payment provider owns the truth about money, and your database keeps a copy.
@@ -319,6 +321,8 @@ Stripe treats the `500` as a failed delivery and retries it for days, and it eve
 # 3.2 — Plans, limits and entitlements: turning pricing into code
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 1.3*
 
+**After this you can** turn Free, Pro and Business pricing into one entitlements module, enforce monitor limits with a structured `limit_exceeded` error, and downgrade an org without deleting any of its data. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - An entitlement is one thing an account may do or have: a feature gate, a limit or a configuration value. A plan is just a named package of them.
@@ -599,6 +603,8 @@ Both requests read 4, both pass the check, and the org ends up with 6 monitors. 
 
 # 3.3 — Usage-based billing and metering
 *Level: 🔴 Advanced* · *Prerequisites: 3.1, 3.2*
+
+**After this you can** record one idempotent usage event per SMS, report overage to Stripe meters from a retrying job, and show that replaying the job does not change the invoice. *Study time: about 105 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 

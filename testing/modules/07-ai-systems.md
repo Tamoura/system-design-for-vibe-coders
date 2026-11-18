@@ -9,6 +9,8 @@
 # 7.1 — Evals: testing LLM applications with datasets, graders, LLM-as-judge, non-determinism and CI gates
 *Level: 🔴 Advanced* · *Prerequisites: 2.3, 5.1* · *Focus: AI, Delivery*
 
+**After this you can** build a golden-set eval with a baseline gate that fails on the right category, and decide whether to trust an LLM judge from its agreement (kappa) with your own labels. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - An **eval** tests behaviour with no single right answer: a **dataset** of inputs with expectations, a **task** that runs your system, a **grader**, a **metric** and a **threshold**.
 - Assert on facts and properties, not wording. Exact match fails good answers; vague checks pass bad ones.
@@ -437,6 +439,8 @@ Use a scratch copy of `testing/sample`. No paid API is needed.
 # 7.2 — Testing RAG, tool use and agents: retrieval metrics, groundedness, trajectories and sandboxes
 *Level: 🔴 Advanced* · *Prerequisites: 2.1, 7.1* · *Focus: AI, Integration*
 
+**After this you can** measure retrieval with recall and precision at k, and write agent tests that fail when a tool skips confirmation or acts on an account the customer does not own. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Retrieval-augmented generation (RAG)** retrieves documents, puts them in the prompt, generates and cites. Test the **retriever** and **generator** separately, then together.
 - Judge the retriever with **recall@k**, **precision@k** and **MRR** on labelled queries. Judge the generator with the context *fixed*: grounded, honest about "no answer", robust to stale or hostile text.
@@ -854,6 +858,8 @@ Use a scratch copy of `testing/sample`.
 
 # 7.3 — Safety, robustness, fairness and monitoring: red-teaming, metamorphic tests, drift and turning incidents into tests
 *Level: 🔴 Advanced* · *Prerequisites: 7.1, 7.2* · *Focus: AI, Security*
+
+**After this you can** write a balanced red-team set with over-refusal cases, report attack-success and over-refusal rates, and add a drift alert that fires on a shifted input mix. *Study time: about 115 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Plan AI testing from **harms**: wrong answer, leakage, prompt injection, unsafe action, bias, toxicity and **over-refusal** (blocking a legitimate request).

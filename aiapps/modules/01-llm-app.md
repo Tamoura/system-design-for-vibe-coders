@@ -9,6 +9,8 @@
 # 1.1 — The one idea: a stateless function, tokens, the context window and the messages list
 *Level: 🟢 Beginner* · *Prerequisites: 0.2* · *Layer: Model*
 
+**After this you can** write out the exact `system` and `messages` sent on each call of a chat, and build a cost model that reproduces how input tokens and cost grow with every turn. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A large language model (LLM) is a **function**: a list of messages in, the next message out. It keeps nothing between calls, so **memory is what your code resends**. Every chatbot, copilot and agent calls it in a loop and decides what goes into the list.
 - The model reads and writes **tokens**. You pay for input tokens on every call (the whole history, again) and for output tokens (thinking included), so cost grows faster than the number of turns.
@@ -250,6 +252,8 @@ Grades: 🟢 offline only, 🟡 offline plus a price page, 🔴 a real API key.
 
 # 1.2 — Lab: a chatbot with memory, break it on purpose, then your first agent loop
 *Level: 🟢 Beginner* · *Prerequisites: 0.2, 1.1* · *Layer: Model, Agents*
+
+**After this you can** build a chatbot with memory, write a tested `trim()` that keeps it inside the context window, and run and bound your first agent loop on the mock. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Lab A.** A chatbot is a list plus one function: append your message, send the whole list, append the reply. Send less and it forgets.

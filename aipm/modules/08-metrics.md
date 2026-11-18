@@ -9,6 +9,8 @@
 # 8.1 — Product metrics for AI: value, quality, adoption, trust
 *Level: 🔴 Advanced* · *Prerequisites: 6.1, 6.3, 7.3* · *Stage: Grow*
 
+**After this you can** sort AI product metrics into value, quality, adoption, trust and cost, flag the ones most likely to be gamed, and build a metrics tree with a North Star, input metrics and owned guardrails. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - An AI product needs metrics in **four families**: **value** (did the user's job get done better, faster or cheaper?), **quality** (were the outputs right?), **adoption** (do the intended users use it, and keep using it?) and **trust** (do they rely on it the right amount, no more and no less?).
 - Organise them as a **metrics tree**: one North Star that expresses delivered value, a few input metrics the team can move, and **guardrail metrics** that must not get worse.
@@ -235,6 +237,8 @@ Retired from the headline: *drafts generated* and *average thumbs rating* (now d
 
 # 8.2 — Unit economics: cost to serve, pricing models and margins
 *Level: 🔴 Advanced* · *Prerequisites: 1.2, 1.3, 7.2, 8.1* · *Stage: Grow*
+
+**After this you can** compute the model cost per request and per resolved conversation from token counts and illustrative prices, and write a break-even comparison of per-seat and per-outcome pricing. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Traditional software costs almost nothing extra per use. AI does not: every request consumes compute, and often retrieval, tool calls, evaluation and human review. **Cost to serve** is a product variable, not an IT line item.
@@ -474,6 +478,8 @@ Decision rule agreed with Khalid: *"A change that lowers the model bill but rais
 
 # 8.3 — Monitoring, drift and the iteration loop after launch
 *Level: 🔴 Advanced* · *Prerequisites: 6.1, 6.2, 6.3, 8.1* · *Stage: Grow*
+
+**After this you can** name the type of drift behind a scenario and a signal that detects it, and write a dated model-migration plan with a golden-set go/no-go rule and a rollback path. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - AI products get worse without anyone touching them. Customers change, fraudsters adapt, policies are updated and model vendors ship new versions. This is **drift**, and it is usually silent: no error message, just slowly worse answers.

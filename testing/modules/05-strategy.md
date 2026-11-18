@@ -9,6 +9,8 @@
 # 5.1 — Test strategy and planning: risk-based testing, the test pyramid and quality metrics
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 2.3, 3.2* · *Focus: Strategy*
 
+**After this you can** score feature areas by risk to set how deeply each is tested, and show with measured coverage and bug-catch numbers why a coverage target alone misleads. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A **test strategy** is the standing approach: what you test, at which level, who owns it. A **test plan** applies it to one release. Keep the strategy to a page.
 - **Risk-based testing** scores areas by likelihood × impact (1 to 5 each); the score sets the depth. One override: a catastrophic impact is never "light".
@@ -321,6 +323,8 @@ Copy `testing/sample` and use the venv from lesson 0.3 (`pytest-cov` is already 
 
 # 5.2 — Testing in CI/CD and in production: fast pipelines, flaky-test policy, feature flags, canaries and synthetic monitoring
 *Level: 🟡 Intermediate* · *Prerequisites: 2.3, 3.2, 5.1* · *Focus: Delivery, Reliability*
+
+**After this you can** shard a test suite deterministically, run a quarantine job for a flaky test, and build a shadow-traffic comparison that flags a seeded fee difference. *Study time: about 115 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - A **pipeline** orders checks by cost: cheap and fast first, slow and broad later. Each stage answers one question.
@@ -693,6 +697,8 @@ Copy `testing/sample` and run `pip install pytest-xdist`.
 
 # 5.3 — Exploratory testing, agile teams and BDD: working with developers, product owners and users
 *Level: 🟡 Intermediate* · *Prerequisites: 1.3, 5.1* · *Focus: Strategy, Design*
+
+**After this you can** run a time-boxed exploratory session from a charter and report its findings, and write BDD scenarios for the 15:00 cut-off that fail under the seeded time-zone bug. *Study time: about 155 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Exploratory testing** is simultaneous learning, test design and execution. It finds what scripts cannot predict, and it is a skilled, planned activity, not random clicking.

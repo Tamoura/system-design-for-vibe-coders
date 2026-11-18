@@ -9,6 +9,8 @@
 # 9.1 — Short-term, working and long-term memory: what to remember and what never to
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 3.1, 8.1* · *Layer: Agents*
 
+**After this you can** sort candidate memories into keep, never and depends, each with a kind, a retention and a rule, and map every place a stored copy can live with a test for how a forget reaches it. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - The model remembers nothing. "Memory" is text your code puts back into the next request, in three tiers: **short-term** (the context window), **working** (a state object) and **long-term** (a store), either **episodic** (what happened) or **semantic** (what is true).
 - Memory has a write path and a read path, both tool calls you design: `remember`, `recall`, `forget`. The model proposes; your code decides.
@@ -236,6 +238,8 @@ The artefact is the **Najm Desk v1 Memory Design**, owned by Lujain, reviewed by
 
 # 9.2 — Lab: persistent memory across sessions, with a "forget" command
 *Level: 🟡 Intermediate* · *Prerequisites: 8.2, 9.1* · *Layer: Agents, Production*
+
+**After this you can** build per-user SQLite memory with remember, recall and forget, and prove with tests that forget removes the data from the store, the summary and the raw file. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - A per-user SQLite memory (`remember`, `recall`, `forget`, `export`), an agent that remembers across processes and a rolling summary under a token budget. No tool takes a user id.

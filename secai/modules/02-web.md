@@ -9,6 +9,8 @@
 # 2.1 — Injection: SQL, command and template injection
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.2* · *Phase: Build, Test*
 
+**After this you can** show a SQL injection in a small local app, fix it with a parameterised query and add a unit test that fails on the old code and passes on the new. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Injection** happens when untrusted input reaches an **interpreter** (a database engine, a shell, a template engine) as part of a command, so the input can change what the command does.
 - The rule: **keep code and data apart**. Use parameterised queries, run programs with an argument list and no shell, and pass data into templates as variables. Never build commands by gluing strings together.
@@ -272,6 +274,8 @@ Hands-on work runs only on your own machine, against your own code or deliberate
 
 # 2.2 — Browser attacks: XSS, CSRF, and the headers that stop them
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1* · *Phase: Build, Test*
+
+**After this you can** audit an app's security headers against a baseline, and prove with a working page that a textContent fix and a nonce-based CSP each stop an injected script. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Cross-site scripting (XSS)** runs an attacker's script inside your page, in your user's browser, with your user's session. It can do anything the user can, including approving a payment.
@@ -538,6 +542,8 @@ Run everything on your own machine or on deliberately vulnerable training apps s
 
 # 2.3 — Server-side traps: SSRF, file uploads, path traversal and deserialisation
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 2.1* · *Phase: Design, Build*
+
+**After this you can** find SSRF, path traversal, unsafe deserialisation and upload risks in a codebase you own, and write tests showing a safe fetcher refusing each hostile URL with a logged reason. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Four bugs, one shape: the server does something powerful (fetches a URL, stores a file, opens a path, rebuilds an object) with input the attacker controls.

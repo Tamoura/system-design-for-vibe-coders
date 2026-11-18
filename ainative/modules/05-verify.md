@@ -19,7 +19,7 @@
 - **Spend in proportion:** money logic gets everything, a typo does not. Unverified merged code is verification debt.
 
 ## 🧭 Why it matters
-Lujain (graduate engineer) has her agent finish REMIT-227 in minutes: show the rate in the "transfer sent" message. The pull request touches four files and says "all tests pass". They do: 99 passed. Tariq (engineering lead) asks one question: "Which test goes red if the Arabic number is wrong?" Lujain cannot name one. The Arabic message ends with the rate in Western digits, and the test forbidding that was quietly narrowed.
+Lujain (graduate engineer) has her agent finish REMIT-227 in minutes: show the rate in the "transfer sent" message. The pull request touches four files and says "all tests pass". They do: 99 passed. Tariq (engineering lead) asks: "Which test goes red if the Arabic number is wrong?" Lujain cannot name one. The Arabic message ends with the rate in Western digits, and the test forbidding that was quietly narrowed.
 
 In March 2026 METR published "Many SWE-bench-Passing PRs Would Not Be Merged into Main": maintainers of three repositories reviewed patches that had passed an automated grader, and a substantial share would not have been merged (METR cautions: one benchmark subset, one harness, a single attempt). [*Software Testing*, lesson 6.1 — Verifying AI-generated code](../testing/index.html#/6.1) catalogues the failures; this lesson is the routine.
 
@@ -29,12 +29,12 @@ In March 2026 METR published "Many SWE-bench-Passing PRs Would Not Be Merged int
 
 **Trust evidence, not fluency.** Ask of any check: *if the change were wrong, would this look different?* A description, a green badge and a tidy diff look the same either way; a test failing on the bug does not.
 
-**Set the bar at verification.** In [*How Meta Built Forum With AI-Native Engineering*](https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/), Meta describes a small team building its Forum app with an AI agent as a participant. It reports counting a task complete only after automated tests and visual checks passed, not when the code compiled, and measuring success in production-ready changes rather than code volume. This is one company describing its own practice, so read the original: an example of a bar, not proof that it works. For Remit, "it compiles" is not done: you need a test that can fail and, with no screen, a run where you read the Arabic line yourself.
+**Set the bar at verification.** In [*How Meta Built Forum With AI-Native Engineering*](https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/), Meta reports counting a task complete only after automated tests and visual checks passed, not when the code compiled. This is one company describing its own practice, so read the original: an example of a bar, not proof that it works. For Remit, "it compiles" is not done: you need a test that can fail and, with no screen, a run where you read the Arabic line yourself.
 
 **Tests are the specification.** A test turns an acceptance criterion (lesson 3.1) into something a machine can hold the agent to. [*Software Testing*, lesson 6.2 — Tests as the specification for coding agents](../testing/index.html#/6.2) teaches it in depth; here is the loop.
 
 1. **Write or approve the tests** from the ticket. The agent may draft them; you check every expected value against the ticket, not the code.
-2. **Watch them fail for the right reason.** An import error is red but proves nothing. Claude Code's best-practices page uses the same pattern: a failing test that reproduces the issue, then the fix.
+2. **Watch them fail for the right reason.** An import error is red but proves nothing. Claude Code's best-practices page uses the same pattern.
 3. **Commit the tests alone,** so they have a known-good state.
 4. **Tell the agent to implement, not to edit them.** A deny rule such as `Edit(tests/**)` in `.claude/settings.json` can help; it covers Claude's built-in edit tools, not every subprocess (check the permissions documentation). The real guard is step 5.
 5. **Review: the test diff since step 3 must be empty.** A changed test is a finding until explained.
@@ -286,7 +286,7 @@ Use it in proportion: all of it for money modules, Parts 1 and 4 for a copy chan
 # 5.2 — Lab: review a pull request an agent wrote
 *Level: 🟡 Intermediate* · *Prerequisites: 4.2, 5.1* · *Focus: Verify*
 
-**After this you can** review an agent's pull request, record findings with evidence and fix it in small commits that pass the grader. *Study time: about 110 minutes (estimate).*
+**After this you can** review an agent's pull request, record findings with evidence and fix it in small commits that pass the grader. *Study time: about 190 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Lab m05.** `ailab start` puts you on the branch `agent/loyalty-discount`: Lujain's agent built Hessa's loyalty-discount ticket (REMIT-229), and the suite is **green**.
@@ -337,7 +337,7 @@ Each finding in `review.md` has five parts: **File**, **Line** (the line in the 
 
 Rate by the damage if it ships, not by how hard it is to fix. A reviewer who marks everything blocker is ignored; one who marks a leaked credential a nit has not read the room. The grader fails both: ratings below the damage, and a review where every finding is a blocker (a test too weak to fail is a major at most).
 
-**A second-model reviewer (optional).** With Claude Code started in the lab directory, `/code-review high agent/loyalty-discount` reviews a branch (skip `--fix`, which edits code, and `--comment`; the documentation says what it compares). A fresh headless session works too (lesson 9.1 teaches it): pipe `git diff main...agent/loyalty-discount` into `claude -p` with a prompt that names `lab-assets/ticket-REMIT-229.md`. It has nobody to approve commands unless you allow them (see `--allowedTools`), so it cannot see what only running shows. This diff is safe; a real one is untrusted text, and the security page advises against piping untrusted content straight to Claude. Do your own pass first, check the code for every finding it adds, and count the real ones for the debrief.
+**A second-model reviewer (optional).** With Claude Code started in the lab directory, `/code-review high agent/loyalty-discount` reviews a branch (skip `--fix`, which edits code, and `--comment`). A fresh headless session works too (lesson 9.1 teaches it): pipe `git diff main...agent/loyalty-discount` into `claude -p` with a prompt that names `lab-assets/ticket-REMIT-229.md`. It has nobody to approve commands unless you allow them (see `--allowedTools`), so it cannot see what only running shows. This diff is safe; a real one is untrusted text, and the security page advises against piping untrusted content straight to Claude. Do your own pass first, check the code for every finding it adds, and count the real ones for the debrief.
 
 ### 🔴 Expert view
 
@@ -437,7 +437,7 @@ Now vary the inputs: other amounts, both tiers, `express=True`, a tier name the 
 
 **What the grader checks.** Review: the three sections (**What I ran** with at least three words), each finding's file, line and severity, a verdict that asks for changes, at least six of the eight seeded problems found, and severities that fit the damage. Fix (graded only once the review passes): the branch's own tests; hidden acceptance tests written from REMIT-229; CONTRIBUTING.md's code rules (Decimal money, standard library only, no secret in any file, your review included); the lesson 5.1 checklist as far as a machine can read it; at least two tests of yours that fail on the agent's version; only the files the pull request touches, plus tests and docs; commit messages; everything committed. A fix past about 300 changed lines is flagged (advisory).
 
-**Grade.** From `ainative/ailab` again (the folder you ran `start` from): `python -m ailab grade m05 --dir ~/ainative/m05`. On the starter, before you have written anything, it lists 17 checks (excerpt; the other review lines say "no review.md yet" and the other nine fix lines "not checked yet"):
+**Grade.** From `ainative/ailab` again: `python -m ailab grade m05 --dir ~/ainative/m05`. On the starter, before you have written anything, it lists 17 checks (excerpt; the other review lines say "no review.md yet" and the other nine fix lines "not checked yet"):
 
 ```text
 [FAIL] review.md has a verdict, what you ran and findings: review.md does not exist
@@ -449,7 +449,7 @@ Now vary the inputs: other amounts, both tiers, `express=True`, a tier name the 
 Lab m05: 0/13 required checks passed: NOT YET
 ```
 
-When the review and the fix are both right, the same command ends like this (an excerpt from a run of the kit's own reference solution; your numbers will differ):
+When the review and the fix are both right, it ends like this (from the kit's reference solution; your numbers will differ):
 
 ```text
 [PASS] Your review covers the problems in the pull request: your findings cover 8 of 8 problems the grader knows about (and 1 more finding the grader cannot judge, which may still be fair)

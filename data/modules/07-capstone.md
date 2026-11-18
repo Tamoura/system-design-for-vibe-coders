@@ -9,6 +9,8 @@
 # 7.1 — Capstone: build Najm's credit-risk data mart end to end
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–6* · *Stage: Model, Operate*
 
+**After this you can** build a tested, reconciled credit-risk mart and document it well enough that a peer can trace one NPL figure back to its source rows. *Study time: about 125 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - The capstone builds the **credit-risk mart**: a daily, tested, reconciled record of every loan's balance and days past due, for dashboards, regulators and models.
 - Treat it as a **data product**: named consumers, a grain statement, a source contract, metric definitions, an owner, a freshness promise and an access policy.
@@ -330,6 +332,8 @@ The output is the **credit-risk mart case file**: a one-page summary, then linke
 # 7.2 — The data career: roles, interviews, portfolio and growth
 *Level: 🔴 Advanced* · *Prerequisites: 0.1, 7.1* · *Stage: Govern*
 
+**After this you can** map a target data role's requirements against your own evidence on one page, and publish a portfolio project a friend can clone and run from its README. *Study time: about 175 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - "Data" is several jobs: **data engineer**, **analytics engineer**, **data analyst**, **data scientist** and **ML engineer**, plus platform and governance roles. Titles vary by employer, so read the job description, not the title.
 - Interviews test a few things in different clothes: **SQL under pressure**, **modelling and grain**, **pipeline reasoning** (idempotency, late data, backfills), **metric and statistics judgement**, and communication.
@@ -586,6 +590,8 @@ Kareem's plan targets analytics engineering: his proof is three Monday extracts 
 
 # 7.3 — Practice exam: 60 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: 7.1, 7.2* · *Stage: Analyse*
+
+**After this you can** sit a timed 60-question practice exam with a confidence mark on every answer, and turn the result into a review sheet that names your weakest stage and the next action for it. *Study time: about 120 minutes (estimate).*
 
 > **Under revision (November 2026).** In many questions in this practice exam the correct option can be spotted by its length or wording, so a high score here does not show readiness for any real exam. Use it to practise reasoning: answer each question in your own words before you read the options, then compare.
 

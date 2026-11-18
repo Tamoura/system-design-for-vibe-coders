@@ -9,6 +9,8 @@
 # 7.1 — OECD principles and the NIST AI RMF
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 2.1, 6.1* · *BoK: II.D*
 
+**After this you can** assign governance activities to the NIST AI RMF functions, and build a chatbot risk register that rates all twelve NIST AI 600-1 risks. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - The **OECD AI Principles** (2019, updated May 2024) are the first intergovernmental AI standard: five **values-based principles** for trustworthy AI and five **recommendations** to governments. The OECD's definition of an "AI system" underpins the EU AI Act's.
@@ -302,6 +304,8 @@ Decision recorded: *"The copilot remains in pilot for 20 relationship managers u
 # 7.2 — ISO/IEC 42001 and the AI standards family
 *Level: 🟡 Intermediate* · *Prerequisites: 7.1, 6.2* · *BoK: II.D*
 
+**After this you can** map activities to ISO/IEC 42001 clauses, draft a Statement of Applicability outline, and write five questions that test a vendor's 42001 certificate. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - **ISO/IEC 42001:2023** specifies requirements for an **AI management system (AIMS)**: the policies, roles, processes and controls an organisation uses to develop, provide or use AI responsibly. It is the first **certifiable** AI management system standard.
@@ -542,6 +546,8 @@ A **vendor-certificate rule** is added to the procurement standard:
 
 # 7.3 — The global map: other frameworks that shape practice
 *Level: 🟡 Intermediate* · *Prerequisites: 7.1, 7.2* · *BoK: II.D*
+
+**After this you can** sort AI instruments by how binding they are, and map one human-oversight control to at least five framework references with the evidence and gaps. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 

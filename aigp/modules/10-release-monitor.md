@@ -9,6 +9,8 @@
 # 10.1 — Release readiness and conformity
 *Level: 🔴 Advanced* · *Prerequisites: 6.2, 8.3, 9.3* · *BoK: III.C*
 
+**After this you can** write a release checklist naming who provides each piece of evidence, and set measurable go/no-go criteria and rollback triggers for a staged rollout. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - Release is a governance decision: a named, accountable person says "go" against **go/no-go criteria agreed before testing**, with evidence on file.
@@ -237,6 +239,8 @@ Khalid lost his Sunday launch; v2 went live six weeks later with a clean file.
 
 # 10.2 — Monitoring, drift and incidents
 *Level: 🔴 Advanced* · *Prerequisites: 10.1, 9.3* · *BoK: III.C*
+
+**After this you can** choose monitoring signals that detect drift, quality problems or harm, and build a reporting timeline from awareness to each notification for an AI incident. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -481,6 +485,8 @@ After the employer-field event, Layla and Omar rebuild the credit model's **moni
 
 # 10.3 — Change management, maintenance and retirement
 *Level: 🔴 Advanced* · *Prerequisites: 10.2, 6.2* · *BoK: III.C*
+
+**After this you can** classify model changes with a change matrix, write a pre-determined changes section an assessor could check, and draft a decommissioning plan with owners and dates. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 

@@ -9,6 +9,8 @@
 # 7.1 — Architecture and autonomy design: workflow or agent, tool surface, human-in-the-loop, failure design, build or buy
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 5.1, 6.2* · *Layer: Delivery, Agents*
 
+**After this you can** draw C4 diagrams for an agent design and write three architecture decision records, each with a cost as a consequence and a trigger to revisit. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Design** turns the specification into decisions a reviewer can read, each traced to a requirement or risk.
 - Climb the **ladder** (prompt, workflow, agent, multi-agent) only for a named need. Najm Desk v1: a router workflow, route-scoped tools.
@@ -315,6 +317,8 @@ Constraints: quote, never paraphrase; write "unclear" rather than guess; invent 
 
 # 7.2 — Prototype, propose and agree scope: demos, proposals, phased rollout and change control
 *Level: 🟡 Intermediate* · *Prerequisites: 4.2, 6.2, 7.1* · *Layer: Delivery*
+
+**After this you can** run a scripted demo that shows failures on purpose, and draft a proposal and phased rollout plan whose exit criteria each have a number and a decider. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - A **prototype ladder** (paper, Wizard of Oz, thin slice, pilot) buys the cheapest evidence first.

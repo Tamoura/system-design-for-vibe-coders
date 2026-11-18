@@ -9,6 +9,8 @@
 # 5.1 — The hiring loop, the recruiter screen and behavioural interviews (STAR)
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 3.1, 4.1* · *Step: Interview*
 
+**After this you can** record a 50- to 75-second introduction for a specific role and build a bank of at least eight STAR stories, each with a personal action, a result and a verifier. *Study time: about 120 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A **hiring loop** is the full sequence of steps from application to offer: screen, assessments, interviews, debrief and references. Each step checks something specific; learn what, and prepare for that.
 - The **recruiter screen** checks fit with the role, logistics (location, start date, right to work, salary expectations) and whether you can explain yourself clearly. It is a real interview, not a formality.
@@ -253,6 +255,8 @@ Khalid's rule for the cohort: every story must have a link or a person who could
 
 # 5.2 — Technical interviews today: algorithms, live coding, take-homes and reviewing AI-written code
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.2, 5.1* · *Step: Interview*
+
+**After this you can** solve a coding problem aloud with the five steps, deliver a four-hour take-home with a Trade-offs section, and review an AI-written pull request with blockers separated from suggestions. *Study time: about 435 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Technical rounds come in four common formats: **algorithm screens** (data structures and algorithms, often on a platform), **live coding** (building something small with an interviewer watching), **take-home tasks** (a small project in your own time), and **code review**, increasingly of a pull request written by an AI agent.
@@ -538,6 +542,8 @@ Reem's second attempt, a month later in a mock round with Khalid, finds issues 1
 
 # 5.3 — System design, data and ML interviews for juniors
 *Level: 🟡 Intermediate* · *Prerequisites: 1.3, 5.2* · *Step: Interview*
+
+**After this you can** draw your project's architecture with a reason for every box, and answer a junior design question for your track aloud for 30 minutes using the four moves. *Study time: about 120 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Juniors increasingly meet **design-style rounds**: a small system design, a SQL or data-modelling case, a machine-learning evaluation question, or a cloud troubleshooting walk-through. Expectations are lower than for seniors, but the method is the same.

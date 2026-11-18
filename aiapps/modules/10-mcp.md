@@ -9,6 +9,8 @@
 # 10.1 — The Model Context Protocol: servers, tools, resources, authorisation and least privilege
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 8.1* · *Layer: Agents*
 
+**After this you can** decide and justify MCP or a plain function for a given case, and review a vendor's tool definition, naming its hidden instruction, identity argument and the other problems you would fix. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **MCP**, the Model Context Protocol, is an open standard for connecting AI applications to systems. A **server** wraps a system and offers **tools** (functions the model may call), **resources** (data the application attaches) and **prompts** (templates a person picks) to any **host** that speaks MCP.
 - Two transports: **stdio** (the host starts the server as a child process) and **Streamable HTTP** (a network service, authorised with OAuth tokens).
@@ -260,6 +262,8 @@ The artefact is the **Najm Desk v1 TicketHub MCP Server Design**, owned by Salem
 
 # 10.2 — Lab: expose the ticket system as an MCP server and let the agent use it
 *Level: 🟡 Intermediate* · *Prerequisites: 3.2, 8.2, 10.1* · *Layer: Agents, Delivery*
+
+**After this you can** expose a ticket system as an MCP server with ownership checks, scopes and human approval, and show which tests fail when each defence is removed. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Build `ticket_server.py` (two read tools, a policy resource, a write tool that exists only with the write scope) and `mcp_agent.py` (a host that converts the tools and runs the loop).

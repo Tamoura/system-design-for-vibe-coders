@@ -9,6 +9,8 @@
 # 0.1 — What cloud, DevOps, platform engineering and SRE are
 *Level: 🟢 Beginner* · *Prerequisites: none* · *Phase: Plan*
 
+**After this you can** write a plain-language definition of cloud, DevOps, platform engineering and SRE that a non-technical friend can explain back, and estimate the four DORA metrics for a project from its git history. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Cloud** is a way of getting computing: you rent servers, storage, networks and managed services on demand, through an API, and pay for what you use. It is less "someone else's computer" than someone else's *automation*.
 - **DevOps** is a way of working: the people who build software also take part in shipping and running it, supported by automation and fast feedback. It is a culture and a set of practices, not a job title or a tool.
@@ -232,6 +234,8 @@ After the "DevOps access" episode, Salem asks Yousef to draft the team's **respo
 
 # 0.2 — The path to production: from a commit to a customer, and everything that can break on the way
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Phase: Release, Deploy*
+
+**After this you can** draw a path-to-production map for your own project with an automated catch and an undo for every stage, and show a CI run that fails on a broken test and passes once it is fixed. *Study time: about 115 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Every change travels the same **path to production**: commit, build, test, package, store, deploy, release to users, observe. Each step either catches problems or lets them through.
@@ -480,6 +484,8 @@ Salem asks Yousef to produce the **path-to-production map** for the Najm Mobile 
 
 # 0.3 — Meet Najm Bank's platform team, and how to use this course
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Phase: Plan*
+
+**After this you can** set up a lab journal with a verified tool check and a local kind cluster you created and deleted, and write a service card and a personal study plan for this course. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Najm Bank** is a fictional mid-sized Gulf bank operating in Qatar, the UAE and the EU. You will follow its **Platform Engineering & SRE** team through a real-shaped cloud migration.

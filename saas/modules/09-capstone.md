@@ -13,6 +13,8 @@ decisions the way a senior engineer would in a design review.*
 
 *Level: 🔴 Advanced* · *Prerequisites: 0.1, 1.2, 3.1, 5.1*
 
+**After this you can** draw Beacon's full architecture with a concrete choice for every component, write five ADRs that each name a measurable signal to revisit, and trace one customer action across every component it touches. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - A SaaS architecture is not a list of components; it is the connections between

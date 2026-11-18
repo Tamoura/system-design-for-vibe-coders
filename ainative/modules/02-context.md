@@ -20,7 +20,7 @@
 - Biggest trap: pasting the README and architecture document into memory.
 
 ## 🧭 Why it matters
-In her second week Lujain (graduate engineer) types the same paragraph into a fourth prompt: `pytest -q`, money is `Decimal`, commits look like `type(scope): subject`, and `najmkit` is ours, so read its docs. The fifth time she forgets the last clause, and the agent writes `audit.record(...)`, which does not exist (lesson 1.1's `hallucinated-api`). Tariq (engineering lead) does not coach her prompt: "Write it once, where the tool reads it at the start of every session."
+In week two Lujain (graduate engineer) types the same paragraph into a fourth prompt: `pytest -q`, money is `Decimal`, commits look like `type(scope): subject`, and `najmkit` is ours, so read its docs. The fifth time she forgets the last clause, and the agent invents `audit.record(...)` (lesson 1.1's `hallucinated-api`). Tariq (engineering lead) says: "Write it once, where the tool reads it at the start of every session."
 
 A month later he has the opposite problem (constructed). Someone pasted the README, the architecture document and a style guide into `CLAUDE.md`: 400 lines, one page describing a `risk.py` that no longer exists. The documentation names "the over-specified CLAUDE.md" a failure pattern. Both stories have one cause: nobody decided what the agent should see.
 
@@ -81,7 +81,7 @@ Two tests keep the file honest. The documentation targets **under 200 lines**, b
 
 **AGENTS.md.** Other tools read `AGENTS.md`, an open plain-Markdown "README for agents". Claude Code reads it directly from v2.1.277, but by default only when no `CLAUDE.md` or `CLAUDE.local.md` exists in the working directory or above (the `/config` setting "Project instructions" changes that). To share one file, write `AGENTS.md` and put `@AGENTS.md` inside a `CLAUDE.md`. These details moved in 2026: check the current documentation.
 
-**The same job under another name.** In [Spec-Driven Development: A Spec-First Approach to AI-Native Engineering](https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/), Microsoft describes a seven-step lifecycle whose first step is a *constitution*: principles and guardrails. Its companion post on GitHub Spec Kit, an open-source toolkit Microsoft created, explains the constitution file. In this course that is the job of project memory: standing rules the agent reads every session. Module 3 covers the other six steps. A company describing its own practice is not independent evidence; it shows the idea is current, not that a constitution improves results. Read the originals (linked below).
+**The same job under another name.** In [Spec-Driven Development: A Spec-First Approach to AI-Native Engineering](https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/), Microsoft describes a seven-step lifecycle whose first step is a *constitution*: principles and guardrails. Its companion post on GitHub Spec Kit, Microsoft's open-source toolkit, explains the constitution file. Here that is project memory's job: standing rules the agent reads every session. Module 3 covers the other six steps. A company describing its own practice is not independent evidence; it shows the idea is current, not that a constitution improves results. Read the originals (linked below).
 
 **Imports.** `@path/to/file` pulls a file in; imports nest four hops deep and are ignored inside code spans and fences. **Imports do not reduce context cost**: imported files load at launch. `@docs/najmkit.md` would put the whole page into every session; a plain pointer costs one line and is followed when it matters.
 
@@ -95,7 +95,7 @@ paths:
 Tests are deterministic: use the fixtures in tests/conftest.py (fixed clock, sequential ids).
 ```
 
-**Memory is context, not enforcement.** The model usually follows the file, and "usually" is not a control. The memory page says to use a `PreToolUse` hook to block an action whatever Claude decides; the best-practices page suggests "IMPORTANT" on the one line that must not be missed. Use it once: if everything shouts, nothing does. The file gives rule and reason; a hook or deny rule enforces (lesson 9.1; the guard hook is built in lesson 8.2). A deny rule lives in `.claude/settings.json`; it covers the built-in file tools and commands such as `cat`, not every subprocess: a layer, not a wall.
+**Memory is context, not enforcement.** The model usually follows the file, and "usually" is not a control. The memory page says to use a `PreToolUse` hook to block an action whatever Claude decides; the best-practices page suggests "IMPORTANT" on the one line that must not be missed. Use it once: if everything shouts, nothing does. The file gives rule and reason; a hook or deny rule enforces (lessons 8.2 and 9.1). A deny rule lives in `.claude/settings.json`; it covers the built-in file tools and commands such as `cat`, not every subprocess: a layer, not a wall.
 
 ```json
 { "permissions": { "deny": ["Read(./.env)"] } }
@@ -134,7 +134,7 @@ A subagent never sees your conversation; it gets its own system prompt, your tas
 
 **Context rot, carefully.** Lesson 1.1 gave the evidence (a Chroma vendor report; Liu et al. on 2023-era models). Neither tested coding agents, so neither gives a number for your repository.
 
-**Treat memory like code.** A change to `CLAUDE.md` changes what every agent on the team is told: review the raw diff. Pillar Security, a security vendor, reported in 2025 that hidden Unicode in rules files could hide instructions from a human reviewer while Copilot and Cursor followed them. Prune on a schedule: `/doctor prompt-audit [path]` (v2.1.283 or later) audits instruction files for stale or conflicting content. Auto memory is local to one machine, so team rules belong in the project file, in git. When the agent errs, ask whether a line is missing, wrong, or a job for a hook; do not add a rule per mistake.
+**Treat memory like code.** A change to `CLAUDE.md` changes what every agent on the team is told: review the raw diff. Pillar Security, a security vendor, reported in 2025 that hidden Unicode in rules files could hide instructions from a human reviewer while Copilot and Cursor followed them. Prune on a schedule: `/doctor prompt-audit [path]` (v2.1.283 or later) audits instruction files for stale or conflicting content. Auto memory is machine-local, so team rules belong in the project file, in git. When the agent errs, ask whether a line is missing, wrong, or a job for a hook; do not add a rule per mistake.
 
 **When not to.** A ten-line scratch script needs no memory file, a one-off fact belongs in the prompt, and a rule the agent never breaks should go.
 
@@ -370,9 +370,9 @@ The commands ran. The `float` rule is stated once, with the one `IMPORTANT`. `na
 - The notes are checked for completeness and for quoting real lines of your file, never for "B won". "No difference" is valid.
 
 ## 🧭 Why it matters
-Tariq, at the clinic: "Everyone believes a memory file helps. Show me." In METR's randomized trial (16 experienced developers on their own repositories, early-2025 tools; lesson 0.1) the developers believed they were faster while the clock said otherwise. One small trial proves nothing about your repository, but a feeling about a prompt is no sounder than a feeling about speed. The remedy is the same: measure, small and honest.
+Tariq: "Everyone believes a memory file helps. Show me." In METR's randomized trial (16 experienced developers on their own repositories, early-2025 tools; lesson 0.1) developers believed they were faster while the clock said otherwise. One small trial proves nothing about your repository, but a feeling about a prompt is no sounder than a feeling about speed. The remedy is the same: measure, small and honest.
 
-A wrong command or a stale pointer in a memory file is paid for in every session, so this grader does something unusual for a document: it executes what you wrote.
+A wrong command or a stale pointer in a memory file is paid for in every session, so this grader executes what you wrote.
 
 ## 📐 How it works
 
@@ -416,13 +416,13 @@ Run every command you put in it and show me the output. Quote the file behind ea
 
 **Measure six things:** the rows of the table in `ab-notes.md`. A *wrong turn* is each time you had to stop, correct or redirect the agent; count from the transcript.
 
-**Name the confounders.** The agent in A may find `CONTRIBUTING.md` through the README; then the commit rule made no difference, and that is a finding. Your tool may keep notes between sessions (Claude Code's auto memory; `/memory` toggles it), and your user-level `~/.claude/CLAUDE.md` loads in both runs. The agent is not deterministic (lesson 1.1), and you know which run is which. One run each is an anecdote: repeat each twice if you can, and have a colleague count wrong turns from the diffs. If B is no better, that is a finding too.
+**Name the confounders.** The agent in A may find `CONTRIBUTING.md` through the README; then the commit rule made no difference: a finding. Your tool may keep notes between sessions (Claude Code's auto memory; `/memory` toggles it), and your user-level `~/.claude/CLAUDE.md` loads in both runs. The agent is not deterministic (lesson 1.1), and you know which run is which. One run each is an anecdote: repeat each twice if you can, and have a colleague count wrong turns from the diffs. If B is no better, that is a finding too.
 
 **No agent?** Paste the ticket into a fresh chat twice, once with the repository files and once with your memory file too. Or time a colleague who has not read Remit, once with only the repository and once with your file. The colleague is the better test. No interactive session at all (a script, a CI job, an agent inside an agent)? Then you play the agent: the comparison is contaminated, so say so under *Limits*.
 
 ### 🔴 Expert view
 
-**What the grader checks, and what it cannot.** The list is under *What the grader checks* below. It runs only `pytest` and `python -m remit`, in a throw-away copy with a temporary database; a pytest option it does not recognise fails the check unrun, and a command for a tool Remit lacks fails wherever you write it, a `text` block included. It compares only the claims it knows (rounding, decimal places, the ledger, the clock, dependencies, the old architecture facts), so other wrong facts pass. It cannot tell whether the file is *useful*, who wrote it, or whether the experiment happened: invented results pass. The A/B is where usefulness shows. The notes are never checked for B beating A, because that would reward invented improvements.
+**What the grader checks, and what it cannot.** It runs only `pytest` and `python -m remit`, in a throw-away copy with a temporary database; a pytest option it does not recognise fails the check unrun, and a command for a tool Remit lacks fails wherever you write it, a `text` block included. It compares only the claims it knows (rounding, decimal places, the ledger, the clock, dependencies, the old architecture facts), so other wrong facts pass. It cannot tell whether the file is *useful*, who wrote it, or whether the experiment happened: invented results pass. The A/B shows usefulness. The notes are never checked for B beating A, because that would reward invented improvements.
 
 **The thresholds are guard rails, not targets.** A twelve-rule never list passes and may still be the over-specified file the documentation warns about. Lint the file, then read it as the agent would; use hooks for what must never happen (lesson 9.1).
 

@@ -9,6 +9,8 @@
 # 4.1 — Levels of automation: suggest, draft, decide, act
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 2.1* · *Stage: Design*
 
+**After this you can** choose and justify an automation level (suggest, draft, decide or act) for a task, and write a decision record with a scope fence, a demotion criterion and a way for the customer to undo a wrong action. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Every AI feature sits somewhere on a ladder of automation. This course uses four working rungs: **suggest** (the AI points, the human does), **draft** (the AI produces, the human edits and owns), **decide** (the AI makes the call, a human can review or override), **act** (the AI changes something in the world).
 - The level is a **product decision**, not a model property. The same model can power a suggestion today and an automatic decision next year.
@@ -239,6 +241,8 @@ Baseline levels across the portfolio:
 
 # 4.2 — Designing for trust: expectations, explanations, errors and recovery
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 4.1* · *Stage: Design*
+
+**After this you can** write an error-and-recovery matrix that covers notice, recover, learn and contain for each failure, and rate an AI answer flow against the 18 Microsoft guidelines with the top three fixes justified. *Study time: about 125 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - The goal is **calibrated trust**, not maximum trust: users should rely on the AI when it is right and catch it when it is wrong. Overtrust causes harm; undertrust kills adoption.
@@ -488,6 +492,8 @@ Hessa and Faisal write the **Trust Design Spec** for the Credit Memo Copilot, v1
 
 # 4.3 — Conversational and agentic experiences
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 4.1, 4.2* · *Stage: Design*
+
+**After this you can** decide between chat, a structured screen or a hybrid for a task, and write the preview and handover text for an agentic action whose limits are enforced outside the model. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Chat is an interface choice, not a strategy.** It is good for open-ended questions and varied requests; it is poor for repeated, structured tasks where a button or form is faster and clearer.

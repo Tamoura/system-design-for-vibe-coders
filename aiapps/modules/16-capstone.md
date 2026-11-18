@@ -9,6 +9,8 @@
 # 16.1 — Capstone: take Najm Desk from discovery to go-live, with the customer
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–15* · *Layer: Delivery, Production*
 
+**After this you can** take Najm Desk from discovery to a go or no-go decision through eight milestones, with the capstone audit showing zero problems and requirement ids traced into eval cases, UAT rows and runbooks. *Study time: about 20 minutes of reading, plus the four-week project (estimate).*
+
 ## ⚡ In 60 seconds
 - Eight milestones, about four weeks; after each, the customer answers a gate question.
 - Ids thread through: a specification id reappears in an eval case, a UAT row, a runbook.
@@ -358,6 +360,8 @@ Do not: start the next milestone before I answer the gate; weaken a test or eval
 
 # 16.2 — Practice exam: 60 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–16* · *Layer: Model, Applications, Agents, Delivery, Production*
+
+**After this you can** answer 60 mixed scenario questions in one closed-book sitting of about 90 minutes, then name your two weakest Layer tags and the lesson to reread for every miss. *Study time: about 150 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - This is a 60-question practice exam covering every module from 0 to 16. Most questions are scenarios at Najm Bank. They are mixed, as in real work, not grouped by module.

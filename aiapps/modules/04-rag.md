@@ -9,6 +9,8 @@
 # 4.1 — RAG: embeddings, chunking, vector stores, hybrid search, reranking, citations, and why it fails
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 3.1* · *Layer: Applications*
 
+**After this you can** compute reciprocal rank fusion by hand for two rankings, and write a knowledge-contract row with chunking, metadata, refresh and access rules plus ten labelled questions. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Retrieval-augmented generation (RAG)** fetches a few relevant passages per question, puts them in the prompt with ids, and has the model answer only from them and cite the ids.
 - It buys private knowledge, freshness, citations and access control. Fine-tuning is a weak way to add facts, keep them fresh or cite them; long context covers the need only while the library is small.
@@ -252,6 +254,8 @@ quality_gate: {recall_at_3: "agreed target on 40 questions", refusal_tests: 5}
 
 # 4.2 — Lab: a policy Q&A bot with Chroma, then BM25 and a comparison
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 4.1* · *Layer: Applications*
+
+**After this you can** build a policy Q&A bot with Chroma that answers "I don't know" when no chunk is relevant, add BM25, and compare the methods' recall in a table after changing one setting. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Build Najm Desk's policy Q&A over the kit's 15 policies: a sentence-aware chunker with overlap, and Chroma with the toy `HashEmbedding`.

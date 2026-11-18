@@ -9,6 +9,8 @@
 # 0.1 — What software testing is, and what it is not: quality, risk and the AI-era shift
 *Level: 🟢 Beginner* · *Prerequisites: none* · *Focus: Mindset*
 
+**After this you can** write a quality profile and a ranked list of failure modes for a feature you know, with each risk tied to an observation that would reveal it. *Study time: about 95 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Software testing** is evaluating software to find defects and to give stakeholders evidence about quality and risk. It produces information, not quality, and it can never prove that no bugs remain.
 - **Debugging** finds a failure's cause and fixes it. **Quality assurance (QA)** is about process, **quality control (QC)** about the product, and **quality engineering** builds quality in across the team. Testing is one activity among them.
@@ -287,6 +289,8 @@ Every Najm feature starts with a **quality profile**: one page saying what "work
 # 0.2 — How software fails: errors, defects, failures, famous disasters and the economics of finding bugs early
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Focus: Mindset*
 
+**After this you can** trace a seeded bug in the sample from failure to root cause with a five-whys chain, and turn it into a regression test that fails with the bug on and passes without it. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A person makes an **error**; it leaves a **defect** (bug, fault) in code, a specification or a setting; when the defect runs under the right conditions the software shows a **failure**. Root-cause analysis works back to the error and to why nothing stopped it.
 - A defect can sit dormant. The sample's `float_fee` bug gives a wrong fee on 407 of the 25,000 whole-riyal amounts up to the per-transfer maximum, about one in 61, so a few hand-picked examples can miss it.
@@ -558,6 +562,8 @@ Every escape at Najm gets an **escaped-defect card** within two working days, ow
 
 # 0.3 — Meet Najm Bank's Quality Engineering team, and how to use this course
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Focus: Mindset*
+
+**After this you can** set up the Najm sample lab, run the starter suite to 24 passing tests, and write one test that catches a seeded bug the starter suite misses. *Study time: about 115 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Najm Bank is fictional.** You join its **Quality Engineering (QE)** team: Rashid (head, your mentor), Nada (new graduate, your peer, who makes the mistakes), Bilal (SDET lead) and Amal (exploratory and accessibility lead).

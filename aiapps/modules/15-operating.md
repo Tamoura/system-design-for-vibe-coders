@@ -9,6 +9,8 @@
 # 15.1 — Running an agent in production: observability, alerts, incidents, runbooks and the improvement loop
 *Level: 🔴 Advanced* · *Prerequisites: 8.2, 12.2, 13.1, 14.2* · *Layer: Production*
 
+**After this you can** read a per-release trace report to name the release to roll back and the evidence for it, and set a cost breaker from data with a test showing normal traffic never trips it. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Agents fail softly: the service is up and the answers are wrong. Observe the **run**.
 - Trace four levels; log ids, counts and reasons, never text.
@@ -392,6 +394,8 @@ Do not weaken a test. Run the tests after each step.
 
 # 15.2 — Handover and adoption: training, support model, acceptance, change management and benefits tracking
 *Level: 🔴 Advanced* · *Prerequisites: 6.2, 7.2, 13.2, 15.1* · *Layer: Delivery*
+
+**After this you can** run a user acceptance test script, give each failed row a severity and a decision to fix, waive or re-scope, and add a row that passes on the original app and fails on a broken copy. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Handover moves **ownership**, not files: named people can run, change, support and defend Najm Desk without the builders.

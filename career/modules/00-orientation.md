@@ -9,6 +9,8 @@
 # 0.1 — The entry-level tech market in the AI era: what changed and what didn't
 *Level: 🟢 Beginner* · *Prerequisites: None* · *Step: Explore*
 
+**After this you can** build a ten-row market scan of current ads for one junior role and turn it into a half-page market brief that names your top three gaps and your first action. *Study time: about 125 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - AI coding agents now do much of the routine work that juniors used to learn on: boilerplate, simple features, first-draft tests, small bug fixes.
 - Employers have not stopped needing juniors. They have raised the bar for what a junior must show: that you can **specify, verify, ship and explain** work, not only produce code.
@@ -238,6 +240,8 @@ Khalid's comment: "Your gap is not knowledge; it is proof that you can ship. See
 
 # 0.2 — The roles map: what software, AI, data, platform and security juniors actually do all day
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Step: Explore*
+
+**After this you can** score at least three role families on the role-fit scorecard with a one-line reason for each score, and name either a target role or a tie-break task for your top two. *Study time: about 120 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - "Tech job" covers several different jobs. Five families hire most graduates: **software and full-stack**, **AI application**, **data**, **cloud and platform**, and **security**.
@@ -470,6 +474,8 @@ Dana's note in the margin: "Good choice for this market. Your modelling backgrou
 
 # 0.3 — Meet the cohort, and how to use this course and the library
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Step: Explore, Learn*
+
+**After this you can** set up your career folder and a starting audit with a weekly time budget blocked in your calendar, and match each of your top three gaps to a library lesson. *Study time: about 120 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - You will follow five graduates in the **Najm Tech Graduate Programme** at **Najm Bank**, a fictional Gulf bank, plus the people who hire and mentor them.

@@ -9,6 +9,8 @@
 # 3.1 — API testing: REST, schemas, status codes, authentication and negative cases
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 2.1* · *Focus: Integration, Security*
 
+**After this you can** write API tests for status codes, schemas, authentication and access to another customer's account, and show the schema test failing when the response shape drifts. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - An **API test** sends real HTTP requests and checks status, headers, body and side effects. It needs no browser, so it is fast and stable, and sits where every client meets the rules.
 - Design per endpoint: happy path, validation, boundaries, 401, 403, idempotency, error format, rate limit, pagination.
@@ -437,6 +439,8 @@ Work in a copy of `testing/sample`.
 # 3.2 — Web UI and end-to-end testing with Playwright: locators, waiting, page objects and stable suites
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 3.1* · *Focus: UI*
 
+**After this you can** rewrite a flaky Playwright test with role locators and web-first assertions, and prove it stable with `--repeat-each=10` and parallel workers. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - An **end-to-end (E2E) test** drives a real browser through a user journey. It sees what the customer sees but is the slowest test, so keep a few.
 - **Playwright** gives each test a fresh **browser context**, **auto-waits** for elements, and retries **web-first assertions** until they pass or time out.
@@ -825,6 +829,8 @@ Work in a copy of `testing/sample` with Playwright installed.
 
 # 3.3 — Mobile, accessibility, cross-browser and localisation testing, including Arabic right-to-left
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 3.2* · *Focus: UI, Design*
+
+**After this you can** audit one screen in English and Arabic against named WCAG criteria, recording what the automated scan missed, and write tests that fail when right-to-left layout or an Arabic plural form is removed. *Study time: about 115 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Mobile apps add risks no browser test sees: interruptions, permissions, bad networks, killed processes, old OS versions and store rules. Test logic fast, the UI natively, a few journeys on real devices.

@@ -9,6 +9,8 @@
 # 6.1 — Scope, roles and the risk pyramid
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 4.1* · *BoK: II.C*
 
+**After this you can** assign provider, importer, distributor and deployer roles in an AI supply chain, and write an Art. 6(3) derogation assessment an authority could follow. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - The EU AI Act (Regulation (EU) 2024/1689) is a directly applicable EU regulation, in force since 1 August 2024 and applying in phases. It uses product-safety machinery (requirements, conformity assessment, CE marking, market surveillance) to protect health, safety and fundamental rights.
@@ -296,6 +298,8 @@ She adds one clause to Najm's AI policy:
 # 6.2 — High-risk obligations for providers and deployers
 *Level: 🟡 Intermediate* · *Prerequisites: 6.1, 4.3* · *BoK: II.C*
 
+**After this you can** sort high-risk obligations into provider and deployer duties with their articles, and decide whether an incident is serious, who reports it and by when. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - High-risk AI systems must meet seven requirements (Arts 9–15): **risk management system**, **data and data governance**, **technical documentation**, **record-keeping (logging)**, **transparency and instructions for use**, **human oversight**, and **accuracy, robustness and cybersecurity**.
@@ -561,6 +565,8 @@ This is why Yusuf's contract (11.2) must secure instructions, log access, change
 
 # 6.3 — General-purpose AI, transparency, enforcement and the timeline
 *Level: 🟡 Intermediate* · *Prerequisites: 6.1, 6.2* · *BoK: II.C*
+
+**After this you can** state the AI Act's five key application dates from memory, and audit an organisation's AI outputs for Art. 50 transparency duties with a draft disclosure for each. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 

@@ -9,6 +9,8 @@
 # 0.1 — What AI governance is, and what the AIGP proves
 *Level: 🟢 Beginner* · *Prerequisites: none* · *BoK: Orientation (all domains)*
 
+**After this you can** classify seven governance instruments as hard law, guidance, standard, principle or internal policy, and explain two routes by which a voluntary one becomes binding for a bank. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **AI governance** is the system of people, rules, processes and evidence an organisation uses to decide which AI to build or use, under what conditions, and how to keep it within the law, its values and its risk appetite for as long as it runs.
 - It is not the same as AI ethics (the values), compliance (meeting specific legal duties) or risk management (identifying and treating risks). Governance is the frame that holds all three and assigns accountability.
@@ -226,6 +228,8 @@ Layla's first artefact is a one-page **AI Governance Charter**, approved by the 
 
 # 0.2 — How the exam thinks: BoK v2.1, question styles, a study plan
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *BoK: Orientation (all domains)*
+
+**After this you can** build a study plan weighted by the exam's domains, and write a Najm scenario with one FIRST and one BEST question, each with a key and three tempting distractors. *Study time: about 105 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - At the time of writing (2026), the AIGP exam has **100 multiple-choice questions** (85 scored, 15 unscored pilot questions you cannot identify), lasts **2 hours 45 minutes**, and is scored on a **scale of 100–500 with 300 to pass**.
@@ -483,6 +487,8 @@ Layla gives Omar and Sara two study plans and lets them choose. Both map directl
 
 # 0.3 — Meet Najm Bank: an AI inventory from day one
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *BoK: Orientation · I.A, I.C*
+
+**After this you can** complete an AI inventory row with owner, decision and preliminary risk, and argue in a 150-word memo for changing a risk rating using decision significance, automation and data sensitivity. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Najm Bank is fictional**: a mid-sized Gulf bank and the running case throughout.

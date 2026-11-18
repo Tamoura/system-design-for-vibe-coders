@@ -9,6 +9,8 @@
 # 12.1 — Capstone: secure Najm Assist from threat model to incident drill
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–11* · *Phase: Plan, Design, Build, Test, Deploy, Operate, Respond, Govern*
 
+**After this you can** threat-model an AI assistant end to end and prove with tests that its card and dispute tools enforce session-bound identity and confirmation, then run an incident drill on it. *Study time: about 125 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - The capstone takes **Najm Assist** through all eight phases as it becomes an agent that looks up fees, freezes cards and opens disputes, reusing an artefact from every earlier module.
 - The output is a **security case file**: linked artefacts arguing, with evidence, that Assist is secure enough, and saying what happens when it is not.
@@ -274,6 +276,8 @@ The main finding is typical: output handling covered links but not phone numbers
 
 # 12.2 — The security career: roles, certifications and portfolio
 *Level: 🔴 Advanced* · *Prerequisites: 12.1* · *Phase: Govern*
+
+**After this you can** build a skills-gap table for a security role you choose, based on five current job adverts, and produce one portfolio piece in which every finding ends with a fix and a test. *Study time: about 125 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - "Security" is many jobs: application, AI and cloud security, detection and response, offensive testing, and governance, risk and compliance (GRC). Pick a target role before you pick a course or a certificate.
@@ -543,6 +547,8 @@ Ali's **12-month development plan**, agreed with Noura:
 
 # 12.3 — Practice exam: 60 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–11* · *Phase: Plan, Design, Build, Test, Deploy, Operate, Respond, Govern*
+
+**After this you can** answer 60 scenario questions in 90 minutes and turn every wrong or guessed answer into an error-log row that names the trap and the section to re-read. *Study time: about 150 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - This is a **60-question practice exam** covering Modules 0–11, grouped by the eight security life cycle phases: Plan, Design, Build, Test, Deploy, Operate, Respond and Govern (7–9 questions each). Every module has about five questions; Module 9 has six. Most questions are short scenarios at Najm Bank or a neutral company.

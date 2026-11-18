@@ -9,6 +9,8 @@
 # 13.1 — Threats and guardrails: prompt injection, tool permissions, PII, approvals and audit logs
 *Level: 🔴 Advanced* · *Prerequisites: 3.2, 8.2, 9.1, 12.1* · *Layer: Agents, Production*
 
+**After this you can** run prompt-injection attacks against layered guardrails and say which layer stops each, and build a hash-chained audit log whose tests fail when a row is edited or deleted. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - The model cannot tell data from orders: pages, comments and your instructions share one stream. Prompting and training lower **prompt injection** risk, never remove it: limit what a fooled model can do.
 - The **lethal trifecta** (Simon Willison's framing): private data, untrusted content, a way out. Cut or gate one leg.
@@ -431,6 +433,8 @@ Plan first; small steps; run the tests after each.
 
 # 13.2 — Enterprise controls: agent identity, multi-tenancy, data residency, compliance and the governance pack
 *Level: 🔴 Advanced* · *Prerequisites: 6.2, 7.1, 13.1* · *Layer: Production, Delivery*
+
+**After this you can** draft a system card from the agent's configuration that passes the structure check, and write a degrade-don't-fail handler with a test against an overloaded API. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Three identities meet in every call: the user, the agent, the system behind the tool. **The agent may never do more than the user may**; prefer delegated access to a shared service account.

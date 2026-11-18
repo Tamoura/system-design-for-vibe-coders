@@ -9,6 +9,8 @@
 # 8.1 — Capstone: your venture file and 30-day plan
 *Level: 🔴 Advanced* · *Prerequisites: 0.2, 1.4, 2.1, 3.3, 4.3, 5.3, 6.3, 7.3* · *Step: Explore, Validate, Scope, Price, Sell, Launch, Protect, Run*
 
+**After this you can** assemble a venture file with one dated artefact per step, rate each step green, amber or red from its evidence, and write a 30-day plan with at most three measurable outcomes and a day-30 decision rule. *Study time: about 125 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - After this lesson you can assemble a **venture file** with one dated artefact for each of the eight steps, rate each step green, amber or red from the evidence, and write a **30-day plan** with at most three measurable outcomes and a written decision rule for day 30.
 - The venture file is not a business plan. It is a folder of the things you actually made in this course, each with a date and a note on how you know it is true.
@@ -225,6 +227,8 @@ Books and writers are cited by title and author because their exact web pages we
 
 # 8.2 — Practice exam: 40 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: 8.1* · *Step: Explore, Validate, Scope, Price, Sell, Launch, Protect, Run*
+
+**After this you can** answer forty scenario questions across all eight modules in about an hour, mark them, and list the lessons your wrong answers send you back to. *Study time: about 90 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can answer forty scenario questions spread across all eight modules, and use your wrong answers to pick the lessons to reread.

@@ -9,6 +9,8 @@
 # 3.1 — Data readiness: do we have what the product needs?
 *Level: 🟡 Intermediate* · *Prerequisites: 1.3, 2.2* · *Stage: Define, Build*
 
+**After this you can** score a product's data readiness green, amber or red on six questions with evidence, naming at least one representativeness gap and one labelling gap, and propose a phased scope that collects the missing data. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Data readiness** is the evidence that the data an AI product needs exists, can be reached, is good enough, represents the real users, and may legally be used for this purpose. It is a feasibility question, and it belongs in discovery, not in sprint 6.
 - Different products need different data. A **predictive model** needs historical examples with trustworthy **labels** (the known right answer). A **GenAI product built on retrieval** needs a clean, current, permissioned **knowledge corpus**. **Every** AI product needs **evaluation data**: a set of real cases with agreed good answers.
@@ -222,6 +224,8 @@ Rania's note: *"Two reds, both fixed by changing scope, not reasons to stop. Fai
 
 # 3.2 — Feedback loops, flywheels and learning products
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 1.2* · *Stage: Design, Grow*
+
+**After this you can** write a feedback-loop spec that gives each signal its capture, interpretation, action, verification and owner, and decide with evidence whether a claimed data flywheel belongs in a business case. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - A **learning product** gets better because people use it. That only happens if the product is designed to capture **feedback signals**, turn them into **labels** or test cases, and feed them back into prompts, retrieval, models or rules on a schedule someone owns.
@@ -447,6 +451,8 @@ Loop metrics reviewed monthly by Rania: share of memos with a captured signal, m
 
 # 3.3 — Privacy, consent and data rights: what the PM must own
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 3.2* · *Stage: Define, Build*
+
+**After this you can** map every place personal data appears in an AI feature with a retention period, and give each proposed data use a proceed, change or reject verdict using the surprise test and purpose limitation. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - The DPO and legal interpret privacy law, but most privacy outcomes are **product decisions**: what the feature collects, for what, for how long, shared with whom, and what the user is told and can control. The PM owns them.

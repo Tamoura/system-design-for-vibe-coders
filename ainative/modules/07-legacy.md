@@ -19,7 +19,7 @@
 - Cue: no net, no delegation. Trap: a green suite that never touched the code.
 
 ## 🧭 Why it matters
-On a Wednesday (a constructed day, not recorded from a real model) Lujain (graduate engineer) asks her agent to "make `ledger.py` consistent with the rest of Remit". The summary reads well: the partner share uses the shared rounding helper, `balance()` has no side effect, `journal()` returns the list directly. `pytest -q` prints `99 passed`, because no test asserts anything about the ledger (lesson 5.1 changed `PARTNER_SHARE` to 0.35 and watched all 99 stay green). Three weeks later Finance finds the partner payable a cent out on some transfers, and nobody can say which commit did it.
+On a constructed Wednesday Lujain (graduate engineer) asks her agent to "make `ledger.py` consistent with the rest of Remit". The summary reads well: the partner share uses the shared rounding helper, `balance()` has no side effect, `journal()` returns the list directly. `pytest -q` prints `99 passed`, because no test asserts anything about the ledger (lesson 5.1 changed `PARTNER_SHARE` to 0.35 and watched all 99 stay green). Three weeks later Finance finds the partner payable a cent out on some transfers; nobody can say which commit did it.
 
 Michael Feathers, in *Working Effectively with Legacy Code* (2004), defines legacy code as code without tests: without tests you cannot tell whether a change preserved behaviour, however well it reads. Agents cut both ways: they make tidying and the net cheap. Tests are quick to draft, slow to trust: habit 4, *Trust evidence, not fluency*, applies to the net too.
 
@@ -27,7 +27,7 @@ Michael Feathers, in *Working Effectively with Legacy Code* (2004), defines lega
 
 ### 🟢 The essentials
 
-**What a characterization test is.** It records what the code does, not what it should do. Feathers's method, as he describes it on his blog: write a test with a placeholder expectation, run it, and let the failure tell you the real value. Against the ledger's tie case:
+**What a characterization test is.** It records what the code does, not what it should do. Feathers's method, from his blog: write a test with a placeholder expectation, run it, and let the failure tell you the real value. Against the ledger's tie case:
 
 ```python
 from decimal import Decimal
@@ -145,7 +145,7 @@ done
 
 The OK or FAIL it prints is the agent's claim, not evidence, so review the combined diff as above. Thirty call sites in five files need one session, not a loop.
 
-**When to leave legacy alone.** Pinning and refactoring cost time and review attention. If a module is stable, sits behind a clean interface and nothing on the roadmap needs it, document its quirks, fence it with a memory line and a review rule, and spend the week elsewhere. If it must go, strangle it. A rewrite is cheap to produce now, and as expensive as ever to verify.
+**When to leave legacy alone.** If a module is stable, sits behind a clean interface and nothing on the roadmap needs it, document its quirks, fence it with a memory line and a review rule, and spend the week elsewhere. If it must go, strangle it. A rewrite is cheap to produce now, and as expensive as ever to verify.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
@@ -201,7 +201,7 @@ One commit per step, tests green after each. A refactor step never changes behav
 - Done means:
 ```
 
-Fill it in before the work, a few lines per section; draft section 4 with your agent in plan mode (Shift+Tab, or `claude --permission-mode plan`), where it proposes and edits nothing. For the vendor-feed change that the old TODO in `screening.py` asks for, section 1 would list Q-SCR-1 to Q-SCR-4 as *must not change*.
+Fill it in before the work, a few lines per section; draft section 4 with your agent in plan mode, where it proposes and edits nothing. For the vendor-feed change that the old TODO in `screening.py` asks for, section 1 would list Q-SCR-1 to Q-SCR-4 as *must not change*.
 
 ## 🛠️ Exercises
 - 🟢 **Pin two quirks by hand.** *No agent.* In any lab directory (your m00 one, say), write two tests of `remit.ledger` with the placeholder method: the tied partner share for a fee of 10.15 (Q-LED-1) and `balance("NOPE")` (Q-LED-2). *Done when:* both pass with the real values and a comment naming the quirk, and setting `rounding="ROUND_HALF_UP"` in a scratch copy makes the first fail.
@@ -309,7 +309,7 @@ Fill it in before the work, a few lines per section; draft section 4 with your a
 - The grader breaks the original ledger sixteen ways, runs a hidden suite on your refactor and compares audit lines byte for byte. Plan a few hours.
 
 ## 🧭 Why it matters
-On Monday Hessa (product owner) brings Finance's request: the nightly reconciliation needs two services in one process, each with its own books. Tariq's answer is this lab in a sentence: "Nobody touches `ledger.py` without tests, and I will not review four hundred lines of agent diff on trust." The same ticket carries najmkit 2, because the fraud team's dashboard reads the audit lines and one "tidy" conversion would quietly stop it matching. An agent can do the mechanical parts in an hour; deciding what must not change, and proving it did not, is the part only you can do.
+On Monday Hessa (product owner) brings Finance's request: the nightly reconciliation needs two services in one process, each with its own books. Tariq's answer: "Nobody touches `ledger.py` without tests, and I will not review four hundred lines of agent diff on trust." The same ticket carries najmkit 2, because the fraud team's dashboard reads the audit lines and one "tidy" conversion would quietly break it. An agent can do the mechanical parts in an hour; deciding what must not change, and proving it did not, is the part only you can do.
 
 ## 📐 How it works
 
@@ -317,7 +317,7 @@ On Monday Hessa (product owner) brings Finance's request: the nightly reconcilia
 
 **Read first.** The docstring of `ledger.py` lists Q-LED-1 to Q-LED-4; `git show lab-start:src/remit/ledger.py` always shows the original, and the grader uses the same one. `pytest -q` prints `99 passed` and a long list of `DeprecationWarning`s from najmkit 2: a first, partial migration to-do list (only calls your tests reach appear).
 
-**Part 1: pin it.** The seam `ledger_port.py` gives your tests `make_ledger()` and `ledger_of(service)`, which work before and after Part 2. Use lesson 7.1's placeholder method, or print a batch of real values once from a scratch script. Cover the four quirks and the details around them: the order of the four entries, error types and messages, what a refused posting leaves behind, what `send` does when the store fails (the service docstring calls it D-SVC-1). Ten tests is the minimum; thirty small ones is thorough. Do not call `make_ledger()` after a `send` in the same test: before the refactor it wipes the shared books. With an agent, ask for one behaviour at a time: "Pin Q-LED-2 only, in tests/test_ledger_basics.py, through make_ledger(). Put a placeholder in the assertion, run it, and copy the value the code returns. Change nothing under src/." Then read every test and delete any that asserts nothing.
+**Part 1: pin it.** The seam `ledger_port.py` gives your tests `make_ledger()` and `ledger_of(service)`, which work before and after Part 2. Use lesson 7.1's placeholder method, or print a batch of real values once from a scratch script. Cover the four quirks and the details around them: the order of the four entries, error types and messages, what a refused posting leaves behind, what `send` does when the store fails (the service docstring calls it D-SVC-1). Ten tests is the minimum; thirty small ones is thorough. Do not call `make_ledger()` after a `send` in the same test: before the refactor it wipes the shared books. With an agent, ask for one behaviour at a time: "Pin Q-LED-2 only, in tests/test_ledger_basics.py, through make_ledger(). Put a placeholder in the assertion, run it, and copy the value the code returns. Change nothing under src/."
 
 **Parts 2 and 3.** Follow the strangler order from lesson 7.1 and commit each green step. For the migration, `docs/najmkit-v2-migration.md` has the renames, one behaviour change and a suggested order: migrate `tests/conftest.py` first (every test runs its fixtures), then run `pytest -W error::DeprecationWarning`. The `CLAUDE.md` in your repository allows commits and test edits only when a task asks; this ticket does, so say so in your prompts.
 
@@ -477,7 +477,7 @@ A first attempt: ten tests that only check the happy path (real output, abridged
 [FAIL] Your ledger tests catch defects in the original ledger: your tests catch 1 of 16 deliberate defects; they miss: the partner's share is rounded half-even, not half-up, the partner's share is 30% of the fee, asking for the balance of an unknown account creates it (+12 more)
 ```
 
-When all three parts are right, the same command ends like this (excerpt of a real run; your counts will differ):
+When all three parts are right, it ends like this (your counts will differ):
 
 ```text
 [PASS] Your ledger tests catch defects in the original ledger: your tests catch 16 of 16 deliberate defects

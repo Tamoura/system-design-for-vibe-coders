@@ -9,6 +9,8 @@
 # 5.1 — Telemetry: logs, metrics, traces and OpenTelemetry
 *Level: 🟡 Intermediate* · *Prerequisites: 2.2, 4.1* · *Phase: Monitor*
 
+**After this you can** build a RED dashboard from a latency histogram, and follow one request across two services from its trace to its log lines by trace ID. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Telemetry** is the data a running system emits about itself. The three main signals are **logs** (events, with detail), **metrics** (numbers over time, cheap to keep and alert on) and **traces** (the path of one request across services). **Profiles** (where CPU and memory go inside the code) are a fourth signal that is still maturing.
 - **Observability** is the ability to answer new questions about production from that telemetry, without shipping new code to find out.
@@ -303,6 +305,8 @@ All three run locally with Docker or a kind/k3d cluster. Do not point them at an
 # 5.2 — SLOs, error budgets, alerting and on-call that people can sustain
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1* · *Phase: Operate, Monitor*
 
+**After this you can** write SLIs as good-event ratios with an error budget in minutes and in requests, and configure a multi-window burn-rate alert that pages on a steady error rate but not on a short burst. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - An **SLI** (service level indicator) measures what users experience, such as "the share of transfer requests that succeed in under 2 seconds". An **SLO** (service level objective) is the target for it over a window, such as 99.9% over 30 days. An **SLA** (service level agreement) is a contract with consequences, and should be looser than the SLO.
 - The **error budget** is what the SLO allows to fail: 100% minus the target. It turns "how reliable?" into a shared, numeric decision between product and operations: spend the budget on change, or slow down when it runs out.
@@ -583,6 +587,8 @@ For a gentler introduction to monitoring stacks and alert hygiene, see [*System 
 
 # 5.3 — Incidents and blameless postmortems
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1, 5.2* · *Phase: Operate*
+
+**After this you can** run a tabletop incident with assigned roles, a timestamped timeline and status updates, and write a blameless postmortem whose action items each change a system or a tool. *Study time: about 130 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - An **incident** is an unplanned event that hurts, or threatens to hurt, users or the business, and that needs a coordinated response. Declaring one early is cheap; declaring one late is expensive.

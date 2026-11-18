@@ -9,6 +9,8 @@
 # 1.1 — Threat modelling: data flows, trust boundaries and STRIDE
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Phase: Plan, Design*
 
+**After this you can** draw a data flow diagram with every trust boundary marked and apply STRIDE to it until each element has its threats and a mitigation. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Threat modelling** is structured thinking about what can go wrong with a system *before* it is built or changed, so fixes go into the design, not into an incident report.
 - It answers four questions: *What are we working on? What can go wrong? What are we going to do about it? Did we do a good job?* (Adam Shostack's framework).
@@ -280,6 +282,8 @@ Ali's second draft becomes **TM-ASSIST-004: Najm Assist "freeze card" tool**, an
 # 1.2 — Security principles: least privilege, defence in depth, secure defaults, zero trust
 *Level: 🟢 Beginner* · *Prerequisites: 1.1* · *Phase: Design, Build*
 
+**After this you can** turn a project's credentials into a granted-versus-needed table and rewrite an access check to fail closed, with a test that proves access is denied when the check breaks. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Security principles are design rules that keep working when you cannot predict the specific attack. Most go back to a 1975 paper by Saltzer and Schroeder, and they still decide whether one bug becomes a breach.
 - **Least privilege:** every person, service, token and AI agent gets only the access it needs, for only as long as it needs it.
@@ -530,6 +534,8 @@ Noura turns the principles into the **Najm Secure Design Review: ten questions**
 
 # 1.3 — Rating and prioritising risk: likelihood, impact and CVSS
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2* · *Phase: Plan, Operate*
+
+**After this you can** re-rank a dependency audit's findings using CVSS, KEV, EPSS and reachability, and justify each move in one line. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Risk** combines how likely something bad is (**likelihood**) with how much harm it does (**impact**). You can never fix everything at once, so the job is to fix the right things first.

@@ -10,6 +10,8 @@
 
 *Level: 🔴 Advanced* · *Prerequisites: 1.3, 2.4, 5.2, 7.3*
 
+**After this you can** scan Beacon's full history with gitleaks and block a commit containing a fake key, and build an SSRF-safe fetch that refuses monitors pointing at metadata, loopback or private addresses. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - Security for a SaaS is two things: the engineering that keeps tenants' data safe, and the evidence (SOC 2, ISO 27001, a DPA) that proves it to buyers.
@@ -257,6 +259,8 @@ Two holes. `fetch(url)` resolves DNS again, so a DNS rebinding answer can swap i
 # 8.2 — AI features as a SaaS component
 
 *Level: 🔴 Advanced* · *Prerequisites: 2.4, 3.3, 5.1, 8.1*
+
+**After this you can** build a schema-validated AI incident summary saved as an editable draft, record tokens and cost per org for every model call, and run a CI eval that includes a prompt-injection case. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 

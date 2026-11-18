@@ -9,6 +9,8 @@
 # 10.1 — Capstone: take Najm Assist from idea to scale
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–9* · *Stage: Discover, Define, Design, Build, Evaluate, Launch, Grow, Lead*
 
+**After this you can** assemble a dossier that takes an AI product from idea to scale, with a decision, evidence and stop rule at each stage, and defend it in a 10-minute review. *Study time: about 125 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - The capstone walks one product, **Najm Assist**, through all eight stages: Discover, Define, Design, Build, Evaluate, Launch, Grow and Lead. Each stage produces one artefact you already learned to make.
 - Each artefact answers a **decision question** ("worth solving?", "how much autonomy?", "good enough to ship?", "does it pay?"). If it changes no decision, cut it.
@@ -232,6 +234,8 @@ Rania's comment: *"Auditors will ask about rows 3 and 7, Khalid about row 8. Row
 
 # 10.2 — The AI PM career: interviews, portfolio and growth
 *Level: 🔴 Advanced* · *Prerequisites: 10.1* · *Stage: Lead*
+
+**After this you can** answer an AI product-design interview question with the eight-step structure, write a one-page portfolio case study whose decision a reader can state in one sentence, and design a scored interview loop. *Study time: about 125 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - AI product management is product management first. Interviewers still test product sense, execution, metrics and leadership; the AI part tests whether you can reason about **probabilistic behaviour, data, evaluation, cost and trust** when you make those calls.
@@ -468,6 +472,8 @@ And Faisal's **one-page portfolio case study**, rewritten with Rania to meet the
 
 # 10.3 — Practice exam: 60 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–9* · *Stage: Discover, Define, Design, Build, Evaluate, Launch, Grow, Lead*
+
+**After this you can** complete 60 scenario questions in 90 minutes without notes and build an error log that names, for each wrong or guessed answer, the trap and the section to re-read. *Study time: about 120 minutes (estimate).*
 
 > **Under revision (November 2026).** In many questions in this practice exam the correct option can be spotted by its length or wording, so a high score here does not show readiness for any real exam. Use it to practise reasoning: answer each question in your own words before you read the options, then compare.
 

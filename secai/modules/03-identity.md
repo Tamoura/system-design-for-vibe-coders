@@ -9,6 +9,8 @@
 # 3.1 — Authentication: passwords, MFA, passkeys and sessions
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.2* · *Phase: Design, Build*
 
+**After this you can** test login, sign-up and password reset for account enumeration, and store passwords with Argon2id plus a test that proves rehashing when parameters change. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Authentication** answers "who is this?"; **authorisation** (3.3) answers "what may they do?". Keep them apart in design and in code.
 - Passwords fail through reuse, guessing, phishing and database theft. Store them only with a slow, salted **password hash** such as Argon2id, block breached passwords, and drop composition rules and forced expiry.
@@ -259,6 +261,8 @@ After the stuffing wave, Noura and Ali write the **Najm Authentication Standard 
 
 # 3.2 — OAuth 2.0, OpenID Connect and token pitfalls
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1* · *Phase: Design, Build*
+
+**After this you can** write a token-verification function whose tests reject seven bad tokens, from alg none to an unknown kid, each for the right reason. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **OAuth 2.0** is for **delegated authorisation**: an app calls an API on a user's behalf, with limited rights, without seeing their password. It does not say who the user is.
@@ -551,6 +555,8 @@ Noura and Tariq publish the **Najm Identity and Token Standard v1**. Every new c
 
 # 3.3 — Authorisation: broken access control, IDOR and multi-tenancy
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 3.1* · *Phase: Build, Test*
+
+**After this you can** write an access-control matrix for an app and enforce tenant isolation with PostgreSQL row-level security, proven by queries that cannot see or insert another company's rows. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Authorisation** decides what an authenticated user may do, and to which object. Broken access control tops the OWASP Top 10 (A01 in the 2025 edition, as in 2021), and **Broken Object Level Authorization (BOLA)** leads the OWASP API Security Top 10 (2023).

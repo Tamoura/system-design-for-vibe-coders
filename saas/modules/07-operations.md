@@ -10,6 +10,8 @@
 
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 1.3, 3.2*
 
+**After this you can** build a staff-only admin area with customer search and support actions that require a reason and write an audit event, and show that a customer account gets 404 on every admin route. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - An admin panel is the internal app your staff use to find customers, inspect their state, extend trials, comp plans, fix data and impersonate.
@@ -293,6 +295,8 @@ The impersonation session was indistinguishable from Ana's own session: no `impe
 
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1*
 
+**After this you can** replace `console.log` with JSON logs that carry a request id and org id on every line, and follow one trace from an API request through a queued job to the first check. *Study time: about 105 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 
 - Observability means you can explain any behavior of production from the data it already emits, without shipping new code to find out.
@@ -555,6 +559,8 @@ Trace context is propagated automatically over HTTP through the `traceparent` he
 # 7.3 — Audit logs and activity feeds
 
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 1.3*
+
+**After this you can** record audit events in the same transaction as each change, build an owners-and-admins audit log page with filters and CSV export, and show that a failed change leaves no event. *Study time: about 105 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -851,6 +857,8 @@ The change exists with no audit record, which is precisely the case an auditor a
 # 7.4 — Deployment, environments and self-hostable SaaS
 
 *Level: 🔴 Advanced* · *Prerequisites: 2.1, 5.1, 7.2*
+
+**After this you can** write a multi-stage Dockerfile and a compose file that start Beacon from a fresh clone, and build a CI/CD pipeline that promotes the same SHA-tagged image from staging to production. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 

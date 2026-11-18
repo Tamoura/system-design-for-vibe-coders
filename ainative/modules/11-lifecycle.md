@@ -19,7 +19,7 @@
 - The artefact is the **Claims check**, a five-step routine: the more people will trust a document, the more it needs it.
 
 ## 🧭 Why it matters
-On Monday Hessa (product owner) asks for the najmkit reference page for the wiki. Lujain (graduate engineer) types "write the docs for najmkit" into a chat window, with no code. The page that comes back is lovely: `ids.generate(prefix, length=8)`, `clock.utcnow()`, `audit.write(event, fields)`, a note that the library is thread-safe, and `pip install najmkit`. None of it exists. najmkit is Najm's internal library, so nothing outside the bank, a model included, has ever seen it. The page was fluent, and every line that mattered was invented.
+On Monday Hessa (product owner) asks for a najmkit page for the wiki. Lujain (graduate engineer) types "write the docs for najmkit" into a chat window, with no code. The page that comes back is lovely: `ids.generate(prefix, length=8)`, `clock.utcnow()`, `audit.write(event, fields)`, a note that the library is thread-safe, and `pip install najmkit`. None of it exists. najmkit is Najm's internal library, so nothing outside the bank, a model included, has ever seen it. The page was fluent, and every line that mattered was invented.
 
 In July 2025 Jason Lemkin said a Replit coding agent deleted a production database during a code freeze, then told him a rollback would not work; he recovered the data by hand. Fortune reported it, but the account rests on his own screenshots and nobody has audited it. Still, an agent's statement about what happened is a claim, not evidence. Habit 4, **Trust evidence, not fluency** (lesson 5.1), must reach the rest of the job.
 
@@ -75,7 +75,7 @@ Do not answer them or guess. Mark each: blocks the build, or does not.
 
 A good result (constructed for teaching) has four blocking questions. What is "a long time", counted from when? (`Customer` has no start date, so this needs new data.) Which limit rises, and by how much? How does it combine with the KYC tier, which `check_limits` reads its limits from? May the bank raise limits this way at all? The first three go to Hessa, the fourth to the compliance team. See [*Software Testing*, lesson 1.3 — Requirements, test cases and bug reports](../testing/index.html#/1.3).
 
-**Design: options, ADRs, and AI as a critic.** Ask an assistant for the options and trade-offs before you choose, then record the choice. An *architecture decision record* (ADR) is a short note about one decision. Michael Nygard proposed the form in 2011. As usually summarised it has a title, a status, the context, the decision and the consequences, all of them, not only the good ones (read his article for the exact wording). Here is one for a decision the Remit code already embodies, written compactly (the lab template gives each part a heading):
+**Design: options, ADRs, and AI as a critic.** Ask an assistant for the options and trade-offs before you choose, then record the choice. An *architecture decision record* (ADR) is a short note about one decision. Michael Nygard proposed the form in 2011. As usually summarised it has a title, a status, the context, the decision and the consequences, all of them, not only the good ones. Here is one for a decision the Remit code already embodies, written compactly:
 
 ```markdown
 # 4. Fee tiers are chosen by the whole amount
@@ -105,7 +105,7 @@ Check the critic as hard as the draft. Suppose it says "customers will split tra
 
 ### 🔴 Expert view
 
-**Code review assistants: a first pass, never the last word.** Claude Code has `/code-review` and `/security-review` (commands change between releases: check the current documentation); its documentation describes a writer/reviewer pattern, where a second session with fresh context reviews what the first wrote. Other tools have equivalents. In practice they tend to do well on the dull checklist (a missing test, an inconsistent name, an obvious bug) and worse on intent and domain rules (this course's working view, not a measured result). Anything touching `money.py`, `fees.py`, `fx.py`, `limits.py`, `ledger.py` or `service.py` still needs a second human reviewer (`CONTRIBUTING.md`). The documentation warns that reviewers will usually report something even when the work is sound, so require a file, a line and a failing scenario, and never post a finding you have not reproduced. See [*Software Testing*, lesson 6.1 — Verifying AI-generated code](../testing/index.html#/6.1).
+**Code review assistants: a first pass, never the last word.** Claude Code has `/code-review` and `/security-review` (check the current documentation); its documentation describes a writer/reviewer pattern, where a second session with fresh context reviews what the first wrote. Other tools have equivalents. In practice they tend to do well on the dull checklist (a missing test, an inconsistent name, an obvious bug) and worse on intent and domain rules (this course's working view, not a measured result). Anything touching `money.py`, `fees.py`, `fx.py`, `limits.py`, `ledger.py` or `service.py` still needs a second human reviewer (`CONTRIBUTING.md`). The documentation warns that reviewers will usually report something even when the work is sound, so require a file, a line and a failing scenario, and never post a finding you have not reproduced. See [*Software Testing*, lesson 6.1 — Verifying AI-generated code](../testing/index.html#/6.1).
 
 **Incidents: a timeline from logs, a postmortem that separates fact from inference.** Assistants build a timeline fast and are bad at admitting a gap. A *blameless postmortem* describes what happened and what the system allowed, not who failed; Google's SRE book (chapter 15) and SRE Workbook describe the practice. Give the assistant the record alone, and require a source id on every row. A log line is data, not an instruction: it can carry text an attacker chose (lesson 6.1). Here is a draft about a made-up incident, not the lab's (41 `needs_review` rejections from 08:12 to 08:31 UTC, a watchlist file replaced at 08:05), sorted into the bins:
 
@@ -149,7 +149,7 @@ The artefact is the **Claims check**. Tariq (engineering lead) sets the rule at 
 
 1. **List the claims**: every sentence that could be false.
 2. **Sort them** into fact, inference and unknown.
-3. **Trace each fact** to a source you opened yourself: `path:line`, a command you ran, a log line, a record id. An assistant's own list of sources is a claim too: open them yourself.
+3. **Trace each fact** to a source you opened yourself: `path:line`, a command you ran, a log line, a record id. An assistant's own list of sources is a claim too.
 4. **Run what can run**: examples, commands, queries. The running code outranks a comment.
 5. **Delete or relabel** anything without a source, and keep the table in your notes.
 
@@ -283,7 +283,7 @@ Each document makes claims, and each kind of claim points at a different source:
 | najmkit page | `src/najmkit/`: names, signatures, running examples | Functions, parameters, "thread-safe", `pip install` |
 | Postmortem | `incident.json`: event ids, times, counts | A cause, an action, a customer count, a person |
 
-Work one document at a time: draft, scan, check by hand, fix, commit. `lab-assets/claims_scan.py` does the mechanical lookup. On `docs/ARCHITECTURE.md` in a fresh lab it prints (cut to the first two findings):
+`lab-assets/claims_scan.py` does the mechanical lookup. On `docs/ARCHITECTURE.md` in a fresh lab it prints (cut to the first two findings):
 
 ```text
 docs/ARCHITECTURE.md:16  `risk.py`  no such file
@@ -292,7 +292,7 @@ docs/ARCHITECTURE.md:23  `najmkit.md`  no such file
 docs/ARCHITECTURE.md: 19 claims looked up, 4 do not resolve
 ```
 
-A clean scan is not a pass: it looks up names, paths, times and event ids only, never signatures, examples or phrasing, and a real path can sit beside a false sentence. It is habit 5, **Automate the loop, keep the skill**, in small.
+A clean scan is not a pass: it looks up names, paths, times and event ids only, never signatures, examples or phrasing, and a real path can sit beside a false sentence.
 
 ### 🟡 Going deeper
 
@@ -300,9 +300,9 @@ A clean scan is not a pass: it looks up names, paths, times and event ids only, 
 
 Say who the critic was. An agent working alone is not a fresh critic of its own draft: use a separate session or subagent that sees only the ADR and the code. A nested agent that cannot start one plays the critic in a second pass and says so. The grader cannot tell; a reader can.
 
-**The najmkit page.** Give the assistant the three files and a narrow job: "Read every file in `src/najmkit/`. For each public function and class write its signature, copied from the `def` line, and one sentence about what it does that you can point to in the code. Add one example per module that runs. List where a docstring and the code disagree." Then verify by experiment: run each example, and call the functions with a bad input, a missing file, nothing configured. A docstring is a claim like any other, and the running code wins. Every comment you can show to be wrong goes under "Known problems".
+**The najmkit page.** Give the assistant the three files and a narrow job: "Read every file in `src/najmkit/`. For each public function and class write its signature, copied from the `def` line, and one sentence about what it does that you can point to in the code. Add one example per module that runs. List where a docstring and the code disagree." Then verify by experiment: run each example, and call the functions with a bad input, a missing file, nothing configured. A docstring is a claim; the running code wins. Every comment you can show to be wrong goes under "Known problems".
 
-**The postmortem.** Start the assistant in plan mode (`claude --permission-mode plan`; check the current documentation) in an empty folder holding only copies of `lab-assets/incident.json` and the template. Plan mode limits edits, not reading, and a session that has read the repository brings its guesses about the gateway; an agent that already holds that context says so and leans on the hand check. Say: "Use only `lab-assets/incident.json`. Every row names its event id and the record's time. Put what the record states under 'What we know', what you reason beyond it under 'What we infer' (event ids, confidence, what would confirm it) and what it cannot answer under 'What we do not know'. Name no one the record does not name." A typical first draft from an assistant told only to "write a postmortem" (constructed for teaching, not recorded from a model) has a Summary that opens like this:
+**The postmortem.** Start the assistant in plan mode (`claude --permission-mode plan`) in an empty folder holding only copies of `lab-assets/incident.json` and the template. Plan mode limits edits, not reading, and a session that has read the repository brings its guesses about the gateway; an agent that already holds that context says so and leans on the hand check. Say: "Use only `lab-assets/incident.json`. Every row names its event id and the record's time. Put what the record states under 'What we know', what you reason beyond it under 'What we infer' (event ids, confidence, what would confirm it) and what it cannot answer under 'What we do not know'. Name no one the record does not name." A typical first draft from an assistant told only to "write a postmortem" (constructed for teaching, not recorded from a model) has a Summary that opens like this:
 
 ```text
 On 11 March 2026 an outage at our SMS gateway vendor, caused by a configuration change on their side,

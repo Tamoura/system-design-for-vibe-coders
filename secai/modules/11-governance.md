@@ -9,6 +9,8 @@
 # 11.1 — Frameworks: NIST CSF 2.0, ISO/IEC 27001, NIST SSDF and OWASP SAMM
 *Level: 🔴 Advanced* · *Prerequisites: 1.3, 6.1* · *Phase: Govern*
 
+**After this you can** map an application's controls to the NIST CSF 2.0 Functions and score your team's SAMM practices with evidence and risk-based targets. *Study time: about 125 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A **security framework** is a published, structured set of outcomes, requirements or practices. It helps you find gaps and gives you a shared language with auditors, regulators and customers. It is a map of security, not security itself.
 - The four here answer different questions. **NIST CSF 2.0**: what outcomes should the whole organisation achieve? **ISO/IEC 27001**: is there a management system running security that an auditor can certify? **NIST SSDF**: which practices make software secure? **OWASP SAMM**: how mature is our software security practice, and what comes next?
@@ -254,6 +256,8 @@ Noura's team publishes **Najm Unified Control Set v1: AppSec and AI extract**. E
 
 # 11.2 — Regulation that touches security: GDPR, PDPPL, the EU AI Act and financial-sector rules
 *Level: 🔴 Advanced* · *Prerequisites: 5.3, 10.2, 11.1* · *Phase: Govern, Respond*
+
+**After this you can** list which data protection and AI regimes plausibly apply to an application, each with a named decision owner, and work an incident's notification clocks to their due times. *Study time: about 125 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Most security law states an **outcome** (appropriate security, resilience, timely notification) and makes you **accountable**: you must show what you did and why. It rarely names a tool.
@@ -502,6 +506,8 @@ Rule: Jassim, as incident commander, records the awareness time in the ticket, a
 
 # 11.3 — Building a security programme and culture: champions, metrics and budgets
 *Level: 🔴 Advanced* · *Prerequisites: 10.3, 11.1, 11.2* · *Phase: Plan, Govern*
+
+**After this you can** define security metrics with a formula, data source, owner and an anti-gaming pair, and write a one-page budget case with three options. *Study time: about 125 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - A **security programme** is the standing system of people, roles, services, platforms, metrics and budget that keeps controls working while the organisation changes. Projects end; a programme does not.

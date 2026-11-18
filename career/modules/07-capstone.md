@@ -9,6 +9,8 @@
 # 7.1 — Capstone: your 12-week job-readiness plan, from audit to offer
 *Level: 🔴 Advanced* · *Prerequisites: 0.2, 3.1, 4.1, 5.1, 6.1* · *Step: Build, Apply*
 
+**After this you can** write a target-role statement, a skills audit scored from at least ten real postings, and a one-page 12-week plan with a checkable deliverable every week and three if-yes/if-no checkpoints. *Study time: about 125 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A job search is a project: **audit, build and prove, apply, interview, decide**, with overlapping phases and a weekly review.
 - The rule that matters most: **start applying before you feel ready**. Proof, applications and interview practice improve each other, so they run in parallel from around week 4 or 5.
@@ -255,6 +257,8 @@ At week 8, her tracker showed that applications after a referral or conversation
 
 # 7.2 — Practice interview pack: 40 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: 7.1* · *Step: Interview*
+
+**After this you can** sit the 40-question pack in 60 minutes, marking each answer sure or guess, and turn your misses and guesses into a review log that names a lesson and an action for each. *Study time: about 90 minutes (estimate).*
 
 > **Under revision (November 2026).** In many questions in this practice exam the correct option can be spotted by its length or wording, so a high score here does not show readiness for any real exam. Use it to practise reasoning: answer each question in your own words before you read the options, then compare.
 

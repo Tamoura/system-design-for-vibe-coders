@@ -9,6 +9,8 @@
 # 0.1 — What application and AI security is: assets, attackers and risk
 *Level: 🟢 Beginner* · *Prerequisites: none* · *Phase: Plan, Govern*
 
+**After this you can** write an asset register for an application you own, with an owner and a confidentiality, integrity or availability impact rating on every row, plus two risk statements that each name a control. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Security** means protecting what a system is trusted with (its **assets**) from people who would misuse it. **Application security** does this for the software you design, build and run; **AI security** extends it to systems that contain models.
 - Three properties describe most of the harm: **confidentiality** (only the right people see it), **integrity** (nobody changes it improperly) and **availability** (it works when needed).
@@ -256,6 +258,8 @@ Below it, Noura's three questions:
 # 0.2 — How breaches really happen: the attack chain and the usual suspects
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Phase: Design, Operate*
 
+**After this you can** map a real breach, or an attack on your own lab app, onto the stages of the attack chain and name for each stage a control that breaks it and the signal that would reveal it. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A breach is rarely one clever trick but a **chain**: get in, get a foothold, gain more access, reach the target, steal or disrupt. Every link is a chance to stop it or see it.
 - Most chains start with **the usual suspects**: stolen or weak credentials, phishing, known vulnerabilities left unpatched, misconfiguration, broken access control in apps and APIs, leaked secrets, and compromised suppliers.
@@ -491,6 +495,8 @@ Noura's rule: every walkthrough ends with two lines. **Cheapest link to break:**
 
 # 0.3 — Meet Najm Bank's security team, and how to use this course
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Phase: Plan, Govern*
+
+**After this you can** build a security map for three systems you know that names the right person to call and the course lesson for each concern, and run a local practice lab under written rules of engagement. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Najm Bank is fictional**: a mid-sized Gulf bank headquartered in Doha, with customers in Qatar, the UAE and the EU. You join its **Application & AI Security** team for the whole course.

@@ -9,6 +9,8 @@
 # 4.1 — The OWASP API Security Top 10 in practice
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 3.3* · *Phase: Design, Test*
 
+**After this you can** find an object-level authorisation flaw by replaying a request with a second account's token, fix it on the server and add a two-user test that proves the fix. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - An **API** (application programming interface) exposes data and functions directly to programs. Attackers skip your app: they call the API with their own tools and change any value.
 - The **OWASP API Security Top 10 (2023)** is the standard list of what goes wrong. Three of its top five entries are authorisation failures: **BOLA** (objects), **BOPLA** (fields) and **BFLA** (functions).
@@ -284,6 +286,8 @@ Hands-on work runs only against your own code or a local lab such as OWASP crAPI
 # 4.2 — Abuse, bots, rate limits and business-logic flaws
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 4.1* · *Phase: Design, Operate*
 
+**After this you can** reproduce a race-condition overdraft with concurrent requests and fix it with an atomic conditional update and an idempotency key, proven over ten runs. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Abuse** is using legitimate features at a scale, speed or order the designers did not expect. Often every single request is valid.
 - Two OWASP API risks name it: **API4 Unrestricted Resource Consumption** (no limits on volume or cost) and **API6 Unrestricted Access to Sensitive Business Flows** (a valuable flow automated by attackers). For LLM features the equivalent is **LLM10 Unbounded Consumption**.
@@ -527,6 +531,8 @@ Hands-on work runs only against code you wrote, a local lab, or deliberately vul
 
 # 4.3 — Mobile app security: what you can and cannot trust on the device
 *Level: 🟡 Intermediate* · *Prerequisites: 3.2, 4.1* · *Phase: Build, Test*
+
+**After this you can** triage a mobile build's embedded strings and scanner findings by MASVS category, and decide for every secret whether to rotate it, restrict it or remove it. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - A mobile app runs on a device you do not control. Anyone can decompile it, read its strings and change its behaviour. **Everything in the app is public, and every check in the app can be skipped.**

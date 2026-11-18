@@ -9,6 +9,8 @@
 # 0.1 — What changed, and what did not, when AI builds the product
 *Level: 🟢 Beginner* · *Prerequisites: none* · *Step: Explore*
 
+**After this you can** write a one-page "still hard" list for your own idea with at least five items, each with a question you could ask a real person to test it. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - After this lesson you can write a one-page "still hard" list for your own idea: at least five things that AI tools did not make easier, each with the question that tests it.
 - What changed: many builders report that a first version of many kinds of software takes far less time and money than before; results vary and this lesson gives no figures. A person who cannot code can now direct an agent to build something that runs.
@@ -219,6 +221,8 @@ She also started a built-versus-learned log. After the weekend, the "built" colu
 
 # 0.2 — The founder's map: eight steps and the Tick cast
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Step: Explore*
+
+**After this you can** draw your eight-step journey map on one page, mark the step you are on, and name the artefact that proves each step is done. *Study time: about 115 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can draw your own journey map with eight steps, mark which step you are on, and name the one artefact that proves you finished it.
@@ -468,6 +472,8 @@ Notice that she did not delete the logo forever. She postponed it behind a cheap
 
 # 0.3 — How to use this course, and what it is not (not legal, tax or investment advice)
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Step: Explore*
+
+**After this you can** write a one-page "how I will use this course" note with your pace, your artefact folder, the professionals you will consult and three limits you will keep. *Study time: about 115 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can write a one-page "how I will use this" note: your pace, your artefact folder, your professional list, and three limits you will keep.

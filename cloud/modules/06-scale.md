@@ -9,6 +9,8 @@
 # 6.1 — Scaling and resilience: autoscaling, multi-zone, backups and disaster recovery
 *Level: 🔴 Advanced* · *Prerequisites: 2.3, 3.2, 5.2* · *Phase: Operate*
 
+**After this you can** show an HPA scaling out and back under load, keep a service available through a zone drain with spread constraints and a PDB, and measure a real restore against an RTO and an RPO you chose. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Scaling** handles more load; **resilience** survives failure, through redundancy, backups and recovery plans.
 - Autoscale in layers: the **Horizontal Pod Autoscaler** adds pods, a **node autoscaler** adds machines for those pods, and the **database** usually does not autoscale at all, so it is often the real limit.
@@ -280,6 +282,8 @@ The first run found three gaps no design review had caught: the replica-lag aler
 # 6.2 — FinOps: understanding, allocating and cutting cloud cost
 *Level: 🔴 Advanced* · *Prerequisites: 1.2, 3.1, 6.1* · *Phase: Operate, Monitor*
 
+**After this you can** write a tagging policy with a policy-as-code check that fails on missing tags, produce a cost-by-namespace table for a shared cluster, and compute the cost per 1,000 requests for three scenarios. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **FinOps** is the practice of making engineering, finance and the business share responsibility for cloud spending, so cost becomes an engineering signal like latency, not a month-end surprise.
 - The FinOps Foundation framework runs in a loop of three phases: **Inform** (see and allocate cost), **Optimise** (reduce waste and get better rates) and **Operate** (make it routine and owned).
@@ -501,6 +505,8 @@ The first report's actions: tag policy enforced in the OpenTofu pipeline (untagg
 
 # 6.3 — Running AI workloads: GPUs, model serving, LLM gateways and their cost
 *Level: 🔴 Advanced* · *Prerequisites: 2.3, 5.1, 6.2* · *Phase: Deploy, Operate*
+
+**After this you can** estimate GPU memory for a model at three precisions, run an LLM gateway with a rate limit and a fallback route, and decide between a managed API and self-hosting from a dated break-even calculation. *Study time: about 115 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - AI workloads need scarce, expensive **GPUs**, load large model files before serving, and cost scales with **tokens**, not requests.

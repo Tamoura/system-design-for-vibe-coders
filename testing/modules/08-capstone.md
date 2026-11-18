@@ -9,6 +9,8 @@
 # 8.1 — Capstone: the quality strategy and automated suite for a new Najm feature, including an AI feature
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–7* · *Focus: Strategy, AI*
 
+**After this you can** deliver a risk-scored quality strategy and an automated suite for a new feature in which each planted bug turns a pull request red at the gate you predicted. *Study time: about 120 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **The brief.** Najm Mobile adds **scheduled and recurring transfers** ("Schedules"); Najm Assist can create one by tool call, only after an explicit yes. You deliver nine artefacts, risks to report.
 - **Why it is harder than a one-off transfer.** A schedule runs unwatched and repeats: a silent skip or double send happens again next month.
@@ -339,6 +341,8 @@ The tiers nest. Use a copy of `testing/sample`.
 # 8.2 — The testing career: roles, certifications, interviews and a portfolio
 *Level: 🔴 Advanced* · *Prerequisites: 8.1* · *Focus: Career*
 
+**After this you can** link each rung of a testing skills ladder to evidence you produced, build a portfolio project with evidence-backed CV bullets, and hold a scored mock interview. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Testing has many doors: analyst, QA engineer, SDET, quality engineer, performance and security specialists, lead, architect and, newly, AI evaluation. Read the job description, not the title.
 - Hiring managers want **evidence of judgement**: can you tell a test that can fail from one that only passes? A portfolio with a catch matrix says more than a list of tools.
@@ -566,6 +570,8 @@ Rashid scores graduate quality-engineer interviews on the **Najm QE interview sc
 
 # 8.3 — Practice exam: 60 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–8* · *Focus: Strategy*
+
+**After this you can** sit a 60-question scenario exam in about 90 minutes and turn your misses into a study plan by focus tag and lesson. *Study time: about 120 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - This is a 60-question practice exam covering every lesson from 0.1 to 8.2 and all nine modules. Most questions are scenarios set at Najm Bank. They are mixed, as in a real exam, rather than grouped by module.

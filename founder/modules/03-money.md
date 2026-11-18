@@ -9,6 +9,8 @@
 # 3.1 — Unit economics in plain words, including AI and model costs
 *Level: 🟡 Intermediate* · *Prerequisites: 1.4, 2.2* · *Step: Price*
 
+**After this you can** fill in a one-page unit-economics sheet for one customer-month and calculate its gross margin and the months it takes to earn back the cost of winning that customer. *Study time: about 120 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - After this lesson you can fill in a one-page **unit-economics sheet** for one customer per month: what the customer pays, what each part costs to serve, what is left, and how many months it takes to earn back what it cost to win them. Allow about two hours.
 - **Unit economics** means the money story of one customer (the "unit"): revenue in, cost to serve out, and cost to acquire them. If one customer does not work on paper, a thousand will not work either.
@@ -211,6 +213,8 @@ Mona asked what Layla would do if a large salon sent 2,000 reminders. Layla's an
 
 # 3.2 — Pricing: choose, test and change a price
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1* · *Step: Price*
+
+**After this you can** write a price test plan with three price points and signal rules set in advance, run it with at least twelve real prospects, and decide your next price from what they paid or committed to. *Study time: about 115 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can write a one-page **price test plan** with three price points, who will see each, what counts as a signal, and a rule for what you will do next, and then run it with at least twelve real prospects over about two weeks.
@@ -430,6 +434,8 @@ She also wrote down what the test could not tell her: twelve people is a small g
 
 # 3.3 — Cash, runway and invoicing: what to ask your accountant
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 3.2* · *Step: Price*
+
+**After this you can** build a six-month cash table, compute your runway in months including a late-payment case, and send an accountant a one-page question list with the documents each question needs. *Study time: about 180 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can build a six-month **cash table**, compute your **runway** in months, and write a one-page **question list for an accountant** that you could send before a first meeting. Allow about three hours.

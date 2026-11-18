@@ -9,6 +9,8 @@
 # 8.1 — The AI attack surface: OWASP Top 10 for LLM Applications and MITRE ATLAS
 *Level: 🔴 Advanced* · *Prerequisites: 1.1, 1.3* · *Phase: Design*
 
+**After this you can** draw the data flow of an LLM feature, tag every boundary-crossing threat with an OWASP LLM ID and an ATLAS technique, and state whether the lethal trifecta is present. *Study time: about 125 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - An AI system is ordinary software plus new parts: the model, prompts, training data, retrieved documents, tools and an AI supply chain. Each one is attack surface.
 - A large language model (LLM) reads instructions and data in one stream of text and cannot reliably tell them apart. Anything it reads can steer it, so anything it writes is untrusted.
@@ -258,6 +260,8 @@ Ali, Noura and Mariam produce the **Najm Assist AI Threat Register v1** (excerpt
 
 # 8.2 — Prompt injection and jailbreaks, direct and indirect
 *Level: 🔴 Advanced* · *Prerequisites: 8.1, 2.1* · *Phase: Design, Test*
+
+**After this you can** measure how often a planted canary instruction hijacks a summariser before and after spotlighting, and redesign an assistant's tools so no component holds all three legs of the lethal trifecta. *Study time: about 125 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Prompt injection**: attacker-controlled text changes what an LLM application does. **Direct** injection comes from the person typing; **indirect** injection hides in content the system reads, such as documents, emails, transaction descriptions or tool results.
@@ -544,6 +548,8 @@ Under PI-3 and PI-4, Najm Assist's tools are tiered:
 
 # 8.3 — Attacks on data and models: poisoning, evasion, extraction and inference
 *Level: 🔴 Advanced* · *Prerequisites: 8.1, 5.3, 6.2* · *Phase: Build, Operate*
+
+**After this you can** classify an AI attack as poisoning, evasion, extraction or inference, and measure in a lab how label flipping lowers a classifier's recall with and without a defence. *Study time: about 125 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Four families of attack target the model and its data. **Poisoning** corrupts what a model learns, **evasion** crafts inputs it gets wrong, **extraction** copies it, and **inference** (privacy) attacks learn about its training data.

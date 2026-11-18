@@ -9,6 +9,8 @@
 # 2.1 — From principles to strategy and risk appetite
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 1.3* · *BoK: I.B*
 
+**After this you can** draft an AI risk-appetite table with an appetite level, a measurable tolerance and an owner for each risk category. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - AI governance starts from the top: **principles** (what we value) drive an **AI strategy** (what we will use AI for), which is bounded by a **risk appetite** (how much AI risk we accept) and **risk tolerances** (the measurable limits around it).
 - Principles only matter once they are translated into commitments someone can test: "fair" becomes "we measure approval-rate gaps across groups before launch and monthly after".
@@ -250,6 +252,8 @@ Najm's corporate banking division wants to run its own AI governance because "th
 # 2.2 — Roles, accountability and the AI governance committee
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1* · *BoK: I.B*
 
+**After this you can** write an AI governance committee charter that states membership, quorum and decision rights, and find two independence risks in a RACI with a fix for each. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Every AI system needs a single **accountable owner** in the business, not in IT or data science. Governance roles support that owner; they do not replace them.
 - The **three lines model** separates doing (first line: business, data science, IT), overseeing (second line: risk, compliance, privacy, AI governance) and independent assurance (third line: internal audit), all reporting to the governing body.
@@ -490,6 +494,8 @@ Review the RACI above and identify two independence or conflict-of-interest risk
 
 # 2.3 — AI literacy, training and culture
 *Level: 🟡 Intermediate* · *Prerequisites: 2.2* · *BoK: I.B*
+
+**After this you can** design a 60-minute oversight training session with a competence check, and draft a role-based answer to a regulator on the AI Act's AI-literacy duty. *Study time: about 105 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **AI literacy** is the skills, knowledge and understanding that let people use and oversee AI in an informed way and understand its opportunities, risks and possible harms.

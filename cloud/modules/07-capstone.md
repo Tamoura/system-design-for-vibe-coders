@@ -9,6 +9,8 @@
 # 7.1 — Capstone: take a new Najm service from empty repo to production with an SLO
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–6* · *Phase: Deploy, Operate*
 
+**After this you can** take a small service from an empty repo to a local cluster with a build-once pipeline, GitOps rollback and an SLO with burn-rate alerts, and show each injected failure caught by an alert or the canary. *Study time: about 125 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - The capstone takes **Card Controls**, a new Najm service for freezing cards and setting limits, from an empty repository to production through all eight phases.
 - The output is a **production readiness file**: linked evidence that the service can be built, released, observed, recovered and paid for, with an owner for each part.
@@ -284,6 +286,8 @@ The first game day found two gaps: the credentials runbook pointed to a renamed 
 # 7.2 — The cloud career: roles, certifications, interviews and a portfolio
 *Level: 🔴 Advanced* · *Prerequisites: 7.1* · *Phase: Plan*
 
+**After this you can** build a skills table for a target role from real job adverts with your top three gaps, publish a portfolio repository a peer can run from its README alone, and score a mock interview against a scorecard. *Study time: about 155 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - "Cloud" is several jobs: cloud, DevOps, platform, site reliability (SRE), cloud security, FinOps and AI infrastructure. They share foundations but own different things. Pick a target role first.
 - Certifications are a signal, not proof. The main sources are the three cloud providers (**AWS**, **Microsoft**, **Google Cloud**), the **Linux Foundation and CNCF** for Kubernetes, **HashiCorp** for Terraform and the **FinOps Foundation**. Names, codes and content change, so check the issuer's current page.
@@ -534,6 +538,8 @@ Salem's **platform engineer interview scorecard**, used for every candidate:
 
 # 7.3 — Practice exam: 60 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: 7.1, 7.2* · *Phase: Plan*
+
+**After this you can** sit a 60-question scenario exam in one timed sitting, build a miss log with a cause and an action for each miss, and write new scenario questions with defensible answers for your weakest phase. *Study time: about 135 minutes (estimate).*
 
 > **Under revision (November 2026).** In many questions in this practice exam the correct option can be spotted by its length or wording, so a high score here does not show readiness for any real exam. Use it to practise reasoning: answer each question in your own words before you read the options, then compare.
 

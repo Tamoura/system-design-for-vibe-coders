@@ -9,6 +9,8 @@
 # 7.1 — Cloud security: shared responsibility, IAM and misconfiguration
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 2.3, 5.2* · *Phase: Design, Deploy*
 
+**After this you can** write a shared responsibility table for three cloud systems and cut a wildcard storage role down to least privilege, confirming that read and delete are denied. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - The **shared responsibility model**: the provider secures the cloud itself (buildings, hardware, virtualisation, managed-service internals). You secure what you put in it and how you configure it. The split moves with the type of service.
 - In the cloud, **identity is the perimeter**. Every API call is checked against IAM policy, so an over-privileged role or a leaked key is worth more to an attacker than an open port.
@@ -261,6 +263,8 @@ Each production role also gets a **role review card**: the workload that assumes
 
 # 7.2 — Containers, Kubernetes and infrastructure as code
 *Level: 🟡 Intermediate* · *Prerequisites: 6.2, 7.1* · *Phase: Build, Deploy*
+
+**After this you can** harden a Dockerfile to a pinned, non-root, secret-free image and enforce the Restricted pod profile and a default-deny network policy on a local cluster. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - A **container** is an ordinary process isolated by the host's kernel, which it shares with every other container on the machine. It is not a strong security boundary like a virtual machine.
@@ -580,6 +584,8 @@ Tariq and Ali agree the **Najm Kubernetes Workload Baseline v1**, enforced autom
 
 # 7.3 — Networks and the edge: segmentation, WAFs and DDoS
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 4.2, 7.1* · *Phase: Design, Operate*
+
+**After this you can** draw a zone-and-flow matrix that lists every outbound destination, and tune a WAF in front of a lab app to block a true positive while removing a false positive with a narrow exclusion. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Segmentation** divides the network into zones with explicitly allowed flows, so one compromise cannot reach everything. Deny by default, inbound *and* outbound.

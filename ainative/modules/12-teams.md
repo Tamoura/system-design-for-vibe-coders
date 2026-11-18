@@ -88,7 +88,7 @@ The first three are *throughput*, the last two *instability*. **A vague metric b
 
 **What AI may change.** Code output can rise while the review queue grows, so lead time and stability may suffer (lesson 10.1). DORA's 2024 report associated higher AI adoption with lower delivery throughput and stability, partly through larger batches; the 2025 report found throughput positive and stability still negative, and frames AI as amplifying what a team already does. These are self-reported associations, not causes: keep batches small and measure.
 
-**Vanity metrics and guard metrics.** Lines of code rewards volume (the best change is often a deletion), suggestion acceptance rewards clicking, and percent AI-written is a usage number that can rise while delivery falls. Meta reports, in its own account of building the Forum app with an agent, that it measured success by production-ready changes rather than code volume, and counted a task done only after automated tests and visual checks passed, not when the code compiled. That is DORA's move too: count what reaches users, safely. It is one company's description, so read the original (Go deeper) and measure your own team. A **guard metric** watches what speed could break, with a threshold and response written in advance:
+**Vanity metrics and guard metrics.** Lines of code rewards volume (the best change is often a deletion), suggestion acceptance rewards clicking, and percent AI-written is a usage number that can rise while delivery falls. Meta reports, in its own account of building the Forum app with an agent, that it measured success by production-ready changes rather than code volume. That is DORA's move too: count what reaches users, safely. It is one company's description, so read the original (Go deeper) and measure your own team. A **guard metric** watches what speed could break, with a threshold and response written in advance:
 
 | Guard | Threshold | Response |
 |---|---|---|
@@ -269,7 +269,7 @@ Owner: <name>.  Version: 1.  Next review: <date, and after any incident>.
 - Deliverable: `playbook.md` committed, plus your agent log and debrief answers in a notes folder.
 
 ## 🧭 Why it matters
-At the clinic Tariq reads out a page of guidance from his last company, nearly every sentence starting "should". "Which of these could you check?" he asks. Nobody can name one. A rule you cannot check is a hope, and a metric you cannot compute is a mood. Hessa (product owner) asks for the opposite in her ticket: every rule ends with how anyone could verify it, and every number can be recomputed by two people. An assistant drafts something fluent in minutes; this lab teaches you to read that draft the way the grader does.
+At the clinic Tariq reads out a page of guidance from his last company, nearly every sentence starting "should". "Which of these could you check?" he asks. Nobody can name one. A rule you cannot check is a hope, and a metric you cannot compute is a mood. Hessa's ticket asks for the opposite: every rule ends with how anyone could verify it, and every number can be recomputed by two people. An assistant drafts something fluent in minutes; this lab teaches you to read that draft the way the grader does.
 
 ## 📐 How it works
 
@@ -346,7 +346,7 @@ The assistant's list of assumptions is a claim too (lesson 11.1): open the files
 ## 🏛️ In practice at Najm Bank
 **Needs an agent: no.** The **no-agent path** is the plain one: read the facts file and `CONTRIBUTING.md`, then write the sections below. An assistant can draft them in minutes if you want one; the grader does not care how the text was produced.
 
-**The ticket.** Hessa wrote it (the kit's `task.md`; `start` writes it to your lab directory as `TASK.md`, capitals matter):
+**The ticket.** Hessa wrote it (the kit's `task.md`, written to your lab directory as `TASK.md`):
 
 ```text
 # REMIT-262: write the Payments Platform AI engineering playbook
@@ -414,7 +414,7 @@ cd ~/ainative/m12
 
 The start commit holds `lab-assets/team-context.md` (the facts), the skeleton `playbook.md` and `TASK.md`; `git diff lab-start` shows your changes. Commit on the branch you start on: the grader reads what is checked out there.
 
-**Your move.** (1) Read the ticket, the facts, `CONTRIBUTING.md` and the skeleton first. (2) Write sections 1 to 3 from the facts, 4 and 5 from `CONTRIBUTING.md`, then 6, 7, 9 and 10, and the metrics plan (8) last: it needs the numbers. (3) With an agent, use the prompt above, then the audit table. (4) Grade as you go (lines for unwritten sections keep failing) and commit when a part reads well, for example `docs(playbook): add the review norms` (any lower-case scope works, though `CONTRIBUTING.md`'s list lacks `playbook`). (5) Read it as the engineer who must follow it.
+**Your move.** (1) Read the ticket, the facts, `CONTRIBUTING.md` and the skeleton first. (2) Write sections 1 to 3 from the facts, 4 and 5 from `CONTRIBUTING.md`, then 6, 7, 9 and 10, and the metrics plan (8) last: it needs the numbers. (3) With an agent, use the prompt above, then the audit table. (4) Grade as you go and commit when a part reads well, for example `docs(playbook): add the review norms` (any lower-case scope works, though `CONTRIBUTING.md`'s list lacks `playbook`). (5) Read it as the engineer who must follow it.
 
 **What the grader checks.** The ticket's six points, as categories. *Shape:* sections, template text, length. *Rules:* count, spread, mechanism, soft words, no one check pasted onto many. *Sections:* what a good one says (review: label, diff limit, six money modules, response time, what the author explains). *Metrics:* six fields, three delivery metrics, a guard with a response, measurable definitions, baselines, no vanity measures anywhere in the file. *Honesty:* the bank's rules, invented files, unsourced claims. *Repository:* only `playbook.md` changed, no secrets, Conventional Commits, everything committed.
 
@@ -442,7 +442,7 @@ Lab m12: 26/35 required checks passed: NOT YET
 
 Each line says what failed and where, never the answer. A passing run ends with `Lab m12: 35/35 required checks passed: PASSED`; six advisory checks never block.
 
-**Weekly deliverable.** In the lab repository, `playbook.md`, committed. In your own notes folder (the kit has none and the grader ignores it), `week-12/` with your agent log ("no agent" if you used none), your debrief answers and, from lesson 12.1, your one-page working agreement.
+**Weekly deliverable.** In the lab repository, `playbook.md`, committed. In your own notes folder, `week-12/` with your agent log ("no agent" if you used none), your debrief answers and, from lesson 12.1, your one-page working agreement.
 
 **Group session (60 minutes).** (1) Swap playbooks; your partner names the rule they would break first and how (20). (2) Defend each guard threshold (15). (3) Pick three rules to build as real checks this month, with owners (15). (4) Agree one thing to measure next quarter (10).
 

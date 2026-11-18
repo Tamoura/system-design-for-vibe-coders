@@ -19,9 +19,9 @@
 - Stay current on a cadence, not on the news cycle, and say plainly what AI wrote and what you checked.
 
 ## 🧭 Why it matters
-Last Tuesday Lujain (graduate engineer) asked her agent to "tidy the rounding in the ledger". Its diff made the partner's share of the fee round half up, "like everything else in Remit". The ledger has no tests of its own, so nothing went red, and she opened a pull request. On Thursday Nada (quality engineering lead), the second reviewer that money logic needs, asks in the clinic: "Why does the ledger give the partner 3.04 on a fee of 10.15, not 3.05?" Lujain has never opened `ledger.py`. Its docstring documents the quirk (Q-LED-1) and warns against refactoring the file without characterization tests. The agent skipped that or took it for a bug, and she could not say which.
+Last Tuesday Lujain (graduate engineer) asked her agent to "tidy the rounding in the ledger". Its diff made the partner's share of the fee round half up, "like everything else in Remit". The ledger has no tests of its own, so nothing went red, and she opened a pull request. On Thursday Nada (quality engineering lead), the second reviewer, asks: "Why does the ledger give the partner 3.04 on a fee of 10.15, not 3.05?" Lujain has never opened `ledger.py`. Its docstring documents the quirk (Q-LED-1) and warns against refactoring the file without characterization tests. The agent skipped that or took it for a bug, and she could not say which.
 
-What was missing was not a prompt trick but a fundamental: reading code and asking why it is the way it is. It is a skill you practise less when an agent does the reading. The fifth habit, **Automate the loop, keep the skill**, has two halves: Module 9 built the first, this module the second. In January 2026 Anthropic researchers published a small randomized study in which mostly junior engineers who learned a library with an AI assistant scored lower on a comprehension quiz afterwards. Its authors state its limits; it is reason enough to practise on purpose.
+What was missing was not a prompt trick but a fundamental: reading code and asking why it is the way it is. You practise it less when an agent does the reading. The fifth habit, **Automate the loop, keep the skill**, has two halves: Module 9 built the first, this module the second. A small Anthropic study (below) found juniors who learned a library with an AI assistant scored lower on a later quiz: reason enough to practise on purpose.
 
 ## 📐 How it works
 
@@ -71,7 +71,7 @@ to a bound stays in the lower tier. I will paste each attempt.
 
 **Taste** is knowing what good looks like and what to leave out. An agent will produce what you cannot judge, so read one merged pull request a week from another team: before you open the review comments, write the three questions you would ask, then compare. Tariq (engineering lead): "Taste is mostly the list of things you chose not to do."
 
-**Communication and requirements.** An agent cannot know what Hessa (product owner) meant. Take a vague ticket, "make the fee clearer", and write your questions (the quote screen or the SMS? English only, or Arabic too?) and four acceptance criteria (lesson 3.1) before you prompt. Then compare with its questions.
+**Communication and requirements.** An agent cannot know what Hessa meant. Take a vague ticket, "make the fee clearer", and write your questions (the quote screen or the SMS? English only, or Arabic too?) and four acceptance criteria (lesson 3.1) before you prompt. Then compare with its questions.
 
 **Evaluating tools and models on your own tasks.** A leaderboard answers "how does this model do on other people's tasks?". Known limits, from sources the course has checked:
 
@@ -302,7 +302,7 @@ A clean copy fails, the reference passes, and `TODO` fails and names the missing
 
 **Choose tasks like a sceptic.** Take them from real work, including one that went wrong last month; prefer code a model is unlikely to have seen, such as `najmkit` (lesson 2.1). Make each check *fair*: any reasonable reading of the prompt passes. Keep two or three tasks you never tune against, or you measure your tuning.
 
-**Read results honestly.** Say tool A passes 15 of 24 runs and tool B 17 of 24. A two-run gap on 24 runs is within what luck can produce, so name no winner: see which tasks differ, whether B's passes survive a read of the diff, and the minutes and corrections, then add runs. Compare tasks, not only totals.
+**Read results honestly.** Say tool A passes 15 of 24 runs and tool B 17 of 24. A two-run gap on 24 runs is within what luck can produce, so name no winner: see which tasks differ, whether B's passes survive a read of the diff, and the minutes and corrections, then add runs.
 
 **When not to build one.** If you will use a tool for a week, or can reverse the choice in an afternoon, just try it. An eval pays when the decision is costly or repeats. It costs time and money (9 tasks × 3 runs × 2 tools is 54 runs): start with three.
 
@@ -314,7 +314,7 @@ A clean copy fails, the reference passes, and `TODO` fails and names the missing
 
 ### 🔴 Expert view
 
-**What the grader cannot tell.** Whether your tasks are the right ones, whether a check measures what its prompt asks (it knows only that the check fails first, passes on the reference and refuses lazy answers), or whether your plan is wise. It cannot tell why a check fails: one that crashes on a bug of its own fails too, so read the reason `baseline` prints. A throw-away copy is not a sandbox: a check is code that runs as you, and an agent can write one. Read every check before you run it, a partner's included.
+**What the grader cannot tell.** Whether your tasks are the right ones, whether a check measures what its prompt asks, or whether your plan is wise. It cannot tell why a check fails: one that crashes on a bug of its own fails too, so read the reason `baseline` prints. A throw-away copy is not a sandbox: a check is code that runs as you, and an agent can write one. Read every check before you run it, a partner's included.
 
 **Checks can be gamed.** A tool can special-case the example: use several inputs, a guard, read diffs and held-out tasks.
 

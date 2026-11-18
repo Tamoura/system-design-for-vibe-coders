@@ -9,6 +9,8 @@
 # 9.1 — Guardrails and output handling: never trust model output
 *Level: 🔴 Advanced* · *Prerequisites: 2.1, 2.2, 8.2* · *Phase: Design, Build*
 
+**After this you can** render model output safely and validate an agent action against a strict schema, with tests that reject malformed and malicious outputs and accept valid ones. *Study time: about 125 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - Model output is **untrusted input** to whatever reads it next. Anyone whose text reaches the model (a customer, a document, a web page) can influence it. The 2025 version of the OWASP Top 10 for LLM Applications lists this risk as **LLM05 Improper Output Handling**.
 - The decisive control sits at the **sink**, the place where the output is used: encode or sanitise before rendering, never build SQL or shell commands from it, validate structured output against a strict schema, allow-list URLs.
@@ -257,6 +259,8 @@ Noura and Ali write the **Najm Assist Output Handling Standard v1**. Tariq (engi
 
 # 9.2 — Agents and tools: excessive agency, least-privilege tools and MCP
 *Level: 🔴 Advanced* · *Prerequisites: 3.2, 3.3, 8.2, 9.1* · *Phase: Design, Build*
+
+**After this you can** tier an agent's tools and build a mock banking tool that refuses, and logs, a model's request to act on another customer's card. *Study time: about 125 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - An **agent** is a model in a loop that chooses and calls **tools** (functions or APIs). Whatever its tools can do, a successful prompt injection can do.
@@ -507,6 +511,8 @@ Noura, Tariq and Rania agree the **Najm Assist Tool Register v1**. No tool reach
 # 9.3 — Securing retrieval (RAG): data boundaries and access control
 *Level: 🔴 Advanced* · *Prerequisites: 3.3, 5.3, 8.2, 9.1* · *Phase: Design, Build*
 
+**After this you can** implement permission pre-filtering in a RAG pipeline and prove with persona-by-document tests that no forbidden chunk is ever returned. *Study time: about 120 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Retrieval-augmented generation (RAG)** finds relevant passages in a document store and puts them in the model's context. Anything that reaches the context can reach the answer.
 - Enforce access control **in the retriever, before the model sees anything**: apply the user's entitlements inside the index query. Never rely on the model to keep a document secret.
@@ -753,6 +759,8 @@ The suite runs in CI with 40 ordinary and adversarial queries per persona. One f
 
 # 9.4 — AI red-teaming and security evaluation
 *Level: 🔴 Advanced* · *Prerequisites: 1.3, 8.1, 8.2, 9.1, 9.2* · *Phase: Test, Operate*
+
+**After this you can** write red-team test cases with deterministic oracles, run an open-source scanner against a lab app, and report attack success rates with severity. *Study time: about 120 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **AI red-teaming** is authorised, scoped adversarial testing of an AI *system* (model, prompts, tools, data, interface) to find security and safety failures before attackers and customers do.

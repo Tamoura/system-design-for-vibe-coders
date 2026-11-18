@@ -109,7 +109,7 @@ Anthropic, the maker of Claude Code, found that five assistants consistently sho
 
 ### 🔴 Expert view
 
-**Done means verified.** Meta's engineering blog describes a small team building its Forum app with an AI agent as a participant. Meta reports that it measured success by production-ready changes, not code volume, and set the bar "at verification rather than compilation": a task is complete only after automated tests and visual checks pass, not when the code compiles. It also reports that when the agent repeated a mistake more than twice, the team encoded the correction once, for everyone. Meta's target is "human-on-the-loop": the agent runs the plan, build, test and correct cycle while an engineer sets the goal and approves the result. The post calls this a target, not a finished state. All of it is a company's account of its own practice, not independent evidence. The habits carry over: "done" is a check you ran, and a correction you make a third time belongs in `CLAUDE.md`, a test or a hook (Modules 2 and 9).
+**Done means verified.** Meta's engineering blog describes a small team building its Forum app with an AI agent as a participant. Meta reports that it measured success by production-ready changes, not code volume, and set the bar "at verification rather than compilation": a task is complete only after automated tests and visual checks pass, not when the code compiles. It also reports that when the agent repeated a mistake more than twice, the team encoded the correction once, for everyone. All of it is a company's account of its own practice, not independent evidence. The habits carry over: "done" is a check you ran, and a correction you make a third time belongs in `CLAUDE.md`, a test or a hook (Modules 2 and 9).
 
 **Gate the stop.** An agent stops when it believes it is done. The page names three ways to make "done" require your check: a `/goal` condition, a Stop hook or a verification subagent (lesson 9.1 covers hooks and subagents, not `/goal`; check the current documentation).
 
@@ -281,7 +281,7 @@ The clinic's rule: no pull request without a filled checklist, and no "the agent
 - The grader runs hidden acceptance tests, then breaks the warning on purpose to see whether your tests notice. It cannot tell whether you read the diff or decided well.
 
 ## 🧭 Why it matters
-Lujain's agent writes the limit warning in four minutes. It looks right and passes every test, including the ones the agent wrote. It also fails at exactly 80%, shows 100% to a customer at 99.95%, prints Western digits to Arabic customers, and turns a gateway outage into a crash after the money has moved. A green suite proves none of this: the old tests predate the feature, and the agent's tests check only the cases it thought of.
+Lujain's agent writes the limit warning in four minutes. It looks right and passes every test, its own included. It also fails at exactly 80%, shows 100% to a customer at 99.95%, prints Western digits to Arabic customers, and turns a gateway outage into a crash after the money has moved. A green suite proves none of this: the old tests predate the feature, and the agent's tests check only the cases it thought of.
 
 ## 📐 How it works
 
@@ -318,7 +318,7 @@ The lab is the loop in seven steps (the order is advice):
 False
 ```
 
-**The vague prompt and the specified one.** *"Add a warning at 80% of the daily limit"* leaves the agent to choose a reading, and each choice above is one it can get wrong. Specified:
+**The vague prompt and the specified one.** *"Add a warning at 80% of the daily limit"* leaves the agent to choose a reading, and each choice above can go wrong. Specified:
 
 ```text
 Read TASK.md and specs/REMIT-318.md, then service.py (send), limits.py and notify.py.
@@ -330,7 +330,7 @@ existing test, and do not commit. Show me the diff when pytest -q is green.
 
 ### 🔴 Expert view
 
-**How the grader judges your tests.** "Your new tests fail when the warning is removed" puts every file outside `tests/` back to its `lab-start` state and runs your new tests. "Your tests notice a broken warning" runs them seven more times on your own code, each time with one deliberate breakage applied to the running program by a test plugin: the warning never delivered, the text without its numbers, the percentage one too high, Arabic customers given English, Western digits in Arabic, the 80% line a little too high or too low. Five of seven must be caught, and both 80%-line breakages among them: the ticket asks you to pin a total just under the line and one exactly on it, and wording tests alone never touch the line. This is the mutation idea from [*Software Testing*, lesson 2.3 — Are your tests any good?](../testing/index.html#/2.3), applied at the edges of the program so it works whatever your code looks like.
+**How the grader judges your tests.** "Your new tests fail when the warning is removed" puts every file outside `tests/` back to its `lab-start` state and runs your new tests. "Your tests notice a broken warning" runs them seven more times on your own code, each time with one deliberate breakage applied by a test plugin: the warning never delivered, the text without its numbers, the percentage one too high, Arabic customers given English, Western digits in Arabic, the 80% line a little too high or too low. Five of seven must be caught, and both 80%-line breakages among them: the ticket asks you to pin a total just under the line and one exactly on it, and wording tests alone never touch the line. This is the mutation idea from [*Software Testing*, lesson 2.3 — Are your tests any good?](../testing/index.html#/2.3), applied at the edges of the program so it works whatever your code looks like.
 
 **What it cannot do.** It does not know your design is good, your spec wise or that you read the diff. If your tests use a fake notifier that never calls `render`, some breakages cannot reach them. A pass is not a review: in a real team `service.py` needs a second human reviewer and the pull request carries the `AI-assisted` label.
 
@@ -428,11 +428,11 @@ pytest -q
 
 The starter is green: 99 tests pass. It holds `CLAUDE.md` (the project memory from lab 2.2), `specs/TEMPLATE.md`, an unfilled `agent-log.md` and `TASK.md`, committed as "Lab starting state" and tagged `lab-start`; steps 6 and 7 and the grader compare with that tag. The grader reads the branch checked out in `~/ainative/m04`, so grade on your task branch. If your tool reads `AGENTS.md`, copy or link the memory file.
 
-**Your move.** Follow the seven steps. Explore first, in plan mode if you use Claude Code, and record in the spec what the ticket leaves open. Commit the spec. With an agent, give it one step per prompt, as in the specified prompt above; the memory file lets it commit only when asked, so ask it to, or commit yourself. Then one step per lap: failing test, code, `pytest -q` yourself, `git diff`, commit as `type(scope): subject`. Stop at the first cue on the card.
+**Your move.** Follow the seven steps. Explore first (plan mode, in Claude Code) and record in the spec what the ticket leaves open. Commit the spec. With an agent, give it one step per prompt, as in the specified prompt above; the memory file lets it commit only when asked, so ask, or commit yourself. Then one step per lap: failing test, code, `pytest -q` yourself, `git diff`, commit as `type(scope): subject`. Stop at the first cue on the card.
 
 Step 6 is the one people skip. In `~/ainative/m04`, after committing, run `git restore --source=lab-start --staged --worktree src` to put the code back, then run your new tests. Those that expect a warning must fail; "no warning at 79.99%" or "nothing sent on a refusal" tests stay green, as they should. Then `git restore --source=HEAD --staged --worktree src` brings your feature back.
 
-**What the grader checks.** Required: the suite passes; no old test, fixture or constant was edited; the hidden acceptance tests (the rules, wording and interface of the ticket, in both languages and all three KYC tiers); your new tests fail without the warning and catch five of seven breakages, both 80%-line ones included; only the files `TASK.md` lists changed, with at most four files and 120 changed lines under `src/`; no float added; three or more commits with Remit messages; nothing uncommitted; no secrets. Advisory: a spec and plan, spec before code, every commit green, no commit adding over 200 lines, no blanket `except`, a log entry.
+**What the grader checks.** Required: the suite passes; no old test, fixture or constant was edited; the hidden acceptance tests (the rules, wording and interface of the ticket, in both languages and all three KYC tiers); your new tests pass the two checks above; only the files `TASK.md` lists changed, with at most four files and 120 changed lines under `src/`; no float added; three or more commits with Remit messages; nothing uncommitted; no secrets. Advisory: a spec and plan, spec before code, every commit green, no commit adding over 200 lines, no blanket `except`, a log entry.
 
 **Grade.**
 

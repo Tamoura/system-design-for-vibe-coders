@@ -9,6 +9,8 @@
 # 1.1 — Pick a problem you can reach: customer, pain, frequency
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Step: Explore*
 
+**After this you can** score three candidate problems on reach, pain and frequency, pick one, and write its one-paragraph problem statement with the evidence that would change your mind. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - After this lesson you can write a one-paragraph **problem statement** (who, what situation, what it costs them, how they cope today) and score three candidate problems on **reach, pain and frequency**, then pick one and name what would change your mind.
 - A problem worth solving has three properties: you can **reach** the people who have it, it **hurts** in a way they can describe, and it happens **often enough** that they would act.
@@ -212,6 +214,8 @@ Books and writers are cited by title and author because their exact web pages we
 
 # 1.2 — Customer interviews that find the truth
 *Level: 🟢 Beginner* · *Prerequisites: 1.1* · *Step: Explore, Validate*
+
+**After this you can** run a scripted 20-to-30-minute customer interview and turn it into a one-page log that separates facts from opinions and checks your kill condition. *Study time: about 115 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can run a 20-to-30-minute customer interview with a written script, take notes that separate **facts** from **opinions**, and finish with a one-page interview log that says what you learned, what surprised you, and whether your kill condition has been met.
@@ -457,6 +461,8 @@ Cited by title and author; their web pages were not opened for this lesson.
 # 1.3 — AI-assisted research without fooling yourself
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.2* · *Step: Explore, Validate*
 
+**After this you can** build a claims table for your desk research in which every fact you rely on points to a source you opened and every unchecked item is labelled as unchecked. *Study time: about 115 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - After this lesson you can use an AI model to speed up desk research (competitors, language customers use, questions to ask) while keeping a **claims table** where every fact you plan to rely on has a source you opened, and every unchecked item is labelled as such.
 - AI is good at **breadth and drafting**: listing options, summarising what you paste in, suggesting questions, finding gaps. It is unreliable on **specific facts**: numbers, quotes, names, dates, prices and "what the data says".
@@ -686,6 +692,8 @@ Cited by title and publisher; their web pages were not opened for this lesson. C
 
 # 1.4 — Smoke tests: a landing page and a pre-sale before you build
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.2, 1.3* · *Step: Validate*
+
+**After this you can** write a one-page smoke-test brief with go, change and stop thresholds set in advance, plus a landing page that states the promise and asks for one clear action. *Study time: about 115 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can write a one-page **smoke-test brief**, build or commission a landing page that states the promise and asks for one clear action, and decide in advance what result means "go", "change" or "stop", before you build more of the product.

@@ -9,6 +9,8 @@
 # 10.1 — Logging, monitoring and detection engineering
 *Level: 🔴 Advanced* · *Prerequisites: 1.1, 5.3, 9.1* · *Phase: Operate*
 
+**After this you can** list the security events a service should log and write a detection rule kept in git with a positive and a negative test. *Study time: about 125 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - **Logging** records security-relevant events, **monitoring** watches them, and **detection engineering** turns knowledge of attacker behaviour into tested rules that raise alerts a person acts on.
 - Log the events that matter (sign-ins, access denials, high-value actions, admin changes and, for AI, tool calls, guardrail verdicts and retrieved documents) in a **structured** format, with **UTC** timestamps and a **request ID** that links services.
@@ -302,6 +304,8 @@ Noura and Jassim publish the **Najm Bank Security Logging Standard v1** (signed 
 # 10.2 — Incident response: prepare, detect, contain, recover, learn
 *Level: 🔴 Advanced* · *Prerequisites: 1.3, 10.1* · *Phase: Respond*
 
+**After this you can** write a severity matrix and contact sheet, and run a timed tabletop exercise that produces a decision log and owned gaps. *Study time: about 155 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A **security incident** actually or potentially harms the confidentiality, integrity or availability of systems or data. **Incident response** (IR) is the practised process for handling one.
 - The life cycle: **prepare**, **detect and analyse**, **contain**, **eradicate and recover**, **learn**. NIST SP 800-61 Rev. 3 (2025) frames it around the CSF 2.0 functions.
@@ -565,6 +569,8 @@ After Thursday night, Jassim rewrites the runbook; Hamad approves it; it is rehe
 
 # 10.3 — Vulnerability management, disclosure and bug bounties
 *Level: 🔴 Advanced* · *Prerequisites: 1.3, 6.2, 10.2* · *Phase: Operate, Respond*
+
+**After this you can** write a security.txt and a vulnerability disclosure policy, and rank scanner findings with EPSS and KEV, explaining why the top three outrank the highest CVSS score. *Study time: about 125 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - **Vulnerability management** is the continuous cycle of finding weaknesses in what you run, ranking them, fixing or mitigating them and proving the fix, on top of an accurate **asset inventory**.

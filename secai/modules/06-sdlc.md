@@ -9,6 +9,8 @@
 # 6.1 — A secure development life cycle: requirements, review and testing (SAST, DAST, SCA)
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.3, 2.1* · *Phase: Build, Test*
 
+**After this you can** write security acceptance criteria that someone else can turn into pass/fail tests, and triage SAST and SCA findings with a one-line reason each. *Study time: about 110 minutes (estimate).*
+
 ## ⚡ In 60 seconds
 - A **secure development life cycle** (secure SDLC) adds small security activities to every step of delivery instead of relying on one penetration test at the end.
 - Start with **security requirements**: testable statements, taken from threat models and **OWASP ASVS**, that sit in the user story next to the functional ones.
@@ -275,6 +277,8 @@ Run hands-on work only against your own code, a local lab, or a deliberately vul
 
 # 6.2 — The software supply chain: dependencies, SBOMs, SLSA and signing
 *Level: 🟡 Intermediate* · *Prerequisites: 5.2, 6.1* · *Phase: Build, Deploy*
+
+**After this you can** generate and read an SBOM for your own project and harden a CI workflow with SHA-pinned actions, least-privilege permissions and OIDC, explaining the threat each change addresses. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - Your **software supply chain** is everything between a developer's keyboard and production: source, third-party packages, registries, build tools, CI/CD pipelines, base images and, increasingly, AI models.
@@ -555,6 +559,8 @@ Run hands-on work only on your own repositories and in a local lab on your own m
 
 # 6.3 — Securing AI-generated code: what coding agents get wrong
 *Level: 🟡 Intermediate* · *Prerequisites: 6.1, 6.2* · *Phase: Build, Test*
+
+**After this you can** review AI-generated endpoints against a security checklist, and write a rules file and Semgrep rules that flag the insecure version but not the fixed one. *Study time: about 110 minutes (estimate).*
 
 ## ⚡ In 60 seconds
 - AI coding assistants and agents write code fast and fluently, but their output is **untrusted input**. It reproduces insecure patterns from public code, does not know your authorisation model, and sometimes names packages that do not exist.
