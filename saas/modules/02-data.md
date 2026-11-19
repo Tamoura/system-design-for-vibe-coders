@@ -9,7 +9,7 @@
 # 2.1 — The data layer: Postgres, ORMs, migrations and seeds
 *Level: 🟢 Beginner* · *Prerequisites: 1.2*
 
-**After this you can** write a Beacon schema, migration and idempotent seed that one command rebuilds from a fresh clone, and use `EXPLAIN ANALYZE` to remove an N+1 and get an index scan on the dashboard query. *Study time: reading about 20 min, hands-on about 5 h (estimate).*
+**After this you can** write a Beacon schema, migration and idempotent seed that one command rebuilds from a fresh clone, and use `EXPLAIN ANALYZE` to remove an N+1 and get an index scan on the dashboard query. *Study time: reading about 20 min; hands-on by track: 🟢 75 min · 🟡 165 min · 🔴 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -330,7 +330,7 @@ Each concurrent function invocation opened its own Postgres connection, and a ty
 # 2.2 — File uploads and object storage
 *Level: 🟢 Beginner* · *Prerequisites: 2.1*
 
-**After this you can** build presigned uploads in which the file bytes never pass through your app server, and serve private files through a membership check that returns 404 to users from another org. *Study time: reading about 15 min, hands-on about 6 h (estimate).*
+**After this you can** build presigned uploads in which the file bytes never pass through your app server, and serve private files through a membership check that returns 404 to users from another org. *Study time: reading about 15 min; hands-on by track: 🟢 100 min · 🟡 4 h · 🔴 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -601,7 +601,7 @@ This is stored XSS: the SVG runs script on your app's domain with access to your
 # 2.3 — Search: from `LIKE '%x%'` to a search engine
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1*
 
-**After this you can** add tenant-scoped fuzzy monitor search with `pg_trgm`, show the index in use with `EXPLAIN ANALYZE`, and prove with a test that no user receives another org's results. *Study time: reading about 15 min, hands-on about 5 h (estimate).*
+**After this you can** add tenant-scoped fuzzy monitor search with `pg_trgm`, show the index in use with `EXPLAIN ANALYZE`, and prove with a test that no user receives another org's results. *Study time: reading about 15 min; hands-on by track: 🟢 70 min · 🟡 3 h · 🔴 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -853,7 +853,7 @@ Anyone can edit the request, change or remove the filter, and read another org's
 # 2.4 — Multi-tenancy deep dive: isolation, noisy neighbours, residency
 *Level: 🔴 Advanced* · *Prerequisites: 1.2, 1.3, 2.1*
 
-**After this you can** route every tenant query through a scoped helper, add Postgres row-level security as a backstop, and write a cross-tenant test that gets 404 for every other org's resource. *Study time: reading about 15 min, hands-on about 7 h (estimate).*
+**After this you can** route every tenant query through a scoped helper, add Postgres row-level security as a backstop, and write a cross-tenant test that gets 404 for every other org's resource. *Study time: reading about 15 min; hands-on by track: 🟢 120 min · 🟡 4 h · 🔴 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 

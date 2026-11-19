@@ -10,7 +10,7 @@
 
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 1.3, 3.2*
 
-**After this you can** build a staff-only admin area with customer search and support actions that require a reason and write an audit event, and show that a customer account gets 404 on every admin route. *Study time: reading about 15 min, hands-on about 6 h (estimate).*
+**After this you can** build a staff-only admin area with customer search and support actions that require a reason and write an audit event, and show that a customer account gets 404 on every admin route. *Study time: reading about 15 min; hands-on by track: 🟢 100 min · 🟡 3 h · 🔴 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -295,7 +295,7 @@ The impersonation session was indistinguishable from Ana's own session: no `impe
 
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1*
 
-**After this you can** replace `console.log` with JSON logs that carry a request id and org id on every line, and follow one trace from an API request through a queued job to the first check. *Study time: reading about 15 min, hands-on about 6 h (estimate).*
+**After this you can** replace `console.log` with JSON logs that carry a request id and org id on every line, and follow one trace from an API request through a queued job to the first check. *Study time: reading about 15 min; hands-on by track: 🟢 90 min · 🟡 4 h · 🔴 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -560,7 +560,7 @@ Trace context is propagated automatically over HTTP through the `traceparent` he
 
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 1.3*
 
-**After this you can** record audit events in the same transaction as each change, build an owners-and-admins audit log page with filters and CSV export, and show that a failed change leaves no event. *Study time: reading about 15 min, hands-on about 6 h (estimate).*
+**After this you can** record audit events in the same transaction as each change, build an owners-and-admins audit log page with filters and CSV export, and show that a failed change leaves no event. *Study time: reading about 15 min; hands-on by track: 🟢 80 min · 🟡 4 h · 🔴 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -858,7 +858,7 @@ The change exists with no audit record, which is precisely the case an auditor a
 
 *Level: 🔴 Advanced* · *Prerequisites: 2.1, 5.1, 7.2*
 
-**After this you can** write a multi-stage Dockerfile and a compose file that start Beacon from a fresh clone, and build a CI/CD pipeline that promotes the same SHA-tagged image from staging to production. *Study time: reading about 20 min, hands-on about 8 h (estimate).*
+**After this you can** write a multi-stage Dockerfile and a compose file that start Beacon from a fresh clone, and build a CI/CD pipeline that promotes the same SHA-tagged image from staging to production. *Study time: reading about 20 min; hands-on by track: 🟢 100 min · 🟡 5 h · 🔴 8 h (estimate).*
 
 ## ⚡ In 60 seconds
 

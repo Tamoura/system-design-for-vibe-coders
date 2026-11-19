@@ -307,37 +307,161 @@
  "modules/11-reaching-the-world/module.md#11.4": 60,
  "modules/11-reaching-the-world/module.md#11.5": 90,
  "modules/12-capstone/module.md#12": 300,
- "saas/modules/00-orientation.md#0.1": 90,
- "saas/modules/00-orientation.md#0.2": 150,
- "saas/modules/00-orientation.md#0.3": 180,
- "saas/modules/01-identity-access.md#1.1": 420,
- "saas/modules/01-identity-access.md#1.2": 480,
- "saas/modules/01-identity-access.md#1.3": 390,
- "saas/modules/01-identity-access.md#1.4": 480,
- "saas/modules/02-data.md#2.1": 300,
- "saas/modules/02-data.md#2.2": 360,
- "saas/modules/02-data.md#2.3": 300,
- "saas/modules/02-data.md#2.4": 420,
- "saas/modules/03-money.md#3.1": 420,
- "saas/modules/03-money.md#3.2": 360,
- "saas/modules/03-money.md#3.3": 420,
- "saas/modules/04-communication.md#4.1": 300,
- "saas/modules/04-communication.md#4.2": 360,
- "saas/modules/04-communication.md#4.3": 480,
- "saas/modules/05-background-integrations.md#5.1": 420,
- "saas/modules/05-background-integrations.md#5.2": 360,
- "saas/modules/05-background-integrations.md#5.3": 420,
- "saas/modules/05-background-integrations.md#5.4": 420,
- "saas/modules/06-product-growth.md#6.1": 360,
- "saas/modules/06-product-growth.md#6.2": 300,
- "saas/modules/06-product-growth.md#6.3": 300,
- "saas/modules/07-operations.md#7.1": 360,
- "saas/modules/07-operations.md#7.2": 360,
- "saas/modules/07-operations.md#7.3": 360,
- "saas/modules/07-operations.md#7.4": 480,
- "saas/modules/08-trust-frontier.md#8.1": 360,
- "saas/modules/08-trust-frontier.md#8.2": 420,
- "saas/modules/09-capstone.md#9.1": 1080,
+ "saas/modules/00-orientation.md#0.1": {
+  "green": 35,
+  "yellow": 60,
+  "red": 95
+ },
+ "saas/modules/00-orientation.md#0.2": {
+  "green": 55,
+  "yellow": 100,
+  "red": 160
+ },
+ "saas/modules/00-orientation.md#0.3": {
+  "green": 75,
+  "yellow": 125,
+  "red": 180
+ },
+ "saas/modules/01-identity-access.md#1.1": {
+  "green": 110,
+  "yellow": 240,
+  "red": 420
+ },
+ "saas/modules/01-identity-access.md#1.2": {
+  "green": 120,
+  "yellow": 260,
+  "red": 480
+ },
+ "saas/modules/01-identity-access.md#1.3": {
+  "green": 100,
+  "yellow": 230,
+  "red": 390
+ },
+ "saas/modules/01-identity-access.md#1.4": {
+  "green": 150,
+  "yellow": 300,
+  "red": 480
+ },
+ "saas/modules/02-data.md#2.1": {
+  "green": 75,
+  "yellow": 165,
+  "red": 300
+ },
+ "saas/modules/02-data.md#2.2": {
+  "green": 100,
+  "yellow": 220,
+  "red": 360
+ },
+ "saas/modules/02-data.md#2.3": {
+  "green": 70,
+  "yellow": 180,
+  "red": 300
+ },
+ "saas/modules/02-data.md#2.4": {
+  "green": 120,
+  "yellow": 240,
+  "red": 420
+ },
+ "saas/modules/03-money.md#3.1": {
+  "green": 100,
+  "yellow": 220,
+  "red": 420
+ },
+ "saas/modules/03-money.md#3.2": {
+  "green": 90,
+  "yellow": 210,
+  "red": 360
+ },
+ "saas/modules/03-money.md#3.3": {
+  "green": 90,
+  "yellow": 230,
+  "red": 420
+ },
+ "saas/modules/04-communication.md#4.1": {
+  "green": 80,
+  "yellow": 190,
+  "red": 300
+ },
+ "saas/modules/04-communication.md#4.2": {
+  "green": 90,
+  "yellow": 230,
+  "red": 360
+ },
+ "saas/modules/04-communication.md#4.3": {
+  "green": 100,
+  "yellow": 250,
+  "red": 480
+ },
+ "saas/modules/05-background-integrations.md#5.1": {
+  "green": 90,
+  "yellow": 210,
+  "red": 420
+ },
+ "saas/modules/05-background-integrations.md#5.2": {
+  "green": 100,
+  "yellow": 220,
+  "red": 360
+ },
+ "saas/modules/05-background-integrations.md#5.3": {
+  "green": 110,
+  "yellow": 250,
+  "red": 420
+ },
+ "saas/modules/05-background-integrations.md#5.4": {
+  "green": 90,
+  "yellow": 230,
+  "red": 420
+ },
+ "saas/modules/06-product-growth.md#6.1": {
+  "green": 100,
+  "yellow": 210,
+  "red": 360
+ },
+ "saas/modules/06-product-growth.md#6.2": {
+  "green": 60,
+  "yellow": 170,
+  "red": 300
+ },
+ "saas/modules/06-product-growth.md#6.3": {
+  "green": 60,
+  "yellow": 170,
+  "red": 300
+ },
+ "saas/modules/07-operations.md#7.1": {
+  "green": 100,
+  "yellow": 200,
+  "red": 360
+ },
+ "saas/modules/07-operations.md#7.2": {
+  "green": 90,
+  "yellow": 230,
+  "red": 360
+ },
+ "saas/modules/07-operations.md#7.3": {
+  "green": 80,
+  "yellow": 210,
+  "red": 360
+ },
+ "saas/modules/07-operations.md#7.4": {
+  "green": 100,
+  "yellow": 300,
+  "red": 480
+ },
+ "saas/modules/08-trust-frontier.md#8.1": {
+  "green": 90,
+  "yellow": 200,
+  "red": 360
+ },
+ "saas/modules/08-trust-frontier.md#8.2": {
+  "green": 100,
+  "yellow": 250,
+  "red": 420
+ },
+ "saas/modules/09-capstone.md#9.1": {
+  "green": 180,
+  "yellow": 480,
+  "red": 1080
+ },
  "secai/modules/00-orientation.md#0.1": 120,
  "secai/modules/00-orientation.md#0.2": 205,
  "secai/modules/00-orientation.md#0.3": 160,

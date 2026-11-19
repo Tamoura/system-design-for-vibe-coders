@@ -9,7 +9,7 @@
 # 4.1 — Transactional email that actually arrives
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2*
 
-**After this you can** send verify, invitation and incident emails through one `sendEmail()` function, authenticate a sending domain with SPF, DKIM and DMARC, and stop sending to addresses that bounced or complained. *Study time: reading about 15 min, hands-on about 5 h (estimate).*
+**After this you can** send verify, invitation and incident emails through one `sendEmail()` function, authenticate a sending domain with SPF, DKIM and DMARC, and stop sending to addresses that bounced or complained. *Study time: reading about 15 min; hands-on by track: 🟢 80 min · 🟡 3 h · 🔴 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -280,7 +280,7 @@ Provider latency becomes signup latency, and a provider outage turns signups int
 # 4.2 — Notifications: in-app, push, Slack, SMS — and preferences
 *Level: 🟡 Intermediate* · *Prerequisites: 4.1, 1.2*
 
-**After this you can** build an in-app inbox and a channel router with per-user preferences, and show that an incident creates exactly one notification per eligible member even when `notify()` runs twice. *Study time: reading about 15 min, hands-on about 6 h (estimate).*
+**After this you can** build an in-app inbox and a channel router with per-user preferences, and show that an incident creates exactly one notification per eligible member even when `notify()` runs twice. *Study time: reading about 15 min; hands-on by track: 🟢 90 min · 🟡 4 h · 🔴 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -593,7 +593,7 @@ People reading on their phone can't unsubscribe easily, so they click "Report sp
 # 4.3 — Real-time and collaboration: WebSockets to CRDTs
 *Level: 🔴 Advanced* · *Prerequisites: 4.2, 2.4*
 
-**After this you can** replace dashboard polling with server-sent events fanned out through Redis, and show a monitor turning red on an open dashboard within about a second, even when the event was published on another app instance. *Study time: reading about 15 min, hands-on about 8 h (estimate).*
+**After this you can** replace dashboard polling with server-sent events fanned out through Redis, and show a monitor turning red on an open dashboard within about a second, even when the event was published on another app instance. *Study time: reading about 15 min; hands-on by track: 🟢 100 min · 🟡 4 h · 🔴 8 h (estimate).*
 
 ## ⚡ In 60 seconds
 

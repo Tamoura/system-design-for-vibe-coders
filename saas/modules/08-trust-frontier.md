@@ -10,7 +10,7 @@
 
 *Level: 🔴 Advanced* · *Prerequisites: 1.3, 2.4, 5.2, 7.3*
 
-**After this you can** scan Beacon's full history with gitleaks and block a commit containing a fake key, and build an SSRF-safe fetch that refuses monitors pointing at metadata, loopback or private addresses. *Study time: reading about 20 min, hands-on about 6 h (estimate).*
+**After this you can** scan Beacon's full history with gitleaks and block a commit containing a fake key, and build an SSRF-safe fetch that refuses monitors pointing at metadata, loopback or private addresses. *Study time: reading about 20 min; hands-on by track: 🟢 90 min · 🟡 3 h · 🔴 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -260,7 +260,7 @@ Two holes. `fetch(url)` resolves DNS again, so a DNS rebinding answer can swap i
 
 *Level: 🔴 Advanced* · *Prerequisites: 2.4, 3.3, 5.1, 8.1*
 
-**After this you can** build a schema-validated AI incident summary saved as an editable draft, record tokens and cost per org for every model call, and run a CI eval that includes a prompt-injection case. *Study time: reading about 20 min, hands-on about 7 h (estimate).*
+**After this you can** build a schema-validated AI incident summary saved as an editable draft, record tokens and cost per org for every model call, and run a CI eval that includes a prompt-injection case. *Study time: reading about 20 min; hands-on by track: 🟢 100 min · 🟡 4 h · 🔴 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 

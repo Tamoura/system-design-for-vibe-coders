@@ -13,7 +13,7 @@ decisions the way a senior engineer would in a design review.*
 
 *Level: 🔴 Advanced* · *Prerequisites: 0.1, 1.2, 3.1, 5.1*
 
-**After this you can** draw Beacon's full architecture with a concrete choice for every component, write five ADRs that each name a measurable signal to revisit, and trace one customer action across every component it touches. *Study time: reading about 15 min, hands-on about 18 h (estimate).*
+**After this you can** draw Beacon's full architecture with a concrete choice for every component, write five ADRs that each name a measurable signal to revisit, and trace one customer action across every component it touches. *Study time: reading about 15 min; hands-on by track: 🟢 3 h · 🟡 8 h · 🔴 18 h (estimate).*
 
 ## ⚡ In 60 seconds
 
