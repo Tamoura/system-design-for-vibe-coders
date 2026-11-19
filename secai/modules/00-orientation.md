@@ -9,7 +9,7 @@
 # 0.1 — What application and AI security is: assets, attackers and risk
 *Level: 🟢 Beginner* · *Prerequisites: none* · *Phase: Plan, Govern*
 
-**After this you can** write an asset register for an application you own, with an owner and a confidentiality, integrity or availability impact rating on every row, plus two risk statements that each name a control. *Study time: about 110 minutes (estimate).*
+**After this you can** write an asset register for an application you own, with an owner and a confidentiality, integrity or availability impact rating on every row, plus two risk statements that each name a control. *Study time: reading about 15 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Security** means protecting what a system is trusted with (its **assets**) from people who would misuse it. **Application security** does this for the software you design, build and run; **AI security** extends it to systems that contain models.
@@ -22,7 +22,7 @@
 ## 🧭 Why it matters
 On Ali's first morning in Najm Bank's Application & AI Security team, Noura (Head of Application & AI Security) gives him one task: "List what Najm Assist has to protect." Najm Assist, the assistant in the bank's mobile app, is about to gain the ability to freeze cards and open disputes. Ali returns with two items: "the server, and the database password". Noura's list has seven, including customers' balances, the card-freeze action (a fraudster would love to misuse it), what Assist says about fees (a wrong answer can become a commitment the bank is held to), the conversation logs and the credentials Assist uses to call internal systems. "The server is where things live," she says. "The assets are what people would be hurt by losing."
 
-The most damaging breaches rarely start with anything exotic. In 2017, attackers entered Equifax, a US credit reporting agency, through a known vulnerability in the Apache Struts web framework (CVE-2017-5638). A fix had been published weeks before they got in, but it had not been applied to the affected system. The US Federal Trade Commission reported that the personal data of about 147 million people was exposed. In 2023, staff at Samsung were reported to have pasted confidential source code and meeting notes into ChatGPT; the company then restricted staff use of such tools. Nobody "hacked" anything in the second case: data crossed a boundary nobody had drawn. One case is classic application security, the other new and AI-shaped. This course covers both.
+The most damaging breaches rarely start with anything exotic. In 2017, attackers entered Equifax, a US credit reporting agency, through a known vulnerability in the Apache Struts web framework (CVE-2017-5638). A fix had been published about two months before they got in, but it had not been applied to the affected system. The US Federal Trade Commission reported that the personal data of about 147 million people was exposed. In 2023, staff at Samsung were reported to have pasted confidential source code and meeting notes into ChatGPT; the company then restricted staff use of such tools. Nobody "hacked" anything in the second case: data crossed a boundary nobody had drawn. One case is classic application security, the other new and AI-shaped. This course covers both.
 
 ## 📐 How it works
 
@@ -182,10 +182,10 @@ Below it, Noura's three questions:
 
 **1. Ali lists Najm Assist's assets as "the server and the database password". Which list is the BEST replacement?**
 
-- A. The server, the database password and the firewall
+- A. The server, the database password and the firewall: the infrastructure the whole app runs on, which is where all the real assets are kept
 - B. Customer data in chat, card freeze and dispute actions, fee answers, API credentials, conversation logs, and availability and cost
-- C. The language model, because it is the most expensive component
-- D. Only customer personal data, because that is what data protection law covers
+- C. The language model alone, because it is the costliest and hardest part to replace; the rest can be rebuilt
+- D. Only customer personal data, because that is what data protection law covers; the rest is for other teams
 
 <details><summary>Answer</summary>
 
@@ -221,14 +221,14 @@ Below it, Noura's three questions:
 
 **4. Why can prompt injection not be fixed the way SQL injection is, with parameterised queries?**
 
-- A. Because language models do not accept user input
-- B. Because nobody has tried
-- C. Because parameterised queries are too slow for AI workloads, and vendors leave them off to keep answers fast and costs low for customers
-- D. Because a language model receives instructions and data in one stream of text, with no reliable way to mark part of it as "data only"
+- A. Because vendors keep model weights closed, so nobody outside the vendor can add a parameter interface to them
+- B. Because a filter that blocks known attack phrases already does the same job, so no separate fix is needed
+- C. Because parameterised queries are too slow for AI workloads, so vendors leave them off to keep answers fast
+- D. Because a model reads instructions and data as one stream of text, with no reliable way to mark part "data only"
 
 <details><summary>Answer</summary>
 
-**D.** A parameterised query lets the database treat input strictly as data. LLMs have no equivalent separation at the time of writing, so the defence is architectural: least privilege, output handling and human approval. (🟡 Going deeper.)
+**D.** A parameterised query lets the database treat input strictly as data. LLMs have no equivalent separation at the time of writing, open weights included (A), and phrase filters are beaten by rewording (B), so the defence is architectural: least privilege, output handling and human approval. (🟡 Going deeper.)
 
 </details>
 
@@ -260,7 +260,7 @@ Below it, Noura's three questions:
 # 0.2 — How breaches really happen: the attack chain and the usual suspects
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Phase: Design, Operate*
 
-**After this you can** map a real breach, or an attack on your own lab app, onto the stages of the attack chain and name for each stage a control that breaks it and the signal that would reveal it. *Study time: about 110 minutes (estimate).*
+**After this you can** map a real breach, or an attack on your own lab app, onto the stages of the attack chain and name for each stage a control that breaks it and the signal that would reveal it. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A breach is rarely one clever trick but a **chain**: get in, get a foothold, gain more access, reach the target, steal or disrupt. Every link is a chance to stop it or see it.
@@ -419,10 +419,10 @@ Noura's rule: every walkthrough ends with two lines. **Cheapest link to break:**
 
 **1. Ali wants to spend most of the year's budget on detecting zero-day attacks. Based on public breach reporting, what should Noura tell him?**
 
-- A. Agree, because most breaches use zero-days
-- B. Spend nothing until a breach happens
-- C. Spend it on a web application firewall, which stops all attacks
-- D. Most breaches start with ordinary routes (stolen credentials, phishing, unpatched flaws, misconfiguration), so fix those first
+- A. Agree and back his plan, because most major breaches use zero-days that nobody knew about before the attack
+- B. Spend nothing until a real breach happens, because any earlier spending is only a guess about risk and may well be wasted
+- C. Spend it on a web application firewall, which stops all attacks and makes most other controls unnecessary
+- D. Most breaches start with ordinary routes (stolen credentials, phishing, unpatched flaws, misconfiguration); fix those first
 
 <details><summary>Answer</summary>
 
@@ -458,10 +458,10 @@ Noura's rule: every walkthrough ends with two lines. **Cheapest link to break:**
 
 **4. What does MITRE ATT&CK give a defender that a single list of vulnerabilities does not?**
 
-- A. Patches for every known vulnerability
-- B. A legal framework for incident reporting
-- C. A knowledge base of real-world attacker tactics and techniques, for describing incidents and mapping detection coverage
-- D. A severity score for each CVE
+- A. Ready-made patches for every known vulnerability, applied to systems automatically with no review needed
+- B. A legal framework for reporting incidents to regulators within the deadlines set by each country's legislation
+- C. A knowledge base of real-world attacker tactics and techniques for describing incidents and mapping detection
+- D. A numeric severity score for each CVE, by which all remediation work can be ranked on its own
 
 <details><summary>Answer</summary>
 
@@ -498,7 +498,7 @@ Noura's rule: every walkthrough ends with two lines. **Cheapest link to break:**
 # 0.3 — Meet Najm Bank's security team, and how to use this course
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Phase: Plan, Govern*
 
-**After this you can** build a security map for three systems you know that names the right person to call and the course lesson for each concern, and run a local practice lab under written rules of engagement. *Study time: about 110 minutes (estimate).*
+**After this you can** build a security map for three systems you know that names the right person to call and the course lesson for each concern, and run a local practice lab under written rules of engagement. *Study time: reading about 20 min, hands-on about 160 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Najm Bank is fictional**: a mid-sized Gulf bank headquartered in Doha, with customers in Qatar, the UAE and the EU. You join its **Application & AI Security** team for the whole course.
@@ -576,6 +576,25 @@ flowchart LR
 
 Every arrow from people outside the bank into a system is attack surface. Lesson 1.1 turns this picture into a data-flow diagram with trust boundaries.
 
+**Five ways through the course.** Pick the row closest to you. Reading the whole course takes about 15 hours; with the 🟢 and 🟡 exercises it is roughly 120, and the 🔴 exercises add about 100 more.
+
+| You are… | Suggested path |
+|---|---|
+| A developer, including with AI coding agents | Modules 0–6, then 8.1–8.2 and 9; every 🟡 exercise on your own code or the starter lab |
+| An architect | Modules 0, 1, 3, 7, 8 and 9.1–9.3; a threat model for each system you own |
+| A product or engineering manager | 0, 1.3, 6.1, 8.1–8.2, 9.1–9.2, 10.1–10.2 and 11; the 🏛️ artefacts as templates to ask for; the paper route |
+| A security analyst moving into AppSec or AI security | The 12.3 practice exam first; then deep on 2–4 and 8–9 |
+| A bank, government or enterprise system owner | 0, 1, 5.3, 7.1, 9.1, 10.1–10.2 and 11; the paper route |
+
+**No code? Take the paper route.** Most 🟢 exercises need only paper. When an exercise needs a repository, a cloud account or a lab, review the lesson's own vulnerable and fixed code pair, or its 🏛️ artefact, as if a developer had sent it to you for approval: name the flaw, what an attacker gains, the fix you would require and the test that would prove it. Lessons whose exercises all need code add a 📝 paper-route exercise. *Done when:* a developer could act on your review without asking you what you meant.
+
+> **Before you start: your practice lab.**
+> - **What you need.** A computer on which you may install software (8 GB of memory is comfortable), about an hour, and no money for personal study: every tool here is free for personal and small-business use. On Windows, install Docker Desktop with WSL 2; on macOS or Linux, Docker Desktop or Docker Engine. At work, check your Docker Desktop licence (larger organisations need a paid plan) or use Docker Engine on Linux or WSL.
+> - **OWASP Juice Shop with Docker.** Run `docker run --rm -p 127.0.0.1:3000:3000 bkimminich/juice-shop`, then open `http://localhost:3000`. The `127.0.0.1:` part keeps the app on your own machine: without it Docker publishes the port on every network interface, and anyone on the same café or office Wi-Fi could reach a deliberately vulnerable app. `--rm` deletes the container when you stop it with Ctrl+C, so every start is a clean lab.
+> - **Without Docker.** Install a Node.js version that Juice Shop's README lists as supported, then run `git clone https://github.com/juice-shop/juice-shop.git --depth 1`, `cd juice-shop`, `npm install` and `npm start`. This route may listen on every interface, so use it only with your firewall on.
+> - **For the AI exercises.** The course's [starter lab](https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/secai/lab), `secai/lab/`, is a mini Najm Assist with one tool, a folder of documents and JSON logs. It needs Python 3.9 or later and nothing else: no packages, no API key, no cost.
+> - **Never paste** an API key, token or password into a chat with an AI assistant, a forum or a file you commit. Keep keys in environment variables or a secrets manager (lesson 5.2).
+
 ### 🟡 Going deeper
 
 **How the course is organised.** Thirteen modules: 0 Orientation · 1 Thinking like a defender · 2 Web application security · 3 Identity and access · 4 APIs, mobile and abuse · 5 Data, cryptography and secrets · 6 Secure development and supply chain · 7 Cloud and infrastructure · 8 How AI systems get attacked · 9 Securing LLM apps and agents · 10 Detection and response · 11 Governance and leadership · 12 Hero: capstone and practice exam. Levels rise from 🟢 Beginner (Modules 0–1) through 🟡 Intermediate (2–7) to 🔴 Advanced (8–12).
@@ -608,16 +627,6 @@ Every arrow from people outside the bank into a system is attack surface. Lesson
 The rule of thumb: "How could this be attacked, how do we stop it, and how would we know?" stays here. "How exactly is this built?", "What exactly does the law require?" and "Should we build it at all?" go to a companion course; come back with the answer.
 
 ### 🔴 Expert view
-
-**Five ways through the course.**
-
-| You are… | Suggested path |
-|---|---|
-| A developer, including with AI coding agents | Modules 0–6, then 9; every 🟡 exercise on your own code |
-| An architect | Modules 0, 1, 3, 7, 8, 9.2 and 9.3; a threat model for each system you own |
-| A product or engineering manager | 0, 1.3, 6.1, 8.1, 9.2, 10.2 and 11; the 🏛️ artefacts as templates to ask for |
-| A security analyst moving into AppSec or AI security | The 12.3 practice exam first; then deep on 2–4 and 8–9 |
-| A bank, government or enterprise system owner | 0, 1, 5.3, 7.1, 10.2 and 11 |
 
 **Rules of engagement.** Testing without permission is an attack, whatever your intentions, and most countries, including those in the GCC and the EU, outlaw unauthorised access to computer systems. Hands-on exercises run only on:
 - your own code, on your own machine or accounts;
@@ -670,7 +679,7 @@ Ali: "So I rate it, Tariq fixes it, Jassim checks whether anyone used it, Sara w
 ## 🛠️ Exercises
 - 🟢 For each of the six Najm systems, write one sentence naming the cast member you would contact first about a security problem in it, and why. *Done when:* you have six sentences naming at least four different people.
 - 🟡 Build a system security map like Noura's for three systems you know. *Done when:* every cell is filled, and each concern names the lesson in this course that addresses it.
-- 🔴 Set up your practice lab: run OWASP Juice Shop (or another deliberately vulnerable app) on your own machine, write one page of rules of engagement for yourself, and choose a study path from the 🔴 table. *Done when:* the lab runs locally, your rules name two kinds of system you will never test, and your plan has dates and its first three artefacts.
+- 🔴 Set up your practice lab: run OWASP Juice Shop (or another deliberately vulnerable app) on your own machine, write one page of rules of engagement for yourself, and choose a study path from the table in 🟢 The essentials. *Done when:* the lab runs locally, your rules name two kinds of system you will never test, and your plan has dates and its first three artefacts.
 
 ## ⚠️ Mistakes and traps
 - **Treating Najm Bank as real.** It is fictional. Do not quote its systems, people or numbers as facts about any bank.
@@ -703,10 +712,10 @@ Ali: "So I rate it, Tariq fixes it, Jassim checks whether anyone used it, Sara w
 
 **2. At 2 a.m., Ali notices log entries suggesting someone is downloading invoices from many SME Portal companies. Who should he call first?**
 
-- A. Jassim, the SOC and incident response lead
-- B. Rania, the Head of AI Products
-- C. Dana, the lead data scientist
-- D. Layla, the Head of AI Governance
+- A. Jassim, SOC and incident response lead
+- B. Rania, the Head of AI Products at Najm
+- C. Dana, the lead data scientist at Najm
+- D. Layla, the Head of AI Governance at Najm
 
 <details><summary>Answer</summary>
 
@@ -743,9 +752,9 @@ Ali: "So I rate it, Tariq fixes it, Jassim checks whether anyone used it, Sara w
 **5. During an incident, the team needs to know exactly what GDPR requires for notifying the authority about a breach of EU customers' data. What does this course advise?**
 
 - A. Work it out from the security lessons alone, since breach notification is a technical matter for the security team
-- B. Wait until the incident is closed
+- B. Wait until the incident is fully closed, then review the legal requirements calmly before contacting anyone
 - C. Involve Sara, the DPO, and use lesson 11.2 and *AI Governance: Zero to Hero* for the legal detail
-- D. Look it up in *SaaS Building Blocks*
+- D. Look it up in *SaaS Building Blocks* and apply it as it stands to EU customer data breaches, since the principle is the same
 
 <details><summary>Answer</summary>
 

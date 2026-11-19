@@ -9,7 +9,7 @@
 # 12.1 — Capstone: secure Najm Assist from threat model to incident drill
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–11* · *Phase: Plan, Design, Build, Test, Deploy, Operate, Respond, Govern*
 
-**After this you can** threat-model an AI assistant end to end and prove with tests that its card and dispute tools enforce session-bound identity and confirmation, then run an incident drill on it. *Study time: about 125 minutes (estimate).*
+**After this you can** threat-model an AI assistant end to end and prove with tests that its card and dispute tools enforce session-bound identity and confirmation, run an incident drill on it, and assemble the security case file that argues it is secure enough. *Study time: reading about 20 min, hands-on about 13 h (estimate).*
 
 ## ⚡ In 60 seconds
 - The capstone takes **Najm Assist** through all eight phases as it becomes an agent that looks up fees, freezes cards and opens disputes, reusing an artefact from every earlier module.
@@ -24,7 +24,7 @@ Rania (Head of AI Products) confirms that next quarter Najm Assist gets its firs
 
 Ali offers a vendor's 120-line control checklist. Noura asks which threat line 47 answers; Ali does not know. "A checklist tells me what someone else worried about. I need our threats, our controls, tests that prove them, and a drill."
 
-Public cases show the gaps. In February 2023, users got Bing Chat to reveal its hidden instructions through prompt injection. In December 2023, a Chevrolet dealer's chatbot was manipulated into "agreeing" to sell a car for one dollar. In *Moffatt v. Air Canada* (2024), a tribunal held the airline responsible for what its chatbot said. Greshake and colleagues (2023) showed that instructions hidden in content an assistant reads can steer it. In each case the weakness sat in a design choice that a threat traced to a control and a test would have challenged.
+Recall the public AI failures from Modules 8 and 9, from the leaked Bing Chat instructions (2023) to *Moffatt v. Air Canada* (2024) and the indirect injection Greshake and colleagues described (2023). In each case the weakness sat in a design choice that a threat traced to a control and a test would have challenged.
 
 ## 📐 How it works
 
@@ -178,7 +178,25 @@ The main finding is typical: output handling covered links but not phone numbers
 ## 🛠️ Exercises
 - 🟢 Redraw the Assist data-flow diagram from memory and list one threat per STRIDE category, mapped to an LLM Top 10 item where one fits. *Done when:* every threat names a control and a test that could fail.
 - 🟡 Rania wants Assist to "email the customer a PDF statement". Run the lethal-trifecta check and add this tool's rows to the traceability matrix. *Done when:* you name the leg it adds and a design that keeps it acceptable (for example, only the verified address on file and a fixed template), with tests and a detection.
-- 🔴 In a local lab, build a toy agent with fake `freeze_card` and `open_dispute` tools over a fake database you control. Write tests for session-bound identity and confirmation, then run a 60-minute tabletop with two colleagues using the injects above. Work only on your own code and machine. *Done when:* your tests fail against the vulnerable handler and pass against the fixed one, and your drill report has a timeline, three owned findings and a new regression test.
+- 🔴 In a local lab, build a toy agent with fake `freeze_card` and `open_dispute` tools over a fake database you control. Write tests for session-bound identity and confirmation, then run a 60-minute tabletop with two colleagues using the injects above, or alone with the solo method from 10.2 (one inject at a time, your decision written before you read the next). The starter lab `secai/lab/` already has `freeze_card`; add `open_dispute`. Work only on your own code and machine. *Done when:* your tests fail against the vulnerable handler and pass against the fixed one, and your drill report has a timeline, three owned findings and a new regression test.
+- 🏁 **Build the case file.** For Najm Assist with your 🟡 tool added, or for a system you know, assemble your own security case file: a one-page summary in the format above (eight phases, each with an artefact you made, a decision and a gate), a traceability matrix of at least six rows, your drill report, and a residual-risk statement for a named decision-maker to sign. *Done when:* you score at least 10 of 12 on the rubric below.
+
+<details><summary>Check your work</summary>
+
+**🏁 Self-assessment rubric.** Score each criterion 0 (missing), 1 (partial) or 2 (complete).
+
+| Criterion | 2 means |
+|---|---|
+| Coverage | All eight phases appear, each with an artefact you produced, a recorded decision and a gate |
+| Traceability | At least six rows; every threat has a control, test, detection and owner; no control lacks a threat |
+| Tests that can fail | Each test would fail against a vulnerable version, and you have shown at least one failing |
+| Honest bars | Hard properties (no cross-customer action, no unconfirmed write) are required at 100%; soft-failure rates are tracked, not promised to be zero |
+| Drill evidence | The drill report has a timeline and owned findings, and at least one finding fed a new test or matrix row |
+| Residual risk | A plain statement of what can still go wrong, what limits it, who signs and when it is reviewed |
+
+Below 10, fix the lowest-scoring rows first; a case file with a weak traceability row is weaker than one with a short summary.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Controls without threats.** A downloaded checklist cannot be traced to your system. Start from your threats.
@@ -225,10 +243,10 @@ The main finding is typical: output handling covered links but not phone numbers
 
 **3. Rania proposes that Assist emails statements to any address the customer types in the chat. Using the lethal trifecta, what is the main concern?**
 
-- A. It adds external communication to a system that already reads private data and untrusted content, creating an exfiltration path
-- B. Email is slower than the app
-- C. PDF files are too large for the model's context
-- D. It increases the model's token cost
+- A. It adds outbound communication to a system that already reads private data and untrusted content
+- B. Email is slower than the app, so customers wait longer for the statements they need
+- C. PDF files are too large for the model's context, so long statements would be cut off
+- D. It increases the model's token cost for every statement sent outside the app
 
 <details><summary>Answer</summary>
 
@@ -238,10 +256,10 @@ The main finding is typical: output handling covered links but not phone numbers
 
 **4. During the drill, injected transfer references are making Assist show customers a fake phone number. No money has moved. What is the best first containment step?**
 
-- A. Shut down Najm Mobile entirely
+- A. Shut down Najm Mobile entirely until the cause is found and every customer is safe
 - B. Edit the system prompt in production to tell the model to ignore transfer references
-- C. Turn off the transaction-history and dispute tools by flag, keep fee answers running, ask fraud to act on the sending account, and preserve logs
-- D. Delete the affected conversations so customers cannot see them again
+- C. Turn off the history and dispute tools by flag, keep fee answers running, act on the sender, keep logs
+- D. Delete the affected conversations so customers cannot see the fake number again
 
 <details><summary>Answer</summary>
 
@@ -251,10 +269,10 @@ The main finding is typical: output handling covered links but not phone numbers
 
 **5. Which is the strongest evidence for Hamad that the "confirmation before any write" control works?**
 
-- A. A trajectory test in the pipeline and red-team set that fails if any write runs without a confirmed pending action, plus a detection on declined confirmations
+- A. A pipeline and red-team test that fails if any write runs without a confirmed pending action
 - B. A statement from the model vendor that the model follows tool-use instructions
-- C. A line in the system prompt requiring confirmation
-- D. A successful demo to the steering committee
+- C. A line in the system prompt requiring confirmation before every write the model makes
+- D. A successful demo to the steering committee showing the confirmation step working
 
 <details><summary>Answer</summary>
 
@@ -277,7 +295,7 @@ The main finding is typical: output handling covered links but not phone numbers
 # 12.2 — The security career: roles, certifications and portfolio
 *Level: 🔴 Advanced* · *Prerequisites: 12.1* · *Phase: Govern*
 
-**After this you can** build a skills-gap table for a security role you choose, based on five current job adverts, and produce one portfolio piece in which every finding ends with a fix and a test. *Study time: about 125 minutes (estimate).*
+**After this you can** build a skills-gap table for a security role you choose, based on five current job adverts, and produce one portfolio piece in which every finding ends with a fix and a test. *Study time: reading about 20 min, hands-on about 9 h (estimate).*
 
 ## ⚡ In 60 seconds
 - "Security" is many jobs: application, AI and cloud security, detection and response, offensive testing, and governance, risk and compliance (GRC). Pick a target role before you pick a course or a certificate.
@@ -463,10 +481,10 @@ Ali's **12-month development plan**, agreed with Noura:
 
 **1. Ali, an AppSec engineer, wants to move into AI security within two years. Which plan is best?**
 
-- A. Collect as many AI certificates as possible, since AI is a new field
-- B. Keep strengthening AppSec fundamentals, build AI-security evidence such as a public threat model of an LLM app, and choose a certification with the decision matrix
+- A. Collect as many AI certificates as possible, since AI is new and employers ask for them
+- B. Keep AppSec strong, publish AI-security work such as an LLM-app threat model, then choose a certification
 - C. Practise prompt injection on the public chatbots of companies he does not work for
-- D. Wait until an industry-standard AI-security certification appears
+- D. Wait until an industry-standard AI-security certification appears, then study for it
 
 <details><summary>Answer</summary>
 
@@ -548,7 +566,7 @@ Ali's **12-month development plan**, agreed with Noura:
 # 12.3 — Practice exam: 60 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–11* · *Phase: Plan, Design, Build, Test, Deploy, Operate, Respond, Govern*
 
-**After this you can** answer 60 scenario questions in 90 minutes and turn every wrong or guessed answer into an error-log row that names the trap and the section to re-read. *Study time: about 150 minutes (estimate).*
+**After this you can** answer 60 scenario questions in 90 minutes and turn every wrong or guessed answer into an error-log row that names the trap and the section to re-read. *Study time: reading about 70 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 - This is a **60-question practice exam** covering Modules 0–11, grouped by the eight security life cycle phases: Plan, Design, Build, Test, Deploy, Operate, Respond and Govern (7–9 questions each). Every module has about five questions; Module 9 has six. Most questions are short scenarios at Najm Bank or a neutral company.

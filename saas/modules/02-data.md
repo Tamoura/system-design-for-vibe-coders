@@ -9,7 +9,7 @@
 # 2.1 — The data layer: Postgres, ORMs, migrations and seeds
 *Level: 🟢 Beginner* · *Prerequisites: 1.2*
 
-**After this you can** write a Beacon schema, migration and idempotent seed that one command rebuilds from a fresh clone, and use `EXPLAIN ANALYZE` to remove an N+1 and get an index scan on the dashboard query. *Study time: about 110 minutes (estimate).*
+**After this you can** write a Beacon schema, migration and idempotent seed that one command rebuilds from a fresh clone, and use `EXPLAIN ANALYZE` to remove an N+1 and get an index scan on the dashboard query. *Study time: reading about 20 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -23,7 +23,7 @@
 
 Beacon's first version stores everything in one Postgres database. Three months in, a customer with 400 monitors complains the dashboard takes nine seconds to load. You look, and the page runs 401 queries: one for the monitor list, then one per monitor for its latest check. A week later you rename a column, deploy, and for four minutes every request fails because the old code is still running against the new schema. Then someone runs a cleanup script against production instead of staging.
 
-These are the three classic ways a young SaaS hurts itself: slow queries, unsafe schema changes, and unrecoverable mistakes. The most famous example of the last one: in January 2017 GitLab lost several hours of production data after an engineer deleted the wrong database directory during an incident, and then discovered that several of their backup mechanisms had not been working. Their public postmortem is still worth reading.
+These are the three classic ways a young SaaS hurts itself: slow queries, unsafe schema changes, and unrecoverable mistakes. The last one is the most dangerous, because you usually discover your backups don't work at the moment you need them. Lesson 7.4 tells the best-known real case; here you build the safety net.
 
 The database is the one component you cannot rewrite on a weekend. Code can be redeployed; data that was lost, corrupted, or modelled badly stays lost, corrupted, or badly modelled.
 
@@ -114,7 +114,34 @@ CREATE INDEX check_result_monitor_time_idx
 
 Column order matters: the index serves queries that filter by `monitor_id` and sort by `checked_at`, not the other way round. Learn to read `EXPLAIN ANALYZE` output; a `Seq Scan` on a big table in a hot path is a bug report waiting to happen. Remember that Postgres does *not* automatically index foreign key columns.
 
-The N+1 problem from the opening is the classic ORM trap: one query for the list, then N queries for each item's relation. The fix is to fetch relations in one go: `include` in Prisma, `with` in Drizzle's relational queries, `includes`/`preload` in Rails, `select_related`/`prefetch_related` in Django, or a single SQL query with a join or `DISTINCT ON`. Query logs and APM traces (lesson 7.2) make it visible.
+Here is the dashboard query from the 🟡 exercise below, before and after that index (Postgres 16, plans trimmed; the Beacon starter names the table `check_results` and already ships this index, so run `DROP INDEX check_results_monitor_time_idx;` first to see the "before" plan):
+
+```text
+-- Before: no index (500 monitors x 1,000 checks)
+Nested Loop Left Join  (actual time=112.031..6521.601 rows=500 loops=1)
+  ->  Seq Scan on monitor m  (actual time=97.172..97.557 rows=500 loops=1)
+        Filter: (organization_id = 1)
+  ->  Limit  (actual time=12.844..12.845 rows=1 loops=500)
+        ->  Sort  (actual time=12.842..12.842 rows=1 loops=500)
+              Sort Key: check_result.checked_at DESC
+              ->  Seq Scan on check_result  (actual time=6.284..12.752 rows=1000 loops=500)
+                    Filter: (monitor_id = m.id)
+                    Rows Removed by Filter: 499000
+Execution Time: 6536.568 ms
+
+-- After: CREATE INDEX check_result_monitor_time_idx ...
+Nested Loop Left Join  (actual time=0.056..4.742 rows=500 loops=1)
+  ->  Seq Scan on monitor m  (actual time=0.010..0.159 rows=500 loops=1)
+        Filter: (organization_id = 1)
+  ->  Limit  (actual time=0.009..0.009 rows=1 loops=500)
+        ->  Index Scan using check_result_monitor_time_idx on check_result  (actual time=0.009..0.009 rows=1 loops=500)
+              Index Cond: (monitor_id = m.id)
+Execution Time: 4.844 ms
+```
+
+Read a plan from the most indented line outwards. `actual time` is in milliseconds per loop (first row..last row), and `loops=500` means that step ran once per monitor. Before: a `Seq Scan` on `check_result` ran 500 times and threw away 499,000 rows each time. After: an `Index Scan` reads one row per monitor, and the query drops from about 6.5 seconds to under 5 ms. The `Seq Scan on monitor` is fine: that table holds 500 rows.
+
+The N+1 problem from the opening is the classic ORM trap: one query for the list, then N queries for each item's relation. The fix is to fetch relations in one go: `include` in Prisma, `with` in Drizzle's relational queries, `includes`/`preload` in Rails, `select_related`/`prefetch_related` in Django, or a single SQL query with a join, `DISTINCT ON` or `LATERAL`. Query logs and APM traces (lesson 7.2) make it visible.
 
 **Transactions.** A transaction groups statements so they all succeed or all fail. When Beacon opens an incident it must insert the incident, mark the monitor as down, and enqueue notifications. If the second step fails after the first succeeded, you have an incident for a monitor that looks healthy. Wrap them in one transaction. Keep transactions short and never call external APIs (Stripe, email) inside one. The pattern for "write to DB and reliably trigger a side effect" is the **transactional outbox**: insert an `outbox` row in the same transaction, and let a background worker (lesson 5.1) deliver it.
 
@@ -134,7 +161,7 @@ Other dangerous operations in Postgres: adding a column with a volatile default 
 
 ### 🔴 At scale / enterprise
 
-**Backups and point-in-time recovery (PITR).** A nightly `pg_dump` is a start, not a strategy. Postgres writes every change to the write-ahead log (WAL); if you archive a base backup plus the WAL stream, you can restore the database to *any moment*, say 14:31:59, one second before someone ran the bad `DELETE`. Managed services (RDS, Neon, Supabase, Crunchy Bridge and others) offer PITR as a setting; self-hosters use tools like pgBackRest or WAL-G. The GitLab lesson applies: **a backup you have never restored is a hope, not a backup.** Schedule a restore drill, measure how long it takes (that is your real recovery time), and put the number in your runbook. Enterprise questionnaires will ask for exactly these numbers (RPO and RTO).
+**Backups and point-in-time recovery (PITR).** A nightly `pg_dump` is a start, not a strategy. Postgres writes every change to the write-ahead log (WAL); if you archive a base backup plus the WAL stream, you can restore the database to *any moment*, say 14:31:59, one second before someone ran the bad `DELETE`. Managed services (RDS, Neon, Supabase, Crunchy Bridge and others) offer PITR as a setting; self-hosters use tools like pgBackRest or WAL-G. The rule from 7.4 applies: **a backup you have never restored is a hope, not a backup.** Schedule a restore drill, measure how long it takes (that is your real recovery time), and put the number in your runbook. Enterprise questionnaires will ask for exactly these numbers (RPO and RTO).
 
 **Read replicas.** A replica is a copy of the database that follows the primary by streaming its WAL. You can send read-only queries (reports, analytics, the public status page) to it. The catch is **replication lag**: a user saves a monitor, gets redirected, and the replica hasn't seen the write yet, so the monitor "disappears". Common fix: read your own writes from the primary for a few seconds after a write, or route by endpoint.
 
@@ -198,14 +225,18 @@ Create Beacon's schema for `organization`, `user`, `membership`, `monitor` and `
 
 ### 🟡 Intermediate exercise
 
-Build the dashboard query "all monitors in my org with their latest check" and make it fast. Seed 500 monitors with 1,000 checks each, log the queries, fix any N+1, and add the index that makes `EXPLAIN ANALYZE` show an index scan.
+Build the dashboard query "all monitors in my org with their latest check" and make it fast. Seed 500 monitors with 1,000 checks each, log the queries, fix any N+1, and add the index that makes `EXPLAIN ANALYZE` show an index scan. Use the `LATERAL` form below: the common `DISTINCT ON (m.id) ... ORDER BY m.id, c.checked_at DESC` version still reads all 500,000 checks and took about 250 ms with the index in our test run.
 
 ```sql
-SELECT DISTINCT ON (m.id) m.id, m.url, c.status_code, c.checked_at
+SELECT m.id, m.url, c.status_code, c.checked_at
 FROM monitor m
-LEFT JOIN check_result c ON c.monitor_id = m.id
-WHERE m.organization_id = $1
-ORDER BY m.id, c.checked_at DESC;
+LEFT JOIN LATERAL (
+  SELECT status_code, checked_at FROM check_result
+  WHERE monitor_id = m.id
+  ORDER BY checked_at DESC
+  LIMIT 1                       -- one index probe per monitor
+) c ON true
+WHERE m.organization_id = $1;
 ```
 
 **Done when:**
@@ -299,7 +330,7 @@ Each concurrent function invocation opened its own Postgres connection, and a ty
 # 2.2 — File uploads and object storage
 *Level: 🟢 Beginner* · *Prerequisites: 2.1*
 
-**After this you can** build presigned uploads in which the file bytes never pass through your app server, and serve private files through a membership check that returns 404 to users from another org. *Study time: about 110 minutes (estimate).*
+**After this you can** build presigned uploads in which the file bytes never pass through your app server, and serve private files through a membership check that returns 404 to users from another org. *Study time: reading about 15 min, hands-on about 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -570,7 +601,7 @@ This is stored XSS: the SVG runs script on your app's domain with access to your
 # 2.3 — Search: from `LIKE '%x%'` to a search engine
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1*
 
-**After this you can** add tenant-scoped fuzzy monitor search with `pg_trgm`, show the index in use with `EXPLAIN ANALYZE`, and prove with a test that no user receives another org's results. *Study time: about 105 minutes (estimate).*
+**After this you can** add tenant-scoped fuzzy monitor search with `pg_trgm`, show the index in use with `EXPLAIN ANALYZE`, and prove with a test that no user receives another org's results. *Study time: reading about 15 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -822,7 +853,7 @@ Anyone can edit the request, change or remove the filter, and read another org's
 # 2.4 — Multi-tenancy deep dive: isolation, noisy neighbours, residency
 *Level: 🔴 Advanced* · *Prerequisites: 1.2, 1.3, 2.1*
 
-**After this you can** route every tenant query through a scoped helper, add Postgres row-level security as a backstop, and write a cross-tenant test that gets 404 for every other org's resource. *Study time: about 110 minutes (estimate).*
+**After this you can** route every tenant query through a scoped helper, add Postgres row-level security as a backstop, and write a cross-tenant test that gets 404 for every other org's resource. *Study time: reading about 15 min, hands-on about 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 

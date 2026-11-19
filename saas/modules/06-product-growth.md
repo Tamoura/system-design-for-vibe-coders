@@ -10,7 +10,7 @@
 
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2*
 
-**After this you can** build an org-scoped app shell with a sidebar, org switcher, empty state and split settings, and show that a Member gets 403 from the server when calling an admin-only endpoint directly. *Study time: about 110 minutes (estimate).*
+**After this you can** build an org-scoped app shell with a sidebar, org switcher, empty state and split settings, and, in the 🟡 exercise, show that a Member gets 403 from the server when calling an admin-only endpoint directly. *Study time: reading about 20 min, hands-on about 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -76,7 +76,7 @@ export type CreateMonitorInput = z.infer<typeof createMonitorSchema>;
 export async function createMonitor(orgId: string, raw: unknown) {
   const parsed = createMonitorSchema.safeParse(raw);
   if (!parsed.success) return { ok: false, issues: parsed.error.issues };
-  await assertCan(orgId, "monitor:create");   // lesson 1.3
+  await assertCan(orgId, "monitor:create");   // lesson 1.3 (before it: check memberships.role)
   await assertWithinLimit(orgId, "monitors"); // lesson 3.2
   return { ok: true, monitor: await db.monitor.create({ data: { orgId, ...parsed.data } }) };
 }
@@ -216,7 +216,7 @@ Build Beacon's authenticated layout with shadcn/ui: a sidebar (Monitors, Inciden
 Split settings into Account (`/settings/account`), Organization (`/[org]/settings/general`, `/members`), Billing and Developer (API keys). Add an onboarding checklist driven by milestones stored on the org: first monitor, first alert channel, status page published. The checklist hides itself once all three are done.
 
 **Done when:**
-- A Member role gets a 403 from the server when calling the org-rename endpoint directly, not just a hidden button.
+- A Member role gets a 403 from the server when calling the org-rename endpoint directly, not just a hidden button. Use lesson 1.3's permission check if you have done it; otherwise check `memberships.role` from 1.2 on the server.
 - A second admin who joins after onboarding is done never sees the checklist.
 - Milestone timestamps are stored, so you can later compute "time to activation" (6.2).
 
@@ -307,7 +307,7 @@ Anyone can point any domain at Beacon's server, and Caddy will request a certifi
 
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 6.1*
 
-**After this you can** write a tracking plan of 8–12 object_action events with no personal data, send key events server-side to PostHog, and build an activation funnel broken down by organization. *Study time: about 105 minutes (estimate).*
+**After this you can** write a tracking plan of 8–12 object_action events with no personal data, send key events server-side to PostHog, and build an activation funnel broken down by organization. *Study time: reading about 15 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -539,7 +539,7 @@ Logging in isn't value, so retention should be measured by a value event such as
 
 *Level: 🟡 Intermediate* · *Prerequisites: 3.2, 6.2*
 
-**After this you can** build a percentage-rollout flag with per-org overrides, prove with a 1,000-call test that the same org always gets the same answer, and add a kill switch that on-call can flip. *Study time: about 105 minutes (estimate).*
+**After this you can** build a percentage-rollout flag with per-org overrides, prove with a 1,000-call test that the same org always gets the same answer, and add a kill switch that on-call can flip. *Study time: reading about 15 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -551,7 +551,7 @@ Logging in isn't value, so retention should be measured by a value event such as
 
 ## 🧭 Why every SaaS has this
 
-On 1 August 2012, Knight Capital deployed new trading code to its servers. The new code reused an old configuration flag that had once switched on a long-dead feature called "Power Peg". One of eight servers didn't get the new code. When the flag was turned on, that server ran the old Power Peg logic against the live market. In about 45 minutes Knight lost roughly $440 million, and the firm didn't survive as an independent company. The SEC's later order describes it in detail. It remains the most expensive lesson in flag hygiene ever recorded: **never repurpose an old flag, and delete dead flags along with their code.**
+On 1 August 2012, Knight Capital deployed new trading code to its servers. The new code reused an old configuration flag that had once switched on a long-dead feature called "Power Peg". One of eight servers didn't get the new code. When the flag was turned on, that server ran the old Power Peg logic against the live market. In about 45 minutes Knight lost more than $460 million, and the firm didn't survive as an independent company. The SEC's 2013 order describes it in detail. It remains one of the most expensive lessons in flag hygiene on record: **never repurpose an old flag, and delete dead flags along with their code.**
 
 Beacon's stakes are smaller, but the shape is the same. The team rewrites the check scheduler. They can merge it on a Friday and hope, or they can merge it *switched off*, turn it on for their own org, then for 5% of Free orgs, watch the error rate, and turn it off in one click if checks start arriving late. Separately, product wants to know whether a new onboarding checklist raises activation, and "it feels better" isn't an answer.
 

@@ -9,7 +9,7 @@
 # 1.1 — SQL that answers business questions: joins, aggregation, CTEs and window functions
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Stage: Model, Analyse*
 
-**After this you can** write a CTE-based SQL query with window functions that answers a business question at the right grain, and explain why the naive join-everything count gives a larger number. *Study time: about 110 minutes (estimate).*
+**After this you can** write a CTE-based SQL query with window functions that answers a business question at the right grain, and explain why the naive join-everything count gives a larger number. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - SQL is how you ask a database a question. Most business questions need four moves: **join** the tables, **filter** the rows, **aggregate** to the level the question asks about, then **rank or compare** with window functions.
@@ -273,7 +273,7 @@ Checks       : grain unique OK; debit total reconciles to GL report within 0.1%,
 A question asked every month becomes a tested model (3.1) and a defined metric (4.1).
 
 ## 🛠️ Exercises
-Use synthetic data only: generate `customers`, `accounts` (one to three per customer) and about 100,000 `transactions` in DuckDB or PostgreSQL with `generate_series` and `random()`, including some customers with no accounts.
+Use synthetic data only: the lab dataset from lesson 0.3 already has `customers`, `accounts` (some customers have none) and 100,000 `transactions` from July 2025 to March 2026, so every answer below can be checked by rerunning it. Two adjustments: the lab's September is September 2025, and its columns are `amount_qar` and `txn_ts_utc` (rename them in a CTE, or edit the lesson's queries).
 
 - 🟢 Write the "active retail customers in September and their spend" query twice: once the wrong way (same filters, join everything, `COUNT(*)`) and once with CTEs, each commented with its grain. *Done when:* you can explain the exact ratio between the two counts (it is the average number of debits per active customer), and your correct query passes the grain check.
 - 🟡 For each customer and month, compute spend, the previous month's spend, the change in percent, and the customer's rank within their segment for that month. Then return only each customer's single highest-spend month. *Done when:* the query uses `LAG`, `DENSE_RANK` and a "latest or top row per key" pattern, with a deterministic tie-breaker, and gives identical results on two runs.
@@ -371,7 +371,7 @@ Use synthetic data only: generate `customers`, `accounts` (one to three per cust
 # 1.2 — Data modelling: normalisation, star schemas, grain and slowly changing dimensions
 *Level: 🟢 Beginner* · *Prerequisites: 1.1* · *Stage: Model*
 
-**After this you can** design a star schema with a written grain statement, and build a Type 2 customer dimension that keeps day-1 exposure by branch unchanged after later loads. *Study time: about 120 minutes (estimate).*
+**After this you can** design a star schema with a written grain statement, and build a Type 2 customer dimension that keeps day-1 exposure by branch unchanged after later loads. *Study time: reading about 15 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A **data model** decides which tables exist, what one row in each means, and how they connect. It is the most expensive thing to change later, so it deserves the most thought up front.
@@ -604,7 +604,7 @@ Use DuckDB or PostgreSQL with synthetic data.
 - A. Accumulating snapshot: one row per application, updated per milestone
 - B. Transaction fact: one row per loan repayment
 - C. Periodic snapshot: one row per loan per day
-- D. A Type 3 dimension holding the previous and current application status
+- D. A Type 3 dimension with the previous and current application status
 
 <details><summary>Answer</summary>
 
@@ -664,7 +664,7 @@ Use DuckDB or PostgreSQL with synthetic data.
 # 1.3 — Where data lives: OLTP vs OLAP, warehouses, lakes, lakehouses and open table formats
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2* · *Stage: Store*
 
-**After this you can** time the same query on CSV and Parquet and on PostgreSQL and DuckDB, and justify from your timings which storage format and engine suit an OLTP or an OLAP workload. *Study time: about 120 minutes (estimate).*
+**After this you can** time the same query on CSV and Parquet and on PostgreSQL and DuckDB, and justify from your timings which storage format and engine suit an OLTP or an OLAP workload. *Study time: reading about 15 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **OLTP** systems (online transaction processing) run the business: many small reads and writes, each touching a few rows, which must be fast and correct. **OLAP** systems (online analytical processing) analyse it: fewer, larger queries that scan millions of rows but only a few columns.
@@ -677,7 +677,7 @@ Use DuckDB or PostgreSQL with synthetic data.
 ## 🧭 Why it matters
 On the last working day of the quarter, Huda runs a heavy query directly on the core banking PostgreSQL primary: a year of transactions joined to every account, grouped by product and month. It reads tens of millions of rows. Branch staff start reporting that account look-ups are slow, and the payments team sees timeouts. Salem, Head of Platform Engineering, finds the query and cancels it. His message to Faisal is short: "The core banking database exists to serve customers. Analytics needs its own home."
 
-Public cases show how storage choices fail in the other direction too. In October 2020, Public Health England reported that around 16,000 positive COVID-19 cases had been left out of England's daily figures. As widely reported, the cause was an automated process that loaded test results into the legacy Excel `.xls` format, whose worksheets are limited to 65,536 rows, so rows past the limit were silently dropped. The data existed; the container could not hold it, and nothing checked. Where data lives, and what that container guarantees, is an engineering decision.
+Storage choices fail in the other direction too. The 2020 England COVID-19 reporting gap (lesson 0.2) was, as widely reported, a storage failure: test results were loaded into the legacy Excel `.xls` format, whose worksheets hold at most 65,536 rows, and rows past the limit were silently dropped. The data existed; the container could not hold it, and nothing checked. Where data lives, and what that container guarantees, is an engineering decision.
 
 ## 📐 How it works
 
@@ -831,7 +831,7 @@ Use synthetic data only.
 - A. Keep it on the primary but run it at night, when branches are closed
 - B. Add more indexes to the primary so the scan finishes faster
 - C. Move the workload to a separate analytical store
-- D. Export the tables to CSV files on a shared drive
+- D. Export the tables to CSV files on a shared network drive
 
 <details><summary>Answer</summary>
 

@@ -2,7 +2,7 @@
 
 *Module 3: Caching — the Sharpest Knife in the Drawer*
 
-**After this you can** reproduce a cache-poisoning attack, block it with a proxy guard, and write a tripwire test plus a CLAUDE.md rule, then watch the test fail when the guard is removed. *Study time: about 70 minutes (estimate).*
+**After this you can** reproduce a cache-poisoning attack, block it with a proxy guard, and write a tripwire test plus a CLAUDE.md rule, then watch the test fail when the guard is removed. *Study time: reading about 10 min, hands-on about 90 min (estimate).*
 
 ---
 

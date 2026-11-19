@@ -8,7 +8,7 @@ build-vs-buy — the decision that sets how many seams you own.*
 
 # 0.1 — "It Works" Is Not a Property of a System
 
-**After this you can** list the seams in your own product and rewrite your CLAUDE.md definition of "done" as a system claim that says works where, works when and works for whom, with evidence from where users stand. *Study time: about 35 minutes (estimate).*
+**After this you can** list the seams in your own product and rewrite your CLAUDE.md definition of "done" as a system claim that says works where, works when and works for whom, with evidence from where users stand. *Study time: reading about 5 min, hands-on about 25 min (estimate).*
 
 ## 🔥 The Story: the deploy that lied — twice
 
@@ -135,7 +135,7 @@ what Tiers 2 and 3 are for.
 
 # 0.2 — The Map of Everything That Can Hurt You
 
-**After this you can** draft a one-page `docs/threat-map.md` that names a specific bad day for your product at each of the eight seams, ranks them, and gives the cheapest first action for your top three. *Study time: about 35 minutes (estimate).*
+**After this you can** draft a one-page `docs/threat-map.md` that names a specific bad day for your product at each of the eight seams, ranks them, and gives the cheapest first action for your top three. *Study time: reading about 5 min, hands-on about 30 min (estimate).*
 
 ## 🔥 The Story: eight seams, eight famous disasters
 
@@ -153,8 +153,8 @@ Proof by famous example — one disaster per seam:
 | **Deploy** | Knight Capital, 2012 | 7 of 8 servers updated; $440M in 45 minutes |
 | **Auth & identity** | (every credential-stuffing breach ever) | reused passwords + no rate limit |
 | **Abuse** | Dyn/Mirai, 2016 | hacked cameras flooded DNS; Twitter & Netflix "down" |
-| **Clients** | Facebook, 2021 | the recovery tools depended on the broken system |
-| **Observability** | AWS S3, 2017 | the status dashboard died with the thing it monitored |
+| **Clients** | CrowdStrike, 2024 | one bad update reached about 8.5 million Windows machines; many had to be fixed by hand |
+| **Observability** | AWS S3, 2017 | the status page stayed green: its update tool depended on S3 |
 | **Cost** | (a thousand quiet startups) | the surprise cloud bill that ended the runway |
 
 None of these needed a villain. Each was a normal Tuesday meeting a seam nobody
@@ -251,7 +251,7 @@ The exercise that turns the map into *your* map:
 
 # 0.3 — Build vs Buy: the Highest-Leverage Decision You'll Make
 
-**After this you can** build a capabilities table that marks each part of your product build or buy, justify any "build" for auth, payments or email in writing, and name your two or three innovation tokens. *Study time: about 35 minutes (estimate).*
+**After this you can** build a capabilities table that marks each part of your product build or buy, justify any "build" for auth, payments or email in writing, and name your two or three innovation tokens. *Study time: reading about 5 min, hands-on about 30 min (estimate).*
 
 ## 🔥 The Story: the disasters all lived in the built things
 

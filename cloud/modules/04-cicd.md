@@ -9,7 +9,7 @@
 # 4.1 — Continuous integration: pipelines, tests, artefacts and fast feedback
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 3.2* · *Phase: Build, Test*
 
-**After this you can** build a CI workflow with read-only permissions, timeouts and layer caching that turns red on a failing test, and prove that the digest running in your cluster is the one CI built. *Study time: about 115 minutes (estimate).*
+**After this you can** build a CI workflow with read-only permissions, timeouts and layer caching that turns red on a failing test, and prove that the digest running in your cluster is the one CI built. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Continuous integration (CI)** means everyone merges small changes into the main branch often, at least daily, and every change is built and tested automatically before and after it merges.
@@ -144,7 +144,7 @@ The result: lint and unit tests in 3 minutes, build and integration tests in 6, 
 
 ### 🔴 Expert view
 
-**Measure the outcome, not the pipeline.** The DORA research programme tracks four key delivery measures: **deployment frequency**, **lead time for changes** (commit to production), **change failure rate** and **time to restore service**. DORA has since added a reliability measure and refined some names (for example, recent reports talk about failed deployment recovery time); check dora.dev for the current definitions. A fast pipeline improves lead time; trustworthy tests lower change failure rate. Watch both together: speeding up by deleting tests just moves the cost into incidents.
+**Measure the outcome, not the pipeline.** The DORA research programme tracks four key delivery measures: **deployment frequency**, **lead time for changes** (commit to production), **change failure rate** and **time to restore service**. DORA has since renamed time to restore as **failed deployment recovery time** and, in 2024, added a fifth measure, **deployment rework rate** (the share of deployments that are unplanned fixes for a production incident); check dora.dev for the current definitions. A fast pipeline improves lead time; trustworthy tests lower change failure rate. Watch both together: speeding up by deleting tests just moves the cost into incidents.
 
 **The pipeline is a product.** At Najm, product teams do not each write their own pipeline. The platform team publishes a **golden path**: a reusable workflow (in GitHub Actions, a workflow called with `uses: najm-bank/platform-workflows/.github/workflows/service-ci.yml@<version>`) that does build, scan, test, sign and push in the approved way. Teams pass a few inputs. When the platform team improves caching or adds a scanner, every service gets it. Version it, keep a changelog, and measure adoption and build times.
 
@@ -208,7 +208,7 @@ Use your own GitHub account and a public practice repository; never an employer'
 
 - 🟢 Take a small app of your own (any language) and add a CI workflow that runs lint and unit tests on every pull request, with read-only permissions, a job timeout and cancellation of outdated runs. Open a PR with a deliberately failing test. *Done when:* the PR shows a red check that names the failing test, and fixing the test turns it green.
 - 🟡 Add a container build to the pipeline with layer caching. Reorder the Dockerfile so dependencies install before the source code is copied. Record the build time before and after for a one-line code change. *Done when:* you have both timings, and a second build after a source-only change reuses the dependency layer (the log shows cached steps).
-- 🔴 Implement "build once, promote": on merge to `main`, push the image to a registry (GitHub Container Registry works for a public repo), output its digest, and have a second job deploy that digest to a local kind cluster or update a manifest in a GitOps folder. Add a test that fails if any deploy job contains a `docker build` command. *Done when:* the digest running in your cluster (`kubectl get pod -o jsonpath='{.items[*].status.containerStatuses[*].imageID}'`) matches the digest the build job printed.
+- 🔴 Implement "build once, promote": on merge to `main`, push the image to a registry (GitHub Container Registry works for a public repo), output its digest, and have a second job update a manifest in a GitOps folder to that digest, which Argo CD (3.2) syncs into your local kind cluster. A GitHub-hosted runner cannot reach a cluster on your laptop; deploying from the job directly would need a self-hosted runner on your machine. Add a test that fails if any deploy job contains a `docker build` command. *Done when:* the digest running in your cluster (`kubectl get pod -o jsonpath='{.items[*].status.containerStatuses[*].imageID}'`) matches the digest the build job printed.
 
 ## ⚠️ Mistakes and traps
 - **Rebuilding per environment.** Staging tests one image and production runs another. Build once, deploy by digest, inject configuration at deploy time.
@@ -309,7 +309,7 @@ Use your own GitHub account and a public practice repository; never an employer'
 # 4.2 — Release strategies: rolling, blue-green, canary, feature flags and rollback
 *Level: 🟡 Intermediate* · *Prerequisites: 2.2, 2.3, 4.1* · *Phase: Release, Deploy*
 
-**After this you can** run a rolling update and a rollback with zero failed requests, explain why a release with a failing probe stops while one returning HTTP 500 does not, and set up a canary that aborts itself on failed analysis. *Study time: about 115 minutes (estimate).*
+**After this you can** run a rolling update and a rollback with zero failed requests, explain why a release with a failing probe stops while one returning HTTP 500 does not, and set up a canary that aborts itself on failed analysis. *Study time: reading about 15 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Deploying** puts new code on servers; **releasing** lets users reach it. Separating the two, with feature flags and progressive traffic shifting, is the core of safe delivery.
@@ -525,7 +525,15 @@ Run these on a local kind or k3d cluster.
 
 - 🟢 Deploy a small web app as a Deployment with 4 replicas, a readiness probe, `maxSurge: 1`, `maxUnavailable: 0` and a short `preStop` sleep so endpoints drain before pods stop. Update the image and watch `kubectl rollout status`. Then roll back with `kubectl rollout undo`. *Done when:* a loop of `curl` requests against the Service during both the update and the rollback shows no failed requests.
 - 🟡 Deploy a version whose readiness probe never passes. Observe what the rolling update does and what `progressDeadlineSeconds` reports. Then deploy a version that starts fine but returns HTTP 500 on one endpoint. *Done when:* you can explain in three sentences why the first bad version was stopped and the second was not, and what would stop the second.
-- 🔴 Install Argo Rollouts and Prometheus in your cluster. Convert the Deployment to a Rollout with a canary (10% → 50% → 100%) and an AnalysisTemplate on the success rate. Release a version that returns errors on 20% of requests. *Done when:* the rollout aborts by itself, traffic returns to stable, and you can show the failed analysis run.
+- 🔴 *Best done after 5.1.* Install Argo Rollouts and Prometheus in your cluster with the commands below; your app must expose a request counter that Prometheus scrapes. Convert the Deployment to a Rollout with a canary (10% → 50% → 100%) and an AnalysisTemplate on the success rate. Release a version that returns errors on 20% of requests. *Done when:* the rollout aborts by itself, traffic returns to stable, and you can show the failed analysis run.
+
+```bash
+# Lab installs for the 🔴 exercise (Prometheus itself is taught in 5.1)
+kubectl create namespace argo-rollouts
+kubectl apply -n argo-rollouts -f https://github.com/argoproj/argo-rollouts/releases/latest/download/install.yaml
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm install monitoring prometheus-community/kube-prometheus-stack -n monitoring --create-namespace
+```
 
 ## ⚠️ Mistakes and traps
 - **Treating configuration and content as "not a release".** A bad config or content push can break everything at once. Stage them through the same rings.
@@ -614,8 +622,8 @@ Run these on a local kind or k3d cluster.
 - Flagger documentation — https://docs.flagger.app/
 - OpenFeature — https://openfeature.dev/
 - Martin Fowler's site, Feature Toggles (Pete Hodgson) — https://martinfowler.com/articles/feature-toggles.html
-- CrowdStrike, Channel File 291 incident information and root cause analysis — https://www.crowdstrike.com/
-- US SEC, administrative proceeding against Knight Capital Americas LLC (2013) — https://www.sec.gov/
+- CrowdStrike, Channel File 291 incident information and root cause analysis — https://www.crowdstrike.com/wp-content/uploads/2024/08/Channel-File-291-Incident-Root-Cause-Analysis-08.06.2024.pdf
+- US SEC, administrative proceeding against Knight Capital Americas LLC (2013) — https://www.sec.gov/litigation/admin/2013/34-70694.pdf
 - Google SRE book, chapter on release engineering — https://sre.google/sre-book/release-engineering/
 - DORA research — https://dora.dev/
 
@@ -624,7 +632,7 @@ Run these on a local kind or k3d cluster.
 # 4.3 — Securing the pipeline: secrets, signed artefacts and least-privilege deploys
 *Level: 🟡 Intermediate* · *Prerequisites: 1.3, 3.2, 4.1* · *Phase: Build, Deploy*
 
-**After this you can** pin every action in a workflow to a commit SHA with least-privilege permissions, sign an image keylessly with cosign, and show verification passing for your workflow identity and failing for another branch. *Study time: about 115 minutes (estimate).*
+**After this you can** pin every action in a workflow to a commit SHA with least-privilege permissions, sign an image keylessly with cosign, and show verification passing for your workflow identity and failing for another branch. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A CI/CD pipeline can change production, so it is one of the most privileged systems you run. Attackers know this; protect it like production.
@@ -740,7 +748,7 @@ cosign verify \
 
 Sign the **digest**, never a tag. A signature on a tag says nothing once the tag moves.
 
-**Provenance and SBOMs.** **Provenance** is a signed statement of how an artefact was built: which source commit, which workflow, which builder, which inputs. **SLSA** defines build levels (in SLSA v1.0, Build L1 to L3) by how trustworthy that provenance is; at L3 the build runs on a hardened platform that the build's own steps cannot tamper with. An **SBOM** (software bill of materials) lists the components inside the image, so you can answer "are we affected?" when the next critical vulnerability appears. Docker's build-push action can attach provenance and an SBOM as attestations, and GitHub offers artifact attestations; at the time of writing (2026), check each tool's documentation for the exact options.
+**Provenance and SBOMs.** **Provenance** is a signed statement of how an artefact was built: which source commit, which workflow, which builder, which inputs. **SLSA** defines build levels (Build L1 to L3) by how trustworthy that provenance is; at L3 the build runs on a hardened platform that the build's own steps cannot tamper with. SLSA v1.2, current at the time of writing (2026), adds a Source track for how code is changed and reviewed. An **SBOM** (software bill of materials) lists the components inside the image, so you can answer "are we affected?" when the next critical vulnerability appears. Docker's build-push action can attach provenance and an SBOM as attestations, and GitHub offers artifact attestations; at the time of writing (2026), check each tool's documentation for the exact options.
 
 **Verify at the door: admission control.** Signing is wasted if nothing checks it. A Kubernetes **admission controller** inspects every new pod before it is created. Policy engines such as **Kyverno** (image verification rules) or Sigstore's **policy-controller** can reject any image that is not signed by the expected identity, or that lacks provenance. Combine this with the policy-as-code guardrails from lesson 3.3: images by digest only, from the internal registry only. Roll out in audit mode first, then enforce, starting with one namespace.
 
@@ -892,7 +900,7 @@ Use your own GitHub account and, if you use a cloud, a free-tier account with a 
 - Microsoft Entra, workload identity federation — https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation
 - Google Cloud, Workload Identity Federation — https://cloud.google.com/iam/docs/workload-identity-federation
 - Sigstore documentation (cosign, Rekor) — https://docs.sigstore.dev/
-- SLSA specification — https://slsa.dev/
+- SLSA specification v1.2 — https://slsa.dev/spec/v1.2/
 - Kyverno, verify images — https://kyverno.io/docs/
 - Argo CD documentation — https://argo-cd.readthedocs.io/
 - NVD, CVE-2025-30066 (tj-actions/changed-files) — https://nvd.nist.gov/vuln/detail/CVE-2025-30066

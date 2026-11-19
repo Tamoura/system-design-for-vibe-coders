@@ -37,6 +37,9 @@ else:
         if l=='mermaid' and len(a.splitlines())!=len(b.splitlines()): err.append('mermaid line count changed'); break
 if icode(en)!=icode(ar): err.append(f'inline code differs: {list((icode(en)-icode(ar)))[:6]} / {list((icode(ar)-icode(en)))[:6]}')
 if urls(en)!=urls(ar): err.append(f'links differ: {list((urls(en)-urls(ar)))[:4]}')
+FORBIDDEN=['عمليات الدفع التي','وعند الدفع','يدفع أحد المطوّرين','انمذج','غلي المحيط','السباق التالي','الثلاثية القاتلة','الثلاثي القاتل','وكيل الخروج','وكيل خروج','وكيل المستودع','حماية الدفع','بيئة ما قبل الإنتاج']
+bad=[w for w in FORBIDDEN if w in ar]
+if bad: err.append(f'forbidden Arabic forms (see TRANSLATING.md fixed terms): {bad}')
 body=re.sub(r'[`|*#\-\[\]()]','',nof(ar)); a=len(re.findall(r'[؀-ۿ]',body)); t=len(re.sub(r'\s','',body))
 if a/max(t,1)<0.45: err.append(f'only {a/max(t,1):.0%} Arabic script')
 if err: print('✗',sys.argv[2]); [print('  -',e) for e in err]; sys.exit(1)

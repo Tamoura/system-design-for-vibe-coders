@@ -9,7 +9,7 @@
 # 3.1 — API testing: REST, schemas, status codes, authentication and negative cases
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 2.1* · *Focus: Integration, Security*
 
-**After this you can** write API tests for status codes, schemas, authentication and access to another customer's account, and show the schema test failing when the response shape drifts. *Study time: about 115 minutes (estimate).*
+**After this you can** write API tests for status codes, schemas, authentication and access to another customer's account, and show the schema test failing when the response shape drifts. *Study time: reading about 15 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - An **API test** sends real HTTP requests and checks status, headers, body and side effects. It needs no browser, so it is fast and stable, and sits where every client meets the rules.
@@ -439,7 +439,7 @@ Work in a copy of `testing/sample`.
 # 3.2 — Web UI and end-to-end testing with Playwright: locators, waiting, page objects and stable suites
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 3.1* · *Focus: UI*
 
-**After this you can** rewrite a flaky Playwright test with role locators and web-first assertions, and prove it stable with `--repeat-each=10` and parallel workers. *Study time: about 115 minutes (estimate).*
+**After this you can** rewrite a flaky Playwright test with role locators and web-first assertions, and prove it stable with `--repeat-each=10` and parallel workers. *Study time: reading about 15 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - An **end-to-end (E2E) test** drives a real browser through a user journey. It sees what the customer sees but is the slowest test, so keep a few.
@@ -474,7 +474,9 @@ flowchart LR
 
 Two ideas remove most flakiness. **Auto-waiting:** before a `click`, `fill` or `check`, Playwright waits until the element is visible, stable, enabled and not covered. **Web-first assertions** such as `toBeVisible`, `toHaveText` and `toHaveValue` retry until they pass or time out (5 seconds by default), instead of reading the page once.
 
-**Project layout and config.** In a copy of `testing/sample`, run `npm install`, `npm install -D @axe-core/playwright` and `npx playwright install chromium`; tests live in `e2e/`. Replace the starter `e2e/playwright.config.ts`:
+> **TypeScript you need.** Playwright tests are TypeScript, but four patterns cover this lesson. `import { test, expect } from '@playwright/test'` loads names from a package. `async ({ page }) => { ... }` is an arrow function: a test body that receives a ready `page`. `await` waits for a browser action to finish before the next line runs; a missing `await` is the commonest beginner bug. `{ name: 'Amount' }` is an object of named options.
+
+**Project layout and config.** In a copy of `testing/sample`, run `npm install`, `npm install -D @axe-core/playwright` and `npx playwright install chromium`; tests live in `e2e/`. Then give the starter `e2e/playwright.config.ts` CI settings (`forbidOnly`, `retries`, a reporter) and a named browser project:
 
 ```typescript
 // e2e/playwright.config.ts
@@ -487,10 +489,7 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,         // a passing retry is reported as "flaky"
   reporter: [['list'], ['html', { open: 'never' }]],
   use: { baseURL: 'http://127.0.0.1:8000', trace: 'on-first-retry' },
-  projects: [
-    { name: 'setup', testMatch: /auth\.setup\.ts/ },
-    { name: 'chromium', use: { ...devices['Desktop Chrome'], storageState: '.auth/alice.json' }, dependencies: ['setup'] },
-  ],
+  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
     command: `${process.env.PYTHON ?? 'python'} -m uvicorn najm.api:app --port 8000`,
     cwd: '..',
@@ -500,7 +499,7 @@ export default defineConfig({
 });
 ```
 
-Run from `testing/sample`: `npx playwright test --config e2e/playwright.config.ts`. Add `.auth/` to `.gitignore`; a saved session is a credential.
+Run from `testing/sample`: `npx playwright test --config e2e/playwright.config.ts`.
 
 **Locators: role first.** A **locator** says how to find an element each time it is needed. Prefer what a user or screen reader perceives. Each step down is more fragile, and the top rows double as accessibility checks, because they fail if a label or role is missing.
 
@@ -575,6 +574,15 @@ setup('sign in as Alice through the API', async ({ page, request }) => {
   await page.evaluate(() => localStorage.setItem('token', 'token-alice'));
   await page.context().storageState({ path: '.auth/alice.json' });
 });
+```
+
+To use it, put a `setup` project first in the config and make the browser project start from the saved file. Add `.auth/` to `.gitignore`; a saved session is a credential.
+
+```typescript
+  projects: [
+    { name: 'setup', testMatch: /auth\.setup\.ts/ },
+    { name: 'chromium', use: { ...devices['Desktop Chrome'], storageState: '.auth/alice.json' }, dependencies: ['setup'] },
+  ],
 ```
 
 **Page objects, component objects and fixtures.** A **page object** is a class holding a page's locators and user actions, so a changed label is fixed once. A **component object** does the same for a reused widget, such as a `Toast` class wrapping the alert. **Fixtures** (`test.extend`) hand tests a ready object and handle setup and teardown. Keep assertions in the tests, so a failure reads like a sentence. For two or three tests a fixture and a helper function are enough; add the class when locators start repeating.
@@ -830,7 +838,7 @@ Work in a copy of `testing/sample` with Playwright installed.
 # 3.3 — Mobile, accessibility, cross-browser and localisation testing, including Arabic right-to-left
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 3.2* · *Focus: UI, Design*
 
-**After this you can** audit one screen in English and Arabic against named WCAG criteria, recording what the automated scan missed, and write tests that fail when right-to-left layout or an Arabic plural form is removed. *Study time: about 115 minutes (estimate).*
+**After this you can** audit one screen in English and Arabic against named WCAG criteria, recording what the automated scan missed, and write tests that fail when right-to-left layout or an Arabic plural form is removed. *Study time: reading about 15 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Mobile apps add risks no browser test sees: interruptions, permissions, bad networks, killed processes, old OS versions and store rules. Test logic fast, the UI natively, a few journeys on real devices.
@@ -1035,7 +1043,7 @@ Wrap user-supplied names, references and amounts in `<bdi>` (or `dir="auto"`). `
 | Area | What goes wrong | Test |
 |---|---|---|
 | Digits and separators | The API accepts `٢٥٠.٥٠` but refuses `٢٥٠٫٥٠` (Arabic decimal comma), `250,50` and `1,000` with a bare `error` | Type amounts as Arabic and German keyboards do |
-| Hijri and Gregorian | In Node 22, 9 October 2026 is 28 Rabi' al-Thani 1448 in Umm al-Qura and 26 in the civil calendar | Keep value dates Gregorian ISO; format Hijri only for display, naming the variant |
+| Hijri and Gregorian | In Node 22.22 (ICU 78), 9 October 2026 is 28 Rabi' al-Thani 1448 in Umm al-Qura and 26 in the civil calendar | Keep value dates Gregorian ISO; format Hijri only for display, naming the variant |
 | Plurals | English `n === 1` logic fails for 2 (`حوالتان`) and 11 (`11 حوالة`) | One message per CLDR category |
 | Sorting | Plain `sort()` puts `Émile` after `bob` and `أحمد` before `إبراهيم` | A native speaker reviews a list sorted with `Intl.Collator` |
 | Fonts and shaping | Arabic letters change shape by position; a missing font shows boxes | Screenshots per OS, reviewed by a reader |

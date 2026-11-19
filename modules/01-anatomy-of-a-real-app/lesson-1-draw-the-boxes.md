@@ -13,7 +13,7 @@ of them breaks. Terms are defined on first use; the
 
 *Module 1: Anatomy of a Real App*
 
-**After this you can** draw your app's seven boxes in `docs/architecture.md`, make the running app match the drawing, and prove with a cold-start test that a fresh agent session knows where uploaded media goes from CLAUDE.md alone. *Study time: about 70 minutes (estimate).*
+**After this you can** name the seven boxes of a production app, draw in `docs/architecture.md` the ones Relay has today (solid) and the ones it will grow (dashed), make the running app match the drawing, and prove with a cold-start test that a fresh agent session knows Relay's boxes and the architecture rule from CLAUDE.md alone. *Study time: reading about 10 min, hands-on about 90 min (estimate).*
 
 ---
 
@@ -118,6 +118,9 @@ Seven kinds of box, each with exactly one job:
 | Database | Be the source of truth | A queue, a cache, or an analytics warehouse |
 | Object storage | Hold big immutable blobs | A filesystem you mutate in place |
 
+(In the diagram, **Redis** is the cache box: a very fast in-memory store, used for
+copies and short-lived state such as presence counters and rate limits.)
+
 This is the C4 model's "container diagram" level (Simon Brown's term — see
 references), and it's the single most useful drawing you will ever make. Not
 because it's sophisticated, but because every incident in this course is a story
@@ -183,9 +186,11 @@ write a line yourself — the 🔧 boxes are optional, for readers who want to.
    > and explain each box's single job to me in plain language."*
    Push back on any box you didn't ask for. Every box is a seam you now own.
 2. **Scaffold it.**
-   > *"Scaffold Relay exactly as the diagram shows: one web app, one API process,
-   > one database, running locally. Then show it to me running in the browser, and
-   > tell me which box each thing I can see came from."*
+   > *"Scaffold Relay exactly as the diagram shows: one web app (its pages and its
+   > API routes live in the same box), one database, running locally. If the
+   > database needs Docker, tell me before installing anything and walk me through
+   > it. Then show it to me running in the browser, and tell me which box each
+   > thing I can see came from."*
 3. **The boxes table.**
    > *"Add a table to `docs/architecture.md`: each box, its one job, and what it
    > must never become."*
@@ -193,8 +198,9 @@ write a line yourself — the 🔧 boxes are optional, for readers who want to.
    > *"Add to CLAUDE.md: any change that adds a service, store, subdomain, or
    > external dependency must update `docs/architecture.md` in the same PR."*
 5. **Predict the future.**
-   > *"Add dashed boxes to the diagram for what we expect to add later: CDN, cache,
-   > object storage, queue."*
+   > *"Add dashed boxes to the diagram for what we expect to add later: CDN,
+   > proxy, cache, object storage, queue. Solid means it exists today; dashed means
+   > not built yet."*
    You now have a map of the seams you'll be learning, drawn before you need them.
 
 Finish: *"Commit everything with the message `01-1-boxes-drawn`."*
@@ -211,16 +217,22 @@ The agent that wrote the sibling subdomain configs did nothing wrong — it matc
 the system as it found it. It had no way to know a deploy-model change elsewhere
 would invalidate the pattern. Global knowledge is your job to supply.
 
-**Context to give (put this in project memory, not in one chat):**
+**Context to give (put this in project memory, not in one chat).** Write only
+what is true today. Facts about boxes Relay does not have yet would plant false
+context, so keep them in a "later" list and move each line up when its box exists:
 
 ```markdown
 ## Architecture (contract — update in the same PR as any structural change)
 - Diagram: docs/architecture.md (Mermaid). It is the source of truth.
-- All API traffic routes through the shared nginx upstream `app_backend`.
-  NEVER write a proxy_pass pointing at a literal port.
-- Redis is disposable cache + soft state only. Nothing in Redis may be
+- Today: browser → web app (pages + API routes) → database. Nothing else.
+- Solid boxes exist; dashed boxes are NOT built yet. Never assume a dashed box.
+
+## Add when the box exists (the reference platform's rules, adapt them)
+- Proxy: all API traffic routes through the shared nginx upstream
+  `app_backend`. NEVER write a proxy_pass pointing at a literal port.
+- Cache (Redis): disposable cache + soft state only. Nothing in Redis may be
   the only copy of anything.
-- Object storage is immutable: write new keys, never mutate in place.
+- Object storage: immutable. Write new keys, never mutate in place.
 ```
 
 **Review questions for any structural change:**
@@ -233,8 +245,9 @@ would invalidate the pattern. Global knowledge is your job to supply.
    test catches the lie?"
 
 **Guardrail to install:** a deploy-time assertion for every claim the diagram
-makes about routing — the exact fix the incident shipped. Grep your proxy configs
-for literal ports in CI; fail if any appear outside the upstream block.
+makes about routing — the exact fix the incident shipped. Once Relay has a proxy
+(a later module), grep its configs for literal ports in CI and fail if any appear
+outside the upstream block. Until then, the process-list check in Verify It is the assertion.
 
 ---
 
@@ -247,11 +260,13 @@ Accept this lesson as done only when every box is checked — none requires read
 - [ ] The running app matches the drawing: for each box, you can name the thing you
       *clicked or saw* that proves it exists (page loads → web app is real; data
       survives a restart → database is real — ask the agent to restart it and show you).
-- [ ] **Cold-start test:** open a brand-new agent session and ask *"where does
-      uploaded media go, and what must never live only in the cache?"* It answers
-      correctly from CLAUDE.md alone, without you explaining anything.
-- [ ] Ask the agent: *"search all proxy/config files for hardcoded ports and show me
-      the raw output."* The output is empty outside the shared upstream block.
+- [ ] **Cold-start test:** open a brand-new agent session and ask *"which boxes
+      does Relay have today, which are only planned, and what must change in the
+      same PR when we add a box?"* It answers correctly from CLAUDE.md alone (three
+      solid boxes, the dashed list, update `docs/architecture.md`), without you
+      explaining anything.
+- [ ] Ask the agent: *"list every process and data store running for Relay right
+      now, with the raw output."* The list matches the solid boxes, nothing extra.
 - [ ] You can redraw the seven-box diagram from memory on paper. (This one is for you.)
 
 ---

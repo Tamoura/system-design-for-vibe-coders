@@ -9,7 +9,7 @@
 # 4.1 — The OWASP API Security Top 10 in practice
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 3.3* · *Phase: Design, Test*
 
-**After this you can** find an object-level authorisation flaw by replaying a request with a second account's token, fix it on the server and add a two-user test that proves the fix. *Study time: about 110 minutes (estimate).*
+**After this you can** find an object-level authorisation flaw by replaying a request with a second account's token, fix it on the server and add a two-user test that proves the fix. *Study time: reading about 15 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 - An **API** (application programming interface) exposes data and functions directly to programs. Attackers skip your app: they call the API with their own tools and change any value.
@@ -24,7 +24,7 @@ Najm is adding card controls to Najm Mobile: spending limits, blocking online pa
 
 Her report has two more findings. `GET /v2/customers/me` returns fields the app never displays, including an internal `riskScore` and `kycStatus`. And the 2019 `/v1/` API, unused by the current app, still answers on the public gateway without the newer checks. Ali (new security engineer) asks whether these are "real", since no customer could reach them through the app. Noura (Head of Application & AI Security) answers: "The app is one client. Attackers write their own."
 
-Public cases show the cost. In 2022 the Australian telecoms company Optus suffered a large exposure of customer records. Public reporting at the time described an internet-facing API that returned customer data without requiring authentication; the details were contested and later examined by regulators. Whatever the exact facts, the pattern combines three themes of this lesson: an unwatched endpoint, a missing access check and iterable identifiers.
+Public cases show the cost. In 2022 the Australian telecoms company Optus exposed records of about 9.5 million people. Public reporting described an internet-facing API that returned customer data without authentication, and in August 2025 Australia's privacy regulator took Optus to court over its security. The pattern combines three themes of this lesson: an unwatched endpoint, a missing access check and iterable identifiers.
 
 ## 📐 How it works
 
@@ -189,6 +189,13 @@ Hands-on work runs only against your own code or a local lab such as OWASP crAPI
 - 🟢 Pick five endpoints from an API you own, or from local crAPI or Juice Shop, and note which of the ten risks could apply to each. *Done when:* each endpoint has at least two mapped risks and one concrete review question, and every endpoint taking an object ID is marked.
 - 🟡 In your local crAPI or Juice Shop, create two accounts and find one object-level authorisation flaw by replaying a request with the other account's token. Then reproduce the flaw in a small API of your own, fix it on the server and add an automated two-user test. *Done when:* the test fails on your vulnerable version and passes on the fixed one.
 - 🔴 Build an inventory for a service you own: compare the routes served in the last 30 days, from logs, with the OpenAPI document, and classify each difference as shadow, zombie or documented-but-unused. *Done when:* every served endpoint has an owner, a version and a decision (document, retire or block), and CI fails if a new route appears without a schema entry.
+- 📝 **Paper route (no code).** Review the two VULNERABLE handlers in 📐 How it works (the statements route and the profile update) as a change sent to you. *Done when:* each has its API Top 10 risk, a one-sentence attack, the fix and a test a developer could write.
+
+<details><summary>Check your work</summary>
+
+**📝 Model answer.** Statements: any logged-in customer can change the account ID and read another customer's statements: Broken Object Level Authorization (API1:2023). Fix: look the account up with the caller's customer ID and return 404 otherwise. Test: two customers, one asks for the other's statements, expect 404. Profile: the whole request body is written and the whole record returned, so a customer can set their own KYC status and read internal fields: Broken Object Property Level Authorization (API3:2023). Fix: an allowlist of writable fields and an explicit response shape. Test: send an extra field such as a KYC status and expect 400, and check that the response has no internal fields.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Hiding instead of checking.** "The app doesn't show it" is not a control. Enforce on the server, on every request.
@@ -260,10 +267,10 @@ Hands-on work runs only against your own code or a local lab such as OWASP crAPI
 
 **5. Najm Assist will call the accounts API to look up a customer's transactions. Tariq proposes giving it a service account that can read all accounts "to keep it simple". What is the main risk, and the better design?**
 
-- A. Cost; cache responses instead
-- B. Latency; let the agent query the database directly
-- C. A confused deputy: a manipulated agent could read other customers' data; the agent should use the customer's delegated, narrowly scoped token so the API's object checks apply
-- D. None, because the agent is internal and therefore trusted
+- A. Cost; cache responses instead, which cuts the number of calls and removes the need for a broad service account
+- B. Latency; let the agent query the database directly to skip the API layer that slows every request
+- C. A confused deputy: a manipulated agent could read others' data; use the customer's delegated, narrow token so object checks apply
+- D. None, because the agent is internal and therefore trusted, and anything from the internal network is safe by nature
 
 <details><summary>Answer</summary>
 
@@ -286,7 +293,7 @@ Hands-on work runs only against your own code or a local lab such as OWASP crAPI
 # 4.2 — Abuse, bots, rate limits and business-logic flaws
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 4.1* · *Phase: Design, Operate*
 
-**After this you can** reproduce a race-condition overdraft with concurrent requests and fix it with an atomic conditional update and an idempotency key, proven over ten runs. *Study time: about 110 minutes (estimate).*
+**After this you can** reproduce a race-condition overdraft with concurrent requests and fix it with an atomic conditional update and an idempotency key, proven over ten runs. *Study time: reading about 15 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Abuse** is using legitimate features at a scale, speed or order the designers did not expect. Often every single request is valid.
@@ -453,10 +460,10 @@ Hands-on work runs only against code you wrote, a local lab, or deliberately vul
 
 **1. "Pay by mobile number" shows the recipient's full name if the number belongs to a Najm customer. Which combination best reduces the risk of customer enumeration?**
 
-- A. A CAPTCHA on the lookup screen
-- B. Blocking IP addresses that make more than 100 lookups per hour
-- C. Lookups only by logged-in customers on bound devices, a masked name, per-customer limits on total and distinct numbers, and SOC alerts on accounts with many lookups and few payments
-- D. Moving the lookup to a new, undocumented endpoint
+- A. A CAPTCHA on the lookup screen, because automation is the only risk in this feature and a CAPTCHA stops it all
+- B. Blocking IP addresses that make more than 100 lookups per hour, because an attacker cannot easily change address
+- C. Lookups only by logged-in customers on bound devices, masked names, per-customer limits, and alerts on many lookups with few payments
+- D. Moving the lookup to a new, undocumented endpoint that nobody knows about, and relying on it being hard to find
 
 <details><summary>Answer</summary>
 
@@ -468,8 +475,8 @@ Hands-on work runs only against code you wrote, a local lab, or deliberately vul
 
 - A. A race condition from check-then-act; make the check and the debit one atomic conditional update or locked transaction, and use idempotency keys
 - B. Credential stuffing; add multi-factor authentication for every transfer and block the IP addresses that sent the duplicate transfers during the incident window
-- C. Missing TLS; enforce HTTPS
-- D. A slow database; add more servers
+- C. Missing TLS between the app and the server; enforce HTTPS on every request and refuse any connection without it
+- D. A slow database that delays processing both requests; add more servers so capacity grows and the problem goes away
 
 <details><summary>Answer</summary>
 
@@ -492,10 +499,10 @@ Hands-on work runs only against code you wrote, a local lab, or deliberately vul
 
 **4. Overnight, Najm's spending on verification texts triples, the share of codes entered collapses, and most messages go to countries where Najm has no customers. What is most likely happening, and what should the team do?**
 
-- A. A marketing campaign succeeded; buy more SMS credit
-- B. A fault at the SMS provider; open a ticket and wait
-- C. A denial-of-service attack; put the site behind a CDN
-- D. SMS pumping; restrict sending to served countries, limit per number, prefix and account, alert on spend and conversion, and move customers to in-app approval
+- A. A marketing campaign by the product team succeeded; buy more SMS credit so the service does not stop
+- B. A fault at the SMS provider is resending messages; open a ticket with the provider and wait for the fix
+- C. A denial-of-service attack on the site; put it behind a CDN that quickly absorbs the extra requests
+- D. SMS pumping; limit sending to served countries and per number and account, alert on spend, move to in-app approval
 
 <details><summary>Answer</summary>
 
@@ -506,9 +513,9 @@ Hands-on work runs only against code you wrote, a local lab, or deliberately vul
 **5. A few Najm Assist accounts paste huge documents into the chat all day, and the model bill jumps. Which OWASP item applies, and which controls fit?**
 
 - A. LLM10 Unbounded Consumption; cap input size, output tokens and tool calls per turn, set per-customer daily token budgets, and alert on spend
-- B. LLM01 Prompt Injection; write a stronger system prompt
+- B. LLM01 Prompt Injection; write a stronger system prompt that refuses huge documents and tells the model to reject them
 - C. API9 Improper Inventory Management; document the endpoint, give it an owner, and list it in the API catalogue with its version and retirement date, so the security team can review it every quarter
-- D. LLM09 Misinformation; add a disclaimer
+- D. LLM09 Misinformation; add a disclaimer telling customers that the model's answers may contain mistakes
 
 <details><summary>Answer</summary>
 
@@ -532,7 +539,7 @@ Hands-on work runs only against code you wrote, a local lab, or deliberately vul
 # 4.3 — Mobile app security: what you can and cannot trust on the device
 *Level: 🟡 Intermediate* · *Prerequisites: 3.2, 4.1* · *Phase: Build, Test*
 
-**After this you can** triage a mobile build's embedded strings and scanner findings by MASVS category, and decide for every secret whether to rotate it, restrict it or remove it. *Study time: about 110 minutes (estimate).*
+**After this you can** triage a mobile build's embedded strings and scanner findings by MASVS category, and decide for every secret whether to rotate it, restrict it or remove it. *Study time: reading about 15 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A mobile app runs on a device you do not control. Anyone can decompile it, read its strings and change its behaviour. **Everything in the app is public, and every check in the app can be skipped.**
@@ -750,9 +757,9 @@ Hands-on work runs only against apps you own or deliberately vulnerable training
 
 **3. Which statement about certificate pinning in Najm Mobile is most accurate?**
 
-- A. It makes the API safe from scripts
+- A. It makes the API safe from malicious scripts, because it stops any unsigned code from connecting to the server
 - B. It protects against mis-issued or intercepting certificates, but a reverse engineer can remove it from their own copy, and it needs backup pins and a rotation plan
-- C. It replaces the need for TLS
+- C. It replaces the need for TLS, as long as the pinned server is the only party the app ever connects to
 - D. It should pin a single leaf certificate with no backup pins, for maximum strength, because any extra pin would weaken the protection and should be avoided by design
 
 <details><summary>Answer</summary>
@@ -763,10 +770,10 @@ Hands-on work runs only against apps you own or deliberately vulnerable training
 
 **4. Najm's current biometric login shows the OS prompt and, on success, opens the accounts screen. What is the weakness, and the stronger design?**
 
-- A. The server learns nothing and the result can be hooked; biometrics should instead unlock a hardware-bound key that signs a server challenge the server verifies
-- B. There is no weakness; the OS prompt is secure
-- C. Replace biometrics with SMS codes
-- D. Show the prompt twice
+- A. The server learns nothing and the result can be hooked; biometrics should unlock a hardware-bound key that signs a server challenge
+- B. There is no weakness; the OS prompt is secure, and its result can be trusted because the OS itself checks the fingerprint
+- C. Replace biometrics with SMS codes, which are harder to intercept and do not depend on the device's own components
+- D. Show the prompt to the user twice every time, so the system can be sure the device was not tampered with during the check
 
 <details><summary>Answer</summary>
 
@@ -777,9 +784,9 @@ Hands-on work runs only against apps you own or deliberately vulnerable training
 **5. When a customer enrols a new phone, the server-verified Play Integrity verdict says the device fails integrity checks. What should Najm's server do?**
 
 - A. Ignore it, because attestation is unreliable and a rooted device is not necessarily a fraudulent one; judge the customer only on the transaction itself, by its amount
-- B. Let the app decide for itself
+- B. Let the app decide for itself what to do with the result, since it knows best the state of the device it runs on
 - C. Treat it as a risk signal: allow low-risk features, require step-up or extra checks for high-risk actions, and log it with the other fraud signals
-- D. Block the customer permanently
+- D. Block the customer from the app permanently, because no transaction from a device that fails the integrity check can be trusted
 
 <details><summary>Answer</summary>
 

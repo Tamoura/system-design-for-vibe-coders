@@ -9,7 +9,7 @@
 # 1.1 — AI, machine learning, generative AI and agents
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *BoK: I.A*
 
-**After this you can** walk three borderline tools through the AI Act's Art. 3(1) definition, state whether each is an AI system, and name the governance that applies either way. *Study time: about 110 minutes (estimate).*
+**After this you can** walk three borderline tools through the AI Act's Art. 3(1) definition, state whether each is an AI system, and name the governance that applies either way. *Study time: reading about 15 min, hands-on about 75 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Artificial intelligence (AI)** is an umbrella term. The definitions that matter for governance (OECD, EU AI Act) describe a **machine-based system that infers from its inputs how to generate outputs** such as predictions, content, recommendations or decisions that can influence physical or virtual environments.
@@ -20,7 +20,7 @@
 - Biggest trap: assuming that "simple" or "rule-based" means "not AI" or "low risk". Risk follows use and impact; the definition follows *inference*.
 
 ## 🧭 Why it matters
-In Najm Bank's first AI Governance Committee meeting, Khalid objects to the credit-scoring model being on the inventory at all. "It's a scorecard," he says. "We've used scorecards for twenty years. It's statistics, not AI." Dana disagrees: the current model is a gradient-boosted tree ensemble trained on three years of loan outcomes, and it is retrained twice a year. Meanwhile, Omar wants to know whether the credit memo copilot is "one system or two", since it combines a third-party language model with Najm's own retrieval of client documents. And the Head of Customer Experience asks whether a planned upgrade, letting Najm Assist actually *perform* card blocks and address changes instead of just answering questions, changes anything.
+In Najm Bank's first AI Governance Committee meeting, Khalid objects to the credit-scoring model being on the inventory at all. "It's a scorecard," he says. "We've used scorecards for twenty years. It's statistics, not AI." Dana disagrees: the current model is a gradient-boosted tree ensemble (hundreds of small decision trees, each one built to correct the errors of those before it) trained on three years of loan outcomes, and it is retrained twice a year. Meanwhile, Omar wants to know whether the credit memo copilot is "one system or two", since it combines a third-party language model with Najm's own retrieval of client documents. And the Head of Customer Experience asks whether a planned upgrade, letting Najm Assist actually *perform* card blocks and address changes instead of just answering questions, changes anything.
 
 Each question has real consequences. Whether something meets a legal definition of an AI system decides whether AI-specific law applies. Whether Najm is the provider of a model or only a deployer decides its duties. Whether a chatbot can act, not just talk, changes the risk entirely. The committee needs a shared vocabulary before it can make any of these calls. This lesson builds it.
 
@@ -245,7 +245,7 @@ Applied to the inventory: credit scoring (supervised ML, AI, high impact); Najm 
 # 1.2 — Risks and harms to people, groups, organisations and society
 *Level: 🟢 Beginner* · *Prerequisites: 1.1* · *BoK: I.A*
 
-**After this you can** write harm-register rows for a GenAI copilot using NIST AI 600-1 risks, each with a source, likelihood, two severities and an action. *Study time: about 105 minutes (estimate).*
+**After this you can** write harm-register rows for a GenAI copilot using NIST AI 600-1 risks, each with a source, likelihood, two severities and an action. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **harm** is an actual negative impact; a **risk** combines how likely a harm is and how severe it would be. Governance manages risks so that harms do not happen, or are caught and remedied fast.
@@ -463,7 +463,7 @@ Rules: every harm has an owner and an action; a "people" severity of High cannot
 # 1.3 — Why AI is different: the traits that demand governance
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2* · *BoK: I.A*
 
-**After this you can** rate which of the nine AI traits apply to a chatbot, and write a 250-word memo to a CIO showing why existing IT and model-risk controls need extending. *Study time: about 105 minutes (estimate).*
+**After this you can** rate which of the nine AI traits apply to a chatbot, and write a 250-word memo to a CIO showing why existing IT and model-risk controls need extending. *Study time: reading about 15 min, hands-on about 80 min (estimate).*
 
 ## ⚡ In 60 seconds
 - AI shares many risks with ordinary software (bugs, outages, security flaws), but a set of **traits** makes it different enough to need its own governance.

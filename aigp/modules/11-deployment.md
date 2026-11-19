@@ -9,7 +9,7 @@
 # 11.1 — The deploy decision: context, stakeholders and alternatives
 *Level: 🔴 Advanced* · *Prerequisites: 8.1, 6.1* · *BoK: IV.A*
 
-**After this you can** map the stakeholders of an AI deployment, and compare it with real alternatives on benefits, risks and rough cost. *Study time: about 105 minutes (estimate).*
+**After this you can** map the stakeholders of an AI deployment, and compare it with real alternatives on benefits, risks and rough cost. *Study time: reading about 20 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -21,11 +21,9 @@
 
 ## 🧭 Why it matters
 
-In 2022 a grieving customer asked Air Canada's website chatbot about bereavement fares. The chatbot told him he could claim the discount after travelling. That was wrong; the airline's policy said otherwise. When he claimed, Air Canada argued, in effect, that the chatbot was responsible for its own words. In *Moffatt v. Air Canada* (2024), British Columbia's Civil Resolution Tribunal rejected that argument and held the airline responsible for information on its own website, chatbot included. The chatbot was a deployment decision, and the deployer owned the consequences.
-
 At Najm Bank, Khalid, Head of Retail Lending, has a plan. The customer-service chatbot, licensed from a platform vendor and currently answering questions about branch hours and card fees, is popular. Khalid wants it to start **pre-qualifying** personal-loan applicants: customers would type in their salary and commitments, and the bot would tell them whether they are "likely to be approved". "It's the same chatbot," he says. "We're just adding a feature."
 
-Layla, Head of AI Governance, sees a different system. Telling people whether they are likely to get credit is a form of creditworthiness assessment, which is high-risk under the EU AI Act when it concerns natural persons. Wrong answers would discourage eligible customers or mislead ineligible ones, and the Air Canada case says Najm would own them. And by changing the chatbot's intended purpose, Najm might become the *provider* of a high-risk system. The technology is the same; the context has changed everything. This lesson teaches the analysis Layla runs before anyone says "go".
+Layla, Head of AI Governance, sees a different system. Telling people whether they are likely to get credit is a form of creditworthiness assessment, which is high-risk under the EU AI Act when it concerns natural persons. Wrong answers would discourage eligible customers or mislead ineligible ones, and, as *Moffatt v. Air Canada* (2024; see 5.3) showed, Najm would own them. And by changing the chatbot's intended purpose, Najm might become the *provider* of a high-risk system. The technology is the same; the context has changed everything. This lesson teaches the analysis Layla runs before anyone says "go".
 
 ## 📐 How it works
 
@@ -66,7 +64,7 @@ Khalid's plan falls squarely into the third bullet. The deploy decision must sur
 2. Is the use **high-risk** (Annex III, such as creditworthiness, employment, access to essential services; or Annex I products)?
 3. Does it trigger **transparency** duties (Art. 50), such as a chatbot interacting with people or AI-generated content?
 4. Under the **GDPR**: lawful basis, whether Art. 22 applies to solely automated decisions with legal or similarly significant effects, and whether a DPIA is required. The CJEU's *SCHUFA* judgment (2023) shows that producing a score can itself be the decision when others rely heavily on it.
-5. **Sector and local rules**: consumer-credit and anti-discrimination law; for Najm, the Qatar PDPPL, the QCB AI guideline for financial institutions and UAE data protection law; outside the EU, US state laws such as the Colorado AI Act, which places risk-management, impact-assessment and notice duties on deployers of high-risk systems (its effective date was postponed to 30 June 2026; check its current status).
+5. **Sector and local rules**: consumer-credit and anti-discrimination law; for Najm, the Qatar PDPPL, the QCB AI guideline for financial institutions and UAE data protection law; outside the EU, US state laws such as Colorado's SB 26-189, which in May 2026 replaced the 2024 Colorado AI Act and from 1 January 2027 places notice, consumer-rights and record-keeping duties on deployers of automated decision-making technology used in consequential decisions (check its current status).
 
 **Proportionality.** This idea comes from fundamental-rights law and data protection: an interference with people's rights must pursue a legitimate aim, be suitable and necessary to achieve it, and not be excessive in its effects. For AI deployment, ask: is AI needed for this goal, is this the least intrusive effective option, and are the safeguards commensurate with the stakes?
 
@@ -108,7 +106,7 @@ flowchart TD
 | **GDPR** — Arts 5, 6, 22, 35 | Principles (including minimisation), lawful basis, solely automated significant decisions, DPIA | Proportionality and necessity are built into GDPR analysis |
 | **NIST AI RMF** — MAP | Context, categorisation, benefits and costs, third-party risks, impacts | Voluntary; MAP is the pre-deployment analysis function |
 | **ISO/IEC 42001** — Annex A | Controls on impact assessment and on responsible, intended use of AI systems | Certifiable management system; deploy decisions should be evidenced |
-| **Colorado AI Act** — SB 24-205 | Deployers of high-risk AI must use reasonable care, run risk-management programmes, complete impact assessments and give notices | US state law; effective date postponed to 30 June 2026 — check current status |
+| **Colorado AI Act** — SB 26-189 (replaced SB 24-205) | Deployers of automated decision-making technology in consequential decisions must give notices, honour consumer rights and keep records | US state law; repealed and replaced May 2026; applies from 1 January 2027 — check current status |
 | **QCB AI guideline** | Governance, risk assessment and oversight expectations for AI in Qatar-regulated financial institutions | Local regulators expect a documented deploy decision |
 
 ## 🏛️ In practice at Najm Bank
@@ -133,6 +131,23 @@ Layla's team writes a **Deploy Decision Memo** for the committee.
 - 🟢 Map the stakeholders for Najm's credit memo copilot (a GenAI tool that drafts memos for relationship managers). *Done when:* you have users, affected persons, indirectly affected people and overseers, with at least two vulnerable groups identified or ruled out with reasons.
 - 🟡 Write the "alternatives" section for Najm's vendor CV-screening tool, comparing it with doing nothing, structured human screening, and a simpler knock-out-questions form. *Done when:* each option has benefits, risks and a rough cost.
 - 🔴 Run the full classification checklist for the chatbot's *current* use (hours and fees) and the proposed use (pre-qualification) in the EU, Qatar and the UAE. *Done when:* you can state Najm's role, risk tier and key obligations for each use in each jurisdiction, flagging what you would verify with counsel.
+
+<details class="model"><summary>Compare with Layla's version</summary>
+
+**🟡 Alternatives for the CV-screening tool.**
+
+| Option | Benefits | Risks | Rough cost |
+|---|---|---|---|
+| Do nothing (recruiters read every CV) | No new AI duties; familiar | Slow; inconsistent; human bias goes unmeasured | High recruiter time |
+| Structured human screening (scored rubric, two readers) | Consistent, transparent, easy to explain to candidates | Slow at peak volume; the rubric itself must be tested for bias | Medium: training and reviewer time |
+| Knock-out questions form | Cheap, fast, criteria can be published | Crude criteria (years of experience, degree) can act as proxies; disabled applicants need another route | Low |
+| Vendor AI tool | Fast at scale | High-risk in the EU (Annex III): Art. 26 deployer duties, bias testing, informing workers; vendor opacity | Licence plus governance effort |
+
+**🔴 Classification.** *Current use (hours and fees).* EU: Najm is the deployer of a system that is not high-risk; under Art. 50 customers must know they are talking to AI (the provider builds this in, Najm checks it is switched on); the GDPR and consumer law apply to wrong answers. Qatar: the PDPPL and the QCB AI guideline. UAE: the UAE PDPL, or the DIFC's own data protection law if the business sits in the DIFC. *Proposed use (pre-qualification).* EU: the intended purpose becomes creditworthiness assessment, so the system is high-risk under Annex III and Najm becomes its provider (Art. 25): conformity assessment, technical documentation, quality management system and registration, plus a FRIA as deployer (Art. 27), a DPIA and an Art. 22 check. Qatar and the UAE: no AI Act, but the QCB guideline expects a documented risk assessment and oversight, and data protection law applies. *Verify with counsel:* whether deterring an application counts as a decision, and which UAE regime applies.
+
+*Self-check:* each use has a role, a tier and at least two obligations per jurisdiction; you spotted the Art. 25 role change; uncertain points are flagged, not guessed.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 
@@ -188,7 +203,7 @@ Layla's team writes a **Deploy Decision Memo** for the committee.
 
 <details><summary>Answer</summary>
 
-**C.** The tribunal rejected the idea that the chatbot was responsible for its own words and held the airline responsible for information on its website, including the chatbot. The deployer owns its customer-facing AI. (Why it matters.)
+**C.** The tribunal rejected the idea that the chatbot was responsible for its own words and held the airline responsible for information on its website, including the chatbot. The deployer owns its customer-facing AI. (Why it matters; 5.3.)
 
 </details>
 
@@ -224,7 +239,7 @@ Layla's team writes a **Deploy Decision Memo** for the committee.
 - GDPR, Regulation (EU) 2016/679 (EUR-Lex): https://eur-lex.europa.eu/eli/reg/2016/679/oj
 - NIST AI Risk Management Framework and Playbook: https://www.nist.gov/itl/ai-risk-management-framework
 - ISO/IEC 42001:2023 (ISO): https://www.iso.org/standard/81230.html
-- Colorado General Assembly (SB 24-205, Consumer Protections for Artificial Intelligence): https://leg.colorado.gov
+- Colorado General Assembly (SB 24-205, Consumer Protections for Artificial Intelligence, and SB 26-189, which replaced it in 2026): https://leg.colorado.gov
 - British Columbia Civil Resolution Tribunal (*Moffatt v. Air Canada*, 2024): https://civilresolutionbc.ca
 - Qatar Central Bank: https://www.qcb.gov.qa
 
@@ -233,7 +248,7 @@ Layla's team writes a **Deploy Decision Memo** for the committee.
 # 11.2 — Buying AI: vendor due diligence and contracts
 *Level: 🔴 Advanced* · *Prerequisites: 3.3, 11.1* · *BoK: IV.A*
 
-**After this you can** write vendor due-diligence questions with red-flag answers, and draft incident- and change-notification clauses a lawyer could redline. *Study time: about 105 minutes (estimate).*
+**After this you can** write vendor due-diligence questions with red-flag answers, and draft incident- and change-notification clauses a lawyer could redline. *Study time: reading about 20 min, hands-on about 130 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -350,8 +365,32 @@ Yusuf and Layla create a **Vendor AI Due Diligence Scorecard**. Here is the resu
 ## 🛠️ Exercises
 
 - 🟢 Write ten due diligence questions for the credit memo copilot's foundation-model provider. *Done when:* each question maps to a risk (data use, versions, security, IP, documentation) and a red-flag answer.
-- 🟡 Draft the incident-notification and change-notification clauses for the chatbot platform contract, and explain how the deadlines fit Najm's own GDPR and AI Act timelines. *Done when:* a lawyer could redline your text.
-- 🔴 Dana proposes an open-weight model hosted on Najm's servers for the copilot, instead of an API. Write a one-page comparison of governance obligations and residual risks for the two options. *Done when:* the committee could decide from your page alone.
+- 🟡 Draft the incident-notification and change-notification clauses for the chatbot platform contract, and explain how the deadlines fit Najm's own GDPR and AI Act timelines. *Done when:* each clause states what triggers it, who notifies whom, by when and what the notice contains, and your note shows how the vendor's deadline leaves Najm time inside its own clocks.
+- 🔴 Dana proposes an open-weight model hosted on Najm's servers for the copilot, instead of an API. Write a one-page comparison of governance obligations and residual risks for the two options. *Done when:* both options are compared under the same headings (documentation, data, security, change, testing, licence, residual risk) and the page ends with a recommendation and its conditions.
+
+<details class="model"><summary>Compare with Layla's version</summary>
+
+**🟡 Clauses.** *Incident notification:* "The Supplier shall notify Najm within 24 hours of becoming aware of any security incident, personal data breach, serious malfunction or wrong output affecting customers, stating what happened, which versions and customers are affected and what containment it has taken, and shall preserve logs and cooperate with Najm's investigation." *Change notification:* "The Supplier shall give at least 60 days' written notice of any material change to the model, its training data, its sub-processors or its hosting location, with updated test results; Najm may test before the change goes live, or terminate without penalty." *Fit with Najm's clocks:* under GDPR Art. 33 Najm has 72 hours from becoming aware to notify the supervisory authority, and a processor must tell the controller without undue delay; a 24-hour vendor deadline leaves Najm about two days to assess. The chatbot's current use is not high-risk, so AI Act Art. 73 reporting does not apply; if it became high-risk, Najm as deployer would have to inform the provider immediately.
+
+*Self-check:* each clause has a trigger, a deadline, the content of the notice and a cooperation duty; the vendor's deadline is shorter than yours; you said which AI Act duty does or does not apply, and why.
+
+**🔴 Open-weight model versus API.**
+
+| | API (vendor-hosted) | Open-weight on Najm's servers |
+|---|---|---|
+| Documentation | The GPAI provider must supply downstream information (Art. 53) | Only what was published with the weights; Najm documents the rest |
+| Data | Prompts leave Najm: needs enterprise terms, no training on inputs, retention and residency limits | Data stays in-house: simpler confidentiality and transfers |
+| Security | Vendor patches; Najm reviews its assurance | Najm verifies the weights, scans model files and patches |
+| Change | Vendor updates versions: pin versions, get notice | Najm controls versions but must re-test each one itself |
+| Testing and monitoring | Shared with the vendor | All on Najm |
+| Licence | Commercial terms | Legal reviews use restrictions |
+| Residual risks | Lock-in, concentration, version drift | Skills and running cost, no warranty, slower fixes |
+
+Recommendation: keep the API under enterprise terms unless Najm has the staff to evaluate, secure and maintain the model; if the open-weight route is chosen, make it conditional on a licence review, a security review and a named owner for maintenance. Either way, Najm is responsible for the copilot system it builds.
+
+*Self-check:* both options are covered under the same headings; each has at least two residual risks; the page ends with a recommendation and its conditions.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 
@@ -452,7 +491,7 @@ Yusuf and Layla create a **Vendor AI Due Diligence Scorecard**. Here is the resu
 # 11.3 — Assessing the system: impact assessments, audits and assurance
 *Level: 🔴 Advanced* · *Prerequisites: 4.3, 6.2, 11.1* · *BoK: IV.B*
 
-**After this you can** decide which systems need a DPIA, a FRIA or a conformity assessment and who does each, and scope an internal audit an auditor could start from. *Study time: about 110 minutes (estimate).*
+**After this you can** decide which systems need a DPIA, a FRIA or a conformity assessment and who does each, and scope an internal audit an auditor could start from. *Study time: reading about 20 min, hands-on about 140 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -513,7 +552,7 @@ The deployer notifies the market surveillance authority of the results, using a 
 
 **Canada's Algorithmic Impact Assessment.** Canada's Treasury Board **Directive on Automated Decision-Making** applies to federal government institutions using automated systems to make or support administrative decisions about people. It requires an **Algorithmic Impact Assessment (AIA)**, a questionnaire-based tool that scores the system's design, data, decision and impacts and assigns an **impact level from I (little impact) to IV (very high impact)**. The level determines proportionate requirements, such as peer review, notice to affected people, human involvement in decisions, explanation and training. Results are published. The Directive does not apply to private companies like Najm, but it is an influential model of *proportionality by design*: assess, assign a level, and let the level set the controls.
 
-**The Colorado AI Act.** Among US state laws, Colorado's SB 24-205 requires deployers of high-risk AI systems used for consequential decisions to complete impact assessments, among other duties. Its effective date was postponed to 30 June 2026; check the current status and any amendments.
+**The Colorado AI Act.** Among US state laws, Colorado's 2024 act (SB 24-205) would have required deployers of high-risk AI systems used for consequential decisions to complete impact assessments. In May 2026 it was repealed and replaced by SB 26-189, which swaps those broad risk-management and impact-assessment duties for narrower notice, consumer-rights and record-keeping duties from 1 January 2027; check the current status and any rules.
 
 ### 🔴 Expert view
 
@@ -557,7 +596,7 @@ A good assessment record states: who did it and with what independence; the vers
 | **Canada Directive on Automated Decision-Making** | Algorithmic Impact Assessment for federal institutions; impact levels I–IV set proportionate requirements | Public sector only; model of proportionality |
 | **NYC Local Law 144** | Independent bias audit within one year before use, public summary, notice to candidates; impact ratios by sex and race/ethnicity | Audit and disclosure, no statutory pass mark |
 | **NIST AI RMF** — MEASURE | Test, evaluate, verify and validate; independent assessment; track metrics for trustworthy characteristics | Voluntary; MEASURE supplies assessment evidence |
-| **Colorado AI Act** — SB 24-205 | Deployer impact assessments for high-risk AI in consequential decisions | Check current status and dates |
+| **Colorado AI Act** — SB 26-189 (replaced SB 24-205) | Deployer notices, consumer rights and records for automated consequential decisions | Applies from 1 January 2027; check current status |
 
 ## 🏛️ In practice at Najm Bank
 
@@ -578,8 +617,30 @@ A good assessment record states: who did it and with what independence; the vers
 ## 🛠️ Exercises
 
 - 🟢 For each Najm system (credit score, chatbot, CV screener, credit memo copilot, fraud detection, staff GenAI use), say whether a DPIA, a FRIA and a conformity assessment are required in the EU, and who does each. *Done when:* each answer has a one-line reason.
-- 🟡 Scope an internal audit of Najm's CV-screening deployment: criteria, boundary, evidence, tests and level of assurance. *Done when:* an auditor could start fieldwork from your scope.
+- 🟡 Scope an internal audit of Najm's CV-screening deployment: criteria, boundary, evidence, tests and level of assurance. *Done when:* each of the five elements names something concrete (a rule, a boundary, a document or log, a test, a level of assurance) that could be checked without asking you.
 - 🔴 Design Najm's integrated impact assessment template so that one exercise produces a compliant DPIA and FRIA plus the ISO/IEC 42001 impact assessment. *Done when:* you can show which section satisfies each legal requirement and who signs it.
+
+<details class="model"><summary>Compare with Layla's version</summary>
+
+**🟡 Audit scope.** *Criteria:* EU AI Act Art. 26 deployer duties, GDPR Arts 22 and 35, Najm's Adverse Impact Testing Standard (5.1) and the vendor contract. *Boundary:* the vendor tool as configured by Najm plus the recruiters' workflow around it, for EU vacancies in the last 12 months; how the vendor built the model is out of scope. *Evidence:* instructions for use, the DPIA, configuration records, logs, override records, bias test results, training records, notices to candidates and workers, complaints. *Tests:* re-perform the selection-rate ratios on the period's data; sample 30 rejected candidates and check the human review; check that logs are kept for at least six months; check that notices went out. *Level of assurance:* reasonable assurance on Najm's own controls, limited assurance on evidence supplied by the vendor.
+
+*Self-check:* each of the five elements names something concrete; the boundary says what is out of scope; at least one test re-performs a result instead of only reading a document.
+
+**🔴 Integrated template.**
+
+| Section | Satisfies | Signed by |
+|---|---|---|
+| 1. Description: system, version, purpose, processes, period and frequency of use | GDPR Art. 35(7)(a); AI Act Art. 27(1)(a)–(b); ISO/IEC 42001 impact assessment (cl. 6.1.4) | System owner |
+| 2. Affected people and groups; consultation | Art. 27(1)(c); Art. 35(9) | System owner |
+| 3. Necessity, proportionality and lawful basis | Art. 35(7)(b) | DPO (advice recorded, Art. 35(2)) |
+| 4. Risks to rights: privacy, non-discrimination and others | Art. 35(7)(c); Art. 27(1)(d) | Layla's team |
+| 5. Human oversight, mitigations, complaints | Art. 35(7)(d); Art. 27(1)(e)–(f) | System owner |
+| 6. Residual risk, sign-off and notification | Residual-risk acceptance; FRIA results notified to the market surveillance authority (Art. 27(3)) | Accountable executive |
+| 7. Review triggers and date | Art. 27 update duty; ISO/IEC 42001 continual improvement | Layla |
+
+*Self-check:* every item in Art. 35(7) and Art. 27(1) maps to a section; each section has one signer; one evidence pack feeds all three outputs.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 
@@ -680,7 +741,7 @@ A good assessment record states: who did it and with what independence; the vers
 # 11.4 — Governing use: oversight, transparency and incident response
 *Level: 🔴 Advanced* · *Prerequisites: 11.3, 10.2* · *BoK: IV.C*
 
-**After this you can** write an AI disclosure and contest text under 80 words, and run a paper tabletop exercise that finds two gaps in an incident response. *Study time: about 110 minutes (estimate).*
+**After this you can** write an AI disclosure and contest text under 80 words, and run a paper tabletop exercise that finds two gaps in an incident response. *Study time: reading about 20 min, hands-on about 130 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -693,9 +754,9 @@ A good assessment record states: who did it and with what independence; the vers
 
 ## 🧭 Why it matters
 
-In spring 2023, media reported that engineers at Samsung's semiconductor business had pasted confidential material, including source code and internal meeting notes, into ChatGPT to help with their work. The company then restricted the use of generative AI tools on company devices. Nobody set out to leak secrets. Staff were trying to be productive with a tool that nobody had governed.
-
 At Najm Bank, two things surface in the same month. First, Omar's security team finds that relationship managers have been pasting customers' financial statements into a free public chatbot to summarise them faster than the approved credit memo copilot. Second, the copilot's own logs show something subtler: relationship managers accept its draft credit memos with no substantive edits in 97% of cases, and average review time has fallen from 11 minutes to under 2. Khalid sees efficiency. Layla sees a "human in the loop" who may no longer be looking, and a customer whose loan was approved on a memo that misread a key figure.
+
+Najm is not the first organisation to meet the first problem. In spring 2023, media reported that engineers at Samsung's semiconductor business had pasted source code and internal meeting notes into ChatGPT, and the company then restricted generative AI tools on company devices. Nobody set out to leak secrets. Staff were trying to be productive with a tool that nobody had governed.
 
 These are problems of *use*, not design. The question is whether the safeguards on paper work in the building.
 
@@ -766,7 +827,7 @@ The Samsung lesson is that bans without alternatives drive use underground. Prov
 
 Run **tabletop exercises** at least annually for high-risk systems; plans often fail because nobody knows who can switch the vendor system off.
 
-**Customer-facing statements are your statements.** *Moffatt v. Air Canada* (11.1) applies to incident handling too: when a chatbot gives wrong information, correct it, honour reasonable reliance where fair, and fix the source, rather than arguing the machine was responsible.
+**Customer-facing statements are your statements.** *Moffatt v. Air Canada* (5.3) applies to incident handling too: when a chatbot gives wrong information, correct it, honour reasonable reliance where fair, and fix the source, rather than arguing the machine was responsible.
 
 **The deployer's continuing obligations.** For an EU high-risk system, the list below applies for as long as the system is in use:
 
@@ -821,6 +882,26 @@ After the findings, Najm moved relationship managers onto the enterprise copilot
 - 🟢 Write the AI disclosure and the "how to contest" text for Najm's customer-service chatbot and for a credit decline letter. *Done when:* each is under 80 words and a customer would understand what to do next.
 - 🟡 Design an oversight dashboard for the CV-screening tool: five metrics, thresholds and what each threshold triggers. *Done when:* you can explain how each metric detects automation bias or human bias.
 - 🔴 Run a tabletop exercise on paper: the vendor chatbot tells EU customers that a fee has been waived when it has not, and a screenshot goes viral. Walk through all seven playbook steps with names, timings and notifications. *Done when:* you have identified at least two gaps in Najm's current arrangements and a fix for each.
+
+<details class="model"><summary>Compare with Layla's version</summary>
+
+**🟡 Oversight dashboard.**
+
+| Metric | Threshold | Triggers | What it detects |
+|---|---|---|---|
+| Override rate of the tool's ranking | Below 2% or above 30% in a month | Sample review of 20 cases | Low: automation bias. High: distrust, or human bias |
+| Median review time per CV | Below 30 seconds | Workload check and refresher training | Rubber-stamping (automation bias) |
+| Overrides per recruiter | More than twice the team rate | Review of that recruiter's cases | Human bias by one person |
+| Selection-rate ratio after human review, by sex and age band | Below 0.80 | Investigation under the Adverse Impact Testing Standard | Bias in the final outcome, human or model |
+| Later outcomes of overridden candidates | Candidates moved up do worse at interview than those the tool ranked high, over a quarter | Review whether overrides add value | Whether humans correct the tool or add bias |
+
+*Self-check:* each metric has a threshold and an action; at least two metrics catch automation bias and two catch human bias.
+
+**🔴 Tabletop.** (1) *Detect, hour 0:* the social media team spots the screenshot and routes it to the AI incident desk. (2) *Triage, by hour 2:* Layla's team and the chatbot's business owner rate it high severity (customer harm, reputation) and search the logs for other fee-waiver answers. (3) *Contain, by hour 4:* Omar blocks fee topics in the bot and hands them to staff; logs are preserved. (4) *Notify:* tell the vendor at once; Sara (DPO) confirms no personal data breach, so no 72-hour GDPR notice; the chatbot is not high-risk, so no Art. 73 report; Compliance decides whether consumer or conduct regulators must hear. (5) *Remediate:* honour the waiver for customers who relied on it (Moffatt); Yusuf has the vendor fix the cause. (6) *Communicate, within 24 hours:* a short, honest public statement. (7) *Learn, within two weeks:* review and report to the committee. Gaps and fixes: nobody can switch the vendor bot off out of hours (name the person and a 24/7 vendor contact in the runbook and contract); no rule on honouring wrong bot statements (a pre-approved goodwill rule); the logs sit only with the vendor (a contract right to logs within 24 hours).
+
+*Self-check:* every step has a name and a time; you decided which notification clocks apply and why; you found at least two gaps, each with an owner for the fix.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 

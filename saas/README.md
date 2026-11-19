@@ -3,6 +3,10 @@
 **Every SaaS is the same app wearing a different product. Learn the ~25 components
 they all share — once — from the best open-source code there is.**
 
+<!-- study-time -->
+**Study time for the whole course: about 207 hours** (estimate: reading plus hands-on work, summed over every lesson). At about 6 hours a week that is roughly 35 weeks. Each lesson shows its own split; a pilot with real learners will replace these estimates.
+<!-- /study-time -->
+
 ## What this is
 
 A written course for **junior developers** who can build a CRUD app but have never
@@ -48,10 +52,15 @@ Each lesson has the same ten parts, so you always know where you are:
 Every lesson carries a level badge showing where it *starts*: 🟢 Beginner,
 🟡 Intermediate or 🔴 Advanced. Pick the track that matches you.
 
-### 🟢 Beginner track — "ship a SaaS v1" (≈ 4 weeks)
+The track lengths below and the 12-week plan assume a full-time pace of about 15–17 study hours a
+week: the course estimate above (about 207 hours) spread over 12–14 weeks. At about 6 hours a week,
+plan for roughly 35 weeks instead, or scale each week of the plan to about two and a half weeks.
+
+### 🟢 Beginner track — "ship a SaaS v1" (≈ 4–5 weeks)
 
 Read Module 0, then lessons 1.1, 1.2, 2.1, 2.2, 3.1, 4.1 and 6.1. Do the 🟢
-exercise in each. At the end you have a Beacon that people can sign up to, create
+exercise in each, plus the 🟡 exercise in 1.1 (GitHub sign-in and password reset)
+and in 3.1 (the webhook handler): those two lessons promise these skills. At the end you have a Beacon that people can sign up to, create
 a workspace in, invite teammates to, pay for, and receive email from.
 
 ### 🟡 Intermediate track — "survive real customers" (≈ 5 weeks)
@@ -97,6 +106,18 @@ SaaS component is missing and marked `TODO(lesson)`. Clone it as a standalone re
 ```bash
 git clone -b beacon/starter --single-branch https://github.com/Tamoura/system-design-for-vibe-coders.git beacon
 ```
+
+> **Before you start.** You need Node 22 or later, Git and Docker (on Windows, use WSL2 with Docker Desktop);
+> any laptop with 8 GB of RAM is enough. Then, inside `beacon/`: `cp .env.example .env.local`,
+> `docker compose up -d` (Postgres, plus the Mailpit test inbox at http://localhost:8025), `npm install`,
+> `npm run db:migrate`, `npm run db:seed` and `npm run dev`, and open http://localhost:3000. The starter is
+> TypeScript only; in another stack, build the exercises in your own app against the same "done when" lines.
+> Some lessons need a free account (GitHub OAuth app in 1.1, Stripe test mode in 3.1) and say so in a
+> "Before you start" box. Keep keys in `.env.local`, never in Git or in a chat with an AI assistant.
+>
+> **About the code samples.** Lesson code uses a short, ORM-neutral `db.model.method()` style
+> (`db.monitor.findFirst(...)`). The starter uses Drizzle, so translate as lesson 1.1 shows:
+> `db.insert(table).values(...)`, `db.select().from(table).where(...)`, `db.update(table).set(...)`.
 
 Each module has a **reference solution branch**, `beacon/module-N-solution`, that implements the 🟢 and 🟡
 exercises on top of the previous module. The 🔴 exercises are left as stretch goals. Try each exercise first,

@@ -9,7 +9,7 @@
 # 9.1 — Commands, skills, subagents, hooks, MCP and headless mode: what to automate and what not to
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 8.1* · *Focus: Automate*
 
-**After this you can** decide with a decision card whether a repeated task becomes a command, skill or hook or stays manual, and justify it. *Study time: about 110 minutes (estimate).*
+**After this you can** decide with a decision card whether a repeated task becomes a command, skill or hook or stays manual, and justify it. *Study time: reading about 15 min, hands-on about 60 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Automate what repeats and has a mechanical success check.** A hook that reports a file that does not parse qualifies; "an agent approves the pull request" is judgement in disguise.
@@ -49,7 +49,7 @@ flowchart TD
     F -->|"no"| H["Script around claude -p, with limits"]
 ```
 
-**Commands and skills.** **Custom commands have been merged into skills.** `.claude/commands/deploy.md` and `.claude/skills/deploy/SKILL.md` both create `/deploy`; old command files keep working, a skill beats a command of the same name, and the documentation recommends skills for new work. A skill is a folder with `SKILL.md`, whose first line opens YAML frontmatter. Only `description` is recommended, and **unknown keys are ignored**: a misspelt `disable_model_invocation` does nothing and tells nobody. The documented keys at the time of writing: `name`, `description`, `when_to_use`, `argument-hint`, `arguments`, `disable-model-invocation`, `user-invocable`, `allowed-tools`, `disallowed-tools`, `model`, `effort`, `context`, `agent`, `background`, `hooks`, `paths`, `shell`. Claude reads every description at the start and loads a skill when the task matches, or you type `/name`, so the description is the trigger: "Reviews stuff" matches everything and nothing. `$ARGUMENTS` receives what follows the name. `` !`command` `` runs before Claude sees the text and is replaced by its output; a command that exits non-zero aborts the invocation, so `main...HEAD` below fails if there is no `main`. This skill writes pull request descriptions:
+**Commands and skills.** **Custom commands have been merged into skills.** `.claude/commands/deploy.md` and `.claude/skills/deploy/SKILL.md` both create `/deploy`; old command files keep working, a skill beats a command of the same name, and the documentation recommends skills for new work. A skill is a folder with `SKILL.md`, whose first line opens YAML frontmatter. Only `description` is recommended, and **unknown keys are ignored**: a misspelt `disable_model_invocation` does nothing and tells nobody. Claude reads every description at the start and loads a skill when the task matches, or you type `/name`, so the description is the trigger: "Reviews stuff" matches everything and nothing. `$ARGUMENTS` receives what follows the name. `` !`command` `` runs before Claude sees the text and is replaced by its output; a command that exits non-zero aborts the invocation, so `main...HEAD` below fails if there is no `main`. This skill writes pull request descriptions:
 
 ```markdown
 ---
@@ -67,17 +67,17 @@ Say what and why, what you ran to check it, and which files touch money logic; i
 
 `disable-model-invocation: true` makes it yours to start. `allowed-tools` pre-approves tools for the turn, as a comma- or space-separated string or a YAML list (`allowed-tools: Read, Grep, Bash(git diff *)`); pre-approve only commands that read.
 
-**Subagents.** A subagent has its own system prompt, tool list and context window. It receives your task message, `CLAUDE.md` and a git status snapshot, but not your conversation, invoked skills or auto memory; only its final report comes back. `name` and `description` are required; `tools` is an allowlist, `disallowedTools` a denylist, `model` is an alias, a model ID or `inherit`, `maxTurns` caps it; `permissionMode`, `skills`, `memory` and `color` are among the other documented keys. Claude delegates by matching the description, or you name it (`@agent-test-writer`). Check the built-ins first: **Explore** and **Plan** are read-only. A **reviewer** gets `tools: Read, Grep, Glob` (lesson 9.2); a **test-writer** gets `Read, Grep, Glob, Write`, `maxTurns: 20` and no shell, so you run its tests. Treat each tool as all or nothing (the subagents page may offer finer control): that `Write` can create a file anywhere the session may, so read `git diff --stat`.
+**Subagents.** A subagent has its own system prompt, tool list and context window. It receives your task message, `CLAUDE.md` and a git status snapshot, but not your conversation, invoked skills or auto memory; only its final report comes back. `name` and `description` are required; `tools` is an allowlist, `disallowedTools` a denylist, `model` is an alias, a model ID or `inherit`, `maxTurns` caps it. Claude delegates by matching the description, or you name it (`@agent-test-writer`). Check the built-ins first: **Explore** and **Plan** are read-only. A **reviewer** gets `tools: Read, Grep, Glob` (lesson 9.2); a **test-writer** gets `Read, Grep, Glob, Write`, `maxTurns: 20` and no shell, so you run its tests. Treat each tool as all or nothing: that `Write` can create a file anywhere the session may, so read `git diff --stat`.
 
 ### 🟡 Going deeper
 
-**Hooks are code at an event.** They live in settings files, plugins, and skill or subagent frontmatter; `/hooks` lists them. The documentation lists 33 events at the time of writing; a few do the work: `PreToolUse` (block, allow, ask, defer or rewrite the input), `PostToolUse` (feed back a reason; no undo), `Stop`, `PreCompact`. A `matcher` filters by tool name: `*`, empty or missing matches all; letters, digits, `_`, `-`, space, `,` and `|` give an exact name or list (`Edit|Write`); anything else is a JavaScript regular expression. A command hook reads one JSON document on standard input: `session_id`, `cwd`, `permission_mode`, `hook_event_name`; for tools `tool_name`, `tool_input` (Edit: `file_path`, `old_string`, `new_string`; Write: `file_path`, `content`; Bash: `command`), `tool_use_id`, and for `PostToolUse` `tool_response`.
+**Hooks are code at an event.** They live in settings files, plugins, and skill or subagent frontmatter; `/hooks` lists them. A few events do the work: `PreToolUse` (block, allow, ask, defer or rewrite the input), `PostToolUse` (feed back a reason; no undo), `Stop`, `PreCompact`. A `matcher` filters by tool name: `*`, empty or missing matches all; letters, digits, `_`, `-`, space, `,` and `|` give an exact name or list (`Edit|Write`); anything else is a JavaScript regular expression. A command hook reads one JSON document on standard input: `session_id`, `cwd`, `permission_mode`, `hook_event_name`; for tools `tool_name`, `tool_input` (Edit: `file_path`, `old_string`, `new_string`; Write: `file_path`, `content`; Bash: `command`), `tool_use_id`, and for `PostToolUse` `tool_response`.
 
-**Exit codes.** 0 is success (standard output counts only as one JSON object). **2 blocks:** standard error is the reason and Claude sees it (the hooks reference says what blocking means per event). **Any other code is a non-blocking error:** the action goes ahead, so a crashing guard guards nothing. For richer answers print JSON: `PreToolUse` returns `hookSpecificOutput` with a `permissionDecision` (`allow`, `deny`, `ask`, `defer`) and a reason; `PostToolUse` returns `decision: "block"` and a `reason`.
+**Exit codes.** 0 is success (standard output counts only as one JSON object). **2 blocks:** standard error is the reason and Claude sees it. **Any other code is a non-blocking error:** the action goes ahead, so a crashing guard guards nothing. For richer answers print JSON: `PreToolUse` returns `hookSpecificOutput` with a `permissionDecision` (`allow`, `deny`, `ask`, `defer`) and a reason; `PostToolUse` returns `decision: "block"` and a `reason`.
 
 **Enforcement versus advice.** `CLAUDE.md` is context, not enforcement (lesson 2.1); the memory page says a `PreToolUse` hook blocks an action whatever Claude decides. Exit 2 acts before permission rules are read, and a hook's `allow` cannot override a `deny` or `ask` rule. A guard that cannot read its input still exits 2 (lesson 8.2).
 
-The other kind runs *after* the edit and can only report. The hooks guide's example runs a formatter on the edited file; Remit has none (standard library only), so lab m09's `PostToolUse` hook checks instead. A checker that cannot read its input should exit 1, not 2: the hook is broken, the agent is not wrong. A hook is registered in `.claude/settings.json` (use `python` if `python3` is missing; this script name is made up):
+The other kind runs *after* the edit and can only report. Remit has no formatter to run (standard library only), so lab m09's `PostToolUse` hook checks instead. A checker that cannot read its input should exit 1, not 2: the hook is broken, the agent is not wrong. A hook is registered in `.claude/settings.json` (use `python` if `python3` is missing; this script name is made up):
 
 ```json
 {
@@ -96,15 +96,15 @@ The other kind runs *after* the edit and can only report. The hooks guide's exam
 
 **Headless mode** runs the agent as a program. `claude -p "prompt"` does one run and exits; piped input joins it. `--output-format json` prints one object with `result`, `session_id`, cost fields such as `total_cost_usd`, and `structured_output` with `--json-schema`. A failed run exits non-zero and prints the failure as its result. `--allowedTools` pre-approves (`"Bash(git diff *)"`; the trailing ` *` is a prefix match), `--tools` restricts which built-in tools exist (`""` means none: the strong choice), `--permission-mode dontAsk` denies whatever would prompt. `--max-turns N` ends with an error when reached and **has no limit by default**; `--max-budget-usd` is a client-side estimate. `--bare` skips auto-discovery of hooks, skills, subagents, MCP servers and `CLAUDE.md` and needs `ANTHROPIC_API_KEY`; the documentation says it will become the default for `-p`, so check your version. Without it, `-p` applies a repository's project hooks and `.mcp.json` servers with no trust dialog.
 
-**MCP: a connection is a trust decision.** Before `claude mcp add`, ask: does a CLI or file already do this (`gh`, `git`)? Does the server fetch text strangers write (issues, tickets, web pages)? The documentation warns of prompt injection; lesson 8.1 lists one vendor's demonstration of a public GitHub issue steering an agent that used the GitHub server, a demo and not a measured rate. Is it read-only? Scope it (`--scope local`, `project` or `user`), allow tools by `mcp__<server>__<tool>`, and remember that a project `.mcp.json` loads under `-p` without asking. Protocol internals: [*Building AI Applications & Agents*, lesson 10.1 — The Model Context Protocol: servers, tools, resources, authorisation and least privilege](../aiapps/index.html#/10.1).
+**MCP: a connection is a trust decision.** Before `claude mcp add`, ask: does a CLI or file already do this (`gh`, `git`)? Does the server fetch text strangers write (issues, tickets, web pages)? The documentation warns of prompt injection; lesson 8.1 lists one vendor's demo of an issue steering an agent. Is it read-only? Scope it (`--scope local`, `project` or `user`), allow tools by `mcp__<server>__<tool>`, and remember that a project `.mcp.json` loads under `-p` without asking. Protocol internals: [*Building AI Applications & Agents*, lesson 10.1 — The Model Context Protocol: servers, tools, resources, authorisation and least privilege](../aiapps/index.html#/10.1).
 
 ### 🔴 Expert view
 
-**GitHub Actions** runs the agent on GitHub's runners with `anthropics/claude-code-action@v1`; `/install-github-app` sets it up. With no `prompt` input it answers `@claude` in comments; with a `prompt` it runs on any event, including a schedule. `claude_args` passes any CLI flag, and the documentation names the cost controls: `--max-turns`, job `timeout-minutes`, concurrency groups and a concise `CLAUDE.md`. Its example permissions are broad (write access to contents, pull requests and issues): trim them to the job. Keep a human at the merge: protected branches, a second reviewer for money logic, output as a comment, never a merge.
+**GitHub Actions** runs the agent on GitHub's runners with `anthropics/claude-code-action@v1`; `/install-github-app` sets it up. With no `prompt` input it answers `@claude` in comments; with a `prompt` it runs on any event, including a schedule. `claude_args` passes any CLI flag; the documentation names the cost controls: `--max-turns`, job `timeout-minutes`, concurrency groups and a concise `CLAUDE.md`. Its example permissions are broad: trim them to the job. Keep a human at the merge: protected branches, a second reviewer for money logic, output as a comment, never a merge.
 
 **Cost and reliability** are design inputs. Give every unattended run a tool list, turn limit, budget cap and timeout; retry once at most; make a second run harmless (same input, same output, one result per ticket id); validate what comes back before anything acts on it, because model output is data. In August 2025, as Wiz reported, malicious Nx packages ran AI command-line tools already installed on developers' machines, with safety-bypass flags (the cause: a stolen npm token and a vulnerable CI workflow, not an AI flaw), which shows that an agent CLI is a capability any script can call.
 
-**Meta's map.** Meta reports that a small team built Forum, a Groups app, with an AI agent as a participant, using five components: rules, skills, agents, commands and hooks. In this course's terms: rules are `CLAUDE.md` and `.claude/rules/` (money is `Decimal`); skills and commands are the same files here (`/pr-description`); agents are subagents (`remit-reviewer`); hooks are hooks (the float check). Meta also reports that when the agent repeats a mistake more than twice, the team encodes the correction once, for everyone, and that its biggest gains came from changing code and tooling rather than prompts. Remit's small version: `python -m remit quote QAR 500 INR`, so the agent need not guess the fee. A company describing its own project, not independent evidence: read the original (linked below).
+**Meta's map.** Meta reports that its Forum team (lesson 0.1) used five components: rules, skills, agents, commands and hooks. Here, rules are `CLAUDE.md` and `.claude/rules/` (money is `Decimal`); skills and commands are the same files here (`/pr-description`); agents are subagents (`remit-reviewer`); hooks are hooks (the float check). Meta also reports that when the agent repeats a mistake more than twice, the team encodes the correction once, for everyone, and that its biggest gains came from changing code and tooling rather than prompts. Remit's small version: `python -m remit quote QAR 500 INR`, so the agent never guesses the fee. A company's own account, not independent evidence.
 
 **Maintenance.** Keep the shared files of `.claude/` in git (not `settings.local.json`) and review them like code: a hook runs with your rights, outside the sandbox. Test hooks on sample documents, never by running what they guard. Give each automation an owner, pin the team's version (`claude --version`; behaviour changes across releases) and delete automations nobody trusts.
 
@@ -212,16 +212,16 @@ Delete the first comment line in your copy: it names the file in the course repo
 
 ## ✍️ Check yourself
 
-**1. Salem finds `.claude/commands/deploy.md` in one repository and `.claude/skills/deploy/SKILL.md` in another. What is true?**
+**1. Salem pastes the same pull-request description prompt three times a week, then reads and edits what comes back. Which form fits the decision card?**
 
-- A. Command files are no longer read, so only the skill exists
-- B. Both create `/deploy`, and a skill wins if the names clash
-- C. Both run in turn, with the command file first
-- D. Commands are typed by people and skills are used only by Claude
+- A. A `PreToolUse` hook that drafts the description before every edit he makes
+- B. A skill he starts when he needs it, whose output he reads and edits himself
+- C. A nightly headless job that writes each description and opens the pull request
+- D. A subagent that writes the description and then approves the pull request itself
 
 <details><summary>Answer</summary>
 
-**B.** Commands merged into skills: both paths create `/deploy`, and the skill wins a name clash. (🟢 Commands and skills.)
+**B.** It repeats and a person reads every result, so a skill such as `/pr-description` fits. A hook (A) fires on every edit, not when needed; C and D act with nobody reading the output. (🟢 The decision rule.)
 
 </details>
 
@@ -264,30 +264,30 @@ Delete the first comment line in your copy: it names the file in the course repo
 
 </details>
 
-**5. A nightly job runs `claude -p` with `--allowedTools` set but no `--max-turns`. What does the documentation say about turns?**
+**5. Tariq approves a nightly `claude -p` job that labels new tickets by area from a fixed list. What belongs under "Limits?" on its card?**
 
-- A. A small default applies, and the run ends with an error
-- B. The model sets the limit, stopping when it has finished
-- C. `--max-budget-usd` replaces the turn flag, so none is needed
-- D. There is no limit by default, so a confused run can keep going
+- A. Tools, turns, budget and timeout set, and each label checked against the list
+- B. Tools, turns and budget set, with each label taken as the model returns it
+- C. A turn limit and timeout only, since a run that ends cannot overspend
+- D. A budget cap only, since `--max-budget-usd` stands in for every other limit
 
 <details><summary>Answer</summary>
 
-**D.** `--max-turns` has no limit by default. A budget is a separate cap, and only an estimate. (🟡 Headless mode.)
+**A.** Every unattended run gets a tool list, turn limit, budget cap and timeout, and its output is validated before anything acts on it. Unchecked labels (B) let a wrong area through, a turn limit and timeout (C) cap length, not spend, tools or output, and the budget is only a client-side estimate (D). (🟡 Headless mode; 🔴 Cost and reliability.)
 
 </details>
 
 ## 📚 References
 - Claude Code documentation: skills https://code.claude.com/docs/en/skills; subagents https://code.claude.com/docs/en/sub-agents; hooks https://code.claude.com/docs/en/hooks; hooks guide https://code.claude.com/docs/en/hooks-guide; MCP https://code.claude.com/docs/en/mcp; headless https://code.claude.com/docs/en/headless; GitHub Actions https://code.claude.com/docs/en/github-actions
 - [*Building AI Applications & Agents*, lesson 10.1 — The Model Context Protocol: servers, tools, resources, authorisation and least privilege](../aiapps/index.html#/10.1); [*Secure AI & Application Security*, lesson 9.2 — Agents and tools: excessive agency, least-privilege tools and MCP](../secai/index.html#/9.2)
-- **Go deeper.** Engineering at Meta, "How Meta Built Forum With AI-Native Engineering": https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/ · OWASP, LLM06:2025 Excessive Agency: https://genai.owasp.org/llm-top-10/ · Invariant Labs, GitHub MCP exploited: https://invariantlabs.ai/blog/mcp-github-vulnerability · Wiz, the s1ngularity supply-chain attack: https://wiz.io/blog/s1ngularity-supply-chain-attack · Model Context Protocol: https://modelcontextprotocol.io
+- **Go deeper.** Engineering at Meta, "How Meta Built Forum With AI-Native Engineering": https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/ · OWASP, LLM06:2025 Excessive Agency (LLM03 in the 2026 edition): https://genai.owasp.org/llmrisk/llm062025-excessive-agency/ · Invariant Labs, GitHub MCP exploited: https://invariantlabs.ai/blog/mcp-github-vulnerability · Wiz, the s1ngularity supply-chain attack: https://wiz.io/blog/s1ngularity-supply-chain-attack · Model Context Protocol: https://modelcontextprotocol.io
 
 ---
 
 # 9.2 — Lab: build a project toolkit and a headless triage script
 *Level: 🟡 Intermediate* · *Prerequisites: 9.1, 8.2* · *Focus: Automate*
 
-**After this you can** build a review command, a post-edit hook and a headless triage script that pass the grader. *Study time: about 110 minutes (estimate).*
+**After this you can** build a review command, a post-edit hook and a headless triage script that pass the grader. *Study time: reading about 10 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Lab m09.** Five things in Remit: a review command, a read-only reviewer, a post-edit hook, a headless triage script and three decision cards.
@@ -432,7 +432,7 @@ directory>` passes (run it from the `ailab` folder of the course repository).
 **Start.**
 
 ```bash
-cd ainative/ailab
+cd ~/system-design-for-vibe-coders/ainative/ailab
 python -m ailab start m09 --dir ~/ainative/m09
 cd ~/ainative/m09
 export PATH="$PWD/lab-assets/bin:$PATH"   # the stand-in; macOS, Linux or WSL

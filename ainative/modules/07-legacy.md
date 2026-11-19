@@ -9,7 +9,7 @@
 # 7.1 — Changing code you do not understand: characterization tests, seams, incremental refactors and agent-sized migrations
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1, 6.1* · *Focus: Workflow, Verify*
 
-**After this you can** write characterization tests that pin a legacy module's behaviour, quirks included, and show a mutation they catch. *Study time: about 110 minutes (estimate).*
+**After this you can** write characterization tests that pin a legacy module's behaviour, quirks included, and show a mutation they catch. *Study time: reading about 15 min, hands-on about 75 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Legacy is code you cannot change with confidence**, usually because it has no tests. Start by *pinning*: a **characterization test** records what the code does today, quirks included, even those you think wrong.
@@ -19,7 +19,7 @@
 - Cue: no net, no delegation. Trap: a green suite that never touched the code.
 
 ## 🧭 Why it matters
-On a constructed Wednesday Lujain (graduate engineer) asks her agent to "make `ledger.py` consistent with the rest of Remit". The summary reads well: the partner share uses the shared rounding helper, `balance()` has no side effect, `journal()` returns the list directly. `pytest -q` prints `99 passed`, because no test asserts anything about the ledger (lesson 5.1 changed `PARTNER_SHARE` to 0.35 and watched all 99 stay green). Three weeks later Finance finds the partner payable a cent out on some transfers; nobody can say which commit did it.
+On a constructed Wednesday Lujain (graduate engineer) asks her agent to "make `ledger.py` consistent with the rest of Remit". The summary reads well: the partner share uses the shared rounding helper, `balance()` has no side effect, `journal()` returns the list directly. `pytest -q` prints `99 passed`, because no test asserts anything about the ledger. Three weeks later Finance finds the partner payable a cent out on some transfers; nobody can say which commit did it.
 
 Michael Feathers, in *Working Effectively with Legacy Code* (2004), defines legacy code as code without tests: without tests you cannot tell whether a change preserved behaviour, however well it reads. Agents cut both ways: they make tidying and the net cheap. Tests are quick to draft, slow to trust: habit 4, *Trust evidence, not fluency*, applies to the net too.
 
@@ -132,7 +132,7 @@ A prompt or `CLAUDE.md` is context, not enforcement. Once the tests are committe
 
 **Review at scale.** A forty-file mechanical diff cannot be read line by line. (1) Review the *rule*: the instruction or, for a codemod, the script (run it twice; the second run should change nothing). (2) Read the tests in full. (3) Sample the diff: first and last hunks and the riskiest files. (4) Automate the rest: the suite on every commit, warnings as errors, a search for the old names, `git diff --stat`. Stop signs: a changed test file in a refactor commit, and a hunk you cannot explain.
 
-**Agent-sized units.** A unit is one rule over a bounded set of files, small enough to verify in one sitting. For a long list, Claude Code's best-practices page shows a headless fan-out, which lesson 9.1 teaches (other tools have equivalents); adapted to this rename (`files.txt` from a `grep -l`):
+**Agent-sized units.** A unit is one rule over a bounded set of files, small enough to verify in one sitting. For a long list, Claude Code's best-practices page shows a headless fan-out, which lesson 9.1 teaches; adapted to this rename (`files.txt` from a `grep -l`):
 
 ```bash
 for file in $(cat files.txt); do
@@ -254,7 +254,7 @@ Fill it in before the work, a few lines per section; draft section 4 with your a
 
 - A. Once nothing calls the old names any more, in the contract step
 - B. In the expand step, so the new names are unambiguous
-- C. In the first migration commit, so missed call sites fail at once
+- C. In the first migration commit, so missed callers fail at once
 - D. Never, because another service might still use them one day
 
 <details><summary>Answer</summary>
@@ -300,7 +300,7 @@ Fill it in before the work, a few lines per section; draft section 4 with your a
 # 7.2 — Lab: tame an untested module, refactor it, then migrate a dependency
 *Level: 🟡 Intermediate* · *Prerequisites: 6.2, 7.1* · *Focus: Workflow, Verify*
 
-**After this you can** pin an untested module, refactor it in green commits and migrate a dependency so the grader passes. *Study time: about 110 minutes (estimate).*
+**After this you can** pin an untested module, refactor it in green commits and migrate a dependency so the grader passes. *Study time: reading about 10 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Lab m07** on Najm Remit: the legacy ledger has no tests and keeps module-level books. Three parts: **pin** it with characterization tests, **refactor** it (`class Ledger`, `RemitService(..., ledger=None)`), **migrate** najmkit from version 1 to 2.
@@ -340,9 +340,9 @@ pytest -W error::DeprecationWarning, show me the output, and commit when it is g
 
 ### 🔴 Expert view
 
-**How the grader reads your work.** It rebuilds the original ledger from the `lab-start` tag and runs your tests on it, on an identical copy rewritten with other comments and private names (so a test cannot fingerprint the file) and on sixteen broken copies, each described by a behaviour such as "a negative fee is refused"; survivors are named. Every run is `pytest -q` as CI runs it.
+**How the grader reads your work.** It rebuilds the original ledger from the `lab-start` tag and runs your tests on it, on an identical copy rewritten with other comments and private names (so a test cannot fingerprint the file) and on sixteen broken copies, each described by a behaviour such as "a negative fee is refused"; survivors are named.
 
-**What it cannot tell.** Whether you understood a quirk, or moved in small steps rather than one leap committed three times (it checks only that each commit changes a file and that the tests come first). Whether your refactor changed a behaviour nobody pinned. A suite that copies values out of the code passes and teaches nothing if you never asked why. The grader is a practice partner, not a gate.
+**What it cannot tell.** Whether you understood a quirk, or moved in small steps rather than one leap committed three times (it checks only that each commit changes a file and that the tests come first). Whether your refactor changed a behaviour nobody pinned. A suite that copies values out of the code passes and teaches nothing if you never asked why.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
@@ -448,7 +448,7 @@ When you think you are done, from the `ailab` folder of the course repository:
 **Start.**
 
 ```bash
-cd ainative/ailab                     # in your clone of the course repository
+cd ~/system-design-for-vibe-coders/ainative/ailab                     # in your clone of the course repository
 python -m ailab start m07 --dir ~/ainative/m07
 cd ~/ainative/m07                     # the lab repository: work, run pytest and commit here
 git log --oneline          # "Lab starting state" on top of "Initial state"

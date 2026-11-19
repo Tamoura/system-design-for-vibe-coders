@@ -9,7 +9,7 @@
 # 4.1 — Performance testing: load, stress, soak and spike, percentiles and SLOs
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 3.1* · *Focus: Performance*
 
-**After this you can** predict a service's maximum rate with Little's Law, find its knee by measurement, and write a latency test that fails when you inject a 20 ms slowdown. *Study time: about 115 minutes (estimate).*
+**After this you can** predict a service's maximum rate with Little's Law, find its knee by measurement, and write a latency test that fails when you inject a 20 ms slowdown. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A **performance test** asks one question about speed or capacity under a stated load: "Do 95 % of balance requests finish within 300 ms at payday traffic?" No number, no test.
@@ -372,7 +372,7 @@ Work in a copy of `testing/sample`.
 # 4.2 — Security testing for testers: OWASP, SAST, DAST, dependency scanning, fuzzing and authorisation tests
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 4.1* · *Focus: Security*
 
-**After this you can** extend an authorisation matrix, fix and pin a fuzz-test finding, and build rate-limit tests, showing each one fail against the matching seeded or injected weakness. *Study time: about 115 minutes (estimate).*
+**After this you can** extend an authorisation matrix, fix and pin a fuzz-test finding, and build rate-limit tests, showing each one fail against the matching seeded or injected weakness. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Testers add what scanners cannot: **abuse cases**, **authorisation matrices** (who may do what to whose data), hostile and generated input, and a regression test for every vulnerability.
@@ -783,7 +783,7 @@ Use only your own copy of `testing/sample`.
 # 4.3 — Reliability and data testing: resilience experiments, backups, migrations and data quality
 *Level: 🟡 Intermediate* · *Prerequisites: 2.2, 4.1* · *Focus: Reliability, Integration*
 
-**After this you can** time a restore drill and check the newest restored record is under 15 minutes old, and rehearse a batched data migration that reconciles every row and stops on a bad one. *Study time: about 115 minutes (estimate).*
+**After this you can** time a restore drill and check the newest restored record is under 15 minutes old, and rehearse a batched data migration that reconciles every row and stops on a bad one. *Study time: reading about 10 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Reliability tests ask "what happens when something goes wrong?": a dependency is slow or down, a reply is lost, a request repeats, a restore is needed.
@@ -1137,7 +1137,7 @@ Try `DELETE FROM ledger` by hand: `not null`, `accepted values` and `relationshi
 
 **Test data and privacy.** Test data is synthetic or masked, never raw customer data. **Faker** makes repeatable fake people: `Faker("ar_AA")` plus `fake.seed_instance(2026)` gives the same Arabic names every run. **Masking** replaces real values consistently, e.g. with a keyed hash, so joins and formats survive but the original cannot be rebuilt without the key. Keep production copies off laptops and out of AI tools ([*Secure AI & Application Security*, lesson 5.3 — Protecting personal data: minimisation, logging and privacy engineering](../secai/index.html#/5.3)).
 
-**Regulation.** The EU's Digital Operational Resilience Act (DORA, Regulation 2022/2554; unrelated to the DevOps metrics) has applied since January 2025 and, as we read it, requires resilience testing, including threat-led penetration testing for designated entities. Compliance owns the interpretation.
+**Regulation.** The EU's Digital Operational Resilience Act (DORA, Regulation 2022/2554; unrelated to the DevOps metrics) has applied since January 2025 and, as we read it, requires resilience testing, including threat-led penetration testing (TLPT) for the entities their supervisor selects (Article 26). Compliance owns the interpretation.
 
 **AI-era notes.** Agents add retries without backoff, limits or idempotency keys, and write migrations that drop columns in one step; these tests catch both. Test AI features' degraded paths too: when retrieval returns nothing (the `hallucinate` seeded bug), Najm Assist must say so, not invent a policy (lesson 7.2).
 

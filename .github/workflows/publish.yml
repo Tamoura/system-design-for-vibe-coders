@@ -150,6 +150,8 @@ jobs:
             cp secai/index.html secai/course.html secai/COURSE.md secai/TOOLKIT.md \
                secai/index.ar.html secai/course.ar.html secai/COURSE.ar.md secai/TOOLKIT.ar.md \
                secai/assessment.html secai/assessment.ar.html _site/secai/
+            # The starter lab the lessons link to (secai/lab/README.md and its files)
+            mkdir -p _site/secai/lab && cp -r secai/lab/. _site/secai/lab/ && rm -rf _site/secai/lab/__pycache__ _site/secai/lab/logs
           fi
           # From Graduate to Hired → /career/ (once built)
           if [ -f career/index.html ]; then

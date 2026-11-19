@@ -9,7 +9,7 @@
 # 10.1 — Capstone: take Najm Assist from idea to scale
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–9* · *Stage: Discover, Define, Design, Build, Evaluate, Launch, Grow, Lead*
 
-**After this you can** assemble a dossier that takes an AI product from idea to scale, with a decision, evidence and stop rule at each stage, and defend it in a 10-minute review. *Study time: about 125 minutes (estimate).*
+**After this you can** assemble a dossier that takes an AI product from idea to scale, with a decision, evidence and stop rule at each stage, and defend it in a 10-minute review. *Study time: reading about 20 min, hands-on about 16 h (estimate).*
 
 ## ⚡ In 60 seconds
 - The capstone walks one product, **Najm Assist**, through all eight stages: Discover, Define, Design, Build, Evaluate, Launch, Grow and Lead. Each stage produces one artefact you already learned to make.
@@ -24,7 +24,7 @@ It is January. Rania shows the team one slide: most contact-centre calls last ye
 
 Faisal wants a demo by Thursday. Rania: "The demo is easy. The hard part is the decisions between the demo and a product customers trust with their money. Let's make them in order, and write each one down."
 
-Skipped decisions have public costs. In *Moffatt v. Air Canada* (2024), a tribunal held the airline responsible for what its chatbot told a customer about bereavement fares. DPD's delivery chatbot swore and criticised the company after an update in January 2024. Klarna announced in February 2024 that its assistant handled a large share of customer chats, and in 2025 said it would bring more human service back. Each is a failure *between* artefacts: a spec without a grounding rule, an update without a regression gate, a cost metric without a quality counterweight. The capstone is where you practise closing those gaps.
+Skipped decisions have public costs. An airline was held responsible for what its chatbot told a customer (0.2). A delivery chatbot swore at a customer after an update (5.3). Klarna announced in February 2024 that its assistant handled a large share of customer chats, and in 2025 said it would bring more human service back. Each is a failure *between* artefacts: a spec without a grounding rule, an update without a regression gate, a cost metric without a quality counterweight. The capstone is where you practise closing those gaps.
 
 ## 📐 How it works
 
@@ -42,7 +42,7 @@ All numbers below are illustrative.
 
 **Discover.** Hessa and Faisal listen to call recordings (with Sara's approval), read app reviews and shadow five contact-centre agents. They frame the work as **Jobs to be Done** (Clayton Christensen): "when I see a transaction I don't recognise, I want to stop further damage and get my money back." Their **Opportunity Solution Tree** (Teresa Torres) has one outcome (customers resolve common needs in the app without waiting), four opportunities (unknown transactions, lost cards, confusing fees, transfer limits) and candidate solutions under each. Only some need AI: a clearer fee page fixes part of the fee confusion better than any chatbot.
 
-**Define.** The scorecard rates each candidate on value, feasibility and risk. Answering fee and policy questions from the bank's documents scores high on value and feasibility, medium on risk (wrong fee answers are costly, as Air Canada learned). Freezing a card is high value, low risk, because it is reversible. Disputing a transaction is high value but higher risk: it starts a regulated process with deadlines. Personalised investment advice is **killed** (high risk, unclear value, a licensing question), and the reason is recorded so it is not reopened every quarter.
+**Define.** The scorecard rates each candidate on value, feasibility and risk. Answering fee and policy questions from the bank's documents scores high on value and feasibility, medium on risk (wrong fee answers are costly, as the tribunal ruling in 0.2 showed). Freezing a card is high value, low risk, because it is reversible. Disputing a transaction is high value but higher risk: it starts a regulated process with deadlines. Personalised investment advice is **killed** (high risk, unclear value, a licensing question), and the reason is recorded so it is not reopened every quarter.
 
 The data readiness check asks whether the bank has what each use case needs: a current, owned fee and terms corpus (partly — three versions of the fee schedule exist, so Omar's team names one owner); historical conversations for evaluation (yes, after redaction); and card APIs (yes, already used by the app). Sara's data rights note records the lawful basis under Qatar's PDPPL (Law No. 13 of 2016) and GDPR for EU customers, plus retention. Detail belongs to *AI Governance: Zero to Hero*; the PM makes sure the note exists before build.
 
@@ -71,7 +71,7 @@ Before this, Faisal ran a **Wizard of Oz** test (a human behind the chat window)
 **Evaluate.** Dana's eval plan has three layers, matching Module 6:
 
 1. **Offline**: a golden set of redacted real conversations, sliced by job, language (English and Arabic) and difficulty. Error analysis reads failures by hand before anyone tunes a prompt.
-2. **Judged and adversarial**: an **LLM-as-judge** grades grounding and tone at scale, calibrated against human raters because judges have known biases (Zheng et al., 2023). A red-team tries prompt injection, limit overrides, the "$1 car" manipulation seen at a Chevrolet dealer in December 2023, and questions baiting the assistant to state fees it cannot find.
+2. **Judged and adversarial**: an **LLM-as-judge** grades grounding and tone at scale, calibrated against human raters because judges have known biases (Zheng et al., 2023). A red-team tries prompt injection, limit overrides, the "$1 car" manipulation from 5.3, and questions baiting the assistant to state fees it cannot find.
 3. **Online**: a staged rollout (staff, then 1%, 10%, 50% of users) with an **A/B test** against the existing help centre. Following Kohavi, Tang and Xu, the team agrees the **overall evaluation criterion** in advance and adds **guardrail metrics** (complaints, handoff rate, wrong-answer reports) that can stop the rollout on their own.
 
 ```mermaid
@@ -133,10 +133,32 @@ Faisal's **Najm Assist product dossier — summary page** (v1.0, reviewed by Ran
 
 Rania's comment: *"Auditors will ask about rows 3 and 7, Khalid about row 8. Row 1 is the one we'll forget — revisit it every six months."*
 
+**Capstone brief: build your dossier from your earlier exercises.** You do not start from a blank page. If you did the Najm Assist exercises along the way, most rows already exist; the table shows where each comes from. Where you skipped an exercise, do it now.
+
+| Row | Build it from |
+|---|---|
+| 1 Discover | 2.1 🟢 job statements; an Opportunity Solution Tree like the 2.1 🔴 one, for Najm Assist |
+| 2 Define | 2.2 🟡 value sizing; 2.3 🟡 kill criteria |
+| 3 Define | 3.1 🟡 readiness questions, rerun for Najm Assist; 3.2 🟡 feedback loop spec |
+| 4 Design | The automation map above, with your own reasons; 4.2 🔴 guideline review; 4.3 🟡 preview and handover |
+| 5 Build | 5.1 🟢 requirements and 🔴 dispute spec; 5.3 🟡 tool contracts |
+| 6 Evaluate | 6.1 🟡 golden-set table; 6.3 🟢 OEC and guardrails |
+| 7 Launch | 7.1 🔴 change classes and v2 gates; 7.2 🟡 positioning and claims register |
+| 8 Grow | 8.1 🟢 metric families; 8.2 🟡 cost per resolved conversation |
+| 9 Lead | 9.1 🟡 moat audit; 9.2 🟡 bet card; 9.3 🟡 decision rights; 9.4 🔴 responsible-AI section |
+
 ## 🛠️ Exercises
-- 🟢 Write out three rows of the dossier in full (for example the scorecard with five candidates, the automation map with six tasks, the launch checklist). *Done when:* each states its decision, evidence and stop rule, and names the input it passes on.
+- 🟢 Assemble your own Najm Assist dossier from your earlier exercise outputs, using the capstone brief above: fill in the nine summary rows and attach each artefact, writing any missing one in full now. *Done when:* every row states its decision, evidence and stop rule, names the input it passes on, and scores at least 6 of 8 on the self-review rubric below.
 - 🟡 Write the dossier summary for **Smart Alerts** or **Staff GenAI**, one row per stage. *Done when:* all nine rows are filled and at least three differ in substance from Najm Assist, each with a one-sentence reason (classic ML, or internal tool).
 - 🔴 Run the full capstone on a product from your own organisation or a public product. Present it in 10 minutes to a colleague playing Khalid, Layla and Tariq in turn. *Done when:* each artefact fits on one page, the links are explicit, you have written answers to their three hardest questions and at least one artefact changed because of them.
+
+<details><summary>Check your work</summary>
+
+**🟢 and 🟡 self-review rubric.** Score each dossier row 0–2 on four points: (1) the decision is stated in one sentence; (2) the evidence is named and you could show it; (3) the stop rule is a number or an observable event; (4) the row names the input it passes to the next row. A row scoring 6 or more out of 8 is ready; below 6, rework it with the lesson listed in the brief. For the 🟡 summary, at least three rows should differ from Najm Assist for a stated reason (for example Smart Alerts' labels arrive weeks late, so row 8 needs leading proxies).
+
+**Working alone?** Record your 10-minute talk, wait a day, then answer in writing the questions each reviewer always asks: Khalid, "what does the business get back, and when?"; Layla, "what is the risk tier, and who signs off?"; Tariq, "what does each request cost, and how fast is it?". Change at least one artefact in response.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Starting at Build.** A demo answers "can we?", not "should we?". Start with jobs and the scorecard.
@@ -159,7 +181,7 @@ Rania's comment: *"Auditors will ask about rows 3 and 7, Khalid about row 8. Row
 - A. Launch as planned and fix the issue in the next release
 - B. Lower the bar to 90% for the whole assistant, because the rest of the results are strong and the gap is small
 - C. Take that fee type out of scope, route those questions to a person, and launch the rest if all other bars are met
-- D. Cancel the launch and restart discovery from the beginning, because the failure shows the team misread what customers need
+- D. Cancel the launch and restart discovery, because the failure shows the team misread what customers need
 
 <details><summary>Answer</summary>
 
@@ -197,7 +219,7 @@ Rania's comment: *"Auditors will ask about rows 3 and 7, Khalid about row 8. Row
 
 - A. Expand to 100% because the cost saving is large and the headline number is clearly better
 - B. Switch to a cheaper model to increase the saving, then run the same test again next month
-- C. Remove complaints from the guardrail list, since the change affects only a small group of users
+- C. Agree with the business owner to raise the complaints limit, since the call saving outweighs it
 - D. Pause the expansion and investigate the complaints before deciding
 
 <details><summary>Answer</summary>
@@ -210,8 +232,8 @@ Rania's comment: *"Auditors will ask about rows 3 and 7, Khalid about row 8. Row
 
 - A. Switching to a cheaper model is the main lever, because model calls are the part of the bill the team controls most directly
 - B. Improving resolution on the most common jobs, which reduces handoffs, is likely the biggest lever
-- C. Removing the "talk to a person" option will cut cost safely
-- D. Cost does not matter once the product has launched, because the team can adjust it later
+- C. Making the "talk to a person" option harder to find, so that more of the chats stay with the assistant
+- D. Growing conversation volume, so the platform's fixed cost is spread over more chats
 
 <details><summary>Answer</summary>
 
@@ -235,7 +257,7 @@ Rania's comment: *"Auditors will ask about rows 3 and 7, Khalid about row 8. Row
 # 10.2 — The AI PM career: interviews, portfolio and growth
 *Level: 🔴 Advanced* · *Prerequisites: 10.1* · *Stage: Lead*
 
-**After this you can** answer an AI product-design interview question with the eight-step structure, write a one-page portfolio case study whose decision a reader can state in one sentence, and design a scored interview loop. *Study time: about 125 minutes (estimate).*
+**After this you can** answer an AI product-design interview question with the eight-step structure, write a one-page portfolio case study whose decision a reader can state in one sentence, and design a scored interview loop. *Study time: reading about 20 min, hands-on about 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 - AI product management is product management first. Interviewers still test product sense, execution, metrics and leadership; the AI part tests whether you can reason about **probabilistic behaviour, data, evaluation, cost and trust** when you make those calls.
@@ -375,6 +397,16 @@ And Faisal's **one-page portfolio case study**, rewritten with Rania to meet the
 - 🟡 Write one portfolio case study (one page) from your own work or from your 10.1 capstone, using the six sections in the table. Then ask someone to read it and tell you, in one sentence, what decision you made. *Done when:* their sentence matches your decision, every number is either real and shareable or removed, and the case study includes a trade-off.
 - 🔴 Design an interview loop for hiring an AI PM at your organisation (or Najm Bank): four interviews, the questions for each, a scorecard with at least six criteria and what "strong" and "weak" look like for each. Run one interview with a colleague. *Done when:* each criterion links to a skill from a course module, two panel members could score the same answer independently, and you have revised at least one question after the trial run.
 
+<details><summary>Check your work</summary>
+
+**🟢 Self-check.** Play back the recording and mark the minute where each of the eight steps starts. A strong answer spends its first two minutes on the user, the job and whether AI is needed at all, names a quality bar and one failure mode with a guardrail, and ends with a metric and a trade-off.
+
+**🟡 and 🔴 self-check.** Your case study passes if a reader can state the decision in one sentence, it contains a trade-off, and every number is real and shareable or removed. Your interview loop passes if each of the six criteria links to a module and has "strong" and "weak" examples concrete enough for two people to score the same answer alike.
+
+**Working alone?** For the 🟡, put the case study away for two days, then write the decision in one sentence from memory and compare it with the page. For the 🔴, answer one of your own questions on a recording, score it a day later with your scorecard, and revise any question you could not score clearly.
+
+</details>
+
 ## ⚠️ Mistakes and traps
 - **Leading with the model.** Starting with architecture or a vendor name signals engineering interest, not product judgement. Start with the user and the job.
 - **Never asking whether AI is needed.** Interviewers often plant problems where a simpler fix wins. Saying so, briefly, scores well.
@@ -394,7 +426,7 @@ And Faisal's **one-page portfolio case study**, rewritten with Rania to meet the
 **1. In an interview, Faisal is asked to "design an AI assistant for relationship managers preparing for client meetings". What is the best way to begin?**
 
 - A. Describe the retrieval pipeline and which model to use
-- B. Quote the context window size of the latest models and explain how that size limits how much client material the assistant can read
+- B. Quote the context window of the latest models and explain how it limits the client material the assistant reads
 - C. Propose a pricing model for the assistant, with a price per seat and a rough view of the margin
 - D. Clarify who the RM is, what they do to prepare today and where the pain is, then check whether AI is the right tool
 
@@ -408,7 +440,7 @@ And Faisal's **one-page portfolio case study**, rewritten with Rania to meet the
 
 - A. "We'd track customer ratings after launch and investigate any month in which the average score falls."
 - B. "We'd choose the model that ranks highest on the public leaderboards and re-check the ranking each quarter."
-- C. "A golden set of real tasks sliced by job and language, with error analysis; an LLM judge calibrated against humans plus red-teaming; then a staged rollout with an agreed criterion and guardrail metrics."
+- C. "A sliced golden set with error analysis, a calibrated LLM judge plus red-teaming, then a staged rollout with guardrails."
 - D. "Engineering would run a full set of unit tests on each release and block any build that fails them."
 
 <details><summary>Answer</summary>
@@ -421,12 +453,12 @@ And Faisal's **one-page portfolio case study**, rewritten with Rania to meet the
 
 - A. Include the internal dashboard screenshots to prove the results, and add a line explaining how the team measured them for readers who want to check the numbers
 - B. Describe the decision, evidence and result at a level of detail the bank accepts, state his own role precisely, and remove numbers he may not share
-- C. Say "I built Najm Assist" to keep the story short
+- C. Present the results as his own, since he led the product, and thank the team at the end
 - D. Include only the parts that went well, so the case study stays short and reads as a clear success story
 
 <details><summary>Answer</summary>
 
-**B.** Confidentiality comes first, and precise attribution builds credibility. Screenshots of internal dashboards (A) risk leaking data; "I built it" (C) overclaims a team's work; success-only stories (D) hide the judgement interviewers want to see. (🟡 Going deeper: the portfolio.)
+**B.** Confidentiality comes first, and precise attribution builds credibility. Screenshots of internal dashboards (A) risk leaking data; claiming the results as his own (C) overclaims a team's work; success-only stories (D) hide the judgement interviewers want to see. (🟡 Going deeper: the portfolio.)
 
 </details>
 
@@ -473,9 +505,7 @@ And Faisal's **one-page portfolio case study**, rewritten with Rania to meet the
 # 10.3 — Practice exam: 60 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–9* · *Stage: Discover, Define, Design, Build, Evaluate, Launch, Grow, Lead*
 
-**After this you can** complete 60 scenario questions in 90 minutes without notes and build an error log that names, for each wrong or guessed answer, the trap and the section to re-read. *Study time: about 120 minutes (estimate).*
-
-> **Under revision (November 2026).** In many questions in this practice exam the correct option can be spotted by its length or wording, so a high score here does not show readiness for any real exam. Use it to practise reasoning: answer each question in your own words before you read the options, then compare.
+**After this you can** complete 60 scenario questions in 90 minutes without notes and build an error log that names, for each wrong or guessed answer, the trap and the section to re-read. *Study time: reading about 65 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - This is a **60-question practice exam** covering the whole course, grouped by the eight lifecycle stages: Discover, Define, Design, Build, Evaluate, Launch, Grow and Lead (7–8 questions each). Most questions are short scenarios at Najm Bank or a neutral company.
@@ -487,7 +517,7 @@ And Faisal's **one-page portfolio case study**, rewritten with Rania to meet the
 ## 🧭 Why it matters
 Faisal finished the course in three weeks and felt ready. Then Rania asked him four quick questions in a corridor: what he would measure first on Najm Assist, when he would stop an A/B test, who owns the decision to let SME Instant Finance decline an application on its own, and what happens to the Credit Memo Copilot when the model vendor ships a new version. He knew the words but not the answers. Knowing a framework is not the same as reaching for the right one when a situation is described in three sentences.
 
-That is what this exam tests. The questions are not about definitions. They describe a situation, often a messy one, and ask what you would do. The aim is that a reader who skimmed will find two answers attractive, and a reader who understood will see why one of them is wrong. Many questions do not meet that aim yet (see the notice above).
+That is what this exam tests. The questions are not about definitions. They describe a situation, often a messy one, and ask what you would do. The aim is that a reader who skimmed will find two answers attractive, and a reader who understood will see why one of them is wrong. The options were rebalanced in November 2026 so that length and wording do not point to the answer; if you find a question where they still do, treat it as a flaw in the question, not a clue.
 
 ## 📐 How it works
 ### 🟢 The essentials
@@ -530,6 +560,14 @@ Rania runs this exam with every new AI product manager in their first month. She
 - 🟡 **Build your error log.** For every wrong or guessed answer, fill in one row of the template above. *Done when:* each row names a trap and a section to re-read.
 - 🔴 **Write your own.** For your two weakest stages, write two new scenario questions each, set at Najm Bank or your own organisation, with an answer that explains the best distractor. *Done when:* a colleague answers them and at least one finds a distractor tempting.
 
+<details><summary>Check your work</summary>
+
+**🟢 and 🟡 self-check.** Mark your answers against the answer blocks only after all 60 are written. Count a guessed answer as wrong. Then sort your error log by stage: any stage where you missed two or more questions is the module to re-read first.
+
+**Working alone?** For the 🔴, put your four questions away for a week, then answer them cold without looking at your answers. If you can rule out every distractor at a glance, it is too weak: rewrite it as a mistake someone in the lesson's traps list would really make.
+
+</details>
+
 ## ⚠️ Mistakes and traps
 - **Opening answers as you go.** It turns an exam into reading practice. Write all your answers first.
 - **Counting lucky guesses as knowledge.** Mark any answer you were not sure about as wrong in your error log, even if it was right.
@@ -542,7 +580,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **1. Khalid, Head of Retail Lending, tells Faisal: "Our competitors all have AI in their apps. Put AI in our lending journey this quarter." What should Faisal do first?**
 
-- A. Shortlist three model vendors and ask each to demo on a sample of lending data, so the team can compare quality before choosing
+- A. Shortlist three model vendors and ask each to demo on sample lending data, to compare quality before choosing
 - B. Map the lending journey with customers and staff to find the jobs and pain points where AI could change an outcome
 - C. Build a chatbot for the lending page, since a chatbot is the quickest way to show customers that the bank uses AI
 - D. Write a PRD for an AI loan assistant so engineering can start estimating the work and planning the quarter
@@ -556,7 +594,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 **2. Faisal scores three candidate use cases on a 1–5 scale for business value only, and ranks "AI declines for SME invoice finance" first. Rania sends the scorecard back. What is the best fix?**
 
 - A. Replace the 1–5 scale with a 1–10 scale so the differences between the three use cases become clearer
-- B. Ask Khalid to confirm the ranking, since he owns the business outcome and knows which of the three use cases matters most to the bank
+- B. Ask Khalid to confirm the ranking, since he owns the business outcome and knows which use case matters most
 - C. Keep the ranking but add a note that the top idea needs extra testing before the team commits budget and people to it
 - D. Score each use case on value, feasibility and risk, and treat very high risk as a gate that must be resolved before ranking
 
@@ -594,7 +632,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **5. Faisal is about to run a four-week pilot of an AI tool that suggests next steps to SME relationship managers. Rania asks him to add one thing to the pilot plan before it starts. What is it most likely to be?**
 
-- A. A list of extra features to add if the pilot goes well, so the team can move quickly into the next phase
+- A. A list of extra features to add if the pilot goes well, so the team can move straight into the next phase without losing momentum
 - B. A draft press release announcing the results, so that marketing is ready to publish as soon as the pilot ends and the numbers look good
 - C. Kill criteria agreed in advance: the result below which the idea stops, such as fewer than a set share of suggestions used
 - D. A longer pilot period, since four weeks is rarely enough to see how relationship managers use an AI tool
@@ -633,7 +671,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **8. The fraud team wants to improve Smart Alerts, which flags suspicious card transactions from structured data: amount, merchant, location and time. Which approach is the best starting fit?**
 
-- A. A large language model that reads each transaction and writes a short judgement on whether it looks fraudulent, with its reasons
+- A. A large language model that reads each transaction and writes a short judgement on whether it is fraud
 - B. A classic machine-learning classifier trained on labelled past fraud cases, scoring each transaction as it arrives
 - C. An autonomous agent that investigates each transaction with tools, pulling extra data before it decides
 - D. A generative image model that turns spending patterns into charts so analysts can spot unusual activity
@@ -664,7 +702,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 - A. Five years is too little data for any model to learn from, so the team should wait until several more years of history exist
 - B. The data must first be moved to a new cloud platform before any model can be trained on it at all
 - C. Repayment outcomes exist only for approved requests, so the model never sees how rejected applicants would have behaved
-- D. Invoice data is structured, and structured data cannot be used by AI, so the team needs documents instead
+- D. Invoice data is structured, and structured data cannot be used by AI, so the team needs scanned documents and free text instead
 
 <details><summary>Answer</summary>
 
@@ -674,7 +712,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **11. The Credit Memo Copilot must answer questions about Najm's credit policy manual, which is updated several times a year, and it must show which section each answer came from. Which approach from the build spectrum fits best?**
 
-- A. Train a new model from scratch on the policy manual, so that it holds every rule in its own weights
+- A. Train a new model from scratch on the policy manual, so that it holds every rule in its own weights and never has to look anything up
 - B. Retrieval-augmented generation: fetch the relevant policy sections at question time and answer from them, with citations
 - C. Fine-tune a model on the current manual, and fine-tune it again after every update so that the model stays in step with the policy
 - D. Put a summary of the manual in the system prompt so that every answer starts from the policy
@@ -687,10 +725,10 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **12. Faisal's spec for Najm Assist lists everything the assistant should do. In review, Layla asks what is missing. What is the most important gap?**
 
-- A. A list of every question customers might ask, so that the assistant can be tested on each one before launch
-- B. The model name and version to use, so that engineering and risk teams know exactly what is being deployed
+- A. A list of every question customers might ask, so that the assistant can be tested on each one of them before a launch date is set and announced
+- B. The model name and version to deploy, so that engineering and risk teams know exactly what is going live and can approve that exact version
 - C. The target number of daily conversations, so that the team can size the infrastructure and the budget
-- D. What the assistant must not do and how it behaves then: topics it declines, such as personalised investment advice, and when it hands over to a human
+- D. What the assistant must not do and how it behaves then: topics it declines, such as investment advice, and when it hands over to a person
 
 <details><summary>Answer</summary>
 
@@ -700,10 +738,10 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **13. Tariq suggests using two years of Najm Assist chat transcripts to improve the assistant's answers. What should Faisal do before any transcript is used?**
 
-- A. Anonymise the transcripts by deleting customer names from them, then proceed with the improvement work
+- A. Anonymise the transcripts by deleting customer names from them, then proceed with the improvement work on the full two years of chats
 - B. Ask Sara, the Data Protection Officer, whether this use fits the original purpose, has a lawful basis, and what minimisation it needs
-- C. Proceed, because the bank already holds the data and it was collected in the normal course of serving customers
-- D. Ask the model vendor whether it is allowed to use the transcripts, since the vendor will process them
+- C. Proceed, because the bank already holds the data and it was collected in the normal course of serving these same customers over the years
+- D. Ask the model vendor whether it is allowed to use the transcripts, since the vendor will process them and sets the terms of use
 
 <details><summary>Answer</summary>
 
@@ -714,7 +752,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 **14. For Smart Alerts, a missed fraud costs the customer money and trust, while a false alarm costs a moment of annoyance and, if repeated, alert fatigue. How should the product team treat this when defining the product?**
 
 - A. Treat the cost of each error type as a product decision, write it into the spec, and use it to set the alert threshold
-- B. Leave the threshold to the data science team, since it is a technical parameter that they tune every day as part of model maintenance
+- B. Leave the threshold to the data science team, since it is a technical parameter they tune routinely
 - C. Maximise overall accuracy, which balances both kinds of error automatically without extra decisions
 - D. Minimise false alarms first, since customers complain about them most and alert fatigue is the bigger risk
 
@@ -727,7 +765,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 **15. Najm Bank wants an internal assistant, Staff GenAI, to help employees draft emails, summarise documents and search internal policies. Nothing about it is unique to banking. What is the most sensible default?**
 
 - A. Train a proprietary model from scratch so that the bank owns the technology and does not depend on a supplier
-- B. Fine-tune an open-weight model before evaluating any existing product, so that the result fits the bank's language and its data needs
+- B. Fine-tune an open-weight model before evaluating any existing product, to fit the bank's language
 - C. Buy or license an enterprise product that meets the bank's security and data needs; spend the effort on adoption and integration
 - D. Build from scratch so that the assistant can later be sold to other banks as a new line of business
 
@@ -754,9 +792,9 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **17. In early testing, relationship managers expect the Credit Memo Copilot to know about client meetings that were never written down. They lose trust when it cannot. Which design change addresses the cause?**
 
-- A. Add more animations while the draft is generated, so that waiting feels shorter and the product feels capable
-- B. Set expectations at the start: show what the copilot can and cannot see, for example "Drafts from the credit file and financial statements only"
-- C. Hide the copilot's limitations so that users are not put off before they have tried it for themselves
+- A. Add more animations while the draft is generated, so that the wait feels shorter and the product feels more capable and polished to RMs
+- B. Set expectations at the start: show what the copilot can and cannot see, such as "Drafts from the credit file and financials only"
+- C. Hide the copilot's limitations at first, so that users are not put off before they have tried it on several of their own client files
 - D. Make the copilot's tone more confident so that managers feel they can rely on what it writes
 
 <details><summary>Answer</summary>
@@ -770,7 +808,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 - A. Ask the customer to rate the answer from 1 to 5, so that the team can find the weak spots in the assistant later and fix them
 - B. Apologise and end the conversation, so the customer can start again with a cleaner request
 - C. Make correction easy: show which transaction the assistant understood, and let the customer pick the right one in one tap
-- D. Retry the same answer with different wording, in case the customer simply did not understand it
+- D. Retry the same answer with different wording, in case the customer simply did not understand it the first time it appeared
 
 <details><summary>Answer</summary>
 
@@ -833,7 +871,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 **23. In *Moffatt v. Air Canada* (2024), a tribunal held the airline responsible for what its website chatbot told a customer about a fare policy. What is the main design lesson for Najm Assist?**
 
 - A. Answers on policies, fees and commitments must come from the bank's approved sources; the assistant must not invent terms
-- B. Customer-facing chatbots should be avoided in regulated industries, where a wrong answer can lead to a ruling or a regulatory fine
+- B. Customer-facing chatbots should be avoided in regulated industries, where a wrong answer is costly
 - C. A disclaimer that the chatbot may be wrong removes the company's responsibility for what it says to its customers
 - D. The chatbot should refer every question to the website instead of answering it, so that only published text is used
 
@@ -874,7 +912,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 **26. In the first sprint planning session for SME Instant Finance, what is the most valuable thing Faisal can bring to Dana's data science team?**
 
 - A. A decision on which algorithm to use, so that the data scientists can start building the model straight away
-- B. A demand that the model be 99% accurate on all cases, so that the team has a clear and ambitious quality target to aim for each week
+- B. A demand that the model be 99% accurate on all cases, so the team has a clear quality target
 - C. A fixed delivery date for the final model, so that the launch and the marketing can be planned around it
 - D. The business context: the decision the model supports, the cost of each error type, real cases, and constraints like latency
 
@@ -886,7 +924,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **27. Najm Assist's agent will get tools to read balances, freeze cards and file disputes. Tariq proposes connecting it through one integration account with full access to the core banking API "to keep things simple". What should Faisal push for?**
 
-- A. Full access, but with extra logging so that every call the agent makes can be reviewed afterwards by the security and audit teams
+- A. Full access, but with extra logging so that every call the agent makes can be reviewed afterwards
 - B. Least privilege: separate, narrow tools for each action, acting only on the signed-in customer's own accounts, with limits
 - C. Remove all tools until the model is perfect, and let the agent answer questions only, never act on accounts
 - D. Let the model choose which API calls to make at run time, based on what the customer asks for and its own judgement
@@ -899,10 +937,10 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **28. To make the Credit Memo Copilot "know everything", an engineer proposes putting the whole 600-page credit policy manual into every request. What is the main problem?**
 
-- A. Every request gets slower and costlier, and models can miss details buried in a very long context; retrieving the right sections is usually better
-- B. It is impossible, because no model accepts more than a few pages of text in a single request
+- A. Every request gets slower and costlier, and models can miss details buried in a long context; retrieving the right sections is usually better
+- B. It is impossible, because no current model can accept more than a few dozen pages of text in one request, so the whole manual could never fit
 - C. It makes the model forget part of its training, so its general knowledge gets worse
-- D. There is no problem, as long as the model's context window is large enough to hold the manual
+- D. There is no real problem, as long as the model's context window is large enough to hold the whole manual together with each client's documents
 
 <details><summary>Answer</summary>
 
@@ -940,7 +978,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **31. Dana is building a golden set to evaluate the Credit Memo Copilot. Which approach is best?**
 
-- A. Use the 200 most recent memos, whatever they contain, since they reflect how the bank works today and how its clients behave
+- A. Use the 200 most recent memos, whatever they contain, since they reflect how the bank works today
 - B. Choose a fixed set of real cases: the normal mix plus known hard cases, with answers checked by senior credit officers
 - C. Ask the model to generate test cases and expected answers, which is fast and scales to thousands of cases
 - D. Use only the hardest cases, so that the score is conservative and a pass really means something to the team
@@ -1005,22 +1043,22 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **36. Before Najm Assist can take actions for customers, Layla asks for red-teaming. Which exercise fits best?**
 
-- A. A survey of customer satisfaction with the beta, collecting ratings and comments from the pilot users
+- A. A survey of customer satisfaction with the beta, collecting ratings and comments from pilot users about the actions they tried in the app
 - B. Running the golden set a second time, to confirm that the scores are stable from run to run
-- C. A load test to check that the system handles peak traffic without slowing or failing
-- D. A structured attempt by briefed testers to make the assistant break its rules: prompt injection, off-topic misuse, actions on the wrong account
+- C. A load test to check that the system handles peak traffic, including bursts of action requests, within the agreed response times
+- D. A structured attempt by briefed testers to make the assistant break its rules: prompt injection, misuse, actions on the wrong account
 
 <details><summary>Answer</summary>
 
-**D.** Red-teaming is deliberate adversarial testing to find failures that normal evaluation will not show. The Chevrolet dealer chatbot that was talked into "agreeing" to sell a car for $1 (Dec 2023) shows what untested manipulation looks like in public. B is tempting because it is an evaluation, but a golden set checks expected behaviour on normal cases, not what an adversary can make the system do. *(Evaluate · 6.2)*
+**D.** Red-teaming is deliberate adversarial testing to find failures that normal evaluation will not show. The $1 car case from 5.3 shows what untested manipulation looks like in public. B is tempting because it is an evaluation, but a golden set checks expected behaviour on normal cases, not what an adversary can make the system do. *(Evaluate · 6.2)*
 
 </details>
 
 **37. In an A/B test of a new Najm Assist design, the plan was a 50/50 split, but the treatment group has noticeably fewer users than control. The treatment is winning on the main metric. What should the team do?**
 
 - A. Stop and investigate the imbalance before reading results: a sample ratio mismatch usually means assignment or logging is broken
-- B. Ship the treatment, since it is winning on the main metric and the sample is still large
-- C. Re-weight the groups statistically and report the result, noting the imbalance in the write-up
+- B. Ship the treatment, since it is winning on the main metric and the treatment sample is still large enough for a reliable final reading
+- C. Re-weight the two groups statistically so they count equally, report the result, and note the imbalance clearly in the final write-up
 - D. Extend the test until the groups are the same size, then read the results as planned
 
 <details><summary>Answer</summary>
@@ -1046,10 +1084,10 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **39. Faisal plans to launch SME Instant Finance to sole traders in the EU next month. The model has passed its evals. Which step is most clearly missing?**
 
-- A. A marketing campaign to announce SME Instant Finance to sole traders across the EU
+- A. A marketing campaign to announce SME Instant Finance to sole traders across the EU, timed so that the launch reaches as many of them as possible
 - B. A second round of offline evaluation, to be sure the model holds up before launch
-- C. A plan to measure adoption, so that the team can see how many sole traders use the product
-- D. The governance gate: Layla's team confirms the risk tier and controls, since credit decisions about individuals can be high-risk under the EU AI Act
+- C. A plan to measure adoption after launch, so that the team can see how many sole traders apply, how many finish and how many come back later
+- D. The governance gate: Layla's team confirms the risk tier and controls, since credit decisions about people can be high-risk under the EU AI Act
 
 <details><summary>Answer</summary>
 
@@ -1061,7 +1099,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 - A. The press release, which should be agreed with the communications and legal teams well before the launch day arrives
 - B. Contact-centre readiness: scripts for common AI errors, a view of what the assistant said, and an escalation path
-- C. A launch party for the team, to mark the milestone and thank everyone who worked on the assistant over the year
+- C. A launch party for the team, to mark the milestone and thank everyone who worked on the assistant over the past year
 - D. A new logo for the assistant, so that customers can tell it apart from the old chat service and the app
 
 <details><summary>Answer</summary>
@@ -1092,7 +1130,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 <details><summary>Answer</summary>
 
-**C.** Positioning sets expectations, and expectations drive trust. Overclaiming invites users to stop checking, and a public mistake in a demo can dominate the story, as with the factual error in Google's Bard launch demo (Feb 2023). D is tempting, but a "beta" label does not fix a promise of perfection or the missing message that the user must review. *(Launch · 7.2)*
+**C.** Positioning sets expectations, and expectations drive trust. Overclaiming invites users to stop checking, and a public mistake in launch material can dominate the story, as with the factual error in a promotional video for Google's Bard launch (Feb 2023). D is tempting, but a "beta" label does not fix a promise of perfection or the missing message that the user must review. *(Launch · 7.2)*
 
 </details>
 
@@ -1111,7 +1149,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **44. Three months after Staff GenAI launched, only a small share of employees use it weekly, and most of them are in IT. What is the best next step?**
 
-- A. Send an all-staff email reminding people that Staff GenAI exists, how to open it, and where to ask for help if needed
+- A. Send an all-staff email reminding people that Staff GenAI exists, how to open it, and where to ask for help when they get stuck
 - B. Find champions in each department, collect concrete use cases for their real tasks, and train people in their own workflows
 - C. Make its use mandatory for all staff, and report each department's usage to senior management every month, as a league table
 - D. Switch to a better model, since low usage suggests the answers are not good enough for most employees
@@ -1127,7 +1165,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 - A. Train them on where the copilot is strong and where it fails, and make clear that they remain responsible for the memo
 - B. Give them a long video of the model's architecture, so that they understand how its drafts are produced and checked
 - C. Send them the vendor's marketing brochure, which describes in detail what the product can do for their daily work
-- D. Wait until relationship managers ask for training, so that the sessions answer questions that people really have in their own work
+- D. Wait until relationship managers ask for training, so the sessions answer real questions
 
 <details><summary>Answer</summary>
 
@@ -1204,9 +1242,9 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **51. Six months after launch, SME Instant Finance's approval rate has drifted up while its early repayment performance has weakened. Nothing in the model has changed. What is the most likely explanation, and the right response?**
 
-- A. The applicants or economy have shifted, so the data no longer matches training: investigate drift in inputs and outcomes, then review or retrain
-- B. The model has a software bug introduced since launch; roll back to an older version of the model
-- C. Relationship managers are overriding the model's decisions; restrict their access to the override function
+- A. Applicants or the economy have shifted, so the data no longer matches training: investigate drift in inputs and outcomes, then review or retrain
+- B. A software change around the model, such as a new data feed or business rule, is skewing scores; roll back recent releases and compare
+- C. Relationship managers are overriding the model's decisions more often; restrict access to the override function and review a sample of recent overrides
 - D. It is random noise in a small sample; wait another six months before drawing any conclusion
 
 <details><summary>Answer</summary>
@@ -1217,9 +1255,9 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **52. The model vendor behind Najm Assist announces that it will retire the model version the bank uses and move customers to a newer one. What should Faisal do?**
 
-- A. Assume the newer version is better and switch on the retirement date, as the vendor recommends
-- B. Ask the vendor to keep the old version available forever, so that nothing in the product changes
-- C. Rebuild the assistant from scratch on a different vendor's model, to avoid depending on this one
+- A. Assume the newer version is better and switch on the retirement date, as the vendor recommends, so the product stays on a supported model
+- B. Negotiate extended support for the old version with the vendor, so that nothing in the product has to change for now
+- C. Rebuild the assistant from scratch on a different vendor's model, so that the bank never again depends on one supplier's release schedule
 - D. Run the full eval suite on the new version first, compare golden-set and key risk cases, and fix any regressions in prompts or guardrails
 
 <details><summary>Answer</summary>
@@ -1245,10 +1283,10 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **54. Najm's board asks what will protect the Credit Memo Copilot from being copied, when competitors can buy the same models. What is the best answer?**
 
-- A. Our prompts are secret, so competitors cannot reproduce how the copilot is instructed
-- B. We use the largest model available, which gives the best quality that competitors can buy
+- A. Our prompts are secret and carefully tuned, so competitors cannot reproduce how the copilot is instructed or match the quality of its drafts
+- B. We use the largest model available and upgrade as soon as a new one appears, which keeps our quality ahead of anything competitors can buy
 - C. We launched first, so customers and staff will stay with our product out of habit
-- D. What others cannot easily copy: our credit data, feedback from experts' edits, deep integration into the lending workflow, and managers' trust
+- D. What others cannot easily copy: our credit data, feedback from experts' edits, deep integration into the lending workflow, and trust
 
 <details><summary>Answer</summary>
 
@@ -1259,9 +1297,9 @@ Rania runs this exam with every new AI product manager in their first month. She
 **55. New models appear every few months, and Tariq worries that the team's choices will quickly go out of date. Which roadmap principle helps most?**
 
 - A. Wait for the models to settle before building anything of value, so that no work is thrown away later
-- B. Commit to one vendor for five years to avoid churn, and negotiate a discount for the long-term commitment
+- B. Commit to one vendor for five years to avoid churn, and negotiate a discount in return for the long-term commitment
 - C. Design for a swappable model: a thin layer between product and model, your own eval suite, and a replaceable model
-- D. Rebuild the product each time a new model is released, so that it always uses the latest and most capable model that the vendors have released
+- D. Rebuild the product each time a new model is released, so that it always uses the latest and most capable model on offer
 
 <details><summary>Answer</summary>
 
@@ -1271,9 +1309,9 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **56. Rania asks Faisal to redo his 12-month roadmap, which lists ten AI features with fixed delivery dates. What is she most likely asking for?**
 
-- A. More features, to show ambition and to give the board a fuller picture of everything the team can deliver over the next twelve months
+- A. More features, to show ambition and give the board a fuller picture of everything the team can deliver this year
 - B. A roadmap framed as bets: the outcome targeted, the key uncertainty, how it will be tested, and when to continue, change or stop
-- C. Dates moved later to add buffer, so that the team is less likely to miss a delivery commitment made to the board
+- C. Dates moved later to add buffer, so that the team is less likely to miss a delivery commitment it has made to the board
 - D. A single feature, to reduce risk and let the whole team concentrate on one thing and deliver it well
 
 <details><summary>Answer</summary>
@@ -1297,10 +1335,10 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **58. SME Instant Finance is designed to automatically decline some applications from EU sole traders, with no human involvement. Which requirement must Faisal design for, working with Layla and Sara?**
 
-- A. A notice in the app's terms and conditions is enough, as long as the applicant accepts them
-- B. Declines are allowed only if the model is shown to be more accurate than human reviewers
-- C. Nothing, since invoice finance is a business product and the rules on automated decisions do not apply
-- D. Under GDPR Article 22, people have rights over solely automated decisions with significant effects, often including human intervention and a way to contest, so the product needs a real human review path
+- A. A notice in the app's terms and conditions is enough, as long as the applicant has accepted them and can read them again in the app at any time later
+- B. Declines are allowed only if the model is shown, on a held-out test set, to be more accurate than the bank's experienced human credit reviewers
+- C. Nothing, since invoice finance is a business product and the rules on automated decisions about individuals do not apply to it
+- D. GDPR Article 22 gives people rights over solely automated decisions with significant effects, so the product needs a real human review path
 
 <details><summary>Answer</summary>
 
@@ -1310,7 +1348,7 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **59. Khalid wants to raise SME Instant Finance's automatic approval limit sharply after a strong first quarter. What is the best leadership response?**
 
-- A. Agree, since the results are strong and the growth in approvals will help the business reach its lending targets for the year
+- A. Agree, since the results are strong and more approvals will help the business reach its targets
 - B. Refuse any increase until the model has run for five years and has survived a full credit cycle with no changes
 - C. Increase in stages with exposure caps, keep monitoring outcomes and drift, and agree in advance what triggers a pull-back
 - D. Leave the decision to the data science team, since they understand the model and its limits better than anyone
@@ -1323,14 +1361,14 @@ Rania runs this exam with every new AI product manager in their first month. She
 
 **60. In an interview for an AI product manager role, Faisal is asked to talk about a project in his portfolio. Which answer will impress most?**
 
-- A. A detailed description of the model architecture and the prompts he wrote, with the reasons for each choice
-- B. The problem and user, where he decided AI fit, how he defined and measured quality, a trade-off and why, and the results, including what did not work
-- C. A live demo of the product working well on a hand-picked example that shows its best features
+- A. A detailed description of the model architecture and the prompts he wrote, with the reasons for each choice and the benchmarks behind them
+- B. The problem and user, where AI fit, how he defined and measured quality, a trade-off and why, and the results, including what failed
+- C. A live demo of the product working well on a hand-picked example that shows its best features, followed by the user numbers since launch
 - D. A list of every AI tool he has used, with the dates, to show breadth of hands-on experience
 
 <details><summary>Answer</summary>
 
-**B.** Hiring managers for AI PM roles look for product judgement: problem framing, evaluation, trade-offs and learning from results. Showing what did not work demonstrates honesty and rigour. C is tempting because demos are vivid, but a polished demo on a chosen example hides exactly what an AI PM is paid to understand. The gap between demo and real workflow is one lesson often drawn from IBM Watson Health, whose units were sold in 2022 after a large investment. *(Lead · 10.2)*
+**B.** Hiring managers for AI PM roles look for product judgement: problem framing, evaluation, trade-offs and learning from results. Showing what did not work demonstrates honesty and rigour. C is tempting because demos are vivid, but a polished demo on a chosen example hides exactly what an AI PM is paid to understand. The gap between demo and real workflow is one lesson often drawn from IBM Watson Health, whose data and analytics assets IBM sold in 2022 after a large investment. *(Lead · 10.2)*
 
 </details>
 

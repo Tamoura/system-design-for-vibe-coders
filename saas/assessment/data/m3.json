@@ -7,7 +7,7 @@
    "lesson": "3.1",
    "q": {
     "en": "Beacon's Checkout success page sets the org's plan to Pro. Support reports a customer who paid but closed the tab before the redirect and is still on Free, and a Free user who typed the success URL by hand and got Pro. What fixes both?",
-    "ar": "صفحة النجاح التي يعود إليها العميل بعد الدفع عبر Checkout في Beacon تضبط خطة المؤسسة على Pro. يبلّغ فريق الدعم عن عميل دفع ثم أغلق التبويب قبل إعادة التوجيه فبقي على Free، وعن مستخدم على Free كتب رابط النجاح يدويًا فحصل على Pro. ما الذي يصلح الحالتين معًا؟"
+    "ar": "صفحة النجاح التي يعود إليها العميل بعد الدفع عبر Checkout في Beacon تضبط خطة المنظمة على Pro. يبلّغ فريق الدعم عن عميل دفع ثم أغلق التبويب قبل إعادة التوجيه فبقي على Free، وعن مستخدم على Free كتب رابط النجاح يدويًا فحصل على Pro. ما الذي يصلح الحالتين معًا؟"
    },
    "o": {
     "en": [
@@ -17,9 +17,9 @@
      "Keep the success-page upgrade, and add a nightly job that repairs any mismatches"
     ],
     "ar": [
-     "تحقّق من معرّف جلسة الدفع في رابط النجاح قبل ترقية خطة المؤسسة",
-     "رقِّ المؤسسة عندما ينقر المالك زر الترقية، وتراجع عن ذلك إن فشل الدفع",
-     "رقِّ المؤسسة من الويب هوك بعد التحقق منه، ولتكتفِ صفحة النجاح بعبارة \"جارٍ التأكيد\"",
+     "تحقّق من معرّف جلسة الدفع في رابط النجاح قبل ترقية خطة المنظمة",
+     "رقِّ المنظمة عندما ينقر المالك زر الترقية، وتراجع عن ذلك إن فشل الدفع",
+     "رقِّ المنظمة من الويب هوك الموثَّق، وصفحة النجاح تعرض \"جارٍ التأكيد\" فقط",
      "أبقِ الترقية في صفحة النجاح، وأضف مهمة ليلية تصلح أي حالات عدم تطابق"
     ]
    },
@@ -35,7 +35,7 @@
    "lesson": "3.2",
    "q": {
     "en": "Sales signs Acme to Beacon Business with 2,000 monitors and 15-second checks until the contract renews next year. How should Beacon give Acme these limits?",
-    "ar": "يوقّع فريق المبيعات عقدًا مع Acme على خطة Business في Beacon يمنحها 2,000 مراقِب وفحوصًا كل 15 ثانية (15-second checks) حتى تجديد العقد في العام المقبل. كيف يجب أن يمنح Beacon هذه الحدود لـAcme؟"
+    "ar": "يوقّع فريق المبيعات عقدًا مع Acme على خطة Business في Beacon يمنحها 2,000 مراقِب وفحوصًا كل 15 ثانية حتى تجديد العقد في العام المقبل. كيف يجب أن يمنح Beacon هذه الحدود لـAcme؟"
    },
    "o": {
     "en": [
@@ -45,16 +45,16 @@
      "Turn on a feature flag for Acme's account that unlocks the higher plan limits"
     ],
     "ar": [
-     "أبقِ Acme على خطة Business مع استثناءات لها سبب ومالك وانتهاء",
-     "أنشئ خطة مخصصة باسم acme_enterprise في plans.ts، واربط بها سعر Stripe الجديد الخاص بـAcme",
-     "عدّل حدود خطة Business في plans.ts إلى 2,000 مراقِب وفحص كل 15 ثانية (15-second checks)",
-     "فعّل علم ميزة لحساب Acme يفتح حدود الخطة الأعلى"
+     "أبقِ Acme على خطة Business مع استثناءات لها سبب ومالك وتاريخ انتهاء",
+     "أنشئ خطة acme_enterprise في plans.ts واربط بها سعر Stripe الجديد لـAcme",
+     "عدّل حدود خطة Business في plans.ts إلى 2,000 مراقِب وفحص كل 15 ثانية",
+     "فعّل علم ميزة على حساب Acme يفتح له حدود الخطة الأعلى"
     ]
    },
    "a": 0,
    "why": {
     "en": "A custom contract is the Business plan plus per-org overrides that carry an owner, a reason and an expiry, edited in the admin panel and written to the audit log, with a reminder job on the expiry. Editing the Business plan in plans.ts would hand Acme's deal to every Business customer, and a plan per customer is exactly what the lesson warns against.",
-    "ar": "العقد المخصص هو خطة Business مع استثناءات لكل مؤسسة تحمل مالكًا وسببًا وتاريخ انتهاء، وتُعدَّل من لوحة الإدارة وتُسجَّل في سجل التدقيق (audit log)، مع مهمة تذكير عند انتهائها. أما تعديل خطة Business في plans.ts فيمنح صفقة Acme لكل عملاء Business، وإنشاء خطة لكل عميل هو بالضبط ما يحذّر منه الدرس."
+    "ar": "العقد المخصص هو خطة Business مع استثناءات لكل منظمة تحمل مالكًا وسببًا وتاريخ انتهاء، وتُعدَّل من لوحة الإدارة وتُسجَّل في سجل التدقيق (audit log)، مع مهمة تذكير عند انتهائها. أما تعديل خطة Business في plans.ts فيمنح صفقة Acme لكل عملاء Business، وإنشاء خطة لكل عميل هو بالضبط ما يحذّر منه الدرس."
    }
   },
   {
@@ -63,7 +63,7 @@
    "lesson": "3.3",
    "q": {
     "en": "Beacon will bill Business orgs per check execution. After a worker restart the scheduler can enqueue the same scheduled check twice, and a check that times out is retried. Which idempotency key should each usage event carry?",
-    "ar": "سيفوتر Beacon مؤسسات Business على كل تنفيذ فحص. وبعد إعادة تشغيل العامل قد يضع المجدول الفحص المجدول نفسه في الطابور مرتين، والفحص الذي تنتهي مهلته تُعاد محاولته. أي مفتاح عدم تأثر بالتكرار (idempotency key) يجب أن يحمله كل حدث استخدام (usage event)؟"
+    "ar": "سيفوتر Beacon منظمات Business على كل تنفيذ فحص. وبعد إعادة تشغيل العامل قد يضع المجدول الفحص المجدول نفسه في الطابور مرتين، والفحص الذي تنتهي مهلته تُعاد محاولته. أي مفتاح عدم تأثر بالتكرار (idempotency key) يجب أن يحمله كل حدث استخدام (usage event)؟"
    },
    "o": {
     "en": [
@@ -76,7 +76,7 @@
      "check:{monitorId}:{startedAt}، مأخوذًا من لحظة بدء تشغيل الفحص",
      "معرّف UUID يُولَّد عند وضع المهمة في الطابور، ويُحفظ في حمولة المهمة",
      "check:{monitorId}، ويفرضه قيد تفرّد على أحداث الاستخدام",
-     "check:{monitorId}:{scheduledAt}، ويفرضه قيد تفرّد"
+     "check:{monitorId}:{scheduledAt}، ويفرضه قيد تفرّد على أحداث الاستخدام"
     ]
    },
    "a": 3,
@@ -104,7 +104,7 @@
      "ما زالت getEntitlements تعدّ canceled حالة مدفوعة خلال فترة سماح",
      "منطق التجميد يعمل من زر التخفيض، لا من مسار الويب هوك",
      "أسقط معالج الويب هوك حدث الإلغاء على أنه تسليم مكرر",
-     "المجدول يخزّن خطة Acme القديمة في الكاش بدل قراءة لقطة المؤسسة"
+     "المجدول يخزّن خطة Acme القديمة في الكاش بدل قراءة لقطة المنظمة"
     ]
    },
    "a": 1,

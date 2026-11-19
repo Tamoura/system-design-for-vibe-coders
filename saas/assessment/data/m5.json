@@ -7,26 +7,26 @@
    "lesson": "5.1",
    "q": {
     "en": "During a deploy, Beacon's notify-incident worker emails 25 of an incident's 40 subscribers, then is killed before it acknowledges the job. The broker hands the job to another worker, and those 25 people get the email twice. Which change stops the duplicates without losing the other 15?",
-    "ar": "أثناء النشر، يرسل عامل الإشعارات في Beacon بريدًا إلى 25 من أصل 40 مشتركًا في الحادثة، ثم يُقتل قبل أن يؤكد المهمة. فيسلّم الوسيط المهمة إلى عامل آخر، فيصل البريد إلى هؤلاء الخمسة والعشرين مرتين. أي تغيير يمنع التكرار دون أن يخسر الخمسة عشر الباقون (other 15) بريدهم؟"
+    "ar": "أثناء النشر، يرسل عامل الإشعارات في Beacon بريدًا إلى 25 من أصل 40 مشتركًا في الحادثة، ثم يُقتل قبل أن يؤكد المهمة. فيسلّم الوسيط المهمة إلى عامل آخر، فيصل البريد إلى هؤلاء الخمسة والعشرين مرتين. أي تغيير يمنع التكرار دون أن يخسر الخمسة عشر الباقون بريدهم؟"
    },
    "o": {
     "en": [
      "Set the job's attempts to 1, so the broker can never run it a second time",
-     "Insert a unique delivery row per subscriber, and skip the email when the insert conflicts",
+     "Insert a unique delivery row per subscriber; skip the email on conflict",
      "Give the job a deterministic jobId, so the broker can never run it twice",
      "Acknowledge the job as soon as a worker picks it up, before any email goes out"
     ],
     "ar": [
      "اضبط عدد محاولات المهمة على 1، حتى لا يشغّلها الوسيط مرة ثانية أبدًا",
-     "أدخل صف تسليم فريدًا لكل مشترك، وتخطَّ البريد عند التعارض",
+     "أدخل صف تسليم فريدًا لكل مشترك، وتخطَّ إرسال البريد عند حدوث تعارض",
      "أعطِ المهمة معرّفًا حتميًا، حتى لا يستطيع الوسيط تشغيلها مرتين أبدًا",
-     "أكّد المهمة بمجرد أن يلتقطها عامل، قبل إرسال أي بريد"
+     "أكّد المهمة بمجرد أن يلتقطها عامل، قبل أن يُرسَل أي بريد إلكتروني"
     ]
    },
    "a": 1,
    "why": {
     "en": "Queues deliver at least once, so the fix is to make a rerun harmless: a notification_deliveries row unique on (incident, subscriber, channel), inserted before each send, lets the second run skip the 25 and still email the other 15. A deterministic jobId only stops the same job being enqueued twice; it cannot stop an unacknowledged job from running again.",
-    "ar": "الطوابير تسلّم مرة واحدة على الأقل، لذلك الحل أن تجعل إعادة التنفيذ غير ضارة: صف في notification_deliveries بقيد فريد (unique constraint) على، يُدرَج قبل كل إرسال، فيتخطى التشغيل الثاني الخمسة والعشرين ويرسل إلى الخمسة عشر الباقين (other 15). أما المعرّف الحتمي للمهمة فيمنع فقط إضافة المهمة نفسها إلى الطابور مرتين، ولا يمنع مهمة لم تُؤكَّد من أن تُنفَّذ مرة أخرى."
+    "ar": "الطوابير تسلّم مرة واحدة على الأقل، لذلك الحل أن تجعل إعادة التنفيذ غير ضارة: صف في notification_deliveries بقيد فريد (unique constraint) على (incident, subscriber, channel)، يُدرَج قبل كل إرسال، فيتخطى التشغيل الثاني الخمسة والعشرين ويرسل إلى الخمسة عشر الباقين. أما المعرّف الحتمي للمهمة فيمنع فقط إضافة المهمة نفسها إلى الطابور مرتين، ولا يمنع مهمة لم تُؤكَّد من أن تُنفَّذ مرة أخرى."
    }
   },
   {
@@ -45,8 +45,8 @@
      "Prefixed keys that secret scanners can match, each revocable on its own"
     ],
     "ar": [
-     "مفاتيح تُخزَّن كتجزئات SHA-256 (SHA-256 hashes) فقط، فلا يمكن استخدام النسخة المسربة إطلاقًا",
-     "مفتاح واحد لكل مؤسسة، يدوّره الدعم فور الإبلاغ عن تسريب",
+     "مفاتيح تُخزَّن كتجزئات SHA-256 فقط، فلا يمكن استخدام النسخة المسربة إطلاقًا",
+     "مفتاح واحد لكل منظمة، يدوّره الدعم فور الإبلاغ عن تسريب",
      "كعكات جلسة تنتهي صلاحيتها بعد ساعة، فتموت النسخة المسربة وحدها",
      "مفاتيح ببادئة تطابقها أدوات فحص الأسرار، ويمكن إلغاء كل منها وحده"
     ]
@@ -101,8 +101,8 @@
      "Every wake-up replays the code from the top and re-sends the earlier steps"
     ],
     "ar": [
-     "كانت التشغيلات المنتظرة في ذاكرة العامل، فأضاعت إعادةُ تشغيل العمال عند النشر موضعَها",
-     "الخطوات تُنفَّذ مرة واحدة على الأقل، فنُفِّذت من جديد بعد إعادة تشغيل العمال كلُّ خطوة للمستوى الأول كانت قيد التنفيذ",
+     "كانت التشغيلات المنتظرة في ذاكرة العامل، فأضاعت إعادة التشغيل عند النشر موضعها",
+     "الخطوات تُنفَّذ مرة على الأقل (at-least-once)، فأُعيد بعد إعادة التشغيل تنفيذ كل خطوة جارية من المستوى الأول",
      "التشغيلات الأقدم ليس في سجلها خطوات page-tier، فتنفّذها إعادة التشغيل فعليًا",
      "كل استيقاظ يعيد تشغيل الكود من البداية، فيعيد إرسال الخطوات السابقة"
     ]
@@ -120,7 +120,7 @@
    "lesson": "5.1",
    "text": {
     "en": "I have pointed Beacon's email provider at a bad host, watched the notify-incident job retry with backoff and succeed once I restored it, and seen a job that failed every attempt land in the dead-letter queue with its error",
-    "ar": "وجّهتُ مزوّد البريد في Beacon إلى مضيف خاطئ، وشاهدتُ مهمة notify-incident تعيد المحاولة بتأخير متزايد ثم تنجح بعد أن أعدتُه (once I restored it)، ورأيتُ مهمة فشلت في كل المحاولات تنتهي في طابور الرسائل الميتة (dead-letter queue) مع خطئها"
+    "ar": "وجّهتُ مزوّد البريد في Beacon إلى مضيف خاطئ، وشاهدتُ مهمة notify-incident تعيد المحاولة بتأخير أسي ثم تنجح بعد أن أعدتُه، ورأيتُ مهمة فشلت في كل المحاولات تنتهي في طابور الرسائل الميتة (dead-letter queue) مع خطئها"
    }
   },
   {
@@ -128,7 +128,7 @@
    "lesson": "5.3",
    "text": {
     "en": "I have tried to register http://127.0.0.1, http://169.254.169.254, http://[::1] and a hostname resolving to 10.x as both a webhook and a monitor URL, and seen every one rejected",
-    "ar": "حاولتُ تسجيل http://127.0.0.1 وhttp://169.254.169.254 وhttp://[::1] واسم مضيف يُحلّ إلى 10.x (hostname resolving to 10.x)، كرابط ويب هوك وكرابط مراقِب معًا، ورأيتُ رفضها كلها"
+    "ar": "حاولتُ تسجيل http://127.0.0.1 وhttp://169.254.169.254 وhttp://[::1] واسم مضيف يُحلّ إلى 10.x، كرابط ويب هوك وكرابط مراقِب معًا، ورأيتُ رفضها كلها"
    }
   }
  ]

@@ -9,7 +9,7 @@
 # 4.1 — Data protection principles meet AI
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.2* · *BoK: II.A*
 
-**After this you can** draft a legitimate interests assessment for training a fraud model, and test the claim that a model is anonymous against EDPB Opinion 28/2024. *Study time: about 110 minutes (estimate).*
+**After this you can** draft a legitimate interests assessment for training a fraud model, and test the claim that a model is anonymous against EDPB Opinion 28/2024. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Data protection law applies to AI whenever personal data is processed, from training data to outputs about people.
@@ -224,7 +224,7 @@ Committee decision recorded: *"Chat logs are excluded from credit-model training
 # 4.2 — Automated decisions, individual rights and transparency
 *Level: 🟡 Intermediate* · *Prerequisites: 4.1* · *BoK: II.A*
 
-**After this you can** decide for each of five AI systems whether GDPR Art. 22 is engaged, and write a decline-letter explanation of the logic involved in under 150 words. *Study time: about 110 minutes (estimate).*
+**After this you can** decide for each of five AI systems whether GDPR Art. 22 is engaged, and write a decline-letter explanation of the logic involved in under 150 words. *Study time: reading about 15 min, hands-on about 100 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Data subjects keep all their rights when AI is involved: information, access, rectification, erasure, restriction, portability and objection. AI makes some of these technically hard, but hard is not a legal excuse.
@@ -351,7 +351,7 @@ The AI Governance Committee approves a redesign of the retail credit decision fl
 
 ## 🛠️ Exercises
 - 🟢 For each of Najm's AI systems (credit scoring, chatbot, CV screening, credit memo copilot, fraud detection), decide whether Art. 22 is likely engaged and why, using the three conditions. *Done when:* each system has a yes, no or depends with one line of reasoning.
-- 🟡 Write the "logic involved" paragraph for Najm's decline letter. It must be understandable to a non-expert, name the main factors, and say what the customer could change. *Done when:* the paragraph is under 150 words and a colleague who has not seen the model can explain it back to you.
+- 🟡 Write the "logic involved" paragraph for Najm's decline letter. It must be understandable to a non-expert, name the main factors, and say what the customer could change. *Done when:* the paragraph is under 150 words, names at least two factors in everyday words, and passes a read-aloud test: no term a customer would need to look up.
 - 🔴 A former customer asks for erasure "including from your AI". Using the erasure options table, write the decision memo for the credit model and for the credit memo copilot, which uses retrieval over internal documents. *Done when:* each system has a chosen option, the legal exceptions considered (such as record-keeping duties) and the evidence you would keep.
 
 ## ⚠️ Mistakes and exam traps
@@ -449,7 +449,7 @@ The AI Governance Committee approves a redesign of the retail credit decision fl
 # 4.3 — DPIAs and the global privacy map, from the EU to the GCC
 *Level: 🟡 Intermediate* · *Prerequisites: 4.1, 4.2* · *BoK: II.A*
 
-**After this you can** screen AI systems for a DPIA, and draft the risks and measures sections of a DPIA with at least five risks each matched to a measure. *Study time: about 110 minutes (estimate).*
+**After this you can** screen AI systems for a DPIA, and draft the risks and measures sections of a DPIA with at least five risks each matched to a measure. *Study time: reading about 20 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A Data Protection Impact Assessment (DPIA, GDPR Art. 35) is mandatory before processing that is likely to result in a high risk to people's rights and freedoms. Most significant AI uses of personal data, such as credit scoring, CV screening and large-scale profiling, will need one.

@@ -9,7 +9,7 @@
 # 1.1 — Machine learning, generative AI, LLMs and agents: what each is good for
 *Level: 🟢 Beginner* · *Prerequisites: 0.2* · *Stage: Discover*
 
-**After this you can** classify AI features as rules, classic ML, LLM, workflow or agent with a one-line reason each, and redesign an "LLM does everything" idea as a hybrid that states which component decides and which communicates. *Study time: about 110 minutes (estimate).*
+**After this you can** classify AI features as rules, classic ML, LLM, workflow or agent with a one-line reason each, and redesign an "LLM does everything" idea as a hybrid that states which component decides and which communicates. *Study time: reading about 20 min, hands-on about 105 min (estimate).*
 
 ## ⚡ In 60 seconds
 - "AI" is an umbrella over four families: **machine learning** (predicts a label or number from examples), **generative AI** (produces new content), **large language models** (generative AI for text, behind most assistants) and **agents** (a model using tools in a loop to finish a task).
@@ -121,6 +121,14 @@ Rania's rule for the card: *"If you cannot fill in 'cost of an error', you are n
 - 🟡 Faisal's list includes "an LLM that reads every card transaction and flags fraud". Rewrite it as a hybrid design that uses ML and an LLM each where it is strong. *Done when:* you state which component decides, which communicates, and one reason each (speed, cost, consistency or language).
 - 🔴 Najm Assist's product owner wants the phase-2 agent to handle "anything a customer asks for". Write a half-page note arguing for a narrower first scope. *Done when:* the note names at most three tasks, explains why each suits an agent rather than a fixed workflow, and names one task that should stay a workflow and why.
 
+<details><summary>Check your work</summary>
+
+**🟢 Model answer (three of five).** Email spam filter: classic ML, because it outputs a label (spam or not). Writing assistant: LLM, because it outputs new text. Loan eligibility check in a banking app: rules, because the same inputs always give the same answer from a published policy. Judge each by what it outputs, not by its marketing.
+
+**🟡 and 🔴 self-check.** Your hybrid design passes if a fast ML model scores every transaction and decides what to flag, and the LLM only writes the customer message or summarises the case for an analyst. Your scope note passes if it names at most three tasks, each needing several steps or tool calls, and keeps at least one predictable task (such as resetting a PIN) as a fixed workflow because it never varies.
+
+</details>
+
 ## ⚠️ Mistakes and traps
 - **Technology first.** "We need a GenAI use case" produces demos, not products. Start from the user job and the output it needs.
 - **An LLM for predictive decisions.** For consistent, calibrated, explainable scores on structured data, classic ML is usually better, cheaper and easier to govern. Use the LLM to communicate around the decision.
@@ -139,10 +147,10 @@ Rania's rule for the card: *"If you cannot fill in 'cost of an error', you are n
 
 **1. Najm Bank wants to pre-approve SME invoice-financing requests in seconds, using ten years of labelled repayment history. Which approach best fits the decision itself?**
 
-- A. Ask an LLM to read the application and answer "approve" or "decline"
+- A. Ask an LLM to read each application and answer "approve" or "decline" with a short reason
 - B. Train a classic ML model on the repayment history and set thresholds for approve, refer and decline
-- C. Build an agent that browses the company's website before deciding
-- D. Use embeddings to find similar past memos and copy their decision
+- C. Build an agent that gathers data from the company's website and registries before deciding
+- D. Use embeddings to find the most similar past requests and reuse the decisions made on them
 
 <details><summary>Answer</summary>
 
@@ -152,10 +160,10 @@ Rania's rule for the card: *"If you cannot fill in 'cost of an error', you are n
 
 **2. What best describes what a large language model does when it generates an answer?**
 
-- A. It retrieves the answer from an internal database of verified facts
-- B. It repeatedly predicts the next token based on patterns learned in training and the text in its context
-- C. It runs the rules its developers wrote for each topic
-- D. It searches the internet for every request
+- A. It looks up the answer in an internal store of verified facts that it compiled during its training run
+- B. It repeatedly predicts the next token from patterns learned in training and the text in its context
+- C. It applies the rules and response templates that its developers wrote for each kind of question it gets
+- D. It searches the web for each request and summarises the most relevant pages it finds
 
 <details><summary>Answer</summary>
 
@@ -166,7 +174,7 @@ Rania's rule for the card: *"If you cannot fill in 'cost of an error', you are n
 **3. The Credit Memo Copilot always extracts figures, checks ratios, then drafts sections in the same order. A vendor pitches an "autonomous agent" for it. What is the strongest product response?**
 
 - A. Accept, because agents are more advanced than workflows and will cope better with unexpected cases
-- B. Reject all use of LLMs for credit memos, because credit documents are too sensitive and no generative model can be trusted with them
+- B. Accept, but cap the agent at ten tool calls per memo and log every step so the relationship manager can review it
 - C. Replace the copilot with a classic ML classifier that scores each section of the credit memo
 - D. Prefer a fixed LLM workflow, because the steps do not vary and a workflow is more predictable and easier to test
 
@@ -178,10 +186,10 @@ Rania's rule for the card: *"If you cannot fill in 'cost of an error', you are n
 
 **4. Smart Alerts must score millions of card transactions in real time at very low cost per transaction. A team proposes an LLM to review every transaction. What is the main product objection?**
 
-- A. LLMs cannot read numbers, so transaction amounts and balances would be misread by the model
+- A. An LLM cannot explain its decisions, so analysts would not be able to see why a transaction was flagged
 - B. For this volume and latency, a specialised ML model is faster and far cheaper per decision, and an LLM can be kept for explaining alerts to customers
 - C. Fraud detection is prohibited under the EU AI Act, so the team would need a regulator's approval first
-- D. LLMs cannot be used in Arabic, so the bank would need to build a separate fraud model for every language its customers speak before launching anything
+- D. An LLM would need each customer's full transaction history in every prompt, which breaks the data minimisation rules that apply to card data
 
 <details><summary>Answer</summary>
 
@@ -215,7 +223,7 @@ Rania's rule for the card: *"If you cannot fill in 'cost of an error', you are n
 # 1.2 — Capabilities and limits: errors, hallucination, context, latency and cost
 *Level: 🟢 Beginner* · *Prerequisites: 1.1* · *Stage: Define, Design*
 
-**After this you can** compute precision and the false-alarm count for an alerting product, and write a limits register in which every high-severity limit has a testable design response. *Study time: about 110 minutes (estimate).*
+**After this you can** compute precision and the false-alarm count for an alerting product, and write a limits register in which every high-severity limit has a testable design response. *Study time: reading about 20 min, hands-on about 145 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Every AI system is **wrong some of the time**. The product question is never "is it accurate?" but "how often is it wrong, in which way, for whom, and what happens then?"
@@ -226,11 +234,11 @@ Rania's rule for the card: *"If you cannot fill in 'cost of an error', you are n
 - Biggest trap: judging a model by a great demo. Demos show the best case; users meet the distribution.
 
 ## 🧭 Why it matters
-Two weeks into the Credit Memo Copilot pilot, Khalid forwards Rania a draft memo with one sentence highlighted. The memo says the borrower's existing facility "includes a negative pledge covenant and a minimum DSCR of 1.25x". The facility agreement says neither. The draft reads perfectly. The relationship manager (RM) had not checked it because "the rest of the numbers were right". Khalid's note is short: "If this reaches credit committee, who is accountable?"
+Two weeks into the Credit Memo Copilot pilot, Khalid forwards Rania a draft memo with one sentence highlighted. The memo says the borrower's existing facility "includes a negative pledge covenant and a minimum DSCR of 1.25x" (a promise not to pledge its assets to other lenders, and a debt service coverage ratio: cash available for debt payments ÷ payments due). The facility agreement says neither. The draft reads perfectly. The relationship manager (RM) had not checked it because "the rest of the numbers were right". Khalid's note is short: "If this reaches credit committee, who is accountable?"
 
 The model did what language models do: it produced a plausible credit memo, and plausible credit memos mention covenants. The failure was in the product. Nothing forced the draft to cite its source, nothing flagged unsupported claims, and nobody had told the RM where the copilot is weak.
 
-Public examples show the same pattern. In February 2023, a launch demo of Google's Bard included a factual error about the James Webb Space Telescope. In *Moffatt v. Air Canada* (2024), a tribunal held the airline liable after its website chatbot described a refund policy that did not match the airline's own policy. In both cases the product around the model did not account for a known limit. This lesson gives you the vocabulary to name each limit, and the habit of designing for it before users find it.
+The public cases you met in 0.2 show the same pattern: the Bard launch video with its telescope error, and the airline held liable for a refund policy its chatbot made up. In both, the product around the model did not account for a known limit. This lesson gives you the vocabulary to name each limit, and the habit of designing for it before users find it.
 
 ## 📐 How it works
 
@@ -305,7 +313,7 @@ flowchart LR
 
 **Errors compound in chains.** If each step in an agent succeeds 95% of the time, and failures are independent, a ten-step task succeeds about 0.95¹⁰ ≈ 60% of the time. Real steps are not independent, so treat this as intuition, but the direction holds: long chains need checkpoints, confirmations before risky actions and recovery paths. This is why Najm Assist's dispute agent asks the customer to confirm before filing.
 
-**Untrusted text can steer the model.** Because instructions and data both arrive as text, content the model reads (an email, a web page, a document) can contain instructions that hijack it. This is **prompt injection**. The Chevrolet dealer chatbot that agreed to "sell" a car for $1 after user manipulation (December 2023) is a well-known public example; the stakes there were reputational, but for an agent with tools they are actions. The PM's part is to limit what tools can do, require confirmation for consequential actions and never rely on the prompt alone for security. The *Production AI Agents* course covers defences.
+**Untrusted text can steer the model.** Because instructions and data both arrive as text, content the model reads (an email, a web page, a document) can contain instructions that hijack it. This is **prompt injection**. Lesson 5.3 looks at a public case in which users talked a car dealer's chatbot into a $1 "sale"; the stakes there were reputational, but for an agent with tools they are actions. The PM's part is to limit what tools can do, require confirmation for consequential actions and never rely on the prompt alone for security. The *Production AI Agents* course covers defences.
 
 **Cost is a quality lever, and quality is a cost lever.** Smaller models are often good enough for simple steps, leaving the larger model for the hard step. But a cheap model that fails more often pushes cost into human review and rework. Klarna's AI assistant is a useful caution. The company announced in early 2024 that it was handling a large share of customer chats, and in 2025 said it would bring more human service back. It shows why cost savings must be measured alongside resolution quality and satisfaction.
 
@@ -340,7 +348,15 @@ Rania's note at the bottom: *"Every high-severity row needs a design response we
 ## 🛠️ Exercises
 - 🟢 Recompute Smart Alerts precision if the false-alarm rate on legitimate transactions falls from 1% to 0.2% and recall stays at 90%. *Done when:* you show the number of false alarms, the precision, and one sentence on what this means for alert fatigue.
 - 🟡 Build a cost-per-task estimate for Staff GenAI with your own illustrative assumptions: users, requests per user per day, tokens in and out, price. *Done when:* you have a monthly cost, you have labelled every assumption as illustrative, and you name the one assumption that moves the total most.
-- 🔴 Write a limits register for Najm Assist phase 1 (answering questions about products and fees). *Done when:* it covers all five limits plus non-determinism, each high-severity row has a testable design response, and at least one row cites a public case (Air Canada or the Chevrolet dealer) as the reason for the control.
+- 🔴 Write a limits register for Najm Assist phase 1 (answering questions about products and fees). *Done when:* it covers all five limits plus non-determinism, each high-severity row has a testable design response, and at least one row cites a public case (such as the airline in 0.2) as the reason for the control.
+
+<details><summary>Check your work</summary>
+
+**🟢 Worked answer.** Legitimate transactions: 999,000. False alarms at 0.2%: 1,998. Frauds caught at 90% recall: 900. Precision = 900 ÷ (900 + 1,998) ≈ 31%, up from about 8%. About one alert in three is now real fraud instead of one in twelve, so customers are far less likely to learn to ignore alerts.
+
+**🟡 and 🔴 self-check.** Your cost estimate passes if every input is labelled illustrative, the arithmetic is shown per call, per day and per month, and you recomputed it with your shakiest input doubled. Your limits register passes if it has six rows (the five limits plus non-determinism), each high-severity row has a response you could test before launch (for example "fees quoted only from retrieved documents"), and one row cites a public case, such as the airline in 0.2, as the reason for its control.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Headline accuracy.** For rare events, accuracy hides failure. Ask for precision and recall, and for the cost of each error type.
@@ -362,7 +378,7 @@ Rania's note at the bottom: *"Every high-severity row needs a design response we
 **1. A fraud model is 99% accurate on a dataset where 0.1% of transactions are fraud. What should the PM ask next?**
 
 - A. What are its precision and recall, and what does each type of error cost?
-- B. Nothing; 99% accuracy is excellent, so the model can go to the approval committee now
+- B. Whether the 99% holds on a fresh month of transactions before the approval committee sees it
 - C. Whether the model uses deep learning or a simpler method such as logistic regression
 - D. Whether accuracy could reach 99.9% if the team collects more labelled training data
 
@@ -374,27 +390,27 @@ Rania's note at the bottom: *"Every high-severity row needs a design response we
 
 **2. The Credit Memo Copilot states a covenant that does not appear in the facility agreement it was given. Which design response most directly addresses this?**
 
-- A. Increase the temperature so the model explores more options
+- A. Lower the temperature to zero so the model gives the same answer every time
 - B. Add a line to the user guide saying AI can make mistakes
 - C. Require every claim to cite a source passage and flag any claim without one
-- D. Switch to a model with a larger context window
+- D. Switch to a model with a larger context window so the whole agreement fits at once
 
 <details><summary>Answer</summary>
 
-**C.** Grounding with citations makes unsupported claims visible and checkable. A makes variation more likely, B is a warning rather than a control, and D does not stop fabrication because the model already had the document. (🟡 Going deeper, hallucination; 🏛️ register.)
+**C.** Grounding with citations makes unsupported claims visible and checkable. A makes answers repeatable, not correct, B is a warning rather than a control, and D does not stop fabrication because the model already had the document. (🟡 Going deeper, hallucination; 🏛️ register.)
 
 </details>
 
-**3. Using illustrative prices of $3 per million input tokens and $15 per million output tokens, what is the approximate model cost of one call with 30,000 input tokens and 2,000 output tokens?**
+**3. Using illustrative prices of $3 per million input tokens and $15 per million output tokens, what is the approximate model cost of one call with 20,000 input tokens and 1,000 output tokens?**
 
-- A. $0.012
-- B. $0.12
-- C. $1.20
-- D. $12.00
+- A. $0.0075
+- B. $0.075
+- C. $0.75
+- D. $7.50
 
 <details><summary>Answer</summary>
 
-**B.** 30,000 × $3 / 1,000,000 = $0.09, plus 2,000 × $15 / 1,000,000 = $0.03, which gives $0.12. (🟡 Going deeper, cost.)
+**B.** 20,000 × $3 / 1,000,000 = $0.06, plus 1,000 × $15 / 1,000,000 = $0.015, which gives $0.075. (🟡 Going deeper, cost.)
 
 </details>
 
@@ -402,7 +418,7 @@ Rania's note at the bottom: *"Every high-severity row needs a design response we
 
 - A. The agent is 95% reliable end to end, because each step passes its test most of the time
 - B. End-to-end success is likely much lower, so add checkpoints, customer confirmation before filing and a recovery path
-- C. Agents should never be used for disputes, because customers expect a person to handle every complaint that involves their money
+- C. Keep disputes with human agents until every step passes 99% in testing, and only then automate the whole dispute flow
 - D. Increase the context window to fix it, so the agent can remember all eight steps at once
 
 <details><summary>Answer</summary>
@@ -413,10 +429,10 @@ Rania's note at the bottom: *"Every high-severity row needs a design response we
 
 **5. Why can putting an entire 300-page document into a long context window still produce poor answers?**
 
-- A. Models cannot read documents longer than one page
-- B. Models may use information in the middle of long contexts less reliably, and every token adds cost and latency
-- C. Long contexts make models deterministic
-- D. Context windows only count output tokens
+- A. The model reads only the first pages, because anything beyond its training length is cut off
+- B. Models may use the middle of long contexts less reliably, and every token adds cost and latency
+- C. Long contexts switch the model into a summarising mode that drops detail from every page
+- D. The context window counts only output tokens, so the document crowds out the answer
 
 <details><summary>Answer</summary>
 
@@ -437,7 +453,7 @@ Rania's note at the bottom: *"Every high-severity row needs a design response we
 # 1.3 — The build spectrum: prompt, retrieval (RAG), fine-tune, train, or buy
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2* · *Stage: Build*
 
-**After this you can** diagnose which rung of the build spectrum (prompt, RAG, fine-tune, train or buy) fixes a given quality gap, and write a build-path decision record with a rejected option and the condition that would reverse it. *Study time: about 110 minutes (estimate).*
+**After this you can** diagnose which rung of the build spectrum (prompt, RAG, fine-tune, train or buy) fixes a given quality gap, and write a build-path decision record with a rejected option and the condition that would reverse it. *Study time: reading about 20 min, hands-on about 165 min (estimate).*
 
 ## ⚡ In 60 seconds
 - There are five main ways to put AI into a product, from lightest to heaviest: **prompt** an existing model, add **retrieval (RAG)** so it answers from your documents, **fine-tune** a model on your examples, **train** your own model, or **buy** a finished product.
@@ -572,6 +588,14 @@ The team's quick view across the portfolio:
 - 🟡 Write a build-path decision record for Najm Assist phase 1 using the template above. *Done when:* it states the quality bar, the gap found with prompting alone, the chosen path, at least one rejected option with reasons, and one condition that would change the decision.
 - 🔴 Yusuf has two proposals for Staff GenAI: buy an enterprise assistant, or build one on an open-weight model hosted in-country. Draft a build-vs-buy scorecard. *Done when:* you compare both on differentiation, data residency and control, time to value, total cost of ownership (with illustrative, labelled numbers), lock-in and model-change risk, and make a recommendation with the one piece of evidence that could reverse it.
 
+<details><summary>Check your work</summary>
+
+**🟢 Model answer.** (a) Knowledge gap, so RAG with citations: fees change, and the answer must come from the current fee document. (b) Behaviour gap, so a better prompt and examples first; fine-tune only if that plateaus. (c) Efficiency gap, so a smaller model or caching first, then fine-tuning a small model: quality is fine, cost and speed at volume are not.
+
+**🟡 and 🔴 self-check.** Your decision record passes if the quality bar is a number on a named golden set, the gap with prompting alone is measured, and one rejected option has a reason (for example "fine-tuning rejected: fees change monthly"). Your build-vs-buy scorecard passes if both options are scored on all six criteria with labelled numbers, the recommendation is clear, and the reversing evidence is something you could obtain (such as the vendor's data-use terms or an in-country eval result).
+
+</details>
+
 ## ⚠️ Mistakes and traps
 - **Fine-tuning for facts.** Changing facts belong in retrieval, where they can be updated and cited. Fine-tune for behaviour.
 - **Skipping rungs.** Jumping to fine-tuning or training before a well-built prompt and RAG baseline wastes months. Climb on evidence from a golden set.
@@ -593,8 +617,8 @@ The team's quick view across the portfolio:
 
 - A. Retrieve the current fee schedule at request time and have the model answer from it with a citation
 - B. Fine-tune the model on the new fee schedule so it learns the changed fee and answers without any lookup
-- C. Increase the temperature so the model varies its answers and sometimes gives the newer fee instead of the old one
-- D. Train a new language model from scratch on all of the bank's documents, including the latest fee schedule
+- C. Add a note telling customers to confirm fees on the website, since the model's knowledge may be out of date
+- D. Switch to the vendor's newest model, whose training data is more recent and likely includes the new fee
 
 <details><summary>Answer</summary>
 
@@ -617,8 +641,8 @@ The team's quick view across the portfolio:
 
 **3. Testing shows the Staff GenAI assistant gives correct answers, but in the wrong structure and far too long, even after several prompt revisions. Which next step fits the build ladder?**
 
-- A. Add many more documents to retrieval, so the model has more examples of the right structure and length in front of it
-- B. Train a model from scratch on the bank's own credit memos
+- A. Add many more documents to retrieval, so the model has more examples of the right structure and length
+- B. Switch to a larger, more capable model, which is more likely to follow the format and length instructions in the prompt
 - C. Refine examples in the prompt further, and consider fine-tuning if it still plateaus, since this is a behaviour gap
 - D. Buy a second vendor product that offers a built-in memo template
 
@@ -632,7 +656,7 @@ The team's quick view across the portfolio:
 
 - A. In the system prompt, by telling the model not to reveal confidential data to users outside the credit team
 - B. By fine-tuning the model on public data only, so that it never sees confidential credit files
-- C. By lowering the temperature so the model is less likely to repeat any sensitive passages
+- C. By a filter on the model's answers that blocks any reply naming a corporate credit client or account
 - D. At retrieval, by enforcing the user's access rights before passages reach the model
 
 <details><summary>Answer</summary>
@@ -646,7 +670,7 @@ The team's quick view across the portfolio:
 - A. A strong evaluation suite with golden sets, plus a thin layer between the application and any one vendor's API
 - B. A longer contract with the current vendor, with a written commitment to keep the model available for several more years
 - C. A fine-tuned copy of the retired model, kept in storage for later
-- D. Avoiding AI products altogether until the vendor market becomes more stable
+- D. A detailed prompt library, written and tuned around the current model's quirks
 
 <details><summary>Answer</summary>
 

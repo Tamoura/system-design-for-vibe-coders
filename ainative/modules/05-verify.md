@@ -9,7 +9,7 @@
 # 5.1 — Trust evidence, not fluency: tests as the spec, reading diffs and the ways AI code passes while being wrong
 *Level: 🟡 Intermediate* · *Prerequisites: 4.1* · *Focus: Verify*
 
-**After this you can** write a test that fails on a green but wrong pull request and explain from the diff why the suite missed it. *Study time: about 110 minutes (estimate).*
+**After this you can** write a test that fails on a green but wrong pull request and explain from the diff why the suite missed it. *Study time: reading about 15 min, hands-on about 75 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Fluent is not true.** A summary, a diff and "all tests pass" read well either way. Evidence could have come out the other way: a test that can fail, a diff you read, a run you watched.
@@ -286,7 +286,7 @@ Use it in proportion: all of it for money modules, Parts 1 and 4 for a copy chan
 # 5.2 — Lab: review a pull request an agent wrote
 *Level: 🟡 Intermediate* · *Prerequisites: 4.2, 5.1* · *Focus: Verify*
 
-**After this you can** review an agent's pull request, record findings with evidence and fix it in small commits that pass the grader. *Study time: about 190 minutes (estimate).*
+**After this you can** review an agent's pull request, record findings with evidence and fix it in small commits that pass the grader. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Lab m05.** `ailab start` puts you on the branch `agent/loyalty-discount`: Lujain's agent built Hessa's loyalty-discount ticket (REMIT-229), and the suite is **green**.
@@ -337,13 +337,13 @@ Each finding in `review.md` has five parts: **File**, **Line** (the line in the 
 
 Rate by the damage if it ships, not by how hard it is to fix. A reviewer who marks everything blocker is ignored; one who marks a leaked credential a nit has not read the room. The grader fails both: ratings below the damage, and a review where every finding is a blocker (a test too weak to fail is a major at most).
 
-**A second-model reviewer (optional).** With Claude Code started in the lab directory, `/code-review high agent/loyalty-discount` reviews a branch (skip `--fix`, which edits code, and `--comment`). A fresh headless session works too (lesson 9.1 teaches it): pipe `git diff main...agent/loyalty-discount` into `claude -p` with a prompt that names `lab-assets/ticket-REMIT-229.md`. It has nobody to approve commands unless you allow them (see `--allowedTools`), so it cannot see what only running shows. This diff is safe; a real one is untrusted text, and the security page advises against piping untrusted content straight to Claude. Do your own pass first, check the code for every finding it adds, and count the real ones for the debrief.
+**A second-model reviewer (optional).** With Claude Code started in the lab directory, `/code-review high agent/loyalty-discount` reviews a branch (skip `--fix`, which edits code, and `--comment`). A fresh headless session works too (lesson 9.1 teaches it): pipe `git diff main...agent/loyalty-discount` into `claude -p` with a prompt that names `lab-assets/ticket-REMIT-229.md`. It has nobody to approve commands unless you allow them (see `--allowedTools`), so it cannot see what only running shows. This diff is safe; a real one is untrusted text, and the security page advises against piping untrusted content straight to Claude. Do your own pass first, and check the code for every finding it adds.
 
 ### 🔴 Expert view
 
 **How the grader reads your review.** It splits the Findings section into blocks (headings, table rows or list items all work), finds the file, line and severity in each, and pairs each finding with at most one seeded problem. A finding counts when it names the right file and either points within a few lines of the problem or uses words that name it (keywords, not meaning, so say plainly what is wrong). A finding in the wrong file never counts, and one finding cannot cover two problems. Extra findings it cannot judge are accepted. The advisory lines ask for all eight problems, and for a follow-up that no commit can do.
 
-**What it cannot tell.** It cannot tell whether you *understood* a finding, only that the review mentions it in the right place. A review stuffed with keywords would pass this half and teach you nothing: the grader is a practice partner, not a gate, and the fix half runs your code against tests written from the ticket, which keywords cannot fake. Two habits keep it honest: **What I ran** lists real commands and their output, and every finding says how you know.
+**What it cannot tell.** It cannot tell whether you *understood* a finding, only that the review mentions it in the right place. A review stuffed with keywords would pass this half and teach you nothing; the fix half runs your code against tests written from the ticket, which keywords cannot fake. Two habits keep it honest: **What I ran** lists real commands and their output, and every finding says how you know.
 
 **Fixing without rewriting.** The fix is small commits on the branch. Leave tests behind that fail on the agent's version: the grader puts the agent's code back, runs your new or changed tests, and wants at least two to go red. That is the test-first rule applied in reverse.
 
@@ -412,7 +412,7 @@ No rubber stamp and no rewrite: I want a review I can act on, then a branch I ca
 **Start.**
 
 ```bash
-cd ainative/ailab
+cd ~/system-design-for-vibe-coders/ainative/ailab
 python -m ailab start m05 --dir ~/ainative/m05
 cd ~/ainative/m05
 git log --oneline main..agent/loyalty-discount

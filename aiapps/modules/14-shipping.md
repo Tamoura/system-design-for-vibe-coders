@@ -9,7 +9,7 @@
 # 14.1 — Deploying an agent: containers, environments, queues, durable execution, release strategies and rollback
 *Level: 🔴 Advanced* · *Prerequisites: 2.2, 8.2, 12.2, 13.2* · *Layer: Delivery, Production*
 
-**After this you can** run the agent service with idempotency keys, carry out a canary and rollback drill with the counts to prove it, and build a container image with no key in any layer. *Study time: about 110 minutes (estimate).*
+**After this you can** run the agent service with idempotency keys, carry out a canary and rollback drill with the counts to prove it, and build a container image with no key in any layer. *Study time: reading about 10 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A deployed agent is a service around a model call you do not control: expect it slow, wrong, down or costly.
@@ -271,7 +271,7 @@ PASS  bad input is refused, not crashed
 
 **Group session (45 minutes).** (1) Place each diagram box on your platform (10). (2) Time a rollback (10). (3) Check the Dockerfile and compose file against R3 and R4 (15). (4) Write a canary's stop signals (10).
 
-**Build it with Claude Code.** Give this spec in plan mode (check the current Claude Code documentation):
+**Build it with Claude Code.** *No Claude Code? Do the spec's steps by hand and run its checks yourself (lesson 0.3).* Give this spec in plan mode (check the current Claude Code documentation):
 
 ```text
 Goal: package the Najm Desk answer path as a FastAPI service (lesson 14.1): labs/m14/app.py, smoke.py, Dockerfile, docker-compose.yml,
@@ -383,7 +383,7 @@ Do not: build images, add dependencies or touch other modules. Plan first; one f
 # 14.2 — Cost, latency and reliability engineering: budgets, caching, routing, retries and SLOs
 *Level: 🔴 Advanced* · *Prerequisites: 0.2, 12.2, 14.1* · *Layer: Production, Delivery*
 
-**After this you can** price a conversation from a dated price file and match your hand arithmetic to five decimals, and change an escalation rule test-first while naming one case where the change is wrong. *Study time: about 110 minutes (estimate).*
+**After this you can** price a conversation from a dated price file and match your hand arithmetic to five decimals, and change an escalation rule test-first while naming one case where the change is wrong. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Cost is tokens times the current price on four meters: input, output, cache write, cache read. Judge it per resolved ticket.
@@ -405,7 +405,7 @@ Hind asks what one resolved ticket costs, and what the bill becomes if every emp
 | `input_tokens` | P_in | Uncached input |
 | `output_tokens` | P_out | Includes thinking |
 | `cache_creation_input_tokens` | P_in × w | w is about 1.25 for the default five-minute cache, about 2 for the one-hour option (at the time of writing) |
-| `cache_read_input_tokens` | P_in × r | r is a fraction, about 0.1 on many models: check yours |
+| `cache_read_input_tokens` | P_in × r | r is a fraction: 0.1 by default, 0.05 on Opus 5.5 and Sonnet 5.5, 0.025 on Fable 5.1 and 5.2 (November 2026): check yours |
 
 A conversation sums its calls; input grows each turn as history is resent (lesson 0.2). Cost per resolved ticket is all spend divided by tickets resolved without a person: unresolved conversations and hand-offs stay in.
 
@@ -496,7 +496,7 @@ class Tracked:
 | **Response cache**: exact answers under a versioned key | Free | Never for answers using the user's own data; flush on a policy change |
 | **Trim tool output**: cap rows, select fields | Free | Cut too much and the agent calls again |
 | **Summarise history** | Trade-off | Rewrites the prefix: the cache restarts |
-| **Batch API**: about half price; results by `custom_id`, most within an hour, all within 24 | Free if nobody waits | Evals and nightly jobs; one request, not a loop |
+| **Batch API**: about half price; results by `custom_id`, most within an hour; any not done in 24 hours expire and must be resubmitted | Free if nobody waits | Evals and nightly jobs; one request, not a loop |
 | **Lower effort**, **cheaper model** | Trade-off | Test the hard cases; one change at a time |
 
 **Routing.** Start on `claude-haiku-5-5`; escalate to `claude-sonnet-5-5` or `claude-opus-5-5` for hard cases or low confidence. Make the signal checkable (a cited answer): a model's stated confidence is often poorly calibrated. Routing pays only when e < 1 − c/s, with e the share escalated and c, s the cost per call of the cheap and strong tiers on your traffic; each escalation also adds a second call's latency. Validate it with the eval (lesson 12.2): with and without routing, per category.
@@ -643,7 +643,7 @@ In the twelve lines `demo.py` printed (hidden above), `tried 2` marks the three 
 
 **Group session (45 minutes).** (1) Compare costs per resolved ticket; find the biggest lever (15). (2) Break the router with phrasings it misses, Arabic included (10). (3) Argue the SLO targets and who is paged, as Hind, Yara and Maha would (20).
 
-**Build it with Claude Code.** Give this spec in plan mode (check the current Claude Code documentation):
+**Build it with Claude Code.** *No Claude Code? Do the spec's steps by hand and run its checks yourself (lesson 0.3).* Give this spec in plan mode (check the current Claude Code documentation):
 
 ```text
 Goal: add a cost and reliability layer around the Anthropic client (lesson 14.2): labs/m14/cost.py, router.py, reliable.py, report.py,
@@ -659,7 +659,7 @@ Acceptance: pytest passes; report.py exits 1 on a breached SLO. No new dependenc
 - Read the diff for a price in code, an uncapped sleep, a retry inside a retry, a prompt in the log.
 
 ## 🛠️ Exercises
-- 🟢 **Fill the prices.** Offline. Copy current prices from the public price page into `prices.json`, date them, run the demo and report. *Done when:* the warning is gone and the report matches your hand arithmetic for one conversation to five decimals.
+- 🟢 **Fill the prices.** Offline, plus the public price page. Copy current prices from the public price page into `prices.json`, date them, run the demo and report. *Done when:* the warning is gone and the report matches your hand arithmetic for one conversation to five decimals.
 - 🟡 **Smarter escalation.** Offline. Make "I don't know based on the provided documents" a final answer, not an escalation; write the failing test first. *Done when:* tests pass, escalations fall from three to one, and one case shows when that is wrong.
 - 🔴 **Prove it on the real API.** Needs the real API and the cap from lesson 0.2. Run `probe.py`, then your 20 questions routed and all on the middle tier. *Done when:* `NOTES.md` holds the probe output, both costs per question (dated), a verdict on each differing answer and your decision with a threshold.
 

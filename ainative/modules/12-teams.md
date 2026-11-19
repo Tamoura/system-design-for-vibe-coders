@@ -9,7 +9,7 @@
 # 12.1 — Team practice: conventions, review norms, ownership, juniors, metrics and policy
 *Level: 🔴 Advanced* · *Prerequisites: 0.3, 5.1, 10.1* · *Focus: Team*
 
-**After this you can** write a team AI working agreement in which every norm has a number, a name or a check. *Study time: about 110 minutes (estimate).*
+**After this you can** write a team AI working agreement in which every norm has a number, a name or a check. *Study time: reading about 15 min, hands-on about 60 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **team practice** is what stays true when your best engineer is away: shared context, review norms, owners, a path for juniors, metrics and policy, each with a check.
@@ -21,7 +21,7 @@
 ## 🧭 Why it matters
 Three months after Payments Platform rolled out its tools, Hamad (CISO) asks Tariq (engineering lead) two questions: how much of our code is AI-written, and are we faster? The IDE dashboard offers a stand-in for the first (41% of suggestions accepted; every figure here is fictional) and nothing answers the second. The same week Lujain (graduate engineer) opens a pull request of 1,100 changed lines, mostly agent-written, unlabelled, touching `fees.py`. It waits four days, then is approved because nobody can read 1,100 lines closely.
 
-Feelings also mislead: in one randomized trial of experienced developers on their own repositories, tasks took longer with early-2025 AI tools although the developers believed they had been faster (METR, 2025: other settings and newer tools may differ).
+Feelings also mislead: in one randomized trial of experienced developers on their own repositories, tasks took longer with early-2025 AI tools although the developers believed they had been faster (METR, 2025).
 
 ## 📐 How it works
 
@@ -88,7 +88,7 @@ The first three are *throughput*, the last two *instability*. **A vague metric b
 
 **What AI may change.** Code output can rise while the review queue grows, so lead time and stability may suffer (lesson 10.1). DORA's 2024 report associated higher AI adoption with lower delivery throughput and stability, partly through larger batches; the 2025 report found throughput positive and stability still negative, and frames AI as amplifying what a team already does. These are self-reported associations, not causes: keep batches small and measure.
 
-**Vanity metrics and guard metrics.** Lines of code rewards volume (the best change is often a deletion), suggestion acceptance rewards clicking, and percent AI-written is a usage number that can rise while delivery falls. Meta reports, in its own account of building the Forum app with an agent, that it measured success by production-ready changes rather than code volume. That is DORA's move too: count what reaches users, safely. It is one company's description, so read the original (Go deeper) and measure your own team. A **guard metric** watches what speed could break, with a threshold and response written in advance:
+**Vanity metrics and guard metrics.** Lines of code rewards volume (the best change is often a deletion), suggestion acceptance rewards clicking, and percent AI-written is a usage number that can rise while delivery falls. Meta reports, in its own account of building the Forum app with an agent, that it measured success by production-ready changes rather than code volume. That is DORA's move too: count what reaches users, safely. Measure your own team. A **guard metric** watches what speed could break, with a threshold and response written in advance:
 
 | Guard | Threshold | Response |
 |---|---|---|
@@ -260,7 +260,7 @@ Owner: <name>.  Version: 1.  Next review: <date, and after any incident>.
 # 12.2 — Workshop: write your team's AI engineering playbook
 *Level: 🔴 Advanced* · *Prerequisites: 12.1* · *Focus: Team*
 
-**After this you can** write a team AI engineering playbook of twelve or more checkable rules that passes the grader. *Study time: about 110 minutes (estimate).*
+**After this you can** write a team AI engineering playbook of twelve or more checkable rules that passes the grader. *Study time: reading about 15 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Lab `m12` (**needs an agent: no**): write `playbook.md` for Payments Platform: ten sections, twelve or more **rules** (`MUST ... Check: ...`), concrete review norms and a **metrics plan**, one block per metric.
@@ -269,7 +269,7 @@ Owner: <name>.  Version: 1.  Next review: <date, and after any incident>.
 - Deliverable: `playbook.md` committed, plus your agent log and debrief answers in a notes folder.
 
 ## 🧭 Why it matters
-At the clinic Tariq reads out a page of guidance from his last company, nearly every sentence starting "should". "Which of these could you check?" he asks. Nobody can name one. A rule you cannot check is a hope, and a metric you cannot compute is a mood. Hessa's ticket asks for the opposite: every rule ends with how anyone could verify it, and every number can be recomputed by two people. An assistant drafts something fluent in minutes; this lab teaches you to read that draft the way the grader does.
+At the clinic Tariq reads out a page of guidance from his last company, nearly every sentence starting "should". "Which of these could you check?" he asks. Nobody can name one. A rule you cannot check is a hope, and a metric you cannot compute is a mood. Hessa's ticket asks for the opposite: every rule ends with how anyone could verify it, and every number can be recomputed by two people.
 
 ## 📐 How it works
 
@@ -286,7 +286,7 @@ At the clinic Tariq reads out a page of guidance from his last company, nearly e
 
 In `playbook.md` write each rule as a list item (`- MUST ...`) inside the section it belongs to; the grader reads bullets, not table rows. A check runs or leaves a record. "The team lead reviews it" names a person, not a mechanism.
 
-**What exists today.** CI runs `pytest -q` and nothing else; there is no `CLAUDE.md`, `AGENTS.md`, `CODEOWNERS`, pull-request template or `.claude/` settings (the facts file says so). A playbook describes how the team will work, so call these new: "a new `CODEOWNERS` file". A backticked path that the repository lacks and no sentence calls new is a file you invented.
+**What exists today.** CI runs `pytest -q` and nothing else; there is no `CLAUDE.md`, `AGENTS.md`, `CODEOWNERS`, pull-request template or `.claude/` settings. A playbook describes how the team will work, so call these new: "a new `CODEOWNERS` file". A backticked path that the repository lacks and no sentence calls new is a file you invented.
 
 **A metric as a block.** The skeleton gives every metric six fields. A filled guard block, for a metric the facts file has no figure for (so its baseline says so):
 

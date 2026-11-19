@@ -2,6 +2,10 @@
 
 **Prove it works, find out fast when it doesn't. A free, bilingual course that takes you from zero to confident tester, test automation engineer or quality engineer — in a world where AI writes code, helps write tests, and ships products whose answers are never quite the same twice.**
 
+<!-- study-time -->
+**Study time for the whole course: about 95 hours** (estimate: reading plus hands-on work, summed over every lesson). At about 6 hours a week that is roughly 16 weeks. Each lesson shows its own split; a pilot with real learners will replace these estimates.
+<!-- /study-time -->
+
 ## What this is
 
 Software is being written faster than ever, much of it by AI coding agents. That makes testing more valuable, not less: someone has to decide what "correct" means, design the checks that can actually fail, and judge whether the evidence is good enough to ship. And a growing share of products now contain AI components — assistants, search, agents — that need a different kind of testing altogether.
@@ -16,6 +20,14 @@ This course teaches that work, hands-on and tool-neutral:
 - **Testing AI systems:** evals for LLM apps, RAG and agents, safety, fairness, red-teaming and monitoring.
 
 Every exercise runs on a laptop with free tools — no paid AI API key needed. It is written for computer science, data science and computer engineering graduates, developers and "vibe coders" who must verify what an agent produced, manual testers moving into automation, and teams in banks, government bodies and enterprises.
+
+## Before you start
+
+- **Tools (free):** Python 3.11 or newer and Git from lesson 0.3; Node 20 or newer from Module 3 (Playwright). Docker (for Testcontainers, 2.2) and k6 (4.1) are optional extras. Lesson 0.3 walks through the setup step by step.
+- **Computer:** any recent Windows, macOS or Linux laptop with about 8 GB of memory and 5 GB of free disk. Windows commands differ slightly; the lessons show them.
+- **Costs and accounts:** none are required. A free GitHub account helps for the CI lessons (5.2, 8.1). AI assistants are optional; no lesson needs a paid API key.
+- **Safety:** never paste a real password, token or API key into a chat with an AI assistant. The sample's tokens are fake; keep them that way.
+- **Time (estimates):** see the study-time line at the top of this page: about 95 hours in all, most of it hands-on, or roughly 16 weeks at about 6 hours a week. The capstone alone takes about 20 hours. The "Study time" line at the top of each lesson splits that lesson into reading and hands-on time; use those lines to plan each week.
 
 ## How every lesson works
 

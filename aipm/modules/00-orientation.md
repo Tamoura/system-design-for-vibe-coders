@@ -9,7 +9,7 @@
 # 0.1 — What AI product management is, and what it is not
 *Level: 🟢 Beginner* · *Prerequisites: none* · *Stage: Discover, Lead*
 
-**After this you can** reframe a technology-first request such as "we need an AI chatbot" into a problem, a measurable outcome, a quality bar, a cost and a first step, and write a role card that says what an AI PM owns and does not own. *Study time: about 110 minutes (estimate).*
+**After this you can** reframe a technology-first request such as "we need an AI chatbot" into a problem, a measurable outcome, a quality bar, a cost and a first step, and write a role card that says what an AI PM owns and does not own. *Study time: reading about 20 min, hands-on about 115 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **AI product management** is the work of deciding which AI-powered product to build, for whom, to what quality bar, at what cost and risk, and then proving that it creates value once real people use it.
@@ -152,6 +152,16 @@ Khalid agrees to the outcome, because it is written in his language: calls, sati
 - 🟡 Take a technology-first request you have heard ("we need an AI chatbot", "let's use GenAI for reports") and reframe it with the table in 🏛️: problem, who, outcome, quality bar, cost, first step. *Done when:* the outcome is measurable and says nothing about which technology to use.
 - 🔴 Write a role card like Rania's for an AI product in your own organisation, and show it to one engineer and one risk or compliance colleague. *Done when:* both agree with the "Owns" and "Does not own" rows, or you have written down where they disagree and why.
 
+<details><summary>Check your work</summary>
+
+**🟢 Model answer (a spam filter).** Value: will I trust the spam folder enough to stop checking it? Usability: can I see why a message was filtered and rescue it in one tap? Feasibility: can it keep catching new spam without blocking real mail (errors)? Viability: does scanning every message stay affordable and lawful (cost, data)? Two sentences name AI-specific issues, so the done-when is met.
+
+**🟡 and 🔴 self-check.** Your reframed request passes if: the outcome is a number with a direction and a date; the quality bar says what an error costs; no technology is named; the first step is a test you could start this week. Your role card passes if the "Does not own" row names at least one decision that belongs to risk, privacy or engineering.
+
+**Working alone?** If you cannot reach an engineer and a compliance colleague, compare your card with Rania's and the cast table in 0.3, and mark each row "matches", "differs" or "unsure", with one line on why.
+
+</details>
+
 ## ⚠️ Mistakes and traps
 - **Starting from the technology.** "Where can we use GenAI?" produces demos. Start from a job, a workflow and a measurable outcome.
 - **Confusing a demo with a product.** A demo shows that the model *can* succeed. A product needs to know *how often* it fails and what happens then. Ask for an error rate on representative cases before anyone says "it works".
@@ -170,10 +180,10 @@ Khalid agrees to the outcome, because it is written in his language: calls, sati
 
 **1. Khalid asks Faisal to "add an AI assistant to the app by Q3". What should Faisal do first?**
 
-- A. Write detailed feature requirements so engineering can start
-- B. Ask Tariq to choose a model vendor
-- C. Reframe the request around a customer problem, a measurable outcome and a quality bar, then run short discovery
-- D. Build a demo to show Khalid within a week
+- A. Write detailed feature requirements now so engineering can size the work and still hit Q3
+- B. Ask Tariq to shortlist model vendors so cost and quality can be compared before scoping
+- C. Reframe it around a customer problem, a measurable outcome and a quality bar, then run short discovery
+- D. Build a working demo within a week so Khalid can react to something real before scoping
 
 <details><summary>Answer</summary>
 
@@ -209,10 +219,10 @@ Khalid agrees to the outcome, because it is written in his language: calls, sati
 
 **4. Which statement best describes the difference between an AI feature PM and an AI platform PM?**
 
-- A. The feature PM manages an AI capability inside a product for end users; the platform PM manages shared AI capabilities that other internal teams build on
-- B. The feature PM works on generative AI; the platform PM works on classic machine learning
-- C. The platform PM only manages vendors
-- D. There is no real difference; the titles are interchangeable
+- A. The feature PM serves end users of one product; the platform PM serves internal teams that build on shared AI capabilities
+- B. The feature PM works on generative AI; the platform PM works on classic machine learning models
+- C. The platform PM owns model vendors and contracts, while the feature PM owns the end-user experience
+- D. The feature PM writes the requirements; the platform PM runs the models and evaluations for every team
 
 <details><summary>Answer</summary>
 
@@ -222,10 +232,10 @@ Khalid agrees to the outcome, because it is written in his language: calls, sati
 
 **5. A team says its new AI summariser "works" because it produced good summaries in every demo to leadership. What is the most useful next question from the PM?**
 
-- A. "Can we make the interface more attractive?"
-- B. "How often does it fail on a representative set of real documents, what kinds of failure are they, and who would catch them?"
-- C. "Which competitor has a similar feature?"
-- D. "Can we launch to everyone next week?"
+- A. "Can we run the same demo for the wider business to build support before we invest more?"
+- B. "How often does it fail on a representative set of real documents, what kinds of failure, and who catches them?"
+- C. "Which competitor has a similar feature, and how does our summary quality compare with theirs?"
+- D. "Since leadership liked it, can we launch to all staff next week and gather feedback there?"
 
 <details><summary>Answer</summary>
 
@@ -246,7 +256,7 @@ Khalid agrees to the outcome, because it is written in his language: calls, sati
 # 0.2 — How AI products differ: probabilistic, data-hungry, costly per use, trust-bound
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Stage: Define, Evaluate*
 
-**After this you can** estimate the monthly model cost of an AI assistant from stated illustrative assumptions, name the assumption the total is most sensitive to, and turn each of the four AI differences into a requirement you could test. *Study time: about 110 minutes (estimate).*
+**After this you can** estimate the monthly model cost of an AI assistant from stated illustrative assumptions, name the assumption the total is most sensitive to, and turn each of the four AI differences into a requirement you could test. *Study time: reading about 20 min, hands-on about 130 min (estimate).*
 
 ## ⚡ In 60 seconds
 - AI products differ from ordinary software in four ways that change almost every product decision. They are **probabilistic**, **data-hungry**, **costly per use** and **trust-bound**.
@@ -293,13 +303,13 @@ If the fee schedule the assistant retrieves is out of date, the answer will be w
 
 > cost per task = (input tokens × input price) + (output tokens × output price), summed over every model call the task makes
 
-An **illustrative** example with made-up round numbers (real prices change often, so always check current ones): suppose drafting one credit memo sends 30,000 input tokens and gets back 3,000 output tokens, at say $3 per million input tokens and $15 per million output tokens. That is $0.09 + $0.045 ≈ $0.14 per draft. That is trivial next to hours of a relationship manager's time. Applied to Najm Assist at thousands of conversations a day, several calls each, the same arithmetic produces a monthly bill someone must justify. Classic ML models such as Smart Alerts are usually much cheaper per prediction, but they still carry infrastructure, monitoring and retraining costs.
+An **illustrative** example with made-up round numbers (real prices change often, so always check current ones): suppose one model call while drafting a credit memo sends 30,000 input tokens and gets back 2,000 output tokens, at say $3 per million input tokens and $15 per million output tokens. That is $0.09 + $0.03 = $0.12 per call, or about $0.50 for a memo that needs four calls (the same numbers lesson 1.2 uses). That is trivial next to hours of a relationship manager's time. Applied to Najm Assist at thousands of conversations a day, several calls each, the same arithmetic produces a monthly bill someone must justify. Classic ML models such as Smart Alerts are usually much cheaper per prediction, but they still carry infrastructure, monitoring and retraining costs.
 
 The product consequence: the more successful the feature, the higher the bill. Cost per task belongs next to quality and adoption on the PM's dashboard (Module 8).
 
 **4. Trust-bound.** An AI product only creates value when people act on its output. If relationship managers do not trust the Credit Memo Copilot, they rewrite every draft and save no time. If they trust it too much, they paste a wrong figure into a credit committee pack. The goal is **calibrated trust**: reliance that matches how reliable the product actually is, case by case. The Google PAIR team's People + AI Guidebook and Microsoft's Guidelines for Human-AI Interaction (Amershi et al., 2019) both treat this as a core design goal. Guidelines such as "make clear how well the system can do what it can do" and "support efficient correction" exist because of it (Module 4).
 
-Trust also breaks in public. Google's Bard launch demo (February 2023) contained a factual error about the James Webb Space Telescope. In December 2023 users manipulated a Chevrolet dealer's website chatbot into "agreeing" to sell a car for $1. In January 2024 DPD's parcel chatbot swore at a customer after a system update. Each was small in money and large in reputation.
+Trust also breaks in public. A promotional video for Google's Bard launch (February 2023) contained a factual error about the James Webb Space Telescope. Lesson 5.3 adds two chatbot cases: one talked into a $1 car "deal", one that swore at a customer after a system update. Each was cheap to cause and costly in reputation.
 
 ### 🟡 Going deeper
 
@@ -349,7 +359,7 @@ Each box is a PM decision: which data goes in, which model, how output is shown,
 
 **Errors compound in multi-step products.** When an agent performs several steps in a row, per-step reliability multiplies. As an illustration only, assuming each step succeeds independently 95% of the time, a ten-step task succeeds end to end only about 60% of the time (0.95 to the power of 10 ≈ 0.60). Real steps are not independent, and real rates vary, but the direction holds. It is why Najm Assist starts by answering questions before it is allowed to act (lesson 4.3), and why the companion course *Production AI Agents* spends so much time on checkpoints and recovery.
 
-**The ground moves under you.** Vendors update and retire models, and a prompt that worked last month may behave differently after an update (the DPD incident followed a system update). Pin model versions, test them and upgrade deliberately (lesson 9.2).
+**The ground moves under you.** Vendors update and retire models, and a prompt that worked last month may behave differently after an update (lesson 5.3 has a public case that followed a system update). Pin model versions, test them and upgrade deliberately (lesson 9.2).
 
 **Cost and quality are measured together.** Klarna announced in February 2024 that its AI assistant was handling a large share of its customer-service chats. In 2025 the company said it would bring more human customer service back, with reporting pointing to service quality. The public lesson for PMs: a metric that captures savings but not resolution quality will mislead you. Put quality and trust measures next to cost (Module 8).
 
@@ -372,14 +382,24 @@ After the customer session, Rania asks Faisal to fill in her **AI difference che
 | Probabilistic | What kinds of wrong answer are possible, and which are worst? | Wrong fee amount or condition (worst); outdated information; answering outside its scope; inconsistent answers to the same question | Golden set of about 200 real, anonymised customer questions across fee types and both languages; a stricter bar for fee amounts; must hand over to a human when retrieved content does not cover the question |
 | Data-hungry | Which data does it rely on, and do we have the right to use it? | Approved fee schedules and product terms; anonymised past chats for testing | Content owner for each source; update process when fees change; Sara to confirm whether chat logs may be used for evaluation |
 | Costly per use | What does one conversation cost, and at what volume does it matter? | Illustrative estimate from Tariq, based on expected tokens and calls per conversation | Cost per resolved conversation as a tracked metric; a monthly budget alert |
-| Trust-bound | How will customers know when to rely on it, and how do they recover from errors? | Customers may treat any figure as a commitment by the bank (compare the Air Canada ruling) | Show the source document for every fee answer; one tap to reach a human; clear wording that the assistant answers from Najm's published information |
+| Trust-bound | How will customers know when to rely on it, and how do they recover from errors? | Customers may treat any figure as a commitment by the bank (compare the tribunal ruling above) | Show the source document for every fee answer; one tap to reach a human; clear wording that the assistant answers from Najm's published information |
 
 Faisal's spec line "the assistant answers fee questions correctly" becomes four measurable requirements, and Khalid gets a narrower, safer first version with its quality bar written before build.
 
 ## 🛠️ Exercises
 - 🟢 For an AI product you use every day, write one example of each of the four differences in action. *Done when:* you have four examples, each tied to something you have actually seen or can check.
-- 🟡 Use the cost-per-task formula with illustrative numbers you choose and state. Estimate the monthly model cost of an assistant handling 5,000 conversations a day, averaging three model calls per conversation. *Done when:* every assumption is written down and labelled illustrative, and you can say which assumption the result is most sensitive to.
+- 🟡 Use the cost-per-task formula with illustrative numbers you choose and state. Estimate the monthly model cost of an assistant handling 5,000 conversations a day, averaging three model calls per conversation. *Done when:* every assumption is written down and labelled illustrative, and you have recomputed the total with each assumption doubled in turn and named the one that moves it most.
 - 🔴 Complete the AI difference check for the Credit Memo Copilot. *Done when:* each row names at least one specific failure type, one data source with an owner, one cost driver and one trust risk, and each row produces a requirement you could test.
+
+<details><summary>Check your work</summary>
+
+**🟢 Model answer (a maps app).** Probabilistic: the arrival time was ten minutes out on a rainy evening. Data-hungry: the traffic layer depends on other phones reporting their speed. Costly per use: every route request runs on the provider's servers. Trust-bound: I stopped taking its shortcuts after one led to a closed road.
+
+**🟡 Worked check (illustrative).** 5,000 conversations × 3 calls = 15,000 calls a day. At 2,000 input and 300 output tokens and $3 / $15 per million, a call costs $0.006 + $0.0045 = $0.0105, so about $158 a day and $4,700 a month. Doubling volume or calls per conversation doubles the total; doubling input tokens adds about 57%, output tokens about 43%. So calls per conversation, the least known input, is the one to pin down first.
+
+**🔴 Self-check.** Each row of your difference check names: a specific failure (for example an invented covenant), a data source with an owner, a cost driver, a trust risk, and a requirement you could test (for example "no figure appears that is not in the source documents, on 100% of the golden set").
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Pass/fail acceptance criteria for AI behaviour.** "It answers correctly" cannot be tested. Write rates on a named golden set, with stricter bars for high-severity cases.
@@ -475,7 +495,7 @@ Faisal's spec line "the assistant answers fee questions correctly" becomes four 
 # 0.3 — Meet Najm Bank's AI product team, and how to use this course
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Stage: Discover, Lead*
 
-**After this you can** build a portfolio map of three AI products with a testable open question for each, and write a dated one-page study plan that names the first three artefacts you will produce. *Study time: about 110 minutes (estimate).*
+**After this you can** build a portfolio map of three AI products with a testable open question for each, and write a dated one-page study plan that names the first three artefacts you will produce. *Study time: reading about 15 min, hands-on about 110 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Najm Bank is fictional.** It is a mid-sized Gulf bank headquartered in Doha, with retail, SME and corporate customers in Qatar, the UAE and the EU. You join its **Digital & AI Products** team for the whole course.
@@ -602,12 +622,14 @@ The rule of thumb: when the question is "*should* we, for whom, and how good mus
 
 **Four ways through the course.** The modules are written in order, but not everyone needs every lesson at the same depth.
 
-| You are… | Suggested path |
-|---|---|
-| New to product and to AI | Everything in order. Do the 🟢 and 🟡 exercises; save 🔴 for a second pass |
-| An engineer or data scientist moving into product | Skim Module 1. Go deep on Modules 2, 4, 7 and 8, where product judgement matters most |
-| A manager or sponsor of AI products | Modules 0, 2.2, 2.3, 7, 8 and 9. Use the 🏛️ artefacts as templates to ask your teams for |
-| Already working as an AI PM | Take the practice exam in 10.3 first as a diagnostic, then study the lessons behind the questions you missed |
+| You are… | Suggested path | About how long (estimate) |
+|---|---|---|
+| New to product and to AI | Everything in order. Do the 🟢 and 🟡 exercises; save 🔴 for a second pass | 60 hours |
+| An engineer or data scientist moving into product | Skim Module 1. Go deep on Modules 2, 4, 7 and 8, where product judgement matters most; 🟢 exercises elsewhere | 60 hours |
+| A manager or sponsor of AI products | Modules 0, 2.2, 2.3, 7, 8 and 9; 🟢 exercises. Use the 🏛️ artefacts as templates to ask your teams for | 12 hours |
+| Already working as an AI PM | Take the practice exam in 10.3 first as a map of gaps (not a readiness score), then study the lessons behind the questions you missed | 3 hours, plus 1–3 hours per lesson |
+
+**How long the whole course takes.** Reading every lesson takes about 12 hours; the exercises are most of the work. Every exercise, including the 🔴 ones and the full capstone on your own product, comes to about 115–120 hours: roughly five months at 6 hours a week. The 🟢 exercises alone, with the quizzes, come to about 35 hours. The study-time line at the top of each lesson is an estimate for that lesson, and the lines add up to the course total; plan by the path totals above.
 
 **Build a portfolio as you go.** Each 🏛️ section is a template. If you redo it for a product you know (at work, a side project, or a realistic invented one), you end with a set of artefacts: opportunity brief, use-case scorecard, AI spec, eval plan, launch checklist, metrics tree, strategy. Lesson 10.2 shows how to turn these into interview material. Keep anything confidential out of it. Invent a product if you must, the way this course invented Najm.
 
@@ -651,6 +673,14 @@ Faisal's comment on reading it: "So I recommend and the business decides, and La
 - 🟢 For each of the five Najm products, write one sentence saying which cast member you would talk to first and why. *Done when:* you have five sentences and at least three different people named.
 - 🟡 Build a portfolio map like Rania's for three AI products you know, at work or in public apps. *Done when:* every cell is filled, and the "main open question" for each is one you could test.
 - 🔴 Choose your study path from the 🔴 table and write a one-page plan: which modules in what order, which product you will build your portfolio artefacts for, and one companion course topic you expect to need. *Done when:* the plan has dates, names a real or invented product, and lists the first three artefacts you will produce.
+
+<details><summary>Check your work</summary>
+
+**🟢 Model answer (two of five).** Credit Memo Copilot: Dana first, because the open question is how good drafts must be and how to measure it. SME Instant Finance: Layla first, because automated credit decisions set the risk tier before anything else. A good set names at least three different people, each for a reason tied to that product's biggest risk.
+
+**🟡 and 🔴 self-check.** Your portfolio map passes if each open question can be answered by a test within a month ("do RMs accept more than half the drafts?"), not by opinion. Your study plan passes if it has calendar dates, a weekly time budget that matches the path hours in the table above, a named product, and the first three artefacts with the lesson that teaches each.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Treating Najm Bank as real.** It is fictional. Its numbers, org chart and products are teaching devices. Do not quote them as facts about any bank.
@@ -711,7 +741,7 @@ Faisal's comment on reading it: "So I recommend and the business decides, and La
 
 - A. Go to *AI Governance: Zero to Hero* and involve Layla, then bring the answer back into the product decision
 - B. Work out the obligations from first principles in the product spec, using Faisal's own reading of the Act and recent press coverage
-- C. Ignore it until launch week, then ask the legal team to review the finished assistant and fix anything they raise
+- C. Ask the chatbot model's vendor for its EU AI Act compliance statement and rely on it for the product decision
 - D. Go to *SaaS Building Blocks*, which covers how to build and run customer-facing features such as chat and notifications
 
 <details><summary>Answer</summary>

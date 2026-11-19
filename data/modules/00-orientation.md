@@ -9,7 +9,7 @@
 # 0.1 — What data engineering, analytics and data science are — and how they fit together
 *Level: 🟢 Beginner* · *Prerequisites: None* · *Stage: Analyse, Serve*
 
-**After this you can** write a data request intake card for a published metric (decision, definition, source, owner, freshness and three quality checks) and point to two places where the number could quietly mean different things. *Study time: about 105 minutes (estimate).*
+**After this you can** write a data request intake card for a published metric (decision, definition, source, owner, freshness and three quality checks) and point to two places where the number could quietly mean different things. *Study time: reading about 15 min, hands-on about 130 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Data engineering** builds and runs the systems that move, store and prepare data reliably. **Analytics engineering** turns raw data into clean, tested, documented tables and agreed metrics. **Data analysis** answers business questions with those tables. **Data science** builds models that predict or explain. **ML engineering** keeps those models running in production.
@@ -19,7 +19,7 @@
 - Biggest trap: treating disagreeing numbers as a tooling problem. Usually it is a definition problem that nobody owns.
 
 ## 🧭 Why it matters
-It is Huda's first Monday at Najm Bank. In the weekly business review, the retail team's slide says Najm has **412,000 active customers**. Ten minutes later, the finance slide says **368,000**. (The figures are hypothetical, but the situation is common in every organisation that has data.) The chief operating officer asks which one is right. Nobody answers. Kareem, the retail data analyst, wrote one query; someone in finance wrote the other. Both queries run without errors. Both are "correct".
+It is Huda's first Monday at Najm Bank. In the weekly business review, the retail team's slide says Najm has **412,000 active customers**. Ten minutes later, the finance slide says **365,000**. (The figures are hypothetical, but the situation is common in every organisation that has data.) The chief operating officer asks which one is right. Nobody answers. Kareem, the retail data analyst, wrote one query; someone in finance wrote the other. Both queries run without errors. Both are "correct".
 
 After the meeting, Faisal, Head of Data Platform, takes Huda aside. "Both numbers are right, for their own definition of *active*. Retail counts anyone with an open account. Finance counts anyone who made a transaction themselves in the last 90 days. Our job is not to write a third query. Our job is to make sure the bank has *one* definition, built once, tested, and used everywhere. That is what this team is for."
 
@@ -150,7 +150,7 @@ The card is short on purpose. Its job is to force the two conversations that pre
 
 ## 🛠️ Exercises
 - 🟢 Find five real job adverts: one each for a data engineer, analytics engineer, data analyst, data scientist and ML engineer. For each, list the three skills that appear most and place the role on the eight-stage life cycle. *Done when:* you have a one-page table and can explain, in two sentences, the difference between an analytics engineer and a data analyst.
-- 🟡 Install DuckDB on your laptop. Create small `accounts` and `transactions` tables with ten made-up rows each and run both "active customer" queries from this lesson. Then add rows that make the two numbers differ for three different reasons (an account with only fees, a closed account, a transaction older than 90 days). *Done when:* both queries run and you can explain each difference row by row.
+- 🟡 Install DuckDB on your laptop (`pip install duckdb`; the full lab setup is in lesson 0.3). Create small `accounts` and `transactions` tables with ten made-up rows each and run both "active customer" queries from this lesson. Then add rows that make the two numbers differ for three different reasons (an account with only fees, a closed account, a transaction older than 90 days). *Done when:* both queries run and you can explain each difference row by row.
 - 🔴 Pick a metric you have seen quoted in public, such as "monthly active users" in a company's results, or a public statistic from your country's open-data portal. Write a data request intake card for it: the decision it supports, the exact definition, the source, the owner, the freshness and three quality checks. Note every point where the published material does not tell you enough. *Done when:* the card is complete, and the list of unanswered questions shows at least two places where the number could quietly mean different things.
 
 ## ⚠️ Mistakes and traps
@@ -169,7 +169,7 @@ The card is short on purpose. Its job is to force the two conversations that pre
 
 ## ✍️ Check yourself
 
-**1. At Najm's business review, retail reports 412,000 active customers and finance reports 368,000. Both queries run without errors. What is the most likely root cause?**
+**1. At Najm's business review, retail reports 412,000 active customers and finance reports 365,000. Both queries run without errors. What is the most likely root cause?**
 
 - A. One of the two queries contains a syntax error that the database quietly skipped over while counting
 - B. Two definitions of "active customer", with nobody owning one
@@ -182,12 +182,12 @@ The card is short on purpose. Its job is to force the two conversations that pre
 
 </details>
 
-**2. Which role is mainly responsible for turning raw tables into clean, tested, documented models with agreed metric definitions?**
+**2. Kareem's dashboard and Finance's report compute "active customer" with different SQL. Faisal wants one tested, documented model with the agreed definition, read by both. Which role usually builds and owns it?**
 
-- A. Data scientist, who builds the predictive models
-- B. ML engineer, who keeps models running in production
-- C. Data analyst, who answers business questions with dashboards
-- D. Analytics engineer
+- A. Data scientist, because definitions feed the features of models
+- B. ML engineer, because a shared model must be deployed and kept running
+- C. Data analyst, because analysts are the people who use the number most
+- D. Analytics engineer, because the transformation layer is their remit
 
 <details><summary>Answer</summary>
 
@@ -247,7 +247,7 @@ The card is short on purpose. Its job is to force the two conversations that pre
 # 0.2 — The modern data stack end to end: from a tap in the app to a number on a dashboard
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Stage: Ingest, Serve*
 
-**After this you can** draw the path of one app action from the tap to a dashboard number, label each hop with its life-cycle stage, and name one thing at each hop that could change the number. *Study time: about 120 minutes (estimate).*
+**After this you can** draw the path of one app action from the tap to a dashboard number, label each hop with its life-cycle stage, and name one thing at each hop that could change the number. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - The **modern data stack** is the usual chain of components: sources → ingestion → storage → transformation → serving (dashboards, models, apps), with orchestration, quality checks and governance running alongside.
@@ -499,7 +499,7 @@ Huda writes the team's first **data flow sheet** for one dashboard number. Faisa
 # 0.3 — Meet Najm Bank's data platform team, and how to use this course
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Stage: Operate, Govern*
 
-**After this you can** set up a lab repository whose fresh clone regenerates the same synthetic Najm data, and write three stakeholder queries against it, each under a one-line business question. *Study time: about 105 minutes (estimate).*
+**After this you can** set up a lab repository whose fresh clone regenerates the same synthetic Najm data, and write three stakeholder queries against it, each under a one-line business question. *Study time: reading about 15 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Najm Bank is fictional.** It is a mid-sized Gulf bank (retail, SME and corporate lending) with customers in Qatar, the UAE and the EU, used across this library of courses. You join its **Data Platform & Analytics** team.
@@ -606,14 +606,24 @@ Everyone should do Module 6 and the capstone.
 - **dbt Core** with the DuckDB or PostgreSQL adapter from Module 3.
 - **git**, so every exercise lives in a repository you can show.
 
+**Will my laptop cope?** Our estimate at the time of writing (2026), not a vendor figure:
+- *Modules 0, 1, 3 and 4 (Python, DuckDB, dbt):* any recent laptop with 8 GB of RAM and about 5 GB of free disk.
+- *Modules 2, 5 and 7 (several containers at once):* 16 GB of RAM and about 30 GB of free disk are comfortable. With 8 GB, run one stack at a time and stop it with `docker compose down` before starting the next. Airflow's own Docker guide asks for at least 4 GB of memory for its containers.
+- *Windows:* Docker Desktop runs on WSL 2. Keep your lab files inside the Linux file system (for example `~/najm-lab`), not under `/mnt/c`, which is much slower.
+- *Apple Silicon Macs:* most images used here are published for arm64; if one is not, Docker emulates it slowly, so look for an arm64 tag first.
+- *Lighter path:* Redpanda (a single binary with no JVM) instead of Kafka, `dagster dev` without Docker instead of Airflow, and DuckDB instead of PostgreSQL wherever an exercise allows it.
+- *Cost and secrets:* every tool here is free and no cloud account is needed. Never paste a password or API token into an AI chat or commit it to git.
+
 **Never use real personal data.** Use synthetic data you generate, or public open data. This script creates a small synthetic Najm dataset in one DuckDB file:
 
 ```python
 import duckdb
 
+LAB_VERSION = "najm-lab v1"  # note it in your README; later lessons use v1
 con = duckdb.connect("najm_lab.duckdb")  # one file on your laptop
 
-con.sql("""
+# hash() instead of random(): the same "random-looking" rows on every run
+con.execute("""
 CREATE OR REPLACE TABLE customers AS
 SELECT
     printf('C%06d', i)                            AS customer_id,
@@ -621,20 +631,75 @@ SELECT
     (['QA', 'AE', 'DE'])[1 + (i // 3) % 3]        AS country,
     DATE '2020-01-01' + CAST(i % 2000 AS INTEGER) AS opened_on
 FROM range(1, 1001) AS r(i);
-""")
 
-con.sql("""
--- hash() instead of random(): the same "random-looking" rows on every run
+-- C000001-C000950 get one to several accounts; the last 50 customers get none
+CREATE OR REPLACE TABLE accounts AS
+SELECT
+    printf('A%06d', i)                            AS account_id,
+    printf('C%06d', CASE WHEN i <= 950 THEN i
+                    ELSE 1 + CAST(hash(i, 'owner') % 950 AS BIGINT) END) AS customer_id,
+    (['current', 'savings'])[1 + i % 2]           AS product,
+    CASE WHEN i % 25 = 0 THEN 'closed' ELSE 'open' END AS status
+FROM range(1, 1801) AS r(i);
+
+-- July 2025 to March 2026; about 1 row in 20 is a fee the bank initiated
 CREATE OR REPLACE TABLE transactions AS
 SELECT
-    i                                             AS txn_id,
-    printf('C%06d', 1 + hash(i, 'cust') % 1000)   AS customer_id,
-    5 + (hash(i, 'amount') % 99500) / 100         AS amount_qar,
-    TIMESTAMP '2026-01-01'
-      + to_minutes(CAST(hash(i, 'ts') % 129600 AS BIGINT)) AS txn_ts_utc
-FROM range(1, 50001) AS r(i);
+    t.i                                           AS txn_id,
+    a.account_id,
+    a.customer_id,
+    CASE WHEN hash(t.i, 'dir') % 4 = 0 THEN 'credit' ELSE 'debit' END AS direction,
+    CASE WHEN hash(t.i, 'fee') % 20 = 0 THEN 'bank' ELSE 'customer' END AS initiated_by,
+    CAST(5 + (hash(t.i, 'amount') % 99500) / 100 AS DECIMAL(18, 2)) AS amount_qar,
+    TIMESTAMP '2025-07-01'
+      + to_minutes(CAST(hash(t.i, 'ts') % 393120 AS BIGINT)) AS txn_ts_utc
+FROM range(1, 100001) AS t(i)
+JOIN accounts AS a
+  ON a.account_id = printf('A%06d', 1 + hash(t.i, 'acct') % 1800);
+
+-- 2,000 loans; about 1 in 10 stops paying part-way, some pay late
+CREATE OR REPLACE TABLE loans AS
+SELECT
+    printf('L%06d', i)                            AS loan_id,
+    printf('C%06d', 1 + hash(i, 'borrower') % 950) AS customer_id,
+    CASE WHEN i % 20 = 0 THEN 'USD' ELSE 'QAR' END AS currency,
+    1000 * (10 + hash(i, 'principal') % 190)      AS principal,
+    ([12, 24, 36])[1 + i % 3]                     AS term_months,
+    DATE '2024-01-01' + CAST(hash(i, 'start') % 640 AS INTEGER) AS start_date
+FROM range(1, 2001) AS r(i);
+
+CREATE OR REPLACE TABLE instalments AS
+SELECT
+    l.loan_id,
+    n                                             AS instalment_no,
+    CAST(l.start_date + to_months(CAST(n AS INTEGER)) AS DATE) AS due_date,
+    CAST(l.principal / l.term_months AS DECIMAL(18, 2)) AS amount_due
+FROM loans AS l, range(1, 37) AS r(n)
+WHERE n <= l.term_months;
+
+CREATE OR REPLACE TABLE repayments AS
+SELECT
+    i.loan_id,
+    i.instalment_no,
+    CAST(i.due_date + CAST(CASE WHEN hash(i.loan_id, i.instalment_no) % 10 = 0
+         THEN hash(i.loan_id, i.instalment_no) % 45 ELSE 0 END AS INTEGER) AS DATE) AS paid_on,
+    i.amount_due                                  AS amount_paid
+FROM instalments AS i
+WHERE i.due_date <= DATE '2026-03-31'
+  AND NOT (hash(i.loan_id, 'risk') % 10 = 0
+           AND i.instalment_no > 3 + hash(i.loan_id, 'stop') % 9);
+
+-- the ledger's control total: principal still owed per currency on 31 March 2026
+CREATE OR REPLACE TABLE ledger_totals AS
+SELECT l.currency, DATE '2026-03-31' AS as_of,
+       SUM(i.amount_due) - COALESCE(SUM(p.amount_paid), 0) AS outstanding
+FROM instalments AS i
+JOIN loans AS l USING (loan_id)
+LEFT JOIN repayments AS p USING (loan_id, instalment_no)
+GROUP BY l.currency;
 """)
 
+print(LAB_VERSION)
 print(con.sql("""
 SELECT c.segment, COUNT(*) AS txns, round(SUM(t.amount_qar)) AS total_qar
 FROM transactions AS t
@@ -644,7 +709,7 @@ ORDER BY c.segment;
 """))
 ```
 
-It makes 1,000 customers and 50,000 transactions in the first quarter of 2026. Notice the comment: with `random()`, Huda's exercise answers changed on every re-run. Using `hash()` of the row number gives data that looks random but is the same on every run with the same DuckDB version. **Reproducibility** is a theme you will meet again in pipelines (lesson 2.2) and in ML (lesson 5.1).
+It builds version 1 of the course's **lab dataset**: 1,000 customers (the last 50 with no account), 1,800 accounts (some closed), 100,000 transactions from July 2025 to March 2026, each with a direction and who initiated it, and 2,000 loans with instalments, repayments (some late, some stopped) and the ledger's control totals. When a later exercise says "the lab dataset", it means these tables; when it needs more rows, raise a `range()` bound and keep `hash()`. Notice the comment: with `random()`, Huda's exercise answers changed on every re-run. Using `hash()` of the row number gives data that looks random but is the same on every run with the same DuckDB version, so pin the version you installed in a `requirements.txt`. **Reproducibility** is a theme you will meet again in pipelines (lesson 2.2) and in ML (lesson 5.1).
 
 ### 🔴 Expert view
 
@@ -700,7 +765,7 @@ Faisal hands every new joiner the **Data Platform onboarding pack**. Huda fills 
 
 ## 🛠️ Exercises
 - 🟢 Set up the lab: install Python and DuckDB, run the synthetic-data script and commit it to a new git repository with a README. *Done when:* a fresh clone of your repository runs the script and prints the same three rows as your first run.
-- 🟡 Extend the synthetic dataset with an `accounts` table (one to three accounts per customer, some closed) and a `loans` table (a few hundred loans with an amount, a start date and a status). Then write three queries a Najm stakeholder might ask, and note which cast member would ask each. *Done when:* the tables load, every account and loan links to an existing customer, and each query has a one-line business question above it.
+- 🟡 Using the lab dataset's `accounts`, `transactions` and `loans`, write three queries a Najm stakeholder might ask, and note which cast member would ask each. Add one check query that finds accounts or loans with no matching customer. *Done when:* each query runs, the check returns zero rows, and each query has a one-line business question above it.
 - 🔴 Fill in Part A of the onboarding pack for five systems of an organisation you know (an employer, a university, a public service), using only public information or your own role. Mark every cell you cannot fill. *Done when:* the table is complete or marked, with three sentences on what the gaps would mean for a new data team there.
 
 ## ⚠️ Mistakes and traps

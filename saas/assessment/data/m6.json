@@ -35,7 +35,7 @@
    "lesson": "6.2",
    "q": {
     "en": "Beacon sends identify and track calls to PostHog, and its activation funnel counts users. The founders now ask what share of new organizations activate in their first week, broken down by plan. What should the team change?",
-    "ar": "يرسل Beacon استدعاءات identify وtrack إلى PostHog، ويحسب قُمعُ التفعيل لديه المستخدمين. ويسأل المؤسسون الآن عن نسبة المؤسسات الجديدة التي تصل إلى التفعيل في أسبوعها الأول، مقسّمةً حسب الخطة. ما الذي يجب أن يغيّره الفريق؟"
+    "ar": "يرسل Beacon استدعاءات identify وtrack إلى PostHog، ويحسب قُمعُ التفعيل لديه المستخدمين. ويسأل المؤسسون الآن عن نسبة المنظمات الجديدة التي تصل إلى التفعيل في أسبوعها الأول، مقسّمةً حسب الخطة. ما الذي يجب أن يغيّره الفريق؟"
    },
    "o": {
     "en": [
@@ -45,16 +45,16 @@
      "Treat each user's email domain as their organization, and group the funnel by it"
     ],
     "ar": [
-     "أرسل استدعاءات group بمعرّف المؤسسة والخطة، وحلّل القُمع حسب المؤسسة",
-     "أضف البريد الإلكتروني لكل مستخدم واسم شركته إلى خصائص الأحداث، وطابق المؤسسات لاحقًا",
+     "أرسل استدعاءات group بمعرّف المنظمة والخطة، وحلّل القُمع حسب المنظمة",
+     "أضف البريد الإلكتروني لكل مستخدم واسم شركته إلى خصائص الأحداث، وطابق المنظمات لاحقًا",
      "فعّل الالتقاط التلقائي كي تُسجَّل كل نقرة في التطبيق باسم كل مستخدم",
-     "اعتبر نطاق البريد الإلكتروني لكل مستخدم مؤسستَه، وجمّع القُمع حسبه"
+     "اعتبر نطاق البريد الإلكتروني لكل مستخدم منظمتَه، وجمّع القُمع حسبه"
     ]
    },
    "a": 0,
    "why": {
     "en": "In B2B an organization pays you, not a user, and group(groupId, traits) is the call that ties each user's events to an org and its plan so the funnel can be read per account. Putting emails in event properties sends PII to another vendor and makes GDPR deletion harder, and a company name still can't place a user who belongs to several orgs.",
-    "ar": "في B2B تدفع لك المؤسسة لا المستخدم، واستدعاء group هو الذي يربط أحداث كل مستخدم بمؤسسة وخطتها، فيُقرأ القُمع لكل حساب. أما وضع البريد الإلكتروني في خصائص الأحداث فيرسل بيانات شخصية (PII) إلى مزوّد آخر ويصعّب الحذف وفق GDPR، واسم الشركة لا يحدد مع ذلك المؤسسة الصحيحة لمستخدم ينتمي إلى عدة مؤسسات."
+    "ar": "في B2B تدفع لك المنظمة لا المستخدم، واستدعاء group هو الذي يربط أحداث كل مستخدم بمنظمة وخطتها، فيُقرأ القُمع لكل حساب. أما وضع البريد الإلكتروني في خصائص الأحداث فيرسل بيانات شخصية (PII) إلى مزوّد آخر ويصعّب الحذف وفق GDPR، واسم الشركة لا يحدد مع ذلك المنظمة الصحيحة لمستخدم ينتمي إلى عدة منظمات."
    }
   },
   {
@@ -63,7 +63,7 @@
    "lesson": "6.3",
    "q": {
     "en": "Beacon's check workers ask the flag service over the network whether new-scheduler is on for each org, on every check. During a ten-minute flag-service outage the lookups throw, and checks stop running for every customer. What should the workers do instead?",
-    "ar": "تسأل عمّالُ الفحص في Beacon خدمةَ الأعلام عبر الشبكة مع كل فحص هل العلم new-scheduler مفعّل لهذه المؤسسة. وأثناء انقطاع في خدمة الأعلام مدته عشر دقائق، ترمي عمليات البحث استثناءات، فتتوقف الفحوص عن العمل لكل العملاء. ما الذي يجب أن يفعله العمّال بدلًا من ذلك؟"
+    "ar": "تسأل عمّالُ الفحص في Beacon خدمةَ الأعلام عبر الشبكة مع كل فحص هل العلم new-scheduler مفعّل لهذه المنظمة. وأثناء انقطاع في خدمة الأعلام مدته عشر دقائق، ترمي عمليات البحث استثناءات، فتتوقف الفحوص عن العمل لكل العملاء. ما الذي يجب أن يفعله العمّال بدلًا من ذلك؟"
    },
    "o": {
     "en": [
@@ -75,14 +75,14 @@
     "ar": [
      "اقرأ العلم من متغير بيئة، فلا تدخل خدمة الأعلام في الأمر",
      "أعد محاولة كل عملية بحث حتى تجيب خدمة الأعلام، ثم شغّل الفحص",
-     "قيّم محليًا من مجموعة قواعد مخزّنة مؤقتًا، والمُجدوِل القديم هو القيمة الافتراضية",
+     "قيّم محليًا من قواعد مخزّنة مؤقتًا، والمُجدوِل القديم هو الافتراضي",
      "أبقِ البحث عن بُعد، لكن ارجع إلى المُجدوِل الجديد كي يستمر الطرح"
     ]
    },
    "a": 2,
    "why": {
     "en": "With local evaluation, server SDKs download the whole rule set, keep it fresh and evaluate in memory, so workers keep using the last known rules, and when nothing is available the default should be the safe one: off, the old code path. An environment variable avoids the outage but needs a redeploy to change and can't target one org or a percentage.",
-    "ar": "مع التقييم المحلي (local evaluation) تنزّل حزم SDK على الخادم مجموعة القواعد كاملة وتبقيها محدّثة وتقيّم في الذاكرة، فيستمر العمّال في استخدام آخر قواعد معروفة، وحين لا يتوفر شيء تكون القيمة الافتراضية هي الآمنة: مطفأ، أي مسار الكود القديم. أما متغير البيئة فيتجنب الانقطاع، لكنه يحتاج إلى إعادة نشر ليتغير، ولا يستطيع استهداف مؤسسة واحدة أو نسبة مئوية."
+    "ar": "مع التقييم المحلي (local evaluation) تنزّل حزم SDK على الخادم مجموعة القواعد كاملة وتبقيها محدّثة وتقيّم في الذاكرة، فيستمر العمّال في استخدام آخر قواعد معروفة، وحين لا يتوفر شيء تكون القيمة الافتراضية هي الآمنة: مطفأ، أي مسار الكود القديم. أما متغير البيئة فيتجنب الانقطاع، لكنه يحتاج إلى إعادة نشر ليتغير، ولا يستطيع استهداف منظمة واحدة أو نسبة مئوية."
    }
   },
   {
@@ -91,7 +91,7 @@
    "lesson": "6.3",
    "q": {
     "en": "Beacon gets about 200 new orgs a week and activates about 30% of them. Product starts an A/B test of onboarding-checklist-v2, split by org, with \"activated within 24h\" as the metric, but works out no sample size. On day five the variant leads with p = 0.04, and the PM wants to stop and ship it. What is the best call?",
-    "ar": "يستقبل Beacon نحو 200 مؤسسة جديدة أسبوعيًا، ويصل نحو 30% منها إلى التفعيل. ويبدأ فريق المنتج اختبار A/B (A/B test) للنسخة onboarding-checklist-v2، مقسّمًا حسب المؤسسة، ومقياسه \"مفعّلة خلال 24 ساعة\" (activated within 24h)، دون حساب حجم العينة. وفي اليوم الخامس تتقدم النسخة الجديدة بقيمة p = 0.04، فيريد مدير المنتج إيقاف الاختبار وإطلاقها. ما القرار الأفضل؟"
+    "ar": "يستقبل Beacon نحو 200 منظمة جديدة أسبوعيًا، ويصل نحو 30% منها إلى التفعيل. ويبدأ فريق المنتج اختبار A/B (A/B test) للنسخة onboarding-checklist-v2، مقسّمًا حسب المنظمة، ومقياسه \"مفعّلة خلال 24 ساعة\"، دون حساب حجم العينة. وفي اليوم الخامس تتقدم النسخة الجديدة بقيمة p = 0.04، فيريد مدير المنتج إيقاف الاختبار وإطلاقها. ما القرار الأفضل؟"
    },
    "o": {
     "en": [
@@ -103,14 +103,14 @@
     "ar": [
      "أوقف الاختبار الآن وأطلق النسخة الجديدة، لأن p أقل من 0.05 والتحسن ذو دلالة",
      "أبقِ الاختبار يعمل، وأضف الاحتفاظ والترقيات مقاييسَ لتأكيد التحسن",
-     "أعد تقسيمه حسب المستخدم بدل المؤسسة، كي يبلغ الاختبار الدلالة أسرع",
+     "أعد تقسيمه حسب المستخدم بدل المنظمة، كي يبلغ الاختبار الدلالة أسرع",
      "لا تثق بقيمة p المبكرة، وأطلق التغيير خلف علم إطلاق، وراقب الأرقام"
     ]
    },
    "a": 3,
    "why": {
     "en": "Stopping a fixed-horizon test at the first p < 0.05 is the peeking problem and mostly finds noise, and detecting a 2-point lift on a 30% activation rate needs thousands of orgs per arm, which 200 a week won't reach, so ship behind a release flag and watch the numbers. Stopping now is tempting because p looks significant, but that number came from peeking.",
-    "ar": "إيقاف اختبار ثابت الأفق عند أول p < 0.05 هو مشكلة التلصص، ويجد الضوضاء في الغالب، واكتشاف تحسن بنقطتين على معدل تفعيل نسبته 30% يحتاج إلى آلاف المؤسسات في كل ذراع، وهو ما لن تبلغه 200 مؤسسة أسبوعيًا (200 a week)، لذا أطلق التغيير خلف علم إطلاق (release flag) وراقب الأرقام. والإيقاف الآن مغرٍ لأن p تبدو ذات دلالة، لكن هذا الرقم جاء من التلصص."
+    "ar": "إيقاف اختبار ثابت الأفق عند أول p < 0.05 هو مشكلة التلصص، ويجد الضوضاء في الغالب، واكتشاف تحسن بنقطتين على معدل تفعيل نسبته 30% يحتاج إلى آلاف المنظمات في كل ذراع، وهو ما لن تبلغه 200 منظمة أسبوعيًا، لذا أطلق التغيير خلف علم إطلاق (release flag) وراقب الأرقام. والإيقاف الآن مغرٍ لأن p تبدو ذات دلالة، لكن هذا الرقم جاء من التلصص."
    }
   }
  ],
@@ -120,7 +120,7 @@
    "lesson": "6.1",
    "text": {
     "en": "I have driven Beacon's onboarding checklist from milestones stored on the org, with their timestamps, and seen a second admin who joined after onboarding was done never see it",
-    "ar": "بنيتُ قائمة مهام التهيئة في Beacon على مراحل محفوظة على المؤسسة مع أوقاتها، ورأيتُ مسؤولًا ثانيًا انضم بعد اكتمال التهيئة لا يراها أبدًا"
+    "ar": "بنيتُ قائمة مهام التهيئة في Beacon على مراحل محفوظة على المنظمة مع أوقاتها، ورأيتُ مسؤولًا ثانيًا انضم بعد اكتمال التهيئة لا يراها أبدًا"
    }
   },
   {
@@ -128,7 +128,7 @@
    "lesson": "6.2",
    "text": {
     "en": "I have sent monitor_created from the server after the insert commits, and seen it still recorded with the PostHog domain blocked in the browser, in a funnel I can break down by organization plan",
-    "ar": "أرسلتُ الحدث monitor_created من الخادم بعد تثبيت الإدراج، ورأيتُه يُسجَّل رغم حجب نطاق PostHog في المتصفح، ضمن قُمع أستطيع تقسيمه حسب خطة المؤسسة"
+    "ar": "أرسلتُ الحدث monitor_created من الخادم بعد تثبيت الإدراج، ورأيتُه يُسجَّل رغم حجب نطاق PostHog في المتصفح، ضمن قُمع أستطيع تقسيمه حسب خطة المنظمة"
    }
   }
  ]

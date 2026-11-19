@@ -10,7 +10,7 @@
 
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 4.1*
 
-**After this you can** move incident notifications into a background job with retries, backoff and a dead-letter destination, and prove that running the same job twice sends each subscriber exactly one email. *Study time: about 110 minutes (estimate).*
+**After this you can** move incident notifications into a background job with retries, backoff and a dead-letter destination, and prove that running the same job twice sends each subscriber exactly one email. *Study time: reading about 20 min, hands-on about 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -295,7 +295,7 @@ The task runs three times a night, once per instance, and it stops or shifts on 
 
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 1.3*
 
-**After this you can** ship public monitor endpoints behind hashed, revocable org API keys with cursor pagination, and add plan-aware rate limits that answer 429 with `Retry-After`. *Study time: about 110 minutes (estimate).*
+**After this you can** ship public monitor endpoints behind hashed, revocable org API keys with cursor pagination, and add plan-aware rate limits that answer 429 with `Retry-After`. *Study time: reading about 20 min, hands-on about 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -574,7 +574,7 @@ Every script at that customer shares one bucket, so they throttle each other, an
 
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1, 5.2*
 
-**After this you can** send webhooks signed to the Standard Webhooks spec with timeouts and retries, refuse targets such as `127.0.0.1` and `169.254.169.254`, and give customers a log of every delivery attempt. *Study time: about 105 minutes (estimate).*
+**After this you can** send webhooks signed to the Standard Webhooks spec with timeouts and retries, refuse targets such as `127.0.0.1` and `169.254.169.254`, and give customers a log of every delivery attempt. *Study time: reading about 15 min, hands-on about 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -588,7 +588,7 @@ Every script at that customer shares one bucket, so they throttle each other, an
 
 Beacon's API lets customers *ask* "are there open incidents?". Customers do not want to ask every ten seconds; they want to be *told*. One wants every `incident.opened` event POSTed to their internal on-call tool. Another wants Beacon incidents to appear in their `#ops` Slack channel with an "Acknowledge" button. A third wants "when Beacon opens an incident, create a Jira ticket", and would rather click that together in Zapier or n8n than write code.
 
-The first version is easy: loop over the org's webhook URLs, `fetch` each one, move on. Then reality. A customer's endpoint is down for six hours, and every event for those six hours is lost. Another endpoint takes 45 seconds to answer, and your notification worker stalls. Someone registers `http://169.254.169.254/latest/meta-data/` as their "webhook URL" and reads the response body in your delivery log. That last one is not hypothetical as a class: the 2019 Capital One breach involved a server-side request forgery (SSRF) that reached the AWS instance metadata service and obtained credentials, which is part of why AWS introduced IMDSv2.
+The first version is easy: loop over the org's webhook URLs, `fetch` each one, move on. Then reality. A customer's endpoint is down for six hours, and every event for those six hours is lost. Another endpoint takes 45 seconds to answer, and your notification worker stalls. Someone registers `http://169.254.169.254/latest/meta-data/` as their "webhook URL" and reads the response body in your delivery log. That last one is a real attack class, server-side request forgery (SSRF), and it has led to major cloud breaches; lesson 8.1 tells the best-known case and the full defence.
 
 Stripe is the model on the receiving side of this: it signs every webhook, retries failed deliveries with exponential backoff for up to three days in live mode, and shows you each attempt in the dashboard. Your customers will expect the same from you.
 
@@ -837,7 +837,7 @@ DNS rebinding. The name resolves to a public address at check time and to a priv
 
 *Level: 🔴 Advanced* · *Prerequisites: 5.1, 5.3*
 
-**After this you can** move a notification fan-out into a durable workflow with named steps, kill the worker mid-run and show that it resumes without re-sending, and build an escalation that stops on acknowledgement. *Study time: about 110 minutes (estimate).*
+**After this you can** move a notification fan-out into a durable workflow with named steps, kill the worker mid-run and show that it resumes without re-sending, and build an escalation that stops on acknowledgement. *Study time: reading about 20 min, hands-on about 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 

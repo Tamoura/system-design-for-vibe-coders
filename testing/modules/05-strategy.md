@@ -9,7 +9,7 @@
 # 5.1 — Test strategy and planning: risk-based testing, the test pyramid and quality metrics
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 2.3, 3.2* · *Focus: Strategy*
 
-**After this you can** score feature areas by risk to set how deeply each is tested, and show with measured coverage and bug-catch numbers why a coverage target alone misleads. *Study time: about 115 minutes (estimate).*
+**After this you can** score feature areas by risk to set how deeply each is tested, and show with measured coverage and bug-catch numbers why a coverage target alone misleads. *Study time: reading about 15 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **test strategy** is the standing approach: what you test, at which level, who owns it. A **test plan** applies it to one release. Keep the strategy to a page.
@@ -193,7 +193,7 @@ def requirement(request, record_property):
         record_property("requirement", marker.args[0])    # appears as a <property> in the JUnit XML
 ```
 
-Mark a test `@pytest.mark.req("TRF-212")`, run `pytest --junitxml=report.xml`, and the XML links requirement and result. **PCI DSS** (version 4.x at the time of writing) has requirements on testing changes before production, vulnerability scanning and penetration testing. The **EU's DORA**, the Digital Operational Resilience Act (Regulation (EU) 2022/2554), applies from January 2025 and includes resilience testing, with threat-led penetration testing for significant entities. Compliance owns the mapping to clauses; QE supplies the evidence.
+Mark a test `@pytest.mark.req("TRF-212")`, run `pytest --junitxml=report.xml`, and the XML links requirement and result. **PCI DSS** (version 4.x at the time of writing) has requirements on testing changes before production, vulnerability scanning and penetration testing. The **EU's DORA**, the Digital Operational Resilience Act (Regulation (EU) 2022/2554), applies from January 2025 and includes resilience testing, with threat-led penetration testing (TLPT) for the entities their supervisor selects (Article 26). Compliance owns the mapping to clauses; QE supplies the evidence.
 
 **AI-era additions.** Three rules, previewing Modules 6 and 7. **Code written by agents** is new, unreviewed code: small diffs, and a higher likelihood score in Deep areas until evidence says otherwise ([*System Design for Vibe Coders*, lesson 9.4 — Verification before completion](../vibe/index.en.html#l9-4)). **Tests written by agents** are owned by a human, reviewed separately from the code they cover, and judged by whether they can fail (lessons 6.1 and 6.2). An **AI feature** such as Najm Assist ships only past an **eval gate**: a golden set, thresholds and a regression check in CI (lesson 7.1; see [*AI Product Management*, lesson 6.1 — Quality you can measure: metrics, golden sets and error analysis](../aipm/index.html#/6.1)).
 
@@ -324,7 +324,7 @@ Copy `testing/sample` and use the venv from lesson 0.3 (`pytest-cov` is already 
 # 5.2 — Testing in CI/CD and in production: fast pipelines, flaky-test policy, feature flags, canaries and synthetic monitoring
 *Level: 🟡 Intermediate* · *Prerequisites: 2.3, 3.2, 5.1* · *Focus: Delivery, Reliability*
 
-**After this you can** shard a test suite deterministically, run a quarantine job for a flaky test, and build a shadow-traffic comparison that flags a seeded fee difference. *Study time: about 115 minutes (estimate).*
+**After this you can** shard a test suite deterministically, run a quarantine job for a flaky test, and build a shadow-traffic comparison that flags a seeded fee difference. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A **pipeline** orders checks by cost: cheap and fast first, slow and broad later. Each stage answers one question.
@@ -698,7 +698,7 @@ Copy `testing/sample` and run `pip install pytest-xdist`.
 # 5.3 — Exploratory testing, agile teams and BDD: working with developers, product owners and users
 *Level: 🟡 Intermediate* · *Prerequisites: 1.3, 5.1* · *Focus: Strategy, Design*
 
-**After this you can** run a time-boxed exploratory session from a charter and report its findings, and write BDD scenarios for the 15:00 cut-off that fail under the seeded time-zone bug. *Study time: about 155 minutes (estimate).*
+**After this you can** run a time-boxed exploratory session from a charter and report its findings, and write BDD scenarios for the 15:00 cut-off that fail under the seeded time-zone bug. *Study time: reading about 15 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Exploratory testing** is simultaneous learning, test design and execution. It finds what scripts cannot predict, and it is a skilled, planned activity, not random clicking.

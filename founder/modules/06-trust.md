@@ -9,7 +9,7 @@
 # 6.1 — What you promise: terms, privacy notice and refunds, drafted with AI and checked by a professional
 *Level: 🔴 Advanced* · *Prerequisites: 3.2, 5.1* · *Step: Protect*
 
-**After this you can** produce a one-page promise inventory that matches every promise in your terms, privacy notice, refund policy and marketing to something the product really does, plus at least five questions for a lawyer. *Study time: about 180 minutes (estimate).*
+**After this you can** produce a one-page promise inventory that matches every promise in your terms, privacy notice, refund policy and marketing to something the product really does, plus at least five questions for a lawyer. *Study time: reading about 15 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can produce a one-page **promise inventory** for your product: every promise you make in your terms, privacy notice, refund policy and marketing, each matched to something the product really does, plus a short list of questions for a lawyer. Allow about three hours.
@@ -197,7 +197,7 @@ Then she books thirty minutes with Rashid. Her question list has seven items, in
 # 6.2 — Customer data and AI models: what you may send, consent, retention
 *Level: 🔴 Advanced* · *Prerequisites: 6.1, 5.2* · *Step: Protect*
 
-**After this you can** draw a one-page data-flow map of every kind of customer data, the vendors and AI models that see it, why and for how long, and prove your retention schedule by deleting a fake customer. *Study time: about 180 minutes (estimate).*
+**After this you can** draw a one-page data-flow map of every kind of customer data, the vendors and AI models that see it, why and for how long, and prove your retention schedule by deleting a fake customer. *Study time: reading about 20 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can draw a one-page **data-flow map** of your product: every kind of customer data you hold, every vendor and AI model that sees it, why, and for how long, with a **retention schedule** that says when each kind is deleted. Allow about three hours.
@@ -387,7 +387,7 @@ Her questions for Rashid include: is Tick a controller or a processor for the sa
 # 6.3 — Who owns what: AI-written code, contractors, open-source licences, names (questions for a lawyer)
 *Level: 🔴 Advanced* · *Prerequisites: 2.2, 6.1* · *Step: Protect*
 
-**After this you can** produce a one-page ownership register that shows who made each important piece of your product, under what agreement or licence you hold it, and a question for a lawyer wherever the answer is unclear. *Study time: about 180 minutes (estimate).*
+**After this you can** produce a one-page ownership register that shows who made each important piece of your product, under what agreement or licence you hold it, and a question for a lawyer wherever the answer is unclear. *Study time: reading about 15 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can produce a one-page **ownership register** for your product: every important piece (code, design, logo, content, name, data, dependencies), who made it, under what agreement or licence you hold it, and one question for a lawyer where the answer is unclear. Allow about three hours.

@@ -4,8 +4,8 @@ Not published. Every translator follows this.
 
 ## Language and English terms
 - Modern Standard Arabic, clear and professional, like a well-written university or professional training manual. Faithful: same meaning, structure, emphasis, lists, tables. Never summarise, add or drop content.
-- **English beside every technical term everywhere.** In every paragraph, list item, table cell, heading, quiz question, option and answer, each technical term and key phrase carries its English in parentheses on its first appearance in that unit (a unit = one paragraph, one list item, one table cell, one heading): `نافذة الدالة (window function)`, `مخطط النجمة (star schema)`, `الحُبَيبية (grain)`, `التقاط تغيّر البيانات (change data capture, CDC)`, `عقد البيانات (data contract)`. Aim for roughly one gloss every 4–6 Arabic words in technical text. Gloss whole phrases, never split a construct. A space always separates the Arabic word from `(`. Use the English exactly as the English lesson words it.
-- Key phrases, rules of thumb, labels and framework step names also get their English, e.g. `يكتمل عندما (Done when)`.
+- **English gloss on first use only.** Add the English in parentheses only after a real technical or business term, and only the first time that term appears in each lesson (a quiz or self-assessment item counts as its own unit): `نافذة الدالة (window function)`, `مخطط النجمة (star schema)`, `الحُبَيبية (grain)`, `التقاط تغيّر البيانات (change data capture, CDC)`, `عقد البيانات (data contract)`. Do not gloss plain words or phrases, do not repeat a gloss already given in the lesson, and never nest parentheses. Keep product, standard and acronym names in Latin letters with no parentheses. Parentheses that hold formulas, numbers, option letters (A)–(D) or section pointers are content, not glosses: they always stay. A space always separates the Arabic word from `(`. Use the English exactly as the English lesson words it.
+- Quiz and exam options: translate faithfully and keep each option close to its English length; never add explanation or glosses to one option that the others lack, so the key is not the longest or most glossed option. Run `python3 scripts/qa/quiz_cues.py` after editing items.
 - If a gloss ends in punctuation (`?`, `.`, `!`), wrap it in a left-to-right isolate (the characters U+2066 before `(` and U+2069 after `)`), so it displays correctly in right-to-left text.
 - Names of tools, products, standards, companies, platforms, programming languages and commands stay in their English form (SQL, PostgreSQL, DuckDB, Python, pandas, Polars, dbt, Airflow, Dagster, Kafka, Redpanda, Parquet, Apache Iceberg, Delta Lake, Snowflake, BigQuery, Databricks, MLflow, Feast, pgvector, Metabase, Superset). On first use in a unit you may add a short Arabic rendering before it.
 - People: Faisal فيصل, Huda هدى, Lina لينا, Dana دانة, Kareem كريم, Sara سارة, Layla ليلى, Tariq طارق, Salem سالم. Najm Bank → بنك نجم (Najm Bank). Smart Alerts → التنبيهات الذكية (Smart Alerts); Credit Memo Copilot → مساعد مذكرات الائتمان (Credit Memo Copilot); Najm Mobile → تطبيق نجم للهاتف (Najm Mobile); Najm Assist → نجم أسيست (Najm Assist).
@@ -33,6 +33,17 @@ Not published. Every translator follows this.
 | embedding / vector search / chunking | التضمين (embedding) / البحث المتّجهي (vector search) / التقطيع (chunking) |
 | lineage / catalogue | النسب (lineage) / الفهرس (catalogue) |
 | personal data / masking | البيانات الشخصية (personal data) / الإخفاء (masking) |
+| staging / intermediate / mart(s) | التهيئة (staging) / الوسيطة (intermediate) / متجر البيانات، متاجر البيانات (mart, marts); the dbt mart layer is طبقة المتاجر. IFRS 9 "staging" is a different term: التصنيف المرحلي |
+| decision cue | إشارة القرار |
+| accuracy / precision / recall | الصحة الإجمالية (accuracy) / الدقة (precision) / الشمول (recall); recall@k is الشمول عند k (recall@k). Never الدقة for accuracy, never الاستدعاء for recall |
+| false positive / false negative | النتيجة الإيجابية الكاذبة (الإيجابيات الكاذبة) / النتيجة السلبية الكاذبة (السلبيات الكاذبة); "false alarm" stays إنذار كاذب |
+| offline / online evaluation | التقييم خارج الإنتاج / التقييم في الإنتاج (the feature store's offline/online stores stay المخزن غير المتصل / المتصل) |
+| timeout / deadline | المهلة (انتهاء المهلة) / الموعد النهائي |
+| exponential backoff / rollback | إعادة المحاولة بتأخير أسي (backoff: التأخير الأسي) / التراجع |
+| pilot / capstone | التجربة التشغيلية / المشروع الختامي |
+| vendor / provider | المورّد / المزوّد |
+| organisation / enterprise | المنظمة / المؤسسات (enterprise customers or enterprise-wide) |
+| tool call / API call | استدعاء الأداة / استدعاء API (استدعاء is used only for calls) |
 
 ## Structure the build depends on (do not break)
 - Module heading: `# الوحدة N — العنوان` (N unchanged). Lesson heading: `# N.M — العنوان` (numbers unchanged).
@@ -43,7 +54,7 @@ Not published. Every translator follows this.
 - **🧰 tables:** the first cell of every row must START with the same bold English name as the English row, exactly (e.g. `**dbt** — …`, `**Star schema** — …`). Translate everything after the bold name and the other cells. Header row: `| الأداة أو النمط أو المعيار (Tool, pattern or standard) | ما هو وماذا يفعل (What it is and does) | متى تلجأ إليه (When to reach for it) |`.
 - **Quizzes:** keep the question numbers; options stay labelled `- A.` `- B.` `- C.` `- D.` in Latin letters and in the same order; `<details><summary>الإجابة</summary>` then a blank line, then `**X.**` with the SAME correct letter as the English; letters cited in explanations stay the same Latin letters. Same number of questions and `<details>` blocks. In 7.3 keep the stage/lesson tag in English, e.g. `*(Model · 1.2)*`.
 - **Code blocks stay byte-identical** (code, SQL, YAML, shell, config). Comments inside code stay in English.
-- **Mermaid diagrams:** keep the syntax, the direction line and node IDs exactly; translate only the label text into Arabic (no English in the labels, no parentheses inside labels). The build adds the English and flips the direction for Arabic afterwards.
+- **Mermaid diagrams:** keep the syntax, the direction line and node IDs exactly; translate only the label text into Arabic (tool and product names such as Debezium, Kafka, dbt or PostgreSQL stay in Latin letters, never transliterated; no other English and no parentheses inside labels). The build adds the English and flips the direction for Arabic afterwards.
 - **Links:** keep external URLs unchanged. Relative links to other courses in the library point to their Arabic pages: `index.html` → `index.ar.html`, `index.en.html` → `index.ar.html`, `learning-path.html` → `learning-path.ar.html`, `assessment.html` → `assessment.ar.html` (keep the `#…` part). Translate the link text.
 - Keep unchanged: inline `code`, numbers, `---` separators, tables' column counts.
 - `*Done when:*` → `*يكتمل عندما (Done when):*`.

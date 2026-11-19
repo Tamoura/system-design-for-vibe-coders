@@ -2,7 +2,7 @@
 
 *The whole course, turned into twelve pagers.*
 
-**After this you can** diagnose twelve symptom-only incidents by bisecting the request path to the failing layer, and name for each the evidence that proves the fix worked. *Study time: about 205 minutes (estimate).*
+**After this you can** diagnose twelve symptom-only incidents by bisecting the request path to the failing layer, and name for each the evidence that proves the fix worked. *Study time: reading about 25 min, hands-on about 5 h (estimate).*
 
 ---
 
@@ -28,12 +28,18 @@ The single most useful reflex in operations is not knowing every cause — it's
 the fault is on, until only one layer is left. Every one of these twelve is
 solved by finding the right layer first.
 
+Two cuts come first, with the words from lesson 1.2. The **origin** is your
+public server as the CDN reaches it, through your reverse proxy (nginx). The
+**app port** is the app process behind the proxy, reached without it.
+
 ```mermaid
 flowchart TD
-    P["You get paged"] --> Q0{"Does it reproduce<br/>from the origin directly<br/>(bypass the CDN)?"}
-    Q0 -->|"No — only through the CDN"| EDGE["Edge / cache layer<br/>(CDN, proxy, Redis)"]
-    Q0 -->|"Yes — origin is wrong too"| Q1{"Is the running code<br/>the code you think<br/>is deployed?"}
-    Q1 -->|"No"| DEPLOY["Deploy / artifact layer<br/>(stale worker, build cache,<br/>wrong branch, baked-in config)"]
+    P["You get paged"] --> Q0{"Does it reproduce<br/>at the origin<br/>(bypass the CDN)?"}
+    Q0 -->|"No — only through the CDN"| EDGE["Edge layer<br/>(CDN cache, WAF, DNS)"]
+    Q0 -->|"Yes — origin is wrong too"| QA{"Does it reproduce<br/>at the app port<br/>(skip the proxy)?"}
+    QA -->|"No — app port is clean"| DEPLOY["Deploy / artifact layer<br/>(stale proxy worker, build cache,<br/>wrong branch, baked-in config)"]
+    QA -->|"Yes — the app is wrong too"| Q1{"Is the running code<br/>the code you think<br/>is deployed?"}
+    Q1 -->|"No"| DEPLOY
     Q1 -->|"Yes"| Q2{"Does it depend on<br/>WHO or WHERE the<br/>user is?"}
     Q2 -->|"Yes"| IDENT["Identity / abuse layer<br/>(auth, rate limit, per-client)"]
     Q2 -->|"No"| Q3{"Is a dependency you<br/>DON'T own (third-party<br/>API, provider) slow<br/>or failing?"}
@@ -43,7 +49,7 @@ flowchart TD
     Q4 -->|"No"| Q5{"Is the SIGNAL itself suspect —<br/>monitoring quiet, or an<br/>agent's 'done' the only<br/>evidence?"}
     Q5 -->|"Monitoring is dark"| BLIND["Observability layer<br/>(the watcher shared fate,<br/>or has a blind spot)"]
     Q5 -->|"An agent said so"| AGENT["Agent-direction layer<br/>(demand evidence,<br/>not a self-summary)"]
-    Q5 -->|"No"| DATA["Data / storage layer<br/>(schema, migration,<br/>background job, disk)"]
+    Q5 -->|"No"| DATA["Data / storage layer<br/>(schema, migration, background<br/>job, disk, origin-side cache)"]
 ```
 
 Keep that tree next to you. Each simulation names which branch it lives on.
@@ -78,7 +84,7 @@ everyone until the TTL expired; when that first request was an in-app
 navigation, the edge cached JSON *as the page*. The durable fix was a guard at
 the reverse proxy keyed on the response `Content-Type`, not on framework request
 internals — the layer the team fully controls. This is lesson **3.2**, the
-flagship cache-poisoning incident. Branch of the tree: **edge / cache** — it
+flagship cache-poisoning incident. Branch of the tree: **edge** — it
 never reproduces from the origin.
 
 **The follow-up: and how do you know it worked?**
@@ -95,15 +101,15 @@ carries `no-store` — a test you *watched fail* when the guard was removed.
 **The page** 🔥
 Right after a routine deploy, the edge starts returning 502s — but only some of
 the time. Refresh and it loads; refresh again and it's a 502. The pattern
-flaps for minutes. You `curl` the origin server directly and it answers `200`
-every single time, instantly. The application logs are clean — no errors, no
+flaps for minutes. You `curl` the app's port directly, skipping nginx, and it
+answers `200` every single time, instantly. The application logs are clean — no errors, no
 stack traces, nothing that lines up with the failing requests. On a hunch you
 restart the web proxy, something you feel you *shouldn't have to touch*, and the
 502s stop immediately.
 
 **Your job** — before you scroll:
-- The origin is healthy (`curl` says 200) but the edge returns 502. Which layer
-  sits *between* the edge and the origin, and owns that error?
+- The app port is healthy (`curl` says 200) but the edge returns 502. Which
+  layer sits *between* the edge and the app, and owns that error?
 - Why would a deploy trigger this, and why would a proxy restart — not an app
   restart — cure it?
 - "Reloaded" and "restarted" are different guarantees. What might a graceful
@@ -119,8 +125,9 @@ were innocent. A full proxy restart kills the stale worker; the durable fix
 bounds worker lifetime (`worker_shutdown_timeout`) so a reload actually drains.
 This is lesson **4.3**: every layer between you and the user has its own
 lifecycle and its own cache, and "graceful reload" doesn't drain keepalive
-connections. Branch of the tree: **deploy / artifact** — the running thing isn't
-the thing you think you deployed to.
+connections. Branch of the tree: **deploy / artifact**, reached by the app-port
+cut (origin flaps, app port clean): the running thing isn't the thing you think
+you deployed to.
 
 **The follow-up: and how do you know it worked?**
 Not "I restarted it and the 502s stopped" — that's the symptom leaving, not the
@@ -349,8 +356,10 @@ in one step. It self-healed because clients send heartbeats every ~60s, so
 presence rebuilt itself once the flush was over. The fix: never `FLUSHDB`; evict
 only by narrow key prefix (`SCAN` + `UNLINK`), and don't colocate disposable
 cache with semi-durable state. This is lesson **3.4**: "cache down" must degrade
-to *slow*, never to *data loss*. Branch of the tree: **edge / cache** — but the
-lesson is about what *else* was sharing the cache's home.
+to *slow*, never to *data loss*. Branch of the tree: **data / storage**, at its
+origin-side cache (the counter is wrong at the origin and at the app port too,
+so this is not the CDN) — and the lesson is about what *else* was sharing the
+cache's home.
 
 **The follow-up: and how do you know it worked?**
 You run the maintenance operation that caused it — a cache clear — and watch the
@@ -388,8 +397,8 @@ industrial-grade here: **the thing that tells you "it's fine" must not share fat
 with the thing it monitors** — an external uptime check on someone else's
 infrastructure, plus alerting that reaches you off-network. This is lesson
 **7.6**. Branch of the tree: **observability** — the signal itself failed.
-(Echo: AWS's 2017 S3 outage took down the status dashboard that was hosted on
-S3; Roblox flew blind for 73 hours for the same reason.)
+(Echo: in AWS's 2017 S3 outage the status page stayed green, because its admin
+tool depended on S3; at Roblox, shared fate was one reason the recovery took 73 hours.)
 
 **The follow-up: and how do you know it worked?**
 You run a game-day: deliberately kill the app's infrastructure and watch the
@@ -529,9 +538,8 @@ branch is a module you've already lived through:
 ```mermaid
 mindmap
   root(("You get<br/>paged"))
-    Edge / cache
+    Edge
       Raw JSON pages · 3.2
-      Presence hit zero · 3.4
     Deploy / artifact
       Flapping 502s · 4.3
       Fix un-shipped · 6.2
@@ -542,6 +550,7 @@ mindmap
       Backup tripled · 2.3
       Deleted file returns · 2.2
       Stale profile read · 10.3
+      Presence hit zero · 3.4
     Third-party / capacity
       Retry storm · 6.7 + 10.2
     Observability
@@ -550,8 +559,8 @@ mindmap
       The agent said done · 9.4
 ```
 
-**The passing bar** is not "you memorized eight causes." Real production hands
-you a ninth incident you've never seen. You pass when, for any page, you can:
+**The passing bar** is not "you memorized twelve causes." Real production hands
+you a thirteenth incident you've never seen. You pass when, for any page, you can:
 
 1. **Identify the correct layer** — bisect until one is left, instead of guessing.
 2. **Propose a plausible root cause** at that layer — one that explains *all* the
@@ -564,6 +573,49 @@ you a ninth incident you've never seen. You pass when, for any page, you can:
 That last question is the whole course compressed into six words. Reproduce,
 fix, and prove — from the outside, on the surface the user sees. Everything in
 these twelve modules was in service of being able to answer it calmly at 3am.
+
+## Final drills: two unseen pages and one live break
+
+The twelve above taught the tree. These test it on what you have not seen.
+
+**Unseen page A.** After you move Relay's domain to a new host, about half your
+users still see last week's site for most of a day; the rest see the new one.
+Both servers are healthy. Name the layer, the cause, and the proof.
+
+<details>
+<summary>Model answer</summary>
+
+Edge layer, DNS: resolvers still hold the old address until the record's TTL
+runs out. Proof: query the name from several public resolvers and see the new
+address everywhere, and lower the TTL a day *before* the next move (lessons F.1
+and 11.1).
+</details>
+
+**Unseen page B.** Sign-up confirmation emails stop arriving. No errors in the
+tracker, the app returns 200, and the email provider's dashboard shows every
+send as "rejected: authentication". The API key was rotated yesterday.
+
+<details>
+<summary>Model answer</summary>
+
+Third-party dependency layer: the app keeps the old key and treats the
+provider's rejection as success. Proof: sign up as a real user and receive the
+email, and a check that alerts when the provider's reject count rises above
+zero (lessons 5.5, 6.7 and 7.6).
+</details>
+
+**Live break (solo, about 90 minutes).** In a branch, on staging only, say:
+> *"Pick one fault from this list at random and inject it into staging without
+> telling me which: stop the database, add a CDN cache rule that ignores the
+> login cookie, deploy a build from an old commit, or point the email key at a
+> wrong value. Write your choice to a note outside the repo, such as
+> `~/sealed-fault.txt`, and don't show it to me."*
+
+Don't open that note until the end. Close that session, then diagnose in a fresh
+agent session that has not seen the choice: use the tree, fix it, and prove the
+fix from your phone. Open the note last. Self-check: one point each for the right
+layer, a cause that explains every symptom, a fix, and proof from the layer the user touches. Three
+of four is a pass; anything less, redo with a different fault.
 
 You started not knowing what a server was. You can now get paged, cut the
 request path in half, land on the right layer, and prove your fix. That's not

@@ -74,15 +74,15 @@
     ],
     "ar": [
      "لا شيء آخر، لأن قيمة AUC القوية تُظهر أن احتمالات التعثّر (PDs) صالحة للاستخدام كما هي",
-     "الدقة الإجمالية، لأنها تعطي نسبة التنبؤات الصحيحة من بين كل التنبؤات",
-     "الاستدعاء، لأنه يُظهر كم من المتعثّرين الفعليين يلتقطه النموذج",
+     "الصحة الإجمالية، لأنها تعطي نسبة التنبؤات الصحيحة من بين كل التنبؤات",
+     "الشمول، لأنه يُظهر كم من المتعثّرين الفعليين يلتقطه النموذج",
      "المعايرة حسب البلد، لتطابق الاحتمالات المتنبأ بها معدلات التعثّر الملاحظة"
     ]
    },
    "a": 3,
    "why": {
     "en": "AUC measures ranking quality regardless of cut-off, not whether a 10% PD really means about 10% default; pricing and provisioning rely on the number itself, so calibration must be checked in each country, as Najm's sign-off sheet did. Accuracy misleads when defaults are rare, and recall says nothing about whether the probabilities are right.",
-    "ar": "تقيس AUC جودة الترتيب بصرف النظر عن نقطة القطع، لا ما إذا كان احتمال تعثّر (PD) قدره 10% يعني فعلًا تعثّر نحو 10%؛ والتسعير والمخصصات يعتمدان على الرقم نفسه، لذا يجب التحقق من المعايرة (calibration) في كل بلد، كما فعلت ورقة الاعتماد في بنك نجم (Najm Bank). والدقة مضلِّلة حين يكون التعثّر نادرًا، والاستدعاء لا يقول شيئًا عن صحة الاحتمالات."
+    "ar": "تقيس AUC جودة الترتيب بصرف النظر عن نقطة القطع، لا ما إذا كان احتمال تعثّر (PD) قدره 10% يعني فعلًا تعثّر نحو 10%؛ والتسعير والمخصصات يعتمدان على الرقم نفسه، لذا يجب التحقق من المعايرة (calibration) في كل بلد، كما فعلت ورقة الاعتماد في بنك نجم (Najm Bank). والصحة الإجمالية مضلِّلة حين يكون التعثّر نادرًا، والشمول (recall) لا يقول شيئًا عن صحة الاحتمالات."
    }
   },
   {
@@ -110,7 +110,7 @@
    "a": 1,
    "why": {
     "en": "When base rates differ, selection rates, error rates and precision generally cannot all be equalised except by a perfect predictor, so the accountable owner must choose by harm and law and document the trade-off rather than leave it to data scientists. Forcing approvals up would lend to more group B applicants who cannot repay, and the four-fifths rule is a rule of thumb, not a safe harbour.",
-    "ar": "حين تختلف المعدلات الأساسية (base rates)، لا يمكن عمومًا مساواة معدلات الاختيار (selection rates) ومعدلات الخطأ والضبط معًا إلا مع متنبئ مثالي، لذا يجب أن يختار المالك المسؤول بحسب الضرر والقانون وأن يوثّق المفاضلة بدل تركها لعلماء البيانات. ورفع الموافقات قسرًا يعني إقراض مزيد من متقدمي المجموعة B العاجزين عن السداد، و\"قاعدة الأربعة أخماس\" (four-fifths rule) قاعدة تقريبية (rule of thumb)، لا ملاذ آمن (safe harbour)."
+    "ar": "حين تختلف المعدلات الأساسية (base rates)، لا يمكن عمومًا مساواة معدلات الاختيار (selection rates) ومعدلات الخطأ والدقة (precision) معًا إلا مع متنبئ مثالي، لذا يجب أن يختار المالك المسؤول بحسب الضرر والقانون وأن يوثّق المفاضلة بدل تركها لعلماء البيانات. ورفع الموافقات قسرًا يعني إقراض مزيد من متقدمي المجموعة B العاجزين عن السداد، و\"قاعدة الأربعة أخماس\" (four-fifths rule) قاعدة تقريبية (rule of thumb)، لا ملاذ آمن (safe harbour)."
    }
   }
  ],

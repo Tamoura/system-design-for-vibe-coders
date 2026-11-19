@@ -9,7 +9,7 @@
 # 4.1 — RAG: embeddings, chunking, vector stores, hybrid search, reranking, citations, and why it fails
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 3.1* · *Layer: Applications*
 
-**After this you can** compute reciprocal rank fusion by hand for two rankings, and write a knowledge-contract row with chunking, metadata, refresh and access rules plus ten labelled questions. *Study time: about 110 minutes (estimate).*
+**After this you can** compute reciprocal rank fusion by hand for two rankings, and write a knowledge-contract row with chunking, metadata, refresh and access rules plus ten labelled questions. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Retrieval-augmented generation (RAG)** fetches a few relevant passages per question, puts them in the prompt with ids, and has the model answer only from them and cite the ids.
@@ -24,7 +24,7 @@ Week three of the Najm Desk pilot (hypothetical). Lujain's first version answers
 
 Lujain adds retrieval: policies in Chroma, matched by a simple word-matching embedding, the top three chunks in the prompt. Then Yara asks, "What are the working from home rules?" No chunk of the remote-work policy comes back, because no word of the question appears in it. Two chunks containing "working" do, and the assistant writes a confident paragraph about the VPN and leavers, with a citation. A real embedding would probably find it, and has misses of its own (lesson 4.2). Fahad's rule from that review: **a citation is a claim you must check.**
 
-The stakes are real: in 2024 a British Columbia tribunal held Air Canada responsible for its website chatbot's wrong policy information (Moffatt v. Air Canada, as reported).
+The stakes are real: a wrong policy answer with a citation reads as the bank's policy, and the bank answers for it (lesson 0.1).
 
 ## 📐 How it works
 
@@ -160,7 +160,7 @@ quality_gate: {recall_at_3: "agreed target on 40 questions", refusal_tests: 5}
 
 ## 🛠️ Exercises
 - 🟢 **Fuse by hand.** No API needed. Vector ranking: `remote-work#0`, `vpn#0`, `wifi#0`. BM25 ranking: `vpn#0`, `leavers#1`, `remote-work#0`, `printing#0`. Compute RRF scores for k = 60 and k = 1. *Done when:* a table shows both score sets (k = 60 gives `vpn#0`, `remote-work#0`, `leavers#1`, `wifi#0`, `printing#0`; k = 1 keeps that order, with wider gaps) and a sentence says why `remote-work#0` loses although vector search ranked it first.
-- 🟡 **Write a contract row.** Offline. Add "Service Desk how-to articles": 400 exported web pages, English and Arabic, some with tables. Write the chunking rule, metadata, refresh rule and access rule, then ten labelled questions, three in Arabic. *Done when:* a colleague's review found nothing that rests on a guess.
+- 🟡 **Write a contract row.** Offline. Add "Service Desk how-to articles": 400 exported web pages, English and Arabic, some with tables. Write the chunking rule, metadata, refresh rule and access rule, then ten labelled questions, three in Arabic. *Done when:* a colleague's review found nothing that rests on a guess (solo: write your own review a day later, then have a fresh Claude chat challenge the row, and keep both).
 - 🔴 **Design the failure tests.** Offline design; running the groundedness cases needs the real API. For each of the six failures write one test: input, expected retrieved ids, pass rule, and whether it needs a model. Include a two-user permission test and a planted-instruction test. *Done when:* six rows exist, at least four run without a model, and each names its log evidence.
 
 ## ⚠️ Mistakes and traps
@@ -255,7 +255,7 @@ quality_gate: {recall_at_3: "agreed target on 40 questions", refusal_tests: 5}
 # 4.2 — Lab: a policy Q&A bot with Chroma, then BM25 and a comparison
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 4.1* · *Layer: Applications*
 
-**After this you can** build a policy Q&A bot with Chroma that answers "I don't know" when no chunk is relevant, add BM25, and compare the methods' recall in a table after changing one setting. *Study time: about 110 minutes (estimate).*
+**After this you can** build a policy Q&A bot with Chroma that answers "I don't know" when no chunk is relevant, add BM25, and compare the methods' recall in a table after changing one setting. *Study time: reading about 10 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Build Najm Desk's policy Q&A over the kit's 15 policies: a sentence-aware chunker with overlap, and Chroma with the toy `HashEmbedding`.
@@ -588,7 +588,7 @@ hybrid missed q10 and returned: mfa#0, vpn#0
 
 **Group session (60 minutes).** (1) Read three logs, name the failure (15). (2) Bring an unanswerable question: does the bot refuse? (15) (3) Compare toy and real tables (15). (4) Agree who owns the labelled set (15).
 
-**Build it with Claude Code.** Give this spec to Claude Code in plan mode (check the current Claude Code documentation) and review the plan before it edits anything:
+**Build it with Claude Code.** *No Claude Code? Do the spec's steps by hand and run its checks yourself (lesson 0.3).* Give this spec to Claude Code in plan mode (check the current Claude Code documentation) and review the plan before it edits anything:
 
 ```text
 Goal: labs/m04/rag.py, bm25.py and compare.py as in lesson 4.2 (sentence-aware chunker with overlap,

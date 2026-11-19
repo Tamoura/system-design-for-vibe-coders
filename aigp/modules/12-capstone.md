@@ -9,7 +9,7 @@
 # 12.1 — Capstone: governing Najm's credit copilot end to end
 *Level: 🔴 Advanced* · *Prerequisites: Modules 1–11* · *BoK: I.A–I.C, II.A–II.D, III.A–III.C, IV.A–IV.C*
 
-**After this you can** produce a governance file for a GenAI credit copilot, with a classification memo, a DPIA and FRIA table, vendor clauses and a red-team plan, and present it to a colleague acting as the committee. *Study time: about 130 minutes (estimate).*
+**After this you can** produce a governance file for a GenAI credit copilot, with a classification memo, a DPIA and FRIA table, vendor clauses and a red-team plan, and present it to a colleague acting as the committee. *Study time: reading about 25 min, hands-on about 15 h (estimate).*
 
 ## ⚡ In 60 seconds
 - The **credit memo copilot** is a generative AI system that Najm builds on a third-party foundation model, with retrieval over internal credit files, to draft credit memos for relationship managers (RMs) in retail and SME lending, including EU customers served from Frankfurt.
@@ -187,11 +187,11 @@ The Art. 22 and explanation questions now rest on a model Najm can explain, and 
 **Incident playbook (summary).** Detect (alerts, complaints, sampling). Triage within one business day; Severity 1 covers data leakage, discriminatory patterns or systematic wrong refusals. Contain: switch to manual memos (the kill switch) or disable the feature. Assess which decisions and people were affected. Notify: Sara decides on a GDPR breach notification (72 hours to the supervisory authority where notifiable); Layla decides whether it is an AI Act serious incident, which the provider reports to the market surveillance authority within the Act's deadlines; supervisors such as the QCB are told as their rules require. Remediate affected decisions. Learn: root cause, change control, committee report.
 
 ## 🛠️ Exercises
-These exercises build a portfolio piece: a governance file for a GenAI credit copilot that you could show an employer.
+These exercises build a portfolio piece: a governance file for a GenAI credit copilot that you could show an employer. The hands-on estimate above (about 15 hours) breaks down as roughly 2 hours for 🟢, 4 for 🟡 and 8–10 for 🔴; spread them over several sessions.
 
 - 🟢 **Intake and classification memo.** Using the intake table above, write a one-page classification memo covering: AI Act role(s), risk tier and reasoning (including Art. 6(3) and profiling), GPAI layer, GDPR Art. 22 exposure after *SCHUFA*, and which Qatar and UAE rules need legal review. *Done when:* each conclusion states the fact that drives it and names the instrument.
 - 🟡 **Assessments and vendor schedule.** Draft (a) a DPIA and FRIA table with at least eight risks, each with affected group, likelihood, severity, mitigation, owner and residual risk; and (b) a vendor contract schedule of at least ten clauses, each linked to a due diligence finding. *Done when:* a reviewer can trace every high residual risk to an owner who accepted it, and every contract clause to a risk.
-- 🔴 **Full governance file and red-team plan.** Produce the complete file: one-page summary, design requirements, a TEVV plan (groundedness, fairness, robustness, security, explanation usability), a red-team plan with at least 15 attack scenarios including indirect prompt injection, justified numeric release criteria, a KPI dashboard specification and an incident playbook with a tabletop script. Present it to a colleague acting as the committee. *Done when:* the file answers "who decided, on what evidence, under which rule, and what happens if it goes wrong" for every stage of the life cycle.
+- 🔴 **Full governance file and red-team plan.** Produce the complete file: one-page summary, design requirements, a TEVV plan (groundedness, fairness, robustness, security, explanation usability), a red-team plan with at least 15 attack scenarios including indirect prompt injection, justified numeric release criteria, a KPI dashboard specification and an incident playbook with a tabletop script. Present it to a colleague acting as the committee or, if you study alone, put it aside for a day and then review it stage by stage against the question below, as the committee would. *Done when:* the file answers "who decided, on what evidence, under which rule, and what happens if it goes wrong" for every stage of the life cycle.
 
 ## ⚠️ Mistakes and exam traps
 - **Assuming "the vendor built the model, so the vendor is the provider".** The vendor provides the GPAI model. Najm, which builds the specific system and puts it into service under its own name, is the provider of that system.
@@ -290,7 +290,7 @@ These exercises build a portfolio piece: a governance file for a GenAI credit co
 # 12.2 — Exam strategy and the traps that cost marks
 *Level: 🔴 Advanced* · *Prerequisites: 0.2, Modules 1–11* · *BoK: All domains (I–IV)*
 
-**After this you can** write the role, jurisdiction, life-cycle stage and qualifier of a scenario question in under 20 seconds, and name your top three traps with a rule for each. *Study time: about 110 minutes (estimate).*
+**After this you can** write the role, jurisdiction, life-cycle stage and qualifier of a scenario question in under 20 seconds, and name your top three traps with a rule for each. *Study time: reading about 20 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 - At the time of writing (2026), the AIGP exam has **100 multiple-choice questions** (85 scored, 15 unscored pilot questions you cannot identify) in **2 hours 45 minutes**, scored on a scale of 100–500 with **300 to pass**. Check IAPP's current candidate information before you book.
@@ -438,7 +438,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 | ISO/IEC | 42001:2023 AIMS (certifiable) · 23894:2023 risk · 22989:2022 terms · 42005:2025 impact assessment · 42006 certification bodies · 38507 boards · 5338 life cycle |
 | International | OECD Principles 2019, updated May 2024; definition updated Nov 2023 · UNESCO Recommendation 2021 · CoE Convention Sept 2024 · G7 Hiroshima code 2023 |
 | EU liability | PLD (EU) 2024/2853 covers software · AI Liability Directive proposal withdrawn 2025 |
-| US | No federal AI law · EO 14110 revoked Jan 2025 · NYC LL 144 · Colorado SB 24-205 postponed to 30 June 2026 (check status) |
+| US | No federal AI law · EO 14110 revoked Jan 2025 · NYC LL 144 · Colorado SB 24-205 replaced by SB 26-189 (ADMT; from 1 Jan 2027) |
 | GCC | Qatar PDPPL Law No. 13 of 2016 · UAE PDPL Federal Decree-Law 45/2021 · DIFC Regulation 10 · Saudi PDPL in force 2023, SDAIA AI Ethics Principles |
 
 ## 🛠️ Exercises
@@ -552,12 +552,12 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 # 12.3 — Full mock exam: 100 questions
 *Level: 🔴 Advanced* · *Prerequisites: 12.2* · *BoK: All domains (I–IV)*
 
-**After this you can** sit a timed 100-question practice exam, then use each wrong answer's competency ID to list the lessons you will revisit. *Study time: about 210 minutes (estimate).*
+**After this you can** sit a timed 100-question practice exam, then use each wrong answer's competency ID to list the lessons you will revisit. *Study time: reading about 65 min, hands-on about 5 h (estimate).*
 
 > **Practice only.** The answer options were rewritten in November 2026 so the correct answer can no longer be spotted by its length. But no assessment expert has reviewed these items, and the mix of domains is this course's own, not the official exam blueprint. A high score here is practice, not evidence that you are ready for the real exam. Answer each question in your own words before you read the options, then compare.
 
 ## ⚡ In 60 seconds
-- This is a full-length practice exam: **100 original questions** across all four domains, in a mix chosen by this course (Domain I 18, Domain II 22, Domain III 30, Domain IV 30). About a third are scenario-based, several in sets that share one scenario. None is a real exam item.
+- This is a full-length practice exam: **100 original questions** across all four domains, in a mix chosen by this course (Domain I 18, Domain II 22, Domain III 30, Domain IV 30). The midpoints of the official ranges come to about 21, 25, 27 and 27 per 100, so this mock leans slightly towards Domains III and IV. About two-thirds are scenario-based, several in sets that share one scenario. None is a real exam item.
 - **Time yourself: 2 hours 45 minutes**, one sitting, no notes. Use the pacing plan from 12.2: one full pass, then flagged questions, then a final check.
 - Write your answers down before opening any answer block. **Your score is the number you got right.**
 - **Your score here does not predict your result on the real exam.** Use it to find weak areas, not to decide whether to book. The real exam uses a scaled score (100–500, pass 300) that IAPP does not publish as a percentage.
@@ -567,7 +567,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 ### Domain I — Foundations of AI governance
 
-**1. Which feature best distinguishes a machine-learning system from traditional rules-based software?**
+**1. Khalid calls Najm's credit scorecard "just statistics", but Dana explains that nobody on the credit team wrote its rules. Which feature best distinguishes the machine-learning system Dana describes from traditional rules-based software?**
 
 - A. It can run only on specialised hardware such as GPUs, which is why most firms buy it as a managed service
 - B. Its behaviour is learned from data rather than written out rule by rule by programmers
@@ -593,7 +593,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**3. Which characteristic of many AI systems most directly explains why approval at launch is not enough and ongoing monitoring is needed?**
+**3. Najm's fraud model passed validation at launch, and a committee member asks why Layla still wants it monitored every month. Which characteristic of many AI systems most directly explains her request?**
 
 - A. Performance can degrade as real-world data and conditions change after deployment
 - B. AI systems cost more to licence than other software, so each release needs a fresh budget review
@@ -619,7 +619,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**5. Which of the following is the clearest example of a harm to a group, rather than to an individual?**
+**5. Najm's incident log for the quarter lists four events. Which of them is the clearest example of a harm to a group, rather than to an individual?**
 
 - A. A data breach that exposes the loan file of one customer, with consequences for that person
 - B. A server outage that delays payments for an hour, with consequences for many customers at once
@@ -632,7 +632,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**6. What most distinguishes an AI agent from a simple question-answering chatbot?**
+**6. The Head of Customer Experience wants Najm Assist to block cards and change addresses itself instead of only answering questions. What most distinguishes such an AI agent from a simple question-answering chatbot?**
 
 - A. It can plan and act through tools or other systems toward a goal, with limited step-by-step human direction
 - B. It always uses a voice interface and speaks its answers aloud, while a chatbot shows only written text on a screen
@@ -645,7 +645,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**7. In a well-designed AI governance model, who should be accountable for the outcomes of a specific AI use case?**
+**7. Najm's CV-screening tool was built and trained by a vendor and approved by the AI Governance Committee. Who should be accountable for the outcomes of this use case at Najm?**
 
 - A. The vendor that supplied the model, because it built the system and best knows how it was tested
 - B. The data scientist who trained it, because that person understands its behaviour better than anyone
@@ -671,7 +671,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**9. What should an AI governance committee's charter most importantly set out?**
+**9. Layla is drafting the charter for Najm's new AI Governance Committee. What should the charter most importantly set out?**
 
 - A. Its decision rights, membership, escalation paths and the criteria for which use cases must come before it
 - B. The programming languages and development tools that the organisation's engineers may use
@@ -725,7 +725,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**13. Which element is most specific to an AI-focused third-party risk policy?**
+**13. Yusuf is updating Najm's third-party risk policy before the bank buys its first AI tools. Which element is most specific to an AI-focused third-party risk policy?**
 
 - A. Accepting the vendor's own claims about accuracy as the main evidence of performance, and approving the system on that basis
 - B. Prohibiting the purchase of any AI system until the board has approved each single one in person at a meeting
@@ -738,7 +738,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**14. In an organisation's policy stack, where do detailed, step-by-step instructions, such as how to perform a model validation, normally sit?**
+**14. Now that Najm has an AI policy, Omar's team asks where its step-by-step instructions for validating models should go. Where do such instructions normally sit in the policy stack?**
 
 - A. In procedures or standards beneath the policy
 - B. In the board's charter, which sets out the board's membership and its powers in detail
@@ -764,7 +764,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**16. What should an AI intellectual-property policy address?**
+**16. Najm's relationship managers will use a GenAI copilot to draft credit memos from client documents. What should Najm's AI intellectual-property policy address?**
 
 - A. Patents only, because a patent is the one form of protection that fits software, trained models and their outputs
 - B. Trademarks only, because the brand names of the AI tools are the main assets that are involved in their use
@@ -777,7 +777,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**17. Which requirement is most specific to data governance for AI training data, as opposed to general data management?**
+**17. Dana's team is preparing five years of loan files to train Najm's new credit model. Which requirement is most specific to data governance for this training data, as opposed to general data management?**
 
 - A. Retention schedules for paper records, set by each department and reviewed every few years by its manager
 - B. Encryption at rest for every database, with the keys kept by the infrastructure team in a separate vault
@@ -790,7 +790,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**18. How should AI governance policies apply across the life cycle?**
+**18. Najm's first draft of its AI policies has a single approval step, just before go-live. How should AI governance policies apply across the life cycle instead?**
 
 - A. With defined checkpoints from design and data sourcing through release, operation, change and retirement
 - B. Only at the point of deployment, when the system goes live and the risks are finally visible
@@ -805,7 +805,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 ### Domain II — How laws, standards and frameworks apply to AI
 
-**19. The GDPR Art. 22 right not to be subject to certain decisions applies when a decision is:**
+**19. A Frankfurt applicant complains that Najm's credit model declined her, and Legal must decide whether GDPR Art. 22 applies. The Art. 22 right not to be subject to certain decisions applies when a decision is:**
 
 - A. Made using any AI technology, whether or not a person reviews the result before it takes effect
 - B. Based on any form of profiling, even where a person takes the final decision about the individual
@@ -844,7 +844,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**22. Under GDPR Art. 35, a data protection impact assessment is required when:**
+**22. Najm plans to profile customers' transaction histories to decide who receives credit-limit increases, and Sara must decide whether a DPIA is needed. Under GDPR Art. 35, a DPIA is required when:**
 
 - A. Any AI system is used, since every AI system counts as new technology for the purposes of the Article
 - B. Special category data is processed, and only then, whatever the scale or the purpose of the processing
@@ -1020,7 +1020,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 - A. Carry out the conformity assessment and draw up the declaration of conformity for the system
 - B. Draw up the technical documentation and keep it up to date through the life of the system
 - C. Affix the CE marking to the system before it is made available to its first customers
-- D. Use the system in line with its instructions, assign human oversight to competent staff and keep the logs
+- D. Use it per its instructions, assign competent human oversight and keep the logs
 
 <details><summary>Answer</summary>
 
@@ -1095,7 +1095,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 ### Domain III — How to govern AI development
 
-**41. At intake, which information matters most for assigning a provisional risk tier to a proposed AI system?**
+**41. A business line submits an intake form for an AI tool that would set collection priorities for customers in arrears. Which information matters most for assigning it a provisional risk tier?**
 
 - A. The size of the development team, because a larger team can build a more complex system
 - B. The intended purpose, the people affected, the impact of its decisions and its degree of autonomy
@@ -1121,7 +1121,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**43. What does a model card primarily document?**
+**43. Before credit officers start using the retail PD model's scores, Layla asks Dana for its model card. What does a model card primarily document?**
 
 - A. Intended use, performance across conditions and groups, limitations and ethical considerations
 - B. The full source code of the model, together with the build scripts used to train it
@@ -1134,7 +1134,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**44. What is a key governance advantage of building an AI system in-house rather than buying it?**
+**44. Najm is choosing between building its own fraud model and buying a vendor's. What is a key governance advantage of building it in-house?**
 
 - A. No regulation applies to in-house systems, because the organisation is not placing anything on the market for others
 - B. It is always cheaper, because the organisation avoids the licence fees and the profit margin charged by a vendor
@@ -1147,7 +1147,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**45. What does GDPR Art. 25, data protection by design and by default, require of a controller building an AI system?**
+**45. Dana is designing the data pipeline for Najm's new credit model. What does GDPR Art. 25, data protection by design and by default, require of Najm as controller?**
 
 - A. Technical and organisational measures such as data minimisation and pseudonymisation, built in from design and by default
 - B. A data protection impact assessment for every AI system, completed in full before any code is written for the project and filed
@@ -1160,7 +1160,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**46. For a credit model whose decisions must be explained to declined applicants, which design approach is most defensible?**
+**46. Najm's credit model will decline applicants in Frankfurt, who must be given the main reasons for each decision. Which design approach is most defensible?**
 
 - A. Use the most accurate black-box model available and provide no explanations to declined applicants at all
 - B. Ask a language model to write a plausible explanation after the fact, without checking it against the model
@@ -1266,7 +1266,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**54. What does data lineage allow an organisation to do?**
+**54. A customer challenges a credit decision Najm made two years ago, and the regulator asks Najm to reconstruct it. What does data lineage allow Najm to do here?**
 
 - A. Compress data for storage, so that old records take up less space in the data warehouse
 - B. Trace where data came from, how it was transformed and which model versions used it
@@ -1279,7 +1279,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**55. A team wants to train a model on text scraped from public websites. What is the key governance question?**
+**55. Dana's team wants to train Najm's copilot on text scraped from public financial websites. What is the key governance question?**
 
 - A. Which file format to store it in, so that the training pipeline can read it quickly, without errors and in the right order
 - B. How much storage it will need, since scraped text can run to very large volumes over a few months
@@ -1292,7 +1292,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**56. How does the principle of data minimisation apply to training data?**
+**56. Dana wants to keep every field from ten years of customer records "in case it helps" train the next credit model. How does the principle of data minimisation apply to this training data?**
 
 - A. Use only data that is adequate, relevant and limited to what is needed, with aggregation or pseudonymisation where possible
 - B. Collect as much data as possible in case it turns out to be useful for later projects, and filter it when the need is clear
@@ -1305,7 +1305,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**57. What is red-teaming of a generative AI system?**
+**57. Before launch, Layla asks for the credit memo copilot to be red-teamed. What is she asking for?**
 
 - A. Reviewing source code for style and security flaws before each release, using a checklist agreed with the developers
 - B. Structured adversarial testing in which people try to make the system fail, for example by jailbreaks or prompt injection
@@ -1318,20 +1318,20 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**58. In AI governance, what does TEVV stand for?**
+**58. Omar's release plan for the credit memo copilot has one line under TEVV (test, evaluation, verification and validation): "accuracy test passed". Layla sends it back. What is missing?**
 
-- A. Training, evaluation, versioning and validation
-- B. Testing, explanation, verification and visibility
-- C. Transparency, ethics, values and validation of systems
-- D. Test, evaluation, verification and validation
+- A. Nothing: one passed accuracy test covers the testing and evaluation that TEVV asks for
+- B. A vendor certificate, since TEVV for a bought model is the model provider's job alone
+- C. A second accuracy test run by another team, so that the result is confirmed independently
+- D. Checks that it meets its specification and suits its real use, across the life cycle
 
 <details><summary>Answer</summary>
 
-**D.** TEVV is the set of activities used to establish whether a system works as intended and is fit for purpose. *Competency: III.B*
+**D.** TEVV covers verification (does the system meet its specification?) and validation (does it meet the needs of its intended use in context?), with testing and evaluation across the life cycle, not at one moment. One accuracy test (A, C) is a slice of that, and Najm stays responsible for its own system (B). *Competency: III.B*
 
 </details>
 
-**59. Which activity checks whether a system meets the needs of its intended use in its real operating context?**
+**59. Dana's tests show the copilot reproduces source figures exactly as its specification requires. Layla now wants to know whether relationship managers can rely on it for real credit memos in Doha. Which activity answers Layla's question?**
 
 - A. Verification
 - B. Unit testing
@@ -1344,7 +1344,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**60. Which statement about fairness metrics is correct?**
+**60. The committee asks Dana to make the credit model "fair on every metric at once". Which statement about fairness metrics is correct?**
 
 - A. There is one universal fairness metric that all systems must use, which is set by the regulators in each country they supervise
 - B. Different metrics, such as demographic parity and equalised odds, can conflict, so the choice must be justified for the context
@@ -1450,7 +1450,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**68. What should a plan for retiring an AI system include?**
+**68. Najm will switch off its old CV-screening tool next quarter. What should the retirement plan include?**
 
 - A. Data retention or deletion, archiving documentation and logs as law requires, informing users, and managing the transition
 - B. Switching it off on a Friday afternoon, when the fewest customers are using the service, and then closing the project file
@@ -1476,7 +1476,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**70. Which is the strongest release gate for a high-risk AI system?**
+**70. Najm's credit-scoring v2, a high-risk system in the EU, is due to go live next week. Which is the strongest release gate?**
 
 - A. The development team says it is ready, and the project manager agrees that the work on the system is complete
 - B. The go-live date in the project plan has arrived, and the business has been waiting for the system for months
@@ -1491,7 +1491,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 ### Domain IV — How to govern AI deployment and use
 
-**71. Before deciding to deploy an AI system, what is the first question to answer?**
+**71. Khalid wants to deploy a vendor AI tool that pre-qualifies loan applicants. Before deciding to deploy it, what is the first question to answer?**
 
 - A. Which vendor has the best benchmark scores, so that the most capable model is chosen
 - B. How quickly it can go live, so that the business gains the benefit as soon as it can
@@ -1504,7 +1504,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**72. Whom should an organisation consult when assessing a proposed AI deployment that affects customers?**
+**72. Layla is assessing the proposed pre-qualification chatbot, which would talk to retail customers about loans. Whom should Najm consult?**
 
 - A. Only the vendor, because it knows the system better than anyone else who takes part in the assessment of the deployment
 - B. Affected people or their representatives, frontline users, and control functions such as legal, privacy and risk
@@ -1530,7 +1530,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**74. Compared with using a vendor's hosted model, what key risk shift should an organisation consider when deploying an open-source model it hosts itself?**
+**74. Dana proposes hosting an open-source model on Najm's own servers for the copilot, instead of a vendor's hosted model. What key risk shift should Najm consider?**
 
 - A. Open-source models are always illegal to use commercially, whatever their licence says about the use of the model weights
 - B. Open-source models cannot be tested, because their weights are not owned by the organisation that wants to use them
@@ -1556,7 +1556,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**76. What should AI vendor due diligence include?**
+**76. Yusuf is assessing three vendors for Najm's CV-screening tool. What should his AI due diligence include?**
 
 - A. Evidence of testing, system documentation, security certifications, incident history and sub-processors
 - B. The vendor's financial statements for the last three years, with its credit rating
@@ -1688,7 +1688,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**86. What is the key feature of an independent algorithmic audit?**
+**86. Najm's board wants an independent algorithmic audit of the credit model before the EU launch. What is the key feature of such an audit?**
 
 - A. It is carried out by the team that built the system, using that team's own test data and its own criteria
 - B. It covers only the user interface, and not the data or the model that lies behind it in the application
@@ -1784,7 +1784,7 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 **93. Which transparency duty does the EU AI Act place on Najm, as deployer, toward applicants in Frankfurt?**
 
 - A. Publish the tool's source code, so that applicants can examine how it ranks them
-- B. Inform the applicants that they are subject to the use of a high-risk AI system in decisions about them
+- B. Inform applicants that a high-risk AI system is used in decisions about them
 - C. Obtain each applicant's explicit consent before every use of the system in a decision
 - D. None, because the vendor is the provider and so carries all transparency duties
 
@@ -1807,16 +1807,16 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**95. When is human oversight of an AI system most likely to be effective?**
+**95. Najm's credit officers will review every decline the scoring model proposes. When is this human oversight most likely to be effective?**
 
-- A. When overseers have the competence, training, authority and time to understand outputs and intervene
-- B. When overseers approve outputs as quickly as possible, so that decisions are never delayed
-- C. When one person oversees thousands of decisions a day, so that costs stay low
-- D. When overseers are not told the system's limitations, so that they do not doubt it
+- A. When overseers have the competence, authority and time to understand outputs and intervene
+- B. When overseers sign off every output personally, however many cases they must review a day
+- C. When the system shows only its final decision, so that scores do not distract the overseers
+- D. When the overseers are senior managers, whose approvals are rarely questioned by others
 
 <details><summary>Answer</summary>
 
-**A.** These are the conditions for meaningful oversight. B, C and D are recipes for automation bias. *Competency: IV.C*
+**A.** These are the conditions for meaningful oversight. B overloads reviewers, C hides what they need in order to judge, and D confuses seniority with scrutiny; all three invite automation bias. *Competency: IV.C*
 
 </details>
 
@@ -1859,20 +1859,20 @@ The instruments that appear most often in AIGP-style questions, and the one fact
 
 </details>
 
-**99. What is the most effective way to govern employees' use of public generative AI tools?**
+**99. A survey finds that half of Najm's staff paste work into public chatbots. What is the most effective way to govern employees' use of public generative AI tools?**
 
 - A. A blanket ban with no alternatives, enforced by blocking the sites on the company network
-- B. No rules, because the tools are free and staff can be trusted to use them with care
-- C. Relying on each employee's judgement without guidance, since they know their own work best
+- B. Allowing any public tool, provided that staff first remove client names from whatever they paste in
+- C. Letting each team choose its own tools and write its own rules on how and when to use them
 - D. A list of approved tools, clear rules on what data may be entered, training, and monitoring
 
 <details><summary>Answer</summary>
 
-**D.** Clear rules with approved alternatives reduce data-leakage risk without driving use underground, as blanket bans (A) often do. *Competency: IV.C*
+**D.** Clear rules with approved alternatives reduce data-leakage risk without driving use underground, as blanket bans (A) often do. Removing names (B) still leaks confidential data, and team-by-team rules (C) leave gaps. *Competency: IV.C*
 
 </details>
 
-**100. What keeps governance of a deployed AI system effective over time?**
+**100. Two years after launch, Najm's chatbot still runs on its original approval. What keeps governance of a deployed AI system effective over time?**
 
 - A. Periodic review of each system's risk tier, performance, incidents and continued need, reported to the committee
 - B. Approving it once and never revisiting it, since the original assessment remains valid for as long as the system runs

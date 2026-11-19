@@ -9,7 +9,7 @@
 # 5.1 — The hiring loop, the recruiter screen and behavioural interviews (STAR)
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 3.1, 4.1* · *Step: Interview*
 
-**After this you can** record a 50- to 75-second introduction for a specific role and build a bank of at least eight STAR stories, each with a personal action, a result and a verifier. *Study time: about 120 minutes (estimate).*
+**After this you can** record a 50- to 75-second introduction for a specific role and build a bank of at least eight STAR stories, each with a personal action, a result and a verifier. *Study time: reading about 15 min, hands-on about 9 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A **hiring loop** is the full sequence of steps from application to offer: screen, assessments, interviews, debrief and references. Each step checks something specific; learn what, and prepare for that.
@@ -108,7 +108,7 @@ Sources: your capstone and portfolio projects (3.1), internships and part-time j
 
 ### 🔴 Expert view
 
-**How interviewers score you.** Many larger employers use **structured interviews**: every candidate gets the same questions, scored against the same rubric. Hiring research has long found them more predictive than unstructured chats. The interviewer is listening for evidence they can write down against named competencies, so make it easy: situation briefly, actions explicit, result stated, then stop.
+**How interviewers score you.** Many larger employers use **structured interviews**: every candidate gets the same questions, scored against the same rubric. Hiring research has long found them more predictive than unstructured chats; a 2022 re-analysis ranked structured interviews first among common selection methods (Sackett and colleagues, see References). The interviewer is listening for evidence they can write down against named competencies, so make it easy: situation briefly, actions explicit, result stated, then stop.
 
 A typical rubric line, simplified, looks like this:
 
@@ -247,6 +247,7 @@ Khalid's rule for the cohort: every story must have a link or a person who could
 - Tech Interview Handbook (behavioural interview section) — https://www.techinterviewhandbook.org/
 - Google, How we hire — https://www.google.com/about/careers/applications/how-we-hire/
 - Amazon, Leadership Principles — https://www.amazon.jobs/content/en/our-workplace/leadership-principles
+- Sackett, P. R., Zhang, C., Berry, C. M. and Lievens, F., "Revisiting meta-analytic estimates of validity in personnel selection", *Journal of Applied Psychology* 107(11), 2022 — https://doi.org/10.1037/apl0000994
 - Julia Evans, "Get your work recognized: write a brag document" — https://jvns.ca/blog/brag-documents/
 - [*AI Product Management: Zero to Hero*, lesson 10.2 — The AI PM career: interviews, portfolio and growth](../aipm/index.html#/10.2)
 - [*Secure AI & Application Security: Zero to Hero*, lesson 12.2 — The security career: roles, certifications and portfolio](../secai/index.html#/12.2)
@@ -256,7 +257,7 @@ Khalid's rule for the cohort: every story must have a link or a person who could
 # 5.2 — Technical interviews today: algorithms, live coding, take-homes and reviewing AI-written code
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.2, 5.1* · *Step: Interview*
 
-**After this you can** solve a coding problem aloud with the five steps, deliver a four-hour take-home with a Trade-offs section, and review an AI-written pull request with blockers separated from suggestions. *Study time: about 435 minutes (estimate).*
+**After this you can** solve a coding problem aloud with the five steps, deliver a four-hour take-home with a Trade-offs section, and review an AI-written pull request with blockers separated from suggestions. *Study time: reading about 15 min, hands-on about 9 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Technical rounds come in four common formats: **algorithm screens** (data structures and algorithms, often on a platform), **live coding** (building something small with an interviewer watching), **take-home tasks** (a small project in your own time), and **code review**, increasingly of a pull request written by an AI agent.
@@ -268,7 +269,7 @@ Khalid's rule for the cohort: every story must have a link or a person who could
 ## 🧭 Why it matters
 Omar is the strongest algorithm student in the cohort. In Tariq's live-coding round, he hears the problem, says "OK", and types for 25 minutes in silence. His solution is correct. Tariq's notes say: "Correct solution. No clarifying questions. Did not test. Could not say what happens with an empty input until asked. Communication: 1 of 3."
 
-The same week, Reem gets the AI-review round. Tariq gives her a short pull request an agent wrote for a funds-transfer endpoint and says, "Would you merge this?" She is used to agents; she skims it and says it looks fine because the tests pass. Tariq points to one line, and she realises the SQL query is built from a string with user input in it. She did not catch the missing ownership check either.
+The same week, Reem gets the AI-review round. Tariq gives her a short pull request an agent wrote for a funds-transfer endpoint and says, "Would you merge this?" She is used to agents; she skims it and says it looks fine because the tests pass. Tariq points to one line, and she sees a security flaw she had read straight past. It was not the only one.
 
 Both candidates can code. Neither showed what Tariq is hiring for: someone who can be trusted with code, whether a person or a machine wrote it. That is what technical rounds check now.
 
@@ -295,12 +296,12 @@ flowchart LR
     B --> C["Say a simple plan and its cost"]
     C --> D["Write clean code, narrating"]
     D --> E["Test with examples and edge cases"]
-    E --> F["Improve if time allows"]
+    E --> F["Improve if time allows (optional)"]
 ```
 
 1. **Restate.** "So I get a list of transactions and must return the IDs of any that look like duplicates, meaning the same account and amount within 60 seconds. Is that right?"
 2. **Clarify.** Ask about size, sorting, empty input, ties, and invalid data. "Is the list sorted by time? Can amounts be negative? How large can the list be?"
-3. **Plan.** Say a simple working approach first, with its cost in **Big-O notation** (how running time grows with input size). "A simple way compares every pair: that is O(n²). If the list is sorted by time, I can group by account and amount and compare each item only with the previous one: O(n log n) because of the sort, or O(n) if it is already sorted."
+3. **Plan.** Say a simple working approach first, with its cost in **Big-O notation** (how running time grows with input size). "A simple way compares every pair: that is O(n²). Better: sort by time, then keep the last time seen for each account and amount, and compare each item only with that. The sort costs O(n log n); if the list arrives already sorted, the scan alone is O(n)."
 4. **Code.** Use clear names. Narrate decisions, not keystrokes.
 5. **Test.** Walk through a normal example, then edge cases: empty list, one item, two items exactly 60 seconds apart.
 
@@ -396,7 +397,7 @@ Reem's improved approach in a later mock round: she asks the agent to draft the 
 | **Mock interview with a peer** | A practice round where a friend asks questions from a list and scores with a rubric | Weekly in the month before technical rounds |
 
 ## 🏛️ In practice at Najm Bank
-Tariq uses a fixed rubric and a fixed exercise for Najm's AI-review round. Candidates see this pull request, simplified here. Its title is "Add endpoint to transfer money between a customer's accounts", and the description the coding agent wrote says only "Implements transfer. All tests pass."
+Tariq uses a fixed rubric and a fixed exercise for Najm's AI-review round. Candidates see this pull request, simplified here. Its title is "Add endpoint to transfer money between a customer's accounts", and the description the coding agent wrote says only "Implements transfer. All tests pass." Write your own review of it before you open the answer below.
 
 ```python
 @app.post("/transfers")
@@ -414,6 +415,8 @@ def test_transfer(client):
     assert resp.status_code == 200
 ```
 
+<details><summary>What a strong candidate finds (open after your own written review)</summary>
+
 **What a strong candidate finds, in priority order**
 
 | # | Issue | Why it matters | Blocks merge? |
@@ -425,6 +428,8 @@ def test_transfer(client):
 | 5 | Money as `float` | Rounding errors; use integers in the smallest unit or a decimal type | Yes |
 | 6 | Logs the full request | May write personal or account data to logs | Should fix |
 | 7 | The test checks only the status code | Proves nothing about balances or failure cases | Should fix |
+
+</details>
 
 **Tariq's scoring rubric (1–3 per line)**
 
@@ -441,7 +446,7 @@ Reem's second attempt, a month later in a mock round with Khalid, finds issues 1
 ## 🛠️ Exercises
 - 🟢 Solve three problems from one pattern in the 🟡 table, each in under 40 minutes, while recording yourself saying the five steps out loud. *Done when:* you have three recordings and each one includes a clarifying question and at least one edge-case test.
 - 🟡 Do a take-home-style task in four hours: a small command-line tool or API of your choice with tests and a README that states what you skipped and why. *Done when:* a peer can clone it, run it and the tests from the README alone, and the README has a "Trade-offs" section.
-- 🔴 Review the Najm pull request above in writing before reading the table, then compare your list with it. Next, ask an AI coding assistant to write a small feature in one of your own projects and review its pull request with the six-step order. *Done when:* you have two written reviews with blockers separated from suggestions, and at least one test you added because of the review.
+- 🔴 Review the Najm pull request above in writing before opening the hidden answer, then compare your list with it. Next, ask an AI coding assistant to write a small feature in one of your own projects and review its pull request with the six-step order. *Done when:* you have two written reviews with blockers separated from suggestions, and at least one test you added because of the review.
 
 ## ⚠️ Mistakes and traps
 - **Coding in silence.** The interviewer cannot score thinking they cannot hear. Narrate decisions and ask questions.
@@ -543,7 +548,7 @@ Reem's second attempt, a month later in a mock round with Khalid, finds issues 1
 # 5.3 — System design, data and ML interviews for juniors
 *Level: 🟡 Intermediate* · *Prerequisites: 1.3, 5.2* · *Step: Interview*
 
-**After this you can** draw your project's architecture with a reason for every box, and answer a junior design question for your track aloud for 30 minutes using the four moves. *Study time: about 120 minutes (estimate).*
+**After this you can** draw your project's architecture with a reason for every box, and answer a junior design question for your track aloud for 30 minutes using the four moves. *Study time: reading about 15 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Juniors increasingly meet **design-style rounds**: a small system design, a SQL or data-modelling case, a machine-learning evaluation question, or a cloud troubleshooting walk-through. Expectations are lower than for seniors, but the method is the same.

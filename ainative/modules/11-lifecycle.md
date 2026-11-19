@@ -9,7 +9,7 @@
 # 11.1 — Beyond writing code: requirements, design critique, docs, review, incidents and learning
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1, 6.1* · *Focus: Workflow*
 
-**After this you can** trace claims in a design document to the code, mark which are refuted, and check an AI critic's objections. *Study time: about 110 minutes (estimate).*
+**After this you can** trace claims in a design document to the code, mark which are refuted, and check an AI critic's objections. *Study time: reading about 15 min, hands-on about 60 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Writing code is only part of the job. Requirements, design, documentation, review, incidents and learning are mostly text, and AI helps with each. It fails the same way in each: fluent text that states things nobody checked.
@@ -21,7 +21,7 @@
 ## 🧭 Why it matters
 On Monday Hessa (product owner) asks for a najmkit page for the wiki. Lujain (graduate engineer) types "write the docs for najmkit" into a chat window, with no code. The page that comes back is lovely: `ids.generate(prefix, length=8)`, `clock.utcnow()`, `audit.write(event, fields)`, a note that the library is thread-safe, and `pip install najmkit`. None of it exists. najmkit is Najm's internal library, so nothing outside the bank, a model included, has ever seen it. The page was fluent, and every line that mattered was invented.
 
-In July 2025 Jason Lemkin said a Replit coding agent deleted a production database during a code freeze, then told him a rollback would not work; he recovered the data by hand. Fortune reported it, but the account rests on his own screenshots and nobody has audited it. Still, an agent's statement about what happened is a claim, not evidence. Habit 4, **Trust evidence, not fluency** (lesson 5.1), must reach the rest of the job.
+Lesson 0.2's Replit account has a second lesson in it: after the deletion, the agent told its user a rollback would not work, and the rollback did work ([The Register](https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/)). The founder's account is unaudited, but the point stands: an agent's statement about what happened is a claim, not evidence. Habit 4, **Trust evidence, not fluency** (lesson 5.1), must reach the rest of the job.
 
 ## 📐 How it works
 
@@ -260,7 +260,7 @@ Step 3 is partly mechanical. Lesson 11.2 gives you `claims_scan.py`, which looks
 # 11.2 — Lab: an ADR with a critic, docs checked against code and a postmortem that sticks to the facts
 *Level: 🟡 Intermediate* · *Prerequisites: 11.1* · *Focus: Workflow, Verify*
 
-**After this you can** write an ADR with a critic, a library page checked against code and a factual postmortem that pass the grader. *Study time: about 110 minutes (estimate).*
+**After this you can** write an ADR with a critic, a library page checked against code and a factual postmortem that pass the grader. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Lab `m11`, on Najm Remit: three documents whose claims the grader can look up. An **ADR** with a critic's objections, the **najmkit page** regenerated from the code, and a **postmortem** drafted from a constructed incident record.
@@ -400,7 +400,7 @@ message that follows `CONTRIBUTING.md` (`type(scope): subject`; any lower-case s
 **Start.**
 
 ```bash
-cd ainative/ailab
+cd ~/system-design-for-vibe-coders/ainative/ailab
 python -m ailab start m11 --dir ~/ainative/m11
 cd ~/ainative/m11
 ```

@@ -9,7 +9,7 @@
 # 4.1 — Where your first ten customers are
 *Level: 🟡 Intermediate* · *Prerequisites: 1.4, 2.1, 3.2* · *Step: Sell*
 
-**After this you can** write a first-ten list of at least thirty named people or businesses in three circles, each with a reason they might need your product and a planned first contact. *Study time: about 115 minutes (estimate).*
+**After this you can** write a first-ten list of at least thirty named people or businesses in three circles, each with a reason they might need your product and a planned first contact. *Study time: reading about 15 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can write a **first-ten list** of at least thirty named people or businesses, sorted into three circles by how close they are to you, with a reason each might need your product and a planned first contact for each.
@@ -213,7 +213,7 @@ Sources are cited by author and title without links; this lesson makes no numeri
 # 4.2 — Outreach and sales calls without spam
 *Level: 🟡 Intermediate* · *Prerequisites: 4.1, 1.2* · *Step: Sell*
 
-**After this you can** write a four-sentence outreach message a stranger can answer with yes or no, and a 20-minute sales-call agenda with the decision you want and a single ask. *Study time: about 115 minutes (estimate).*
+**After this you can** write a four-sentence outreach message a stranger can answer with yes or no, and a 20-minute sales-call agenda with the decision you want and a single ask. *Study time: reading about 15 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can write a four-sentence outreach message that a stranger can answer with a clear yes or no, plan a 20-minute sales call with a written agenda and a stated ask, and send a follow-up sequence that stops by itself.
@@ -439,7 +439,7 @@ Links are not given because the rules differ by country and change. Find the cur
 # 4.3 — Onboarding: the first result, fast
 *Level: 🟡 Intermediate* · *Prerequisites: 4.2, 2.3* · *Step: Sell*
 
-**After this you can** write a first-result statement and an onboarding checklist that gets a new customer there in one session, then track how many of three customers reach it and in how many days. *Study time: about 115 minutes (estimate).*
+**After this you can** write a first-result statement and an onboarding checklist that gets a new customer there in one session, then track how many of three customers reach it and in how many days. *Study time: reading about 15 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can name the **first result** a new Tick customer must reach, write an onboarding checklist that gets a customer there in one session, and track how many new customers reach it and how long it takes them.

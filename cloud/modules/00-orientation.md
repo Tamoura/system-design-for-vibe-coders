@@ -9,7 +9,7 @@
 # 0.1 — What cloud, DevOps, platform engineering and SRE are
 *Level: 🟢 Beginner* · *Prerequisites: none* · *Phase: Plan*
 
-**After this you can** write a plain-language definition of cloud, DevOps, platform engineering and SRE that a non-technical friend can explain back, and estimate the four DORA metrics for a project from its git history. *Study time: about 115 minutes (estimate).*
+**After this you can** write a plain-language definition of cloud, DevOps, platform engineering and SRE that a non-technical friend can explain back, and estimate the four DORA metrics for a project from its git history. *Study time: reading about 15 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Cloud** is a way of getting computing: you rent servers, storage, networks and managed services on demand, through an API, and pay for what you use. It is less "someone else's computer" than someone else's *automation*.
@@ -53,7 +53,20 @@ The most widely cited evidence for what works comes from the **DORA** research p
 | Change failure rate | Share of deployments that cause a failure needing a fix or rollback | Stability |
 | Time to restore service | How long it takes to recover when production fails | Stability |
 
-The research's most useful finding is that speed and stability are *not* a trade-off. The best-performing teams are both faster and more stable, because small, frequent, automated changes are easier to test, easier to understand and easier to undo. DORA's later reports added a reliability measure and refined some names and definitions; check dora.dev for the current set at the time you read this.
+The research's most useful finding is that speed and stability are *not* a trade-off. The best-performing teams are both faster and more stable, because small, frequent, automated changes are easier to test, easier to understand and easier to undo. DORA has since refined the set: time to restore is now failed deployment recovery time, and in 2024 it added a fifth measure, deployment rework rate (lesson 4.1); check dora.dev for the current definitions.
+
+**Estimating the four keys from git.** A personal or open-source project rarely has a deploy log, so use proxies and say so. Tags or releases stand in for deployments, reverts and hotfix tags for failed changes, and the gap between a commit and the first tag that contains it for lead time:
+
+```bash
+# Rough DORA proxies from a repository's history (run inside the repo)
+git tag --sort=creatordate --format='%(creatordate:short) %(refname:short)'   # releases, dated
+git log --since='3 months ago' --oneline --grep='[Rr]evert' | wc -l          # reverts: failed changes
+git log -1 --format=%cs <commit>                            # when a change was committed...
+git tag --contains <commit> --sort=creatordate | head -1    # ...and the first release that shipped it
+gh release list --limit 20                                  # GitHub Releases, if the project uses them
+```
+
+A tag is not a production deploy and a revert is not every failure, so write down what each number stands for.
 
 **Site reliability engineering.** SRE started at Google and was described publicly in the book *Site Reliability Engineering* (2016) and *The Site Reliability Workbook* (2018). Its central ideas:
 - A **service level indicator (SLI)** is a measurement of what users experience, for example "the share of API requests that succeed in under 300 milliseconds".
@@ -136,7 +149,7 @@ After the "DevOps access" episode, Salem asks Yousef to draft the team's **respo
 ## 🛠️ Exercises
 - 🟢 Write a one-paragraph definition, in your own words, of cloud, DevOps, platform engineering and SRE, then one sentence on how each relates to the others. Include NIST's five cloud characteristics and the four DORA metrics. *Done when:* a friend who is not in tech can read it and explain back the difference between DevOps and SRE.
 - 🟡 Find five real job postings for cloud, DevOps, platform or SRE roles in your region and map each one's responsibilities to the "who does what" table. *Done when:* a table shows which of the four roles each posting really asks for, plus one sentence on what surprised you.
-- 🔴 Take a project you own that has a git history (a personal project or a public open-source repository). Estimate its DORA metrics for the last three months: deployment or release frequency from tags or releases, lead time from commit date to release date, change failure rate from reverts or hotfix releases, and time to restore from the gap between a bad release and the fix or revert that followed it (use issue timestamps if you have them). *Done when:* you have the four numbers, the commands or queries you used to get them, and a note on which number was hardest to measure honestly and why.
+- 🔴 Take a project you own that has a git history (a personal project or a public open-source repository). Estimate its DORA metrics for the last three months with the git commands shown above: deployment or release frequency from tags or releases, lead time from commit date to release date, change failure rate from reverts or hotfix releases, and time to restore from the gap between a bad release and the fix or revert that followed it (use issue timestamps if you have them). *Done when:* you have the four numbers, the commands or queries you used to get them, and a note on which number was hardest to measure honestly and why.
 
 ## ⚠️ Mistakes and traps
 - **Renaming ops to "DevOps".** A ticket queue with a new name is still a handoff. Measure whether teams can ship without waiting on a person.
@@ -228,14 +241,14 @@ After the "DevOps access" episode, Salem asks Yousef to draft the team's **respo
 - AWS Well-Architected Framework — https://aws.amazon.com/architecture/well-architected/
 - Microsoft Azure Well-Architected Framework — https://learn.microsoft.com/azure/well-architected/
 - Google Cloud Well-Architected Framework (formerly the Google Cloud Architecture Framework) — https://cloud.google.com/architecture/framework
-- Regulation (EU) 2022/2554 (Digital Operational Resilience Act) — https://eur-lex.europa.eu/eli/reg/2022/2554/oj
+- Regulation (EU) 2022/2554 on digital operational resilience (DORA) — https://eur-lex.europa.eu/eli/reg/2022/2554/oj
 
 ---
 
 # 0.2 — The path to production: from a commit to a customer, and everything that can break on the way
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Phase: Release, Deploy*
 
-**After this you can** draw a path-to-production map for your own project with an automated catch and an undo for every stage, and show a CI run that fails on a broken test and passes once it is fixed. *Study time: about 115 minutes (estimate).*
+**After this you can** draw a path-to-production map for your own project with an automated catch and an undo for every stage, and show a CI run that fails on a broken test and passes once it is fixed. *Study time: reading about 15 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Every change travels the same **path to production**: commit, build, test, package, store, deploy, release to users, observe. Each step either catches problems or lets them through.
@@ -387,7 +400,7 @@ Salem asks Yousef to produce the **path-to-production map** for the Najm Mobile 
 ## 🛠️ Exercises
 - 🟢 Pick a website you use. Run `dig +short example.com` and `curl -sI https://example.com` (with the real domain) and note the IP addresses, the HTTP status and headers such as `cache-control`. Then write the five stages a change would pass through before it shows up on that site. *Done when:* the output is saved and each of your five stages names one thing that could go wrong.
 - 🟡 Draw the path-to-production map for a project of your own (or a small open-source project you know), using the same columns as Najm's map. *Done when:* every stage has an "automated catch" and an "undo", and you have marked in a different colour each place where the answer is currently "a person remembers".
-- 🔴 In a public repository on your own GitHub account, create a tiny web service with one test and a Dockerfile, and add the CI workflow from this lesson. Push a change that breaks the test and confirm the pipeline fails. Then fix it, let the pipeline build the image, and build and run the same commit locally with `docker run`. *Done when:* you can show a failed run, a passing run, and the image tag matching the commit hash that passed.
+- 🔴 *Do this after the lab setup in 0.3 and exercise 1.1 🟡, whose starter `server.py`, test and Dockerfile you can reuse (Dockerfiles are explained in 2.1); replace `make test` with `python3 -m unittest`.* In a public repository on your own GitHub account, create a tiny web service with one test and a Dockerfile, and add the CI workflow from this lesson. Push a change that breaks the test and confirm the pipeline fails. Then fix it, let the pipeline build the image, and build and run the same commit locally with `docker run`. *Done when:* you can show a failed run, a passing run, and the image tag matching the commit hash that passed.
 
 ## ⚠️ Mistakes and traps
 - **Rebuilding for each environment.** You end up shipping code you never tested. Build once and promote the same image, identified by its digest.
@@ -473,9 +486,9 @@ Salem asks Yousef to produce the **path-to-production map** for the Najm Mobile 
 ## 📚 References
 - US SEC, In the Matter of Knight Capital Americas LLC (2013) — https://www.sec.gov/litigation/admin/2013/34-70694.pdf
 - AWS, Summary of the Amazon S3 Service Disruption in the Northern Virginia (US-EAST-1) Region — https://aws.amazon.com/message/41926/
-- GitLab, Postmortem of database outage of January 31 — https://about.gitlab.com/blog/
+- GitLab, Postmortem of database outage of January 31 — https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/
 - Meta Engineering, More details about the October 4 outage — https://engineering.fb.com/
-- CrowdStrike, Falcon content update remediation and guidance hub — https://www.crowdstrike.com/
+- CrowdStrike, Falcon content update remediation and guidance hub — https://www.crowdstrike.com/falcon-content-update-remediation-and-guidance-hub/
 - DORA research programme — https://dora.dev/
 - GitHub Actions documentation — https://docs.github.com/actions
 - The Twelve-Factor App — https://12factor.net/
@@ -485,7 +498,7 @@ Salem asks Yousef to produce the **path-to-production map** for the Najm Mobile 
 # 0.3 — Meet Najm Bank's platform team, and how to use this course
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Phase: Plan*
 
-**After this you can** set up a lab journal with a verified tool check and a local kind cluster you created and deleted, and write a service card and a personal study plan for this course. *Study time: about 110 minutes (estimate).*
+**After this you can** set up a lab journal with a verified tool check and a local kind cluster you created and deleted, and write a service card and a personal study plan for this course. *Study time: reading about 15 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Najm Bank** is a fictional mid-sized Gulf bank operating in Qatar, the UAE and the EU. You will follow its **Platform Engineering & SRE** team through a real-shaped cloud migration.
@@ -555,12 +568,22 @@ You may already know Tariq, Noura, Jassim and Hamad from the *Secure AI & Applic
 | Tool | What you use it for | First used in |
 |---|---|---|
 | Git and a GitHub account | Version control, pull requests and GitHub Actions | 0.2 |
-| Docker (Docker Desktop, or Docker Engine on Linux) | Building and running containers | 2.1 |
+| Docker (Docker Desktop, or Docker Engine on Linux) | Building and running containers | 0.2 (🔴), 1.1 |
+| A container registry account (GitHub Container Registry comes with your GitHub account) | Storing the images your pipelines build | 3.2, 4.1 |
 | kind, k3d or minikube | A Kubernetes cluster on your own machine | 2.2 |
 | kubectl and Helm | Talking to Kubernetes; installing packaged applications | 2.2, 2.3 |
 | OpenTofu or Terraform | Infrastructure as code | 3.1 |
 | Prometheus, Grafana, OpenTelemetry | Telemetry and dashboards, installed into your local cluster | 5.1 |
 | Argo CD | GitOps deployments into your local cluster | 3.2 |
+| Argo Rollouts | Canary releases with automated analysis | 4.2 (🔴), 7.1 |
+| cosign | Signing and verifying images | 4.3, 7.1 |
+
+**Before you start: pick your operating system.**
+- **Linux (Ubuntu or Debian):** install Docker Engine and the tools above directly.
+- **Windows:** install WSL 2 with Ubuntu, then Docker Desktop with its WSL 2 backend, and run every command in this course in the Ubuntu terminal, not PowerShell.
+- **macOS:** Docker Desktop runs containers and kind, and the 1.1 exercises run inside containers, so they work as they are. The 1.1 walkthrough commands (`systemctl`, `journalctl`, `ss` on the host) are Linux-only; to follow them, use a Linux virtual machine (Multipass or UTM) or a GitHub Codespace.
+- On Ubuntu, Debian or WSL, add Module 1's network tools: `sudo apt-get install -y dnsutils netcat-openbsd iproute2 curl openssl`.
+- **Costs and secrets.** The tools are free; Docker Desktop is free for personal use, education and small businesses, so check its licence before using it at work. Never paste a token, password or private key into a chat, an issue or a commit; keep it in the tool's secret store (4.3).
 
 Install each from its official site; installation steps change, so follow the current docs rather than copying commands from an old blog post. When they are installed, check them:
 

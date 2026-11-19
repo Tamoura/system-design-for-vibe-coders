@@ -7,7 +7,7 @@
       "lesson": "3.1",
       "q": {
         "en": "Omar is about to start his capstone for a software engineering role. Before he writes any code, what should he write down to make sure the project is more than a tutorial?",
-        "ar": "يوشك عمر أن يبدأ مشروع التخرّج لدور هندسة البرمجيات. قبل أن يكتب أي شيفرة، ماذا ينبغي أن يدوّن ليضمن أن مشروعه أكثر من مجرد درس تعليمي؟"
+        "ar": "يوشك عمر أن يبدأ المشروع الختامي لدور هندسة البرمجيات. قبل أن يكتب أي شيفرة، ماذا ينبغي أن يدوّن ليضمن أن مشروعه أكثر من مجرد درس تعليمي؟"
       },
       "o": {
         "en": [
@@ -18,7 +18,7 @@
         ],
         "ar": [
           "إطار العمل والحزمة السحابية اللذين سيستخدمهما المشروع",
-          "السؤال الصعب الوحيد الذي يجب أن يجيب عنه المشروع جيدًا",
+          "السؤال الصعب الوحيد الذي على المشروع أن يُحسن إجابته",
           "القائمة الكاملة للميزات التي ينوي إضافتها خلال العام",
           "عدد الإيداعات التي سيدفعها كل أسبوع ليبدو نشطًا"
         ]
@@ -26,7 +26,7 @@
       "a": 1,
       "why": {
         "en": "A capstone is anchored on one hard question, such as two people booking the last slot at once; without one it is still a tutorial. Picking the stack first is a named trap: write the spec, then choose the simplest stack that meets it.",
-        "ar": "يُبنى مشروع التخرّج حول سؤال صعب واحد، مثل شخصين يحجزان آخر موعد في اللحظة نفسها؛ ومن دونه يبقى درسًا تعليميًا. أما اختيار الحزمة التقنية أولًا ففخ معروف: اكتب المواصفات، ثم اختر أبسط حزمة تفي بها."
+        "ar": "يُبنى المشروع الختامي حول سؤال صعب واحد، مثل شخصين يحجزان آخر موعد في اللحظة نفسها؛ ومن دونه يبقى درسًا تعليميًا. أما اختيار الحزمة التقنية أولًا ففخ معروف: اكتب المواصفات، ثم اختر أبسط حزمة تفي بها."
       }
     },
     {
@@ -35,7 +35,7 @@
       "lesson": "3.2",
       "q": {
         "en": "Yousef runs the five-minute test on his capstone. A classmate who has never seen it can say what it does from the README, but after ten minutes still cannot start it: the app stops, asking for environment variables the README never names. What is the best fix?",
-        "ar": "يُجري يوسف اختبار الدقائق الخمس على مشروع تخرّجه. يستطيع زميل لم يره من قبل أن يقول ما يفعله من ملف README، لكنه بعد عشر دقائق ما زال عاجزًا عن تشغيله: يتوقف التطبيق طالبًا متغيرات بيئة (environment variables) لا يذكرها ملف README. ما أفضل إصلاح؟"
+        "ar": "يُجري يوسف اختبار الدقائق الخمس على مشروعه الختامي. يستطيع زميل لم يره من قبل أن يقول ما يفعله من ملف README، لكنه بعد عشر دقائق ما زال عاجزًا عن تشغيله: يتوقف التطبيق طالبًا متغيرات بيئة (environment variables) لا يذكرها ملف README. ما أفضل إصلاح؟"
       },
       "o": {
         "en": [
@@ -63,7 +63,7 @@
       "lesson": "3.3",
       "q": {
         "en": "Mohammed's capstone is deployed, tested and used by gym members, and he already has two merged open-source pull requests. Interviewers note he has never turned a vague request from a client into delivered software. With eight weeks, which route adds that signal?",
-        "ar": "مشروع تخرّج محمد منشور ومُختبَر ويستخدمه أعضاء نادٍ رياضي، ولديه بالفعل طلبا دمج (pull requests) مدموجان في مشاريع مفتوحة المصدر (open-source). يلاحظ المحاورون أنه لم يحوّل قط طلبًا غامضًا من عميل إلى برنامج مُسلَّم. لديه ثمانية أسابيع، فأي مسار يضيف هذه الإشارة؟"
+        "ar": "المشروع الختامي لمحمد منشور ومُختبَر ويستخدمه أعضاء نادٍ رياضي، ولديه بالفعل طلبا دمج (pull requests) مدموجان في مشاريع مفتوحة المصدر (open-source). يلاحظ المحاورون أنه لم يحوّل قط طلبًا غامضًا من عميل إلى برنامج مُسلَّم. لديه ثمانية أسابيع، فأي مسار يضيف هذه الإشارة؟"
       },
       "o": {
         "en": [
@@ -91,7 +91,7 @@
       "lesson": "3.1",
       "q": {
         "en": "Reem's capstone is a question-answering assistant over her university's published regulations. Her README says answers \"got much better\" after a prompt change. Dana asks how she knows it is better and not just different. Which evidence answers that best?",
-        "ar": "مشروع تخرّج ريم مساعدٌ للإجابة عن الأسئلة فوق لوائح جامعتها المنشورة. يقول ملف README الخاص بها إن الإجابات «تحسّنت كثيرًا» بعد تغيير في الموجّه. تسألها دانة كيف تعرف أنه أفضل لا مجرد مختلف. أي دليل يجيب عن ذلك على أفضل وجه؟"
+        "ar": "المشروع الختامي لريم مساعدٌ للإجابة عن الأسئلة فوق لوائح جامعتها المنشورة. يقول ملف README الخاص بها إن الإجابات «تحسّنت كثيرًا» بعد تغيير في الموجّه. تسألها دانة كيف تعرف أنه أفضل لا مجرد مختلف. أي دليل يجيب عن ذلك على أفضل وجه؟"
       },
       "o": {
         "en": [
@@ -110,7 +110,7 @@
       "a": 2,
       "why": {
         "en": "The AI capstone's production bar is a golden set of at least 50 real questions scored on every change, because \"it seems better\" is not evidence. Hand-picked sample answers are exactly that kind of impression.",
-        "ar": "معيار الإنتاج لمشروع تخرّج الذكاء الاصطناعي هو مجموعة ذهبية (golden set) من 50 سؤالًا حقيقيًا على الأقل تُقيَّم مع كل تغيير، لأن عبارة «يبدو أفضل» ليست دليلًا. والإجابات النموذجية المنتقاة يدويًا هي بالضبط هذا النوع من الانطباع."
+        "ar": "معيار الإنتاج للمشروع الختامي في الذكاء الاصطناعي هو مجموعة ذهبية (golden set) من 50 سؤالًا حقيقيًا على الأقل تُقيَّم مع كل تغيير، لأن عبارة «يبدو أفضل» ليست دليلًا. والإجابات النموذجية المنتقاة يدويًا هي بالضبط هذا النوع من الانطباع."
       }
     }
   ],
@@ -120,7 +120,7 @@
       "lesson": "3.1",
       "text": {
         "en": "I have shipped the thinnest slice of my capstone so it works on someone else's machine (live link or one command), with CI green and a real user who has tried it",
-        "ar": "أطلقتُ الشريحة الأرفع من مشروع تخرّجي بحيث تعمل على جهاز شخص آخر عبر رابط مباشر أو أمر واحد، مع تكامل مستمر ناجح ومستخدم حقيقي جرّبها"
+        "ar": "أطلقتُ الشريحة الأرفع من مشروعي الختامي بحيث تعمل على جهاز شخص آخر عبر رابط مباشر أو أمر واحد، مع تكامل مستمر ناجح ومستخدم حقيقي جرّبها"
       }
     },
     {

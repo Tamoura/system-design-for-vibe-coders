@@ -9,7 +9,7 @@
 # 4.1 — Explore, plan, implement, check, commit: small steps, checkpoints and when to take the wheel
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1* · *Focus: Workflow*
 
-**After this you can** run the loop on a small change in three or more green commits and name the cue that made you take the wheel. *Study time: about 110 minutes (estimate).*
+**After this you can** run the loop on a small change in three or more green commits and name the cue that made you take the wheel. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - The daily loop has six moves: **explore** (read-only), **plan**, **implement one small step**, **check** it yourself, **read the diff**, **commit**. The unit is the step, not the ticket.
@@ -20,9 +20,9 @@
 - Biggest trap: waiting.
 
 ## 🧭 Why it matters
-On a Friday (a constructed day) Lujain (graduate engineer) gives her agent REMIT-269, a `--since` option for `history`, in one prompt and goes into a meeting. When she returns, 14 files and 612 lines have changed: the option, a parser refactor, a tidy-up of `fees.py` and three edited tests. All pass; she commits it as `wip`. Nada (quality engineering lead) asks which of the 612 lines the feature needs; Lujain cannot say, and one edited test used to guard a fee-tier boundary. The pull request is split into four, and unpicking `fees.py` takes longer than the feature did.
+On a Friday (a constructed day) Lujain (graduate engineer) gives her agent REMIT-269, a `--since` option for `history`, in one prompt and goes into a meeting. When she returns, 14 files and 612 lines have changed: the option, a parser refactor, a tidy-up of `fees.py` and three edited tests. All pass; she commits it as `wip`. Nada (quality engineering lead) asks which lines the feature needs; Lujain cannot say, and one edited test used to guard a fee-tier boundary. The pull request is split into four, and unpicking `fees.py` takes longer than the feature did.
 
-Nothing the agent did was exotic. The loop was missing: no plan to hold the diff against, no check between steps, no commit to return to. DORA's 2024 report associated higher AI adoption with lower delivery stability, and its authors link part of that dip to larger batch sizes; these are survey associations, not proof of cause.
+The loop was missing: no plan to hold the diff against, no check between steps, no commit to return to. DORA's 2024 report associated higher AI adoption with lower delivery stability, and its authors link part of that dip to larger batch sizes; these are survey associations, not proof of cause.
 
 ## 📐 How it works
 
@@ -74,19 +74,19 @@ git commit -m "feat(cli): filter history with --since"
 
 - **A branch per task and a clean tree** make every line of `git diff` the agent's. **A green baseline** makes a later red test news.
 - **Commits are save points**, made when a step is green. `git restore <file>` drops uncommitted edits to one file; `git revert <sha>` undoes a commit without rewriting history.
-- **Conventional Commits.** Remit's `CONTRIBUTING.md` asks for `type(scope): subject`: a listed type, a required lower-case scope, an imperative subject without a full stop, a header up to 72 characters. The public specification makes the scope optional; Remit is stricter.
+- **Conventional Commits.** Remit's `CONTRIBUTING.md` asks for `type(scope): subject`: a listed type, a required lower-case scope (optional in the public specification), an imperative subject without a full stop, a header up to 72 characters.
 
-**Plan mode, and when to skip it.** In plan mode the agent explores and proposes but does not edit source files. Use it for work that spans files or code you do not yet understand; skip it for the one-sentence diff.
+**Plan mode, and when to skip it.** In plan mode the agent explores and proposes but does not edit source files. Use it for multi-file work or unfamiliar code; skip it for the one-sentence diff.
 
 ### 🟡 Going deeper
 
-**Checkpoints and rewind.** At the time of writing (2026), Claude Code records a checkpoint for each prompt that starts a turn, keeps the 100 most recent and expires them about 30 days after the session's last snapshot. Open the menu with `Esc` `Esc` on an empty prompt, or `/rewind`: restore code, conversation or both, or summarise. Bash changes (`rm`, `mv`, `cp`), outside edits and other sessions are not tracked, and the documentation says checkpoints are not a substitute for git.
+**Checkpoints and rewind.** At the time of writing (2026), Claude Code records a checkpoint for each prompt that starts a turn, keeps the 100 most recent and expires them about 30 days after the session's last snapshot. Open the menu with `Esc` `Esc` on an empty prompt, or `/rewind`: restore code, conversation or both, or summarise. Not restored: a file changed only by Bash (`rm`, `mv`, `cp`), edits made outside Claude Code or by other sessions, and usually a subagent's edits.
 
-**Cues that an agent is going astray.** The card in the 🏛️ section lists six. Stop at the first.
+**Cues that an agent is going astray.** The card in the 🏛️ section lists six.
 
 Anthropic, the maker of Claude Code, found that five assistants consistently showed sycophancy, a pull towards the user's view, across four text-generation tasks (Sharma and others, ICLR 2024). "You're right" is not evidence; a test run is (habit 4, *Trust evidence, not fluency*).
 
-**The intervention ladder** is on the card; use the lowest rung that works. `Esc` stops the agent in the terminal (check the documentation for your interface); rewinding is `/rewind`, `git restore` or a commit. A correction needs a place, a reason and a check. Weak: *"That is wrong, try again."* It adds no information, so you get the same attempt reworded. Strong: *"`history` parses `since` as a naive `datetime`, which the store rejects. Build it with `QATAR_TZ` from `remit.limits`, then run `pytest -q tests/test_config_cli.py`."*
+**The intervention ladder** is on the card; use the lowest rung that works. `Esc` stops the agent in the terminal (check the documentation for your interface); rewinding is `/rewind`, `git restore` or a commit. A correction needs a place, a reason and a check. Weak: *"That is wrong, try again."* adds no information, so you get the same attempt reworded. Strong: *"`history` parses `since` as a naive `datetime`, which the store rejects. Build it with `QATAR_TZ` from `remit.limits`, then run `pytest -q tests/test_config_cli.py`."*
 
 **The two-failure rule.** After two failed attempts at a step, a third in the same context rarely helps: it now holds two wrong approaches, and the best-practices page lists "Correcting over and over" among its failure patterns. Change one thing: make the task **smaller**, start a **fresh context** (`/clear`, then one sentence on what you learned) or write a **better spec** with the missing fact, an example or the failing test. This is the course's rule of thumb, not a documented limit.
 
@@ -94,9 +94,9 @@ Anthropic, the maker of Claude Code, found that five assistants consistently sho
 
 **Session hygiene.** One task per session; the page calls the opposite "The kitchen sink session". Use `/clear` between tasks, `/compact Focus on the CLI changes` when a long task fills the window and `/context` to see what is loaded; send investigations to subagents, which return a report only.
 
-**The agent log.** After each AI-assisted task, note the prompt, the result, your corrections, your checks and the minutes. Be honest about the minutes: the log is your clock, and your feeling of speed is not.
+**The agent log.** After each AI-assisted task, note the prompt, result, corrections, checks and minutes. Be honest about the minutes: the log is your clock, not your feeling of speed.
 
-**A session timeline with the interventions marked.** Constructed for REMIT-269; not recorded from a real model, and the times are invented.
+**A session timeline, interventions marked.** Constructed for REMIT-269, with invented times; not recorded from a real model.
 
 | Time | Move | What happened | Cue | Intervention |
 |---|---|---|---|---|
@@ -109,13 +109,13 @@ Anthropic, the maker of Claude Code, found that five assistants consistently sho
 
 ### 🔴 Expert view
 
-**Done means verified.** Meta's engineering blog describes a small team building its Forum app with an AI agent as a participant. Meta reports that it measured success by production-ready changes, not code volume, and set the bar "at verification rather than compilation": a task is complete only after automated tests and visual checks pass, not when the code compiles. It also reports that when the agent repeated a mistake more than twice, the team encoded the correction once, for everyone. All of it is a company's account of its own practice, not independent evidence. The habits carry over: "done" is a check you ran, and a correction you make a third time belongs in `CLAUDE.md`, a test or a hook (Modules 2 and 9).
+**Done means verified.** Meta's engineering blog describes a small team building its Forum app with an AI agent as a participant. It reports measuring success by production-ready changes, not code volume, with the bar "at verification rather than compilation": a task is complete only after automated tests and visual checks pass. When the agent repeated a mistake more than twice, the team encoded the correction once, for everyone. This is a company's account of its own practice, not independent evidence. For us, "done" is a check you ran, and a correction you make a third time belongs in `CLAUDE.md`, a test or a hook (Modules 2 and 9).
 
 **Gate the stop.** An agent stops when it believes it is done. The page names three ways to make "done" require your check: a `/goal` condition, a Stop hook or a verification subagent (lesson 9.1 covers hooks and subagents, not `/goal`; check the current documentation).
 
-**How long a leash.** The course's default is Manual or `acceptEdits` mode with a check after every step; the mode Claude Code starts in depends on its version, plan and provider, so read the status bar. Longer leashes (auto mode, background and headless runs) pay when the work is specified, checkable and cheap to throw away, but you lose the cues, since you cannot interrupt what you are not watching: automate the checks. The documentation says auto mode "does not guarantee safety".
+**How long a leash.** The course's default is Manual or `acceptEdits` mode with a check after every step; the mode Claude Code starts in depends on its version, plan and provider, so read the status bar. Longer leashes (auto mode, background and headless runs) pay when the work is specified, checkable and cheap to throw away, but unwatched, you lose the cues: automate the checks. The documentation says auto mode "does not guarantee safety".
 
-**When not to run the full loop.** For a one-sentence diff, read the diff and commit. For a throwaway spike, delete the branch afterwards. The loop cannot rescue a vague ticket: if every lap ends in "not what I meant", return to lesson 3.1.
+**When not to run the full loop.** For a throwaway spike, delete the branch afterwards. The loop cannot rescue a vague ticket: if every lap ends in "not what I meant", return to lesson 3.1.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
@@ -158,7 +158,7 @@ After the last step
 - [ ] A correction I made a third time is now a rule, a test or a hook.
 ```
 
-The second is the **Interruption cues** card. Keep it next to the terminal.
+The second, the **Interruption cues** card, lives next to the terminal.
 
 ```text
 INTERRUPTION CUES - stop at the first one
@@ -178,7 +178,7 @@ The clinic's rule: no pull request without a filled checklist, and no "the agent
 
 ## 🛠️ Exercises
 - 🟢 **Mark a timeline.** *No agent.* Write a six-line timeline of your last AI-assisted session. *Done when:* each line names a move, and two name a cue you noticed late and the rung you should have used.
-- 🟡 **Run the loop on a small change.** *Agent optional.* Make a green sandbox (from the `ailab` folder: `python -m ailab start m00 --dir ~/ainative/sandbox`, then `python -m ailab solve m00 --dir ~/ainative/sandbox`). In the sandbox, on a branch, add `--since YYYY-MM-DD` to `history`; a date means the start of that Qatar day. (Try `PYTHONPATH=src python -m remit history --customer C001` after `customer add` and `send`.) *Done when:* you have three or more green commits in the Remit format, the checklist is ticked with the commands you ran, and one line says what to change.
+- 🟡 **Run the loop on a small change.** *Agent optional.* Make a green sandbox (from the `ailab` folder: `python -m ailab start m00 --dir ~/ainative/sandbox`, then `python -m ailab solve m00 --dir ~/ainative/sandbox`). In the sandbox, on a branch, add `--since YYYY-MM-DD` to `history`; a date means the start of that Qatar day. (Try `PYTHONPATH=src python -m remit history --customer C001` after `customer add` and `send`.) *Done when:* you have three or more green commits in the Remit format, the checklist is ticked with the commands you ran, one line names the cue that made you take the wheel (with no agent: the point where you would have stopped one), and one line says what to change.
 - 🔴 **Rehearse an interruption.** *Needs an agent.* In the sandbox, give the agent a prompt that invites scope creep ("make the CLI nicer"), with no plan, and watch. *Done when:* your notes give the first cue and its time, the rung you used and what the two-failure rule would have changed, and the branch is at a green commit.
 
 ## ⚠️ Mistakes and traps
@@ -211,27 +211,27 @@ The clinic's rule: no pull request without a filled checklist, and no "the agent
 
 **2. The agent's second attempt at a step failed after your correction. What is the best next move?**
 
-- A. Correct it a third time, using the same words but in capitals so it notices.
+- A. Correct it a third time in the same session, explaining the fix in more detail.
 - B. Rewind everything done today and begin the whole ticket again from scratch.
-- C. Ask the agent to apologise and to promise to be more careful from now on.
+- C. Let it retry in the same session; a third attempt usually gets it right.
 - D. Change the approach: split the step, start fresh or add a missing fact.
 
 <details><summary>Answer</summary>
 
-**D.** After two failures a third try in the same context rarely helps; change the task, the context or the spec. Capitals and apologies add words, not information. (🟡 The two-failure rule.)
+**D.** A third try in the same context rarely helps; change the task, the context or the spec. A longer correction adds words, not new information; rewinding the whole day throws away good work. (🟡 The two-failure rule.)
 
 </details>
 
 **3. Lujain says `Esc` `Esc` makes commits unnecessary, because she can rewind anything. What is the right reply?**
 
 - A. No: Bash changes and outside edits are not tracked, and git is the save point.
-- B. Yes: checkpoints keep every change for a year, whichever tool made that change.
+- B. Yes: a checkpoint records every file the agent touches, shell commands included.
 - C. Yes, as long as the agent only edits files and never runs a shell command at all.
-- D. No: checkpoints cover only the main branch and are deleted every night at midnight.
+- D. No: rewind restores only the conversation; the files stay as the agent left them.
 
 <details><summary>Answer</summary>
 
-**A.** Bash changes and outside edits are untracked, snapshots expire, and git is the real save point. (🟡 Checkpoints and rewind.)
+**A.** Bash changes and outside edits are untracked, snapshots expire, and git is the real save point. B is the tempting myth; D is wrong: rewind can restore code too. (🟡 Checkpoints and rewind.)
 
 </details>
 
@@ -265,14 +265,14 @@ The clinic's rule: no pull request without a filled checklist, and no "the agent
 - Claude Code documentation: best practices https://code.claude.com/docs/en/best-practices; checkpointing and rewind https://code.claude.com/docs/en/checkpointing; permission modes (plan mode) https://code.claude.com/docs/en/permission-modes; the context window https://code.claude.com/docs/en/context-window
 - Git: https://git-scm.com/docs. Conventional Commits 1.0.0: https://www.conventionalcommits.org
 - [*Software Testing*, lesson 6.2 — Tests as the specification for coding agents](../testing/index.html#/6.2)
-- **Go deeper.** Engineering at Meta, "How Meta Built Forum With AI-Native Engineering": https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/ (read the original; this lesson knew it only from a summary). Anthropic, "Towards Understanding Sycophancy in Language Models": https://www.anthropic.com/research/towards-understanding-sycophancy-in-language-models. DORA, 2024 report: https://cloud.google.com/blog/products/devops-sre/announcing-the-2024-dora-report.
+- **Go deeper.** Engineering at Meta, "How Meta Built Forum With AI-Native Engineering": https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/ (the company's own account, so read the original). Anthropic, "Towards Understanding Sycophancy in Language Models": https://www.anthropic.com/research/towards-understanding-sycophancy-in-language-models. DORA, 2024 report: https://cloud.google.com/blog/products/devops-sre/announcing-the-2024-dora-report.
 
 ---
 
 # 4.2 — Lab: ship a small feature through the whole loop
 *Level: 🟡 Intermediate* · *Prerequisites: 3.2, 4.1* · *Focus: Workflow*
 
-**After this you can** ship a small feature through the whole loop in three or more green commits that the grader passes. *Study time: about 110 minutes (estimate).*
+**After this you can** ship a small feature through the whole loop in three or more green commits that the grader passes. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Lab m04.** Hessa's ticket REMIT-318: when a successful transfer takes a customer to 80% of their daily limit or more, send a second message, in English or Arabic. About 25 lines of code, and five easy ways to get them wrong.
@@ -310,7 +310,7 @@ The lab is the loop in seven steps (the order is advice):
                                  remaining=limits.daily_limit - limits.daily_used)
 ```
 
-(1) `limits.daily_used` is the position **before** this transfer, so the warning comes one transfer late. (2) A `Decimal` compared with a float is compared exactly, and `Decimal("0.8") >= 0.8` is `False`: exactly 80% gets no warning. (3) `round` rounds the percentage instead of rounding it down. (4) The notifier is called directly, so a delivery failure escapes `send` after the transfer was saved. (5) An `int` percentage is not localised, so Arabic customers see Western digits. Evidence beats reading: defect 2 takes ten seconds to check. Look for these five in any agent diff.
+(1) `limits.daily_used` is the position **before** this transfer, so the warning comes one transfer late. (2) A `Decimal` compared with a float is compared exactly, and `Decimal("0.8") >= 0.8` is `False`: exactly 80% gets no warning. (3) `round` rounds the percentage instead of rounding it down. (4) The notifier is called directly, so a delivery failure escapes `send` after the transfer was saved. (5) An `int` percentage is not localised, so Arabic customers see Western digits. Evidence beats reading: defect 2 takes ten seconds to check.
 
 ```text
 >>> from decimal import Decimal
@@ -428,7 +428,7 @@ pytest -q
 
 The starter is green: 99 tests pass. It holds `CLAUDE.md` (the project memory from lab 2.2), `specs/TEMPLATE.md`, an unfilled `agent-log.md` and `TASK.md`, committed as "Lab starting state" and tagged `lab-start`; steps 6 and 7 and the grader compare with that tag. The grader reads the branch checked out in `~/ainative/m04`, so grade on your task branch. If your tool reads `AGENTS.md`, copy or link the memory file.
 
-**Your move.** Follow the seven steps. Explore first (plan mode, in Claude Code) and record in the spec what the ticket leaves open. Commit the spec. With an agent, give it one step per prompt, as in the specified prompt above; the memory file lets it commit only when asked, so ask, or commit yourself. Then one step per lap: failing test, code, `pytest -q` yourself, `git diff`, commit as `type(scope): subject`. Stop at the first cue on the card.
+**Your move.** Follow the seven steps. Explore first (plan mode, in Claude Code), then write and commit the spec. With an agent, give it one step per prompt, as in the specified prompt above. Then one step per lap: failing test, code, `pytest -q` yourself, `git diff`, commit as `type(scope): subject`. Stop at the first cue on the card.
 
 Step 6 is the one people skip. In `~/ainative/m04`, after committing, run `git restore --source=lab-start --staged --worktree src` to put the code back, then run your new tests. Those that expect a warning must fail; "no warning at 79.99%" or "nothing sent on a refusal" tests stay green, as they should. Then `git restore --source=HEAD --staged --worktree src` brings your feature back.
 

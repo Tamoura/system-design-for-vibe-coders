@@ -47,6 +47,12 @@ STOP = {"the", "a", "an", "to", "of", "in", "on", "for", "with", "at", "by", "fr
         "they", "not", "no", "if", "when", "while", "as", "into", "than", "so", "do", "does", "did", "can", "will",
         "should", "must", "may", "i", "my", "how", "what", "why", "which", "who", "there", "here", "any", "all", "some"}
 TERM_MIN_USES = 3
+# Content, not a gloss: never removed. Formula parts ("(TP + FP)", "(1 − p)"), option and sub-point letters ("(A)",
+# "Art. 6(1)(f)"), citations ("(Hines et al., 2024)", "(Willison, 2025)"), lesson and standard pointers
+# ("(Evaluate · 6.1)", "(RFC 8555)", "(OWASP LLM05)"). The November 2026 content audit found that an earlier run had
+# deleted all of these from the Arabic editions; scripts/qa/ar_parity.py now catches that class of loss.
+CONTENT = re.compile(r"[÷×=+<>≈≤≥−%]|^\s*(?:[A-Za-z]|[ivx]{1,4})\s*$|et al\.|[A-Z][a-z]+[,،]\s*\d{4}\s*$|\bRFC\s*\d+"
+                     r"|\b(?:LLM|ASI|API|A)\d{2}\b|§|·\s*\d+\.\d+")
 
 
 def files() -> list[Path]:
@@ -122,7 +128,7 @@ def trim_text(text: str, counts: collections.Counter) -> tuple[str, int, int]:
             nested = (line[m.end():m.end() + 1] == ")" and "(" in line[:m.start()]
                       and not re.fullmatch(r"[A-Z][A-Z0-9/+&-]{1,7}s?", g.strip()))   # nested acronym, e.g. "...system (ATS))", stays
             in_bold = line[:m.start()].count("**") % 2 == 1          # an English bold name in a table cell, e.g. **Service level objective (SLO)**
-            pinned = in_bold or bool(re.search(r"[\u0001\d]|(?:^|[\s,.])[IVX]{1,4}(?:[.,\s\u2013\u2014-]|$)", g))   # inline code, link or URL inside; a code such as I.A, LLM01 or "I, IV"
+            pinned = in_bold or bool(CONTENT.search(g)) or bool(re.search(r"[\u0001\d]|(?:^|[\s,.])[IVX]{1,4}(?:[.,\s\u2013\u2014-]|$)", g))   # inline code, link or URL inside; a code such as I.A, LLM01 or "I, IV"
             keep = pinned or ((not nested) and is_term(g, counts) and (option or norm(g) not in seen))
             if keep:
                 if not option:

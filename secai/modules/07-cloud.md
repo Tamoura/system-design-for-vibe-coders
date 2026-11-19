@@ -9,7 +9,7 @@
 # 7.1 — Cloud security: shared responsibility, IAM and misconfiguration
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 2.3, 5.2* · *Phase: Design, Deploy*
 
-**After this you can** write a shared responsibility table for three cloud systems and cut a wildcard storage role down to least privilege, confirming that read and delete are denied. *Study time: about 110 minutes (estimate).*
+**After this you can** write a shared responsibility table for three cloud systems and cut a wildcard storage role down to least privilege, confirming that read and delete are denied. *Study time: reading about 20 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - The **shared responsibility model**: the provider secures the cloud itself (buildings, hardware, virtualisation, managed-service internals). You secure what you put in it and how you configure it. The split moves with the type of service.
@@ -212,9 +212,9 @@ Each production role also gets a **role review card**: the workload that assumes
 
 **3. An authorised penetration tester reports an SSRF flaw in a reporting service on a cloud virtual machine. Which combination MOST reduces the chance of a data breach?**
 
-- A. Fix the SSRF with a destination allowlist, require IMDSv2, and scope the machine's role to the minimum
-- B. Add a CAPTCHA to the reporting page
-- C. Move the service to a larger instance type
+- A. Fix the SSRF with a destination allowlist, require IMDSv2 on the instance, and scope the machine's role to the bare minimum
+- B. Add a CAPTCHA to the reporting page, because automated attacks are what usually exploit this flaw
+- C. Move the service to a larger instance type, because the flaw appears when the machine runs short of memory and CPU
 - D. Rely on the provider, because the metadata service is the provider's responsibility under the shared responsibility model
 
 <details><summary>Answer</summary>
@@ -238,8 +238,8 @@ Each production role also gets a **role review card**: the workload that assumes
 
 **5. Why does Najm Bank block public storage with an organisation-level guardrail instead of trusting each team to configure buckets correctly?**
 
-- A. Organisation guardrails are cheaper than buckets
-- B. Because CSPM tools cannot detect public buckets
+- A. Organisation guardrails are cheaper than the buckets themselves, so teams prefer them to cut cloud costs
+- B. Because CSPM tools cannot detect public buckets, so blocking in advance is the only option left
 - C. Because the shared responsibility model makes the provider responsible for bucket settings
 - D. Because nobody working in one account can override a preventive control set above it, so one mistake cannot expose data
 
@@ -264,7 +264,7 @@ Each production role also gets a **role review card**: the workload that assumes
 # 7.2 — Containers, Kubernetes and infrastructure as code
 *Level: 🟡 Intermediate* · *Prerequisites: 6.2, 7.1* · *Phase: Build, Deploy*
 
-**After this you can** harden a Dockerfile to a pinned, non-root, secret-free image and enforce the Restricted pod profile and a default-deny network policy on a local cluster. *Study time: about 110 minutes (estimate).*
+**After this you can** harden a Dockerfile to a pinned, non-root, secret-free image and enforce the Restricted pod profile and a default-deny network policy on a local cluster. *Study time: reading about 20 min, hands-on about 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A **container** is an ordinary process isolated by the host's kernel, which it shares with every other container on the machine. It is not a strong security boundary like a virtual machine.
@@ -485,6 +485,13 @@ Tariq and Ali agree the **Najm Kubernetes Workload Baseline v1**, enforced autom
 - 🟢 Take a Dockerfile from your own project. Rewrite it with a pinned minimal base image, a non-root user, a `.dockerignore` file and no secrets, then scan the old and new images with an open-source scanner such as Trivy. *Done when:* the new image works, runs as non-root and has fewer findings, and you can explain where the biggest drop came from.
 - 🟡 On a local cluster (kind or minikube), label a namespace to enforce the Restricted profile. Try to deploy a pod with `privileged: true`, then a compliant one. Add a default-deny network policy and test that traffic is blocked; if it is not, check whether your network plugin enforces policies and install one that does (for example Calico or Cilium). *Done when:* the privileged pod is rejected, the compliant pod runs, and blocked traffic is demonstrably blocked.
 - 🔴 Run an IaC scanner (Checkov, KICS or Trivy) on Terraform or manifests you own, or on a deliberately insecure training project such as TerraGoat or Kubernetes Goat in a local lab. Fix the three most serious findings, write one custom policy for a Najm-style rule (for example "no network rule open to 0.0.0.0/0 on database ports") and run the scan in a CI job. *Done when:* the pipeline fails on the original code, passes on the fixed code, and your custom rule catches a test case you wrote.
+- 📝 **Paper route (no code).** Review the vulnerable Dockerfile and the vulnerable `securityContext` in 📐 How it works as a change sent to you. *Done when:* every risky line has its consequence, the hardened replacement and a check a pipeline could run.
+
+<details><summary>Check your work</summary>
+
+**📝 Model answer.** `FROM python:latest` changes under you and drags in a large image; pin a slim image by digest. `COPY . /app` copies `.env` and `.git`; copy only the code and add a `.dockerignore`. The `ENV` line bakes a live key into a layer that anyone with the image can read; rotate that key now and deliver secrets at runtime. No `USER` line means root; add a non-root user. `privileged: true` and `runAsUser: 0` give the container near-host power; enforce the Restricted profile on the namespace. Checks: an image scanner and secret scanner in CI, and admission that rejects privileged pods.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **"It's in a container, so it's isolated."** Containers share the host kernel. Run them non-root and unprivileged, and isolate high-risk workloads.
@@ -505,10 +512,10 @@ Tariq and Ali agree the **Najm Kubernetes Workload Baseline v1**, enforced autom
 
 **1. The Helm chart for Najm Assist's tool service sets `privileged: true` because "the health check failed without it". What should Ali ask for?**
 
-- A. Keep privileged mode, with a comment explaining why
+- A. Keep privileged mode, with a comment explaining why, and add a ticket to review it in a later release when there is time
 - B. Move the pod to a namespace where privileged mode is allowed, and document the exception in the namespace's own description
-- C. Accept it, because the provider manages the cluster
-- D. Find the real cause, grant only the narrow fix it needs, and enforce the Restricted profile on the namespace
+- C. Accept it, because the provider manages the cluster and protects pods from any abuse of privileged mode
+- D. Find the real cause, grant only the narrow capability it needs, and enforce the Pod Security Restricted profile on the namespace
 
 <details><summary>Answer</summary>
 
@@ -518,10 +525,10 @@ Tariq and Ali agree the **Najm Kubernetes Workload Baseline v1**, enforced autom
 
 **2. A developer says: "The core-banking API key is safe because it is stored as a Kubernetes Secret." Which response is correct?**
 
-- A. Correct: Secrets are always strongly encrypted
-- B. Correct, as long as the namespace has a network policy
-- C. Not by itself: Secret data is only base64-encoded by default, so add KMS encryption at rest, tight RBAC on reading Secrets, and preferably an external secrets manager
-- D. Not correct: the key belongs in a ConfigMap
+- A. Correct: Secrets are always strongly encrypted in the store, and nobody can read them without a key of your own
+- B. Correct, as long as the namespace has a network policy limiting its pods' inbound and outbound connections
+- C. Not by itself: Secrets are only base64-encoded by default; add KMS encryption, tight RBAC and ideally an external manager
+- D. Not correct: the key belongs in a ConfigMap, which is designed for sensitive values and better protected than Secrets
 
 <details><summary>Answer</summary>
 
@@ -531,10 +538,10 @@ Tariq and Ali agree the **Najm Kubernetes Workload Baseline v1**, enforced autom
 
 **3. In an RBAC review, Ali sees that the deployment pipeline's service account can only `create` pods in the production namespace, with no permission on Secrets. Why is this still sensitive?**
 
-- A. It is not sensitive, because it cannot read Secrets
-- B. Creating pods can only cause performance problems
-- C. Whoever controls the pipeline can create a pod that runs as any service account in that namespace and mounts any Secret there, gaining those permissions and values
-- D. Pod creation matters only in `kube-system`
+- A. It is not sensitive, because it cannot read Secrets, so this permission cannot reach any important data in the namespace
+- B. Creating pods can only cause performance problems, so nobody looks at it in a permissions review
+- C. Whoever controls the pipeline can start a pod as any service account in that namespace and mount any Secret, gaining both
+- D. Pod creation matters only in `kube-system`; other namespaces are not affected by what is created in them
 
 <details><summary>Answer</summary>
 
@@ -585,7 +592,7 @@ Tariq and Ali agree the **Najm Kubernetes Workload Baseline v1**, enforced autom
 # 7.3 — Networks and the edge: segmentation, WAFs and DDoS
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 4.2, 7.1* · *Phase: Design, Operate*
 
-**After this you can** draw a zone-and-flow matrix that lists every outbound destination, and tune a WAF in front of a lab app to block a true positive while removing a false positive with a narrow exclusion. *Study time: about 110 minutes (estimate).*
+**After this you can** draw a zone-and-flow matrix that lists every outbound destination, and tune a WAF in front of a lab app to block a true positive while removing a false positive with a narrow exclusion. *Study time: reading about 15 min, hands-on about 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Segmentation** divides the network into zones with explicitly allowed flows, so one compromise cannot reach everything. Deny by default, inbound *and* outbound.
@@ -797,10 +804,10 @@ Standing rules: the metadata address is denied from all pods except named node a
 
 **1. Mariam's red team reaches the Credit Memo Copilot's unauthenticated vector database from a developer laptop on the corporate network. Which fix is BEST?**
 
-- A. Add a WAF in front of the internet-facing apps
+- A. Add a WAF in front of the internet-facing apps, which stops unauthorised access to the database with nothing else needed
 - B. Require service authentication on the vector database and restrict network flows so only Credit Memo Copilot can reach it
-- C. Ask developers to keep their laptops patched
-- D. Move the database to another internal subnet with the same rules
+- C. Ask developers to keep their laptops patched and free of malware before they connect to the network
+- D. Move the database to another internal subnet with the same rules, so developers find it harder to locate
 
 <details><summary>Answer</summary>
 
@@ -836,10 +843,10 @@ Standing rules: the metadata address is denied from all pods except named node a
 
 **4. On salary day, the statement-export endpoint is flooded by real-looking HTTP requests from thousands of IP addresses. What is this, and what helps most?**
 
-- A. Volumetric; buy more bandwidth
+- A. Volumetric; buy more bandwidth, so the network can absorb all the extra requests
 - B. Application-layer; per-client rate limits, caching, authentication on the expensive endpoint, and switching off non-essential features
-- C. Protocol; restart the load balancers
-- D. Application-layer; block all mobile-carrier traffic
+- C. Protocol; restart the load balancers, which lose connections and hang until they are reset
+- D. Application-layer; block all mobile-carrier traffic, where most of these requests come from, so the load drops at once
 
 <details><summary>Answer</summary>
 

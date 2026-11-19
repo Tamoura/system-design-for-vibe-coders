@@ -9,7 +9,7 @@
 # 13.1 — Threats and guardrails: prompt injection, tool permissions, PII, approvals and audit logs
 *Level: 🔴 Advanced* · *Prerequisites: 3.2, 8.2, 9.1, 12.1* · *Layer: Agents, Production*
 
-**After this you can** run prompt-injection attacks against layered guardrails and say which layer stops each, and build a hash-chained audit log whose tests fail when a row is edited or deleted. *Study time: about 110 minutes (estimate).*
+**After this you can** run prompt-injection attacks against layered guardrails and say which layer stops each, and build a hash-chained audit log whose tests fail when a row is edited or deleted. *Study time: reading about 10 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - The model cannot tell data from orders: pages, comments and your instructions share one stream. Prompting and training lower **prompt injection** risk, never remove it: limit what a fooled model can do.
@@ -32,7 +32,7 @@ A **direct** injection comes from the user: "ignore previous instructions and un
 
 **The lethal trifecta** (Willison, one practitioner's framing): private data, untrusted content and a way to communicate outward. With all three, attacker text can read secrets and send them out. Here, tickets are the private data; comments and unreviewed policy drafts are the untrusted text; `add_comment` (comments reach email-to-ticket senders) and the draft's `send_email` are the way out. Cut the cheapest leg, often the outward one.
 
-**Excessive agency** (OWASP LLM06:2025) is too many tools, too broad permissions (a service account that reads any ticket) or too much autonomy. Reads can leak and writes can change things, so a chat that has read text strangers wrote is **tainted** (lesson 9.1): it may read but not write. For each tool ask: can it go, shrink, use the user's rights, or wait for a person?
+**Excessive agency** (OWASP LLM06:2025, renumbered LLM03:2026 in the 2026 edition) is too many tools, too broad permissions (a service account that reads any ticket) or too much autonomy. Reads can leak and writes can change things, so a chat that has read text strangers wrote is **tainted** (lesson 9.1): it may read but not write. For each tool ask: can it go, shrink, use the user's rights, or wait for a person?
 
 ```mermaid
 flowchart LR
@@ -279,6 +279,37 @@ if __name__ == "__main__":
 
 `pytest tests/test_m13_guardrails.py` runs offline. *Needs the real API:* whether your model obeys these texts, which paraphrases beat your masks, whether it resists the poisoned page without taint. Retrieval is faked.
 
+**Chaining the audit log.** An append-only file can still be edited by anyone who can write to it. A hash chain makes an edit visible: each row stores the hash of the row before it, so changing or removing one breaks every link after it. A sketch for the 🟡 exercise:
+
+```python
+import hashlib, json
+
+def digest(row):                      # the hash covers every field except the hash itself
+    body = {k: v for k, v in row.items() if k != "hash"}
+    return hashlib.sha256(json.dumps(body, sort_keys=True).encode()).hexdigest()
+
+def append_row(rows, row):
+    row = {**row, "prev": rows[-1]["hash"] if rows else "start"}
+    rows.append({**row, "hash": digest(row)})
+
+def intact(rows):
+    prev = "start"
+    for r in rows:
+        if r["prev"] != prev or r["hash"] != digest(r):
+            return False
+        prev = r["hash"]
+    return True
+```
+
+```text
+three rows appended : intact(rows) -> True
+row 2 edited        : intact(rows) -> False   (its hash no longer matches)
+row 2 deleted       : intact(rows) -> False   (row 3's prev points at a missing row)
+last row dropped    : intact(rows) -> True    (nothing after it to notice)
+```
+
+The last line is the exercise's point: a chain cannot see a missing tail, so keep the latest hash somewhere the log's writer cannot change.
+
 ### 🔴 Expert view
 
 **Input and output.** Schemas (`strict` tools, structured outputs) fix shape, not truth: validate anyway (lesson 3.1). Encode output for where it goes; never build SQL, shell or `eval` input from model text (OWASP LLM05:2025). A markdown image to a stranger's host leaks with no click: allow-list links.
@@ -302,7 +333,7 @@ if __name__ == "__main__":
 | **Red-team set** | Attacks as data with expected outcomes | Every change, in CI |
 
 ## 🏛️ In practice at Najm Bank
-The artefact is the **Najm Desk v1 Threat-and-Control Sheet** (Lujain owns it; Noura reviews): the OWASP Top 10 for LLM Applications (2025) mapped onto the agent.
+The artefact is the **Najm Desk v1 Threat-and-Control Sheet** (Lujain owns it; Noura reviews): the OWASP Top 10 for LLM Applications mapped onto the agent. The codes below are the **2025 edition's** (LLM01:2025 to LLM10:2025), so LLM03 here is supply chain, not excessive agency's 2026 code.
 
 - **LLM01 Prompt injection:** gate, taint, scoped tools (a01 to a10).
 - **LLM02 Sensitive information disclosure:** masks, owner check (a04, a05, a10).
@@ -321,7 +352,7 @@ The artefact is the **Najm Desk v1 Threat-and-Control Sheet** (Lujain owns it; N
 
 **Group session (60 minutes).** (1) Swap three new attacks; predict each stopping layer, run (30). (2) A partner reads your approval screen for ten seconds (15). (3) Remove a layer, predict (15).
 
-**Build it with Claude Code.** Give it this spec in plan mode (check the current documentation) and review the plan before it edits:
+**Build it with Claude Code.** *No Claude Code? Do the spec's steps by hand and run its checks yourself (lesson 0.3).* Give it this spec in plan mode (check the current documentation) and review the plan before it edits:
 
 ```text
 Goal: labs/m13/guardrails.py and attack_runner.py as in lesson 13.1: a seven-layer tool gate, PII masks, an output
@@ -366,7 +397,7 @@ Plan first; small steps; run the tests after each.
 - A. A stricter system prompt
 - B. A tool gate with no email tool
 - C. A classifier scoring pages
-- D. A staff warning about drafts
+- D. An output guard on outgoing text
 
 <details><summary>Answer</summary>
 
@@ -403,9 +434,9 @@ Plan first; small steps; run the tests after each.
 **4. An approval screen reads "Approve the assistant's plan: tidy up the account". What is wrong?**
 
 - A. A summary replaces the exact call
-- B. It has no timeout
-- C. It is too short
-- D. It does not name the model
+- B. It shows no confidence score for it
+- C. It offers no way to edit the plan
+- D. It does not name the model or version
 
 <details><summary>Answer</summary>
 
@@ -436,12 +467,12 @@ Plan first; small steps; run the tests after each.
 # 13.2 — Enterprise controls: agent identity, multi-tenancy, data residency, compliance and the governance pack
 *Level: 🔴 Advanced* · *Prerequisites: 6.2, 7.1, 13.1* · *Layer: Production, Delivery*
 
-**After this you can** draft a system card from the agent's configuration that passes the structure check, and write a degrade-don't-fail handler with a test against an overloaded API. *Study time: about 110 minutes (estimate).*
+**After this you can** draft a system card from the agent's configuration that passes the structure check, and write a degrade-don't-fail handler with a test against an overloaded API. *Study time: reading about 15 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Three identities meet in every call: the user, the agent, the system behind the tool. **The agent may never do more than the user may**; prefer delegated access to a shared service account.
 - **Tenant id** comes from the session and goes into every query, filter, cache key, memory key and log field. A two-tenant test proves it.
-- **Residency** has three places: where data rests, where the model runs, where logs go. Claude's `inference_geo` exists on newer models, but its documented values may not match your regions: check.
+- **Residency** has three places: where data rests, where the model runs, where logs go. Check each against what your provider documents; a region setting may not offer the region you need.
 - Logs are evidence and personal data: keep decisions long, content short; agree both with Sara.
 - The **governance pack** is seven short documents, signed by Layla, Noura, Hamad and Sara. A checker finds gaps and drift, not falsehood.
 - Plan for the provider failing: a tested fallback model and degraded mode.
@@ -489,6 +520,8 @@ Tamper-evident chains and erasure clash only if content sits in the chain, so ke
 | Financial regulators | Local expectations on outsourcing, cloud and model risk | Hamad and compliance map them |
 | NIST AI RMF and its Generative AI Profile | A voluntary framework: govern, map, measure, manage | A shared vocabulary for the risk register |
 | ISO/IEC 42001 | A certifiable AI management-system standard | The pack is evidence of a managed process |
+
+> **Dated note (November 2026).** The 2026 Digital Omnibus on AI, in force since 27 July 2026 as reported, moved stand-alone Annex III high-risk duties to 2 December 2027 and those for AI built into regulated products to 2 August 2028. Check the current consolidated text on EUR-Lex before you rely on any date.
 
 The *AI Governance* course goes deeper (see References).
 
@@ -642,7 +675,7 @@ The artefact is the **Najm Desk v1 Governance Pack**: seven documents in `docs/g
 
 **Group session (60 minutes).** Role-play the sign-off. (1) Four readers play Layla, Noura, Hamad and Sara with only the documents for ten minutes; each marks the claim they trust least (20). (2) The author fixes one document live; the scribe writes the approval-records row (25). (3) Name the document that will rot first, and its check (15).
 
-**Build it with Claude Code.** Have it draft the pack, then verify every claim yourself. Give it this spec in plan mode (check the current documentation):
+**Build it with Claude Code.** *No Claude Code? Do the spec's steps by hand and run its checks yourself (lesson 0.3).* Have it draft the pack, then verify every claim yourself. Give it this spec in plan mode (check the current documentation):
 
 ```text
 Goal: draft docs/governance/ from the templates in labs/m13/templates/ for the agent in this repository.

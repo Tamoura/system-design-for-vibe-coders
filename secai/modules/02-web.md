@@ -9,7 +9,7 @@
 # 2.1 — Injection: SQL, command and template injection
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.2* · *Phase: Build, Test*
 
-**After this you can** show a SQL injection in a small local app, fix it with a parameterised query and add a unit test that fails on the old code and passes on the new. *Study time: about 110 minutes (estimate).*
+**After this you can** show a SQL injection in a small local app, fix it with a parameterised query and add a unit test that fails on the old code and passes on the new. *Study time: reading about 20 min, hands-on about 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Injection** happens when untrusted input reaches an **interpreter** (a database engine, a shell, a template engine) as part of a command, so the input can change what the command does.
@@ -22,7 +22,7 @@
 ## 🧭 Why it matters
 Ali's first code review at Najm Bank is a pull request for the SME Portal's new invoice search, built in an afternoon with an AI coding agent. The query line reads `f"SELECT * FROM invoices WHERE company_id = {cid} AND reference = '{q}'"`. Ali approves it because the tests pass. Noura rejects it with one comment: "Run it on your laptop, type `' OR '1'='1` into the search box, and tell me whose invoices you see." The answer is every company's. On a multi-tenant portal that is a data breach waiting for its first curious customer, and Sara, the DPO, would have to handle it as one.
 
-Injection is the oldest bug class in web security and has never left the lists. It is A05 Injection in the OWASP Top 10 (2025 edition; it was A03 in 2021), and SQL injection (CWE-89) and OS command injection (CWE-78) recur in MITRE's CWE Top 25. In 2023 a SQL injection flaw in the MOVEit Transfer product (CVE-2023-34362) was exploited at scale by an extortion group, and many organisations, as publicly reported, lost files from a product they had bought rather than built. In 2017 Equifax was breached through an unpatched Apache Struts flaw (CVE-2017-5638) in which a crafted HTTP header was evaluated as an expression: injection again, in code the victim did not write.
+Injection is the oldest bug class in web security and has never left the lists. It is A05 Injection in the OWASP Top 10 (2025 edition; it was A03 in 2021), and SQL injection (CWE-89) and OS command injection (CWE-78) recur in MITRE's CWE Top 25. In 2023 a SQL injection flaw in the MOVEit Transfer product (CVE-2023-34362) was exploited at scale by an extortion group, and many organisations, as publicly reported, lost files from a product they had bought rather than built. Even the Equifax breach from 0.1 was injection, in code the victim did not write (see "Interpreters hide" below).
 
 ## 📐 How it works
 
@@ -126,7 +126,7 @@ The f-string is safe only because every possible value comes from the code; revi
 
 ### 🔴 Expert view
 
-**Interpreters hide where you do not expect them.** Log4Shell (CVE-2021-44228, December 2021) was a logging library that evaluated lookup expressions inside logged text, so any logged header or username could make the server fetch and run remote code. The Struts flaw behind the Equifax breach evaluated an expression language (OGNL) from a request header. You inherit these bugs, so dependency inventory and patching speed are injection controls too (6.2, 10.3). Closer to home, a CSV export cell beginning with `=`, `+`, `-`, `@`, a tab or a carriage return may run as a formula when a finance manager opens the file (**CSV or formula injection**); neutralise such cells following OWASP's current guidance.
+**Interpreters hide where you do not expect them.** Log4Shell (CVE-2021-44228, December 2021) was a logging library that evaluated lookup expressions inside logged text, so any logged header or username could make the server fetch and run remote code. The Struts flaw behind the Equifax breach (CVE-2017-5638) evaluated an expression language (OGNL) from a request header. You inherit these bugs, so dependency inventory and patching speed are injection controls too (6.2, 10.3). Closer to home, a CSV export cell beginning with `=`, `+`, `-`, `@`, a tab or a carriage return may run as a formula when a finance manager opens the file (**CSV or formula injection**); neutralise such cells following OWASP's current guidance.
 
 **Prompt injection has the same root cause and no equivalent fix.** An LLM receives instructions and untrusted text in one stream of tokens, exactly the mixing this lesson warns against, and there is no parameterised query for prompts. That is why Modules 8 and 9 defend with architecture rather than filters. The reverse direction is plain injection: model-written SQL, commands or templates are untrusted input (LLM05 Improper Output Handling, OWASP Top 10 for LLM Applications, 2025 version). Najm Assist's "look up fees" tool runs a fixed, parameterised query with a fee code; it never executes model-written SQL. Any future text-to-SQL feature would run on a read-only replica, against restricted views, with row limits.
 
@@ -173,6 +173,13 @@ Hands-on work runs only on your own machine, against your own code or deliberate
 - 🟢 Build a tiny local app (for example Python and SQLite) with invoices for two companies and a search written the vulnerable way. Show that `' OR '1'='1` returns both companies' rows, then fix it with a parameterised query and add a unit test. *Done when:* the input returns every row before the fix and none after, and the test fails on the old code and passes on the new.
 - 🟡 Run Semgrep (or your team's SAST tool) with injection rules on a repository you own, and triage each finding as a true or false positive with a one-line reason. *Done when:* every true positive is fixed or ticketed, and the rule runs in CI and fails the build on new findings.
 - 🔴 Build, locally, the SME Portal's "custom email notification" feature with logic-less, allow-listed placeholders and HTML-escaped values. Then complete one injection challenge in a local Juice Shop or WebGoat and write a defender's note: root cause, fix, the test that would have caught it, and the log signal the attempt leaves. *Done when:* `{{7*7}}` and `<b>` typed into a template render as literal text, a company name containing `<script>` appears escaped, an unknown placeholder such as `{password_hash}` is rejected, and the note fits on one page.
+- 📝 **Paper route (no code).** Treat Ali's three vulnerable snippets in 🟢 The essentials as one pull request sent to you for approval. For each, write a review comment: the faulty line, an input an attacker could send, the fix you require and the test that would prove it. *Done when:* you have three comments, each naming the hostile input its test sends.
+
+<details><summary>Check your work</summary>
+
+**📝 Model answer.** SQL: the f-string pastes `q` into the SQL text; `' OR '1'='1` returns every company's invoices; require a parameterised query; the test sends that input and expects no rows. Command: the file name reaches a shell through `os.system`; a name such as `x.png; whoami` runs a second command; require server-generated names and an argument list with `shell=False`; the test uploads that name and checks that no second command ran. Template: `display_name` becomes template source; `{{7*7}}` renders as 49; require a constant template with the name passed as a value; the test expects the literal text back.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Escaping or blocklisting by hand.** It fails against encodings and breaks names like O'Brien. Use parameters and argument lists.
@@ -208,8 +215,8 @@ Hands-on work runs only on your own machine, against your own code or deliberate
 
 - A. Wrap the column name in quotes and escape any quote characters inside it before adding it to the query
 - B. Map the user's choice through a code-owned allow-list and fall back to a default for anything else
-- C. Strip spaces and semicolons from the input
-- D. Let the ORM decide
+- C. Strip spaces and semicolons from the input before adding it, and reject any name longer than twenty characters
+- D. Let the ORM decide, assuming it treats column names the same way it treats the other values in the query
 
 <details><summary>Answer</summary>
 
@@ -233,9 +240,9 @@ Hands-on work runs only on your own machine, against your own code or deliberate
 **4. A nightly job at a retailer builds a report query by concatenating customer names read from its own database. The names were all inserted with parameterised queries. Is there an injection risk?**
 
 - A. No, because the data came from the company's own database, which only trusted staff and parameterised inserts can write to
-- B. No, because the inserts were parameterised
+- B. No, because the inserts were parameterised, which makes the stored names safe in every later use inside the company
 - C. Yes: stored data can contain interpreter syntax, so the report query must be parameterised too (second-order injection)
-- D. Only if the job runs as an administrator
+- D. Only if the nightly job runs with administrator rights; with limited rights there is no risk to the database
 
 <details><summary>Answer</summary>
 
@@ -246,9 +253,9 @@ Hands-on work runs only on your own machine, against your own code or deliberate
 **5. Rania proposes that Najm Assist answer "how much did I spend on fuel last month?" by having the model write SQL that the backend runs. What is the most defensible design?**
 
 - A. Run the model's SQL on the production database, because the system prompt tells the model to write only SELECT statements
-- B. Give the assistant a narrow tool that runs a fixed, parameterised spending query for the logged-in customer, with the model supplying only validated parameters such as category and month
-- C. Filter the model's SQL for the words DROP and DELETE
-- D. Ask the model to double-check its SQL before it runs
+- B. A tool running a fixed, parameterised query for the logged-in customer, with only validated category and month from the model
+- C. Filter the model's SQL for the words DROP and DELETE, and reject any query that contains either of them
+- D. Ask the model to double-check its SQL before it runs, and run it if the model confirms the query is sound
 
 <details><summary>Answer</summary>
 
@@ -275,7 +282,7 @@ Hands-on work runs only on your own machine, against your own code or deliberate
 # 2.2 — Browser attacks: XSS, CSRF, and the headers that stop them
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1* · *Phase: Build, Test*
 
-**After this you can** audit an app's security headers against a baseline, and prove with a working page that a textContent fix and a nonce-based CSP each stop an injected script. *Study time: about 110 minutes (estimate).*
+**After this you can** audit an app's security headers against a baseline, and prove with a working page that a textContent fix and a nonce-based CSP each stop an injected script. *Study time: reading about 20 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Cross-site scripting (XSS)** runs an attacker's script inside your page, in your user's browser, with your user's session. It can do anything the user can, including approving a payment.
@@ -440,6 +447,13 @@ Run everything on your own machine or on deliberately vulnerable training apps s
 - 🟢 Check the response headers of a web app you own (or a local Juice Shop) with your browser's developer tools or `curl -I`, and compare them with the Najm Bank baseline. *Done when:* you have a table marking each baseline item present, missing or weaker, with the value you would set and where (edge or application).
 - 🟡 Build a small local page that shows a "note" from a query parameter using `innerHTML`, and show that `<img src=x onerror=alert(1)>` runs. Fix it with `textContent`; then put the bug back and add a strict, per-response-nonce CSP instead. *Done when:* the alert fires in the vulnerable version but not after the code fix or with the bug plus CSP, and the CSP violation appears in the browser console.
 - 🔴 In a cookie-authenticated app you own, add three CSRF layers to one state-changing endpoint: `SameSite=Lax`, a synchronizer token, and middleware that rejects `Sec-Fetch-Site: cross-site`. Serve an "attacker" page that auto-submits a form to it from a different local host (the app on `localhost`, the attacker page on `127.0.0.1`, which browsers treat as a different site). *Done when:* tests show the cross-site submission rejected, a same-origin request with the token accepted and one without it rejected, and a short note explains what each layer stops alone and why changing only the port would not make a request cross-site.
+- 📝 **Paper route (no code).** A developer proposes this for the SME Portal: the cookie `Set-Cookie: session=…; HttpOnly`, a CSP of `script-src 'self' https://cdn.example`, and CORS that copies each request's `Origin` into `Access-Control-Allow-Origin` with credentials allowed. Write the review. *Done when:* each of the three items has the attack it allows and the value you would set instead.
+
+<details><summary>Check your work</summary>
+
+**📝 Model answer.** Cookie: without `Secure` it can travel over plain HTTP, and without an explicit `SameSite` it depends on each browser's default, and some still send it on cross-site form posts (CSRF); set `__Host-session=…; Secure; HttpOnly; SameSite=Lax; Path=/`. CSP: a domain allow-list can be bypassed through scripts already hosted on the allowed CDN; use a nonce-based strict CSP with `'strict-dynamic'`, `object-src 'none'` and `base-uri 'none'`. CORS: echoing any origin with credentials lets every website read logged-in users' data; allow-list the exact origins that need it.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Blocking `<script>` and calling XSS fixed.** Event handlers, `javascript:` URLs and SVG files all run script. Encode for the context.
@@ -473,10 +487,10 @@ Run everything on your own machine or on deliberately vulnerable training apps s
 
 **2. Tariq says: "Our session cookie is `HttpOnly`, so an XSS bug cannot hurt us." What is the best reply?**
 
-- A. Correct: without the cookie, the attacker can do nothing
-- B. Only partly right: `HttpOnly` stops script reading the cookie, but injected script can still call the portal's APIs as the user, read the page and change it
-- C. Wrong, because `HttpOnly` cookies are sent over unencrypted HTTP
-- D. Correct, as long as `SameSite=Strict` is also set
+- A. Correct: without being able to read the cookie, the attacker can do nothing harmful with the session in the browser
+- B. Only partly: `HttpOnly` stops script reading the cookie, but injected script can still act as the user and read or change the page
+- C. Wrong, because `HttpOnly` cookies are sent over unencrypted HTTP, so they are easy to intercept on the network
+- D. Correct, as long as `SameSite=Strict` is also set on the same cookie, because then XSS has no effect on the session
 
 <details><summary>Answer</summary>
 
@@ -486,10 +500,10 @@ Run everything on your own machine or on deliberately vulnerable training apps s
 
 **3. An insurer's API team says CSRF is handled because "CORS only allows our own frontend origin". The API uses cookie sessions. What is the problem?**
 
-- A. There is none; CORS blocks requests from other origins
-- B. CORS controls who may read responses; a cross-site form POST is still sent, cookies included unless `SameSite` withholds them, so the API still needs tokens, `SameSite` cookies and origin checks
-- C. CORS should be set to `*` to be safe
-- D. The API should switch to GET requests
+- A. There is none; CORS blocks all requests from other origins, including HTML forms posted from attackers' sites
+- B. CORS governs reading responses; a cross-site form POST is still sent, possibly with cookies, so add tokens, `SameSite` and origin checks
+- C. CORS should be set to `*` to be safe, because allowing every origin removes the need to check any particular one
+- D. The whole API should switch to GET requests, because these are not sent across sites and carry no cookies
 
 <details><summary>Answer</summary>
 
@@ -512,10 +526,10 @@ Run everything on your own machine or on deliberately vulnerable training apps s
 
 **5. Najm Assist's answers are rendered as Markdown in the app's web view. Mariam shows that a prompt-injected document can make the model output an image link whose URL contains the customer's data. What is the most effective control?**
 
-- A. Tell the model in its system prompt never to output images
-- B. Treat model output as untrusted: render a sanitised Markdown subset with no raw HTML, block or proxy remote images, and enforce CSP `img-src` and `connect-src` limits
-- C. Add `HttpOnly` to all cookies
-- D. Rely on the WAF to block the response
+- A. Tell the model in its system prompt never to output images, and add the same rule to every conversation's instructions
+- B. Render a sanitised Markdown subset with no raw HTML, block or proxy remote images, and set CSP `img-src` and `connect-src`
+- C. Add `HttpOnly` to all cookies, because that stops injected content from sending any data out of the page
+- D. Rely on the WAF to block any response that contains the image link before it reaches the customer
 
 <details><summary>Answer</summary>
 
@@ -543,7 +557,7 @@ Run everything on your own machine or on deliberately vulnerable training apps s
 # 2.3 — Server-side traps: SSRF, file uploads, path traversal and deserialisation
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 2.1* · *Phase: Design, Build*
 
-**After this you can** find SSRF, path traversal, unsafe deserialisation and upload risks in a codebase you own, and write tests showing a safe fetcher refusing each hostile URL with a logged reason. *Study time: about 110 minutes (estimate).*
+**After this you can** find SSRF, path traversal, unsafe deserialisation and upload risks in a codebase you own, and write tests showing a safe fetcher refusing each hostile URL with a logged reason. *Study time: reading about 20 min, hands-on about 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Four bugs, one shape: the server does something powerful (fetches a URL, stores a file, opens a path, rebuilds an object) with input the attacker controls.
@@ -556,7 +570,7 @@ Run everything on your own machine or on deliberately vulnerable training apps s
 ## 🧭 Why it matters
 The SME Portal team wants two features next sprint. **Import invoice from link** fetches a file from a URL the customer pastes; **webhooks** notify a customer-chosen URL when an invoice is approved. Tariq's developers built both with an AI coding agent, and each comes down to one line: `requests.get(url)`. Noura asks Ali to threat-model the import feature with STRIDE before launch (1.1). His first question, "Where can this server reach that the customer cannot?", turns out to be the whole lesson.
 
-The best-known public example is the 2019 Capital One breach. As publicly reported, an attacker made a misconfigured web application firewall send requests to the cloud instance metadata service, which returned temporary credentials for an over-privileged role; those were used to copy data from storage buckets. The OWASP Top 10 (2025 edition) files SSRF (CWE-918) under A01 Broken Access Control (it was its own category, A10, in 2021), and it is API7 in the OWASP API Security Top 10 (2023).
+The best-known public example is the 2019 Capital One breach (0.2; the cloud side is in 7.1): a misconfigured web application firewall was made to fetch cloud metadata credentials for an over-privileged role. The OWASP Top 10 (2025 edition) files SSRF (CWE-918) under A01 Broken Access Control (it was its own category, A10, in 2021), and it is API7 in the OWASP API Security Top 10 (2023).
 
 Uploads, paths and deserialisation sit right beside it: customers upload invoices, staff download them, and Dana's team has started loading pre-trained models from public hubs.
 
@@ -713,6 +727,13 @@ Run these only on your own machine, against your own code or a local lab.
 - 🟢 Search a codebase you own for this lesson's risky patterns: user input reaching `requests.get` or `fetch`; `os.path.join` or `open` with request data; `pickle.loads`, `yaml.load` or `torch.load`; upload handlers that keep the user's file name. *Done when:* you have a table of hits with file, line, whether the input is attacker-controllable, and the fix pattern.
 - 🟡 Build the safe fetcher locally, with a stand-in "internal" service on `127.0.0.1` and an "allowed" HTTPS service (a local test certificate is fine) on a host name you allow-list and map in your hosts file to a second loopback address such as `127.0.0.2`; in the lab only, exempt that one address from the internal-address check through test configuration. Write tests showing it refuses a non-allow-listed host, `http://`, `127.0.0.1` and its decimal form `2130706433`, a second allow-listed name mapped to `127.0.0.1`, and a redirect to the internal service. *Done when:* every hostile case is refused with a logged reason, the allowed fetch works, and you can say which check stopped each case.
 - 🔴 Design the SME Portal upload pipeline (diagram, stage controls, component permissions, detection rules), do a STRIDE pass on it (1.1), and implement the validation stage locally. *Done when:* every risk in the 🟢 upload table maps to a control with an owner, your STRIDE table has a threat per category, and local tests reject a renamed HTML file, an SVG and an archive entry named `../evil.txt`.
+- 📝 **Paper route (no code).** Treat the three vulnerable snippets in 🟢 The essentials (the URL fetch, the invoice download and the preferences cookie) as a pull request sent to you. For each, write the attack, the worst outcome, the fix you require and the test. *Done when:* each comment names one hostile input and the check that stops it.
+
+<details><summary>Check your work</summary>
+
+**📝 Model answer.** Fetch: a URL pointing at an internal address, such as the cloud metadata service, makes the server fetch it for the attacker (SSRF); require an allow-list of partner hosts, HTTPS only, every resolved address checked, no redirects; the test sends `http://127.0.0.1/` and expects a refusal. Download: `../` sequences or an absolute path walk out of the folder (path traversal); require lookup by an invoice ID scoped to the caller's company; the test asks for another company's invoice and expects 404. Cookie: `pickle.loads` on attacker bytes can run code; require a data-only format validated against a schema; the test sends a tampered cookie and expects a clean rejection.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Checking the URL string for "localhost" or "169.254".** Alternate notations, DNS and redirects defeat it. Check resolved addresses and enforce at the network layer.
@@ -734,10 +755,10 @@ Run these only on your own machine, against your own code or a local lab.
 
 **1. The first version of "Import invoice from link" blocks URLs containing `localhost`, `127.0.0.1` or `169.254`. Why is this weak, and what should replace it?**
 
-- A. Alternate notations, DNS tricks and redirects bypass string checks; use a host allow-list, check every resolved address, disable redirects and enforce through an egress proxy
-- B. It is sufficient if the check is case-insensitive
-- C. Replace it with a regular expression that also blocks `10.` and `192.168.`
-- D. Show customers an error page when the fetch fails
+- A. Alternate notations, DNS tricks and redirects beat string checks; allow-list hosts, check resolved addresses, block redirects, use an egress proxy
+- B. It is sufficient if the check is case-insensitive, because the other forms are only different spellings of the same name
+- C. Replace it with a regular expression that also blocks `10.` and `192.168.`, which covers every internal address an attacker could target
+- D. Show customers a generic error page when the fetch fails, since hiding error details makes up for a weak check
 
 <details><summary>Answer</summary>
 
@@ -763,7 +784,7 @@ Run these only on your own machine, against your own code or a local lab.
 - A. Also check that the file name does not contain `<script>`
 - B. Verify the content's real type, rename to a random key, store in a private bucket outside the web root, and serve from a separate domain with `Content-Disposition: attachment` and `nosniff`
 - C. Add antivirus scanning, keep the extension and Content-Type checks, leave the upload folder where it is but add a random prefix to each file name, and log every upload for the security team to review each week
-- D. Limit uploads to 5 MB
+- D. Limit uploads to 5 MB per file, rejecting anything larger before it reaches the storage folder
 
 <details><summary>Answer</summary>
 
@@ -775,8 +796,8 @@ Run these only on your own machine, against your own code or a local lab.
 
 - A. `os.path.join` discards the base when the second part is absolute; look invoices up by an ID scoped to the company, or canonicalise and check containment
 - B. The tester bypassed the filter with encoding tricks such as double URL encoding; add URL decoding before the check and reject any name with a percent sign or a backslash
-- C. The server's file permissions are wrong; this is not a code issue
-- D. Add `/etc/` to the blocklist
+- C. The server's file permissions are wrong; this is not a code issue, so the platform team should lock read access on the whole folder
+- D. Add `/etc/` to the handler's blocklist, then add the other sensitive folders an attacker might ask for as well
 
 <details><summary>Answer</summary>
 

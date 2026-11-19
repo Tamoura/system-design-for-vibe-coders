@@ -54,7 +54,7 @@
    "a": 0,
    "why": {
     "en": "Under Art. 26 a deployer that finds a risk suspends use and informs the provider and the authority; for a serious incident it tells the provider first, which then reports within the Art. 73 deadlines. Retuning the tool in-house is the tempting fix, but changing it beyond the vendor's documented parameters can make Najm its provider under Art. 25, and extra human checks do not replace suspension.",
-    "ar": "بموجب المادة 26، يعلّق المُشغِّل (deployer) الذي يكتشف خطرًا الاستخدامَ ويُبلغ مقدّم النظام (provider) والسلطة؛ وفي حالة الحادث الجسيم (serious incident) يُبلغ مقدّم النظام أولًا، وهو الذي يُبلغ ضمن مهل المادة 73 (Art. 73 deadlines). أما إعادة ضبط الأداة داخليًا فهي الحل المغري، لكن تغييرها بما يتجاوز المعايير الموثّقة للمورّد قد يجعل بنك نجم مقدّمَ النظام بموجب المادة 25، كما أن الفحوص البشرية الإضافية لا تُغني عن تعليق الاستخدام."
+    "ar": "بموجب المادة 26، يعلّق المُشغِّل (deployer) الذي يكتشف خطرًا الاستخدامَ ويُبلغ مقدّم النظام (provider) والسلطة؛ وفي حالة الحادث الجسيم (serious incident) يُبلغ مقدّم النظام أولًا، وهو الذي يُبلغ ضمن المواعيد النهائية في المادة 73 (Art. 73 deadlines). أما إعادة ضبط الأداة داخليًا فهي الحل المغري، لكن تغييرها بما يتجاوز المعايير الموثّقة للمورّد قد يجعل بنك نجم مقدّمَ النظام بموجب المادة 25، كما أن الفحوص البشرية الإضافية لا تُغني عن تعليق الاستخدام."
    }
   },
   {
@@ -110,7 +110,7 @@
    "a": 1,
    "why": {
     "en": "Recommending a rating from a person's income and spending is credit scoring that profiles natural persons, so it is high-risk under Annex III point 5 and the Art. 6(3) derogation is unavailable; tiers stack, so it must also tell applicants they are talking to an AI. Calling the score a preparatory task is the tempting escape, but the derogation never covers profiling.",
-    "ar": "تقديم درجة موصى بها استنادًا إلى دخل الشخص وإنفاقه تصنيف ائتماني (credit scoring) يُجري تنميطًا (profiling) للأشخاص الطبيعيين (natural persons)، فهو عالي المخاطر (high-risk) بموجب البند 5 من الملحق III (Annex III point 5)، ولا يتاح له استثناء المادة 6(3) (Art. 6(3) derogation)؛ والمستويات تتراكم، فيجب أيضًا إبلاغ المتقدمين بأنهم يتحاورون مع ذكاء اصطناعي (AI). أما وصف الدرجة بأنها مهمة تحضيرية فهو المخرج المغري، لكن الاستثناء (derogation) لا يشمل التنميط أبدًا."
+    "ar": "تقديم درجة موصى بها استنادًا إلى دخل الشخص وإنفاقه هو تقييم ائتماني (credit scoring) يُجري تنميطًا (profiling) للأشخاص الطبيعيين، فهو عالي المخاطر (high-risk) بموجب البند 5 من الملحق III، ولا يتاح له استثناء المادة 6(3) (derogation)؛ والمستويات تتراكم، فيجب أيضًا إبلاغ المتقدمين بأنهم يتحاورون مع ذكاء اصطناعي. أما وصف الدرجة بأنها مهمة تحضيرية فهو المخرج المغري، لكن الاستثناء لا يشمل التنميط أبدًا."
    }
   }
  ],
@@ -120,7 +120,7 @@
    "lesson": "6.2",
    "text": {
     "en": "I have drafted Art. 13 instructions for use for a high-risk credit model, covering purpose, accuracy metrics, limits, weaker-performing groups, input specifications, oversight steps and logs, so that a loan officer would know when not to rely on the score",
-    "ar": "صغتُ تعليمات الاستخدام (instructions for use) وفق المادة 13 لنموذج ائتماني عالي المخاطر، تغطي الغرض، ومقاييس الدقة، والحدود، والفئات الأضعف أداءً، ومواصفات المدخلات، وخطوات الإشراف، والسجلات، بحيث يعرف موظف القروض متى لا ينبغي له الاعتماد على الدرجة"
+    "ar": "صغتُ تعليمات الاستخدام (instructions for use) وفق المادة 13 لنموذج ائتماني عالي المخاطر، تغطي الغرض، ومقاييس الصحة الإجمالية، والحدود، والفئات الأضعف أداءً، ومواصفات المدخلات، وخطوات الإشراف، والسجلات، بحيث يعرف موظف القروض متى لا ينبغي له الاعتماد على الدرجة"
    }
   },
   {

@@ -12,7 +12,7 @@ Every term is defined before use; every lesson ends with something you can see.*
 
 # 7.1 — The Dashboard That Lies and the Metric That Doesn't
 
-**After this you can** define "returning users" by real activity rather than logins, print that definition next to the number on the dashboard, and name one metric that informs no decision. *Study time: about 50 minutes (estimate).*
+**After this you can** define "returning users" by real activity rather than logins, print that definition next to the number on the dashboard, and name one metric that informs no decision. *Study time: reading about 5 min, hands-on about 60 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -168,7 +168,7 @@ Finish: *"Commit with the message `07-1-honest-retention-metric`."*
 
 # 7.2 — Errors, Logs, and the Noise Floor
 
-**After this you can** audit your error tracker until its top five issues are all failures users actually felt, and write a "what's running where" runbook you have checked against the live hosts. *Study time: about 50 minutes (estimate).*
+**After this you can** audit your error tracker until its top five issues are all failures users actually felt, and write a "what's running where" runbook you have checked against the live hosts. *Study time: reading about 5 min, hands-on about 60 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -318,7 +318,7 @@ Finish: *"Commit with the message `07-2-noise-floor-and-runbook`."*
 
 # 7.3 — Search Is Telemetry
 
-**After this you can** log zero-result searches with the raw and normalized query, put the miss rate on a dashboard, and fix the top normalization miss behind a known-good-query test. *Study time: about 50 minutes (estimate).*
+**After this you can** log zero-result searches with the raw and normalized query, put the miss rate on a dashboard, and fix the top normalization miss behind a known-good-query test. *Study time: reading about 5 min, hands-on about 60 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -464,7 +464,7 @@ Finish: *"Commit with the message `07-3-search-telemetry`."*
 
 # 7.4 — Background Jobs: The Code Nobody Watches
 
-**After this you can** make a background job safe to fire twice, give it an audit row per run and a delivery reconciliation, and show a stale-job sweep reclaiming a job you killed mid-run. *Study time: about 50 minutes (estimate).*
+**After this you can** make a background job safe to fire twice, give it an audit row per run and a delivery reconciliation, and show a stale-job sweep reclaiming a job you killed mid-run. *Study time: reading about 5 min, hands-on about 75 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -630,7 +630,7 @@ Finish: *"Commit with the message `07-4-jobs-lock-audit-receipts`."*
 
 # 7.5 — Product Analytics in Practice: GA, Cloudflare, and Owning Your Events
 
-**After this you can** run edge, consent-gated behavioural and first-party analytics side by side, read one week's signup numbers from each, and explain why the three counts differ. *Study time: about 50 minutes (estimate).*
+**After this you can** run edge, consent-gated behavioural and first-party analytics side by side, read one week's signup numbers from each, and explain why the three counts differ. *Study time: reading about 5 min, hands-on about 75 min (estimate).*
 
 > Tool note: this lesson names today's best defaults — Cloudflare Web Analytics,
 > Google Analytics 4, and first-party events in your own database. The *three
@@ -780,7 +780,7 @@ Finish: *"Commit with the message `07-5-three-tier-analytics`."*
 
 # 7.6 — Your Monitoring Stack: Sentry, Uptime Checks, Metrics, and Alerts
 
-**After this you can** wire error tracking, an uptime check that runs outside your infrastructure, a four-golden-signals dashboard and two phone alerts, then break staging on purpose and show both alerts arriving. *Study time: about 70 minutes (estimate).*
+**After this you can** wire error tracking, an uptime check that runs outside your infrastructure, a four-golden-signals dashboard and two phone alerts, then break staging on purpose and show both alerts arriving. *Study time: reading about 5 min, hands-on about 90 min (estimate).*
 
 > Tool note: this lesson names today's best defaults — Sentry, UptimeRobot /
 > Better Stack, Grafana/Prometheus, OpenTelemetry. The *four instruments* and the
@@ -799,13 +799,13 @@ before-picture this whole module has been fixing.
 Now the industrial version. In October 2021, **Roblox went fully offline for 73
 hours** — one of the longest outages any major platform has suffered. The trigger
 was a subtle bug in a new feature of Consul (a coordination system) under load.
-But the reason recovery took *three days* is the part that matters here: **their
+Recovery took *three days*, and one reason is the part that matters here: **their
 own telemetry and monitoring ran on the same infrastructure that had failed.**
 The dashboards that should have shown responders where the problem was were
 themselves dark. They were debugging a fire with the lights off.
 
-It's the exact shape of the AWS S3 outage (2017), where the **status page that
-was supposed to report the outage couldn't load — because it depended on S3.**
+It's the same shape as the AWS S3 outage (2017), where the **status page kept
+showing green for hours, because the tool that updates it depended on S3.**
 
 The lesson, in iron: **monitoring must never share fate with the thing it
 monitors. If your app dies, the thing that tells you must be running somewhere
@@ -860,7 +860,8 @@ Google SRE's **four golden signals** are the whole dashboard you need to start:
 
 Four signals answer "is the system healthy?" better than fifty vanity charts.
 Watch percentiles, not averages — an average hides the p99 that's hurting your
-worst-served users (Module 10.5 pays this off).
+worst-served users (Module 10.5 pays this off). The **p99** is the time within
+which 99 of every 100 requests finish; p50 is the typical request.
 
 ### 4. Alerting — *who gets woken, and for what?*
 
@@ -951,7 +952,7 @@ Finish: *"Commit with the message `07-6-monitoring-stack`."*
 
 - Google SRE Book, ch. 6 **"Monitoring Distributed Systems"** — the four golden signals, in the source.
 - Roblox, **"Return to Service 10/28–10/31 2021"** postmortem — 73 hours, partly because monitoring shared fate with the monitored.
-- Amazon, **"Summary of the Amazon S3 Service Disruption"** (2017) — the status page that couldn't report the outage it depended on.
+- Amazon, **"Summary of the Amazon S3 Service Disruption"** (2017) — the status page that couldn't be updated during the outage, because its admin tool depended on S3.
 - **OpenTelemetry docs** (opentelemetry.io) — the vendor-neutral standard for traces, metrics, and logs.
 - Netflix Tech Blog + **Principles of Chaos** (principlesofchaos.org) — breaking things on purpose so survival is tested, not hoped.
 

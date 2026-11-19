@@ -9,7 +9,7 @@
 # 5.1 — Cryptography for builders: TLS, hashing, encryption and keys
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 3.1* · *Phase: Design, Build*
 
-**After this you can** choose the right cryptographic tool for ten common data items and say where each key lives, then migrate fast password hashes to Argon2id at login with a test. *Study time: about 110 minutes (estimate).*
+**After this you can** choose the right cryptographic tool for ten common data items and say where each key lives, then migrate fast password hashes to Argon2id at login with a test. *Study time: reading about 15 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Cryptography gives builders **confidentiality** (only the right party can read), **integrity** (tampering is detected) and **authenticity** (you know who produced it). Choose the tool by the property you need.
@@ -229,9 +229,9 @@ Ali turns his review into the bank's **Cryptography Standard for Builders (v1, e
 **3. A call to the e-invoicing partner's test environment fails certificate validation. Which fix is right?**
 
 - A. Set `verify=False` in test only, behind an environment variable, and add a comment so the setting is removed before release
-- B. Use plain HTTP for the test integration
+- B. Use plain HTTP for the test integration for now, since the partner's test environment holds no real data
 - C. Trust the partner's test CA certificate in the test environment, keep verification on, and leave production unchanged
-- D. Disable hostname checking but keep chain validation
+- D. Disable hostname checking but keep chain validation, which is enough for the call to work in test, with production unchanged
 
 <details><summary>Answer</summary>
 
@@ -242,8 +242,8 @@ Ali turns his review into the bank's **Cryptography Standard for Builders (v1, e
 **4. Which statement about envelope encryption is TRUE?**
 
 - A. The app keeps the master key in its configuration file to decrypt quickly, reads it once at start-up, holds it in memory, and reloads it whenever the file on disk changes
-- B. It is a TLS feature for securing connections
-- C. It removes the need for database access control
+- B. It is a TLS feature for securing connections between services, encrypting each message with a fresh key every time
+- C. It removes the need for database access control, because the data stays encrypted whoever reads it
 - D. Data keys are wrapped by a master key that stays in the KMS, so each decryption is an access-checked, logged call, and rotating the master key needs no bulk re-encryption
 
 <details><summary>Answer</summary>
@@ -281,7 +281,7 @@ Ali turns his review into the bank's **Cryptography Standard for Builders (v1, e
 # 5.2 — Secrets management: keys, tokens and where they leak
 *Level: 🟡 Intermediate* · *Prerequisites: 3.2, 5.1* · *Phase: Build, Operate*
 
-**After this you can** inventory a project's secrets with owners and scope, and add a secret scanner to pre-commit and CI that blocks a planted fake key. *Study time: about 105 minutes (estimate).*
+**After this you can** inventory a project's secrets with owners and scope, and add a secret scanner to pre-commit and CI that blocks a planted fake key. *Study time: reading about 15 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A **secret** is any value that grants access on its own: passwords, API keys, tokens, private keys, connection strings. Whoever holds it *is* you, as far as the system can tell.
@@ -496,23 +496,23 @@ Forbidden everywhere: secrets in source code, images, mobile or web bundles, tic
 
 **4. Which statement about Kubernetes Secrets is TRUE by default in upstream Kubernetes?**
 
-- A. Values are base64-encoded, stored unencrypted in etcd unless encryption at rest is configured, and readable by anyone who can create pods in the namespace
-- B. Values are strongly encrypted with a per-cluster key that the cloud provider rotates, so only the API server and the controllers can ever read them in clear text
-- C. Only cluster administrators can ever read them
-- D. They rotate automatically every 24 hours
+- A. Values are base64-encoded, unencrypted in etcd unless encryption at rest is on, and readable by anyone who can create pods in the namespace
+- B. Values are encrypted with a per-cluster key that the cloud provider rotates, so only the API server and controllers can read them in clear text
+- C. Values are readable only by cluster administrators, because the API server refuses Secret reads from every other role
+- D. Values are rotated by the API server every 24 hours, so a leaked value stops working within a day of the leak
 
 <details><summary>Answer</summary>
 
-**A.** Hence encryption at rest, tight RBAC and an external manager. B confuses encoding with encryption; C and D are false. (🟡 Going deeper.)
+**A.** Hence encryption at rest, tight RBAC and an external manager. B confuses encoding with encryption; by default, anyone allowed to create pods in the namespace can read them (not C), and nothing rotates them (not D). (🟡 Going deeper.)
 
 </details>
 
 **5. A developer proposes putting the fee-service API key into Najm Assist's system prompt "so the model can call the tool". Why is this wrong?**
 
-- A. System prompts have a length limit
-- B. Models refuse to use keys
-- C. It is fine if the prompt says "never reveal this key"
-- D. Assume the system prompt can be extracted (OWASP LLM07) or the model steered by prompt injection; credentials belong in the server-side tool layer, bound to the customer's session
+- A. System prompts have a length limit, and a long key could push important instructions out of the context window
+- B. Models refuse to use keys they find in a prompt, so any tool that needs one fails when the model calls it
+- C. It is fine as long as the prompt also says "never reveal this key", because models follow system instructions
+- D. The prompt can be extracted (OWASP LLM07) or the model steered by injection; keep credentials in the server-side tool layer
 
 <details><summary>Answer</summary>
 
@@ -536,7 +536,7 @@ Forbidden everywhere: secrets in source code, images, mobile or web bundles, tic
 # 5.3 — Protecting personal data: minimisation, logging and privacy engineering
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 5.1* · *Phase: Design, Build*
 
-**After this you can** map every copy of the personal data in a feature, and add redacted structured logging with a test that fails if a card number or Authorization header reaches the log. *Study time: about 105 minutes (estimate).*
+**After this you can** map every copy of the personal data in a feature, and add redacted structured logging with a test that fails if a card number or Authorization header reaches the log. *Study time: reading about 15 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Personal data** is any information about an identifiable person. The safest personal data is data you never collected; the next safest is data you have already deleted.
@@ -696,10 +696,10 @@ After the erasure request, Sara and Noura publish the **Najm Assist personal-dat
 
 **1. Dana's team builds an evaluation set from real Najm Assist transcripts, replaces customers' phone numbers with their SHA-256 hashes, and labels it "anonymous". What is the best response?**
 
-- A. Approve it: hashing is irreversible, so the data is anonymous
-- B. It is not anonymous: phone numbers can be recovered by hashing every possible number, and transcripts hold other identifiers. Prefer synthetic or properly masked data, use keyed pseudonyms where linking is needed, and get DPO approval
-- C. Encrypt the dataset and call it anonymous
-- D. Remove the phone numbers and keep everything else
+- A. Approve it: hashing is irreversible, so the data is anonymous and nothing more is needed before sharing it with the team
+- B. Not anonymous: numbers can be recovered by hashing every possible one, and transcripts hold other identifiers; mask, with DPO approval
+- C. Encrypt the dataset and call it anonymous, because encryption with a strong key meets the test for not identifying people
+- D. Remove the phone numbers and keep everything else, since phones are the only identifier in the transcripts
 
 <details><summary>Answer</summary>
 
@@ -709,10 +709,10 @@ After the erasure request, Sara and Noura publish the **Najm Assist personal-dat
 
 **2. The SME Portal team is chasing an intermittent upload failure. A developer proposes logging full request headers and bodies "for one week only". What is the best approach?**
 
-- A. Agree, since it is only one week
-- B. Turn off logging for the endpoint to protect privacy
-- C. Log everything, but limit the log tool to the SME Portal team
-- D. Log allowlisted fields (company reference, file size and type, error code, trace ID) and reproduce with test data; if content capture is truly needed, make it redacted, access-restricted, approved and self-expiring
+- A. Agree, since it is only one week, the log will be deleted afterwards, and a short retention does no harm
+- B. Turn off logging for the whole endpoint to protect privacy, and track the failure by guessing from server state alone
+- C. Log everything, but limit the log tool to the SME Portal team alone and stop any other team from opening it
+- D. Log allowlisted fields such as error code and trace ID, reproduce with test data, and keep any content capture redacted and expiring
 
 <details><summary>Answer</summary>
 
@@ -722,10 +722,10 @@ After the erasure request, Sara and Noura publish the **Najm Assist personal-dat
 
 **3. An EU-resident customer asks Najm Bank to erase her Najm Assist data. Which plan shows the team knows where the data lives?**
 
-- A. Delete her rows in the transcript table
-- B. Delete everything about her everywhere, immediately, including core banking records
-- C. Follow the data map to transcripts, traces, the vector index, evaluation sets, caches and analytics; apply legally required retention exceptions as the DPO decides; crypto-shred backups; handle provider logs under the contract
-- D. Refuse, because an AI model was involved
+- A. Delete her rows in the transcript table and tell her the data is gone, since that is where her data is stored
+- B. Delete everything about her everywhere, immediately, including the core banking records the law requires the bank to keep
+- C. Follow the data map to every copy (transcripts, traces, vector index, caches, backups), keeping only what the law requires
+- D. Refuse, because an AI model was involved in the conversation and nobody can tell what data the model kept
 
 <details><summary>Answer</summary>
 
@@ -735,10 +735,10 @@ After the erasure request, Sara and Noura publish the **Najm Assist personal-dat
 
 **4. A Najm laptop holding a customer-data export is stolen. It had strong full-disk encryption and there is no sign the key was compromised. Which statement is closest to correct under GDPR?**
 
-- A. The DPO assesses and documents the breach; because the data is unintelligible to the thief, telling affected customers is likely not required (Art. 34(3)(a)), and whether to notify the authority is also assessed
-- B. Encryption means it is not an incident, so nothing is recorded
-- C. Every customer must be notified within 72 hours regardless
-- D. Only the IT asset register needs updating
+- A. The DPO records it and assesses notification; unintelligible data likely means no customer notice (Art. 34(3)(a))
+- B. Encryption means it is not an incident at all, so nothing is recorded, nobody is told and no impact is assessed
+- C. Every customer must be notified within 72 hours regardless of the state of the data or the stolen disk's protection
+- D. Only the IT asset register needs updating, and the incident is then closed with no other legal step
 
 <details><summary>Answer</summary>
 

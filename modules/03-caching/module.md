@@ -13,7 +13,7 @@ Terms are defined on first use; the [Glossary](../../GLOSSARY.md) has the rest.*
 
 *Module 3: Caching — the Sharpest Knife in the Drawer*
 
-**After this you can** cache one hot endpoint in Redis with a written TTL justification, measure cold time, warm time and hit rate, and show that a stale value is served for a bounded time only. *Study time: about 70 minutes (estimate).*
+**After this you can** cache one hot endpoint in Redis with a written TTL justification, measure cold time, warm time and hit rate, and show that a stale value is served for a bounded time only. *Study time: reading about 10 min, hands-on about 90 min (estimate).*
 
 > The flagship lesson of this module — **3.2, the cache-poisoning incident** —
 > sits between 3.1 and 3.3 as its own piece. This file holds **3.1, 3.3, and
@@ -22,6 +22,8 @@ Terms are defined on first use; the [Glossary](../../GLOSSARY.md) has the rest.*
 ---
 
 ## 🔥 The War Story
+
+> *A composite scenario, not one dated incident: the pattern repeats across many real apps.*
 
 Here is the day caching bites you, and it will look nothing like a bug.
 
@@ -114,7 +116,9 @@ to name the TTL of each. If you can't, you don't have a cache — you have a gho
 
 Give Relay a real response cache on its hottest endpoint — and, just as
 important, **measure the win honestly** so you know what the cache is actually
-buying you.
+buying you. Three words first: an **endpoint** is one address your API answers
+at (like `/api/creators/42`); **Redis** is a very fast in-memory store, used here
+as the cache; the **hit rate** is the share of requests the cache answers itself.
 
 1. **Find the hot, cacheable endpoint.**
    > *"Which read endpoint in Relay is both the most-requested and safe to serve
@@ -185,7 +189,7 @@ No code reading required — accept the lesson only when:
 
 # 3.3 — Invalidation in real life
 
-**After this you can** move every cache key into one key module, prove with a round-trip test that a mutation clears the exact key a read fills, and watch a drift-guard fail when an invalidation is missing. *Study time: about 70 minutes (estimate).*
+**After this you can** move every cache key into one key module, prove with a round-trip test that a mutation clears the exact key a read fills, and watch a drift-guard fail when an invalidation is missing. *Study time: reading about 5 min, hands-on about 75 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -361,7 +365,7 @@ No code reading required — accept the lesson only when:
 
 # 3.4 — When the cache takes you down
 
-**After this you can** cap Redis memory, cut a 100-request stampede to one database hit with a single-flight lock, and show that killing Redis makes the app slower but not broken. *Study time: about 70 minutes (estimate).*
+**After this you can** cap Redis memory, cut a 100-request stampede to one database hit with a single-flight lock, and show that killing Redis makes the app slower but not broken. *Study time: reading about 5 min, hands-on about 90 min (estimate).*
 
 ## 🔥 The War Story
 

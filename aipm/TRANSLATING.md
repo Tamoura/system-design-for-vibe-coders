@@ -4,10 +4,10 @@ Not published. Every translator follows this.
 
 ## Language and English terms
 - Modern Standard Arabic, clear and professional, like a well-written bank or technology training manual. Faithful: same meaning, structure, emphasis, lists, tables. Never summarise, add or drop content.
-- **English beside every technical term everywhere.** In every paragraph, list item, table cell, heading, quiz question, option and answer, each technical term and key phrase carries its English in parentheses on its first appearance in that unit (a unit = one paragraph, one list item, one table cell, one heading): `الاكتشاف (discovery)`, `حالة الاستخدام (use case)`, `التقييمات (evals)`, `مجموعة مرجعية (golden set)`, `الأتمتة (automation)`, `تكلفة الخدمة (cost to serve)`. Aim for roughly one gloss every 4–6 Arabic words in technical text. Gloss whole phrases, never split a construct (`إدارة المنتج (product management)`, not `إدارة (management) المنتج`). A space always separates the Arabic word from `(`. Use the English exactly as the English lesson words it.
-- Key phrases, slogans, labels and framework step names also get their English: `هل يجب أن نبنيه؟ (Should we build it?)`, `يكتمل عندما (Done when)`.
-- If a gloss ends in punctuation (`?`, `.`, `!`), wrap it in a left-to-right isolate: `⁦(Should we build it?)⁩` (the characters U+2066 and U+2069), so it displays correctly in right-to-left text.
-- Names of products, companies, books, frameworks and papers stay in their English form (Jobs to be Done, RICE, Kano, HEART, Opportunity Solution Tree, People + AI Guidebook, GitHub Copilot, Moffatt v. Air Canada). On first use in a unit you may add a short Arabic rendering before it: «شجرة الفرص والحلول (Opportunity Solution Tree)».
+- **Gloss rule (one English gloss per term per lesson).** Add the English in parentheses only after a real technical or business term, and only the first time that term appears in each lesson: `الاكتشاف (discovery)`, `حالة الاستخدام (use case)`, `المجموعة المرجعية (golden set)`. Do not gloss plain words or plain phrases, do not repeat a gloss already given in the lesson, and never nest parentheses (write `نتيجة إيجابية كاذبة (FP)`, not `(False positive (FP))`). Keep product, standard and acronym names in Latin letters with no parentheses (GDPR, RAG, PM). Parentheses that hold formulas, numbers, option letters or section pointers, such as `TP ÷ (TP + FP)`, `(A)` or `(6.1)`, are content, not glosses: they always stay, exactly as in the English. Gloss whole phrases, never split a construct, and keep a space between the Arabic word and `(`.
+- If a gloss ends in punctuation (`?`, `.`, `!`), wrap it in a left-to-right isolate (the characters U+2066 and U+2069) so it displays correctly in right-to-left text.
+- Quiz and exam options say what the English option says, at about the same length and level of detail. Do not pad or trim one option, so the key is never findable by length or wording.
+- Names of products, companies, books, frameworks and papers stay in their English form (Jobs to be Done, RICE, Kano, HEART, Opportunity Solution Tree, People + AI Guidebook, GitHub Copilot, Moffatt v. Air Canada). On first use in a lesson you may add a short Arabic rendering before it: «شجرة الفرص والحلول (Opportunity Solution Tree)».
 - People: Rania رانيا, Faisal فيصل, Hessa حصة, Tariq طارق, Dana دانة, Khalid خالد, Layla ليلى, Sara سارة, Yusuf يوسف, Omar عمر. Najm Bank → بنك نجم (Najm Bank). Products: Credit Memo Copilot → مساعد مذكرات الائتمان (Credit Memo Copilot); Najm Assist → نجم أسيست (Najm Assist); SME Instant Finance → التمويل الفوري للشركات الصغيرة (SME Instant Finance); Smart Alerts → التنبيهات الذكية (Smart Alerts); Staff GenAI → مساعد الموظفين التوليدي (Staff GenAI).
 
 ## Fixed terms
@@ -28,8 +28,19 @@ Not published. Every translator follows this.
 | evaluation (eval) / evals | التقييم (eval) / التقييمات (evals) |
 | golden set | المجموعة المرجعية (golden set) |
 | error analysis | تحليل الأخطاء |
-| precision / recall | الدقة (precision) / الاستدعاء (recall) |
-| false positive / false negative | إيجابي كاذب / سلبي كاذب |
+| accuracy (the metric) | الصحة الإجمالية (never الدقة, never bare الصحة) |
+| precision / recall | الدقة (precision) / الشمول (recall); recall@k = الشمول عند k |
+| false positive / false negative | النتيجة الإيجابية الكاذبة / النتيجة السلبية الكاذبة (plural: الإيجابيات الكاذبة / السلبيات الكاذبة) |
+| false alarm | إنذار كاذب (only where the English says false alarm) |
+| tool call / API call | استدعاء الأداة / استدعاء الواجهة (استدعاء is used only for calls) |
+| offline evaluation / online evaluation | التقييم خارج الإنتاج / التقييم في الإنتاج |
+| pilot | التجربة التشغيلية |
+| vendor / provider | المورّد / المزوّد; vendor lock-in = الارتباط بمورّد واحد |
+| enterprise (customer segment or plan) | المؤسسات (عملاء المؤسسات) |
+| deadline / timeout | الموعد النهائي / المهلة |
+| capstone | المشروع الختامي |
+| postmortem | مراجعة ما بعد الحادثة |
+| TTL | مدة البقاء (TTL) |
 | hallucination | الهلوسة |
 | model / large language model (LLM) | النموذج / النموذج اللغوي الكبير (LLM) |
 | prompt / context window | الموجّه (prompt) / نافذة السياق (context window) |
@@ -60,14 +71,14 @@ Not published. Every translator follows this.
 ## Structure the build depends on (do not break)
 - Module heading: `# الوحدة N — العنوان` (N unchanged). Lesson heading: `# N.M — العنوان` (numbers unchanged).
 - The line right after each lesson heading, translated exactly like this pattern:
-  `*المستوى (Level): 🟡 متوسط (Intermediate)* · *المتطلبات (Prerequisites): 1.2، 2.1* · *المرحلة (Stage): Design*`
-  (🟢 مبتدئ (Beginner) / 🟡 متوسط (Intermediate) / 🔴 متقدم (Advanced); keep the same emoji; keep lesson numbers; **stage names stay in English** exactly as in the English line, e.g. `Build, Evaluate`; separate lesson lists with «، »). If the English has no prerequisites, omit that part as the English does.
-- Section headings keep their emoji first, translated: `## ⚡ الدرس في دقيقة (In 60 seconds)`, `## 🧭 لماذا يهم (Why it matters)`, `## 📐 كيف يعمل (How it works)`, `### 🟢 الأساسيات (The essentials)`, `### 🟡 التعمق أكثر (Going deeper)`, `### 🔴 نظرة الخبير (Expert view)`, `## 🧰 الأدوات (The toolkit)`, `## 🏛️ عمليًا في بنك نجم (In practice at Najm Bank)`, `## 🛠️ التمارين (Exercises)`, `## ⚠️ أخطاء وفخاخ (Mistakes and traps)`, `## 🧾 الخلاصة (Recap)`, `## ✍️ اختبر نفسك (Check yourself)`, `## 📚 المراجع (References)` (10.3: `## ✍️ الامتحان التدريبي (Practice exam)`). Same number of `#`/`##`/`###` headings in the same order as the English.
-- **🧰 tables:** the first cell of every row must START with the same bold English tool name as the English row, exactly (e.g. `**RICE** (Intercom) — …`, `**Golden set**`). Translate everything after the bold name and the other cells. Header row: `| الأداة أو الإطار (Tool or framework) | ما هو وماذا يفعل (What it is and does) | متى تلجأ إليه (When to reach for it) |`.
+  `*المستوى: 🟡 متوسط* · *المتطلبات: 1.2، 2.1* · *المرحلة: Design*`
+  (🟢 مبتدئ / 🟡 متوسط / 🔴 متقدم; keep the same emoji; keep lesson numbers; **stage names stay in English** exactly as in the English line, e.g. `Build, Evaluate`; separate lesson lists with «، »). If the English has no prerequisites, omit that part as the English does.
+- Section headings keep their emoji first, translated: `## ⚡ الدرس في دقيقة`, `## 🧭 لماذا يهم`, `## 📐 كيف يعمل`, `### 🟢 الأساسيات`, `### 🟡 التعمق أكثر`, `### 🔴 نظرة الخبير`, `## 🧰 الأدوات`, `## 🏛️ عمليًا في بنك نجم`, `## 🛠️ التمارين`, `## ⚠️ أخطاء وفخاخ`, `## 🧾 الخلاصة`, `## ✍️ اختبر نفسك`, `## 📚 المراجع` (10.3: `## ✍️ الامتحان التدريبي`). Headings carry no English gloss. Same number of `#`/`##`/`###` headings in the same order as the English.
+- **🧰 tables:** the first cell of every row must START with the same bold English tool name as the English row, exactly (e.g. `**RICE** (Intercom) — …`, `**Golden set**`). Translate everything after the bold name and the other cells. Header row: `| الأداة أو الإطار | ما هو وماذا يفعل | متى تلجأ إليه |`.
 - **Quizzes:** keep the question numbers; options stay labelled `- A.` `- B.` `- C.` `- D.` in Latin letters and in the same order; `<details><summary>الإجابة</summary>` then a blank line, then `**X.**` with the SAME correct letter as the English; letters cited in explanations stay the same Latin letters. Same number of questions and `<details>` blocks. In 10.3 keep the stage/lesson tag in English, e.g. `*(Evaluate · 6.1)*`.
-- **Mermaid diagrams:** keep the syntax, the direction line (`flowchart LR`/`TD`) and node IDs exactly; translate only the label text into Arabic (no English in the labels, no parentheses inside labels). The build adds the English and flips the direction for Arabic afterwards.
+- **Mermaid diagrams:** keep the syntax and node IDs exactly; translate only the label text into Arabic (no English in the labels, no parentheses inside labels). In the Arabic file a left-to-right diagram runs right to left: `flowchart LR` becomes `flowchart RL` and `direction LR` becomes `direction RL`.
 - Keep unchanged: fenced code, inline `code`, URLs and link targets, numbers, `---` separators, tables' column counts.
-- `*Done when:*` → `*يكتمل عندما (Done when):*`.
+- `*Done when:*` → `*يكتمل عندما:*`.
 
 ## Verify
 Run: `python3 aipm/check_ar.py <english file> <arabic file>` until it prints ✓. It checks headings, the level/stage lines, section emoji order, 🧰 bold names, quiz letters, details blocks, mermaid blocks, code, links and that the text is really Arabic.

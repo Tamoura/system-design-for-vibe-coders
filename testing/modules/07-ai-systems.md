@@ -9,7 +9,7 @@
 # 7.1 — Evals: testing LLM applications with datasets, graders, LLM-as-judge, non-determinism and CI gates
 *Level: 🔴 Advanced* · *Prerequisites: 2.3, 5.1* · *Focus: AI, Delivery*
 
-**After this you can** build a golden-set eval with a baseline gate that fails on the right category, and decide whether to trust an LLM judge from its agreement (kappa) with your own labels. *Study time: about 115 minutes (estimate).*
+**After this you can** build a golden-set eval with a baseline gate that fails on the right category, and decide whether to trust an LLM judge from its agreement (kappa) with your own labels. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - An **eval** tests behaviour with no single right answer: a **dataset** of inputs with expectations, a **task** that runs your system, a **grader**, a **metric** and a **threshold**.
@@ -47,7 +47,7 @@ flowchart LR
     H --> R["Pass, or block the change"]
 ```
 
-**A dataset is a file**: JSONL, one case per line, in git, reviewed like code. Two of our 24 golden cases (you write your own in the first exercise):
+**A dataset is a file**: JSONL, one case per line, in git, reviewed like code. Two of our 24 golden cases; all 24 ship in the sample as `evals/golden.jsonl`, with `evals/baseline.json`, so you can reproduce every number in this lesson:
 
 ```json
 {"id": "lim-01", "category": "limits", "question": "What is the daily transfer limit?", "must_contain": ["50,000 QAR"], "expected_source": "limits"}
@@ -142,7 +142,7 @@ FAIL lim-04 - missing '25,000 QAR'
 (five more FAIL lines)
 ```
 
-On our 24 cases the clean sample scores 75%: a **baseline**, where you are, not where you aim to be. Yours will differ.
+On our 24 cases the clean sample scores 75%: a **baseline**, where you are, not where you aim to be. Your own cases will score differently.
 
 ### 🟡 Going deeper
 
@@ -240,7 +240,7 @@ if __name__ == "__main__":
 ```
 
 ```text
-passes per run (of 24): [16, 17, 17, 18, 15, 15, 16, 14, 13, 17]
+passes per run (of 24): [16, 18, 17, 18, 15, 16, 16, 14, 13, 17]
 ```
 
 Same code and data, 13 to 18 passes: one run is one draw. A seed makes a run *reproducible*, not stable, so vary seeds across runs. Even temperature 0 can vary on hosted models, so repeat there too. **pass@k** (Chen et al., 2021) asks whether at least one of k tries succeeds, which suits "generate until the tests pass"; a customer gets one draw, so ask whether *all* k succeed.
@@ -343,9 +343,9 @@ Rania, Rashid and Dana publish the **Najm Assist eval gate v1**, kept beside the
 ## 🛠️ Exercises
 Use a scratch copy of `testing/sample`. No paid API is needed.
 
-- 🟢 Create `evals/golden.jsonl` with at least 12 cases, including the six questions in the error-analysis table (facts are in `najm/assist.py`; the domestic fee is in `najm/transfers.py`) and two out_of_scope ones, and run the harness. *Done when:* you can explain each failure.
-- 🟡 Write `evals/baseline.json` from your report, add the gate test and run it with `NAJM_AI_BUGS=hallucinate`. *Done when:* it fails on the right category and you can name a bug it misses.
-- 🔴 Validate a judge: label 30 answers yourself, write a stub judge with your own rule, and compute agreement and kappa. *Done when:* you report kappa and say whether you would trust the judge.
+- 🟢 Run the harness on the shipped `evals/golden.jsonl`. Then write `evals/mine.jsonl` with at least 12 cases of your own, including the six error-analysis questions in your own words (facts are in `najm/assist.py`; the domestic fee is in `najm/transfers.py`) and two out_of_scope ones, and run `python -m evals.harness evals/mine.jsonl`. *Done when:* the shipped set gives 18/24, and each failure on yours has a one-line cause from one of the four groups in the error-analysis table.
+- 🟡 Add the gate test (the shipped `evals/baseline.json` matches the shipped set) and run it clean, then with `NAJM_AI_BUGS=hallucinate`. *Done when:* it passes clean, fails with the two categories shown above (`ALL` and `out_of_scope`), and you have added a case for a bug it misses that turns it red.
+- 🔴 Validate a judge (about an hour). Print 30 noisy answers with `python -c "from evals.harness import load; from evals.repeat import NoisyModel; from najm.assist import answer; [print(c['id'], '|', answer(c['question'], m)['text']) for s in (1, 2) for m in [NoisyModel(0.8, seed=s)] for c in load('evals/golden.jsonl')[:15]]"`, label each good or bad yourself, write a stub judge with your own rule, and compute agreement and kappa. *Done when:* you report both, compare kappa with the 0.6 bar in the gate table (trust the judge only above it), and name the cause of each disagreement.
 
 ## ⚠️ Mistakes and traps
 - **One run, one number.** A sampled model differs each time. Repeat and report the spread.
@@ -439,7 +439,7 @@ Use a scratch copy of `testing/sample`. No paid API is needed.
 # 7.2 — Testing RAG, tool use and agents: retrieval metrics, groundedness, trajectories and sandboxes
 *Level: 🔴 Advanced* · *Prerequisites: 2.1, 7.1* · *Focus: AI, Integration*
 
-**After this you can** measure retrieval with recall and precision at k, and write agent tests that fail when a tool skips confirmation or acts on an account the customer does not own. *Study time: about 115 minutes (estimate).*
+**After this you can** measure retrieval with recall and precision at k, and write agent tests that fail when a tool skips confirmation or acts on an account the customer does not own. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Retrieval-augmented generation (RAG)** retrieves documents, puts them in the prompt, generates and cites. Test the **retriever** and **generator** separately, then together.
@@ -597,7 +597,7 @@ def test_a_user_never_retrieves_another_users_document(user, other_id, secret):
 
 Drop the `OWNER` condition from `visible_to` and both cases fail: `assert 'stmt-bob' not in ['stmt-alice', 'stmt-bob', 'privacy', 'limits']`. The sample has no per-user filter, so `visible_to` stands in for a vector store's metadata filter. See [*Secure AI & Application Security*, lesson 9.3 — Securing retrieval (RAG): data boundaries and access control](../secai/index.html#/9.3).
 
-**Prompt injection inside a document.** Users are not the only authors of text the model reads; documents are too (indirect prompt injection, first in OWASP's LLM Top 10). This test plants a hostile document in the local sample:
+**Prompt injection inside a document.** Users are not the only authors of text the model reads; documents are too (indirect prompt injection; prompt injection, direct or indirect, is LLM01 in OWASP's Top 10 for LLM Applications). This test plants a hostile document in the local sample:
 
 ```python
 def test_instructions_hidden_in_a_document_are_not_obeyed(monkeypatch):  # catches "obey_injection"
@@ -859,7 +859,7 @@ Use a scratch copy of `testing/sample`.
 # 7.3 — Safety, robustness, fairness and monitoring: red-teaming, metamorphic tests, drift and turning incidents into tests
 *Level: 🔴 Advanced* · *Prerequisites: 7.1, 7.2* · *Focus: AI, Security*
 
-**After this you can** write a balanced red-team set with over-refusal cases, report attack-success and over-refusal rates, and add a drift alert that fires on a shifted input mix. *Study time: about 115 minutes (estimate).*
+**After this you can** write a balanced red-team set with over-refusal cases, report attack-success and over-refusal rates, and add a drift alert that fires on a shifted input mix. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Plan AI testing from **harms**: wrong answer, leakage, prompt injection, unsafe action, bias, toxicity and **over-refusal** (blocking a legitimate request).
@@ -869,7 +869,7 @@ Use a scratch copy of `testing/sample`.
 - In production, sample traffic, watch drift, release through shadow mode and canaries, and make **every incident a test**.
 
 ## 🧭 Why it matters
-In February 2024 the British Columbia Civil Resolution Tribunal ruled in *Moffatt v. Air Canada* that the airline was responsible for wrong information its website chatbot gave a customer about bereavement fares and, as widely reported, rejected the argument that the chatbot was a separate entity. For testers the lesson: a company owns what its assistant says.
+In February 2024 the British Columbia Civil Resolution Tribunal ruled in *Moffatt v. Air Canada* that the airline was responsible for wrong information its website chatbot gave a customer about bereavement fares, and rejected its argument that the chatbot was a separate legal entity responsible for its own actions (2024 BCCRT 149). For testers the lesson: a company owns what its assistant says.
 
 At Najm Bank, in a story we invent, Layla asks Rashid: "If Assist gives a customer the wrong cut-off tomorrow, what will we show to prove we tested what it says about money, and noticed within a day?" Lessons 7.1 and 7.2 gave him a golden set and retrieval and agent tests. He lacks attack tests, rephrasing checks, a view of who is served worse, and a way to see reality drifting.
 
@@ -1221,7 +1221,7 @@ Use a scratch copy of `testing/sample` with the lesson 7.1 files. Attack only th
 </details>
 
 ## 📚 References
-- *Moffatt v. Air Canada* (British Columbia Civil Resolution Tribunal, February 2024, 2024 BCCRT 149), as widely reported; read the decision itself, not summaries
+- *Moffatt v. Air Canada* (British Columbia Civil Resolution Tribunal, 14 February 2024), 2024 BCCRT 149 — https://www.canlii.org/en/bc/bccrt/doc/2024/2024bccrt149/2024bccrt149.html
 - OWASP GenAI Security Project, Top 10 for LLM Applications: [genai.owasp.org](https://genai.owasp.org/)
 - MITRE ATLAS: [atlas.mitre.org](https://atlas.mitre.org/)
 - NIST AI Risk Management Framework and the Generative AI Profile (NIST AI 600-1): [nist.gov](https://www.nist.gov/)

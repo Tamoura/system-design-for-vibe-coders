@@ -7,9 +7,9 @@
 ---
 
 # 1.1 — The tester's mindset, the seven principles and the test process
-*Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Focus: Mindset*
+*Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2, 0.3* · *Focus: Mindset*
 
-**After this you can** write tests whose expected values come from outside the code, show which seeded bugs they catch, and write a one-page completion report that recommends release or not from that evidence. *Study time: about 115 minutes (estimate).*
+**After this you can** write tests whose expected values come from outside the code, show which seeded bugs they catch, and write a one-page completion report that recommends release or not from that evidence. *Study time: reading about 15 min, hands-on about 75 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Testing produces **evidence**: what you checked, against what, and what you did not check.
@@ -296,7 +296,7 @@ Copy the sample first (`cp -r testing/sample ~/najm-sample`), create a virtual e
 # 1.2 — Test design techniques: equivalence partitions, boundaries, decision tables, state transitions and pairwise
 *Level: 🟢 Beginner* · *Prerequisites: 1.1* · *Focus: Design*
 
-**After this you can** write boundary tests for the transfer limits that fail under the seeded limit bug while mid-range cases pass, generate state-transition tests for every state-event cell, and prove a pairwise set's coverage with your own checker. *Study time: about 115 minutes (estimate).*
+**After this you can** write boundary tests for the transfer limits that fail under the seeded limit bug while mid-range cases pass, generate state-transition tests for every state-event cell, and prove a pairwise set's coverage with your own checker. *Study time: reading about 15 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Test design** is choosing, on purpose, a small set of tests that can fail for the right reasons.
@@ -675,16 +675,16 @@ Work in a copy of the sample, with the lesson's files in `tests/`.
 
 </details>
 
-**4. Najm Mobile has 4 browsers, 2 languages, 3 currencies and 3 devices; the team cannot run all 72 combinations. Which statement about pairwise testing is correct?**
+**4. Najm Mobile has 4 browsers, 2 languages, 3 currencies and 3 devices, so the team runs a 12-case pairwise set instead of all 72 combinations. It passes, yet customers then hit a bug that needs one browser, Arabic and EUR together. What explains the miss?**
 
-- A. It guarantees every three-way combination is covered too
-- B. It picks cases at random, so results vary between runs
-- C. It removes the need to list impossible combinations
-- D. It covers every pair of values, but can miss other interactions
+- A. The set was built wrong: pairwise also covers every triple
+- B. The tool picks cases at random, so this run was unlucky
+- C. The listed constraints removed the case that would have failed
+- D. Pairwise covers every pair of values, not every triple
 
 <details><summary>Answer</summary>
 
-**D.** Our 12 cases covered every pair but only 46 of 97 feasible triples. B misdescribes a systematic method, and C is false: constraints must still be listed. (🟡 Going deeper.)
+**D.** Our 12 cases covered every pair but only 46 of 97 feasible triples, so a three-way bug can slip through. A is false, B misdescribes a systematic method, and constraints (C) remove only combinations that cannot happen. (🟡 Going deeper.)
 
 </details>
 
@@ -711,7 +711,7 @@ Work in a copy of the sample, with the lesson's files in `tests/`.
 # 1.3 — Requirements, test cases and bug reports: from acceptance criteria to a defect someone can fix
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2* · *Focus: Design, Mindset*
 
-**After this you can** write Given/When/Then acceptance criteria with concrete numbers, file a reproducible bug report for a real failure, and rate the severity and priority of a list of bugs with a reason for each. *Study time: about 115 minutes (estimate).*
+**After this you can** write Given/When/Then acceptance criteria with concrete numbers, file a reproducible bug report for a real failure, and rate the severity and priority of a list of bugs with a reason for each. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A requirement is **testable** if two people would independently agree on pass or fail. Words like "fast", "user-friendly" and "etc." are warnings.

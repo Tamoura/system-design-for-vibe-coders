@@ -13,7 +13,7 @@ decisions the way a senior engineer would in a design review.*
 
 *Level: 🔴 Advanced* · *Prerequisites: 0.1, 1.2, 3.1, 5.1*
 
-**After this you can** draw Beacon's full architecture with a concrete choice for every component, write five ADRs that each name a measurable signal to revisit, and trace one customer action across every component it touches. *Study time: about 105 minutes (estimate).*
+**After this you can** draw Beacon's full architecture with a concrete choice for every component, write five ADRs that each name a measurable signal to revisit, and trace one customer action across every component it touches. *Study time: reading about 15 min, hands-on about 18 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -258,7 +258,23 @@ monitors per worker" is a signal; "revisit if needed" is not).
 
 - Five ADRs exist in `docs/adr/`, each one page or less.
 - Each names a concrete revisit trigger.
-- A teammate can read them and predict what you would choose for a sixth component.
+- Each rejected alternative has a stated reason tied to Beacon's context (team size,
+  stage, cost), not "less popular".
+- Using only the reasoning in your five ADRs, you can write a one-paragraph sixth ADR
+  (search, say) in ten minutes, without new research.
+
+<details><summary>A model ADR to compare against</summary>
+
+**ADR-002: Job queue.** *Context:* Beacon has two engineers, one Postgres database
+and about 2,000 monitor checks a minute. *Decision:* pg-boss on the existing Postgres,
+so a job is enqueued in the same transaction as the row that caused it. *Rejected:*
+BullMQ on Redis, because it adds a second store to keep durable and loses that
+transaction; a hosted workflow engine, because it is a new vendor for work with no
+long multi-step state yet. *Consequences:* jobs must be idempotent, and queue tables
+need pruning. *Revisit when:* queue writes pass 30% of the primary's write load, or one
+workflow must wait for hours.
+
+</details>
 
 ### 🔴 Advanced exercise
 
@@ -267,7 +283,9 @@ admin removes an employee through their identity provider" and trace it across
 SCIM, sessions, API keys, audit log, notifications, on-call schedules and billing
 seats. Then do the same for "a customer requests a full data export and then
 account deletion". Fix at least one seam you find, and present the review in 15
-minutes to a peer acting as the customer's security team.
+minutes to a peer acting as the customer's security team. Working alone? Record the
+presentation, then replay it and score each of the five 🔴 questions as answered,
+partly answered or missed.
 
 **Done when:**
 

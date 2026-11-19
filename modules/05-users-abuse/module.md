@@ -13,7 +13,7 @@ of the wrong hands.*
 
 # 5.1 — Your First Attacker Is a Script
 
-**After this you can** put a CAPTCHA and per-recipient email limits in front of your anonymous forms, then run a scripted signup flood and show outbound mail capped while a real user can still register. *Study time: about 70 minutes (estimate).*
+**After this you can** put a CAPTCHA and per-recipient email limits in front of your anonymous forms, then run a scripted signup flood and show outbound mail capped while a real user can still register. *Study time: reading about 10 min, hands-on about 75 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -195,7 +195,7 @@ Finish: *"Commit with the message `05-1-abuse-defense`."*
 
 # 5.2 — Rate Limiting That Survives a CDN
 
-**After this you can** fix a rate limiter so it keys on the real client IP behind the CDN, keeps its counters in Redis across a redeploy, and ignores a forged client-IP header. *Study time: about 70 minutes (estimate).*
+**After this you can** fix a rate limiter so it keys on the real client IP behind the CDN, keeps its counters in Redis across a redeploy, and ignores a forged client-IP header. *Study time: reading about 10 min, hands-on about 90 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -368,7 +368,7 @@ Finish: *"Commit with the message `05-2-cdn-rate-limit`."*
 
 # 5.3 — Auth That You Can Operate
 
-**After this you can** move auth tokens into httpOnly cookies, show refresh-token reuse detection forcing a re-login, require 2FA for admins, and build an env-var audience table that flags any variable with two audiences. *Study time: about 70 minutes (estimate).*
+**After this you can** move auth tokens into httpOnly cookies, show refresh-token reuse detection forcing a re-login, require 2FA for admins, and build an env-var audience table that flags any variable with two audiences. *Study time: reading about 5 min, hands-on about 150 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -539,7 +539,7 @@ Finish: *"Commit with the message `05-3-operable-auth`."*
 
 # 5.4 — Input You Didn't Realize You Were Trusting
 
-**After this you can** inventory the inputs your anonymous endpoints trust, route every outbound fetch through one guarded function that refuses internal addresses, and make a missing signing secret stop the app from starting. *Study time: about 70 minutes (estimate).*
+**After this you can** inventory the inputs your anonymous endpoints trust, route every outbound fetch through one guarded function that refuses internal addresses, and make a missing signing secret stop the app from starting. *Study time: reading about 5 min, hands-on about 90 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -626,10 +626,9 @@ is a free lever on your product. Rank inputs need auth or at least per-IP limits
 length and schema caps, and cardinality limits. (This exact telemetry hole returns
 in 7.5 as an *analytics* failure and in 10.4 as realtime presence you must cap.)
 
-**Pair it with a public case.** Capital One's 2019 breach — over 100 million
-records — was an SSRF at its core: a misconfigured firewall let an attacker reach
+**Pair it with a public case.** Capital One's 2019 breach was an SSRF at its core: a misconfigured firewall let an attacker reach
 the cloud metadata endpoint through a server-side request and lift credentials.
-Same shape as the media proxy exactly, at nation-state scale of impact. SSRF isn't
+Same shape as the media proxy exactly, carried out by a single person, exposing over 100 million records. SSRF isn't
 exotic; it's one of the most damaging classes of "I didn't know I was trusting
 that."
 
@@ -708,7 +707,7 @@ Finish: *"Commit with the message `05-4-trusted-input`."*
 
 # 5.5 — Email Is Production Infrastructure
 
-**After this you can** list every code path that sends mail, make reset links point at the public site, and show that a newsletter interrupted mid-run and re-run sends nobody a duplicate. *Study time: about 70 minutes (estimate).*
+**After this you can** list every code path that sends mail, make reset links point at the public site, and show that a newsletter interrupted mid-run and re-run sends nobody a duplicate. *Study time: reading about 5 min, hands-on about 120 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -874,7 +873,7 @@ Finish: *"Commit with the message `05-5-email-infra`."*
 
 # 5.6 — The OWASP Top 10, Mapped to a Real App
 
-**After this you can** rate your app against each OWASP Top 10 category, fix the top three findings, and add a CI dependency-audit gate that fails on a planted known-bad version. *Study time: about 70 minutes (estimate).*
+**After this you can** rate your app against each OWASP Top 10 category, fix the top three findings, and add a CI dependency-audit gate that fails on a planted known-bad version. *Study time: reading about 5 min, hands-on about 90 min (estimate).*
 
 ## 🔥 The War Story
 
@@ -1026,7 +1025,7 @@ Finish: *"Commit with the message `05-6-owasp-audit`."*
 
 # 5.7 — Secrets and Configuration: The Keys to the Kingdom
 
-**After this you can** scan your git history for secrets, add a pre-commit hook that blocks a planted fake key, and rotate a real key end to end in under 15 minutes. *Study time: about 70 minutes (estimate).*
+**After this you can** scan your git history for secrets, add a pre-commit hook that blocks a planted fake key, and rotate a real key end to end in under 15 minutes. *Study time: reading about 5 min, hands-on about 75 min (estimate).*
 
 ## 🔥 The War Story
 

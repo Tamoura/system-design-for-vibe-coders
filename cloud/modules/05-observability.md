@@ -9,7 +9,7 @@
 # 5.1 — Telemetry: logs, metrics, traces and OpenTelemetry
 *Level: 🟡 Intermediate* · *Prerequisites: 2.2, 4.1* · *Phase: Monitor*
 
-**After this you can** build a RED dashboard from a latency histogram, and follow one request across two services from its trace to its log lines by trace ID. *Study time: about 115 minutes (estimate).*
+**After this you can** build a RED dashboard from a latency histogram, and follow one request across two services from its trace to its log lines by trace ID. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Telemetry** is the data a running system emits about itself. The three main signals are **logs** (events, with detail), **metrics** (numbers over time, cheap to keep and alert on) and **traces** (the path of one request across services). **Profiles** (where CPU and memory go inside the code) are a fourth signal that is still maturing.
@@ -305,7 +305,7 @@ All three run locally with Docker or a kind/k3d cluster. Do not point them at an
 # 5.2 — SLOs, error budgets, alerting and on-call that people can sustain
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1* · *Phase: Operate, Monitor*
 
-**After this you can** write SLIs as good-event ratios with an error budget in minutes and in requests, and configure a multi-window burn-rate alert that pages on a steady error rate but not on a short burst. *Study time: about 115 minutes (estimate).*
+**After this you can** write SLIs as good-event ratios with an error budget in minutes and in requests, and configure a multi-window burn-rate alert that pages on a steady error rate but not on a short burst. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - An **SLI** (service level indicator) measures what users experience, such as "the share of transfer requests that succeed in under 2 seconds". An **SLO** (service level objective) is the target for it over a window, such as 99.9% over 30 days. An **SLA** (service level agreement) is a contract with consequences, and should be looser than the SLO.
@@ -588,7 +588,7 @@ For a gentler introduction to monitoring stacks and alert hygiene, see [*System 
 # 5.3 — Incidents and blameless postmortems
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1, 5.2* · *Phase: Operate*
 
-**After this you can** run a tabletop incident with assigned roles, a timestamped timeline and status updates, and write a blameless postmortem whose action items each change a system or a tool. *Study time: about 130 minutes (estimate).*
+**After this you can** run a tabletop incident with assigned roles, a timestamped timeline and status updates, and write a blameless postmortem whose action items each change a system or a tool. *Study time: reading about 15 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - An **incident** is an unplanned event that hurts, or threatens to hurt, users or the business, and that needs a coordinated response. Declaring one early is cheap; declaring one late is expensive.
@@ -673,7 +673,7 @@ Blameless does not mean nobody is accountable. Teams are accountable for complet
 Complex failures usually have several **contributing factors** rather than one root cause. List them all; fix the ones with the most leverage.
 
 ### 🔴 Expert view
-**A public example: the Amazon S3 outage of February 2017.** AWS published a summary of a disruption to S3 in its us-east-1 region. An authorised engineer, following an established playbook, ran a command meant to remove a small number of servers from an S3 subsystem; one input was entered incorrectly and a much larger set was removed. AWS's response focused on the tool rather than the person: it changed the tool to remove capacity more slowly and to refuse to go below a safe minimum. The summary also noted that AWS's own status dashboard depended on S3, so it could not show the outage at first. The lessons for Najm: build guardrails into dangerous tools, and make sure your incident tooling does not depend on the thing that is failing.
+**A public example: the Amazon S3 outage of February 2017.** Lesson 3.3 told how one mistyped input removed far more S3 capacity in us-east-1 than intended, and how AWS fixed the tool rather than blaming the person. AWS's summary has a second lesson for incident tooling: the administration console of its own Service Health Dashboard depended on S3, so for the first hours staff could not update the dashboard to show which services were affected. The lesson for Najm: make sure your incident tooling does not depend on the thing that is failing.
 
 **A second example: GitLab, January 2017.** During a late-night effort to fix database replication, an engineer deleted data on the primary database instead of the replica. GitLab's public postmortem then found that several of its backup and replication mechanisms were not working as expected, and about six hours of production data was lost. The lessons: a backup you have not restored is a hope, not a backup (lesson 6.1 covers recovery testing), and tired people doing risky manual work at night need tooling that makes the safe action easy.
 
@@ -790,7 +790,7 @@ Prioritise items that **prevent** recurrence, then those that **detect** faster,
 
 </details>
 
-**5. During the February 2017 S3 disruption, AWS's own status dashboard could not show the problem at first. What lesson does Najm take from this?**
+**5. During the February 2017 S3 disruption, AWS staff could not at first update its own status dashboard to show the problem. What lesson does Najm take from this?**
 
 - A. Status pages are not useful during incidents and can be dropped
 - B. Run every service in a single cloud region to keep things simple
@@ -799,7 +799,7 @@ Prioritise items that **prevent** recurrence, then those that **detect** faster,
 
 <details><summary>Answer</summary>
 
-**D.** The dashboard depended on S3, so it failed with it; incident tooling, such as the status page and paging, must survive the failure it reports. Banning all production commands (C) is unworkable; AWS's fix was guardrails in the tool. (🔴 Expert view.)
+**D.** The dashboard's administration console depended on S3, so it failed with it; incident tooling, such as the status page and paging, must survive the failure it reports. Banning all production commands (C) is unworkable; AWS's fix was guardrails in the tool. (🔴 Expert view.)
 
 </details>
 
@@ -809,6 +809,6 @@ Prioritise items that **prevent** recurrence, then those that **detect** faster,
 - Google, *The Site Reliability Workbook*, "Incident Response" — https://sre.google/workbook/incident-response/
 - Google, *The Site Reliability Workbook*, "Postmortem Culture" — https://sre.google/workbook/postmortem-culture/
 - AWS, Summary of the Amazon S3 Service Disruption in the Northern Virginia (US-EAST-1) Region — https://aws.amazon.com/message/41926/
-- GitLab, Postmortem of database outage of January 31 — https://about.gitlab.com/blog/
+- GitLab, Postmortem of database outage of January 31 — https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/
 - DORA research — https://dora.dev/
 - Regulation (EU) 2022/2554 (DORA) — https://eur-lex.europa.eu/eli/reg/2022/2554/oj

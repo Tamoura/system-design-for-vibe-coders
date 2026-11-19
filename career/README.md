@@ -2,11 +2,15 @@
 
 **Your first tech job in the AI era. A free, bilingual course for computer science, data science and computer (software) engineering graduates: choose a role, build the skills and the proof employers check for, get seen, pass the interviews, and start well.**
 
+<!-- study-time -->
+**Study time for the whole course: about 256 hours** (estimate: reading plus hands-on work, summed over every lesson). At about 6 hours a week that is roughly 43 weeks. Each lesson shows its own split; a pilot with real learners will replace these estimates.
+<!-- /study-time -->
+
 ## What this is
 
 The entry-level market has changed. AI coding agents now do much of the routine work juniors used to do, so employers look harder for graduates who can do what the tools cannot: understand a real system, check and correct AI-written code, ship something that works for users, and explain their decisions clearly. A degree and a list of languages no longer separate you from everyone else. Proof does.
 
-This course is the front door to the whole library. It does not re-teach engineering. It shows what employers check for in each role, sends you to the exact lessons in the other courses that build each skill, and teaches what no other course covers: choosing a role, building a portfolio, writing a CV that gets read, networking without awkwardness, passing today's interviews, negotiating an offer, and your first 90 days. It is written for final-year students and graduates of computer science, data science and computer or software engineering, and for bootcamp and self-taught people at the same stage. It also suits career-centre advisers and lecturers who guide them.
+This course is the front door to the whole library. It does not re-teach engineering. It shows what employers check for in each role, sends you to the exact lessons in the other courses that build each skill, and teaches what no other course covers: choosing a role, building a portfolio, writing a CV that gets read, networking without awkwardness, passing today's interviews, negotiating an offer, and your first 90 days. It is written for final-year students and graduates of computer science, data science and computer or software engineering, and for bootcamp and self-taught people at the same stage. It also suits career-centre advisers and lecturers who guide them. Most examples, employers, pay packages and hiring channels are from the Gulf (GCC); the methods transfer to any market, and the course points out where to check local rules. The full path takes about 12 weeks at 16 hours a week, about 20 weeks at 10 hours a week, or 24–30 weeks at 6–8 hours a week (lesson 0.3).
 
 ## How every lesson works
 

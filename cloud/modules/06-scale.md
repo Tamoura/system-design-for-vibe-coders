@@ -9,7 +9,7 @@
 # 6.1 — Scaling and resilience: autoscaling, multi-zone, backups and disaster recovery
 *Level: 🔴 Advanced* · *Prerequisites: 2.3, 3.2, 5.2* · *Phase: Operate*
 
-**After this you can** show an HPA scaling out and back under load, keep a service available through a zone drain with spread constraints and a PDB, and measure a real restore against an RTO and an RPO you chose. *Study time: about 115 minutes (estimate).*
+**After this you can** show an HPA scaling out and back under load, keep a service available through a zone drain with spread constraints and a PDB, and measure a real restore against an RTO and an RPO you chose. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Scaling** handles more load; **resilience** survives failure, through redundancy, backups and recovery plans.
@@ -143,7 +143,7 @@ flowchart LR
 | Bad migration corrupts data | No, corruption replicates | No, corruption replicates | Yes: restore to just before |
 | Ransomware or a rogue admin deletes data | No | No | Only if the backup is immutable and in a separate account |
 
-The bottom two rows are why replication is not backup. **Point-in-time recovery** (PITR), which managed PostgreSQL services offer by keeping base backups plus the write-ahead log, lets you restore to a chosen second before the bad change. Know your retention window and how long a restore of your data size really takes.
+The region-wide row is not theoretical in the Gulf: in March 2026 AWS reported two of three zones in its UAE region impaired by drone strikes (1.2), so agree with the risk and compliance teams where a recovery region may sit under data-residency rules. The bottom two rows are why replication is not backup. **Point-in-time recovery** (PITR), which managed PostgreSQL services offer by keeping base backups plus the write-ahead log, lets you restore to a chosen second before the bad change. Know your retention window and how long a restore of your data size really takes.
 
 **Static stability and the recovery path.** A *statically stable* system keeps working without needing to change during the failure, for example because capacity is already provisioned in each zone rather than launched mid-outage. Also check that the recovery path does not depend on what failed. In Facebook's October 2021 outage, a backbone change disconnected data centres and DNS servers withdrew their BGP routes; Facebook's engineering post notes that the internal tools needed for the fix were affected too. Ask: if our primary region is gone, are the runbooks, the GitOps repo, the CI runners, the secrets and the break-glass accounts still reachable?
 
@@ -272,7 +272,7 @@ The first run found three gaps no design review had caught: the replica-lag aler
 - AWS whitepaper: Disaster recovery of workloads on AWS — https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-workloads-on-aws.html
 - Azure Well-Architected Framework, reliability — https://learn.microsoft.com/azure/well-architected/
 - Google Cloud Architecture Framework — https://cloud.google.com/architecture/framework
-- GitLab: Postmortem of database outage of January 31 (2017) — https://about.gitlab.com/blog/
+- GitLab: Postmortem of database outage of January 31 (2017) — https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/
 - Google SRE books (data integrity, managing critical state) — https://sre.google/books/
 - Regulation (EU) 2022/2554 on digital operational resilience (DORA) — https://eur-lex.europa.eu/eli/reg/2022/2554/oj
 - Deeper on cloud security controls: [*Secure AI & Application Security*, lesson 7.1 — Cloud security: shared responsibility, IAM and misconfiguration](../secai/index.html#/7.1)
@@ -282,7 +282,7 @@ The first run found three gaps no design review had caught: the replica-lag aler
 # 6.2 — FinOps: understanding, allocating and cutting cloud cost
 *Level: 🔴 Advanced* · *Prerequisites: 1.2, 3.1, 6.1* · *Phase: Operate, Monitor*
 
-**After this you can** write a tagging policy with a policy-as-code check that fails on missing tags, produce a cost-by-namespace table for a shared cluster, and compute the cost per 1,000 requests for three scenarios. *Study time: about 115 minutes (estimate).*
+**After this you can** write a tagging policy with a policy-as-code check that fails on missing tags, produce a cost-by-namespace table for a shared cluster, and compute the cost per 1,000 requests for three scenarios. *Study time: reading about 15 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **FinOps** is the practice of making engineering, finance and the business share responsibility for cloud spending, so cost becomes an engineering signal like latency, not a month-end surprise.
@@ -468,12 +468,12 @@ The first report's actions: tag policy enforced in the OpenTofu pipeline (untagg
 
 - A. Approve it, because cost reduction is the priority this quarter
 - B. Treat it as a resilience change for the service owner and SRE
-- C. Approve it quietly and leave risk out of the decision
+- C. Approve it if nightly backups are copied to a second zone
 - D. Approve it as long as Infracost shows a clear monthly saving
 
 <details><summary>Answer</summary>
 
-**B.** Removing zone redundancy changes the RTO and RPO the business signed, so the service owner and SRE decide, and will very likely refuse. A and D look only at money; C undermines governance. (🔴 Expert view.)
+**B.** Removing zone redundancy changes the RTO and RPO the business signed, so the service owner and SRE decide, and will very likely refuse. A and D look only at money; C treats a nightly backup as redundancy, but restoring one takes far longer than the RTO and can lose up to a day of data. (🔴 Expert view.)
 
 </details>
 
@@ -506,7 +506,7 @@ The first report's actions: tag policy enforced in the OpenTofu pipeline (untagg
 # 6.3 — Running AI workloads: GPUs, model serving, LLM gateways and their cost
 *Level: 🔴 Advanced* · *Prerequisites: 2.3, 5.1, 6.2* · *Phase: Deploy, Operate*
 
-**After this you can** estimate GPU memory for a model at three precisions, run an LLM gateway with a rate limit and a fallback route, and decide between a managed API and self-hosting from a dated break-even calculation. *Study time: about 115 minutes (estimate).*
+**After this you can** estimate GPU memory for a model at three precisions, run an LLM gateway with a rate limit and a fallback route, and decide between a managed API and self-hosting from a dated break-even calculation. *Study time: reading about 15 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - AI workloads need scarce, expensive **GPUs**, load large model files before serving, and cost scales with **tokens**, not requests.
@@ -608,7 +608,7 @@ spec:
             allowPrivilegeEscalation: false
 ```
 
-Small workloads can share a GPU with time-slicing or, on some NVIDIA data-centre GPUs, Multi-Instance GPU (MIG), which splits one into isolated slices. Kubernetes' Dynamic Resource Allocation API offers more flexible device requests; check its status in your version.
+Small workloads can share a GPU with time-slicing or, on some NVIDIA data-centre GPUs, Multi-Instance GPU (MIG), which splits one into isolated slices. Kubernetes' Dynamic Resource Allocation API offers more flexible device requests; it has been generally available since Kubernetes 1.34 (August 2025), though it still needs a device driver that supports it.
 
 **Serving engines.** Running a model with a plain script serves one request at a time and leaves the GPU mostly idle, which is what Yousef saw. Serving engines fix this:
 - **vLLM** is an open-source engine known for *PagedAttention*, which manages KV-cache memory in pages, and *continuous batching*, which adds new requests to the running batch as others finish. It exposes an OpenAI-compatible HTTP API.

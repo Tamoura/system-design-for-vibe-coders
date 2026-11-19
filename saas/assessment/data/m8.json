@@ -26,7 +26,7 @@
    "a": 2,
    "why": {
     "en": "Disk encryption protects against stolen disks, not against anyone with a database login, so tokens Beacon must read back need application-level envelope encryption with KMS-managed keys. Hashing suits API keys, which are only verified, but Beacon has to send Slack tokens back to Slack.",
-    "ar": "تشفير القرص يحمي من سرقة الأقراص، لا من أي شخص يملك حساب دخول إلى قاعدة البيانات، لذا تحتاج الرموز التي يجب على Beacon قراءتها مرة أخرى إلى تشفير مغلّف على مستوى التطبيق بمفاتيح تديرها KMS. أما التجزئة (hashing) فتناسب مفاتيح API (API keys) التي يكفي التحقق منها، لكن Beacon يجب أن يرسل رموز Slack إلى Slack نفسه."
+    "ar": "تشفير القرص يحمي من سرقة الأقراص، لا من أي شخص يملك حساب دخول إلى قاعدة البيانات، لذا تحتاج الرموز التي يجب على Beacon قراءتها مرة أخرى إلى تشفير مغلّف على مستوى التطبيق بمفاتيح تديرها KMS. أما التجزئة (hashing) فتناسب مفاتيح API التي يكفي التحقق منها، لكن Beacon يجب أن يرسل رموز Slack إلى Slack نفسه."
    }
   },
   {
@@ -45,16 +45,16 @@
      "Purge the exposed list from every store first, then decide whether anyone has to be told about it"
     ],
     "ar": [
-     "أبلغ Acme دون تأخير، لأن أمام Acme مهلة 72 ساعة لإبلاغ سلطتها الرقابية",
+     "أبلغ Acme دون تأخير غير مبرر، فأمامها 72 ساعة لإبلاغ سلطتها الرقابية",
      "أبلغ السلطة الرقابية مباشرةً خلال 72 ساعة، لأن الاختراق وقع لدى Beacon",
-     "أبلغ Acme خلال 72 ساعة، لأنها المهلة التي يمنحها GDPR للمعالج كي يبلّغ عن الاختراق",
+     "أبلغ Acme خلال 72 ساعة، لأنه الموعد النهائي الذي يمنحه GDPR للمعالج كي يبلّغ عن الاختراق",
      "احذف القائمة المكشوفة من كل مخزن أولًا، ثم قرّر هل يجب إبلاغ أحد بالأمر"
     ]
    },
    "a": 0,
    "why": {
     "en": "As controller, Acme must notify its supervisory authority within 72 hours of becoming aware of the breach (Art. 33), and Beacon, as processor, must tell Acme without undue delay, which is why its incident process needs a clock. Notifying the authority directly is tempting, but that duty sits with the controller, and 72 hours is the controller's deadline, not the processor's.",
-    "ar": "بصفتها متحكمًا، يجب على Acme إبلاغ السلطة الرقابية خلال 72 ساعة من علمها بالاختراق، وفق المادة 33 (Art. 33)، أما Beacon بصفته معالجًا فيجب أن يبلغ Acme دون تأخير غير مبرر، ولهذا تحتاج عملية الاستجابة للحوادث لديه إلى ساعة توقيت. وإبلاغ السلطة مباشرةً مغرٍ، لكنه واجب المتحكم، ومهلة 72 ساعة هي مهلة المتحكم لا المعالج."
+    "ar": "بصفتها متحكمًا، يجب على Acme إبلاغ السلطة الرقابية خلال 72 ساعة من علمها بالاختراق، وفق المادة 33، أما Beacon بصفته معالجًا فيجب أن يبلغ Acme دون تأخير غير مبرر، ولهذا تحتاج عملية الاستجابة للحوادث لديه إلى ساعة توقيت. وإبلاغ السلطة مباشرةً مغرٍ، لكنه واجب المتحكم، والـ 72 ساعة هي الموعد النهائي للمتحكم لا للمعالج."
    }
   },
   {
@@ -63,7 +63,7 @@
    "lesson": "8.2",
    "q": {
     "en": "Beacon wants to move its incident summaries to a cheaper model. The engineer tried it on three recent incidents: every output passed the zod schema, and Langfuse shows HTTP 200s at a lower cost. What should gate the switch?",
-    "ar": "يريد Beacon نقل ملخصات الحوادث إلى نموذج أرخص. جرّبه المهندس على ثلاث حوادث حديثة: اجتازت كل المخرجات مخطط zod، ويُظهر Langfuse استجابات HTTP 200 (HTTP 200s) بتكلفة أقل. ما الذي يجب أن يكون شرطًا لهذا التبديل؟"
+    "ar": "يريد Beacon نقل ملخصات الحوادث إلى نموذج أرخص. جرّبه المهندس على ثلاث حوادث حديثة: اجتازت كل المخرجات مخطط zod، ويُظهر Langfuse استجابات HTTP 200 بتكلفة أقل. ما الذي يجب أن يكون شرطًا لهذا التبديل؟"
    },
    "o": {
     "en": [
@@ -74,9 +74,9 @@
     ],
     "ar": [
      "لا شيء آخر، لأن المخطط الصالح والتتبعات السليمة تُظهر أن النموذج الجديد يعمل",
-     "مجموعة تقييم من حوادث مجهولة الهوية في CI، تفشل إذا وُصفت حادثة مفتوحة بأنها \"حُلّت\"",
+     "مجموعة تقييم من حوادث مجهولة الهوية في CI، تفشل إن وُصفت حادثة مفتوحة بـ\"حُلّت\"",
      "أسبوع من التتبع في الإنتاج، مع التراجع إذا ساء معدل الأخطاء أو زمن الاستجابة",
-     "مخطط zod أكثر صرامة، بحدود للطول وحقل إلزامي لكل قسم"
+     "مخطط zod أكثر صرامة، مع حدود لطول النص وحقل إلزامي لكل قسم"
     ]
    },
    "a": 1,
@@ -91,7 +91,7 @@
    "lesson": "8.2",
    "q": {
     "en": "Beacon plans an AI responder for Business orgs. It reads new error bodies and incident comments, can search the org's private postmortems, and has a sendWebhook(url, body) tool that posts to any URL the model picks. Security review must decide on it. What is the best call?",
-    "ar": "يخطط Beacon لوكيل استجابة بالذكاء الاصطناعي لمؤسسات خطة Business. يقرأ الوكيل نصوص الأخطاء الجديدة وتعليقات الحوادث، ويستطيع البحث في تقارير ما بعد الحادثة الخاصة بالمؤسسة، ولديه أداة اسمها sendWebhook ترسل إلى أي رابط يختاره النموذج. ويجب أن تتخذ المراجعة الأمنية قرارًا بشأنه. ما القرار الأفضل؟"
+    "ar": "يخطط Beacon لوكيل استجابة بالذكاء الاصطناعي لمنظمات خطة Business. يقرأ الوكيل نصوص الأخطاء الجديدة وتعليقات الحوادث، ويستطيع البحث في تقارير مراجعة ما بعد الحادثة الخاصة بالمنظمة، ولديه أداة اسمها sendWebhook ترسل إلى أي رابط يختاره النموذج. ويجب أن تتخذ المراجعة الأمنية قرارًا بشأنه. ما القرار الأفضل؟"
    },
    "o": {
     "en": [
@@ -101,16 +101,16 @@
      "Approve it without the sendWebhook tool, so it can't post data to URLs the model picks"
     ],
     "ar": [
-     "وافق عليه، لأن أدواته تعمل أصلًا بصلاحيات المستخدم المستدعي داخل المؤسسة",
+     "وافق عليه، لأن أدواته تعمل أصلًا بصلاحيات المستخدم المستدعي داخل المنظمة",
      "وافق عليه مع موجّه نظام يصف نصوص الأخطاء والتعليقات بأنها بيانات لا أوامر",
      "وافق عليه بعد أن ينجح في CI تقييم بـ promptfoo فيه اثنتا عشرة محاولة حقن",
-     "وافق عليه دون أداة sendWebhook، كي لا يستطيع إرسال البيانات إلى روابط يختارها النموذج"
+     "وافق عليه دون أداة sendWebhook، فلا يرسل بيانات إلى روابط يختارها النموذج"
     ]
    },
    "a": 3,
    "why": {
     "en": "Private data, untrusted content and the ability to communicate externally together form the lethal trifecta, and because prompt injection has no complete fix, you remove at least one leg: here, the free-form webhook tool, which is also an SSRF risk. A system prompt or a passing eval can't reliably stop injection, and user-scoped tools still let an injected comment send that org's own postmortems out.",
-    "ar": "البيانات الخاصة والمحتوى غير الموثوق والقدرة على التواصل مع الخارج تشكّل معًا الثالوث القاتل (lethal trifecta)، ولأن حقن الموجّهات (prompt injection) ليس له إصلاح كامل، فأنت تزيل واحدًا على الأقل من الثلاثة: وهو هنا أداة الـ webhook المفتوحة، وهي أيضًا خطر SSRF. أما موجّه النظام أو التقييم الناجح فلا يوقفان الحقن بشكل موثوق، والأدوات المقيدة بالمستخدم تسمح مع ذلك لتعليق محقون بإرسال تقارير ما بعد الحادثة الخاصة بالمؤسسة نفسها إلى الخارج."
+    "ar": "البيانات الخاصة والمحتوى غير الموثوق والقدرة على التواصل مع الخارج تشكّل معًا الثالوث القاتل (lethal trifecta)، ولأن حقن الموجّهات (prompt injection) ليس له إصلاح كامل، فأنت تزيل واحدًا على الأقل من الثلاثة: وهو هنا أداة الـ webhook المفتوحة، وهي أيضًا خطر SSRF. أما موجّه النظام أو التقييم الناجح فلا يوقفان الحقن بشكل موثوق، والأدوات المقيدة بالمستخدم تسمح مع ذلك لتعليق محقون بإرسال تقارير مراجعة ما بعد الحادثة الخاصة بالمنظمة نفسها إلى الخارج."
    }
   }
  ],

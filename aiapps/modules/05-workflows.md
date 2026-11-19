@@ -9,7 +9,7 @@
 # 5.1 — Chaining, routing and parallelisation: when a workflow beats an agent
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 2.2, 3.1* · *Layer: Applications*
 
-**After this you can** decide and justify single prompt, chain, router, parallel calls or agent for a given request, and cost a workflow against a six-iteration agent loop in calls, tokens and money. *Study time: about 110 minutes (estimate).*
+**After this you can** decide and justify single prompt, chain, router, parallel calls or agent for a given request, and cost a workflow against a six-iteration agent loop in calls, tokens and money. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **workflow** is code that decides the next step and calls the model inside each step. An **agent** lets the model decide. The distinction is Anthropic's ("Building effective agents"), which advises using the simplest thing that works.
@@ -249,7 +249,7 @@ This v1 card is read-only; write steps (a new ticket, an unlock) add their own c
 # 5.2 — Lab: a document pipeline: classify, route, summarise, fact-check in parallel
 *Level: 🟡 Intermediate* · *Prerequisites: 3.2, 5.1* · *Layer: Applications, Production*
 
-**After this you can** build a classify, route, summarise and parallel fact-check pipeline with a gate after each step, and close a gate gap with a test that fails before your fix and passes after. *Study time: about 110 minutes (estimate).*
+**After this you can** build a classify, route, summarise and parallel fact-check pipeline with a gate after each step, and close a gate gap with a test that fails before your fix and passes after. *Study time: reading about 10 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Each policy-change notice is **classified** (cheap model), **routed** (code picks a specialist prompt), **summarised**, then every claim is **fact-checked** in parallel, with a gate after each step.
@@ -539,7 +539,7 @@ The pipeline reads 5.3 times the input but costs 1.7 times as much: output is as
 
 **Group session (60 minutes).** (1) Read the step table aloud (10). (2) Break gate 2: write a summary it lets through (15). (3) Argue pipeline versus one prompt from your table (20). (4) Agree a status vocabulary (15).
 
-**Build it with Claude Code.** Give this spec to Claude Code in plan mode (check the current Claude Code documentation) and review the plan before it edits:
+**Build it with Claude Code.** *No Claude Code? Do the spec's steps by hand and run its checks yourself (lesson 0.3).* Give this spec to Claude Code in plan mode (check the current Claude Code documentation) and review the plan before it edits:
 
 ```text
 Goal: labs/m05/calls.py, notice_prompts.py, pipeline.py: classify with the cheap model, route to a

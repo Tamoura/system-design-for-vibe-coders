@@ -8,6 +8,7 @@ A small, fictional banking back end that the *Software Testing: Zero to Hero in 
 | `najm/api.py` | A FastAPI REST API: `POST /transfers`, `GET /transfers/{id}`, `GET /accounts/{id}/balance`, `GET /health` | API testing, security testing, performance testing |
 | `static/transfer.html` | A small web page served at `/app` (English, and Arabic right-to-left with `?lang=ar`) | End-to-end, accessibility and localisation testing |
 | `najm/assist.py` | **Najm Assist**: a deterministic stand-in for an LLM assistant — retrieval over policy documents, a fake model, and tools | Evals, RAG tests, agent tests, red-teaming |
+| `evals/` | The 24-case golden set and its baseline counts (you write the harness in lesson 7.1) | Evals, regression gates, robustness and differential tests |
 | `tests/` | A deliberately incomplete starter test suite | Test quality, mutation testing |
 | `e2e/` | A Playwright starter that starts the API and drives the page | End-to-end testing |
 

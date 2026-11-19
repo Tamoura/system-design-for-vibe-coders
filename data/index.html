@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="data-source" content="39d57c86df63df84">
+<meta name="data-source" content="e560ddcbf592b08f">
 <meta name="description" content="Data Engineering &amp; Analytics: Zero to Hero — a free, bilingual course: SQL and modelling, pipelines and streaming, dbt and data quality, trusted metrics and experiments, ML and LLM data in production, and data governance, with a quiz in every lesson and a 60-question practice exam.">
 <title>Data Engineering &amp; Analytics: Zero to Hero</title>
 <style>
@@ -438,6 +438,10 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <template id="t-about"><section class="page prose">
 <h1>Start here</h1>
 <p><strong>Build the data systems people trust. A free, bilingual course that takes you from zero to confident data engineer, analytics engineer or production-minded data scientist.</strong></p>
+<!-- study-time -->
+<p><strong>Study time for the whole course: about 138 hours</strong> (estimate: reading plus hands-on work, summed over every lesson). At about 6 hours a week that is roughly 23 weeks. Each lesson shows its own split; a pilot with real learners will replace these estimates.</p>
+<!-- /study-time -->
+
 <h2>What this is</h2>
 <p>Every dashboard, model and AI assistant runs on data that someone modelled, moved, cleaned, tested and secured. When that work is done badly, the numbers disagree, the model drifts unnoticed and the AI assistant answers from the wrong document. When it is done well, nobody notices. That is the goal.</p>
 <p>This course teaches the work end to end:</p>
@@ -451,7 +455,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <li>Preparing data for LLM applications.</li>
 <li>Governance, privacy and security for the data platform.</li>
 </ul>
-<p>Everything runs on a laptop with free tools: PostgreSQL, DuckDB, Python, dbt, Airflow or Dagster, and Kafka.</p>
+<p>Everything runs on a laptop with free tools: PostgreSQL, DuckDB, Python, dbt, Airflow or Dagster, and Kafka. The container-heavy modules are comfortable with 16 GB of RAM; lesson <a class="xref" href="#/0.3">0.3</a> gives the hardware notes, a lighter path for 8 GB, and one shared synthetic dataset that most exercises reuse.</p>
 <p>It is written for data science, computer science and engineering graduates, software engineers moving into data, analysts who want to engineer, and anyone who owns data in a bank, a government body or an enterprise.</p>
 <h2>How every lesson works</h2>
 <p>Every lesson has the same ten parts, so you always know where you are:</p>
@@ -818,7 +822,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p class="crumb"><a href="#/map">Module 0 — Orientation</a></p>
 <h1><span class="num">0.1</span> What data engineering, analytics and data science are — and how they fit together</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Stage <bdi dir="ltr">Analyse, Serve</bdi></span> · <span class="prereq">Before this: None</span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> write a data request intake card for a published metric (decision, definition, source, owner, freshness and three quality checks) and point to two places where the number could quietly mean different things. <em>Study time: about 105 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a data request intake card for a published metric (decision, definition, source, owner, freshness and three quality checks) and point to two places where the number could quietly mean different things. <em>Study time: reading about 15 min, hands-on about 130 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -830,7 +834,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 </ul>
 </section>
 <section class="sec sec-why"><h2>🧭 Why it matters</h2>
-<p>It is Huda&#39;s first Monday at Najm Bank. In the weekly business review, the retail team&#39;s slide says Najm has <strong>412,000 active customers</strong>. Ten minutes later, the finance slide says <strong>368,000</strong>. (The figures are hypothetical, but the situation is common in every organisation that has data.) The chief operating officer asks which one is right. Nobody answers. Kareem, the retail data analyst, wrote one query; someone in finance wrote the other. Both queries run without errors. Both are &quot;correct&quot;.</p>
+<p>It is Huda&#39;s first Monday at Najm Bank. In the weekly business review, the retail team&#39;s slide says Najm has <strong>412,000 active customers</strong>. Ten minutes later, the finance slide says <strong>365,000</strong>. (The figures are hypothetical, but the situation is common in every organisation that has data.) The chief operating officer asks which one is right. Nobody answers. Kareem, the retail data analyst, wrote one query; someone in finance wrote the other. Both queries run without errors. Both are &quot;correct&quot;.</p>
 <p>After the meeting, Faisal, Head of Data Platform, takes Huda aside. &quot;Both numbers are right, for their own definition of <em>active</em>. Retail counts anyone with an open account. Finance counts anyone who made a transaction themselves in the last 90 days. Our job is not to write a third query. Our job is to make sure the bank has <em>one</em> definition, built once, tested, and used everywhere. That is what this team is for.&quot;</p>
 <p>This lesson is about that team: what each role does, where the hand-offs are, and why most data failures happen in the gaps between roles rather than inside any one of them.</p>
 </section>
@@ -1068,7 +1072,7 @@ WHERE t.initiated_by = &#39;customer&#39;
 <section class="sec sec-build"><h2>🛠️ Exercises</h2>
 <ul>
 <li>🟢 Find five real job adverts: one each for a data engineer, analytics engineer, data analyst, data scientist and ML engineer. For each, list the three skills that appear most and place the role on the eight-stage life cycle. <em>Done when:</em> you have a one-page table and can explain, in two sentences, the difference between an analytics engineer and a data analyst.</li>
-<li>🟡 Install DuckDB on your laptop. Create small <code>accounts</code> and <code>transactions</code> tables with ten made-up rows each and run both &quot;active customer&quot; queries from this lesson. Then add rows that make the two numbers differ for three different reasons (an account with only fees, a closed account, a transaction older than 90 days). <em>Done when:</em> both queries run and you can explain each difference row by row.</li>
+<li>🟡 Install DuckDB on your laptop (<code>pip install duckdb</code>; the full lab setup is in lesson <a class="xref" href="#/0.3">0.3</a>). Create small <code>accounts</code> and <code>transactions</code> tables with ten made-up rows each and run both &quot;active customer&quot; queries from this lesson. Then add rows that make the two numbers differ for three different reasons (an account with only fees, a closed account, a transaction older than 90 days). <em>Done when:</em> both queries run and you can explain each difference row by row.</li>
 <li>🔴 Pick a metric you have seen quoted in public, such as &quot;monthly active users&quot; in a company&#39;s results, or a public statistic from your country&#39;s open-data portal. Write a data request intake card for it: the decision it supports, the exact definition, the source, the owner, the freshness and three quality checks. Note every point where the published material does not tell you enough. <em>Done when:</em> the card is complete, and the list of unanswered questions shows at least two places where the number could quietly mean different things.</li>
 </ul>
 </section>
@@ -1091,7 +1095,7 @@ WHERE t.initiated_by = &#39;customer&#39;
 </ul>
 </section>
 <section class="sec sec-quiz"><h2>✍️ Check yourself</h2>
-<p><strong>1. At Najm&#39;s business review, retail reports 412,000 active customers and finance reports 368,000. Both queries run without errors. What is the most likely root cause?</strong></p>
+<p><strong>1. At Najm&#39;s business review, retail reports 412,000 active customers and finance reports 365,000. Both queries run without errors. What is the most likely root cause?</strong></p>
 <ul>
 <li>A. One of the two queries contains a syntax error that the database quietly skipped over while counting</li>
 <li>B. Two definitions of &quot;active customer&quot;, with nobody owning one</li>
@@ -1103,12 +1107,12 @@ WHERE t.initiated_by = &#39;customer&#39;
 <p><strong>B.</strong> Both queries can be correct for their own definition. The fix is an agreed, owned definition built once. A is tempting, but a query with a syntax error would not run at all, and the scenario says both run. (🟢 The essentials.)</p>
 </details>
 
-<p><strong>2. Which role is mainly responsible for turning raw tables into clean, tested, documented models with agreed metric definitions?</strong></p>
+<p><strong>2. Kareem&#39;s dashboard and Finance&#39;s report compute &quot;active customer&quot; with different SQL. Faisal wants one tested, documented model with the agreed definition, read by both. Which role usually builds and owns it?</strong></p>
 <ul>
-<li>A. Data scientist, who builds the predictive models</li>
-<li>B. ML engineer, who keeps models running in production</li>
-<li>C. Data analyst, who answers business questions with dashboards</li>
-<li>D. Analytics engineer</li>
+<li>A. Data scientist, because definitions feed the features of models</li>
+<li>B. ML engineer, because a shared model must be deployed and kept running</li>
+<li>C. Data analyst, because analysts are the people who use the number most</li>
+<li>D. Analytics engineer, because the transformation layer is their remit</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -1170,7 +1174,7 @@ WHERE t.initiated_by = &#39;customer&#39;
 <p class="crumb"><a href="#/map">Module 0 — Orientation</a></p>
 <h1><span class="num">0.2</span> The modern data stack end to end: from a tap in the app to a number on a dashboard</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Stage <bdi dir="ltr">Ingest, Serve</bdi></span> · <span class="prereq">Before this: <a href="#/0.1">0.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> draw the path of one app action from the tap to a dashboard number, label each hop with its life-cycle stage, and name one thing at each hop that could change the number. <em>Study time: about 120 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> draw the path of one app action from the tap to a dashboard number, label each hop with its life-cycle stage, and name one thing at each hop that could change the number. <em>Study time: reading about 15 min, hands-on about 3 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -1526,7 +1530,7 @@ ORDER BY 1;
 <p class="crumb"><a href="#/map">Module 0 — Orientation</a></p>
 <h1><span class="num">0.3</span> Meet Najm Bank's data platform team, and how to use this course</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Stage <bdi dir="ltr">Operate, Govern</bdi></span> · <span class="prereq">Before this: <a href="#/0.1">0.1</a>, <a href="#/0.2">0.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> set up a lab repository whose fresh clone regenerates the same synthetic Najm data, and write three stakeholder queries against it, each under a one-line business question. <em>Study time: about 105 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> set up a lab repository whose fresh clone regenerates the same synthetic Najm data, and write three stakeholder queries against it, each under a one-line business question. <em>Study time: reading about 15 min, hands-on about 4 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -1767,12 +1771,23 @@ ORDER BY 1;
 <li><strong>dbt Core</strong> with the DuckDB or PostgreSQL adapter from Module 3.</li>
 <li><strong>git</strong>, so every exercise lives in a repository you can show.</li>
 </ul>
+<p><strong>Will my laptop cope?</strong> Our estimate at the time of writing (2026), not a vendor figure:</p>
+<ul>
+<li><em>Modules 0, 1, 3 and 4 (Python, DuckDB, dbt):</em> any recent laptop with 8 GB of RAM and about 5 GB of free disk.</li>
+<li><em>Modules 2, 5 and 7 (several containers at once):</em> 16 GB of RAM and about 30 GB of free disk are comfortable. With 8 GB, run one stack at a time and stop it with <code>docker compose down</code> before starting the next. Airflow&#39;s own Docker guide asks for at least 4 GB of memory for its containers.</li>
+<li><em>Windows:</em> Docker Desktop runs on WSL 2. Keep your lab files inside the Linux file system (for example <code>~/najm-lab</code>), not under <code>/mnt/c</code>, which is much slower.</li>
+<li><em>Apple Silicon Macs:</em> most images used here are published for arm64; if one is not, Docker emulates it slowly, so look for an arm64 tag first.</li>
+<li><em>Lighter path:</em> Redpanda (a single binary with no JVM) instead of Kafka, <code>dagster dev</code> without Docker instead of Airflow, and DuckDB instead of PostgreSQL wherever an exercise allows it.</li>
+<li><em>Cost and secrets:</em> every tool here is free and no cloud account is needed. Never paste a password or API token into an AI chat or commit it to git.</li>
+</ul>
 <p><strong>Never use real personal data.</strong> Use synthetic data you generate, or public open data. This script creates a small synthetic Najm dataset in one DuckDB file:</p>
 <pre><code class="language-python">import duckdb
 
+LAB_VERSION = &quot;najm-lab v1&quot;  # note it in your README; later lessons use v1
 con = duckdb.connect(&quot;najm_lab.duckdb&quot;)  # one file on your laptop
 
-con.sql(&quot;&quot;&quot;
+# hash() instead of random(): the same &quot;random-looking&quot; rows on every run
+con.execute(&quot;&quot;&quot;
 CREATE OR REPLACE TABLE customers AS
 SELECT
     printf(&#39;C%06d&#39;, i)                            AS customer_id,
@@ -1780,20 +1795,75 @@ SELECT
     ([&#39;QA&#39;, &#39;AE&#39;, &#39;DE&#39;])[1 + (i // 3) % 3]        AS country,
     DATE &#39;2020-01-01&#39; + CAST(i % 2000 AS INTEGER) AS opened_on
 FROM range(1, 1001) AS r(i);
-&quot;&quot;&quot;)
 
-con.sql(&quot;&quot;&quot;
--- hash() instead of random(): the same &quot;random-looking&quot; rows on every run
+-- C000001-C000950 get one to several accounts; the last 50 customers get none
+CREATE OR REPLACE TABLE accounts AS
+SELECT
+    printf(&#39;A%06d&#39;, i)                            AS account_id,
+    printf(&#39;C%06d&#39;, CASE WHEN i &lt;= 950 THEN i
+                    ELSE 1 + CAST(hash(i, &#39;owner&#39;) % 950 AS BIGINT) END) AS customer_id,
+    ([&#39;current&#39;, &#39;savings&#39;])[1 + i % 2]           AS product,
+    CASE WHEN i % 25 = 0 THEN &#39;closed&#39; ELSE &#39;open&#39; END AS status
+FROM range(1, 1801) AS r(i);
+
+-- July 2025 to March 2026; about 1 row in 20 is a fee the bank initiated
 CREATE OR REPLACE TABLE transactions AS
 SELECT
-    i                                             AS txn_id,
-    printf(&#39;C%06d&#39;, 1 + hash(i, &#39;cust&#39;) % 1000)   AS customer_id,
-    5 + (hash(i, &#39;amount&#39;) % 99500) / 100         AS amount_qar,
-    TIMESTAMP &#39;2026-01-01&#39;
-      + to_minutes(CAST(hash(i, &#39;ts&#39;) % 129600 AS BIGINT)) AS txn_ts_utc
-FROM range(1, 50001) AS r(i);
+    t.i                                           AS txn_id,
+    a.account_id,
+    a.customer_id,
+    CASE WHEN hash(t.i, &#39;dir&#39;) % 4 = 0 THEN &#39;credit&#39; ELSE &#39;debit&#39; END AS direction,
+    CASE WHEN hash(t.i, &#39;fee&#39;) % 20 = 0 THEN &#39;bank&#39; ELSE &#39;customer&#39; END AS initiated_by,
+    CAST(5 + (hash(t.i, &#39;amount&#39;) % 99500) / 100 AS DECIMAL(18, 2)) AS amount_qar,
+    TIMESTAMP &#39;2025-07-01&#39;
+      + to_minutes(CAST(hash(t.i, &#39;ts&#39;) % 393120 AS BIGINT)) AS txn_ts_utc
+FROM range(1, 100001) AS t(i)
+JOIN accounts AS a
+  ON a.account_id = printf(&#39;A%06d&#39;, 1 + hash(t.i, &#39;acct&#39;) % 1800);
+
+-- 2,000 loans; about 1 in 10 stops paying part-way, some pay late
+CREATE OR REPLACE TABLE loans AS
+SELECT
+    printf(&#39;L%06d&#39;, i)                            AS loan_id,
+    printf(&#39;C%06d&#39;, 1 + hash(i, &#39;borrower&#39;) % 950) AS customer_id,
+    CASE WHEN i % 20 = 0 THEN &#39;USD&#39; ELSE &#39;QAR&#39; END AS currency,
+    1000 * (10 + hash(i, &#39;principal&#39;) % 190)      AS principal,
+    ([12, 24, 36])[1 + i % 3]                     AS term_months,
+    DATE &#39;2024-01-01&#39; + CAST(hash(i, &#39;start&#39;) % 640 AS INTEGER) AS start_date
+FROM range(1, 2001) AS r(i);
+
+CREATE OR REPLACE TABLE instalments AS
+SELECT
+    l.loan_id,
+    n                                             AS instalment_no,
+    CAST(l.start_date + to_months(CAST(n AS INTEGER)) AS DATE) AS due_date,
+    CAST(l.principal / l.term_months AS DECIMAL(18, 2)) AS amount_due
+FROM loans AS l, range(1, 37) AS r(n)
+WHERE n &lt;= l.term_months;
+
+CREATE OR REPLACE TABLE repayments AS
+SELECT
+    i.loan_id,
+    i.instalment_no,
+    CAST(i.due_date + CAST(CASE WHEN hash(i.loan_id, i.instalment_no) % 10 = 0
+         THEN hash(i.loan_id, i.instalment_no) % 45 ELSE 0 END AS INTEGER) AS DATE) AS paid_on,
+    i.amount_due                                  AS amount_paid
+FROM instalments AS i
+WHERE i.due_date &lt;= DATE &#39;2026-03-31&#39;
+  AND NOT (hash(i.loan_id, &#39;risk&#39;) % 10 = 0
+           AND i.instalment_no &gt; 3 + hash(i.loan_id, &#39;stop&#39;) % 9);
+
+-- the ledger&#39;s control total: principal still owed per currency on 31 March 2026
+CREATE OR REPLACE TABLE ledger_totals AS
+SELECT l.currency, DATE &#39;2026-03-31&#39; AS as_of,
+       SUM(i.amount_due) - COALESCE(SUM(p.amount_paid), 0) AS outstanding
+FROM instalments AS i
+JOIN loans AS l USING (loan_id)
+LEFT JOIN repayments AS p USING (loan_id, instalment_no)
+GROUP BY l.currency;
 &quot;&quot;&quot;)
 
+print(LAB_VERSION)
 print(con.sql(&quot;&quot;&quot;
 SELECT c.segment, COUNT(*) AS txns, round(SUM(t.amount_qar)) AS total_qar
 FROM transactions AS t
@@ -1802,7 +1872,7 @@ GROUP BY c.segment
 ORDER BY c.segment;
 &quot;&quot;&quot;))
 </code></pre>
-<p>It makes 1,000 customers and 50,000 transactions in the first quarter of 2026. Notice the comment: with <code>random()</code>, Huda&#39;s exercise answers changed on every re-run. Using <code>hash()</code> of the row number gives data that looks random but is the same on every run with the same DuckDB version. <strong>Reproducibility</strong> is a theme you will meet again in pipelines (lesson <a class="xref" href="#/2.2">2.2</a>) and in ML (lesson <a class="xref" href="#/5.1">5.1</a>).</p>
+<p>It builds version 1 of the course&#39;s <strong>lab dataset</strong>: 1,000 customers (the last 50 with no account), 1,800 accounts (some closed), 100,000 transactions from July 2025 to March 2026, each with a direction and who initiated it, and 2,000 loans with instalments, repayments (some late, some stopped) and the ledger&#39;s control totals. When a later exercise says &quot;the lab dataset&quot;, it means these tables; when it needs more rows, raise a <code>range()</code> bound and keep <code>hash()</code>. Notice the comment: with <code>random()</code>, Huda&#39;s exercise answers changed on every re-run. Using <code>hash()</code> of the row number gives data that looks random but is the same on every run with the same DuckDB version, so pin the version you installed in a <code>requirements.txt</code>. <strong>Reproducibility</strong> is a theme you will meet again in pipelines (lesson <a class="xref" href="#/2.2">2.2</a>) and in ML (lesson <a class="xref" href="#/5.1">5.1</a>).</p>
 <h3>🔴 Expert view</h3>
 <p><strong>Build a portfolio, not a pile of notes.</strong> Hiring managers for data roles want evidence that you can do the work. Keep one git repository for this course. Each module adds something real: a modelled schema, an incremental pipeline, a tested dbt project, a metric card, a drift checklist, a classification table, and finally the credit-risk mart. Write a short README for each one, in the style of the Najm artefacts: what decision it supports, what it assumes, how to run it. For how to present this to employers, see <a href="../career/index.html#/2.3"><em>From Graduate to Hired</em>, lesson 2.3 — Data engineer, analyst and data scientist</a> and lesson <a class="xref" href="#/7.2">7.2</a> of this course.</p>
 <p><strong>Use the companion courses</strong> where they go deeper:</p>
@@ -1946,7 +2016,7 @@ ORDER BY c.segment;
 <section class="sec sec-build"><h2>🛠️ Exercises</h2>
 <ul>
 <li>🟢 Set up the lab: install Python and DuckDB, run the synthetic-data script and commit it to a new git repository with a README. <em>Done when:</em> a fresh clone of your repository runs the script and prints the same three rows as your first run.</li>
-<li>🟡 Extend the synthetic dataset with an <code>accounts</code> table (one to three accounts per customer, some closed) and a <code>loans</code> table (a few hundred loans with an amount, a start date and a status). Then write three queries a Najm stakeholder might ask, and note which cast member would ask each. <em>Done when:</em> the tables load, every account and loan links to an existing customer, and each query has a one-line business question above it.</li>
+<li>🟡 Using the lab dataset&#39;s <code>accounts</code>, <code>transactions</code> and <code>loans</code>, write three queries a Najm stakeholder might ask, and note which cast member would ask each. Add one check query that finds accounts or loans with no matching customer. <em>Done when:</em> each query runs, the check returns zero rows, and each query has a one-line business question above it.</li>
 <li>🔴 Fill in Part A of the onboarding pack for five systems of an organisation you know (an employer, a university, a public service), using only public information or your own role. Mark every cell you cannot fill. <em>Done when:</em> the table is complete or marked, with three sentences on what the gaps would mean for a new data team there.</li>
 </ul>
 </section>
@@ -2046,7 +2116,7 @@ ORDER BY c.segment;
 <p class="crumb"><a href="#/map">Module 1 — SQL and data modelling</a></p>
 <h1><span class="num">1.1</span> SQL that answers business questions: joins, aggregation, CTEs and window functions</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Stage <bdi dir="ltr">Model, Analyse</bdi></span> · <span class="prereq">Before this: <a href="#/0.1">0.1</a>, <a href="#/0.2">0.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> write a CTE-based SQL query with window functions that answers a business question at the right grain, and explain why the naive join-everything count gives a larger number. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a CTE-based SQL query with window functions that answers a business question at the right grain, and explain why the naive join-everything count gives a larger number. <em>Study time: reading about 15 min, hands-on about 3 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -2354,7 +2424,7 @@ Checks       : grain unique OK; debit total reconciles to GL report within 0.1%,
 <p>A question asked every month becomes a tested model (<a class="xref" href="#/3.1">3.1</a>) and a defined metric (<a class="xref" href="#/4.1">4.1</a>).</p>
 </section>
 <section class="sec sec-build"><h2>🛠️ Exercises</h2>
-<p>Use synthetic data only: generate <code>customers</code>, <code>accounts</code> (one to three per customer) and about 100,000 <code>transactions</code> in DuckDB or PostgreSQL with <code>generate_series</code> and <code>random()</code>, including some customers with no accounts.</p>
+<p>Use synthetic data only: the lab dataset from lesson <a class="xref" href="#/0.3">0.3</a> already has <code>customers</code>, <code>accounts</code> (some customers have none) and 100,000 <code>transactions</code> from July 2025 to March 2026, so every answer below can be checked by rerunning it. Two adjustments: the lab&#39;s September is September 2025, and its columns are <code>amount_qar</code> and <code>txn_ts_utc</code> (rename them in a CTE, or edit the lesson&#39;s queries).</p>
 <ul>
 <li>🟢 Write the &quot;active retail customers in September and their spend&quot; query twice: once the wrong way (same filters, join everything, <code>COUNT(*)</code>) and once with CTEs, each commented with its grain. <em>Done when:</em> you can explain the exact ratio between the two counts (it is the average number of debits per active customer), and your correct query passes the grain check.</li>
 <li>🟡 For each customer and month, compute spend, the previous month&#39;s spend, the change in percent, and the customer&#39;s rank within their segment for that month. Then return only each customer&#39;s single highest-spend month. <em>Done when:</em> the query uses <code>LAG</code>, <code>DENSE_RANK</code> and a &quot;latest or top row per key&quot; pattern, with a deterministic tie-breaker, and gives identical results on two runs.</li>
@@ -2457,7 +2527,7 @@ Checks       : grain unique OK; debit total reconciles to GL report within 0.1%,
 <p class="crumb"><a href="#/map">Module 1 — SQL and data modelling</a></p>
 <h1><span class="num">1.2</span> Data modelling: normalisation, star schemas, grain and slowly changing dimensions</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Stage <bdi dir="ltr">Model</bdi></span> · <span class="prereq">Before this: <a href="#/1.1">1.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> design a star schema with a written grain statement, and build a Type 2 customer dimension that keeps day-1 exposure by branch unchanged after later loads. <em>Study time: about 120 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> design a star schema with a written grain statement, and build a Type 2 customer dimension that keeps day-1 exposure by branch unchanged after later loads. <em>Study time: reading about 15 min, hands-on about 4 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -2853,7 +2923,7 @@ GROUP BY d.branch_code;
 <li>A. Accumulating snapshot: one row per application, updated per milestone</li>
 <li>B. Transaction fact: one row per loan repayment</li>
 <li>C. Periodic snapshot: one row per loan per day</li>
-<li>D. A Type 3 dimension holding the previous and current application status</li>
+<li>D. A Type 3 dimension with the previous and current application status</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -2915,7 +2985,7 @@ GROUP BY d.branch_code;
 <p class="crumb"><a href="#/map">Module 1 — SQL and data modelling</a></p>
 <h1><span class="num">1.3</span> Where data lives: OLTP vs OLAP, warehouses, lakes, lakehouses and open table formats</h1>
 <p class="meta"><span class="lvl lvl-b">🟢 Beginner</span> · <span class="bok">Stage <bdi dir="ltr">Store</bdi></span> · <span class="prereq">Before this: <a href="#/1.1">1.1</a>, <a href="#/1.2">1.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> time the same query on CSV and Parquet and on PostgreSQL and DuckDB, and justify from your timings which storage format and engine suit an OLTP or an OLAP workload. <em>Study time: about 120 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> time the same query on CSV and Parquet and on PostgreSQL and DuckDB, and justify from your timings which storage format and engine suit an OLTP or an OLAP workload. <em>Study time: reading about 15 min, hands-on about 4 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -2929,7 +2999,7 @@ GROUP BY d.branch_code;
 </section>
 <section class="sec sec-why"><h2>🧭 Why it matters</h2>
 <p>On the last working day of the quarter, Huda runs a heavy query directly on the core banking PostgreSQL primary: a year of transactions joined to every account, grouped by product and month. It reads tens of millions of rows. Branch staff start reporting that account look-ups are slow, and the payments team sees timeouts. Salem, Head of Platform Engineering, finds the query and cancels it. His message to Faisal is short: &quot;The core banking database exists to serve customers. Analytics needs its own home.&quot;</p>
-<p>Public cases show how storage choices fail in the other direction too. In October 2020, Public Health England reported that around 16,000 positive COVID-19 cases had been left out of England&#39;s daily figures. As widely reported, the cause was an automated process that loaded test results into the legacy Excel <code>.xls</code> format, whose worksheets are limited to 65,536 rows, so rows past the limit were silently dropped. The data existed; the container could not hold it, and nothing checked. Where data lives, and what that container guarantees, is an engineering decision.</p>
+<p>Storage choices fail in the other direction too. The 2020 England COVID-19 reporting gap (lesson <a class="xref" href="#/0.2">0.2</a>) was, as widely reported, a storage failure: test results were loaded into the legacy Excel <code>.xls</code> format, whose worksheets hold at most 65,536 rows, and rows past the limit were silently dropped. The data existed; the container could not hold it, and nothing checked. Where data lives, and what that container guarantees, is an engineering decision.</p>
 </section>
 <section class="sec sec-how"><h2>📐 How it works</h2>
 <h3>🟢 The essentials</h3>
@@ -3195,7 +3265,7 @@ GROUP BY channel;
 <li>A. Keep it on the primary but run it at night, when branches are closed</li>
 <li>B. Add more indexes to the primary so the scan finishes faster</li>
 <li>C. Move the workload to a separate analytical store</li>
-<li>D. Export the tables to CSV files on a shared drive</li>
+<li>D. Export the tables to CSV files on a shared network drive</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -3270,7 +3340,7 @@ GROUP BY channel;
 <p class="crumb"><a href="#/map">Module 2 — Ingestion and pipelines</a></p>
 <h1><span class="num">2.1</span> Getting data in: ETL vs ELT, connectors, incremental loads and change data capture</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Ingest</bdi></span> · <span class="prereq">Before this: <a href="#/1.1">1.1</a>, <a href="#/1.3">1.3</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> run a high-water-mark incremental load and show with a query exactly which inserts, updates and deletes it caught or missed, then capture the same changes with CDC. <em>Study time: about 120 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> run a high-water-mark incremental load and show with a query exactly which inserts, updates and deletes it caught or missed, then capture the same changes with CDC. <em>Study time: reading about 15 min, hands-on about 6 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -3496,11 +3566,12 @@ WHERE rn = 1
 <p>Every new pipeline must also tick: <em>raw append-only with load metadata; deletes handled; overlap or CDC; merge into staging; reconciliation defined; personal data minimised at source; owner and alerts named.</em></p>
 </section>
 <section class="sec sec-build"><h2>🛠️ Exercises</h2>
-<p>Use synthetic data only. A generator script or a public sample database is fine; never real customer data.</p>
+<p>Use synthetic data only: the lab dataset from lesson <a class="xref" href="#/0.3">0.3</a> (its <code>accounts</code> and <code>transactions</code> tables) is the easiest source, and a public sample database is also fine; never real customer data.</p>
+<p><strong>Before the 🟡 exercise.</strong> Kafka is taught properly in lesson <a class="xref" href="#/2.3">2.3</a>; here you need only four words. A <em>topic</em> is a named log of events, a <em>producer</em> writes to it, a <em>consumer</em> reads it, and Kafka Connect runs connectors such as Debezium between a database and a topic. Start from the PostgreSQL Docker Compose file in the <code>tutorial</code> folder of Debezium&#39;s examples repository on GitHub, which starts a PostgreSQL already set up for logical decoding, Kafka and Kafka Connect together. Give Docker at least 4 GB of memory (lesson <a class="xref" href="#/0.3">0.3</a>, <em>Will my laptop cope?</em>).</p>
 <ul>
-<li>🟢 In PostgreSQL or DuckDB, create a synthetic <code>accounts</code> table (1,000 rows with <code>updated_at</code>) and copy it to <code>raw_accounts</code> with <code>_loaded_at</code> and <code>_batch_id</code>. Then update 50 rows, delete 10, insert 20 and run a high-water-mark incremental load. <em>Done when:</em> you can show, with a query, exactly which changes the incremental load caught and which it missed, and explain why.</li>
+<li>🟢 In PostgreSQL or DuckDB, take the lab&#39;s <code>accounts</code> table (1,800 rows), add an <code>updated_at</code> column and copy it to <code>raw_accounts</code> with <code>_loaded_at</code> and <code>_batch_id</code>. Then update 50 rows, delete 10, insert 20 and run a high-water-mark incremental load. <em>Done when:</em> you can show, with a query, exactly which changes the incremental load caught and which it missed, and explain why.</li>
 <li>🟡 Run PostgreSQL with <code>wal_level = logical</code>, Kafka (or Redpanda) and Kafka Connect with the Debezium PostgreSQL connector in Docker, following the Debezium tutorial. Capture one table, then insert, update and delete rows. <em>Done when:</em> you can show the <code>c</code>, <code>u</code> and <code>d</code> events in the topic, and a SQL query over the landed events that rebuilds the current table state exactly.</li>
-<li>🔴 Write an ingestion design note, using the Najm template, for your synthetic <code>transactions</code> table, with a reconciliation query. Stop the CDC connector for an hour while generating writes. <em>Done when:</em> you can show the slot&#39;s retained WAL growing, a clean catch-up after restart (no lost or duplicated rows) and the reconciliation passing.</li>
+<li>🔴 Write an ingestion design note, using the Najm template, for the lab&#39;s <code>transactions</code> table, with a reconciliation query. Stop the CDC connector for an hour while generating writes. <em>Done when:</em> you can show the slot&#39;s retained WAL growing, a clean catch-up after restart (no lost or duplicated rows) and the reconciliation passing.</li>
 </ul>
 </section>
 <section class="sec sec-mistakes"><h2>⚠️ Mistakes and traps</h2>
@@ -3603,7 +3674,7 @@ WHERE rn = 1
 <p class="crumb"><a href="#/map">Module 2 — Ingestion and pipelines</a></p>
 <h1><span class="num">2.2</span> Orchestration: DAGs, idempotency, retries and backfills</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Ingest, Operate</bdi></span> · <span class="prereq">Before this: <a href="#/2.1">2.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> write a daily load that can be rerun or backfilled for any date without duplicating rows, and prove it with the day&#39;s totals before and after three reruns. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a daily load that can be rerun or backfilled for any date without duplicating rows, and prove it with the day&#39;s totals before and after three reruns. <em>Study time: reading about 15 min, hands-on about 6 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -3942,7 +4013,7 @@ Approved by:      Faisal
 <ul>
 <li>A. Move the schedule to 05:00 and hope the end-of-day batch is never that late</li>
 <li>B. Trigger on a readiness signal from core end-of-day, with a timeout and an alert</li>
-<li>C. Retry the build every five minutes until the totals look right to the risk team</li>
+<li>C. Retry the build every five minutes until the totals look right</li>
 <li>D. Build twice a day and let users pick whichever version looks better</li>
 </ul>
 <details><summary>Answer</summary>
@@ -3970,13 +4041,13 @@ Approved by:      Faisal
 <p class="crumb"><a href="#/map">Module 2 — Ingestion and pipelines</a></p>
 <h1><span class="num">2.3</span> Streaming: events, Kafka, windows and the exactly-once myth</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Ingest, Transform</bdi></span> · <span class="prereq">Before this: <a href="#/2.1">2.1</a>, <a href="#/2.2">2.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> build a Kafka consumer that lands every event exactly once in its table despite crashes, using manual commits after writing and an idempotent sink. <em>Study time: about 120 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build a Kafka consumer that lands every event exactly once in its table despite crashes, using manual commits after writing and an idempotent sink. <em>Study time: reading about 15 min, hands-on about 7 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
 <li><strong>Streaming</strong> processes data continuously as <strong>events</strong> (small immutable facts such as &quot;card 4417 was authorised for 120 QAR at 14:02:11&quot;) instead of in nightly batches. Use it when a decision loses value within seconds or minutes, like scoring a card payment for fraud.</li>
 <li><strong>Apache Kafka</strong> stores events in <strong>topics</strong>, split into <strong>partitions</strong>. Order is guaranteed only within a partition, so choose the <strong>key</strong> (for example the card ID) that keeps related events together.</li>
-<li>Consumers track their position with <strong>offsets</strong>. When you commit the offset relative to doing the work decides whether you get <strong>at-most-once</strong> (may lose) or <strong>at-least-once</strong> (may duplicate) delivery.</li>
+<li>Consumers track their position with <strong>offsets</strong>. Whether you commit the offset before or after doing the work decides whether you get <strong>at-most-once</strong> (may lose) or <strong>at-least-once</strong> (may duplicate) delivery.</li>
 <li>Kafka offers <strong>exactly-once within Kafka</strong> through idempotent producers and transactions. End to end, exactly-once needs an <strong>idempotent sink</strong>: design for duplicates, and make them harmless.</li>
 <li>Aggregate by <strong>event time</strong>, not arrival time, using <strong>windows</strong> (tumbling, sliding, session) and <strong>watermarks</strong> that say how long to wait for late events.</li>
 <li>Biggest trap: auto-committing offsets before the work is done, so a crash silently drops events.</li>
@@ -4256,9 +4327,9 @@ GROUP BY card_id, window_start, window_end;
 <p>Dana&#39;s go-live test: <em>&quot;Kill the feature job mid-stream, restart it, and show every card&#39;s 10-minute count matches a batch recomputation from the raw archive.&quot;</em></p>
 </section>
 <section class="sec sec-build"><h2>🛠️ Exercises</h2>
-<p>Run Kafka or Redpanda locally in Docker using their official quick-starts, and generate synthetic card events with a small Python script. Never use real card numbers.</p>
+<p>Run Kafka or Redpanda locally in Docker using their official quick-starts, and produce card events with a small Python script that replays rows of the lab dataset&#39;s <code>transactions</code> (lesson <a class="xref" href="#/0.3">0.3</a>), treating each <code>account_id</code> as a card. Never use real card numbers.</p>
 <ul>
-<li>🟢 Create a three-partition topic <code>card.auths</code> and produce 1,000 synthetic events for 20 cards, keyed by <code>card_id</code>. Start two consumers in one group, then a third. <em>Done when:</em> you can show partition ownership before and after the rebalance, and each card&#39;s events in order.</li>
+<li>🟢 Create a three-partition topic <code>card.auths</code> and produce 1,000 of those events for 20 cards, keyed by <code>card_id</code>. Start two consumers in one group, then a third. <em>Done when:</em> you can show partition ownership before and after the rebalance, and each card&#39;s events in order.</li>
 <li>🟡 Write a consumer with auto-commit that sleeps between reading and writing to PostgreSQL, and kill it mid-run. Rewrite it with manual commits after writing and an <code>ON CONFLICT (auth_id) DO NOTHING</code> sink, and kill it again. <em>Done when:</em> you can show events lost by the first version, and every event exactly once in the second version&#39;s table although some were read twice.</li>
 <li>🔴 Using Flink SQL, Spark Structured Streaming or Kafka Streams, compute a 5-minute tumbling count per card by event time with a 30-second watermark. Produce some events with event times two minutes in the past. <em>Done when:</em> you can show those late events handled as you designed (dropped, side output or allowed lateness), explain the trade-off, and fill in a Najm stream design card for your topic.</li>
 </ul>
@@ -4363,7 +4434,7 @@ GROUP BY card_id, window_start, window_end;
 <p class="crumb"><a href="#/map">Module 3 — Transformation and quality</a></p>
 <h1><span class="num">3.1</span> Transformations as code: dbt, layers, tests and version control</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Transform</bdi></span> · <span class="prereq">Before this: <a href="#/1.1">1.1</a>, <a href="#/1.2">1.2</a>, <a href="#/2.1">2.1</a>, <a href="#/2.2">2.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> build a dbt project with staging, intermediate and mart models whose tests fail on a planted duplicate and pass again once you fix the deduplication. <em>Study time: about 125 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build a dbt project with staging, intermediate and mart models whose tests fail on a planted duplicate and pass again once you fix the deduplication. <em>Study time: reading about 15 min, hands-on about 5 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -4407,7 +4478,7 @@ GROUP BY card_id, window_start, window_end;
 <td>Each model is defined once and reused, so logic is not copied</td>
 </tr>
 </tbody></table></div>
-<p><strong>dbt in one paragraph.</strong> dbt (dbt Core is the open-source command-line tool, maintained by dbt Labs) compiles and runs SQL <code>SELECT</code> statements against your warehouse. You do not write <code>CREATE TABLE</code>; you write the <code>SELECT</code>, and dbt wraps it in the right DDL for its <strong>materialisation</strong> (how the result is stored: <code>view</code>, <code>table</code>, <code>incremental</code> or <code>ephemeral</code>). Instead of hard-coding table names, you call <code>{{ ref(&#39;model_name&#39;) }}</code> for another model and <code>{{ source(&#39;source_name&#39;, &#39;table&#39;) }}</code> for a raw table. From those calls dbt builds a <strong>DAG</strong> (directed acyclic graph) of dependencies and runs models in the right order. Adapters connect dbt to PostgreSQL, DuckDB (the community <code>dbt-duckdb</code> adapter), Snowflake, BigQuery, Databricks, Amazon Redshift and others.</p>
+<p><strong>dbt in one paragraph.</strong> dbt (dbt Core is the open-source command-line tool, maintained by dbt Labs) compiles and runs SQL <code>SELECT</code> statements against your warehouse. You do not write <code>CREATE TABLE</code>; you write the <code>SELECT</code>, and dbt wraps it in the right DDL (data definition language: the statements that create tables and views) for its <strong>materialisation</strong> (how the result is stored: <code>view</code>, <code>table</code>, <code>incremental</code> or <code>ephemeral</code>). Instead of hard-coding table names, you call <code>{{ ref(&#39;model_name&#39;) }}</code> for another model and <code>{{ source(&#39;source_name&#39;, &#39;table&#39;) }}</code> for a raw table. The double braces are <strong>Jinja</strong>, a templating language: dbt replaces them with real table names before it sends the SQL. From those calls dbt builds a <strong>DAG</strong> (directed acyclic graph) of dependencies and runs models in the right order. Adapters connect dbt to PostgreSQL, DuckDB (the community <code>dbt-duckdb</code> adapter), Snowflake, BigQuery, Databricks, Amazon Redshift and others.</p>
 <p><strong>The layers.</strong> Najm follows the structure dbt Labs recommends in its project-structure guide. Each layer has one job:</p>
 <div class="diagram" dir="ltr"><svg id="sd9" width="100%" xmlns="http://www.w3.org/2000/svg" class="flowchart" style="max-width: 1610.96875px;" viewBox="0 0 1610.96875 330" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#sd9{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;font-size:16px;fill:#000000;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#sd9 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#sd9 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#sd9 .error-icon{fill:#552222;}#sd9 .error-text{fill:#552222;stroke:#552222;}#sd9 .edge-thickness-normal{stroke-width:1px;}#sd9 .edge-thickness-thick{stroke-width:3.5px;}#sd9 .edge-pattern-solid{stroke-dasharray:0;}#sd9 .edge-thickness-invisible{stroke-width:0;fill:none;}#sd9 .edge-pattern-dashed{stroke-dasharray:3;}#sd9 .edge-pattern-dotted{stroke-dasharray:2;}#sd9 .marker{fill:#666;stroke:#666;}#sd9 .marker.cross{stroke:#666;}#sd9 svg{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;font-size:16px;}#sd9 p{margin:0;}#sd9 .label{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;color:#000000;}#sd9 .cluster-label text{fill:#333;}#sd9 .cluster-label span{color:#333;}#sd9 .cluster-label span p{background-color:transparent;}#sd9 .label text,#sd9 span{fill:#000000;color:#000000;}#sd9 .node rect,#sd9 .node circle,#sd9 .node ellipse,#sd9 .node polygon,#sd9 .node path{fill:#eee;stroke:#999;stroke-width:1px;}#sd9 .rough-node .label text,#sd9 .node .label text,#sd9 .image-shape .label,#sd9 .icon-shape .label{text-anchor:middle;}#sd9 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#sd9 .rough-node .label,#sd9 .node .label,#sd9 .image-shape .label,#sd9 .icon-shape .label{text-align:center;}#sd9 .node.clickable{cursor:pointer;}#sd9 .root .anchor path{fill:#666!important;stroke-width:0;stroke:#666;}#sd9 .arrowheadPath{fill:#333333;}#sd9 .edgePath .path{stroke:#666;stroke-width:1px;}#sd9 .flowchart-link{stroke:#666;fill:none;}#sd9 .edgeLabel{background-color:white;text-align:center;}#sd9 .edgeLabel p{background-color:white;}#sd9 .edgeLabel rect{opacity:0.5;background-color:white;fill:white;}#sd9 .labelBkg{background-color:rgba(255, 255, 255, 0.5);}#sd9 .cluster rect{fill:hsl(0, 0%, 98.9215686275%);stroke:#707070;stroke-width:1px;}#sd9 .cluster text{fill:#333;}#sd9 .cluster span{color:#333;}#sd9 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;font-size:12px;background:hsl(-160, 0%, 93.3333333333%);border:1px solid #707070;border-radius:2px;pointer-events:none;z-index:100;}#sd9 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#000000;}#sd9 rect.text{fill:none;stroke-width:0;}#sd9 .icon-shape,#sd9 .image-shape{background-color:white;text-align:center;}#sd9 .icon-shape p,#sd9 .image-shape p{background-color:white;padding:2px;}#sd9 .icon-shape .label rect,#sd9 .image-shape .label rect{opacity:0.5;background-color:white;fill:white;}#sd9 .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#sd9 .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#sd9 .node .neo-node{stroke:#999;}#sd9 [data-look="neo"].node rect,#sd9 [data-look="neo"].cluster rect,#sd9 [data-look="neo"].node polygon{stroke:url(#sd9-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#sd9 [data-look="neo"].swimlane.cluster rect{filter:none;}#sd9 [data-look="neo"].node path{stroke:url(#sd9-gradient);stroke-width:1px;}#sd9 [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#sd9 [data-look="neo"].node .neo-line path{stroke:#999;filter:none;}#sd9 [data-look="neo"].node circle{stroke:url(#sd9-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#sd9 [data-look="neo"].node circle .state-start{fill:#000000;}#sd9 [data-look="neo"].icon-shape .icon{fill:url(#sd9-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#sd9 [data-look="neo"].icon-shape .icon-neo path{stroke:url(#sd9-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#sd9 :root{--mermaid-font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;}</style><g><marker id="sd9_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="sd9_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="sd9_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></path></marker><marker id="sd9_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></polygon></marker><marker id="sd9_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="sd9_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="sd9_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="sd9_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="sd9_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="sd9_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="sd9_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"></path></marker><marker id="sd9_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M268,47L272.167,47C276.333,47,284.667,47,294.673,47C304.68,47,316.359,47,322.199,47L328.039,47" id="sd9-L_S1_ST1_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_S1_ST1_0" data-points="W3sieCI6MjY4LCJ5Ijo0N30seyJ4IjoyOTMsInkiOjQ3fSx7IngiOjMzMi4wMzkwNjI1LCJ5Ijo0N31d" data-look="classic" marker-end="url(#sd9_flowchart-v2-pointEnd)"></path><path d="M578,163L582.167,163C586.333,163,594.667,163,602.359,163C610.052,163,617.104,163,620.63,163L624.156,163" id="sd9-L_S2_ST2_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_S2_ST2_0" data-points="W3sieCI6NTc4LCJ5IjoxNjN9LHsieCI6NjAzLCJ5IjoxNjN9LHsieCI6NjI4LjE1NjI1LCJ5IjoxNjN9XQ==" data-look="classic" marker-end="url(#sd9_flowchart-v2-pointEnd)"></path><path d="M268,283L272.167,283C276.333,283,284.667,283,292.798,283C300.93,283,308.859,283,312.824,283L316.789,283" id="sd9-L_S3_ST3_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_S3_ST3_0" data-points="W3sieCI6MjY4LCJ5IjoyODN9LHsieCI6MjkzLCJ5IjoyODN9LHsieCI6MzIwLjc4OTA2MjUsInkiOjI4M31d" data-look="classic" marker-end="url(#sd9_flowchart-v2-pointEnd)"></path><path d="M471.511,74L493.426,99.167C515.341,124.333,559.17,174.667,590.261,203.109C621.351,231.552,639.702,238.103,648.877,241.379L658.053,244.655" id="sd9-L_ST1_I1_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_ST1_I1_0" data-points="W3sieCI6NDcxLjUxMTIzNTk1NTA1NjIsInkiOjc0fSx7IngiOjYwMywieSI6MjI1fSx7IngiOjY2MS44MTk4MjQyMTg3NSwieSI6MjQ2fV0=" data-look="classic" marker-end="url(#sd9_flowchart-v2-pointEnd)"></path><path d="M575.211,283L579.842,283C584.474,283,593.737,283,601.87,282.74C610.004,282.479,617.007,281.958,620.509,281.698L624.011,281.437" id="sd9-L_ST3_I1_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_ST3_I1_0" data-points="W3sieCI6NTc1LjIxMDkzNzUsInkiOjI4M30seyJ4Ijo2MDMsInkiOjI4M30seyJ4Ijo2MjgsInkiOjI4MS4xNDA1MDc4NzM3ODd9XQ==" data-look="classic" marker-end="url(#sd9_flowchart-v2-pointEnd)"></path><path d="M846.734,163L850.927,163C855.12,163,863.505,163,876.735,167.851C889.964,172.703,908.038,182.405,917.075,187.257L926.111,192.108" id="sd9-L_ST2_D1_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_ST2_D1_0" data-points="W3sieCI6ODQ2LjczNDM3NSwieSI6MTYzfSx7IngiOjg3MS44OTA2MjUsInkiOjE2M30seyJ4Ijo5MjkuNjM1NjQxMTYzNzkzMSwieSI6MTk0fV0=" data-look="classic" marker-end="url(#sd9_flowchart-v2-pointEnd)"></path><path d="M846.891,273L851.057,273C855.224,273,863.557,273,875.78,269.122C888.003,265.245,904.116,257.49,912.172,253.612L920.228,249.735" id="sd9-L_I1_D1_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_I1_D1_0" data-points="W3sieCI6ODQ2Ljg5MDYyNSwieSI6MjczfSx7IngiOjg3MS44OTA2MjUsInkiOjI3M30seyJ4Ijo5MjMuODMyNDgxOTcxMTUzOCwieSI6MjQ4fV0=" data-look="classic" marker-end="url(#sd9_flowchart-v2-pointEnd)"></path><path d="M563.961,47L570.467,47C576.974,47,589.987,47,618.901,47C647.815,47,692.63,47,737.445,47C782.26,47,827.076,47,867.49,47C907.904,47,943.917,47,979.93,47C1015.943,47,1051.956,47,1073.462,47C1094.969,47,1101.969,47,1105.469,47L1108.969,47" id="sd9-L_ST1_F1_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_ST1_F1_0" data-points="W3sieCI6NTYzLjk2MDkzNzUsInkiOjQ3fSx7IngiOjYwMywieSI6NDd9LHsieCI6NzM3LjQ0NTMxMjUsInkiOjQ3fSx7IngiOjg3MS44OTA2MjUsInkiOjQ3fSx7IngiOjk3OS45Mjk2ODc1LCJ5Ijo0N30seyJ4IjoxMDg3Ljk2ODc1LCJ5Ijo0N30seyJ4IjoxMTEyLjk2ODc1LCJ5Ijo0N31d" data-look="classic" marker-end="url(#sd9_flowchart-v2-pointEnd)"></path><path d="M1007.449,194L1020.869,180.833C1034.289,167.667,1061.129,141.333,1085.531,121.673C1109.934,102.012,1131.899,89.024,1142.881,82.53L1153.864,76.036" id="sd9-L_D1_F1_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_D1_F1_0" data-points="W3sieCI6MTAwNy40NDkwNzEzNDQzMzk2LCJ5IjoxOTR9LHsieCI6MTA4Ny45Njg3NSwieSI6MTE1fSx7IngiOjExNTcuMzA2OTg1Mjk0MTE3NiwieSI6NzR9XQ==" data-look="classic" marker-end="url(#sd9_flowchart-v2-pointEnd)"></path><path d="M1292.969,47L1297.135,47C1301.302,47,1309.635,47,1330.416,59.434C1351.197,71.868,1384.426,96.736,1401.04,109.169L1417.654,121.603" id="sd9-L_F1_E1_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_F1_E1_0" data-points="W3sieCI6MTI5Mi45Njg3NSwieSI6NDd9LHsieCI6MTMxNy45Njg3NSwieSI6NDd9LHsieCI6MTQyMC44NTY2ODEwMzQ0ODI4LCJ5IjoxMjR9XQ==" data-look="classic" marker-end="url(#sd9_flowchart-v2-pointEnd)"></path><path d="M1062.969,228.686L1067.135,229.072C1071.302,229.457,1079.635,230.229,1102.969,230.614C1126.302,231,1164.635,231,1202.969,231C1241.302,231,1279.635,231,1309.209,226.434C1338.782,221.869,1359.595,212.738,1370.002,208.172L1380.409,203.607" id="sd9-L_D1_E1_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_D1_E1_0" data-points="W3sieCI6MTA2Mi45Njg3NSwieSI6MjI4LjY4NjAyMjEyNzQxMzR9LHsieCI6MTA4Ny45Njg3NSwieSI6MjMxfSx7IngiOjEyMDIuOTY4NzUsInkiOjIzMX0seyJ4IjoxMzE3Ljk2ODc1LCJ5IjoyMzF9LHsieCI6MTM4NC4wNzE2OTExNzY0NzA1LCJ5IjoyMDJ9XQ==" data-look="classic" marker-end="url(#sd9_flowchart-v2-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" data-id="L_S1_ST1_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_S2_ST2_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_S3_ST3_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_ST1_I1_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_ST3_I1_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_ST2_D1_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_I1_D1_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_ST1_F1_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_D1_F1_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_F1_E1_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_D1_E1_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default  " id="sd9-flowchart-S1-0" data-look="classic" transform="translate(138, 47)"><rect class="basic label-container" style="" x="-130" y="-39" width="260" height="78"></rect><g class="label" style="" transform="translate(-100, -24)"><rect></rect><foreignObject width="200" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel "><p>source: raw_core.transactions</p></span></div></foreignObject></g></g><g class="node default  " id="sd9-flowchart-ST1-1" data-look="classic" transform="translate(448, 47)"><rect class="basic label-container" style="" x="-115.9609375" y="-27" width="231.921875" height="54"></rect><g class="label" style="" transform="translate(-85.9609375, -12)"><rect></rect><foreignObject width="171.921875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel "><p>stg_core__transactions</p></span></div></foreignObject></g></g><g class="node default  " id="sd9-flowchart-S2-2" data-look="classic" transform="translate(448, 163)"><rect class="basic label-container" style="" x="-130" y="-39" width="260" height="78"></rect><g class="label" style="" transform="translate(-100, -24)"><rect></rect><foreignObject width="200" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel "><p>source: raw_core.customers</p></span></div></foreignObject></g></g><g class="node default  " id="sd9-flowchart-ST2-3" data-look="classic" transform="translate(737.4453125, 163)"><rect class="basic label-container" style="" x="-109.2890625" y="-27" width="218.578125" height="54"></rect><g class="label" style="" transform="translate(-79.2890625, -12)"><rect></rect><foreignObject width="158.578125" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel "><p>stg_core__customers</p></span></div></foreignObject></g></g><g class="node default  " id="sd9-flowchart-S3-4" data-look="classic" transform="translate(138, 283)"><rect class="basic label-container" style="" x="-130" y="-39" width="260" height="78"></rect><g class="label" style="" transform="translate(-100, -24)"><rect></rect><foreignObject width="200" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel "><p>source: raw_cards.authorisations</p></span></div></foreignObject></g></g><g class="node default  " id="sd9-flowchart-ST3-5" data-look="classic" transform="translate(448, 283)"><rect class="basic label-container" style="" x="-127.2109375" y="-27" width="254.421875" height="54"></rect><g class="label" style="" transform="translate(-97.2109375, -12)"><rect></rect><foreignObject width="194.421875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel "><p>stg_cards__authorisations</p></span></div></foreignObject></g></g><g class="node default  " id="sd9-flowchart-I1-7" data-look="classic" transform="translate(737.4453125, 273)"><rect class="basic label-container" style="" x="-109.4453125" y="-27" width="218.890625" height="54"></rect><g class="label" style="" transform="translate(-79.4453125, -12)"><rect></rect><foreignObject width="158.890625" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel "><p>int_customer_activity</p></span></div></foreignObject></g></g><g class="node default  " id="sd9-flowchart-D1-11" data-look="classic" transform="translate(979.9296875, 221)"><rect class="basic label-container" style="" x="-83.0390625" y="-27" width="166.078125" height="54"></rect><g class="label" style="" transform="translate(-53.0390625, -12)"><rect></rect><foreignObject width="106.078125" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel "><p>dim_customer</p></span></div></foreignObject></g></g><g class="node default  " id="sd9-flowchart-F1-15" data-look="classic" transform="translate(1202.96875, 47)"><rect class="basic label-container" style="" x="-90" y="-27" width="180" height="54"></rect><g class="label" style="" transform="translate(-60, -12)"><rect></rect><foreignObject width="120" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel "><p>fct_transactions</p></span></div></foreignObject></g></g><g class="node default  " id="sd9-flowchart-E1-19" data-look="classic" transform="translate(1472.96875, 163)"><rect class="basic label-container" style="" x="-130" y="-39" width="260" height="78"></rect><g class="label" style="" transform="translate(-100, -24)"><rect></rect><foreignObject width="200" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;"><span class="nodeLabel "><p>Retail and finance dashboards</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="sd9-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"></feDropShadow></filter></defs><defs><filter id="sd9-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"></feDropShadow></filter></defs><linearGradient id="sd9-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="hsl(0, 0%, 83.3333333333%)" stop-opacity="1"></stop><stop offset="100%" stop-color="hsl(0, 0%, 88.9215686275%)" stop-opacity="1"></stop></linearGradient></svg></div><div class="table-scroll"><table>
 <thead>
@@ -4467,7 +4538,7 @@ select
 from deduplicated
 where rn = 1
 </code></pre>
-<p><strong>Tests next to the code.</strong> In a YAML file beside the model, you declare <strong>generic data tests</strong>. dbt ships four: <code>unique</code>, <code>not_null</code>, <code>accepted_values</code> and <code>relationships</code> (every value must exist in another model, like a foreign key). Since dbt 1.8 the key is <code>data_tests:</code>; the older <code>tests:</code> still works. From 1.10, parameters such as <code>values</code> are preferably nested under <code>arguments:</code>.</p>
+<p><strong>Tests next to the code.</strong> In a YAML file beside the model, you declare <strong>generic data tests</strong>. dbt ships four: <code>unique</code>, <code>not_null</code>, <code>accepted_values</code> and <code>relationships</code> (every value must exist in another model, like a foreign key). Since dbt 1.8 the key is <code>data_tests:</code>; the older <code>tests:</code> still works. From dbt 1.10.5 (the <code>require_generic_test_arguments_property</code> flag, on by default from 1.10.8), parameters such as <code>values</code> are nested under <code>arguments:</code>.</p>
 <pre><code class="language-yaml"># models/staging/core/_core__models.yml
 models:
   - name: stg_core__transactions
@@ -4719,7 +4790,24 @@ from {{ source(&#39;core_banking&#39;, &#39;customers&#39;) }}
 <p>Kareem and finance now read the same <code>is_active_90d</code>. The disagreement about which definition is right moves to where it belongs: a metric definition card (<a class="xref" href="#/4.1">4.1</a>).</p>
 </section>
 <section class="sec sec-build"><h2>🛠️ Exercises</h2>
-<p>Use synthetic data only. Generate fake customers, accounts and transactions with Python (for example the <code>Faker</code> library) or write small CSV seeds.</p>
+<p>Use synthetic data only. Export seeds from the lab dataset (lesson <a class="xref" href="#/0.3">0.3</a>), giving <code>transactions</code> the raw column names the staging example above expects:</p>
+<pre><code class="language-sql">-- run in DuckDB, from your dbt project folder, against the lab file
+ATTACH &#39;najm_lab.duckdb&#39; AS lab (READ_ONLY);
+COPY lab.customers TO &#39;seeds/customers.csv&#39; (HEADER);
+COPY lab.accounts  TO &#39;seeds/accounts.csv&#39;  (HEADER);
+COPY (
+    SELECT printf(&#39;T%08d&#39;, txn_id) AS txn_ref,
+           account_id              AS acct_no,
+           txn_ts_utc              AS txn_ts,
+           amount_qar              AS amt,
+           &#39;QAR&#39;                   AS ccy,
+           CASE direction WHEN &#39;debit&#39; THEN &#39;D&#39; ELSE &#39;C&#39; END AS txn_typ,
+           TIMESTAMP &#39;2026-04-01 06:00&#39; AS _loaded_at
+    FROM lab.transactions
+    WHERE txn_id &lt;= 5000
+) TO &#39;seeds/transactions.csv&#39; (HEADER);
+</code></pre>
+<p>A seed is referenced like a model, with <code>{{ ref(&#39;transactions&#39;) }}</code> rather than <code>source()</code>; otherwise your staging model can follow the example. If dbt is new to you, allow about three hours for 🟢 and 🟡 together; the 🔴 snapshot, unit test and CI add about two more and can wait for a second pass.</p>
 <ul>
 <li>🟢 Install dbt Core with the <code>dbt-duckdb</code> adapter, create a project, load three CSV seeds (<code>customers</code>, <code>accounts</code>, <code>transactions</code>) with <code>dbt seed</code>, and write one staging model per seed with renamed, cast columns. <em>Done when:</em> <code>dbt build</code> succeeds and every staging model has <code>unique</code> and <code>not_null</code> tests on its primary key.</li>
 <li>🟡 Add <code>int_customer_activity</code> and <code>dim_customer</code> as in this lesson. Deliberately insert a duplicate transaction and a transaction with an unknown account into your seed data. <em>Done when:</em> <code>dbt build</code> fails on the right tests, downstream models are skipped, and after you fix the staging deduplication the build passes again.</li>
@@ -4783,10 +4871,10 @@ from {{ source(&#39;core_banking&#39;, &#39;customers&#39;) }}
 
 <p><strong>4. A staging model <code>stg_core__transactions</code> has a <code>unique</code> test on <code>transaction_id</code> that fails during <code>dbt build</code>. What happens to <code>fct_transactions</code>, which depends on it?</strong></p>
 <ul>
-<li>A. It builds normally, and the failure is logged for later</li>
+<li>A. It builds normally and the failure is logged for later</li>
 <li>B. It is skipped, so the bad data does not flow downstream</li>
 <li>C. It is dropped from the warehouse</li>
-<li>D. dbt automatically removes the duplicates and rebuilds it</li>
+<li>D. dbt automatically removes duplicates and rebuilds it</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -4826,7 +4914,7 @@ from {{ source(&#39;core_banking&#39;, &#39;customers&#39;) }}
 <p class="crumb"><a href="#/map">Module 3 — Transformation and quality</a></p>
 <h1><span class="num">3.2</span> Data quality: tests, contracts and observability</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Transform, Operate</bdi></span> · <span class="prereq">Before this: <a href="#/2.2">2.2</a>, <a href="#/3.1">3.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> write a data contract and a validation script that rejects each bad file with a message naming the breach, and set a severity and owner for one check per quality dimension. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a data contract and a validation script that rejects each bad file with a message naming the breach, and set a severity and owner for one check per quality dimension. <em>Study time: reading about 15 min, hands-on about 5 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -4839,7 +4927,7 @@ from {{ source(&#39;core_banking&#39;, &#39;customers&#39;) }}
 </section>
 <section class="sec sec-why"><h2>🧭 Why it matters</h2>
 <p>At 07:40 on a Monday, the Chief Risk Officer&#39;s dashboard shows SME loan arrears down by a third overnight. The risk team starts drafting a note to the board. Huda checks Airflow: every task is green. It takes until lunchtime to find the cause. Over the weekend, the core banking team changed the <code>days_past_due</code> field from an integer to a text code (&quot;0-30&quot;, &quot;31-60&quot;) in a release. The ingestion job loaded it without error, the staging cast turned every value it could not parse into null, and the arrears model counted nulls as &quot;not in arrears&quot;. Nothing failed. The numbers were simply wrong.</p>
-<p>Public cases show the same pattern. In October 2020, it was widely reported that around 16,000 positive COVID-19 test results in England were left out of official daily figures. The cause was a data pipeline that used the legacy Excel XLS file format, which holds at most 65,536 rows per sheet; records beyond the limit were silently dropped. Again, nothing crashed.</p>
+<p>Public cases show the same pattern. In the 2020 England COVID-19 reporting gap (lesson <a class="xref" href="#/0.2">0.2</a>), the widely reported cause was a format limit: each case took several rows in a legacy Excel XLS template capped at 65,536 rows, so a file held only about 1,400 cases and the rest were dropped without an error. Again, nothing crashed.</p>
 <p>Faisal&#39;s conclusion for the team: &quot;Pipelines fail loudly; data fails quietly. We need checks that make data failures loud, agreements so they happen less, and monitoring for the ones we didn&#39;t imagine.&quot;</p>
 </section>
 <section class="sec sec-how"><h2>📐 How it works</h2>
@@ -5272,7 +5360,7 @@ where d = current_date - 1
 <p class="crumb"><a href="#/map">Module 3 — Transformation and quality</a></p>
 <h1><span class="num">3.3</span> Performance and cost: partitioning, clustering, incremental models and query plans</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Store, Operate</bdi></span> · <span class="prereq">Before this: <a href="#/1.3">1.3</a>, <a href="#/3.1">3.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> show from query plans that a partitioned table or a half-open date filter reads less data, and build an incremental model whose lookback window keeps it equal to a full refresh. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> show from query plans that a partitioned table or a half-open date filter reads less data, and build an incremental model whose lookback window keeps it equal to a full refresh. <em>Study time: reading about 15 min, hands-on about 5 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -5538,7 +5626,7 @@ group by account_id;
 <p>Thresholds and lookback windows are Najm&#39;s own choices, set from measured data.</p>
 </section>
 <section class="sec sec-build"><h2>🛠️ Exercises</h2>
-<p>Use synthetic data only: generate, for example, tens of millions of fake transactions over two years with DuckDB&#39;s <code>range()</code> and <code>random()</code> functions.</p>
+<p>Use synthetic data only: scale up the lab generator from lesson <a class="xref" href="#/0.3">0.3</a> to tens of millions of transactions over two years by raising its <code>range()</code> bound and widening the date span. Keep <code>hash()</code> rather than <code>random()</code>, so reruns match.</p>
 <ul>
 <li>🟢 In DuckDB, create a synthetic transactions table and write it to Parquet twice: once unpartitioned and once partitioned by year and month. Run the same one-month sum on both with <code>explain analyze</code>. <em>Done when:</em> you can show from the plans and timings that the partitioned version reads only one month&#39;s files.</li>
 <li>🟡 In PostgreSQL, create a range-partitioned <code>fct_transactions</code> by month, load synthetic data, and compare <code>explain (analyze, buffers)</code> for a <code>to_char</code> month filter and a half-open range filter. <em>Done when:</em> you can point to the line in each plan that shows how many partitions were scanned, and explain the difference in buffers read.</li>
@@ -5646,7 +5734,7 @@ group by account_id;
 <p class="crumb"><a href="#/map">Module 4 — Analytics people trust</a></p>
 <h1><span class="num">4.1</span> Defining metrics: one definition, a semantic layer and a metrics catalogue</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Model, Serve</bdi></span> · <span class="prereq">Before this: <a href="#/1.2">1.2</a>, <a href="#/3.1">3.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> write a metric card that resolves three conflicting active-customer definitions, and explain each difference between their numbers row by row. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a metric card that resolves three conflicting active-customer definitions, and explain each difference between their numbers row by row. <em>Study time: reading about 15 min, hands-on about 6 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -5945,7 +6033,7 @@ metrics:
 </tbody></table></div>
 </section>
 <section class="sec sec-build"><h2>🛠️ Exercises</h2>
-<p>Use DuckDB or PostgreSQL with a synthetic table of 1,000 customers and 50,000 events that you generate yourself (include a few staff accounts, salary credits and reversals).</p>
+<p>Use DuckDB or PostgreSQL with the lab dataset from lesson <a class="xref" href="#/0.3">0.3</a>: its 1,000 <code>customers</code> and 100,000 <code>transactions</code>. Add a 50,000-row <code>events</code> table of app logins, and flag a few staff accounts, salary credits and reversals, using <code>hash()</code> as in 0.3 so reruns match.</p>
 <ul>
 <li>🟢 Write three different &quot;active customers&quot; queries, matching the retail, finance and risk definitions in 🧭, and run them on the same data. Then write the metric card that resolves them. <em>Done when:</em> the three queries give three different numbers, you can explain each difference row by row, and your card answers every field in the table above.</li>
 <li>🟡 Build a dbt model <code>mart_active_customers_daily</code> at the grain date × segment with an &quot;All&quot; row, plus tests (unique combination, not null, and a custom test that &quot;All&quot; is never less than any segment). Show, in a query, why summing daily rows to get a monthly figure is wrong. <em>Done when:</em> <code>dbt build</code> passes and your wrong-versus-right query pair produces visibly different numbers.</li>
@@ -6052,7 +6140,7 @@ metrics:
 <p class="crumb"><a href="#/map">Module 4 — Analytics people trust</a></p>
 <h1><span class="num">4.2</span> Dashboards and data storytelling that lead to decisions</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Serve, Analyse</bdi></span> · <span class="prereq">Before this: <a href="#/4.1">4.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> write a dashboard spec that names its decision, cadence and questions, and build a layout from which a colleague can answer those questions in under two minutes. <em>Study time: about 105 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write a dashboard spec that names its decision, cadence and questions, and build a layout from which a colleague can answer those questions in under two minutes. <em>Study time: reading about 15 min, hands-on about 4 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -6299,10 +6387,10 @@ metrics:
 </tbody></table></div>
 </section>
 <section class="sec sec-build"><h2>🛠️ Exercises</h2>
-<p>Run Metabase or Apache Superset locally in Docker against DuckDB or PostgreSQL with synthetic data you generate (at least 52 weeks of weekly figures for four segments and four regions).</p>
+<p>Run Metabase or Apache Superset locally in Docker against DuckDB or PostgreSQL with weekly figures built from the lab dataset (lesson <a class="xref" href="#/0.3">0.3</a>). You need at least 52 weeks for four segments and four regions, so widen its date span and add a fourth segment and region, keeping <code>hash()</code> so reruns match.</p>
 <ul>
 <li>🟢 Take a dashboard you know (or a public one) and write its spec using the six fields above. List every chart that does not answer one of its questions. <em>Done when:</em> your spec names a decision and a cadence, and each remaining chart maps to one question.</li>
-<li>🟡 Build the Retail Weekly layout from the spec with your synthetic data: five KPI tiles with comparisons, small multiples by segment and region, and a campaign table. Rewrite every chart title as a message. <em>Done when:</em> a classmate can answer the four questions in under two minutes without your help, and no bar chart has a non-zero baseline.</li>
+<li>🟡 Build the Retail Weekly layout from the spec with your weekly data: five KPI tiles with comparisons, small multiples by segment and region, and a campaign table. Rewrite every chart title as a message. <em>Done when:</em> a classmate can answer the four questions in under two minutes without your help, and no bar chart has a non-zero baseline.</li>
 <li>🔴 Add a 52-week normal-range band (or control-chart limits) to <code>card_spend</code> and write a four-line Monday note for a week where you injected a real change and a week where you did not. <em>Done when:</em> your note flags the injected change, stays quiet about the ordinary week, and separates measured facts from explanations.</li>
 </ul>
 </section>
@@ -6330,7 +6418,7 @@ metrics:
 <ul>
 <li>A. Add more charts so that it covers every question anyone might ask</li>
 <li>B. Email the dashboard link to the whole retail team every Monday</li>
-<li>C. Move it to a faster, more modern BI tool so that people enjoy opening it</li>
+<li>C. Move it to a faster, modern BI tool so that people enjoy opening it</li>
 <li>D. Ask what she decides and how often, write a spec, and rebuild around it</li>
 </ul>
 <details><summary>Answer</summary>
@@ -6406,7 +6494,7 @@ metrics:
 <p class="crumb"><a href="#/map">Module 4 — Analytics people trust</a></p>
 <h1><span class="num">4.3</span> Experiments and statistics for analysts: A/B tests and the traps that fool smart people</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Analyse</bdi></span> · <span class="prereq">Before this: <a href="#/1.1">1.1</a>, <a href="#/4.1">4.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> calculate an A/B test&#39;s sample size, explain to a product manager why it cannot finish early, and show with a simulation how peeking raises the false-positive rate. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> calculate an A/B test&#39;s sample size, explain to a product manager why it cannot finish early, and show with a simulation how peeking raises the false-positive rate. <em>Study time: reading about 15 min, hands-on about 4 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -6643,7 +6731,7 @@ print(round(stat, 1), p)              # 14.4, p about 0.00015
 <ul>
 <li>A. Treatment is performing worse, because it has fewer users</li>
 <li>B. Nothing important: 1,200 users out of 100,000 is negligible</li>
-<li>C. The test needs a larger minimum detectable effect to be reliable</li>
+<li>C. The test needs a bigger minimum detectable effect to be reliable</li>
 <li>D. Sample ratio mismatch: assignment or logging is probably broken</li>
 </ul>
 <details><summary>Answer</summary>
@@ -6707,7 +6795,7 @@ print(round(stat, 1), p)              # 14.4, p about 0.00015
 <p class="crumb"><a href="#/map">Module 5 — Data science and ML in production</a></p>
 <h1><span class="num">5.1</span> From notebook to pipeline: features, training, reproducibility and feature stores</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Transform, Serve</bdi></span> · <span class="prereq">Before this: <a href="#/1.2">1.2</a>, <a href="#/2.2">2.2</a>, <a href="#/3.1">3.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> build a point-in-time feature that avoids label leakage, and a training script whose two runs from the same commit and data log identical metrics. <em>Study time: about 120 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build a point-in-time feature that avoids label leakage, and a training script whose two runs from the same commit and data log identical metrics. <em>Study time: reading about 15 min, hands-on about 7 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -6926,9 +7014,9 @@ def train(train_df, valid_df, features, cfg, snapshot_id, git_sha):
 <p>The rebuild test keeps the card honest: each quarter Huda re-runs the pipeline from the recorded commit, snapshot and image. If it fails, something was not recorded, and they learn it before a validation review does.</p>
 </section>
 <section class="sec sec-build"><h2>🛠️ Exercises</h2>
-<p>Use synthetic data only: a short Python script with random card ids, timestamps and a small fraud rate.</p>
+<p>Use synthetic data only: start from the lab dataset&#39;s <code>transactions</code> (lesson <a class="xref" href="#/0.3">0.3</a>), treat each <code>account_id</code> as a card, and add a small fraud rate with <code>hash()</code> so reruns match.</p>
 <ul>
-<li>🟢 In DuckDB, generate 100,000 synthetic card transactions over six months and a <code>chargebacks</code> table dated 5 to 50 days after each fraud. Build one leaky feature (chargebacks per customer, all time) and one point-in-time feature (chargebacks filed before the transaction). <em>Done when:</em> a query shows a fraud row where the leaky feature is non-zero and the point-in-time one is zero, and you can explain why only the second is usable.</li>
+<li>🟢 In DuckDB, flag about 1 in 200 of the lab&#39;s 100,000 transactions as fraud, and build a <code>chargebacks</code> table dated 5 to 50 days after each fraud. Build one leaky feature (chargebacks per customer, all time) and one point-in-time feature (chargebacks filed before the transaction). <em>Done when:</em> a query shows a fraud row where the leaky feature is non-zero and the point-in-time one is zero, and you can explain why only the second is usable.</li>
 <li>🟡 Turn a notebook that trains a scikit-learn model on that data into a script with <code>build_training_set</code>, <code>train</code> and <code>evaluate</code> functions, a time-based split, a <code>Pipeline</code>, and MLflow logging of parameters, metrics, git commit and data file hash. <em>Done when:</em> two runs from the same commit and data give identical metrics in the MLflow UI.</li>
 <li>🔴 Run Feast locally with a file offline store and SQLite online store. Define a <code>card</code> entity and a feature view with two velocity features; retrieve a training set, materialise, and fetch online features. <em>Done when:</em> online and historical values match for one card at the latest timestamp, and an older timestamp returns older values.</li>
 </ul>
@@ -6966,7 +7054,7 @@ def train(train_df, valid_df, features, cfg, snapshot_id, git_sha):
 
 <p><strong>2. Najm&#39;s churn model predicts which customers will close their accounts next quarter. How should the team split the data?</strong></p>
 <ul>
-<li>A. Randomly, 70/15/15, shuffled so that every period is represented in every set</li>
+<li>A. Randomly, 70/15/15, shuffled so every period appears in every set</li>
 <li>B. By customer id, so no customer appears in two sets</li>
 <li>C. Randomly, five times with different seeds, averaging the results</li>
 <li>D. By time: train on earlier periods, test on the latest, minus immature labels</li>
@@ -7034,7 +7122,7 @@ def train(train_df, valid_df, features, cfg, snapshot_id, git_sha):
 <p class="crumb"><a href="#/map">Module 5 — Data science and ML in production</a></p>
 <h1><span class="num">5.2</span> Evaluating models and monitoring drift (MLOps basics)</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Operate, Analyse</bdi></span> · <span class="prereq">Before this: <a href="#/4.3">4.3</a>, <a href="#/5.1">5.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> pick and justify a fraud-model threshold from precision, recall and review capacity, and build a PSI report that flags a shifted feature and a broken one, and say which is real drift and which is an upstream data break. <em>Study time: about 120 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> pick and justify a fraud-model threshold from precision, recall and review capacity, and build a PSI report that flags a shifted feature and a broken one, and say which is real drift and which is an upstream data break. <em>Study time: reading about 15 min, hands-on about 7 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -7297,7 +7385,7 @@ def psi(baseline, current, bins=10, eps=1e-6):
 <section class="sec sec-quiz"><h2>✍️ Check yourself</h2>
 <p><strong>1. Smart Alerts v4 shows 99.9% accuracy on a test set where about 0.1% of transactions are fraud. What should Dana ask for instead?</strong></p>
 <ul>
-<li>A. Accuracy on the training set as well, to check that the model has not overfitted</li>
+<li>A. Accuracy on the training set too, to check that the model has not overfitted</li>
 <li>B. ROC-AUC alone, because it does not depend on the threshold chosen</li>
 <li>C. Precision and recall at the proposed threshold, PR-AUC, and a comparison with v3</li>
 <li>D. The number of features, to judge whether the model is too complex</li>
@@ -7375,7 +7463,7 @@ def psi(baseline, current, bins=10, eps=1e-6):
 <p class="crumb"><a href="#/map">Module 5 — Data science and ML in production</a></p>
 <h1><span class="num">5.3</span> Data for LLM applications: documents, chunking, embeddings, vector search and evaluation</h1>
 <p class="meta"><span class="lvl lvl-i">🟡 Intermediate</span> · <span class="bok">Stage <bdi dir="ltr">Store, Serve</bdi></span> · <span class="prereq">Before this: <a href="#/1.3">1.3</a>, <a href="#/3.2">3.2</a>, <a href="#/5.2">5.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> build hybrid vector and keyword retrieval over chunked documents, measure it with recall@5 and MRR on a golden question set, and justify which configuration you would ship. <em>Study time: about 125 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build hybrid vector and keyword retrieval over chunked documents, measure it with recall@5 and MRR on a golden question set, and justify which configuration you would ship. <em>Study time: reading about 15 min, hands-on about 7 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -7388,7 +7476,7 @@ def psi(baseline, current, bins=10, eps=1e-6):
 </ul>
 </section>
 <section class="sec sec-why"><h2>🧭 Why it matters</h2>
-<p>The <strong>Credit Memo Copilot</strong> helps Najm&#39;s credit analysts draft memos by retrieving the bank&#39;s credit policies and past memos. In its pilot, two incidents reach Faisal&#39;s desk the same week. First, an analyst asks about the maximum loan-to-value ratio for SME property lending, and the copilot answers confidently from a policy that was replaced months ago. Both versions were indexed with nothing marking the current one, and the old one matched the wording better. Second, a retail analyst receives a summary quoting a corporate credit memo she cannot open in the document system: the index ignored permissions.</p>
+<p>The <strong>Credit Memo Copilot</strong> helps Najm&#39;s credit analysts draft memos by retrieving the bank&#39;s credit policies and past memos. In its pilot, two incidents reach Faisal&#39;s desk the same week. First, an analyst asks about the maximum loan-to-value ratio for SME property lending, and the copilot answers confidently from a policy that was replaced months ago. Both versions were indexed with nothing marking the current one, and the old one matched the wording better. Such answers can carry legal weight: in <em>Moffatt v. Air Canada</em> (2024), a Canadian tribunal held the airline liable for its customer-facing chatbot&#39;s wrong account of its bereavement-fare policy. Second, a retail analyst receives a summary quoting a corporate credit memo she cannot open in the document system: the index ignored permissions.</p>
 <p>Huda built the index: 500-character pieces that cut tables in half, judged by trying a few questions herself. Layla, Head of AI Governance, pauses the pilot; Sara, the DPO, asks why memos with customer data were copied into a new store without a record. Faisal&#39;s verdict: &quot;We built a data pipeline and skipped everything we know about data pipelines.&quot;</p>
 </section>
 <section class="sec sec-how"><h2>📐 How it works</h2>
@@ -7729,7 +7817,7 @@ def mrr(results, golden):
 <p class="crumb"><a href="#/map">Module 6 — Governance, privacy and security</a></p>
 <h1><span class="num">6.1</span> Data governance that works: ownership, catalogue, lineage and data contracts</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Stage <bdi dir="ltr">Govern</bdi></span> · <span class="prereq">Before this: <a href="#/1.2">1.2</a>, <a href="#/3.1">3.1</a>, <a href="#/3.2">3.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> write an ownership register a colleague can use to find who answers for any dataset, and add a dbt contract that fails the build when a column type changes. <em>Study time: about 110 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> write an ownership register a colleague can use to find who answers for any dataset, and add a dbt contract that fails the build when a column type changes. <em>Study time: reading about 15 min, hands-on about 5 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -8068,10 +8156,10 @@ ORDER BY depth, node;
 
 <p><strong>3. Huda must find every report affected by a change to <code>core.accounts.acct_status</code> before the change ships. What gives her the most reliable answer?</strong></p>
 <ul>
-<li>A. Current column-level lineage, walked downstream and joined to the ownership register</li>
+<li>A. Current column-level lineage, walked downstream, plus the ownership register</li>
 <li>B. Asking in the analytics team&#39;s chat channel who uses the accounts table</li>
-<li>C. Table-level lineage showing every mart and report that reads <code>core.accounts</code></li>
-<li>D. The detailed lineage diagram drawn during last year&#39;s architecture review</li>
+<li>C. Table-level lineage showing every report that reads <code>core.accounts</code></li>
+<li>D. The detailed lineage diagram drawn by hand during last year&#39;s architecture review</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -8082,7 +8170,7 @@ ORDER BY depth, node;
 <ul>
 <li>A. Catalogue every table in the warehouse first, then assign owners once the inventory is complete</li>
 <li>B. Buy a commercial catalogue tool and let adoption grow on its own</li>
-<li>C. Start with critical data elements and give each an owner, definition, lineage, contract and tests</li>
+<li>C. Start with critical data elements, each with an owner, definition, lineage and tests</li>
 <li>D. Write a full governance policy, approve it in committee and wait for teams to adopt it</li>
 </ul>
 <details><summary>Answer</summary>
@@ -8123,7 +8211,7 @@ ORDER BY depth, node;
 <p class="crumb"><a href="#/map">Module 6 — Governance, privacy and security</a></p>
 <h1><span class="num">6.2</span> Personal data: classification, masking, minimisation, retention and the law</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Stage <bdi dir="ltr">Govern, Store</bdi></span> · <span class="prereq">Before this: <a href="#/1.3">1.3</a>, <a href="#/6.1">6.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> classify every column of a customer table, build a pseudonymised analyst view with a keyed hash, and show why a plain MD5 hash of an ID can be reversed. <em>Study time: about 125 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> classify every column of a customer table, build a pseudonymised analyst view with a keyed hash, and show why a plain MD5 hash of an ID can be reversed. <em>Study time: reading about 15 min, hands-on about 5 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -8137,7 +8225,7 @@ ORDER BY depth, node;
 </section>
 <section class="sec sec-why"><h2>🧭 Why it matters</h2>
 <p>Huda wants to know why Najm Assist conversations about card disputes end in complaints. A colleague gives her read access to <code>core.customers</code>, and she copies all 38 columns (names, phones, national IDs, birth dates, salaries, addresses) into a personal sandbox schema. Her notebook then exports a sample to a CSV on a shared drive &quot;for Kareem to look at&quot;.</p>
-<p>Three weeks later Sara, the Data Protection Officer, finds the schema in a routine scan. Huda explains that she hashed the national IDs, so the data was &quot;anonymised&quot;. Sara shows her why not: IDs are short numbers with a known structure, so anyone can hash every possible value and match them back. Then she asks the questions the law asks: for what purpose was it copied, was every column needed, who else accessed it, and when will it be deleted?</p>
+<p>Three weeks later Sara, the Data Protection Officer, finds the schema in a routine scan. Huda explains that she hashed the national IDs, so the data was &quot;anonymised&quot;. Sara shows her why not: IDs are short numbers with a known structure, so anyone can hash every possible value and match them back. It has happened in public: in 2014 New York City released 173 million taxi trips with driver licence and medallion numbers as unsalted MD5 hashes, and a developer reversed them all within hours. Then she asks the questions the law asks: for what purpose was it copied, was every column needed, who else accessed it, and when will it be deleted?</p>
 <p>Nothing leaked outside the bank, and Huda&#39;s analysis needed only five columns, none of them identifying. This lesson builds a platform where the safe path (classified data, masked views, purpose-limited copies that expire) is also the easy one.</p>
 </section>
 <section class="sec sec-how"><h2>📐 How it works</h2>
@@ -8454,9 +8542,9 @@ FROM marts.customer_360;
 <p><strong>Part C: rules.</strong> Sandbox schemas are created by a script that records owner, purpose and expiry; a nightly job drops expired ones. Unclassified new columns fail CI. Lakehouse tables with personal data expire snapshots weekly. The keyed-hash secret rotates only with a re-keying plan, since rotation changes every pseudonym.</p>
 </section>
 <section class="sec sec-build"><h2>🛠️ Exercises</h2>
-<p>Use synthetic data only (for example generated with the Python Faker library). Never use real personal data for these exercises.</p>
+<p>Use synthetic data only: start from the lab dataset&#39;s <code>customers</code> (lesson <a class="xref" href="#/0.3">0.3</a>) and add personal-looking columns with the Python Faker library. Never use real personal data for these exercises.</p>
 <ul>
-<li>🟢 Generate a synthetic customer table of 20 columns with Faker. Classify every column with a level, tags and a retention class, and say for an &quot;analyse complaint drivers&quot; purpose which columns are needed. <em>Done when:</em> every column is classified and your purpose needs no more than a third of them.</li>
+<li>🟢 Extend the lab&#39;s <code>customers</code> table with Faker to 20 columns. Classify every column with a level, tags and a retention class, and say for an &quot;analyse complaint drivers&quot; purpose which columns are needed. <em>Done when:</em> every column is classified and your purpose needs no more than a third of them.</li>
 <li>🟡 In PostgreSQL or DuckDB, load your synthetic table and build an analyst view with a keyed-hash customer key, an age band and a masked phone. Then show the weakness of plain hashing: MD5-hash one fake six-digit ID and recover it by hashing all one million candidates. <em>Done when:</em> joins on the keyed hash work across two tables, and your script recovers the MD5-hashed ID but not the keyed one.</li>
 <li>🔴 Build a retention and erasure job for a PostgreSQL table partitioned by month: drop partitions older than the retention period, and implement an erasure procedure for one customer that pseudonymises them in three tables and writes an evidence record (who, when, which tables, rows affected). <em>Done when:</em> running the job twice gives the same result, the evidence table shows each run, and a k-anonymity check (<code>GROUP BY</code> quasi-identifiers <code>HAVING COUNT(*) &lt; 5</code>) on your released dataset returns no rows.</li>
 </ul>
@@ -8483,8 +8571,8 @@ FROM marts.customer_360;
 <p><strong>1. Huda replaces each national ID with its unsalted MD5 hash and labels the table &quot;anonymised&quot;. What is the main problem?</strong></p>
 <ul>
 <li>A. MD5 output is too long to store efficiently in a column used for joins</li>
-<li>B. Hashing destroys the ability to join tables on the customer</li>
-<li>C. The hashes can be reversed by hashing every possible ID, so the data is not anonymous</li>
+<li>B. Hashing destroys the ability to join tables on the same customer later</li>
+<li>C. Every possible ID can be hashed and matched, so it is not anonymous</li>
 <li>D. Hashing personal data is prohibited outright under the GDPR</li>
 </ul>
 <details><summary>Answer</summary>
@@ -8508,8 +8596,8 @@ FROM marts.customer_360;
 <ul>
 <li>A. A row-level export of complaints with customer names so the team can follow up</li>
 <li>B. A dashboard on the full customer table, filtered at view time</li>
-<li>C. A dashboard that hides the nationality column</li>
-<li>D. An aggregated dashboard that suppresses groups smaller than an agreed threshold</li>
+<li>C. A dashboard by branch only, with the nationality column hidden</li>
+<li>D. An aggregated dashboard that hides groups under an agreed threshold</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -8518,10 +8606,10 @@ FROM marts.customer_360;
 
 <p><strong>4. Lina runs <code>DELETE</code> on an Apache Iceberg table for customers whose retention period has ended. What else must happen before the data is physically gone?</strong></p>
 <ul>
-<li>A. Nothing; in Iceberg a <code>DELETE</code> removes the underlying data files immediately</li>
-<li>B. Expire old snapshots so unreferenced data files are deleted, and clean up copies</li>
+<li>A. Nothing; in Iceberg a <code>DELETE</code> removes the data files immediately</li>
+<li>B. Expire old snapshots so unreferenced files are removed, and clean up copies</li>
 <li>C. Rename the table so time-travel queries can no longer find the old rows</li>
-<li>D. Re-run the dbt models that read the table so downstream marts are rebuilt</li>
+<li>D. Re-run the dbt models that read the table so all the downstream marts are rebuilt</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -8531,8 +8619,8 @@ FROM marts.customer_360;
 <p><strong>5. An EU customer of Najm asks for erasure. Some of their transaction records must be kept under banking record-keeping rules. What should the data platform do?</strong></p>
 <ul>
 <li>A. Delete every record immediately, including those the law requires the bank to keep</li>
-<li>B. Refuse the whole request, because some of the records must be kept by law</li>
-<li>C. Find every copy via lineage, erase where no duty to keep applies, restrict the rest and record evidence</li>
+<li>B. Refuse the whole request, because some of the customer&#39;s records must be kept by law</li>
+<li>C. Trace copies via lineage, erase what need not be kept, restrict the rest, log it</li>
 <li>D. Delete only the customer&#39;s row in <code>core.customers</code>, since every mart rebuilds from it</li>
 </ul>
 <details><summary>Answer</summary>
@@ -8563,7 +8651,7 @@ FROM marts.customer_360;
 <p class="crumb"><a href="#/map">Module 6 — Governance, privacy and security</a></p>
 <h1><span class="num">6.3</span> Securing the data platform: access control, secrets, audit and sharing safely</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Stage <bdi dir="ltr">Govern, Operate</bdi></span> · <span class="prereq">Before this: <a href="#/6.1">6.1</a>, <a href="#/6.2">6.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> set up least-privilege PostgreSQL roles and row-level security, prove with test queries that each user sees only their rows, and explain how FORCE and removing superuser close the two bypasses. <em>Study time: about 125 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> set up least-privilege PostgreSQL roles and row-level security, prove with test queries that each user sees only their rows, and explain how FORCE and removing superuser close the two bypasses. <em>Study time: reading about 15 min, hands-on about 6 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -8848,7 +8936,7 @@ GRANT SELECT ON core.customers TO auditor;
 <li>A. Delete the line from the notebook, commit the change and push it</li>
 <li>B. Rotate the credential, then move the pipeline to the secrets manager</li>
 <li>C. Make the repository private so no one else can see the password</li>
-<li>D. Nothing, because the repository is internal to the bank</li>
+<li>D. Nothing, because the repository is internal to the bank and access is limited</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -8857,7 +8945,7 @@ GRANT SELECT ON core.customers TO auditor;
 
 <p><strong>3. Najm wants analysts to see confidential columns only for customers in their own country, with masking driven by the classification tags of 6.2. Which access model fits best?</strong></p>
 <ul>
-<li>A. One role per table per country, granted by each data owner</li>
+<li>A. One role per table per country, each granted by the data owner when asked</li>
 <li>B. A single shared analyst account with a masked view for everyone</li>
 <li>C. ABAC on user attributes and column tags, with row-level security</li>
 <li>D. Giving all analysts <code>pii_reader</code> and relying on training</li>
@@ -8869,9 +8957,9 @@ GRANT SELECT ON core.customers TO auditor;
 
 <p><strong>4. Which audit-log setup gives evidence that internal audit can rely on?</strong></p>
 <ul>
-<li>A. Named-user logs of grants, writes and restricted reads, in a store administrators cannot alter</li>
+<li>A. Named-user logs of grants, writes and restricted reads that admins cannot edit</li>
 <li>B. Detailed logs kept on the warehouse server, editable by the platform administrators</li>
-<li>C. Logs of failed logins only, kept for seven years</li>
+<li>C. Logs of failed logins only, kept for seven years in the security team&#39;s archive</li>
 <li>D. Screenshots of the access-control settings, taken once a year for the auditors</li>
 </ul>
 <details><summary>Answer</summary>
@@ -8884,7 +8972,7 @@ GRANT SELECT ON core.customers TO auditor;
 <li>A. Email a daily encrypted CSV of all SME card transactions to the partner</li>
 <li>B. Give the partner a named login to the warehouse with <code>marts_reader</code></li>
 <li>C. Copy the raw card stream into the partner&#39;s cloud account each night</li>
-<li>D. A revocable, read-only aggregated view, shared under a DPO-approved agreement</li>
+<li>D. A revocable, read-only aggregated view under a DPO-approved agreement</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -8914,7 +9002,7 @@ GRANT SELECT ON core.customers TO auditor;
 <p class="crumb"><a href="#/map">Module 7 — Hero: capstone and practice exam</a></p>
 <h1><span class="num">7.1</span> Capstone: build Najm's credit-risk data mart end to end</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Stage <bdi dir="ltr">Model, Operate</bdi></span> · <span class="prereq">Before this: Modules 0–6</span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> build a tested, reconciled credit-risk mart and document it well enough that a peer can trace one NPL figure back to its source rows. <em>Study time: about 125 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> build a tested, reconciled credit-risk mart and document it well enough that a peer can trace one NPL figure back to its source rows. <em>Study time: reading about 15 min, hands-on about 20 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -8929,7 +9017,7 @@ GRANT SELECT ON core.customers TO auditor;
 <section class="sec sec-why"><h2>🧭 Why it matters</h2>
 <p>Every month, Najm&#39;s credit-risk team, Finance and the retail business each produce a non-performing loan ratio, and they never quite agree. Each cleans its own extract in a spreadsheet and applies its own reading of &quot;90 days past due&quot;. When a supervisory review asks how its credit-risk figures are produced, from source to report, nobody can draw the line.</p>
 <p>Faisal gets a mandate from the Chief Risk Officer: one credit-risk mart, owned by his team, with definitions owned by Credit Risk and Finance, used by every report. He gives it to Huda (graduate data engineer) and Lina (analytics engineer), with Dana (lead data scientist) as the first model consumer and Sara (DPO) and Layla (Head of AI Governance) as reviewers.</p>
-<p>The 2007–2009 financial crisis showed that many banks could not aggregate risk exposures quickly and accurately. In January 2013 the Basel Committee on Banking Supervision published <strong>BCBS 239</strong>, <em>Principles for effective risk data aggregation and risk reporting</em>: risk data must be accurate, complete, timely and adaptable. And in England in 2020, thousands of COVID-19 cases were left out of daily reporting by a legacy spreadsheet format&#39;s row limit: data that never arrived, and nobody noticed.</p>
+<p>The 2007–2009 financial crisis showed that many banks could not aggregate risk exposures quickly and accurately. In January 2013 the Basel Committee on Banking Supervision published <strong>BCBS 239</strong>, <em>Principles for effective risk data aggregation and risk reporting</em>: risk data must be accurate, complete, timely and adaptable. And in England in 2020 (lesson <a class="xref" href="#/0.2">0.2</a>), a legacy spreadsheet format&#39;s row limit kept thousands of COVID-19 cases out of daily reporting for about a week: the rows were dropped at load, and no check caught it until the gap was spotted.</p>
 </section>
 <section class="sec sec-how"><h2>📐 How it works</h2>
 <h3>🟢 The essentials</h3>
@@ -9279,11 +9367,23 @@ where m.mart_total is null
 <p><strong>Readiness rule.</strong> The mart replaces the spreadsheets only after three month-ends in a row reconcile with no manual adjustment, Credit Risk and Finance get the same NPL ratio from it, and the drill has run once.</p>
 </section>
 <section class="sec sec-build"><h2>🛠️ Exercises</h2>
+<p>Plan this as a project, not a sitting: about 15 to 25 hours over one to two weeks, roughly 4 to 6 hours for 🟢, 5 to 8 for 🟡 and 6 to 10 for 🔴. Start from the lab dataset (lesson <a class="xref" href="#/0.3">0.3</a>), whose <code>loans</code>, <code>instalments</code>, <code>repayments</code> and <code>ledger_totals</code> already include late and stopped payers. This copies them into PostgreSQL and sketches <code>dim_date</code>:</p>
+<pre><code class="language-sql">-- in DuckDB: copy the lab&#39;s loan tables into PostgreSQL, the &quot;core banking&quot; source
+-- (set PGPASSWORD in your shell; never write the password here or commit it)
+INSTALL postgres; LOAD postgres;
+ATTACH &#39;najm_lab.duckdb&#39; AS lab (READ_ONLY);
+ATTACH &#39;dbname=najm host=localhost user=postgres&#39; AS pg (TYPE postgres);
+CREATE TABLE pg.loans AS SELECT * FROM lab.loans;  -- repeat for instalments, repayments
+-- dim_date starts as one row per day; add business-day and month-end flags in dbt
+SELECT CAST(range AS DATE) AS date_day
+FROM range(DATE &#39;2024-01-01&#39;, DATE &#39;2027-01-01&#39;, INTERVAL 1 DAY);
+</code></pre>
 <ul>
-<li>🟢 <strong>Build the slice.</strong> Generate a few thousand synthetic loans, some in arrears, with instalments and repayments, into PostgreSQL in Docker. Load them into DuckDB and build <code>dim_date</code>, <code>dim_loan</code>, a snapshot of <code>loans</code> and <code>fct_loan_daily</code> with dbt Core and generic tests. <em>Done when:</em> <code>dbt build</code> is green and a query returns the balance in each DPD bucket for any date you choose.</li>
-<li>🟡 <strong>Make it trustworthy.</strong> Add the lookback, a Type 2 snapshot of <code>customers</code>, synthetic ledger control totals and the reconciliation test, scheduled in Dagster or Airflow. Insert a five-day-late repayment and a loan in a currency missing from the ledger. <em>Done when:</em> the reconciliation catches the currency gap, rerunning a day gives identical rows, and you can explain why the late repayment needs a backfill.</li>
+<li>🟢 <strong>Build the slice.</strong> Copy the lab&#39;s loans, instalments and repayments into PostgreSQL in Docker, as above. Load them into DuckDB and build <code>dim_date</code>, <code>dim_loan</code>, a snapshot of <code>loans</code> and <code>fct_loan_daily</code> with dbt Core and generic tests. <em>Done when:</em> <code>dbt build</code> is green and a query returns the balance in each DPD bucket for any date you choose.</li>
+<li>🟡 <strong>Make it trustworthy.</strong> Add the lookback, a Type 2 snapshot of <code>customers</code>, the lab&#39;s <code>ledger_totals</code> as the ledger&#39;s control totals and the reconciliation test, scheduled in Dagster or Airflow. Insert a five-day-late repayment and a loan in a currency missing from the ledger. <em>Done when:</em> the reconciliation catches the currency gap, rerunning a day gives identical rows, and you can explain why the late repayment needs a backfill.</li>
 <li>🔴 <strong>Ship the case file.</strong> Write your case file: summary, grain statements, metric cards for the NPL ratio and roll rate, a classification table, a row-level security rule tested in PostgreSQL, a point-in-time feature view with a leakage test, and a runbook. Then drill: rename a source column without warning. <em>Done when:</em> a peer can trace one NPL figure to source rows using only your documentation, and your drill write-up says what failed, who was alerted and what changed.</li>
 </ul>
+<p><em>Optional extension:</em> stream repayments through Redpanda (<a class="xref" href="#/2.3">2.3</a>), test a repayment-reminder message with a proper experiment design (<a class="xref" href="#/4.3">4.3</a>), or index Najm&#39;s credit policy for the Credit Memo Copilot (<a class="xref" href="#/5.3">5.3</a>).</p>
 </section>
 <section class="sec sec-mistakes"><h2>⚠️ Mistakes and traps</h2>
 <ul>
@@ -9383,7 +9483,7 @@ where m.mart_total is null
 <p class="crumb"><a href="#/map">Module 7 — Hero: capstone and practice exam</a></p>
 <h1><span class="num">7.2</span> The data career: roles, interviews, portfolio and growth</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Stage <bdi dir="ltr">Govern</bdi></span> · <span class="prereq">Before this: <a href="#/0.1">0.1</a>, <a href="#/7.1">7.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> map a target data role&#39;s requirements against your own evidence on one page, and publish a portfolio project a friend can clone and run from its README. <em>Study time: about 175 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> map a target data role&#39;s requirements against your own evidence on one page, and publish a portfolio project a friend can clone and run from its README. <em>Study time: reading about 15 min, hands-on about 4 h (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -9506,7 +9606,7 @@ where m.mart_total is null
 <td>STAR stories from your projects</td>
 </tr>
 </tbody></table></div>
-<p>Many employers now allow AI assistants in some rounds and ban them in others. Ask the recruiter what applies; never assume. For how these rounds run and how to prepare, see <a href="../career/index.html#/5.3"><em>From Graduate to Hired</em>, lesson 5.3 — System design, data and ML interviews for juniors</a>.</p>
+<p>At the time of writing (2026), some employers allow AI assistants in some rounds and ban them in others. Ask the recruiter what applies; never assume. For how these rounds run and how to prepare, see <a href="../career/index.html#/5.3"><em>From Graduate to Hired</em>, lesson 5.3 — System design, data and ML interviews for juniors</a>.</p>
 <h3>🟡 Going deeper</h3>
 <p><strong>What good answers sound like.</strong> Interviewers want to watch you reason. Four examples:</p>
 <p><em>Live SQL: &quot;For each customer, return their most recent transaction.&quot;</em> Strong candidates ask about ties and NULLs before typing, then use a window function:</p>
@@ -9753,7 +9853,7 @@ where rn = 1;
 <p><strong>3. In a pipeline interview at a neutral company, the interviewer asks what happens if the daily load runs twice. Which answer scores best?</strong></p>
 <ul>
 <li>A. A MERGE or partition overwrite makes the rerun a no-op; tests catch duplicates if that regresses</li>
-<li>B. The scheduler is configured to prevent concurrent runs, so a double run cannot happen in practice</li>
+<li>B. The scheduler is set to prevent concurrent runs, so a double run cannot happen in practice</li>
 <li>C. We would notice the inflated totals in the dashboard and delete the duplicate rows by hand</li>
 <li>D. Duplicates do not matter much in analytics, because trends stay roughly the same over time</li>
 </ul>
@@ -9805,9 +9905,9 @@ where rn = 1;
 <p class="crumb"><a href="#/map">Module 7 — Hero: capstone and practice exam</a></p>
 <h1><span class="num">7.3</span> Practice exam: 60 scenario questions</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Stage <bdi dir="ltr">Analyse</bdi></span> · <span class="prereq">Before this: <a href="#/7.1">7.1</a>, <a href="#/7.2">7.2</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> sit a timed 60-question practice exam with a confidence mark on every answer, and turn the result into a review sheet that names your weakest stage and the next action for it. <em>Study time: about 120 minutes (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> sit a timed 60-question practice exam with a confidence mark on every answer, and turn the result into a review sheet that names your weakest stage and the next action for it. <em>Study time: reading about 45 min, hands-on about 150 min (estimate).</em></p>
 <blockquote>
-<p><strong>Under revision (November 2026).</strong> In many questions in this practice exam the correct option can be spotted by its length or wording, so a high score here does not show readiness for any real exam. Use it to practise reasoning: answer each question in your own words before you read the options, then compare.</p>
+<p><strong>Practice only.</strong> The options were re-checked in November 2026 for length and wording cues, though some may remain. A score here shows how well you know this course, not readiness for any certification. Answer each question in your own words before you read the options, then compare.</p>
 </blockquote>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
@@ -10125,14 +10225,14 @@ where rn = 1;
 
 <p><strong>16. Kareem wants to pull CRM data with an open-source connector whose documentation says &quot;incremental sync supported&quot;. What should Faisal ask for?</strong></p>
 <ul>
-<li>A. Nothing, since maintainers test incremental modes against every source</li>
+<li>A. Only the connector&#39;s version number, so the team can pin it in the repo</li>
 <li>B. Writing every extractor by hand in Python instead of using connectors</li>
 <li>C. A test that it really catches updates and deletes from this source</li>
-<li>D. Full loads only, since connectors cannot do any incremental sync at all</li>
+<li>D. A log showing the first full sync finished with matching row counts</li>
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>C.</strong> Treat a connector&#39;s &quot;incremental&quot; as a claim to test. Also ask who maintains it and where it can run. A takes the claim on trust; B throws away a useful tool; D is false. <em>(Ingest · 2.1)</em></p>
+<p><strong>C.</strong> Treat a connector&#39;s &quot;incremental&quot; as a claim to test. Also ask who maintains it and where it can run. A takes the claim on trust; B throws away a useful tool; D proves only the full load. <em>(Ingest · 2.1)</em></p>
 </details>
 
 <p><strong>17. A dbt test fails inside an Airflow DAG. The task retries three times with a five-minute backoff, so the alert arrives twenty minutes late. What should change?</strong></p>
@@ -10199,7 +10299,7 @@ where rn = 1;
 <ul>
 <li>A. Nothing is lost, because Kafka keeps events until every group has read them</li>
 <li>B. The consumer resumes from its committed offset with every event intact</li>
-<li>C. Kafka pauses all producers on the topic while any consumer group is down</li>
+<li>C. Reset the consumer to the latest offset; the nine-day gap cannot be filled</li>
 <li>D. Events past seven-day retention are deleted; rebuild from the raw archive</li>
 </ul>
 <details><summary>Answer</summary>
@@ -10282,13 +10382,13 @@ where rn = 1;
 <p><strong>29. Najm&#39;s data observability tool sends about 300 alerts a week to a shared channel. A real freshness breach on the credit-risk mart went unnoticed. What should change?</strong></p>
 <ul>
 <li>A. Add monitors on every column of every table so real breaches stand out</li>
-<li>B. Turn off all monitors and rely on dbt tests alone from now on</li>
+<li>B. Raise every alert threshold by half so the channel gets quieter</li>
 <li>C. Email every alert to the whole data team as well as the channel</li>
 <li>D. Monitor critical tables, give each alert an owner, tune noisy ones</li>
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>D.</strong> Alert fatigue is the real enemy: monitor what matters, route to an owner and review noisy monitors. A adds noise; B loses the protection for unknown failures. <em>(Operate · 3.2)</em></p>
+<p><strong>D.</strong> Alert fatigue is the real enemy: monitor what matters, route to an owner and review noisy monitors. A adds noise; B hides alerts but still routes none to an owner. <em>(Operate · 3.2)</em></p>
 </details>
 
 <p><strong>30. <code>fct_transactions</code> is partitioned by date. Most queries filter one month and one <code>account_id</code>, yet each still reads every block in that month. What helps most?</strong></p>
@@ -10378,13 +10478,13 @@ where rn = 1;
 <p><strong>37. The average balance of Najm&#39;s current customers has risen for six months. Over the same period, many low-balance customers closed their accounts. How should Kareem read it?</strong></p>
 <ul>
 <li>A. Customers are saving more, so the retail team should celebrate the trend</li>
-<li>B. Possibly survivorship; show the population size and a cohort view</li>
-<li>C. Balances are semi-additive, so they can never be averaged at all</li>
-<li>D. It is Simpson&#39;s paradox, which only a randomised test can resolve</li>
+<li>B. Survivorship: show the population size alongside a cohort view</li>
+<li>C. Inflation: report the balances in real terms and the trend goes away</li>
+<li>D. Simpson&#39;s paradox: split the average by segment to resolve it</li>
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>B.</strong> A metric over a changing population can rise just because some members left. Show the population behind it and follow cohorts. C confuses summing over time with averaging across customers. <em>(Analyse · 4.2)</em></p>
+<p><strong>B.</strong> A metric over a changing population can rise just because some members left. Show the population behind it and follow cohorts. C may matter over years but does not explain a population that changed. <em>(Analyse · 4.2)</em></p>
 </details>
 
 <p><strong>38. An A/B test&#39;s primary metric shows no significant effect. Among twelve segments, SME customers on Android show a lift with p = 0.02. What should Dana advise?</strong></p>
@@ -10473,10 +10573,10 @@ where rn = 1;
 
 <p><strong>45. Credit Risk wants to use a model&#39;s score directly as a probability of default in an expected-loss calculation. The model was trained on down-sampled data. What is needed?</strong></p>
 <ul>
-<li>A. Nothing, because a model that ranks well always gives good probabilities</li>
-<li>B. Replace the model with rules, since ML scores are never probabilities</li>
+<li>A. Nothing, as long as the model&#39;s ROC-AUC on the test set is high</li>
+<li>B. Rescale the scores so their average matches the down-sampled training rate</li>
 <li>C. Check calibration with a reliability curve, and re-calibrate the scores</li>
-<li>D. Multiply every score by the down-sampling rate, then ship without checks</li>
+<li>D. Multiply each score by the down-sampling rate and use it as is</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10605,10 +10705,10 @@ where rn = 1;
 
 <p><strong>56. A view over <code>marts.loan_book</code> is owned by the dbt service account, which also owns the base table and is not subject to its policy. The base table has row-level security by country, but analysts querying the view see every country. Why?</strong></p>
 <ul>
-<li>A. Row-level security never applies to tables that dbt has built in a marts schema</li>
+<li>A. The view was created before the policy, so it still reads the old rows</li>
 <li>B. The view runs with its owner&#39;s rights; use <code>security_invoker</code> or filter in it</li>
-<li>C. Views copy the base table&#39;s data, so its row policies are lost on the way</li>
-<li>D. RLS applies only to the first query in each session, not to the later ones</li>
+<li>C. Views copy the base table&#39;s data, so its row policies are lost on the way through</li>
+<li>D. Row policies are checked when the view is created, not when it is queried</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10642,7 +10742,7 @@ where rn = 1;
 <p><strong>59. A repayment arrives with a value date six days ago. The credit-risk mart has a three-day lookback window, and month-end is in two days. What should the team do?</strong></p>
 <ul>
 <li>A. Nothing; the next incremental run corrects it like any late repayment</li>
-<li>B. Ignore it, since a few days of DPD never change risk figures</li>
+<li>B. Post it in next month&#39;s figures, since this month is nearly closed</li>
 <li>C. Run a logged backfill for the affected days before the month-end freeze</li>
 <li>D. Widen the lookback permanently to the longest delay ever seen</li>
 </ul>

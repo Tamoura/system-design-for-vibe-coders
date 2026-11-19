@@ -9,7 +9,7 @@
 # 15.1 — Running an agent in production: observability, alerts, incidents, runbooks and the improvement loop
 *Level: 🔴 Advanced* · *Prerequisites: 8.2, 12.2, 13.1, 14.2* · *Layer: Production*
 
-**After this you can** read a per-release trace report to name the release to roll back and the evidence for it, and set a cost breaker from data with a test showing normal traffic never trips it. *Study time: about 105 minutes (estimate).*
+**After this you can** read a per-release trace report to name the release to roll back and the evidence for it, and set a cost breaker from data with a test showing normal traffic never trips it. *Study time: reading about 10 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Agents fail softly: the service is up and the answers are wrong. Observe the **run**.
@@ -117,7 +117,15 @@ if __name__ == "__main__":
     sys.exit(1 if any(breached) or leaks or bad or not runs else 0)        # no traces at all is an incident too
 ```
 
-**Dashboards, SLOs and alerts.** Four panels: outcomes by stop reason, quality proxies (citations, hand-offs, ratings), latency and cost, guard and tool errors. Targets come from requirements: success (`done` is a proxy), p95 (NFR-01), availability (NFR-02), cost per resolved conversation (NFR-06). A month has about 217 desk hours, so 99.5% leaves about one; at a **burn rate** (bad fraction seen over allowed) of 10 it is gone in about two desk days. Page when a short and a long window burn fast ([*Cloud & DevOps*, lesson 5.2 — SLOs, error budgets and alerting](../cloud/index.html#/5.2)). Against fatigue: page on symptoms, give each alert a runbook, delete ignored alerts.
+**Dashboards, SLOs and alerts.** Four panels: outcomes by stop reason, quality proxies (citations, hand-offs, ratings), latency and cost, guard and tool errors. Targets come from requirements: success (`done` is a proxy), p95 (NFR-01), availability (NFR-02), cost per resolved conversation (NFR-06). A month has about 217 desk hours, so a 99.5% availability target leaves an **error budget** of about 1.1 desk hours (65 minutes) of failure. The **burn rate** is the bad fraction you see divided by the 0.5% allowed:
+
+| Burn rate | Bad fraction seen | The month's budget is gone in |
+|---|---|---|
+| 1 | 0.5% | the whole month, 217 desk hours |
+| 10 | 5% | about 22 desk hours, roughly two desk days |
+| 50 | 25% | about 4 desk hours |
+
+Page only when a short window (say, the last 5 minutes) and a long one (the last hour) both burn fast: the long window shows the problem is real, the short one that it is still happening ([*Cloud & DevOps*, lesson 5.2 — SLOs, error budgets and alerting](../cloud/index.html#/5.2)). Against fatigue: page on symptoms, give each alert a runbook, delete ignored alerts.
 
 | Incident class | It looks like | Then |
 |---|---|---|
@@ -281,11 +289,11 @@ No call started after the flip; the loop ended at call five, not 500. The breake
 ## 🏛️ In practice at Najm Bank
 The artefact is the **Najm Desk v1 Runbook Set** (Maha owns it): `docs/runbooks/`, from `labs/m15/runbooks/`: a template, the kill-switch card, five incident runbooks, two routines.
 
-**Weekly deliverable.** Commit `week-15/`: `labs/m15/` with passing tests, the report on your own traces, the drill output, `docs/runbooks/` for your own agent, one postmortem, `NOTES.md`.
+**Weekly deliverable.** Commit `week-15/`. Required: `labs/m15/` with passing tests, the report on your own traces and `NOTES.md`. Stretch, or carry into the capstone: the drill output, `docs/runbooks/` for your own agent and one postmortem.
 
 **Group session (60 minutes).** A fire drill: plant an incident in a trace file and name its class from the report (15); follow the runbook, press the switch, write the first note (25); each names one unclear line (20).
 
-**Build it with Claude Code.** Give this spec in plan mode (check the current Claude Code documentation):
+**Build it with Claude Code.** *No Claude Code? Do the spec's steps by hand and run its checks yourself (lesson 0.3).* Give this spec in plan mode (check the current Claude Code documentation):
 
 ```text
 Goal: labs/m15/trace_report.py and kill_switch.py as in lesson 15.1, with tests in labkit/tests/test_m15_operating.py.
@@ -395,7 +403,7 @@ Do not weaken a test. Run the tests after each step.
 # 15.2 — Handover and adoption: training, support model, acceptance, change management and benefits tracking
 *Level: 🔴 Advanced* · *Prerequisites: 6.2, 7.2, 13.2, 15.1* · *Layer: Delivery*
 
-**After this you can** run a user acceptance test script, give each failed row a severity and a decision to fix, waive or re-scope, and add a row that passes on the original app and fails on a broken copy. *Study time: about 110 minutes (estimate).*
+**After this you can** run a user acceptance test script, give each failed row a severity and a decision to fix, waive or re-scope, and add a row that passes on the original app and fails on a broken copy. *Study time: reading about 15 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Handover moves **ownership**, not files: named people can run, change, support and defend Najm Desk without the builders.
@@ -633,7 +641,7 @@ The artefact is the **Najm Desk v1 Handover Pack** (Fahad owns it): `docs/handov
 
 **Group session (60 minutes).** Role-play the handover meeting. (1) Two readers play Hind and Yara with only the pack and ten minutes; each marks the claim they trust least (20). (2) The author runs the runner live; the group sets a severity per FAIL and decides fix, waiver or re-scope (25). (3) Name the document that will rot first and its check (15).
 
-**Build it with Claude Code.** Have it dry-run the handover as a sceptical customer. Give this spec in plan mode, which proposes without editing (check the current Claude Code documentation):
+**Build it with Claude Code.** *No Claude Code? Do the spec's steps by hand and run its checks yourself (lesson 0.3).* Have it dry-run the handover as a sceptical customer. Give this spec in plan mode, which proposes without editing (check the current Claude Code documentation):
 
 ```text
 Goal: act as a sceptical customer and list what would stop you signing the Najm Desk v1 handover.
@@ -653,7 +661,7 @@ Constraints: read-only; invent no facts, names, numbers or approvals; quote only
 ## 🛠️ Exercises
 - 🟢 **Run the rehearsal.** Offline. Run the runner and classify U-09 and U-10. *Done when:* `NOTES.md` holds the report and, per failed row, a severity, a reason and a decision: fix, waiver or re-scope.
 - 🟡 **Add the sceptic's row.** Offline. Add a row for a requirement of your own, such as GR-01 as far as a reply can show it (a pasted password is never repeated; the thin slice has no masking, so whether it reached the model needs a log), and a copy of the app that breaks it. *Done when:* a test shows the row passes on the original, fails on the copy.
-- 🔴 **Run it for real.** *Needs the real API*, the cap from lesson 0.2 and a colleague who plays Hind. Run the script against your own build with `--app`; the colleague runs the `person` rows and alone signs. *Done when:* `NOTES.md` has the evidence file, their decisions, each waiver with owner and date, and what the mock had hidden.
+- 🔴 **Run it for real.** *Needs the real API*, the cap from lesson 0.2 and a colleague who plays Hind (solo: play her yourself a day later, from her brief only, and mark the sign-off in `NOTES.md` as a rehearsal). Run the script against your own build with `--app`; the colleague runs the `person` rows and alone signs. *Done when:* `NOTES.md` has the evidence file, their decisions, each waiver with owner and date, and what the mock had hidden.
 
 ## ⚠️ Mistakes and traps
 - **Handover as a zip file.** Hand over custody, access and a first unaided run.

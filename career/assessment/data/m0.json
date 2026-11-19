@@ -90,27 +90,27 @@
       "level": 3,
       "lesson": "0.1",
       "q": {
-        "en": "Omar's market scan lists Git, SQL, a backend language and REST APIs as baseline, and several ads say \"production\" and \"end to end\". He can prove algorithms (a contest record), Java and Python, but has never deployed anything. What is the best diagnosis and next step?",
-        "ar": "يُظهر مسح السوق الذي أعدّه عمر أن Git وSQL ولغة خلفية وواجهات REST (REST APIs) مهارات أساسية، وتذكر عدة إعلانات «الإنتاج» (production) و«من البداية إلى النهاية». يستطيع إثبات الخوارزميات بسجلّ مسابقاته وJava وPython، لكنه لم ينشر أي شيء قط. ما أفضل تشخيص وخطوة تالية؟"
+        "en": "Huda's market scan of ten junior data analyst ads lists SQL, a dashboard tool and Python as baseline, and several ads mention \"stakeholders\" and \"reporting\". She can prove statistics (strong coursework) and modelling (Kaggle notebooks), but no one outside class has ever used her work. What is the best diagnosis and next step?",
+        "ar": "يُظهر مسح السوق الذي أعدّته هدى لعشرة إعلانات لوظائف محلّل بيانات مبتدئ أن SQL وأداة لوحات المعلومات (dashboard) وPython مهارات أساسية، وتذكر عدة إعلانات «أصحاب المصلحة» و«إعداد التقارير». تستطيع إثبات الإحصاء بمقرّراتها القوية والنمذجة بدفاتر Kaggle، لكن لم يستخدم أحدٌ خارج القاعة عملها قط. ما أفضل تشخيص وخطوة تالية؟"
       },
       "o": {
         "en": [
-          "His gap is algorithms depth; he should solve more contest problems",
-          "His gap is shipping proof; he should deploy a small tested API with CI",
-          "His gap is tool breadth; he should list every tool from the ads on his CV",
-          "His gap is formal credentials; he should start a master's before applying"
+          "Her gap is modelling depth; she should enter more Kaggle competitions",
+          "Her gap is proof of use; she should ship a dashboard a real user needs",
+          "Her gap is tool breadth; she should list every tool from the ads on her CV",
+          "Her gap is formal credentials; she should start a master's before applying"
         ],
         "ar": [
-          "فجوته في عمق الخوارزميات؛ عليه أن يحلّ مزيدًا من مسائل المسابقات",
-          "فجوته في إثبات القدرة على التسليم؛ عليه نشر واجهة برمجية صغيرة مختبَرة مع تكامل مستمر",
-          "فجوته في اتساع الأدوات؛ عليه إدراج كل أداة وردت في الإعلانات في سيرته الذاتية",
-          "فجوته في المؤهلات الرسمية؛ عليه بدء درجة الماجستير قبل التقديم"
+          "فجوتها في عمق النمذجة؛ عليها أن تشارك في مزيد من مسابقات Kaggle",
+          "فجوتها في إثبات الاستخدام؛ عليها إطلاق لوحة معلومات يحتاجها مستخدم حقيقي",
+          "فجوتها في اتساع الأدوات؛ عليها إدراج كل أدوات الإعلانات في سيرتها الذاتية",
+          "فجوتها في المؤهلات الرسمية؛ عليها بدء درجة الماجستير قبل التقديم"
         ]
       },
       "a": 1,
       "why": {
-        "en": "His knowledge is strong but nothing shows he can ship, which the baseline and words like \"production\" ask for; a small deployed API with tests and CI closes that gap. More contest problems would deepen proof he already has instead of closing the gap.",
-        "ar": "معرفته قوية، لكن لا شيء يُثبت قدرته على التسليم، وهو ما تطلبه المهارات الأساسية وكلمات مثل «الإنتاج» (production)؛ وواجهة برمجية صغيرة منشورة مع اختبارات وتكامل مستمر (CI) تسدّ هذه الفجوة. أما مزيد من مسائل المسابقات فيعمّق إثباتًا يملكه أصلًا بدل سدّ الفجوة."
+        "en": "Her knowledge is strong, but nothing shows that someone has used her work, which the baseline and words like \"stakeholders\" and \"reporting\" ask for; a dashboard that a real user needs closes that gap. More competitions would deepen proof she already has instead of closing the gap.",
+        "ar": "معرفتها قوية، لكن لا شيء يُثبت أن أحدًا استخدم عملها، وهو ما تطلبه المهارات الأساسية وكلمات مثل «أصحاب المصلحة» و«إعداد التقارير»؛ ولوحة معلومات يحتاجها مستخدم حقيقي تسدّ هذه الفجوة. أما مزيد من المسابقات فيعمّق إثباتًا تملكه أصلًا بدل سدّ الفجوة."
       }
     }
   ],

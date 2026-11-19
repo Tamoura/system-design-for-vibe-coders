@@ -9,7 +9,7 @@
 # 6.1 — Understanding unfamiliar code and debugging with an agent: reproduce first, hypotheses, root cause
 *Level: 🟡 Intermediate* · *Prerequisites: 4.1, 5.1* · *Focus: Workflow*
 
-**After this you can** reproduce a bug first, list hypotheses each with a disproof, and find the breaking commit with a bisect. *Study time: about 110 minutes (estimate).*
+**After this you can** reproduce a bug first, list hypotheses each with a disproof, and find the breaking commit with a bisect. *Study time: reading about 15 min, hands-on about 75 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Two jobs, one rule: get oriented in code you did not write, and find the *cause* of a bug, not a patch that hides it. **Everything an agent says about code is a hypothesis until you have opened the file or run the command.**
@@ -21,7 +21,7 @@
 ## 🧭 Why it matters
 On Monday 9 March 2026 Nada (quality engineering lead) forwards a line from Compliance's regression sheet (every name here is fictional). The alias "Samir bin Haddad bin Younis" belongs to a watchlist entry; Remit held it last quarter; this week a test transfer to that name went through. Lujain (graduate engineer) types: "The screening threshold is too strict, isn't it? Lower it so the alias matches." Her agent agrees, lowers `THRESHOLD` from 100 to 60, and the alias is held. `screening.py` has no tests, so all stays green. Tariq (engineering lead) asks: "Why did it match last quarter at 100?" Nobody knows. The real cause is one missing word in a list, and the "fix" would have held innocent customers.
 
-The pattern is documented. Anthropic's 2023 study of five assistants found them consistently inclined to match the view a user had already expressed, and people and preference models sometimes preferred a convincing, agreeable answer to a correct one (none tested on debugging; models have changed since). A small, preliminary Anthropic trial (52 mostly junior engineers learning a new Python library; Anthropic makes Claude Code) found the assisted group scored lower on a comprehension quiz, most on debugging. The lesson is not "avoid agents": do the thinking debugging exists to teach.
+Anthropic's 2023 study of five assistants found them consistently inclined to match the view a user had already expressed, and people and preference models sometimes preferred a convincing, agreeable answer to a correct one (none tested on debugging; models have changed since). A small, preliminary Anthropic trial (52 mostly junior engineers learning a new Python library; Anthropic makes Claude Code) found the assisted group scored lower on a comprehension quiz, most on debugging. The lesson is not "avoid agents": do the thinking debugging exists to teach.
 
 ## 📐 How it works
 
@@ -94,7 +94,7 @@ Ask for alternatives and falsifiers (an agent argues well for a position; make i
 
 **When the agent is stuck.** The signs: the same fix twice, edits growing, the failing test being "adjusted". Stop; undo (`/rewind` or `git restore`; checkpoints do not track shell commands and are no substitute for git); write what is ruled out and the smallest failing test into a file; `/clear` and restart from it; send long exploration to a read-only subagent; or take the keyboard.
 
-**When not to bring an agent.** When you already know the line, when the evidence cannot leave production, or when the point is to learn. In one randomised trial (METR, 2025; 16 experienced open-source developers in their own mature repositories, early-2025 tools) tasks took longer with AI allowed, though the developers believed it had helped; METR says other settings and newer tools may differ.
+**When not to bring an agent.** When you already know the line, when the evidence cannot leave production, or when the point is to learn. In one randomised trial (METR, 2025; 16 experienced open-source developers in their own mature repositories, early-2025 tools) tasks took longer with AI allowed, though the developers believed it had helped.
 
 ### 🔴 Expert view
 
@@ -289,16 +289,16 @@ What you could not verify.
 # 6.2 — Lab: onboard to the codebase and fix a production bug from its logs
 *Level: 🟡 Intermediate* · *Prerequisites: 6.1* · *Focus: Workflow, Verify*
 
-**After this you can** write an onboarding note for unfamiliar code and fix a production bug from its logs, starting with a failing test. *Study time: about 110 minutes (estimate).*
+**After this you can** write an onboarding note for unfamiliar code and fix a production bug from its logs, starting with a failing test. *Study time: reading about 10 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Lab m06 on Najm Remit: write `docs/onboarding.md`, then fix incident REMIT-231 from `lab-assets/prod.log` with a failing test of your own (it becomes the regression test), a minimal fix and a root-cause note.
-- **Needs an agent: no** (recommended, not required; the grader needs none and checks the result, not who or what made it). Allow two to three hours, plus the 60-minute group session.
+- **Needs an agent: no** (recommended, not required). Allow two to three hours, plus the 60-minute group session.
 - The visible suite starts **green**, which proves nothing about the bug, so your test must fail first.
 - Trap: fixing the first line you find, or counting only the customers who complained.
 
 ## 🧭 Why it matters
-On Tuesday 17 March Maha (SRE lead) sends Payments Platform an incident note: six customers have written to support with the same complaint about their daily limit, the suite is green, and no limit has changed. Tariq's rule: a green suite is a statement about the tests, not about production. So reproduce the customers' experience in a test, at the log's exact moments, watch it fail, and only then touch the code. Ask who else the defect touched, in both directions: those who write to support are not the only ones. Then leave Maha a note she can paste into the incident record.
+On Tuesday 17 March Maha (SRE lead) sends Payments Platform an incident note: six customers have written to support with the same complaint about their daily limit, the suite is green, and no limit has changed. Reproduce it in a test before you touch the code, find everyone it touched, and leave Maha a note she can paste into the incident record.
 
 That needs knowing the code, which is Part 1: a tour of Remit, checked against the code, in your own words.
 
@@ -306,11 +306,11 @@ That needs knowing the code, which is Part 1: a tour of Remit, checked against t
 
 ### 🟢 The essentials
 
-**What you get.** `python -m ailab start m06` copies Remit and applies the incident. You receive `TASK.md` (below), `lab-assets/` (Maha's note, the audit extract, the KYC tiers and lesson 6.1's redaction filter) and a repository with a history, all fictional and constructed for teaching.
+**What you get.** `python -m ailab start m06` copies Remit and applies the incident. You receive `TASK.md` (below), `lab-assets/` (Maha's note, the audit extract, the KYC tiers and lesson 6.1's redaction filter) and a repository with a history.
 
 **The order of work.**
 1. Read the ticket and `incident.md`; write down what you know and what you do not.
-2. **Part 1.** Map the repository (kit prompt 1, in plan mode, or by hand), verify five claims, run `pytest -q`, write `docs/onboarding.md`, commit. A suspicion about the incident goes under Open questions, as a question.
+2. **Part 1.** Map the repository (kit prompt 1, in plan mode, or by hand), verify five claims, run `pytest -q`, write `docs/onboarding.md`, commit.
 3. Read the log. Follow one customer's story; do not guess.
 4. Reproduce it in a test with the real moments, and watch it fail.
 5. Rank hypotheses; check the cheapest. `git bisect` with your own test works here.
@@ -318,7 +318,7 @@ That needs knowing the code, which is Part 1: a tour of Remit, checked against t
 7. Replay the whole log through the fixed code: who else, in which direction?
 8. Write `docs/root-cause.md` and the agent log; commit separately; grade.
 
-**The no-agent path.** Do it all by hand, or ask a chat assistant questions without giving it the repository. The grader cannot tell. An agent speeds up steps 2, 3 and 7; it must not own steps 4 to 6.
+**The no-agent path.** Do it all by hand, or ask a chat assistant questions without giving it the repository. An agent speeds up steps 2, 3 and 7; it must not own steps 4 to 6.
 
 ### 🟡 Going deeper
 
@@ -330,7 +330,7 @@ $ grep C9002 lab-assets/prod.log
 {"corridor": "QAR-INR", "customer_id": "C9002", "event": "transfer.rejected", "reason": "limit_exceeded", "send_amount": "500.00 QAR", "ts": "2026-03-14T11:00:31+00:00"}
 ```
 
-Their tier is in `kyc_tiers.csv`, their limits in the code. Is this refusal right? Work it out by hand, then decide which of the eleven refusals deserve the same arithmetic; the log never says *why*. Support named only three of the six customers: the log is how you find the rest.
+Their tier is in `kyc_tiers.csv`, their limits in the code. Is this refusal right? Work it out by hand, then decide which of the eleven refusals deserve the same arithmetic; the log never says *why*.
 
 **From a log line to a test.** Arrange: what the customer had already sent (`transfer.sent` lines). Act: the question they asked (the `transfer.rejected` line). Assert: what Remit *should* have answered. `tests/test_limits.py` has the helpers `qar()` and `past(amount, when)`; `check_limits(tier, history, amount, now)` takes `now`, so no clock is needed, and `datetime.fromisoformat` reads the log's timestamps. Exact moments matter: "the evening" proves nothing. Build a control first, a refusal the log got right, so you know your test can say no: C9002 (T1) sent 1,800.00 at 08:00:20 UTC, then asked for 500.00 at 11:00:31 UTC, and `check_limits` must say not allowed. Then write the same shape for a customer it got wrong.
 
@@ -338,7 +338,7 @@ Their tier is in `kyc_tiers.csv`, their limits in the code. Is this refusal righ
 
 ### 🔴 Expert view
 
-**What the grader can and cannot tell.** It runs hidden acceptance tests of the documented behaviour (a count, not names), runs *your* tests against the original code and against partly repaired versions of it, checks that nothing existing was edited, measures your fix, and reads your two documents against checkable facts. It cannot tell whether you understood, ranked hypotheses, wrote the tour yourself, or wrote a good note. Its document checks are pattern-based: an unusual wording can fail a true sentence and a thin document can pass. If a check rejects something you verified, rephrase it and say so in your agent log.
+**What the grader can and cannot tell.** It runs the checks listed under What the grader checks below. It cannot tell whether you understood, ranked hypotheses, wrote the tour yourself, or wrote a good note. Its document checks are pattern-based: an unusual wording can fail a true sentence and a thin document can pass. If a check rejects something you verified, rephrase it and say so in your agent log.
 
 **The history is a witness with a motive.** A commit that "simplifies" code and deletes tests in one change deserves a second look, but the nearest suspect is not always guilty: bisect with your own test is how you are sure. Then ask why review missed it: that is "Why it was missed".
 
@@ -352,7 +352,7 @@ Their tier is in `kyc_tiers.csv`, their limits in the code. Is this refusal righ
 | **Agent log** | Prompt, result, correction, minutes | After every agent session |
 
 ## 🏛️ In practice at Najm Bank
-**Needs an agent: no (recommended, not required).** If you use one, the prompts from lesson 6.1 are your starting point; keep the agent log as you go.
+**Needs an agent: no (recommended, not required).** If you use one, start from lesson 6.1's prompts and keep the agent log.
 
 **The ticket.** This is `TASK.md`, as Hessa (product owner) wrote it:
 
@@ -429,7 +429,7 @@ from this directory: `python -m ailab grade m06 --dir <this directory>`
 **Start.**
 
 ```bash
-cd ainative/ailab      # with the virtual environment of lesson 0.2 active
+cd ~/system-design-for-vibe-coders/ainative/ailab      # with the virtual environment of lesson 0.2 active
 python -m ailab start m06 --dir ~/ainative/m06
 cd ~/ainative/m06
 ```
@@ -443,7 +443,7 @@ Work directory: /home/you/ainative/m06
 **Your move.**
 1. **Part 1, with an agent.** In plan mode, run kit prompt 1 on `src/remit/` and `tests/`. Open the files behind five claims. Write the tour yourself, using the map as notes; then ask the agent to list every statement the code does not support. Commit. **Without an agent:** read `README.md`, `CONTRIBUTING.md`, `docs/TOUR.md` and `service.py`, run `pytest -q`, and `grep` as you go. The checks read this: a wrong document must be named with its claim ("<document> says X; the code has Y").
 2. **Part 2, with an agent.** Give it the extract (safe by construction) and prompts 2 and 3. Run its test yourself; keep it away from `src` until the test fails for the log's reason. **Without an agent:** the same steps by hand, with prints or a debugger.
-3. Either way, in `~/ainative/m06`: read the diff, run `pytest -q`, check `git diff lab-start --stat`, and read the note aloud as if to Maha. Headers are `type(scope): subject`, lower-case scope, no full stop, at most 72 characters (`CONTRIBUTING.md`).
+3. Either way, in `~/ainative/m06`: read the diff, run `pytest -q`, check `git diff lab-start --stat`, and read the note aloud as if to Maha.
 
 **What the grader checks.**
 - **The tour:** six headings and length; files named exist; steps in the order the code runs them; no invented function or technology; no contradicted claim; entry points, tests, gaps, house rules.
@@ -456,7 +456,7 @@ Work directory: /home/you/ainative/m06
 **Grade.**
 
 ```bash
-cd ainative/ailab      # the grader runs from the kit folder, not from your work directory
+cd ~/system-design-for-vibe-coders/ainative/ailab      # the grader runs from the kit folder, not from your work directory
 python -m ailab grade m06 --dir ~/ainative/m06
 ```
 
@@ -493,8 +493,47 @@ When everything passes, the last line reads `Lab m06: 20/20 required checks pass
 
 ## 🛠️ Exercises
 - 🟢 **Read the grader.** Grade the starter and pair each `[FAIL]` with the ticket line it comes from. *Done when:* a table gives, per failure, that line and your first action. Needs an agent: no.
-- 🟡 **Replay the log.** Write a script (in `scripts/` or outside the repository) that feeds `prod.log` through your fixed code with the tiers in `kyc_tiers.csv` and prints the customers whose outcome differs from the log. *Done when:* it lists both kinds of difference and your Impact section matches. Needs an agent: optional; read what it writes.
+- 🟡 **Replay the log.** Write a script (in `scripts/` or outside the repository) that feeds `prod.log` through your fixed code with the tiers in `kyc_tiers.csv` and prints the customers whose outcome differs from the log. *Done when:* it lists both kinds of difference and your Impact section matches. Needs an agent: optional; read what it writes. A starting skeleton follows the exercises.
 - 🔴 **Bisect the history.** In a throw-away worktree (`git worktree add ../m06-bisect lab-start`, then `cd` into it) with your test copied in untracked, run the test at `lab-start` (it must fail) and at the first commit (`git checkout --detach $(git rev-list --max-parents=0 HEAD)`; it must pass). Back at `lab-start`, run `git bisect start lab-start $(git rev-list --max-parents=0 HEAD)`, `git bisect run python -m pytest -q <your test file>` and `git bisect reset`; remove the worktree. *Done when:* your notes name the commit found, the one you suspected first (and whether it was guilty), and a review rule that would have stopped it. Needs an agent: no.
+
+<details><summary>A starting skeleton for 🟡 Replay the log (run it from <code>~/ainative/m06</code> with <code>PYTHONPATH=src</code>; the comparison is yours to write)</summary>
+
+```python
+# scripts/replay.py: run from the lab folder with PYTHONPATH=src
+import csv
+import json
+from datetime import datetime
+from types import SimpleNamespace
+
+from remit.limits import check_limits
+from remit.money import Money
+
+
+def money(text):  # "500.00 QAR" -> Money("500.00", "QAR")
+    amount, currency = text.split()
+    return Money(amount, currency)
+
+
+with open("lab-assets/kyc_tiers.csv") as f:
+    tiers = {row["customer_id"]: row["kyc_tier"] for row in csv.DictReader(f)}
+
+sent = {}  # customer id -> that customer's earlier transfer.sent events
+with open("lab-assets/prod.log") as f:
+    for line in f:  # check first: is the log in time order?
+        event = json.loads(line)
+        if event["event"] not in ("transfer.sent", "transfer.rejected"):
+            continue
+        cid, when = event["customer_id"], datetime.fromisoformat(event["ts"])
+        amount = money(event["send_amount"])
+        answer = check_limits(tiers[cid], sent.get(cid, []), amount, when)
+        was_sent = event["event"] == "transfer.sent"
+        # TODO: compare answer.allowed with was_sent; print the id, the time and
+        # which of the two kinds of difference this is
+        if was_sent:
+            sent.setdefault(cid, []).append(SimpleNamespace(created_at=when, send_amount=amount))
+```
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **Copying a document into the tour.** Documents drift; the code wins.
@@ -502,14 +541,12 @@ When everything passes, the last line reads `Lab m06: 20/20 required checks pass
 - **Letting the agent edit a test to get green.** The old tests are the specification: undo, and ask why they conflict.
 - **Fixing the first line you see, or counting only the complainers.** Look for the twin (an advisory check tells you if your tests miss it); replay the log and count both directions.
 - **Special-casing the log's timestamps.** A patch that handles only the incident's moments greens your test and fails the rest of the week: fix the rule.
-- **One big commit.** The tour, the fix and the note are three changes.
 
 ## 🧾 Recap
 - The suite is green and the bug is real: reproduce it from the log first.
-- Verify every claim in your tour; the grader checks files, steps and facts, and so will your partner.
+- Verify every claim in your tour.
 - Fix the root cause with the smallest correct change; leave the old tests alone.
 - The note names the mechanism, the evidence, who was hurt each way, and why the tests missed it.
-- A grade checks the result; the group session checks the thinking.
 
 ## ✍️ Check yourself
 

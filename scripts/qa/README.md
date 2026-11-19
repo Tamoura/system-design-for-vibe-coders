@@ -11,9 +11,10 @@ library. CI runs them with Python 3.11 in `.github/workflows/publish.yml`, and e
 | Claims lint | `npm run qa:claims` | Looks for wording the library must not publish (see below). | Any hit. There is no baseline. |
 | Site counts | `npm run qa:counts` | Compares the landing cards and about pages with `academy/catalogue.json`, and each course's assurance level with its sign-off records (see below). | Any count differs, or a level has no record. |
 | Lesson outcomes | `npm run qa:outcomes` | Every lesson (EN and AR) opens with "After this you can ..." and a study-time estimate (`academy/STANDARD.md` section 3). | A lesson lacks either line. |
+| Arabic content parity | `npm run qa:parity` | Each Arabic lesson and assessment string keeps the English's formula operators, option letters and citations (see below). | The Arabic has fewer than the English, beyond `scripts/qa/ar-parity-baseline.json`. |
 | Internal links | `npm run qa:links` | Every internal link and `#anchor` on the assembled `_site/` resolves. Runs in the publish workflow after "Assemble the site". | Any broken internal link. |
 
-`npm run qa` runs the first six (the internal-link check needs the assembled site), keeps going after a failure and prints a summary. Each script also runs on its own:
+`npm run qa` runs the first seven (the internal-link check needs the assembled site), keeps going after a failure and prints a summary. Each script also runs on its own:
 `python3 scripts/qa/<name>.py`. Exit status 0 means pass, 1 means fail, 2 means the check could not run.
 
 Two other tools live here:
@@ -83,6 +84,17 @@ Sources: Arabic Markdown files that a builder did not generate, the Arabic field
 `about/index.ar.html`. Generated pages repeat the sources and are not scanned again. `agentic/` is a published copy
 of another repository and is not checked. When the check was written there were no violations, so the list of known
 exceptions in the baseline is empty.
+
+## Arabic content parity (`ar_parity.py`)
+
+A translation must carry some tokens over unchanged. The November 2026 content audit found that an automated
+gloss-trimming pass had deleted formula parts ("TP ÷ (TP + FP)" became "TP ÷."), quiz option letters and research
+citations from the Arabic editions, and no check noticed. This check compares every `X.md` with `X.ar.md`, and the
+`en` and `ar` strings of every self-assessment item file, on three counts: option letters in parentheses, formula
+operators (÷ × = ≈ ≤ ≥ and a spaced + or −), and citations ("et al.", «وزملاؤه», "Name, 2024"). Code is left out.
+The Arabic count must not be lower than the English one. `--list` prints every shortfall.
+
+`scripts/qa/trim_glosses.py` now pins these parentheticals as content, so it cannot delete them again.
 
 ## Claims lint (`claims_lint.py`)
 

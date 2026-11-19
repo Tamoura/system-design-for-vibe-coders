@@ -37,6 +37,10 @@ else:
         if l=='mermaid' and len(a.splitlines())!=len(b.splitlines()): err.append('mermaid line count changed'); break
 if icode(en)!=icode(ar): err.append(f'inline code differs: {list((icode(en)-icode(ar)))[:6]} / {list((icode(ar)-icode(en)))[:6]}')
 if urls(en)!=urls(ar): err.append(f'links differ: {list((urls(en)-urls(ar)))[:4]}')
+# maths tokens: every italic variable (*N*, *r*) and operator (·, −, ×, ²…) in the English prose must survive in the Arabic,
+# so a formula cannot lose a term (the Arabic may add × where English writes "x" or "times")
+def maths(s): return collections.Counter(re.findall(r'(?<![*A-Za-z0-9])\*[A-Za-z](?:_[A-Za-z0-9]+)?\*(?!\*)|[·−×÷≈≤≥²³√∑]',re.sub(r'`[^`\n]*`','',nof(s))))
+if maths(en)-maths(ar): err.append(f'maths tokens missing from a formula: {dict(maths(en)-maths(ar))}')
 body=re.sub(r'[`|*#\-\[\]()]','',nof(ar)); a=len(re.findall(r'[؀-ۿ]',body)); t=len(re.sub(r'\s','',body))
 if a/max(t,1)<0.45: err.append(f'only {a/max(t,1):.0%} Arabic script')
 if err: print('✗',sys.argv[2]); [print('  -',e) for e in err]; sys.exit(1)

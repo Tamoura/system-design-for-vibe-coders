@@ -9,7 +9,7 @@
 # 11.1 — Supervisors, workers and hand-offs: when multi-agent is the wrong answer
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 5.1, 8.1* · *Layer: Agents*
 
-**After this you can** decide and justify whether a design needs one agent or several, and write Pydantic hand-off contracts that accept three valid inputs and reject three invalid ones as predicted. *Study time: about 110 minutes (estimate).*
+**After this you can** decide and justify whether a design needs one agent or several, and write Pydantic hand-off contracts that accept three valid inputs and reject three invalid ones as predicted. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **team** is several agents, each with its own prompt, tools and context, plus a **supervisor** that decides who goes next and **hand-offs** between them.
@@ -263,7 +263,7 @@ Hind needs none of the vocabulary: she asks whether answers are right, fast and 
 # 11.2 — Lab: a three-agent team with explicit hand-off contracts
 *Level: 🟡 Intermediate* · *Prerequisites: 3.2, 8.2, 11.1* · *Layer: Agents*
 
-**After this you can** build a three-agent team with allow-list, grounding and budget guards, and add deadline and no-progress escalations with tests that fail without your change. *Study time: about 110 minutes (estimate).*
+**After this you can** build a three-agent team with allow-list, grounding and budget guards, and add deadline and no-progress escalations with tests that fail without your change. *Study time: reading about 10 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A researcher, writer and reviewer run by a supervisor in plain code, each with its own prompt, tools and contract.
@@ -601,7 +601,7 @@ The budget is checked before a call, so one call can cross it.
 
 **Group session (60 minutes).** (1) Swap `compare` tables; explain the ratios (15). (2) Run the drills; name each guard and the packet field a Service Desk agent needs (20). (3) Write a hand-off that passes the schema yet is wrong (15). (4) Team or one agent for v1 (10)?
 
-**Build it with Claude Code.** Give this spec to Claude Code in plan mode (check the current Claude Code documentation) and review the plan before any edit:
+**Build it with Claude Code.** *No Claude Code? Do the spec's steps by hand and run its checks yourself (lesson 0.3).* Give this spec to Claude Code in plan mode (check the current Claude Code documentation) and review the plan before any edit:
 
 ```text
 Goal: build labs/m11/contracts.py, team.py and compare.py as in lesson 11.2, with pytest tests in

@@ -9,7 +9,7 @@
 # 6.1 — A secure development life cycle: requirements, review and testing (SAST, DAST, SCA)
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 1.3, 2.1* · *Phase: Build, Test*
 
-**After this you can** write security acceptance criteria that someone else can turn into pass/fail tests, and triage SAST and SCA findings with a one-line reason each. *Study time: about 110 minutes (estimate).*
+**After this you can** write security acceptance criteria that someone else can turn into pass/fail tests, and triage SAST and SCA findings with a one-line reason each. *Study time: reading about 15 min, hands-on about 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A **secure development life cycle** (secure SDLC) adds small security activities to every step of delivery instead of relying on one penetration test at the end.
@@ -24,7 +24,7 @@ Ten days before launch, Mariam's red team runs the planned, authorised penetrati
 
 The honest answer: security was a gate at the end, not a thread through the work. The story never said who may invite whom, nobody threat-modelled the flow, nothing in the pipeline looked for injection, and no test checked that one company cannot act on another's data. The pen testers found the bugs because they were the first to look.
 
-Public cases show the same pattern: a missing process, not missing knowledge. The Apache Struts flaw behind the 2017 Equifax breach (CVE-2017-5638) was disclosed with a fix in March 2017. According to public reports, attackers exploited an unpatched Equifax system in the following months, exposing personal data of roughly 147 million people. The fix existed; the process to apply it everywhere in time did not. This lesson builds that process for Najm.
+Public cases show the same pattern: a missing process, not missing knowledge. Equifax (0.1) is the standard example: the Struts fix (CVE-2017-5638) was published in March 2017, but no process applied it everywhere in time. This lesson builds that process for Najm.
 
 ## 📐 How it works
 
@@ -198,10 +198,10 @@ Run hands-on work only against your own code, a local lab, or a deliberately vul
 
 **1. The SME Portal pen test found that a company administrator could invite users into another company. Which earlier control would most reliably have caught this?**
 
-- A. A SAST scan with the default ruleset
-- B. A DAST baseline scan
+- A. A SAST scan with the default ruleset, because it reads all the code, finds any call that skips the company check, and runs first in every build
+- B. A DAST baseline scan of the test environment, because it sends real requests and finds every authorisation flaw
 - C. A security integration test, written from an acceptance criterion, asserting that an admin of company A gets 403 or 404 when targeting company B
-- D. An SCA scan of the portal's dependencies
+- D. An SCA scan of the portal's dependencies, because it finds logic errors in the code Najm's own team wrote
 
 <details><summary>Answer</summary>
 
@@ -211,10 +211,10 @@ Run hands-on work only against your own code, a local lab, or a deliberately vul
 
 **2. Ali switches on SAST for the Najm Mobile API and gets 2,400 findings. He proposes failing every build until all of them are fixed. What should Noura advise?**
 
-- A. Agree, because security findings must never be ignored
-- B. Switch the tool off until the team has time
-- C. Baseline the existing findings as a prioritised backlog, block pull requests only on new high-confidence, high-severity findings, and tune the noisy rules
-- D. Mark all 2,400 as false positives so the build goes green
+- A. Agree, because security findings must never be ignored and no code may merge before they are all fixed
+- B. Switch the tool off until the team has time to deal with these findings, then turn it back on later in the project
+- C. Baseline existing findings as a backlog, block only new high-confidence, high-severity ones, and tune the noisy rules
+- D. Mark all 2,400 as false positives so the build goes green, and revisit them later if needed
 
 <details><summary>Answer</summary>
 
@@ -237,9 +237,9 @@ Run hands-on work only against your own code, a local lab, or a deliberately vul
 
 **4. An SCA tool reports 40 vulnerable dependencies in the SME Portal. Which way of prioritising them is best?**
 
-- A. Rank them by severity, exploitation evidence (CISA KEV, EPSS) and reachability, then fix within agreed time limits
-- B. Fix them in alphabetical order
-- C. Fix only those with a CVSS base score of 10
+- A. Rank them by severity, exploitation evidence (CISA KEV, EPSS) and reachability, then fix each one within the agreed time limits
+- B. Fix them in alphabetical order of package name, because every sub-team can agree on that order and follow it
+- C. Fix only those with a CVSS base score of 10 and leave the rest, because their lower scores mean they do not matter
 - D. Ignore transitive dependencies, because the team did not choose them and cannot easily update them without breaking the build
 
 <details><summary>Answer</summary>
@@ -278,7 +278,7 @@ Run hands-on work only against your own code, a local lab, or a deliberately vul
 # 6.2 — The software supply chain: dependencies, SBOMs, SLSA and signing
 *Level: 🟡 Intermediate* · *Prerequisites: 5.2, 6.1* · *Phase: Build, Deploy*
 
-**After this you can** generate and read an SBOM for your own project and harden a CI workflow with SHA-pinned actions, least-privilege permissions and OIDC, explaining the threat each change addresses. *Study time: about 110 minutes (estimate).*
+**After this you can** generate and read an SBOM for your own project and harden a CI workflow with SHA-pinned actions, least-privilege permissions and OIDC, explaining the threat each change addresses. *Study time: reading about 20 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Your **software supply chain** is everything between a developer's keyboard and production: source, third-party packages, registries, build tools, CI/CD pipelines, base images and, increasingly, AI models.
@@ -458,6 +458,13 @@ Run hands-on work only on your own repositories and in a local lab on your own m
 - 🟢 Generate an SBOM for one of your own projects with Syft or cdxgen, in CycloneDX or SPDX format. *Done when:* you can say how many direct and transitive components it contains, name any package present in two versions, and find one component by its package URL.
 - 🟡 Harden one CI workflow in a repository you own: pin third-party actions to full commit SHAs, set least-privilege `permissions`, install from the lock file, and use OIDC instead of long-lived cloud secrets where your platform allows. *Done when:* the workflow still passes, and the pull request explains each change and the threat it addresses.
 - 🔴 In a local lab (a local registry plus a kind or minikube cluster), sign an image you built with cosign using a key pair you generate (keyless signing would publish your identity in the public Rekor log), then install an admission policy that only admits images signed by that key. *Done when:* the signed image runs, an unsigned image and one referenced by `:latest` are both rejected, and you have noted which threat each rejection stops.
+- 📝 **Paper route (no code).** Review the two "Risky" examples in 📐 How it works (the pip command and the CI workflow) as if they were in a pull request. *Done when:* each risky line has the attack it allows, the hardened replacement and a check that would catch it next time.
+
+<details><summary>Check your work</summary>
+
+**📝 Model answer.** `--extra-index-url` lets pip take a public package with the same name as an internal one (dependency confusion); use one index with exact versions and `--require-hashes`, checked by a CI rule that rejects extra indexes. `permissions: write-all` hands every step write access; grant `contents: read` plus only what a job needs. A tag such as `@v3` can be moved to new code; pin the full commit SHA, and add a CI check for unpinned actions. A long-lived deploy token can leak and stays valid; use the pipeline's short-lived OIDC identity instead.
+
+</details>
 
 ## ⚠️ Mistakes and traps
 - **"We only use a few libraries."** Direct dependencies are the tip; transitive ones usually far outnumber them. Count them with an SBOM.
@@ -503,10 +510,10 @@ Run hands-on work only on your own repositories and in a local lab on your own m
 
 **3. Ali argues that signing every Najm image protects the bank against a SolarWinds-style attack. What is wrong with this?**
 
-- A. Nothing; signing prevents build compromise
-- B. Signatures expire too quickly to be useful
-- C. If the build is compromised, the malicious artefact is signed too; signing needs reviewed source, a hardened build and provenance alongside it
-- D. Only open-source software can be signed
+- A. Nothing; signing prevents build compromise, because anything signed is trusted from the moment it is signed
+- B. Signatures expire too quickly to be useful, so large production environments do not rely on them and must renew them every week
+- C. If the build is compromised, the malicious artefact gets signed too; signing needs reviewed source, a hardened build and provenance
+- D. Only open-source software can be signed; internal images have nothing to be signed with in the first place
 
 <details><summary>Answer</summary>
 
@@ -560,7 +567,7 @@ Run hands-on work only on your own repositories and in a local lab on your own m
 # 6.3 — Securing AI-generated code: what coding agents get wrong
 *Level: 🟡 Intermediate* · *Prerequisites: 6.1, 6.2* · *Phase: Build, Test*
 
-**After this you can** review AI-generated endpoints against a security checklist, and write a rules file and Semgrep rules that flag the insecure version but not the fixed one. *Study time: about 110 minutes (estimate).*
+**After this you can** review AI-generated endpoints against a security checklist, and write a rules file and Semgrep rules that flag the insecure version but not the fixed one. *Study time: reading about 15 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - AI coding assistants and agents write code fast and fluently, but their output is **untrusted input**. It reproduces insecure patterns from public code, does not know your authorisation model, and sometimes names packages that do not exist.
@@ -624,7 +631,7 @@ def export_invoice(invoice_id):
     return render_pdf(row)
 ```
 
-**Slopsquatting.** Language models sometimes recommend packages that do not exist. Research on this "package hallucination" (Spracklen et al., 2024) found it common, with many invented names recurring when the same prompt was repeated. So an attacker can register a commonly hallucinated name with malicious code and wait for developers or agents to install it, a practice that became known as **slopsquatting** in 2025. The defences are the 6.2 controls, applied strictly: installs only through the registry proxy, a gate on every new dependency, and a human check that the package is the real, established project.
+**Slopsquatting.** Language models sometimes recommend packages that do not exist. Research on this "package hallucination" (Spracklen et al., 2024, arXiv:2406.10279) found that about one in five packages suggested by the 16 models tested did not exist, and that many invented names recurred when the same prompt was repeated (summaries of the paper put it at 43% recurring in all ten reruns). So an attacker can register a commonly hallucinated name with malicious code and wait for developers or agents to install it, a practice that became known as **slopsquatting** in 2025. The defences are the 6.2 controls, applied strictly: installs only through the registry proxy, a gate on every new dependency, and a human check that the package is the real, established project.
 
 **Give the assistant your rules.** Most coding tools read a project instruction file (`AGENTS.md` is one common convention). Najm's holds short, specific security rules (🏛️ Part C). Rules reduce mistakes but do not replace the gates, because models do not follow instructions reliably.
 
@@ -764,10 +771,10 @@ Run hands-on work only in your own projects and repositories, or in a local lab.
 
 **2. A build fails because an assistant added a package that Najm's registry proxy cannot find. The developer proposes adding the public index so the build passes. What is the best response?**
 
-- A. Agree; the proxy is only a cache
-- B. Publish an internal package with that name
-- C. Treat the name as possibly hallucinated: find the real package that was intended, keep installs going through the proxy, and record the new dependency
-- D. Pin the package to its latest version and continue
+- A. Agree; the proxy is only a cache, and adding the public index changes nothing about where installed packages come from
+- B. Publish an internal package with that same name in the private registry, which fixes the build and satisfies the assistant
+- C. Treat the name as possibly hallucinated: find the package that was intended, keep installs going through the proxy, record it
+- D. Pin the package to its latest version and continue, since the newest version is the safest and least exposed to known flaws
 
 <details><summary>Answer</summary>
 
@@ -791,9 +798,9 @@ Run hands-on work only in your own projects and repositories, or in a local lab.
 **4. Every Najm repository has a security rules file for AI assistants. Why keep SAST, secret scanning and protected security tests on AI-written pull requests?**
 
 - A. Because models do not follow instructions reliably: rules reduce mistakes, and deterministic gates catch the rest
-- B. Because rules files are only read by humans
-- C. Because regulations ban rules files
-- D. They are not needed once a rules file exists
+- B. Because rules files are only read by humans, so they do nothing for assistants and every line must be reviewed by hand
+- C. Because regulations ban rules files, so automated checks alone must review every pull request
+- D. They are not needed once a rules file exists, because the assistant always follows it and no flaw gets into the code
 
 <details><summary>Answer</summary>
 

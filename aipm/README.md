@@ -1,6 +1,10 @@
 # AI Product Management: Zero to Hero
 
-**Build AI products people trust and pay for. A free, bilingual course that takes you from zero to confident AI product manager, from the first idea to a product at scale.**
+**"Our competitors have AI in their apps. I want an assistant in ours by the third quarter." When a request like that lands on your desk, this free, bilingual course teaches you what to do next: find the problem worth solving, set the quality bar, prove it works, launch it safely and show that it pays, from the first idea to a product at scale.**
+
+<!-- study-time -->
+**Study time for the whole course: about 118 hours** (estimate: reading plus hands-on work, summed over every lesson). At about 6 hours a week that is roughly 20 weeks. Each lesson shows its own split; a pilot with real learners will replace these estimates.
+<!-- /study-time -->
 
 ## What this is
 
@@ -38,6 +42,20 @@ The whole course follows the **Digital & AI Products** team at **Najm Bank**, a 
 | 🟢 **Foundations** | 0–1 | Explain what AI product management is, how AI products differ, and what ML, generative AI, LLMs and agents can and cannot do. |
 | 🟡 **Practitioner** | 2–6 | Find and score use cases, judge data readiness, design AI experiences, write AI specs, and prove quality with evals and experiments. |
 | 🔴 **Hero** | 7–10 | Launch safely, drive adoption, measure value, model cost and pricing, set strategy, lead teams, and run a product end to end. |
+
+## How long it takes
+
+Reading every lesson takes about 12 hours; the exercises are most of the work. Lesson 0.3 suggests four paths (estimates, reading plus exercises):
+
+| Path | About |
+|---|---|
+| Everything, every exercise, including the 🔴 ones and the full capstone on your own product | 115–120 hours |
+| New to product and AI: every lesson, 🟢 and 🟡 exercises only | 60 hours |
+| Engineer or data scientist moving into product | 60 hours |
+| Manager or sponsor: Modules 0, 2.2–2.3, 7, 8 and 9 with the 🟢 exercises | 12 hours |
+| Working AI PM: the practice exam and error log, then the lessons behind your misses | 3 hours, plus 1–3 hours per lesson you revisit |
+
+The study-time line on each lesson is an estimate for that lesson, and the lines add up to the course total above; plan by the path totals above. A pilot with real learners will replace these figures.
 
 ## Companion courses
 

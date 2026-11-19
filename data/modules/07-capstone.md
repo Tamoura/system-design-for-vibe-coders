@@ -9,7 +9,7 @@
 # 7.1 — Capstone: build Najm's credit-risk data mart end to end
 *Level: 🔴 Advanced* · *Prerequisites: Modules 0–6* · *Stage: Model, Operate*
 
-**After this you can** build a tested, reconciled credit-risk mart and document it well enough that a peer can trace one NPL figure back to its source rows. *Study time: about 125 minutes (estimate).*
+**After this you can** build a tested, reconciled credit-risk mart and document it well enough that a peer can trace one NPL figure back to its source rows. *Study time: reading about 15 min, hands-on about 20 h (estimate).*
 
 ## ⚡ In 60 seconds
 - The capstone builds the **credit-risk mart**: a daily, tested, reconciled record of every loan's balance and days past due, for dashboards, regulators and models.
@@ -24,7 +24,7 @@ Every month, Najm's credit-risk team, Finance and the retail business each produ
 
 Faisal gets a mandate from the Chief Risk Officer: one credit-risk mart, owned by his team, with definitions owned by Credit Risk and Finance, used by every report. He gives it to Huda (graduate data engineer) and Lina (analytics engineer), with Dana (lead data scientist) as the first model consumer and Sara (DPO) and Layla (Head of AI Governance) as reviewers.
 
-The 2007–2009 financial crisis showed that many banks could not aggregate risk exposures quickly and accurately. In January 2013 the Basel Committee on Banking Supervision published **BCBS 239**, *Principles for effective risk data aggregation and risk reporting*: risk data must be accurate, complete, timely and adaptable. And in England in 2020, thousands of COVID-19 cases were left out of daily reporting by a legacy spreadsheet format's row limit: data that never arrived, and nobody noticed.
+The 2007–2009 financial crisis showed that many banks could not aggregate risk exposures quickly and accurately. In January 2013 the Basel Committee on Banking Supervision published **BCBS 239**, *Principles for effective risk data aggregation and risk reporting*: risk data must be accurate, complete, timely and adaptable. And in England in 2020 (lesson 0.2), a legacy spreadsheet format's row limit kept thousands of COVID-19 cases out of daily reporting for about a week: the rows were dropped at load, and no check caught it until the gap was spotted.
 
 ## 📐 How it works
 
@@ -234,9 +234,25 @@ The output is the **credit-risk mart case file**: a one-page summary, then linke
 **Readiness rule.** The mart replaces the spreadsheets only after three month-ends in a row reconcile with no manual adjustment, Credit Risk and Finance get the same NPL ratio from it, and the drill has run once.
 
 ## 🛠️ Exercises
-- 🟢 **Build the slice.** Generate a few thousand synthetic loans, some in arrears, with instalments and repayments, into PostgreSQL in Docker. Load them into DuckDB and build `dim_date`, `dim_loan`, a snapshot of `loans` and `fct_loan_daily` with dbt Core and generic tests. *Done when:* `dbt build` is green and a query returns the balance in each DPD bucket for any date you choose.
-- 🟡 **Make it trustworthy.** Add the lookback, a Type 2 snapshot of `customers`, synthetic ledger control totals and the reconciliation test, scheduled in Dagster or Airflow. Insert a five-day-late repayment and a loan in a currency missing from the ledger. *Done when:* the reconciliation catches the currency gap, rerunning a day gives identical rows, and you can explain why the late repayment needs a backfill.
+Plan this as a project, not a sitting: about 15 to 25 hours over one to two weeks, roughly 4 to 6 hours for 🟢, 5 to 8 for 🟡 and 6 to 10 for 🔴. Start from the lab dataset (lesson 0.3), whose `loans`, `instalments`, `repayments` and `ledger_totals` already include late and stopped payers. This copies them into PostgreSQL and sketches `dim_date`:
+
+```sql
+-- in DuckDB: copy the lab's loan tables into PostgreSQL, the "core banking" source
+-- (set PGPASSWORD in your shell; never write the password here or commit it)
+INSTALL postgres; LOAD postgres;
+ATTACH 'najm_lab.duckdb' AS lab (READ_ONLY);
+ATTACH 'dbname=najm host=localhost user=postgres' AS pg (TYPE postgres);
+CREATE TABLE pg.loans AS SELECT * FROM lab.loans;  -- repeat for instalments, repayments
+-- dim_date starts as one row per day; add business-day and month-end flags in dbt
+SELECT CAST(range AS DATE) AS date_day
+FROM range(DATE '2024-01-01', DATE '2027-01-01', INTERVAL 1 DAY);
+```
+
+- 🟢 **Build the slice.** Copy the lab's loans, instalments and repayments into PostgreSQL in Docker, as above. Load them into DuckDB and build `dim_date`, `dim_loan`, a snapshot of `loans` and `fct_loan_daily` with dbt Core and generic tests. *Done when:* `dbt build` is green and a query returns the balance in each DPD bucket for any date you choose.
+- 🟡 **Make it trustworthy.** Add the lookback, a Type 2 snapshot of `customers`, the lab's `ledger_totals` as the ledger's control totals and the reconciliation test, scheduled in Dagster or Airflow. Insert a five-day-late repayment and a loan in a currency missing from the ledger. *Done when:* the reconciliation catches the currency gap, rerunning a day gives identical rows, and you can explain why the late repayment needs a backfill.
 - 🔴 **Ship the case file.** Write your case file: summary, grain statements, metric cards for the NPL ratio and roll rate, a classification table, a row-level security rule tested in PostgreSQL, a point-in-time feature view with a leakage test, and a runbook. Then drill: rename a source column without warning. *Done when:* a peer can trace one NPL figure to source rows using only your documentation, and your drill write-up says what failed, who was alerted and what changed.
+
+*Optional extension:* stream repayments through Redpanda (2.3), test a repayment-reminder message with a proper experiment design (4.3), or index Najm's credit policy for the Credit Memo Copilot (5.3).
 
 ## ⚠️ Mistakes and traps
 - **Building the wide "current state" table first.** It cannot answer trend or point-in-time questions. Start from the daily snapshot.
@@ -332,7 +348,7 @@ The output is the **credit-risk mart case file**: a one-page summary, then linke
 # 7.2 — The data career: roles, interviews, portfolio and growth
 *Level: 🔴 Advanced* · *Prerequisites: 0.1, 7.1* · *Stage: Govern*
 
-**After this you can** map a target data role's requirements against your own evidence on one page, and publish a portfolio project a friend can clone and run from its README. *Study time: about 175 minutes (estimate).*
+**After this you can** map a target data role's requirements against your own evidence on one page, and publish a portfolio project a friend can clone and run from its README. *Study time: reading about 15 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - "Data" is several jobs: **data engineer**, **analytics engineer**, **data analyst**, **data scientist** and **ML engineer**, plus platform and governance roles. Titles vary by employer, so read the job description, not the title.
@@ -388,7 +404,7 @@ For each path and which courses in the library to take, see [*From Graduate to H
 | Take-home | A small dataset and a question; judged on correctness, tests and write-up | Everything, plus 🏛️ below |
 | Behavioural | Past work, conflict, mistakes, ownership | STAR stories from your projects |
 
-Many employers now allow AI assistants in some rounds and ban them in others. Ask the recruiter what applies; never assume. For how these rounds run and how to prepare, see [*From Graduate to Hired*, lesson 5.3 — System design, data and ML interviews for juniors](../career/index.html#/5.3).
+At the time of writing (2026), some employers allow AI assistants in some rounds and ban them in others. Ask the recruiter what applies; never assume. For how these rounds run and how to prepare, see [*From Graduate to Hired*, lesson 5.3 — System design, data and ML interviews for juniors](../career/index.html#/5.3).
 
 ### 🟡 Going deeper
 
@@ -542,7 +558,7 @@ Kareem's plan targets analytics engineering: his proof is three Monday extracts 
 **3. In a pipeline interview at a neutral company, the interviewer asks what happens if the daily load runs twice. Which answer scores best?**
 
 - A. A MERGE or partition overwrite makes the rerun a no-op; tests catch duplicates if that regresses
-- B. The scheduler is configured to prevent concurrent runs, so a double run cannot happen in practice
+- B. The scheduler is set to prevent concurrent runs, so a double run cannot happen in practice
 - C. We would notice the inflated totals in the dashboard and delete the duplicate rows by hand
 - D. Duplicates do not matter much in analytics, because trends stay roughly the same over time
 
@@ -591,9 +607,9 @@ Kareem's plan targets analytics engineering: his proof is three Monday extracts 
 # 7.3 — Practice exam: 60 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: 7.1, 7.2* · *Stage: Analyse*
 
-**After this you can** sit a timed 60-question practice exam with a confidence mark on every answer, and turn the result into a review sheet that names your weakest stage and the next action for it. *Study time: about 120 minutes (estimate).*
+**After this you can** sit a timed 60-question practice exam with a confidence mark on every answer, and turn the result into a review sheet that names your weakest stage and the next action for it. *Study time: reading about 45 min, hands-on about 150 min (estimate).*
 
-> **Under revision (November 2026).** In many questions in this practice exam the correct option can be spotted by its length or wording, so a high score here does not show readiness for any real exam. Use it to practise reasoning: answer each question in your own words before you read the options, then compare.
+> **Practice only.** The options were re-checked in November 2026 for length and wording cues, though some may remain. A score here shows how well you know this course, not readiness for any certification. Answer each question in your own words before you read the options, then compare.
 
 ## ⚡ In 60 seconds
 - Sixty multiple-choice questions cover every module and all eight stages: Ingest, Store, Model, Transform, Serve, Analyse, Operate and Govern. Most are short scenarios at Najm Bank.
@@ -866,14 +882,14 @@ The sheet feeds her development plan from 7.2.
 
 **16. Kareem wants to pull CRM data with an open-source connector whose documentation says "incremental sync supported". What should Faisal ask for?**
 
-- A. Nothing, since maintainers test incremental modes against every source
+- A. Only the connector's version number, so the team can pin it in the repo
 - B. Writing every extractor by hand in Python instead of using connectors
 - C. A test that it really catches updates and deletes from this source
-- D. Full loads only, since connectors cannot do any incremental sync at all
+- D. A log showing the first full sync finished with matching row counts
 
 <details><summary>Answer</summary>
 
-**C.** Treat a connector's "incremental" as a claim to test. Also ask who maintains it and where it can run. A takes the claim on trust; B throws away a useful tool; D is false. *(Ingest · 2.1)*
+**C.** Treat a connector's "incremental" as a claim to test. Also ask who maintains it and where it can run. A takes the claim on trust; B throws away a useful tool; D proves only the full load. *(Ingest · 2.1)*
 
 </details>
 
@@ -946,7 +962,7 @@ The sheet feeds her development plan from 7.2.
 
 - A. Nothing is lost, because Kafka keeps events until every group has read them
 - B. The consumer resumes from its committed offset with every event intact
-- C. Kafka pauses all producers on the topic while any consumer group is down
+- C. Reset the consumer to the latest offset; the nine-day gap cannot be filled
 - D. Events past seven-day retention are deleted; rebuild from the raw archive
 
 <details><summary>Answer</summary>
@@ -1036,13 +1052,13 @@ The sheet feeds her development plan from 7.2.
 **29. Najm's data observability tool sends about 300 alerts a week to a shared channel. A real freshness breach on the credit-risk mart went unnoticed. What should change?**
 
 - A. Add monitors on every column of every table so real breaches stand out
-- B. Turn off all monitors and rely on dbt tests alone from now on
+- B. Raise every alert threshold by half so the channel gets quieter
 - C. Email every alert to the whole data team as well as the channel
 - D. Monitor critical tables, give each alert an owner, tune noisy ones
 
 <details><summary>Answer</summary>
 
-**D.** Alert fatigue is the real enemy: monitor what matters, route to an owner and review noisy monitors. A adds noise; B loses the protection for unknown failures. *(Operate · 3.2)*
+**D.** Alert fatigue is the real enemy: monitor what matters, route to an owner and review noisy monitors. A adds noise; B hides alerts but still routes none to an owner. *(Operate · 3.2)*
 
 </details>
 
@@ -1140,13 +1156,13 @@ The sheet feeds her development plan from 7.2.
 **37. The average balance of Najm's current customers has risen for six months. Over the same period, many low-balance customers closed their accounts. How should Kareem read it?**
 
 - A. Customers are saving more, so the retail team should celebrate the trend
-- B. Possibly survivorship; show the population size and a cohort view
-- C. Balances are semi-additive, so they can never be averaged at all
-- D. It is Simpson's paradox, which only a randomised test can resolve
+- B. Survivorship: show the population size alongside a cohort view
+- C. Inflation: report the balances in real terms and the trend goes away
+- D. Simpson's paradox: split the average by segment to resolve it
 
 <details><summary>Answer</summary>
 
-**B.** A metric over a changing population can rise just because some members left. Show the population behind it and follow cohorts. C confuses summing over time with averaging across customers. *(Analyse · 4.2)*
+**B.** A metric over a changing population can rise just because some members left. Show the population behind it and follow cohorts. C may matter over years but does not explain a population that changed. *(Analyse · 4.2)*
 
 </details>
 
@@ -1243,10 +1259,10 @@ The sheet feeds her development plan from 7.2.
 
 **45. Credit Risk wants to use a model's score directly as a probability of default in an expected-loss calculation. The model was trained on down-sampled data. What is needed?**
 
-- A. Nothing, because a model that ranks well always gives good probabilities
-- B. Replace the model with rules, since ML scores are never probabilities
+- A. Nothing, as long as the model's ROC-AUC on the test set is high
+- B. Rescale the scores so their average matches the down-sampled training rate
 - C. Check calibration with a reliability curve, and re-calibrate the scores
-- D. Multiply every score by the down-sampling rate, then ship without checks
+- D. Multiply each score by the down-sampling rate and use it as is
 
 <details><summary>Answer</summary>
 
@@ -1386,10 +1402,10 @@ The sheet feeds her development plan from 7.2.
 
 **56. A view over `marts.loan_book` is owned by the dbt service account, which also owns the base table and is not subject to its policy. The base table has row-level security by country, but analysts querying the view see every country. Why?**
 
-- A. Row-level security never applies to tables that dbt has built in a marts schema
+- A. The view was created before the policy, so it still reads the old rows
 - B. The view runs with its owner's rights; use `security_invoker` or filter in it
-- C. Views copy the base table's data, so its row policies are lost on the way
-- D. RLS applies only to the first query in each session, not to the later ones
+- C. Views copy the base table's data, so its row policies are lost on the way through
+- D. Row policies are checked when the view is created, not when it is queried
 
 <details><summary>Answer</summary>
 
@@ -1426,7 +1442,7 @@ The sheet feeds her development plan from 7.2.
 **59. A repayment arrives with a value date six days ago. The credit-risk mart has a three-day lookback window, and month-end is in two days. What should the team do?**
 
 - A. Nothing; the next incremental run corrects it like any late repayment
-- B. Ignore it, since a few days of DPD never change risk figures
+- B. Post it in next month's figures, since this month is nearly closed
 - C. Run a logged backfill for the affected days before the month-end freeze
 - D. Widen the lookback permanently to the longest delay ever seen
 

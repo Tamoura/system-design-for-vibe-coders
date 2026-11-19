@@ -3,30 +3,30 @@
   "questions": [
     {
       "id": "paged-1",
-      "level": 1,
-      "lesson": "12",
+      "level": 2,
+      "lesson": "2.3",
       "q": {
-        "en": "You get paged: users in several countries see a broken page. You fetch the same URL from the origin directly, bypassing the CDN, and the response is correct every time. What does that tell you?",
-        "ar": "يصلك تنبيه: مستخدمون في عدة دول يرون صفحة معطوبة. تجلب الرابط (URL) نفسه من الخادم الأصلي (origin) مباشرةً بتجاوز شبكة توصيل المحتوى (CDN)، فتأتي الاستجابة صحيحة في كل مرة. ماذا يخبرك ذلك؟"
+        "en": "Your nightly backup job has exited with code 0 every night for a year. Before a big migration you must show you could recover if the database were lost. What is the strongest evidence?",
+        "ar": "مهمة النسخ الاحتياطي الليلية تنتهي برمز الخروج 0 كل ليلة منذ سنة. وقبل ترحيل كبير عليك أن تُثبت أنك تستطيع الاستعادة لو ضاعت قاعدة البيانات. ما أقوى دليل؟"
       },
       "o": {
         "en": [
-          "The fault is in the edge or cache layer, so look at the CDN or proxy next",
-          "The bug is in the deployed code, so roll back the latest release first",
-          "The users' browsers are at fault, so ask them to clear their local cache",
-          "The origin is healthy, so the incident is over and you can close it"
+          "A year of successful exit codes from the job, with no failures logged at all",
+          "A restore drill: last night's backup loaded into a spare copy and checked",
+          "The backup file size, which has stayed steady and close to the database's size",
+          "The storage provider's promise of eleven nines of durability for the bucket"
         ],
         "ar": [
-          "الخلل في طبقة الحافة أو الكاش، فانظر بعدها في الـCDN أو الوسيط (proxy)",
-          "الخطأ في الكود المنشور، فتراجع عن آخر إصدار أولًا",
-          "متصفحات المستخدمين هي السبب، فاطلب منهم مسح الكاش المحلي وإعادة التحميل",
-          "الخادم الأصلي (origin) سليم، فالحادث محلول ويمكن إغلاق التنبيه الآن"
+          "سنة من رموز الخروج الناجحة للمهمة، دون أي فشل مسجَّل على الإطلاق",
+          "تمرين استعادة: نسخة البارحة مستعادة إلى قاعدة احتياطية ومفحوصة",
+          "حجم ملف النسخة، الذي بقي ثابتًا وقريبًا من حجم قاعدة البيانات نفسها",
+          "وعد مزوّد التخزين بمتانةٍ 99.999999999% للحاوية التي تحفظ النسخ"
         ]
       },
-      "a": 0,
+      "a": 1,
       "why": {
-        "en": "Bisecting by layer starts by cutting the request path at the CDN: if the origin is clean, the fault sits in front of it. Rolling back code ignores the evidence that the running code returns the right answer.",
-        "ar": "التنصيف حسب الطبقة يبدأ بقطع مسار الطلب عند الـCDN: إن كان الخادم الأصلي (origin) سليمًا فالخلل أمامه. والتراجع عن الكود يتجاهل الدليل على أن الكود العامل يعيد الجواب الصحيح."
+        "en": "Exit codes and file sizes prove the job ran, not that the archive holds what you need, and durability protects the file, not its contents. Only a restore you have watched shows the data comes back (lesson 2.3, capstone Simulation 3).",
+        "ar": "رموز الخروج وأحجام الملفات تُثبت أن المهمة عملت، لا أن الأرشيف يحوي ما تحتاجه، والمتانة تحمي الملف لا محتواه. وحدها الاستعادة التي شاهدتها تُظهر أن البيانات تعود (الدرس 2.3، المحاكاة 3 في المشروع الختامي)."
       }
     },
     {
@@ -34,8 +34,8 @@
       "level": 2,
       "lesson": "4.3",
       "q": {
-        "en": "You get paged right after a blue-green deploy: about one in five requests through the edge returns 502, and it flaps for minutes. A curl to the origin returns 200 every time, and the app logs are clean. What do you check first?",
-        "ar": "يصلك تنبيه بعد نشر أزرق-أخضر مباشرة: نحو طلب من كل خمسة عبر الحافة (edge) يعيد 502، ويتذبذب ذلك لدقائق. أمر curl إلى الخادم الأصلي (origin) يعيد 200 في كل مرة، وسجلّات التطبيق نظيفة. ما الذي تفحصه أولًا؟"
+        "en": "You get paged right after a blue-green deploy: about one in five requests through the edge returns 502, and it flaps for minutes. A curl to the app's port, skipping nginx, returns 200 every time, and the app logs are clean. What do you check first?",
+        "ar": "يصلك تنبيه بعد نشر أزرق-أخضر مباشرة: نحو طلب من كل خمسة عبر الحافة (edge) يعيد 502، ويتذبذب ذلك لدقائق. أمر curl إلى منفذ التطبيق، متخطيًا nginx، يعيد 200 في كل مرة، وسجلّات التطبيق نظيفة. ما الذي تفحصه أولًا؟"
       },
       "o": {
         "en": [
@@ -46,15 +46,15 @@
         ],
         "ar": [
           "هل يرمي الكود الجديد أخطاء لا تصل بطريقة ما إلى سجلّات التطبيق",
-          "هل انتهت صلاحية شهادة TLS في مكان ما ضمن نافذة النشر",
-          "هل عاش عامل (worker) في الوسيط (proxy) بعد إعادة التحميل وما زال يوجّه إلى اللون القديم",
-          "هل نفدت اتصالات قاعدة البيانات تحت الحِمل الإضافي للنشر"
+          "هل انتهت صلاحية شهادة TLS في وقت ما ضمن نافذة النشر",
+          "هل نجا عامل للخادم الوسيط من إعادة التحميل ويوجّه إلى اللون القديم",
+          "هل نفدت اتصالات قاعدة البيانات تحت الحِمل الإضافي الذي سبّبه النشر"
         ]
       },
       "a": 2,
       "why": {
-        "en": "The origin is healthy and the failures flap, so the fault is in the layer between edge and origin: a graceful reload doesn't drain keepalive connections, so a stale worker keeps routing to the dead color. An expired certificate would fail every request, not one in five.",
-        "ar": "الخادم الأصلي (origin) سليم والأعطال تتذبذب، فالخلل في الطبقة بين الحافة (edge) والأصل: إعادة التحميل اللطيفة لا تصرّف اتصالات الإبقاء حيًا، فيظل عامل (worker) قديم يوجّه إلى اللون الميت. والشهادة المنتهية كانت ستُفشل كل الطلبات، لا واحدًا من خمسة."
+        "en": "The app port is healthy and the failures flap, so the fault is in the proxy between the edge and the app: a graceful reload doesn't drain keepalive connections, so a stale worker keeps routing to the dead color. An expired certificate would fail every request, not one in five.",
+        "ar": "منفذ التطبيق سليم والأعطال تتذبذب، فالخلل في الخادم الوسيط (proxy) بين الحافة (edge) والتطبيق: إعادة التحميل اللطيفة لا تصرّف اتصالات الإبقاء حيًا، فيظل عامل (worker) قديم يوجّه إلى اللون الميت. والشهادة المنتهية كانت ستُفشل كل الطلبات، لا واحدًا من خمسة."
       }
     },
     {
@@ -101,16 +101,16 @@
           "Unbounded instant retries made a storm; add backoff, jitter and a breaker"
         ],
         "ar": [
-          "المزوّد ما زال متدهورًا؛ انتظر حتى تُظهر صفحة حالته التعافي الكامل ثم أعد الاتصال به",
-          "العمّال (workers) قليلون؛ أضف المزيد منهم كي يُصرَّف التراكم أسرع بكثير",
-          "الطابور (queue) أضاع مهامّ؛ أعد تشغيل كل شيء من سجلّات المزوّد يدويًا",
-          "إعادات المحاولة الفورية غير المحدودة صنعت عاصفة؛ أضف تراجعًا (backoff) وارتعاشًا (jitter) وقاطعًا"
+          "المزوّد ما زال متدهورًا؛ انتظر حتى تعود صفحة حالته إلى الأخضر",
+          "العمّال قليلون؛ أضف المزيد منهم كي يُصرَّف التراكم أسرع",
+          "الطابور أضاع مهامّ؛ أعد تشغيل كل شيء يدويًا من سجلّات المزوّد",
+          "إعادات فورية بلا حدّ صنعت عاصفة؛ أضف تأخيرًا أسيًا وارتعاشًا وقاطعًا"
         ]
       },
       "a": 3,
       "why": {
         "en": "Immediate, unlimited retries turned one blip into a thundering herd that outlived the provider's recovery and billed every retry; the fix is backoff with jitter, a circuit breaker, a dead-letter lane and watched queue depth. Adding workers just fires more retries at the provider.",
-        "ar": "إعادات المحاولة الفورية غير المحدودة حوّلت عثرة واحدة إلى قطيع هادر (thundering herd) عاش بعد تعافي المزوّد وفُوتِرت كل إعادة منها؛ والإصلاح تراجع مع تذبذب، وقاطع دارة (circuit breaker)، ومسار رسائل ميتة، ومراقبة عمق الطابور. وإضافة العمّال (workers) تطلق مزيدًا من الإعادات على المزوّد فقط."
+        "ar": "إعادات المحاولة الفورية غير المحدودة حوّلت عثرة واحدة إلى قطيع هادر (thundering herd) عاش بعد تعافي المزوّد وفُوتِرت كل إعادة منها؛ والإصلاح تأخير أسي مع ارتعاش، وقاطع دارة (circuit breaker)، ومسار رسائل ميتة، ومراقبة عمق الطابور. وإضافة العمّال (workers) تطلق مزيدًا من الإعادات على المزوّد فقط."
       }
     }
   ],

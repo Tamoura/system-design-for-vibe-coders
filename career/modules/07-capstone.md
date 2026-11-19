@@ -9,7 +9,7 @@
 # 7.1 — Capstone: your 12-week job-readiness plan, from audit to offer
 *Level: 🔴 Advanced* · *Prerequisites: 0.2, 3.1, 4.1, 5.1, 6.1* · *Step: Build, Apply*
 
-**After this you can** write a target-role statement, a skills audit scored from at least ten real postings, and a one-page 12-week plan with a checkable deliverable every week and three if-yes/if-no checkpoints. *Study time: about 125 minutes (estimate).*
+**After this you can** write a target-role statement, a skills audit scored from at least ten real postings, and a one-page 12-week plan with a checkable deliverable every week and three if-yes/if-no checkpoints. *Study time: reading about 20 min, hands-on about 36 h (estimate).*
 
 ## ⚡ In 60 seconds
 - A job search is a project: **audit, build and prove, apply, interview, decide**, with overlapping phases and a weekly review.
@@ -112,7 +112,7 @@ Changing one variable at a time is the only way a small, noisy sample can tell y
 
 **The evidence pack.** By week 9, you should be able to send one link that shows what a hiring manager checks for in your role: the project, its README with your decisions and what you verified, your CV, and a short note on how you used AI tools. Khalid calls it "the page I read before the interview".
 
-**Week 12 is a checkpoint, not a deadline.** Hiring timelines are outside your control, and early-career hiring has been reported as weaker in AI-exposed occupations (Brynjolfsson, Chandar and Chen, 2025); a long search is not a verdict on you. Many graduate programmes recruit on an annual cycle, and large employers can move slower than startups; check each employer's dates. Continue past week 12 at a sustainable level: a few tailored applications a week, one mock, one project improvement.
+**Week 12 is a checkpoint, not a deadline.** Hiring timelines are outside your control, and early-career hiring has been reported as weaker in AI-exposed occupations (Brynjolfsson, Chandar and Chen, 2025, updated 2026); a long search is not a verdict on you. Many graduate programmes recruit on an annual cycle, and large employers can move slower than startups; check each employer's dates. Continue past week 12 at a sustainable level: a few tailored applications a week, one mock, one project improvement.
 
 **Look after the runway.** Before week one, write down how many weeks you can afford to search, any visa or sponsorship constraints (check the current rules), and when your targets recruit. These facts decide whether you take a bridge role, such as a contract, an internship or a job in your fallback track, while you keep going.
 
@@ -146,6 +146,8 @@ Huda's plan, as she sent it to Khalid. Her audit showed that nearly every postin
 | 9 | Evidence pack: one link with project, README, CV and an AI-use note | 3.2 |
 | 10–11 | Practice pack from 7.2; rehearse the two weakest stories; follow-ups | 5.1, 7.2 |
 | 12 | **Checkpoint.** Offer comparison, or the next 12-week plan | 6.1 |
+
+**On 6–8 hours a week.** Huda had finished her degree and could give 16 hours. Her plan is about 190 hours (less than the whole course, because she kept only the exercises her target role needs), so with 6–8 keep the same order but spread each week of the table over two (about 24 weeks; nearer 30 at 6 hours). The checkpoints move with it, to about weeks 8, 16 and 24, and applications drop to two good ones a week instead of four. Do not cut the checkpoints or the weekly review; they are what keeps a slower plan honest.
 
 **Her weekly review template** (one note, five lines):
 
@@ -247,7 +249,7 @@ At week 8, her tracker showed that applications after a referral or conversation
 </details>
 
 ## 📚 References
-- Brynjolfsson, E., Chandar, B. and Chen, R., "Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence", Stanford Digital Economy Lab, August 2025 — https://digitaleconomy.stanford.edu/
+- Brynjolfsson, E., Chandar, B. and Chen, R., "Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence", Stanford Digital Economy Lab, first published August 2025, updated August 2026 — https://digitaleconomy.stanford.edu/publication/canaries-in-the-coal-mine-six-facts-about-the-recent-employment-effects-of-artificial-intelligence/
 - GitHub Docs, About READMEs — https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes
 - [*System Design for Vibe Coders* self-assessment](../vibe/assessment.html)
 - [*Secure AI & Application Security*, lesson 12.2 — The security career: roles, certifications and portfolio](../secai/index.html#/12.2)
@@ -258,9 +260,9 @@ At week 8, her tracker showed that applications after a referral or conversation
 # 7.2 — Practice interview pack: 40 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: 7.1* · *Step: Interview*
 
-**After this you can** sit the 40-question pack in 60 minutes, marking each answer sure or guess, and turn your misses and guesses into a review log that names a lesson and an action for each. *Study time: about 90 minutes (estimate).*
+**After this you can** sit the 40-question pack in 60 minutes, marking each answer sure or guess, and turn your misses and guesses into a review log that names a lesson and an action for each. *Study time: reading about 35 min, hands-on about 6 h (estimate).*
 
-> **Under revision (November 2026).** In many questions in this practice exam the correct option can be spotted by its length or wording, so a high score here does not show readiness for any real exam. Use it to practise reasoning: answer each question in your own words before you read the options, then compare.
+> **Reviewed (November 2026).** Option lengths and wording in this pack were reviewed in November 2026, but the right answer is still sometimes the longest option, so do not use length as a clue. Answer each question in your own words before you read the options, then compare.
 
 ## ⚡ In 60 seconds
 - This is a 40-question practice pack covering every module, from reading the market to growing after your first year. Most questions are scenarios with the cohort: which project to build, which CV bullet is stronger, how to answer, which offer to take, what to do in week two.
@@ -332,16 +334,16 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 
 ## ✍️ Practice exam
 
-**1. Yousef's market scan of ten junior platform ads finds Git in nine ads and Docker in four. How should he read those counts?**
+**1. Yousef's market scan of ten junior platform ads finds Linux in seven ads and Terraform in six. How should he read those counts?**
 
-- A. Both are baseline skills, because each of them appears in more than three of the ten ads
-- B. Git is a baseline skill and Docker a differentiator, so he proves Git first and Docker second
-- C. Both are differentiators, since neither of them appears in every single ad he collected
-- D. Docker is the real baseline, because newer tools matter more to employers than old ones
+- A. Both are baseline skills, because each of them appears in more than half of the ten ads
+- B. Linux is a baseline skill and Terraform a differentiator, since the line sits at seven ads
+- C. Both are differentiators, since neither of them appears in eight or more of the ads
+- D. Terraform is the real baseline, because newer tools matter more to employers than old ones
 
 <details><summary>Answer</summary>
 
-**B.** Skills in seven or more of ten ads are the baseline; skills in three to six are differentiators. A and C misapply the thresholds; D swaps evidence for a guess about what is fashionable. *(Explore · 0.1)*
+**B.** Skills in seven or more of ten ads are the baseline; skills in three to six are differentiators, so seven and six sit just either side of the line. A and C invent other cut-offs; D swaps evidence for a guess about what is fashionable. *(Explore · 0.1)*
 
 </details>
 
@@ -400,9 +402,9 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 **6. In his first week at Najm, Yousef is unsure how long he should try alone before asking for help. Nobody has told him. What should he do?**
 
 - A. Ask Salem in their first 1:1 how long to try alone before asking, as teams differ
-- B. Never ask during probation, so that he looks independent and capable to the team
-- C. Ask immediately whenever anything fails, because every minute stuck is wasted time
-- D. Message the most senior engineer privately each time, since seniors answer fastest
+- B. Wait until probation ends to ask, so that he looks independent and capable to the team
+- C. Ask as soon as something fails, because time spent stuck is time the team loses
+- D. Message the most senior engineer privately when stuck, since seniors answer fastest
 
 <details><summary>Answer</summary>
 
@@ -763,9 +765,9 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 
 **34. Tariq asks Reem to estimate the load on the card-alert service. She does not know the real numbers. What is the best approach?**
 
-- A. Refuse to estimate, because any number she gives without real data would be wrong
+- A. Refuse to estimate, because a number given without real data would be wrong
 - B. Quote a large figure confidently, so that the whole design sounds suitably ambitious
-- C. Ask Tariq for the exact production figures and wait until he provides them all
+- C. Ask Tariq for the exact production figures and wait until he provides them
 - D. State round assumptions out loud, do simple sums, and say what the result implies
 
 <details><summary>Answer</summary>
@@ -789,10 +791,10 @@ Khalid's comment: "You missed few technical questions. Spend this week on rows 1
 
 **36. Omar asks whether he should learn six frameworks to look employable in every role family. What does the T-shaped idea suggest?**
 
-- A. Learn all six to a basic level, since breadth across families gets juniors hired
-- B. Go deep in one role family first, and keep working knowledge of the areas next to it
-- C. Learn only algorithms in depth, since frameworks change too fast to be worth learning
-- D. Apply to every family at once with the same CV, then specialise after the first offer
+- A. Learn the six to a basic level, since breadth across families gets juniors hired
+- B. Go deep in one role family first, and keep a working knowledge of the areas next to it
+- C. Learn algorithms in depth instead, since frameworks change too fast to be worth it
+- D. Apply across the families at once with one CV, then specialise after the first offer
 
 <details><summary>Answer</summary>
 

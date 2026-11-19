@@ -2,13 +2,17 @@
 
 **A free, bilingual, hands-on course for software engineers who want to work well with AI coding agents: give them context, specify the work, verify what they produce, secure your setup, automate the loop, and stay accountable for everything that ships. Every lab is a real task with an offline grader.**
 
+<!-- study-time -->
+**Study time for the whole course: about 76 hours** (estimate: reading plus hands-on work, summed over every lesson). At about 6 hours a week that is roughly 13 weeks. Each lesson shows its own split; a pilot with real learners will replace these estimates.
+<!-- /study-time -->
+
 ## What this is
 
 Almost every engineer now has an AI agent that can read a repository, edit files, run commands and open a pull request. Using one is easy. Using one *well* is a skill: the engineers who get the most from agents are not the ones who type the least, but the ones who give the right context, write down what "done" means, work in small verified steps, and notice when the confident answer is wrong.
 
-This course teaches that skill by practice. You join the **Payments Platform** team at **Najm Bank** (a fictional bank used across this library) and work through one codebase, **Najm Remit**, for fourteen weeks: onboarding to unfamiliar code, shipping features, reviewing an agent's pull request, fixing a production bug from its logs, taming legacy code, hardening your setup, automating your agent with hooks, skills and subagents, running agents in parallel, and writing your team's playbook.
+This course teaches that skill by practice. You join the **Payments Platform** team at **Najm Bank** (a fictional bank used across this library) and work through one codebase, **Najm Remit**, for about fifteen weeks, one module a week: onboarding to unfamiliar code, shipping features, reviewing an agent's pull request, fixing a production bug from its logs, taming legacy code, hardening your setup, automating your agent with hooks, skills and subagents, running agents in parallel, and writing your team's playbook.
 
-You do not need an API key to do the labs. The lab kit (`ailab`) starts each task, and its hidden tests and checks grade your result offline. Use **Claude Code** (the course's worked example), any other agentic tool, or no agent at all: the grader only sees the work.
+You do not need an API key to do the labs. The lab kit (`ailab`) starts each task, and its hidden tests and checks grade your result offline. Use **Claude Code** (the course's worked example), any other agentic tool, or no agent at all: the grader only sees the work. Agent tools usually cost money: at the time of writing (November 2026) Claude Code needs a paid plan or pay-per-use API billing, not the free Claude plan, so check current pricing first. The no-agent path costs nothing.
 
 ## The five habits
 
@@ -58,6 +62,10 @@ Every lab says whether it needs an agent and gives a path without one. The labs 
 | 🟢 **Foundations** | 0–3 | Explain what an AI-native engineer does differently, how coding agents really work and fail, give an agent the right context, and turn a vague ticket into a spec an agent can build from. |
 | 🟡 **Practitioner** | 4–9, 11 | Run the daily loop, verify and review AI-written code, debug and onboard to unfamiliar code, change legacy code safely, secure your setup, and automate your agent with hooks, skills, subagents and headless scripts. |
 | 🔴 **Hero** | 10, 12–14 | Run agents in parallel, set team practice and metrics, keep your own skills sharp, and take a change through the whole cycle. |
+
+**How long it takes.** Each module is one week, so the course runs about fifteen weeks (sixteen if the capstone takes two); the total at the top, spread evenly at 6 hours a week, comes out a little shorter because some modules are lighter. Plan on 5 to 8 hours a week in all: the reading, 3 to 5 hours of exercises and lab (the lab is the bigger part; lab 5.2, for example, takes about three hours), and the 60-minute group session. Module 0 includes setup, so allow an extra hour. The capstone week is the exception: 8 to 12 hours of hands-on work plus a 90-minute demo, so give it a week or two. Each lesson's header gives its own estimate; the capstone's (about 10 hours hands-on) is the middle of that range, not an extra.
+
+**Studying alone.** The group sessions assume a study group, but none is required. On your own, do each session's steps in writing in your notes repository: where it says "swap with a partner", put your work aside for a day and review it cold, or have a fresh agent session review it against the lesson's checklist and decide which of its points you accept. For the capstone demo, record yourself answering its questions, and play it to a colleague when you can: an agent session does not replace their questions.
 
 ## Companion courses
 

@@ -4,6 +4,10 @@
 
 > **Defensive and educational.** Every attack in this course is explained so you can recognise it, test for it and prevent it. Test only systems you own or have written permission to test. Practise on local labs and deliberately vulnerable training apps.
 
+<!-- study-time -->
+**Study time for the whole course: about 220 hours** (estimate: reading plus hands-on work, summed over every lesson). At about 6 hours a week that is roughly 37 weeks. Each lesson shows its own split; a pilot with real learners will replace these estimates.
+<!-- /study-time -->
+
 ## What this is
 
 Most breaches still come through a short list of doors: a missing access check, an injectable query, a leaked key, an unpatched dependency, a misconfigured cloud bucket. AI has added new doors, and now they are open too. A chatbot can be talked into revealing its instructions. An assistant that reads documents can be steered by text hidden inside them. An agent with tools can be tricked into acting for an attacker. A coding agent can confidently write vulnerable code or install a package that does not exist.
@@ -39,7 +43,19 @@ The course follows the **Application & AI Security** team at **Najm Bank**, the 
 |---|---|---|
 | 🟢 **Foundations** | 0–1 | Explain assets, attackers and risk, how breaches happen, and model threats with STRIDE. |
 | 🟡 **Practitioner** | 2–7 | Find and fix web, identity, API, mobile, crypto, secrets, pipeline and cloud weaknesses. |
-| 🔴 **Hero** | 8–12 | Secure LLM apps and agents, red-team AI, detect and respond to incidents, lead a security programme, and pass a 60-question practice exam. |
+| 🔴 **Hero** | 8–12 | Secure LLM apps and agents, red-team AI, detect and respond to incidents, lead a security programme, and sit a 60-question practice exam. |
+
+**Choose your path.** You do not have to do everything. Lesson 0.3 explains each route.
+
+| You are… | Suggested path |
+|---|---|
+| A developer, including with AI coding agents | Modules 0–6, then 8.1–8.2 and 9; every 🟡 exercise on your own code or the starter lab |
+| An architect | Modules 0, 1, 3, 7, 8 and 9.1–9.3; a threat model for each system you own |
+| A product or engineering manager | 0, 1.3, 6.1, 8.1–8.2, 9.1–9.2, 10.1–10.2 and 11; the paper route for hands-on exercises |
+| A security analyst moving into AppSec or AI security | The 12.3 practice exam first; then deep on 2–4 and 8–9 |
+| A bank, government or enterprise system owner | 0, 1, 5.3, 7.1, 9.1, 10.1–10.2 and 11; the paper route |
+
+**Time.** Reading the whole course takes about 15 hours. With the 🟢 and 🟡 exercises it is roughly 120 hours, about five hours a week for six months; the 🔴 exercises add about 100 more. **No code?** Every hands-on exercise has a paper route: review a supplied change or artefact instead of building it. **Before you start**, lesson 0.3 sets up the free practice lab (OWASP Juice Shop in Docker) and the course's offline [starter lab](./lab/README.md) for the AI exercises.
 
 ## Companion courses
 

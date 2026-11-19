@@ -2,6 +2,10 @@
 
 **Build the data systems people trust. A free, bilingual course that takes you from zero to confident data engineer, analytics engineer or production-minded data scientist.**
 
+<!-- study-time -->
+**Study time for the whole course: about 138 hours** (estimate: reading plus hands-on work, summed over every lesson). At about 6 hours a week that is roughly 23 weeks. Each lesson shows its own split; a pilot with real learners will replace these estimates.
+<!-- /study-time -->
+
 ## What this is
 
 Every dashboard, model and AI assistant runs on data that someone modelled, moved, cleaned, tested and secured. When that work is done badly, the numbers disagree, the model drifts unnoticed and the AI assistant answers from the wrong document. When it is done well, nobody notices. That is the goal.
@@ -16,7 +20,7 @@ This course teaches the work end to end:
 - Preparing data for LLM applications.
 - Governance, privacy and security for the data platform.
 
-Everything runs on a laptop with free tools: PostgreSQL, DuckDB, Python, dbt, Airflow or Dagster, and Kafka.
+Everything runs on a laptop with free tools: PostgreSQL, DuckDB, Python, dbt, Airflow or Dagster, and Kafka. The container-heavy modules are comfortable with 16 GB of RAM; lesson 0.3 gives the hardware notes, a lighter path for 8 GB, and one shared synthetic dataset that most exercises reuse.
 
 It is written for data science, computer science and engineering graduates, software engineers moving into data, analysts who want to engineer, and anyone who owns data in a bank, a government body or an enterprise.
 

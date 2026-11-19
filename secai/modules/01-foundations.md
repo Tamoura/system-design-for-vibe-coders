@@ -9,7 +9,7 @@
 # 1.1 — Threat modelling: data flows, trust boundaries and STRIDE
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Phase: Plan, Design*
 
-**After this you can** draw a data flow diagram with every trust boundary marked and apply STRIDE to it until each element has its threats and a mitigation. *Study time: about 110 minutes (estimate).*
+**After this you can** draw a data flow diagram with every trust boundary marked and apply STRIDE to it until each element has its threats and a mitigation. *Study time: reading about 15 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Threat modelling** is structured thinking about what can go wrong with a system *before* it is built or changed, so fixes go into the design, not into an incident report.
@@ -183,7 +183,7 @@ Ali's second draft becomes **TM-ASSIST-004: Najm Assist "freeze card" tool**, an
 ## 🛠️ Exercises
 - 🟢 Draw a DFD for an application you built yourself, or for a deliberately vulnerable training app running on your own machine, such as OWASP Juice Shop. Include all five element types and mark every trust boundary. *Done when:* every arrow that crosses a boundary is listed with what the receiving side checks, or "nothing yet".
 - 🟡 Najm's SME Portal lets a company user upload an invoice PDF. It is stored in an object store, scanned for viruses, then read by a parser that fills in the amounts. Draw the DFD and apply STRIDE per element. *Done when:* you have at least 12 threats, at least one per STRIDE category, each with a mitigation and the element it affects.
-- 🔴 In your own code or a local lab, build or reuse a small LLM feature with one tool, such as a to-do assistant that can delete items. Threat-model the model-to-tool boundary, then write and run automated tests for the three most serious threats. *Done when:* each test sends a malicious tool call (for example, deleting another user's item) and passes because your code refuses it, not because the model chose not to make the call.
+- 🔴 In your own code or a local lab, build or reuse a small LLM feature with one tool, such as a to-do assistant that can delete items. Threat-model the model-to-tool boundary, then write and run automated tests for the three most serious threats. The starter lab `secai/lab/` is a ready-made one: its `freeze_card` tool and `test_assist.py` are a starting point. *Done when:* each test sends a malicious tool call (for example, deleting another user's item) and passes because your code refuses it, not because the model chose not to make the call.
 
 ## ⚠️ Mistakes and traps
 - **A list without a diagram.** Generic threats change nothing. Draw flows and boundaries first, then look for threats at each crossing.
@@ -229,10 +229,10 @@ Ali's second draft becomes **TM-ASSIST-004: Najm Assist "freeze card" tool**, an
 
 **3. The model's tool call includes both `card_id` and `customer_id`, and the tool checks that the card belongs to that `customer_id`. Why is this still a problem?**
 
-- A. The check should use the card's expiry date instead
-- B. It is fine, because the model was given the correct customer ID in its prompt
-- C. The tool should skip the ownership check to stay fast
-- D. Both values crossed the model's trust boundary, so the check only proves that two model-chosen values agree; the customer ID must come from the verified session
+- A. The check should compare the card's expiry date instead of its owner, since expired cards are the more common sign of misuse
+- B. It is fine, because the model was given the correct customer ID in its prompt and has no reason to pass a different one
+- C. The tool should drop the ownership check to stay fast, since the model is already trusted to pick the customer's own card
+- D. Both values came from the model, so the check proves only that two model-chosen values agree; the ID must come from the session
 
 <details><summary>Answer</summary>
 
@@ -255,10 +255,10 @@ Ali's second draft becomes **TM-ASSIST-004: Najm Assist "freeze card" tool**, an
 
 **5. Three months after launch, Noura asks of the freeze-card threat model: "Did we do a good job?" What does a strong answer include?**
 
-- A. Evidence that each high-risk mitigation was built and is checked by a test or red-team case, and that the model reflects changes since launch
-- B. A statement from the vendor that its model is safe
-- C. The number of threats found in the original session
-- D. Confirmation that the document was approved
+- A. Evidence that each high-risk mitigation is built and tested, and that the model reflects the changes since launch
+- B. A statement from the model vendor that its model is safe, since whoever owns the model is best placed to judge
+- C. The number of threats found in the original session, since a higher number shows the session was done well
+- D. Confirmation that the document was formally approved and signed by the relevant parties well before launch
 
 <details><summary>Answer</summary>
 
@@ -282,7 +282,7 @@ Ali's second draft becomes **TM-ASSIST-004: Najm Assist "freeze card" tool**, an
 # 1.2 — Security principles: least privilege, defence in depth, secure defaults, zero trust
 *Level: 🟢 Beginner* · *Prerequisites: 1.1* · *Phase: Design, Build*
 
-**After this you can** turn a project's credentials into a granted-versus-needed table and rewrite an access check to fail closed, with a test that proves access is denied when the check breaks. *Study time: about 110 minutes (estimate).*
+**After this you can** turn a project's credentials into a granted-versus-needed table and rewrite an access check to fail closed, with a test that proves access is denied when the check breaks. *Study time: reading about 15 min, hands-on about 5 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Security principles are design rules that keep working when you cannot predict the specific attack. Most go back to a 1975 paper by Saltzer and Schroeder, and they still decide whether one bug becomes a breach.
@@ -293,7 +293,7 @@ Ali's second draft becomes **TM-ASSIST-004: Najm Assist "freeze card" tool**, an
 - Biggest trap: giving a new service or AI agent broad access "for now". Convenience access is rarely taken back, and an agent with broad access can be steered by text into misusing it.
 
 ## 🧭 Why it matters
-In July 2019, Capital One announced that an outsider had obtained data relating to roughly 100 million people in the United States and about 6 million in Canada. Public accounts, including the bank's statements and the later criminal case, describe a chain. A misconfigured web application firewall could be made to send requests on the attacker's behalf (server-side request forgery; see 2.3). One request reached the cloud provider's **instance metadata service**, which handed out temporary credentials for the firewall's role. That role could list and read many storage buckets a firewall had no need to read. The bank learned of the breach from an outside tip.
+Recall the Capital One chain from 0.2, this time through the lens of privilege. On its own, the firewall's flaw (server-side request forgery; see 2.3) gave the attacker a way to the cloud provider's **instance metadata service**, which handed out temporary credentials for the firewall's role. The damage came from that role: it could list and read many storage buckets a firewall had no need to read. The bank later said data on roughly 100 million people in the US and 6 million in Canada was taken; a role scoped to the firewall's job would have left the stolen credentials far less to read.
 
 No single exotic flaw caused this. The role was broader than its job (**least privilege**). The metadata service of the time answered simple requests without extra proof (**secure defaults**; AWS introduced a session-token version, IMDSv2, later in 2019). One compromised component led straight to bulk data (**defence in depth**). Change any one and the outcome is smaller.
 
@@ -438,7 +438,7 @@ Noura turns the principles into the **Najm Secure Design Review: ten questions**
 ## 🛠️ Exercises
 - 🟢 Pick a project you own. List every credential it uses (database users, cloud roles, API keys, CI tokens), what each can do and what it actually needs. *Done when:* you have a granted-versus-needed table for each credential, with at least one permission marked for removal.
 - 🟡 In your own codebase, find error handling around an authentication or authorisation check, such as a bare `except` or an empty `catch`. Rewrite one to fail closed and write a test that simulates the check failing. *Done when:* the test proves access is denied and a log line or metric records the failure.
-- 🔴 In a local lab, design access for an agent with three tools (read, change, delete) acting for logged-in users. Specify the decision and enforcement points, how the user's identity reaches each tool, and two independent layers that stop "delete another user's data". *Done when:* the agent's own credentials cannot do more than the user could, and your tests show each layer blocking the delete when the other is switched off.
+- 🔴 In a local lab, design access for an agent with three tools (read, change, delete) acting for logged-in users. Specify the decision and enforcement points, how the user's identity reaches each tool, and two independent layers that stop "delete another user's data". You can extend the starter lab `secai/lab/`. *Done when:* the agent's own credentials cannot do more than the user could, and your tests show each layer blocking the delete when the other is switched off.
 
 ## ⚠️ Mistakes and traps
 - **"Broad for now, tighten later."** Later rarely comes. Start from zero and add only what tests show is needed.
@@ -458,10 +458,10 @@ Noura turns the principles into the **Najm Secure Design Review: ten questions**
 
 **1. Tariq wants Najm Assist's service account to reuse the mobile backend's full API scope "so new tools are quicker to add". Which principle does this break, and what is the better design?**
 
-- A. Open design; publish the scope so it can be reviewed
+- A. Open design; publish the scope so it can be reviewed, which solves the problem at its root
 - B. Least privilege; grant only the actions Assist needs now, scoped to the signed-in customer, and add more through review
-- C. Economy of mechanism; use fewer tokens
-- D. Psychological acceptability; it would annoy developers
+- C. Economy of mechanism; use fewer tokens, because every extra token complicates the design and leaves more room for error
+- D. Psychological acceptability; it would annoy developers and slow their work, against the idea of usable security
 
 <details><summary>Answer</summary>
 
@@ -510,10 +510,10 @@ Noura turns the principles into the **Najm Secure Design Review: ten questions**
 
 **5. Why is an AI agent acting with its own broad service credentials called a "confused deputy"?**
 
-- A. Because models sometimes give wrong answers
-- B. Because it holds authority for one purpose and can be steered by someone else's text into using it for another; the fix is to act with the user's scoped authority
-- C. Because it has two system prompts
-- D. Because it cannot read access-control lists
+- A. Because models sometimes give wrong answers, and people who rely on those answers can make costly mistakes
+- B. Because it holds authority for one purpose and can be steered by someone else's text into using it for another
+- C. Because it has two conflicting system prompts and cannot tell which one to apply first on each request
+- D. Because it cannot read access-control lists, which set out what each user may do in the system
 
 <details><summary>Answer</summary>
 
@@ -535,7 +535,7 @@ Noura turns the principles into the **Najm Secure Design Review: ten questions**
 # 1.3 — Rating and prioritising risk: likelihood, impact and CVSS
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2* · *Phase: Plan, Operate*
 
-**After this you can** re-rank a dependency audit's findings using CVSS, KEV, EPSS and reachability, and justify each move in one line. *Study time: about 110 minutes (estimate).*
+**After this you can** re-rank a dependency audit's findings using CVSS, KEV, EPSS and reachability, and justify each move in one line. *Study time: reading about 20 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Risk** combines how likely something bad is (**likelihood**) with how much harm it does (**impact**). You can never fix everything at once, so the job is to fix the right things first.
@@ -550,7 +550,7 @@ Ali's scanners have finished their first full run across Najm's cloud platform: 
 
 Noura asks three questions. Which of these is anyone actually exploiting? Which systems can be reached from the internet? Which hold customer data or can move money? The answers reorder everything. Most of the 10.0s sit in a library used by an internal batch job with no network listener. Meanwhile a 7.5 in the remote-access VPN appliance is on CISA's exploited list. And Mariam's team has an SME Portal finding that never reached the dashboard because it has no CVE: a company user can download another company's invoices by changing a number in the URL.
 
-Public history shows the stakes. In 2017, Equifax was breached through a known vulnerability in Apache Struts (CVE-2017-5638). According to public reports and later US government reviews, a fix had been published about two months before the attackers first got in. The US Federal Trade Commission later described the breach as affecting approximately 147 million people. The failure was not knowing; it was getting the right fix done in time.
+Recall Equifax from 0.1: the Struts flaw (CVE-2017-5638) was known, and a fix had been published about two months before the attackers first got in. The failure was not knowing; it was ranking that fix above everything else and getting it done in time. That ranking is this lesson's subject.
 
 ## 📐 How it works
 
@@ -739,10 +739,10 @@ Noura and Jassim publish the **Najm Vulnerability Prioritisation Standard v1**. 
 
 **2. Hamad asks why the SME Portal bug that lets one company read another company's invoices is only "Medium" (CVSS 6.5). What is the best explanation?**
 
-- A. The score is wrong and should be changed to 9.0 by hand
-- B. CVSS rates technical severity independent of any one deployment, not risk to Najm; with business impact and exposure taken into account, it is a high-priority risk
-- C. Medium findings do not need fixing
-- D. Bugs without a CVE cannot be rated
+- A. The score is wrong and should be changed to 9.0 by hand, since a bug exposing one company's data to another cannot be Medium
+- B. CVSS rates technical severity, not the risk to Najm; once business impact and exposure are added, it becomes a high-priority risk
+- C. Medium findings do not need fixing: a 6.5 means the risk is acceptable and only needs recording in the register
+- D. Bugs without a CVE cannot be rated, so they are always given a default Medium score instead
 
 <details><summary>Answer</summary>
 
@@ -778,9 +778,9 @@ Noura and Jassim publish the **Najm Vulnerability Prioritisation Standard v1**. 
 
 **5. Tariq's team cannot fix a P2 finding within its 30-day deadline because the vendor's patch breaks a critical integration. What makes a valid risk acceptance at Najm?**
 
-- A. Leaving the finding open until the patch works
-- B. A comment in the ticket saying "accepted"
-- C. A risk-register entry approved by the right owners, with the reason, compensating controls and an expiry of no more than 90 days
+- A. Leaving the finding open with no formal record until the patch works, since the deadline cannot apply to what cannot be fixed
+- B. A comment in the ticket saying "accepted", written by the responsible engineer, because the ticket itself records the decision
+- C. A risk-register entry approved by the right owners, with the reason, compensating controls and an expiry within 90 days
 - D. Lowering the finding's CVSS score so that it becomes a P3, the 30-day deadline no longer applies to it, and the ticket can be closed
 
 <details><summary>Answer</summary>

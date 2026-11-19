@@ -26,6 +26,16 @@ else:
         if d in (2,3) and emo(a)!=emo(b): err.append(f'section emoji differs: {a} vs {b}'); break
 if lvl(en)!=lvl(ar): err.append(f'level/phase lines differ: {lvl(ar)[:4]} vs {lvl(en)[:4]}')
 if inst(en)!=inst(ar): err.append(f'🧰 bold names differ: missing {[x for x in inst(en) if x not in inst(ar)][:5]}')
+HDR='| المصدر أو الأداة أو القالب (Resource, tool or template) |'
+def tkrows(s):
+    bad=[]
+    for sec in re.split(r'\n(?=## )',s):
+        if not sec.startswith('## 🧰'): continue
+        rows=[r for r in sec.splitlines() if r.startswith('|') and not re.match(r'^\|\s*-',r)]
+        if rows and not rows[0].startswith(HDR): bad.append('header: '+rows[0][:40])
+        bad+=[r[:40] for r in rows[1:] if not re.match(r'^\|\s*\*\*[^*]+\*\* — \S',r)]
+    return bad
+if tkrows(ar): err.append(f'🧰 rows must read "**English** — Arabic" under the standard header: {tkrows(ar)[:3]}')
 if quiz(en)!=quiz(ar): err.append(f'quiz answer letters differ ({len(quiz(ar))} vs {len(quiz(en))})')
 if ar.count('<details>')!=en.count('<details>'): err.append('details block count differs')
 if opts(en)!=opts(ar): err.append(f'option lines {opts(ar)} vs {opts(en)}')

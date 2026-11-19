@@ -10,7 +10,7 @@
 
 *Level: 🔴 Advanced* · *Prerequisites: 1.3, 2.4, 5.2, 7.3*
 
-**After this you can** scan Beacon's full history with gitleaks and block a commit containing a fake key, and build an SSRF-safe fetch that refuses monitors pointing at metadata, loopback or private addresses. *Study time: about 110 minutes (estimate).*
+**After this you can** scan Beacon's full history with gitleaks and block a commit containing a fake key, and build an SSRF-safe fetch that refuses monitors pointing at metadata, loopback or private addresses. *Study time: reading about 20 min, hands-on about 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -90,7 +90,7 @@ A **control** is a specific commitment: "production access requires SSO and MFA"
 **GDPR basics for a SaaS.** If you have EU users (and a B2B SaaS almost always does), you need to know the roles. Your **customer** (Acme) is usually the *controller* of their data, meaning their team and their status-page subscribers. **You** are the *processor*. That brings obligations:
 
 - A **DPA** (Data Processing Agreement, required by GDPR Article 28) that customers sign with you.
-- A public **subprocessor list**: every vendor that touches customer personal data (AWS, Stripe, Resend, Twilio, PostHog, your LLM provider in 8.2), with notice before you add new ones.
+- A public **subprocessor list**: every vendor that touches customer personal data (AWS, Stripe, Resend, Twilio, PostHog, your LLM provider in 8.2), with notice before you add new ones. GDPR Article 28(2) requires the customer's prior written authorisation for subprocessors and, under a general authorisation, notice of changes so the customer can object; publishing the list, with a way to subscribe to change notices, is the common way to give that notice.
 - **Data subject rights**: access and portability (Art. 15, 20), meaning an export endpoint, and erasure (Art. 17), meaning a deletion that reaches backups, analytics (6.2), search indexes (2.3) and your email provider on a defined schedule.
 - **Retention**: decide how long you keep check results, logs and deleted orgs' data, write it down, and enforce it with jobs (5.1).
 - **Breach notification**: controllers must notify the supervisory authority within 72 hours of becoming aware of a personal-data breach (Art. 33). As a processor you must tell your customers "without undue delay", so your incident process needs a clock.
@@ -260,7 +260,7 @@ Two holes. `fetch(url)` resolves DNS again, so a DNS rebinding answer can swap i
 
 *Level: 🔴 Advanced* · *Prerequisites: 2.4, 3.3, 5.1, 8.1*
 
-**After this you can** build a schema-validated AI incident summary saved as an editable draft, record tokens and cost per org for every model call, and run a CI eval that includes a prompt-injection case. *Study time: about 110 minutes (estimate).*
+**After this you can** build a schema-validated AI incident summary saved as an editable draft, record tokens and cost per org for every model call, and run a CI eval that includes a prompt-injection case. *Study time: reading about 20 min, hands-on about 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -414,6 +414,8 @@ The **cross-tenant leakage** risk is the headline here. A vector search with no 
 
 ### 🟢 Beginner exercise
 
+> **Before you start.** You need either a pay-as-you-go API key from a model provider (a small model keeps these exercises to cents; set a monthly spending cap in the provider's console) or a free local model through Ollama, which serves an OpenAI-compatible API at `http://localhost:11434/v1` that the AI SDK's OpenAI-compatible provider can call. Small local models break the schema more often, which tests your retry path, and need about 8 GB of free RAM. Keep the key in `.env.local`, never in Git or a chat with an AI assistant.
+
 Build the AI incident summary. Add one server function that loads a single incident's tenant-scoped context, calls a model through the Vercel AI SDK with a zod schema for the output, and saves the result as a **draft** that a user can edit before publishing to the status page. Stream the text into the UI.
 
 **Done when:**
@@ -423,11 +425,11 @@ Build the AI incident summary. Add one server function that loads a single incid
 
 ### 🟡 Intermediate exercise
 
-Put a gateway in front of it: LiteLLM (or a thin in-house module) with a primary and fallback model, a timeout, per-org rate limits, and a `llm_usage` table recording `org_id`, feature, model, input/output tokens and cost for every call. Add Langfuse tracing and a promptfoo eval of 15 anonymised incidents that runs in CI, including one incident whose error body contains a prompt-injection attempt.
+Put a gateway in front of it: LiteLLM (or a thin in-house module) with a primary and fallback model, a timeout, per-org rate limits, and a `llm_usage` table recording `org_id`, feature, model, input/output tokens and cost for every call. Add Langfuse tracing and a promptfoo eval of 15 anonymised incidents that runs in CI, including one incident whose error body contains a prompt-injection attempt. No fixtures ship with the starter: write the 15 as a JSON file (or extend the seed script), mixing causes (timeout, 500, DNS failure, expired TLS certificate) and open and resolved states.
 
 **Done when:**
 - Pointing the primary model at a bad endpoint still produces summaries through the fallback.
-- A monthly per-org usage query matches the provider's dashboard within a small margin.
+- A monthly per-org usage query's token totals are within 1% of the provider's usage dashboard for the same days (allow a day for the dashboard to catch up; skip this check with a local model).
 - The eval fails if the summary claims "resolved" for an open incident, or if it follows the injected instruction.
 
 ### 🔴 Advanced exercise

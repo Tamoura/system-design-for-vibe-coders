@@ -9,7 +9,7 @@
 # 12.1 — Evaluating agents: eval sets, graders, LLM-as-judge, trajectories and regression gates
 *Level: 🟡 Intermediate* · *Prerequisites: 2.2, 3.2, 8.2* · *Layer: Delivery, Agents*
 
-**After this you can** diagnose each failing eval case to the prompt, retrieval, a tool description or the dataset, and write ten eval cases from one requirement, three of them adversarial. *Study time: about 110 minutes (estimate).*
+**After this you can** diagnose each failing eval case to the prompt, retrieval, a tool description or the dataset, and write ten eval cases from one requirement, three of them adversarial. *Study time: reading about 15 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - An **eval** is a test suite for behaviour that varies: cases, runner, graders, category scores, gate.
@@ -22,7 +22,7 @@
 ## 🧭 Why it matters
 Lujain tidies the classifier prompt and the tool descriptions in one pull request (hypothetical). Five hand-asked questions look good. Two weeks into the pilot Yara finds what nobody asked: a ransomware message filed under Hardware, a laptop-abroad question answered with the remote-work policy, a two-ticket comparison answered from one lookup. Hind asks "is it right?" and nobody has a number.
 
-Wrong answers are the bank's answers: in *Moffatt v. Air Canada* (2024, British Columbia Civil Resolution Tribunal), the airline was held responsible for what its chatbot said about a bereavement fare. An eval turns "it looked fine" into a sentence Hind can use: "nothing that passed last week fails, and the two failing critical cases are known and owned". The lab's offline run can print that sentence; only a real-model run makes its percentage mean anything.
+Wrong answers are the bank's answers (lesson 0.1). An eval turns "it looked fine" into a sentence Hind can use: "nothing that passed last week fails, and the two failing critical cases are known and owned". The lab's offline run can print that sentence; only a real-model run makes its percentage mean anything.
 
 ## 📐 How it works
 
@@ -178,8 +178,8 @@ Hind's questions now have answers. Is it right? Category scores with an interval
 | Who approves a baseline change, and where are results kept? | |
 
 ## 🛠️ Exercises
-- 🟢 **Read the failures.** Offline. In `labs/m12/baseline_mock.json` (lesson 12.2) list the eight cases scoring under 1. For each, write the cause and whether the fix is the prompt, retrieval, a tool description or the dataset. *Done when:* eight rows of cause and next step, and a sentence on why 83% hides the near-miss category.
-- 🟡 **Ten cases from one requirement.** Offline. Take GR-02 (own tickets only) or another requirement and write ten JSONL cases in the lab set's format, three adversarial; most will probably fail today, which is the point. A colleague writes three expectations before seeing yours. *Done when:* the cases load with `load_cases` and the three expectations match or differ for stated reasons.
+- 🟢 **Read the failures.** Offline. In `labs/m12/baseline_mock.json`, a saved run that ships with the lab kit (lesson 12.2 shows how it is made), list the eight cases scoring under 1: each entry in its `cases` list has an `id`, a `score` and a `failed` list, and rows marked `skipped` have no score. For each, write the cause and whether the fix is the prompt, retrieval, a tool description or the dataset. *Done when:* eight rows of cause and next step, and a sentence on why 83% hides the near-miss category.
+- 🟡 **Ten cases from one requirement.** Offline. Take GR-02 (own tickets only) or another requirement and write ten JSONL cases in the lab set's format, three adversarial; most will probably fail today, which is the point. A colleague writes three expectations before seeing yours (solo: write those three first, from the requirement alone, before the other seven). *Done when:* the cases load with `load_cases` and the three expectations match or differ for stated reasons.
 - 🔴 **Validate a judge.** *Needs the real API*, with the cap from lesson 0.2. Label 20 policy answers by hand, 10 right and 10 with one planted error; run the judge with `claude-haiku-5-5` and with `claude-opus-5-5` (neither is the agent's `claude-sonnet-5-5`). *Done when:* `NOTES.md` has agreement per model, each disagreement explained, the date, model ids, and whether the judge may gate.
 
 ## ⚠️ Mistakes and traps
@@ -274,7 +274,7 @@ Hind's questions now have answers. Is it right? Category scores with an interval
 # 12.2 — Lab: put every agent under a 50-case eval and a CI check
 *Level: 🔴 Advanced* · *Prerequisites: 2.2, 4.2, 8.2, 12.1* · *Layer: Delivery, Production*
 
-**After this you can** put an agent under a 50-case eval with a committed baseline and a CI gate, and fire each alarm in drills, reading its exit code and first reason. *Study time: about 110 minutes (estimate).*
+**After this you can** put an agent under a 50-case eval with a committed baseline and a CI gate, and fire each alarm in drills, reading its exit code and first reason. *Study time: reading about 10 min, hands-on about 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 - One command runs 50 cases (46 offline) over the classifier, the policy Q&A and the ticket agent (Modules 2, 4, 8) and writes category scores, tokens and latency.
@@ -557,7 +557,7 @@ The offline job runs the tests, starts the mock, waits for `/health`, then runs 
 
 **Group session (60 minutes).** (1) Swap results; explain each failing case (20). (2) Predict each drill's exit code, then run it (15). (3) Read `eval.yml` for every place the secret could leak (15). (4) Choose three of your own incidents to become cases (10).
 
-**Build it with Claude Code.** Give this spec to Claude Code in plan mode (check its current documentation) and review the plan before it edits anything:
+**Build it with Claude Code.** *No Claude Code? Do the spec's steps by hand and run its checks yourself (lesson 0.3).* Give this spec to Claude Code in plan mode (check its current documentation) and review the plan before it edits anything:
 
 ```text
 Goal: build labs/m12/adapters.py, stats.py, graders.py, judge.py, run_eval.py, gate.py and eval.yml as in

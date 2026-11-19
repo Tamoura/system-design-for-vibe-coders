@@ -51,8 +51,10 @@ def memoise_runs(monkeypatch):
     real = R.evaluate
 
     def memo(repo, base, task, **kwargs):
+        # The time limit is part of the key: a run under a test's shortened limit (2 s) must not be replayed
+        # for a later test that grades with the normal limit.
         key = (json.dumps({k: v for k, v in task.items() if k != "_line"}, sort_keys=True), _eval_files_digest(Path(repo)), base,
-               kwargs.get("run_baseline", True), kwargs.get("run_reference", True))
+               kwargs.get("run_baseline", True), kwargs.get("run_reference", True), m13.GRADER_TIMEOUT, getattr(R, "TIMEOUT", None))
         if key not in _MEMO:
             _MEMO[key] = real(repo, base, task, **kwargs)
         return _MEMO[key]

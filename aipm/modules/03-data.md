@@ -9,7 +9,7 @@
 # 3.1 — Data readiness: do we have what the product needs?
 *Level: 🟡 Intermediate* · *Prerequisites: 1.3, 2.2* · *Stage: Define, Build*
 
-**After this you can** score a product's data readiness green, amber or red on six questions with evidence, naming at least one representativeness gap and one labelling gap, and propose a phased scope that collects the missing data. *Study time: about 110 minutes (estimate).*
+**After this you can** score a product's data readiness green, amber or red on six questions with evidence, naming at least one representativeness gap and one labelling gap, and propose a phased scope that collects the missing data. *Study time: reading about 20 min, hands-on about 135 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Data readiness** is the evidence that the data an AI product needs exists, can be reached, is good enough, represents the real users, and may legally be used for this purpose. It is a feasibility question, and it belongs in discovery, not in sprint 6.
@@ -133,6 +133,14 @@ Rania's note: *"Two reds, both fixed by changing scope, not reasons to stop. Fai
 - 🟡 Run the six readiness questions for Smart Alerts, Najm's fraud and spending alerts. Assume fraud labels come from customer complaints and chargebacks. *Done when:* each question is scored green, amber or red with one line of evidence, and you have named at least one representativeness gap and one labelling gap.
 - 🔴 Khalid insists SME Instant Finance must launch for all SMEs, including first-time applicants, on the original date. Write him a one-page memo proposing a phased scope. *Done when:* it states what launches first and why, how missing data is collected in phase one, and the evidence that triggers phase two.
 
+<details><summary>Check your work</summary>
+
+**🟢 Model answer (a support chatbot).** Corpus: help-centre articles, owned by the content team. Evaluation: 200 past questions with checked answers, owned by the product team. Runtime inputs: the customer's question and account type, owned by engineering. Labels: agent ratings of sampled answers, owned by the support lead.
+
+**🟡 and 🔴 self-check.** Each of the six questions has a colour and one line of evidence. A typical representativeness gap: complaint-based fraud labels miss customers who never complain. A typical labelling gap: chargebacks arrive weeks after the transaction. Your memo passes if phase one has a clear scope (for example existing customers with repayment history), a way to collect the missing data, and a measurable trigger for phase two.
+
+</details>
+
 ## ⚠️ Mistakes and traps
 - **Counting rows instead of asking questions.** "Hundreds of thousands of rows" says nothing about relevance, labels or coverage. Ask the six questions and demand evidence.
 - **Leaving the data check to engineering.** Gaps found in build arrive as delays with no product decision attached. Check in discovery.
@@ -190,10 +198,10 @@ Rania's note: *"Two reds, both fixed by changing scope, not reasons to stop. Fai
 
 **4. The readiness assessment for SME Instant Finance finds that history covers only RM-served businesses, while the app will reach smaller, newer firms. What is the best product response?**
 
-- A. Cancel the product
-- B. Launch for all SMEs and monitor complaints
-- C. Launch first for the segments the data represents, keep others on the manual path, and collect outcomes to extend scope later
-- D. Remove the size and tenure fields so the model cannot see the difference
+- A. Delay launch until a full year of outcomes for smaller, newer firms has been collected and checked
+- B. Launch for all SMEs, with a lower approval limit for smaller, newer firms, and monitor complaints closely
+- C. Launch for the segments the data represents, keep others manual, and collect outcomes to extend later
+- D. Remove the size and tenure fields so the model treats all firms the same way
 
 <details><summary>Answer</summary>
 
@@ -204,9 +212,9 @@ Rania's note: *"Two reds, both fixed by changing scope, not reasons to stop. Fai
 **5. Why does the lesson recommend building a golden set of real cases with agreed answers before building the product?**
 
 - A. It is required by the EU AI Act for every AI system that a bank puts in front of customers or uses with its own staff, however small the risk
-- B. It replaces the need for training data
+- B. It gives the team labelled examples to fine-tune the model on, so training can start straight away
 - C. Without it the team cannot tell whether any version works, and building it exposes disagreement about what "good" means
-- D. It lets the team skip user research
+- D. It lets the team skip the pilot, since the golden set already shows how the product will perform with users
 
 <details><summary>Answer</summary>
 
@@ -225,7 +233,7 @@ Rania's note: *"Two reds, both fixed by changing scope, not reasons to stop. Fai
 # 3.2 — Feedback loops, flywheels and learning products
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 1.2* · *Stage: Design, Grow*
 
-**After this you can** write a feedback-loop spec that gives each signal its capture, interpretation, action, verification and owner, and decide with evidence whether a claimed data flywheel belongs in a business case. *Study time: about 110 minutes (estimate).*
+**After this you can** write a feedback-loop spec that gives each signal its capture, interpretation, action, verification and owner, and decide with evidence whether a claimed data flywheel belongs in a business case. *Study time: reading about 20 min, hands-on about 135 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **learning product** gets better because people use it. That only happens if the product is designed to capture **feedback signals**, turn them into **labels** or test cases, and feed them back into prompts, retrieval, models or rules on a schedule someone owns.
@@ -358,6 +366,14 @@ Loop metrics reviewed monthly by Rania: share of memos with a captured signal, m
 - 🟡 Write a feedback loop spec for Najm Assist's question-answering feature, using the five parts (signal, capture, interpretation, action, verification). *Done when:* you have at least four signals in the table format above, including one holdout or audit signal, and every signal has a named owner.
 - 🔴 Khalid wants the SME Instant Finance business case to claim a data flywheel as a competitive advantage. Apply the four-question flywheel test and write a half-page verdict. *Done when:* you answer each question with evidence you would need to collect, name the degenerate loop risk for this product and its remedy, and give a clear recommendation on whether the claim belongs in the business case.
 
+<details><summary>Check your work</summary>
+
+**🟢 Model answer (a music app).** Explicit: thumbs-up; "hide this song". Implicit: skip within 10 seconds; replay. Outcome: still subscribed next month. Example of a wrong reading: a skip may mean "not now", not "I dislike this".
+
+**🟡 and 🔴 self-check.** Your loop spec passes if each signal has all five parts, at least one is a holdout or audit sample checked by a person, and each has a named owner. Your flywheel verdict passes if each of the four questions lists the evidence you would collect, it names the degenerate loop (the model only learns from applicants it approved, so it never learns about those it declined) with a remedy such as a small reviewed exploration sample, and it says plainly whether the claim belongs in the business case.
+
+</details>
+
 ## ⚠️ Mistakes and traps
 - **Collecting feedback nobody reads.** A thumbs button without an owner, a review cadence and a path to action is decoration. Assign an owner and a weekly review before launch.
 - **Treating every edit as an error.** Implicit signals are ambiguous. Combine them with explicit reasons and a sampled human review before acting.
@@ -390,9 +406,9 @@ Loop metrics reviewed monthly by Rania: share of memos with a captured signal, m
 
 **2. RMs edit about 40% of Credit Memo Copilot's drafts. What is the best way to turn this into useful learning?**
 
-- A. Treat every edited section as a model error, retrain the model every month, and report the edit rate to the committee each quarter
-- B. Ignore edits, because they are just personal style
-- C. Remove the ability to edit so the signal is cleaner
+- A. Treat every edited section as a model error, retrain monthly, and report the edit rate to the committee quarterly
+- B. Report the edit rate every week as the copilot's main quality metric, and set the team a quarterly target to bring it down
+- C. Send RMs a monthly survey asking which sections they edit most and why
 - D. Pair edit data with a short reason picker and a weekly sampled review, then fix patterns in the corpus, prompt or template
 
 <details><summary>Answer</summary>
@@ -416,10 +432,10 @@ Loop metrics reviewed monthly by Rania: share of memos with a captured signal, m
 
 **4. SME Instant Finance's repayment outcomes arrive 30–120 days after each decision. How should the team report model quality for last month's decisions?**
 
-- A. Report accuracy only on decisions whose outcomes are known, and show the share not yet labelled, using early proxies clearly marked as proxies
-- B. Assume unlabelled decisions were correct
-- C. Wait a year before reporting anything
-- D. Use customer satisfaction scores instead of repayment
+- A. Report quality only where outcomes are known, show the unlabelled share, and mark early proxies as proxies
+- B. Treat decisions without an outcome yet as repaid, since nearly all SME loans are repaid on time
+- C. Hold all reporting until every decision in the month has a final repayment outcome
+- D. Report approval and override rates as the quality measure until repayment outcomes arrive for the month
 
 <details><summary>Answer</summary>
 
@@ -430,8 +446,8 @@ Loop metrics reviewed monthly by Rania: share of memos with a captured signal, m
 **5. Tariq proposes automatically retraining a customer-facing model every night on the previous day's user feedback. What is the main product concern?**
 
 - A. Behaviour would change silently and often, eroding trust and traceability, and it opens the door to deliberately poisoned feedback
-- B. Nightly retraining is always too expensive
-- C. Feedback data is never useful for training
+- B. Nightly retraining costs more in compute than the quality gain is likely to be worth
+- C. One day of feedback is too little data to retrain on, so weekly retraining would be safer
 - D. It breaks the rule that models may only be updated once a year, which the bank's model risk policy sets for all production models in the bank
 
 <details><summary>Answer</summary>
@@ -452,7 +468,7 @@ Loop metrics reviewed monthly by Rania: share of memos with a captured signal, m
 # 3.3 — Privacy, consent and data rights: what the PM must own
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 3.2* · *Stage: Define, Build*
 
-**After this you can** map every place personal data appears in an AI feature with a retention period, and give each proposed data use a proceed, change or reject verdict using the surprise test and purpose limitation. *Study time: about 110 minutes (estimate).*
+**After this you can** map every place personal data appears in an AI feature with a retention period, and give each proposed data use a proceed, change or reject verdict using the surprise test and purpose limitation. *Study time: reading about 20 min, hands-on about 155 min (estimate).*
 
 ## ⚡ In 60 seconds
 - The DPO and legal interpret privacy law, but most privacy outcomes are **product decisions**: what the feature collects, for what, for how long, shared with whom, and what the user is told and can control. The PM owns them.
@@ -583,6 +599,14 @@ Design decisions recorded:
 - 🟡 Apply the surprise test and the purpose-limitation check to three proposed uses of Credit Memo Copilot data: (a) improving memo drafts using RM edits, (b) scoring RMs' performance by how much they edit, (c) sharing anonymised memo patterns with a vendor. *Done when:* each use has a verdict (proceed, proceed with changes, or reject), a one-line reason, and the question you would take to Sara.
 - 🔴 Write a one-page recommendation, on privacy and data rights alone, on whether Staff GenAI should be bought from a vendor or run on a model Najm hosts. *Done when:* it covers training use, retention, location, sub-processors, deletion and employee notice, names the evidence Yusuf must obtain, and states what would change your mind.
 
+<details><summary>Check your work</summary>
+
+**🟢 Model answer (a chat assistant).** The chat transcript (90 days), application logs (30 days), the vendor's prompt store (zero retention if the contract allows), evaluation copies (redacted, 12 months), support tickets raised from chats (as for other tickets), analytics events (pseudonymised, 13 months). The periods are examples; yours must come from your own policy.
+
+**🟡 and 🔴 self-check.** Typical verdicts: (a) proceed with changes (tell RMs, limit to drafting quality); (b) reject or redesign (a new purpose that would surprise RMs and could harm them); (c) proceed only with changes, after Sara confirms the patterns really are anonymous. Your recommendation passes if it covers all six topics, lists the documents Yusuf must obtain (data-use terms, sub-processor list, data location), and states what would change your mind.
+
+</details>
+
 ## ⚠️ Mistakes and traps
 - **"Privacy is legal's job."** Own the data-flow table and bring it to the DPO early.
 - **Defaulting to consent.** Let the DPO choose the basis; if it is consent, make it separate, specific and easy to withdraw.
@@ -605,7 +629,7 @@ Design decisions recorded:
 - A. Whether the fine-tuned model will score higher on public benchmarks
 - B. Whether this use was declared and has a legal basis, what the vendor contract permits, and whether the bank could honour erasure requests afterwards
 - C. Whether customers clicked "accept" on the app's terms and conditions when they first downloaded the app, which the bank treats as consent for any later use of transcripts
-- D. Whether the transcripts are in English
+- D. Whether the vendor will delete the transcripts from its systems once the fine-tuning is finished
 
 <details><summary>Answer</summary>
 
@@ -628,10 +652,10 @@ Design decisions recorded:
 
 **3. Why does the lesson recommend keeping customer data in retrievable stores rather than fine-tuning it into a model?**
 
-- A. Retrieval is always cheaper than fine-tuning
-- B. Fine-tuning is illegal under GDPR
-- C. Data in a queryable store can be accessed, corrected and deleted, while removing one person's data from trained weights is hard and still an open research problem
-- D. Models cannot learn from personal data
+- A. Retrieval is always cheaper than fine-tuning, so it is the default for any customer data
+- B. Fine-tuning on personal data is banned under GDPR, so retrieval is the only lawful option for a bank
+- C. A store can be queried, corrected and erased per person; removing one person from trained weights is still hard
+- D. Fine-tuned models forget customer details quickly, so their answers would go stale within a few weeks
 
 <details><summary>Answer</summary>
 
@@ -641,10 +665,10 @@ Design decisions recorded:
 
 **4. For a bank's assistant answering a customer's questions about their own account, which statement about legal basis is most accurate?**
 
-- A. Consent is always required for AI processing of personal data, so the assistant must ask the customer to agree before every conversation and record that agreement
+- A. Consent is always required for AI processing of personal data, so the assistant must ask before every chat and log it
 - B. The PM should choose the legal basis and inform the DPO
 - C. No legal basis is needed if the data stays inside the bank
-- D. Consent is one of several bases and often not the most suitable in a banking relationship; the DPO decides, based on a precise description of purposes from the PM
+- D. Consent is one of several bases and often not the best fit in banking; the DPO decides, from the PM's precise description of purposes
 
 <details><summary>Answer</summary>
 
@@ -654,9 +678,9 @@ Design decisions recorded:
 
 **5. Where does personal data typically appear in an LLM-based assistant?**
 
-- A. Only in the customer database
-- B. Only in the prompt the user types
-- C. Nowhere, if the model vendor does not train on it
+- A. Only in the customer database and the documents the assistant retrieves from it
+- B. Only in the prompt the user types, since the model keeps nothing after it answers
+- C. Nowhere outside Najm, provided the model vendor has agreed not to train on it
 - D. In the prompt, retrieved documents, outputs, logs, feedback data and evaluation sets
 
 <details><summary>Answer</summary>

@@ -4,8 +4,8 @@ Not published. Every translator follows this.
 
 ## Language and English terms
 - Modern Standard Arabic, clear and professional, like a well-written bank or national-CERT training manual. Faithful: same meaning, structure, emphasis, lists, tables. Never summarise, add or drop content.
-- **English beside every technical term everywhere.** In every paragraph, list item, table cell, heading, quiz question, option and answer, each technical term and key phrase carries its English in parentheses on its first appearance in that unit (a unit = one paragraph, one list item, one table cell, one heading): `حقن SQL (SQL injection)`, `نمذجة التهديدات (threat modelling)`, `أقل الصلاحيات (least privilege)`, `حقن الموجّهات (prompt injection)`, `الصلاحيات المفرطة (excessive agency)`. Aim for roughly one gloss every 4–6 Arabic words in technical text. Gloss whole phrases, never split a construct (`التحكم في الوصول (access control)`, not `التحكم (control) في الوصول`). A space always separates the Arabic word from `(`. Use the English exactly as the English lesson words it.
-- Key phrases, rules of thumb, labels and framework step names also get their English: `لا تثق أبدًا بمخرجات النموذج (never trust model output)`, `يكتمل عندما (Done when)`.
+- **English glosses on technical terms, once per lesson.** A technical term carries its English in parentheses at its first use in a lesson, and not again after that: `حقن SQL (SQL injection)`, `نمذجة التهديدات (threat modelling)`, `أقل الصلاحيات (least privilege)`, `حقن الموجّهات (prompt injection)`, `الصلاحيات المفرطة (excessive agency)`. Never gloss plain words or phrases, never repeat a gloss already given in the lesson, and never nest parentheses. Product, standard and acronym names stay in Latin letters with no parentheses. Parentheses that hold formulas, numbers, option letters, citations or section pointers are content, not glosses, so they always stay. Gloss whole phrases, never split a construct (`التحكم في الوصول (access control)`, not `التحكم (control) في الوصول`). A space always separates the Arabic word from `(`. Use the English exactly as the English lesson words it. Every "DPO" carries «حماية»: `مسؤول حماية البيانات (DPO)`.
+- **Quiz items.** Translate every option exactly as written, with no added or dropped detail, so option lengths stay as balanced as in English. Treat a term the same way in every option of an item (gloss it in all of them or none), never only in the correct one. Keep option letters (A)–(D), formulas, citations and lesson pointers.
 - If a gloss ends in punctuation (`?`, `.`, `!`), wrap it in a left-to-right isolate (the characters U+2066 before `(` and U+2069 after `)`), so it displays correctly in right-to-left text.
 - Names of standards, frameworks, tools, products, CVEs and cases stay in their English form (OWASP Top 10, OWASP ASVS, MITRE ATT&CK, MITRE ATLAS, STRIDE, CVSS, NIST CSF 2.0, ISO/IEC 27001, SLSA, Semgrep, Log4Shell, CVE-2021-44228, Moffatt v. Air Canada). On first use in a unit you may add a short Arabic rendering before it.
 - People: Noura نورة, Ali علي, Mariam مريم, Jassim جاسم, Tariq طارق, Dana دانة, Rania رانيا, Layla ليلى, Sara سارة, Hamad حمد. Najm Bank → بنك نجم (Najm Bank). Systems: Najm Mobile → تطبيق نجم للهاتف (Najm Mobile); Najm Assist → نجم أسيست (Najm Assist); Credit Memo Copilot → مساعد مذكرات الائتمان (Credit Memo Copilot); SME Portal → بوابة الشركات الصغيرة (SME Portal); Smart Alerts → التنبيهات الذكية (Smart Alerts).
@@ -38,6 +38,7 @@ Not published. Every translator follows this.
 | misconfiguration | سوء الإعداد (misconfiguration) |
 | logging / monitoring / detection | التسجيل / المراقبة / الرصد |
 | incident / incident response | الحادثة / الاستجابة للحوادث |
+| inject (tabletop exercise) | المستجدّ / المستجدّات (لا «المدخلات»، فهي لـ inputs) |
 | vulnerability management | إدارة الثغرات |
 | penetration test / red team | اختبار الاختراق / الفريق الأحمر |
 | prompt injection (direct / indirect) | حقن الموجّهات (المباشر / غير المباشر) (prompt injection) |
@@ -50,6 +51,27 @@ Not published. Every translator follows this.
 | retrieval-augmented generation (RAG) | التوليد المعزّز بالاسترجاع (RAG) |
 | large language model (LLM) | النموذج اللغوي الكبير (LLM) |
 | security champion | سفير الأمن (security champion) |
+| sprint | دورة العمل (sprint) |
+| git push / push protection / force-push | الرفع (push) / حماية الرفع (push protection) / الرفع القسري (force-push); never الدفع, which reads as payment |
+| staging (environment) | بيئة التجهيز (staging) |
+| pipeline (CI/CD) | خط التسليم (pipeline); build pipeline: خط البناء |
+| lethal trifecta / leg | الثالوث القاتل (lethal trifecta) / ركن |
+| spotlighting | الإبراز (spotlighting) |
+| organisation | المنظمة (never المؤسسة) |
+| enterprise | المؤسسات (عملاء المؤسسات / خطة المؤسسات) |
+| vendor / provider | المورّد / المزوّد |
+| proxy / reverse proxy / egress proxy | الخادم الوسيط / الخادم الوسيط العكسي / الخادم الوسيط للخروج (never الوكيل, which is agent) |
+| middleware | البرمجية الوسيطة |
+| deadline / timeout | الموعد النهائي / المهلة (expiry: انتهاء المهلة) |
+| TTL | مدة البقاء (TTL) |
+| backoff / rollback | التأخير الأسي / التراجع |
+| accuracy / precision / recall | الصحة الإجمالية / الدقة / الشمول (recall) |
+| tool call | استدعاء الأداة (plural: استدعاءات الأدوات) |
+| false positive / false negative | النتيجة الإيجابية الكاذبة (الإيجابيات الكاذبة) / النتيجة السلبية الكاذبة (السلبيات الكاذبة) |
+| postmortem | مراجعة ما بعد الحادثة (the document: تقرير مراجعة ما بعد الحادثة) |
+| offline / online evaluation | التقييم خارج الإنتاج / التقييم في الإنتاج |
+| pilot | التجربة التشغيلية |
+| capstone | المشروع الختامي |
 
 ## Structure the build depends on (do not break)
 - Module heading: `# الوحدة N — العنوان` (N unchanged). Lesson heading: `# N.M — العنوان` (numbers unchanged).

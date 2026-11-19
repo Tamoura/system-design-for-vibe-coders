@@ -9,7 +9,7 @@
 # 8.1 — Use-case intake, business case and risk tiering
 *Level: 🔴 Advanced* · *Prerequisites: 3.1, 4.3, 6.1* · *BoK: III.A*
 
-**After this you can** write a use-case intake, classify a vendor tool under the AI Act, GDPR and a GCC law, and assign a provisional risk tier with a one-line justification. *Study time: about 110 minutes (estimate).*
+**After this you can** write a use-case intake, classify a vendor tool under the AI Act, GDPR and a GCC law, and assign a provisional risk tier with a one-line justification. *Study time: reading about 20 min, hands-on about 100 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Every AI idea enters governance through one door: a **use-case intake**. It captures purpose, people affected, data, decision impact, vendor and jurisdictions, *before* money is spent.
@@ -242,7 +242,7 @@ Committee decision recorded for the copilot: *"Approved for design at Tier 2. Sc
 # 8.2 — Designing for trustworthiness
 *Level: 🔴 Advanced* · *Prerequisites: 8.1, 4.2, 6.2* · *BoK: III.A*
 
-**After this you can** choose and justify an oversight pattern, write reason codes for customers and underwriters, and threat-model an LLM copilot with an attack, control and test per risk. *Study time: about 110 minutes (estimate).*
+**After this you can** choose and justify an oversight pattern, write reason codes for customers and underwriters, and threat-model an LLM copilot with an attack, control and test per risk. *Study time: reading about 20 min, hands-on about 110 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Trustworthiness is **designed in as requirements**, written before build and tested before release. It covers human oversight, explainability, fairness, privacy, security, robustness and, for GenAI, grounding and guardrails.
@@ -253,7 +253,7 @@ Committee decision recorded for the copilot: *"Approved for design at Tier 2. Sc
 - Biggest trap: treating fairness, explainability or oversight as something added after the model is built.
 
 ## 🧭 Why it matters
-*Moffatt v. Air Canada* (British Columbia Civil Resolution Tribunal, 2024) is a short, well-known lesson. The airline's website chatbot told a grieving customer he could claim a bereavement fare refund after travelling, which contradicted the airline's own policy page. The tribunal rejected the argument that the chatbot was somehow responsible for its own statements and held the airline liable for negligent misrepresentation. The design failure was not exotic. The bot answered policy questions without being grounded in the authoritative policy, and nothing stopped it from inventing terms.
+Remember the late-payment fee waiver that Najm's chatbot promised three customers in 2.2. The design failure behind it was not exotic. The bot answered policy questions without being grounded in the authoritative fee schedule, and nothing stopped it from inventing terms. Najm owns that promise, just as Air Canada owned its chatbot's in *Moffatt v. Air Canada* (2024; see 5.3), where the tribunal held the airline liable for negligent misrepresentation.
 
 Najm is designing two systems where the same gap would hurt. The retail credit-scoring model must give applicants reasons they can act on, must not discriminate, and must be overseen by underwriters who actually review its output. The credit memo copilot will read confidential client documents and produce text that relationship managers (RMs) might paste straight into a credit committee pack. Dana (lead data scientist) wants to start training. Layla's answer: "First write down what 'trustworthy' means for each system as testable requirements. Then build to them."
 
@@ -455,7 +455,7 @@ For Najm's copilot, Layla's team adds a critical design rule: **every financial 
 # 8.3 — Documentation, and build versus buy
 *Level: 🔴 Advanced* · *Prerequisites: 8.2, 3.3, 6.3* · *BoK: III.A*
 
-**After this you can** draft a model card whose intended and out-of-scope uses make misuse recognisable, and write decision-log entries with alternatives, rationale, approver and evidence. *Study time: about 105 minutes (estimate).*
+**After this you can** draft a model card whose intended and out-of-scope uses make misuse recognisable, and write decision-log entries with alternatives, rationale, approver and evidence. *Study time: reading about 15 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Documentation is how governance becomes **evidence**. If a decision, test or limitation is not written down, auditors and regulators will treat it as never having happened.
@@ -560,7 +560,7 @@ The Act allows SMEs, including start-ups, to provide these elements in a simplif
 | Explainability | SHAP-based top-four reason codes; faithfulness check results |
 | Oversight | Underwriter HITL for scores within ±3 of cut-off and all loans over threshold; override logging |
 | Limitations | Not validated for thin-file applicants under 21; performance degrades under recession stress (see stress report) |
-| Monitoring | Monthly PSI and approval-rate dashboard; quarterly fairness review |
+| Monitoring | Monthly PSI (population stability index, a drift measure explained in 10.2) and approval-rate dashboard; quarterly fairness review |
 | Approvals | Independent validation report MV-2026-07; AI Governance Committee minute 2026-09 |
 
 **Decision log entry DL-014** (excerpt): *"Decision: accept a 0.84 approval-rate ratio (women/men) at the chosen cut-off; equal-opportunity gap 1.2 pts. Alternatives: group-specific thresholds (rejected: legal risk of disparate treatment); fairness-constrained retraining (adopted, v1.0). Approver: AI Governance Committee. Evidence: fairness report FR-CR-002."*

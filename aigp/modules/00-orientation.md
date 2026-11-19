@@ -9,7 +9,7 @@
 # 0.1 — What AI governance is, and what the AIGP proves
 *Level: 🟢 Beginner* · *Prerequisites: none* · *BoK: Orientation (all domains)*
 
-**After this you can** classify seven governance instruments as hard law, guidance, standard, principle or internal policy, and explain two routes by which a voluntary one becomes binding for a bank. *Study time: about 105 minutes (estimate).*
+**After this you can** classify seven governance instruments as hard law, guidance, standard, principle or internal policy, and explain two routes by which a voluntary one becomes binding for a bank. *Study time: reading about 15 min, hands-on about 70 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **AI governance** is the system of people, rules, processes and evidence an organisation uses to decide which AI to build or use, under what conditions, and how to keep it within the law, its values and its risk appetite for as long as it runs.
@@ -76,7 +76,7 @@ flowchart LR
 - **The three lines model.** The first line (business and technology teams) owns and runs AI systems and their risks. The second line (risk, compliance, privacy, AI governance) sets policy and challenges the first line. The third line (internal audit) gives independent assurance. Layla sits in the second line; Khalid, who owns retail lending, is first line.
 - **Existing disciplines.** Privacy, information security, model risk, procurement, legal, HR and internal audit all hold part of the answer. Good AI governance reuses their processes and adds what is specific to AI rather than building a parallel bureaucracy.
 
-**Binding and voluntary.** Much of AI governance is about knowing the status of each instrument. Four layers:
+**Binding and voluntary.** Much of AI governance is about knowing the status of each instrument. Five layers:
 
 | Layer | Status | Examples you will meet in this course |
 |---|---|---|
@@ -229,7 +229,7 @@ Layla's first artefact is a one-page **AI Governance Charter**, approved by the 
 # 0.2 — How the exam thinks: BoK v2.1, question styles, a study plan
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *BoK: Orientation (all domains)*
 
-**After this you can** build a study plan weighted by the exam's domains, and write a Najm scenario with one FIRST and one BEST question, each with a key and three tempting distractors. *Study time: about 105 minutes (estimate).*
+**After this you can** build a study plan weighted by the exam's domains, and write a Najm scenario with one FIRST and one BEST question, each with a key and three tempting distractors. *Study time: reading about 15 min, hands-on about 105 min (estimate).*
 
 ## ⚡ In 60 seconds
 - At the time of writing (2026), the AIGP exam has **100 multiple-choice questions** (85 scored, 15 unscored pilot questions you cannot identify), lasts **2 hours 45 minutes**, and is scored on a **scale of 100–500 with 300 to pass**.
@@ -360,18 +360,18 @@ Extract: EU (Germany), deployer, employment decisions (a high-impact use that th
 ## 🏛️ In practice at Najm Bank
 Layla gives Omar and Sara two study plans and lets them choose. Both map directly to this course.
 
-**Plan A — 6 weeks (for people already working in privacy, risk or data; about 8–10 hours a week)**
+**Plan A — 6 weeks (for people already working in privacy, risk or data; about 16–17 hours a week)**
 
 | Week | Modules | Focus | End-of-week check |
 |---|---|---|---|
 | 1 | 0, 1, 2 | Orientation, what AI is, harms, organisational roles | All lesson questions; write your instruments sheet header |
-| 2 | 3, 4 | Policies across the life cycle; privacy law and AI | Explain Art. 22 GDPR and a DPIA to a colleague without notes |
+| 2 | 3, 4 | Policies across the life cycle; privacy law and AI | Explain Art. 22 GDPR and a DPIA aloud, without notes |
 | 3 | 5, 6 | Other laws; the EU AI Act | Draw the AI Act risk pyramid and role map from memory |
 | 4 | 7, 8 | Standards and frameworks; design and build | Map NIST AI RMF functions to ISO/IEC 42001 clauses at a high level |
 | 5 | 9, 10, 11 | Data, testing, release, monitoring, deployment | Do every 🟡 exercise in Module 11 |
 | 6 | 12 | Capstone, exam strategy, full mock exam twice | Mock score review: re-read every lesson behind a wrong answer |
 
-**Plan B — 12 weeks (for newcomers; about 4–6 hours a week)**
+**Plan B — 12 weeks (for newcomers; about 8–9 hours a week)**
 
 | Week | Modules | Focus |
 |---|---|---|
@@ -388,12 +388,16 @@ Layla gives Omar and Sara two study plans and lets them choose. Both map directl
 | 11 | 11 | Deploying and using AI |
 | 12 | 12 | Capstone, strategy, two sittings of the mock exam, targeted review |
 
+**How much time in total.** The study-time estimates at the top of the lessons add up to about 100 hours: roughly 13 hours of reading and 87 hours of hands-on work (exercises, lesson questions and two mock sittings). That total already includes the 12.1 capstone at about 15 hours. Both plans above are paced for it. If you cannot give that, make a first pass through the 🟢 layers, exercises and questions only, and come back to the 🟡 and 🔴 layers for the modules your error log flags.
+
+**Checking your own exercises.** Most exercises have no single right answer, and you may be studying alone. Mark your work against five points: (1) it meets every part of the *Done when* line; (2) every duty has a named owner or role; (3) every legal claim names the instrument and article; (4) it says what evidence would show the control works; (5) it flags what you would check with counsel. Module 11 and the calculation exercises have model answers to compare with.
+
 **Rules for either plan:** book the exam date at the start (a deadline changes behaviour); do the five questions after each lesson the *next* day, not straight away; keep an error log with the competency ID of every miss; and in the last week, study only from your error log and instruments sheet.
 
 ## 🛠️ Exercises
 - 🟢 **Build your map.** Copy the domain table and add, for each domain, the course modules and the number of weeks you will spend on it. *Done when:* your weeks roughly follow the weight of each domain, with Domains III and IV not squeezed.
 - 🟡 **Dissect a question.** Take the worked example above and write down, for each distractor, which type it is (true but irrelevant, wrong time, too extreme). Then rewrite the stem so that a different option becomes the key. *Done when:* your rewritten stem has one clearly best answer and you can explain why.
-- 🔴 **Write a scenario item.** Write your own scenario (80–120 words) about Najm Bank's CV-screening tool with one FIRST question and one BEST question, each with a key and three plausible distractors. *Done when:* a colleague can answer both and agrees each distractor is tempting but wrong.
+- 🔴 **Write a scenario item.** Write your own scenario (80–120 words) about Najm Bank's CV-screening tool with one FIRST question and one BEST question, each with a key and three plausible distractors. *Done when:* a day later, answering cold, you can still pick each key, and you can write for each distractor the mistake that would make someone choose it.
 
 ## ⚠️ Mistakes and exam traps
 - **Trap: picking a true statement.** Several options may be true; only one answers the question asked. Re-read the stem's last line before choosing.
@@ -488,7 +492,7 @@ Layla gives Omar and Sara two study plans and lets them choose. Both map directl
 # 0.3 — Meet Najm Bank: an AI inventory from day one
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *BoK: Orientation · I.A, I.C*
 
-**After this you can** complete an AI inventory row with owner, decision and preliminary risk, and argue in a 150-word memo for changing a risk rating using decision significance, automation and data sensitivity. *Study time: about 110 minutes (estimate).*
+**After this you can** complete an AI inventory row with owner, decision and preliminary risk, and argue in a 150-word memo for changing a risk rating using decision significance, automation and data sensitivity. *Study time: reading about 15 min, hands-on about 80 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Najm Bank is fictional**: a mid-sized Gulf bank and the running case throughout.
@@ -654,9 +658,9 @@ Layla presents the inventory to the AI Governance Committee with a short decisio
 **2. Layla asks department heads "Do you use AI?" and most say no. Which discovery step would MOST improve completeness?**
 
 - A. Accept the answers as given and record only the data science team's models in the inventory
-- B. Hire an external firm to certify that no other AI exists anywhere in the bank's business lines
+- B. Hire an external firm to certify that no other AI exists anywhere in any of the bank's business lines
 - C. Ban all software with AI features until the owners declare them and the committee approves each one
-- D. Ask which decisions use a score, ranking, prediction or generated text, and cross-check contracts, existing registers and network logs
+- D. Ask which decisions use a score, prediction or generated text, then check contracts, registers and logs
 
 <details><summary>Answer</summary>
 

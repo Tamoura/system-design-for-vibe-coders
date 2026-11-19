@@ -9,7 +9,7 @@
 # 5.1 — Non-discrimination in hiring, credit and services
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 4.2* · *BoK: II.B*
 
-**After this you can** compute selection-rate ratios, say which fail the four-fifths rule of thumb, and list features that could act as proxies for protected characteristics. *Study time: about 105 minutes (estimate).*
+**After this you can** compute selection-rate ratios, say which fail the four-fifths rule of thumb, and list features that could act as proxies for protected characteristics. *Study time: reading about 15 min, hands-on about 95 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Anti-discrimination law is technology-neutral. If an AI system treats people less favourably because of a protected characteristic, or produces unjustified disadvantage for a protected group, the organisation using it can be liable.
@@ -59,7 +59,7 @@ Direct discrimination is generally unlawful unless a narrow exception applies. I
 - **publish a summary** of the audit results; and
 - **notify candidates** in advance that an AEDT is used, with information about the qualifications assessed and how to request an alternative process or accommodation.
 
-It requires disclosure and auditing; it doesn't set a pass mark. Other states and cities have followed with their own rules (for example Illinois on AI in employment, and Colorado's AI Act on high-risk decisions, with its effective date postponed to 30 June 2026). Check current status before relying on any.
+It requires disclosure and auditing; it doesn't set a pass mark. Other states and cities have followed with their own rules (for example Illinois on AI in employment, and Colorado, whose 2024 AI Act was replaced in May 2026 by SB 26-189, a narrower law on automated decision-making that applies from 1 January 2027). Check current status before relying on any.
 
 **Credit in the US.**
 - The **Equal Credit Opportunity Act (ECOA)**, implemented by **Regulation B**, prohibits discrimination in any aspect of a credit transaction on grounds including race, colour, religion, national origin, sex, marital status and age, and receipt of public assistance.
@@ -84,7 +84,7 @@ It requires disclosure and auditing; it doesn't set a pass mark. Other states an
 
 **Accommodation and alternatives.** Disability law often requires an individual alternative (a different test format or a human interview). Build the alternative route into the process, not as an afterthought.
 
-**The GCC context.** Gulf labour and banking laws contain their own equal-treatment and consumer-fairness provisions, and national-workforce policies (such as Qatarisation targets) shape hiring lawfully. Any AI that implements such policies must do so openly and within the law, not through hidden proxies. Check local counsel on how equality rules apply to automated tools.
+**The GCC context.** Gulf labour and banking laws contain their own equal-treatment and consumer-fairness provisions. For example, the UAE's labour law (Federal Decree-Law No. 33 of 2021, Art. 4) bars employment discrimination on grounds such as race, colour, sex, religion, national or social origin and disability, while stating that measures to raise Emiratis' participation in the workforce are not discrimination. The UAE Central Bank's Consumer Protection Regulation (Circular 8/2020) and its Standards require banks to treat consumers fairly. Laws are amended, so check the current text. National-workforce policies (such as Qatarisation targets) also shape hiring lawfully. Any AI that implements such policies must do so openly and within the law, not through hidden proxies. Check local counsel on how equality rules apply to automated tools.
 
 ```mermaid
 flowchart LR
@@ -129,7 +129,14 @@ The AI Governance Committee adopts an **Adverse Impact Testing Standard** for al
 ## 🛠️ Exercises
 - 🟢 For the CV tool, list five features that could act as proxies for a protected characteristic, and name the characteristic each might proxy. *Done when:* each proxy has a plausible mechanism in one sentence.
 - 🟡 With these figures, compute selection-rate ratios and say which fail the four-fifths rule of thumb: men 300 applied, 90 shortlisted; women 250 applied, 50 shortlisted; applicants 50+ 80 applied, 12 shortlisted; under 50 470 applied, 128 shortlisted. *Done when:* you have two ratios and a one-line conclusion for each.
-- 🔴 Write the adverse-action reason text Najm would send to a US applicant (imagining a US branch) declined by the credit model, and explain how you derived the reasons so they satisfy Regulation B's "specific principal reasons" requirement. *Done when:* the reasons are specific, accurate to the model's real drivers, and understandable.
+
+<details class="model"><summary>Check your answer</summary>
+
+Selection rates: men 90/300 = 0.30, women 50/250 = 0.20, so the sex ratio is 0.20 ÷ 0.30 = 0.67. Applicants 50+ 12/80 = 0.15, under 50 128/470 = 0.27, so the age ratio is 0.15 ÷ 0.27 = 0.55. Both are below 0.80, so both fail the four-fifths rule of thumb and trigger an investigation under Najm's standard. Failing is a signal to investigate drivers and alternatives, not proof of unlawful discrimination.
+
+</details>
+
+- 🔴 Write the adverse-action reason text Najm would send to a US applicant (imagining a US branch) declined by the credit model, and explain how you derived the reasons so they satisfy Regulation B's "specific principal reasons" requirement. Assume the model's feature contributions for this applicant were, largest first: debt-to-income ratio of 52% (approval band below 40%), two missed payments in the last 12 months, and credit history of under two years. *Done when:* the reasons are specific, accurate to the model's real drivers, and understandable.
 
 ## ⚠️ Mistakes and exam traps
 - **"We don't use protected attributes, so we can't discriminate."** Proxies and biased labels produce indirect discrimination. Pick the answer that tests outcomes.
@@ -227,7 +234,7 @@ The AI Governance Committee adopts an **Adverse Impact Testing Standard** for al
 # 5.2 — Intellectual property in AI inputs and outputs
 *Level: 🟡 Intermediate* · *Prerequisites: 3.2* · *BoK: II.B*
 
-**After this you can** write a guidance note on AI-generated images covering ownership, infringement risk and controls, and give a go/no-go on two open-weight model licences. *Study time: about 105 minutes (estimate).*
+**After this you can** write a guidance note on AI-generated images covering ownership, infringement risk and controls, and give a go/no-go on two open-weight model licences. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - IP questions arise on both sides of an AI system. **Inputs:** do you have the right to use the training data, prompts and documents the system processes? **Outputs:** who owns what the system generates, and could it infringe someone else's rights?
@@ -426,13 +433,13 @@ Layla issues an **AI Intellectual Property Clearance Checklist**, required befor
 # 5.3 — Consumer protection, product liability and sector rules
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 4.2* · *BoK: II.B*
 
-**After this you can** rewrite AI marketing claims so each is substantiated, and write an incident playbook for a chatbot that gives a customer wrong fee information. *Study time: about 105 minutes (estimate).*
+**After this you can** rewrite AI marketing claims so each is substantiated, and write an incident playbook for a chatbot that gives a customer wrong fee information. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Consumer protection law bans unfair and deceptive practices. It applies to what an AI system says to customers and to what a company says *about* its AI. In the US, the FTC enforces section 5 of the FTC Act; in the EU, the Unfair Commercial Practices Directive does similar work.
 - A company is responsible for its chatbot. In *Moffatt v. Air Canada* (2024), a tribunal held the airline liable for its website chatbot's wrong statement about bereavement fares.
 - The new EU **Product Liability Directive (EU) 2024/2853** expressly treats software, including AI systems, as a product, with no-fault liability for defective products causing damage. The proposed **AI Liability Directive** was withdrawn in 2025.
-- Sector regulators apply existing rules to AI. For banks, model risk management (the US **SR 11-7**, the UK PRA's SS1/23), EU banking guidance, and central-bank AI guidance such as **QCB**'s for Qatari financial institutions.
+- Sector regulators apply existing rules to AI. For banks, model risk management (the US **SR 26-2**, which replaced SR 11-7 in 2026, and the UK PRA's SS1/23), EU banking guidance, and central-bank AI guidance such as **QCB**'s for Qatari financial institutions.
 - Exam cue: "AI washing" (overstating AI capabilities) is deception. The biggest trap is thinking a disclaimer or "the bot is a separate entity" shifts liability away from the company.
 
 ## 🧭 Why it matters
@@ -486,7 +493,7 @@ Applied to AI, two kinds of risk arise:
 **US product liability** remains state tort law, with an open debate over whether software and AI outputs are "products". Some courts have let product-liability theories against AI chatbot providers proceed past early stages. Check current case law.
 
 ### 🔴 Expert view
-**Model risk management in banking.** The US **SR 11-7** (Federal Reserve, 2011, adopted by the OCC as Bulletin 2011-12), *Supervisory Guidance on Model Risk Management*, is the classic reference. It defines a **model** broadly as a quantitative method that processes inputs into estimates, and says model risk comes from fundamental errors and from inappropriate use. Its pillars: In April 2026 the Federal Reserve, the OCC and the FDIC replaced SR 11-7 with **SR 26-2**, *Revised Guidance on Model Risk Management*. It is more principles-based, scales validation to each model's materiality instead of fixed cycles, tightens the definition of a model and holds vendor models to the same standard; read its current text for how it treats generative and agentic AI.
+**Model risk management in banking.** The US **SR 11-7** (Federal Reserve, 2011, adopted by the OCC as Bulletin 2011-12), *Supervisory Guidance on Model Risk Management*, is the classic reference. It defines a **model** broadly as a quantitative method that processes inputs into estimates, and says model risk comes from fundamental errors and from inappropriate use. Its pillars:
 
 | Pillar | What it requires | AI extension |
 |---|---|---|
@@ -495,6 +502,8 @@ Applied to AI, two kinds of risk arise:
 | Governance | Board and senior-management oversight, policies, **model inventory**, roles, internal audit | Inventory includes vendor and GenAI systems |
 
 "Effective challenge" means critical analysis by objective, informed people with the influence to make change happen. It's the banking root of the human-oversight idea. Vendor models are in scope: banks must understand and validate what they buy.
+
+In April 2026 the Federal Reserve, the OCC and the FDIC replaced SR 11-7 with **SR 26-2**, *Revised Guidance on Model Risk Management*. It is more principles-based, scales validation to each model's materiality instead of fixed cycles, tightens the definition of a model and holds vendor models to the same standard. A footnote leaves generative and agentic AI outside its scope for now, as novel and fast-moving, and the agencies have signalled separate work on them; so SR 26-2 does not dictate how to govern GenAI, but banks must still cover it through their own risk management and controls, and extending MRM is the usual way.
 
 Related supervisory expectations:
 - **UK PRA SS1/23** (model risk management principles for banks, effective 2024) applies to models including AI and covers model identification, governance, development, validation and risk mitigants.
@@ -522,7 +531,7 @@ flowchart LR
 | **EU Unfair Commercial Practices Directive** — 2005/29/EC | Prohibits misleading, aggressive and unfair practices | Applies to AI-driven marketing and chatbots |
 | **EU Product Liability Directive** — (EU) 2024/2853 | No-fault liability for defective products, now including software and AI; disclosure and presumptions | Software is a product; pure economic loss not covered |
 | **EU AI Liability Directive (withdrawn)** | Proposed 2022 fault-based rules; withdrawn 2025 | Not in force |
-| **SR 11-7** | (Replaced in April 2026 by **SR 26-2**.) US model risk management: development, validation with effective challenge, governance and inventory | Applies to vendor and AI models |
+| **SR 11-7** | (Replaced in April 2026 by **SR 26-2**.) US model risk management: development, validation with effective challenge, governance and inventory | Applies to vendor and AI models; SR 26-2 leaves GenAI and agentic AI out for now |
 | **PRA SS1/23** | UK model risk management principles for banks | Covers AI models |
 | **QCB AI guideline** | Qatar Central Bank expectations for AI at regulated financial institutions | Najm's home supervisor; read the current text |
 
@@ -555,14 +564,14 @@ Layla's team adds an **AI Customer-Facing Controls Standard** and extends the mo
 - **"Software isn't a product."** Under the EU PLD 2024/2853, software including AI is a product.
 - **"The AI Liability Directive will apply."** It was withdrawn in 2025. The adopted instrument is the new PLD.
 - **"The PLD covers any loss caused by AI."** It covers death, personal injury, property damage and loss of non-professional data, not pure economic loss.
-- **"Model risk rules are only for traditional statistical models."** SR 11-7 defined a model broadly, and its 2026 successor SR 26-2 applies to machine-learning and vendor models; check SR 26-2's text for how generative and agentic AI are treated.
+- **"Model risk rules are only for traditional statistical models."** SR 11-7 defined a model broadly, and its 2026 successor SR 26-2 applies to machine-learning and vendor models. A footnote leaves generative and agentic AI outside SR 26-2 for now; that is a gap to fill with your own controls, not a reason to leave them ungoverned.
 
 ## 🧾 Recap
 - Consumer protection covers what AI says, what companies say about AI, and how AI treats customers.
 - *Moffatt v. Air Canada*: the company is liable for its chatbot's statements.
 - The FTC enforces section 5 against AI washing and unfair AI use, with remedies up to algorithmic disgorgement.
 - The EU PLD (2024/2853) brings software and AI into no-fault product liability; the AILD was withdrawn.
-- Banking regulators apply model risk management (SR 11-7, PRA SS1/23, EBA guidance) and AI-specific guidance such as QCB's to AI systems.
+- Banking regulators apply model risk management (SR 26-2, which replaced SR 11-7; PRA SS1/23; EBA guidance) and AI-specific guidance such as QCB's to AI systems.
 
 ## ✍️ Check yourself
 

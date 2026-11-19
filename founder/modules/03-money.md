@@ -9,7 +9,7 @@
 # 3.1 — Unit economics in plain words, including AI and model costs
 *Level: 🟡 Intermediate* · *Prerequisites: 1.4, 2.2* · *Step: Price*
 
-**After this you can** fill in a one-page unit-economics sheet for one customer-month and calculate its gross margin and the months it takes to earn back the cost of winning that customer. *Study time: about 120 minutes (estimate).*
+**After this you can** fill in a one-page unit-economics sheet for one customer-month and calculate its gross margin and the months it takes to earn back the cost of winning that customer. *Study time: reading about 20 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can fill in a one-page **unit-economics sheet** for one customer per month: what the customer pays, what each part costs to serve, what is left, and how many months it takes to earn back what it cost to win them. Allow about two hours.
@@ -20,7 +20,7 @@
 - Biggest trap: using last month's vendor price from memory, or leaving out your own time. Read the pricing page on the day and write the date.
 
 ## 🧭 Why it matters
-Layla's pilot in lesson 1.4 worked: Nadia and one other salon owner paid the pilot deposit, and three more booked calls, before the full version existed. Layla is delighted, and then Mona asks a plain question: "When Nadia pays you, what is left?"
+Layla's pilot in lesson 1.4 worked: of the twelve owners on her list, two paid the pilot deposit and three more booked calls, before the full version existed. Layla is delighted, and then Mona asks a plain question: "When Nadia pays you, what is left?"
 
 Layla knows Tick sends text reminders and, since last week, uses an AI model to write friendlier reminder wording for each client. She does not know what either costs per salon. The agent built the wording feature in an afternoon and she has never opened the model vendor's bill. Mona does not give her the answer. She asks her to open the pricing pages, write down the date, and work it out on one sheet of paper.
 
@@ -52,7 +52,7 @@ The result is not a disaster, and not a triumph. It is a number she can finally 
 
 Never copy these prices from memory or from an article. Vendors change plans, units and limits. Open the pricing page, write the date and the unit, and compute for your volume.
 
-**Tokens, in plain words.** A **token** is a small piece of text, roughly a short word or part of a word, that an AI model reads or writes. Model vendors commonly charge per amount of text processed, with the text you send in (**input**) and the text the model writes back (**output**) priced separately, and with discounts for certain features such as reusing earlier text (caching). Anthropic's pricing page, one example among several vendors, is organised this way: a price per million tokens for input, for output, and for cached input. Whatever vendor you use, check its page for its own units. The library's [*AI Product Management: Zero to Hero*, lesson 1.2 — Capabilities and limits: errors, hallucination, context, latency and cost](../aipm/index.html#/1.2) explains tokens and context from the product side.
+**Tokens, in plain words.** A **token** is a small piece of text, roughly a short word or part of a word, that an AI model reads or writes. Model vendors commonly charge per amount of text processed, with the text you send in (**input**) and the text the model writes back (**output**) priced separately, and with discounts for certain features such as reusing earlier text (caching). Anthropic's pricing page, one example among several vendors, is organised this way: a price per million tokens for input and for output, plus separate prices for writing text into the cache and for reading it back from the cache. Whatever vendor you use, check its page for its own units. The library's [*AI Product Management: Zero to Hero*, lesson 1.2 — Capabilities and limits: errors, hallucination, context, latency and cost](../aipm/index.html#/1.2) explains tokens and context from the product side.
 
 **Cost to acquire.** Add up what it took to win your first customers: your hours (at an honest rate, even if you pay yourself nothing), any ads, any tool you bought only for selling, any free months you gave. Divide by the number of customers won. For a first batch of five, this is rough, and that is fine. It is better to be roughly right than precisely unknown.
 
@@ -69,7 +69,7 @@ Never copy these prices from memory or from an article. Vendors change plans, un
 - **Number of calls per task.** Retries, "regenerate", checking steps and agents that call tools several times multiply the cost of one task.
 - **Which model you choose.** Vendors offer larger and smaller models at very different prices. The library's [*Building AI Applications & Agents*, lesson 14.2 — Cost, latency and reliability engineering: budgets, caching, routing, retries and SLOs](../aiapps/index.html#/14.2) goes deep on budgets and routing; here you only need the founder's habit of measuring one real task.
 
-**Measure, do not guess.** The simplest method is to run one typical task, look at how many tokens went in and out (the vendor's usage dashboard or the response itself shows this), and multiply by the vendor's current prices. Do it for a typical customer and again for a heavy one.
+**Measure, do not guess.** The simplest method is to run one typical task, look at how many tokens went in and out, and multiply by the vendor's current prices. Without code: run only that task, then open the vendor's usage page the next day and read the tokens for that day; or ask your coding agent to print the token counts the response reports. Do it for a typical customer and again for a heavy one.
 
 **Conversations grow.** In a chat feature, each new message usually resends the earlier conversation, so a ten-message chat costs far more than ten times a one-message chat. If you offer a chat or an assistant, price and cap it with this in mind.
 
@@ -77,7 +77,7 @@ Never copy these prices from memory or from an article. Vendors change plans, un
 
 ### 🔴 Expert view
 
-**Spending limits protect cash.** Check whether each vendor offers a budget alert or a hard limit on usage-based bills, turn it on if it does, and note the limit in your sheet. A runaway loop in an agent, or one abusive account, can otherwise produce a large bill before you notice. The library's [*System Design for Vibe Coders*, lesson 5.2 — Rate Limiting That Survives a CDN](../vibe/index.en.html#l5-2) explains how to limit how much one user can consume.
+**Spending limits protect cash.** Check whether each vendor offers a budget alert or a hard limit on usage-based bills, turn it on if it does, and note the limit in your sheet. A runaway loop in an agent, or one abusive account, can otherwise produce a large bill before you notice. The library's [*System Design for Vibe Coders*, lesson 5.2 — Rate Limiting That Survives a CDN](../vibe/index.en.html#l5-2) explains how to limit how much one user can consume. In founder terms: decide a per-customer cap, such as a monthly number of AI rewrites, and have the product enforce it.
 
 **Vendor price changes are a business risk.** The library's [*System Design for Vibe Coders*, lesson 11.4 — Cost Engineering](../vibe/index.en.html#l11-4) covers the engineering levers for cutting model cost; your job is to decide which margin is acceptable. If one model vendor's price or behaviour change would wreck your margin, write that on the sheet as a risk, with what you would do: switch model, raise the price, cap use. For how metering and usage-based billing are implemented, the library's [*SaaS Building Blocks*, lesson 3.3 — Usage-based billing and metering](../saas/index.html#/3.3) is the engineering companion.
 
@@ -94,7 +94,7 @@ Never copy these prices from memory or from an article. Vendors change plans, un
 Tools are examples, not endorsements. A plain spreadsheet is enough for all of them.
 
 ## 🏛️ In practice with Tick
-Tick, its people and all numbers are fictional; the figures are illustrative, not benchmarks.
+Tick, its people and all numbers are fictional; the figures are illustrative, not benchmarks. Amounts are in one unnamed currency unit; read them in yours.
 
 Layla opened the vendors' pricing pages with Mona, wrote the date beside each unit and built the sheet. She planned to charge 29 per salon per month, a figure she picked quickly and tests properly in lesson 3.2.
 
@@ -102,7 +102,7 @@ Layla opened the vendors' pricing pages with Mona, wrote the date beside each un
 |---|---|---|
 | Revenue | 1 salon at the planned price | 29.00 |
 | Messages | 200 reminders at an illustrative 0.05 each | 10.00 |
-| AI wording | 200 messages, about 600 tokens in and 100 out each; illustrative prices of 3 per million input and 15 per million output tokens | 0.36 + 0.30 = 0.66 |
+| AI wording | 200 messages, about 450 tokens in and 150 out each; made-up round prices of 4 per million input and 10 per million output tokens | 0.36 + 0.30 = 0.66 |
 | AI retries and regenerations | Assume the model is called twice per message on average, so double the line above | 1.32 in total for AI |
 | Payment fee | An illustrative 3 percent plus 0.30 per payment on 29.00 | 1.17 |
 | **Cost to serve** | 10.00 + 1.32 + 1.17 | 12.49 |
@@ -110,7 +110,7 @@ Layla opened the vendors' pricing pages with Mona, wrote the date beside each un
 | Support time | Layla's 20 minutes a month at an honest 15 per hour | 5.00 |
 | **Contribution after time** | 16.51 − 5.00 | 11.51 (39.7 percent) |
 
-Then the acquisition side. Winning the first five salons took about 40 hours of Layla's time at the same honest 15 per hour, 600 in all, so 120 per customer. Payback on contribution before time: 120 divided by 16.51 is about 7.3 months. With support time included: 120 divided by 11.51 is about 10.4 months. With an illustrative steady churn of 5 percent a month, the average stay is about 20 months, so the customer earns back the acquisition cost, but not by a wide margin.
+Then the acquisition side. Winning the first five pilot salons (the two who paid and the three who booked calls in lesson 1.4) took about 40 hours of Layla's time at the same honest 15 per hour, 600 in all, so 120 per customer. Payback on contribution before time: 120 divided by 16.51 is about 7.3 months. With support time included: 120 divided by 11.51 is about 10.4 months. With an illustrative steady churn of 5 percent a month, the average stay is about 20 months, so the customer earns back the acquisition cost, but not by a wide margin.
 
 Then she ran the stress test. If a salon used the AI wording ten times more (a heavy user who regenerates constantly), the AI line becomes 13.20 and cost to serve 24.37, leaving contribution of 4.63, still positive but thin. If the model vendor doubled its prices, the AI line goes from 1.32 to 2.64, a small change. The messaging line, 10.00, was the one that mattered: it was most of the cost, and it grew with every salon's client list. Layla had worried about AI cost, the part that felt new, while the old-fashioned cost was bigger.
 
@@ -205,7 +205,7 @@ Mona asked what Layla would do if a large salon sent 2,000 reminders. Layla's an
 </details>
 
 ## 📚 References
-- Anthropic, "Pricing", Claude API documentation: shows that model usage is priced per million tokens, with input, output and cached input priced separately. https://platform.claude.com/docs/en/about-claude/pricing (page opened; prices are not quoted here because they change).
+- Anthropic, "Pricing", Claude API documentation: shows that model usage is priced per million tokens, with input, output, cache writes and cache reads priced separately. https://platform.claude.com/docs/en/about-claude/pricing (page opened; prices are not quoted here because they change).
 - For prices, units and limits of any vendor: the vendor's own pricing page, read on the day you decide (not cited here, because they change).
 - Library lessons linked above: *AI Product Management: Zero to Hero*, *Building AI Applications & Agents*, *System Design for Vibe Coders* and *SaaS Building Blocks*.
 
@@ -214,7 +214,7 @@ Mona asked what Layla would do if a large salon sent 2,000 reminders. Layla's an
 # 3.2 — Pricing: choose, test and change a price
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1* · *Step: Price*
 
-**After this you can** write a price test plan with three price points and signal rules set in advance, run it with at least twelve real prospects, and decide your next price from what they paid or committed to. *Study time: about 115 minutes (estimate).*
+**After this you can** write a price test plan with three price points and signal rules set in advance, run it with at least twelve real prospects, and decide your next price from what they paid or committed to. *Study time: reading about 20 min, hands-on about 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can write a one-page **price test plan** with three price points, who will see each, what counts as a signal, and a rule for what you will do next, and then run it with at least twelve real prospects over about two weeks.
@@ -225,7 +225,7 @@ Mona asked what Layla would do if a large salon sent 2,000 reminders. Layla's an
 - Biggest trap: choosing the price out of fear, copying a competitor without knowing their costs, or giving an endless discount and calling it a price.
 
 ## 🧭 Why it matters
-After the pilot in lesson 1.4, Layla quoted Nadia 9 per month, a figure she picked out of nervousness. Nadia accepted it without a word. Layla took that as proof the price was right. Mona was not so sure. "Nobody argued," she said. "What does that tell you?"
+After the pilot in lesson 1.4, Layla quoted Nadia 9 per month (Tick's amounts use one unnamed currency unit), a figure she picked out of nervousness. Nadia accepted it without a word. Layla took that as proof the price was right. Mona was not so sure. "Nobody argued," she said. "What does that tell you?"
 
 Layla's sheet from lesson 3.1 says that at 29 she keeps about 16.51 per salon after variable costs, and that at 9 she would keep less than zero: 9 minus 12.49 is negative. The low price would lose money on every salon. A price set by nerves had been hiding a cost problem.
 
@@ -332,14 +332,14 @@ Her **price test plan**, in short:
 - **After the test:** anyone who paid keeps that price for a stated period or is refunded, with the end date written down before the test starts.
 - **Honesty line:** each person sees one real price, with no invented discounts and no fake scarcity.
 
-The result, after two weeks: at 19, four of four paid; at 29, three of four paid; at 49, one of four paid. As her plan said, the five who paid kept their price for a stated period or took a refund. Layla felt 19 had been "easy", but at 19 the contribution would be about 19 minus 12.49, or roughly 6.8 before time (the payment fee is smaller at a lower price), which would leave about 1.8 after her support time of 5.00 and almost nothing toward fixed costs. She chose 29, with a founder offer of 25 percent off the first six months for the first ten salons, written on the page with its end date. She sent Nadia, who had agreed to 9, a short note: the first six months stay at 9, then the standard price starts on a date she gave, and Nadia kept her place as the first design partner. Layla knew 9 is below her floor of 12.49; she accepted that loss on one salon, for a stated end date, as the cost of a design partner. Mona's comment: "You wrote the date down. That is the part people skip."
+The result, after two weeks: at 19, four of four paid; at 29, three of four paid; at 49, one of four paid. As her plan said, the eight who paid kept their price for a stated period or took a refund. Layla felt 19 had been "easy", but at 19 the contribution would be about 19 minus 12.49, or roughly 6.8 before time (the payment fee is smaller at a lower price), which would leave about 1.8 after her support time of 5.00 and almost nothing toward fixed costs. She chose 29, with a founder offer of 25 percent off the first six months for the first ten salons, written on the page with its end date. She sent Nadia, who had agreed to 9, a short note: the first six months stay at 9, then the standard price starts on a date she gave, and Nadia kept her place as the first design partner. Layla knew 9 is below her floor of 12.49; she accepted that loss on one salon, for a stated end date, as the cost of a design partner. Mona's comment: "You wrote the date down. That is the part people skip."
 
 She also wrote down what the test could not tell her: twelve people is a small group, they mostly came from her own network and may be kinder than strangers, and she would repeat the test with cold prospects in module 4.
 
 ## 🛠️ Exercises
 1. 🟢 **Write your floor and ceiling.** From your unit-economics sheet (lesson 3.1), write your floor price. From one customer conversation, write the monthly value of the result in their words and numbers. *Done when:* both numbers are written with the source of each, and the price you are considering sits between them.
 2. 🟡 **Write a price test plan.** Choose three price points and a pricing shape, describe who sees each, the exact ask, and write the signal rules before you start. *Done when:* the plan is one page and a peer can read the rules and say what you will do for each result without asking you.
-3. 🔴 **Run it and write the change notice.** Test with at least twelve real prospects, record who paid or committed at each price, then write the notice you would send existing customers if the price changes, with date, reason and what stays the same. *Done when:* a results table exists with one row per prospect, the decision you made against your rules is written down, and the notice is drafted.
+3. 🔴 **Run it and write the change notice.** Test with at least twelve real prospects, record who paid or committed at each price, then write the notice you would send existing customers if the price changes, with date, reason and what stays the same. No twelve prospects yet? Use your lesson 1.4 list and interviewees, mark the result provisional, and rerun it after lessons 4.1 and 4.2. *Done when:* a results table exists with one row per prospect, the decision you made against your rules is written down, and the notice is drafted.
 
 ## ⚠️ Mistakes and traps
 - **Pricing out of fear.** A price nobody argues with is often a price that is too low. Instead, check it against your floor and the customer's own numbers.
@@ -435,7 +435,7 @@ She also wrote down what the test could not tell her: twelve people is a small g
 # 3.3 — Cash, runway and invoicing: what to ask your accountant
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 3.2* · *Step: Price*
 
-**After this you can** build a six-month cash table, compute your runway in months including a late-payment case, and send an accountant a one-page question list with the documents each question needs. *Study time: about 180 minutes (estimate).*
+**After this you can** build a six-month cash table, compute your runway in months including a late-payment case, and send an accountant a one-page question list with the documents each question needs. *Study time: reading about 20 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can build a six-month **cash table**, compute your **runway** in months, and write a one-page **question list for an accountant** that you could send before a first meeting. Allow about three hours.

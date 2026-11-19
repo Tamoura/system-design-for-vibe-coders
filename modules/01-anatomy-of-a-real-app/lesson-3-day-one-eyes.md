@@ -2,7 +2,7 @@
 
 *Module 1: Anatomy of a Real App*
 
-**After this you can** wire an error tracker and an outside uptime check, then throw a test error and kill staging on purpose to show both alarms reach your phone. *Study time: about 50 minutes (estimate).*
+**After this you can** wire an error tracker and an outside uptime check, then throw a test error and kill staging on purpose to show both alarms reach your phone. *Study time: reading about 5 min, hands-on about 75 min (estimate).*
 
 > Tool note: this lesson names today's best defaults (Sentry, UptimeRobot /
 > Better Stack). The principles are permanent; the product names get an annual
@@ -55,9 +55,9 @@ flowchart LR
   it's the difference between "something's wrong" and "v2 broke it, roll back").
   Free tier is plenty at your size.
 - **The uptime check answers: *are we even up?*** — and answers it **from the
-  outside**, which is the whole point. Remember the AWS status dashboard that
-  died with S3, and Roblox flying blind for 73 hours because their monitoring
-  ran on the infrastructure that failed. The iron rule, first met in F.5 and
+  outside**, which is the whole point. Remember the AWS status page that stayed
+  green through the S3 outage, and Roblox, whose 73-hour recovery was slowed partly because
+  their monitoring ran on the infrastructure that failed. The iron rule, first met in F.5 and
   industrial-grade by 7.6: **the thing that tells you "it's fine" must not share
   fate with the thing it monitors.** An external checker on someone else's
   infrastructure is fate-independence for free.
@@ -69,6 +69,16 @@ Module 7. Don't skip ahead; these two are enough until you have real traffic.
 
 ## 🎛️ Direct Your Agent
 
+**Before step 1: give Relay a public address.** So far Relay runs only on your
+machine, and an outside check cannot see localhost. Say:
+> *"Deploy Relay to a free managed host, the way we did the F.5 page, and give me
+> the real URL. This copy is our staging: safe to break, no real users. Tell me
+> how to stop and start it from the host's dashboard."*
+
+Lesson 4.4 builds staging properly; this is the simple version. You need a free
+Sentry account too: sign up yourself, have the agent create the settings file
+and name the line for the key, then paste the key there yourself, never in the chat.
+
 1. **Wire the tracker.**
    > *"Add Sentry (free tier) to Relay's server and web app. Tag every deploy
    > with a release version so errors say which release they belong to. Show me
@@ -79,8 +89,8 @@ Module 7. Don't skip ahead; these two are enough until you have real traffic.
    > Relay's real URL, checking every minute, alerting my email and phone.
    > Tell me exactly what it checks and from where."*
 3. **Break it on purpose — both alarms.**
-   > *"Now stop the staging app. I want to watch the uptime alert arrive. Then
-   > start it again and confirm the recovery notice."*
+   > *"Now stop the staging app (the hosted copy). I want to watch the uptime
+   > alert arrive. Then start it again and confirm the recovery notice."*
    Watching the alarm actually fire is the difference between *having* monitoring
    and *hoping* you have monitoring. (Module 7 will call this practice by its
    industry name: you just did a tiny chaos experiment, like Netflix — on purpose.)

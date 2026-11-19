@@ -21,6 +21,7 @@ CHECKS = [
     ("Claims lint", "claims_lint.py"),
     ("Site counts", "site_counts.py"),
     ("Lesson outcomes", "lesson_outcomes.py"),
+    ("Arabic content parity", "ar_parity.py"),
 ]
 
 

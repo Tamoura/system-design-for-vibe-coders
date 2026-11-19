@@ -9,7 +9,7 @@
 # 0.1 — What it takes to ship an enterprise-grade agent: the delivery lifecycle, the layers and how this course works
 *Level: 🟢 Beginner* · *Prerequisites: none* · *Layer: Delivery*
 
-**After this you can** write a one-page evidence map of what "enterprise-grade" means for a system you know, where every property names an artefact or says "no evidence", and fill the delivery lifecycle table for a past project with an owner and an artefact per stage. *Study time: about 105 minutes (estimate).*
+**After this you can** write a one-page evidence map of what "enterprise-grade" means for a system you know, where every property names an artefact or says "no evidence", and fill the delivery lifecycle table for a past project with an owner and an artefact per stage. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Shipping an agent is a **lifecycle**, not a build: discover, design, build, evaluate, secure, ship, operate, hand over.
@@ -22,7 +22,7 @@
 ## 🧭 Why it matters
 Picture a pilot at Najm Bank that never reached its users. (The story is hypothetical, like every Najm story.) A small team built **Ask HR**, a chatbot over the HR policies, and after six weeks the demo made the steering committee clap. Then it met the second half of the lifecycle. **Sara**, the Data Protection Officer, asked which staff details the prompts sent to the model provider. Nobody knew. **Layla** asked for the risk assessment. There was none. **Hamad's** team asked what stopped a pasted document from giving the bot new instructions (prompt injection, Module 13). **Maha** asked who would be paged; the answer was "the developer", who had moved teams. The prompt lived in a notebook cell and, with no tests, nobody dared edit it. Four months later the pilot was paused. The model never failed. The delivery did.
 
-As reported, in *Moffatt v. Air Canada* (2024) a British Columbia tribunal held an airline responsible for wrong information its website chatbot gave a customer. It is one ruling in one jurisdiction, but plan as if your organisation will answer for what its agent says, and ask your legal team early. "It works in the demo" is the start of the job.
+In *Moffatt v. Air Canada* (2024 BCCRT 149, February 2024) a British Columbia tribunal held an airline responsible for wrong bereavement-fare information its website chatbot gave a customer. It is one ruling in one jurisdiction, but plan as if your organisation will answer for what its agent says, and ask your legal team early. "It works in the demo" is the start of the job.
 
 ## 📐 How it works
 
@@ -102,13 +102,15 @@ Build was the only stage with a finished artefact, a familiar shape for a stalle
 | **Agents** | The agent loop, memory, MCP, multi-agent teams | 8–11 |
 | **Production** | Evaluation, security and governance, deployment, cost, operation | 12–15 |
 
-**How the course works.** By Module 16 you will have taken Najm Desk from first interview to go-live, with a brief, a specification, an eval gate, a governance pack, a runbook and a handover. It suits a reading group with a mentor, one module a week (seventeen weeks); a solo reader can go faster. Each week has six parts: the **lesson**; a **read**, the matching chapter of a source (the Grokking chapter first for the mental model, then the free sources for code); a **lab** you run and extend, offline first, designed to be finished in an evening; a **checkpoint** of five questions; a **deliverable**, a `week-NN/` folder with a `NOTES.md` in your own repository; and a **group session** of demos, one failure shown live, and discussion. Roles rotate weekly: facilitator, demo lead, sceptic (reviews one deliverable against the ten properties) and scribe.
+**How the course works.** By Module 16 you will have taken Najm Desk from first interview to go-live, with a brief, a specification, an eval gate, a governance pack, a runbook and a handover. It suits a reading group with a mentor, one module a week (seventeen weeks); a solo reader sets their own pace (see *Studying alone* below). Each week has six parts: the **lesson**; a **read**, the matching chapter of a source (the Grokking chapter first for the mental model, then the free sources for code); a **lab** you run and extend, offline first, most designed to be finished in an evening or two (8.2, 12.2, 14.1 and the capstone take longer); a **checkpoint** of five questions; a **deliverable**, a `week-NN/` folder with a `NOTES.md` in your own repository; and a **group session** of demos, one failure shown live, and discussion. Roles rotate weekly: facilitator, demo lead, sceptic (reviews one deliverable against the ten properties) and scribe.
+
+> **Studying alone.** Most of the course works solo; the group sessions and a few exercises assume a second person. Replace each group session with a written self-review: run the week's "Verify before you accept it" list and the 🟢 exercise's *done when* against your own work, and note one failure in `NOTES.md`. Where an exercise needs a partner (0.1 the artefact check, 2.1 the third prompt, 2.2 fresh labels, 4.1 the contract row, 6.2 the seed review, 7.1 the C4 review, 7.2 the demo sentences, 12.1 the expectations, 15.2 the real run, 16.1 the gate, 16.2 the five questions and teaching; 6.1 already allows an assistant), it names a solo route: usually, write your own answer first, then have a fresh Claude chat challenge it, and keep both. A realistic pace is about 6 to 10 hours a week for the reading, the 🟢 and 🟡 exercises and the lab; allow a second week for the heaviest labs (8.2, 12.2, 14.1) and several weeks for the capstone.
 
 **The sources, and using them without copying.** Five main sources plus an add-on; the course links to them and never reproduces them. **Grokking AI Applications** (Andrea De Mauro, Manning) is the one paid book; the course plan says its tutorials use Langflow and KNIME, so treat them as demos. **Agentic Design Patterns** (Antonio Gulli) is a free draft; the plan counted 21 patterns. **AI Agents for Beginners** (Microsoft) offers illustrated lessons with videos and notebooks; the plan counted eighteen and noted an Arabic translation. Anthropic's **Building effective agents** is the source of the workflow-versus-agent distinction. Chip Huyen's **aie-book** is the free companion to *AI Engineering*. The add-on, the free **LangChain Academy** course, serves only the multi-agent module. The plan's chapter numbers and counts are the course owner's, not independently checked; contents change, so check each page. Take notes in your own words, add a line headed "what I would challenge", cite source and chapter in `NOTES.md`, and never paste their text or code into your repository.
 
 **Framework churn.** At the time of writing, Microsoft's lessons use Microsoft's agent framework, Gulli's code uses LangChain, CrewAI and Google ADK, and the labs here use the raw Anthropic SDK. That is deliberate: a developer who has met one pattern in three syntaxes has learned the pattern, not the library. Raw SDK first, and no group standard before the comparison box in Module 11.
 
-**How the labs run.** Every lab runs in two modes with identical code. The **offline** mock is free and scripted, so it suits mechanics: messages, tool results, loops, errors, token growth. The **real API** bills per token and gives a real model, which you need for prompt quality, retrieval, safety and true token counts. Switch by pointing `ANTHROPIC_BASE_URL` at the mock or unsetting it. Lesson 0.2 builds the setup.
+**How the labs run.** Every lab runs in two modes with identical code. The **offline** mock is free and scripted, so it suits mechanics: messages, tool results, loops, errors, token growth. The **real API** bills per token and gives a real model, which you need for prompt quality, retrieval, safety and true token counts. Switch by pointing `ANTHROPIC_BASE_URL` at the mock or unsetting it. Lesson 0.2 builds the setup and lists the Python forms the labs use.
 
 ### 🔴 Expert view
 
@@ -152,7 +154,7 @@ Done for the week: lab runs offline, checkpoint answered, deliverable committed,
 ## 🛠️ Exercises
 None of these needs the real API.
 
-- 🟢 **Define it for a system you know.** Write one page on what "enterprise-grade" would mean for a system you have worked on, using the ten properties or your own. *Done when:* every property names an artefact or says "no evidence" (expect at least two of those), and a colleague can find each artefact from your page alone.
+- 🟢 **Define it for a system you know.** Write one page on what "enterprise-grade" would mean for a system you have worked on, using the ten properties or your own. *Done when:* every property names an artefact or says "no evidence" (expect at least two of those), and a colleague can find each artefact from your page alone (solo: a fresh Claude chat given only the page lists where each one is).
 - 🟡 **Map a past project.** Fill in the lifecycle table for a project you shipped or watched. *Done when:* every stage has an owner and an artefact (or "none"), the weakest stage has one concrete consequence, and you have written the question that would have exposed it.
 - 🔴 **Set up the reading group.** Create the group repository with the charter, a seventeen-week calendar, a role rotation and a first-session agenda, then run a 20-minute premortem on the group itself. *Done when:* every member has approved the charter in a pull request, the first session is booked, and the premortem lists three causes of failure, each with a mitigation in the charter.
 
@@ -252,7 +254,7 @@ None of these needs the real API.
 # 0.2 — Your lab: setup, the lab kit, the API key and a spending cap
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Layer: Model, Delivery*
 
-**After this you can** set up the lab kit, run the smoke script against the offline mock with its three exit codes saved, and record a spending cap with low, expected and high cost scenarios in `NOTES.md`. *Study time: about 110 minutes (estimate).*
+**After this you can** set up the lab kit, run the smoke script against the offline mock with its three exit codes saved, and record a spending cap with low, expected and high cost scenarios in `NOTES.md`. *Study time: reading about 15 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Your lab has two modes and one codebase: an **offline mock** (free, scripted) and the **real API** (billed). Only `ANTHROPIC_BASE_URL` and `ANTHROPIC_API_KEY` change.
@@ -269,6 +271,8 @@ On her second Tuesday, Lujain pushes her API key to the team repository inside `
 
 ### 🟢 The essentials
 
+> **Before you start.** You need a laptop where you may install Python packages and run a local server (a locked-down work machine may block both: ask IT first), Python 3.11 or newer, git, and bash or zsh (on Windows, WSL). Exercises marked *Needs the real API* need a Console account with billing; everything else runs on the free mock. Claude Code needs its own account (lesson 0.3). Never paste a key or access token into a chat, a ticket or a screenshot.
+
 **Install.** You need Python 3.11 or newer, the course repository (with the lab kit) and a virtual environment, a private package folder that keeps this course apart from other projects.
 
 ```bash
@@ -282,7 +286,7 @@ pip install -r requirements.txt    # includes "anthropic>=1,<2"
 python -c "import anthropic; print(anthropic.__version__)"    # 1.something
 ```
 
-The labs rely on the 1.x SDK's shape, so keep the pin. The shell lines assume bash or zsh; on Windows, use WSL.
+The labs rely on the 1.x SDK's shape, so keep the pin. As of November 2026 PyPI's current release is a 2.x version; this course was written and tested on 1.x, and SDK-specific details in later lessons describe 1.x. The shell lines assume bash or zsh; on Windows, use WSL. `chromadb` is the heaviest package and is first needed in Module 4; if it will not install on a locked-down laptop, install the rest with `grep -v chromadb requirements.txt > core.txt && pip install -r core.txt` and ask IT before Module 4.
 
 **Start the mock and run the smoke script.**
 
@@ -475,6 +479,18 @@ Doubling the turns from six to twelve multiplied the input tokens by about 2.8 (
 | "Connection refused" (`APIConnectionError`) | Mock not running, wrong port, a firewall | Start the mock; use `127.0.0.1` and the same port |
 | Works at home, fails at the bank | A corporate proxy or TLS inspection | Set `HTTPS_PROXY` and `NO_PROXY=127.0.0.1`; point `SSL_CERT_FILE` at IT's certificate bundle; or pass `DefaultHttpxClient(proxy=...)` |
 
+**Python you will meet in the labs.** The labs assume you can read a short function; these forms are the ones that trip readers. Come back here when a lab uses one (lesson 8.2 uses them all).
+
+| You see | It means |
+|---|---|
+| `@dataclass(frozen=True)` above a class | A class whose fields are listed with defaults; frozen means a field cannot change after creation |
+| `namedtuple("Result", "ok reason")` | A tuple whose items also have names: `res.ok` is `res[0]` |
+| `def stop(...)` inside `def run(...)` | A closure: the inner function can read the outer one's variables, such as `t0` |
+| `Counter()` | A dictionary that counts: `seen[call] += 1` starts from 0 for a new key |
+| `[x for x in items if ...]` | A list comprehension: a loop that builds a list in one line; `{k: v for ...}` builds a dictionary |
+| `{**head, "event": event}` and `**fields` | Unpacking: copy a dictionary's items into a new one, or pass or collect named arguments |
+| `next((b for b in ...), "")` | The first item that matches, or `""` if none does |
+
 ### 🔴 Expert view
 
 **A key is a credential; a base URL is a trust decision.** Pair a real key with a non-local `ANTHROPIC_BASE_URL` and that server receives your key and every prompt. Enterprise gateways are legitimate; treat one as a third party, which is why `hello.py` flags it. `.env` suits a laptop; later modules move keys into a secret manager, one per environment.
@@ -490,7 +506,7 @@ Doubling the turns from six to twelve multiplied the input tokens by about 2.8 (
 | **Cost estimate** | Tokens × price, projected over a pilot | Before a pilot, then with measured numbers |
 
 ## 🏛️ In practice at Najm Bank
-**Deliverable, part 1 of week 0: your lab repository.** Create a private repository next to the cloned course repository. Claude Code builds the skeleton below; you read every file.
+**Deliverable, part 1 of week 0: your lab repository.** Create a private repository next to the cloned course repository. Build the skeleton below by hand this week, or come back after lesson 0.3 and have Claude Code build it from the spec further down; either way, you read every file.
 
 ```text
 najm-desk-lab/                  your own private repository
@@ -504,7 +520,7 @@ najm-desk-lab/                  your own private repository
 
 **Group session, part 1: setup clinic (30 minutes).** Everyone shows the mode line of an offline run; one person stops the mock and shows the failure. Pairs search each other's history for `sk-ant-`. Everyone says where their cap is set.
 
-**Build it with Claude Code.** Give it this spec, and approve its plan before it edits anything.
+**Build it with Claude Code (after lesson 0.3).** Give it this spec, and approve its plan before it edits anything. **By hand instead:** create the folders, copy `.gitignore` and `.env.example` from the lines above, write `use-mock.sh` (two `export` lines) and `use-real.sh` (one `unset` line), leave the Makefile for later, and run the acceptance checks that do not need it.
 
 ```text
 GOAL
@@ -638,7 +654,7 @@ Add CI, Docker or extra features. Do not commit. Plan first and wait for my OK.
 # 0.3 — Your build partner: directing Claude Code to build agents (and what you must still understand)
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Layer: Delivery*
 
-**After this you can** find and fix the five planted flaws in `flawed_chat.py` with a test for one, and write a `CLAUDE.md` under 60 lines whose rules a fresh Claude Code session follows unprompted. *Study time: about 110 minutes (estimate).*
+**After this you can** find and fix the five planted flaws in `flawed_chat.py` with a test for one, and write a `CLAUDE.md` under 60 lines whose rules a fresh Claude Code session follows unprompted. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Claude Code is your build partner, not your replacement, and not the `anthropic` SDK your agent's code calls. You are the architect and reviewer; the method is **spec, plan, small steps, verify, review the diff, commit**.
@@ -656,6 +672,8 @@ Delegating the typing does not delegate the responsibility. As reported in July 
 ## 📐 How it works
 
 ### 🟢 The essentials
+
+> **Getting Claude Code.** Install it from the [official setup page](https://code.claude.com/docs/en/setup); at the time of writing it runs on macOS, Linux, Windows and WSL, and `claude --version` confirms the install. Unlike the lab kit it is not free: the setup page says it needs a paid Claude plan or a Console account with API billing, and that the free plan does not include it; check the current page for plans and prices. On a work laptop, first ask IT or your manager whether it is allowed and with which account. Never paste a key or access token into the chat, and do not start it in a terminal where your lab's `ANTHROPIC_API_KEY` is exported, or it may offer to bill that key. **No Claude Code?** Every "Build it" box still works: treat its spec as your task list, write the code by hand in small steps, and run the same acceptance checks and "Verify before you accept it" list on your own diff. The 🔴 exercise below can be done that way; the 🟡 one needs Claude Code itself.
 
 **The method.** Six steps, and the loop matters more than any one of them.
 

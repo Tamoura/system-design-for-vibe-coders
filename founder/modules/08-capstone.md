@@ -9,7 +9,7 @@
 # 8.1 — Capstone: your venture file and 30-day plan
 *Level: 🔴 Advanced* · *Prerequisites: 0.2, 1.4, 2.1, 3.3, 4.3, 5.3, 6.3, 7.3* · *Step: Explore, Validate, Scope, Price, Sell, Launch, Protect, Run*
 
-**After this you can** assemble a venture file with one dated artefact per step, rate each step green, amber or red from its evidence, and write a 30-day plan with at most three measurable outcomes and a day-30 decision rule. *Study time: about 125 minutes (estimate).*
+**After this you can** assemble a venture file with one dated artefact per step, rate each step green, amber or red from its evidence, and write a 30-day plan with at most three measurable outcomes and a day-30 decision rule. *Study time: reading about 20 min, hands-on about 16 h (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can assemble a **venture file** with one dated artefact for each of the eight steps, rate each step green, amber or red from the evidence, and write a **30-day plan** with at most three measurable outcomes and a written decision rule for day 30.
@@ -42,7 +42,7 @@ The next month stopped being "do more of everything" and became three specific t
 | **Sell** | First-ten list, outreach message and tracker, onboarding checklist | 4.1, 4.2, 4.3 |
 | **Launch** | Launch checklist, support policy, post-incident note template | 5.1, 5.2, 5.3 |
 | **Protect** | Promise inventory, data-flow map, ownership register, question lists for professionals | 6.1, 6.2, 6.3 |
-| **Run** | Vendor notes with exit routes, handover pack | 7.2, 7.3 |
+| **Run** | Delegation cards, vendor notes with exit routes, handover pack | 7.1, 7.2, 7.3 |
 
 If an artefact does not exist, write "missing". An honest gap beats a rushed document made to fill a cell.
 
@@ -228,7 +228,7 @@ Books and writers are cited by title and author because their exact web pages we
 # 8.2 — Practice exam: 40 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: 8.1* · *Step: Explore, Validate, Scope, Price, Sell, Launch, Protect, Run*
 
-**After this you can** answer forty scenario questions across all eight modules in about an hour, mark them, and list the lessons your wrong answers send you back to. *Study time: about 90 minutes (estimate).*
+**After this you can** answer forty scenario questions across all eight modules in about an hour, mark them, and list the lessons your wrong answers send you back to. *Study time: reading about 25 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can answer forty scenario questions spread across all eight modules, and use your wrong answers to pick the lessons to reread.
@@ -447,16 +447,16 @@ Books and writers are cited by title and author because their exact web pages we
 
 </details>
 
-**17. Layla's illustrative sheet shows revenue of 29.00 and cost to serve of 12.49 per salon per month. What is the contribution before her own time?**
+**17. A founder's tutor-scheduling tool (illustrative) charges 26.00 per tutor per month. Cost to serve is 10.00 (messages 6.90, hosting 1.40, payment fee 1.70), and her support time is worth 4.00 per tutor. What is the contribution before her own time?**
 
-- A. 11.51 per salon per month
-- B. 16.51 per salon per month
-- C. 12.49 per salon per month
-- D. 41.49 per salon per month
+- A. 12.00 per tutor per month
+- B. 16.00 per tutor per month
+- C. 10.00 per tutor per month
+- D. 36.00 per tutor per month
 
 <details><summary>Answer</summary>
 
-**B.** Contribution is revenue minus cost to serve: 29.00 minus 12.49 is 16.51. The 11.51 figure subtracts her time as well, and 41.49 adds the costs instead of subtracting. (Lesson 3.1; illustrative figures.)
+**B.** Contribution is revenue minus cost to serve: 26.00 minus 10.00 is 16.00. The 12.00 figure subtracts her time as well, 10.00 is the cost itself, and 36.00 adds the costs instead of subtracting. (Lesson 3.1; illustrative figures.)
 
 </details>
 

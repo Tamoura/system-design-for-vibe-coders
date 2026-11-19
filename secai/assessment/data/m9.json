@@ -34,8 +34,8 @@
    "level": 3,
    "lesson": "9.2",
    "q": {
-    "en": "Rania wants a transfer_to_beneficiary tool in Najm Assist's first release, limited to saved beneficiaries and using the same app-rendered confirmation card as freeze_card. Tariq notes that the tool would take the customer from the session and check ownership in code. What should Noura decide?",
-    "ar": "تريد رانيا إضافة أداة transfer_to_beneficiary إلى الإصدار الأول من نجم أسيست، مقصورةً على المستفيدين المحفوظين، ومستخدمةً بطاقة التأكيد نفسها التي يعرضها التطبيق لأداة freeze_card. ويشير طارق إلى أن الأداة ستأخذ العميل من الجلسة وتتحقق من الملكية في الشيفرة. ماذا ينبغي أن تقرر نورة؟"
+    "en": "Rania wants a transfer_to_beneficiary tool in Najm Assist's first release, limited to saved beneficiaries and using the same app-rendered confirmation card as freeze_card. Tariq notes that the tool would take the customer from the session and check ownership in code. Under the tool-tier rules in Najm's tool register (lesson 9.2), what should Noura decide?",
+    "ar": "تريد رانيا إضافة أداة transfer_to_beneficiary إلى الإصدار الأول من نجم أسيست، مقصورةً على المستفيدين المحفوظين، ومستخدمةً بطاقة التأكيد نفسها التي يعرضها التطبيق لأداة freeze_card. ويشير طارق إلى أن الأداة ستأخذ العميل من الجلسة وتتحقق من الملكية في الشيفرة. وفق قواعد فئات الأدوات في سجل أدوات بنك نجم (الدرس 9.2)، ماذا ينبغي أن تقرر نورة؟"
    },
    "o": {
     "en": [

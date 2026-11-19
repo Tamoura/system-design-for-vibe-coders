@@ -9,7 +9,7 @@
 # 3.1 — Spec-driven development: from ticket to acceptance criteria, constraints, non-goals and a plan
 *Level: 🟢 Beginner* · *Prerequisites: 2.1* · *Focus: Workflow*
 
-**After this you can** turn a vague ticket into a spec with acceptance criteria, constraints and non-goals, and review a plan against a checklist. *Study time: about 110 minutes (estimate).*
+**After this you can** turn a vague ticket into a spec with acceptance criteria, constraints and non-goals, and review a plan against a checklist. *Study time: reading about 15 min, hands-on about 75 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A ticket states a wish. A **spec** says what done means, so an agent can build from it and you can verify against it: habit two.
@@ -124,7 +124,7 @@ It names no file, does not say which tests may change, and has no command and no
 
 ### 🔴 Expert view
 
-**Spec-driven development as industry practice.** Microsoft's developer blog (a 2026 post) describes spec-driven development as agreeing intent before an AI generates code, with structured specs as a shared reference for people and AI tools. It offers GitHub Spec Kit, an open-source toolkit Microsoft created, as a way to apply it, and lists a seven-step lifecycle:
+**Spec-driven development as industry practice.** Microsoft's developer blog (a 2026 post) describes spec-driven development as agreeing intent before an AI generates code, with structured specs as a shared reference for people and AI tools. It offers GitHub's open-source Spec Kit as a way to apply it, and lists a seven-step lifecycle:
 
 | Microsoft's step | In this course |
 |---|---|
@@ -311,7 +311,7 @@ And the **Plan checklist**. Save it as `plan-checklist.md` and run it on every p
 # 3.2 — Lab: turn three vague tickets into specs an agent can build from
 *Level: 🟢 Beginner* · *Prerequisites: 2.2, 3.1* · *Focus: Workflow*
 
-**After this you can** write three specs from vague tickets that pass the grader, each open question answered or flagged with an owner. *Study time: about 110 minutes (estimate).*
+**After this you can** write three specs from vague tickets that pass the grader, each open question answered or flagged with an owner. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 - Lab m03 gives you three vague tickets from Hessa and a template. You write `specs/T1.md` to `T3.md`. Nothing is built.
@@ -443,9 +443,9 @@ Work in `~/ainative/m03` (`cd` there for git, pytest and your editor). The start
 
 **Your move (no agent needed).** Copy the template to `specs/T1.md` and follow the order of work above. In the plan, write the failing test as its own step but commit it with the code that fixes it. Commit each spec when complete, with a message such as `docs(specs): spec the Egypt fee offer`, and grade as you go: a finished spec shows `T1 ok; waiting for specs/T2.md` on the shape checks, and a draft shows what it still lacks.
 
-**Your move (with an agent, optional).** Use the interview prompt above in plan mode, one ticket per session, then write the spec yourself from the decisions it printed. Note in `agent-log.md` which questions it raised that you had missed and which facts it quoted wrongly. Never let it edit the repository: the scope check would catch it, and the writing is the lab.
+**Your move (with an agent, optional).** Use the interview prompt above in plan mode, one ticket per session, then write the spec yourself from the decisions it printed. Note in `agent-log.md` which questions it raised that you had missed and which facts it quoted wrongly. Never let it edit the repository.
 
-**What the grader checks.** Hygiene: only `specs/` and `agent-log.md` changed, the tests pass, commits follow `CONTRIBUTING.md`, nothing uncommitted, no secrets. Shape: sections, examples, criteria, lists, no filler, placeholders or copies. Facts: the files named exist, no decision breaks a house rule (Decimal money, half up, injected clock, no new dependency), money logic names a second reviewer. Then the hidden questions per ticket, and the plan. Advisory lines (risks, the log) print FAIL until satisfied but never block PASSED. It neither runs your examples nor judges your Arabic.
+**What the grader checks.** Hygiene: only `specs/` and `agent-log.md` changed, the tests pass, commits follow `CONTRIBUTING.md`, nothing uncommitted, no secrets. Shape: sections, examples, criteria, lists, no filler, placeholders or copies. Facts: the files named exist, no decision breaks a house rule (Decimal money, half up, injected clock, no new dependency), money logic names a second reviewer. Then the hidden questions per ticket, and the plan. Advisory lines (risks, the log) print FAIL until satisfied but never block PASSED.
 
 **Grade.**
 
@@ -581,7 +581,7 @@ Would I delegate it again?
 
 **5. A plan says "1. Implement the discount in `fees.py`. 2. Write the tests." The plan check fails. Why?**
 
-- A. Plans must have exactly eight steps, never more and never fewer than that.
+- A. Each step must name one function, not a whole file such as `fees.py`.
 - B. Plans may not name files, because files change during the build.
 - C. The failing test must come before the code that it is meant to cover.
 - D. Tests may only be written after a reviewer has approved the code.

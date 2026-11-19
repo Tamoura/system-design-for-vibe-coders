@@ -9,7 +9,7 @@
 # 0.1 — What an AI-native engineer is (and is not): the shift, five habits and the evidence
 *Level: 🟢 Beginner* · *Prerequisites: none* · *Focus: Mindset*
 
-**After this you can** score your own baseline on the five habits and trace one claim about AI productivity to its source, with two caveats. *Study time: about 110 minutes (estimate).*
+**After this you can** score your own baseline on the five habits and trace one claim about AI productivity to its source, with two caveats. *Study time: reading about 15 min, hands-on about 60 min (estimate).*
 
 ## ⚡ In 60 seconds
 - The **shift**: you type less and do more directing, verifying and owning. The agent drafts; you answer for every line.
@@ -22,7 +22,7 @@
 ## 🧭 Why it matters
 On Thursday Lujain, the graduate engineer, closes ticket REMIT-209 in fifteen minutes. Her agent wrote the change, reported "all tests pass" and she committed. On Friday the support team's spreadsheet shows the wrong fees. Tariq, the engineering lead, asks one question: "Who is the author of this change?" She says the agent did. Tariq says no: the author is whoever's name is on the commit, and that person has to explain every line.
 
-The tool was not the problem; a way of working was missing: no context about who reads the output, no definition of done, no look at the diff. This course builds it over fourteen weeks on one small codebase.
+The tool was not the problem; a way of working was missing: no context about who reads the output, no definition of done, no look at the diff. This course builds it over about fifteen weeks on one small codebase.
 
 ## 📐 How it works
 
@@ -124,9 +124,9 @@ Together they show gains on well-scoped tasks with wide error bars, a loss for e
 
 > An AI-native engineer routinely directs AI tools in daily work and stays accountable for the result. They supply context, define done before delegating, work in small verified steps, judge output by evidence, and automate what repeats without letting their own skill lapse.
 
-**Two companies describing their own practice.** Microsoft's post ["Spec-Driven Development: A Spec-First Approach to AI-Native Engineering"](https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/) argues that teams should agree on intent before an AI generates code, and offers its open-source GitHub Spec Kit for the job. Spec-first is part of how Microsoft uses "AI-native"; your second habit makes the same bet, and Module 3 returns to it. Meta reports in ["How Meta Built Forum With AI-Native Engineering"](https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/) that a small team built Forum, a standalone Groups app, with an AI agent as a participant. Its target is "human-on-the-loop": the agent runs the plan, build, test and correct cycle while an engineer sets the goal and approves the result. Meta calls it a target, not a finished state, and sets the bar for done at verification (automated tests and visual checks), not compilation; Lujain's Thursday had green tests and no look at the real output. Each is a company's account of its own work, not independent evidence; read the originals.
+**Two companies describing their own practice.** Microsoft's post ["Spec-Driven Development: A Spec-First Approach to AI-Native Engineering"](https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/) argues that teams should agree on intent before an AI generates code, and offers GitHub's open-source Spec Kit for the job. Your second habit makes the same bet; Module 3 returns to it. Meta reports in ["How Meta Built Forum With AI-Native Engineering"](https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/) that a small team built Forum, a standalone Groups app, with an AI agent as a participant. Its target is "human-on-the-loop": the agent runs the plan, build, test and correct cycle while an engineer sets the goal and approves the result. Meta calls it a target, not a finished state, and sets the bar for done at verification (automated tests and visual checks), not compilation; Lujain's Thursday had green tests and no look at the real output. Each is a company's account of its own work, not independent evidence; read the originals.
 
-**How the course works.** One module a week (Modules 0 to 13), then the capstone; each has a concept lesson and a lab or workshop. Labs run on **Najm Remit**, a small Python service, graded by **`ailab`**, an offline kit: no API key, no network, no agent required. Use Claude Code, another tool or none; the grader looks at the result. Each lab ends with a deliverable, a group session and an **agent log**. **Najm Bank is fictional**, as are its customers, rates and limits. Your team: **Tariq** (your mentor, who runs the weekly "AI-native clinic"), **Lujain** (enthusiastic, over-trusting) and **Hessa** (product owner, writes the tickets). Colleagues in quality, security, SRE, governance and platform join in their own modules.
+**How the course works.** One module a week (Modules 0 to 13), then the capstone; each has a concept lesson and a lab or workshop. Labs run on **Najm Remit**, a small Python service, graded by **`ailab`**, an offline kit: no API key, no network, no agent required. Each lab ends with a deliverable, a group session and an **agent log**. **Najm Bank is fictional**, as are its customers, rates and limits. Your team: **Tariq** (your mentor, who runs the weekly "AI-native clinic"), **Lujain** (enthusiastic, over-trusting) and **Hessa** (product owner, writes the tickets). Colleagues in quality, security, SRE, governance and platform join in their own modules.
 
 **Honest limits.** The course cannot promise you will be faster. Tools change fast: its Claude Code details were checked in October 2026, so check the current documentation. The labs are small and fictional, and the grader checks results, not understanding. The aim is to help you tell when an agent is wrong.
 
@@ -240,7 +240,7 @@ Would I delegate it again?     Yes, with the same spec
 
 - A. This course, because it is about working with agents
 - B. *Software Testing*, because every feature needs tests
-- C. *System Design for Vibe Coders*, because it covers agents
+- C. *System Design for Vibe Coders*, as it covers agents
 - D. *Building AI Applications & Agents*, the companion course
 
 <details><summary>Answer</summary>
@@ -274,7 +274,7 @@ Would I delegate it again?     Yes, with the same spec
 # 0.2 — Your setup: tools, safe configuration, the Najm Remit repo and the ailab kit
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Focus: Workflow, Secure*
 
-**After this you can** set up the ailab kit and a safe permission configuration, then pass lab m00 with a logged commit. *Study time: about 110 minutes (estimate).*
+**After this you can** set up the ailab kit and a safe permission configuration, then pass lab m00 with a logged commit. *Study time: reading about 15 min, hands-on about 120 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Setup is four things: an approved tool, a permission mode that fits the risk, a clean place to work, and the `ailab` kit.
@@ -287,17 +287,19 @@ Would I delegate it again?     Yes, with the same spec
 ## 🧭 Why it matters
 On day two Lujain, tired of permission prompts, switches her agent to bypass mode. Her laptop holds a VPN profile, a cloud login and an old project's `.env`. Nothing happens. That is the trap: the bad day is rare, so safety feels like friction. Noura (application and AI security) sets a week-zero rule: the agent has your hands. Whatever you can read, delete or push, it can.
 
-Rare does happen: one user said Google's Antigravity agent, in "Turbo mode", deleted a drive's contents (November 2025); a founder said a Replit agent deleted a production database during a code freeze (July 2025). Both are unaudited single accounts, so hold the details loosely. The pattern is OWASP's excessive agency (LLM06:2025): too much functionality, permission or autonomy.
+Rare does happen: one user said Google's Antigravity agent, in "Turbo mode", deleted a drive's contents (November 2025); a founder said a Replit agent deleted a production database during a code freeze (July 2025). Both are unaudited single accounts, so hold the details loosely. The pattern is OWASP's excessive agency: too much functionality, permission or autonomy. It is LLM06 in the 2025 list and LLM03 in the 2026 edition (August 2026).
 
 ## 📐 How it works
 
 ### 🟢 The essentials
 
+> **Before you start.** You need Python 3.11 or newer, git and a terminal. The commands are written for a bash shell (macOS, Linux); on Windows, use WSL or Git Bash, or translate them. An agent tool usually needs a paid plan (the README says more); the no-agent path costs nothing. Sign in through the tool's own flow, and never paste an API key or token into a chat or prompt.
+
 **Tools.** Alphabetical, not ranked: [Aider](https://aider.chat/docs/), [Claude Code](https://code.claude.com/docs/en/overview), [Cursor](https://cursor.com/docs/agent/overview), [Gemini CLI](https://geminicli.com/docs/), [GitHub Copilot agent mode](https://docs.github.com/en/copilot/how-tos/copilot-in-your-ide/use-copilot-agents/use-agent-mode) and [OpenAI Codex CLI](https://developers.openai.com/codex).
 
-The examples use Claude Code; the habits do not depend on one tool, and the grader never knows which you used.
+The examples use Claude Code; the habits do not depend on one tool.
 
-**Install and start Claude Code.** Follow the official setup page linked above, not a command from a blog or a chat answer; `claude --version` then prints your version. `cd` into your work directory and run `claude`; expect a sign-in step (at Najm, the approved one).
+**Install and start Claude Code.** Follow the official setup page linked above, not a blog or a chat answer; `claude --version` prints your version. `cd` into your work directory and run `claude`; expect a sign-in step (at Najm, the approved one).
 
 **The trust dialog.** In a folder it has not seen, Claude Code asks whether you trust it. Yes lets the project's own settings and hooks apply, so say yes only to a folder you have read. Do not start in your home directory: it widens what the agent can reach.
 
@@ -333,7 +335,11 @@ Switch with Shift+Tab or `/plan`. The documentation says to use bypass mode only
 }
 ```
 
-Keep it out of the lab folder: a committed `.claude/settings.json` fails m00's scope check (`.claude/settings.local.json` is ignored). A `deny` beats an `allow` in any scope. There is no `allow` for `pytest` on purpose: tests are code, and a user-level rule would reach repositories you have not read. In one you trust, choose "don't ask again" once; the rule is saved to `.claude/settings.local.json`. These are guard rails, not walls: `Bash(git push *)` does not stop `git -C . push`. The sandbox (`/sandbox`, off by default) and hooks enforce (Module 8).
+Three things to know about this file:
+
+- **Where it lives.** Keep it out of the lab folder: a committed `.claude/settings.json` fails m00's scope check (`.claude/settings.local.json` is ignored).
+- **How rules combine.** A `deny` beats an `allow` in any scope. There is no `allow` for `pytest` on purpose: tests are code, and a user-level rule would reach repositories you have not read. In one you trust, choose "don't ask again" once; the rule is saved to `.claude/settings.local.json`.
+- **What it cannot do.** These are guard rails, not walls: `Bash(git push *)` does not stop `git -C . push`. The sandbox (`/sandbox`, off by default) and hooks enforce (Module 8).
 
 **Secrets and `.env`.** Remit takes settings from environment variables and never loads a `.env` file; `.gitignore` already ignores it. Assume everything the agent reads is in its context and a transcript: Claude Code keeps local transcripts as plain text under `~/.claude/projects/`, for 30 days by default. If a secret reaches a prompt, treat it as leaked and rotate it.
 
@@ -353,7 +359,7 @@ Training use of your prompts depends on the plan: read the data-usage page and y
 
 **How the kit works.** `start` copies the base repository, commits "Initial state", applies the lab's seed as "Lab starting state" and tags it `lab-start`, so `git diff lab-start` is your work. `grade` runs hidden tests on a copy of your directory and exits 0 only when every required check passes. `solve` applies the reference solution; it is a peek, so try first.
 
-**The repo tour.** Read `README.md`, `CONTRIBUTING.md` and `docs/TOUR.md`, in that order. Money is `Decimal` in the `Money` class, never `float`. `ledger.py` and `screening.py` are old and have no dedicated tests. `najmkit` is Najm's internal library for ids, time and audit events; no model was trained on it, so tell an agent to read `docs/najmkit.md`. When a doc and the code disagree, the code wins. Try the CLI: `PYTHONPATH=src python -m remit quote QAR 500 INR` prints a fee of 12.00 QAR (`PYTHONPATH=src` lets Python find the package; the README also shows `python -m pip install -e .`).
+**The repo tour.** Read `README.md`, `CONTRIBUTING.md` and `docs/TOUR.md`, in that order. Money is `Decimal` in the `Money` class, never `float`. `ledger.py` and `screening.py` are old and have no dedicated tests. `najmkit` is Najm's internal library for ids, time and audit events; no model was trained on it, so tell an agent to read `docs/najmkit.md`. When a doc and the code disagree, the code wins. Try the CLI: `PYTHONPATH=src python -m remit quote QAR 500 INR` prints a fee of 12.00 QAR (`PYTHONPATH=src` lets Python find the package).
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
@@ -421,14 +427,14 @@ cd ~/ainative/m00
 
 `doctor` prints a `[PASS]` or `[FAIL]` line per check and ends with `Everything needed is in place.` Fix any FAIL first.
 
-From here you work in two places. In `~/ainative/m00` you edit and run `git` and `pytest`. A plain `python -m ailab` command needs the `ailab` folder and the active virtual environment, but `start` ends by printing a grade command that works from any folder (`/home/you` stands for your home):
+You edit and run `git` and `pytest` in `~/ainative/m00`; `start` ends by printing a grade command that works from any folder (`/home/you` stands for your home):
 
 ```text
 When you are ready, grade from any directory:
   PYTHONPATH=/home/you/system-design-for-vibe-coders/ainative/ailab python -m ailab grade m00 --dir /home/you/ainative/m00
 ```
 
-**Your move, by hand first.** In `~/ainative/m00`, run `git switch -c remit-212-typo`, then `pytest -q` and read the first failure from the top: it shows what was expected and what came out. Search for that text (`grep -rn --include='*.py' "<a phrase from the message>" src`, or your editor), make the smallest edit, rerun `pytest -q` and read `git diff`. Commit once. `CONTRIBUTING.md` requires `type(scope): subject`: a type from `feat fix docs test refactor perf chore ci build revert`, one lower-case scope (not a list), an imperative subject, no full stop, a header up to 72 characters (for example `fix(limits): count transfers made just after midnight`). Here the type is `fix` and the scope is the module you changed. Log your minutes.
+**Your move, by hand first.** In `~/ainative/m00`, run `git switch -c remit-212-typo`, then `pytest -q` and read the first failure: what was expected and what came out. Search for that text (`grep -rn --include='*.py' "<a phrase from the message>" src`, or your editor), make the smallest edit, rerun `pytest -q` and read `git diff`. Commit once, as `CONTRIBUTING.md` requires: `type(scope): subject`, a type from `feat fix docs test refactor perf chore ci build revert`, one lower-case scope (not a list), an imperative subject, no full stop, a header up to 72 characters. Log your minutes.
 
 **Then with an agent** (optional), in a second directory (in the `ailab` folder: `python -m ailab start m00 --dir ~/ainative/m00-agent`). The weak prompt `fix the typo in the message` names no file, limit or stopping point, so the agent may rewrite the sentence or a test. Start in Manual mode with a stronger one and read every diff:
 
@@ -440,11 +446,11 @@ Acceptance: `pytest -q` passes; `git diff` shows one file and one line changed.
 First tell me the file and line that cause it. Wait for my OK before editing.
 ```
 
-You commit, with a message you checked against `CONTRIBUTING.md` yourself: you are the author of record. Do not run `/init` or add a `CLAUDE.md` here: extra files fail the scope check, and memory files are Module 2.
+You commit, with a message you checked against `CONTRIBUTING.md` yourself: you are the author of record.
 
 **What the grader checks.** `doctor` and the repo's tests pass. Hidden checks on the message in English and Arabic, and that the wrong spelling is gone from every Python file under `src/` (a comment counts, and so does a fix applied only when the message is built). The tests neither edited nor added. Only the template file changed: the starter with the one word corrected. Exactly one new commit on the checked-out branch (a merge commit does not count), shaped as `CONTRIBUTING.md` says (type `fix`, the module as scope). Nothing left uncommitted; no secrets. It cannot tell who made the change, whether you read the diff, or whether your message is good beyond its form.
 
-**Grade.** Grade on the branch that holds your commit: the grader reads whichever branch is checked out, under any name (`main` works too).
+**Grade.** From the branch that holds your commit (any name works):
 
 ```bash
 cd ~/system-design-for-vibe-coders/ainative/ailab      # with the virtual environment active
@@ -474,7 +480,7 @@ On the starter state the real output is:
 Lab m00: 4/10 required checks passed: NOT YET
 ```
 
-A right fix committed as `fixed the typo` fails one line, `Commit messages follow CONTRIBUTING.md`, quoting your message. Fix it with `git commit --amend`. With two commits, run `git reset --soft lab-start` and commit once; no interactive rebase needed. If you switched to `main` after committing on the task branch, every failing line names the branch that holds your commit: switch back to it. When it passes, the last line reads `Lab m00: 10/10 required checks passed: PASSED`.
+A right fix committed as `fixed the typo` fails one line, `Commit messages follow CONTRIBUTING.md`, quoting your message. Fix it with `git commit --amend`. If you switched to `main` after committing on the task branch, every failing line names the branch that holds your commit: switch back to it. When it passes, the last line reads `Lab m00: 10/10 required checks passed: PASSED`.
 
 **Weekly deliverable (Module 0).** In a notes repository of your own, outside the lab folders (`git init ~/ainative-notes`), commit `week-00/` with `baseline.md` (lesson 0.1), `agent-log.md` (the 0.1 template), `m00-grade.txt` and `delegation-card.md` (your card for REMIT-212, lesson 0.3). For the grade file, create the folder, then run in the `ailab` folder: `python -m ailab grade m00 --dir ~/ainative/m00 > ~/ainative-notes/week-00/m00-grade.txt`.
 
@@ -499,7 +505,6 @@ A right fix committed as `fixed the typo` fails one line, `Commit messages follo
 - Use an approved tool; learn in Manual mode; keep bypass off real machines.
 - Keep secrets out of prompts and reach; deny rules are guard rails, the sandbox and hooks enforce.
 - Clean tree, branch per task and a throwaway directory keep the diff honest.
-- The kit grades the result offline, not your thinking.
 - m00 is the whole loop in miniature: find, fix, check, commit.
 
 ## ✍️ Check yourself
@@ -546,7 +551,7 @@ A right fix committed as `fixed the typo` fails one line, `Commit messages follo
 **4. `grade` shows every line PASS except the commit-message check, which quotes your message "fixed the typo". What now?**
 
 - A. Amend the commit with a `type(scope): subject` message
-- B. Add a second commit with a better message
+- B. Add a second commit on top, with a message that describes the change
 - C. Edit the hidden test so the message is accepted
 - D. Rerun `ailab doctor`, which re-checks messages
 
@@ -573,7 +578,7 @@ A right fix committed as `fixed the typo` fails one line, `Commit messages follo
 - Claude Code documentation: permission modes https://code.claude.com/docs/en/permission-modes, permissions https://code.claude.com/docs/en/permissions, security https://code.claude.com/docs/en/security, data usage https://code.claude.com/docs/en/data-usage, costs https://code.claude.com/docs/en/costs, sandboxing https://code.claude.com/docs/en/sandboxing, settings https://code.claude.com/docs/en/settings
 - The lab kit: https://github.com/Tamoura/system-design-for-vibe-coders/tree/main/ainative/ailab. Conventional Commits: https://www.conventionalcommits.org. Git: https://git-scm.com.
 - Incident reports used above (single-user accounts, not audited): Fortune on the Replit deletion https://fortune.com/2025/07/23/ai-coding-tool-replit-wiped-database-called-it-a-catastrophic-failure/ ; AI Incident Database on the Antigravity deletion https://incidentdatabase.ai/cite/1433/
-- OWASP Top 10 for LLM Applications 2025 (LLM06, Excessive Agency): https://genai.owasp.org/llm-top-10/
+- OWASP Top 10 for LLM Applications 2025, LLM06:2025 Excessive Agency (LLM03 in the 2026 edition): https://genai.owasp.org/llmrisk/llm062025-excessive-agency/
 - [*Secure AI & Application Security*, lesson 9.2 — Agents and tools: excessive agency, least-privilege tools and MCP](../secai/index.html#/9.2)
 
 ---
@@ -581,7 +586,7 @@ A right fix committed as `fixed the typo` fails one line, `Commit messages follo
 # 0.3 — The AI-native loop: specify, delegate, verify, integrate, and who stays accountable
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Focus: Mindset, Workflow*
 
-**After this you can** fill in a delegation card for a real ticket and give each task an autonomy level and a named check. *Study time: about 110 minutes (estimate).*
+**After this you can** fill in a delegation card for a real ticket and give each task an autonomy level and a named check. *Study time: reading about 15 min, hands-on about 60 min (estimate).*
 
 ## ⚡ In 60 seconds
 - The loop is **specify, delegate, verify, integrate**, with **context** feeding every step and **safety** wrapping all of it. One lap is one small step, not one project.
