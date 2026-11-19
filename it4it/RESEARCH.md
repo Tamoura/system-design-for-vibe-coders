@@ -1,6 +1,6 @@
 # IT4IT™ course: primary-source research
 
-Status: research only. No lessons written. Second-agent verification of sections 1, 2 and 4: in progress (this note is removed once corrections are applied).
+Status: research only. No lessons written. Sections 0, 1, 2 and 4 were re-checked by a second agent against the live sources on 2026-11-19, and its corrections are applied.
 All sources were read on **2026-11-19**, and every fact below was read on that date unless a row says otherwise.
 Sources are limited to The Open Group's own sites: www.opengroup.org, publications.opengroup.org and pubs.opengroup.org.
 "confirm" means the fact could not be checked against a source that was readable here. It must be checked before any lesson uses it.
@@ -15,7 +15,7 @@ These come from The Open Group's own terms. They affect whether, and how, this c
 
 | # | Finding | Source |
 |---|---|---|
-| B1 | **AI notice.** The Open Group "strictly prohibits the incorporation of its standards, guides, and other copyrighted material … into any form of Artificial Intelligence (AI) tools". The notice names several assistants, including the one used to prepare this file. It also says the creation of derivatives of its IP "using Artificial Intelligence is strictly prohibited" without "the explicit written permission of The Open Group VP of Standards". The page footer reads "Updated May 2026". | https://www.opengroup.org/copyrights |
+| B1 | **AI notice.** The Open Group "strictly prohibits the incorporation of its standards, guides, and other copyrighted material … into any form of Artificial Intelligence (AI) tools". The notice names several assistants, including the one used to prepare this file. It also says the creation of derivatives of its IP "using Artificial Intelligence is strictly prohibited" without "the explicit written permission of The Open Group VP of Standards". The last line of the page content reads "Updated May 2026". | https://www.opengroup.org/copyrights |
 | B2 | **AI USE RESTRICTION in the publication licences.** The licences for the IT4IT Standard 3.0, 3.0.1, 2.1 and the 3.1 Snapshot each say that use of the publication "to generate any data or content" with LLM or generative-AI tools is "NOT PERMITTED". | https://publications.opengroup.org/standards/it4it/c24a · /c221 · /c171 · /s261 (licence pop-up text in each page) |
 | B3 | **Training counts as commercial use.** The Commercial Licence page says: "Commercial purposes include … providing IT4IT based consultancy, expertise, or training services". Such use needs an annual IT4IT Standard, Version 3.0 Commercial License, which also covers 3.0.1. The Non-Commercial licence says the same. | https://www.opengroup.org/it4it/ra/license_comm · https://www.opengroup.org/it4it/ra/license_nc |
 | B4 | **Trademark in course names.** "If your organization is advertising a non-accredited course then as per the commercial license it is forbidden to use the trademark in the course name." The trademark may be used in subtitles and descriptive material if it is acknowledged and the guidelines are followed. | https://www.opengroup.org/certifications/accreditation/course-naming |
@@ -46,7 +46,7 @@ Consequence for this file: the standard itself was **not** read. It is behind a 
 
 - **2.1 → 3.0.** The 3.0 excerpt Snapshot (S210, 22 Jan 2021) describes "a pivot towards managing Digital Products". It also mentions "modern value stream flow" and "more emphasis on iterative thinking". Source: https://publications.opengroup.org/standards/it4it/s210
 - The certification FAQ says 2.1 knowledge "has just been completed by additional concepts e.g. Digital Product and revised value streams". Source: https://www.opengroup.org/certifications/it4it-certification-program-faqs
-- In 2.1, the IT Value Chain had four value streams: Strategy to Portfolio, Requirement to Deploy, Request to Fulfill and Detect to Correct. The FAQ describes them as "Plan, Source, Offer, Manage". Source: https://www.opengroup.org/membership/forums/it4it-forum/it4it-faq (a 2.x-era FAQ that is still online).
+- In 2.1, the IT Value Chain had four value streams: Strategy to Portfolio, Requirement to Deploy, Request to Fulfill and Detect to Correct. The FAQ says they "generally align to" "Plan, Build, Deliver, Run", and that an IT Value Chain model reinvents this "into 'Plan, Source, Offer, Manage'". Source: https://www.opengroup.org/membership/forums/it4it-forum/it4it-faq. The four names appear in its ITIL answer. This is an undated, 2.x-era FAQ that is still online, and it never says "2.1". Linking it to 2.1 rests on the C171 page.
 - The 3.0 certification material names seven value streams instead: Evaluate, Explore, Integrate, Deploy, Release, Consume and Operate. See §2.1.
 - A detailed list of changes between 2.1 and 3.0 has not been read: **confirm** (it should be in the standard's front matter, which needs a login).
 - **3.0 → 3.0.1:** "minor maintenance update", which incorporates Technical Corrigendum 1 (C24A page).
@@ -99,13 +99,13 @@ The S210 excerpt description names the lifecycle concerns the information model 
 
 | Element | What public pages say | Status |
 |---|---|---|
-| Digital Product | Central new concept in 3.0 (FAQ; datasheet: "Digital Product and related concepts"). | Definition: confirm |
+| Digital Product | One of the "new concepts" introduced in 3.0 (FAQ; datasheet: "Digital Product and related concepts"). | Definition: confirm |
 | Digital Product Backbone | Datasheet: "The Digital Product Backbone functional component and associated data objects". The singular "functional component" is the datasheet's own wording. | Contents: confirm |
 | Service Offer Backbone | Datasheet: "The Service Offer Backbone functional components and associated data objects". | Contents: confirm |
 | Functional components per value stream | Not public. | confirm |
 | Key data objects; essential vs auxiliary distinction | Not public for 3.0. Whether 3.0 keeps the essential/auxiliary terms is unknown. | confirm |
 | Reference architecture abstraction levels | Not public for 3.0. The 2.x FAQ mentions "Level II" modelled in ArchiMate. | confirm for 3.0 |
-| Value stream / value network | The IT4IT home page shows an image captioned "[Digital Value Network]" and calls the standard "a flexible, value stream-based approach". The 2.x FAQ uses "IT Value Chain". | 3.0 definitions: confirm |
+| Value stream / value network | The IT4IT home page has a diagram whose alt text (not a visible caption) is "Digital Value Network" and calls the standard "a flexible, value stream-based approach". The 2.x FAQ uses "IT Value Chain". | 3.0 definitions: confirm |
 | Supporting activities | Not public. | confirm |
 | Capabilities | C24A/C221 pages say the standard "describes and connects the capabilities, value streams, functions, and operational data needed to manage a Digital Product Portfolio at scale". | Capability list: confirm |
 | Reference Architecture vs Operating Model | 2.1 (C171 page) is described as "a standard reference architecture and value chain-based operating model for managing the business of IT". The forum FAQ also calls IT4IT "not a process model" but "an information model". No 3.0 statement on this distinction was found. | 3.0: confirm |
@@ -140,9 +140,9 @@ Forum FAQ URL: https://www.opengroup.org/membership/forums/it4it-forum/it4it-faq
 - The 2.1-based IT4IT Foundation continues "as long as the market needs it". IT4IT 3 Foundation is "a new and separate certification".
 - "There are currently no plans to add an IT4IT 3 Level 2 Certification."
 - The FAQ places Foundation at Bloom's levels 1 and 2 (remembering and understanding).
-- Certifications "do not expire".
+- The certification "does not expire". It "is to a given version of the Body of Knowledge", with no renewal requirement. The FAQ says the same for IT4IT Foundation. Source: the datasheet.
 
-  Source for the four points above: https://www.opengroup.org/certifications/it4it-certification-program-faqs
+  Source for the first three points above: https://www.opengroup.org/certifications/it4it-certification-program-faqs
 - An IT4IT 3 Foundation Open Badge is issued. Prerequisites: none. Source: the datasheet PDF (URL below).
 
 ### 4.2 IT4IT 3 Foundation exam
@@ -157,7 +157,7 @@ Forum FAQ URL: https://www.opengroup.org/membership/forums/it4it-forum/it4it-faq
 | Delivery | At home or in an office through the test provider's online proctoring, or at the test provider's centres | Datasheet |
 | Languages | "Initially … English and English with an ESL … time allowance" | FAQ |
 | Exam code | The FAQ lists "OGIT-101" under "Available now". Whether this is the IT4IT 3 Foundation code is **confirm**, because the examinations list on certification.opengroup.org was blocked. | FAQ |
-| Retake | Retaking within one month voids the result. This is stated on the older IT4IT Foundation page, so whether it applies to IT4IT 3 is **confirm** (the governing policy is X1603). | https://www.opengroup.org/certifications/it4it-individual-certification |
+| Retake | Retaking within one month voids the result. This is stated on the older IT4IT Foundation page, so whether it applies to IT4IT 3 is **confirm** (the current exam policy is X251, Version 1.1, which supersedes X1603). | https://www.opengroup.org/certifications/it4it-individual-certification |
 
 Datasheet URL: https://www.opengroup.org/sites/default/files/images/Accreditation/IT4IT-3-Foundation-Certification-datasheet.pdf (marked "Copyright © 2023").
 
@@ -190,24 +190,24 @@ The datasheet's "demonstrated their understanding of" list, verbatim:
 
 **Detailed learning outcomes:** these are defined in X236, "The Open Group Certification for People: IT4IT™ Conformance Requirements (Level 1), Version 3.0" (published 27 Mar 2023). Its PDF needs a login, so the exact learning-outcome wording is **confirm**. Related documents:
 - X235, Program Configuration, Version 3.0 (27 Mar 2023)
-- X1603, Certification Policy for Examination-Based Programs (18 Apr 2016)
+- X1603, Certification Policy for Examination-Based Programs, Version 1.0 (18 Apr 2016). Its page marks it "(Superseded)" by X251, Version 1.1, which was not read: confirm.
 
 Sources: https://publications.opengroup.org/x236 · /x235 · /x1603
 
 ### 4.4 Training material and trademark rules
 
 - **Accredited versus non-accredited:** accredited providers are assessed on course, personnel and organisation. Their course fee includes the exam. Some may distribute "the official pdf copy of the standard". Source: https://www.opengroup.org/certifications/it4it-individual-certification
-- **Accreditation needs:** an IT4IT™ Commercial License, a Training Course Accreditation Agreement and a Trademark License Agreement. It also requires compliance with the Training Course Accreditation Policy (X255) and Requirements (X256). Fees start at US$3,250 per year for a first course. "IT4IT™ 3 Training Course Materials" are supplied to registered providers. Source: https://www.opengroup.org/certifications/accreditation/atc
+- **Accreditation needs:** an IT4IT™ Commercial License, a Training Course Accreditation Agreement and a Trademark License Agreement. It also requires compliance with the Training Course Accreditation Policy (X255) and Requirements (X256). Annual fees are US$3,250 for a first course (one language and one delivery method). Each further course is US$2,500, each extra language US$1,800, and each extra delivery method US$1,200. "IT4IT™ 3 Training Course Materials" are "provided upon registration and payment of the fees". Source: https://www.opengroup.org/certifications/accreditation/atc
 - **Course names:**
   - Only an accredited course may carry the trademark in its name, and only with permission.
   - A course name may not include "Certification", "Accredited" or "The Open Group".
-  - The trademark may appear in subtitles and descriptive text with ™ and attribution.
+  - The trademark may appear in subtitles and descriptive material "as long as the trademark and attribution are acknowledged, and the trademark usage guidelines are followed". The ™ symbol rule comes from the trademark guidelines.
 
   Source: https://www.opengroup.org/certifications/accreditation/course-naming
 - **Trademark use:**
   - "IT4IT™ and IT4IT™ logo" are listed as unregistered trademarks of The Open Group.
   - Use the ™ symbol at the first and most significant use, with an attribution of ownership.
-  - Do not use the mark as a generic term, in book, seminar or white-paper titles without authorisation, or in ways that imply endorsement or certification.
+  - Do not use the mark as a generic term, "in connection with book titles, white papers, seminars, or conferences" without authorisation, or in ways that imply endorsement or certification.
   - Editorial use is allowed without prior permission if the guidelines are followed; advertising use needs permission.
 
   Sources: https://www.opengroup.org/trademarks · https://www.opengroup.org/permissions
@@ -251,7 +251,7 @@ The English definitions are paraphrased **only** from the public pages cited abo
 | https://publications.opengroup.org/standards/it4it/s261 (3.1 Snapshot) | Login to download | 3.1 changes |
 | https://publications.opengroup.org/u246 (Technical Corrigendum 1) | Login to download | 3.0 → 3.0.1 detail |
 | https://publications.opengroup.org/x236 (Conformance Requirements L1, v3.0) | "Free PDF Edition", but needs a login | Exact learning outcomes |
-| https://publications.opengroup.org/x235 · https://publications.opengroup.org/x1603 | Login | Programme configuration, retake and conduct rules |
+| https://publications.opengroup.org/x235 · https://publications.opengroup.org/x1603 · X251 (current exam policy, v1.1) | Login | Programme configuration, retake and conduct rules |
 | https://certification.opengroup.org/docs/datasheets/it4it-exams.pdf · https://certification.opengroup.org/examinations | Host blocked by this environment's network policy (proxy 403), not by The Open Group | Exam code and summary |
 | https://publications.opengroup.org/standards/it4it/c236 | Login | Official Chinese glossary, only as a model for the Arabic glossary |
 | https://www.opengroup.org/sites/default/files/Accreditation2025/X255.pdf · X256.pdf · TMLA%20v2.0_ff.pdf | Downloaded but **not reviewed** in this pass | Detailed accreditation and trademark obligations |
