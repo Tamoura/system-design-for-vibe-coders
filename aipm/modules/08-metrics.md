@@ -598,7 +598,7 @@ Proxies can mislead, so revisit them when the real labels land: did the proxy pr
 - A **kill switch or fallback** for each AI feature: Najm Assist can drop to a "hand off to an agent" mode; Credit Memo Copilot can switch off drafting and keep search; Smart Alerts can fall back to its previous model version and thresholds.
 - A **post-incident review** whose output always includes new golden-set cases and, where needed, a new monitor.
 
-**Governance hooks.** Providers of high-risk AI systems under the EU AI Act must run post-market monitoring, and credit scoring of individuals is a high-risk use. Banking supervisors, including the Qatar Central Bank through its AI guidance for financial institutions, expect ongoing model monitoring and validation. The PM does not write those policies, but the product's monitoring plan is the evidence they rely on. See *AI Governance: Zero to Hero* for the obligations. For the engineering of logging, tracing and evaluation pipelines, see *Production AI Agents*.
+**Governance hooks.** Providers of high-risk AI systems under the EU AI Act must run post-market monitoring, and credit scoring of individuals is a high-risk use. Banking supervisors expect ongoing model monitoring and validation; the Qatar Central Bank's AI Guideline requires the monitoring, documenting and review of deployed AI models (§8.2.2) and monitoring systems for high-risk AI (§19.1). The PM does not write those policies, but the product's monitoring plan is the evidence they rely on. See *AI Governance: Zero to Hero* for the obligations. For the engineering of logging, tracing and evaluation pipelines, see *Production AI Agents*.
 
 ## 🧰 The toolkit
 | Tool or framework | What it is and does | When to reach for it |

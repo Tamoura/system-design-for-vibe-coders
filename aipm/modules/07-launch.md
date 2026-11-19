@@ -128,7 +128,7 @@ Rania's team produced the **Najm Assist v1 Launch Readiness Checklist** for the 
 | V1 | Risk tier confirmed and sign-offs on file | Yes | Faisal with Layla | Governance record | Green |
 | V2 | Privacy assessment complete; log retention agreed | Yes | Faisal with Sara | Assessment record | Green |
 | V3 | AI disclosure in first message and help page approved by legal | Yes | Faisal | Copy sign-off | Green |
-| V4 | QCB approval obtained where the current QCB AI Guideline requires it (check the text) | Yes | Faisal with Layla | QCB approval letter | Green |
+| V4 | Official QCB approval received before launch: the QCB AI Guideline (in force 4 September 2024) requires it for a new AI system the bank launches as its provider (§11.1), and QCB may first send the system to a sandbox (§11.3) | Yes | Faisal with Layla | QCB approval letter | Green |
 | O1 | Kill switch tested in production: falls back to FAQ search in under 5 minutes | Yes | Tariq | Drill record | Green |
 | O2 | Alerts on grounding, guardrail rate, latency and daily cost, with on-call rota | Yes | Tariq | Dashboard link, rota | Green |
 | O3 | Incident runbook rehearsed with support, governance, DPO and comms | Yes | Faisal | Tabletop notes | Green |
