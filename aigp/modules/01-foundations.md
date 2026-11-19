@@ -9,7 +9,7 @@
 # 1.1 — AI, machine learning, generative AI and agents
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *BoK: I.A*
 
-**After this you can** walk three borderline tools through the AI Act's Art. 3(1) definition, state whether each is an AI system, and name the governance that applies either way. *Study time: reading about 15 min, hands-on about 75 min (estimate).*
+**After this you can** walk three borderline tools through the AI Act's Art. 3(1) definition, state whether each is an AI system, and name the governance that applies either way. *Study time: reading about 20 min, hands-on about 75 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Artificial intelligence (AI)** is an umbrella term. The definitions that matter for governance (OECD, EU AI Act) describe a **machine-based system that infers from its inputs how to generate outputs** such as predictions, content, recommendations or decisions that can influence physical or virtual environments.
@@ -149,8 +149,58 @@ Applied to the inventory: credit scoring (supervised ML, AI, high impact); Najm 
 
 ## 🛠️ Exercises
 - 🟢 **Label the parts.** For Najm's fraud-detection model, name one feature, the label, when training happens and when inference happens. *Done when:* each term matches its definition in the vocabulary table.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** Feature: an input variable, for example the transaction amount, the merchant's country or the time since the card was last used. Label: the answer the model learns to predict, here whether a past transaction was confirmed as fraud (fraud or not fraud, which is why the model is supervised). Training: when the vendor model is fitted or tuned on Najm's historical labelled transactions, before release and again at each retraining. Inference: when the trained model scores each new transaction as it arrives, in seconds. The fraud team's unsupervised work, which looks for unusual patterns nobody has labelled yet, has no label at all.
+
+**Self-check.**
+- Your feature is an input the model sees, not the outcome it predicts.
+- Your label is the confirmed fraud outcome, not the model's score.
+- You place training on past data and inference on new transactions.
+- You do not confuse inference with retraining.
+
+</details>
+
 - 🟡 **Model or system?** List at least six components of the credit memo copilot *system* beyond the LLM itself, and for each, one thing that could go wrong. *Done when:* your list includes data, interface, human and integration components.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** The vendor's LLM is the model; the system around it is Najm's. A good list includes:
+- **Retrieval index of client statements and prior memos** (data): fetches another client's file or a stale statement.
+- **Source documents and pipeline** (data): an error in the statements flows straight into the draft.
+- **System prompts and templates** (integration): a small wording change alters behaviour; unversioned prompts cannot be audited.
+- **RM interface** (interface): shows no sources, so a confabulated ratio looks authoritative.
+- **RM review and sign-off** (human): automation bias; drafts are signed unedited.
+- **Connection to the third-party LLM** (integration): client data leaves Najm; the vendor changes the model version without notice.
+- **Access controls and logging** (integration): an RM sees files they are not entitled to; nobody can reconstruct what was drafted.
+
+**Self-check.**
+- At least six components, none of them the LLM itself.
+- Data, interface, human and integration components all appear.
+- Each component has a concrete failure, not "it could go wrong".
+- You say the model is the vendor's and the system is Najm's.
+
+</details>
+
 - 🔴 **Apply the definition.** Take three borderline tools (a spreadsheet with hand-set scoring weights, a fixed decision tree written by the credit policy team, and a logistic regression refitted yearly on loan outcomes). Walk each through the Art. 3(1) elements and state whether it is likely an AI system, and what governance applies either way. *Done when:* you explain the role of "infers" and name at least one non-AI-Act rule that applies regardless.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** Art. 3(1) turns on whether the system **infers** from its input how to generate outputs, rather than executing rules defined solely by people.
+- **Spreadsheet with hand-set weights:** people chose every weight; nothing is learned. Likely not an AI system.
+- **Fixed decision tree written by credit policy:** human-written rules executed automatically, which the recitals say are not meant to be covered. Likely not an AI system. A tree *learned* from data would be a different answer.
+- **Logistic regression refitted yearly on loan outcomes:** its parameters are learned from data, so it infers its scores. Likely an AI system on the Art. 3(1) test, but genuinely borderline: the Commission's 2025 guidelines name logistic regression among methods that may fall outside the definition, so document the reasoning. Either way it is governed. Adaptiveness is only "may", so the yearly refit is not what decides it.
+
+Either way, all three score individuals, so data protection (including GDPR Art. 22 for solely automated decisions with significant effects), fair-lending and model-risk rules apply, and Najm governs them on the inventory.
+
+**Self-check.**
+- You explain that "infers" separates learning or modelling from executing human-written rules.
+- You do not treat "simple" as "not AI" or "rule-based" as "low risk".
+- You treat the regression as likely in scope or borderline, with reasons; the spreadsheet and fixed tree as likely out.
+- You name at least one non-AI-Act rule that applies to all three.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 - **Trap: "adaptiveness is required".** The definition says a system *may* exhibit adaptiveness after deployment. A model frozen at release can still be an AI system.
@@ -245,7 +295,7 @@ Applied to the inventory: credit scoring (supervised ML, AI, high impact); Najm 
 # 1.2 — Risks and harms to people, groups, organisations and society
 *Level: 🟢 Beginner* · *Prerequisites: 1.1* · *BoK: I.A*
 
-**After this you can** write harm-register rows for a GenAI copilot using NIST AI 600-1 risks, each with a source, likelihood, two severities and an action. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
+**After this you can** write harm-register rows for a GenAI copilot using NIST AI 600-1 risks, each with a source, likelihood, two severities and an action. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **harm** is an actual negative impact; a **risk** combines how likely a harm is and how severe it would be. Governance manages risks so that harms do not happen, or are caught and remedied fast.
@@ -366,8 +416,55 @@ Rules: every harm has an owner and an action; a "people" severity of High cannot
 
 ## 🛠️ Exercises
 - 🟢 **Sort the harms.** Place each real case from 🧭 (Amazon, *toeslagenaffaire*, Samsung, Air Canada) into a NIST harm family and sub-type. *Done when:* each case has at least one people-harm or organisation-harm label with a one-line justification.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.**
+- **Amazon recruiting model:** harm to people, *group* (discrimination against women applicants, an allocative harm); it learned from a decade of mostly male hiring.
+- ***Toeslagenaffaire*:** harm to people, *individual* (families wrongly treated as fraudsters: economic and psychological harm) and *group* (nationality used as a risk factor); also *society* (trust in the state) and *organisation* (the tax administration was fined).
+- **Samsung:** harm to an *organisation*: confidential source code pasted into a public chatbot, a security and confidentiality loss.
+- **Air Canada:** harm to people, *individual* (a customer misled about a refund: economic harm) and to the *organisation* (held liable by a tribunal).
+
+**Self-check.**
+- Every case has at least one family and sub-type label.
+- Each label has a one-line reason drawn from what actually happened.
+- You use the NIST families: people (individual, group, society), organisation, ecosystem.
+- At least one case carries more than one label.
+
+</details>
+
 - 🟡 **Harm register for GenAI.** Write four rows of the harm register for the credit memo copilot, using at least three NIST AI 600-1 risks. *Done when:* each row has a source, a likelihood, two severities and a concrete action.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** Four illustrative rows (likelihood and severity are judgements; severity is people / Najm):
+1. **Confabulation:** the copilot invents a debt-service ratio. Source: the model is optimised for plausibility, not truth. Medium; Medium / High. Action: every figure must cite a retrieved source document, and the RM checks figures before signing.
+2. **Data privacy:** client data reaches the vendor or an RM without entitlement. Source: retrieval index and third-party processing. Medium; High / High. Action: index access mirrors client entitlements; contract terms on data use and retention; DPIA.
+3. **Information security:** a client document contains text the model treats as instructions (prompt injection). Source: instructions and data share one channel. Low–Medium; Medium / High. Action: injection tests before release; drafts never trigger actions.
+4. **Human-AI configuration:** RMs sign fluent drafts unedited. Source: over-reliance. Medium; Medium / Medium. Action: training, sample reviews and tracking how often drafts are edited.
+
+**Self-check.**
+- At least three different NIST AI 600-1 risks are named.
+- Every row has a source, a likelihood, two severities and an action.
+- Actions are concrete controls with an owner in mind, not "be careful".
+- At least one row rates the people severity on its own terms.
+
+</details>
+
 - 🔴 **Make the trade-off explicit.** Najm's fraud team can cut fraud losses by tightening thresholds, at the cost of blocking more legitimate transactions, disproportionately for customers who travel often. Write a half-page decision note for the Committee setting out both harms, who bears them, and what evidence you would need. *Done when:* the note names who decides, what metric will be monitored and what triggers a review.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** A strong note sets out both harms on the record. Tighter thresholds cut fraud losses, borne by Najm and by defrauded customers. They also block more legitimate payments: an individual harm (people left without access to their money) concentrated on a group, frequent travellers, who may overlap with expatriate customers, so check for a proxy effect. The evidence needed: fraud losses and catch rate at current and proposed thresholds, false-positive rates by customer segment, time to unblock and complaints. Options include sending flagged payments to review instead of blocking outright, and a fast unblock route. If, as is likely, you rate the people severity High (customers left without access to their money), the register rule means only the AI Governance Committee can accept it, on the fraud owner's recommendation. Monitor monthly false-positive rates by segment alongside fraud losses; trigger a review if the travellers' rate exceeds twice the overall rate in any month or complaints rise (illustrative figures; the Committee sets the real ones).
+
+**Self-check.**
+- Both harms are named, with who bears each.
+- You check whether "travellers" stands in for a protected group.
+- The note names who decides, the metric monitored and the review trigger.
+- It lists the evidence needed, not just a recommendation.
+- It does not pretend the trade-off can be eliminated.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 - **Trap: "we removed gender, so the model is fair".** Proxies can reintroduce protected information. The correct answer involves testing outcomes across groups.
@@ -463,7 +560,7 @@ Rules: every harm has an owner and an action; a "people" severity of High cannot
 # 1.3 — Why AI is different: the traits that demand governance
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2* · *BoK: I.A*
 
-**After this you can** rate which of the nine AI traits apply to a chatbot, and write a 250-word memo to a CIO showing why existing IT and model-risk controls need extending. *Study time: reading about 15 min, hands-on about 80 min (estimate).*
+**After this you can** rate which of the nine AI traits apply to a chatbot, and write a 250-word memo to a CIO showing why existing IT and model-risk controls need extending. *Study time: reading about 20 min, hands-on about 80 min (estimate).*
 
 ## ⚡ In 60 seconds
 - AI shares many risks with ordinary software (bugs, outages, security flaws), but a set of **traits** makes it different enough to need its own governance.
@@ -595,8 +692,65 @@ Applied to the credit model pilot, the matrix produced three actions: reason cod
 
 ## 🛠️ Exercises
 - 🟢 **Spot the traits.** For Najm Assist, list which of the nine traits apply and rate each as weak, moderate or strong. *Done when:* each rating has a one-line reason tied to how the chatbot works.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** Ratings are judgements; the reasons carry the marks.
+- **Learned from data:** moderate. Built on a foundation model that Najm did not train, learned from broad data.
+- **Opacity:** strong. Nobody can trace why the LLM gave a particular reply.
+- **Probabilistic outputs:** strong. Replies vary run to run and can be confabulated.
+- **Drift:** moderate. Fees, products and policies change; answers go stale unless sources are updated.
+- **Scale and speed:** strong. One flawed answer reaches every customer who asks.
+- **Autonomy:** weak today (it only answers); strong after the card-block upgrade, so re-assess then.
+- **Supply chain:** strong. A bought platform on a third-party LLM that Najm cannot inspect, so the vendor's model changes reach customers.
+- **General-purpose and emergent:** strong. It can answer far outside banking topics.
+- **Human effects:** strong. Customers may trust it like staff, as when a chatbot promises a fee waiver that does not exist.
+
+**Self-check.**
+- All nine traits are rated.
+- Each reason is tied to how a chatbot works, not to AI in general.
+- Autonomy reflects both today's chatbot and the planned upgrade.
+- You do not rate every trait strong without a reason.
+
+</details>
+
 - 🟡 **Design real oversight.** Write a one-page oversight design for underwriters reviewing referred credit applications, covering competence, information, time and authority, and measurement. *Done when:* it names at least two metrics and what value would trigger action.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** Cover the four elements of effective oversight from the lesson.
+- **Competence:** training on the model's purpose, limits, typical failures and automation bias, as Art. 14 expects for high-risk AI and as AI literacy under Art. 4 supports.
+- **Information:** each referred case shows the score with reason codes, the key data behind it and any flag where the file contradicts the score.
+- **Time and authority:** case loads that leave real review time; any underwriter can refer a case to a senior credit officer without justification; overrides are never penalised.
+- **Measurement:** (1) override rate, reported monthly to Khalid: a rate below 2% in a month triggers a review of whether people are rubber-stamping; (2) sample quality reviews of agreed cases: if reviewers disagree with more than 10% of sampled approvals, retrain staff and re-examine the model. These figures are illustrative; set and record Najm's own values before go-live.
+
+**Self-check.**
+- All four elements are covered.
+- At least two metrics, each with a value that triggers action.
+- You treat a near-zero override rate as a warning, not a success.
+- Underwriters can disagree without penalty and have time to do so.
+
+</details>
+
 - 🔴 **Answer the CIO.** Write a 250-word memo to Najm's CIO explaining why existing IT and model risk controls are necessary but not sufficient for AI, using at least four traits and mapping each to an existing discipline you would extend. *Done when:* the memo proposes reuse before new process and ends with one specific decision you need from the CIO.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** The memo agrees that existing controls are necessary, then shows four traits they do not see, each mapped to a discipline to extend:
+- **Drift** → IT change management: the fraud model degraded with no code change, so data, prompt and model-version changes must raise a change.
+- **Probabilistic outputs** → model validation: the copilot gave two answers to one question, so tests need tolerances and repeat runs.
+- **Human effects** → model risk management: the pilot's four-eyes control was one pair of eyes, so oversight needs design and override monitoring.
+- **Supply chain** → procurement and third-party risk: vendor models need documentation, testing evidence and change notices.
+
+It proposes fitting AI risk into the existing risk process (as ISO/IEC 23894 suggests) before any new process, and closes with one decision, for example: "Approve extending the change-management policy to data, prompt and model-version changes."
+
+**Self-check.**
+- At least four traits, each mapped to an existing discipline.
+- It says "necessary but not sufficient", not "replace".
+- Reuse comes before new process.
+- It ends with one specific decision for the CIO, within about 250 words.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 - **Trap: "human in the loop" solves everything.** Automation bias can make review nominal. Look for answers that make oversight effective: training, information, authority, and monitoring of override behaviour.

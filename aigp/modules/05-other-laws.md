@@ -9,7 +9,7 @@
 # 5.1 — Non-discrimination in hiring, credit and services
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 4.2* · *BoK: II.B*
 
-**After this you can** compute selection-rate ratios, say which fail the four-fifths rule of thumb, and list features that could act as proxies for protected characteristics. *Study time: reading about 15 min, hands-on about 95 min (estimate).*
+**After this you can** compute selection-rate ratios, say which fail the four-fifths rule of thumb, and list features that could act as proxies for protected characteristics. *Study time: reading about 20 min, hands-on about 95 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Anti-discrimination law is technology-neutral. If an AI system treats people less favourably because of a protected characteristic, or produces unjustified disadvantage for a protected group, the organisation using it can be liable.
@@ -128,15 +128,48 @@ The AI Governance Committee adopts an **Adverse Impact Testing Standard** for al
 
 ## 🛠️ Exercises
 - 🟢 For the CV tool, list five features that could act as proxies for a protected characteristic, and name the characteristic each might proxy. *Done when:* each proxy has a plausible mechanism in one sentence.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** (1) **Employment gaps** over a year: sex, because caring and maternity breaks fall mostly on women. (2) **Postcode or district**: race, ethnic origin or nationality, where neighbourhoods are associated with particular groups. (3) **Graduation year or total years of experience**: age. (4) **University or school attended**: national or ethnic origin, since schools often track nationality and community. (5) **Words such as "women's" in club memberships**: sex, as in the Amazon recruiting model. A proxy is a feature correlated with a protected characteristic; deleting the characteristic itself leaves these in place. Under Najm's Adverse Impact Testing Standard, each candidate proxy goes to driver analysis and stays only if it is job-related and no less discriminatory alternative exists, as happened with the career-gap penalty.
+
+**Self-check.**
+- Your answer has five features, each paired with a named protected characteristic.
+- Each pair has a one-sentence mechanism (why the feature tracks the group), not just an assertion.
+- At least one proxy is something the CV tool really uses, such as the career-gap penalty.
+- It does not claim that removing sex, age or nationality fields solves the problem.
+- It says what happens next: testing and justification, not automatic deletion of every feature.
+
+</details>
+
 - 🟡 With these figures, compute selection-rate ratios and say which fail the four-fifths rule of thumb: men 300 applied, 90 shortlisted; women 250 applied, 50 shortlisted; applicants 50+ 80 applied, 12 shortlisted; under 50 470 applied, 128 shortlisted. *Done when:* you have two ratios and a one-line conclusion for each.
 
-<details class="model"><summary>Check your answer</summary>
+<details><summary>Model answer and self-check</summary>
 
-Selection rates: men 90/300 = 0.30, women 50/250 = 0.20, so the sex ratio is 0.20 ÷ 0.30 = 0.67. Applicants 50+ 12/80 = 0.15, under 50 128/470 = 0.27, so the age ratio is 0.15 ÷ 0.27 = 0.55. Both are below 0.80, so both fail the four-fifths rule of thumb and trigger an investigation under Najm's standard. Failing is a signal to investigate drivers and alternatives, not proof of unlawful discrimination.
+**Model answer.** Selection rates: men 90/300 = 0.30, women 50/250 = 0.20, so the sex ratio is 0.20 ÷ 0.30 = 0.67. Applicants 50+ 12/80 = 0.15, under 50 128/470 = 0.27, so the age ratio is 0.15 ÷ 0.27 = 0.55. Both are below 0.80, so both fail the four-fifths rule of thumb and trigger an investigation under Najm's standard. Failing is a signal to investigate drivers and alternatives, not proof of unlawful discrimination.
+
+**Self-check.**
+- Your answer shows each group's selection rate (shortlisted ÷ applied) before any ratio.
+- Each ratio divides the lower group's rate by the higher group's rate: 0.67 for sex, 0.55 for age.
+- It compares each ratio with 0.80 and concludes that both fail.
+- It treats a failure as a trigger for investigation under Najm's standard, not as proof of discrimination.
 
 </details>
 
 - 🔴 Write the adverse-action reason text Najm would send to a US applicant (imagining a US branch) declined by the credit model, and explain how you derived the reasons so they satisfy Regulation B's "specific principal reasons" requirement. Assume the model's feature contributions for this applicant were, largest first: debt-to-income ratio of 52% (approval band below 40%), two missed payments in the last 12 months, and credit history of under two years. *Done when:* the reasons are specific, accurate to the model's real drivers, and understandable.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** *Reason text:* "We declined your application for these principal reasons: 1. Your debt is high relative to your income: your debt-to-income ratio is 52%, and we generally approve applications below 40%. 2. You missed two payments on credit obligations in the last 12 months. 3. Your credit history is short: under two years." *Derivation:* the reasons come from this applicant's own feature contributions, not from the model's overall feature importance, ranked largest first, and each is put into plain language with the applicant's real figure. Regulation B requires the specific principal reasons for adverse action, and the CFPB has said a complex model is no excuse: you cannot pick the nearest item from a sample checklist if it does not reflect the real drivers (check the current status of CFPB guidance, as its posture changed in 2025). Vague reasons such as "insufficient score" or "internal policy" fail. Keep the contribution output and its mapping to the wording on file so model validation can confirm the reasons match the model.
+
+**Self-check.**
+- Your reasons are the three real drivers, in order of contribution, with the applicant's figures.
+- They are written so the applicant understands what to change, not in model jargon.
+- Your answer says the reasons come from this applicant's contributions, not global feature importance or a generic checklist.
+- It does not use vague reasons such as "score too low" or "did not meet internal standards".
+- It keeps a record of how the reasons were derived for validation.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 - **"We don't use protected attributes, so we can't discriminate."** Proxies and biased labels produce indirect discrimination. Pick the answer that tests outcomes.
@@ -234,7 +267,7 @@ Selection rates: men 90/300 = 0.30, women 50/250 = 0.20, so the sex ratio is 0.2
 # 5.2 — Intellectual property in AI inputs and outputs
 *Level: 🟡 Intermediate* · *Prerequisites: 3.2* · *BoK: II.B*
 
-**After this you can** write a guidance note on AI-generated images covering ownership, infringement risk and controls, and give a go/no-go on two open-weight model licences. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
+**After this you can** write a guidance note on AI-generated images covering ownership, infringement risk and controls, and give a go/no-go on two open-weight model licences. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - IP questions arise on both sides of an AI system. **Inputs:** do you have the right to use the training data, prompts and documents the system processes? **Outputs:** who owns what the system generates, and could it infringe someone else's rights?
@@ -334,8 +367,49 @@ Layla issues an **AI Intellectual Property Clearance Checklist**, required befor
 
 ## 🛠️ Exercises
 - 🟢 For each IP right in the essentials table, write one AI risk Najm faces and one control. *Done when:* you have six risk–control pairs.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Copyright:** marketing publishes an AI image or text that reproduces a protected work. Control: human review and a similarity check before publication. **Database right (EU):** a team scrapes a third-party database to build training data. Control: no extraction without a recorded legal basis (owned, licensed or exception) on the clearance checklist. **Trade secrets:** relationship managers paste client data into a public chatbot, or fine-tuned weights leak. Control: the GenAI acceptable-use policy, the enterprise copilot with no-training and confidentiality terms, and access control on the weights. **Patents:** an AI-assisted fraud-detection method is filed naming the AI as inventor. Control: record the human inventors' contributions and have Legal review before filing. **Trademarks:** generated campaign images contain another firm's logo. Control: a trademark check in the human review. **Contract and licences:** the market research licence prohibits ML use, or a model licence restricts use. Control: Legal reads licence terms before training (checklist steps 2 and 3).
+
+**Self-check.**
+- You have six pairs, one for each right in the table.
+- Each risk is specific to Najm's systems, not a generic statement about AI.
+- The trade-secret pair addresses staff leaking data into third-party tools, not only outside attackers.
+- Each control is something a named function can do, such as reading licence terms or reviewing outputs.
+- Nothing says an AI system can be named as an inventor.
+
+</details>
+
 - 🟡 Marketing wants to publish AI-generated campaign images. Draft a one-page guidance note covering ownership (can Najm register copyright?), infringement risk and required controls. *Done when:* the note distinguishes pure AI output from human-edited work and names at least three controls.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Ownership.** Copyright generally needs human authorship. In the US the Copyright Office registers only human-authored material (*Thaler v. Perlmutter*), and *Zarya of the Dawn* protected the human text and arrangement but not the AI images; prompts alone are generally not enough. The EU requires the author's own intellectual creation; the UK currently attributes computer-generated works with no human author to the person who made the arrangements, but has consulted on changing this. So in the US and EU **pure AI output** may not be protected, and competitors could reuse it. **Human-edited work** is protected to the extent of the human selection, arrangement and modification, so record what designers changed. Vendor terms can give Najm the outputs as between the parties but cannot create copyright. **Infringement risk:** outputs reproducing protected works, recognisable characters or logos. **Controls:** (1) an enterprise tool whose terms assign outputs and give an IP indemnity; (2) no prompts for "in the style of" living artists or specific works; (3) human review plus a similarity and trademark check before publication; (4) keep prompts and edit records.
+
+**Self-check.**
+- Your note separates pure AI output (likely not protected in the US and EU) from human-edited work (protected for the human contribution).
+- It says prompts alone are generally not enough for authorship.
+- It names at least three concrete controls, including human review before publication.
+- It does not claim a vendor contract creates copyright where the law gives none.
+- It treats infringement and ownership as two separate questions.
+
+</details>
+
 - 🔴 Compare the licence terms of two open-weight models (read the licences on their official pages) against Najm's intended use in the credit memo copilot. *Done when:* you have a table of restrictions, attribution duties and any user-number or field-of-use conditions, with a go/no-go recommendation.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** A good answer is a table built from the licences as published, for example one model under Apache 2.0 and one under a Llama community licence. **Restrictions:** Apache 2.0 has few, and includes a patent licence; the Llama licence adds an acceptable-use policy and conditions for very large services. **Attribution:** Apache 2.0 requires keeping the licence and notices; the Llama licence sets its own display, attribution and model-naming terms, quoted from the version you would actually use. **User-number or field-of-use conditions:** the Llama licence's monthly-active-user threshold for very large services is far above the copilot's user base (Najm's relationship managers); the live question is the acceptable-use policy, so check its clauses on discrimination in credit and on regulated financial services. **Recommendation:** go for the Apache 2.0 model; go with conditions for the Llama model, provided Legal confirms the acceptable-use policy does not bar internal credit-memo drafting and the attribution terms are met. Record both in checklist step 3, signed off by Legal and procurement (Yusuf). Open weights are not open source in the OSI sense, and fine-tuning could raise the provider question (Module 6.3).
+
+**Self-check.**
+- Your table covers restrictions, attribution duties and user-number or field-of-use conditions for both licences.
+- Each entry comes from the licence's official text, not from memory or a blog summary.
+- It tests the conditions against the copilot's real use: internal, relationship managers, drafting credit memos.
+- It does not call an open-weight model "open source" just because the weights are downloadable.
+- It ends with a clear go, go with conditions, or no-go for each model, and who signs it off.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 - **"It's on the internet, so we can train on it."** Public availability isn't a licence. In the EU, Art. 4 TDM applies only where no opt-out was made; in the US, fair use is case by case.
@@ -433,7 +507,7 @@ Layla issues an **AI Intellectual Property Clearance Checklist**, required befor
 # 5.3 — Consumer protection, product liability and sector rules
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 4.2* · *BoK: II.B*
 
-**After this you can** rewrite AI marketing claims so each is substantiated, and write an incident playbook for a chatbot that gives a customer wrong fee information. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
+**After this you can** rewrite AI marketing claims so each is substantiated, and write an incident playbook for a chatbot that gives a customer wrong fee information. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Consumer protection law bans unfair and deceptive practices. It applies to what an AI system says to customers and to what a company says *about* its AI. In the US, the FTC enforces section 5 of the FTC Act; in the EU, the Unfair Commercial Practices Directive does similar work.
@@ -511,7 +585,7 @@ Related supervisory expectations:
 - **Singapore:** the Monetary Authority of Singapore's FEAT principles (2018) on fairness, ethics, accountability and transparency in financial AI.
 - **Insurance (US):** the NAIC model bulletin on insurers' use of AI (2023), adopted by many states.
 
-**Qatar and the GCC.** The Qatar Central Bank has issued an AI guideline for the financial institutions it regulates. It sets expectations on governance and accountability, risk management across the AI life cycle, fairness, transparency to customers, data management, human oversight and third-party AI. Read the current text from QCB directly for exact requirements; don't rely on summaries, including this one. Other Gulf financial regulators, including those in the UAE's onshore and free-zone systems and Saudi Arabia, have published AI principles, guidance or consultations for their sectors, alongside national AI ethics frameworks. Check each regulator's current position.
+**Qatar and the GCC.** The Qatar Central Bank's AI guideline has been in force since 4 September 2024 (§1), with no transition period, for every QCB-regulated entity that develops, buys or outsources AI (§5). It sets requirements on governance and accountability (§7), risk management across the AI life cycle (§9), fairness (§7.7, §15.7), transparency to customers (§20–21), data management (§15), human oversight (§13) and third-party AI (§12). Two duties stand out: official QCB approval before launching a new AI system as a provider or materially modifying one (§11.1), and before signing any high-risk AI purchase, licensing or outsourcing agreement (§11.2). QCB may send a particular system to a sandbox before approving it (§11.3), and serious incidents are reported to QCB (§19.5). Read the full text from QCB directly for exact requirements; don't rely on summaries, including this one. Other Gulf financial regulators, including those in the UAE's onshore and free-zone systems and Saudi Arabia, have published AI principles, guidance or consultations for their sectors, alongside national AI ethics frameworks. Check each regulator's current position.
 
 **Putting it together: one system, many regimes.** Najm's chatbot is subject to consumer law (misstatements), the AI Act (disclose that it is AI; for EU customers), data protection (Module 4), QCB guidance, and potentially product liability if it were embedded in a product causing covered damage. Governance should map each system against every regime, not only the AI Act.
 
@@ -533,7 +607,7 @@ flowchart LR
 | **EU AI Liability Directive (withdrawn)** | Proposed 2022 fault-based rules; withdrawn 2025 | Not in force |
 | **SR 11-7** | (Replaced in April 2026 by **SR 26-2**.) US model risk management: development, validation with effective challenge, governance and inventory | Applies to vendor and AI models; SR 26-2 leaves GenAI and agentic AI out for now |
 | **PRA SS1/23** | UK model risk management principles for banks | Covers AI models |
-| **QCB AI guideline** | Qatar Central Bank expectations for AI at regulated financial institutions | Najm's home supervisor; read the current text |
+| **QCB AI guideline** | Qatar Central Bank requirements for AI at every QCB-regulated entity, in force since 4 September 2024 (§1) | Najm's home supervisor; QCB approval before launching a new AI system as a provider (§11.1) and before signing a high-risk AI purchase, licensing or outsourcing agreement (§11.2) |
 
 ## 🏛️ In practice at Najm Bank
 Layla's team adds an **AI Customer-Facing Controls Standard** and extends the model risk policy.
@@ -555,8 +629,49 @@ Layla's team adds an **AI Customer-Facing Controls Standard** and extends the mo
 
 ## 🛠️ Exercises
 - 🟢 List five marketing claims a bank might make about AI and rewrite each so it is substantiated or removed. *Done when:* each rewrite states what evidence would support it.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** (1) "AI-powered instant approvals" becomes "Apply online in minutes; many applications get a decision the same day". Evidence: data on the share of same-day decisions. (2) "Our AI is unbiased" is removed, or becomes "We test our credit models for unfair outcomes before release and every quarter". Evidence: adverse impact test reports. (3) "Guaranteed accurate answers from our assistant" becomes "Our assistant answers common questions from our published product terms, and you can ask for a person at any time". Evidence: the grounding design, monthly test-suite results and the handoff route. (4) "AI that stops all fraud" becomes "Our systems monitor card activity around the clock and may block suspicious payments; contact us to review a block". Evidence: monitoring coverage and the unblock process. (5) "Smart AI that knows exactly what you need" becomes "Product suggestions based on your account activity, which you can switch off". Evidence: the feature and opt-out work as described. Unsubstantiated AI claims are deceptive under section 5 of the FTC Act and the UCPD ("AI washing"), so Compliance approves the evidence first.
+
+**Self-check.**
+- Each of your five rewrites either removes the claim or limits it to what evidence supports.
+- Each states the specific evidence (data, test results, a working process) that would back it.
+- No rewrite keeps absolute words such as "unbiased", "guaranteed", "all" or "instant" without proof.
+- It names the legal basis: deceptive practices under section 5 of the FTC Act or the UCPD.
+- It gives Compliance the sign-off on AI claims.
+
+</details>
+
 - 🟡 Apply the *Moffatt* lessons to Najm's chatbot: write a one-page incident playbook for when the bot gives a customer wrong information about a fee. *Done when:* the playbook covers customer remedy, root cause, fix, re-test and reporting.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Trigger:** a complaint, agent review or monitoring shows the bot stated a wrong fee. **1. Contain (Customer service, Digital channels):** check the answer against the approved product-terms knowledge base; if it may recur, route fee questions to a human until fixed. **2. Customer remedy (Khalid):** honour the bot's statement where reasonable, refund or waive the difference, apologise and offer a human contact. Do not argue that the bot is a separate entity or rely on a disclaimer: *Moffatt* rejected the first, and contradictory text elsewhere on the site did not help the airline. Use conversation logs to find other affected customers. **3. Root cause (Dana, grounding):** an answer not grounded in the approved source, an outdated or conflicting knowledge-base entry, a retrieval error or a prompt flaw. **4. Fix (Dana):** correct the source or the grounding; Customer service adds the topic to restricted topics if needed. **5. Re-test (Model validation):** add the question and variants to the 300-question suite; restore only when the Committee's accuracy threshold is met. **6. Report (Khalid):** log the incident, escalate to the Head of AI Governance and Compliance, and assess whether it is a serious incident, which the QCB guideline says to report to QCB immediately (§19.5).
+
+**Self-check.**
+- Your playbook covers all five: customer remedy, root cause, fix, re-test and reporting.
+- The remedy honours the bot's statement where reasonable instead of blaming the bot or a disclaimer.
+- It looks for other customers who got the same wrong answer.
+- Re-testing uses the policy test suite and a threshold before the bot answers fee questions again.
+- Each step has an owner.
+
+</details>
+
 - 🔴 Map the fraud-detection model against SR 11-7-style pillars and against the QCB AI guideline (read it from QCB's site). Identify three gaps and a remediation for each. *Done when:* each gap cites the pillar or guideline theme, the evidence missing, and an owner.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** Use the three pillars (development and implementation, validation, governance) and the QCB guideline's themes as taught: governance and accountability (§7), life-cycle risk management (§9), fairness (§7.7, §15.7), customer transparency (§20–21), data management (§15), human oversight (§13) and third-party AI (§12). Najm's extended model risk policy already requires every AI system to be inventoried, tiered and independently validated, so the gaps are missing evidence that it has been applied to this model. **(1) Validation / fairness:** no validation report with effective challenge, and false-positive rates (wrongly blocked cards) are not tested by group, because the Adverse Impact Testing Standard covers hiring, credit, pricing and collections, not fraud blocking. Remediation: independent validation, and a proposal to the Committee to extend the standard to fraud blocking. Owner: model validation, with Layla. **(2) Human oversight / customer recourse:** cards are blocked automatically with no documented Human Oversight protocol (§13.1) or route to have the block reviewed (§21.1). Remediation: a fast human review-and-unblock route; a notice at the point of block is good practice, though fraud-detection models are excluded from the guideline's disclosure requirements (§20.11). Owner: the fraud model's business owner, with customer service. **(3) Governance / third-party AI:** no inventory entry with a materiality tier (the guideline requires a register of all AI systems, §10.1), and no validation evidence for vendor components. Remediation: register and tier it; obtain vendor documentation. Owner: Layla, with procurement (Yusuf). Cite the clause for each gap from the full QCB text.
+
+**Self-check.**
+- Each of your three gaps cites a pillar or a QCB guideline theme.
+- Each names the specific evidence that is missing, not just "poor governance", and does not contradict the extended model risk policy.
+- Each has a remediation and a named owner or function.
+- If you cite SR 11-7, you note that SR 26-2 replaced it in April 2026 and scales validation to materiality.
+- It relies on the current QCB text for exact requirements, not on a summary.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 - **"The chatbot made the mistake, not us."** Organisations are responsible for their AI channels (*Moffatt*). Disclaimers rarely cure a misleading specific statement.

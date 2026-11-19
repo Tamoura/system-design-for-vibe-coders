@@ -25,7 +25,7 @@ Put rows in a Markdown file in this folder, one file per course: `academy/claims
 | date checked | The day someone last read the source, as `YYYY-MM-DD`. |
 | method | `primary text` if the person read the source itself, `search summary` if the fact is only reported by a web search summary, or `not yet checked` for an inventory row nobody has checked. A search summary is "reported", never "verified". |
 | review-by date | The day the claim must be checked again, as `YYYY-MM-DD`. Laws and prices: at most 12 months after the date checked. An inventory row gets the day by which it must first be checked (the inventories of 2026-11-18 use 2027-02-18), so the weekly job flags it if nobody does. |
-| status | `open` (not yet checked), `checked` (read against the source), or `changed` (the source changed, the lesson needs an edit). |
+| status | `open` (not yet checked), `checked` (read against the source), `changed` (the source showed the lesson was wrong; the lesson was or must be edited), or `confirm` (someone tried to read the source but could not, for example a blocked or paywalled site; the method says why and a person must still read it). |
 
 ## How to add one
 

@@ -8,7 +8,7 @@
 
 *Level: 🟢 Beginner*
 
-**After this you can** sort Beacon's ~25 SaaS components into "v1" or "later" with a reason for each, and make a build, buy or self-host call for five of them that names a concrete product or repo. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
+**After this you can** sort Beacon's ~25 SaaS components into "v1" or "later" with a reason for each, and make a build, buy or self-host call for five of them that names a concrete product or repo. *Study time: reading about 15 min; hands-on by track: 🟢 35 min · 🟡 60 min · 🔴 95 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -280,7 +280,7 @@ Monitors belong to one person, so there is nothing for teammates to share and no
 
 *Level: 🟢 Beginner*
 
-**After this you can** map at least 15 SaaS components in an unfamiliar open-source repo such as openstatus, citing a file or search for each, and trace one request from the UI form to the database insert with permalinks. *Study time: reading about 15 min, hands-on about 150 min (estimate).*
+**After this you can** map at least 15 SaaS components in an unfamiliar open-source repo such as openstatus, citing a file or search for each, and trace one request from the UI form to the database insert with permalinks. *Study time: reading about 15 min; hands-on by track: 🟢 55 min · 🟡 100 min · 🔴 160 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -536,7 +536,7 @@ They trusted a file name over the code path. The file may be dead code while the
 
 *Level: 🟢 Beginner*
 
-**After this you can** run a reference SaaS repo from the shelf on your machine, fill its row of the component matrix with evidence for every cell, and decide whether Beacon may copy a given piece of code under its licence. *Study time: reading about 15 min, hands-on about 3 h (estimate).*
+**After this you can** run a reference SaaS repo from the shelf on your machine, fill its row of the component matrix with evidence for every cell, and decide whether Beacon may copy a given piece of code under its licence. *Study time: reading about 15 min; hands-on by track: 🟢 75 min · 🟡 125 min · 🔴 3 h (estimate).*
 
 ## ⚡ In 60 seconds
 

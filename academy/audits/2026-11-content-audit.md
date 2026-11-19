@@ -1307,3 +1307,15 @@ The last items left open after the repair pass were fixed, and each fix was chec
 - **Career Arabic.** One sentence mixed the terms for organisation and enterprise; it now uses one.
 
 The 17 items in "Left for the owner" are unchanged.
+
+### Round 4: owner decisions (19 November 2026)
+
+- **AIGP model answers.** Every exercise in the course now has a collapsed "Model answer and self-check" block in English and Arabic, reviewed module by module against the lesson.
+- **AIGP practice exam.** The mix now follows the blueprint midpoints (Domain I 21, II 25, III 27, IV 27). It remains practice only and has not been reviewed by an assessment expert.
+- **Claims, checked against primary sources.**
+  - SecAI: 166 rows checked, 2 lessons corrected, 88 still marked "confirm". The reason is written in each row: a paywalled standard, or a host that refused the connection.
+  - Career: 3 checked, 29 still "confirm".
+  - The QCB AI Guideline (AIPM) is still unconfirmed. qcb.gov.qa resets the connection or sends an incomplete certificate chain, so the lessons keep their hedge until someone reads the official text.
+- **Study times.** The Arabic numbers now agree with their nouns (3–10 take the plural; 11–99 take the accusative singular). Each SaaS lesson now shows hands-on time per track (🟢 · 🟡 · 🔴).
+- **Shared-script items from the list above are fixed:** the Founder catalogue header and the Beacon billing exercise.
+- **Video-production items** (SaaS 5.2, Testing videos by concept) wait for the video phase.

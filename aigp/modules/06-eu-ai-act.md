@@ -9,7 +9,7 @@
 # 6.1 — Scope, roles and the risk pyramid
 *Level: 🟡 Intermediate* · *Prerequisites: 1.1, 4.1* · *BoK: II.C*
 
-**After this you can** assign provider, importer, distributor and deployer roles in an AI supply chain, and write an Art. 6(3) derogation assessment an authority could follow. *Study time: reading about 20 min, hands-on about 110 min (estimate).*
+**After this you can** assign provider, importer, distributor and deployer roles in an AI supply chain, and write an Art. 6(3) derogation assessment an authority could follow. *Study time: reading about 25 min, hands-on about 110 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -195,11 +195,65 @@ She adds one clause to Najm's AI policy:
 🟢 **Definition test.** Take three tools (one rules-based, one machine-learning, one generative) and walk each through Art. 3(1). Conclude whether each is an "AI system" and which element decided it.
 *Done when:* you have three short conclusions, each naming the decisive element.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** (1) *Rules-based:* the credit officer's spreadsheet rule "decline if debt-to-income exceeds 45%". It is machine-based and produces a decision, but it does not infer: every output follows from a rule defined solely by people. **Not an AI system**; decisive element: inference. (2) *Machine learning:* the retail credit model. It learned its weights from past loans and infers a probability of default that can move an application to "decline". **An AI system**; decisive element: inference. It is frozen after deployment, but the definition says a system *may* be adaptive, so that does not change the answer. (3) *Generative:* the customer chatbot built on a large language model. It infers its replies from each customer's input and answers without a human typing them. **An AI system**; decisive element: inference, with varying autonomy confirming it. Whether a tool is an AI system is a separate question from its tier: the chatbot also carries an Art. 50 duty (6.3). For borderline tools, use the Commission's February 2025 guidelines on the definition.
+
+**Self-check.**
+- Each of the three tools has a yes or no and names one decisive element.
+- The rules-based tool fails on inference, not on autonomy or adaptiveness.
+- You did not treat the frozen model's lack of learning after deployment as disqualifying.
+- You kept "is it an AI system?" apart from "which tier is it in?".
+
+</details>
+
 🟡 **Role map.** A US vendor sells the CV tool through an EU reseller, and Najm's HR team plans to add its own scoring rules on top. Identify the provider, importer, distributor and deployer, and say what would make Najm the provider under Art. 25.
 *Done when:* every party has a role with a one-line justification and you have named at least two Art. 25 triggers.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.**
+- **US vendor: provider.** It develops the CV tool and places it on the EU market under its own name. As a non-EU provider of a high-risk system, it must appoint an EU authorised representative by written mandate.
+- **EU reseller: importer.** Although it resells, it is established in the EU and is the first to place on the EU market a system bearing a non-EU entity's name. It must check the conformity assessment, documentation, CE marking, declaration and representative.
+- **Distributor:** any further EU actor that makes the tool available after the importer, such as an integrator reselling it. If none sits in this chain, say so rather than relabelling the importer.
+- **Najm: deployer.** It uses the tool under its own authority to filter applicants in Frankfurt (Annex III point 4, high-risk).
+
+**Art. 25 triggers.** (1) HR's own scoring rules change the tool beyond the vendor's documented parameters. If that affects compliance, it is a substantial modification of a high-risk system that remains high-risk, and Najm is treated as its provider. (2) Putting Najm's name or trademark on the tool, as in "Najm TalentMatch", has the same effect. Under Najm's role-change control, the HR plan needs prior written approval from the Head of AI Governance; the safer design keeps Najm's rules inside the vendor's documented configuration options.
+
+**Self-check.**
+- All four roles are assigned, each with a one-line reason.
+- The EU reseller is the importer, because it is the first to bring a non-EU brand onto the EU market.
+- Najm is a deployer today, not a provider merely because it bought the tool.
+- You name at least two Art. 25 triggers and link HR's scoring rules to substantial modification.
+- You mention the authorised representative the US vendor needs.
+
+</details>
+
 🔴 **Derogation memo.** Write a one-page Art. 6(3) assessment for the copilot as used for sole traders: the four conditions, the profiling override, the evidence kept, and a conclusion.
 *Done when:* each of the four conditions and the profiling override has a yes or no with its evidence, and the conclusion states whether and where the system must be registered.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** *Art. 6(3) assessment: credit memo copilot, sole-trader lending.* **Scope:** sole traders are natural persons, so evaluating their creditworthiness falls under Annex III point 5. **Use assessed:** the copilot drafts the memo by summarising the applicant's financial behaviour and suggesting a rating before the officer decides.
+
+| Test | Answer | Evidence kept |
+|---|---|---|
+| (a) Narrow procedural task | No: it does more than turn documents into structured data | Intended-purpose statement; output samples |
+| (b) Improves a completed human activity | No: it drafts before the officer's assessment | Workflow map |
+| (c) Detects decision patterns without replacing the human assessment | No: it is not a pattern-deviation check | Function description |
+| (d) Preparatory task | No: a suggested rating materially influences the outcome | Officer override rates; output samples |
+| Profiling of natural persons | **Yes**: it evaluates a person's economic situation and behaviour | Prompt design; sample summaries |
+
+**Conclusion.** The derogation is not available: an Annex III system that profiles natural persons is always high-risk. Najm runs the provider programme (Arts 9–15, QMS, internal-control conformity assessment, declaration, CE marking), registers the system in the EU database (Art. 49) before putting it into service, and as deployer does the FRIA. **Alternative branch:** if Najm redesigns the copilot to restructure documents only, with no behavioural summary or rating, (a) and (d) become Yes and profiling becomes No, so it is not high-risk. Najm must then document this assessment before putting the system into service and still register it in the EU database. Either way, Layla signs and Sara (DPO) reviews.
+
+**Self-check.**
+- Each of the four conditions and the profiling override has a yes or no with its evidence.
+- Your memo treats profiling as overriding all four conditions.
+- It identifies sole traders as natural persons, which is what brings the copilot into Annex III point 5.
+- The conclusion says whether and where the system is registered, including in the not-high-risk branch.
+- The assessment is documented before the system is put into service, not after.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 
@@ -298,7 +352,7 @@ She adds one clause to Najm's AI policy:
 # 6.2 — High-risk obligations for providers and deployers
 *Level: 🟡 Intermediate* · *Prerequisites: 6.1, 4.3* · *BoK: II.C*
 
-**After this you can** sort high-risk obligations into provider and deployer duties with their articles, and decide whether an incident is serious, who reports it and by when. *Study time: reading about 15 min, hands-on about 110 min (estimate).*
+**After this you can** sort high-risk obligations into provider and deployer duties with their articles, and decide whether an incident is serious, who reports it and by when. *Study time: reading about 20 min, hands-on about 110 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -463,11 +517,83 @@ This is why Yusuf's contract (11.2) must secure instructions, log access, change
 🟢 **Sort the duties.** Write twenty obligations from this lesson on cards and sort them into Provider, Deployer or Both.
 *Done when:* every card is placed and you can cite the article for each.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** A representative sample of the twenty cards:
+
+| Card | Holder | Article |
+|---|---|---|
+| Run a risk management system across the life cycle | Provider | Art. 9 |
+| Draw up Annex IV technical documentation and keep it ten years | Provider | Art. 11; Art. 16 and following |
+| Run a quality management system | Provider | Art. 17 |
+| Conformity assessment, EU declaration of conformity, CE marking | Provider | Arts 43, 47, 48 |
+| Use per the instructions; assign human oversight to competent, trained people | Deployer | Art. 26 |
+| Do a FRIA before first use of a credit-scoring system | Deployer | Art. 27 |
+| Explain the AI's role and the main elements of an adverse decision | Deployer | Art. 86 |
+| Keep logs under its control for at least six months | Both | Art. 16 and following; Art. 26 |
+| Serious incident: the deployer tells the provider first; the provider reports to the authority | Both | Arts 26, 73 |
+
+The other cards follow the same split. Data governance, logging capability, transparency, oversight design and robustness (Arts 10, 12–15), database registration (Art. 49), post-market monitoring (Art. 72) and corrective action go to the provider. Checking input data, monitoring and suspending use, informing workers and informing affected persons go to the deployer.
+
+**Self-check.**
+- The FRIA is under Deployer, not Provider.
+- Log retention of at least six months is under Both; the ten-year documentation rule is Provider only.
+- Human oversight appears twice: the provider designs it in (Art. 14) and the deployer staffs it (Art. 26).
+- Serious-incident duties show the relay: deployer to provider, provider to authority.
+- Every one of your twenty cards carries an article number.
+
+</details>
+
 🟡 **Instructions for use.** Draft two pages of Art. 13 instructions for Najm's credit model, aimed at loan officers: purpose, accuracy metrics, limits, weaker-performing groups, input specifications, oversight steps, logs.
 *Done when:* an officer would know when *not* to rely on the score.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** An outline, with sample wording for the hardest parts.
+1. **Purpose.** "This model estimates the probability of default for EU consumer loan applications up to €75,000. It supports your decision; it never makes it. Do not use it for business loans, pricing or collections."
+2. **Accuracy metrics.** The validated performance measures, the validation date, the population tested, and how often they are re-checked.
+3. **Limits and weaker-performing groups.** Thin-file applicants, recent migrants, the self-employed and older applicants, with each group's measured gap. "For a self-employed applicant, treat the score as one input among several and check the income evidence yourself."
+4. **Input specifications.** Required fields, formats and document recency, and what to do when a field is missing.
+5. **Oversight steps.** Every decline and every grey-zone score goes to officer review. Give a written reason when you follow a grey-zone score. You may override without penalty. Escalate to the model owner if scores look wrong.
+6. **When not to rely on the score.** "Do not rely on the score when a required input is missing or estimated, when the applicant belongs to a group listed in section 3 and the score is near the cut-off, or when the score is in the grey zone (for example 0.62)."
+7. **Logs.** Each score is logged with input and model versions and kept at least six months; how to retrieve a record for an Art. 86 explanation.
+
+**Self-check.**
+- An officer reading section 6 knows exactly when not to rely on the score.
+- Weaker-performing groups are named, not hidden in an average.
+- The instructions say the score supports, and never replaces, the officer's decision.
+- Oversight steps include the right to override and a route to escalate.
+- The logs section connects to Art. 86 explanations.
+
+</details>
+
 🔴 **Incident drill.** A pipeline bug scored all self-employed applicants as high-risk for three weeks, and 140 were declined. Decide whether this is a serious incident, who reports what to whom and by when, and what Art. 86 explanations should say.
 *Done when:* you have a timeline with deadlines and owners, and a reasoned view on the fundamental-rights limb of the definition.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Classification.** A malfunction (the pipeline bug) directly led to 140 adverse credit decisions about natural persons on a wrong basis. Under the definition's fundamental-rights limb, that is an infringement of EU-law obligations protecting fundamental rights: a high-risk system systematically denied a whole group fair consideration for credit, and the FRIA already lists the self-employed as a group at risk. So it is a **serious incident**. Whether it is also a "widespread infringement" (2-day limit) is arguable. Najm commits to the 15-day general rule, but reports as soon as the causal link is established rather than waiting for day 15.
+
+**Who.** Najm is both provider and deployer. The deployer side (Frankfurt lending) tells the provider side first. The provider reports to the market-surveillance authority where the incident occurred, which for Najm's Frankfurt branch is its financial supervisor.
+
+| When (from awareness) | Action | Owner |
+|---|---|---|
+| Day 0 | Frankfurt lending informs Layla and Dana; scoring of self-employed applicants is suspended and they go to manual review | Head of lending, Layla |
+| Days 0–1 | Preserve logs and pipeline state; do not change the system in a way that could affect the investigation before informing the authority | Dana, Omar |
+| Days 1–3 | Confirm the causal link from the logs; the AI Governance Committee confirms the classification | Dana, Layla |
+| No later than day 15 | Report to the financial supervisor | Layla |
+| After reporting | Fix, re-validate and re-score; human re-review of all 140 applications; update the FRIA and risk register | Dana, Head of lending |
+
+**Art. 86 explanation.** It states the AI's role ("a credit-scoring model's score was a main element of the decision"), the error ("a processing error between [dates] wrongly rated all self-employed applicants as high-risk"), the main elements of the decision, the outcome of the human re-review, and how to complain, including to the market-surveillance authority.
+
+**Self-check.**
+- Your answer applies the fundamental-rights limb and gives a reason, not just a label.
+- It shows the relay: deployer to provider first, then provider to authority.
+- The 15-day limit is treated as a backstop, not a target, and the 2-day reading is discussed.
+- Evidence is preserved before the system is changed.
+- The Art. 86 text names the AI's role, the error and the human re-review.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 
@@ -566,7 +692,7 @@ This is why Yusuf's contract (11.2) must secure instructions, log access, change
 # 6.3 — General-purpose AI, transparency, enforcement and the timeline
 *Level: 🟡 Intermediate* · *Prerequisites: 6.1, 6.2* · *BoK: II.C*
 
-**After this you can** state the AI Act's five key application dates from memory, and audit an organisation's AI outputs for Art. 50 transparency duties with a draft disclosure for each. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** state the AI Act's five key application dates from memory, and audit an organisation's AI outputs for Art. 50 transparency duties with a draft disclosure for each. *Study time: reading about 25 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -723,11 +849,85 @@ Layla brings a **GenAI and transparency decision record** to the AI Governance C
 🟢 **Timeline card.** From memory, write the five key application dates of the AI Act and what applies on each. Then check against the table in 🔴 Expert view.
 *Done when:* you get all five right twice in a row, a day apart.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.**
+
+| Date | What applies |
+|---|---|
+| 1 Aug 2024 | The Act enters into force |
+| 2 Feb 2025 | General provisions, including AI literacy (Art. 4), and prohibited practices (Art. 5) |
+| 2 Aug 2025 | GPAI model obligations; governance; notified bodies; penalties |
+| 2 Aug 2026 | Most remaining provisions: Annex III high-risk systems, deployer duties, FRIA, Art. 50 transparency, sandboxes |
+| 2 Aug 2027 | Annex I high-risk systems (regulated products); deadline for GPAI models placed on the market before 2 Aug 2025 |
+
+These are the dates of the original Act. Regulation (EU) 2026/1744 moves Annex III high-risk duties to 2 Dec 2027 and Annex I to 2 Aug 2028; Art. 50 still applies from 2 Aug 2026. The AIGP exam content may still follow the original dates; check the current exam guidance.
+
+**Self-check.**
+- Your five dates match the table exactly, day and month included.
+- Literacy and the prohibitions share 2 Feb 2025.
+- Art. 50 sits on 2 Aug 2026, and its date was not moved.
+- You can say which items Regulation (EU) 2026/1744 moved, and to when.
+- You did not put the 2030 dates among the five key dates.
+
+</details>
+
 🟡 **Art. 50 audit.** List every customer-facing or public-facing AI output at Najm (or your organisation): chatbots, generated images, voice, published text. For each, identify whether an Art. 50 duty applies, who holds it (provider or deployer), and what the disclosure should look like.
 *Done when:* each item has a duty, a holder and a draft disclosure line, or a reasoned "no duty".
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.**
+
+| Output | Art. 50 duty | Holder | Draft disclosure |
+|---|---|---|---|
+| Customer chatbot | Tell people they are interacting with AI (Art. 50(1)) | Najm, as provider of the chatbot | First message: "Hi, I'm Najm's virtual assistant, an AI. Type 'agent' to reach a person." |
+| AI "customer" video | Deepfake disclosure (Art. 50(4)); the generating tool's provider also marks it in a machine-readable way (Art. 50(2)) | Najm, as deployer (marketing) | On screen throughout: "AI-generated video. This is not a real customer." Better still: use a real customer |
+| AI-drafted market commentary | Public-interest text disclosure (Art. 50(4)) | Najm, as deployer | No duty if a named editor reviews it and holds editorial responsibility; otherwise: "This commentary was generated with AI." |
+| Voice-emotion analytics on customer calls | Notice of emotion recognition | Najm, as deployer | At the start of the call: "We use AI to analyse the tone of voice on this call to improve our service." Never on staff: prohibited |
+| Customer-facing image generator, if offered | Machine-readable marking of outputs (Art. 50(2)) | Najm, as provider | Watermark and metadata, not only a visible line |
+
+Every disclosure is given at the latest at the first interaction or exposure.
+
+**Self-check.**
+- Each item has a duty, a holder and a draft line, or a reasoned "no duty".
+- The chatbot keeps its AI disclosure, even if the wording becomes friendlier.
+- Provider duties (disclosure by design, marking) are kept apart from deployer duties (deepfakes, public-interest text, emotion-recognition notices).
+- The commentary row explains the human-review and editorial-responsibility exception.
+- Emotion recognition on staff is flagged as prohibited, not treated as an Art. 50 item.
+
+</details>
+
 🔴 **GPAI vendor questionnaire.** Draft ten questions Najm should put to any GPAI model vendor, mapped to Arts 53 and 55 and the Code of Practice chapters. Include at least two on copyright and training data, and two on incident notification to downstream providers.
 *Done when:* each question cites the obligation it tests and says what evidence would be an acceptable answer.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.**
+
+| # | Question | Tests | Acceptable evidence |
+|---|---|---|---|
+| 1 | What information do you give downstream providers on the model's capabilities, limits and integration? | Art. 53; Transparency chapter | Current, versioned model documentation |
+| 2 | Will you give technical documentation to authorities on request, and what does it cover? | Art. 53 | Documentation index; commitment in the contract |
+| 3 | Where is your public summary of training content? | Art. 53 | Link to the summary on the AI Office template |
+| 4 | What is your copyright policy, and how do you respect text-and-data-mining opt-outs? | Art. 53; Copyright chapter | Published policy; description of how opt-outs are handled |
+| 5 | How do you handle claims that outputs reproduce protected works? | Art. 53; Copyright chapter | Complaint mechanism; indemnity terms in the contract |
+| 6 | Is the model presumed or designated to have systemic risk, and did you notify the Commission? | Arts 51, 55 | Classification statement; notification record |
+| 7 | Have you signed the GPAI Code of Practice, and which chapters? | Art. 56 | Commission signatory list, or the other adequate means you rely on |
+| 8 | What model evaluations and adversarial testing have you run? | Art. 55; Safety and security chapter | Summary of evaluation scope and results |
+| 9 | How, and how fast, will you notify us of serious incidents affecting the model? | Art. 55; contract (11.2) | Notice clause with a time limit and a contact point |
+| 10 | Will you tell us in advance about model changes, deprecations and known vulnerabilities? | Art. 53; Art. 55; contract | Change-notice process; version history |
+
+The Act requires systemic-risk providers to report serious incidents to the AI Office; notice to downstream providers such as Najm comes from the contract, so questions 9 and 10 ask for contract terms. A non-EU vendor should also name its EU authorised representative (Art. 54).
+
+**Self-check.**
+- Each of the ten questions cites the obligation it tests and the evidence that would satisfy it.
+- At least two questions cover copyright and training data, and two cover incident notice to downstream providers.
+- Systemic-risk questions are kept apart from questions that apply to every GPAI provider.
+- Your questionnaire does not treat signing the Code of Practice as mandatory.
+- It does not treat Najm as the GPAI model provider.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 

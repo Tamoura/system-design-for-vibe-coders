@@ -9,7 +9,7 @@
 # 3.1 — Subscriptions and payments: checkout, webhooks, the customer portal
 *Level: 🟢 Beginner* · *Prerequisites: 1.2, 2.1*
 
-**After this you can** wire Stripe Checkout, the Customer Portal and a signature-verified, deduplicated webhook handler into Beacon, and show that sending the same event twice updates the subscription row once. *Study time: reading about 20 min, hands-on about 7 h (estimate).*
+**After this you can** wire Stripe Checkout, the Customer Portal and a signature-verified, deduplicated webhook handler into Beacon, and show that sending the same event twice updates the subscription row once. *Study time: reading about 20 min; hands-on by track: 🟢 100 min · 🟡 4 h · 🔴 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -323,7 +323,7 @@ Stripe treats the `500` as a failed delivery and retries it for days, and it eve
 # 3.2 — Plans, limits and entitlements: turning pricing into code
 *Level: 🟡 Intermediate* · *Prerequisites: 3.1, 1.3*
 
-**After this you can** turn Free, Pro and Business pricing into one entitlements module, enforce monitor limits with a structured `limit_exceeded` error, and downgrade an org without deleting any of its data. *Study time: reading about 15 min, hands-on about 6 h (estimate).*
+**After this you can** turn Free, Pro and Business pricing into one entitlements module, enforce monitor limits with a structured `limit_exceeded` error, and downgrade an org without deleting any of its data. *Study time: reading about 15 min; hands-on by track: 🟢 90 min · 🟡 4 h · 🔴 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -606,7 +606,7 @@ Both requests read 4, both pass the check, and the org ends up with 6 monitors. 
 # 3.3 — Usage-based billing and metering
 *Level: 🔴 Advanced* · *Prerequisites: 3.1, 3.2*
 
-**After this you can** record one idempotent usage event per SMS, report overage to Stripe meters from a retrying job, and show that replaying the job does not change the invoice. *Study time: reading about 15 min, hands-on about 7 h (estimate).*
+**After this you can** record one idempotent usage event per SMS, report overage to Stripe meters from a retrying job, and show that replaying the job does not change the invoice. *Study time: reading about 15 min; hands-on by track: 🟢 90 min · 🟡 4 h · 🔴 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 

@@ -300,7 +300,7 @@ Add Stripe Checkout and the Customer Portal to Beacon's billing settings page. C
 - An org owner can upgrade with the test card `4242 4242 4242 4242` and land back on Beacon.
 - The success page says "confirming…" and doesn't change the plan itself.
 - "Manage billing" opens the Portal, where the owner can update the card and cancel.
-- Non-owners don't see the billing buttons (reuse your 1.3 permission check).
+- Non-owners don't see the billing buttons, and the server refuses their checkout request. Check `memberships.role = 'owner'` from 1.2; lesson 1.3 later turns this into a `billing.manage` permission.
 
 #### 🟡 Intermediate exercise
 

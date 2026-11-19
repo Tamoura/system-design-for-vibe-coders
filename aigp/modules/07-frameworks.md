@@ -9,7 +9,7 @@
 # 7.1 — OECD principles and the NIST AI RMF
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 2.1, 6.1* · *BoK: II.D*
 
-**After this you can** assign governance activities to the NIST AI RMF functions, and build a chatbot risk register that rates all twelve NIST AI 600-1 risks. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
+**After this you can** assign governance activities to the NIST AI RMF functions, and build a chatbot risk register that rates all twelve NIST AI 600-1 risks. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -199,11 +199,48 @@ Decision recorded: *"The copilot remains in pilot for 20 relationship managers u
 🟢 **Principle match.** Take Najm's four draft AI principles ("fair", "explainable", "secure", "accountable") and map each to an OECD principle and a NIST trustworthiness characteristic.
 *Done when:* each draft principle has one OECD and one NIST match, and you have spotted which OECD principle Najm has left out.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Fair:** OECD principle 2 (respect for the rule of law, human rights and democratic values, including fairness and privacy); NIST "fair, with harmful bias managed". **Explainable:** OECD principle 3 (transparency and explainability); NIST "explainable and interpretable". **Secure:** OECD principle 4 (robustness, security and safety); NIST "secure and resilient". **Accountable:** OECD principle 5 (accountability); NIST "accountable and transparent". **The gap:** nothing covers OECD principle 1, inclusive growth, sustainable development and well-being, so Najm's draft says nothing about benefit to people, reducing inequalities or the environment. Worth flagging too: no draft principle covers NIST's base characteristic, "valid and reliable", nor "safe" (freedom from harm, which is not the same as "secure and resilient") or "privacy-enhanced" (privacy appears only inside OECD principle 2), so the board may want to add them.
+
+**Self-check.**
+- Each of the four draft principles has exactly one OECD principle and one NIST characteristic.
+- You name OECD principle 1 (inclusive growth, sustainable development and well-being) as the one left out.
+- You do not map any draft principle to one of the five recommendations to governments.
+- "Explainable" is matched to "explainable and interpretable", and you can say how the two differ: *how* an output was produced versus *what it means*.
+
+</details>
+
 🟡 **Function sort.** List fifteen AI governance activities (for example "set risk tolerance", "red-team the chatbot", "document intended use", "decommission the old scorecard", "survey affected customers") and assign each to Govern, Map, Measure or Manage, with a category.
 *Done when:* every activity has a function and category, and you can justify the three you found hardest.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** A good sort, for example: **Govern:** set risk tolerance for fairness gaps (GOVERN 1); name Khalid business owner and Dana technical owner (GOVERN 2); add AI terms to the LLM contract (GOVERN 6). **Map:** document intended use (MAP 1); categorise the chatbot's tasks and knowledge limits (MAP 2); weigh expected benefits and costs (MAP 3); list third-party data and model components (MAP 4); survey affected customers about impacts (MAP 5). **Measure:** choose fairness metrics (MEASURE 1); red-team the chatbot (MEASURE 2); sample drift and errors monthly (MEASURE 3); check whether those metrics catch real problems (MEASURE 4). **Manage:** refer grey-zone cases to humans (MANAGE 1); decommission the old scorecard (MANAGE 2); incident playbook with rollback to manual work (MANAGE 4). **Hardest three:** *decommissioning* is a Manage treatment (MANAGE 2), while the decommissioning policy sits in GOVERN 1; *surveying customers* feeds the impact picture in MAP 5, though the process for engaging them is GOVERN 5; *red-teaming* is testing, so Measure, even though fixing what it finds is Manage.
+
+**Self-check.**
+- All fifteen activities have one function and one category number.
+- Red-teaming is in Measure and documenting intended use is in Map.
+- Each of the four functions has at least one activity, and Govern holds policy, accountability and third-party *policy* (GOVERN 6), not tests.
+- For each of your three hardest cases, you say why the other function was tempting.
+
+</details>
+
 🔴 **GenAI profile.** Using the twelve NIST AI 600-1 risks, build a risk register for Najm's customer chatbot: rate each risk's likelihood and impact, choose a treatment, and name the NIST function that treatment sits in.
 *Done when:* all twelve risks are rated (including "not applicable" with a reason) and the top three have measurable controls.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** One register row per risk (likelihood / impact, treatment, function), for example: **Confabulation**, high / high: answers on fees and rates drawn only from approved documents, with a confabulation rate on a fixed question set tested before each release (MEASURE 2, MANAGE 1). **Information security**, high / high: prompt-injection red-teaming each release, attack success rate tracked against a threshold (MEASURE 2). **Data privacy**, medium / high: an output filter that blocks account data, zero leaks in a monthly test set (MANAGE 1, MEASURE 3). **Human-AI configuration**, medium / medium: AI disclosure and hand-off to a human agent (MANAGE 2). **Dangerous, violent or hateful content**, low / high, and **obscene, degrading or abusive content**, low / medium: content filters (MANAGE 1). **Harmful bias and homogenisation**, medium / medium: test answers across customer groups (MEASURE 2). **Information integrity**, medium / medium: label outputs as AI-generated (MANAGE 2). **Value chain**, medium / medium, and **intellectual property**, low / medium: vendor contract terms (GOVERN 6, MANAGE 3). **Environmental impacts**, low / low: weigh in vendor choice (GOVERN 1). **CBRN**, low / high: banking questions only, so rely on the vendor's filters (GOVERN 6). The top three are confabulation, information security and data privacy, each with a number the Committee can track.
+
+**Self-check.**
+- All twelve NIST AI 600-1 risks appear, none merged away, and any "not applicable" has a reason.
+- Each treatment names a NIST function, ideally with a category.
+- Your top three have a measurable control (a rate, a threshold or a test frequency), not "monitor closely".
+- You use NIST's term "confabulation", and treat over-trust as human-AI configuration.
+- The ratings fit a customer-facing banking chatbot, not a generic model.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 
@@ -304,7 +341,7 @@ Decision recorded: *"The copilot remains in pilot for 20 relationship managers u
 # 7.2 — ISO/IEC 42001 and the AI standards family
 *Level: 🟡 Intermediate* · *Prerequisites: 7.1, 6.2* · *BoK: II.D*
 
-**After this you can** map activities to ISO/IEC 42001 clauses, draft a Statement of Applicability outline, and write five questions that test a vendor's 42001 certificate. *Study time: reading about 15 min, hands-on about 100 min (estimate).*
+**After this you can** map activities to ISO/IEC 42001 clauses, draft a Statement of Applicability outline, and write five questions that test a vendor's 42001 certificate. *Study time: reading about 20 min, hands-on about 100 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -443,11 +480,49 @@ A **vendor-certificate rule** is added to the procurement standard:
 🟢 **Clause map.** Place ten Najm activities (for example "board approves AI policy", "quarterly Committee review", "fix after chatbot incident", "AI training records") into the 42001 clause they belong to.
 *Done when:* every activity has a clause from 4 to 10, and you can say which PDCA stage each belongs to.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** Board approves AI policy: clause 5, Plan. Scope statement for the AIMS: 4.3, Plan. AI risk assessment method: 6.1, Plan. Objective "100% of high-risk systems with an impact assessment": clause 6, Plan. AI training records: 7.2 competence and 7.5 documented information, Do. Intake and review gates for new use cases: clause 8, Do. Drift and error monitoring: clause 9, monitoring and measurement, Check. Annual internal audit of the AIMS: 9.2, Check. Quarterly Committee review: 9.3 management review, Check. Fix after the chatbot incident: clause 10, corrective action, Act. The rule behind the stages: clauses 4–6 are Plan, 7–8 Do, 9 Check and 10 Act.
+
+**Self-check.**
+- Each activity has one clause between 4 and 10.
+- The quarterly Committee review is 9.3 management review, and the post-incident fix is clause 10, not 9.
+- Training records sit in clause 7 (support), not clause 5.
+- Your PDCA stages follow 4–6 Plan, 7–8 Do, 9 Check, 10 Act.
+
+</details>
+
 🟡 **Statement of Applicability.** Using the nine Annex A areas, draft an SoA outline for Najm's credit model: for each area, say whether controls apply, how they are implemented, and justify any exclusion.
 *Done when:* each area has an "applies / excluded" decision with a one-line justification.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** For a high-risk credit model built by Dana's team, every area applies; the work is in the "how". **A.2 Policies:** applies; board-approved AI policy covering the credit model. **A.3 Internal organisation:** applies; Khalid business owner, Dana technical owner, a channel for reporting concerns. **A.4 Resources:** applies; data, tooling, computing and people documented in the model dossier. **A.5 Impact assessment:** applies; joint DPIA-FRIA-impact assessment on applicants, using ISO/IEC 42005. **A.6 Life cycle:** applies; Najm builds the model, so design, verification and validation, deployment, monitoring, technical documentation and event logs. **A.7 Data:** applies; quality and provenance of training data and the credit-bureau feed. **A.8 Information for interested parties:** applies; reason codes for declined applicants, information for loan officers, incident communication. **A.9 Use:** applies; intended use (EU consumer loans up to €75,000) and grey-zone referral. **A.10 Third parties and customers:** applies for the credit-bureau supplier; the customer-facing controls may be excluded only because Najm does not supply this model to other organisations, and that reason is written down.
+
+**Self-check.**
+- All nine areas, A.2 to A.10, have an "applies" or "excluded" decision.
+- Any exclusion has a written reason; nothing is dropped silently.
+- A.5 and A.8 treat applicants as affected people (impact assessment, reason codes).
+- A.7 covers the third-party credit-bureau data, not only Najm's own data.
+- You do not exclude a control because it is hard or not yet in place: a gap is not an exclusion.
+
+</details>
+
 🔴 **Certificate challenge.** The CV vendor sends a 42001 certificate. Write the five questions Yusuf should ask about it and explain, in one paragraph for the Committee, why it does not answer the AI Act question and what evidence would.
 *Done when:* your questions cover scope, issuer, accreditation and validity, and your paragraph names the AI Act artefacts needed.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Questions:** (1) What is the certificate's scope: does it cover the CV-screening product and the site where it is developed? (2) Which certification body issued it? (3) Is that body accredited, and by which national accreditation body? (4) Is the certificate valid today: issue and expiry dates, and the last annual surveillance audit? (5) Can we see the Statement of Applicability, including any Annex A controls excluded and why? **Paragraph for the Committee:** ISO/IEC 42001 certifies the vendor's AI management system within a stated scope, not the CV tool. Under Art. 40 of the EU AI Act, presumption of conformity comes only from harmonised standards cited in the Official Journal, and 42001 alone does not give it. CV screening is high-risk, so we need the product's declaration of conformity, its instructions for use, evidence that it meets Arts 9–15 and has passed conformity assessment, and Najm's own testing before EU use.
+
+**Self-check.**
+- Your questions cover scope, issuing body, accreditation and validity.
+- The paragraph says the certificate covers the vendor's management system, not the CV product.
+- It names Art. 40 and harmonised standards cited in the Official Journal as the route to presumption of conformity.
+- It names the declaration of conformity, the instructions for use and Najm's own testing.
+- It does not call the vendor "AI Act compliant" on the strength of the certificate.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 
@@ -547,7 +622,7 @@ A **vendor-certificate rule** is added to the procurement standard:
 # 7.3 — The global map: other frameworks that shape practice
 *Level: 🟡 Intermediate* · *Prerequisites: 7.1, 7.2* · *BoK: II.D*
 
-**After this you can** sort AI instruments by how binding they are, and map one human-oversight control to at least five framework references with the evidence and gaps. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** sort AI instruments by how binding they are, and map one human-oversight control to at least five framework references with the evidence and gaps. *Study time: reading about 25 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -620,7 +695,7 @@ China has also issued an AI Safety Governance Framework and many technical stand
 
 **The GCC.** Gulf states have moved fast on AI strategy and ethics, with binding rules coming mainly through data-protection law and sector regulators. Specifics change often, so treat what follows as orientation and **check official sources**.
 
-- **Qatar.** A **National Artificial Intelligence Strategy** (2019) set out Qatar's ambitions for AI in the economy, education and government. The **Personal Data Privacy Protection Law (Law No. 13 of 2016, PDPPL)** governs personal data. For Najm, the most directly relevant instrument is the **Qatar Central Bank's AI guideline for financial institutions**, issued on 4 September 2024, which sets supervisory expectations for how licensed institutions govern AI and requires QCB approval before certain AI systems, such as new or materially changed ones, are launched (check the current text for which). In general terms it covers governance and accountability, risk management, the fairness and transparency of AI outcomes for customers, data management, and oversight of third-party AI. Najm's AIMS should map each of its requirements to a control. Read the current guideline from QCB rather than relying on summaries.
+- **Qatar.** A **National Artificial Intelligence Strategy** (2019) set out Qatar's ambitions for AI in the economy, education and government. The **Personal Data Privacy Protection Law (Law No. 13 of 2016, PDPPL)** governs personal data. For Najm, the most directly relevant instrument is the **Qatar Central Bank's AI guideline for financial institutions**, the "Artificial Intelligence Guideline", in force from 4 September 2024 (§1) with no transition period. It applies to every QCB-regulated entity that builds, buys or outsources AI (§5) and requires official QCB approval before launching a new AI system as a provider or materially modifying one (§11.1), and before signing any high-risk AI purchase, licensing or outsourcing agreement (§11.2). In general terms it covers governance and accountability (§7), risk management (§9), human oversight (§13), the fairness and transparency of AI outcomes for customers (§7.7, §20–21), data management (§15), and oversight of third-party AI (§12). Najm's AIMS should map each of its requirements to a control. Read the current guideline from QCB rather than relying on summaries.
 - **Saudi Arabia.** The Saudi Data and Artificial Intelligence Authority (**SDAIA**) published **AI Ethics Principles**, covering fairness; privacy and security; humanity; social and environmental benefits; reliability and safety; transparency and explainability; and accountability and responsibility. It has also issued guidance on generative AI. The **Personal Data Protection Law** has been in force since 2023, supervised by SDAIA.
 - **United Arab Emirates.** The UAE appointed a Minister of State for AI in 2017 and published a **National Strategy for Artificial Intelligence 2031**. It has issued a **UAE Charter for the Development and Use of AI** (2024) and AI ethics guidance. Personal data is governed by the federal **PDPL (Federal Decree-Law No. 45 of 2021)**. The **DIFC Data Protection Law**, through **Regulation 10**, adds specific requirements for personal data processed by autonomous and semi-autonomous systems in the DIFC free zone.
 
@@ -680,11 +755,50 @@ Layla produces a **jurisdiction map** for the AI Governance Committee, showing w
 🟢 **Binding or not?** Sort ten instruments from this module (for example UNESCO Recommendation, CoE Convention, NIST AI RMF, China's Generative AI Measures, Singapore Model Framework, EU AI Act, ISO/IEC 42001, QCB AI guideline) into "binding law", "binding for regulated firms in practice", "treaty binding on states" and "voluntary".
 *Done when:* every instrument is placed with a one-line reason.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Binding law:** EU AI Act (an EU regulation with direct legal effect); China's Generative AI Measures (binding, service-specific rules for public GenAI services in China). **Binding for regulated firms in practice:** QCB AI guideline (requirements for QCB-regulated entities, including official QCB approval before launching a new or materially modified AI system, §11.1). **Treaty binding on states:** Council of Europe Framework Convention (binds states that ratify it, not companies directly). **Voluntary:** UNESCO Recommendation (global soft law); OECD AI Principles (an OECD Recommendation, soft law); G7 Hiroshima Code of Conduct (voluntary code for developers of advanced AI); NIST AI RMF (voluntary guidance, no certification); ISO/IEC 42001 (voluntary and certifiable, binding only if a contract requires it); Singapore Model AI Governance Framework (practical tools, not law).
+
+**Self-check.**
+- Ten instruments are placed, each with a one-line reason.
+- The Council of Europe Convention is the only treaty, and it binds ratifying states, not Najm directly.
+- UNESCO, OECD, G7, NIST and Singapore are voluntary; none is called binding.
+- ISO/IEC 42001 is voluntary even though it is certifiable.
+- The QCB guideline is in the "binding for regulated firms in practice" group, not "voluntary".
+
+</details>
+
 🟡 **Extend the crosswalk.** Add a fourth column to the crosswalk for the QCB AI guideline or another regulator's AI guidance that applies to you. Mark themes where the guidance adds something the other three do not.
 *Done when:* every row has an entry or "not addressed", and you have listed at least two deltas.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** A QCB column built from the guideline's sections: **AI policy and accountability:** board and senior management accountable for AI outcomes (§7.1). **Risk management:** risk assessment within enterprise risk management (§7.6, §9). **Impact on people** and **transparency to users and people:** fair outcomes (§7.7); customers told when they interact with AI and given explanations on request (§20.1, §20.5). **Data governance:** data management, including bias testing (§15, §15.7). **Third parties and supply chain:** outsourcing due diligence and prior QCB consent (§12.1). **Inventory and classification:** a Register of all AI systems, disclosed to QCB annually (§10.1, §10.6); mandatory high-risk classification for consumer access to financial services, material employee decisions and sensitive personal information (§9.7); QCB approval before launching a new AI system as a provider or materially modifying one (§11.1). **Literacy:** trained staff and operators (§8, §13.8.1). **Documentation:** model design documentation (§18). **Logging:** audit logs and traceability (§19.3.1). **Human oversight:** a Human Oversight protocol for every AI system (§13.1). **Monitoring:** monitoring, with serious incidents reported to QCB (§19, §19.5). **Audit:** regular audits (§8). **Accuracy:** independent validation of material models before deployment (§15.12). **Deltas:** (1) the approval step before launch (§11), which none of the EU AI Act, NIST or ISO columns contains: add it as a gate in intake and change management, owned by Layla; (2) the guideline applies by virtue of Najm's QCB licence, not by AI Act risk tier, so even systems the AI Act treats as limited-risk (the chatbot, Art. 50 only) need QCB-ready evidence (§5).
+
+**Self-check.**
+- Every crosswalk row has a QCB entry with its clause number, or "not addressed".
+- You list at least two deltas, and the approval-before-launch requirement is one of them.
+- You work from the current guideline from QCB, not a summary, and say so.
+- Each delta becomes an action in Najm's control set: a gate, an owner or an evidence item.
+- You do not claim that meeting the NIST or ISO rows proves QCB compliance.
+
+</details>
+
 🔴 **One control, many maps.** Write a single human-oversight control for Najm's credit model, then show exactly how it provides evidence for AI Act Art. 14 and Art. 26, NIST MAP 3 and MANAGE 2, ISO/IEC 42001 A.9, and the relevant QCB expectation. Identify what evidence each framework would need and any gaps.
 *Done when:* one control statement is mapped to at least five references, with the evidence and gaps listed.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Control:** "Every credit application the model declines or places in the grey zone is reviewed by a trained loan officer, who sees the score, the reason codes and the file, can override or refer, and records a reason for each override; Dana reviews override rates monthly and Khalid can suspend the model." **Art. 14:** Najm built the model, so it is also the provider and Art. 14 design duties are its own: it needs design records and instructions for use showing people can understand, override and stop the system. **Art. 26:** named, trained oversight staff with authority, and logs kept. **MAP 3:** the documented human role and when humans step in. **MANAGE 2:** the referral procedure and override analysis as a documented treatment. **ISO/IEC 42001 A.9:** a responsible-use procedure tied to the intended use, recorded in the SoA. **QCB:** a credit model that determines consumer access to financial services is high-risk (§9.7.1), so it needs a Human Oversight protocol (§13.1) and a trained Supervisor who can override, reverse or stop it (§13.2–13.4); the board and senior management stay accountable for its outcomes (§7.1); and customers can ask for a human review of a negative AI decision (§21.2). **Gaps:** a near-zero override rate may signal automation bias, so add a sample re-check; a deployer-side procedure cannot supply Art. 14's design evidence; and the crosswalk is not legal equivalence, so each reference is checked on its own terms.
+
+**Self-check.**
+- It is one control statement, not a list of separate controls.
+- It maps to at least five references: Art. 14, Art. 26, MAP 3, MANAGE 2, A.9 and the QCB expectation.
+- Each reference has its own evidence item, and at least one gap is named.
+- Art. 14 is treated as being about system design (provider) and Art. 26 about use (deployer).
+- It does not claim the crosswalk proves compliance with any one instrument.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 

@@ -5,7 +5,7 @@
 > **An independent course.** It is not affiliated with, endorsed by or produced by the IAPP, and it does not reproduce IAPP exam questions. It covers the topics of the public AIGP Body of Knowledge (version 2.1, effective 2 February 2026). Nothing here is legal advice: laws and guidance change, so check the official sources before you rely on them.
 
 <!-- study-time -->
-**Study time for the whole course: about 100 hours** (estimate: reading plus hands-on work, summed over every lesson). At about 6 hours a week that is roughly 17 weeks. Each lesson shows its own split; a pilot with real learners will replace these estimates.
+**Study time for the whole course: about 102 hours** (estimate: reading plus hands-on work, summed over every lesson). At about 6 hours a week that is roughly 17 weeks. Each lesson shows its own split; a pilot with real learners will replace these estimates.
 <!-- /study-time -->
 
 ## What this is

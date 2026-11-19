@@ -10,7 +10,7 @@
 
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 4.1*
 
-**After this you can** move incident notifications into a background job with retries, backoff and a dead-letter destination, and prove that running the same job twice sends each subscriber exactly one email. *Study time: reading about 20 min, hands-on about 7 h (estimate).*
+**After this you can** move incident notifications into a background job with retries, backoff and a dead-letter destination, and prove that running the same job twice sends each subscriber exactly one email. *Study time: reading about 20 min; hands-on by track: 🟢 90 min · 🟡 4 h · 🔴 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -295,7 +295,7 @@ The task runs three times a night, once per instance, and it stops or shifts on 
 
 *Level: 🟡 Intermediate* · *Prerequisites: 1.2, 1.3*
 
-**After this you can** ship public monitor endpoints behind hashed, revocable org API keys with cursor pagination, and add plan-aware rate limits that answer 429 with `Retry-After`. *Study time: reading about 20 min, hands-on about 6 h (estimate).*
+**After this you can** ship public monitor endpoints behind hashed, revocable org API keys with cursor pagination, and add plan-aware rate limits that answer 429 with `Retry-After`. *Study time: reading about 20 min; hands-on by track: 🟢 100 min · 🟡 4 h · 🔴 6 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -574,7 +574,7 @@ Every script at that customer shares one bucket, so they throttle each other, an
 
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1, 5.2*
 
-**After this you can** send webhooks signed to the Standard Webhooks spec with timeouts and retries, refuse targets such as `127.0.0.1` and `169.254.169.254`, and give customers a log of every delivery attempt. *Study time: reading about 15 min, hands-on about 7 h (estimate).*
+**After this you can** send webhooks signed to the Standard Webhooks spec with timeouts and retries, refuse targets such as `127.0.0.1` and `169.254.169.254`, and give customers a log of every delivery attempt. *Study time: reading about 15 min; hands-on by track: 🟢 110 min · 🟡 4 h · 🔴 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -837,7 +837,7 @@ DNS rebinding. The name resolves to a public address at check time and to a priv
 
 *Level: 🔴 Advanced* · *Prerequisites: 5.1, 5.3*
 
-**After this you can** move a notification fan-out into a durable workflow with named steps, kill the worker mid-run and show that it resumes without re-sending, and build an escalation that stops on acknowledgement. *Study time: reading about 20 min, hands-on about 7 h (estimate).*
+**After this you can** move a notification fan-out into a durable workflow with named steps, kill the worker mid-run and show that it resumes without re-sending, and build an escalation that stops on acknowledgement. *Study time: reading about 20 min; hands-on by track: 🟢 90 min · 🟡 4 h · 🔴 7 h (estimate).*
 
 ## ⚡ In 60 seconds
 

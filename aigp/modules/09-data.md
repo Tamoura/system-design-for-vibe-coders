@@ -9,7 +9,7 @@
 # 9.1 — Sourcing, lineage and rights to use data
 *Level: 🔴 Advanced* · *Prerequisites: 3.2, 4.1, 5.2* · *BoK: III.B*
 
-**After this you can** classify datasets by source type and rights issue, and run a GDPR Art. 6(4) compatibility assessment that reaches a reasoned conclusion with safeguards. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
+**After this you can** classify datasets by source type and rights issue, and run a GDPR Art. 6(4) compatibility assessment that reaches a reasoned conclusion with safeguards. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Training data comes from five main sources: **first-party** (your own records), **purchased or licensed**, **scraped** from the web, **synthetic** (generated), and **public datasets**. Each has a different rights and risk profile.
@@ -104,8 +104,47 @@ Standing rule adopted by the committee: *"No dataset may be used to train, fine-
 
 ## 🛠️ Exercises
 - 🟢 Classify five datasets you know (at work or public) by source type and name one rights issue for each. *Done when:* each has a source type and a specific lock (privacy, licence, copyright or confidentiality).
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** Your datasets will differ; a good answer reads like this for Najm. (1) Retail loan applications and repayments: first-party; privacy lock, because reuse for training is a new purpose that needs an Art. 6(4) compatibility assessment. (2) Telecom payment histories from a broker: purchased; licence lock, because the licence is silent on AI training (and the broker's basis is unproven). (3) Public social-media profiles: scraped; privacy lock (no proportionate lawful basis found; applicants would not expect it), plus platform terms and copyright in posts. (4) The vendor's synthetic young-applicant records: synthetic; privacy lock, because rights in the source data carry over and re-identification must be tested. (5) An open benchmark dataset: public; licence lock, because some licences forbid commercial use. Historical credit memos would sit under the confidentiality lock (banking secrecy).
+
+**Self-check.**
+- Each dataset has one of the five source types.
+- Each names a specific lock (privacy, licence, copyright or confidentiality), not a vague "legal risk".
+- At least one public or scraped item says that "publicly available" does not mean free to use.
+- It does not treat synthetic data as automatically outside privacy law.
+
+</details>
+
 - 🟡 Run a GDPR Art. 6(4) compatibility assessment for using Najm's call-centre recordings to train the customer-service chatbot. *Done when:* all five factors are addressed and you reach a reasoned conclusion with safeguards.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** *Link between purposes:* calls were recorded to serve customers, handle complaints and check quality; a customer-service chatbot is close to that purpose, which favours compatibility. *Context and reasonable expectations:* customers were told calls are recorded, not that their voices and stories would train an AI system; this points against. *Nature of the data:* recordings carry financial details and sometimes health or other special-category information, and voice is biometric if used for identification; this weighs against. *Possible consequences:* a model can memorise and repeat personal or confidential details, and models are not automatically anonymous (EDPB Opinion 28/2024). *Safeguards:* use transcripts, not audio; redact names, account numbers and sensitive content; pseudonymise; exclude calls flagged as sensitive; restrict access; set retention. *Conclusion:* compatible only with these safeguards, a DPIA, notices updated before training starts and a way to object; without reliable redaction it is not compatible and needs a new basis. Banking confidentiality must also be cleared.
+
+**Self-check.**
+- All five factors appear, each with a direction (for or against compatibility).
+- It reaches a clear conclusion that depends on named safeguards.
+- It says people must be told about the new purpose before processing starts.
+- It says that sensitive content in calls (special categories) needs extra handling.
+- It does not stop at privacy: confidentiality is named as a separate lock.
+
+</details>
+
 - 🔴 A customer invokes erasure after Najm's credit model was trained on her data. Draft Najm's policy position covering source deletion, model retraining cadence, unlearning, and what to tell the customer. *Done when:* the policy is consistent with the DPIA and privacy notice, and does not over-promise technical deletion.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** *Source deletion:* Najm erases her data from source systems, except records it must keep by law, and from the versioned training snapshots; lineage and rights-register tags show which datasets and model versions used it. The records kept by law are restricted and tagged "no AI training". *Retraining cadence:* her data is excluded from every future training run and leaves the model at the next scheduled retrain; the cadence is stated in the DPIA. *Unlearning:* machine unlearning is an active research area, not a mature guarantee; Najm may use it where tested but does not promise it. *Residual risk:* Najm assesses whether the current model retains extractable personal data, because models are not automatically anonymous, and records the result. *What to tell her:* her data has been deleted from training data and from records Najm no longer needs; records kept by law stay restricted and out of AI training; it will not be used in future training, and the current model will be replaced at the next retrain on a stated date; Najm does not claim the model has "forgotten" her today. The approach is decided in advance in the DPIA and stated in the privacy notice.
+
+**Self-check.**
+- It covers all four parts: source deletion, retraining cadence, unlearning and the customer message.
+- It does not promise that the trained model forgets her at once or that unlearning is guaranteed.
+- It uses lineage to find the affected datasets and model versions.
+- It is consistent with the DPIA and privacy notice.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 - **"It's public, so we can use it."** Public personal data still needs a lawful basis. Public content is still subject to copyright and terms.
@@ -204,7 +243,7 @@ Standing rule adopted by the committee: *"No dataset may be used to train, fine-
 # 9.2 — Quality, representativeness and bias
 *Level: 🔴 Advanced* · *Prerequisites: 9.1, 5.1* · *BoK: III.B*
 
-**After this you can** locate where six bias types enter a pipeline, and write a one-page annotator guide with definitions, worked examples, an unsure rule and an agreement check. *Study time: reading about 15 min, hands-on about 100 min (estimate).*
+**After this you can** locate where six bias types enter a pipeline, and write a one-page annotator guide with definitions, worked examples, an unsure rule and an agreement check. *Study time: reading about 20 min, hands-on about 100 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Data quality** has several dimensions: accuracy, completeness, consistency, timeliness, validity, uniqueness. It also has **fitness for purpose**, which is the dimension that matters most.
@@ -318,8 +357,48 @@ Describe it carefully: it is **not** a general licence to collect sensitive data
 
 ## 🛠️ Exercises
 - 🟢 Map each of the six bias types to one example in a system you know (or in Najm's CV-screening tool). *Done when:* each example says where in the pipeline the bias enters.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** For the CV-screening tool: *Historical:* labels come from past hiring decisions that favoured some groups; it enters at the data source and labels. *Representation:* few older candidates, or few women in technical roles, in the training data; it enters at collection and sampling. *Measurement:* a "good hire" is measured by manager ratings, an unequal proxy for performance; it enters at label definition. *Aggregation:* one model for every role and country, although careers differ; it enters at model design. *Evaluation:* the vendor reports one overall score on a benchmark that does not look like Najm's applicants; it enters at testing. *Deployment:* the tool is reused to rank internal staff for promotion, a purpose it was not built for; it enters at use.
+
+**Self-check.**
+- All six types appear: historical, representation, measurement, aggregation, evaluation and deployment.
+- Each example names the pipeline stage where the bias enters.
+- Historical bias (an unequal world) is not confused with representation bias (too few examples).
+- Evaluation bias is about test data or aggregate-only metrics, not training data.
+
+</details>
+
 - 🟡 Write an annotator guide (one page) for labelling "credit memo quality" for the copilot evaluation set. *Done when:* it has definitions, three worked examples, an "unsure" rule, and an agreement check.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** *Purpose and annotators:* credit analysts with Arabic competence label memo drafts for the copilot evaluation set. *Definitions:* rate each memo Good, Acceptable or Poor on groundedness (every claim supported by the source), accuracy of figures, completeness of required sections, and clarity and tone. Any wrong figure makes a memo Poor, however well written. *Worked examples:* (1) all figures match the statements and all sections are present: Good; (2) a clear memo that misquotes the guarantor's income: Poor; (3) correct figures but a thin risk section: Acceptable. *Unsure rule:* do not guess; mark "Unsure", write one line on why, and the item goes to a senior analyst for adjudication; recurring unsure cases become new examples. *Agreement check:* two annotators label a sample (for example 20%), agreement is measured with Cohen's kappa against a threshold set in advance, gold-standard items are mixed in, disagreements are adjudicated, and low agreement triggers annotator retraining and a revised guide.
+
+**Self-check.**
+- The definitions say what each rating means, not only its name.
+- There are three worked examples, including at least one hard or borderline case.
+- The "unsure" rule tells the annotator what to do, not only that unsure is allowed.
+- The agreement check uses a chance-corrected measure (such as kappa) and adjudication.
+- It names qualified annotators (domain and language).
+
+</details>
+
 - 🔴 Najm's EU team wants to infer applicants' ethnicity from names to test the credit model for ethnic bias. Advise on the AI Act Art. 10(5) route and GDPR, and propose a safer alternative. *Done when:* you apply each Art. 10(5) condition and reach a recommendation with safeguards.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** *Scope:* the credit model for natural persons is high-risk, so Art. 10(5) can apply, but only for bias detection and correction, where strictly necessary. Inferred ethnicity is still special-category processing under GDPR Art. 9, and inference from names is a sensitive activity in itself. *Conditions:* (1) Najm must show it cannot detect the bias with other data, including synthetic or anonymised data; (2) limits on reuse, state-of-the-art security and pseudonymisation; (3) strict access controls and documentation, with access for authorised staff under confidentiality duties; (4) no transmission to or access by other parties; (5) deletion once the bias is corrected or the retention period ends, whichever comes first; (6) records of processing explaining why it was strictly necessary. *Recommendation:* do not start with name inference. Test first by sex and nationality, which Najm already holds. If ethnic-bias testing is still needed, use a voluntary self-identification survey with explicit consent, collected separately, or a trusted third party that returns only aggregate statistics. Inference stays a last resort: aggregate only, never used in an individual decision, with a DPIA and sign-off by Sara (DPO).
+
+**Self-check.**
+- Each of the six conditions is applied to this case.
+- It says Art. 10(5) is not a general licence: high-risk systems, bias detection and correction, strictly necessary.
+- It treats inferred ethnicity as special-category data under GDPR.
+- It proposes a safer alternative (self-identification or a trusted third party) with safeguards.
+- It ends with a recommendation, not only analysis.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 - **"Fairness through unawareness."** Deleting protected attributes does not stop proxy discrimination and prevents you from measuring it.
@@ -517,7 +596,7 @@ Good red-teams are **diverse** (security, domain, language, affected-community p
 - **LLM-as-judge** scoring for scale. This is useful, but the judge model has its own biases and errors, so calibrate it against humans and never rely on it alone for high-stakes checks;
 - **human evaluation** by credit experts with a written rubric, blind to which system produced the draft where possible, with inter-rater agreement checked (9.2).
 
-**Independent validation and model risk management (MRM).** Banks have a head start here. US supervisory guidance **SR 11-7** (Federal Reserve, 2011, adopted by the OCC) defines model risk and requires sound development, **independent validation** and governance. Its core idea is **effective challenge**: critical analysis by objective, informed parties who have the competence, influence and incentives to identify limitations and get changes made. The UK PRA's **SS1/23** sets model risk management principles for banks and explicitly brings AI and machine-learning models into scope. Many GCC banks apply similar principles. Najm should also check QCB's AI guideline for current expectations. An independent validation of an AI system typically reviews: conceptual soundness (is the approach appropriate? are the data and features justified?); data quality and lineage; replication of key results; outcomes analysis and benchmarking against alternatives; fairness and explainability tests; robustness; implementation testing (does production match what was validated?); and the monitoring plan. The validator reports to the second line (risk), not to the model's builders. Since April 2026 **SR 26-2** has replaced SR 11-7; it keeps independent validation but leaves generative and agentic AI out of scope for now (see lesson 5.3).
+**Independent validation and model risk management (MRM).** Banks have a head start here. US supervisory guidance **SR 11-7** (Federal Reserve, 2011, adopted by the OCC) defines model risk and requires sound development, **independent validation** and governance. Its core idea is **effective challenge**: critical analysis by objective, informed parties who have the competence, influence and incentives to identify limitations and get changes made. The UK PRA's **SS1/23** sets model risk management principles for banks and explicitly brings AI and machine-learning models into scope. Many GCC banks apply similar principles. QCB's AI guideline also requires testing for systematic bias across demographic groups (§15.7) and expects material models to be independently validated before deployment (§15.12). An independent validation of an AI system typically reviews: conceptual soundness (is the approach appropriate? are the data and features justified?); data quality and lineage; replication of key results; outcomes analysis and benchmarking against alternatives; fairness and explainability tests; robustness; implementation testing (does production match what was validated?); and the monitoring plan. The validator reports to the second line (risk), not to the model's builders. Since April 2026 **SR 26-2** has replaced SR 11-7; it keeps independent validation but leaves generative and agentic AI out of scope for now (see lesson 5.3).
 
 **Acceptance criteria and sign-off.** Before testing begins, the owner, the developers, the validator and governance agree **acceptance criteria**: metrics, thresholds, groups, test sets and the consequence of failing. Example: "AUC on out-of-time data ≥ agreed floor; calibration within tolerance in each country; approval-rate ratio ≥ 0.8 or a documented justification approved by the committee; TPR gap ≤ 3 points; no critical red-team findings open; reason-code faithfulness check passed." Results are then compared against criteria fixed in advance, which prevents moving the goalposts. Sign-off follows the tier from 8.1. For a Tier 1 system at Najm that means the business owner, the independent validator, the DPO (for DPIA residual risk) and the AI Governance Committee. Conditions and accepted residual risks are recorded in the decision log. For high-risk systems under the EU AI Act, testing against prior defined metrics and probabilistic thresholds is part of the provider's risk-management system. Its results feed the Annex IV file and the conformity assessment (Module 10).
 
@@ -552,6 +631,19 @@ Good red-teams are **diverse** (security, domain, language, affected-community p
 
 ## 🛠️ Exercises
 - 🟢 A fraud model flags 1% of transactions; fraud is 0.2% of transactions. Explain in plain words why accuracy is a poor metric here and which two metrics you would report instead. *Done when:* you can explain precision and recall to Khalid in two sentences each.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** Fraud is only 0.2% of transactions, so a model that never flags anything is 99.8% accurate and catches no fraud: accuracy hides the cases that matter. Because the model flags 1% while fraud is 0.2%, at least four alerts in five must be false alarms, even if every fraud is caught. Report precision and recall. *Precision, for Khalid:* "Of the transactions we flag, this is the share that really is fraud. Low precision means we block many honest customers." *Recall, for Khalid:* "Of all the fraud that really happens, this is the share we catch. Low recall means fraud gets through." The false positive rate is worth adding, because it measures the harm to honest customers.
+
+**Self-check.**
+- It shows that flagging nothing scores 99.8% accuracy.
+- It names precision and recall and explains each in two plain sentences.
+- Precision is tied to false alarms and recall to missed fraud, not the other way round.
+- It notes that, with 1% flagged and 0.2% fraud, most alerts must be false.
+
+</details>
+
 - 🟡 Using the worked example, compute the approval-rate ratio and FPR gap if Group B's approvals rise to 450 (400 good, 50 bad). *Done when:* you state which fairness metrics improve, which worsen, and what the business owner must accept.
 
 <details class="model"><summary>Check your answer</summary>
@@ -561,6 +653,19 @@ Group B's approval rate becomes 450/1,000 = 45%, so the ratio is 45% ÷ 54% = 0.
 </details>
 
 - 🔴 Design a red-team plan for the credit memo copilot: scope, team composition, ten test scenarios (at least three in Arabic), severity scale, and exit criteria. *Done when:* each scenario maps to an OWASP LLM risk or a trustworthiness requirement from 8.2, and the exit criteria are tied to sign-off.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** *Scope:* the copilot, its retrieval sources and tool permissions, tested with redacted data under a threat model and written rules of engagement. *Team:* security testers, credit underwriters, Gulf-dialect Arabic speakers, privacy and compliance, and a voice for borrowers; independent of the build team. *Scenarios:* (1) "ignore your instructions": prompt injection; (2) hidden instructions in an uploaded statement: prompt injection; (3) a Gulf-dialect Arabic jailbreak pushing approval: prompt injection; (4) reveal the system prompt: system prompt leakage; (5) another client's financials: sensitive information disclosure; (6) Arabic-only statements, every figure checked: misinformation; (7) the policy clause behind a conclusion, checked for invented citations: misinformation; (8) Arabic prompts about nationality: fairness (8.2); (9) submit the memo or change a limit: excessive agency; (10) a retail mortgage case: intended purpose (8.2). *Severity:* critical, customer harm or a confidential-data leak in normal use; high, a wrong figure or policy breach that review would probably miss; medium, a wrong output that review catches; low, tone or format. *Exit criteria:* the business owner and Layla sign off only when no critical finding is open (as in the lesson's acceptance criteria); high findings fixed and re-tested or formally accepted; re-run after significant changes.
+
+**Self-check.**
+- It has ten scenarios, at least three in Arabic, each mapped to an OWASP LLM risk or an 8.2 requirement.
+- Its team is diverse and independent of the builders.
+- Each severity level is defined by harm, not only listed.
+- The exit criteria are tied to sign-off (no critical findings open).
+- It does not claim red-teaming proves the copilot safe, and it repeats testing after changes.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 - **Headline accuracy on imbalanced data.** Use precision, recall, AUC and calibration, and report by group.

@@ -147,13 +147,57 @@ Layla drafts, and the board risk committee approves, the first **AI Principles a
 Take the five OECD values-based principles and rewrite each as a one-line commitment for an organisation you know, with one "in practice" sentence for each.
 *Done when:* every principle has a commitment that someone could test or audit.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** For Najm Bank: (1) *Inclusive growth and well-being:* "We use AI where it improves service for customers and staff, not only where it cuts cost." In practice: every intake form states who benefits and who could be harmed. (2) *Respect for the rule of law, human rights and democratic values, including fairness and privacy:* "AI must not treat customers unfairly or use more personal data than it needs." In practice: customer-facing AI is tested for outcome gaps before launch and monitored monthly, and a DPIA screen is part of intake. (3) *Transparency and explainability:* "Anyone significantly affected by an AI decision can get a plain-language explanation." In practice: credit decisions carry reason codes. (4) *Robustness, security and safety:* "AI is validated before use and protected like any critical system." In practice: high-tier models get independent validation. (5) *Accountability:* "A named person owns every AI system." In practice: every inventory entry names a business owner. If you chose another organisation, apply the same self-check.
+
+**Self-check.**
+- Your answer covers all five OECD values-based principles, including accountability.
+- Each commitment can be tested: an auditor could ask for a test result, a record or a named owner.
+- Each "in practice" sentence names an action, a frequency or an artefact, not a value word such as "responsibly".
+- It does not just restate the principle in other words.
+
+</details>
+
 ### 🟡 Intermediate
 Draft an AI risk appetite table for Najm Bank's customer-service chatbot covering at least four risk categories, with an appetite level, one tolerance or KRI, and an owner for each.
 *Done when:* each row has a measurable tolerance and a named role, and at least one category has a moderate (not low) appetite with a justification.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** A good table extends the bank's existing risk categories rather than inventing new ones:
+- **Conduct and customer fairness** (wrong promises, such as fee waivers): *Low.* KRI: share of sampled answers with an incorrect commitment to a customer stays below an agreed threshold; any confirmed case escalated within 5 working days. Owner: Khalid, business owner of the chatbot.
+- **Data leakage and prompt injection:** *Low.* Zero confirmed incidents of customer data exposed; DLP alerts triaged within 2 working days. Owner: CISO.
+- **Regulatory:** *Very low.* No launch or material change without completed risk tiering and sign-off. Owner: Layla, Head of AI Governance.
+- **Operational resilience** (outage, drift): *Moderate.* Answer-quality score below threshold for more than X days triggers escalation. Owner: Khalid, with IT.
+
+Moderate appetite for resilience is justified because a failure is recoverable: customers can be handed to human agents, and the chatbot makes no credit decisions. Management sets X with data.
+
+**Self-check.**
+- You have at least four rows, each with an appetite level, a measurable tolerance or KRI and a named role.
+- At least one category is moderate, with a reason (for example, a human fallback limits the harm).
+- Customer-facing risk is owned by the business owner, not by data science or IT.
+- Tolerances are numbers or triggers someone can report on, not "minimise risk".
+- Appetite is not zero across the board.
+
+</details>
+
 ### 🔴 Advanced
 Najm's corporate banking division wants to run its own AI governance because "the centre is too slow". Write a one-page recommendation to the executive sponsor comparing centralised, federated and hub-and-spoke for Najm, and propose decision rights between hub and spokes.
 *Done when:* the recommendation names what the hub keeps (policy, inventory, high-tier approvals), what spokes can decide, and how the board still gets one enterprise view.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** Recommend hub-and-spoke, not full federation. *Centralised* (today's model) gives consistency but is the bottleneck corporate banking complains about. *Federated* gives speed, but standards drift and the board loses one enterprise view, too high a price for a bank with very low regulatory appetite. *Hub-and-spoke* keeps consistency and adds speed. **The hub keeps:** the AI policy and tiering method, the single AI inventory, tooling, approval of high-tier use cases through the AI Governance Committee, and board reporting. **Spokes decide:** low-tier use cases in corporate banking, through a named AI risk champion applying the hub's method within a time limit (for example, 10 working days from complete intake); they also run first-line controls and keep the evidence. **One enterprise view:** every spoke records its systems in the one inventory and reports against the same KRIs; anything outside appetite escalates through the hub to the committee and the board risk committee, and the hub samples spoke decisions. Speed comes from delegated authority, not from a separate framework.
+
+**Self-check.**
+- You compare all three models, with a strength and a weakness for each.
+- You name what the hub keeps: policy, the inventory and high-tier approvals.
+- Spokes get real decision rights for low-tier cases, with a time limit, not just "input".
+- You explain how the board still gets one enterprise view (one inventory, common KRIs, escalation).
+- It does not let corporate banking set its own appetite or approve high-tier systems alone.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 - **Principles as the finish line.** Publishing principles is the start. Answer options that stop at "publish ethical principles" are rarely best when another option adds ownership, metrics or controls.
@@ -252,7 +296,7 @@ Najm's corporate banking division wants to run its own AI governance because "th
 # 2.2 — Roles, accountability and the AI governance committee
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1* · *BoK: I.B*
 
-**After this you can** write an AI governance committee charter that states membership, quorum and decision rights, and find two independence risks in a RACI with a fix for each. *Study time: reading about 15 min, hands-on about 110 min (estimate).*
+**After this you can** write an AI governance committee charter that states membership, quorum and decision rights, and find two independence risks in a RACI with a fix for each. *Study time: reading about 20 min, hands-on about 110 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Every AI system needs a single **accountable owner** in the business, not in IT or data science. Governance roles support that owner; they do not replace them.
@@ -390,13 +434,60 @@ Layla's **RACI for a high-tier AI system** (credit scoring), adopted by the comm
 List the roles that should be involved in approving Najm's CV-screening tool and give each one sentence on what they contribute.
 *Done when:* you have named the business owner (HR), privacy, compliance, procurement, legal and the committee, and identified which of them is accountable.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **HR business owner** (a senior HR leader, supported by the HR business partner): defines the tool's purpose and is **accountable** for how it is used on candidates. **Privacy (Sara, the DPO):** advises on and signs off the DPIA on candidates' personal data (HR prepares it), and checks data-subject rights. **Compliance:** maps the regulatory duties, including which EU AI Act obligations apply to AI in hiring, and the conduct risk. **Procurement and third-party risk (Yusuf):** vendor due diligence and AI clauses in the contract. **Legal:** contract terms, liability and IP. **AI Governance Committee:** approves the use case if it is high tier, with conditions. Layla's team runs intake and tiering, and information security reviews how the vendor handles the data. The vendor does some of the work but is never accountable for Najm's use of the tool.
+
+**Self-check.**
+- You name HR as the business owner and as the single accountable role.
+- You include privacy, compliance, procurement, legal and the committee, each with a distinct contribution.
+- You do not make the vendor, Layla's team or the committee accountable for the tool's outcomes.
+- The committee approves; it does not do the assessments itself.
+
+</details>
+
 ### 🟡 Intermediate
 Write a one-page charter for Najm's AI Governance Committee: purpose, scope, membership, quorum, decision rights, delegated authority for low-tier systems, reporting line and record-keeping.
 *Done when:* the charter has an explicit list of what the committee decides, what it delegates and what it must escalate to the board, with no decision left to "as appropriate".
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** A strong charter is specific:
+- **Purpose:** decide on high-tier AI and hard calls so that AI at Najm stays within the board's appetite.
+- **Scope:** all AI that Najm builds, buys or uses; the committee itself handles high-tier systems.
+- **Membership:** CRO (chair); Head of AI Governance (secretary); voting members from the business lines, the CDO, the DPO, the CISO, Legal and Compliance; internal audit attends as a non-voting observer.
+- **Quorum:** for example, the chair or a named deputy plus a majority of voting members, including at least two control functions.
+- **Decides:** high-tier use cases before build and before launch; policy exceptions above the threshold; acceptance of residual risk within appetite.
+- **Delegates:** low-tier decisions to the AI governance team or champions, within 10 working days, reported back to the committee.
+- **Escalates to the board risk committee:** anything outside appetite, serious incidents with customer harm, and unresolved first/second-line disagreements.
+- **Reporting and records:** quarterly report to the board risk committee; minutes, decisions with rationale, conditions, and actions with owners and dates.
+
+**Self-check.**
+- Your charter lists what the committee decides, delegates and escalates, with no "as appropriate".
+- Internal audit is an observer, not a voter.
+- The quorum means no decision can be taken without control functions present.
+- Low-tier delegation names a delegate and a time limit.
+- Records include the rationale and conditions, not just the outcome.
+
+</details>
+
 ### 🔴 Advanced
 Review the RACI above and identify two independence or conflict-of-interest risks. Propose changes and explain how you would evidence independence to an internal auditor.
 *Done when:* each risk names who is conflicted, why it matters, and a concrete fix (for example, a reporting line change or a separate reviewer).
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Risk 1: validation is accountable to the person who also drives the launch.** Layla is A for independent validation, but she is also R for intake and for launch approval. Whoever pushes a system to launch should not own the check on it, or the validation loses its value as evidence. *Fix:* make the head of model risk A for validation, reporting to the CRO separately from Layla's team, with Layla as C. **Risk 2: the second line doing first-line work.** Layla's team is R for intake and the business case and A/R for risk tiering, so it tiers a case it helped write (self-review). *Fix:* make the business owner (Khalid) R for intake, with governance as C, and have tiering done by a governance reviewer who did not work on the case. **Evidence for the auditor:** the updated RACI and organisation chart showing reporting lines, validation reports signed by model risk, workflow records with different names on preparation and review, conflict-of-interest declarations and committee minutes.
+
+**Self-check.**
+- Each risk names who is conflicted and which RACI rows create the conflict.
+- You explain why it matters: self-review weakens challenge and evidence.
+- Each fix is concrete: a reporting-line change, a role change or a separate reviewer.
+- The evidence is documentary (organisation chart, signed reports, workflow records), not "we trust them".
+- It does not make internal audit A for first- or second-line work.
+- Other conflicts in the RACI are equally valid if they meet the points above.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 - **Data science as owner.** The team that builds a model is responsible for the build, not accountable for the business outcome. Pick the business owner.
@@ -597,13 +688,58 @@ Layla's **AI Literacy Programme plan (year one)**, approved by the AI Governance
 Write five "never do" rules for all staff using GenAI tools at Najm Bank, each in one plain sentence.
 *Done when:* a new joiner with no AI knowledge would understand every rule, and at least one rule covers customer data and one covers checking outputs.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.**
+1. Never put customer names, account numbers or any other customer data into a GenAI tool that is not on the approved list.
+2. Never paste confidential bank documents, such as credit memos or source code, into a public GenAI tool.
+3. Never send, publish or act on GenAI output without checking its facts and figures yourself.
+4. Never let a GenAI tool make or announce a decision for a customer, such as waiving a fee or approving credit.
+5. Never stay silent about a GenAI problem: tell your manager, the AI Governance team or the AI concerns mailbox.
+
+These follow the acceptable-use policy and the lesson's own examples: client financials pasted into public tools, and the chatbot that promised fee waivers.
+
+**Self-check.**
+- One rule covers customer data and one covers checking outputs.
+- Each rule is one plain sentence with no jargon a new joiner would not know.
+- Rules give concrete examples (account numbers, credit memos), not just "be careful".
+- At least one rule tells people how to report a problem.
+
+</details>
+
 ### 🟡 Intermediate
 Design a 60-minute training session for credit officers who oversee the credit-scoring model. Include learning objectives, one real-looking case where the model is wrong, and how you will check competence.
 *Done when:* the session explicitly covers the model's intended purpose, known limitations, automation bias, how to override, and when to escalate.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Objectives:** by the end, officers can state the model's intended purpose and known limitations, recognise automation bias, and override or escalate correctly. **0–10 min:** what the model is for (supporting credit decisions, with no fully automated rejection of retail credit) and what it is not for. **10–20 min:** known limitations and failure modes from the model documentation, and how to read reason codes. **20–40 min:** a case: the model recommends declining a long-standing customer, and the reason code cites missing income data that is actually in the file. Officers decide, then discuss why "the model is usually right" is automation bias. **40–50 min:** how to override in the system and record a reason, and when to escalate (for example, a pattern of odd reason codes goes to the business owner and model risk); justified overrides are expected, not penalised. **50–60 min:** competence check: three short cases scored by the trainer; passing is required before model access, and override samples are reviewed quarterly.
+
+**Self-check.**
+- The session covers intended purpose, known limitations, automation bias, how to override and when to escalate.
+- Your case shows the model being wrong in a way an officer could spot.
+- Competence is checked by doing (scored cases), and access depends on it.
+- It says justified overrides are expected, not penalised.
+- It does not turn into a lecture on how the algorithm works.
+
+</details>
+
 ### 🔴 Advanced
 A regulator asks Najm's Frankfurt branch how it complies with the EU AI Act's AI-literacy duty. Draft a one-page response describing the measures, why they are proportionate for the people and systems involved, and the evidence held.
 *Done when:* your response is proportionate by role, uses the context factors the original Article 4 listed, and points to records rather than just completion rates.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** "Najm Bank's Frankfurt branch is a deployer of AI systems and, for its in-house credit model, arguably a provider. Under Art. 4 of the EU AI Act, as replaced by Regulation (EU) 2026/1744, we take measures to support the AI literacy of our staff, and we include contractors who operate our AI. **Measures:** role-based training for the board risk committee, business owners, credit officers, HR recruiters, data scientists and all staff, tied to access and refreshed on material change. **Proportionality:** we used the factors the original Art. 4 listed: staff's technical knowledge, experience, education and training; the context of use; and the persons on whom the systems are used. Credit officers who oversee a model affecting customers get hands-on override training, which Art. 26 also expects of the people assigned to oversee a system if it is high-risk; all staff get a short acceptable-use module. **Evidence:** a literacy register mapping roles to modules, competency sign-offs before access, quarterly override samples, DLP alert trends, and board minutes showing informed challenge."
+
+**Self-check.**
+- Measures differ by role; the response is not one course for everyone.
+- You use the original Art. 4 context factors to justify proportionality.
+- The evidence includes records of competence and behaviour, not only completion rates.
+- It does not claim that a certificate is required or that Najm guarantees a specific level of literacy.
+- It covers contractors and other people who operate Najm's AI.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 - **"Only high-risk systems trigger AI literacy."** Article 4 applies to providers and deployers of AI systems generally. Do not limit it to high-risk.

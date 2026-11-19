@@ -80,7 +80,7 @@ flowchart LR
 
 **The deployer's readiness steps.** Before using a high-risk system, a deployer must be able to follow the instructions for use, assign human oversight to people with the necessary competence, training, authority and support (Art. 26), ensure input data under its control is relevant and sufficiently representative, and, as an employer, inform workers' representatives and affected workers. Public bodies, and deployers using a system for **credit scoring or life and health insurance pricing**, must complete a **fundamental rights impact assessment (FRIA)** under Art. 27 before first use (see 11.3). Najm, as provider and deployer, needs both sets of steps.
 
-**Outside the EU.** Najm's Qatar and UAE operations need no CE marking, but the discipline still applies. QCB's AI guideline for financial institutions expects governance, testing and ongoing oversight of AI; read the current text on the QCB website. Banks also have **model risk management** policies (the US Federal Reserve and OCC's 2011 guidance, SR 11-7, is the classic reference; SR 26-2 replaced it in April 2026) requiring independent validation and "effective challenge". An AI release gate should reuse this machinery, not duplicate it.
+**Outside the EU.** Najm's Qatar and UAE operations need no CE marking, but the discipline still applies. QCB's AI guideline for financial institutions expects governance, testing and ongoing oversight of AI, and requires official QCB approval before launching a new AI system as a provider or materially modifying one (§11.1); for a new high-risk system, the full training, validation and testing results go to QCB for approval (§14.1). Banks also have **model risk management** policies (the US Federal Reserve and OCC's 2011 guidance, SR 11-7, is the classic reference; SR 26-2 replaced it in April 2026) requiring independent validation and "effective challenge". An AI release gate should reuse this machinery, not duplicate it.
 
 ### 🔴 Expert view
 
@@ -114,7 +114,7 @@ Two nuances often trip up experienced practitioners:
 | **GDPR** — Arts 25, 35 | Data protection by design; DPIA before high-risk processing, updated when processing changes | New data fields in v2 mean the DPIA must be reviewed before release |
 | **NIST AI RMF** — MANAGE 1.1, GOVERN 1 | Decide whether the system achieves its intended purpose and whether deployment should proceed; policies define roles and processes | Voluntary; "go/no-go" maps to MANAGE 1.1 |
 | **ISO/IEC 42001** — Annex A life-cycle controls | Documented criteria and processes for AI system verification, validation and deployment within a certifiable management system | Certification is of the management system, not a CE marking for the product |
-| **QCB AI guideline** | Governance approval, testing and oversight for AI used by Qatar-regulated financial institutions | Local banking regulators expect release governance even without an AI Act |
+| **QCB AI guideline** | Governance approval, QCB approval before launching a new or materially modified AI system (§11.1), testing and oversight for AI used by Qatar-regulated financial institutions | Local banking regulators expect release governance even without an AI Act |
 
 ## 🏛️ In practice at Najm Bank
 
@@ -139,8 +139,48 @@ Khalid lost his Sunday launch; v2 went live six weeks later with a clean file.
 ## 🛠️ Exercises
 
 - 🟢 List ten release-checklist items for Najm's customer-service chatbot (limited risk under the AI Act), marking which the credit model also needs. *Done when:* each item names who provides the evidence.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** Ten items, each with its evidence provider: (1) go/no-go criteria agreed at intake: business owner and Layla *[credit too]*; (2) answer-accuracy test on a fixed set of customer questions: Dana's team *[credit too, as performance tests]*; (3) quality across languages and customer segments: Dana's team *[credit too, as fairness testing]*; (4) red-team and security review: security team *[credit too]*; (5) system card and limitations: Dana's team *[credit too]*; (6) staff escalation guide (instructions for use): business owner *[credit too]*; (7) monitoring and alerts live: Omar *[credit too]*; (8) rollback tested and human agents ready as fallback: operations *[credit too]*; (9) DPIA reviewed: Sara, the DPO *[credit too]*; (10) notice telling customers they are talking to an AI: compliance *[chatbot only; the credit model has its own customer notices]*. The credit model also needs items the chatbot does not: independent validation, conformity assessment, declaration, CE marking, EU registration and the FRIA.
+
+**Self-check.**
+- Every item names who provides the evidence, not just what it is.
+- Your list covers all six areas: performance, fairness, security, documentation, operations, legal and people.
+- It marks which items the credit model shares, and lists conformity, declaration, CE, registration and FRIA as credit-only.
+- It does not put EU conformity steps on the limited-risk chatbot.
+
+</details>
+
 - 🟡 Draft go/no-go criteria for Najm's fraud-detection model, explaining why EU conformity steps do not apply (fraud detection is excluded from the Annex III credit category) but fairness and rollback criteria still do. *Done when:* each of the six areas has a measurable criterion.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** Fraud detection is excluded from the Annex III credit category, so it is not high-risk on that ground: no conformity assessment, declaration, CE marking or EU registration. Its errors still hurt people: a false fraud flag blocks a customer's payment, and flags can fall unevenly across groups. NIST AI RMF MANAGE 1.1, the QCB guideline, model risk management and the GDPR still expect a governed release. Illustrative criteria with example figures, fixed at intake: **performance**: for example, detection rate ≥ 80% and false-positive rate ≤ 2% in every segment, not only on average; **fairness**: for example, false-positive rate ratio ≥ 0.80 between nationality groups and between age groups; **robustness and security**: no open critical red-team findings on evasion; **documentation**: system card, limitations and analyst instructions final; **operations**: monitoring live, rollback tested, alert queue staffed; **legal and people**: DPIA reviewed by Sara (DPO), analysts ≥ 95% trained before go-live.
+
+**Self-check.**
+- Your answer says why the conformity steps do not apply (the Annex III exclusion), not "because it is internal".
+- Each of the six areas has a number or a pass/fail test.
+- Fairness is measured on errors (false positives), not only on overall accuracy.
+- Rollback is tested and has a staffed fallback.
+- The thresholds are set before testing, not after.
+
+</details>
+
 - 🔴 Design a staged rollout for credit-scoring v2 covering EU customers: which stage counts as putting into service, what must be complete before it, and which rollback triggers apply. *Done when:* your plan shows, stage by stage, which version scored EU applicants, and names the evidence (conformity record, logs) proving none was scored by a non-conformant system.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** Putting into service in the EU starts at the first stage where v2 makes real decisions about EU applicants. **Shadow (4 weeks):** v2 scores live traffic, outputs only logged; v1 decides for everyone. v2's scores for EU applicants are never used, so this is not putting into service (or exclude EU traffic from shadow to keep the proof simple). It still needs a lawful basis and DPIA v3. **Pilot (Doha retail, 2 weeks):** real decisions, but no EU applicants; v1 still scores Frankfurt. DPIA v3 also covers the pilot, and if v2 is a material modification, official QCB approval is needed before it makes real decisions (§11.1). **Canary (10%):** the first stage where v2 can decide for EU applicants, so this is putting into service. Before it: internal-control conformity assessment, declaration signed by the CRO, digital CE marking, EU database registration, FRIA, final instructions for use, credit officers trained, monitoring live, rollback tested. **Full release.** Rollback triggers at every live stage: PSI > 0.25 on key inputs, approval-rate ratio < 0.85, complaints > 2× baseline, with v1 plus manual underwriting as fallback. Evidence: the routing configuration, decision logs recording the model version for every EU decision, and a conformity record and registration dated before the first v2 EU decision. Art. 60 testing is not a shortcut.
+
+**Self-check.**
+- Your plan names the exact stage at which v2 is put into service for EU applicants.
+- All conformity steps (assessment, declaration, CE marking, registration) plus the FRIA are complete before that stage.
+- It shows, stage by stage, which version scored EU applicants.
+- The rollback triggers are numbers, with a named, staffed fallback.
+- It does not treat the pilot or shadow mode as exempt from data protection.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 
@@ -240,7 +280,7 @@ Khalid lost his Sunday launch; v2 went live six weeks later with a clean file.
 # 10.2 — Monitoring, drift and incidents
 *Level: 🔴 Advanced* · *Prerequisites: 10.1, 9.3* · *BoK: III.C*
 
-**After this you can** choose monitoring signals that detect drift, quality problems or harm, and build a reporting timeline from awareness to each notification for an AI incident. *Study time: reading about 15 min, hands-on about 110 min (estimate).*
+**After this you can** choose monitoring signals that detect drift, quality problems or harm, and build a reporting timeline from awareness to each notification for an AI incident. *Study time: reading about 20 min, hands-on about 110 min (estimate).*
 
 ## ⚡ In 60 seconds
 
@@ -335,7 +375,7 @@ An initial, incomplete report is allowed, followed by a complete one. The provid
 | **EU AI Act** (Art. 73) | Serious incident involving a high-risk system | 15 days at most; 10 for a death; 2 for the gravest cases |
 | **GDPR** (Art. 33) | Personal data breach, unless unlikely to result in risk | To the supervisory authority without undue delay and, where feasible, within **72 hours** of becoming aware |
 | **GDPR** (Art. 34) | Breach likely to result in *high* risk to individuals | Tell data subjects without undue delay |
-| Sector and local rules | For example, major ICT incidents under the EU's Digital Operational Resilience Act (DORA) where it applies; Qatar PDPPL and QCB requirements | Check scope and current text |
+| Sector and local rules | For example, major ICT incidents under the EU's Digital Operational Resilience Act (DORA) where it applies; Qatar PDPPL and QCB requirements (the QCB AI guideline: report a serious incident to QCB immediately once a causal link to the AI system is established or reasonably likely, §19.5) | Check scope and current text |
 
 The Najm employer-field event was not a data breach: no data was lost or disclosed. Whether it infringed fundamental-rights obligations is a judgement for counsel, made quickly and documented either way.
 
@@ -384,8 +424,48 @@ After the employer-field event, Layla and Omar rebuild the credit model's **moni
 ## 🛠️ Exercises
 
 - 🟢 For Najm's customer-service chatbot, list five monitoring signals and say for each whether it detects data drift, concept drift, quality problems or customer harm. *Done when:* each signal has a named owner.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** (1) **Mix of question topics and languages** compared with launch, for example a jump in mortgage questions after a campaign: data drift; owner: chatbot business owner. (2) **Answer accuracy on a weekly sample** checked against the current fee schedule: when fees change, the same question has a different right answer, so this catches concept drift as well as quality problems; owner: Dana's team. (3) **Hand-off rate to human agents and repeat contacts within 24 hours:** quality problem; owner: customer-service team lead. (4) **Complaints and staff reports tagged "chatbot", including wrong fee or product information:** customer harm; owner: complaints lead, escalating to Layla. (5) **Failed or slow responses and upstream model version changes:** quality and operations; owner: data engineering, routing version changes to the change board (10.3). Each signal needs an alert threshold, as in Najm's credit monitoring plan. Where the course names no person, the owner is a named role, as in that plan.
+
+**Self-check.**
+- You have five signals, each labelled as data drift, concept drift, quality or customer harm.
+- At least one signal is about people (complaints, hand-offs), not only metrics.
+- Each signal has a named owner: a person where the course names one (Dana, Layla), otherwise a named role, as in Najm's monitoring plan.
+- Your answer explains the difference: data drift is a change in what comes in, concept drift is a change in what the right answer is.
+
+</details>
+
 - 🟡 Draft the monitoring section of the instructions for use Najm (as provider) gives its credit officers (as deployers): what to watch, how to report, when to stop using the score. *Done when:* every instruction is an action with a threshold or an example, and no term is used without a plain explanation.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** *Monitoring: what credit officers do.* **Watch inputs.** The score is the model's estimate of how likely the applicant is to repay. If a field looks wrong for the applicant (for example "unknown employer" for someone employed by a government entity), do not rely on the score: refer the application for manual review and report it. **Override with reasons.** An override means deciding differently from the score. Record why. If you override more than 1 in 5 of your cases in a week (20%), report it. Very few overrides (below 2%) are also reviewed: never accept the score without reading the case. **Tag complaints.** Tag any complaint about an automated decision "automated decision". **How to report.** The same working day, to the model owner (Dana) through the incident channel, with the application number, the model version shown (the version number on the screen) and what you saw. If people may be harmed, also tell Layla. **When to stop.** Stop using the score and switch to the fallback (v1 scorecard plus manual underwriting) when the bank sends a suspension notice (a message telling you to stop using the score), when the screen shows a model version not listed in these instructions, or when the applicant's inputs are missing or wrong. This reflects Art. 26: deployers monitor according to the instructions, inform the provider and suspend use where there is risk.
+
+**Self-check.**
+- Every instruction is an action with a threshold or a concrete example.
+- Terms such as "override" and "score" are explained in plain words.
+- It says who to report to, how and how fast.
+- It names when to stop using the score and what replaces it.
+- It does not ask officers to calculate drift statistics themselves.
+
+</details>
+
 - 🔴 A credit model under-scores applicants of one nationality for two months before anyone notices. Decide which reporting regimes may apply, what facts you need and the deadlines. *Done when:* you have a timeline from "aware" to each possible notification, with a named decision-maker.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Day 0, "aware":** Dana confirms the pattern from an alert or complaint trend; severity S1 (systematic discrimination in credit). Layla owns the incident and escalates the same day to the CRO, Sara (DPO) and legal. Containment within hours: fall back to v1 plus manual review. Remediation: re-assess every applicant of that nationality scored in the two months under v1 or manual review and offer reconsideration; owner Khalid with Dana. **Facts needed:** countries affected (EU applicants?), number of applicants and wrong declines, cause, whether it infringes EU non-discrimination obligations, and whether any personal data was lost or disclosed. **EU AI Act Art. 73:** if counsel finds a serious incident (infringement of fundamental-rights obligations), Najm as provider reports to the market surveillance authority where it occurred, immediately after a causal link is established and no later than 15 days after awareness, or 2 days if it is a widespread infringement (a defined term needing harm across several Member States: unlikely with only Frankfurt; counsel confirms). An initial, incomplete report is allowed. The CRO approves it on Layla's recommendation. **GDPR Art. 33/34:** only if there was also a personal data breach: 72 hours where feasible; Sara decides. **Sector and local:** QCB (a serious incident is reported immediately once a causal link to the AI system is established or reasonably likely, §19.5), Qatar PDPPL, DORA where they apply; check with legal. The two unnoticed months do not start the clock, but explain them and fix the monitoring gap.
+
+**Self-check.**
+- Your timeline starts at "aware", not at the first wrong score.
+- It names a decision-maker for each notification.
+- It gives 15 days, 2 days for a widespread infringement and the 72-hour GDPR clock only if there is a breach.
+- It treats "is this a serious incident?" as a documented legal judgement.
+- It includes containment and remediation for affected applicants, not only reporting.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 
@@ -619,8 +699,48 @@ The AI Governance Committee adopts a **change classification matrix** for all ti
 ## 🛠️ Exercises
 
 - 🟢 Classify these five changes to Najm's chatbot using the matrix: new greeting text; switching to a newer foundation-model version; adding a mortgage-rates FAQ; letting the bot tell customers whether they are likely to qualify for a loan; a security patch. *Done when:* each has a class and a one-line reason.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** (1) **New greeting text: Minor.** No effect on behaviour or compliance; peer review and log it (check it keeps the AI notice if the greeting carries it). (2) **Newer foundation-model version: Significant.** A vendor model update can change every answer; re-validate, update documentation, staged rollout. (3) **Mortgage-rates FAQ: Significant.** It is within the chatbot's purpose, but wrong rate information harms customers, so check the content against current rates before go-live. (4) **Telling customers whether they are likely to qualify for a loan: Substantial.** This changes the intended purpose to assessing creditworthiness, an Annex III high-risk use; under Art. 25 Najm becomes provider of a high-risk system: new intake, conformity assessment, FRIA, committee approval. (5) **Security patch: Minor** if regression tests show no change in outputs; Significant if they do. "Planned" does not apply: the chatbot has no pre-determined change plan.
+
+**Self-check.**
+- Each change has one class and a one-line reason.
+- You classed the loan-qualification change as Substantial and named the change of intended purpose and the role shift (Art. 25).
+- The new foundation-model version is not Minor.
+- It does not use "Planned" for a system without a pre-determined plan.
+
+</details>
+
 - 🟡 Write the "pre-determined changes" section of the credit model's technical documentation so that monthly retraining is planned rather than a substantial modification: data window, fixed features, acceptance tests, rollback and reporting. *Done when:* every element is a number, list or pass mark (window length, feature list, test thresholds) that a retrain either meets or fails.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** *Pre-determined changes: monthly retraining of credit score v2.* **Scope:** retrain only; same architecture, intended purpose, population and countries. **Data window:** the latest 24 months of applications with known outcomes, from the same listed sources. **Fixed features:** the v2 feature list in the technical documentation; adding or removing a feature is a significant change. **Acceptance tests (all must pass):** Gini ≥ 0.55 overall and ≥ 0.50 in each segment; approval-rate ratio ≥ 0.90 across sex and age bands; actual/predicted within 0.8–1.2 per segment; PSI ≤ 0.10 against the current model's scores; not worse than the current model (champion–challenger). **Rollback:** a retrain that fails any test is not promoted; after promotion, automatic return to the previous version if PSI > 0.25 or approval-rate ratio < 0.85. **Versioning and reporting:** every retrain registered with data snapshot, code commit and test results; monthly summary to the AI Governance Committee, overseen by the Model Validation Unit. Anything outside this plan is at least a significant change, and a substantial modification if it affects compliance or the intended purpose. Because v2 is already live, adding this plan is itself such a change: it needs re-validation and a conformity assessment that covers the plan. Only later retrains that stay inside the plan are Planned, not substantial modifications (Art. 3(23), Art. 43(4)).
+
+**Self-check.**
+- Every element is a number, list or pass mark that a retrain meets or fails.
+- Fairness tests sit alongside performance tests.
+- It says what happens if a test fails (no promotion, automatic rollback).
+- It states that changes outside the plan are not covered.
+- It ties the plan to a conformity assessment that covers it, and notes that because v2 is already live, adding the plan now needs re-validation and that assessment first; writing the section alone is not enough.
+
+</details>
+
 - 🔴 Najm's vendor CV-screening tool is being replaced. Draft the decommissioning plan: what Najm (the deployer) must obtain from the vendor about data deletion, which candidate records it keeps and for how long (state assumptions), and who is notified. *Done when:* all seven decommissioning elements have an owner and a date.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** Assumed cut-over 31 March 2027; HR is business owner. (1) **Decision and rationale:** retirement and replacement approved by the committee; dependencies listed (HR reports, interview scheduling). Owner: Layla; by 15 January 2027. (2) **Transition:** new tool or manual screening ready, recruiters briefed. Owner: HR; by 31 March. (3) **Notification:** recruiters, candidates in open campaigns, workers' representatives, Sara and Yusuf (procurement). Owner: HR with Sara; by 1 March. (4) **Retention:** before deletion, export decision logs (at least six months under Art. 26) and records of unsuccessful candidates for an assumed 12 months to defend discrimination claims; hired candidates' records move to the employee file. Litigation holds override. Owner: Sara; by 31 March. (5) **Disposal:** a deletion certificate from the vendor covering Najm's candidate data, backups and sub-processors, and confirmation whether Najm data trained the vendor's model. Owner: Yusuf; by 30 April. (6) **The model:** if a model was trained on Najm data, it is assessed under EDPB Opinion 28/2024 and deleted or kept on that basis. Owner: Sara; by 30 April. (7) **Records and inventory:** access revoked, inventory set to "Retired". Owner: Omar; by 30 April.
+
+**Self-check.**
+- All seven elements have an owner and a date.
+- Your assumptions on retention periods are stated, not presented as law.
+- It asks the vendor for written proof of deletion, including backups and any model trained on Najm data.
+- It keeps what the law requires before deleting the rest.
+- Candidates and workers' representatives are among those notified, not only internal IT.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 

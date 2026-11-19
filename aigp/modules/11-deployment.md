@@ -129,6 +129,19 @@ Layla's team writes a **Deploy Decision Memo** for the committee.
 ## 🛠️ Exercises
 
 - 🟢 Map the stakeholders for Najm's credit memo copilot (a GenAI tool that drafts memos for relationship managers). *Done when:* you have users, affected persons, indirectly affected people and overseers, with at least two vulnerable groups identified or ruled out with reasons.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Users:** relationship managers, who prompt the copilot and sign the memo; credit officers, who rely on it. **Affected persons:** customers whose financial statements are summarised and whose credit decision the memo informs, plus guarantors or directors named in it. **Indirectly affected:** customers' families and employees; depositors and shareholders through credit losses. **Overseers:** Khalid (business owner), Layla's AI governance team, Sara (DPO), internal audit, the AI Governance Committee, the QCB and, for the Frankfurt branch, EU authorities. **Vulnerable groups:** customers in financial difficulty, for whom a misread figure can tip the decision; small-business owners with limited financial literacy, least able to spot or contest an error. Minors are ruled out: they are not credit applicants.
+
+**Self-check.**
+- Your map has all four groups.
+- It treats the customers in the memo as affected persons, not only the tool's users.
+- At least two vulnerable groups are named, or ruled out with a reason.
+- Overseers include a regulator, not only internal teams.
+
+</details>
+
 - 🟡 Write the "alternatives" section for Najm's vendor CV-screening tool, comparing it with doing nothing, structured human screening, and a simpler knock-out-questions form. *Done when:* each option has benefits, risks and a rough cost.
 - 🔴 Run the full classification checklist for the chatbot's *current* use (hours and fees) and the proposed use (pre-qualification) in the EU, Qatar and the UAE. *Done when:* you can state Najm's role, risk tier and key obligations for each use in each jurisdiction, flagging what you would verify with counsel.
 
@@ -143,7 +156,7 @@ Layla's team writes a **Deploy Decision Memo** for the committee.
 | Knock-out questions form | Cheap, fast, criteria can be published | Crude criteria (years of experience, degree) can act as proxies; disabled applicants need another route | Low |
 | Vendor AI tool | Fast at scale | High-risk in the EU (Annex III): Art. 26 deployer duties, bias testing, informing workers; vendor opacity | Licence plus governance effort |
 
-**🔴 Classification.** *Current use (hours and fees).* EU: Najm is the deployer of a system that is not high-risk; under Art. 50 customers must know they are talking to AI (the provider builds this in, Najm checks it is switched on); the GDPR and consumer law apply to wrong answers. Qatar: the PDPPL and the QCB AI guideline. UAE: the UAE PDPL, or the DIFC's own data protection law if the business sits in the DIFC. *Proposed use (pre-qualification).* EU: the intended purpose becomes creditworthiness assessment, so the system is high-risk under Annex III and Najm becomes its provider (Art. 25): conformity assessment, technical documentation, quality management system and registration, plus a FRIA as deployer (Art. 27), a DPIA and an Art. 22 check. Qatar and the UAE: no AI Act, but the QCB guideline expects a documented risk assessment and oversight, and data protection law applies. *Verify with counsel:* whether deterring an application counts as a decision, and which UAE regime applies.
+**🔴 Classification.** *Current use (hours and fees).* EU: Najm is the deployer of a system that is not high-risk; under Art. 50 customers must know they are talking to AI (the provider builds this in, Najm checks it is switched on); the GDPR and consumer law apply to wrong answers. Qatar: the PDPPL and the QCB AI guideline, which requires customers to be told when they are interacting with AI (§20.1). UAE: the UAE PDPL, or the DIFC's own data protection law if the business sits in the DIFC. *Proposed use (pre-qualification).* EU: the intended purpose becomes creditworthiness assessment, so the system is high-risk under Annex III and Najm becomes its provider (Art. 25): conformity assessment, technical documentation, quality management system and registration, plus a FRIA as deployer (Art. 27), a DPIA and an Art. 22 check. Qatar and the UAE: no AI Act, but under the QCB guideline a system that determines consumer access to financial services must be classified high-risk (§9.7.1), with a documented risk assessment and human oversight (§9, §13), and data protection law applies. *Verify with counsel:* whether deterring an application counts as a decision, and which UAE regime applies.
 
 *Self-check:* each use has a role, a tier and at least two obligations per jurisdiction; you spotted the Art. 25 role change; uncertain points are flagged, not guessed.
 
@@ -365,6 +378,31 @@ Yusuf and Layla create a **Vendor AI Due Diligence Scorecard**. Here is the resu
 ## 🛠️ Exercises
 
 - 🟢 Write ten due diligence questions for the credit memo copilot's foundation-model provider. *Done when:* each question maps to a risk (data use, versions, security, IP, documentation) and a red-flag answer.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.**
+
+| Risk | Question | Red-flag answer |
+|---|---|---|
+| Data use | 1. Under our enterprise or API terms, are prompts or outputs used to train any model? | "Yes, by default" |
+| Data use | 2. How long are prompts kept, and who can access them? | Vague or indefinite |
+| Data use | 3. Where are prompts processed, and by which sub-processors? | Undisclosed |
+| Versions | 4. Can we pin a version, with notice before changes or retirement? | Silent updates |
+| Versions | 5. Do you share evaluation results for each version? | "Not available" |
+| Security | 6. Do you hold ISO/IEC 27001 or SOC 2? | None |
+| Security | 7. How do you handle prompt injection, data leakage and incident notice? | No incident process |
+| IP | 8. What is your copyright policy, and do you indemnify us over outputs? | No policy; no indemnity |
+| Documentation | 9. Will you give us, as a downstream provider, the Art. 53 information on capabilities and limitations? | "Proprietary" |
+| Documentation | 10. Which known limitations, such as confabulation on figures, do you document? | "None" |
+
+**Self-check.**
+- All five risks are covered, each question mapped to one.
+- Each red flag is a concrete answer, not "a bad answer".
+- You ask for the Art. 53 documentation, not marketing material.
+
+</details>
+
 - 🟡 Draft the incident-notification and change-notification clauses for the chatbot platform contract, and explain how the deadlines fit Najm's own GDPR and AI Act timelines. *Done when:* each clause states what triggers it, who notifies whom, by when and what the notice contains, and your note shows how the vendor's deadline leaves Najm time inside its own clocks.
 - 🔴 Dana proposes an open-weight model hosted on Najm's servers for the copilot, instead of an API. Write a one-page comparison of governance obligations and residual risks for the two options. *Done when:* both options are compared under the same headings (documentation, data, security, change, testing, licence, residual risk) and the page ends with a recommendation and its conditions.
 
@@ -617,6 +655,28 @@ A good assessment record states: who did it and with what independence; the vers
 ## 🛠️ Exercises
 
 - 🟢 For each Najm system (credit score, chatbot, CV screener, credit memo copilot, fraud detection, staff GenAI use), say whether a DPIA, a FRIA and a conformity assessment are required in the EU, and who does each. *Done when:* each answer has a one-line reason.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.**
+
+| System | DPIA | FRIA | Conformity assessment |
+|---|---|---|---|
+| Credit score v2 | Yes, Najm as controller (Sara advises): profiling for significant decisions | Yes, Najm as deployer: credit scoring of individuals (Art. 27) | Yes, Najm as provider: built in-house, Annex III |
+| Chatbot | Najm (Sara): screen against DPA criteria and record it; keep the existing DPIA current, updated before any change of purpose | No: not high-risk | No: not high-risk; the vendor builds in the Art. 50 disclosure |
+| CV screener | Yes, Najm: scoring with significant effects | No: Najm is not a public body; not credit or insurance | Yes, the vendor as provider, unless Najm rebrands or repurposes it (Art. 25) |
+| Credit memo copilot | Yes, Najm: customer financial data feeding credit decisions | Only for natural persons (e.g. sole traders) and outside the Art. 6(3) preparatory-task derogation, which never covers profiling (see 6.1) | Same condition; Najm provides the copilot system on a GPAI model; relying on Art. 6(3) means documenting and registering |
+| Fraud detection | Yes, Najm: large-scale monitoring and profiling | No: not high-risk (fraud exclusion) | No: not high-risk |
+| Staff GenAI use | Najm (Sara advises), for the enterprise tool if it processes customer data | No: not high-risk | No: not high-risk; Najm only deploys |
+
+**Self-check.**
+- Each required assessment names who does it, and every cell gives a one-line reason.
+- Credit scoring gets a FRIA; the CV screener does not.
+- Conformity assessment sits with the provider, never with a deployer as such.
+- The copilot answer turns on natural persons and Art. 6(3), not a guess.
+
+</details>
+
 - 🟡 Scope an internal audit of Najm's CV-screening deployment: criteria, boundary, evidence, tests and level of assurance. *Done when:* each of the five elements names something concrete (a rule, a boundary, a document or log, a test, a level of assurance) that could be checked without asking you.
 - 🔴 Design Najm's integrated impact assessment template so that one exercise produces a compliant DPIA and FRIA plus the ISO/IEC 42001 impact assessment. *Done when:* you can show which section satisfies each legal requirement and who signs it.
 
@@ -820,7 +880,7 @@ The Samsung lesson is that bans without alternatives drive use underground. Prov
 | **1. Detect** | Monitoring alerts, complaints, staff reports, vendor notices, media | Anyone; routed to the AI incident desk |
 | **2. Triage** | Severity (10.2 matrix); which system, version, users and customers; is personal data involved? | Layla's team with the system owner |
 | **3. Contain** | Suspend use, switch to fallback, restrict features, disable integrations; preserve logs and evidence | System owner (Khalid for lending), Omar for technical steps |
-| **4. Notify** | AI Act: inform the **provider first**, then importer or distributor and the market surveillance authority for serious incidents; GDPR: the DPO assesses whether it is a breach and whether the 72-hour clock applies; sector and local regulators (QCB); customers where required or fair | Legal, Sara (DPO), Compliance |
+| **4. Notify** | AI Act: inform the **provider first**, then importer or distributor and the market surveillance authority for serious incidents; GDPR: the DPO assesses whether it is a breach and whether the 72-hour clock applies; sector and local regulators (QCB, for a serious incident, §19.5); customers where required or fair | Legal, Sara (DPO), Compliance |
 | **5. Remediate** | Correct affected decisions; offer reconsideration; fix root causes with the vendor; update the FRIA or DPIA if the risk picture changed | System owner, vendor manager (Yusuf) |
 | **6. Communicate** | Honest, timely messages to affected people, staff and, if necessary, the public | Communications with Legal |
 | **7. Learn** | Post-incident review; update controls, training, contracts and the risk register; report to the committee | Layla |
@@ -842,7 +902,7 @@ Run **tabletop exercises** at least annually for high-risk systems; plans often 
 - maintain AI literacy for staff (Art. 4);
 - cooperate with competent authorities.
 
-In Qatar and the UAE, similar expectations flow from data protection law and financial-sector guidance such as QCB's AI guideline. Hedge on specifics and check current texts.
+In Qatar and the UAE, similar expectations flow from data protection law and financial-sector guidance such as QCB's AI guideline, which requires, for example, a Human Oversight protocol for every AI system (§13.1), telling customers when they interact with AI (§20.1), explanations of the factors behind AI decisions on request (§20.5), and expects serious incidents to be reported to QCB (§19.5). For the UAE, check the current texts.
 
 **Oversight of oversight.** The AI Governance Committee receives a quarterly **operating report** per high-risk system (metrics, overrides, appeals, incidents, changes, open actions), and internal audit tests that it reflects reality.
 
@@ -880,6 +940,23 @@ After the findings, Najm moved relationship managers onto the enterprise copilot
 ## 🛠️ Exercises
 
 - 🟢 Write the AI disclosure and the "how to contest" text for Najm's customer-service chatbot and for a credit decline letter. *Done when:* each is under 80 words and a customer would understand what to do next.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** *Chatbot:* "You are chatting with Najm's virtual assistant. It is an AI system, not a person, and it can make mistakes, so check important details on our fees page or with our staff. Type 'agent' at any time to talk to a person. If an answer was wrong or caused you a problem, tell us through [complaints channel]: a staff member will review it and reply."
+
+*Credit decline letter:* "We could not approve your personal-loan application. A credit officer made this decision, helped by an AI scoring system. The main reasons were: [reason 1] and [reason 2]. You can ask us for a fuller explanation, give us information we may have missed, and ask for the decision to be reviewed by a senior underwriter. Reply to this letter or call [number]; we will answer within 10 working days."
+
+This covers Arts 50, 26 and 86. As an officer decides, the review rights are good practice: GDPR Art. 22(3) covers only solely automated decisions (see *SCHUFA* if the officer relies heavily on the score).
+
+**Self-check.**
+- Each text is under 80 words, in plain language.
+- Each says AI is involved and what it does.
+- The decline gives specific reasons, not "the algorithm decided".
+- Each gives a channel, a human reviewer and, for the decline, a deadline.
+
+</details>
+
 - 🟡 Design an oversight dashboard for the CV-screening tool: five metrics, thresholds and what each threshold triggers. *Done when:* you can explain how each metric detects automation bias or human bias.
 - 🔴 Run a tabletop exercise on paper: the vendor chatbot tells EU customers that a fee has been waived when it has not, and a screenshot goes viral. Walk through all seven playbook steps with names, timings and notifications. *Done when:* you have identified at least two gaps in Najm's current arrangements and a fix for each.
 
