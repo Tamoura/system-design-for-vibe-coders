@@ -582,7 +582,7 @@ Layla gives Omar and Sara two study plans and lets them choose. Both map directl
 ## 🧭 Why it matters
 Najm Bank's board meets in six weeks. The Chief Risk Officer wants one page: *what AI do we use, and where is the risk?* Layla has no inventory and no policy. She also has a hard external date on her mind: under the EU AI Act, the rules for high-risk systems listed in Annex III, which include AI used to evaluate the creditworthiness of individuals and AI used in recruitment, apply from 2 August 2026. The Frankfurt branch lends to EU residents. (The "Digital Omnibus on AI", adopted as Regulation (EU) 2026/1744 in July 2026, moved the Annex III date to 2 December 2027; see 6.3. The exam may still test the original dates.)
 
-Meanwhile the Qatar Central Bank has issued an AI guideline for financial institutions, Qatar's data protection law (Law No. 13 of 2016, the PDPPL) already covers the customer data in Najm's models, and the UAE operation brings in the UAE's federal data protection law. None of that analysis can start until Layla knows what systems exist.
+Meanwhile the Qatar Central Bank's AI guideline has been in force since 4 September 2024 (§1) for every entity it regulates (§5), Qatar's data protection law (Law No. 13 of 2016, the PDPPL) already covers the customer data in Najm's models, and the UAE operation brings in the UAE's federal data protection law. None of that analysis can start until Layla knows what systems exist.
 
 ## 📐 How it works
 
@@ -682,7 +682,7 @@ flowchart LR
 | **NIST AI RMF** — Govern function | Includes maintaining an inventory of AI systems, resourced according to risk | Inventory is a governance foundation |
 | **ISO/IEC 42001** | Requires the organisation to define the scope of its AI management system and understand its AI systems and context | Scope and context come before controls |
 | **Qatar PDPPL** | Qatar's Law No. 13 of 2016 on personal data protection, applying to personal data processed in Qatar | Home-country privacy law for Najm's Qatari customers |
-| **QCB AI guideline** | The Qatar Central Bank's AI guideline for regulated financial institutions, setting supervisory expectations for governance of AI | Sector supervisor expectations sit alongside general law; read the current text on the QCB site |
+| **QCB AI guideline** | The Qatar Central Bank's AI guideline, in force since 4 September 2024 (§1) for every QCB-regulated entity that builds, buys or outsources AI (§5), setting supervisory expectations for governance of AI | Sector supervisor expectations sit alongside general law; launching a new AI system as a provider needs prior QCB approval (§11.1) |
 
 ## 🏛️ In practice at Najm Bank
 Layla presents the inventory to the AI Governance Committee with a short decision paper. The minute records:
