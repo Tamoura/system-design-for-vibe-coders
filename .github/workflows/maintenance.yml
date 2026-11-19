@@ -15,7 +15,7 @@ jobs:
   links:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0, pinned by commit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4.4.0, pinned by commit
 
       # External (http/https) links only, with the same settings and excludes as publish.yml. Internal
       # links are checked on the assembled site by scripts/qa/site_links.py in publish.yml, because the
@@ -38,7 +38,7 @@ jobs:
   stale-claims:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0, pinned by commit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4.4.0, pinned by commit
 
       - name: Fail if a claim is past its review-by date
         run: |
@@ -75,9 +75,9 @@ jobs:
   audit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0, pinned by commit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4.4.0, pinned by commit
 
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0, pinned by commit
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v4.4.0, pinned by commit
         with:
           node-version: 22
 
