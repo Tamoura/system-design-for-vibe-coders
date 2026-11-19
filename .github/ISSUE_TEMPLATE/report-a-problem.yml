@@ -25,6 +25,7 @@ body:
         - "Building AI Applications & Agents: Zero to Hero (aiapps)"
         - A Practical Guide to Becoming an AI-Native Engineer (ainative)
         - "Founder's Playbook for AI-First Builders (founder)"
+        - "Running IT as a Business (itbiz)"
         - The landing page or the whole site
     validations:
       required: true

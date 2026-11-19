@@ -74,6 +74,9 @@ jobs:
       - name: Verify the founder course output matches its markdown
         run: if [ -f founder/index.html ]; then npm run founder:check; else echo "founder course not built yet — skipped"; fi
 
+      - name: Verify the IT-as-a-business course output matches its markdown
+        run: if [ -f itbiz/index.html ]; then npm run itbiz:check; else echo "itbiz course not built yet — skipped"; fi
+
       - name: Verify the agentic pages carry no organisation name
         run: node scripts/agentic-neutral.mjs --check
 
@@ -118,7 +121,7 @@ jobs:
       - name: Assemble the site
         run: |
           # Course library: landing hub at root, each course in its own subpath.
-          mkdir -p _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai _site/career _site/data _site/cloud _site/testing _site/aiapps _site/ainative _site/founder
+          mkdir -p _site _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai _site/career _site/data _site/cloud _site/testing _site/aiapps _site/ainative _site/founder _site/itbiz
           cp landing.html _site/index.html
           # How these courses are made (linked from every page's notice) → /about/
           mkdir -p _site/about
@@ -195,7 +198,13 @@ jobs:
                founder/index.ar.html founder/course.ar.html founder/COURSE.ar.md founder/TOOLKIT.ar.md \
                founder/assessment.html founder/assessment.ar.html _site/founder/
           fi
-          ls -lh _site _site/about _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai _site/career _site/data _site/cloud _site/testing _site/aiapps _site/ainative _site/founder
+          # Running IT as a Business → /itbiz/ (once built)
+          if [ -f itbiz/index.html ]; then
+            cp itbiz/index.html itbiz/course.html itbiz/COURSE.md itbiz/TOOLKIT.md \
+               itbiz/index.ar.html itbiz/course.ar.html itbiz/COURSE.ar.md itbiz/TOOLKIT.ar.md \
+               itbiz/assessment.html itbiz/assessment.ar.html _site/itbiz/
+          fi
+          ls -lh _site _site/about _site/vibe _site/agentic _site/saas _site/aigp _site/aipm _site/secai _site/career _site/data _site/cloud _site/testing _site/aiapps _site/ainative _site/founder _site/itbiz
 
       # Internal links on the assembled site must resolve (files and #anchors). This blocks the deploy:
       # a broken link inside the library is ours to fix. External links are reported by the next step.
