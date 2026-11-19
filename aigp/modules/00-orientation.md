@@ -9,7 +9,7 @@
 # 0.1 — What AI governance is, and what the AIGP proves
 *Level: 🟢 Beginner* · *Prerequisites: none* · *BoK: Orientation (all domains)*
 
-**After this you can** classify seven governance instruments as hard law, guidance, standard, principle or internal policy, and explain two routes by which a voluntary one becomes binding for a bank. *Study time: reading about 15 min, hands-on about 70 min (estimate).*
+**After this you can** classify seven governance instruments as hard law, guidance, standard, principle or internal policy, and explain two routes by which a voluntary one becomes binding for a bank. *Study time: reading about 20 min, hands-on about 70 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **AI governance** is the system of people, rules, processes and evidence an organisation uses to decide which AI to build or use, under what conditions, and how to keep it within the law, its values and its risk appetite for as long as it runs.
@@ -133,8 +133,46 @@ Layla's first artefact is a one-page **AI Governance Charter**, approved by the 
 
 ## 🛠️ Exercises
 - 🟢 **Define it in your own words.** Write a two-sentence definition of AI governance for your own organisation (or Najm), then list one example each of direction, structure, process and evidence. *Done when:* each of the four parts has a concrete example, not a generic label.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** "AI governance at Najm Bank is the system of people, rules, processes and evidence the bank uses to decide which AI to build, buy or use, and on what conditions. It keeps each system within the law, the bank's values and its risk appetite for as long as it runs, with a named person accountable for it." Examples: **direction**, the AI risk appetite the Charter reserves to the Board; **structure**, the AI Governance Committee chaired by the CRO, with Khalid as Business Owner of the credit model; **process**, use-case intake, risk tiering, impact assessment, approval, monitoring and retirement; **evidence**, the AI inventory, test results, logs and committee minutes. The definition covers the whole life cycle and names accountability, which is what separates governance from ethics, compliance or risk management alone.
+
+**Self-check.**
+- Your definition says who is accountable (the organisation and named people), not "the model" or "the vendor".
+- It covers the whole life of a system, not a one-off approval.
+- Each of direction, structure, process and evidence has a concrete example, not a generic label such as "policies".
+- It does not reduce governance to ethics, compliance or risk management alone.
+
+</details>
+
 - 🟡 **Map the three lines.** For Najm's credit-scoring model, name who sits in the first, second and third line, and write one sentence on what each does for that model. *Done when:* no line is doing another line's job (for example, the second line is not running the model).
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **First line:** Khalid, Head of Retail Lending, as Business Owner, with Dana's data science team that built and runs the model. They own the model and its risks day to day: they use it as intended, operate its controls and monitor its performance. **Second line:** Layla (AI governance), with risk, compliance and privacy (Sara). They set the AI policy and risk-tiering method and independently challenge the first line's assessments and evidence; they do not build or run the model or take over the owner's accountability for it. Approval of high-risk uses such as this one sits with the AI Governance Committee, as the Charter sets out. **Third line:** Internal Audit. It gives the Board independent assurance that the first and second lines' controls over the model exist and work. The test is separation: whoever runs the model is not the one challenging it, and whoever audits it did not design its controls.
+
+**Self-check.**
+- Your answer places a named business owner (Khalid) in the first line, not only the data scientists.
+- It puts Layla's AI governance function in the second line and Internal Audit in the third.
+- The second line sets policy and challenges; it does not run or own the model.
+- Each line has one sentence on what it does for this specific model.
+
+</details>
+
 - 🔴 **Classify the instruments.** Take the five instruments in the table above plus the GDPR and Najm's internal AI Policy. Classify each as hard law, guidance, standard or framework, principle, or internal policy, and write one sentence on how a "voluntary" one could still become effectively mandatory for Najm. *Done when:* you have at least two different routes by which a voluntary instrument becomes binding in practice.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Hard law:** the EU AI Act (Art. 4 on AI literacy reaches Najm as a deployer through Frankfurt) and the GDPR. **Standards or frameworks:** the NIST AI RMF (voluntary), ISO/IEC 42001 (voluntary, certifiable) and ISO/IEC 38507 (guidance for boards). **Principle:** the OECD AI Principles. **Internal policy:** Najm's AI Policy, binding on Najm's own staff. Routes by which a voluntary instrument becomes binding in practice: (1) a supervisor such as the Qatar Central Bank treats it as the benchmark of reasonable practice, so falling short of NIST-style governance is criticised in an inspection; (2) a contract requires it, for example a corporate client or partner requiring ISO/IEC 42001 alignment; (3) Najm certifies to ISO/IEC 42001, a public claim it must then live up to.
+
+**Self-check.**
+- The EU AI Act and the GDPR are hard law; the NIST AI RMF and ISO/IEC standards are not.
+- The OECD AI Principles are a non-binding principle, and the AI Policy binds Najm's staff, not outsiders.
+- You give at least two different routes (regulator benchmark, contract, certification claim), not the same route twice.
+- Nothing calls a voluntary framework "law".
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 - **Trap: "AI governance = AI ethics."** Ethics provides the values; governance is the accountable machinery. In questions, prefer answers that assign ownership, set process and create evidence over answers that only state values.
@@ -229,7 +267,7 @@ Layla's first artefact is a one-page **AI Governance Charter**, approved by the 
 # 0.2 — How the exam thinks: BoK v2.1, question styles, a study plan
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *BoK: Orientation (all domains)*
 
-**After this you can** build a study plan weighted by the exam's domains, and write a Najm scenario with one FIRST and one BEST question, each with a key and three tempting distractors. *Study time: reading about 15 min, hands-on about 105 min (estimate).*
+**After this you can** build a study plan weighted by the exam's domains, and write a Najm scenario with one FIRST and one BEST question, each with a key and three tempting distractors. *Study time: reading about 20 min, hands-on about 105 min (estimate).*
 
 ## ⚡ In 60 seconds
 - At the time of writing (2026), the AIGP exam has **100 multiple-choice questions** (85 scored, 15 unscored pilot questions you cannot identify), lasts **2 hours 45 minutes**, and is scored on a **scale of 100–500 with 300 to pass**.
@@ -396,8 +434,47 @@ Layla gives Omar and Sara two study plans and lets them choose. Both map directl
 
 ## 🛠️ Exercises
 - 🟢 **Build your map.** Copy the domain table and add, for each domain, the course modules and the number of weeks you will spend on it. *Done when:* your weeks roughly follow the weight of each domain, with Domains III and IV not squeezed.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** A 12-week map weighted by the published ranges (midpoints of about 18, 21, 23 and 23 of the 85 scored questions): Module 0, the first half of week 1; **Domain I** (16–20), Modules 1–3, about 2 weeks; **Domain II** (19–23), Modules 4–7, about 2.5 weeks; **Domain III** (21–25), Modules 8–10, about 2.75 weeks; **Domain IV** (21–25), Module 11, about 2.75 weeks; Module 12 (capstone and two mock sittings), the last 1.5 weeks. III and IV share the same range, so they get the same time, and together they get a little more than I and II because they carry just over half the scored questions. Plan B is ordered differently: it front-loads foundations and law (I and II in weeks 2–8) and gives III and IV weeks 9–11. If you follow it, protect III and IV by giving them most of week 12's targeted review. Ranges change, so check the current BoK first.
+
+**Self-check.**
+- Every domain row has its course modules and a number of weeks.
+- Domains III and IV are not squeezed: their weeks roughly match their share of the questions, or, if you keep Plan B's order, they get most of the final review.
+- Module 12 (capstone and mock exam) has its own time at the end.
+- The weeks add up to your real total, and you note that domain ranges should be checked against the current BoK.
+
+</details>
+
 - 🟡 **Dissect a question.** Take the worked example above and write down, for each distractor, which type it is (true but irrelevant, wrong time, too extreme). Then rewrite the stem so that a different option becomes the key. *Done when:* your rewritten stem has one clearly best answer and you can explain why.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Distractor types.** A, "Go live and monitor complaints", is right action, wrong time: monitoring follows an adequate assessment. C, "Build its own ranking tool", is too extreme: it abandons the purchase when a proportionate step exists. D, "Ask applicants to consent", is true but irrelevant: it sounds protective, but consent is a weak basis in employment and does nothing about the missing evidence. **Rewritten stem (A becomes the key):** *The company has obtained the vendor's testing results and documentation, assessed the tool and approved it with human review of every ranking. What should it do NEXT?* Now A is the next life-cycle step. B describes work already done (wrong time), C is still too extreme, and D still does not address the live risk.
+
+**Self-check.**
+- You label A as wrong time, C as too extreme and D as true but irrelevant, with a reason for each.
+- Your rewritten stem changes the facts or the qualifier so that exactly one different option is best.
+- You explain why each of the other three options now loses.
+- The new key is the governance-first, proportionate step for the stage you described.
+
+</details>
+
 - 🔴 **Write a scenario item.** Write your own scenario (80–120 words) about Najm Bank's CV-screening tool with one FIRST question and one BEST question, each with a key and three plausible distractors. *Done when:* a day later, answering cold, you can still pick each key, and you can write for each distractor the mistake that would make someone choose it.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** *Scenario:* Najm Bank bought a SaaS tool that ranks applicants for roles in Doha and at its Frankfurt branch, where it screens EU applicants. Three months after go-live, a recruiter notices that few women reach interview for Frankfurt analyst roles. The vendor says the model was tested before sale but has shared no results. HR has never measured the tool's outcomes by gender or nationality itself, and no named person reviews its rankings before applicants are rejected. HR wants to use the tool for a graduate campaign opening next week. **FIRST question:** What should Najm do first? Key: investigate the disparity, obtaining the vendor's testing evidence and Najm's own outcome data, before the campaign runs. Distractors: replace the tool at once (too extreme); add a notice telling applicants AI is used (true but irrelevant); schedule a bias audit at the annual review (wrong time). **BEST question:** Which best describes Najm's position for the Frankfurt roles? Key: a deployer of a system in an Annex III high-risk area, with its own duties (Art. 26) such as human oversight and monitoring. Distractors: the vendor carries all the duties; the Act does not reach a Doha-headquartered bank; it is only a GDPR question.
+
+**Self-check.**
+- Your scenario gives jurisdiction, role, use, life-cycle stage and a concrete problem.
+- The FIRST key is an understand-and-assess step, not a technical fix or a ban.
+- The BEST key keeps accountability with Najm as deployer rather than the vendor.
+- Each distractor is plausible and maps to a named error type or a known trap.
+- It stays within 80–120 words for the scenario itself.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 - **Trap: picking a true statement.** Several options may be true; only one answers the question asked. Re-read the stem's last line before choosing.
@@ -492,7 +569,7 @@ Layla gives Omar and Sara two study plans and lets them choose. Both map directl
 # 0.3 — Meet Najm Bank: an AI inventory from day one
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *BoK: Orientation · I.A, I.C*
 
-**After this you can** complete an AI inventory row with owner, decision and preliminary risk, and argue in a 150-word memo for changing a risk rating using decision significance, automation and data sensitivity. *Study time: reading about 15 min, hands-on about 80 min (estimate).*
+**After this you can** complete an AI inventory row with owner, decision and preliminary risk, and argue in a 150-word memo for changing a risk rating using decision significance, automation and data sensitivity. *Study time: reading about 20 min, hands-on about 80 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Najm Bank is fictional**: a mid-sized Gulf bank and the running case throughout.
@@ -624,8 +701,54 @@ Layla presents the inventory to the AI Governance Committee with a short decisio
 
 ## 🛠️ Exercises
 - 🟢 **Fill a row.** Add a seventh row to Najm's inventory for an AI feature you might find in a bank (for example, speech analytics in the call centre, or marketing propensity models). Complete every column. *Done when:* the owner is a role or named person, the purpose names a decision, and the preliminary risk has a one-line reason.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.**
+
+| # | System | Business owner | Purpose | Build or buy; Najm's role | Data | Jurisdictions | Preliminary risk |
+|---|---|---|---|---|---|---|---|
+| 7 | **Call-centre speech analytics** | Head of Customer Experience | Transcribes and analyses customer calls to flag complaints, vulnerable customers and missing mandatory disclosures; flags decide which calls go to quality review | Vendor feature embedded in the contact-centre platform; Najm is deployer | Call recordings and transcripts with personal and account data; agent identities | Qatar, UAE, EU (if Frankfurt calls are routed through it) | **Medium**: personal data at scale, including agents' identities, but no direct decision about customers or staff; rises if flags are used to evaluate agents or drive decisions about them, since employment is an Annex III area |
+
+It was found as **embedded AI** through the discovery survey, so the row also records stage (live) and the people affected (customers and agents), and links to the Art. 30 records of processing.
+
+**Self-check.**
+- Every column is filled, including role, data and jurisdictions.
+- The owner is a role or a named person, not "IT" or "the vendor".
+- The purpose names a decision or output and who it affects.
+- The preliminary risk has a one-line reason based on use and impact, not on technique.
+- It is labelled preliminary, not a legal classification.
+
+</details>
+
 - 🟡 **Run discovery.** Write the five questions for Layla's department survey. At least two must ask about decisions or outputs rather than "AI". *Done when:* a department head with no AI knowledge could answer every question.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** (1) Which decisions about customers or staff in your department use a score, ranking, prediction, recommendation or automatically written text? (2) Which software or services has your team bought or renewed in the last two years that are described as "smart", "intelligent", "automated" or "assistant", or that added such features? (3) Do your staff use free online tools to draft, summarise, translate or write code, and what information do they put into them? (4) Where does a system's output reach a customer or employee without a person checking it first? (5) For each tool you named, who in your team is responsible for it, and which supplier provides it? Questions 1 and 4 ask about decisions and outputs; 2 follows the money and catches embedded AI; 3 finds shadow AI; 5 names owners.
+
+**Self-check.**
+- At least two questions ask about decisions or outputs, not "AI".
+- No question needs the reader to know what AI or machine learning is.
+- Together they reach bought, embedded and shadow AI, not only in-house models.
+- At least one asks who owns each tool.
+
+</details>
+
 - 🔴 **Challenge a rating.** Pick one preliminary rating in the table that you think is wrong, too high or too low, and write a 150-word memo to Layla arguing for a change, using significance of decision, degree of automation and data sensitivity. *Done when:* your memo reaches a clear recommendation and names what evidence would confirm it.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** One defensible memo challenges row 5, fraud detection, from Medium to Medium–High. *Layla, I recommend raising fraud detection to Medium–High for prioritisation. Significance: a false positive blocks a customer's card or payment, which can leave them without access to their money when they need it. Automation: blocks happen in real time, before any person reviews them. Data: it profiles transaction, device and location data for every customer at scale. This is not an Annex III high-risk classification: the Act excludes fraud detection from the credit category, and the rating stays preliminary. Data protection, fairness and customer-treatment duties still apply. Evidence to confirm: the false-positive rate, how many blocks are never reviewed by a person, time to unblock, complaint volumes, and whether false positives fall unevenly across customer groups. Proposed controls: a person reviews every block within an agreed service level, and customers get a quick, clearly signposted route to challenge a block and have it lifted.* Other rows can be argued equally well if the three factors drive the case.
+
+**Self-check.**
+- Your memo picks one row and states the new rating clearly.
+- It uses all three factors: significance of the decision, degree of automation and data sensitivity.
+- It does not treat the preliminary rating as a legal classification (and does not call fraud detection Annex III high-risk).
+- It names the evidence that would confirm or overturn the recommendation.
+- It stays close to 150 words.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 - **Trap: inventorying only in-house models.** Bought, embedded and shadow AI create as much risk. Answers that widen discovery beat answers that only ask the data science team.

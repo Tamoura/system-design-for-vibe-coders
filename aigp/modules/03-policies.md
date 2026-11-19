@@ -9,7 +9,7 @@
 # 3.1 — The AI life cycle and the policy stack
 *Level: 🟡 Intermediate* · *Prerequisites: 2.1, 2.2* · *BoK: I.C*
 
-**After this you can** write a complete inventory record for an AI system, with a reasoned risk tier and AI Act role, and draft an exception procedure that blocks permanent silent exceptions. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
+**After this you can** write a complete inventory record for an AI system, with a reasoned risk tier and AI Act role, and draft an exception procedure that blocks permanent silent exceptions. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - The **AI life cycle** runs from planning and design, through data and model building, verification and validation, deployment, operation and monitoring, to retirement. Governance applies at every stage, not only at launch.
@@ -149,13 +149,51 @@ Layla's **AI life-cycle control matrix (extract)**, part of the AI Life-cycle St
 Place each of these Najm activities in a life-cycle stage: choosing retrieval documents for the credit copilot; checking fraud-model alert rates each month; deciding whether AI is needed for chatbot FAQs; deleting the old scoring model's training data.
 *Done when:* each activity is matched to a stage with one sentence of reasoning.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Choosing retrieval documents for the credit copilot: Collect and process data.** It decides what content the system draws on, so the questions are rights, licence and quality (in GenAI this sits close to Build, where retrieval sources are configured; either is defensible if your reasoning names the data choice). **Checking fraud-model alert rates each month: Operate and monitor.** It tracks a live system against tolerance after deployment. **Deciding whether AI is needed for chatbot FAQs: Plan and design.** Deciding whether AI is the right tool at all is the first governance question. **Deleting the old scoring model's training data: Retire.** Decommissioning includes handling the data, under the retention schedule.
+
+**Self-check.**
+- Each of the four activities has exactly one stage and one sentence of reasoning.
+- The FAQ decision is in Plan and design and the data deletion in Retire, not in Operate.
+- The monthly alert-rate check is in Operate and monitor, not Verify and validate (which happens before deployment).
+- Your reasoning for the retrieval documents mentions rights or licence, the data question the lesson raises.
+
+</details>
+
 ### 🟡 Intermediate
 Write the inventory record for the CV-screening tool, using the fields listed in 🟡 Going deeper.
 *Done when:* every field is filled, the risk tier has a reason, and the EU AI Act classification and Najm's role (provider or deployer) are stated.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **ID:** AI-HR-001 (illustrative). **Name and description:** CV-screening tool that scores and ranks job applications for recruiters. **Intended purpose:** shortlisting candidates; recruiters make the hiring decision. **Business owner:** HR business owner. **Life-cycle stage:** in operation; EU (Frankfurt) use in planning. **Built, bought or embedded:** bought vendor product. **Vendor and model details:** vendor name, product version, model information from the due-diligence questionnaire. **Data categories:** candidate CVs and application data (personal data; special-category data possible). **Affected people:** job candidates. **Jurisdictions:** Najm's existing markets plus the EU. **Risk tier:** high, because it affects access to employment and is listed in Annex III. **EU AI Act classification and role:** high-risk (Annex III, employment); Najm is the **deployer**, because it uses the tool under its own authority without rebranding, substantial modification or a changed intended purpose. **Assessments:** DPIA in progress; adverse-impact test scheduled. **Approval status:** EU use pending committee approval. **Next review:** annual reassessment, or earlier on change.
+
+**Self-check.**
+- Every inventory field from 🟡 Going deeper is filled, none left blank.
+- The tier is high, with a reason (employment, Annex III).
+- Najm's role is deployer, and you say why it is not the provider.
+- It records that the tool is bought, not built in-house.
+- It names a business owner, not only the vendor.
+
+</details>
+
 ### 🔴 Advanced
 Draft Najm's AI exception procedure in under 400 words: who can request, what they must provide, approval authority by tier, what cannot be excepted, recording, expiry and reporting.
 *Done when:* the procedure prevents permanent silent exceptions and states that legally mandated requirements cannot be waived internally.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** A good procedure covers: **Request:** any rule owner or business owner may request, in writing, before the deviation starts. **Contents:** the rule, the reason, the risk, compensating controls and a proposed expiry date. **Approval by tier:** the governance lead for low-tier systems; a more senior approver named in the procedure for medium-tier systems (for example, the Head of AI Governance with the business owner's risk sign-off); the AI Governance Committee for high-tier systems (as for EX-004). **Not exceptable:** legally mandated requirements, such as EU AI Act obligations, cannot be waived internally; nor can prohibited uses. **Recording:** every exception goes into the exception register with an ID, owner, controls and expiry; an unrecorded deviation is a breach. **Expiry:** every exception has an end date; renewal needs a fresh decision with evidence of progress. **Reporting:** the register is reported to the committee regularly, and repeated exceptions to the same rule trigger a review of the rule. These steps make exceptions visible, owned, compensated and time-bound, which is what stops permanent silent ones.
+
+**Self-check.**
+- Your procedure is under 400 words and covers all seven required elements.
+- Approval authority rises with the tier.
+- It says legally mandated requirements cannot be excepted internally.
+- Every exception has an expiry date and a register entry; renewal is a new decision.
+- Repeated exceptions lead to a review of the rule.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 - **Launch-gate-only governance.** Answers that put all controls at deployment miss design, data and monitoring risks. Prefer life-cycle answers.
@@ -364,13 +402,50 @@ Clauses Layla, Omar and Sara add to Najm's **Data Governance Policy** and **Acce
 For each of Dana's three proposed datasets (historical loan files, current-account transactions, the broker's company financials), write the one question that must be answered before use.
 *Done when:* you have one lawful-use or rights question per dataset and named who answers it.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Historical loan files:** "Is training the SME credit model compatible with the purpose the data was collected for, and what is the lawful basis?" Answered by the DPO (clause 9.2), with a DPIA screen because the model is high-tier. **Current-account transactions:** "Is there a lawful basis and a compatible purpose for using transaction data to train a credit model, and is each field necessary?" Answered by the DPO (purpose compatibility and minimisation). **Broker's company financials:** "Does the licence allow machine-learning use, such as training a model?" Answered by Legal (clause 9.3), because the dataset is governed by contract. Holding the data already is not an answer to any of these.
+
+**Self-check.**
+- Each dataset has one question, about lawful use or rights, not accuracy or storage.
+- The two internal personal-data sets go to the DPO; the broker data goes to Legal.
+- The broker question is about the licence terms, not copyright in general.
+- Nothing treats "we already hold the data" as a lawful basis.
+
+</details>
+
 ### 🟡 Intermediate
 Draft a data card outline for the SME credit model's training data, with at least eight headings, and fill in two with plausible Najm content.
 *Done when:* the outline covers origin, collection purpose, preparation, representativeness, known gaps, bias examination and retention.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** Headings: (1) Motivation and intended use; (2) Origin and provenance (source, licence or legal basis, data owner); (3) Original collection purpose and process; (4) Composition (fields, date range, volume); (5) Preparation and lineage (cleaning, labelling, joins); (6) Representativeness; (7) Known gaps and limitations; (8) Bias examination and mitigations; (9) Personal data and lawful basis; (10) Retention and maintenance. Filled example, **Representativeness:** ten years of SME loan files compared with Najm's current SME customer base by sector, size and region; earlier years may under-represent groups the bank under-served then. **Known gaps:** no data on applicants rejected before a full file was opened, so the model learns only from approved or fully assessed cases; mitigation under review in validation. This documentation is evidence for EU AI Act Art. 10, for the DPIA and for validators.
+
+**Self-check.**
+- At least eight headings, covering origin, collection purpose, preparation, representativeness, known gaps, bias examination and retention.
+- Two headings are filled with Najm-specific content, not placeholders.
+- Representativeness is compared with today's customer base, not only described.
+- It links the card to Article 10 evidence or validation.
+
+</details>
+
 ### 🔴 Advanced
 The research reports already in the credit copilot's retrieval library may not be licensed for AI use. Write a short decision memo for the committee: options (remove, license, keep with restrictions), risks of each, and your recommendation.
 *Done when:* the memo distinguishes contract risk from copyright risk, addresses outputs that quote the reports, and sets an action owner and date.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Options.** *Remove:* lowest legal risk, but the copilot loses useful content. *License:* negotiate terms that expressly allow indexing for AI and quoting in outputs; costs money and time. *Keep with restrictions* (internal use, no quoting): restrictions do not cure the problem if the subscription forbids copying into an index. **Two separate risks.** *Contract risk:* the subscription terms may prohibit copying, machine use or derived products, a breach whatever copyright law says. *Copyright risk:* copying reports into the index, and outputs that reproduce passages, may infringe; a paid source is not "publicly available", and even public content is not free to use. Outputs that quote the reports also reach credit memos, so 4.3 human review applies. **Recommendation:** remove the reports from the index now; Legal reviews the licence and seeks AI-use terms; reinstate only if the licence covers indexing and quoting, with outputs citing rather than reproducing text. **Owner:** Omar, with Legal; decision within 30 days.
+
+**Self-check.**
+- The memo treats contract risk and copyright risk as two different risks.
+- It addresses outputs that quote the reports, not only the index.
+- It gives all three options with a risk for each, then one clear recommendation.
+- It names an action owner and a date.
+- It does not rely on "we paid for it" or "it is publicly available" as permission.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 - **"We already hold the data."** Holding data is not a lawful basis for a new AI purpose. Look for purpose-compatibility and lawful-basis checks.
@@ -603,13 +678,50 @@ Yusuf and Layla's **AI vendor due-diligence and contracting checklist** for the 
 List Najm's third-party AI dependencies from this lesson and classify each by type (vendor product, embedded, foundation-model API, open model, data service).
 *Done when:* each dependency has a type and one main risk.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **CV-screening tool:** vendor product; bias against groups of candidates. **"AI insights" feature in the CRM:** embedded AI; it arrives without procurement review. **Model behind the credit copilot:** foundation-model API; model changes with no proper advance notice (only a developer-changelog entry, twice this year). **Open-weight model for fraud summaries:** open model; licence never checked for Najm's use. **Broker's company financials:** data service; licence may not permit machine-learning use. **Research subscription in the retrieval library:** data service; licence may not permit AI use. **Outsourced labelling:** data service; label quality.
+
+**Self-check.**
+- Your list includes the embedded CRM feature and the open-weight model, the two most often missed.
+- Each dependency has one type from the five given and one main risk.
+- The foundation-model risk is model change without adequate advance notice or a chance to test.
+- Data services (broker data, research content) count as third-party AI dependencies.
+
+</details>
+
 ### 🟡 Intermediate
 Write ten contract clauses (one sentence each) for Najm's agreement with the credit copilot's foundation-model provider.
 *Done when:* the clauses cover data use, retention and location, change notification, incident notification, audit or information rights, regulatory cooperation, IP and exit.
 
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** (1) The provider will not use Najm's inputs, outputs or customer data to train or improve its models without written agreement. (2) Inputs and outputs are kept no longer than [agreed period] and then deleted. (3) Data is stored and processed only in agreed locations, with subprocessors approved by Najm. (4) Where personal data is processed, a GDPR Art. 28 data processing agreement applies. (5) The provider gives advance notice of material model or version changes and lets Najm test before they take effect, with version pinning where feasible. (6) The provider notifies Najm of incidents, security breaches and serious malfunctions within [agreed hours] and cooperates in investigations. (7) Najm, its auditors and its regulators have information and audit rights. (8) The provider supplies the documentation it owes downstream providers under Art. 53 and cooperates with Najm's regulatory obligations. (9) The provider warrants its rights in training data and indemnifies Najm against IP claims arising from outputs. (10) On exit, the provider returns and deletes Najm data and gives transition support.
+
+**Self-check.**
+- Ten clauses, one sentence each, each with a concrete obligation.
+- They cover data use, retention and location, change notification, incidents, audit or information rights, regulatory cooperation, IP and exit.
+- Change notification gives Najm time to test, not only a changelog entry.
+- No clause transfers Najm's own accountability to the provider.
+
+</details>
+
 ### 🔴 Advanced
 HR wants to rename the CV tool "Najm TalentMatch", retrain it on Najm's own hiring data and offer it to a sister company. Analyse whether Najm becomes a provider under the EU AI Act, what obligations follow, and what you would recommend.
 *Done when:* your analysis applies the rebranding, substantial-modification and intended-purpose triggers, lists the main provider obligations that would apply, and gives a clear recommendation with conditions.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Triggers (Art. 25).** *Rebranding:* putting "Najm TalentMatch" on a high-risk system makes Najm a provider on its own. *Substantial modification:* retraining on Najm's hiring data very likely counts as one. *Intended purpose:* unchanged (recruitment), but the tool is already high-risk under Annex III, and offering it to a sister company puts it on the market under Najm's name. **Conclusion:** if HR goes ahead, Najm becomes the provider: rebranding alone is enough, and the retraining very likely adds a second trigger. **Obligations:** risk management (Art. 9), data governance and bias examination for the new training data (Art. 10), technical documentation, instructions for use, a quality management system (Art. 17) and conformity assessment, while keeping its deployer duties for its own use. **Recommendation:** do not rebrand or offer it now. Keep the tool as a vendor product, and let the sister company contract with the vendor as its own deployer. If the business still wants it, proceed only on conditions: committee approval of the provider role, a written agreement with the vendor for documentation and technical access, DPO review of reusing candidate data, Article 10 work, and conformity assessment before the rebranded or retrained version is used by Najm or offered to anyone else.
+
+**Self-check.**
+- Your analysis applies all three Art. 25 triggers separately.
+- It concludes that Najm becomes the provider, and why.
+- It lists the main provider obligations, not only deployer duties.
+- The recommendation is clear and has conditions.
+- It addresses the reuse of candidate data for retraining.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 - **"The vendor is responsible."** Deployers keep their own obligations and remain accountable to affected people. Choose answers that combine your controls with vendor cooperation.

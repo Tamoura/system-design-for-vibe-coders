@@ -126,8 +126,48 @@ Committee decision recorded: *"Chat logs are excluded from credit-model training
 
 ## 🛠️ Exercises
 - 🟢 Take the seven Art. 5 principles and, for Najm's customer-service chatbot, write one sentence each on where the principle bites. *Done when:* you have seven sentences, each naming a concrete stage (collection, training, deployment, outputs or logs).
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** *Lawfulness, fairness and transparency:* at **collection**, the notice must tell customers that chats are logged and what they are used for, with a lawful basis for each purpose. *Purpose limitation:* at **training**, reusing chat logs to train other models is a new purpose that needs an Art. 6(4) compatibility assessment (the committee already excluded them from the credit model). *Data minimisation:* at **collection**, the bot should not ask for or keep details it does not need to answer the query. *Accuracy:* in **outputs**, a confident wrong answer about a customer's data is inaccurate personal data that must be correctable. *Storage limitation:* in **logs**, transcripts need a set retention period, not "keep in case we retrain". *Integrity and confidentiality:* in **deployment**, prompt injection could make the bot leak other customers' data, so retrieval must be permission-aware. *Accountability:* across every stage, Najm must be able to show its records: notice, retention entry, test results.
+
+**Self-check.**
+- You have seven sentences, one per principle, including accountability.
+- Each sentence names a concrete stage: collection, training, deployment, outputs or logs.
+- Your accuracy sentence is about wrong statements about a person, not the model's overall accuracy rate.
+- Your purpose limitation sentence treats training on chat logs as a separate purpose that needs a compatibility check.
+- It does not treat logs as outside the GDPR.
+
+</details>
+
 - 🟡 Draft a one-page legitimate interests assessment for using five years of card transaction data to train Najm's fraud-detection model. Cover purpose, necessity (including less intrusive alternatives) and balancing (expectations, impact, safeguards). *Done when:* each of the three steps has a conclusion and at least two safeguards are named.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Purpose:** detecting and preventing card fraud to protect customers and the bank is lawful, clearly set out, and real and present rather than speculative. Conclusion: passed. **Necessity:** transaction data is needed to learn fraud patterns, but Najm must show why five years and not fewer; learning curves should show where more history stops helping. Less intrusive alternatives considered: pseudonymised identifiers, dropping features with no measurable value, synthetic data for rare fraud cases. Conclusion: necessary, if the period and the features are justified. **Balancing:** customers reasonably expect their bank to use transactions to fight fraud, which favours Najm; the risks are wrongly blocked cards and merchant categories that reveal health or religion (Art. 9). Safeguards: pseudonymisation before training, removal of sensitive merchant-category features, a retention limit for training snapshots, access control, human review of blocks and a privacy-notice clause. Conclusion: legitimate interests under Art. 6(1)(f) can apply, with these safeguards documented.
+
+**Self-check.**
+- Each of the three steps (purpose, necessity, balancing) ends with a conclusion.
+- Necessity questions the five-year period and names at least one less intrusive alternative.
+- Balancing weighs reasonable expectations and the impact on customers, including proxies for special categories.
+- At least two concrete safeguards are named.
+- It does not fall back on consent or treat the bank's interest as winning automatically.
+
+</details>
+
 - 🔴 Dana says the new credit model is "anonymous because it is just weights". Write the memo Sara would send, applying EDPB Opinion 28/2024: what evidence would support that claim, what tests to run, and what follows if the claim fails. *Done when:* the memo names at least two attack-based tests and states the consequence for erasure requests and retention.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** Sara's memo says that weights are not anonymous by default. Under EDPB Opinion 28/2024 a model is anonymous only if, using all means reasonably likely to be used, the likelihood of extracting personal data about training subjects, from the parameters or through queries, is insignificant; this is judged case by case and the reasoning must be documented. Before accepting Dana's claim, run and record a **membership-inference test** (could an attacker tell that a customer's record was in training, which might reveal a default?) and **model-inversion and extraction tests** through queries, and review who can query the model. If the risk is insignificant, document it and re-test after each retraining. If the claim fails, the model is treated as containing personal data: erasure requests may reach it (retraining or unlearning, not only deleting the source record), it needs its own entry in the retention schedule, and it stays within the lawful basis, security controls and DPIA.
+
+**Self-check.**
+- The memo rejects "just weights" as proof and applies the EDPB test: likelihood of extraction, means reasonably likely to be used, case by case.
+- It names at least two attack-based tests, such as membership inference and model inversion or extraction.
+- It says the reasoning and test results must be documented.
+- It states what failure means for erasure requests and for retention.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 - **"Public data is free to use."** Publicly available personal data is still personal data. You still need a lawful basis, transparency and a balancing that respects expectations. Answer choices that treat "publicly available" as an exemption are wrong.
@@ -224,7 +264,7 @@ Committee decision recorded: *"Chat logs are excluded from credit-model training
 # 4.2 — Automated decisions, individual rights and transparency
 *Level: 🟡 Intermediate* · *Prerequisites: 4.1* · *BoK: II.A*
 
-**After this you can** decide for each of five AI systems whether GDPR Art. 22 is engaged, and write a decline-letter explanation of the logic involved in under 150 words. *Study time: reading about 15 min, hands-on about 100 min (estimate).*
+**After this you can** decide for each of five AI systems whether GDPR Art. 22 is engaged, and write a decline-letter explanation of the logic involved in under 150 words. *Study time: reading about 20 min, hands-on about 100 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Data subjects keep all their rights when AI is involved: information, access, rectification, erasure, restriction, portability and objection. AI makes some of these technically hard, but hard is not a legal excuse.
@@ -351,8 +391,48 @@ The AI Governance Committee approves a redesign of the retail credit decision fl
 
 ## 🛠️ Exercises
 - 🟢 For each of Najm's AI systems (credit scoring, chatbot, CV screening, credit memo copilot, fraud detection), decide whether Art. 22 is likely engaged and why, using the three conditions. *Done when:* each system has a yes, no or depends with one line of reasoning.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Credit scoring: yes.** The automatic decline below 420 is a decision, solely automated, with a legal or similarly significant effect (refused credit); under *SCHUFA* the score in the reviewed band can count too if officers almost always follow it. **Chatbot: no, as a rule.** It answers questions and does not decide about people. **CV screening: depends, likely yes.** Hiding the bottom 60% from recruiters without meaningful review is a solely automated rejection with a significant effect (the recitals give e-recruiting as an example); sample reviews reduce but may not remove this. **Credit memo copilot: no, if review is real.** It drafts for credit officers who decide; rubber-stamping would change the answer. **Fraud detection: depends.** Flagging a transaction for an analyst is not solely automated; automatically blocking a card could be a similarly significant effect.
+
+**Self-check.**
+- All five systems have yes, no or depends, with one line of reasoning each.
+- Your reasoning uses the three conditions: a decision, solely automated, a legal or similarly significant effect.
+- You apply *SCHUFA* or the rubber-stamping point to the credit score in the reviewed band.
+- You do not assume that any human involvement takes a system outside Art. 22.
+
+</details>
+
 - 🟡 Write the "logic involved" paragraph for Najm's decline letter. It must be understandable to a non-expert, name the main factors, and say what the customer could change. *Done when:* the paragraph is under 150 words, names at least two factors in everyday words, and passes a read-aloud test: no term a customer would need to look up.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** "We used an automated system to assess your application. It looked mainly at three things: how much of your monthly income already goes on repaying loans and cards, whether your past repayments were on time, and how long you have banked with us. In your case, the three main reasons were: your current repayments take up a large part of your income; some payments in the last year were late; and you have banked with us for a short time. If your monthly repayments had been below 35% of your income, the result would likely have been different. To have a person review this decision, contact our Credit Review Team; a senior credit officer will review it within 10 business days, and you can give your view and challenge the decision." It is under 150 words, meets the committee's three requirements and explains the procedure and principles actually applied, as *Dun & Bradstreet Austria* requires, with a counterfactual and no source code.
+
+**Self-check.**
+- It is under 150 words.
+- It meets the committee's three requirements: it says the decision was automated, gives the top three reasons in plain language and names a route to human review within 10 business days.
+- It names the factors in everyday words, with no term such as "debt-to-income ratio" left unexplained.
+- It tells the customer what they could change.
+- It does not disclose source code or model internals.
+
+</details>
+
 - 🔴 A former customer asks for erasure "including from your AI". Using the erasure options table, write the decision memo for the credit model and for the credit memo copilot, which uses retrieval over internal documents. *Done when:* each system has a chosen option, the legal exceptions considered (such as record-keeping duties) and the evidence you would keep.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Credit model.** Delete the customer's data from source systems and add their ID to the training exclusion list, so the next retraining drops it. Exceptions considered: the bank's record-keeping duty and the defence of legal claims, so keep the loan decision record for that period only and tell the customer why. Whether more is needed depends on the anonymity assessment under EDPB Opinion 28/2024: if the model is anonymous, deletion plus exclusion suffices; if it is not and memorisation is shown, retrain or use unlearning with evidence that it works. **Credit memo copilot.** The person's data reaches it through retrieval, so delete or redact it in the indexed documents where no retention duty applies, re-index, and add an output filter as a backstop. **Evidence kept:** the reply sent within one month, the exclusion-list entry, the anonymity assessment reference, the re-index log and a test query showing nothing is returned.
+
+**Self-check.**
+- Each system has a chosen option from the erasure table, not "delete everything" or "technically impossible".
+- You consider legal exceptions such as the record-keeping duty and legal claims.
+- The credit-model option depends on the anonymity assessment.
+- For the copilot, you act on the retrieval sources rather than retraining.
+- You list the evidence you would keep for each system.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 - **"A human is in the loop, so Art. 22 doesn't apply."** Only meaningful human involvement counts. If the question describes a reviewer who always follows the model, treat the decision as solely automated.
@@ -581,8 +661,64 @@ Layla's team produces the **Integrated AI Impact Assessment (IAIA) template**, f
 
 ## 🛠️ Exercises
 - 🟢 Using the DPIA criteria in 🟢 The essentials, screen Najm's five AI systems and the staff use of public GenAI tools. *Done when:* each has a "DPIA required / likely / not required" verdict with the criteria it meets.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.** **Credit scoring: required.** Scoring and profiling with legal or similarly significant effects is the first case in Art. 35(3); it is also large scale and can block access to a contract. **CV screening: required.** Evaluation and scoring, automated decisions with significant effect, vulnerable data subjects (applicants), innovative technology. **Fraud detection: required.** Systematic monitoring of transactions at large scale, scoring, and it can stop people using a service when a card is blocked. **Chatbot: likely.** Large scale, innovative technology and possibly sensitive data in messages, but no significant decisions. **Credit memo copilot: likely.** Large-scale processing of client files, combining datasets, innovative technology. **Staff use of public GenAI tools: likely if personal data can be entered** (innovative technology, possibly sensitive data); not required if policy and controls keep personal data out, but record that screening.
+
+**Self-check.**
+- All six items have one of the three verdicts.
+- Each verdict names the criteria it meets, taken from the lesson's list.
+- Credit scoring and CV screening are "required", because each meets several criteria including scoring with significant effects.
+- You use the two-or-more-criteria rule of thumb, not "it is AI, so a DPIA is needed".
+- Job applicants are counted as vulnerable data subjects.
+
+</details>
+
 - 🟡 Draft the "risks to rights and freedoms" and "measures" sections of a DPIA for the credit memo copilot, which summarises corporate clients' files, including personal data about directors and guarantors. *Done when:* you list at least five risks, each matched to a measure, and at least one measure is a PET with its limitation stated.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.**
+1. *Inaccurate or invented statements about a director or guarantor reach a credit decision.* Measure: officers check each summary against the cited source documents; summaries are not stored as records unless a human verifies them.
+2. *Users see files they are not entitled to, or prompt injection in a document leaks data.* Measure: permission-aware retrieval, access control, red-teaming.
+3. *Purpose creep: the vendor trains on prompts or the data is reused.* Measure: contract terms barring training on prompts; purpose recorded.
+4. *More personal data than needed in prompts and outputs.* Measure: minimisation and **pseudonymisation** of guarantor identifiers where names are not needed. Limitation: pseudonymised data is still personal data, and the key must be held separately.
+5. *Prompt and output logs kept indefinitely.* Measure: a retention period for logs.
+6. *Directors and guarantors are not told.* Measure: Art. 14 information through the privacy notice and client documentation.
+
+**Self-check.**
+- At least five risks, each with a matching measure.
+- The risks are to people (directors, guarantors), not only to the bank.
+- At least one PET appears, with its limitation stated.
+- The measures mix technical and organisational controls.
+- It does not treat a PET as an exemption from the GDPR.
+
+</details>
+
 - 🔴 Najm wants to train one fraud model on transaction data from Qatar, the UAE (onshore and DIFC) and Germany. Sketch the privacy analysis: which laws apply, the transfer question for each, and whether federated learning changes the answer. *Done when:* you have a one-page table with a hedged conclusion per jurisdiction and a list of questions for local counsel.
+
+<details><summary>Model answer and self-check</summary>
+
+**Model answer.**
+
+| Jurisdiction | Law | Transfer question | Hedged conclusion |
+|---|---|---|---|
+| Germany | GDPR | Adequacy or standard contractual clauses needed for a central site outside the EU | Possible with a transfer tool, lawful basis and DPIA |
+| Qatar | Qatar PDPPL (the QFC has a separate regime) | The PDPPL's own cross-border rules | Likely possible; confirm with counsel |
+| UAE onshore | UAE PDPL, subject to its scope exclusions | Own transfer rules; some banking data may fall under other laws | Settle scope first, then transfers |
+| DIFC | DIFC Data Protection Law, with Regulation 10 for AI | The DIFC's own transfer rules | Likely possible; check Regulation 10 duties |
+
+**Federated learning** keeps raw data in each country, easing transfers, but model updates can leak and may be personal data: use secure aggregation, and a lawful basis and DPIA are still needed. **Questions for counsel:** Do the transfer rules cover model updates? Which law governs Najm's onshore UAE banking data? What do the PDPPL and DIFC rules require before data leaves the country?
+
+**Self-check.**
+- All four jurisdictions appear: Germany, Qatar, UAE onshore and DIFC.
+- Each has a transfer question and a hedged conclusion, not a firm legal opinion.
+- The UAE onshore row raises the scope exclusions.
+- Federated learning reduces the transfer question but does not remove the privacy analysis.
+- There is a list of questions for local counsel.
+
+</details>
 
 ## ⚠️ Mistakes and exam traps
 - **"The vendor did a privacy assessment, so we're covered."** The controller owns the DPIA for its processing. Vendor documentation is an input, and under the AI Act deployers must use it.
