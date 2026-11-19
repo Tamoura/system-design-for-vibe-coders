@@ -212,9 +212,9 @@ Rania's note: *"Two reds, both fixed by changing scope, not reasons to stop. Fai
 **5. Why does the lesson recommend building a golden set of real cases with agreed answers before building the product?**
 
 - A. It is required by the EU AI Act for every AI system that a bank puts in front of customers or uses with its own staff, however small the risk
-- B. It replaces the need for training data
+- B. It gives the team labelled examples to fine-tune the model on, so training can start straight away
 - C. Without it the team cannot tell whether any version works, and building it exposes disagreement about what "good" means
-- D. It lets the team skip user research
+- D. It lets the team skip the pilot, since the golden set already shows how the product will perform with users
 
 <details><summary>Answer</summary>
 
@@ -407,8 +407,8 @@ Loop metrics reviewed monthly by Rania: share of memos with a captured signal, m
 **2. RMs edit about 40% of Credit Memo Copilot's drafts. What is the best way to turn this into useful learning?**
 
 - A. Treat every edited section as a model error, retrain monthly, and report the edit rate to the committee quarterly
-- B. Ignore edits, because they are just personal style
-- C. Remove the ability to edit so the signal is cleaner
+- B. Report the edit rate every week as the copilot's main quality metric, and set the team a quarterly target to bring it down
+- C. Send RMs a monthly survey asking which sections they edit most and why
 - D. Pair edit data with a short reason picker and a weekly sampled review, then fix patterns in the corpus, prompt or template
 
 <details><summary>Answer</summary>
@@ -446,8 +446,8 @@ Loop metrics reviewed monthly by Rania: share of memos with a captured signal, m
 **5. Tariq proposes automatically retraining a customer-facing model every night on the previous day's user feedback. What is the main product concern?**
 
 - A. Behaviour would change silently and often, eroding trust and traceability, and it opens the door to deliberately poisoned feedback
-- B. Nightly retraining is always too expensive
-- C. Feedback data is never useful for training
+- B. Nightly retraining costs more in compute than the quality gain is likely to be worth
+- C. One day of feedback is too little data to retrain on, so weekly retraining would be safer
 - D. It breaks the rule that models may only be updated once a year, which the bank's model risk policy sets for all production models in the bank
 
 <details><summary>Answer</summary>
@@ -629,7 +629,7 @@ Design decisions recorded:
 - A. Whether the fine-tuned model will score higher on public benchmarks
 - B. Whether this use was declared and has a legal basis, what the vendor contract permits, and whether the bank could honour erasure requests afterwards
 - C. Whether customers clicked "accept" on the app's terms and conditions when they first downloaded the app, which the bank treats as consent for any later use of transcripts
-- D. Whether the transcripts are in English
+- D. Whether the vendor will delete the transcripts from its systems once the fine-tuning is finished
 
 <details><summary>Answer</summary>
 

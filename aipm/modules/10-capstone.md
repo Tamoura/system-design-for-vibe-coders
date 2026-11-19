@@ -219,7 +219,7 @@ Rania's comment: *"Auditors will ask about rows 3 and 7, Khalid about row 8. Row
 
 - A. Expand to 100% because the cost saving is large and the headline number is clearly better
 - B. Switch to a cheaper model to increase the saving, then run the same test again next month
-- C. Remove complaints from the guardrail list, since the change affects only a small group of users
+- C. Agree with the business owner to raise the complaints limit, since the call saving outweighs it
 - D. Pause the expansion and investigate the complaints before deciding
 
 <details><summary>Answer</summary>
@@ -232,8 +232,8 @@ Rania's comment: *"Auditors will ask about rows 3 and 7, Khalid about row 8. Row
 
 - A. Switching to a cheaper model is the main lever, because model calls are the part of the bill the team controls most directly
 - B. Improving resolution on the most common jobs, which reduces handoffs, is likely the biggest lever
-- C. Removing the "talk to a person" option will cut cost safely
-- D. Cost does not matter once the product has launched, because the team can adjust it later
+- C. Making the "talk to a person" option harder to find, so that more of the chats stay with the assistant
+- D. Growing conversation volume, so the platform's fixed cost is spread over more chats
 
 <details><summary>Answer</summary>
 
@@ -453,12 +453,12 @@ And Faisal's **one-page portfolio case study**, rewritten with Rania to meet the
 
 - A. Include the internal dashboard screenshots to prove the results, and add a line explaining how the team measured them for readers who want to check the numbers
 - B. Describe the decision, evidence and result at a level of detail the bank accepts, state his own role precisely, and remove numbers he may not share
-- C. Say "I built Najm Assist" to keep the story short
+- C. Present the results as his own, since he led the product, and thank the team at the end
 - D. Include only the parts that went well, so the case study stays short and reads as a clear success story
 
 <details><summary>Answer</summary>
 
-**B.** Confidentiality comes first, and precise attribution builds credibility. Screenshots of internal dashboards (A) risk leaking data; "I built it" (C) overclaims a team's work; success-only stories (D) hide the judgement interviewers want to see. (🟡 Going deeper: the portfolio.)
+**B.** Confidentiality comes first, and precise attribution builds credibility. Screenshots of internal dashboards (A) risk leaking data; claiming the results as his own (C) overclaims a team's work; success-only stories (D) hide the judgement interviewers want to see. (🟡 Going deeper: the portfolio.)
 
 </details>
 

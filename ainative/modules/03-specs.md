@@ -443,9 +443,9 @@ Work in `~/ainative/m03` (`cd` there for git, pytest and your editor). The start
 
 **Your move (no agent needed).** Copy the template to `specs/T1.md` and follow the order of work above. In the plan, write the failing test as its own step but commit it with the code that fixes it. Commit each spec when complete, with a message such as `docs(specs): spec the Egypt fee offer`, and grade as you go: a finished spec shows `T1 ok; waiting for specs/T2.md` on the shape checks, and a draft shows what it still lacks.
 
-**Your move (with an agent, optional).** Use the interview prompt above in plan mode, one ticket per session, then write the spec yourself from the decisions it printed. Note in `agent-log.md` which questions it raised that you had missed and which facts it quoted wrongly. Never let it edit the repository: the scope check would catch it, and the writing is the lab.
+**Your move (with an agent, optional).** Use the interview prompt above in plan mode, one ticket per session, then write the spec yourself from the decisions it printed. Note in `agent-log.md` which questions it raised that you had missed and which facts it quoted wrongly. Never let it edit the repository.
 
-**What the grader checks.** Hygiene: only `specs/` and `agent-log.md` changed, the tests pass, commits follow `CONTRIBUTING.md`, nothing uncommitted, no secrets. Shape: sections, examples, criteria, lists, no filler, placeholders or copies. Facts: the files named exist, no decision breaks a house rule (Decimal money, half up, injected clock, no new dependency), money logic names a second reviewer. Then the hidden questions per ticket, and the plan. Advisory lines (risks, the log) print FAIL until satisfied but never block PASSED. It neither runs your examples nor judges your Arabic.
+**What the grader checks.** Hygiene: only `specs/` and `agent-log.md` changed, the tests pass, commits follow `CONTRIBUTING.md`, nothing uncommitted, no secrets. Shape: sections, examples, criteria, lists, no filler, placeholders or copies. Facts: the files named exist, no decision breaks a house rule (Decimal money, half up, injected clock, no new dependency), money logic names a second reviewer. Then the hidden questions per ticket, and the plan. Advisory lines (risks, the log) print FAIL until satisfied but never block PASSED.
 
 **Grade.**
 

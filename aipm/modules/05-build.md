@@ -169,7 +169,7 @@ Faisal adds a page of twenty behaviour examples below the table. One row: *Input
 **1. Faisal's spec says "The copilot shall produce accurate credit memos." What is the best improvement?**
 
 - A. Add behaviour examples, a measurable bar for factual errors by severity, and an eval that checks figures against source documents
-- B. Change "accurate" to "highly accurate"
+- B. Replace "accurate" with a 95% accuracy target, measured on memos sampled after launch
 - C. Ask Dana to choose the most accurate model available, confirming that it scores best on the public benchmarks for financial documents
 - D. Add a line saying the RM is responsible for accuracy
 
@@ -207,8 +207,8 @@ Faisal adds a page of twenty behaviour examples below the table. One row: *Input
 
 **4. The model provider releases a new version that scores better on public benchmarks. Tariq wants to switch next week. According to a good AI spec, what must happen first?**
 
-- A. Nothing; benchmark gains mean the product will improve, so the switch can go ahead as soon as engineering is ready to deploy it
-- B. Update the marketing page
+- A. Switch for a small group of users first, and compare their complaints with everyone else's before making the full move
+- B. Ask the provider for its release notes and test results, and switch if no known issues are listed
 - C. Ask users whether they notice a difference after switching
 - D. Run the full eval suite, including must-never and regression cases, against the new version before it reaches users
 
@@ -222,7 +222,7 @@ Faisal adds a page of twenty behaviour examples below the table. One row: *Input
 
 - A. The highest score reported by any vendor in its published benchmark results for similar tasks and users
 - B. Whatever the model achieves on the first test, since that shows what the technology can really do today
-- C. 100% on every dimension of quality, since any lower figure would mean the feature is not safe to release
+- C. The bar the business owner sets from what the business case needs in order to pay back within a year
 - D. The performance of the current process, adjusted for the risk tier and what users will tolerate
 
 <details><summary>Answer</summary>
@@ -412,9 +412,9 @@ Faisal replaces the executive demo with a four-week prototype plan for Najm Assi
 
 **2. Faisal's prompt prototype looks excellent on the 15 questions he wrote himself. What is the main weakness of this evidence?**
 
-- A. 15 is an odd number
+- A. Fifteen questions is a small sample, so he should write fifty more of his own
 - B. The questions are cleaner and more typical than real customer inputs, so quality on the real distribution is unknown
-- C. Prompt prototypes cannot measure cost
+- C. The prototype ran on a cheaper model than production will use, so quality may differ
 - D. He should have used a Wizard of Oz test instead, because a human playing the assistant would show real customer questions
 
 <details><summary>Answer</summary>
@@ -427,7 +427,7 @@ Faisal replaces the executive demo with a four-week prototype plan for Najm Assi
 
 - A. Insist on a firm delivery date and hold the team to it
 - B. Remove the quality bar so the date can be met, and agree to improve quality in a later release once the product is live and real usage data is available
-- C. Wait until a better model is released
+- C. Ask the vendor for a more capable model, and keep the plan unchanged until it arrives
 - D. Run a time-boxed spike with a specific question and kill criterion, and agree a smaller fallback product if the target is not reachable
 
 <details><summary>Answer</summary>
@@ -662,7 +662,7 @@ After the fee-waiver incident, Rania asks Faisal to own the **Najm Assist behavi
 
 - A. Nothing; tone changes are low risk because the wording of a single sentence cannot affect what the assistant is able to do
 - B. A registry entry with an owner, a passing regression eval suite including must-never cases, and a staged rollout
-- C. A new model should have been selected
+- C. A review of the new wording by the brand team, to check that it matches the bank's voice
 - D. A customer survey about tone
 
 <details><summary>Answer</summary>
@@ -676,7 +676,7 @@ After the fee-waiver incident, Rania asks Faisal to own the **Najm Assist behavi
 - A. A system prompt line saying "only act for the logged-in customer", repeated at the start and end of every conversation
 - B. A larger, more capable model
 - C. The application checking the customer's session and permissions before running the tool, plus in-app confirmation
-- D. A longer conversation history in the context
+- D. An output filter that blocks any freeze whose card number differs from the one in the chat
 
 <details><summary>Answer</summary>
 
@@ -689,7 +689,7 @@ After the fee-waiver incident, Rania asks Faisal to own the **Najm Assist behavi
 - A. Give the smallest set of narrow tools and permissions the job needs, with limits enforced by the application
 - B. Give the assistant every tool it might conceivably need, to avoid hand-overs and keep each customer conversation moving
 - C. Only allow read tools, never write tools, so that the assistant can never change a limit, a card or an account
-- D. Let customers choose which tools the assistant uses, so that each person can decide how much access it gets in each conversation
+- D. Give each tool full access to the account, but require the model to state its reason before every call it makes
 
 <details><summary>Answer</summary>
 
@@ -714,7 +714,7 @@ After the fee-waiver incident, Rania asks Faisal to own the **Najm Assist behavi
 
 - A. The upgrade should be treated as a change to every prompt that runs on it, with the regression suite run before rollout
 - B. No evaluation is needed because the prompts are the same
-- C. Only the cost needs checking
+- C. Only latency and cost need checking, since the vendor has already tested quality on the new version
 - D. Prompts must be rewritten from scratch for every new model, because prompts are never portable between versions of the same model family
 
 <details><summary>Answer</summary>

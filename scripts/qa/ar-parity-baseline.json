@@ -20,7 +20,40 @@
  "career/modules/07-capstone.ar.md": {
   "citation": 1
  },
+ "modules/01-anatomy-of-a-real-app/lesson-1-draw-the-boxes.ar.md": {
+  "operator": 3
+ },
+ "modules/01-anatomy-of-a-real-app/lesson-3-day-one-eyes.ar.md": {
+  "operator": 1
+ },
+ "modules/02-data-storage-backups/module.ar.md": {
+  "operator": 5
+ },
+ "modules/03-caching/lesson-2-cache-poisoning.ar.md": {
+  "operator": 3
+ },
  "modules/03-caching/module.ar.md": {
+  "operator": 5
+ },
+ "modules/04-deploys/module.ar.md": {
+  "operator": 1
+ },
+ "modules/05-users-abuse/module.ar.md": {
+  "operator": 1
+ },
+ "modules/06-many-clients/module.ar.md": {
+  "operator": 4
+ },
+ "modules/07-observability/module.ar.md": {
+  "operator": 7
+ },
+ "modules/09-directing-ai-team/module.ar.md": {
+  "operator": 5
+ },
+ "modules/10-scaling/module.ar.md": {
+  "operator": 1
+ },
+ "modules/11-reaching-the-world/module.ar.md": {
   "operator": 3
  },
  "saas/REPOS.ar.md": {

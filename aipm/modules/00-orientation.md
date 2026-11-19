@@ -222,7 +222,7 @@ Khalid agrees to the outcome, because it is written in his language: calls, sati
 - A. The feature PM serves end users of one product; the platform PM serves internal teams that build on shared AI capabilities
 - B. The feature PM works on generative AI; the platform PM works on classic machine learning models
 - C. The platform PM owns model vendors and contracts, while the feature PM owns the end-user experience
-- D. The roles are the same job; the titles differ only by which team pays for the work
+- D. The feature PM writes the requirements; the platform PM runs the models and evaluations for every team
 
 <details><summary>Answer</summary>
 
@@ -741,7 +741,7 @@ Faisal's comment on reading it: "So I recommend and the business decides, and La
 
 - A. Go to *AI Governance: Zero to Hero* and involve Layla, then bring the answer back into the product decision
 - B. Work out the obligations from first principles in the product spec, using Faisal's own reading of the Act and recent press coverage
-- C. Ignore it until launch week, then ask the legal team to review the finished assistant and fix anything they raise
+- C. Ask the chatbot model's vendor for its EU AI Act compliance statement and rely on it for the product decision
 - D. Go to *SaaS Building Blocks*, which covers how to build and run customer-facing features such as chat and notifications
 
 <details><summary>Answer</summary>

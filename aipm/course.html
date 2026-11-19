@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="aipm-source" content="683d25289a16bd1d">
+<meta name="aipm-source" content="6f284ffb36246aa0">
 <meta name="description" content="AI Product Management: Zero to Hero — a free, bilingual course: AI literacy, discovery, data, designing AI experiences, specs and evals, launch, metrics and pricing, strategy and leadership, with a quiz in every lesson and a 60-question practice exam.">
 <title>AI Product Management: Zero to Hero — Complete Course</title>
 <style>
@@ -882,7 +882,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <li>A. The feature PM serves end users of one product; the platform PM serves internal teams that build on shared AI capabilities</li>
 <li>B. The feature PM works on generative AI; the platform PM works on classic machine learning models</li>
 <li>C. The platform PM owns model vendors and contracts, while the feature PM owns the end-user experience</li>
-<li>D. The roles are the same job; the titles differ only by which team pays for the work</li>
+<li>D. The feature PM writes the requirements; the platform PM runs the models and evaluations for every team</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -1853,7 +1853,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. Go to <em>AI Governance: Zero to Hero</em> and involve Layla, then bring the answer back into the product decision</li>
 <li>B. Work out the obligations from first principles in the product spec, using Faisal&#39;s own reading of the Act and recent press coverage</li>
-<li>C. Ignore it until launch week, then ask the legal team to review the finished assistant and fix anything they raise</li>
+<li>C. Ask the chatbot model&#39;s vendor for its EU AI Act compliance statement and rely on it for the product decision</li>
 <li>D. Go to <em>SaaS Building Blocks</em>, which covers how to build and run customer-facing features such as chat and notifications</li>
 </ul>
 <details><summary>Answer</summary>
@@ -2143,7 +2143,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p><strong>3. The Credit Memo Copilot always extracts figures, checks ratios, then drafts sections in the same order. A vendor pitches an &quot;autonomous agent&quot; for it. What is the strongest product response?</strong></p>
 <ul>
 <li>A. Accept, because agents are more advanced than workflows and will cope better with unexpected cases</li>
-<li>B. Reject all use of LLMs for credit memos, because credit documents are too sensitive and no generative model can be trusted with them</li>
+<li>B. Accept, but cap the agent at ten tool calls per memo and log every step so the relationship manager can review it</li>
 <li>C. Replace the copilot with a classic ML classifier that scores each section of the credit memo</li>
 <li>D. Prefer a fixed LLM workflow, because the steps do not vary and a workflow is more predictable and easier to test</li>
 </ul>
@@ -2154,10 +2154,10 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 
 <p><strong>4. Smart Alerts must score millions of card transactions in real time at very low cost per transaction. A team proposes an LLM to review every transaction. What is the main product objection?</strong></p>
 <ul>
-<li>A. LLMs cannot read numbers, so transaction amounts and balances would be misread by the model</li>
+<li>A. An LLM cannot explain its decisions, so analysts would not be able to see why a transaction was flagged</li>
 <li>B. For this volume and latency, a specialised ML model is faster and far cheaper per decision, and an LLM can be kept for explaining alerts to customers</li>
 <li>C. Fraud detection is prohibited under the EU AI Act, so the team would need a regulator&#39;s approval first</li>
-<li>D. LLMs cannot be used in Arabic, so the bank would need to build a separate fraud model for every language its customers speak before launching anything</li>
+<li>D. An LLM would need each customer&#39;s full transaction history in every prompt, which breaks the data minimisation rules that apply to card data</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -2462,7 +2462,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p><strong>1. A fraud model is 99% accurate on a dataset where 0.1% of transactions are fraud. What should the PM ask next?</strong></p>
 <ul>
 <li>A. What are its precision and recall, and what does each type of error cost?</li>
-<li>B. Nothing; 99% accuracy is excellent, so the model can go to the approval committee now</li>
+<li>B. Whether the 99% holds on a fresh month of transactions before the approval committee sees it</li>
 <li>C. Whether the model uses deep learning or a simpler method such as logistic regression</li>
 <li>D. Whether accuracy could reach 99.9% if the team collects more labelled training data</li>
 </ul>
@@ -2473,14 +2473,14 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 
 <p><strong>2. The Credit Memo Copilot states a covenant that does not appear in the facility agreement it was given. Which design response most directly addresses this?</strong></p>
 <ul>
-<li>A. Increase the temperature so the model explores more options</li>
+<li>A. Lower the temperature to zero so the model gives the same answer every time</li>
 <li>B. Add a line to the user guide saying AI can make mistakes</li>
 <li>C. Require every claim to cite a source passage and flag any claim without one</li>
 <li>D. Switch to a model with a larger context window so the whole agreement fits at once</li>
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>C.</strong> Grounding with citations makes unsupported claims visible and checkable. A makes variation more likely, B is a warning rather than a control, and D does not stop fabrication because the model already had the document. (🟡 Going deeper, hallucination; 🏛️ register.)</p>
+<p><strong>C.</strong> Grounding with citations makes unsupported claims visible and checkable. A makes answers repeatable, not correct, B is a warning rather than a control, and D does not stop fabrication because the model already had the document. (🟡 Going deeper, hallucination; 🏛️ register.)</p>
 </details>
 
 <p><strong>3. Using illustrative prices of $3 per million input tokens and $15 per million output tokens, what is the approximate model cost of one call with 20,000 input tokens and 1,000 output tokens?</strong></p>
@@ -2499,7 +2499,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. The agent is 95% reliable end to end, because each step passes its test most of the time</li>
 <li>B. End-to-end success is likely much lower, so add checkpoints, customer confirmation before filing and a recovery path</li>
-<li>C. Agents should never be used for disputes, because customers expect a person to handle every complaint that involves their money</li>
+<li>C. Keep disputes with human agents until every step passes 99% in testing, and only then automate the whole dispute flow</li>
 <li>D. Increase the context window to fix it, so the agent can remember all eight steps at once</li>
 </ul>
 <details><summary>Answer</summary>
@@ -2841,8 +2841,8 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. Retrieve the current fee schedule at request time and have the model answer from it with a citation</li>
 <li>B. Fine-tune the model on the new fee schedule so it learns the changed fee and answers without any lookup</li>
-<li>C. Increase the temperature so the model varies its answers and sometimes gives the newer fee instead of the old one</li>
-<li>D. Train a new language model from scratch on all of the bank&#39;s documents, including the latest fee schedule</li>
+<li>C. Add a note telling customers to confirm fees on the website, since the model&#39;s knowledge may be out of date</li>
+<li>D. Switch to the vendor&#39;s newest model, whose training data is more recent and likely includes the new fee</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -2864,7 +2864,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p><strong>3. Testing shows the Staff GenAI assistant gives correct answers, but in the wrong structure and far too long, even after several prompt revisions. Which next step fits the build ladder?</strong></p>
 <ul>
 <li>A. Add many more documents to retrieval, so the model has more examples of the right structure and length</li>
-<li>B. Train a model from scratch on the bank&#39;s own credit memos</li>
+<li>B. Switch to a larger, more capable model, which is more likely to follow the format and length instructions in the prompt</li>
 <li>C. Refine examples in the prompt further, and consider fine-tuning if it still plateaus, since this is a behaviour gap</li>
 <li>D. Buy a second vendor product that offers a built-in memo template</li>
 </ul>
@@ -2877,7 +2877,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. In the system prompt, by telling the model not to reveal confidential data to users outside the credit team</li>
 <li>B. By fine-tuning the model on public data only, so that it never sees confidential credit files</li>
-<li>C. By lowering the temperature so the model is less likely to repeat any sensitive passages</li>
+<li>C. By a filter on the model&#39;s answers that blocks any reply naming a corporate credit client or account</li>
 <li>D. At retrieval, by enforcing the user&#39;s access rights before passages reach the model</li>
 </ul>
 <details><summary>Answer</summary>
@@ -2890,7 +2890,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <li>A. A strong evaluation suite with golden sets, plus a thin layer between the application and any one vendor&#39;s API</li>
 <li>B. A longer contract with the current vendor, with a written commitment to keep the model available for several more years</li>
 <li>C. A fine-tuned copy of the retired model, kept in storage for later</li>
-<li>D. Avoiding AI products altogether until the vendor market becomes more stable</li>
+<li>D. A detailed prompt library, written and tuned around the current model&#39;s quirks</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -3528,12 +3528,12 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. Treat the scores as effectively tied and weigh the platform dependency explicitly in the decision</li>
 <li>B. Pick 3.47 because it scored higher, since the scoring process is meant to settle exactly this kind of choice</li>
-<li>C. Re-weight the criteria until 3.41 wins, so the platform work is approved for the sake of the later products</li>
+<li>C. Add a &quot;strategic fit&quot; criterion to the scorecard now and re-score both, so the platform value counts</li>
 <li>D. Average the two scores and build both ideas together, splitting the team&#39;s capacity between them evenly</li>
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>A.</strong> Small score gaps are noise, and platform effects are real value that stand-alone scores miss. C is gaming the scorecard. Show the dependency openly instead. (🟡 Going deeper; 🔴 Expert view.)</p>
+<p><strong>A.</strong> Small score gaps are noise, and platform effects are real value that stand-alone scores miss. C changes the scorecard after seeing the result. Show the dependency openly instead. (🟡 Going deeper; 🔴 Expert view.)</p>
 </details>
 
 <p><strong>5. The risk team gives Najm Assist a poor risk score because &quot;customer chatbots can say wrong things&quot;. What is the best PM response?</strong></p>
@@ -3805,7 +3805,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <li>A. Keep going and add more features to the model, since a pilot with this much accuracy should eventually change what the relationship managers do</li>
 <li>B. Improve the model&#39;s accuracy further</li>
 <li>C. Stop the pilot, record the evidence and a reopening condition, and move the team to a higher-value queued item</li>
-<li>D. Hand the model to a vendor</li>
+<li>D. Run another six months with more RMs, since wider use may show the value the pilot missed</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -3817,7 +3817,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <li>A. Keep the reasons deterministic, from the decision&#39;s reason codes and a reviewed template. Consider AI only for helping staff explain the letter</li>
 <li>B. Let the model generate the reasons from the application file, and have a credit officer read and approve each letter before it is sent to the customer</li>
 <li>C. Use GenAI but add a disclaimer</li>
-<li>D. Send no reasons</li>
+<li>D. Use GenAI to write the reasons from the reason codes, letting the model vary the wording for each customer</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -3826,10 +3826,10 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 
 <p><strong>5. An extraction idea is stopped because scanned statements are too poor for accurate extraction today. What should the decision record include?</strong></p>
 <ul>
-<li>A. Only &quot;did not work&quot;</li>
+<li>A. A one-line note that extraction quality was too low, filed with the pilot&#39;s closing slides</li>
 <li>B. The evidence and a reopening condition, such as &quot;revisit when statements arrive in machine-readable form or extraction quality improves on the same test set&quot;</li>
-<li>C. The names of the people who proposed it</li>
-<li>D. Nothing, stopped ideas should not be recorded, because a record of failures discourages people from proposing ideas and clutters the backlog for the team that has to maintain it</li>
+<li>C. The cost and effort spent so far, so that leaders can see what the attempt consumed</li>
+<li>D. A recommendation to drop extraction from the roadmap for good, so that the team does not spend time on it again and the backlog stays on ideas that work</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -4128,9 +4128,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p><strong>5. Why does the lesson recommend building a golden set of real cases with agreed answers before building the product?</strong></p>
 <ul>
 <li>A. It is required by the EU AI Act for every AI system that a bank puts in front of customers or uses with its own staff, however small the risk</li>
-<li>B. It replaces the need for training data</li>
+<li>B. It gives the team labelled examples to fine-tune the model on, so training can start straight away</li>
 <li>C. Without it the team cannot tell whether any version works, and building it exposes disagreement about what &quot;good&quot; means</li>
-<li>D. It lets the team skip user research</li>
+<li>D. It lets the team skip the pilot, since the golden set already shows how the product will perform with users</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -4473,8 +4473,8 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p><strong>2. RMs edit about 40% of Credit Memo Copilot&#39;s drafts. What is the best way to turn this into useful learning?</strong></p>
 <ul>
 <li>A. Treat every edited section as a model error, retrain monthly, and report the edit rate to the committee quarterly</li>
-<li>B. Ignore edits, because they are just personal style</li>
-<li>C. Remove the ability to edit so the signal is cleaner</li>
+<li>B. Report the edit rate every week as the copilot&#39;s main quality metric, and set the team a quarterly target to bring it down</li>
+<li>C. Send RMs a monthly survey asking which sections they edit most and why</li>
 <li>D. Pair edit data with a short reason picker and a weekly sampled review, then fix patterns in the corpus, prompt or template</li>
 </ul>
 <details><summary>Answer</summary>
@@ -4509,8 +4509,8 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p><strong>5. Tariq proposes automatically retraining a customer-facing model every night on the previous day&#39;s user feedback. What is the main product concern?</strong></p>
 <ul>
 <li>A. Behaviour would change silently and often, eroding trust and traceability, and it opens the door to deliberately poisoned feedback</li>
-<li>B. Nightly retraining is always too expensive</li>
-<li>C. Feedback data is never useful for training</li>
+<li>B. Nightly retraining costs more in compute than the quality gain is likely to be worth</li>
+<li>C. One day of feedback is too little data to retrain on, so weekly retraining would be safer</li>
 <li>D. It breaks the rule that models may only be updated once a year, which the bank&#39;s model risk policy sets for all production models in the bank</li>
 </ul>
 <details><summary>Answer</summary>
@@ -4827,7 +4827,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <li>A. Whether the fine-tuned model will score higher on public benchmarks</li>
 <li>B. Whether this use was declared and has a legal basis, what the vendor contract permits, and whether the bank could honour erasure requests afterwards</li>
 <li>C. Whether customers clicked &quot;accept&quot; on the app&#39;s terms and conditions when they first downloaded the app, which the bank treats as consent for any later use of transcripts</li>
-<li>D. Whether the transcripts are in English</li>
+<li>D. Whether the vendor will delete the transcripts from its systems once the fine-tuning is finished</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -5189,7 +5189,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p><strong>2. Khalid wants SME Instant Finance to approve and decline automatically. The model is well evaluated. Which design does this lesson recommend as a first step?</strong></p>
 <ul>
 <li>A. Automate both, since the model outperforms the scorecard</li>
-<li>B. Keep everything manual until the model is perfect</li>
+<li>B. Run shadow mode only, with no automation at all, until the model matches underwriters on every case for a year</li>
 <li>C. Automate approvals inside a scope fence, route declines and unclear cases to people, and run shadow mode</li>
 <li>D. Automate declines only, because declines save the most underwriter time and are seen as lower risk</li>
 </ul>
@@ -5202,8 +5202,8 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. The review may be a rubber stamp; sample-check cases and give reviewers more time, evidence and easy override before drawing conclusions</li>
 <li>B. The model is excellent and the agreement rate proves it; remove the reviewers and use the underwriting team&#39;s time on other, more valuable work</li>
-<li>C. The reviewers are lazy and should be retrained</li>
-<li>D. The override rate is irrelevant to product quality</li>
+<li>C. The reviewers need refresher training on credit policy so that they challenge the model&#39;s recommendations more often</li>
+<li>D. Set a target override rate, such as 5%, so that reviewers are pushed to look at cases more closely</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -5224,9 +5224,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 
 <p><strong>5. Bainbridge&#39;s &quot;Ironies of Automation&quot; warns about which effect?</strong></p>
 <ul>
-<li>A. Automation always lowers costs</li>
-<li>B. Automation cannot be applied to decisions, because only a human can be held accountable for a choice that changes what happens to a customer&#39;s money</li>
-<li>C. Users never trust automated systems</li>
+<li>A. Operators stop trusting automation after one visible error, even when it is reliable overall</li>
+<li>B. Automation shifts accountability to the system&#39;s designers, so the operators who oversee it feel less responsible for its outcomes</li>
+<li>C. People accept automated advice more readily when it comes with a confidence score</li>
 <li>D. When routine work is automated, humans are left with the hardest cases while losing the practice and context needed to handle them</li>
 </ul>
 <details><summary>Answer</summary>
@@ -5572,9 +5572,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <section class="sec sec-quiz"><h2>✍️ Check yourself</h2>
 <p><strong>1. An RM refuses to use the Credit Memo Copilot because &quot;I&#39;d have to check every number anyway.&quot; Which design change most directly addresses this?</strong></p>
 <ul>
-<li>A. Add a banner at the top of each draft saying the Copilot is highly accurate</li>
+<li>A. Add a note to each draft saying the Copilot was tested on thousands of past memos</li>
 <li>B. Show a single overall confidence percentage for the draft, above the first section</li>
-<li>C. Remove the ability to edit drafts so that managers use the output as it is generated</li>
+<li>C. Let RMs tick each figure once checked, and show how many in the draft are still unchecked</li>
 <li>D. Link each figure to its source page so checking takes seconds</li>
 </ul>
 <details><summary>Answer</summary>
@@ -5584,10 +5584,10 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 
 <p><strong>2. What does &quot;calibrated trust&quot; mean?</strong></p>
 <ul>
-<li>A. Users trust the AI as much as possible, so that they use it for every task and spend as little time as they can on checking it afterwards</li>
+<li>A. Users rely on the AI most for the tasks where its overall accuracy was highest in the launch evaluation, and check its output elsewhere</li>
 <li>B. The model&#39;s scores are statistically calibrated</li>
 <li>C. Users&#39; reliance on the system matches what the system can actually do, so they rely on it when it is right and check it where it is weak</li>
-<li>D. Users trust the AI only after a training course</li>
+<li>D. Users&#39; trust is measured in regular surveys and kept above an agreed target level</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -5609,7 +5609,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p><strong>4. Fraud analysts have stopped reading Smart Alerts because most are false alarms. Which statement is most accurate?</strong></p>
 <ul>
 <li>A. Alert fatigue is a training issue: refresher sessions on why alerts matter will get analysts reading again</li>
-<li>B. Raising the threshold to cut false alarms solves it at no cost to fraud detection</li>
+<li>B. Raising the threshold is the fix, since fewer alerts will mean analysts read each one again</li>
 <li>C. The threshold trades missed fraud for false alarms, and dismissal design adds to fatigue; both are product calls</li>
 <li>D. Shorter alerts with the explanation removed, so analysts can clear each one in a few seconds</li>
 </ul>
@@ -5620,10 +5620,10 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 
 <p><strong>5. A research team finds that adding a fluent rationale to each model recommendation made reviewers accept more recommendations, including wrong ones. What should the PM take from this?</strong></p>
 <ul>
-<li>A. Explanations always improve decisions, because they give reviewers the reasoning they need to judge a recommendation properly, so they should be shown in full for every recommendation</li>
-<li>B. Remove all explanations</li>
+<li>A. Show the rationale only on low-confidence recommendations, where reviewers need the most help, and hide it on confident ones so it cannot sway them</li>
+<li>B. Drop the rationales and show only the recommendation and its score on the review screen</li>
 <li>C. Prefer explanations that make checking easy, such as citations and evidence, and test whether they help users catch errors, not only whether they like them</li>
-<li>D. Show explanations only to new users</li>
+<li>D. Keep the rationales, and add a reminder that reviewers must make their own judgement</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -5920,8 +5920,8 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. Cancel the card immediately to protect the customer, since a stop request signals possible fraud and speed matters more than anything else</li>
 <li>B. Clarify whether the customer wants a temporary freeze or to report the card lost or stolen, then show a preview of the chosen action</li>
-<li>C. Tell the customer to call the contact centre</li>
-<li>D. Freeze the card silently and notify them later</li>
+<li>C. Show the card&#39;s recent transactions first, so the customer can decide whether any of them is fraud</li>
+<li>D. Freeze the card at once, since a freeze is reversible, then tell the customer how to undo it</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -5944,7 +5944,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. Accept: the prompt is the right place for business rules, because the assistant reads it before every conversation</li>
 <li>B. Enforce the limit in the card system the tool calls, and keep the prompt instruction only as an extra layer</li>
-<li>C. Remove the limit so customers are not frustrated when the assistant refuses a request they consider reasonable</li>
+<li>C. Accept, but also show the limit to customers so they know the assistant cannot go above it</li>
 <li>D. Ask the model to double-check its own output against the rule before it sends the final action to the card system</li>
 </ul>
 <details><summary>Answer</summary>
@@ -6247,7 +6247,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p><strong>1. Faisal&#39;s spec says &quot;The copilot shall produce accurate credit memos.&quot; What is the best improvement?</strong></p>
 <ul>
 <li>A. Add behaviour examples, a measurable bar for factual errors by severity, and an eval that checks figures against source documents</li>
-<li>B. Change &quot;accurate&quot; to &quot;highly accurate&quot;</li>
+<li>B. Replace &quot;accurate&quot; with a 95% accuracy target, measured on memos sampled after launch</li>
 <li>C. Ask Dana to choose the most accurate model available, confirming that it scores best on the public benchmarks for financial documents</li>
 <li>D. Add a line saying the RM is responsible for accuracy</li>
 </ul>
@@ -6282,8 +6282,8 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 
 <p><strong>4. The model provider releases a new version that scores better on public benchmarks. Tariq wants to switch next week. According to a good AI spec, what must happen first?</strong></p>
 <ul>
-<li>A. Nothing; benchmark gains mean the product will improve, so the switch can go ahead as soon as engineering is ready to deploy it</li>
-<li>B. Update the marketing page</li>
+<li>A. Switch for a small group of users first, and compare their complaints with everyone else&#39;s before making the full move</li>
+<li>B. Ask the provider for its release notes and test results, and switch if no known issues are listed</li>
 <li>C. Ask users whether they notice a difference after switching</li>
 <li>D. Run the full eval suite, including must-never and regression cases, against the new version before it reaches users</li>
 </ul>
@@ -6296,7 +6296,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. The highest score reported by any vendor in its published benchmark results for similar tasks and users</li>
 <li>B. Whatever the model achieves on the first test, since that shows what the technology can really do today</li>
-<li>C. 100% on every dimension of quality, since any lower figure would mean the feature is not safe to release</li>
+<li>C. The bar the business owner sets from what the business case needs in order to pay back within a year</li>
 <li>D. The performance of the current process, adjusted for the risk tier and what users will tolerate</li>
 </ul>
 <details><summary>Answer</summary>
@@ -6596,9 +6596,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 
 <p><strong>2. Faisal&#39;s prompt prototype looks excellent on the 15 questions he wrote himself. What is the main weakness of this evidence?</strong></p>
 <ul>
-<li>A. 15 is an odd number</li>
+<li>A. Fifteen questions is a small sample, so he should write fifty more of his own</li>
 <li>B. The questions are cleaner and more typical than real customer inputs, so quality on the real distribution is unknown</li>
-<li>C. Prompt prototypes cannot measure cost</li>
+<li>C. The prototype ran on a cheaper model than production will use, so quality may differ</li>
 <li>D. He should have used a Wizard of Oz test instead, because a human playing the assistant would show real customer questions</li>
 </ul>
 <details><summary>Answer</summary>
@@ -6610,7 +6610,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. Insist on a firm delivery date and hold the team to it</li>
 <li>B. Remove the quality bar so the date can be met, and agree to improve quality in a later release once the product is live and real usage data is available</li>
-<li>C. Wait until a better model is released</li>
+<li>C. Ask the vendor for a more capable model, and keep the plan unchanged until it arrives</li>
 <li>D. Run a time-boxed spike with a specific question and kill criterion, and agree a smaller fallback product if the target is not reachable</li>
 </ul>
 <details><summary>Answer</summary>
@@ -6976,7 +6976,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. Nothing; tone changes are low risk because the wording of a single sentence cannot affect what the assistant is able to do</li>
 <li>B. A registry entry with an owner, a passing regression eval suite including must-never cases, and a staged rollout</li>
-<li>C. A new model should have been selected</li>
+<li>C. A review of the new wording by the brand team, to check that it matches the bank&#39;s voice</li>
 <li>D. A customer survey about tone</li>
 </ul>
 <details><summary>Answer</summary>
@@ -6989,7 +6989,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <li>A. A system prompt line saying &quot;only act for the logged-in customer&quot;, repeated at the start and end of every conversation</li>
 <li>B. A larger, more capable model</li>
 <li>C. The application checking the customer&#39;s session and permissions before running the tool, plus in-app confirmation</li>
-<li>D. A longer conversation history in the context</li>
+<li>D. An output filter that blocks any freeze whose card number differs from the one in the chat</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -7001,7 +7001,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <li>A. Give the smallest set of narrow tools and permissions the job needs, with limits enforced by the application</li>
 <li>B. Give the assistant every tool it might conceivably need, to avoid hand-overs and keep each customer conversation moving</li>
 <li>C. Only allow read tools, never write tools, so that the assistant can never change a limit, a card or an account</li>
-<li>D. Let customers choose which tools the assistant uses, so that each person can decide how much access it gets in each conversation</li>
+<li>D. Give each tool full access to the account, but require the model to state its reason before every call it makes</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -7024,7 +7024,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. The upgrade should be treated as a change to every prompt that runs on it, with the regression suite run before rollout</li>
 <li>B. No evaluation is needed because the prompts are the same</li>
-<li>C. Only the cost needs checking</li>
+<li>C. Only latency and cost need checking, since the vendor has already tested quality on the new version</li>
 <li>D. Prompts must be rewritten from scratch for every new model, because prompts are never portable between versions of the same model family</li>
 </ul>
 <details><summary>Answer</summary>
@@ -7408,9 +7408,9 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 
 <p><strong>5. Why does the eval plan mark &quot;fabricated financial figure&quot; as a critical failure with zero tolerance, instead of folding it into the average?</strong></p>
 <ul>
-<li>A. Because critical failures are easier to measure</li>
-<li>B. Because regulators require zero errors in all AI systems, so any fabricated figure is a breach that the bank must report to the central bank</li>
-<li>C. Because averages are always wrong</li>
+<li>A. Because a figure error is easier to spot than other failures, so it can be counted on its own</li>
+<li>B. Because banking supervisors require zero errors in any AI output that contains financial figures</li>
+<li>C. Because averages hide the cases that matter most, so the plan tracks critical failures instead of averages for every release</li>
 <li>D. Because some failures are severe enough that a release improving the average but adding one of them should still be blocked</li>
 </ul>
 <details><summary>Answer</summary>
@@ -7740,7 +7740,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. Both prompts are good</li>
 <li>B. The judge is not discriminating between good and bad outputs and must be redesigned and calibrated against expert labels</li>
-<li>C. The broken prompt should ship because the difference is small and the cost of delaying a release to redesign the judge is high</li>
+<li>C. The broken prompt is nearly as good as the working one, so the faults it introduced matter much less than the team expected</li>
 <li>D. The judge needs a larger model and nothing else</li>
 </ul>
 <details><summary>Answer</summary>
@@ -7786,7 +7786,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 
 <p><strong>5. After a red-team week, the team fixes the prompt that let testers make Najm Assist promise a fee waiver. What else MUST happen for the fix to last?</strong></p>
 <ul>
-<li>A. Nothing; the fix is done once the prompt change has been tested and the wording of the answer has been corrected</li>
+<li>A. Retest the fixed prompt against the exact attack that worked, and close the finding in the tracker</li>
 <li>B. Publish the red-team report internally so that other teams can learn what the testers found and why it worked</li>
 <li>C. Add the successful attacks to an adversarial test set that is re-run on every release</li>
 <li>D. Schedule another red-team week in a year, to check whether new attacks have appeared since this one</li>
@@ -8108,13 +8108,13 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p><strong>5. The vendor behind the copilot&#39;s model announces a new version with &quot;improved reasoning&quot; and will retire the current one next quarter. What should Faisal do?</strong></p>
 <ul>
 <li>A. Switch immediately, because the vendor says it is better and the current version will be retired next quarter anyway</li>
-<li>B. Keep the old version indefinitely</li>
+<li>B. Ask the vendor to extend support for the current version, so nothing changes until the team is ready</li>
 <li>C. Treat it as a new release: re-run the offline evals, then shadow and canary before moving full traffic</li>
 <li>D. Run only a public benchmark comparison</li>
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>C.</strong> A model change can shift behaviour anywhere, so it goes through the same evaluation stages as any release. B is not possible once the version is retired, and D does not measure Najm&#39;s task. (🔴 Expert view; 🏛️ In practice.)</p>
+<p><strong>C.</strong> A model change can shift behaviour anywhere, so it goes through the same evaluation stages as any release. B only postpones the same change, and D does not measure Najm&#39;s task. (🔴 Expert view; 🏛️ In practice.)</p>
 </details>
 </section>
 <section class="sec sec-refs"><h2>📚 References</h2>
@@ -8496,7 +8496,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p><strong>2. Which guardrail design best follows the &quot;deny by default for actions&quot; principle for a first release of a customer assistant?</strong></p>
 <ul>
 <li>A. Give the assistant all banking tools but tell it in the system prompt to be careful with every action it takes</li>
-<li>B. Allow actions only for customers who accept the terms</li>
+<li>B. Allow all actions, but cap each customer at a set number of actions per day</li>
 <li>C. Allow actions but log them for review at month end</li>
 <li>D. Launch with question-answering only and add action tools later, each under its own gate</li>
 </ul>
@@ -8509,8 +8509,8 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. Pause the rollout, fall back or roll back as the plan says, and investigate</li>
 <li>B. Continue to 100% because the drop may be noise and two days is too short a period to judge</li>
-<li>C. Lower the spec bar so the rollout can continue, then review the bar again after launch</li>
-<li>D. Wait for the 30-day post-launch review before deciding whether to take any action at all</li>
+<li>C. Agree a temporary lower bar with Layla, so the rollout can continue while the team investigates the drop</li>
+<li>D. Hold at 25% without rolling back, and wait a few more days for data before deciding anything</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -8519,7 +8519,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 
 <p><strong>4. The team changes the wording of Najm Assist&#39;s system prompt to sound friendlier. Under a sensible change-class policy, what should happen?</strong></p>
 <ul>
-<li>A. Nothing: prompt wording is not a product change</li>
+<li>A. Release it straight away, since a wording change does not alter what the assistant can do</li>
 <li>B. The full launch gate, including a new governance approval and a fresh review by the risk committee</li>
 <li>C. Re-run the automated eval suite and get the PM&#39;s approval before release</li>
 <li>D. Release it to all users and monitor complaints</li>
@@ -8803,8 +8803,8 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p><strong>1. Faisal&#39;s campaign headline for SME Instant Finance is &quot;AI approves your invoice finance instantly&quot;. Which revision best follows this lesson?</strong></p>
 <ul>
 <li>A. &quot;Turn eligible invoices into cash, with a decision in minutes&quot;</li>
-<li>B. &quot;The smartest AI lender in the Gulf&quot;</li>
-<li>C. &quot;Instant AI approvals, guaranteed&quot;</li>
+<li>B. &quot;Najm&#39;s AI reviews your invoices and approves finance in seconds&quot;</li>
+<li>C. &quot;Instant invoice finance for every SME, with each decision made by AI&quot;</li>
 <li>D. &quot;Powered by advanced machine learning, trained on ten years of Najm Bank&#39;s own invoice finance data&quot;</li>
 </ul>
 <details><summary>Answer</summary>
@@ -8814,10 +8814,10 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 
 <p><strong>2. Why does the choice of market category matter more for AI products than for many traditional products?</strong></p>
 <ul>
-<li>A. Because AI products cannot be sold without a category</li>
+<li>A. Because the category decides which competitors&#39; prices customers compare the product with</li>
 <li>B. Because the category sets the standard customers judge the product against, and AI products make visible errors</li>
 <li>C. Because regulators require a category for every AI product, and the category decides which rules apply to it in the Gulf region</li>
-<li>D. Because categories determine the model used</li>
+<li>D. Because AI products are new, so a familiar category is needed to get customers to try them</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -8828,7 +8828,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. Nothing, because claims describe the product as customers experience it, not the model underneath</li>
 <li>B. Each claim is re-checked against evals on the new model before release</li>
-<li>C. All claims are deleted and rewritten from scratch by marketing after the new model has launched</li>
+<li>C. Only claims that mention the model or AI are re-checked; the rest stay as they are</li>
 <li>D. Marketing updates claims after the next campaign, once there is time in the planning calendar</li>
 </ul>
 <details><summary>Answer</summary>
@@ -8841,7 +8841,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <li>A. The precise definition of &quot;resolved&quot; and who measures it</li>
 <li>B. Whether the agent uses an open-weight model or a proprietary model from a large vendor</li>
 <li>C. Whether the vendor offers a free trial before the buyer commits to the first-year contract</li>
-<li>D. Whether the price is quoted in dollars or in the local currency used by the buyer</li>
+<li>D. Whether the price per resolution falls as the buyer&#39;s conversation volume grows</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -9126,7 +9126,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. Ask them to share their workflow with the team, since they get the most out of the copilot</li>
 <li>B. Treat it as possible over-reliance: sample their memos, coach on checking, and add source cues</li>
-<li>C. Limit their access to two drafts a week until they show they edit carefully</li>
+<li>C. Set a minimum edit rate for all RMs, so that every submitted draft shows at least some sign of review</li>
 <li>D. Leave it, since heavy use is exactly the adoption the launch was aiming for</li>
 </ul>
 <details><summary>Answer</summary>
@@ -9150,8 +9150,8 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. Purely as a security matter for Layla&#39;s office to block</li>
 <li>B. As evidence of unmet demand to feed product discovery, while governance handles the policy and data risk</li>
-<li>C. As proof that Staff GenAI should be withdrawn</li>
-<li>D. As acceptable, because the staff are being productive and no customer has complained about the way their data was handled</li>
+<li>C. As a sign that Staff GenAI needs a faster model, which should be bought and rolled out before anything else</li>
+<li>D. As acceptable for now, since the staff are productive, while the team speeds up Staff GenAI</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -9555,7 +9555,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <li>A. Credit the copilot, since it launched in the same quarter and cycle time fell right afterwards across the bank</li>
 <li>B. Compare teams using the copilot with a holdout or not-yet-rolled-out group over the same period</li>
 <li>C. Survey RMs on whether they feel faster</li>
-<li>D. Divide the gain equally between the two causes</li>
+<li>D. Credit the new analysts, since added capacity reliably cuts queues while new tools take time to bed in</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -9963,7 +9963,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <li>A. You cannot tell without adding handoff costs and dividing by resolution rate</li>
 <li>B. Model A is cheaper, because it costs a tenth as much per token</li>
 <li>C. Model B is always cheaper, because it resolves more</li>
-<li>D. Cost does not matter if quality differs, because customers care about the quality of the answer, not the price per token</li>
+<li>D. Compare cost per conversation, since every conversation uses the model whether or not it resolves</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10009,8 +10009,8 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p><strong>5. Najm Assist&#39;s average cost per agent task is on target, but finance reports occasional very large bills. What should the team add?</strong></p>
 <ul>
 <li>A. p95 cost reporting and a per-task spend cap that ends in a graceful handoff</li>
-<li>B. A switch to the smallest model for all tasks, whatever the effect on the quality of the answers</li>
-<li>C. Removing agent features from the product until cost per task falls further below the target</li>
+<li>B. A switch to a smaller, cheaper model for all agent tasks, to bring the average down further</li>
+<li>C. A larger monthly budget buffer agreed with finance, sized to cover the occasional large bills</li>
 <li>D. A monthly budget review only, run by finance with the product team once the bills have arrived</li>
 </ul>
 <details><summary>Answer</summary>
@@ -10034,7 +10034,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p class="crumb"><a href="#contents">Module 8 — Metrics, economics and growth</a></p>
 <h1><span class="num">8.3</span> Monitoring, drift and the iteration loop after launch</h1>
 <p class="meta"><span class="lvl lvl-a">🔴 Advanced</span> · <span class="bok">Stage <bdi dir="ltr">Grow</bdi></span> · <span class="prereq">Before this: <a href="#l6-1">6.1</a>, <a href="#l6-2">6.2</a>, <a href="#l6-3">6.3</a>, <a href="#l8-1">8.1</a></span></p>
-<section class="sec sec-lead"><p><strong>After this you can</strong> name the type of drift behind a scenario and a signal that detects it, and write a dated model-migration plan with a golden-set go/no-go rule and a rollback path. <em>Study time: reading about 15 min, hands-on about 160 min (estimate).</em></p>
+<section class="sec sec-lead"><p><strong>After this you can</strong> name the type of drift behind a scenario and a signal that detects it, and write a dated model-migration plan with a golden-set go/no-go rule and a rollback path. <em>Study time: reading about 20 min, hands-on about 160 min (estimate).</em></p>
 </section>
 <section class="sec sec-tldr"><h2>⚡ In 60 seconds</h2>
 <ul>
@@ -10417,12 +10417,12 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. A tighter p95 latency threshold, with alerts that notify the on-call engineer whenever response time rises above it</li>
 <li>B. Monthly PSI on customer age</li>
-<li>C. A higher containment target</li>
+<li>C. A containment alert that fires whenever the share of chats handed to agents changes sharply</li>
 <li>D. A source-freshness check linking policy page changes to re-indexing and a targeted re-test</li>
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>D.</strong> This was knowledge drift. Linking content changes to re-indexing and re-testing catches it at the source. Health metrics (A) cannot see wrong answers, and a containment target (C) might even reward the error. (🟡 Going deeper.)</p>
+<p><strong>D.</strong> This was knowledge drift. Linking content changes to re-indexing and re-testing catches it at the source. Health metrics (A) cannot see wrong answers, and a containment alert (C) stays quiet, because the wrong answers still counted as contained. (🟡 Going deeper.)</p>
 </details>
 
 <p><strong>2. Smart Alerts&#39; recall on confirmed fraud has fallen, though input distributions look stable. Which kind of drift is most likely?</strong></p>
@@ -10453,7 +10453,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. Nothing; prompt changes are low risk because a prompt is only text and can be edited back by the team at any time</li>
 <li>B. Add the failing cases to the golden set, run the full set for regressions, and release through a staged rollout</li>
-<li>C. Ask the vendor to confirm the fix</li>
+<li>C. Test the new prompt on the reported Arabic phrasings, then release it to all customers</li>
 <li>D. Retrain the model</li>
 </ul>
 <details><summary>Answer</summary>
@@ -10818,7 +10818,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <li>A. Power needs both a benefit and a barrier, and accuracy alone does not stop rivals from matching it</li>
 <li>B. Accuracy is not a benefit, because customers cannot see or value the difference between two credit models</li>
 <li>C. Only network economies count as power in AI, because the other six powers need physical assets and factories</li>
-<li>D. Banks cannot have power because they are regulated and every competitor in the market must follow the same rules</li>
+<li>D. Power needs a benefit that customers pay for, and credit accuracy only lowers the bank&#39;s own losses</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -10828,7 +10828,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p><strong>5. Najm is deciding how much to invest in Staff GenAI, a general internal assistant. Productivity-suite vendors already bundle capable assistants. What portfolio role and posture fit best?</strong></p>
 <ul>
 <li>A. Differentiate: build a custom assistant and a proprietary model, so that Najm owns every layer of the stack</li>
-<li>B. Stop: internal assistants have no value</li>
+<li>B. Stop: retire Staff GenAI and leave internal assistants to each department&#39;s own budget</li>
 <li>C. Parity: build from scratch to match the vendors&#39; features</li>
 <li>D. Commodity: buy the bundled capability and invest only in connecting bank-specific knowledge sources</li>
 </ul>
@@ -11163,7 +11163,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p><strong>1. Khalid asks Faisal for &quot;the date when the copilot will be 95% accurate on corporate memos&quot;. No evaluation on corporate files exists yet. What is the best response?</strong></p>
 <ul>
 <li>A. Give a date one quarter out, to keep Khalid&#39;s confidence and show the bank&#39;s board that the whole team is committed to the target</li>
-<li>B. Refuse to give any dates until the product is finished</li>
+<li>B. Explain that AI quality cannot be scheduled, and offer regular monthly progress reports instead of any fixed date</li>
 <li>C. Commit to a date for a feasibility spike result on corporate files, then give a quality range and a delivery plan based on it</li>
 <li>D. Promise 95% and reduce scope later if needed</li>
 </ul>
@@ -11213,7 +11213,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <li>A. Build the five-prompt chain, since it fixes today&#39;s problem</li>
 <li>B. Wait for a future model to fix arithmetic before shipping anything, since a chain of prompts would be rebuilt anyway when the model improves</li>
 <li>C. Have the model call a calculation tool for ratios, and invest the saved effort in evaluation sets and workflow integration</li>
-<li>D. Remove ratios from memos permanently</li>
+<li>D. Ask RMs to check every ratio by hand until the model&#39;s arithmetic improves</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -11617,11 +11617,11 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <li>A. Write a decision-rights register: the PM is accountable for the quality bar, with Dana responsible and Layla and domain experts consulted</li>
 <li>B. Ask the CEO to approve the quality bar, since the three leaders disagree and only the most senior executive can break the deadlock between them</li>
 <li>C. Make Layla accountable for all AI decisions</li>
-<li>D. Launch without a quality bar and measure later</li>
+<li>D. Launch to a small pilot group now, and let the pilot results set the quality bar</li>
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>A.</strong> The stall is an ownership gap. One accountable owner, with the right people consulted, resolves it. C confuses governance&#39;s role (limits and review) with product ownership. D skips the quality bar entirely. (🟡 Going deeper.)</p>
+<p><strong>A.</strong> The stall is an ownership gap. One accountable owner, with the right people consulted, resolves it. C confuses governance&#39;s role (limits and review) with product ownership. D lets the results set the bar instead of judging them against it. (🟡 Going deeper.)</p>
 </details>
 
 <p><strong>2. A bank&#39;s central AI team built fourteen prototypes in a year and two reached production. Business lines say the prototypes do not fit how they work. Which idea best explains the pattern?</strong></p>
@@ -11664,8 +11664,8 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. Require every pilot to show a demo to the board before it starts, so that executives can see the idea working and approve it</li>
 <li>B. Approve a pilot only if it has a named business owner, a run-cost budget, an integration plan and a provisional risk tier</li>
-<li>C. Double the AI Lab&#39;s budget</li>
-<li>D. Ban pilots and build only full products</li>
+<li>C. Fund every pilot for twelve months, so that teams have time to reach production</li>
+<li>D. Replace pilots with full product builds, funded only once a business case is approved</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -11980,8 +11980,8 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p><strong>1. Faisal says: &quot;Responsible AI for SME Instant Finance is Layla&#39;s job; she will review it before go-live.&quot; What is the best correction?</strong></p>
 <ul>
 <li>A. He is right; the product team should focus on features, and the governance team should deal with responsible AI before go-live so that nobody duplicates the work</li>
-<li>B. Responsible AI only applies after launch</li>
-<li>C. Legal should write the product requirements instead</li>
+<li>B. He is partly right; responsible AI is mainly a launch approval, so he should book Layla&#39;s review early</li>
+<li>C. Responsible AI belongs to Dana&#39;s team, since fairness and explainability are model properties</li>
 <li>D. Governance sets the tier, limits and review; the PM must build the controls into the product and produce the evidence, starting in discovery</li>
 </ul>
 <details><summary>Answer</summary>
@@ -12004,8 +12004,8 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <p><strong>3. A reviewer confirms 99% of SME Instant Finance pre-approvals, spending a few seconds on each. What does this suggest about human oversight?</strong></p>
 <ul>
 <li>A. The model is excellent, so oversight is working as intended and no further checks are required for these cases or for any others like them</li>
-<li>B. Nothing; approval rates are irrelevant to oversight</li>
-<li>C. The reviewer should be removed to save cost</li>
+<li>B. The reviewer is well calibrated, since the model&#39;s pre-approvals were tested before launch</li>
+<li>C. Review should move to a sample of cases, since checking every case adds little</li>
 <li>D. Oversight may be nominal; the team should examine review time, the information shown and the reviewer&#39;s authority and training</li>
 </ul>
 <details><summary>Answer</summary>
@@ -12029,8 +12029,8 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. Najm, although its contract with the vendor should cover data use, change notices and incident notification</li>
 <li>B. The vendor alone, because it built the model and its documentation shows strong responsible-AI practice and independent audits</li>
-<li>C. Nobody, because the answer was generated by AI and no person decided what the customer was told</li>
-<li>D. The customer, who chose to use the assistant and should have checked the answer before acting on it</li>
+<li>C. Najm and the vendor equally, since both shaped the answer the customer received</li>
+<li>D. The vendor, if its contract with Najm includes an indemnity for harm from wrong answers</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -12396,7 +12396,7 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. Expand to 100% because the cost saving is large and the headline number is clearly better</li>
 <li>B. Switch to a cheaper model to increase the saving, then run the same test again next month</li>
-<li>C. Remove complaints from the guardrail list, since the change affects only a small group of users</li>
+<li>C. Agree with the business owner to raise the complaints limit, since the call saving outweighs it</li>
 <li>D. Pause the expansion and investigate the complaints before deciding</li>
 </ul>
 <details><summary>Answer</summary>
@@ -12408,8 +12408,8 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. Switching to a cheaper model is the main lever, because model calls are the part of the bill the team controls most directly</li>
 <li>B. Improving resolution on the most common jobs, which reduces handoffs, is likely the biggest lever</li>
-<li>C. Removing the &quot;talk to a person&quot; option will cut cost safely</li>
-<li>D. Cost does not matter once the product has launched, because the team can adjust it later</li>
+<li>C. Making the &quot;talk to a person&quot; option harder to find, so that more of the chats stay with the assistant</li>
+<li>D. Growing conversation volume, so the platform&#39;s fixed cost is spread over more chats</li>
 </ul>
 <details><summary>Answer</summary>
 
@@ -12754,12 +12754,12 @@ footer{max-width:60rem;margin:0 auto;padding:2rem 1rem 3rem;border-top:1px solid
 <ul>
 <li>A. Include the internal dashboard screenshots to prove the results, and add a line explaining how the team measured them for readers who want to check the numbers</li>
 <li>B. Describe the decision, evidence and result at a level of detail the bank accepts, state his own role precisely, and remove numbers he may not share</li>
-<li>C. Say &quot;I built Najm Assist&quot; to keep the story short</li>
+<li>C. Present the results as his own, since he led the product, and thank the team at the end</li>
 <li>D. Include only the parts that went well, so the case study stays short and reads as a clear success story</li>
 </ul>
 <details><summary>Answer</summary>
 
-<p><strong>B.</strong> Confidentiality comes first, and precise attribution builds credibility. Screenshots of internal dashboards (A) risk leaking data; &quot;I built it&quot; (C) overclaims a team&#39;s work; success-only stories (D) hide the judgement interviewers want to see. (🟡 Going deeper: the portfolio.)</p>
+<p><strong>B.</strong> Confidentiality comes first, and precise attribution builds credibility. Screenshots of internal dashboards (A) risk leaking data; claiming the results as his own (C) overclaims a team&#39;s work; success-only stories (D) hide the judgement interviewers want to see. (🟡 Going deeper: the portfolio.)</p>
 </details>
 
 <p><strong>4. A job advert asks for a PM to own &quot;model access, eval tooling and guardrails used by all product teams&quot;. Which role shape is this?</strong></p>

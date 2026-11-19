@@ -436,12 +436,12 @@ Weighted score = 0.40 × value + 0.35 × feasibility + 0.25 × risk. Faisal adds
 
 - A. Treat the scores as effectively tied and weigh the platform dependency explicitly in the decision
 - B. Pick 3.47 because it scored higher, since the scoring process is meant to settle exactly this kind of choice
-- C. Re-weight the criteria until 3.41 wins, so the platform work is approved for the sake of the later products
+- C. Add a "strategic fit" criterion to the scorecard now and re-score both, so the platform value counts
 - D. Average the two scores and build both ideas together, splitting the team's capacity between them evenly
 
 <details><summary>Answer</summary>
 
-**A.** Small score gaps are noise, and platform effects are real value that stand-alone scores miss. C is gaming the scorecard. Show the dependency openly instead. (🟡 Going deeper; 🔴 Expert view.)
+**A.** Small score gaps are noise, and platform effects are real value that stand-alone scores miss. C changes the scorecard after seeing the result. Show the dependency openly instead. (🟡 Going deeper; 🔴 Expert view.)
 
 </details>
 
@@ -651,7 +651,7 @@ Khalid pushes back on stopping the predictor: "We've spent six months on it." Ra
 - A. Keep going and add more features to the model, since a pilot with this much accuracy should eventually change what the relationship managers do
 - B. Improve the model's accuracy further
 - C. Stop the pilot, record the evidence and a reopening condition, and move the team to a higher-value queued item
-- D. Hand the model to a vendor
+- D. Run another six months with more RMs, since wider use may show the value the pilot missed
 
 <details><summary>Answer</summary>
 
@@ -664,7 +664,7 @@ Khalid pushes back on stopping the predictor: "We've spent six months on it." Ra
 - A. Keep the reasons deterministic, from the decision's reason codes and a reviewed template. Consider AI only for helping staff explain the letter
 - B. Let the model generate the reasons from the application file, and have a credit officer read and approve each letter before it is sent to the customer
 - C. Use GenAI but add a disclaimer
-- D. Send no reasons
+- D. Use GenAI to write the reasons from the reason codes, letting the model vary the wording for each customer
 
 <details><summary>Answer</summary>
 
@@ -674,10 +674,10 @@ Khalid pushes back on stopping the predictor: "We've spent six months on it." Ra
 
 **5. An extraction idea is stopped because scanned statements are too poor for accurate extraction today. What should the decision record include?**
 
-- A. Only "did not work"
+- A. A one-line note that extraction quality was too low, filed with the pilot's closing slides
 - B. The evidence and a reopening condition, such as "revisit when statements arrive in machine-readable form or extraction quality improves on the same test set"
-- C. The names of the people who proposed it
-- D. Nothing, stopped ideas should not be recorded, because a record of failures discourages people from proposing ideas and clutters the backlog for the team that has to maintain it
+- C. The cost and effort spent so far, so that leaders can see what the attempt consumed
+- D. A recommendation to drop extraction from the roadmap for good, so that the team does not spend time on it again and the backlog stays on ideas that work
 
 <details><summary>Answer</summary>
 

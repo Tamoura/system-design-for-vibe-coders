@@ -1295,3 +1295,15 @@ These need a decision or a check that only the owner, a subject expert or a nati
 - **Founder's Playbook for AI-First Builders**, `reg-5`: The wrong number-noun agreement in the Arabic badges (for example «نحو 5 ساعة») comes from scripts/study_time.py. I may not edit that script or the Study time lines. The owner must apply the plural rule (3 to 10: ساعات, 11 and up: ساعة) and regenerate.
 - **Founder's Playbook for AI-First Builders**, `reg-6`: This is the same generated TOOLKIT.ar.md / COURSE.ar.md / index.ar.html header as founder-9. It needs catCols changed in scripts/build-founder.mjs:119 and a rebuild.
 - **Founder's Playbook for AI-First Builders**, `reg-10`: «نحو 15 أسابيع» in README.ar.md:6 sits inside the generated study-time block (also copied into COURSE.ar.md and the HTML). The template in scripts/study_time.py must produce «أسبوعًا» for 11 and up, then be regenerated.
+
+### Round 3 (19 November 2026)
+
+The last items left open after the repair pass were fixed, and each fix was checked by an independent verifier:
+
+- **AI-Native word budget.** The audit fixes and the longer study-time line had pushed most lessons just past the 3,500-word limit (4.1 had reached 3,557). Repeated sentences were cut in English and Arabic, and every lesson is back under the limit. The ailab tests also had a caching bug: a result graded under a 2-second limit could be reused by a test that expected the normal limit. The time limit is now part of the cache key.
+- **Vibe Arabic.** In running prose, "+" now reads «و». Code, formulas, diagrams and most table cells keep "+". `scripts/qa/ar-parity-baseline.json` records the Arabic operator counts that are lower as a result, because the Arabic now says these joins in words.
+- **AI Apps Arabic.** The offline mock model now has one name, «المحاكي», with its grammar made consistent.
+- **AI PM quizzes.** Strawman distractors were replaced with plausible mistakes. No answer-cue score rose.
+- **Career Arabic.** One sentence mixed the terms for organisation and enterprise; it now uses one.
+
+The 17 items in "Left for the owner" are unchanged.

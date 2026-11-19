@@ -124,9 +124,9 @@ Together they show gains on well-scoped tasks with wide error bars, a loss for e
 
 > An AI-native engineer routinely directs AI tools in daily work and stays accountable for the result. They supply context, define done before delegating, work in small verified steps, judge output by evidence, and automate what repeats without letting their own skill lapse.
 
-**Two companies describing their own practice.** Microsoft's post ["Spec-Driven Development: A Spec-First Approach to AI-Native Engineering"](https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/) argues that teams should agree on intent before an AI generates code, and offers GitHub's open-source Spec Kit for the job. Spec-first is part of how Microsoft uses "AI-native"; your second habit makes the same bet, and Module 3 returns to it. Meta reports in ["How Meta Built Forum With AI-Native Engineering"](https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/) that a small team built Forum, a standalone Groups app, with an AI agent as a participant. Its target is "human-on-the-loop": the agent runs the plan, build, test and correct cycle while an engineer sets the goal and approves the result. Meta calls it a target, not a finished state, and sets the bar for done at verification (automated tests and visual checks), not compilation; Lujain's Thursday had green tests and no look at the real output. Each is a company's account of its own work, not independent evidence; read the originals.
+**Two companies describing their own practice.** Microsoft's post ["Spec-Driven Development: A Spec-First Approach to AI-Native Engineering"](https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/) argues that teams should agree on intent before an AI generates code, and offers GitHub's open-source Spec Kit for the job. Your second habit makes the same bet; Module 3 returns to it. Meta reports in ["How Meta Built Forum With AI-Native Engineering"](https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/) that a small team built Forum, a standalone Groups app, with an AI agent as a participant. Its target is "human-on-the-loop": the agent runs the plan, build, test and correct cycle while an engineer sets the goal and approves the result. Meta calls it a target, not a finished state, and sets the bar for done at verification (automated tests and visual checks), not compilation; Lujain's Thursday had green tests and no look at the real output. Each is a company's account of its own work, not independent evidence; read the originals.
 
-**How the course works.** One module a week (Modules 0 to 13), then the capstone; each has a concept lesson and a lab or workshop. Labs run on **Najm Remit**, a small Python service, graded by **`ailab`**, an offline kit: no API key, no network, no agent required. Use Claude Code, another tool or none; the grader looks at the result. Each lab ends with a deliverable, a group session and an **agent log**. **Najm Bank is fictional**, as are its customers, rates and limits. Your team: **Tariq** (your mentor, who runs the weekly "AI-native clinic"), **Lujain** (enthusiastic, over-trusting) and **Hessa** (product owner, writes the tickets). Colleagues in quality, security, SRE, governance and platform join in their own modules.
+**How the course works.** One module a week (Modules 0 to 13), then the capstone; each has a concept lesson and a lab or workshop. Labs run on **Najm Remit**, a small Python service, graded by **`ailab`**, an offline kit: no API key, no network, no agent required. Each lab ends with a deliverable, a group session and an **agent log**. **Najm Bank is fictional**, as are its customers, rates and limits. Your team: **Tariq** (your mentor, who runs the weekly "AI-native clinic"), **Lujain** (enthusiastic, over-trusting) and **Hessa** (product owner, writes the tickets). Colleagues in quality, security, SRE, governance and platform join in their own modules.
 
 **Honest limits.** The course cannot promise you will be faster. Tools change fast: its Claude Code details were checked in October 2026, so check the current documentation. The labs are small and fictional, and the grader checks results, not understanding. The aim is to help you tell when an agent is wrong.
 
@@ -287,7 +287,7 @@ Would I delegate it again?     Yes, with the same spec
 ## 🧭 Why it matters
 On day two Lujain, tired of permission prompts, switches her agent to bypass mode. Her laptop holds a VPN profile, a cloud login and an old project's `.env`. Nothing happens. That is the trap: the bad day is rare, so safety feels like friction. Noura (application and AI security) sets a week-zero rule: the agent has your hands. Whatever you can read, delete or push, it can.
 
-Rare does happen: one user said Google's Antigravity agent, in "Turbo mode", deleted a drive's contents (November 2025); a founder said a Replit agent deleted a production database during a code freeze (July 2025). Both are unaudited single accounts, so hold the details loosely. The pattern is OWASP's excessive agency: too much functionality, permission or autonomy. It is LLM06 in the 2025 list and LLM03 in the 2026 edition (August 2026), so the code you see depends on which list you open.
+Rare does happen: one user said Google's Antigravity agent, in "Turbo mode", deleted a drive's contents (November 2025); a founder said a Replit agent deleted a production database during a code freeze (July 2025). Both are unaudited single accounts, so hold the details loosely. The pattern is OWASP's excessive agency: too much functionality, permission or autonomy. It is LLM06 in the 2025 list and LLM03 in the 2026 edition (August 2026).
 
 ## 📐 How it works
 
@@ -297,9 +297,9 @@ Rare does happen: one user said Google's Antigravity agent, in "Turbo mode", del
 
 **Tools.** Alphabetical, not ranked: [Aider](https://aider.chat/docs/), [Claude Code](https://code.claude.com/docs/en/overview), [Cursor](https://cursor.com/docs/agent/overview), [Gemini CLI](https://geminicli.com/docs/), [GitHub Copilot agent mode](https://docs.github.com/en/copilot/how-tos/copilot-in-your-ide/use-copilot-agents/use-agent-mode) and [OpenAI Codex CLI](https://developers.openai.com/codex).
 
-The examples use Claude Code; the habits do not depend on one tool, and the grader never knows which you used.
+The examples use Claude Code; the habits do not depend on one tool.
 
-**Install and start Claude Code.** Follow the official setup page linked above, not a command from a blog or a chat answer; `claude --version` then prints your version. `cd` into your work directory and run `claude`; expect a sign-in step (at Najm, the approved one).
+**Install and start Claude Code.** Follow the official setup page linked above, not a blog or a chat answer; `claude --version` prints your version. `cd` into your work directory and run `claude`; expect a sign-in step (at Najm, the approved one).
 
 **The trust dialog.** In a folder it has not seen, Claude Code asks whether you trust it. Yes lets the project's own settings and hooks apply, so say yes only to a folder you have read. Do not start in your home directory: it widens what the agent can reach.
 
@@ -359,7 +359,7 @@ Training use of your prompts depends on the plan: read the data-usage page and y
 
 **How the kit works.** `start` copies the base repository, commits "Initial state", applies the lab's seed as "Lab starting state" and tags it `lab-start`, so `git diff lab-start` is your work. `grade` runs hidden tests on a copy of your directory and exits 0 only when every required check passes. `solve` applies the reference solution; it is a peek, so try first.
 
-**The repo tour.** Read `README.md`, `CONTRIBUTING.md` and `docs/TOUR.md`, in that order. Money is `Decimal` in the `Money` class, never `float`. `ledger.py` and `screening.py` are old and have no dedicated tests. `najmkit` is Najm's internal library for ids, time and audit events; no model was trained on it, so tell an agent to read `docs/najmkit.md`. When a doc and the code disagree, the code wins. Try the CLI: `PYTHONPATH=src python -m remit quote QAR 500 INR` prints a fee of 12.00 QAR (`PYTHONPATH=src` lets Python find the package; the README also shows `python -m pip install -e .`).
+**The repo tour.** Read `README.md`, `CONTRIBUTING.md` and `docs/TOUR.md`, in that order. Money is `Decimal` in the `Money` class, never `float`. `ledger.py` and `screening.py` are old and have no dedicated tests. `najmkit` is Najm's internal library for ids, time and audit events; no model was trained on it, so tell an agent to read `docs/najmkit.md`. When a doc and the code disagree, the code wins. Try the CLI: `PYTHONPATH=src python -m remit quote QAR 500 INR` prints a fee of 12.00 QAR (`PYTHONPATH=src` lets Python find the package).
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
@@ -427,14 +427,14 @@ cd ~/ainative/m00
 
 `doctor` prints a `[PASS]` or `[FAIL]` line per check and ends with `Everything needed is in place.` Fix any FAIL first.
 
-From here you work in two places. In `~/ainative/m00` you edit and run `git` and `pytest`. A plain `python -m ailab` command needs the `ailab` folder and the active virtual environment, but `start` ends by printing a grade command that works from any folder (`/home/you` stands for your home):
+You edit and run `git` and `pytest` in `~/ainative/m00`; `start` ends by printing a grade command that works from any folder (`/home/you` stands for your home):
 
 ```text
 When you are ready, grade from any directory:
   PYTHONPATH=/home/you/system-design-for-vibe-coders/ainative/ailab python -m ailab grade m00 --dir /home/you/ainative/m00
 ```
 
-**Your move, by hand first.** In `~/ainative/m00`, run `git switch -c remit-212-typo`, then `pytest -q` and read the first failure from the top: it shows what was expected and what came out. Search for that text (`grep -rn --include='*.py' "<a phrase from the message>" src`, or your editor), make the smallest edit, rerun `pytest -q` and read `git diff`. Commit once. `CONTRIBUTING.md` requires `type(scope): subject`: a type from `feat fix docs test refactor perf chore ci build revert`, one lower-case scope (not a list), an imperative subject, no full stop, a header up to 72 characters (for example `fix(limits): count transfers made just after midnight`). Here the type is `fix` and the scope is the module you changed. Log your minutes.
+**Your move, by hand first.** In `~/ainative/m00`, run `git switch -c remit-212-typo`, then `pytest -q` and read the first failure: what was expected and what came out. Search for that text (`grep -rn --include='*.py' "<a phrase from the message>" src`, or your editor), make the smallest edit, rerun `pytest -q` and read `git diff`. Commit once, as `CONTRIBUTING.md` requires: `type(scope): subject`, a type from `feat fix docs test refactor perf chore ci build revert`, one lower-case scope (not a list), an imperative subject, no full stop, a header up to 72 characters. Log your minutes.
 
 **Then with an agent** (optional), in a second directory (in the `ailab` folder: `python -m ailab start m00 --dir ~/ainative/m00-agent`). The weak prompt `fix the typo in the message` names no file, limit or stopping point, so the agent may rewrite the sentence or a test. Start in Manual mode with a stronger one and read every diff:
 
@@ -446,11 +446,11 @@ Acceptance: `pytest -q` passes; `git diff` shows one file and one line changed.
 First tell me the file and line that cause it. Wait for my OK before editing.
 ```
 
-You commit, with a message you checked against `CONTRIBUTING.md` yourself: you are the author of record. Do not run `/init` or add a `CLAUDE.md` here: extra files fail the scope check, and memory files are Module 2.
+You commit, with a message you checked against `CONTRIBUTING.md` yourself: you are the author of record.
 
 **What the grader checks.** `doctor` and the repo's tests pass. Hidden checks on the message in English and Arabic, and that the wrong spelling is gone from every Python file under `src/` (a comment counts, and so does a fix applied only when the message is built). The tests neither edited nor added. Only the template file changed: the starter with the one word corrected. Exactly one new commit on the checked-out branch (a merge commit does not count), shaped as `CONTRIBUTING.md` says (type `fix`, the module as scope). Nothing left uncommitted; no secrets. It cannot tell who made the change, whether you read the diff, or whether your message is good beyond its form.
 
-**Grade.** Grade on the branch that holds your commit: the grader reads whichever branch is checked out, under any name (`main` works too).
+**Grade.** From the branch that holds your commit (any name works):
 
 ```bash
 cd ~/system-design-for-vibe-coders/ainative/ailab      # with the virtual environment active
@@ -480,7 +480,7 @@ On the starter state the real output is:
 Lab m00: 4/10 required checks passed: NOT YET
 ```
 
-A right fix committed as `fixed the typo` fails one line, `Commit messages follow CONTRIBUTING.md`, quoting your message. Fix it with `git commit --amend`. With two commits, run `git reset --soft lab-start` and commit once; no interactive rebase needed. If you switched to `main` after committing on the task branch, every failing line names the branch that holds your commit: switch back to it. When it passes, the last line reads `Lab m00: 10/10 required checks passed: PASSED`.
+A right fix committed as `fixed the typo` fails one line, `Commit messages follow CONTRIBUTING.md`, quoting your message. Fix it with `git commit --amend`. If you switched to `main` after committing on the task branch, every failing line names the branch that holds your commit: switch back to it. When it passes, the last line reads `Lab m00: 10/10 required checks passed: PASSED`.
 
 **Weekly deliverable (Module 0).** In a notes repository of your own, outside the lab folders (`git init ~/ainative-notes`), commit `week-00/` with `baseline.md` (lesson 0.1), `agent-log.md` (the 0.1 template), `m00-grade.txt` and `delegation-card.md` (your card for REMIT-212, lesson 0.3). For the grade file, create the folder, then run in the `ailab` folder: `python -m ailab grade m00 --dir ~/ainative/m00 > ~/ainative-notes/week-00/m00-grade.txt`.
 
@@ -505,7 +505,6 @@ A right fix committed as `fixed the typo` fails one line, `Commit messages follo
 - Use an approved tool; learn in Manual mode; keep bypass off real machines.
 - Keep secrets out of prompts and reach; deny rules are guard rails, the sandbox and hooks enforce.
 - Clean tree, branch per task and a throwaway directory keep the diff honest.
-- The kit grades the result offline, not your thinking.
 - m00 is the whole loop in miniature: find, fix, check, commit.
 
 ## ✍️ Check yourself

@@ -19,7 +19,7 @@
 - Cue: no net, no delegation. Trap: a green suite that never touched the code.
 
 ## 🧭 Why it matters
-On a constructed Wednesday Lujain (graduate engineer) asks her agent to "make `ledger.py` consistent with the rest of Remit". The summary reads well: the partner share uses the shared rounding helper, `balance()` has no side effect, `journal()` returns the list directly. `pytest -q` prints `99 passed`, because no test asserts anything about the ledger (lesson 5.1 changed `PARTNER_SHARE` to 0.35 and watched all 99 stay green). Three weeks later Finance finds the partner payable a cent out on some transfers; nobody can say which commit did it.
+On a constructed Wednesday Lujain (graduate engineer) asks her agent to "make `ledger.py` consistent with the rest of Remit". The summary reads well: the partner share uses the shared rounding helper, `balance()` has no side effect, `journal()` returns the list directly. `pytest -q` prints `99 passed`, because no test asserts anything about the ledger. Three weeks later Finance finds the partner payable a cent out on some transfers; nobody can say which commit did it.
 
 Michael Feathers, in *Working Effectively with Legacy Code* (2004), defines legacy code as code without tests: without tests you cannot tell whether a change preserved behaviour, however well it reads. Agents cut both ways: they make tidying and the net cheap. Tests are quick to draft, slow to trust: habit 4, *Trust evidence, not fluency*, applies to the net too.
 
@@ -132,7 +132,7 @@ A prompt or `CLAUDE.md` is context, not enforcement. Once the tests are committe
 
 **Review at scale.** A forty-file mechanical diff cannot be read line by line. (1) Review the *rule*: the instruction or, for a codemod, the script (run it twice; the second run should change nothing). (2) Read the tests in full. (3) Sample the diff: first and last hunks and the riskiest files. (4) Automate the rest: the suite on every commit, warnings as errors, a search for the old names, `git diff --stat`. Stop signs: a changed test file in a refactor commit, and a hunk you cannot explain.
 
-**Agent-sized units.** A unit is one rule over a bounded set of files, small enough to verify in one sitting. For a long list, Claude Code's best-practices page shows a headless fan-out, which lesson 9.1 teaches (other tools have equivalents); adapted to this rename (`files.txt` from a `grep -l`):
+**Agent-sized units.** A unit is one rule over a bounded set of files, small enough to verify in one sitting. For a long list, Claude Code's best-practices page shows a headless fan-out, which lesson 9.1 teaches; adapted to this rename (`files.txt` from a `grep -l`):
 
 ```bash
 for file in $(cat files.txt); do
@@ -340,9 +340,9 @@ pytest -W error::DeprecationWarning, show me the output, and commit when it is g
 
 ### 🔴 Expert view
 
-**How the grader reads your work.** It rebuilds the original ledger from the `lab-start` tag and runs your tests on it, on an identical copy rewritten with other comments and private names (so a test cannot fingerprint the file) and on sixteen broken copies, each described by a behaviour such as "a negative fee is refused"; survivors are named. Every run is `pytest -q` as CI runs it.
+**How the grader reads your work.** It rebuilds the original ledger from the `lab-start` tag and runs your tests on it, on an identical copy rewritten with other comments and private names (so a test cannot fingerprint the file) and on sixteen broken copies, each described by a behaviour such as "a negative fee is refused"; survivors are named.
 
-**What it cannot tell.** Whether you understood a quirk, or moved in small steps rather than one leap committed three times (it checks only that each commit changes a file and that the tests come first). Whether your refactor changed a behaviour nobody pinned. A suite that copies values out of the code passes and teaches nothing if you never asked why. The grader is a practice partner, not a gate.
+**What it cannot tell.** Whether you understood a quirk, or moved in small steps rather than one leap committed three times (it checks only that each commit changes a file and that the tests come first). Whether your refactor changed a behaviour nobody pinned. A suite that copies values out of the code passes and teaches nothing if you never asked why.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |

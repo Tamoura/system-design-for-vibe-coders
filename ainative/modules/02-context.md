@@ -81,7 +81,7 @@ Two tests keep the file honest. The documentation targets **under 200 lines**, b
 
 **AGENTS.md.** Other tools read `AGENTS.md`, an open plain-Markdown "README for agents". Claude Code reads it directly from v2.1.277, but by default only when no `CLAUDE.md` or `CLAUDE.local.md` exists in the working directory or above (the `/config` setting "Project instructions" changes that). To share one file, write `AGENTS.md` and put `@AGENTS.md` inside a `CLAUDE.md`. These details moved in 2026: check the current documentation.
 
-**The same job under another name.** In [Spec-Driven Development: A Spec-First Approach to AI-Native Engineering](https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/), Microsoft describes a seven-step lifecycle whose first step is a *constitution*: principles and guardrails. Its companion post on GitHub's open-source Spec Kit explains the constitution file. Here that is project memory's job: standing rules the agent reads every session. Module 3 covers the other six steps. A company describing its own practice is not independent evidence; it shows the idea is current, not that a constitution improves results. Read the originals (linked below).
+**The same job under another name.** In [Spec-Driven Development: A Spec-First Approach to AI-Native Engineering](https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/), Microsoft describes a seven-step lifecycle whose first step is a *constitution*: principles and guardrails. Here that is project memory's job: standing rules the agent reads every session. Module 3 covers the other six steps. A company describing its own practice is not independent evidence; it shows the idea is current, not that a constitution improves results.
 
 **Imports.** `@path/to/file` pulls a file in; imports nest four hops deep and are ignored inside code spans and fences. **Imports do not reduce context cost**: imported files load at launch. `@docs/najmkit.md` would put the whole page into every session; a plain pointer costs one line and is followed when it matters.
 
@@ -511,7 +511,7 @@ git -C ~/ainative/m02-a tag ab-start
 git -C ~/ainative/m02-b tag ab-start
 ```
 
-In each copy start your tool fresh in Manual mode (`claude --permission-mode manual`; the default depends on your version) and paste the text of `~/ainative/m02/lab-assets/ab-task.md` followed by "Plan first. Commit when the tests pass." Do not mention memory files. The ticket asks for `quote QAR 500 INR --json`: one line of JSON, amounts as strings, tests in the usual place, a commit that follows the rules. Afterwards, in each copy:
+In each copy start your tool fresh in Manual mode (`claude --permission-mode manual`; the default depends on your version) and paste the text of `~/ainative/m02/lab-assets/ab-task.md` followed by "Plan first. Commit when the tests pass." Do not mention memory files. Afterwards, in each copy:
 
 ```bash
 git add -A                                  # so new, uncommitted files count too

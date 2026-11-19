@@ -81,7 +81,7 @@ flowchart RL
 
 **AGENTS.md.** تقرأ أدوات أخرى `AGENTS.md`، وهو ملف Markdown عادي ومفتوح يُعدّ «README للوكلاء». ويقرؤه Claude Code مباشرة منذ الإصدار v2.1.277، لكن افتراضيًا فقط حين لا يوجد `CLAUDE.md` ولا `CLAUDE.local.md` في دليل العمل أو فوقه؛ ويغيّر ذلك إعداد «Project instructions» في `/config`. ولمشاركة ملف واحد، اكتب `AGENTS.md` وضع `@AGENTS.md` داخل `CLAUDE.md`. وقد تغيّرت هذه التفاصيل في 2026، فراجع الوثائق الحالية.
 
-**المهمة نفسها باسم آخر.** في [Spec-Driven Development: A Spec-First Approach to AI-Native Engineering](https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/)، تصف Microsoft دورة حياة من سبع خطوات خطوتها الأولى *دستور*: مبادئ وحواجز وقائية. وتشرح تدوينتها المرافقة عن Spec Kit، أداة GitHub المفتوحة المصدر، ملفَّ الدستور. وهذه هنا وظيفة ذاكرة المشروع: قواعد دائمة يقرؤها الوكيل في كل جلسة. وتغطي الوحدة 3 الخطوات الست الأخرى. وما تصفه شركة عن ممارستها ليس دليلًا مستقلًا؛ فهو يُظهر أن الفكرة متداولة اليوم، لا أن الدستور يحسّن النتائج. فاقرأ المصادر الأصلية المرتبطة أدناه.
+**المهمة نفسها باسم آخر.** في [Spec-Driven Development: A Spec-First Approach to AI-Native Engineering](https://developer.microsoft.com/blog/spec-driven-development-ai-native-engineering/)، تصف Microsoft دورة حياة من سبع خطوات خطوتها الأولى *دستور*: مبادئ وحواجز وقائية. وهذه هنا وظيفة ذاكرة المشروع: قواعد دائمة يقرؤها الوكيل في كل جلسة. وتغطي الوحدة 3 الخطوات الست الأخرى. وما تصفه شركة عن ممارستها ليس دليلًا مستقلًا؛ فهو يُظهر أن الفكرة متداولة اليوم، لا أن الدستور يحسّن النتائج.
 
 **الاستيراد.** يجلب `@path/to/file` ملفًا إلى الذاكرة؛ وتتداخل الاستيرادات حتى أربع مراحل وتُتجاهل داخل مقاطع الشيفرة وكتلها المسيَّجة. **الاستيراد لا يقلل كلفة السياق**: فالملفات المستوردة تُحمَّل عند الإطلاق. وسيضع `@docs/najmkit.md` الصفحة كلها في كل جلسة؛ أما المؤشر العادي فيكلّف سطرًا واحدًا ويُتَّبع حين يهم الأمر.
 
@@ -511,7 +511,7 @@ git -C ~/ainative/m02-a tag ab-start
 git -C ~/ainative/m02-b tag ab-start
 ```
 
-في كل نسخة ابدأ أداتك من جديد في الوضع اليدوي (Manual mode) — `claude --permission-mode manual`؛ والافتراضي يتوقف على إصدارك — والصق نص `~/ainative/m02/lab-assets/ab-task.md` متبوعًا بعبارة "Plan first. Commit when the tests pass." (أي: خطِّط أولًا، وأودِع حين تنجح الاختبارات). ولا تذكر ملفات الذاكرة. تطلب التذكرة `quote QAR 500 INR --json`: سطرًا واحدًا من JSON، والمبالغ نصوصًا، والاختبارات في مكانها المعتاد، وإيداعًا يتبع القواعد. وبعد ذلك، في كل نسخة:
+في كل نسخة ابدأ أداتك من جديد في الوضع اليدوي (Manual mode) — `claude --permission-mode manual`؛ والافتراضي يتوقف على إصدارك — والصق نص `~/ainative/m02/lab-assets/ab-task.md` متبوعًا بعبارة "Plan first. Commit when the tests pass." (أي: خطِّط أولًا، وأودِع حين تنجح الاختبارات). ولا تذكر ملفات الذاكرة. وبعد ذلك، في كل نسخة:
 
 ```bash
 git add -A                                  # so new, uncommitted files count too

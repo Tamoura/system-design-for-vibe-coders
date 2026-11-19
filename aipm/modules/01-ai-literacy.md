@@ -174,7 +174,7 @@ Rania's rule for the card: *"If you cannot fill in 'cost of an error', you are n
 **3. The Credit Memo Copilot always extracts figures, checks ratios, then drafts sections in the same order. A vendor pitches an "autonomous agent" for it. What is the strongest product response?**
 
 - A. Accept, because agents are more advanced than workflows and will cope better with unexpected cases
-- B. Reject all use of LLMs for credit memos, because credit documents are too sensitive and no generative model can be trusted with them
+- B. Accept, but cap the agent at ten tool calls per memo and log every step so the relationship manager can review it
 - C. Replace the copilot with a classic ML classifier that scores each section of the credit memo
 - D. Prefer a fixed LLM workflow, because the steps do not vary and a workflow is more predictable and easier to test
 
@@ -186,10 +186,10 @@ Rania's rule for the card: *"If you cannot fill in 'cost of an error', you are n
 
 **4. Smart Alerts must score millions of card transactions in real time at very low cost per transaction. A team proposes an LLM to review every transaction. What is the main product objection?**
 
-- A. LLMs cannot read numbers, so transaction amounts and balances would be misread by the model
+- A. An LLM cannot explain its decisions, so analysts would not be able to see why a transaction was flagged
 - B. For this volume and latency, a specialised ML model is faster and far cheaper per decision, and an LLM can be kept for explaining alerts to customers
 - C. Fraud detection is prohibited under the EU AI Act, so the team would need a regulator's approval first
-- D. LLMs cannot be used in Arabic, so the bank would need to build a separate fraud model for every language its customers speak before launching anything
+- D. An LLM would need each customer's full transaction history in every prompt, which breaks the data minimisation rules that apply to card data
 
 <details><summary>Answer</summary>
 
@@ -378,7 +378,7 @@ Rania's note at the bottom: *"Every high-severity row needs a design response we
 **1. A fraud model is 99% accurate on a dataset where 0.1% of transactions are fraud. What should the PM ask next?**
 
 - A. What are its precision and recall, and what does each type of error cost?
-- B. Nothing; 99% accuracy is excellent, so the model can go to the approval committee now
+- B. Whether the 99% holds on a fresh month of transactions before the approval committee sees it
 - C. Whether the model uses deep learning or a simpler method such as logistic regression
 - D. Whether accuracy could reach 99.9% if the team collects more labelled training data
 
@@ -390,14 +390,14 @@ Rania's note at the bottom: *"Every high-severity row needs a design response we
 
 **2. The Credit Memo Copilot states a covenant that does not appear in the facility agreement it was given. Which design response most directly addresses this?**
 
-- A. Increase the temperature so the model explores more options
+- A. Lower the temperature to zero so the model gives the same answer every time
 - B. Add a line to the user guide saying AI can make mistakes
 - C. Require every claim to cite a source passage and flag any claim without one
 - D. Switch to a model with a larger context window so the whole agreement fits at once
 
 <details><summary>Answer</summary>
 
-**C.** Grounding with citations makes unsupported claims visible and checkable. A makes variation more likely, B is a warning rather than a control, and D does not stop fabrication because the model already had the document. (🟡 Going deeper, hallucination; 🏛️ register.)
+**C.** Grounding with citations makes unsupported claims visible and checkable. A makes answers repeatable, not correct, B is a warning rather than a control, and D does not stop fabrication because the model already had the document. (🟡 Going deeper, hallucination; 🏛️ register.)
 
 </details>
 
@@ -418,7 +418,7 @@ Rania's note at the bottom: *"Every high-severity row needs a design response we
 
 - A. The agent is 95% reliable end to end, because each step passes its test most of the time
 - B. End-to-end success is likely much lower, so add checkpoints, customer confirmation before filing and a recovery path
-- C. Agents should never be used for disputes, because customers expect a person to handle every complaint that involves their money
+- C. Keep disputes with human agents until every step passes 99% in testing, and only then automate the whole dispute flow
 - D. Increase the context window to fix it, so the agent can remember all eight steps at once
 
 <details><summary>Answer</summary>
@@ -617,8 +617,8 @@ The team's quick view across the portfolio:
 
 - A. Retrieve the current fee schedule at request time and have the model answer from it with a citation
 - B. Fine-tune the model on the new fee schedule so it learns the changed fee and answers without any lookup
-- C. Increase the temperature so the model varies its answers and sometimes gives the newer fee instead of the old one
-- D. Train a new language model from scratch on all of the bank's documents, including the latest fee schedule
+- C. Add a note telling customers to confirm fees on the website, since the model's knowledge may be out of date
+- D. Switch to the vendor's newest model, whose training data is more recent and likely includes the new fee
 
 <details><summary>Answer</summary>
 
@@ -642,7 +642,7 @@ The team's quick view across the portfolio:
 **3. Testing shows the Staff GenAI assistant gives correct answers, but in the wrong structure and far too long, even after several prompt revisions. Which next step fits the build ladder?**
 
 - A. Add many more documents to retrieval, so the model has more examples of the right structure and length
-- B. Train a model from scratch on the bank's own credit memos
+- B. Switch to a larger, more capable model, which is more likely to follow the format and length instructions in the prompt
 - C. Refine examples in the prompt further, and consider fine-tuning if it still plateaus, since this is a behaviour gap
 - D. Buy a second vendor product that offers a built-in memo template
 
@@ -656,7 +656,7 @@ The team's quick view across the portfolio:
 
 - A. In the system prompt, by telling the model not to reveal confidential data to users outside the credit team
 - B. By fine-tuning the model on public data only, so that it never sees confidential credit files
-- C. By lowering the temperature so the model is less likely to repeat any sensitive passages
+- C. By a filter on the model's answers that blocks any reply naming a corporate credit client or account
 - D. At retrieval, by enforcing the user's access rights before passages reach the model
 
 <details><summary>Answer</summary>
@@ -670,7 +670,7 @@ The team's quick view across the portfolio:
 - A. A strong evaluation suite with golden sets, plus a thin layer between the application and any one vendor's API
 - B. A longer contract with the current vendor, with a written commitment to keep the model available for several more years
 - C. A fine-tuned copy of the retired model, kept in storage for later
-- D. Avoiding AI products altogether until the vendor market becomes more stable
+- D. A detailed prompt library, written and tuned around the current model's quirks
 
 <details><summary>Answer</summary>
 

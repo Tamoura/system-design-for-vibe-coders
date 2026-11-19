@@ -215,7 +215,7 @@ Rania replaces the deck with a one-page **AI Product Strategy** the board can ho
 - A. Power needs both a benefit and a barrier, and accuracy alone does not stop rivals from matching it
 - B. Accuracy is not a benefit, because customers cannot see or value the difference between two credit models
 - C. Only network economies count as power in AI, because the other six powers need physical assets and factories
-- D. Banks cannot have power because they are regulated and every competitor in the market must follow the same rules
+- D. Power needs a benefit that customers pay for, and credit accuracy only lowers the bank's own losses
 
 <details><summary>Answer</summary>
 
@@ -226,7 +226,7 @@ Rania replaces the deck with a one-page **AI Product Strategy** the board can ho
 **5. Najm is deciding how much to invest in Staff GenAI, a general internal assistant. Productivity-suite vendors already bundle capable assistants. What portfolio role and posture fit best?**
 
 - A. Differentiate: build a custom assistant and a proprietary model, so that Najm owns every layer of the stack
-- B. Stop: internal assistants have no value
+- B. Stop: retire Staff GenAI and leave internal assistants to each department's own budget
 - C. Parity: build from scratch to match the vendors' features
 - D. Commodity: buy the bundled capability and invest only in connecting bank-specific knowledge sources
 
@@ -425,7 +425,7 @@ Rania replaces Faisal's timeline with a **Now-Next-Later AI roadmap** and a bet 
 **1. Khalid asks Faisal for "the date when the copilot will be 95% accurate on corporate memos". No evaluation on corporate files exists yet. What is the best response?**
 
 - A. Give a date one quarter out, to keep Khalid's confidence and show the bank's board that the whole team is committed to the target
-- B. Refuse to give any dates until the product is finished
+- B. Explain that AI quality cannot be scheduled, and offer regular monthly progress reports instead of any fixed date
 - C. Commit to a date for a feasibility spike result on corporate files, then give a quality range and a delivery plan based on it
 - D. Promise 95% and reduce scope later if needed
 
@@ -479,7 +479,7 @@ Rania replaces Faisal's timeline with a **Now-Next-Later AI roadmap** and a bet 
 - A. Build the five-prompt chain, since it fixes today's problem
 - B. Wait for a future model to fix arithmetic before shipping anything, since a chain of prompts would be rebuilt anyway when the model improves
 - C. Have the model call a calculation tool for ratios, and invest the saved effort in evaluation sets and workflow integration
-- D. Remove ratios from memos permanently
+- D. Ask RMs to check every ratio by hand until the model's arithmetic improves
 
 <details><summary>Answer</summary>
 
@@ -689,11 +689,11 @@ Rania's two-page **AI Operating Model**, approved by the steering group:
 - A. Write a decision-rights register: the PM is accountable for the quality bar, with Dana responsible and Layla and domain experts consulted
 - B. Ask the CEO to approve the quality bar, since the three leaders disagree and only the most senior executive can break the deadlock between them
 - C. Make Layla accountable for all AI decisions
-- D. Launch without a quality bar and measure later
+- D. Launch to a small pilot group now, and let the pilot results set the quality bar
 
 <details><summary>Answer</summary>
 
-**A.** The stall is an ownership gap. One accountable owner, with the right people consulted, resolves it. C confuses governance's role (limits and review) with product ownership. D skips the quality bar entirely. (🟡 Going deeper.)
+**A.** The stall is an ownership gap. One accountable owner, with the right people consulted, resolves it. C confuses governance's role (limits and review) with product ownership. D lets the results set the bar instead of judging them against it. (🟡 Going deeper.)
 
 </details>
 
@@ -740,8 +740,8 @@ Rania's two-page **AI Operating Model**, approved by the steering group:
 
 - A. Require every pilot to show a demo to the board before it starts, so that executives can see the idea working and approve it
 - B. Approve a pilot only if it has a named business owner, a run-cost budget, an integration plan and a provisional risk tier
-- C. Double the AI Lab's budget
-- D. Ban pilots and build only full products
+- C. Fund every pilot for twelve months, so that teams have time to reach production
+- D. Replace pilots with full product builds, funded only once a business case is approved
 
 <details><summary>Answer</summary>
 
@@ -914,8 +914,8 @@ Layla's gate review becomes a check of evidence against this table, not a first 
 **1. Faisal says: "Responsible AI for SME Instant Finance is Layla's job; she will review it before go-live." What is the best correction?**
 
 - A. He is right; the product team should focus on features, and the governance team should deal with responsible AI before go-live so that nobody duplicates the work
-- B. Responsible AI only applies after launch
-- C. Legal should write the product requirements instead
+- B. He is partly right; responsible AI is mainly a launch approval, so he should book Layla's review early
+- C. Responsible AI belongs to Dana's team, since fairness and explainability are model properties
 - D. Governance sets the tier, limits and review; the PM must build the controls into the product and produce the evidence, starting in discovery
 
 <details><summary>Answer</summary>
@@ -940,8 +940,8 @@ Layla's gate review becomes a check of evidence against this table, not a first 
 **3. A reviewer confirms 99% of SME Instant Finance pre-approvals, spending a few seconds on each. What does this suggest about human oversight?**
 
 - A. The model is excellent, so oversight is working as intended and no further checks are required for these cases or for any others like them
-- B. Nothing; approval rates are irrelevant to oversight
-- C. The reviewer should be removed to save cost
+- B. The reviewer is well calibrated, since the model's pre-approvals were tested before launch
+- C. Review should move to a sample of cases, since checking every case adds little
 - D. Oversight may be nominal; the team should examine review time, the information shown and the reviewer's authority and training
 
 <details><summary>Answer</summary>
@@ -967,8 +967,8 @@ Layla's gate review becomes a check of evidence against this table, not a first 
 
 - A. Najm, although its contract with the vendor should cover data use, change notices and incident notification
 - B. The vendor alone, because it built the model and its documentation shows strong responsible-AI practice and independent audits
-- C. Nobody, because the answer was generated by AI and no person decided what the customer was told
-- D. The customer, who chose to use the assistant and should have checked the answer before acting on it
+- C. Najm and the vendor equally, since both shaped the answer the customer received
+- D. The vendor, if its contract with Najm includes an indemnity for harm from wrong answers
 
 <details><summary>Answer</summary>
 

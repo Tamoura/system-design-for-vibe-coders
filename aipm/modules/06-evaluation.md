@@ -244,9 +244,9 @@ All cases are labelled by credit officers (Arabic speakers for the Arabic slice)
 
 **5. Why does the eval plan mark "fabricated financial figure" as a critical failure with zero tolerance, instead of folding it into the average?**
 
-- A. Because critical failures are easier to measure
-- B. Because regulators require zero errors in all AI systems, so any fabricated figure is a breach that the bank must report to the central bank
-- C. Because averages are always wrong
+- A. Because a figure error is easier to spot than other failures, so it can be counted on its own
+- B. Because banking supervisors require zero errors in any AI output that contains financial figures
+- C. Because averages hide the cases that matter most, so the plan tracks critical failures instead of averages for every release
 - D. Because some failures are severe enough that a release improving the average but adding one of them should still be blocked
 
 <details><summary>Answer</summary>
@@ -464,7 +464,7 @@ Before the agent features of Najm Assist go to pilot, Faisal, Hessa and Dana pro
 
 - A. Both prompts are good
 - B. The judge is not discriminating between good and bad outputs and must be redesigned and calibrated against expert labels
-- C. The broken prompt should ship because the difference is small and the cost of delaying a release to redesign the judge is high
+- C. The broken prompt is nearly as good as the working one, so the faults it introduced matter much less than the team expected
 - D. The judge needs a larger model and nothing else
 
 <details><summary>Answer</summary>
@@ -514,7 +514,7 @@ Before the agent features of Najm Assist go to pilot, Faisal, Hessa and Dana pro
 
 **5. After a red-team week, the team fixes the prompt that let testers make Najm Assist promise a fee waiver. What else MUST happen for the fix to last?**
 
-- A. Nothing; the fix is done once the prompt change has been tested and the wording of the answer has been corrected
+- A. Retest the fixed prompt against the exact attack that worked, and close the finding in the tracker
 - B. Publish the red-team report internally so that other teams can learn what the testers found and why it worked
 - C. Add the successful attacks to an adversarial test set that is re-run on every release
 - D. Schedule another red-team week in a year, to check whether new attacks have appeared since this one
@@ -753,13 +753,13 @@ Faisal rewrites his launch proposal as the **Credit Memo Copilot Rollout and Exp
 **5. The vendor behind the copilot's model announces a new version with "improved reasoning" and will retire the current one next quarter. What should Faisal do?**
 
 - A. Switch immediately, because the vendor says it is better and the current version will be retired next quarter anyway
-- B. Keep the old version indefinitely
+- B. Ask the vendor to extend support for the current version, so nothing changes until the team is ready
 - C. Treat it as a new release: re-run the offline evals, then shadow and canary before moving full traffic
 - D. Run only a public benchmark comparison
 
 <details><summary>Answer</summary>
 
-**C.** A model change can shift behaviour anywhere, so it goes through the same evaluation stages as any release. B is not possible once the version is retired, and D does not measure Najm's task. (🔴 Expert view; 🏛️ In practice.)
+**C.** A model change can shift behaviour anywhere, so it goes through the same evaluation stages as any release. B only postpones the same change, and D does not measure Najm's task. (🔴 Expert view; 🏛️ In practice.)
 
 </details>
 

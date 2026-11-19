@@ -187,7 +187,7 @@ Baseline levels across the portfolio:
 **2. Khalid wants SME Instant Finance to approve and decline automatically. The model is well evaluated. Which design does this lesson recommend as a first step?**
 
 - A. Automate both, since the model outperforms the scorecard
-- B. Keep everything manual until the model is perfect
+- B. Run shadow mode only, with no automation at all, until the model matches underwriters on every case for a year
 - C. Automate approvals inside a scope fence, route declines and unclear cases to people, and run shadow mode
 - D. Automate declines only, because declines save the most underwriter time and are seen as lower risk
 
@@ -201,8 +201,8 @@ Baseline levels across the portfolio:
 
 - A. The review may be a rubber stamp; sample-check cases and give reviewers more time, evidence and easy override before drawing conclusions
 - B. The model is excellent and the agreement rate proves it; remove the reviewers and use the underwriting team's time on other, more valuable work
-- C. The reviewers are lazy and should be retrained
-- D. The override rate is irrelevant to product quality
+- C. The reviewers need refresher training on credit policy so that they challenge the model's recommendations more often
+- D. Set a target override rate, such as 5%, so that reviewers are pushed to look at cases more closely
 
 <details><summary>Answer</summary>
 
@@ -225,9 +225,9 @@ Baseline levels across the portfolio:
 
 **5. Bainbridge's "Ironies of Automation" warns about which effect?**
 
-- A. Automation always lowers costs
-- B. Automation cannot be applied to decisions, because only a human can be held accountable for a choice that changes what happens to a customer's money
-- C. Users never trust automated systems
+- A. Operators stop trusting automation after one visible error, even when it is reliable overall
+- B. Automation shifts accountability to the system's designers, so the operators who oversee it feel less responsible for its outcomes
+- C. People accept automated advice more readily when it comes with a confidence score
 - D. When routine work is automated, humans are left with the hardest cases while losing the practice and context needed to handle them
 
 <details><summary>Answer</summary>
@@ -433,9 +433,9 @@ Hessa and Faisal write the **Trust Design Spec** for the Credit Memo Copilot, v1
 
 **1. An RM refuses to use the Credit Memo Copilot because "I'd have to check every number anyway." Which design change most directly addresses this?**
 
-- A. Add a banner at the top of each draft saying the Copilot is highly accurate
+- A. Add a note to each draft saying the Copilot was tested on thousands of past memos
 - B. Show a single overall confidence percentage for the draft, above the first section
-- C. Remove the ability to edit drafts so that managers use the output as it is generated
+- C. Let RMs tick each figure once checked, and show how many in the draft are still unchecked
 - D. Link each figure to its source page so checking takes seconds
 
 <details><summary>Answer</summary>
@@ -446,10 +446,10 @@ Hessa and Faisal write the **Trust Design Spec** for the Credit Memo Copilot, v1
 
 **2. What does "calibrated trust" mean?**
 
-- A. Users trust the AI as much as possible, so that they use it for every task and spend as little time as they can on checking it afterwards
+- A. Users rely on the AI most for the tasks where its overall accuracy was highest in the launch evaluation, and check its output elsewhere
 - B. The model's scores are statistically calibrated
 - C. Users' reliance on the system matches what the system can actually do, so they rely on it when it is right and check it where it is weak
-- D. Users trust the AI only after a training course
+- D. Users' trust is measured in regular surveys and kept above an agreed target level
 
 <details><summary>Answer</summary>
 
@@ -473,7 +473,7 @@ Hessa and Faisal write the **Trust Design Spec** for the Credit Memo Copilot, v1
 **4. Fraud analysts have stopped reading Smart Alerts because most are false alarms. Which statement is most accurate?**
 
 - A. Alert fatigue is a training issue: refresher sessions on why alerts matter will get analysts reading again
-- B. Raising the threshold to cut false alarms solves it at no cost to fraud detection
+- B. Raising the threshold is the fix, since fewer alerts will mean analysts read each one again
 - C. The threshold trades missed fraud for false alarms, and dismissal design adds to fatigue; both are product calls
 - D. Shorter alerts with the explanation removed, so analysts can clear each one in a few seconds
 
@@ -485,10 +485,10 @@ Hessa and Faisal write the **Trust Design Spec** for the Credit Memo Copilot, v1
 
 **5. A research team finds that adding a fluent rationale to each model recommendation made reviewers accept more recommendations, including wrong ones. What should the PM take from this?**
 
-- A. Explanations always improve decisions, because they give reviewers the reasoning they need to judge a recommendation properly, so they should be shown in full for every recommendation
-- B. Remove all explanations
+- A. Show the rationale only on low-confidence recommendations, where reviewers need the most help, and hide it on confident ones so it cannot sway them
+- B. Drop the rationales and show only the recommendation and its score on the review screen
 - C. Prefer explanations that make checking easy, such as citations and evidence, and test whether they help users catch errors, not only whether they like them
-- D. Show explanations only to new users
+- D. Keep the rationales, and add a reminder that reviewers must make their own judgement
 
 <details><summary>Answer</summary>
 
@@ -674,8 +674,8 @@ Supporting rules in the spec:
 
 - A. Cancel the card immediately to protect the customer, since a stop request signals possible fraud and speed matters more than anything else
 - B. Clarify whether the customer wants a temporary freeze or to report the card lost or stolen, then show a preview of the chosen action
-- C. Tell the customer to call the contact centre
-- D. Freeze the card silently and notify them later
+- C. Show the card's recent transactions first, so the customer can decide whether any of them is fraud
+- D. Freeze the card at once, since a freeze is reversible, then tell the customer how to undo it
 
 <details><summary>Answer</summary>
 
@@ -700,7 +700,7 @@ Supporting rules in the spec:
 
 - A. Accept: the prompt is the right place for business rules, because the assistant reads it before every conversation
 - B. Enforce the limit in the card system the tool calls, and keep the prompt instruction only as an extra layer
-- C. Remove the limit so customers are not frustrated when the assistant refuses a request they consider reasonable
+- C. Accept, but also show the limit to customers so they know the assistant cannot go above it
 - D. Ask the model to double-check its own output against the rule before it sends the final action to the card system
 
 <details><summary>Answer</summary>

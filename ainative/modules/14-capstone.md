@@ -18,16 +18,16 @@
 - **Needs an agent: no, but recommended.** The grader sees the result, never the author; only the demo tests understanding.
 
 ## 🧭 Why it matters
-Hessa (product owner) gives every number in her ticket. Lujain (graduate engineer) finishes in an hour: one prompt, a corridor borrowing `STD-B`, tests written after the code, all green. Tariq (engineering lead) asks four questions. Where is the spec? What fails if the maximum is 12,000.01? Who has read the `service.py` diff, a money file? What stops the agent opening `.env`? Lujain has no answer. The change may be fine; nobody can know.
+Hessa (product owner) gives every number in her ticket. Lujain (graduate engineer) finishes in an hour: one prompt, a corridor borrowing `STD-B`, tests written after the code, all green. Tariq (engineering lead) asks four questions. Where is the spec? What fails if the maximum is 12,000.01? Who has read the `service.py` diff, a money file? What stops the agent opening `.env`? The change may be fine; nobody can know.
 
-The capstone trains the habit behind those questions: a change others can trust without your word. The 2025 DORA report (nearly 5,000 professionals, self-reported, associations not causes) frames AI as an amplifier of what a team already does. That specs, tests, small batches and review are what to amplify is the course's bet, not DORA's finding.
+The capstone trains the habit behind those questions: a change others can trust without your word. The 2025 DORA report (self-reported associations, not causes) frames AI as an amplifier of what a team already does. That specs, tests, small batches and review are what to amplify is the course's bet, not DORA's finding.
 
 ## 📐 How it works
 
 ### 🟢 The essentials
-**The brief.** Eight milestones: context (modules 0-2), spec and plan (3), small steps (4, 5), review (5, 6), security (8), automation (9, 10), documents (11) and retrospective (12, 13). Each leaves something checkable that must refer to something real: files, ids `AC1`..., commands, the code, a commit. `lab-assets/README.md` lists what the grader reads in each. Module 7 has no milestone: REMIT-414 adds code rather than changing an untested module, though its habit (pin behaviour before you change it) runs through the tests-first step.
+**The brief.** Eight milestones: context (modules 0-2), spec and plan (3), small steps (4, 5), review (5, 6), security (8), automation (9, 10), documents (11) and retrospective (12, 13). Each leaves something checkable that must refer to something real: files, ids `AC1`..., commands, the code, a commit. `lab-assets/README.md` lists what the grader reads in each.
 
-**Time.** This is not a one-sitting lesson. The header's hands-on estimate is the build itself: 8 to 12 hours of hands-on work spread over a week or more (roughly: spec and plan 2 h, code and tests 3 to 4 h, review and hardening 2 h, documents and retrospective 2 h), plus the 90-minute group session.
+**Time.** 8 to 12 hours of hands-on work over a week or more, plus the 90-minute group session.
 
 **Providers before the consumer.** A corridor names its fee schedule, and an old test (`tests/test_corridors.py`) checks that the schedule exists. So the plan adds `STD-C` in `fees.py`, then the rate and margin in `fx.py`, then the corridor, then the wording (`notify.py`) and the template choice (`service.py`). No code commit turns an old test red. Fee and rate functions take a `Corridor`: build one that points at `STD-C` in your fee tests, and they pass before the real corridor exists.
 
@@ -37,7 +37,7 @@ The capstone trains the habit behind those questions: a change others can trust 
 150.25 on QAR-INR:   150.25 x 2.00% + 2.00 = 5.005    half up 5.01      (half-even or float: 5.00)
 ```
 
-A tie catches a wrong rounding only when the rules disagree, which needs an even digit before the 5 (5.015 gives 5.02 either way). `STD-C`, its rate and its receive amounts have such ties; find them before any test exists. This script scans one tier (some have none); keep it outside the repository:
+A tie catches a wrong rounding only when the rules disagree, which needs an even digit before the 5 (5.015 gives 5.02 either way). `STD-C`, its rate and its receive amounts have such ties; find them before any test exists. This script scans one tier:
 
 ```python
 # ~/scratch/find_ties.py: a throwaway script, kept outside the repository
@@ -56,10 +56,10 @@ for quarter in range(400, 605):  # amounts 100.00 to 151.00 on a 0.25 grid
         print(amount, "->", fee)  # 150.25 -> 5.0050
 ```
 
-Try the rate (`useful_tie(mid * (1 - margin), 4)`) and the receive amount the same way. An agent may draft the tests; the expected values come from you.
+Try the rate (`useful_tie(mid * (1 - margin), 4)`) and the receive amount the same way.
 
 ### 🟡 Going deeper
-**Delegate the draft, keep the decision.** The agent interviews you for the spec, drafts tests from your values and takes one plan step per prompt. A fresh-context reviewer (the **Second-model review** of lesson 5.1: a second session or `/code-review`) adds questions; verify each, because reviewers usually report something even when the work is sound. The vague prompt is "Add a Bangladesh corridor to Remit"; the specified one, for step 2, is a task contract (lesson 10.1).
+**Delegate the draft, keep the decision.** The agent interviews you for the spec, drafts tests from your values and takes one plan step per prompt. A fresh-context reviewer (the **Second-model review** of lesson 5.1: a second session or `/code-review`) adds questions; verify each. The vague prompt is "Add a Bangladesh corridor to Remit"; the specified one, for step 2, is a task contract (lesson 10.1).
 
 ```text
 Do step 2 of specs/REMIT-414-plan.md; read it, the spec and CLAUDE.md first.
@@ -77,7 +77,7 @@ Then commit: feat(fees): add the STD-C fee schedule for Bangladesh
 
 **How much evidence is enough?** Match it to risk. A typo needs one commit and the test that was red; money logic gets all ten pieces and a second human on `fees.py`, `fx.py` and `service.py`.
 
-**What the grader cannot tell.** A model could fill every template in ten minutes and pass: the checks verify shape, truth and references, never sincerity. The demo has you break your own code live. Its real test is a colleague's live questions; studying alone, a recorded demo is the fallback, and an agent session on its own never counts as the reviewer.
+**What the grader cannot tell.** A model could fill every template in ten minutes and pass: the checks verify shape, truth and references, never sincerity. Its real test is the demo: a colleague's live questions; an agent session alone never counts as the reviewer.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |
@@ -167,7 +167,7 @@ cp lab-assets/harden/guard.py .claude/hooks/guard.py
 python3 .claude/hooks/guard.py < lab-assets/hook-samples/block-rm-rf.json; echo $?    # Blocked: ... then 2
 ```
 
-Exit code 2 with a reason on standard error blocks; any other non-zero code is a non-blocking error, so a guard must block what it cannot read. (3) Tests first, then one step per commit. CONTRIBUTING.md wants a green suite at every commit: one commit of red tests alone is a deliberate exception here, or commit each step's tests with its code. (4) Review your own diff, then ask a fresh session; if you cannot start one, write "self-review" and put your questions for the humans under Second reviewer. (5) Write the ADR, the corridors page and the architecture fix from the code. (6) Log, then write the retrospective last, from `lab-assets/templates/retrospective.md`; it quotes a commit hash, so copy one again after any rebase or amend. *No agent:* the same order; budget a week of part-time study.
+Exit code 2 with a reason on standard error blocks; any other non-zero code is a non-blocking error, so a guard must block what it cannot read. (3) Tests first, then one step per commit. CONTRIBUTING.md wants a green suite at every commit: one commit of red tests alone is a deliberate exception here, or commit each step's tests with its code. (4) Review your own diff, then ask a fresh session; if you cannot start one, write "self-review" and put your questions for the humans under Second reviewer. (5) Write the ADR, the corridors page and the architecture fix from the code. (6) Log, then write the retrospective last, from `lab-assets/templates/retrospective.md`; it quotes a commit hash, so copy one again after any rebase or amend. *No agent:* the same order.
 
 **What the grader checks.** *The change:* five groups of hidden acceptance tests (corridor, fees, rate, wording, the send path); no old test weakened; only the expected files touched; your new tests must fail without your change and notice at least four of six deliberate defects (one agreed number broken at a time). *The evidence:* each document keeps its template's headings, has no `TODO` placeholder, names only files that exist and is checked against the code and the other documents (the hook runs on 18 sample inputs). *Hygiene and security:* Conventional Commits, one kind of change per commit, no secrets, no float or clock shortcuts, no new dependency. *Advisory:* tests before or with the code, a history that follows the plan, small commits, a hook that sees through `bash -lc`, ask rules for the money files.
 
@@ -197,9 +197,9 @@ Pointing Bangladesh at `STD-B` instead of `STD-C` looks plausible, yet fails sev
 - *Security baseline:* 1 defaults; 2 deny rules; 3 hook blocks and allows; 4 hook limits written down.
 - *Documents:* 1 from memory; 2 match today; 3 cross-refer, checked; 4 drift check automated.
 
-**Weekly deliverable (Module 14).** In a notes folder of your own, commit `week-14/`: `m14-grade.txt` (the final grade output), `baseline-after.md` (the lesson 0.1 self-check again, if you did one), `demo-notes.md` and a one-page `portfolio.md` (what changed, how you know it is right, where AI helped and where you overruled it; fictional, no secrets). The kit does not check these.
+**Weekly deliverable (Module 14).** In a notes folder of your own, commit `week-14/`: `m14-grade.txt` (the final grade output), `baseline-after.md` (the lesson 0.1 self-check again, if you did one), `demo-notes.md` and a one-page `portfolio.md` (what changed, how you know it is right, where AI helped and where you overruled it; fictional, no secrets).
 
-**Group session (90 minutes).** Demo in English and Arabic; Hessa asks if Customer Care would sign (15). The trail, spec to `git log --oneline`; Tariq asks where the plan changed (15). Move the cap by one cent, live (the **Mutation check** of lesson 5.1); Nada (quality engineering lead) asks which test fails (20). Make the agent try to read `.env`, push or install; Noura (application and AI security) asks what the guard cannot see (15). Swap repositories and find the riskiest hunk in `git diff lab-start` (15). Agree one change to the memory file (10). *Alone:* record a 15-minute demo answering the four people's questions, do the one-cent mutation and the `.env` attempt on camera, have a fresh agent session find the riskiest hunk before you check its answer, and play the recording to a colleague when you can.
+**Group session (90 minutes).** Demo in English and Arabic; Hessa asks if Customer Care would sign (15). The trail, spec to `git log --oneline`; Tariq asks where the plan changed (15). Move the cap by one cent, live (the **Mutation check** of lesson 5.1); Nada (quality engineering lead) asks which test fails (20). Make the agent try to read `.env`, push or install; Noura (application and AI security) asks what the guard cannot see (15). Swap repositories and find the riskiest hunk in `git diff lab-start` (15). Agree one change to the memory file (10). *Alone:* record a 15-minute demo answering the four people's questions, do the one-cent mutation and the `.env` attempt on camera, and play the recording to a colleague when you can.
 
 **Debrief.** What did the agent get wrong, or nearly? What did your context or spec miss? Which document would you write first?
 
@@ -231,7 +231,6 @@ Total minutes: 0
 - One small change, ten pieces of evidence that refer to each other and the code.
 - Order is a decision: spec, plan, tests, then providers before the consumer.
 - The five habits in one change: **Context first** (memory file), **Specify before you delegate** (spec, plan), **Small verified steps** (tests first, a commit per step), **Trust evidence, not fluency** (hand-worked values, review, demo), **Automate the loop, keep the skill** (guard hook, log).
-- Match evidence to risk.
 
 ## ✍️ Check yourself
 

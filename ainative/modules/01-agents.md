@@ -44,7 +44,7 @@ A subagent has a window of its own, and only its final report comes back. `/cont
 
 **Tokens and cost, qualitatively.** You pay for tokens read and written, and every turn reads the whole context again. A 4,000-line log pasted on turn three is read again on every later turn. Providers often discount repeated context, but it is not free and still competes for attention. `/usage` shows your usage (its session-cost block is meant for API users).
 
-**The loop.** An agent adds hands: the same model, called in a loop, with tools to read, search, edit and run commands. The model asks for a tool, the program checks the permission rules, runs it, appends the result to the context and calls the model again. It stops when the model answers instead of asking. (This agent loop runs inside the *delegate* step of the AI-native loop of lesson 0.3, which stays yours.)
+**The loop.** An agent adds hands: the same model, called in a loop, with tools to read, search, edit and run commands. The model asks for a tool, the program checks the permission rules, runs it, appends the result to the context and calls the model again. It stops when the model answers instead of asking. (This loop runs inside the *delegate* step of lesson 0.3's loop.)
 
 ```mermaid
 flowchart TD
@@ -91,7 +91,7 @@ The loop makes agents useful and risky: they can check their work by running tes
 | **Available context** | Is everything it needs in the window or findable? | Constants and tests in the repo | The rule lives in a PDF or in the product owner's head |
 | **Familiarity** | Is this common in public code? | Table-driven tests, a CLI flag | najmkit; a bank-specific screening rule |
 
-The evidence fits this table without proving it. One randomized trial of 16 experienced developers in their own mature repositories found tasks took 19% longer with early-2025 tools, though they had expected, and afterwards believed, they were faster; METR warns that other settings and later tools may differ. A lab experiment on one self-contained task (GitHub and Microsoft Research authors) found Copilot users 55.8% faster (95% interval 21% to 89%). Results depend on task, tool and experience; neither is a rule for your team.
+The evidence fits this table without proving it. One randomized trial of 16 experienced developers in their own mature repositories found tasks took 19% longer with early-2025 tools, though they had expected, and afterwards believed, they were faster. A lab experiment on one self-contained task (GitHub and Microsoft Research authors) found Copilot users 55.8% faster (95% interval 21% to 89%). Results depend on task, tool and experience; neither is a rule for your team.
 
 **A weak prompt and a stronger one.** Take Tuesday's request, with what the model cannot know put into the context:
 
@@ -321,7 +321,7 @@ A fee of 165.00 above a 150.00 cap, by design. T05 and T06 test nothing about a 
 
 **Choosing the cheapest prevention.** A memory-file line or a spec sentence costs minutes once, a deny rule or a hook perhaps an hour once, a reviewer minutes every time (estimates). Prefer the earliest, cheapest one that would have stopped it, and add a second layer where the damage is large. The grader treats your category as advice only.
 
-**What the grader cannot tell.** It cannot tell whether you understood why, who filled the file, whether your reasons were sound or whether part 2 was really read-only, and a failed line points at a session, so you could guess your way to green and learn nothing. An agent may draft your findings if you check every turn and quotation, which is the skill. The group session tests the thinking.
+**What the grader cannot tell.** It cannot tell whether you understood why, who filled the file, whether your reasons were sound or whether part 2 was really read-only, and a failed line points at a session, so you could guess your way to green and learn nothing. The group session tests the thinking.
 
 ## 🧰 The toolkit
 | Tool, practice or pattern | What it is and does | When to reach for it |

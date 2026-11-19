@@ -224,7 +224,7 @@ Retired from the headline: *drafts generated* and *average thumbs rating* (now d
 - A. Credit the copilot, since it launched in the same quarter and cycle time fell right afterwards across the bank
 - B. Compare teams using the copilot with a holdout or not-yet-rolled-out group over the same period
 - C. Survey RMs on whether they feel faster
-- D. Divide the gain equally between the two causes
+- D. Credit the new analysts, since added capacity reliably cuts queues while new tools take time to bed in
 
 <details><summary>Answer</summary>
 
@@ -424,7 +424,7 @@ Decision rule agreed with Khalid: *"A change that lowers the model bill but rais
 - A. You cannot tell without adding handoff costs and dividing by resolution rate
 - B. Model A is cheaper, because it costs a tenth as much per token
 - C. Model B is always cheaper, because it resolves more
-- D. Cost does not matter if quality differs, because customers care about the quality of the answer, not the price per token
+- D. Compare cost per conversation, since every conversation uses the model whether or not it resolves
 
 <details><summary>Answer</summary>
 
@@ -474,8 +474,8 @@ Decision rule agreed with Khalid: *"A change that lowers the model bill but rais
 **5. Najm Assist's average cost per agent task is on target, but finance reports occasional very large bills. What should the team add?**
 
 - A. p95 cost reporting and a per-task spend cap that ends in a graceful handoff
-- B. A switch to the smallest model for all tasks, whatever the effect on the quality of the answers
-- C. Removing agent features from the product until cost per task falls further below the target
+- B. A switch to a smaller, cheaper model for all agent tasks, to bring the average down further
+- C. A larger monthly budget buffer agreed with finance, sized to cover the occasional large bills
 - D. A monthly budget review only, run by finance with the product team once the bills have arrived
 
 <details><summary>Answer</summary>
@@ -497,7 +497,7 @@ Decision rule agreed with Khalid: *"A change that lowers the model bill but rais
 # 8.3 — Monitoring, drift and the iteration loop after launch
 *Level: 🔴 Advanced* · *Prerequisites: 6.1, 6.2, 6.3, 8.1* · *Stage: Grow*
 
-**After this you can** name the type of drift behind a scenario and a signal that detects it, and write a dated model-migration plan with a golden-set go/no-go rule and a rollback path. *Study time: reading about 15 min, hands-on about 160 min (estimate).*
+**After this you can** name the type of drift behind a scenario and a signal that detects it, and write a dated model-migration plan with a golden-set go/no-go rule and a rollback path. *Study time: reading about 20 min, hands-on about 160 min (estimate).*
 
 ## ⚡ In 60 seconds
 - AI products get worse without anyone touching them. Customers change, fraudsters adapt, policies are updated and model vendors ship new versions. This is **drift**, and it is usually silent: no error message, just slowly worse answers.
@@ -667,12 +667,12 @@ After the fee incident, Rania asks each product to publish a **monitoring plan a
 
 - A. A tighter p95 latency threshold, with alerts that notify the on-call engineer whenever response time rises above it
 - B. Monthly PSI on customer age
-- C. A higher containment target
+- C. A containment alert that fires whenever the share of chats handed to agents changes sharply
 - D. A source-freshness check linking policy page changes to re-indexing and a targeted re-test
 
 <details><summary>Answer</summary>
 
-**D.** This was knowledge drift. Linking content changes to re-indexing and re-testing catches it at the source. Health metrics (A) cannot see wrong answers, and a containment target (C) might even reward the error. (🟡 Going deeper.)
+**D.** This was knowledge drift. Linking content changes to re-indexing and re-testing catches it at the source. Health metrics (A) cannot see wrong answers, and a containment alert (C) stays quiet, because the wrong answers still counted as contained. (🟡 Going deeper.)
 
 </details>
 
@@ -706,7 +706,7 @@ After the fee incident, Rania asks each product to publish a **monitoring plan a
 
 - A. Nothing; prompt changes are low risk because a prompt is only text and can be edited back by the team at any time
 - B. Add the failing cases to the golden set, run the full set for regressions, and release through a staged rollout
-- C. Ask the vendor to confirm the fix
+- C. Test the new prompt on the reported Arabic phrasings, then release it to all customers
 - D. Retrain the model
 
 <details><summary>Answer</summary>

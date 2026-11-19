@@ -185,7 +185,7 @@ Go/no-go outcome: *"No-go this week on G1. Go at 5% once the false-block fix is 
 **2. Which guardrail design best follows the "deny by default for actions" principle for a first release of a customer assistant?**
 
 - A. Give the assistant all banking tools but tell it in the system prompt to be careful with every action it takes
-- B. Allow actions only for customers who accept the terms
+- B. Allow all actions, but cap each customer at a set number of actions per day
 - C. Allow actions but log them for review at month end
 - D. Launch with question-answering only and add action tools later, each under its own gate
 
@@ -199,8 +199,8 @@ Go/no-go outcome: *"No-go this week on G1. Go at 5% once the false-block fix is 
 
 - A. Pause the rollout, fall back or roll back as the plan says, and investigate
 - B. Continue to 100% because the drop may be noise and two days is too short a period to judge
-- C. Lower the spec bar so the rollout can continue, then review the bar again after launch
-- D. Wait for the 30-day post-launch review before deciding whether to take any action at all
+- C. Agree a temporary lower bar with Layla, so the rollout can continue while the team investigates the drop
+- D. Hold at 25% without rolling back, and wait a few more days for data before deciding anything
 
 <details><summary>Answer</summary>
 
@@ -210,7 +210,7 @@ Go/no-go outcome: *"No-go this week on G1. Go at 5% once the false-block fix is 
 
 **4. The team changes the wording of Najm Assist's system prompt to sound friendlier. Under a sensible change-class policy, what should happen?**
 
-- A. Nothing: prompt wording is not a product change
+- A. Release it straight away, since a wording change does not alter what the assistant can do
 - B. The full launch gate, including a new governance approval and a fresh review by the risk committee
 - C. Re-run the automated eval suite and get the PM's approval before release
 - D. Release it to all users and monitor complaints
@@ -405,8 +405,8 @@ Faisal's revised **SME Instant Finance GTM One-Pager**, approved by Khalid and r
 **1. Faisal's campaign headline for SME Instant Finance is "AI approves your invoice finance instantly". Which revision best follows this lesson?**
 
 - A. "Turn eligible invoices into cash, with a decision in minutes"
-- B. "The smartest AI lender in the Gulf"
-- C. "Instant AI approvals, guaranteed"
+- B. "Najm's AI reviews your invoices and approves finance in seconds"
+- C. "Instant invoice finance for every SME, with each decision made by AI"
 - D. "Powered by advanced machine learning, trained on ten years of Najm Bank's own invoice finance data"
 
 <details><summary>Answer</summary>
@@ -417,10 +417,10 @@ Faisal's revised **SME Instant Finance GTM One-Pager**, approved by Khalid and r
 
 **2. Why does the choice of market category matter more for AI products than for many traditional products?**
 
-- A. Because AI products cannot be sold without a category
+- A. Because the category decides which competitors' prices customers compare the product with
 - B. Because the category sets the standard customers judge the product against, and AI products make visible errors
 - C. Because regulators require a category for every AI product, and the category decides which rules apply to it in the Gulf region
-- D. Because categories determine the model used
+- D. Because AI products are new, so a familiar category is needed to get customers to try them
 
 <details><summary>Answer</summary>
 
@@ -432,7 +432,7 @@ Faisal's revised **SME Instant Finance GTM One-Pager**, approved by Khalid and r
 
 - A. Nothing, because claims describe the product as customers experience it, not the model underneath
 - B. Each claim is re-checked against evals on the new model before release
-- C. All claims are deleted and rewritten from scratch by marketing after the new model has launched
+- C. Only claims that mention the model or AI are re-checked; the rest stay as they are
 - D. Marketing updates claims after the next campaign, once there is time in the planning calendar
 
 <details><summary>Answer</summary>
@@ -446,7 +446,7 @@ Faisal's revised **SME Instant Finance GTM One-Pager**, approved by Khalid and r
 - A. The precise definition of "resolved" and who measures it
 - B. Whether the agent uses an open-weight model or a proprietary model from a large vendor
 - C. Whether the vendor offers a free trial before the buyer commits to the first-year contract
-- D. Whether the price is quoted in dollars or in the local currency used by the buyer
+- D. Whether the price per resolution falls as the buyer's conversation volume grows
 
 <details><summary>Answer</summary>
 
@@ -661,7 +661,7 @@ After the six-week review, Rania and Faisal rewrote the rollout as the **Credit 
 
 - A. Ask them to share their workflow with the team, since they get the most out of the copilot
 - B. Treat it as possible over-reliance: sample their memos, coach on checking, and add source cues
-- C. Limit their access to two drafts a week until they show they edit carefully
+- C. Set a minimum edit rate for all RMs, so that every submitted draft shows at least some sign of review
 - D. Leave it, since heavy use is exactly the adoption the launch was aiming for
 
 <details><summary>Answer</summary>
@@ -687,8 +687,8 @@ After the six-week review, Rania and Faisal rewrote the rollout as the **Credit 
 
 - A. Purely as a security matter for Layla's office to block
 - B. As evidence of unmet demand to feed product discovery, while governance handles the policy and data risk
-- C. As proof that Staff GenAI should be withdrawn
-- D. As acceptable, because the staff are being productive and no customer has complained about the way their data was handled
+- C. As a sign that Staff GenAI needs a faster model, which should be bought and rolled out before anything else
+- D. As acceptable for now, since the staff are productive, while the team speeds up Staff GenAI
 
 <details><summary>Answer</summary>
 

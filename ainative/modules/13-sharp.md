@@ -21,7 +21,7 @@
 ## 🧭 Why it matters
 Lujain (graduate engineer) merged more agent-written code this quarter than anyone on the team, and this week she could not explain one line of it. Last Tuesday she asked her agent to "tidy the rounding in the ledger". Its diff made the partner's share of the fee round half up, "like everything else in Remit". The ledger has no tests of its own, so nothing went red, and she opened a pull request. On Thursday Nada (quality engineering lead), the second reviewer, asks: "Why does the ledger give the partner 3.04 on a fee of 10.15, not 3.05?" It is the quirk lesson 7.1 pinned, but Lujain has never opened `ledger.py`. Its docstring documents the quirk (Q-LED-1) and warns against refactoring the file without characterization tests. The agent skipped that or took it for a bug, and she could not say which.
 
-What was missing was not a prompt trick but a fundamental: reading code and asking why it is the way it is. You practise it less when an agent does the reading. The fifth habit, **Automate the loop, keep the skill**, has two halves: Module 9 built the first, this module the second. A small Anthropic study (below) found juniors who learned a library with an AI assistant scored lower on a later quiz: reason enough to practise on purpose.
+What was missing was not a prompt trick but a fundamental: reading code and asking why it is the way it is. You practise it less when an agent does the reading. The fifth habit, **Automate the loop, keep the skill**, has two halves: Module 9 built the first, this module the second.
 
 ## 📐 How it works
 
@@ -40,7 +40,7 @@ What was missing was not a prompt trick but a fundamental: reading code and aski
 
 **What the evidence says about deskilling. It is early.** Sources the course has checked:
 - Shen and Tamkin (Anthropic, 2026), randomized: 52 mostly junior engineers learning the Trio library. The AI group averaged 50% on a comprehension quiz, the hand-coders 67%; a speed gain of about two minutes was not significant; the biggest gap was on debugging questions. The authors' limits: a small sample, a quiz right after the task, a setup unlike agentic tools, preliminary results. Anthropic makes Claude Code.
-- METR (2025), randomized: 16 experienced open-source developers in their own mature repositories, early-2025 tools. They forecast a 24% speed-up, afterwards believed about 20%, and took 19% longer. METR says other settings and later tools may differ; in 2026 it called its newer data "only very weak evidence" of the speed-up now.
+- METR (2025), randomized: 16 experienced open-source developers in their own mature repositories, early-2025 tools. They forecast a 24% speed-up, afterwards believed about 20%, and took 19% longer. In 2026 METR called its newer data "only very weak evidence" of the speed-up now.
 
 Together: in one small trial, learning with an assistant was followed by lower quiz scores, and people can misjudge their own speed. Nothing the course has checked covers years of agentic work. A modest rule follows: *protect the skills you verify with.*
 
@@ -98,7 +98,7 @@ Strong: AI-assisted (label added). The agent drafted the tier change; I wrote th
         Hessa, please have it checked. Ran: pytest -q (101 passed: 99 existing, 2 mine).
 ```
 
-**How roles may shift. Nobody knows yet.** "AI-native" has no standard definition, and the sources the course has read are vendors, consultancies and essays. Atlassian's playbook argues the bottleneck has moved to the work around the code; the sources agree you redesign the workflow and its controls, not just add a tool. DORA's 2025 report says AI "amplifies what's already there", from self-reported associations. Predictions about particular jobs are speculation; a sensible bet is to build verification and judgement and keep evidence of them. The career course covers the market: [*From Graduate to Hired*, lesson 0.1 — The entry-level tech market in the AI era: what changed and what didn't](../career/index.html#/0.1).
+**How roles may shift. Nobody knows yet.** "AI-native" has no standard definition, and the sources the course has read are vendors, consultancies and essays. Atlassian's playbook argues the bottleneck has moved to the work around the code. DORA's 2025 report says AI "amplifies what's already there", from self-reported associations. Predictions about particular jobs are speculation; a sensible bet is to build verification and judgement and keep evidence of them. The career course covers the market: [*From Graduate to Hired*, lesson 0.1 — The entry-level tech market in the AI era: what changed and what didn't](../career/index.html#/0.1).
 
 ### 🔴 Expert view
 
