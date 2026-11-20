@@ -87,7 +87,7 @@ Incident roles follow skill, not hierarchy: Omar, if he joins, receives updates;
 
 ### 🔴 Expert view
 
-**Measuring the model, not just the incidents.** Treat mean time to restore (MTTR) with care: one long outage moves the average more than any improvement. Štěpán Davidovič's report *Incident Metrics in SRE*, published by Google, is reported to use simulations to show that mean-time metrics are poorly suited to spotting trends or judging whether a change helped. Use instead:
+**Measuring the model, not just the incidents.** Treat mean time to restore (MTTR) with care: one long outage moves the average more than any improvement. Štěpán Davidovič's report *Incident Metrics in SRE*, published by O'Reilly and offered free on Google's SRE site, uses simulations to show that mean-time metrics are poorly suited to spotting trends or judging whether a change helped. Use instead:
 
 | Measure | Why it helps | Pair it with |
 |---|---|---|
