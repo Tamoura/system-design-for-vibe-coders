@@ -1,0 +1,135 @@
+{
+  "area": "m0",
+  "questions": [
+    {
+      "id": "m0-1",
+      "level": 1,
+      "lesson": "0.1",
+      "q": {
+        "en": "Omar tells the board: \"IT is doing well. Our people work hard and users seem happier.\" Which reply applies the course rule for any claim about IT?",
+        "ar": "قال عمر لمجلس الإدارة: «تقنية المعلومات بخير؛ فريقنا يعمل بجد، ويبدو المستخدمون أكثر رضا». أي رد يطبّق قاعدة الدورة في أي ادعاء عن تقنية المعلومات؟"
+      },
+      "o": {
+        "en": [
+          "Accept it, since a CIO's own judgement of his division is the best evidence there is",
+          "Start charging every business line for IT, so that its costs finally become visible",
+          "Ask which customers are happier, by what number, and which record holds that number",
+          "Run a staff survey on effort, so that the claim about hard work can be supported"
+        ],
+        "ar": [
+          "نقبله، فتقدير مدير تقنية المعلومات لقطاعه هو أفضل دليل متاح لدينا",
+          "نبدأ بتحميل كل قطاع أعمال تكلفة التقنية، حتى تصبح تكاليفها ظاهرة أخيرًا",
+          "نسأل: أي العملاء أكثر رضا، وبأي رقم، وفي أي سجل يُحفظ هذا الرقم",
+          "نجري استبيانًا للموظفين عن جهدهم، حتى يجد ادعاء العمل الجاد ما يسنده"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "The course rule is that every claim about IT needs a customer, a number and a record; without all three it is an opinion. The tempting option is charging every business line: lesson 0.1 calls that the biggest trap, an accounting exercise instead of making value, cost and risk visible. An effort survey measures activity, not customers.",
+        "ar": "قاعدة الدورة أن كل ادعاء عن تقنية المعلومات يحتاج إلى عميل ورقم وسجل؛ وإن غاب أحدها فهو رأي لا حقيقة. والخيار المغري هو تحميل كل قطاع أعمال التكلفة، والدرس 0.1 يسمّيه أكبر فخ: تمرين محاسبي بدل أن تصبح القيمة والتكلفة والمخاطر ظاهرة بما يكفي للقرار. أما استبيان الجهد فيقيس النشاط لا العملاء."
+      }
+    },
+    {
+      "id": "m0-2",
+      "level": 2,
+      "lesson": "0.1",
+      "q": {
+        "en": "AI coding assistants have doubled how fast Reem's team writes code, yet a change still takes six weeks to reach customers. What does lesson 0.1 suggest she looks at?",
+        "ar": "ضاعفت مساعدات البرمجة بالذكاء الاصطناعي سرعة كتابة الشيفرة في فريق ريم، لكن التغيير ما زال يحتاج إلى ستة أسابيع ليصل إلى العملاء. إلى أين يقترح الدرس 0.1 أن تنظر؟"
+      },
+      "o": {
+        "en": [
+          "Review, release and running the service, where the bottleneck has probably moved",
+          "More AI coding licences, since faster coding will pull the releases forward in time",
+          "Nothing new: six weeks is normal for a bank, so she reports the coding speed-up",
+          "Dropping code review for AI-written changes, so the extra code can ship sooner"
+        ],
+        "ar": [
+          "المراجعة والإصدار وتشغيل الخدمة، حيث انتقل عنق الزجاجة على الأرجح",
+          "مزيد من تراخيص البرمجة بالذكاء الاصطناعي، فالبرمجة الأسرع ستقرّب الإصدارات",
+          "لا شيء جديد؛ فستة أسابيع أمر عادي في بنك، فتكتفي بإعلان تسريع البرمجة",
+          "إلغاء مراجعة الشيفرة للتغييرات التي يكتبها الذكاء الاصطناعي لتُشحن أسرع"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "AI makes writing code cheaper, not deciding, reviewing, releasing, running or governing; the research the lesson cites suggests it amplifies the operating model you already have, so the bottleneck moves downstream. The tempting option is buying more licences: it speeds up a step that is no longer the constraint. Dropping review removes a safeguard instead of fixing flow.",
+        "ar": "الذكاء الاصطناعي يجعل كتابة الشيفرة أرخص، لا اتخاذ القرار ولا المراجعة ولا الإصدار ولا التشغيل ولا الحوكمة؛ والأبحاث التي يذكرها الدرس تشير إلى أنه يضخّم نموذج التشغيل الموجود، فينتقل عنق الزجاجة إلى ما بعد البرمجة. والخيار المغري هو شراء مزيد من التراخيص، وهو يسرّع خطوة لم تعد هي القيد. أما إلغاء المراجعة فيزيل ضمانة بدل إصلاح التدفّق."
+      }
+    },
+    {
+      "id": "m0-3",
+      "level": 2,
+      "lesson": "0.2",
+      "q": {
+        "en": "Huda's first draft of the eight steps reads \"Build = the development department, Run = the operations department\", and she calls the map finished. What is its main flaw?",
+        "ar": "كتبت هدى في مسودتها الأولى للخطوات الثماني: «Build = إدارة التطوير، وRun = إدارة العمليات»، ثم عدّت الخريطة مكتملة. ما عيبها الرئيسي؟"
+      },
+      "o": {
+        "en": [
+          "It uses the course's own step names instead of a recognised framework's terms",
+          "It keeps eight steps, when a cycle this simple should fit into four at most",
+          "It gives each step an owner, which should wait until the map is agreed first",
+          "It copies the org chart, but the steps are a loop that feeds back into Plan"
+        ],
+        "ar": [
+          "تستخدم أسماء الخطوات الخاصة بالدورة بدل مصطلحات إطار معروف",
+          "تُبقي ثماني خطوات، والدورة بهذه البساطة يجب ألا تزيد على أربع",
+          "تسمّي مالكًا لكل خطوة، وكان ينبغي تأجيل ذلك حتى يُتفق على الخريطة",
+          "تنسخ الهيكل التنظيمي، والخطوات حلقة تعود بياناتها إلى خطوة Plan"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 0.2 names this as the biggest trap: mapping the steps onto departments. The steps are a loop, not a sequence of departments; data from Serve and Run must flow back into Plan and Fund, and value leaks at the hand-offs. The tempting option is the framework terms: the course deliberately uses its own plain words. Owners per step are part of a good map, not a later extra.",
+        "ar": "يسمّي الدرس 0.2 هذا أكبر فخ: إسقاط الخطوات على الإدارات. فالخطوات حلقة لا تسلسل إدارات، ويجب أن تعود البيانات من Serve وRun إلى Plan وFund، والقيمة تتسرب عند التسليم بين الفرق. والخيار المغري هو مصطلحات الإطار، لكن الدورة تستخدم كلماتها البسيطة عن قصد. وتسمية مالك لكل خطوة جزء من الخريطة الجيدة، لا إضافة لاحقة."
+      }
+    },
+    {
+      "id": "m0-4",
+      "level": 3,
+      "lesson": "0.3",
+      "q": {
+        "en": "Tariq wants to settle how to book a platform's costs from the course's cost lessons alone, and to paste the bank's cost ledger into a public AI chat to speed up his analysis. What fits the course's stated limits?",
+        "ar": "يريد طارق أن يحسم طريقة قيد تكاليف منصة اعتمادًا على دروس التكلفة في الدورة وحدها، وأن يلصق دفتر تكاليف البنك في محادثة ذكاء اصطناعي عامة ليسرّع تحليله. ما الذي يتفق مع حدود الدورة المعلنة؟"
+      },
+      "o": {
+        "en": [
+          "Follow the lessons as written, since the course is a full accounting reference",
+          "Take the booking question to finance, and keep the ledger out of AI tools",
+          "Use the AI chat for the analysis, after deleting the ledger's column headings",
+          "Wait until a framework certification body confirms the correct method to use"
+        ],
+        "ar": [
+          "يتّبع الدروس كما هي، فالدورة مرجع محاسبي كامل يُعتمد عليه",
+          "يحمل سؤال القيد إلى المالية، ويُبقي الدفتر خارج أدوات الذكاء الاصطناعي",
+          "يستخدم المحادثة في التحليل بعد حذف عناوين أعمدة الدفتر أولًا",
+          "ينتظر حتى تؤكد جهة شهادات لإطار معروف الطريقة الصحيحة"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 0.3 says the course is not professional advice: it names the kind of rule and the question to ask finance, legal, risk or the regulator, and it tells you to keep confidential data out of AI tools. The tempting option is deleting the column headings: the figures are still confidential. Following the lessons as an accounting reference treats a teaching course as a ruling.",
+        "ar": "يقول الدرس 0.3 إن الدورة ليست استشارة مهنية؛ فهي تسمّي نوع القاعدة والسؤال الذي يُحمل إلى المالية أو الشؤون القانونية أو المخاطر أو الجهة الرقابية، وتطلب إبقاء البيانات السرية خارج أدوات الذكاء الاصطناعي. والخيار المغري هو حذف عناوين الأعمدة، لكن الأرقام تبقى سرية. واتباع الدروس مرجعًا محاسبيًا يجعل دورة تعليمية حكمًا نهائيًا."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m0-e1",
+      "lesson": "0.1",
+      "text": {
+        "en": "I have written a one-page \"IT as a business\" diagnosis of my own IT organisation that names its customers, what they consume, how money and work flow, and three questions I cannot yet answer with evidence.",
+        "ar": "كتبتُ تشخيصًا من صفحة واحدة لمؤسسة تقنية المعلومات التي أعمل فيها بعنوان «تقنية المعلومات كعمل تجاري»، يسمّي عملاءها وما يستهلكونه وكيف يتدفق المال والعمل، وثلاثة أسئلة لا أستطيع بعدُ أن أجيب عنها بدليل."
+      }
+    },
+    {
+      "id": "m0-e2",
+      "lesson": "0.2",
+      "text": {
+        "en": "I have drawn my organisation's IT operating cycle on one page with the eight steps, named an owner, a main record and one measure for each step, and marked the two weakest hand-offs.",
+        "ar": "رسمتُ دورة تشغيل تقنية المعلومات في مؤسستي على صفحة واحدة بالخطوات الثماني، وسمّيتُ لكل خطوة مالكًا وسجلًا رئيسيًا ومقياسًا واحدًا، وعلّمتُ أضعف نقطتي تسليم بين الفرق."
+      }
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "area": "m7",
+  "questions": [
+    {
+      "id": "m7-1",
+      "level": 1,
+      "lesson": "7.1",
+      "q": {
+        "en": "Najm Bank receives about 80 test-environment requests a month (illustrative). Each waits days for a manager who approves nearly all of them. What does lesson 7.1 suggest?",
+        "ar": "يتلقى بنك نجم نحو 80 طلبًا لبيئة اختبار شهريًا (رقم توضيحي). وينتظر كل طلب أيامًا موافقة مدير يعتمد معظمها تقريبًا. ماذا يقترح الدرس 7.1؟"
+      },
+      "o": {
+        "en": [
+          "Write a recipe, move the check into it or the tool, and work toward self-service",
+          "Put a web form in front of the current manual process and call it self-service",
+          "Add a second approver so that each request is checked more thoroughly than now",
+          "Treat each request as new work and send it to the next portfolio review meeting"
+        ],
+        "ar": [
+          "كتابة وصفة، ونقل الفحص إليها أو إلى الأداة، والسير نحو الخدمة الذاتية",
+          "وضع استمارة ويب أمام الإجراء اليدوي الحالي وتسميتها خدمة ذاتية",
+          "إضافة معتمِد ثانٍ حتى يُفحص كل طلب بدقة أكبر مما هو الآن",
+          "معاملة كل طلب عملًا جديدًا تمامًا وإرساله إلى اجتماع مراجعة المحفظة القادم"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "A frequent request deserves a recipe, and a recipe that never needs judgement deserves self-service. If the approver approves almost everything, the approval is a delay, not a control, so move the check into the recipe or the tool. The tempting option is the web form: the lesson's biggest trap is a form in front of the same slow manual process.",
+        "ar": "الطلب المتكرر يستحق وصفة، والوصفة التي لا تحتاج إلى اجتهاد تستحق الخدمة الذاتية. وإذا كان المعتمِد يعتمد كل شيء تقريبًا، فالاعتماد تأخير لا ضابط رقابي، فانقل الفحص إلى الوصفة أو الأداة. والخيار المغري هو استمارة الويب، وأكبر فخ في الدرس استمارة أمام الإجراء اليدوي البطيء نفسه."
+      }
+    },
+    {
+      "id": "m7-2",
+      "level": 2,
+      "lesson": "7.2",
+      "q": {
+        "en": "An analyst moved from the payments team to marketing six months ago, and she still holds production access to the payments database. Which gap does lesson 7.2 point to?",
+        "ar": "انتقلت محللة من فريق المدفوعات إلى التسويق قبل ستة أشهر، وما زالت تملك صلاحية وصول إلى قاعدة بيانات المدفوعات في بيئة الإنتاج. إلى أي فجوة يشير الدرس 7.2؟"
+      },
+      "o": {
+        "en": [
+          "The yearly access review was not long enough to cover every system she uses",
+          "Mover events are not tied to HR, and her grant had no owner, reason and end",
+          "Her new manager should have asked for access to be added for her new role",
+          "The business line's subscription to the payments product had already ended"
+        ],
+        "ar": [
+          "المراجعة السنوية للصلاحيات لم تكن طويلة بما يكفي لتشمل كل أنظمتها",
+          "أحداث الانتقال غير مربوطة بالموارد البشرية، ومنحها بلا مالك وسبب ونهاية",
+          "كان على مديرها الجديد أن يطلب إضافة صلاحيات لدورها الجديد",
+          "اشتراك قطاع الأعمال في منتج المدفوعات كان قد انتهى بالفعل"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 7.2: most access problems come at joiner, mover and leaver moments, so tie them to HR events; and every grant needs an owner, a reason and an end. The tempting option is a longer yearly review: the lesson's biggest trap is the yearly spreadsheet that managers approve without reading. The subscription is a different question from her access right.",
+        "ar": "الدرس 7.2: معظم مشكلات الصلاحيات تقع عند الالتحاق والانتقال والمغادرة، فاربطها بأحداث الموارد البشرية؛ ولكل منح مالك وسبب ونهاية. والخيار المغري هو مراجعة سنوية أطول، وأكبر فخ في الدرس جدول سنوي يعتمده المدراء دون قراءة. أما الاشتراك فسؤال مختلف عن صلاحية وصولها."
+      }
+    },
+    {
+      "id": "m7-3",
+      "level": 2,
+      "lesson": "7.3",
+      "q": {
+        "en": "Tariq wants to start charging business lines next month for cloud test environments, split by a headcount formula. Usage tagging covers about half the cost. What fits lesson 7.3?",
+        "ar": "يريد طارق أن يبدأ الشهر القادم بتحميل قطاعات الأعمال تكلفة بيئات الاختبار السحابية، موزّعةً بمعادلة حسب عدد الموظفين. ووسم الاستخدام يغطي نحو نصف التكلفة. ما الذي يتفق مع الدرس 7.3؟"
+      },
+      "o": {
+        "en": [
+          "Charge next month as planned, since bills are what make people change behaviour",
+          "Charge by headcount, since it is simple and every business line knows its own",
+          "Fold the untagged cost into a shared overhead line so the report looks clean",
+          "Show usage first in readable units, show untagged cost openly, and ask finance"
+        ],
+        "ar": [
+          "التحميل الشهر القادم كما هو مخطط، فالفواتير وحدها هي ما يغيّر سلوك الناس فعلًا",
+          "التحميل حسب عدد الموظفين، فهي طريقة بسيطة ويعرف كل قطاع عدده",
+          "دمج التكلفة غير الموسومة في بند نفقات مشتركة ليبدو التقرير نظيفًا",
+          "عرض الاستخدام أولًا بوحدات مقروءة، وإظهار غير الموسوم علنًا، وسؤال المالية"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 7.3's rule: show before you charge; nobody accepts a bill they cannot read or influence. With half the cost untagged, show usage in units people can change, show untagged cost openly, and let finance decide on moving money. The tempting option is the headcount formula: it is simple, but a business line cannot change its bill by changing its usage.",
+        "ar": "قاعدة الدرس 7.3: اعرض قبل أن تحمّل؛ فلا أحد يقبل فاتورة لا يستطيع قراءتها أو التأثير فيها. ومع نصف التكلفة غير موسوم، اعرض الاستخدام بوحدات يستطيع الناس تغييرها، وأظهر غير الموسوم علنًا، ودع المالية تقرر نقل المال. والخيار المغري هو معادلة عدد الموظفين، فهي بسيطة، لكن القطاع لا يستطيع تغيير فاتورته بتغيير استخدامه."
+      }
+    },
+    {
+      "id": "m7-4",
+      "level": 3,
+      "lesson": "7.2",
+      "q": {
+        "en": "Reem finds that the cards platform has 40 unused licences and 25 staff accounts with no logins for 90 days (illustrative). How should Najm Bank treat this?",
+        "ar": "وجدت ريم أن منصة البطاقات فيها 40 ترخيصًا غير مستخدم و25 حساب موظف بلا أي دخول منذ 90 يومًا (أرقام توضيحية). كيف ينبغي أن يتعامل بنك نجم مع ذلك؟"
+      },
+      "o": {
+        "en": [
+          "As a cost question only, for finance to settle when the contract next renews",
+          "As an access question only, for the system owner to fix at the yearly review",
+          "As both a cost and a risk, using the same usage data to act on each of them",
+          "As normal slack that protects the platform against sudden growth in users"
+        ],
+        "ar": [
+          "سؤال تكلفة فقط، تحسمه المالية عند تجديد العقد القادم",
+          "سؤال صلاحيات فقط، يصلحه مالك النظام في المراجعة السنوية",
+          "تكلفة ومخاطرة معًا، تعالجهما بيانات الاستخدام نفسها",
+          "هامش طبيعي يحمي المنصة من نمو مفاجئ في عدد المستخدمين"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 7.2 ends on this point: unused access is a risk and unused licences are a cost, and the same usage data shows both. The tempting options treat it as only one of the two: cost alone leaves 25 dormant accounts open, and access alone at a yearly review leaves the licences paid for and the accounts open for months.",
+        "ar": "يختم الدرس 7.2 بهذه الفكرة: الصلاحية غير المستخدمة مخاطرة، والترخيص غير المستخدم تكلفة، وبيانات الاستخدام نفسها تُظهر الاثنين. والخيارات المغرية تعاملها على أنها واحد منهما فقط؛ فالتكلفة وحدها تترك 25 حسابًا خاملًا مفتوحًا، والصلاحيات وحدها في مراجعة سنوية تُبقي التراخيص مدفوعة والحسابات مفتوحة لأشهر."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m7-e1",
+      "lesson": "7.1",
+      "text": {
+        "en": "I have written recipes for the five most frequent asks reaching my IT area (steps, checks, approver, evidence, target time) and decided which one moves to self-service first.",
+        "ar": "كتبتُ وصفات لأكثر خمسة طلبات تكرارًا تصل إلى مجالي في تقنية المعلومات (الخطوات والفحوص والمعتمِد والدليل والزمن المستهدف)، وقررتُ أيها ينتقل إلى الخدمة الذاتية أولًا."
+      }
+    },
+    {
+      "id": "m7-e2",
+      "lesson": "7.3",
+      "text": {
+        "en": "I have designed a monthly usage-and-cost report for one shared platform, chosen between showback and chargeback for it with reasons, and listed the questions to take to finance before any charge is made.",
+        "ar": "صمّمتُ تقريرًا شهريًا للاستخدام والتكلفة لمنصة مشتركة واحدة، واخترتُ لها بين عرض التكلفة وتحميلها مع الأسباب، وسردتُ الأسئلة التي تُحمل إلى المالية قبل أي تحميل."
+      }
+    }
+  ]
+}

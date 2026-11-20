@@ -8,7 +8,8 @@ English string of a self-assessment item with its Arabic string, on tokens a tra
 
 - option letters in parentheses: (A) (B) (C) (D), or the Arabic (أ) (ب) (ج) (د);
 - formula operators: ÷ × = ≈ ≤ ≥ and "+" or "−" between two operands;
-- citations: "et al." (or «وزملاؤه», «وآخرون») and "Name, 2024" or "Name، 2024".
+- citations: "et al." (or «وزملاؤه», «وآخرون») and "Name, 2024" or "Name، 2024" (also after an attached Arabic
+  «و», as in «Forsgren وHumble وKim، 2018»).
 
 Each count in the Arabic must be at least the English count. Code fences, inline code and Mermaid blocks are left
 out on both sides. Known, reviewed differences live in scripts/qa/ar-parity-baseline.json as
@@ -32,7 +33,7 @@ CODE = re.compile(r"`[^`\n]*`")
 TOKENS = {
     "option letter": re.compile(r"\([A-Dأبجد]\)"),
     "operator": re.compile(r"[÷×=≈≤≥]|(?<=[\w)\]%])\s[+−]\s(?=[\w(])"),
-    "citation": re.compile(r"et al\.|وزملاؤه|وآخرون|\b[A-Z][a-z]+[,،]\s*(?:19|20)\d{2}\b"),
+    "citation": re.compile(r"et al\.|وزملاؤه|وآخرون|(?<![A-Za-z0-9_])[A-Z][a-z]+[,،]\s*(?:19|20)\d{2}\b"),
 }
 
 

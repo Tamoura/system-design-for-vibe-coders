@@ -1,0 +1,135 @@
+{
+  "area": "m12",
+  "questions": [
+    {
+      "id": "m12-1",
+      "level": 1,
+      "lesson": "12.1",
+      "q": {
+        "en": "A consultant proposes adopting a well-known service management framework across Najm Bank's Technology division, with its process names becoming new job titles. What should Huda ask first?",
+        "ar": "يقترح مستشار تبنّي إطار معروف لإدارة الخدمات في قطاع التقنية كله في بنك نجم، على أن تصبح أسماء عملياته مسمّيات وظيفية جديدة. ما الذي ينبغي أن تسأل عنه هدى أولًا؟"
+      },
+      "o": {
+        "en": [
+          "Which certificate staff should hold before the new titles are handed out",
+          "How quickly the framework's full process list can be built into the tools",
+          "What question the framework must answer, and which decision it will change",
+          "Whether the framework's diagrams can be copied into the bank's own policies"
+        ],
+        "ar": [
+          "ما الشهادة التي يجب أن يحملها الموظفون قبل منح المسمّيات الجديدة",
+          "ما سرعة بناء قائمة عمليات الإطار كاملة داخل الأدوات",
+          "ما السؤال الذي يجب أن يجيب عنه الإطار، وأي قرار سيغيّره",
+          "هل يمكن نسخ مخططات الإطار إلى سياسات البنك نفسها"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 12.1's decision cue: before adopting a framework, write the question it must answer and the decision it will change; if you cannot, you are buying vocabulary. Borrow the question, keep your own map. The tempting option is building the full process list into the tools: tools shaped by the book and framework titles are the servant signs the lesson warns of. Copying diagrams is a question for legal first.",
+        "ar": "إشارة القرار في الدرس 12.1: قبل تبنّي إطار، اكتب السؤال الذي يجب أن يجيب عنه والقرار الذي سيغيّره؛ وإن لم تستطع فأنت تشتري مفردات. استعِر السؤال، واحتفظ بخريطتك. والخيار المغري هو بناء قائمة العمليات كاملة في الأدوات، لكن أدوات تتشكّل على مقاس الكتاب ومسمّيات الإطار من علامات التبعية التي يحذّر منها الدرس. ونسخ المخططات سؤال يُحمل إلى الشؤون القانونية أولًا."
+      }
+    },
+    {
+      "id": "m12-2",
+      "level": 2,
+      "lesson": "12.2",
+      "q": {
+        "en": "In Najm Bank's evidence review, the change capability has a detailed, approved policy, but a sample of real changes shows half of them skipped the required steps. How should it be scored on the 0–3 scale?",
+        "ar": "في مراجعة الأدلة لدى بنك نجم، لقدرة إدارة التغيير سياسة مفصّلة ومعتمدة، لكن عيّنة من التغييرات الفعلية تُظهر أن نصفها تخطّى الخطوات المطلوبة. كيف تُمنح الدرجة على مقياس 0–3؟"
+      },
+      "o": {
+        "en": [
+          "At the top, because the policy is detailed and has been formally approved",
+          "As defined but not yet practised, since the records show steps being skipped",
+          "At zero, because any skipped step means the capability does not exist",
+          "Leave it unscored until the team writes a fuller version of the policy"
+        ],
+        "ar": [
+          "في أعلى المقياس، لأن السياسة مفصّلة ومعتمدة رسميًا من الإدارة العليا",
+          "معرَّفة لكنها غير مُمارَسة بعد، لأن السجلات تُظهر تخطّي الخطوات",
+          "صفر، لأن تخطّي أي خطوة يعني أن القدرة غير موجودة",
+          "تُترك بلا درجة حتى يكتب الفريق نسخة أوفى من السياسة"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 12.2's rule: score what you can show, not what you say. A policy shows something is defined; only records of real work show it happens, and the 0–3 scale separates defined from practised. The tempting option is the top score for the approved policy: that scores what is said. Zero ignores that the capability is defined and partly practised.",
+        "ar": "قاعدة الدرس 12.2: امنح الدرجة لما تستطيع إظهاره، لا لما تقوله. فالسياسة تُظهر أن الشيء معرَّف، أما أنه يحدث فعلًا فلا تُظهره إلا سجلات العمل الفعلي، ومقياس 0–3 يفصل المعرَّف عن المُمارَس. والخيار المغري هو أعلى درجة بسبب السياسة المعتمدة، وهذا منحٌ للدرجة على ما يُقال. والصفر يتجاهل أن القدرة معرَّفة ومُمارَسة جزئيًا."
+      }
+    },
+    {
+      "id": "m12-3",
+      "level": 2,
+      "lesson": "12.2",
+      "q": {
+        "en": "After the review, Omar wants to show the board a heat map that ranks teams by their maturity scores. What does lesson 12.2 advise?",
+        "ar": "بعد المراجعة، يريد عمر أن يعرض على مجلس الإدارة خريطة حرارية ترتّب الفرق حسب درجات نضجها. بماذا ينصح الدرس 12.2؟"
+      },
+      "o": {
+        "en": [
+          "Show outcomes and the top three constraints with owners, and never rank teams",
+          "Rank the teams, since a league table pushes the low scorers to improve faster",
+          "Show only the average score, since the board will not read the detail anyway",
+          "Ask each team to score itself again, since the board prefers higher numbers"
+        ],
+        "ar": [
+          "عرض النتائج وأهم ثلاثة قيود مع مالكيها، ودون ترتيب الفرق أبدًا",
+          "ترتيب الفرق، فجدول الترتيب يدفع أصحاب الدرجات الدنيا إلى التحسّن أسرع",
+          "عرض متوسط الدرجات فقط، فمجلس الإدارة لن يقرأ التفاصيل على أي حال",
+          "مطالبة كل فريق بتقييم نفسه مجددًا، فالمجلس يفضّل الأرقام الأعلى"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 12.2: show the board outcomes, not scores; never rank teams; and name the top three constraints with evidence and owners. The tempting option is the league table: the lesson's biggest trap is a generous self-assessment presented as a heat map and used to compare teams, which invites inflated scores rather than fixes.",
+        "ar": "الدرس 12.2: اعرض على المجلس النتائج لا الدرجات، ولا ترتّب الفرق أبدًا، وسمِّ أهم ثلاثة قيود مع أدلتها ومالكيها. والخيار المغري هو جدول الترتيب، وأكبر فخ في الدرس تقييم ذاتي متساهل يُعرض خريطةً حرارية ويُستخدم لمقارنة الفرق، فيدعو إلى تضخيم الدرجات بدل الإصلاح."
+      }
+    },
+    {
+      "id": "m12-4",
+      "level": 3,
+      "lesson": "12.3",
+      "q": {
+        "en": "Omar's draft transformation roadmap: month 1, rename all roles; month 3, replace all tools; month 6, pilot one value stream. What does lesson 12.3 suggest?",
+        "ar": "مسودة عمر لخارطة طريق التحوّل: في الشهر الأول تُعاد تسمية كل الأدوار، وفي الشهر الثالث تُستبدل كل الأدوات، وفي الشهر السادس يُجرَّب مسار قيمة واحد. بماذا يوحي الدرس 12.3؟"
+      },
+      "o": {
+        "en": [
+          "Keep the order, since new titles create the urgency that carries the rest",
+          "Replace the tools first, since new tools will force the new process on teams",
+          "Run all three in parallel, so the whole transformation is done in six months",
+          "Pilot one value stream end to end first: records before tools, titles last"
+        ],
+        "ar": [
+          "الإبقاء على الترتيب، فالمسمّيات الجديدة تخلق الإلحاح الذي يحمل الباقي",
+          "استبدال الأدوات أولًا، فالأدوات الجديدة ستفرض العملية الجديدة على الفرق",
+          "تنفيذ الثلاثة بالتوازي، ليكتمل التحوّل كله في ستة أشهر",
+          "مسار قيمة واحد كاملًا أولًا، والسجلات قبل الأدوات، والمسمّيات أخيرًا"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 12.3's rule: change one value stream end to end before changing one layer everywhere. Sequence by dependency: funding and ownership before renaming roles, records and definitions before tool replacements, a working pilot before scaling. The tempting option is replacing tools first: new tools on undefined records repeat the old problems faster.",
+        "ar": "قاعدة الدرس 12.3: غيّر مسار قيمة واحدًا من أوله إلى آخره قبل أن تغيّر طبقة واحدة في كل مكان. ورتّب حسب الاعتماديات: التمويل والملكية قبل إعادة تسمية الأدوار، والسجلات والتعريفات قبل استبدال الأدوات، وتجربة ناجحة قبل التوسّع. والخيار المغري هو استبدال الأدوات أولًا، لكن الأدوات الجديدة على سجلات غير معرَّفة تكرر المشكلات القديمة بسرعة أكبر."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m12-e1",
+      "lesson": "12.1",
+      "text": {
+        "en": "I have built a framework register for my organisation that names, for each framework in use or proposed, its owner, the question it helps answer, its internal owner, any licence question for legal, and a use decision.",
+        "ar": "أعددتُ سجلًا للأطر في مؤسستي يسمّي لكل إطار مستخدم أو مقترح الجهة المالكة له، والسؤال الذي يساعد على الإجابة عنه، ومالكه الداخلي، وأي سؤال ترخيص يُحمل إلى الشؤون القانونية، وقرار الاستخدام."
+      }
+    },
+    {
+      "id": "m12-e2",
+      "lesson": "12.2",
+      "text": {
+        "en": "I have run an evidence review across my operating model's capabilities, scored each only on evidence I have seen, and named the top three constraints with their evidence and owners.",
+        "ar": "أجريتُ مراجعة أدلة لقدرات نموذج التشغيل لدينا، ومنحتُ كل قدرة درجة بناءً على أدلة رأيتُها فقط، وسمّيتُ أهم ثلاثة قيود مع أدلتها ومالكيها."
+      }
+    }
+  ]
+}

@@ -32,7 +32,7 @@ AR_LINE = re.compile(r"\*مدة الدراسة:[^*\n]*\*")
 WPM = 200
 WEEKLY_HOURS = 6
 TRACK_ICON = {"green": "🟢", "yellow": "🟡", "red": "🔴"}
-COURSES = ["vibe", "saas", "aigp", "aipm", "secai", "career", "data", "cloud", "testing", "aiapps", "ainative", "founder"]
+COURSES = ["vibe", "saas", "aigp", "aipm", "secai", "career", "data", "cloud", "testing", "aiapps", "ainative", "founder", "itbiz"]
 
 
 AR_UNITS = {  # (one, two, plural for 3-10, accusative singular for 11-99, genitive singular for 100+)

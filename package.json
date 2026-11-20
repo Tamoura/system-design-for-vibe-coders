@@ -33,6 +33,8 @@
     "ainative:check": "node scripts/build-ainative.mjs --check",
     "founder:build": "node scripts/build-founder.mjs",
     "founder:check": "node scripts/build-founder.mjs --check",
+    "itbiz:build": "node scripts/build-itbiz.mjs",
+    "itbiz:check": "node scripts/build-itbiz.mjs --check",
     "videos:build": "node scripts/build-videos.mjs",
     "videos:check": "node scripts/build-videos.mjs --check",
     "videos:render": "node scripts/build-videos.mjs --render",

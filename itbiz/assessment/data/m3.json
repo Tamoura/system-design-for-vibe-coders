@@ -1,0 +1,135 @@
+{
+  "area": "m3",
+  "questions": [
+    {
+      "id": "m3-1",
+      "level": 1,
+      "lesson": "3.1",
+      "q": {
+        "en": "Najm Bank's strategy names digital SME banking as its top priority, but the portfolio puts 5% of change money and one team there, and 40% on a branch-system upgrade (illustrative). What does lesson 3.1's rule conclude?",
+        "ar": "تسمّي استراتيجية بنك نجم الخدمات المصرفية الرقمية للمنشآت الصغيرة والمتوسطة أولويتها الأولى، لكن المحفظة تضع فيها 5% من مال التغيير وفريقًا واحدًا، و40% في ترقية أنظمة الفروع (أرقام توضيحية). ماذا تستنتج قاعدة الدرس 3.1؟"
+      },
+      "o": {
+        "en": [
+          "The real strategy is what is funded, so the document stays a wish until money moves",
+          "The strategy is fine, since priorities are set by the document, not by the budget",
+          "The portfolio is fine, since upgrades always need more money than new products",
+          "Nothing can be concluded until the next annual budget cycle has been completed"
+        ],
+        "ar": [
+          "الاستراتيجية الحقيقية هي ما يُموَّل، فتبقى الوثيقة أمنية حتى يتحرك المال",
+          "الاستراتيجية سليمة، فالأولويات تحددها الوثيقة لا الميزانية",
+          "المحفظة سليمة، فالترقيات تحتاج دائمًا إلى مال أكثر مما تحتاجه المنتجات الجديدة",
+          "لا يمكن استنتاج شيء قبل اكتمال دورة الميزانية السنوية القادمة"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 3.1's rule is that your real strategy is what you fund: if money and teams point elsewhere, the strategy document is a wish. The tempting option is that the document sets priorities: a priority with 5% of the money and one team is not being pursued. Waiting for the next budget cycle repeats the trap of adding up requests and writing the strategy afterwards.",
+        "ar": "قاعدة الدرس 3.1 أن استراتيجيتك الحقيقية هي ما تموّله؛ فإذا اتجه المال والفرق إلى مكان آخر، صارت وثيقة الاستراتيجية أمنية. والخيار المغري أن الوثيقة هي التي تحدد الأولويات، لكن أولوية لها 5% من المال وفريق واحد لا يسعى إليها أحد فعلًا. وانتظار دورة الميزانية القادمة يكرر فخ جمع الطلبات ثم كتابة الاستراتيجية بعدها."
+      }
+    },
+    {
+      "id": "m3-2",
+      "level": 2,
+      "lesson": "3.2",
+      "q": {
+        "en": "Three items compete for one team (illustrative). A: cost of delay 40k a week, 4 weeks' work. B: 30k a week, 1 week. C: 60k a week, 10 weeks. In what order does CD3 put them?",
+        "ar": "تتنافس ثلاثة بنود على فريق واحد (أرقام توضيحية). البند A: كلفة التأخير 40 ألفًا أسبوعيًا، ومدته 4 أسابيع. البند B: 30 ألفًا أسبوعيًا، ومدته أسبوع واحد. البند C: 60 ألفًا أسبوعيًا، ومدته 10 أسابيع. بأي ترتيب يضعها CD3؟"
+      },
+      "o": {
+        "en": [
+          "C, A, B, because C loses the most value for each week that it waits",
+          "A, B, C, because A sits in the middle on both value and duration",
+          "B, A, C, because B has the highest cost of delay divided by duration",
+          "B, C, A, because the shortest goes first and then the most valuable"
+        ],
+        "ar": [
+          "C ثم A ثم B، لأن C يخسر أكبر قيمة عن كل أسبوع ينتظره",
+          "A ثم B ثم C، لأن A يقع في الوسط من حيث القيمة والمدة معًا",
+          "B ثم A ثم C، لأن B أعلى في كلفة التأخير مقسومة على المدة",
+          "B ثم C ثم A، لأن الأقصر يأتي أولًا ثم الأعلى قيمة بعده"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "CD3 is cost of delay divided by duration: A = 40 ÷ 4 = 10, B = 30 ÷ 1 = 30, C = 60 ÷ 10 = 6, so the order is B, A, C. The tempting option is C first because it has the highest cost of delay: doing it first blocks the team for ten weeks while A and B keep losing value. Shortest-first ignores value.",
+        "ar": "CD3 هو كلفة التأخير مقسومة على المدة: A = 40 ÷ 4 = 10، وB = 30 ÷ 1 = 30، وC = 60 ÷ 10 = 6، فالترتيب B ثم A ثم C. والخيار المغري أن يبدأ الفريق بالبند C لأن كلفة تأخيره هي الأعلى، لكن ذلك يشغل الفريق عشرة أسابيع بينما يستمر A وB في خسارة القيمة. والبدء بالأقصر وحده يتجاهل القيمة."
+      }
+    },
+    {
+      "id": "m3-3",
+      "level": 2,
+      "lesson": "3.3",
+      "q": {
+        "en": "A loyalty initiative has spent 2m of its 3m budget and has missed its adoption measure for two quarters. Its sponsor says: \"We have spent too much to stop now.\" What should the portfolio review do?",
+        "ar": "أنفقت مبادرة ولاء مليونين من ميزانيتها البالغة ثلاثة ملايين، ولم تبلغ مقياس التبنّي فيها لربعين متتاليين. ويقول راعيها: «أنفقنا أكثر من أن نتوقف الآن». ماذا ينبغي أن تفعل مراجعة المحفظة؟"
+      },
+      "o": {
+        "en": [
+          "Continue it, because stopping would waste the two million already spent",
+          "Judge only whether the next spend is worth it, using the stop rule set at funding",
+          "Continue it, but drop the adoption measure, since it has proved too hard to meet",
+          "Leave the decision to the sponsor, since she knows the initiative best of all"
+        ],
+        "ar": [
+          "تستمر المبادرة، لأن الإيقاف يهدر المليونين اللذين أُنفقا",
+          "يُحكم فقط على جدوى الإنفاق القادم، بقاعدة الإيقاف التي وُضعت عند التمويل",
+          "تستمر المبادرة مع حذف مقياس التبنّي، فقد ثبت أنه أصعب من أن يُبلغ في وقته",
+          "يُترك القرار للراعية، فهي أعلم الناس بالمبادرة"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Spent money is gone; lesson 3.3 says the only question is whether the next spend is worth it, judged against the stop rule written before the money was spent. The tempting option is continuing to avoid wasting the 2m: that is the sunk-cost trap the lesson names. Dropping the missed measure hides the evidence instead of acting on it.",
+        "ar": "المال الذي أُنفق ذهب؛ والدرس 3.3 يقول إن السؤال الوحيد هو هل يستحق الإنفاق القادم، بالحكم عليه بقاعدة الإيقاف التي كُتبت قبل إنفاق المال. والخيار المغري هو الاستمرار حتى لا يُهدر المليونان، وهذا فخ التكلفة الغارقة الذي يسمّيه الدرس. أما حذف المقياس الذي لم يتحقق فيخفي الدليل بدل العمل به."
+      }
+    },
+    {
+      "id": "m3-4",
+      "level": 3,
+      "lesson": "3.2",
+      "q": {
+        "en": "Tariq's process asks for a 40-page business case for every request, including two-week changes, and work waits two months for money. Which redesign fits lesson 3.2?",
+        "ar": "يشترط إجراء طارق دراسة جدوى (business case) من 40 صفحة لكل طلب، حتى للتغييرات التي تستغرق أسبوعين، فينتظر العمل شهرين حتى يُموَّل. أي إعادة تصميم تتفق مع الدرس 3.2؟"
+      },
+      "o": {
+        "en": [
+          "Keep the 40-page case, and add more reviewers so approvals come faster",
+          "Drop business cases entirely, and let each team decide on its own spending",
+          "Fund each request as a project, and check its business case again at the end",
+          "Fund product teams for a period with guardrails, and size cases to the decision"
+        ],
+        "ar": [
+          "تبقى الدراسة ذات الأربعين صفحة، مع إضافة مراجعين أكثر لتسريع الموافقات عليها",
+          "تُلغى دراسات الجدوى كليًا، ويقرر كل فريق إنفاقه بنفسه",
+          "يُموَّل كل طلب مشروعًا، وتُراجع دراسة جدواه مرة أخرى في النهاية",
+          "تُموَّل فرق المنتجات لفترة بحواجز حماية، ويُقاس حجم الدراسة على حجم القرار"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 3.2's rule: fund the team for the period, steer the work every week, and ask for a business case only in proportion to the decision. A two-week change waiting two months for money means the funding model is the bottleneck. The tempting option is dropping business cases entirely: it removes the guardrails and the review date that keep team funding accountable.",
+        "ar": "قاعدة الدرس 3.2: موّل الفريق للفترة، ووجّه العمل كل أسبوع، ولا تطلب دراسة جدوى إلا بما يتناسب مع القرار. وتغيير مدته أسبوعان ينتظر المال شهرين يعني أن نموذج التمويل هو عنق الزجاجة. والخيار المغري هو إلغاء دراسات الجدوى كليًا، لكنه يزيل حواجز الحماية وموعد المراجعة اللذين يُبقيان تمويل الفرق خاضعًا للمساءلة."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m3-e1",
+      "lesson": "3.1",
+      "text": {
+        "en": "I have placed every product, initiative and obligation of one IT area on a one-page portfolio, tagged by theme, category and horizon, and named at least one thing that will not be funded.",
+        "ar": "وضعتُ كل منتج ومبادرة والتزام في مجال واحد من تقنية المعلومات على محفظة من صفحة واحدة، موسومة بالمحور والفئة والأفق الزمني، وسمّيتُ شيئًا واحدًا على الأقل لن يُموَّل."
+      }
+    },
+    {
+      "id": "m3-e2",
+      "lesson": "3.3",
+      "text": {
+        "en": "I have written a stop rule for at least one real investment, with a measure that can be collected from records, a threshold and a date, before or at its funding decision.",
+        "ar": "كتبتُ قاعدة إيقاف لاستثمار حقيقي واحد على الأقل، فيها مقياس يمكن جمعه من السجلات وحدّ وتاريخ، قبل قرار تمويله أو عنده."
+      }
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "area": "m4",
+  "questions": [
+    {
+      "id": "m4-1",
+      "level": 1,
+      "lesson": "4.1",
+      "q": {
+        "en": "Ideas and requests reach Najm Bank's IT by email, hallway chats, three different forms and a steering committee. Nobody can say how many are open. What is the first step?",
+        "ar": "تصل الأفكار والطلبات إلى تقنية المعلومات في بنك نجم بالبريد الإلكتروني وأحاديث الممرات وثلاث استمارات مختلفة ولجنة توجيه. ولا أحد يعرف كم منها مفتوح. ما الخطوة الأولى؟"
+      },
+      "o": {
+        "en": [
+          "Set up one team that does all the requested work, so there is one place for it",
+          "Build a forty-field form so that every ask arrives complete from the start",
+          "Create one front door, one record per ask, and triage rules into five paths",
+          "Have requesters escalate through their managers to keep the volume down"
+        ],
+        "ar": [
+          "تأسيس فريق واحد ينفّذ كل العمل المطلوب، ليكون له مكان واحد",
+          "بناء استمارة من أربعين حقلًا ليصل كل طلب مكتملًا من البداية",
+          "إنشاء باب أمامي واحد وسجل واحد لكل طلب وقواعد فرز إلى خمسة مسارات",
+          "مطالبة مقدّمي الطلبات بالتصعيد عبر مدرائهم لتقليل عدد الطلبات"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 4.1: one front door means one place to ask, one record per ask and one set of routing rules into five paths, not one team that does everything. The tempting option is the forty-field form: the lesson calls it the biggest trap, because it drives people to side doors and fills records with guesses.",
+        "ar": "الدرس 4.1: الباب الأمامي الواحد يعني مكانًا واحدًا للطلب، وسجلًا واحدًا لكل طلب، ومجموعة واحدة من قواعد التوجيه إلى خمسة مسارات، لا فريقًا واحدًا يفعل كل شيء. والخيار المغري هو استمارة الأربعين حقلًا، ويسمّيها الدرس أكبر فخ لأنها تدفع الناس إلى الأبواب الجانبية وتملأ السجلات بالتخمين."
+      }
+    },
+    {
+      "id": "m4-2",
+      "level": 2,
+      "lesson": "4.1",
+      "q": {
+        "en": "Triage receives: \"We must report card fraud data to the central bank in a new format by June.\" Which of the five paths should it take?",
+        "ar": "وصل إلى الفرز هذا الطلب: «علينا أن نرفع بيانات احتيال البطاقات إلى البنك المركزي بصيغة جديدة قبل يونيو». أي المسارات الخمسة يسلك؟"
+      },
+      "o": {
+        "en": [
+          "Product backlog, since the cards team will do most of the work involved",
+          "Portfolio decision, since it may need new money and must compete for it",
+          "Catalogue request, since reports are a standard thing IT already provides",
+          "Obligation, since it must be done and only the how and when stay open"
+        ],
+        "ar": [
+          "قائمة أعمال المنتج، لأن فريق البطاقات سينفّذ معظم العمل المطلوب",
+          "قرار المحفظة، لأنه قد يحتاج إلى مال جديد وعليه أن ينافس للحصول عليه",
+          "طلب من الدليل، لأن التقارير شيء معتاد تقدّمه تقنية المعلومات أصلًا",
+          "التزام، لأنه يجب أن يُنفَّذ، ولا يبقى مفتوحًا إلا الكيف والمتى"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "A regulatory reporting change with a date is an obligation: it must be done, and only the how and when are open. The tempting option is a portfolio decision: obligations do not compete for funding the way new bets do; they are planned to their date. A new report format is not something IT already knows how to provide, so it is not a catalogue request.",
+        "ar": "تغيير في التقارير التنظيمية له موعد هو التزام؛ يجب أن يُنفَّذ، ولا يبقى مفتوحًا إلا الكيف والمتى. والخيار المغري هو قرار المحفظة، لكن الالتزامات لا تنافس على التمويل كما تنافس الرهانات الجديدة؛ بل يُخطَّط لها حسب موعدها. والصيغة الجديدة للتقرير ليست شيئًا تعرف تقنية المعلومات تقديمه أصلًا، فهي ليست طلبًا من الدليل."
+      }
+    },
+    {
+      "id": "m4-3",
+      "level": 2,
+      "lesson": "4.2",
+      "q": {
+        "en": "An auditor asks Reem which tests and which release met a payment requirement. Her team spends three weeks rebuilding the links in a spreadsheet. Which change best follows lesson 4.2?",
+        "ar": "سأل مدقق ريم عن الاختبارات والإصدار الذي حقق متطلبًا في المدفوعات. فأمضى فريقها ثلاثة أسابيع يعيد بناء الروابط في جدول بيانات. أي تغيير يتّبع الدرس 4.2 على أفضل وجه؟"
+      },
+      "o": {
+        "en": [
+          "Record the links to item, tests and release during the work, and test five",
+          "Keep the spreadsheet, and start rebuilding it a month before each audit",
+          "Write a full requirements document up front so tracing starts at the beginning",
+          "Ask the auditor to accept a sample of release notes in place of the trace"
+        ],
+        "ar": [
+          "تسجيل الروابط إلى البند والاختبارات والإصدار أثناء العمل، واختبار خمسة",
+          "الإبقاء على الجدول، والبدء بإعادة بنائه قبل كل تدقيق بشهر",
+          "كتابة وثيقة متطلبات كاملة مسبقًا ليبدأ التتبّع من أول يوم في العمل على المنتج",
+          "مطالبة المدقق بقبول عيّنة من ملاحظات الإصدار بدل التتبّع"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 4.2's rule is to link at the moment of work, not after it: a link recorded during the work costs seconds, one rebuilt for an audit costs weeks. Test it by tracing five random requirements. The tempting option is the full requirements document: the lesson's biggest trap is a document written up front that is traceable only to itself.",
+        "ar": "قاعدة الدرس 4.2 أن تسجّل الرابط لحظة العمل لا بعده؛ فالرابط الذي يُسجَّل أثناء العمل يكلّف ثواني، والذي يُعاد بناؤه لتدقيق يكلّف أسابيع. واختبره بتتبّع خمسة متطلبات عشوائية. والخيار المغري هو وثيقة المتطلبات الكاملة، وأكبر فخ في الدرس وثيقة تُكتب مسبقًا ولا يمكن تتبّعها إلا إلى نفسها."
+      }
+    },
+    {
+      "id": "m4-4",
+      "level": 3,
+      "lesson": "4.3",
+      "q": {
+        "en": "Sami's foundation work, such as upgrading a payment library and paying down technical debt, loses every weekly priority call to features until an outage forces it. Which arrangement fits lesson 4.3?",
+        "ar": "يخسر عمل الأساسات الذي يقوده سامي، مثل ترقية مكتبة مدفوعات وسداد الدين التقني (technical debt)، كل نقاش أسبوعي على الأولويات أمام الميزات، حتى يفرضه انقطاع. أي ترتيب يتفق مع الدرس 4.3؟"
+      },
+      "o": {
+        "en": [
+          "Hold the foundation work until the next outage, when its case is easiest to make",
+          "Protect a share of team capacity for foundations, with a rule for spending it",
+          "Send each foundation item to the architecture review board for final approval",
+          "Let foundation items compete with features each week, so the best idea wins"
+        ],
+        "ar": [
+          "تأجيل عمل الأساسات حتى الانقطاع القادم، حين يسهل الدفاع عنه",
+          "حماية حصة من طاقة الفريق للأساسات، مع قاعدة لكيفية إنفاقها",
+          "إرسال كل بند من الأساسات إلى مجلس مراجعة البنية للموافقة النهائية",
+          "ترك بنود الأساسات تنافس الميزات كل أسبوع، لتفوز الفكرة الأفضل"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 4.3 names this as its biggest trap: foundation work competing with features without a protected share loses every week until an outage wins the argument. The fix is a protected capacity share with a spending rule, so the runway stays healthy. The tempting option is weekly open competition, which is exactly the situation described. A late review board is what the lesson moves away from.",
+        "ar": "يسمّي الدرس 4.3 هذا أكبر فخ: عمل الأساسات الذي ينافس الميزات دون حصة محمية يخسر كل أسبوع حتى يحسم الانقطاع النقاش. والحل حصة محمية من الطاقة مع قاعدة للإنفاق، ليبقى المدرج سليمًا. والخيار المغري هو المنافسة المفتوحة كل أسبوع، وهي الوضع الموصوف نفسه. أما مجلس المراجعة المتأخر فهو ما يدعو الدرس إلى تجاوزه."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m4-e1",
+      "lesson": "4.1",
+      "text": {
+        "en": "I have designed a single intake for one IT area with no more than ten fields, written triage rules for the five paths, and set up a demand board that shows the age, status and decision of every open ask.",
+        "ar": "صمّمتُ بوابة استقبال واحدة لمجال واحد من تقنية المعلومات بعشرة حقول على الأكثر، وكتبتُ قواعد فرز للمسارات الخمسة، وأنشأتُ لوحة طلب تُظهر عمر كل طلب مفتوح وحالته والقرار فيه."
+      }
+    },
+    {
+      "id": "m4-e2",
+      "lesson": "4.3",
+      "text": {
+        "en": "I have written five quality requirements for one product as measurable, testable scenarios, and recorded one significant architecture decision as a one-page decision record.",
+        "ar": "كتبتُ خمسة متطلبات جودة لمنتج واحد في صورة سيناريوهات قابلة للقياس والاختبار، وسجّلتُ قرار بنية مهمًا واحدًا في سجل قرار من صفحة واحدة."
+      }
+    }
+  ]
+}

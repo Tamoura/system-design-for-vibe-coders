@@ -1,0 +1,135 @@
+{
+  "area": "m5",
+  "questions": [
+    {
+      "id": "m5-1",
+      "level": 1,
+      "lesson": "5.1",
+      "q": {
+        "en": "Najm Bank's shared delivery pipeline breaks for a day. Three teams are stopped, nobody is paged, and no one knows who pays for the fix. What does lesson 5.1 say is missing?",
+        "ar": "تعطّل خط النشر (pipeline) المشترك في بنك نجم يومًا كاملًا. توقفت ثلاثة فرق، ولم يُستدعَ أحد، ولا يعرف أحد من يدفع تكلفة الإصلاح. ما الناقص بحسب الدرس 5.1؟"
+      },
+      "o": {
+        "en": [
+          "A faster build server, since pipeline outages are mostly a capacity problem",
+          "An owner who runs it as a product, with service levels and stable funding",
+          "A rule that each team keeps its own private pipeline as a backup option",
+          "A committee of team leads who vote each month on pipeline improvements"
+        ],
+        "ar": [
+          "خادم بناء أسرع، فأعطال خطوط النشر في الغالب مشكلة سعة",
+          "مالك يديره بوصفه منتجًا، بمستويات خدمة وتمويل مستقر",
+          "قاعدة تُلزم كل فريق بخط نشر خاص به احتياطًا",
+          "لجنة من قادة الفرق تصوّت كل شهر على تحسينات خط النشر"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 5.1's rule: a pipeline nobody owns is a pipeline everybody works around. Run it as a product with a named owner, known customers, published service levels, a roadmap and stable funding. The tempting option is private backup pipelines: that is the working-around the rule warns of, and it multiplies unmanaged copies. A voting committee is not one owner either.",
+        "ar": "قاعدة الدرس 5.1: خط النشر الذي لا يملكه أحد يلتفّ عليه الجميع. أدِره بوصفه منتجًا له مالك مسمّى وعملاء معروفون ومستويات خدمة منشورة وخارطة طريق وتمويل مستقر. والخيار المغري هو خطوط النشر الاحتياطية الخاصة، وهي الالتفاف الذي تحذّر منه القاعدة، وتضاعف النسخ غير المُدارة. ولجنة تصوّت ليست مالكًا واحدًا كذلك."
+      }
+    },
+    {
+      "id": "m5-2",
+      "level": 2,
+      "lesson": "5.2",
+      "q": {
+        "en": "A quality gate's test suite fails so often from flaky tests that engineers routinely override it. Nour notices that overrides are not recorded. What should change?",
+        "ar": "تفشل مجموعة الاختبارات عند إحدى بوابات الجودة (quality gate) كثيرًا بسبب اختبارات متقلّبة، فصار المهندسون يتجاوزونها بانتظام. ولاحظت نور أن حالات التجاوز لا تُسجَّل. ما الذي ينبغي تغييره؟"
+      },
+      "o": {
+        "en": [
+          "Fix or set aside the flaky tests, and record every override with its reason",
+          "Remove the gate, since a gate people override adds delay and no protection",
+          "Add a manager's manual sign-off before each override so someone reviews it",
+          "Keep the gate as it is, since the overrides show engineers using judgement"
+        ],
+        "ar": [
+          "إصلاح الاختبارات المتقلّبة أو عزلها، وتسجيل كل تجاوز مع سببه",
+          "إزالة البوابة، فالبوابة التي يتجاوزها الناس تضيف تأخيرًا بلا حماية",
+          "إضافة توقيع يدوي من مدير قبل كل تجاوز حتى يراجعه أحد",
+          "إبقاء البوابة كما هي، فالتجاوزات تدل على أن المهندسين يحكّمون تقديرهم"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 5.2 warns of gates that are red so often that people ignore them. Each gate card has an override rule and evidence, so make the gate trustworthy again and record overrides. The tempting option is removing the gate: that drops the check instead of fixing why it cannot be trusted. A manual sign-off on every override adds delay without fixing the flaky tests.",
+        "ar": "يحذّر الدرس 5.2 من بوابات تكون حمراء كثيرًا حتى يتجاهلها الناس. ولكل بوابة بطاقة فيها قاعدة التجاوز والدليل، فأعد للبوابة موثوقيتها وسجّل حالات التجاوز. والخيار المغري هو إزالة البوابة، وهي تُسقط الفحص بدل إصلاح سبب فقدان الثقة به. والتوقيع اليدوي على كل تجاوز يضيف تأخيرًا دون أن يُصلح الاختبارات المتقلّبة."
+      }
+    },
+    {
+      "id": "m5-3",
+      "level": 2,
+      "lesson": "5.3",
+      "q": {
+        "en": "A widely used open-source logging library is reported vulnerable. Omar asks which products use it, and it takes the bank four days to find out. What should Najm Bank build?",
+        "ar": "أُعلن عن ثغرة في مكتبة تسجيل مفتوحة المصدر واسعة الاستخدام. سأل عمر: أي المنتجات تستخدمها؟ فاحتاج البنك أربعة أيام ليعرف. ما الذي ينبغي أن يبنيه بنك نجم؟"
+      },
+      "o": {
+        "en": [
+          "A rule that bans open-source libraries from all customer-facing products",
+          "A contract clause making each SaaS vendor answer for its own components",
+          "A yearly survey asking each team to list the libraries it remembers using",
+          "A pipeline-generated inventory, with a named owner for every component"
+        ],
+        "ar": [
+          "قاعدة تمنع المكتبات مفتوحة المصدر في كل المنتجات الموجهة للعملاء",
+          "بند تعاقدي يجعل كل مورّد SaaS مسؤولًا عن مكوّناته وحده",
+          "استبيان سنوي يطلب من كل فريق سرد المكتبات التي يتذكر استخدامها",
+          "سجل حصر يولّده خط النشر، مع مالك مسمّى لكل مكوّن"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 5.3's rule: if it runs in your product, it is in your inventory, and someone by name owns it. A pipeline-generated software bill of materials (SBOM) answers \"where do we use X?\" in minutes, transitive dependencies included. The tempting option is the yearly survey: memory misses indirect dependencies and is out of date at once. Banning open source is not realistic, since products are mostly made of it.",
+        "ar": "قاعدة الدرس 5.3: ما يعمل في منتجك موجود في سجل حصرك، ويملكه شخص مسمّى. وقائمة مكوّنات البرمجيات (SBOM) التي يولّدها خط النشر تجيب عن «أين نستخدم X؟» في دقائق، بما فيها الاعتماديات غير المباشرة. والخيار المغري هو الاستبيان السنوي، لكن الذاكرة تُغفل الاعتماديات غير المباشرة، ويتقادم الاستبيان فورًا. ومنع المصادر المفتوحة غير واقعي، فالمنتجات مبنية منها في معظمها."
+      }
+    },
+    {
+      "id": "m5-4",
+      "level": 3,
+      "lesson": "5.2",
+      "q": {
+        "en": "Audit asks for proof that every payment change passed security scanning last quarter. Team A pastes a scan report into a wiki page for each release. Team B's pipeline stores every scan result, time-stamped and tied to the artefact's identifier. Which evidence is more trustworthy?",
+        "ar": "طلب التدقيق إثباتًا على أن كل تغيير في المدفوعات اجتاز الفحص الأمني في الربع الماضي. الفريق A يلصق تقرير الفحص في صفحة wiki لكل إصدار. وخط نشر الفريق B يحفظ كل نتيجة فحص بختم زمني ومربوطة بمعرّف الحزمة. أي الدليلين أجدر بالثقة؟"
+      },
+      "o": {
+        "en": [
+          "Team A's, because a person reviewed and wrote up each report by hand",
+          "Both equally, since each one shows that a scan ran for every release",
+          "Team B's, because it is made by the work and tied to the exact artefact",
+          "Neither, because only a manager's manual sign-off counts as evidence"
+        ],
+        "ar": [
+          "دليل الفريق A، لأن شخصًا راجع كل تقرير وكتبه بيده",
+          "الدليلان بالقدر نفسه، فكلاهما يُظهر أن الفحص جرى لكل إصدار",
+          "دليل الفريق B، لأنه ناتج عن العمل نفسه ومربوط بالحزمة بعينها",
+          "لا هذا ولا ذاك، فالتوقيع اليدوي من مدير هو وحده الدليل المعتبر"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 5.2's rule: evidence is a by-product of doing the work, never a separate document written about it. Trustworthy evidence is generated, tied to the artefact, time-stamped, complete, retained and meaningful. The tempting option is Team A's hand-written report: a pasted page cannot show which artefact was scanned or that nothing was missed.",
+        "ar": "قاعدة الدرس 5.2: الدليل ناتج جانبي لأداء العمل، وليس وثيقة منفصلة تُكتب عنه. والدليل الموثوق مولَّد من العمل، ومربوط بالحزمة، ومختوم بزمن، ومكتمل، ومحفوظ، وذو معنى. والخيار المغري هو تقرير الفريق A المكتوب يدويًا، لكن الصفحة الملصقة لا تُظهر أي حزمة فُحصت، ولا أن شيئًا لم يُغفل."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m5-e1",
+      "lesson": "5.1",
+      "text": {
+        "en": "I have written a service card for a shared delivery pipeline (owner, customers, standard steps, service levels, funding and the records it leaves) and a one-page scorecard of five measures, each paired with one that keeps it honest.",
+        "ar": "كتبتُ بطاقة خدمة لخط نشر مشترك (المالك والعملاء والخطوات القياسية ومستويات الخدمة والتمويل والسجلات التي يتركها)، وبطاقة أداء من صفحة واحدة بخمسة مقاييس، كل منها مقترن بمقياس يُبقيه صادقًا."
+      }
+    },
+    {
+      "id": "m5-e2",
+      "lesson": "5.3",
+      "text": {
+        "en": "I have checked that I can answer \"where do we use component X?\" for one product from an inventory within minutes, and drafted a response playbook for the day a widely used component turns out to be vulnerable.",
+        "ar": "تحققتُ من أنني أستطيع الإجابة عن «أين نستخدم المكوّن X؟» لمنتج واحد من سجل حصر خلال دقائق، وكتبتُ مسودة دليل استجابة لليوم الذي يتبيّن فيه أن مكوّنًا واسع الاستخدام فيه ثغرة."
+      }
+    }
+  ]
+}

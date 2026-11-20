@@ -1,0 +1,135 @@
+{
+  "area": "m8",
+  "questions": [
+    {
+      "id": "m8-1",
+      "level": 1,
+      "lesson": "8.1",
+      "q": {
+        "en": "Branch staff often report mobile-app login failures before Najm Bank's monitoring does, while the operations centre receives hundreds of CPU alerts a day. What should change first?",
+        "ar": "كثيرًا ما يبلّغ موظفو الفروع عن إخفاق الدخول إلى تطبيق الجوال قبل أن تلتقطه أنظمة المراقبة في بنك نجم، بينما يتلقى مركز العمليات مئات التنبيهات اليومية عن المعالج. ما الذي ينبغي تغييره أولًا؟"
+      },
+      "o": {
+        "en": [
+          "Lower every CPU alert threshold so that the team is warned much earlier",
+          "Ask branch staff to report faults faster through a dedicated phone line",
+          "Page on what customers feel, such as failed logins, and log the rest",
+          "Hire more operators so the centre can read every alert it receives"
+        ],
+        "ar": [
+          "خفض كل عتبات تنبيه المعالج ليتلقى الفريق التحذير أبكر بكثير",
+          "مطالبة موظفي الفروع بالإبلاغ أسرع عبر خط هاتفي مخصص",
+          "الاستدعاء على ما يشعر به العملاء، كإخفاق الدخول، وتسجيل الباقي",
+          "توظيف مشغّلين أكثر ليقرأ المركز كل تنبيه يصله"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 8.1's rule: page on what customers feel; record what explains it. If customers or branch staff report outages first, fix detection first. The tempting option is lowering CPU thresholds: it adds more server alerts to an already noisy funnel and still does not measure the failed logins customers see.",
+        "ar": "قاعدة الدرس 8.1: أيقِظ الناس على ما يشعر به العملاء، وسجّل ما يفسّره. وإذا سبق العملاء أو موظفو الفروع المراقبة إلى الإبلاغ عن الانقطاع، فأصلح الالتقاط أولًا. والخيار المغري هو خفض عتبات المعالج، وهو يضيف تنبيهات خوادم إلى قمع مزدحم أصلًا، ولا يقيس مع ذلك إخفاق الدخول الذي يراه العملاء."
+      }
+    },
+    {
+      "id": "m8-2",
+      "level": 2,
+      "lesson": "8.2",
+      "q": {
+        "en": "The card switch had three incidents this quarter, each \"resolved by restart\". What does lesson 8.2 say to do?",
+        "ar": "وقعت ثلاث حوادث في محوّل البطاقات هذا الربع، وكل منها «حُلّت بإعادة التشغيل». ماذا يقول الدرس 8.2؟"
+      },
+      "o": {
+        "en": [
+          "Open a problem record linking them, and look for the contributing factors",
+          "Automate the restart so that the next incident is resolved more quickly",
+          "Find the engineer behind the last change and send them to retraining",
+          "Close the incidents, since service came back each time without loss"
+        ],
+        "ar": [
+          "فتح سجل مشكلة يربط الحوادث، والبحث عن العوامل المساهمة",
+          "أتمتة إعادة التشغيل حتى تُحل الحادثة القادمة أسرع",
+          "تحديد المهندس صاحب آخر تغيير وإرساله لإعادة التدريب",
+          "إغلاق الحوادث، فالخدمة عادت في كل مرة دون خسارة"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 8.2's decision cue: three similar incidents in a quarter, each resolved by restart, is an unmanaged problem, not bad luck. Incident management restores service; problem management makes failure rarer, by finding contributing factors. The tempting option is automating the restart: it restores faster but leaves the cause in place. Hunting for the engineer breaks the blameless review.",
+        "ar": "إشارة القرار في الدرس 8.2: ثلاث حوادث متشابهة في ربع واحد، كل منها حُلّت بإعادة التشغيل، مشكلة غير مُدارة لا سوء حظ. فإدارة الحوادث تعيد الخدمة، وإدارة المشكلات تجعل الإخفاق أندر بالبحث عن العوامل المساهمة. والخيار المغري هو أتمتة إعادة التشغيل، فهي تعيد الخدمة أسرع وتترك السبب قائمًا. والبحث عن المهندس ينقض المراجعة الخالية من اللوم."
+      }
+    },
+    {
+      "id": "m8-3",
+      "level": 2,
+      "lesson": "8.2",
+      "q": {
+        "en": "A post-incident review ends with two actions, \"improve monitoring\" and \"be more careful with configuration\". Six months later, neither has happened. What was missing?",
+        "ar": "انتهت مراجعة ما بعد الحادثة بإجراءين: «تحسين المراقبة» و«مزيد من الحذر في التهيئة». وبعد ستة أشهر لم يُنفَّذ أيّ منهما. ما الذي كان ناقصًا؟"
+      },
+      "o": {
+        "en": [
+          "A longer review meeting, so that every possible cause could be discussed",
+          "An owner, a date and a backlog link for each action, with capacity set aside",
+          "A formal warning to the team, so that the actions were taken seriously",
+          "One single root cause, so that the team could focus on one action only"
+        ],
+        "ar": [
+          "اجتماع مراجعة أطول، لتُناقش فيه كل الأسباب الممكنة",
+          "مالك وموعد ورابط في قائمة الأعمال لكل إجراء، مع طاقة محجوزة له",
+          "إنذار رسمي للفريق، حتى تُؤخذ الإجراءات بجدية",
+          "سبب جذري واحد فقط، ليركّز الفريق على إجراء واحد"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 8.2's rule: an action without an owner, a date and a backlog link is a wish; and problem work needs reserved capacity, not spare time. The tempting option is a single root cause: the lesson says a single root cause usually means the analysis stopped early. A formal warning breaks the blameless approach and assigns nothing.",
+        "ar": "قاعدة الدرس 8.2: الإجراء الذي ليس له مالك وموعد ورابط في قائمة الأعمال المتراكمة مجرد أمنية؛ وعمل المشكلات يحتاج إلى طاقة محجوزة، لا إلى وقت الفراغ. والخيار المغري هو السبب الجذري الواحد، والدرس يقول إن «السبب الجذري» الواحد يعني غالبًا أن التحليل توقف مبكرًا. والإنذار الرسمي ينقض نهج عدم اللوم ولا يكلّف أحدًا بشيء."
+      }
+    },
+    {
+      "id": "m8-4",
+      "level": 3,
+      "lesson": "8.3",
+      "q": {
+        "en": "The payments journey's SLO is 99.9% of transfers succeeding over 30 days. Halfway through the window, 80% of the error budget is spent. Reem wants to ship a big feature; Yousef wants a freeze. What should decide it?",
+        "ar": "هدف مستوى الخدمة (SLO) لرحلة المدفوعات أن تنجح 99.9% من التحويلات خلال 30 يومًا. وفي منتصف الفترة أُنفق 80% من ميزانية الخطأ (error budget). تريد ريم إطلاق ميزة كبيرة، ويريد يوسف التجميد. ما الذي ينبغي أن يحسم الأمر؟"
+      },
+      "o": {
+        "en": [
+          "Yousef's view, because operations always has the final say on stability",
+          "Reem's view, because the budget resets at the end of the window anyway",
+          "A vote at the next change board, weighing the two managers' arguments",
+          "The error budget policy agreed in advance, saying what changes when low"
+        ],
+        "ar": [
+          "رأي يوسف، لأن للعمليات دائمًا الكلمة الأخيرة في الاستقرار",
+          "رأي ريم، لأن الميزانية تعود إلى البداية مع نهاية الفترة على أي حال",
+          "تصويت في مجلس التغيير القادم، يوازن بين حجتي المديرين",
+          "سياسة ميزانية الخطأ المتفق عليها مسبقًا، وما تقوله عند انخفاضها"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 8.3: the SLO is a business decision written as a number, and a budget only manages anything if a policy agreed in advance says what changes when it runs low; a freeze is a last resort. The tempting option is Yousef's freeze by default: it replaces the agreed policy with one side's opinion, which is the argument the SLO exists to end.",
+        "ar": "الدرس 8.3: هدف مستوى الخدمة قرار أعمال مكتوب على شكل رقم، والميزانية لا تدير شيئًا إلا إذا قالت سياسة متفق عليها مسبقًا ما الذي يتغيّر حين تنخفض؛ والتجميد آخر الحلول. والخيار المغري هو تجميد يوسف تلقائيًا، لكنه يستبدل بالسياسة المتفق عليها رأيَ طرف واحد، وهذا هو الخلاف الذي وُجد الهدف لإنهائه."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m8-e1",
+      "lesson": "8.1",
+      "text": {
+        "en": "I have written an incident model for one service: the customer symptoms that page someone, four severity levels in business terms, major-incident roles and rhythm, the incident record, and three measures of how well the model works.",
+        "ar": "كتبتُ نموذجًا للحوادث لخدمة واحدة: أعراض العملاء التي تستدعي أحدًا، وأربعة مستويات خطورة بلغة الأعمال، وأدوار الحوادث الكبرى وإيقاعها، وسجل الحادثة، وثلاثة مقاييس لمدى نجاح النموذج."
+      }
+    },
+    {
+      "id": "m8-e2",
+      "lesson": "8.3",
+      "text": {
+        "en": "I have written an SLO sheet for two customer journeys and an error budget policy, agreed with the business, operations and finance, that says what changes when the budget runs low.",
+        "ar": "كتبتُ ورقة أهداف مستوى الخدمة لرحلتين من رحلات العملاء، وسياسة لميزانية الخطأ متفقًا عليها مع قطاع الأعمال والعمليات والمالية، تقول ما الذي يتغيّر حين تنخفض الميزانية."
+      }
+    }
+  ]
+}

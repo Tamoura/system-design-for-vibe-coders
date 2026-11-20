@@ -190,6 +190,19 @@ const COURSES = [
         'تعرف الأفكار الأساسية (core ideas) في عدد من الوحدات (modules). الخطوة التالية: نفّذ التمارين، من مقابلات واختبار دخان (smoke test) وقائمة استبعاد (kill list) واختبار سعر، وضع علامات على الأدلة (evidence).',
         'تعرف معظم الوحدات (modules) ونفّذت عددًا من الخطوات، مثل مقابلات العملاء أو اختبار السعر أو التواصل أو قائمة تحقق الإطلاق. الخطوة التالية: أغلق الفجوات المتبقية (remaining gaps).',
         'إجاباتك تغطي كل الوحدات (modules)، وتذكر أنك نفّذت معظم الخطوات. هذا فحص ذاتي (self-check)، وليس مؤهلًا (qualification)، ولا يتنبأ بوجود عملاء أو دخل أو تمويل. الخطوة التالية: واصل الاختبار مع عملاء حقيقيين، واحمل أسئلة القانون والضرائب والبيانات إلى مختص مؤهَّل، وراجع الدروس (lessons) التي تقف خلف الأسئلة التي أخطأت فيها.'] } },
+  { id: 'itbiz', src: 'itbiz/assessment', out: 'itbiz', reader: { en: 'index.html', ar: 'index.ar.html' }, mode: 'hash', store: 'itbiz', theme: 'itbiz-theme',
+    name: { en: 'Running IT as a Business', ar: 'إدارة تقنية المعلومات كعمل تجاري (Running IT as a Business)' }, brand: 'Running IT as a Business',
+    unit: { en: 'module', ens: 'modules', ar: 'وحدة (module)', ars: 'وحدات (modules)' },
+    evidenceHint: { en: 'for real, with something a reviewer could open — a map, a canvas, a board, a policy, a sheet — not just planned', ar: 'فعليًا، مع شيء يستطيع المراجِع فتحه، كخريطة أو لوحة أو سياسة أو جدول، لا مجرد خطة' },
+    steps: { // next step for each rung of the shared SCALE: no job titles, readiness, certification or income claims
+      en: ['Next: see value as a flow and map one value stream in your own organisation. Start with the modules marked Not yet.',
+        'You know the core ideas in several modules. Next: do the exercises — a value-stream map, a product canvas, a portfolio review, an SLO sheet — and tick the evidence.',
+        'You know most modules and have produced several of the artefacts, such as a funding memo, a change model, a cost model or a toolchain map. Next: close the remaining gaps.',
+        'Your answers cover every module and you report producing most of the artefacts. This is a self-check, not a qualification or a certification. Next: test your operating blueprint with the people who run the work, and measure what changes.'],
+      ar: ['الخطوة التالية: أن ترى القيمة تدفّقًا، وترسم خريطة مسار قيمة (value stream) واحد في مؤسستك. ابدأ بالوحدات (modules) المعلَّمة «ليس بعد».',
+        'تعرف الأفكار الأساسية في عدد من الوحدات. الخطوة التالية: نفّذ التمارين، من خريطة مسار القيمة ولوحة المنتج ومراجعة المحفظة وورقة أهداف مستوى الخدمة (SLO)، وعلّم الأدلة.',
+        'تعرف معظم الوحدات وأنتجت عددًا من المخرجات، مثل مذكرة تمويل أو نموذج تغيير أو نموذج تكلفة أو خريطة سلسلة الأدوات. الخطوة التالية: أغلق الفجوات المتبقية.',
+        'إجاباتك تغطي كل الوحدات، وتذكر أنك أنتجت معظم المخرجات. هذا فحص ذاتي (self-check)، وليس مؤهلًا ولا شهادة. الخطوة التالية: اختبر مخططك التشغيلي مع من يؤدون العمل، وقِس ما يتغيّر.'] } },
 ];
 
 /* ---------------------------------------------------------------- load + validate */
