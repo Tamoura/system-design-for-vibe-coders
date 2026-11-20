@@ -1,0 +1,135 @@
+{
+  "area": "m11",
+  "questions": [
+    {
+      "id": "m11-1",
+      "level": 1,
+      "lesson": "11.1",
+      "q": {
+        "en": "Both the service management platform and a team spreadsheet are used to create and edit the list of applications, and the two disagree. What does lesson 11.1's rule say?",
+        "ar": "تُستخدم منصة إدارة الخدمات وجدول بيانات لدى أحد الفرق كلاهما لإنشاء قائمة التطبيقات وتعديلها، والمصدران متعارضان. ماذا تقول قاعدة الدرس 11.1؟"
+      },
+      "o": {
+        "en": [
+          "Choose one home where the record is made and fixed; others read or copy it",
+          "Keep both, and ask each team to update the two sources on the same day",
+          "Move every record in the bank into one platform as the single truth",
+          "Let whichever tool was edited last count as right when the two differ"
+        ],
+        "ar": [
+          "اختيار موطن واحد يُنشأ فيه السجل ويُصحَّح، وتقرؤه الأدوات الأخرى",
+          "الإبقاء على الاثنين، ومطالبة كل فريق بتحديث المصدرين في اليوم نفسه",
+          "نقل كل سجلات البنك إلى منصة واحدة تكون مصدر الحقيقة الوحيد",
+          "اعتبار الأداة التي عُدّلت أخيرًا هي الصحيحة عند اختلاف الاثنين"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 11.1's rule: one record, one home. Each core record has exactly one system of record; every other tool reads it, links to it or holds a dated copy. The tempting option is moving everything into one platform: the lesson's biggest trap, because the answer is to federate the records and centralise the links.",
+        "ar": "قاعدة الدرس 11.1: سجل واحد، موطن واحد. لكل سجل أساسي نظام سجل مرجعي واحد بالضبط، وكل أداة أخرى تقرؤه أو ترتبط به أو تحمل نسخة مؤرّخة منه. والخيار المغري هو نقل كل شيء إلى منصة واحدة، وهو أكبر فخ في الدرس، فالحل أن توزّع السجلات وتركّز الروابط."
+      }
+    },
+    {
+      "id": "m11-2",
+      "level": 2,
+      "lesson": "11.2",
+      "q": {
+        "en": "Najm Bank runs four ticketing tools. A vendor offers a three-year programme to replace all of them with one suite at once. What fits lesson 11.2?",
+        "ar": "يشغّل بنك نجم أربع أدوات للتذاكر. وعرض مورّد برنامجًا مدته ثلاث سنوات يستبدل بها كلها حزمة واحدة دفعة واحدة. ما الذي يتفق مع الدرس 11.2؟"
+      },
+      "o": {
+        "en": [
+          "Sign the programme, since one platform will end the integration problems",
+          "Keep all four tools, and connect every one to every other with two-way sync",
+          "Move one record type or team at a time, switching the old tool off each step",
+          "Measure success by how many tools are removed before the end of the year"
+        ],
+        "ar": [
+          "توقيع البرنامج، فمنصة واحدة ستنهي مشكلات التكامل",
+          "الإبقاء على الأدوات الأربع، وربط كل واحدة بالأخريات بمزامنة ثنائية الاتجاه",
+          "نقل نوع سجل واحد أو فريق واحد في كل مرة، وإطفاء الأداة القديمة في كل خطوة",
+          "قياس النجاح بعدد الأدوات التي تُزال قبل نهاية العام"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 11.2's rule: move one record type or one team at a time, and switch the old tool off at the end of each step. The tempting option is signing the programme: the lesson's biggest trap is the one-platform programme that configures a suite for years while the old tools keep running. Counting tools removed is not the success measure either.",
+        "ar": "قاعدة الدرس 11.2: انقل نوع سجل واحدًا أو فريقًا واحدًا في كل مرة، وأطفئ الأداة القديمة في نهاية كل خطوة. والخيار المغري هو توقيع البرنامج، وأكبر فخ في الدرس برنامج «منصة واحدة تحل محل الجميع» يهيّئ حزمة لسنوات بينما تبقى الأدوات القديمة تعمل. وعدد الأدوات المُزالة ليس مقياس النجاح أيضًا."
+      }
+    },
+    {
+      "id": "m11-3",
+      "level": 2,
+      "lesson": "11.2",
+      "q": {
+        "en": "Two tools both need an incident's status field. Which integration design fits lesson 11.2?",
+        "ar": "تحتاج أداتان كلتاهما إلى حقل حالة الحادثة. أي تصميم للتكامل يتفق مع الدرس 11.2؟"
+      },
+      "o": {
+        "en": [
+          "Two-way sync, so that either tool can edit the status and both stay current",
+          "Re-key the status by hand each day, so that a person checks it is correct",
+          "Copy the status in a nightly batch from whichever tool holds newer data",
+          "Shared identifiers and a one-way feed, with one tool as the only writer"
+        ],
+        "ar": [
+          "مزامنة ثنائية الاتجاه، لتعدّل أي أداة الحالة ويبقى الاثنان محدَّثين",
+          "إعادة إدخال الحالة يدويًا كل يوم، ليتحقق شخص من صحتها",
+          "نسخ الحالة في دفعة ليلية من الأداة التي تحمل البيانات الأحدث",
+          "معرّفات مشتركة وتغذية باتجاه واحد، وأداة واحدة هي الكاتب الوحيد"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 11.2 orders integration as shared identifiers, one-way feeds, events, and two-way only where unavoidable, always with one writer per field. The tempting option is two-way sync: with two writers the tools can overwrite each other and nobody knows which value is right. Re-keying by hand is the manual feed the lesson wants removed.",
+        "ar": "يرتّب الدرس 11.2 التكامل هكذا: معرّفات مشتركة، ثم تغذية باتجاه واحد، ثم أحداث، ثم اتجاهان فقط حيث لا مفر، ودائمًا بكاتب واحد لكل حقل. والخيار المغري هو المزامنة ثنائية الاتجاه، فمع كاتبين قد تكتب كل أداة فوق الأخرى ولا يعرف أحد أي القيمتين صحيحة. وإعادة الإدخال اليدوي هي التغذية اليدوية التي يريد الدرس إزالتها."
+      }
+    },
+    {
+      "id": "m11-4",
+      "level": 3,
+      "lesson": "11.3",
+      "q": {
+        "en": "An AI pilot that restarts failed services runs with an administrator's credentials \"just for now\" and keeps no log of its actions. Omar wants to move it into production. What does lesson 11.3 require first?",
+        "ar": "تجربة تشغيلية بالذكاء الاصطناعي تعيد تشغيل الخدمات المتعطلة، تعمل ببيانات اعتماد مسؤول نظام «مؤقتًا»، ولا تحفظ سجلًا لأفعالها. ويريد عمر نقلها إلى الإنتاج. ما الذي يشترطه الدرس 11.3 أولًا؟"
+      },
+      "o": {
+        "en": [
+          "Nothing more, as long as the pilot has had no failures in its runs so far",
+          "Its own identity, least privilege, approval for big actions and a full log",
+          "A vendor statement that the model is accurate enough for production use",
+          "A rule that only the person who built it may switch the pilot on or off"
+        ],
+        "ar": [
+          "لا شيء إضافي، ما دامت التجربة لم تفشل في أي تشغيل حتى الآن",
+          "هوية خاصة بها، وأقل صلاحية، واعتماد للأفعال الكبيرة، وسجل كامل",
+          "إفادة من المورّد بأن النموذج دقيق بما يكفي للاستخدام في الإنتاج",
+          "قاعدة بأن من بنى التجربة وحده يستطيع تشغيلها أو إيقافها"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 11.3: any AI that can change something running needs its own identity, least-privilege credentials, approval for high-impact actions and a full log before it leaves a pilot, and a named person stays accountable for the result. The tempting option is \"no failures so far\": the lesson's biggest trap is exactly an admin-credential pilot quietly becoming production. A vendor accuracy claim does not limit what the AI can reach.",
+        "ar": "الدرس 11.3: أي ذكاء اصطناعي يستطيع تغيير شيء يعمل يحتاج إلى هوية خاصة به، وبيانات اعتماد بأقل صلاحية، واعتماد للأفعال عالية الأثر، وسجل كامل، قبل أن يغادر التجربة؛ ويبقى شخص مسمّى مساءلًا عن النتيجة. والخيار المغري هو «لم تفشل حتى الآن»، وأكبر فخ في الدرس هو بالضبط تجربة ببيانات مسؤول النظام تصبح إنتاجًا بصمت. وإفادة المورّد عن الدقة لا تحدّ مما يستطيع الذكاء الاصطناعي الوصول إليه."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m11-e1",
+      "lesson": "11.1",
+      "text": {
+        "en": "I have drawn a one-page toolchain map that names, for each core record, its one system of record, its engagement tools and its fed copies, with a tool owner and a record owner, and listed the overlaps to resolve first.",
+        "ar": "رسمتُ خريطة سلسلة أدوات من صفحة واحدة تسمّي لكل سجل أساسي نظام سجله المرجعي الواحد وأدوات التعامل معه ونسخه المغذّاة، مع مالك للأداة ومالك للسجل، وسردتُ التداخلات التي تُحل أولًا."
+      }
+    },
+    {
+      "id": "m11-e2",
+      "lesson": "11.3",
+      "text": {
+        "en": "I have written an AI use register for the AI uses in my IT area, each with a purpose, a level of automation, an accountable person, controls and paired measures, and a keep, extend, lower or stop decision.",
+        "ar": "كتبتُ سجلًا لاستخدامات الذكاء الاصطناعي في مجالي من تقنية المعلومات، لكل استخدام غرض ومستوى أتمتة وشخص مساءل وضوابط ومقاييس مقترنة، وقرار بالإبقاء أو التوسيع أو خفض المستوى أو الإيقاف."
+      }
+    }
+  ]
+}

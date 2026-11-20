@@ -9,7 +9,7 @@
 # 9.1 — The information model: the few records that matter and how they link
 *Level: 🔴 Advanced* · *Prerequisites: 2.1, 6.3* · *Step: Govern*
 
-**After this you can** draw a one-page information model for your IT organisation that names about ten core records, gives each an owner and a system of record, states the decision each one serves, and shows the links between them. *Study time: reading about 25 min, hands-on about 120 min (estimate).*
+**After this you can** draw a one-page information model for your IT organisation that names about ten core records, gives each an owner and a system of record, states the decision each one serves, and shows the links between them. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - An **information model** is a plain map of the records an organisation keeps, what each one means, who owns it and how the records link. It is a management artefact, not a database design.
@@ -265,7 +265,7 @@ Her first mistake was making fourteen fields mandatory on the change record. Wit
 # 9.2 — Configuration and asset data quality: ownership, reconciliation and decay
 *Level: 🔴 Advanced* · *Prerequisites: 9.1, 6.3* · *Step: Govern*
 
-**After this you can** set up a data-quality scorecard for configuration and asset records: name an owner for each attribute, set reconciliation rules between discovered and declared data, measure completeness, accuracy and freshness from a sample, and decide what to fix first. *Study time: reading about 25 min, hands-on about 120 min (estimate).*
+**After this you can** set up a data-quality scorecard for configuration and asset records: name an owner for each attribute, set reconciliation rules between discovered and declared data, measure completeness, accuracy and freshness from a sample, and decide what to fix first. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Configuration data** describes what runs and how it connects; **asset data** describes what the organisation owns or licenses, its cost and its terms. They overlap but answer different questions.
@@ -516,7 +516,7 @@ Pages marked "reported" were known only from search summaries for this lesson; t
 # 9.3 — Traceability from investment to incident and back
 *Level: 🔴 Advanced* · *Prerequisites: 9.1, 9.2, 4.2, 8.1* · *Step: Govern, Run*
 
-**After this you can** define the minimum shared identifiers that let you trace any incident back to the change, release, backlog item and investment behind it, and any investment forward to the incidents and costs it produced, then run a five-incident trace test and report the result. *Study time: reading about 25 min, hands-on about 120 min (estimate).*
+**After this you can** define the minimum shared identifiers that let you trace any incident back to the change, release, backlog item and investment behind it, and any investment forward to the incidents and costs it produced, then run a five-incident trace test and report the result. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Traceability** is the ability to follow links between records from one end of the operating cycle to the other: from a funding decision to what runs, and from an incident back to the decision that changed it.

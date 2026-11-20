@@ -1,0 +1,135 @@
+{
+  "area": "m10",
+  "questions": [
+    {
+      "id": "m10-1",
+      "level": 1,
+      "lesson": "10.1",
+      "q": {
+        "en": "The cost per thousand card authorisations fell 20% this year (illustrative), and Tariq presents it as an efficiency gain. Volumes grew strongly over a mostly fixed cost base. What should Reem ask?",
+        "ar": "انخفضت تكلفة كل ألف عملية تفويض بطاقات 20% هذا العام (رقم توضيحي)، فعرضها طارق مكسبًا في الكفاءة. وقد نمت الأحجام كثيرًا على قاعدة تكاليف ثابتة في معظمها. ماذا ينبغي أن تسأل ريم؟"
+      },
+      "o": {
+        "en": [
+          "Nothing, because a falling unit cost always shows the team became efficient",
+          "Whether the cost model should switch to a formula that the board prefers",
+          "Whether the drop means the product's budget can now be cut by a fifth",
+          "How much of the fall is growth spread over fixed cost, not a real saving"
+        ],
+        "ar": [
+          "لا شيء، فانخفاض تكلفة الوحدة يدل دائمًا على أن الفريق صار أكفأ",
+          "هل ينبغي تغيير نموذج التكلفة إلى معادلة يفضّلها مجلس الإدارة",
+          "هل يعني الانخفاض أن ميزانية المنتج يمكن خفضها الآن بمقدار الخُمس",
+          "كم من الانخفاض نموٌّ موزّع على تكلفة ثابتة، لا توفير حقيقي"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 10.1's biggest trap is reading a falling average unit cost as efficiency: growth over a fixed cost lowers it by itself. Separate fixed from variable cost and average from marginal cost before calling it a saving. The tempting option is the budget cut: if the cost base is fixed, total spend has not fallen at all.",
+        "ar": "أكبر فخ في الدرس 10.1 أن تقرأ انخفاض متوسط تكلفة الوحدة كفاءةً؛ فالنمو على تكلفة ثابتة يخفّضها من تلقاء نفسه. افصل الثابت عن المتغيّر، والمتوسط عن الحدّي، قبل أن تسمّيه توفيرًا. والخيار المغري هو خفض الميزانية، لكن إن كانت قاعدة التكاليف ثابتة فالإنفاق الكلي لم ينخفض أصلًا."
+      }
+    },
+    {
+      "id": "m10-2",
+      "level": 2,
+      "lesson": "10.2",
+      "q": {
+        "en": "Three suppliers each run part of Najm Bank's card-dispute service. Each meets its own service level, yet customers' disputes take weeks. What does lesson 10.2 recommend?",
+        "ar": "يشغّل ثلاثة مورّدين أجزاءً من خدمة اعتراضات البطاقات في بنك نجم. كل مورّد يحقق مستوى خدمته، ومع ذلك تستغرق اعتراضات العملاء أسابيع. بماذا يوصي الدرس 10.2؟"
+      },
+      "o": {
+        "en": [
+          "Name an integrator, with one incident record and journey-based service levels",
+          "Leave it to the suppliers, since accountability passed to them in the contracts",
+          "Add penalties to each contract so that every supplier works harder on its part",
+          "Replace all three with one supplier, since several suppliers can never work"
+        ],
+        "ar": [
+          "تسمية جهة تكامل، بسجل حوادث واحد ومستويات خدمة مبنية على الرحلة",
+          "ترك الأمر للمورّدين، فالمساءلة انتقلت إليهم بالعقود",
+          "إضافة غرامات إلى كل عقد ليجتهد كل مورّد أكثر في جزئه",
+          "استبدال مورّد واحد بالثلاثة، فتعدد المورّدين في خدمة واحدة لا ينجح أبدًا"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 10.2's biggest trap is suppliers meeting their own service levels while the customer journey fails, so measure the journey. Name the integrator, with one incident record, one change view and service levels derived from the journey. The tempting option is penalties per contract: each supplier already meets its own target, so the penalties never trigger. Accountability never passes to suppliers.",
+        "ar": "أكبر فخ في الدرس 10.2 أن يحقق المورّدون مستويات خدمتهم بينما تفشل رحلة العميل، فقِس الرحلة. سمِّ جهة التكامل، بسجل حوادث واحد ورؤية واحدة للتغيير ومستويات خدمة مشتقة من الرحلة. والخيار المغري هو الغرامات في كل عقد، لكن كل مورّد يحقق هدفه أصلًا، فلن تُطبَّق الغرامات. والمساءلة لا تنتقل إلى المورّدين أبدًا."
+      }
+    },
+    {
+      "id": "m10-3",
+      "level": 2,
+      "lesson": "10.3",
+      "q": {
+        "en": "Nour's control states: \"The change manager reviews all production changes.\" Audit asks for evidence covering the past six months, and there is none apart from meeting invitations. What does lesson 10.3 conclude?",
+        "ar": "ينص أحد الضوابط الرقابية لدى نور على: «يراجع مدير التغيير كل التغييرات في بيئة الإنتاج». وطلب التدقيق دليلًا يغطي الأشهر الستة الماضية، فلم يوجد سوى دعوات الاجتماعات. ماذا يستنتج الدرس 10.3؟"
+      },
+      "o": {
+        "en": [
+          "The control is fine, since someone in the right role was appointed to it",
+          "Without evidence there is no control; redesign it so that it leaves a record",
+          "Write a monthly report that describes the reviews held during that month",
+          "Ask the auditor to test only the control's design, not how it operated"
+        ],
+        "ar": [
+          "الضابط سليم، فقد عُيّن له شخص في الدور المناسب",
+          "بلا دليل لا ضابط؛ يُعاد تصميمه ليترك سجلًا",
+          "كتابة تقرير شهري يصف المراجعات التي جرت خلال الشهر",
+          "مطالبة المدقق باختبار تصميم الضابط فقط، لا طريقة عمله"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 10.3's rule: a control you cannot evidence is a control you do not have. Auditors test both design and operation over a period, so redesign the control to leave a record without anyone writing a report. The tempting option is the monthly report: a write-up after the fact is a document about the work, not evidence generated by it.",
+        "ar": "قاعدة الدرس 10.3: الضابط الذي لا تستطيع أن تقدّم دليله ضابطٌ لا تملكه. والمدققون يختبرون التصميم والتشغيل معًا على مدى فترة، فأعد تصميم الضابط ليترك سجلًا دون أن يكتب أحد تقريرًا. والخيار المغري هو التقرير الشهري، لكن ما يُكتب بعد الحدث وثيقة عن العمل، لا دليل ناتج عنه."
+      }
+    },
+    {
+      "id": "m10-4",
+      "level": 3,
+      "lesson": "10.3",
+      "q": {
+        "en": "After an audit finding on unreviewed code, the proposed fix is a new manual sign-off by a senior manager on every release. Which response fits lesson 10.3's three lines and its advice on controls in the flow?",
+        "ar": "بعد ملاحظة تدقيق عن شيفرة لم تُراجَع، اقتُرح إصلاحٌ هو توقيع يدوي جديد من مدير أول على كل إصدار. أي استجابة تتفق مع الخطوط الثلاثة في الدرس 10.3 ونصيحته بشأن الضوابط داخل التدفّق؟"
+      },
+      "o": {
+        "en": [
+          "Accept it, since a senior sign-off is the strongest control for any finding",
+          "Let internal audit design and run the new control, since it raised the finding",
+          "Enforce peer review in the pipeline, keep its record, and agree it with risk",
+          "Reject it and tell audit that reviews slow delivery down far too much"
+        ],
+        "ar": [
+          "قبوله، فتوقيع المدير الأول أقوى ضابط لأي ملاحظة",
+          "ترك التدقيق الداخلي يصمم الضابط الجديد ويشغّله، فهو من أثار الملاحظة",
+          "فرض مراجعة الأقران في خط النشر، وحفظ سجلها، والاتفاق على تصميمها مع المخاطر",
+          "رفضه، وإبلاغ التدقيق بأن أي مراجعة إضافية تبطئ التسليم أكثر مما ينبغي"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 10.3: the first line owns the risk, the second supports and challenges, and internal audit gives independent assurance; build controls into the flow so evidence is a by-product, and agree the design with the second line and audit. The tempting option is the senior sign-off: the lesson's biggest trap is answering every finding with another manual sign-off. Audit designing and running the control would end its independence.",
+        "ar": "الدرس 10.3: الخط الأول يملك المخاطرة، والثاني يدعم ويتحدى، والتدقيق الداخلي يقدّم تأكيدًا مستقلًا؛ ابنِ الضوابط داخل التدفّق ليكون الدليل ناتجًا جانبيًا، واتفق على التصميم مع الخط الثاني والتدقيق. والخيار المغري هو توقيع المدير الأول، وأكبر فخ في الدرس أن ترد على كل ملاحظة بتوقيع يدوي آخر. وأن يصمم التدقيق الضابط ويشغّله ينهي استقلاله."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m10-e1",
+      "lesson": "10.1",
+      "text": {
+        "en": "I have built a one-page cost model for one digital product that traces every material cost line to it, splits direct from shared and fixed from variable, and states one unit cost with its numerator, denominator and data source.",
+        "ar": "بنيتُ نموذج تكلفة من صفحة واحدة لمنتج رقمي واحد يتتبّع إليه كل بند تكلفة جوهري، ويفصل المباشر عن المشترك والثابت عن المتغيّر، ويذكر تكلفة وحدة واحدة ببسطها ومقامها ومصدر بياناتها."
+      }
+    },
+    {
+      "id": "m10-e2",
+      "lesson": "10.3",
+      "text": {
+        "en": "I have built a control matrix for one technology risk area that links each risk to its controls, owners, evidence and tests, and marked which controls can be automated in the delivery flow.",
+        "ar": "بنيتُ مصفوفة ضوابط لمجال واحد من مخاطر التقنية تربط كل مخاطرة بضوابطها ومالكيها وأدلتها واختباراتها، وعلّمتُ الضوابط التي يمكن أتمتتها داخل تدفّق التسليم."
+      }
+    }
+  ]
+}

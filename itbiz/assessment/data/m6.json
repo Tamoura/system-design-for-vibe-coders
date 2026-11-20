@@ -1,0 +1,135 @@
+{
+  "area": "m6",
+  "questions": [
+    {
+      "id": "m6-1",
+      "level": 1,
+      "lesson": "6.1",
+      "q": {
+        "en": "Marketing sets a launch date for a new card feature, and Reem's team is told to deploy that same morning. What does lesson 6.1 recommend?",
+        "ar": "حدّد التسويق موعد إطلاق لميزة بطاقات جديدة، وطُلب من فريق ريم أن ينشرها صباح اليوم نفسه. بماذا يوصي الدرس 6.1؟"
+      },
+      "o": {
+        "en": [
+          "Deploy and release together on the marketing date, which keeps the plan simple",
+          "Let the product team decide both deployment and release, so marketing waits",
+          "Ask the change board to set both dates, so that neither team can be blamed",
+          "Deploy when ready behind a feature flag, and release on the business's date"
+        ],
+        "ar": [
+          "النشر والإصدار معًا في موعد التسويق، فهذا يُبقي الخطة بسيطة",
+          "يقرر فريق المنتج النشر والإصدار كليهما، وينتظر التسويق",
+          "يحدد مجلس التغيير الموعدين، حتى لا يُلام أي من الفريقين",
+          "النشر حين يجهز خلف مفتاح ميزة، والإصدار في موعد قطاع الأعمال"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 6.1's rule: deploy when it is ready; release when the business is ready. If a marketing date forces a deployment date, the two decisions are still glued together. A feature flag separates them. The tempting option is letting the team decide both: the release belongs to the product manager with the business, not to the team alone.",
+        "ar": "قاعدة الدرس 6.1: انشر حين تجهز البرمجيات، وأصدِر حين يجهز قطاع الأعمال. وإذا فرض موعد التسويق موعد النشر، فالقراران ما زالا ملتصقين. ومفتاح الميزة يفصل بينهما. والخيار المغري أن يقرر الفريق الاثنين، لكن الإصدار من شأن مدير المنتج مع قطاع الأعمال، لا الفريق وحده."
+      }
+    },
+    {
+      "id": "m6-2",
+      "level": 2,
+      "lesson": "6.2",
+      "q": {
+        "en": "Najm Bank's change advisory board reviews 300 changes a week and approves almost all of them, yet it missed the two changes behind last quarter's outages. After the latest outage, someone proposes a second approval layer. What fits lesson 6.2?",
+        "ar": "يراجع مجلس استشارات التغيير (CAB) في بنك نجم 300 تغيير أسبوعيًا ويعتمد معظمها، لكنه لم يلتقط التغييرين اللذين سبّبا انقطاعات الربع الماضي. وبعد آخر انقطاع، اقترح أحدهم طبقة اعتماد ثانية. ما الذي يتفق مع الدرس 6.2؟"
+      },
+      "o": {
+        "en": [
+          "Add the second layer, since more reviewers will catch more of the risky ones",
+          "Abolish change control, since its approvals have not prevented any outages",
+          "Pre-approve routine kinds on evidence, and focus people on risky changes",
+          "Make each change wait a week, so reviewers have time to read every one"
+        ],
+        "ar": [
+          "تُضاف الطبقة الثانية، فمراجعون أكثر يلتقطون عددًا أكبر من التغييرات الخطرة",
+          "يُلغى ضبط التغيير، فاعتماداته لم تمنع أي انقطاع",
+          "تُعتمد الأنواع الروتينية مسبقًا بالأدلة، ويُركَّز انتباه الناس على الخطِر",
+          "ينتظر كل تغيير أسبوعًا، ليجد المراجعون وقتًا لقراءة كل واحد منها"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 6.2's rule: approve the kind, not every instance, and let evidence do the approving. A board that approves almost everything and still misses the risky changes is reading descriptions, not judging risk. The tempting option is a second layer: the lesson calls answering an outage with another approval layer the biggest trap, since it brings delay and bigger batches, themselves a risk.",
+        "ar": "قاعدة الدرس 6.2: اعتمد النوع لا كل حالة منه، ودع الأدلة تتولى الاعتماد. والمجلس الذي يعتمد كل شيء تقريبًا ثم يفوته الخطِر يقرأ الأوصاف ولا يحكم على المخاطر. والخيار المغري هو الطبقة الثانية، ويسمّي الدرس الرد على الانقطاع بطبقة اعتماد أخرى أكبرَ فخ، لأنها تجلب التأخير ودفعات أكبر، وهذه بذاتها مخاطرة."
+      }
+    },
+    {
+      "id": "m6-3",
+      "level": 2,
+      "lesson": "6.3",
+      "q": {
+        "en": "During an incident, three engineers give three different answers to \"which version is in production?\". The bank's record is a spreadsheet updated by hand after deployments. What should replace it?",
+        "ar": "أثناء حادثة، أعطى ثلاثة مهندسين ثلاث إجابات مختلفة عن سؤال «أي نسخة تعمل في بيئة الإنتاج؟». وسجل البنك جدول بيانات يُحدَّث يدويًا بعد عمليات النشر. ما الذي ينبغي أن يحل محله؟"
+      },
+      "o": {
+        "en": [
+          "A record written by the pipeline at each deployment, and checked afterwards",
+          "A stricter rule that engineers must update the sheet within one hour",
+          "A weekly meeting where the teams confirm which versions they deployed",
+          "One senior engineer named as the only person allowed to edit the sheet"
+        ],
+        "ar": [
+          "سجل يكتبه خط النشر عند كل عملية نشر، ويُتحقق منه بعدها",
+          "قاعدة أشد تُلزم المهندسين بتحديث الجدول خلال ساعة",
+          "اجتماع أسبوعي تؤكد فيه الفرق النسخ التي نشرتها",
+          "مهندس أول واحد هو وحده المسموح له بتعديل الجدول"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 6.3's rule: if the record of what is running is typed by hand, it is already wrong. The pipeline should write it at each deployment, with artefact version, configuration version, flag state and the change behind it, and verify it afterwards. The tempting option is a stricter one-hour rule: it still depends on people remembering to type, so the record still drifts.",
+        "ar": "قاعدة الدرس 6.3: إن كان سجل ما الذي يعمل يُكتب باليد، فهو خاطئ من الآن. ينبغي أن يكتبه خط النشر عند كل عملية نشر، بنسخة الحزمة ونسخة التهيئة وحالة المفاتيح والتغيير الذي وراءها، ثم يُتحقق منه. والخيار المغري هو قاعدة الساعة الواحدة الأشد، لكنها ما زالت تعتمد على تذكّر الناس للكتابة، فيبقى السجل ينحرف."
+      }
+    },
+    {
+      "id": "m6-4",
+      "level": 3,
+      "lesson": "6.2",
+      "q": {
+        "en": "A change will alter card-authorisation routing for all customers, is hard to reverse, and uses a supplier component the bank has never used before. Which of lesson 6.2's four routes fits?",
+        "ar": "تغيير سيعدّل توجيه تفويض البطاقات لكل العملاء، ويصعب التراجع عنه، ويستخدم مكوّنًا من مورّد لم يستخدمه البنك من قبل. أي مسار من المسارات الأربعة في الدرس 6.2 يناسبه؟"
+      },
+      "o": {
+        "en": [
+          "Pre-approved, because the pipeline's automated checks will run on it anyway",
+          "Authority-decided, because blast radius, reversal and novelty are all high",
+          "Peer-reviewed, because a colleague's review is enough for any planned change",
+          "Emergency, because high-risk changes should move fast to limit exposure"
+        ],
+        "ar": [
+          "المعتمد مسبقًا، لأن الفحوص الآلية في خط النشر ستجري عليه على أي حال",
+          "بقرار سلطة، لأن نطاق الأثر وصعوبة التراجع والجِدّة كلها مرتفعة",
+          "بمراجعة الأقران، لأن مراجعة زميل تكفي لأي تغيير مخطط له",
+          "الطارئ، لأن التغييرات عالية المخاطر يجب أن تتحرك بسرعة لتقليل التعرض"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "The five risk questions in lesson 6.2 (blast radius, reversibility, novelty, impact class, evidence quality) all point high here, so it goes to the authority-decided route, where people who understand the risk make a real decision. The tempting option is peer review: that route suits changes with good pipeline evidence and contained risk, not a hard-to-reverse change to every customer. Emergency is for restoring service, not for planned risk.",
+        "ar": "أسئلة المخاطر الخمسة في الدرس 6.2 (نطاق الأثر، وإمكانية التراجع، والجِدّة، وفئة الأثر، وجودة الأدلة) كلها مرتفعة هنا، فيذهب التغيير إلى مسار القرار بسلطة، حيث يتخذ قرارًا حقيقيًا أناسٌ يفهمون المخاطرة. والخيار المغري هو مراجعة الأقران، وهو مسار يناسب تغييرات لها أدلة جيدة من خط النشر ومخاطر محدودة، لا تغييرًا يصعب التراجع عنه ويمسّ كل العملاء. والمسار الطارئ لاستعادة الخدمة، لا لمخاطرة مخطط لها."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m6-e1",
+      "lesson": "6.1",
+      "text": {
+        "en": "I have written a one-page release policy for one product that separates the deployment decision from the release decision, names who makes each, sets release classes and states when a rollout is paused or rolled back.",
+        "ar": "كتبتُ سياسة إصدار من صفحة واحدة لمنتج واحد تفصل قرار النشر عن قرار الإصدار، وتسمّي من يتخذ كلًّا منهما، وتحدد فئات الإصدار، ومتى يُوقف الطرح أو يُتراجع عنه."
+      }
+    },
+    {
+      "id": "m6-e2",
+      "lesson": "6.2",
+      "text": {
+        "en": "I have designed a change model for one product area with four approval routes, the risk questions that place a change on a route, the evidence and approver for each route, and five measures of whether it protects stability without slowing flow.",
+        "ar": "صمّمتُ نموذج تغيير لمجال منتج واحد بأربعة مسارات اعتماد، وأسئلة المخاطر التي تضع التغيير على مسار، والدليل والمعتمِد لكل مسار، وخمسة مقاييس تُظهر هل يحمي الاستقرار دون أن يبطئ التدفّق."
+      }
+    }
+  ]
+}

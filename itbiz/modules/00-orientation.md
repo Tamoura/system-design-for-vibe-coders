@@ -9,7 +9,7 @@
 # 0.1 — What it means to run IT as a business, and what digital products and AI change
 *Level: 🟢 Beginner* · *Prerequisites: none* · *Step: Plan*
 
-**After this you can** write a one-page "IT as a business" diagnosis of your own IT organisation that names its customers, what they consume, how money and work flow, and three questions you cannot yet answer with evidence. *Study time: reading about 20 min, hands-on about 60 min (estimate).*
+**After this you can** write a one-page "IT as a business" diagnosis of your own IT organisation that names its customers, what they consume, how money and work flow, and three questions you cannot yet answer with evidence. *Study time: reading about 15 min, hands-on about 60 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Running IT as a business** does not mean profit from colleagues or outsourcing everything. It means knowing IT's customers, offer, costs, performance and risks, and being able to show the evidence.
@@ -260,7 +260,7 @@ Tariq first rated cost "evidence" on one line: "IT is about 8% of bank costs". H
 # 0.2 — Meet Najm Bank's Technology division and the eight steps
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Step: Plan*
 
-**After this you can** draw your own organisation's IT operating cycle on one page using the eight steps, name an owner, a main record and one measure for each step, and mark the two weakest hand-offs. *Study time: reading about 20 min, hands-on about 75 min (estimate).*
+**After this you can** draw your own organisation's IT operating cycle on one page using the eight steps, name an owner, a main record and one measure for each step, and mark the two weakest hand-offs. *Study time: reading about 15 min, hands-on about 60 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Najm Bank is a **fictional** mid-sized Gulf bank. This course sits in its **Technology division** (about 600 staff plus suppliers, an illustrative figure), which is moving from project-and-ticket IT to product-aligned IT.
@@ -513,7 +513,7 @@ Huda's first draft listed "IT operations" as owner of Serve and Run. Reem pointe
 # 0.3 — How to use this course, and what it is not
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Step: Plan*
 
-**After this you can** write a one-page learning plan that sets your path through the modules for your role, your artefact folder, the people in your organisation you will check facts with, and three limits you will keep. *Study time: reading about 15 min, hands-on about 50 min (estimate).*
+**After this you can** write a one-page learning plan that sets your path through the modules for your role, your artefact folder, the people in your organisation you will check facts with, and three limits you will keep. *Study time: reading about 15 min, hands-on about 60 min (estimate).*
 
 ## ⚡ In 60 seconds
 - The course teaches the **operating-model view** of IT: who decides, what record proves it, how it is measured, funded and governed. It is **not an engineering course**; it links to the library's engineering courses for depth.

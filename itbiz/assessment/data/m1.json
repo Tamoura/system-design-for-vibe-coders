@@ -1,0 +1,135 @@
+{
+  "area": "m1",
+  "questions": [
+    {
+      "id": "m1-1",
+      "level": 1,
+      "lesson": "1.1",
+      "q": {
+        "en": "A project to rebuild the card-dispute screens closes on time and on budget, and Omar wants to report it as a success. What should he ask first?",
+        "ar": "أُغلق مشروع إعادة بناء شاشات اعتراضات البطاقات في موعده وضمن ميزانيته، ويريد عمر أن يعلنه نجاحًا. ما الذي ينبغي أن يسأل عنه أولًا؟"
+      },
+      "o": {
+        "en": [
+          "Whether the team followed the approved plan and logged every change request",
+          "Whether customers now settle disputes differently, against a baseline measure",
+          "Whether the screens shipped with every feature listed in the original scope",
+          "Whether the budget variance stayed inside the tolerance agreed with finance"
+        ],
+        "ar": [
+          "هل التزم الفريق بالخطة المعتمدة وسجّل كل طلب تغيير وصله أثناء المشروع",
+          "هل تغيّر ما يفعله العملاء في اعتراضاتهم، مقارنةً بخط أساس",
+          "هل سُلّمت الشاشات بكل الميزات المذكورة في النطاق الأصلي للمشروع",
+          "هل بقي انحراف الميزانية ضمن الحد المتفق عليه مع الإدارة المالية"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Closing on time and on budget is an output; lesson 1.1 asks for the outcome, the change in what customers do, measured against a baseline. The tempting option is the full original scope: delivering every listed feature is still an output and says nothing about whether customers behave differently.",
+        "ar": "الإغلاق في الموعد وضمن الميزانية مُخرَج؛ والدرس 1.1 يطلب النتيجة، أي التغيّر فيما يفعله العملاء، مقيسًا على خط أساس. والخيار المغري هو النطاق الأصلي كاملًا، لكن تسليم كل الميزات المذكورة يبقى مُخرَجًا، ولا يقول شيئًا عن تغيّر سلوك العملاء."
+      }
+    },
+    {
+      "id": "m1-2",
+      "level": 2,
+      "lesson": "1.2",
+      "q": {
+        "en": "Yousef maps account opening (illustrative figures): lead time 30 days, process time 3 days. The busiest step is the fraud-check team; the longest wait is 9 days for a weekly architecture board. Where should he act first?",
+        "ar": "رسم يوسف خريطة فتح الحسابات (أرقام توضيحية): زمن التسليم الكلي 30 يومًا، وزمن العمل الفعلي 3 أيام. أكثر الخطوات انشغالًا فريق فحص الاحتيال، وأطول انتظار 9 أيام لمجلس بنية يجتمع أسبوعيًا. أين يبدأ؟"
+      },
+      "o": {
+        "en": [
+          "Add staff to the fraud-check team, because it is the step with the most work",
+          "Ask every team to work faster, since the stream is only ten per cent efficient",
+          "Automate the fraud check, since automation cuts process time at any step",
+          "Attack the nine-day wait for the weekly board, the longest wait in the stream"
+        ],
+        "ar": [
+          "يضيف موظفين إلى فريق فحص الاحتيال، لأنه الخطوة التي عليها أكبر قدر من العمل",
+          "يطلب من كل الفرق أن تعمل أسرع، فكفاءة المسار عشرة في المئة فقط",
+          "يؤتمت فحص الاحتيال، لأن الأتمتة تقلّص زمن العمل في أي خطوة",
+          "يعالج انتظار الأيام التسعة للمجلس الأسبوعي، أطول انتظار في المسار"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Most of the 30 days is waiting (flow efficiency is 3 ÷ 30 = 10%), so the rule is to shorten the longest wait, not the busiest step. The tempting option is adding staff to the fraud-check team: it is busy, but its work is a small part of the lead time. Asking everyone to work faster attacks process time, which is not where the days go.",
+        "ar": "معظم الأيام الثلاثين انتظار (كفاءة التدفّق 3 ÷ 30 = 10%)، والقاعدة أن تقصّر أطول انتظار لا أكثر الخطوات انشغالًا. والخيار المغري هو إضافة موظفين إلى فريق فحص الاحتيال؛ فهو مشغول، لكن عمله جزء صغير من زمن التسليم الكلي. وطلب السرعة من الجميع يستهدف زمن العمل، وليس هناك تذهب الأيام."
+      }
+    },
+    {
+      "id": "m1-3",
+      "level": 2,
+      "lesson": "1.3",
+      "q": {
+        "en": "The Technology division's board pack reports tickets closed, story points delivered and deployments per week. Which change best follows lesson 1.3?",
+        "ar": "يعرض تقرير مجلس الإدارة الخاص بقطاع التقنية عدد التذاكر المغلقة ونقاط القصص المنجزة وعدد عمليات النشر أسبوعيًا. أي تغيير يتّبع الدرس 1.3 على أفضل وجه؟"
+      },
+      "o": {
+        "en": [
+          "Pair each speed measure with a stability measure, and tie each to a decision",
+          "Add a league table that ranks teams by deployments, so slower teams catch up",
+          "Keep story points as the headline, since they show how hard teams are working",
+          "Set a deployment target and reward the teams that beat it every single month"
+        ],
+        "ar": [
+          "يقرن كل مقياس للسرعة بمقياس للاستقرار، ويربط كل مقياس بقرار",
+          "يضيف جدول ترتيب للفرق حسب عدد عمليات النشر، لتلحق الفرق الأبطأ بغيرها",
+          "يُبقي نقاط القصص في الصدارة، لأنها تُظهر مدى اجتهاد الفرق في العمل",
+          "يضع هدفًا لعدد عمليات النشر ويكافئ الفرق التي تتجاوزه في كل شهر"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 1.3's rule is to measure speed and stability together, with each measure tied to a decision and paired with one that would catch gaming; tickets and story points are activity, which is easy to inflate. The tempting option is a deployment target: DORA's guide is reported to warn against using its metrics as targets or league tables, because targets invite gaming.",
+        "ar": "قاعدة الدرس 1.3 أن تقيس السرعة والاستقرار معًا، وأن يرتبط كل مقياس بقرار ويُقرن بمقياس يكشف التلاعب به؛ أما التذاكر ونقاط القصص فنشاط يسهل تضخيمه. والخيار المغري هو هدف لعدد عمليات النشر، ويُذكر أن دليل DORA يحذّر من استخدام مقاييسه أهدافًا أو جداول ترتيب، لأن الأهداف تدعو إلى التلاعب."
+      }
+    },
+    {
+      "id": "m1-4",
+      "level": 3,
+      "lesson": "1.2",
+      "q": {
+        "en": "A value stream has 60 items in progress on average and finishes 10 a week (illustrative). Reem proposes starting 20 more items \"to keep everyone busy\". Using Little's Law, what is the likely effect?",
+        "ar": "في مسار قيمة متوسط العمل الجاري 60 بندًا، ويُنجز 10 بنود أسبوعيًا (أرقام توضيحية). تقترح ريم بدء 20 بندًا إضافيًا «حتى يبقى الجميع مشغولين». ما الأثر المرجّح وفق قانون ليتل (Little's Law)؟"
+      },
+      "o": {
+        "en": [
+          "Lead time stays near six weeks, because throughput alone sets the lead time",
+          "Lead time falls, because starting more items means finishing more of them sooner",
+          "Lead time grows toward eight weeks, if throughput holds at ten items a week",
+          "Lead time cannot be estimated until each item has been fully re-mapped first"
+        ],
+        "ar": [
+          "يبقى زمن التسليم الكلي قرب ستة أسابيع، لأن الإنتاجية وحدها تحدده",
+          "ينخفض زمن التسليم الكلي، لأن بدء بنود أكثر يعني إنجاز المزيد منها في وقت أقصر بكثير",
+          "يرتفع زمن التسليم الكلي نحو ثمانية أسابيع، إن بقيت الإنتاجية عشرة أسبوعيًا",
+          "لا يمكن تقدير زمن التسليم الكلي قبل إعادة رسم مسار كل بند بالكامل"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Little's Law: average lead time = work in progress ÷ throughput. Today 60 ÷ 10 = 6 weeks; with 80 items and the same throughput it is 80 ÷ 10 = 8 weeks. The tempting option is that lead time falls: starting more work does not finish more if throughput holds, it only lengthens the queue. Lead time does depend on work in progress, not on throughput alone.",
+        "ar": "قانون ليتل: متوسط زمن التسليم الكلي = العمل الجاري ÷ الإنتاجية. اليوم 60 ÷ 10 = 6 أسابيع، ومع 80 بندًا والإنتاجية نفسها يصبح 80 ÷ 10 = 8 أسابيع. والخيار المغري أن الزمن سينخفض، لكن بدء عمل أكثر لا يُنجز أكثر ما دامت الإنتاجية ثابتة؛ إنه يطيل الطابور فقط. فزمن التسليم يتأثر بالعمل الجاري، لا بالإنتاجية وحدها."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m1-e1",
+      "lesson": "1.2",
+      "text": {
+        "en": "I have mapped one real value stream from trigger to customer, with the process time, wait time and %C&A of each step taken from records, and calculated its lead time and flow efficiency.",
+        "ar": "رسمتُ خريطة مسار قيمة حقيقي واحد من المحفّز إلى العميل، فيها زمن العمل وزمن الانتظار ونسبة %C&A لكل خطوة مأخوذة من السجلات، وحسبتُ زمن التسليم الكلي وكفاءة التدفّق."
+      }
+    },
+    {
+      "id": "m1-e2",
+      "lesson": "1.3",
+      "text": {
+        "en": "I have built a one-page measurement sheet for one product with six to eight measures across outcome, flow, delivery and reliability, each with a source record, an owner, the decision it serves and a paired measure.",
+        "ar": "أعددتُ ورقة قياس من صفحة واحدة لمنتج واحد فيها ستة إلى ثمانية مقاييس تغطي النتائج والتدفّق والتسليم والموثوقية، لكل منها سجل مصدر ومالك والقرار الذي يخدمه ومقياس مقترن به."
+      }
+    }
+  ]
+}

@@ -9,7 +9,7 @@
 # 7.1 — Request fulfilment and self-service
 *Level: 🟡 Intermediate* · *Prerequisites: 2.3, 6.2* · *Step: Serve*
 
-**After this you can** pick the five most frequent asks reaching your Technology division, write a recipe for each (steps, checks, approver, evidence, target time) and decide which ones move to self-service first. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** pick the five most frequent asks reaching your Technology division, write a recipe for each (steps, checks, approver, evidence, target time) and decide which ones move to self-service first. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **request** here means any ask from a person or team for something IT already knows how to provide: a test environment, a software licence, a shared mailbox, a database copy, a report extract. It is not a fault and it is not a new piece of work.
@@ -236,7 +236,7 @@ Yousef objected at first: "If nobody approves, who is accountable?" Nour answere
 # 7.2 — Subscriptions, entitlements and access rights
 *Level: 🟡 Intermediate* · *Prerequisites: 7.1* · *Step: Serve*
 
-**After this you can** write, for one product or platform, a one-page register that answers who has signed up to use it, what each sign-up allows, and who holds which technical access, and set the review rhythm that keeps those three answers true. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** write, for one product or platform, a one-page register that answers who has signed up to use it, what each sign-up allows, and who holds which technical access, and set the review rhythm that keeps those three answers true. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Three different questions get mixed up under the word "access": **who has signed up to use this?**, **what does that sign-up allow?**, and **which named person or system can technically do what?**
@@ -455,7 +455,7 @@ They cut 23 technical permissions down to five roles, agreed one risky pair with
 # 7.3 — Usage, showback and chargeback
 *Level: 🟡 Intermediate* · *Prerequisites: 7.2* · *Step: Serve*
 
-**After this you can** design a monthly usage-and-cost report for one shared platform, choose between showback and chargeback for it with reasons, and list the questions to take to finance before any charge is made. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** design a monthly usage-and-cost report for one shared platform, choose between showback and chargeback for it with reasons, and list the questions to take to finance before any charge is made. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Usage** is how much of a service someone consumed: environments, storage, licences, API calls, compute hours.

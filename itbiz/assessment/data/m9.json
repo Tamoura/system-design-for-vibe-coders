@@ -1,0 +1,135 @@
+{
+  "area": "m9",
+  "questions": [
+    {
+      "id": "m9-1",
+      "level": 1,
+      "lesson": "9.1",
+      "q": {
+        "en": "Huda's team collects 60 fields for every server record, including \"rack colour\" and \"last repainted\". Which test does lesson 9.1 apply to each field?",
+        "ar": "يجمع فريق هدى 60 حقلًا لكل سجل خادم، منها «لون الخزانة» و«تاريخ آخر طلاء». أي اختبار يطبّقه الدرس 9.1 على كل حقل؟"
+      },
+      "o": {
+        "en": [
+          "Keep every field, since more data always improves the analysis done later",
+          "Keep a field only if a named decision reads it, and stop collecting the rest",
+          "Keep the fields that the CMDB tool's vendor marks as standard in its product",
+          "Keep any field that at least one team has asked for in the last five years"
+        ],
+        "ar": [
+          "الإبقاء على كل الحقول، فالبيانات الأكثر تحسّن التحليل لاحقًا دائمًا",
+          "الإبقاء على الحقل إن قرأه قرار مسمّى، وترك جمع الباقي",
+          "الإبقاء على الحقول التي يعدّها مورّد أداة CMDB قياسية في منتجه",
+          "الإبقاء على أي حقل طلبه فريق واحد على الأقل في السنوات الخمس الأخيرة"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 9.1's rule: a record earns its place only if a named decision reads it; if no decision reads it, stop collecting it. The same test applies to each field. The tempting option is the vendor's standard fields: a tool's defaults are not your decisions, and every unused field still has to be kept accurate or it decays.",
+        "ar": "قاعدة الدرس 9.1: لا يستحق السجل مكانه إلا إذا قرأه قرار مسمّى؛ وإن لم يقرأه أي قرار فتوقف عن جمعه. والاختبار نفسه ينطبق على كل حقل. والخيار المغري هو الحقول القياسية لدى المورّد، لكن الإعدادات الافتراضية للأداة ليست قراراتك، وكل حقل غير مستخدم يجب أن يبقى صحيحًا وإلا تقادم."
+      }
+    },
+    {
+      "id": "m9-2",
+      "level": 2,
+      "lesson": "9.2",
+      "q": {
+        "en": "A discovery scan finds a server at a new IP address, while the declared record from infrastructure code still shows the old one. The server's business owner is held in the HR system. How should reconciliation work?",
+        "ar": "وجد مسح الاكتشاف خادمًا على عنوان IP جديد، بينما ما زال السجل المصرَّح به من شيفرة البنية التحتية يُظهر العنوان القديم. ومالك الخادم في قطاع الأعمال محفوظ في نظام الموارد البشرية. كيف تجري المطابقة (reconciliation)؟"
+      },
+      "o": {
+        "en": [
+          "The discovery scan wins for every attribute, since it shows what really runs",
+          "The declared record wins for every attribute, since it is what was approved",
+          "Whichever source changed most recently wins for the whole record at once",
+          "Set a trusted source per attribute: scan for the IP, HR for business owner"
+        ],
+        "ar": [
+          "يفوز مسح الاكتشاف في كل السمات، لأنه يُظهر ما يعمل فعلًا",
+          "يفوز السجل المصرَّح به في كل السمات، لأنه ما اعتُمد رسميًا",
+          "يفوز المصدر الأحدث تغييرًا بالسجل كله دفعة واحدة",
+          "مصدر موثوق لكل سمة: المسح لعنوان IP، والموارد البشرية للمالك"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 9.2's rule: every attribute has one owner and one trusted source. Ownership by record is not enough, because the IP address and the business owner of the same server come from different places. The tempting option is letting discovery win everywhere: a scan sees the running IP but cannot know who the business owner is.",
+        "ar": "قاعدة الدرس 9.2: لكل سمة مالك واحد ومصدر موثوق واحد. ولا تكفي الملكية على مستوى السجل، لأن عنوان IP للخادم ومالكه في الأعمال يأتيان من مكانين مختلفين. والخيار المغري أن يفوز الاكتشاف في كل شيء، لكن المسح يرى العنوان الذي يعمل ولا يستطيع أن يعرف من مالك الخادم في الأعمال."
+      }
+    },
+    {
+      "id": "m9-3",
+      "level": 2,
+      "lesson": "9.3",
+      "q": {
+        "en": "Nour picks five incidents at random and tries to trace each one back to its change, backlog item and investment. Only one traces end to end; most break between the change and the backlog item. What should happen next?",
+        "ar": "اختارت نور خمس حوادث عشوائيًا، وحاولت أن تتتبّع كلًّا منها إلى التغيير وبند قائمة الأعمال والاستثمار. لم يكتمل التتبّع إلا في واحدة، وانقطع معظمها بين التغيير وبند قائمة الأعمال. ما الخطوة التالية؟"
+      },
+      "o": {
+        "en": [
+          "Build a full traceability matrix by hand before the next audit visit",
+          "Report the test as passed, since at least one incident traced fully",
+          "Fix that break: carry the backlog item key into changes in the work",
+          "Replace every tool in the chain with one platform that holds all links"
+        ],
+        "ar": [
+          "بناء مصفوفة تتبّع كاملة يدويًا قبل زيارة التدقيق القادمة",
+          "إعلان نجاح الاختبار، فحادثة واحدة على الأقل تُتبّعت كاملة",
+          "إصلاح الانقطاع: حمل مفتاح بند قائمة الأعمال إلى التغيير أثناء العمل",
+          "استبدال كل أدوات السلسلة بمنصة واحدة كبيرة تحفظ كل الروابط في مكان واحد"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 9.3: measure traceability with a random trace test and fix the most common break point, by putting shared identifiers in the work, not in a form filled in afterwards. The tempting option is the hand-built matrix: the lesson's biggest trap, out of date the week after it is signed. One trace in five is a 20% result, not a pass.",
+        "ar": "الدرس 9.3: قِس التتبّع باختبار تتبّع عشوائي، وأصلح أكثر نقاط الانقطاع شيوعًا بوضع المعرّفات المشتركة في العمل نفسه، لا في استمارة تُملأ بعده. والخيار المغري هو المصفوفة اليدوية، وهي أكبر فخ في الدرس، إذ تتقادم بعد أسبوع من توقيعها. وتتبّع واحد من خمسة نتيجة 20%، لا نجاح."
+      }
+    },
+    {
+      "id": "m9-4",
+      "level": 3,
+      "lesson": "9.1",
+      "q": {
+        "en": "Yousef's operations tools, Reem's backlog and Tariq's cost ledger each use different names for the same products. Which single addition gives the most value across these records?",
+        "ar": "تستخدم أدوات العمليات لدى يوسف، وقائمة أعمال ريم، ودفتر تكاليف طارق، أسماء مختلفة للمنتجات نفسها. أي إضافة واحدة تعطي أكبر قيمة عبر هذه السجلات؟"
+      },
+      "o": {
+        "en": [
+          "A stable product identifier that appears on every one of the core records",
+          "A single-source-of-truth programme that models every record in the bank",
+          "A monthly meeting where record owners agree the names in their reports",
+          "A fresh reporting copy of each record, kept in the finance data warehouse"
+        ],
+        "ar": [
+          "معرّف منتج ثابت يظهر على كل سجل من السجلات الأساسية",
+          "برنامج «مصدر حقيقة واحد» ينمذج كل سجلات البنك",
+          "اجتماع شهري يتفق فيه مالكو السجلات على الأسماء في تقاريرهم",
+          "نسخة تقارير جديدة من كل سجل تُحفظ في مستودع بيانات المالية"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 9.1: the links matter more than the records, and a shared product identifier on every record is the cheapest, most powerful link you can add. The tempting option is the single-source-of-truth programme: the lesson's biggest trap is trying to model everything instead of starting from decisions. A monthly naming meeting fixes reports, not the records.",
+        "ar": "الدرس 9.1: الروابط أهم من السجلات، ومعرّف المنتج المشترك على كل سجل أرخص رابط وأقواه يمكنك إضافته. والخيار المغري هو برنامج «مصدر الحقيقة الواحد»، وأكبر فخ في الدرس محاولة نمذجة كل شيء بدل البدء من القرارات. أما اجتماع التسمية الشهري فيُصلح التقارير لا السجلات."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m9-e1",
+      "lesson": "9.1",
+      "text": {
+        "en": "I have drawn a one-page information model that names about ten core records, gives each an owner and a system of record, states the decision each one serves, and shows the links between them.",
+        "ar": "رسمتُ نموذج معلومات من صفحة واحدة يسمّي نحو عشرة سجلات أساسية، ويعطي كلًّا منها مالكًا ونظام سجل مرجعي، ويذكر القرار الذي يخدمه كل منها، ويُظهر الروابط بينها."
+      }
+    },
+    {
+      "id": "m9-e2",
+      "lesson": "9.3",
+      "text": {
+        "en": "I have run a five-incident trace test on real records, reported the share that traced end to end from incident back to investment, and named the most common break point.",
+        "ar": "أجريتُ اختبار تتبّع على خمس حوادث في سجلات حقيقية، وذكرتُ نسبة ما تُتبّع منها كاملًا من الحادثة إلى الاستثمار، وسمّيتُ أكثر نقاط الانقطاع شيوعًا."
+      }
+    }
+  ]
+}

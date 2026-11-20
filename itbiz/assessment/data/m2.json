@@ -1,0 +1,135 @@
+{
+  "area": "m2",
+  "questions": [
+    {
+      "id": "m2-1",
+      "level": 1,
+      "lesson": "2.1",
+      "q": {
+        "en": "Huda's team proposes relabelling the bank's 400-row application list as \"the product list\", owned by the architecture committee. What does lesson 2.1 say?",
+        "ar": "يقترح فريق هدى أن تُسمّى قائمة تطبيقات البنك ذات الأربعمئة صف «قائمة المنتجات»، وأن تملكها لجنة البنية. ماذا يقول الدرس 2.1؟"
+      },
+      "o": {
+        "en": [
+          "A good start, since the application list is the bank's most complete inventory",
+          "Acceptable, as long as the committee meets often enough to decide in good time",
+          "Better to name each application's vendor as owner, since vendors know it best",
+          "Applications are not products, and a committee is not one accountable owner"
+        ],
+        "ar": [
+          "بداية جيدة، فقائمة التطبيقات أكمل سجل حصر لدى البنك",
+          "مقبول، ما دامت اللجنة تجتمع بما يكفي لتقرر في الوقت المناسب",
+          "الأفضل أن يكون مورّد كل تطبيق مالكه، فالمورّدون أعلم به من غيرهم",
+          "التطبيقات ليست منتجات، واللجنة ليست مالكًا واحدًا مساءلًا"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 2.1's biggest trap is renaming the application list as the product list: four hundred applications are not four hundred products, and every product needs exactly one accountable name. The tempting option is a committee that meets often: frequency does not turn a committee into one accountable owner. A vendor cannot be accountable for the bank's product.",
+        "ar": "أكبر فخ في الدرس 2.1 أن تُعيد تسمية قائمة التطبيقات قائمةً للمنتجات؛ فأربعمئة تطبيق ليست أربعمئة منتج، ولكل منتج اسم واحد مساءل بالضبط. والخيار المغري لجنة تجتمع كثيرًا، لكن كثرة الاجتماعات لا تجعل اللجنة مالكًا واحدًا مساءلًا. ولا يستطيع المورّد أن يكون مساءلًا عن منتج البنك."
+      }
+    },
+    {
+      "id": "m2-2",
+      "level": 2,
+      "lesson": "2.2",
+      "q": {
+        "en": "In Najm Bank's draft operating model, a typical card-feature change needs agreement from five teams: product, database, network, security and release. What does lesson 2.2's decision cue suggest?",
+        "ar": "في مسودة نموذج التشغيل لدى بنك نجم، يحتاج تغيير معتاد في ميزة بطاقات إلى موافقة خمسة فرق: المنتج وقواعد البيانات والشبكات والأمن والإصدار. ماذا تقترح إشارة القرار في الدرس 2.2؟"
+      },
+      "o": {
+        "en": [
+          "Add a coordinator who chases the five teams, so that the hand-offs move faster",
+          "Redraw boundaries or interfaces so a typical change needs at most two teams",
+          "Merge all five teams into one large team that owns every system in the bank",
+          "Keep the structure, and set tighter deadlines for each team's part of the work"
+        ],
+        "ar": [
+          "يُضاف منسّق يتابع الفرق الخمسة، حتى تتحرك عمليات التسليم أسرع",
+          "يُعاد رسم الحدود أو الواجهات لتكفي موافقة فريقين على الأكثر",
+          "تُدمج الفرق الخمسة في فريق كبير واحد يملك كل أنظمة البنك",
+          "يبقى الهيكل كما هو، مع مواعيد أضيق لجزء كل فريق من العمل"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 2.2's cue: if a typical change needs more than two teams to agree, the boundaries or interfaces are wrong. Place the work with the product, as a self-service platform capability, or as time-limited help. The tempting option is a coordinator: it adds one more person to the chain without removing a single hand-off. One giant team owning everything is not a product boundary either.",
+        "ar": "إشارة القرار في الدرس 2.2: إذا احتاج التغيير المعتاد إلى موافقة أكثر من فريقين، فالحدود أو الواجهات خاطئة. ضع العمل مع المنتج، أو قدرةً ذاتية الخدمة على المنصة، أو مساعدةً محددة المدة. والخيار المغري هو المنسّق، وهو يضيف شخصًا إلى السلسلة دون أن يزيل تسليمًا واحدًا. وفريق عملاق يملك كل شيء ليس حدًّا لمنتج أيضًا."
+      }
+    },
+    {
+      "id": "m2-3",
+      "level": 2,
+      "lesson": "2.3",
+      "q": {
+        "en": "The service catalogue entry \"Test environment\" lists server cluster names, says \"contact the infrastructure team\" and gives no service level. Two users phoned the service desk to order it this month. What is the best fix?",
+        "ar": "مدخل «بيئة اختبار» في دليل الخدمات (service catalogue) يسرد أسماء عناقيد الخوادم، ويقول «تواصل مع فريق البنية التحتية»، ولا يذكر مستوى خدمة. واتصل مستخدمان بمكتب الخدمة هذا الشهر ليطلباه. ما أفضل إصلاح؟"
+      },
+      "o": {
+        "en": [
+          "Add the cluster's technical specification so engineers can judge whether it fits",
+          "Remove it from the catalogue, since staff can still ask the team directly",
+          "Rewrite it in users' words, with how to order, service level, cost and owner",
+          "Leave it as it is, since two requests this month show that it already works"
+        ],
+        "ar": [
+          "تُضاف المواصفات الفنية للعنقود حتى يحكم المهندسون بأنفسهم على مدى ملاءمتها",
+          "يُحذف من الدليل، فما زال الموظفون قادرين على سؤال الفريق مباشرة",
+          "يُكتب بلغة المستخدمين: طريقة الطلب، ومستوى الخدمة، والتكلفة، والمالك",
+          "يبقى كما هو، فطلبان هذا الشهر يدلّان على أنه يعمل فعلًا"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 2.3's rule: if a user cannot find it, understand it and order it without calling someone, it is not in the catalogue yet. An entry is a promise in the user's words. The tempting option is adding the technical specification: that turns the entry into an inventory in IT's language. Two phone calls show the entry fails, not that it works.",
+        "ar": "قاعدة الدرس 2.3: إن لم يستطع المستخدم أن يجده ويفهمه ويطلبه دون أن يتصل بأحد، فهو ليس في الدليل بعد. والمدخل وعد بلغة المستخدم. والخيار المغري هو إضافة المواصفات الفنية، وهي تجعل المدخل سجل حصر بلغة تقنية المعلومات. والاتصالان الهاتفيان يدلّان على فشل المدخل، لا على نجاحه."
+      }
+    },
+    {
+      "id": "m2-4",
+      "level": 3,
+      "lesson": "2.2",
+      "q": {
+        "en": "Omar wants to announce the new product-aligned structure for the whole Technology division on 1 January, from an organisation chart. Yousef worries about stability. Which plan fits lesson 2.2?",
+        "ar": "يريد عمر أن يعلن الهيكل الجديد المحاذي للمنتجات لقطاع التقنية كله في 1 يناير، انطلاقًا من مخطط تنظيمي. ويقلق يوسف على الاستقرار. أي خطة تتفق مع الدرس 2.2؟"
+      },
+      "o": {
+        "en": [
+          "Pilot one value stream, move controls into the flow with risk, then extend it",
+          "Announce on 1 January as planned, since one date ends months of uncertainty",
+          "Delay any change until operations agree that stability is not affected at all",
+          "Rename the functional teams as product teams now, and adjust their work later"
+        ],
+        "ar": [
+          "تجربة مسار قيمة واحد، ونقل الضوابط إلى التدفّق مع المخاطر، ثم التوسّع",
+          "الإعلان في 1 يناير كما هو مخطط، فتاريخ واحد ينهي أشهرًا طويلة من الغموض",
+          "تأجيل أي تغيير حتى تتفق العمليات على أن الاستقرار لن يتأثر إطلاقًا",
+          "إعادة تسمية الفرق الوظيفية فرقَ منتجات الآن، وتعديل عملها لاحقًا"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 2.2 names reorganising the whole division on one date from a chart drawn on paper as the biggest trap. It advises piloting one value stream and moving controls into the flow with the risk function's agreement, which also answers Yousef's stability concern with evidence. The tempting option is the single date: it changes everything at once with no proof the design works. Renaming teams changes labels, not the work.",
+        "ar": "يسمّي الدرس 2.2 إعادة تنظيم القطاع كله في تاريخ واحد انطلاقًا من مخطط على الورق أكبرَ فخ، وينصح بتجربة مسار قيمة واحد ونقل الضوابط إلى التدفّق بموافقة وظيفة المخاطر، وهذا يجيب أيضًا عن قلق يوسف على الاستقرار بالدليل. والخيار المغري هو التاريخ الواحد، فهو يغيّر كل شيء دفعة واحدة دون دليل على أن التصميم يعمل. أما إعادة تسمية الفرق فتغيّر الأسماء لا العمل."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m2-e1",
+      "lesson": "2.1",
+      "text": {
+        "en": "I have sorted at least ten real items from my organisation's application, project and request lists into products, services, projects and components, and named one accountable person, or an explicit \"none\", for each product and service.",
+        "ar": "صنّفتُ عشرة بنود حقيقية على الأقل من قوائم التطبيقات والمشاريع والطلبات في مؤسستي إلى منتجات وخدمات ومشاريع ومكوّنات، وسمّيتُ لكل منتج وخدمة شخصًا واحدًا مساءلًا، أو كتبتُ «لا أحد» صراحةً."
+      }
+    },
+    {
+      "id": "m2-e2",
+      "lesson": "2.3",
+      "text": {
+        "en": "I have written catalogue entries for one product and one platform service with the same set of fields, tested them with three real users, and recorded where each user stopped and what I changed.",
+        "ar": "كتبتُ مدخلات في دليل الخدمات لمنتج واحد وخدمة منصة واحدة بمجموعة الحقول نفسها، واختبرتُها مع ثلاثة مستخدمين حقيقيين، وسجّلتُ أين توقف كل منهم وما الذي غيّرته."
+      }
+    }
+  ]
+}

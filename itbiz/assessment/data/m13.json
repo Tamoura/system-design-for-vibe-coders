@@ -1,0 +1,135 @@
+{
+  "area": "m13",
+  "questions": [
+    {
+      "id": "m13-1",
+      "level": 1,
+      "lesson": "13.1",
+      "q": {
+        "en": "Najm Bank's blueprint says the incident record's home is the service management platform on the Run page, but the operations centre's own tool on the toolchain page. What does the capstone's rule say?",
+        "ar": "يقول مخطط بنك نجم في صفحة Run إن موطن سجل الحوادث منصة إدارة الخدمات، ويقول في صفحة سلسلة الأدوات إنه أداة مركز العمليات الخاصة. ماذا تقول قاعدة المشروع الختامي؟"
+      },
+      "o": {
+        "en": [
+          "Nothing serious, since two pages may differ if each is internally consistent",
+          "The organisation already disagrees; fix it so the value lives in one home",
+          "Keep the Run page's version, since operations owns all incident records",
+          "Delete the toolchain page, since the spine is the only page that matters"
+        ],
+        "ar": [
+          "لا شيء خطير، فقد تختلف صفحتان إن كانت كل منهما متسقة داخليًا",
+          "المؤسسة مختلفة أصلًا؛ يُصلَح الأمر لتعيش القيمة في موطن واحد",
+          "تُعتمد نسخة صفحة Run، فالعمليات تملك كل سجلات الحوادث",
+          "تُحذف صفحة سلسلة الأدوات، فالعمود الفقري هو الصفحة الوحيدة المهمة"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 13.1's rule: if two pages of the blueprint disagree, the organisation already does; keep each value in one home. The tempting option is simply keeping the Run page's version: choosing a page without checking where the truth is generated hides the real disagreement between teams instead of resolving it.",
+        "ar": "قاعدة الدرس 13.1: إذا اختلفت صفحتان في المخطط، فالمؤسسة مختلفة أصلًا؛ أبقِ كل قيمة في موطن واحد. والخيار المغري هو اعتماد نسخة صفحة Run ببساطة، لكن اختيار صفحة دون التحقق من مكان توليد الحقيقة يُخفي الخلاف الفعلي بين الفرق بدل حلّه."
+      }
+    },
+    {
+      "id": "m13-2",
+      "level": 2,
+      "lesson": "13.1",
+      "q": {
+        "en": "Which test is most likely to show that Najm Bank's blueprint does not work in practice?",
+        "ar": "أي اختبار هو الأرجح أن يكشف أن مخطط بنك نجم لا يعمل في الواقع؟"
+      },
+      "o": {
+        "en": [
+          "Counting pages, to check that every lesson's artefact has been included",
+          "Asking the board whether the blueprint looks clear and complete to them",
+          "Checking that each step's name matches a recognised framework's terms",
+          "Walking one real change and one real incident through it end to end"
+        ],
+        "ar": [
+          "عدّ الصفحات، للتأكد من أن وثيقة كل درس قد أُدرجت",
+          "سؤال مجلس الإدارة هل يبدو المخطط في نظرهم واضحًا ومكتملًا ومقنعًا",
+          "التحقق من أن اسم كل خطوة يطابق مصطلحات إطار معروف",
+          "تمرير تغيير حقيقي وحادثة حقيقية عبره من البداية إلى النهاية"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Of lesson 13.1's five coherence tests, the walk-through of one real change and one real incident matters most, because it shows whether the decisions, records and links work on real work. The tempting option is counting pages: a complete set of artefacts can still contradict itself. Board approval of the look is not evidence that it works.",
+        "ar": "من بين اختبارات الاتساق الخمسة في الدرس 13.1، أهمها تمرير تغيير حقيقي وحادثة حقيقية، لأنه يُظهر هل تعمل القرارات والسجلات والروابط على عمل فعلي. والخيار المغري هو عدّ الصفحات، لكن مجموعة مكتملة من الوثائق قد تناقض نفسها. وإعجاب المجلس بالشكل ليس دليلًا على أنه يعمل."
+      }
+    },
+    {
+      "id": "m13-3",
+      "level": 2,
+      "lesson": "13.1",
+      "q": {
+        "en": "Omar's draft board summary ends: \"We present the new operating model for the board's information.\" What is wrong with it?",
+        "ar": "تنتهي مسودة الملخص الذي أعدّه عمر لمجلس الإدارة بعبارة: «نعرض نموذج التشغيل الجديد لعلم المجلس». ما الخطأ فيها؟"
+      },
+      "o": {
+        "en": [
+          "It is too short, since a board summary should include every artefact page",
+          "It should list each framework the blueprint aligns with, for credibility",
+          "It asks for nothing; it should ask the board for named, dated decisions",
+          "It should show maturity scores ranked by team so the board can compare"
+        ],
+        "ar": [
+          "قصير جدًا، فملخص المجلس ينبغي أن يضم كل صفحات الوثائق",
+          "ينبغي أن يسرد الأطر التي يتوافق معها المخطط، لكسب المصداقية",
+          "لا يطلب شيئًا؛ وينبغي أن يطلب من المجلس قرارات مسمّاة ومؤرّخة",
+          "ينبغي أن يعرض درجات النضج مرتّبة حسب الفرق ليقارن المجلس بينها"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 13.1's decision cue: the blueprint is ready for the board when it asks for named, dated decisions, not applause. A summary \"for information\" asks for nothing. The tempting option is adding every artefact page: the blueprint keeps the board summary, the spine and the artefact pages as separate layers, and more pages still ask for no decision.",
+        "ar": "إشارة القرار في الدرس 13.1: يصبح المخطط جاهزًا للمجلس حين يطلب قرارات مسمّاة ومؤرّخة، لا التصفيق. والملخص المقدَّم «للعلم» لا يطلب شيئًا. والخيار المغري هو إضافة كل صفحات الوثائق، لكن المخطط يجعل ملخص المجلس والعمود الفقري وصفحات الوثائق طبقات منفصلة، والصفحات الإضافية لا تطلب قرارًا كذلك."
+      }
+    },
+    {
+      "id": "m13-4",
+      "level": 3,
+      "lesson": "13.2",
+      "q": {
+        "en": "Yousef scores 34 out of 40 on the practice exam and wants to tell HR he is now certified in running IT as a business. What does lesson 13.2 say?",
+        "ar": "حصل يوسف على 34 من 40 في الامتحان التدريبي، ويريد أن يُبلغ الموارد البشرية بأنه صار حاصلًا على شهادة في إدارة تقنية المعلومات كعمل تجاري. ماذا يقول الدرس 13.2؟"
+      },
+      "o": {
+        "en": [
+          "It is practice on this course only; use wrong answers to pick what to reread",
+          "A score above 80% is enough to claim the course's certificate of practice",
+          "He should retake it until he scores 40, and then the claim can be made",
+          "The score shows readiness for a framework exam, though not a certificate"
+        ],
+        "ar": [
+          "تدريب على هذه الدورة فقط؛ والإجابات الخاطئة تحدد الدروس التي تُعاد",
+          "درجة فوق 80% تكفي للمطالبة بشهادة الممارسة الخاصة بالدورة",
+          "يعيد الامتحان حتى يحصل على 40، ثم يستطيع أن يقول ذلك",
+          "الدرجة تُظهر الجاهزية لامتحان إطار ما، وإن لم تكن شهادة"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 13.2 says the exam is practice on this course only, not preparation for any certification or framework exam, and a score proves nothing to an employer or an auditor; its use is to send you back to the lessons behind wrong answers. The tempting option is \"readiness for a framework exam\": the course is not derived from or aligned with any framework, so it shows no such readiness.",
+        "ar": "يقول الدرس 13.2 إن الامتحان تدريب على هذه الدورة فقط، وليس إعدادًا لأي شهادة أو امتحان إطار، ولا تثبت الدرجة شيئًا لصاحب عمل أو مدقق؛ وفائدته أن يعيدك إلى الدروس التي تقف خلف إجاباتك الخاطئة. والخيار المغري هو «الجاهزية لامتحان إطار»، لكن الدورة ليست مشتقة من أي إطار ولا متوافقة معه، فلا تُظهر جاهزية كهذه."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m13-e1",
+      "lesson": "13.1",
+      "text": {
+        "en": "I have assembled a one-page spine for my organisation that names, for each of the eight steps, the decision, the decider, the record and its home, the measure and the artefact, and run the five coherence tests on it.",
+        "ar": "جمعتُ لمؤسستي عمودًا فقريًا من صفحة واحدة يسمّي لكل خطوة من الخطوات الثماني القرار ومتخذه والسجل وموطنه والمقياس والوثيقة، وأجريتُ عليه اختبارات الاتساق الخمسة."
+      }
+    },
+    {
+      "id": "m13-e2",
+      "lesson": "13.2",
+      "text": {
+        "en": "I have answered all forty practice questions before opening any explanation, marked them, and listed the lessons my wrong answers send me back to.",
+        "ar": "أجبتُ عن أسئلة التدريب الأربعين كلها قبل أن أفتح أي شرح، وصحّحتُها، وسردتُ الدروس التي تعيدني إليها إجاباتي الخاطئة."
+      }
+    }
+  ]
+}
