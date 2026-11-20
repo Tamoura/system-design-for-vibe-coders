@@ -253,7 +253,7 @@ Pages on sre.google could not be opened from this environment; what this lesson 
 # 8.2 — Problem management and learning from failure
 *Level: 🟡 Intermediate* · *Prerequisites: 8.1* · *Step: Run, Improve*
 
-**After this you can** run a blameless post-incident review, open a problem record that links repeated incidents to their causes, and get the resulting fixes into a product backlog with an owner, a date and funding. *Study time: reading about 15 min, hands-on about 100 min (estimate).*
+**After this you can** run a blameless post-incident review, open a problem record that links repeated incidents to their causes, and get the resulting fixes into a product backlog with an owner, a date and funding. *Study time: reading about 20 min, hands-on about 100 min (estimate).*
 
 ## ⚡ In 60 seconds
 - An **incident** is about getting service back; a **problem** is what must change so it stops happening, usually several things. Incident management restores service; problem management makes failure rarer or smaller.
@@ -266,7 +266,7 @@ Pages on sre.google could not be opened from this environment; what this lesson 
 ## 🧭 Why it matters
 Najm Bank, its people and every figure in this lesson are fictional and illustrative, not benchmarks.
 
-Every month-end for five months, card authorisations at Najm Bank slowed for about twenty minutes. Each time, the on-call engineer restarted a connection pool (a shared set of open database connections) and the symptom went away. Seven incidents, seven closed "resolved by restart". Different people handled each, and none was severe enough for a review, so nobody connected them. They were separate from the two-hour salary-day app slowdown of lesson 4.3, which was reviewed and had a different cause: a peak load nobody had specified or tested.
+For five months, card authorisations at Najm Bank slowed for about twenty minutes at every month-end, and in two of those months again the next morning. Each time, the on-call engineer restarted a connection pool (a shared set of open database connections) and the symptom went away. Seven incidents, seven closed "resolved by restart". Different people handled each, and none was severe enough for a review, so nobody connected them. They were separate from the two-hour salary-day app slowdown of lesson 4.3, which was reviewed and had a different cause: a peak load nobody had specified or tested.
 
 The bigger incidents had formal reports. Nour counted them for an internal audit: eleven reports, 63 actions, 14 completed. The rest sat in documents, assigned to "IT operations" or to people who had changed role. The holiday outage of lesson 8.1 shared two contributing factors with a report from the previous spring, whose action "add a timeout on the processor connection" had never been done.
 
@@ -373,11 +373,11 @@ The "five whys" technique digs past the first answer, but alone it follows one c
 Huda's first trend review found the seven month-end incidents in ten minutes. Yousef opened a problem record; Reem named an engineer from her team as owner. Fictional and illustrative:
 
 > **PRB-0142: Card authorisation slow at month-end.**
-> **Linked incidents:** 7 in 5 months, each about 20 minutes, plus a contributing factor in the holiday Sev 1.
+> **Linked incidents:** 7 in 5 months (each month-end, twice again the next morning), each about 20 minutes, plus a contributing factor in the holiday Sev 1.
 > **Contributing factors:** (1) a month-end reporting batch, added last year by another team, holds connections from the same pool as live authorisations; (2) the pool size was set years ago and never reviewed; (3) no alert on authorisation time, only on failures; (4) restarts worked, so nobody escalated; (5) the earlier action "add a timeout on the processor connection" was never done because it had no backlog item.
 > **Workaround:** restart the pool; now in the runbook with a "link to PRB-0142" step.
-> **Actions:** move the batch to its own pool (prevent; Sami's platform team; backlog item CP-881; 3 weeks); page on authorisation time (detect; Reem's team; CP-882; 1 week); add the processor timeout (mitigate; CP-883; 2 weeks); share the review with the other payment teams (learn; Reem; next month's session).
-> **Funding:** fits in the 20% of Cards & Payments capacity now reserved for reliability (agreed with Tariq for a two-quarter trial).
+> **Actions:** move the batch to its own pool (prevent; Sami's platform team; backlog item CARDS-881; 3 weeks); page on authorisation time (detect; Reem's team; CARDS-882; 1 week); add the processor timeout (mitigate; Reem's team; CARDS-883; 2 weeks); share the review with the other payment teams (learn; Reem; CARDS-884; next month's session).
+> **Funding:** fits in the 20% protected foundation share from lesson 4.3, whose spending rule puts incident causes first; Tariq confirmed no extra funding is needed.
 
 The engineer who had added the batch job expected blame. Huda asked what he knew when he chose the shared pool: the platform documentation showed one pool and no limits. That produced a fifth action, updated guidance from Sami's team. Nour closed her audit finding three months later, when the repeat incidents had stopped.
 
@@ -411,7 +411,7 @@ The engineer who had added the batch job expected blame. Huda asked what he knew
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** Every action becomes a linked backlog item within five working days; 15–20% of capacity is reserved for two quarters, then reviewed using repeat incidents and error budget use (lesson 8.3); fixes beyond a quarter's capacity go to portfolio review; the business head who owns the product (at Najm Bank, the head of retail banking) and the head of operations review open actions monthly. **Self-check.**
+**Model answer.** Every action becomes a linked backlog item within five working days; 15–20% of capacity is reserved for two quarters, then reviewed using repeat incidents and error budget use (lesson 8.3); fixes beyond a quarter's capacity go to portfolio review; the product manager (at Najm Bank, Reem) reviews open actions monthly with the business head (the head of retail banking) and the head of operations; the finance partner (Tariq) comments on the reserved capacity. **Self-check.**
 - Is the reserved capacity explicit and time-limited?
 - Is there a route for fixes too big for one team?
 - Did the old open actions really move, or only get re-listed?
@@ -510,7 +510,7 @@ None of these sources could be opened from this environment; what this lesson sa
 # 8.3 — Service levels, SLOs and error budgets as a management tool
 *Level: 🟡 Intermediate* · *Prerequisites: 1.3, 2.3, 8.1* · *Step: Run*
 
-**After this you can** write an SLO sheet for two customer journeys (indicator, exclusions, target, window, error budget, owner, data source) and agree with the business, operations and finance an error budget policy that says what changes when the budget runs low. *Study time: reading about 15 min, hands-on about 100 min (estimate).*
+**After this you can** write an SLO sheet for two customer journeys (indicator, exclusions, target, window, error budget, owner, data source) and agree with the business, operations and finance an error budget policy that says what changes when the budget runs low. *Study time: reading about 20 min, hands-on about 100 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **service level indicator (SLI)** measures how the service behaves for users; a **service level objective (SLO)** is its target over a window; a **service level agreement (SLA)** is a promise with a penalty.
@@ -646,7 +646,7 @@ Lesson 4.3's quality requirements sheet had asked for 99.95% of each calendar mo
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** Transfers, at 2 million a month (illustrative): 99.5% allows about 10,000 failures or 3.6 hours; 99.9% about 2,000 or 43 minutes; 99.95% about 1,000 or 22 minutes. 99.9% may need better alerting and a rehearsed rollback (modest cost); 99.95% a second active site (major cost). Sheet: the 🟢 SLI, 99.9% over a rolling 30 days. Login, at 4 million a month (illustrative): 99.5%, about 20,000 failures or 3.6 hours. Both agreed by the product owner, head of operations and finance partner. **Self-check.**
+**Model answer.** Transfers, at 2 million a month (illustrative): 99.5% allows about 10,000 failures or 3.6 hours; 99.9% about 2,000 or 43 minutes; 99.95% about 1,000 or 22 minutes. 99.9% may need better alerting and a rehearsed rollback (modest cost); 99.95% a second active site (major cost). Sheet: the 🟢 SLI, 99.9% over a rolling 30 days. Login, at 4 million a month (illustrative): 99.5%, about 20,000 failures or 3.6 hours; 99.9%, about 4,000 or 43 minutes; 99.95%, about 2,000 or 22 minutes. 99.9% would need a standby identity service (modest cost); 99.95% a second active site and a resilient identity supplier (major cost). Sheet: the 🟢 login SLI, 99.5% over a rolling 30 days for now, revisited after two quarters of data. Both agreed by the product owner, head of operations and finance partner. **Self-check.**
 - Did you use your real volumes, labelled as such?
 - Does each step up have a cost note, and did you avoid 100%?
 - Does each sheet have every field, with named approvers?

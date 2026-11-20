@@ -289,7 +289,7 @@ Aim to move most changes onto the first two routes, where the pipeline produces 
 
 **What the research says.** Nicole Forsgren's announcement of the 2019 Accelerate State of DevOps report on the Google Cloud blog said that "heavyweight change processes don't work". Explaining why, in the 2019 data, organisations with more than 5,000 employees were lower performers, it named heavyweight process and controls among the reasons for "slower speed and the associated instability". The same post lists "clear change management" among capabilities that can positively affect software delivery performance: clear and light, not absent.
 
-DORA's capability guide on streamlining change approval is reported to recommend peer review backed by automated checks, and to name reliance on a central change approval board as a pitfall. *Accelerate* (Forsgren, Humble and Kim, 2018) is reported to have found, from 2014–2017 survey data, that approval by an external body was associated with slower lead times, lower deployment frequency and slower restoration, and not with lower change failure rates. These are survey findings, not a law, and they do not say "remove all approval".
+DORA's capability guide on streamlining change approval is reported to recommend peer review backed by automated checks, and to name reliance on a central change approval board as a pitfall. *Accelerate* (Forsgren, Humble and Kim, 2018) is reported to have found, from 2014–2017 survey data, that approval by an external body was associated with slower lead times, lower deployment frequency and slower restoration, and not with lower change fail rates. These are survey findings, not a law, and they do not say "remove all approval".
 
 Yet change is where risk lives: the Google SRE book's introduction is reported to state that roughly 70% of outages are due to changes in a live system. So put the control where it works: small, reviewed, tested, reversible changes, with people judging the few risky ones.
 
@@ -374,12 +374,12 @@ One mistake: the first catalogue pre-approved "database index change". One such 
 
 </details>
 
-**🔴 Set measures and test with audit's eyes.** Write the five measures with an owner and a warning sign each. Then write five questions an auditor would ask, and the record that answers each.
-*Done when:* every measure has a data source, and every audit question is answered by a record that exists or a note of what must be built.
+**🔴 Set measures and test with audit's eyes.** Write the five measures with an owner, a data source and a warning sign each. Then write five questions an auditor would ask, and the record that answers each.
+*Done when:* every measure has an owner, a data source and a warning sign, and every audit question is answered by a record that exists or a note of what must be built.
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** Measures, owner and source: approval wait by route (Yousef; change tool timestamps); share pre-approved or peer-reviewed (Yousef; change tool route field); change fail rate by route (Nour; deployment records joined to incident records); emergency share (Yousef; change tool); unrecorded changes found (Sami; deployment and configuration events reconciled with change records). Audit questions and records: who approved (platform review record); could the author self-approve (platform setting and a sample); was it tested (pipeline record); how are pre-approved kinds approved and withdrawn (catalogue history); are all changes recorded (deployments and configuration changes reconciled with change records). **Self-check.**
+**Model answer.** Measures, owner, source and warning sign: approval wait by route (Yousef; change tool timestamps; low-risk changes waiting days); share pre-approved or peer-reviewed (Yousef; change tool route field; falling, or flat for a year); change fail rate by route (Nour; deployment records joined to incident records; a pre-approved kind that fails often); emergency share (Yousef; change tool; rising while incidents are flat); unrecorded changes found (Sami; deployment and configuration events reconciled with change records; any deployment with no change record). Audit questions and records: who approved (platform review record); could the author self-approve (platform setting and a sample); was it tested (pipeline record); how are pre-approved kinds approved and withdrawn (catalogue history); are all changes recorded (deployments and configuration changes reconciled with change records). **Self-check.**
 - Is every measure computed from records, not surveys?
 - Could an auditor sample, not interview?
 - Did you avoid claiming the design satisfies the regulator without asking?
@@ -497,7 +497,7 @@ Najm Bank and its people are fictional. All numbers about Najm Bank in this less
 
 An internal auditor asked Nour a simple question: "Which version of the card authorisation service is running in production, and since when?" Nour asked three people. The configuration management database (CMDB, the register of IT components and how they relate) said version 4.2. Sami's pipeline showed 4.6 deployed three weeks earlier. Yousef's team knew of a hotfix a supplier engineer had applied by hand to one of the four servers during an incident. All three were partly right, which meant the bank could not answer.
 
-The same month, a change passed every test in pre-production and failed in production, because a timeout setting differed; someone had changed one by hand a year earlier. And Reem's team waited nine working days (illustrative) to book the shared test environment, so they tested less and later.
+The same month, a change passed every test in pre-production and failed in production, because a timeout setting differed; someone had changed one by hand a year earlier. And Reem's team waited six working days (illustrative) to book the shared test environment, so they tested less and later.
 
 Omar's question to Huda, Head of Enterprise Architecture, was blunt: "Why don't we know what we are running?" This lesson answers it with three artefacts: an environment map, a configuration rule, and a record of what is running that nobody types.
 
@@ -585,7 +585,7 @@ Illustrative and fictional. Huda and Sami wrote the environment map for the card
 > **What-is-running record:** written by the pipeline at every deployment, per server; checked after deployment that every server reports the new version. Fed to the CMDB nightly.
 > **Drift:** nightly for production; findings to the team's on-duty engineer; restore or accept through change within two working days.
 
-The first nightly drift check found eleven differences in production (illustrative), including the supplier's hand-applied hotfix and the timeout that had caused the pre-production pass and production failure. Lina added a clause to the supplier's contract: no changes by hand without a change record, and every emergency fix brought back into the supplier's release within a set period. Reem's team stopped booking the shared environment for most tests once ephemeral environments arrived; the nine-day wait disappeared from their value-stream map.
+The first nightly drift check found eleven differences in production (illustrative), including the supplier's hand-applied hotfix and the timeout that had caused the pre-production pass and production failure. Lina added a clause to the supplier's contract: no changes by hand without a change record, and every emergency fix brought back into the supplier's release within a set period. Reem's team stopped booking the shared environment for most tests once ephemeral environments arrived; the six-day wait disappeared from their value-stream map.
 
 The mistake: the first version recorded versions per service, not per server, and so would not have caught a deployment that missed one server. Nour spotted it after reading about the Knight Capital case; the record changed to per-server.
 
@@ -645,14 +645,14 @@ The mistake: the first version recorded versions per service, not per server, an
 ## ✍️ Check yourself
 **1. An auditor asks which version of the card authorisation service runs in production. The CMDB, the pipeline and operations give three different answers. What is the root problem?**
 
-- A. Make the CMDB the system of record, with a post-deployment checklist owned by operations.
-- B. The supplier's hand-applied hotfix broke the rules, so the contract needs a clause banning hand changes.
-- C. The pipeline cannot see hand fixes, so a quarterly manual audit of every server should be the reference.
+- A. Operations skip the post-deployment checklist, so the CMDB is not updated after each release.
+- B. The supplier applied a hotfix by hand, and its contract has no clause that bans hand changes.
+- C. Nobody runs a regular manual audit of every server to confirm which version is really installed.
 - D. Nothing writes a per-server record at deployment and checks it later, so sources drift apart.
 
 <details><summary>Answer</summary>
 
-**D.** The record should be written by the deployment itself, per instance, checked for drift, and fed to the CMDB. A keeps people typing the record, so it still goes stale. B is a useful clause (Najm Bank added one) but fixes one source of drift, not the missing record. C gives a snapshot that is out of date the day after. See "The record of what is running".
+**D.** The record should be written by the deployment itself, per instance, checked for drift, and fed to the CMDB. A blames people for not typing the record; a checklist kept perfectly would still go stale. B is a real gap (Najm Bank added a clause) but explains one source of drift, not the missing record. C would only give a snapshot that is out of date the day after. See "The record of what is running".
 
 </details>
 
@@ -669,7 +669,7 @@ The mistake: the first version recorded versions per service, not per server, an
 
 </details>
 
-**3. Reem's team waits nine working days to book the shared test environment. Which change best fits the lesson?**
+**3. Reem's team waits six working days to book the shared test environment. Which change best fits the lesson?**
 
 - A. Add a second shared test environment and assign a coordinator to manage both booking queues.
 - B. Ask teams to plan their testing further ahead, so bookings are made weeks before they are needed.

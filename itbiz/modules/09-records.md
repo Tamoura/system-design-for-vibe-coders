@@ -9,7 +9,7 @@
 # 9.1 — The information model: the few records that matter and how they link
 *Level: 🔴 Advanced* · *Prerequisites: 2.1, 6.3* · *Step: Govern*
 
-**After this you can** draw a one-page information model for your IT organisation that names about ten core records, gives each an owner and a system of record, states the decision each one serves, and shows the links between them. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
+**After this you can** draw a one-page information model for your IT organisation that names about ten core records, gives each an owner and a system of record, states the decision each one serves, and shows the links between them. *Study time: reading about 15 min, hands-on about 150 min (estimate).*
 
 ## ⚡ In 60 seconds
 - An **information model** is a plain map of the records an organisation keeps, what each one means, who owns it and how the records link. It is a management artefact, not a database design.
@@ -91,7 +91,7 @@ Read it as sentences: an investment funds a product; work on the product is a ba
 - **System of engagement:** where people interact with the record day to day. An engineer may raise a change from the pipeline (engagement) while the service management platform holds the change record (record).
 - **Reporting copy:** a copy pulled into a dashboard, data warehouse or spreadsheet. Useful, never edited, always dated.
 
-Write the system of record for each core record on the model. Most data-quality arguments at Najm Bank turned out to be two tools both acting as the system of record for the same thing.
+Write the system of record for each core record on the model.
 
 **Ownership has three layers.** For each record: a **record owner** who decides what the record means and which fields are mandatory (often Huda's team or a process owner); a **data steward** who watches its quality (9.2); and the **creators** who fill it in as part of their work. Without a record owner, definitions drift. Without a steward, quality decays. Without creators who see value in the record, it is filled in badly or not at all.
 
@@ -101,11 +101,11 @@ Write the system of record for each core record on the model. Most data-quality 
 
 ### 🔴 Expert view
 
-**Avoid the universal data model.** Large organisations are tempted to define every entity and attribute IT could ever need, then buy one platform to hold them all. These programmes tend to run for years and deliver a model nobody uses. A model of ten records and fifteen links that is used every week beats a model of two hundred entities that is used for an audit once a year. Grow the model only when a new decision needs a new record.
+**Avoid the universal data model.** Large organisations are tempted to define every entity and attribute IT could ever need, then buy one platform to hold them all. These programmes tend to run for years and deliver a model nobody uses. A model of ten records and fifteen links that is used every week beats a model of two hundred entities that is used for an audit once a year.
 
 **Federate the records, centralise the links.** You will not get one tool for everything, and you should not try. Let each record live in the tool that suits its creators, and invest instead in the **link fields** (shared identifiers) and a small **integration layer** or reporting store that joins them. Module 11 covers the toolchain view; here the decision is which identifiers are mandatory in which tool.
 
-**Granularity is a cost decision.** Every additional record type and every finer grain must be created, linked and kept accurate. Ask "what decision changes if we know this?" before adding it. A model in the bank's own words, with its own identifiers, also survives the next change of tool; the vendor's default schema does not.
+**Granularity is a cost decision.** Every additional record type and every finer grain must be created, linked and kept accurate. Ask "what decision changes if we know this?" before adding it.
 
 **AI raises the stakes.** AI tools that summarise incidents or answer "what changed?" are only as good as the links they can follow; lesson 11.3 returns to this.
 
@@ -129,7 +129,7 @@ Illustrative and fictional. Huda ran two workshops: one with Omar's leadership t
 Her one-page **record map** for the Technology division named eleven records, each with a card. Three findings changed the plan:
 
 1. **Two systems of record for running components.** The CMDB and the cloud inventory both claimed to be authoritative for cloud servers. Huda made the cloud inventory (fed by infrastructure code) the system of record for cloud resources and the CMDB a consumer of it.
-2. **No product on incidents.** Incident records had a "service" field with 340 free-text values (illustrative figure). Huda replaced it with the product identifier, chosen from a list of 48 products.
+2. **No product on incidents.** Incident records had a "service" field with 340 free-text values (illustrative figure). Huda replaced it with the product identifier, chosen from the list of 31 products from lesson 2.1.
 3. **Cost lines mapped to projects, not products.** Tariq's cost reports used project codes that ended when projects closed. They agreed to add the product identifier to every cost line from the next quarter, keeping project codes for capital accounting questions, which Tariq would confirm with the finance function.
 
 Her first mistake was making fourteen fields mandatory on the change record. Within a month, Sami, Platform Engineering Lead, showed her that engineers were pasting the same text into six fields. She cut it to five mandatory fields and had the pipeline fill three of them automatically.
@@ -166,7 +166,7 @@ Her first mistake was making fourteen fields mandatory on the change record. Wit
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** For example: "12 of 20 incidents named the correct running component; owner: Head of IT Operations; change: pick from a list filtered by product instead of free text." "7 of 20 changes linked to a backlog item; owner: platform lead; change: pipeline fills the link from the commit message." **Self-check.**
+**Model answer.** For example: "12 of 20 incidents named the correct running component; system of record: service management platform; owner: Head of IT Operations; change: pick from a list filtered by product instead of free text." "7 of 20 changes linked to a backlog item; system of record: service management platform; owner: platform lead; change: pipeline fills the link from the commit message." **Self-check.**
 - Did you check correctness, not just whether the field was filled?
 - Is each proposed change automatic or built into the work, rather than a reminder to "fill it in"?
 - Did you name one owner, not a committee?
@@ -194,7 +194,7 @@ Her first mistake was making fourteen fields mandatory on the change record. Wit
 
 - A. Ask both teams to reconcile the two lists by hand at the end of every month.
 - B. Build a dashboard that shows both lists side by side so people can choose.
-- C. Name one system of record for cloud resources and make the other a consumer.
+- C. Name one system of record for cloud resources; make the other a consumer.
 - D. Move all cloud server records into the CMDB and switch off the cloud inventory.
 
 <details><summary>Answer</summary>
@@ -219,9 +219,9 @@ Her first mistake was making fourteen fields mandatory on the change record. Wit
 **3. Reem, Product Manager for Cards & Payments, wants to know how many incidents last quarter followed a release of her product. Records exist in four tools. Which single design choice most directly makes this answerable?**
 
 - A. A weekly meeting where each tool owner reports their numbers for her product.
-- B. A data warehouse that copies every table from all four tools each night.
+- B. A data warehouse that copies every table from all four tools every night.
 - C. A new mandatory free-text field on incidents describing the affected release.
-- D. A shared product identifier present on releases, running components and incidents.
+- D. A shared product identifier on releases, running components and incidents.
 
 <details><summary>Answer</summary>
 
@@ -231,10 +231,10 @@ Her first mistake was making fourteen fields mandatory on the change record. Wit
 
 **4. What does "grain" mean when defining a record?**
 
-- A. The level of detail allowed in the record's free-text description field.
-- B. What one record represents, such as one incident per interruption, not per alert.
-- C. How often the record is copied from its system of record into reports.
-- D. The number of mandatory fields a creator must fill before saving it.
+- A. The level of detail that is allowed in the record's free-text description field.
+- B. What one record represents: one incident per interruption, not per alert.
+- C. How often the record is copied from its system of record into the reports.
+- D. The number of mandatory fields that a creator must fill in before saving it.
 
 <details><summary>Answer</summary>
 
@@ -256,7 +256,7 @@ Her first mistake was making fourteen fields mandatory on the change record. Wit
 </details>
 
 ## 📚 References
-- DORA, *Accelerate State of DevOps Report 2023* (Google Cloud). Reported (search summary) to find that "high-quality documentation amplifies the impact that technical capabilities have on organizational performance". https://dora.dev/research/2023/dora-report/2023-dora-accelerate-state-of-devops-report.pdf
+- DORA, *Accelerate State of DevOps Report 2023* (Google Cloud). Google Cloud's announcement of the report (5 October 2023) states that "high-quality documentation amplifies the impact that DevOps technical capabilities (for example, continuous integration and trunk-based development) have on organizational performance". https://cloud.google.com/blog/products/devops-sre/announcing-the-2023-state-of-devops-report (full report: https://dora.dev/research/2023/dora-report/2023-dora-accelerate-state-of-devops-report.pdf)
 - Library course: [*Data Engineering & Analytics: Zero to Hero*, lesson 6.1 — Data governance that works: ownership, catalogue, lineage and data contracts](../data/index.html#/6.1) (ownership and lineage for data platforms, which apply here to IT's own records).
 - Library course: [*Cloud & DevOps: Zero to Hero*, lesson 3.3 — Policy as code, drift and guardrails](../cloud/index.html#/3.3) (infrastructure code as the declared source for cloud resources).
 
@@ -265,7 +265,7 @@ Her first mistake was making fourteen fields mandatory on the change record. Wit
 # 9.2 — Configuration and asset data quality: ownership, reconciliation and decay
 *Level: 🔴 Advanced* · *Prerequisites: 9.1, 6.3* · *Step: Govern*
 
-**After this you can** set up a data-quality scorecard for configuration and asset records: name an owner for each attribute, set reconciliation rules between discovered and declared data, measure completeness, accuracy and freshness from a sample, and decide what to fix first. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
+**After this you can** set up a data-quality scorecard for configuration and asset records: name an owner for each attribute, set reconciliation rules between discovered and declared data, measure completeness, accuracy and freshness from a sample, and decide what to fix first. *Study time: reading about 15 min, hands-on about 160 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Configuration data** describes what runs and how it connects; **asset data** describes what the organisation owns or licenses, its cost and its terms. They overlap but answer different questions.
@@ -282,7 +282,7 @@ During the third payment outage, the incident team opened the CMDB to see what d
 
 Yousef, Head of IT Operations, had heard this story before. His team had cleaned the CMDB eighteen months earlier: a six-month project, a consultant, a celebration. A sample check this year found about a third of server records had at least one wrong key attribute. The clean-up had fixed the data once. It had not changed how data got in.
 
-At the same time Lina, Vendor and Sourcing Manager, was preparing a software licence renewal. Her asset tool said the bank had 1,200 installations of a database product; the supplier's audit letter said 1,450. She could not say which number was right, and the difference was a negotiating position worth real money.
+At the same time Lina, Vendor and Sourcing Manager, was preparing a software licence renewal. Her asset tool said the bank had 1,200 installations of a database product; the supplier's audit letter said 1,450. She could not say which number was right.
 
 ## 📐 How it works
 
@@ -298,6 +298,7 @@ At the same time Lina, Vendor and Sourcing Manager, was preparing a software lic
 | What goes wrong | Missing dependencies, stale records, retired items still listed | Licences not matched to installs, assets with no owner, contracts lapsing unseen |
 
 **Definitions you can cite.** NIST's glossary is reported (search summary; the page could not be opened for this lesson) to define a **configuration item** as an aggregation of information system components "designated for configuration management and treated as a single entity in the configuration management process", citing NIST SP 800-128. **IT asset management (ITAM)** is the discipline of managing IT assets across their life; ISO/IEC 19770-1:2017 is reported to set requirements for an IT asset management system. The Center for Internet Security's CIS Critical Security Controls (v8) are reported to open with two inventory controls: Control 1, "Inventory and Control of Enterprise Assets", and Control 2, "Inventory and Control of Software Assets".
+
 **Why data decays.** A CMDB record is right on the day it is written. After that, every change, scaling event, migration, licence transfer and retirement can make it wrong. If the update depends on someone remembering to edit a form afterwards, a share of updates will not happen. Decay is not a moral failing of the operations team; it is the predictable result of a process in which updating the record is separate from doing the work.
 
 **The four quality measures.** Keep them simple and measured from samples:
@@ -340,7 +341,7 @@ Neither is enough alone. A discovered server nobody declared may be shadow IT or
 - Require the **product identifier as a tag** at resource creation; deny creation without it where the cloud platform allows (policy as code; see the library link below).
 - Treat **discovery differences as work items** with owners and due dates, not as a report nobody reads.
 
-**Software and component inventories.** For the software inside products, a **software bill of materials (SBOM)** lists the components and versions a piece of software contains. Two open formats are common. SPDX was reported (Linux Foundation announcement, September 2021) to have been published as the international standard ISO/IEC 5962:2021. CycloneDX is reported (search summary) to have been published by Ecma International as ECMA-424, first edition June 2024. For the operating-model view, the decision is simple: SBOMs produced by the pipeline become an attribute source for "installed software and version" and link releases to components. The engineering detail is in the security course.
+**Software and component inventories.** For the software inside products, a **software bill of materials (SBOM)** lists the components and versions a piece of software contains. Two open formats are common. SPDX was reported (Linux Foundation announcement, September 2021) to have been published as the international standard ISO/IEC 5962:2021. CycloneDX is reported (search summary) to have been published by Ecma International as ECMA-424, first edition June 2024. For the operating-model view, the decision is simple: SBOMs produced by the pipeline become an attribute source for "installed software and version" and link releases to components.
 
 ### 🔴 Expert view
 
@@ -464,23 +465,23 @@ Yousef's mistake: he first set the accuracy sample to be checked by his own team
 
 **3. A dashboard shows the CMDB is 98% complete. What is the main weakness of using this as evidence of quality?**
 
-- A. Complete records can still hold wrong values; accuracy needs a sample checked against reality.
+- A. Complete records can still be wrong; accuracy needs a sample checked against reality.
 - B. Completeness should be measured weekly, so a monthly figure is too old to be useful.
-- C. The figure should exclude cloud resources, which are created automatically and skew it.
-- D. Ninety-eight percent is below the level most auditors would expect for a bank.
+- C. The figure should exclude cloud resources, which are created automatically.
+- D. Ninety-eight percent is below the level that most auditors would expect from a bank.
 
 <details><summary>Answer</summary>
 
-**A.** Completeness says fields are filled, not that they are right. B, C and D argue about frequency, scope or a threshold the lesson never gives, while missing the real point. See "The four quality measures" and "Sample-based assurance".
+**A.** Completeness says fields are filled, not that they are right. B, C and D argue about frequency, scope or a threshold the lesson never gives. See "The four quality measures" and "Sample-based assurance".
 
 </details>
 
 **4. Lina's asset tool shows 1,200 installations of a database product; the supplier's letter says 1,450. What should she do before replying?**
 
-- A. Reply with the asset tool's figure, since it is the bank's system of record.
+- A. Reply with the asset tool's figure, since the tool is the bank's system of record.
 - B. Accept the supplier's figure to avoid a dispute and negotiate on price instead.
-- C. Agree a licence position with the asset owner, sourcing and legal before sending any number.
-- D. Ask the supplier to run a fresh scan of the bank's environment to settle it.
+- C. Agree a licence position with the asset owner, sourcing and legal before replying.
+- D. Ask the supplier to run a fresh scan of the bank's whole environment to settle it.
 
 <details><summary>Answer</summary>
 
@@ -490,9 +491,9 @@ Yousef's mistake: he first set the accuracy sample to be checked by his own team
 
 **5. Yousef's team checks the monthly accuracy sample of its own records. Why did Nour object?**
 
-- A. The sample was too small to give any meaningful accuracy figure for the CMDB.
+- A. The sample was too small to give any meaningful accuracy figure for the whole CMDB.
 - B. An owner checking its own records does not give independent evidence of quality.
-- C. Accuracy should be measured by a tool, never by people looking at live systems.
+- C. Accuracy should be measured by a tool, never by people looking at the live systems.
 - D. Operations teams are not allowed to see configuration data owned by product teams.
 
 <details><summary>Answer</summary>
@@ -516,7 +517,7 @@ Pages marked "reported" were known only from search summaries for this lesson; t
 # 9.3 — Traceability from investment to incident and back
 *Level: 🔴 Advanced* · *Prerequisites: 9.1, 9.2, 4.2, 8.1* · *Step: Govern, Run*
 
-**After this you can** define the minimum shared identifiers that let you trace any incident back to the change, release, backlog item and investment behind it, and any investment forward to the incidents and costs it produced, then run a five-incident trace test and report the result. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
+**After this you can** define the minimum shared identifiers that let you trace any incident back to the change, release, backlog item and investment behind it, and any investment forward to the incidents and costs it produced, then run a five-incident trace test and report the result. *Study time: reading about 15 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - **Traceability** is the ability to follow links between records from one end of the operating cycle to the other: from a funding decision to what runs, and from an incident back to the decision that changed it.
@@ -695,9 +696,9 @@ Reem's mistake came next. Keen to show progress, she asked her team to add the m
 **1. Internal audit asks Nour to show, for three payment incidents, the change, its approval and the funding behind it. Which is the most durable way to make this routine?**
 
 - A. Keep a traceability spreadsheet that the change board updates after every meeting.
-- B. Assign an analyst to answer audit trace requests within five working days each time.
+- B. Assign an analyst to answer each audit trace request within five working days.
 - C. Ask each team to send a monthly list of changes and investments to the risk team.
-- D. Put shared identifiers into the work through pipelines, tags and monitoring, then test by sampling.
+- D. Put shared identifiers into the work through pipelines, then test them by sampling.
 
 <details><summary>Answer</summary>
 
@@ -708,7 +709,7 @@ Reem's mistake came next. Keen to show progress, she asked her team to add the m
 **2. In Nour's first trace test, incident 2 broke because the release label had been reused and overwritten. What is the right fix?**
 
 - A. Ask engineers to note the old label in the change record before reusing it.
-- B. Make release identifiers immutable and have the pipeline record them on the change.
+- B. Make release identifiers immutable; the pipeline writes them to the change.
 - C. Remove releases from the trace and link incidents straight to backlog items.
 - D. Add a field to the incident record for the engineer's memory of the release.
 
@@ -722,8 +723,8 @@ Reem's mistake came next. Keen to show progress, she asked her team to add the m
 
 - A. Backlog keys may only be added by the change authority, not by product teams.
 - B. The trace test only uses incidents, so changes are outside its scope entirely.
-- C. Back-filling improves the test result without fixing the process that lost the links.
-- D. Editing old change records is never allowed under the bank's audit rules.
+- C. Back-filling lifts the score without fixing the process that lost the links.
+- D. Editing old change records is never allowed under the bank's own audit rules.
 
 <details><summary>Answer</summary>
 
@@ -733,10 +734,10 @@ Reem's mistake came next. Keen to show progress, she asked her team to add the m
 
 **4. Omar asks Tariq what last year's tokenisation investment delivered and what it now costs to run, including incidents. Which trace is this, and which link is most essential?**
 
-- A. A forward trace, relying on the product identifier on investments, cost lines and incidents.
-- B. A backward trace, relying on the running-component identifier on each incident.
-- C. A forward trace, relying on the backlog item key in each commit message.
-- D. A backward trace, relying on the approval recorded on each change record.
+- A. A forward trace, using the product identifier on investments, costs and incidents.
+- B. A backward trace, relying on the running-component identifier on every incident.
+- C. A forward trace, relying on the backlog item key written in each commit message.
+- D. A backward trace, relying on the approval recorded on every change record.
 
 <details><summary>Answer</summary>
 
@@ -748,8 +749,8 @@ Reem's mistake came next. Keen to show progress, she asked her team to add the m
 
 - A. Treat all IT records as in scope, since the principles cover every bank system.
 - B. Treat IT records as out of scope, since the principles concern only risk data.
-- C. Wait for the next supervisory inspection and let the inspectors decide the scope.
-- D. Ask the risk function which IT records feed risk reporting and what lineage evidence is needed.
+- C. Wait for the next supervisory inspection and let the inspectors decide on the scope.
+- D. Ask the risk function which IT records feed its reports and what lineage it needs.
 
 <details><summary>Answer</summary>
 

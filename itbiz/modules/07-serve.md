@@ -9,7 +9,7 @@
 # 7.1 — Request fulfilment and self-service
 *Level: 🟡 Intermediate* · *Prerequisites: 2.3, 6.2* · *Step: Serve*
 
-**After this you can** pick the five most frequent asks reaching your Technology division, write a recipe for each (steps, checks, approver, evidence, target time) and decide which ones move to self-service first. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
+**After this you can** pick the five most frequent asks reaching your Technology division, write a recipe for each (steps, checks, approver, evidence, target time) and decide which ones move to self-service first. *Study time: reading about 15 min, hands-on about 110 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **request** here means any ask from a person or team for something IT already knows how to provide: a test environment, a software licence, a shared mailbox, a database copy, a report extract. It is not a fault and it is not a new piece of work.
@@ -22,9 +22,9 @@
 ## 🧭 Why it matters
 Najm Bank, its Technology division and the people in it are fictional. All numbers in this lesson are illustrative figures, not benchmarks.
 
-Reem's Cards & Payments team needed a new test environment to try a change to card limits. She raised a ticket on Sunday. It reached Yousef's service desk, which passed it to the infrastructure team, which asked the security team to approve firewall rules, which asked Reem's team for a diagram, which went back to infrastructure. The environment arrived on the ninth day. When Huda later traced the ticket, the actual work (building the servers, opening the ports, loading the data) took about six hours. The rest was queues and hand-offs.
+Reem's Cards & Payments team needed a new test environment to try a change to card limits. This was not the shared-environment booking queue from lesson 6.3. The ephemeral environments described there use synthetic data and cover routine tests; this one had to stay up for weeks, hold masked card data and get its own firewall rules, and no pipeline built an environment like that. She raised a ticket on Sunday. It reached Yousef's service desk, which passed it to the infrastructure team, which asked the security team to approve firewall rules, which asked Reem's team for a diagram, which went back to infrastructure. The environment arrived on the ninth day. When Huda later traced the ticket, the actual work (building the servers, opening the ports, loading the data) took about six hours. The rest was queues and hand-offs.
 
-Meanwhile Sami's platform team had built a template that creates the same kind of environment in under an hour, with the approved network rules already in it. Hardly anyone used it, because nobody had told the service desk it existed, the security team had never formally agreed that the template's rules were acceptable, and there was no record linking environments built by the template to a product, an owner or a cost.
+Meanwhile Sami's platform team had built a template that creates this longer-lived kind of environment in under an hour, with the approved network rules already in it. Hardly anyone used it, because nobody had told the service desk it existed, the security team had never formally agreed that the template's rules were acceptable, and there was no record linking environments built by the template to a product, an owner or a cost.
 
 Omar heard about the nine days from the head of retail banking, not from IT. That is the point of this lesson: the business experiences IT through its requests. A slow, opaque request process makes even a good platform look like a bottleneck, and a fast but uncontrolled one creates risk and cost nobody can trace.
 
@@ -236,7 +236,7 @@ Yousef objected at first: "If nobody approves, who is accountable?" Nour answere
 # 7.2 — Subscriptions, entitlements and access rights
 *Level: 🟡 Intermediate* · *Prerequisites: 7.1* · *Step: Serve*
 
-**After this you can** write, for one product or platform, a one-page register that answers who has signed up to use it, what each sign-up allows, and who holds which technical access, and set the review rhythm that keeps those three answers true. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
+**After this you can** write, for one product or platform, a one-page register that answers who has signed up to use it, what each sign-up allows, and who holds which technical access, and set the review rhythm that keeps those three answers true. *Study time: reading about 15 min, hands-on about 85 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Three different questions get mixed up under the word "access": **who has signed up to use this?**, **what does that sign-up allow?**, and **which named person or system can technically do what?**
@@ -325,7 +325,7 @@ Fictional and illustrative. After the audit, Nour and Reem built a three-questio
 | SME Banking | Head of SME | Log disputes only; up to 40 users | Dispute agent | Quarterly, by exception |
 | Fraud Operations | Head of Fraud Ops | Read-only view of all disputes | Fraud viewer | Half-yearly |
 
-They cut 23 technical permissions down to five roles, agreed one risky pair with Nour (no one may hold both "dispute supervisor" and "refund approver"), and linked role removal to the HR mover and leaver events. Lina used the same register to reduce the licence tier at the next renewal from 400 to 280 named users (illustrative). Yousef's only request was that the role changes go through the release process (lesson 6.2), which they did.
+They cut 23 technical permissions down to five roles, agreed one risky pair with Nour (no one may hold both "dispute supervisor" and "refund approver"), and linked role removal to the HR mover and leaver events. Lina used the same register to reduce the licence tier at the next renewal from 400 to 280 named users (illustrative). Yousef's only request was that the role changes go through the change process (lesson 6.2), which they did.
 
 ## 🛠️ Exercises
 **🟢 Separate the three questions.** For one system you know (or the Najm Bank card-dispute system), write down who has signed up, what each sign-up allows and how many people hold access, with the owner of each answer.
@@ -455,7 +455,7 @@ They cut 23 technical permissions down to five roles, agreed one risky pair with
 # 7.3 — Usage, showback and chargeback
 *Level: 🟡 Intermediate* · *Prerequisites: 7.2* · *Step: Serve*
 
-**After this you can** design a monthly usage-and-cost report for one shared platform, choose between showback and chargeback for it with reasons, and list the questions to take to finance before any charge is made. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
+**After this you can** design a monthly usage-and-cost report for one shared platform, choose between showback and chargeback for it with reasons, and list the questions to take to finance before any charge is made. *Study time: reading about 15 min, hands-on about 95 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Usage** is how much of a service someone consumed: environments, storage, licences, API calls, compute hours.
@@ -486,7 +486,7 @@ The business lines wanted to know why their IT charge went up. IT wanted the bus
 
 Skipping step 1 makes steps 2 and 3 arguments. Skipping step 2 makes step 3 a surprise.
 
-**Direct and shared cost.** Some cost belongs clearly to one consumer: a test environment tagged to Cards & Payments. Some is shared: the network, the security operations centre, the service desk, the platform team itself. Direct cost is easy to show. Shared cost must be **allocated**, meaning split by a rule (by usage, by number of users, evenly). The rule should be simple enough that a business line can check its own share and see how to change it.
+**Direct and shared cost.** Some cost belongs clearly to one consumer: a test environment tagged to Cards & Payments. Some is shared: the network, the security operations centre, the service desk, the platform team itself. Direct cost is easy to show. Shared cost must be **allocated**, meaning split by a rule (by usage, by number of transactions, by number of users). An even split will do only as a stopgap; lesson 10.1 explains why drivers that move with use are better. The rule should be simple enough that a business line can check its own share and see how to change it.
 
 **Choose units people can act on.** "Compute core-hours" is a unit the platform understands; Reem cannot act on it. "Test environments kept open per month" or "cost per thousand card transactions processed" are units she can change. Pick one or two units per service that the consumer can both read and influence. Lesson 10.1 goes deeper on unit costs.
 
@@ -547,13 +547,20 @@ Fictional and illustrative. Tariq and Sami started with the shared platform. The
 
 Their first monthly page for Cards & Payments showed:
 
-| Cost line (unit) | Last month | This month | Note |
-|---|---|---|---|
-| Test environments (environments × days) | 38 | 52 | 11 environments past their end date |
-| Card analytics data store (TB-months) | 14 | 15 | Steady |
-| Developer tool licences (named users) | 60 | 60 | 18 unused for 90 days |
-| Share of platform team (fixed share) | 1 | 1 | Allocated by number of products |
-| Untagged cost attributed by owner guess | — | 4 | To be confirmed |
+| Cost line (unit) | Usage last month | Usage this month | Cost last month | Cost this month | Note |
+|---|---|---|---|---|---|
+| Test environments (environment-days) | 380 | 520 | 19.0 | 26.0 | 11 environments past their end date |
+| Card analytics data store (TB-months) | 14 | 15 | 8.4 | 9.0 | Steady |
+| Developer tool licences (named users) | 60 | 60 | 12.0 | 12.0 | 18 unused for 90 days |
+| Share of platform team (temporary split) | — | — | 20.0 | 20.0 | Split evenly by number of products as a stopgap, until a usage driver is agreed (lesson 10.1) |
+| Untagged cost attributed by owner guess | — | — | — | 4.0 | To be confirmed with the owners |
+| **Total** | | | **59.4** | **71.0** | Up mainly because of open test environments |
+
+Costs are in thousands of the bank's currency per month (illustrative). Below the table the page listed two suggested actions and a contact:
+
+- **Close the 11 expired environments** (owner: Reem). Estimated saving: about 16 thousand a month (11 environments × 30 days × 0.05 thousand per environment-day).
+- **Release the 18 unused licences at renewal** (owner: Reem, with Lina for the contract). Estimated saving: about 3.6 thousand a month (18 × 0.2 thousand per named user).
+- **Contact:** Tariq for the figures and the allocation rule; Sami for tags and environments.
 
 Reem closed nine of the eleven expired environments in a week and released the unused licences at renewal. Tariq proposed keeping showback for six months, then asking finance whether test environments, and only those, should move to chargeback. Omar agreed and told the board that platform cost was now visible by product, with the first reductions underway.
 
@@ -575,7 +582,7 @@ Reem closed nine of the eleven expired environments in a week and released the u
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** See the Cards & Payments page above. A good page is short, shows the untagged cost openly, and ends with actions. **Self-check.**
+**Model answer.** See the Cards & Payments page above: usage and cost side by side with last month, a note on what changed, the untagged line, two actions with owners and estimated savings, and a contact. A good page is short, shows the untagged cost openly, and ends with actions. **Self-check.**
 - Is the untagged cost visible, not hidden in an allocation?
 - Does each action name an owner?
 - Is every number labelled as real or illustrative?
@@ -606,7 +613,7 @@ Reem closed nine of the eleven expired environments in a week and released the u
 - **Usage** with an owner is the basis of everything; tag at creation.
 - **Showback** shows the cost of usage without moving money; **chargeback** moves it into budgets.
 - Show before you charge, in **units people can read and change**.
-- Allocate shared cost by a **simple, checkable rule**, and show untagged cost openly.
+- Allocate shared cost by a **simple, checkable rule** that moves with use (an even split only as a stopgap), and show untagged cost openly.
 - The choice between showback and chargeback depends on data quality, the consumer's control, the bank's accounting and the behaviour you want; **finance decides** on moving money.
 - The same records serve access (7.2) and cost (7.3): build them once.
 

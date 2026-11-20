@@ -12,13 +12,13 @@
       "o": {
         "en": [
           "Choose one home where the record is made and fixed; others read or copy it",
-          "Keep both, and ask each team to update the two sources on the same day",
+          "Keep both, and ask each team to update the two sources on the same working day",
           "Move every record in the bank into one platform as the single truth",
           "Let whichever tool was edited last count as right when the two differ"
         ],
         "ar": [
-          "اختيار موطن واحد يُنشأ فيه السجل ويُصحَّح، وتقرؤه الأدوات الأخرى",
-          "الإبقاء على الاثنين، ومطالبة كل فريق بتحديث المصدرين في اليوم نفسه",
+          "اختيار موطن واحد يُنشأ فيه السجل ويُصحَّح، وتقرؤه الأدوات الأخرى أو تنسخه",
+          "الإبقاء على الاثنين، ومطالبة كل فريق بتحديث المصدرين معًا في يوم العمل نفسه",
           "نقل كل سجلات البنك إلى منصة واحدة تكون مصدر الحقيقة الوحيد",
           "اعتبار الأداة التي عُدّلت أخيرًا هي الصحيحة عند اختلاف الاثنين"
         ]
@@ -34,8 +34,8 @@
       "level": 2,
       "lesson": "11.2",
       "q": {
-        "en": "Najm Bank runs four ticketing tools. A vendor offers a three-year programme to replace all of them with one suite at once. What fits lesson 11.2?",
-        "ar": "يشغّل بنك نجم أربع أدوات للتذاكر. وعرض مورّد برنامجًا مدته ثلاث سنوات يستبدل بها كلها حزمة واحدة دفعة واحدة. ما الذي يتفق مع الدرس 11.2؟"
+        "en": "A bank runs four ticketing tools. A vendor offers a three-year programme to replace all of them with one suite at once. What fits lesson 11.2?",
+        "ar": "يشغّل أحد البنوك أربع أدوات للتذاكر. وعرض مورّد برنامجًا مدته ثلاث سنوات يستبدل بها كلها حزمة واحدة دفعة واحدة. ما الذي يتفق مع الدرس 11.2؟"
       },
       "o": {
         "en": [

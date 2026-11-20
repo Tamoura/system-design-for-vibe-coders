@@ -264,7 +264,7 @@ Najm Bank and everyone in it are fictional. All numbers about Najm Bank in this 
 
 The board asked Omar why a small change to the cards app "takes a quarter". Development blamed booked test environments; testing blamed incomplete requirements; Yousef said the change board "approves in one meeting"; Tariq said funding was quick once the paperwork was right. Each answer was true from where the speaker stood, and none explained the quarter.
 
-Huda pulled the real dates for Reem's travel card-limit change and eight similar ones, with one person from each step in the room. Within three hours everyone could see it: the change had been worked on for about four weeks and had spent the rest of five months waiting. The longest wait was not in engineering at all.
+Huda had the real dates pulled for Reem's travel card-limit change and eight similar ones, with one person from each step in the room. Within three hours everyone could see it: the change had been worked on for about four weeks and had spent the rest of five months waiting. The longest wait was not in engineering at all.
 
 ## 📐 How it works
 
@@ -361,7 +361,7 @@ Huda facilitated; Reem owned the result. Sami and Yousef's operations analysts p
 >
 > **Biggest waits:** funding (30 days, cadence), release window (12 days, batch), demand review (10 days, cadence). **Lowest %C&A:** demand review (60%), then requirements and test (70%).
 >
-> **Agreed experiments:** (1) Changes under an agreed size funded monthly from the product's capacity budget (measure: funding wait; owner Tariq; review in two months). (2) A weekly release slot for low-risk changes with automated test evidence (measure: release wait and change failure; owner Yousef, with Sami). (3) An intake checklist for demand requests (measure: %C&A at demand review; owner Reem).
+> **Agreed experiments:** (1) Changes under an agreed size funded monthly from the product's capacity budget (measure: funding wait; owner Tariq; review in two months). (2) A weekly release slot for low-risk changes with automated test evidence (measure: release wait and change fail rate; owner Yousef, with Sami). (3) An intake checklist for demand requests (measure: %C&A at demand review; owner Reem).
 
 Yousef came ready to defend the change board; it was a short wait, and he volunteered the weekly release slot. Tariq, surprised the longest wait was his, checked the trace sheet; the dates held.
 
@@ -459,7 +459,7 @@ Yousef came ready to defend the change board; it was a short wait, and he volunt
 
 </details>
 
-**4. Before the workshop, Yousef suggests the team skip pulling dates from records and "just agree the numbers in the room". Why does Huda refuse?**
+**4. Before the workshop, Tariq suggests the team skip pulling dates from records and "just agree the numbers in the room". Why does Huda refuse?**
 
 - A. Records give more precise process times than people can recall for their own step.
 - B. People recall their own work time well but waits poorly, so records keep the waits honest.
@@ -499,7 +499,7 @@ Yousef came ready to defend the change board; it was a short wait, and he volunt
 # 1.3 — Flow and delivery metrics that matter, and the ones that mislead
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2* · *Step: Improve*
 
-**After this you can** build a one-page measurement sheet for one product, with six to eight measures covering outcome, flow, delivery and reliability, each with a definition, source record, owner, the decision it serves and a paired measure, and retire two misleading measures with a reason the board will accept. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
+**After this you can** build a one-page measurement sheet for one product, with six to eight measures covering outcome, flow, delivery and reliability, each with a definition, source record, owner, the decision it serves and a paired measure, and retire two misleading measures with a reason the board will accept. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A useful measure is tied to a **decision**, comes from a **record**, has an **owner**, is read as a **trend**, and is **paired** with a measure that would catch gaming.
@@ -536,7 +536,7 @@ Lesson 1.2's map made it worse. The cards team's story points had risen by almos
 | **Outcome** | Did customers or colleagues change behaviour, and did the bank gain? | Share of card blocks done in the app; calls per thousand customers (lesson 1.1) |
 | **Flow** | How long does work take from trigger to value, and how much is in progress? | Idea-to-live lead time; WIP; throughput; flow efficiency; age of items in progress (lesson 1.2) |
 | **Delivery** | How often and how safely do changes reach production? | DORA's software delivery metrics (below) |
-| **Reliability** | Is the service working for customers right now? | A **service level objective** (SLO: a target for how often a customer journey must succeed, such as 99.5% of card payments approved in a month, illustrative) for each journey that matters (Module 8) |
+| **Reliability** | Is the service working for customers right now? | A **service level objective** (SLO: a target for how often a customer journey must succeed, such as 99.9% of card payment requests answered successfully within 2 seconds over 30 days, illustrative) for each journey that matters (Module 8) |
 
 **DORA's software delivery metrics.** DORA (DevOps Research and Assessment, now part of Google Cloud) is a long-running research programme on software delivery. Its guide on dora.dev is reported to group five metrics: **throughput** (change lead time, deployment frequency, failed deployment recovery time) and **instability** (change fail rate, deployment rework rate). The original four appear in *Accelerate* (2018); DORA reportedly renamed "time to restore service" in 2023 and added deployment rework rate in 2024. For the definitions, how to compute each one, and why lines of code or the share of AI-written code mislead, see [*A Practical Guide to Becoming an AI-Native Engineer*, lesson 12.1 — Team practice: conventions, review norms, ownership, juniors, metrics and policy](../ainative/index.html#/12.1). Use DORA's own definitions and say which version you report. This lesson adds the operating-model questions: what each measure covers, what it is paired with, and which decision it serves.
 
@@ -557,7 +557,7 @@ Lesson 1.2's map made it worse. The cards team's story points had risen by almos
 | **Projects "green"** | Self-reported progress against plans, not outcomes | Outcome measures and lead time |
 | **Average availability across all systems** | Averages hide the outage customers remember | Reliability per customer journey, against an agreed objective |
 
-**Why measures go wrong: targets.** The anthropologist Marilyn Strathern, writing in 1997, put the economist Charles Goodhart's observation in its best-known form: "When a measure becomes a target, it ceases to be a good measure" (as reported in sources on the history of the phrase). DORA's own guide is reported to warn of the same pitfalls: setting its metrics as goals (for example, ordering every application to deploy several times a day), comparing very different applications (a mobile app and a mainframe system), and using them to make teams compete rather than to help each team improve against its own past. The guide is also reported to say the metrics are meant for a team and its application or service, not for ranking individuals.
+**Why measures go wrong: targets.** The anthropologist Marilyn Strathern, writing in 1997, put the economist Charles Goodhart's observation in its best-known form: "When a measure becomes a target, it ceases to be a good measure" (as reported in sources on the history of the phrase). DORA's own guide warns of the same pitfalls: setting its metrics as goals (for example, ordering every application to deploy several times a day), comparing very different applications (a mobile app and a mainframe system), and using them to make teams compete rather than to help each team improve against its own past. The guide says the metrics are meant to be applied at the application or service level, which makes them a poor fit for judging individuals.
 
 **Productivity is not one number.** "The SPACE of Developer Productivity" (Forsgren, Storey and colleagues, *ACM Queue*, 2021) is reported to argue that productivity cannot be reduced to a single metric and that activity is only one of five dimensions. Read it before anyone asks for a developer-productivity score.
 
@@ -588,15 +588,15 @@ Reem drafted the sheet; Yousef co-owned the stability rows; Tariq checked the so
 
 > **Cards & Payments: measurement sheet v1 (monthly)**
 >
-> | Family | Measure | Record | Owner | Decision it serves | Paired with |
-> |---|---|---|---|---|---|
-> | Outcome | Share of temporary-limit changes made in the app | Card system channel data | Reem | Keep investing in self-service, or change approach | Contact-centre calls on the same reason codes |
-> | Flow | Idea-to-live lead time, median and 85th percentile | Demand log and release records | Reem | Where to act on waits (lesson 1.2) | WIP |
-> | Flow | WIP (items started, not live) | Backlog tool | Reem | Whether to stop starting new work | Throughput |
-> | Delivery | Deployment frequency | CI/CD system | Sami | Release cadence and automation investment | Change fail rate |
-> | Delivery | Change fail rate | Change and incident records | Yousef | Whether to slow down and invest in testing | Deployment frequency |
-> | Delivery | Failed deployment recovery time | Incident records | Yousef | Rollback and on-call investment | Change fail rate |
-> | Reliability | Card-payment success rate against its objective | Monitoring platform | Yousef and Reem | Feature work versus reliability work (Module 8) | Customer complaints about failed card payments |
+> | Family | Measure | Definition | Record | Owner | Decision it serves | Paired with |
+> |---|---|---|---|---|---|---|
+> | Outcome | Share of temporary-limit changes made in the app | In-app temporary-limit changes ÷ all temporary-limit changes, per month | Card system channel data | Reem | Keep investing in self-service, or change approach | Contact-centre calls on the same reason codes |
+> | Flow | Idea-to-live lead time, median and 85th percentile | Working days from request logged to live, per item | Demand log and release records | Reem | Where to act on waits (lesson 1.2) | WIP |
+> | Flow | WIP (items started, not live) | Items started and not yet live, counted at month end | Backlog tool | Reem | Whether to stop starting new work | Throughput |
+> | Delivery | Deployment frequency | Production deployments per week (DORA definition, 2024 guide) | CI/CD system | Sami | Release cadence and automation investment | Change fail rate |
+> | Delivery | Change fail rate | Share of deployments needing an immediate fix or rollback (DORA definition, 2024 guide) | Change and incident records | Yousef | Whether to slow down and invest in testing | Deployment frequency |
+> | Delivery | Failed deployment recovery time | Time from a failed deployment to service restored (DORA definition, 2024 guide) | Incident records | Yousef | Rollback and on-call investment | Change fail rate |
+> | Reliability | Card-payment success rate against its objective | Card payment requests answered successfully within 2 seconds ÷ all requests, over 30 days | Monitoring platform | Yousef and Reem | Feature work versus reliability work (Module 8) | Customer complaints about failed card payments |
 >
 > **Retired from the board report:** story points (a team estimating tool, now kept inside the team); count of changes approved (replaced by change fail rate); utilisation (replaced by WIP and lead time).
 
@@ -621,7 +621,7 @@ Omar asked for a single "IT performance score". Huda argued that one number woul
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** (1) Idea-to-live lead time (median, 85th percentile); demand and release records; product manager; decision: which wait to attack; paired with WIP. (2) Change fail rate (DORA's definition); change and incident records; head of operations; decision: invest in testing; paired with deployment frequency. (3) Payment success rate against its objective; monitoring platform; operations and product; decision: feature versus reliability work; paired with customer complaints about failed payments, which would rise if the success measure were narrowed to look good.
+**Model answer.** (1) Idea-to-live lead time (median, 85th percentile); demand and release records; product manager; decision: which wait to attack; paired with WIP. (2) Change fail rate (DORA's definition as in its dora.dev metrics guide, 2024 version); change and incident records; head of operations; decision: invest in testing; paired with deployment frequency. (3) Payment success rate against its objective; monitoring platform; operations and product; decision: feature versus reliability work; paired with customer complaints about failed payments, which would rise if the success measure were narrowed to look good.
 
 **Self-check.**
 - Would someone gaming one measure in each pair show up in the other?
@@ -635,7 +635,7 @@ Omar asked for a single "IT performance score". Huda argued that one number woul
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** Sheet as Najm Bank's, adapted. Note: "From next month we stop reporting story points and changes approved. Story points are a team's private estimating unit; the cards team's rose by almost a third while lead time did not move. Approvals count paperwork, not safety. In their place: lead time (median and 85th percentile) and change fail rate, from system records, read together."
+**Model answer.** Sheet as Najm Bank's, adapted, keeping a one-line definition on every row. Note: "From next month we stop reporting story points and changes approved. Story points are a team's private estimating unit; the cards team's rose by almost a third while lead time did not move. Approvals count paperwork, not safety. In their place: lead time (median and 85th percentile) and change fail rate, from system records, read together."
 
 **Self-check.**
 - Is each retired measure replaced by one that serves a decision?
@@ -689,7 +689,7 @@ Omar asked for a single "IT performance score". Huda argued that one number woul
 - A. Separate sheets for product teams (speed) and operations (stability), reviewed at different meetings.
 - B. Speed measures first, with stability added once deployment frequency has reached daily.
 - C. Speed and stability measures paired on the same sheet, with Yousef owning the stability rows.
-- D. Stability measures only, until the change failure rate has reached a level the board accepts.
+- D. Stability measures only, until the change fail rate has reached a level the board accepts.
 
 <details><summary>Answer</summary>
 
@@ -697,7 +697,7 @@ Omar asked for a single "IT performance score". Huda argued that one number woul
 
 </details>
 
-**4. Reem reports DORA change lead time of four days for the cards app. Tariq says customers still wait months. How can both be true?**
+**4. Reem reports DORA change lead time of about ten days for the cards app. Tariq says customers still wait months. How can both be true?**
 
 - A. Reem's figure is probably an average, which hides the few slow changes customers notice.
 - B. DORA's change lead time starts at commit; most of the months are spent before build begins.
@@ -706,7 +706,7 @@ Omar asked for a single "IT performance score". Huda argued that one number woul
 
 <details><summary>Answer</summary>
 
-**B.** DORA's change lead time covers commit to production, while idea-to-live lead time also covers intake, funding and the waits before build. A names a real reporting risk but cannot turn four days into months, C invents a rule, and D misstates where either measure starts. See "Note the scope".
+**B.** DORA's change lead time covers commit to production, while idea-to-live lead time also covers intake, funding and the waits before build. A names a real reporting risk but cannot turn ten days into months, C invents a rule, and D misstates where either measure starts. See "Note the scope".
 
 </details>
 

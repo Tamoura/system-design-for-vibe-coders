@@ -41,8 +41,8 @@ Undecided asks create duplicate work, push the business toward tools Nour's risk
 | **Catalogue request** | We already offer this in a known way | Request fulfilment (lesson 7.1) | The recipe; no further decision |
 | **Incident** | Something that worked has stopped working | Operations (lesson 8.1) | Operations, at once |
 | **Product backlog** | Fits the purpose and budget of a funded product | That product's backlog (lesson 4.2) | The product manager |
-| **Portfolio decision** | Needs new money, a new team or crosses several products | The portfolio cycle (lessons 3.1–3.3) | The portfolio forum |
-| **Obligation** | Required by law, regulator, auditor or contract | The owning product, with a due date | Risk confirms the obligation; the product owner plans the how |
+| **Portfolio decision** | Needs new money, a new team or crosses several products | The portfolio cycle (lessons 3.1–3.3) | The portfolio board |
+| **Obligation** | Required by law, regulator, auditor or contract | The owning product, with a due date | Risk confirms the obligation; the product manager plans the how |
 
 The asker need not know the path; triage does.
 
@@ -178,7 +178,7 @@ On day one the board held 212 asks: the retail and cards share of the old lists 
 ## ✍️ Check yourself
 **1. A branch manager asks Yousef's team for a new report that the reporting service already offers in a standard form. Under the five-path triage, where should the ask go?**
 
-- A. To the portfolio forum, because it was raised by a business unit and not by IT.
+- A. To the portfolio board, because it was raised by a business unit and not by IT.
 - B. To request fulfilment, because it is a known offer delivered in a known way.
 - C. To the reporting product's backlog, as a small change to an existing report.
 - D. To the obligation lane, because branch reporting is often reviewed by auditors.
@@ -189,11 +189,11 @@ On day one the board held 212 asks: the retail and cards share of the old lists 
 
 </details>
 
-**2. Najm Bank's portfolio forum decides about 20 ideas a month, and 160 ideas are waiting. Roughly how long does a new idea wait, on average, and what is the quickest way to shorten that wait?**
+**2. Najm Bank's portfolio board decides about 20 ideas a month, and 160 ideas are waiting. Roughly how long does a new idea wait, on average, and what is the quickest way to shorten that wait?**
 
 - A. About two months; add more fields to the form so each idea is better prepared.
 - B. About three months; ask sponsors to resubmit every idea in the next annual cycle.
-- C. About five months; ask the forum to meet less often but review longer lists.
+- C. About five months; ask the board to meet less often but review longer lists.
 - D. About eight months; decline or park stale ideas so that fewer wait in the queue.
 
 <details><summary>Answer</summary>

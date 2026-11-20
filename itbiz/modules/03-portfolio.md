@@ -22,7 +22,7 @@
 ## 🧭 Why it matters
 Najm Bank, its Technology division and the people in it are fictional. All numbers about Najm Bank in this lesson are illustrative figures, not benchmarks.
 
-The board approved a three-year strategy for Najm Bank with three headlines: grow SME banking through digital channels, lower the cost to serve retail customers, and become more resilient after two payment outages last year. Omar, the Chief Information Officer, was asked to show how the Technology plan supports it.
+The board approved a three-year strategy for Najm Bank with three headlines: grow SME banking through digital channels, lower the cost to serve retail customers, and become more resilient after three payment outages last year. Omar, the Chief Information Officer, was asked to show how the Technology plan supports it.
 
 Tariq, the IT Finance Business Partner, pulled the whole division's numbers: 143 approved projects and about 420 applications, with roughly seven in ten of every unit of money spent keeping existing systems running. The largest share of change money went to a corporate treasury upgrade no headline mentioned; SME digital work received less than a tenth, and resilience was not a theme at all.
 
@@ -106,7 +106,7 @@ Huda and Tariq built the first portfolio one-pager for the retail and SME area (
 >
 > **Proposed choices:** grow SME digital onboarding to two teams; fund payments resilience as a named initiative with its own measure; decide keep, simplify or retire for the old internet-banking platform within one quarter; ask each sponsor of an untagged project to name its theme or obligation before the next review.
 >
-> **Not funded this year:** a new branch-queue system and a retail chatbot pilot, because neither moves a theme measure more than the work above.
+> **Not funded this year:** a full roll-out of the branch-queue system (its existing pilot runs only until its stop rule is checked) and a retail chatbot pilot, because neither moves a theme measure more than the work above.
 
 Huda's first draft had eleven themes, one per business line. Omar sent it back: "Eleven themes means we are still funding departments." Tariq spent two weeks splitting shared costs to two decimal places before themes were agreed; Yousef pointed out that a rough split would do.
 
@@ -116,7 +116,7 @@ Huda's first draft had eleven themes, one per business line. Omar sent it back: 
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** Diagnosis: "SME onboarding is slow and branch-bound; routine retail calls are high; two payment outages damaged trust". Guiding policy: "digital SME onboarding first; self-service for the ten commonest retail requests; payment resilience before new payment features". Less of: "new branch technology and projects without a theme". Themes as in the 🏛️ section.
+**Model answer.** Diagnosis: "SME onboarding is slow and branch-bound; routine retail calls are high; three payment outages damaged trust". Guiding policy: "digital SME onboarding first; self-service for the ten commonest retail requests; payment resilience before new payment features". Less of: "new branch technology and projects without a theme". Themes as in the 🏛️ section.
 
 **Self-check.**
 - Could a stranger disagree with your guiding policy? If not, it is still a goal.
@@ -347,7 +347,7 @@ Tariq and Reem wrote Najm Bank's first product funding memo for Cards & Payments
 
 > **Product funding memo: Cards & Payments (draft for the investment committee)**
 >
-> **What is funded:** three stable product teams (about 24 people, two from a supplier; the product grew from one team after the lesson 2.2 pilot), the product's run costs and its share of the card-processing contract, for one year, reviewed quarterly.
+> **What is funded:** three stable product teams (about 24 people, two from a supplier; the product grew from one team after the lesson 2.2 pilot), the product's run costs and the card-processing contract, for one year, reviewed quarterly.
 >
 > **Outcome measures (theme: retail self-service):** routine card calls per active card customer, today about 1.1 a year; lost-card fraud losses per quarter. Reliability: card payment availability against its service level (lesson 8.3).
 >
@@ -592,7 +592,7 @@ After the first quarterly review under the new model, Tariq's portfolio office p
 > | Loan origination replacement | **Change course**: stop the custom build; ten-week comparison of a packaged system against extending the current one | 1.8 times original cost; three slips; two key assumptions (data migration, supplier staffing) failed | No costed option in ten weeks: stop and keep the current system with a support plan | Two of four teams to SME onboarding |
 > | Cards & Payments | **Continue** | Routine card calls down from about 1.1 to 0.9 per customer a year; run cost within guardrail | Unchanged | No change |
 > | SME digital onboarding | **Scale up** | Digital share of new SME accounts up from 10% to 18% in a pilot region | Below 30% two quarters after full launch: reconsider | Two teams added |
-> | Branch queue system | **Stop** | No theme; pilot adoption stop rule not met | — | Supplier notice; checklist owner Lina |
+> | Branch queue system | **Stop** | No theme; pilot adoption below its threshold, so the stop rule was met | — | Supplier notice; checklist owner Lina |
 > | Core banking end-of-support upgrade | **Re-plan** (obligation) | On track, but testing capacity short | Deadline fixed | Platform team provides test environments |
 >
 > **Dissent recorded:** the loan origination sponsor asked that completing the current build be compared too; the board agreed.
@@ -635,7 +635,7 @@ Omar's first instinct was to stop loan origination outright; Huda pointed out th
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** Najm Bank's charter follows "The portfolio board" and "Cadence and triggers"; the board does not approve individual changes. Limit (illustrative): the area has 24 teams; 14 are funded as product or platform teams, leaving 10 for initiatives. At most one active initiative per available team gives 10. Of the area's 52 projects, 30 fold into product backlogs, 8 finish this quarter, 4 stop and 10 remain. Open question to Nour: which stops and supplier exits need second-line review before notice.
+**Model answer.** Najm Bank's charter follows "The portfolio board" and "Cadence and triggers"; the board does not approve individual changes. Limit (illustrative): the area has 24 teams; 14 are funded as product or platform teams, leaving 10 for initiatives. At most one active initiative per available team gives 10. Of the area's 52 projects, 30 fold into product backlogs this quarter; of the rest, 8 finish and 4 stop by year end, leaving 10. Open question to Nour: which stops and supplier exits need second-line review before notice.
 
 **Self-check.**
 - Does the charter say what the board does *not* decide?

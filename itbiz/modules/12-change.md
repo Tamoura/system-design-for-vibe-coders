@@ -128,7 +128,7 @@ Huda built the register in two weeks. Illustrative, fictional extract:
 | ITIL® | How we design and support services | Yousef | Selective use: incident, request and major-incident practices | Faster major-incident reviews since training |
 | COBIT® | How internal audit frames IT governance reviews | Nour | Reference | No outcome measure |
 | TOGAF® | How architecture work is structured | Huda | Reference | Unknown; review in 12.2 |
-| SAFe® | How four Cards teams plan together | Reem | Under review: pilot ends in Q2 | Pilot measures not yet defined |
+| SAFe® | How the three Cards teams plan together | Reem | Under review: pilot ends in Q2 | Pilot measures not yet defined |
 | ISO/IEC 27001 | Security management, data centre scope | Nour | Certify against | Required by two client contracts |
 | DORA research | What to measure in delivery | Sami | Reference | Baseline in 12.2 |
 
@@ -168,7 +168,7 @@ The register settled three arguments. Omar stopped looking for one framework. Re
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** "Sign 1, process count: the quarterly report shows '14 of 16 change practices implemented'. Proposal: report change lead time and change failure rate for the top five products (lessons 1.3, 6.2). Sign 2, tool shaped by the book: a configured process with no records in a year. Proposal: retire it."
+**Model answer.** "Sign 1, process count: the quarterly report shows '14 of 16 change practices implemented'. Proposal: report change lead time and change fail rate for the top five products (lessons 1.3, 6.2). Sign 2, tool shaped by the book: a configured process with no records in a year. Proposal: retire it; measure: share of change records completed in the main workflow, and time spent maintaining unused configuration."
 
 **Self-check.**
 - Is each sign backed by something you can show, not an impression?
@@ -248,7 +248,7 @@ The register settled three arguments. Omar stopped looking for one framework. Re
 - A. Add the number of staff trained in the framework that the practices came from.
 - B. Add a comparison with the number of practices other banks report implementing.
 - C. Add the date each practice was implemented and the name of the person responsible.
-- D. Replace the count with measures such as change lead time and change failure rate.
+- D. Replace the count with measures such as change lead time and change fail rate.
 
 <details><summary>Answer</summary>
 
@@ -600,7 +600,7 @@ The **Stops** row is most often left empty. If nothing old stops, the new practi
 
 | Wave | Typical focus | Typical outcomes to move |
 |---|---|---|
-| **Wave 1: prove** (months 0–6) | One pilot value stream end to end | Lead time, change failure rate and traceability for the pilot |
+| **Wave 1: prove** (months 0–6) | One pilot value stream end to end | Lead time, change fail rate and traceability for the pilot |
 | **Wave 2: extend** (months 6–12) | Two to four more value streams; platform as a product; a portfolio review that can stop work | Same measures; share of spend funded as products; SLO attainment |
 | **Wave 3: embed** (months 12–18) | Remaining value streams; cost per product; supplier contracts; tool rationalisation; retire old boards | Unit costs; audit findings closed; reports and tools retired |
 
@@ -650,9 +650,9 @@ Omar adopted Huda's three-wave roadmap. Illustrative, fictional extract of wave 
 
 | Part | Wave 1: prove (months 0–6) |
 |---|---|
-| **Outcome** | Cards & Payments: change lead time from about 9 days to 3–5 days; traceable sampled changes from 1 of 5 (the Cards share of the 12.2 trace) to at least 9 of 10; change failure rate not worse than baseline |
+| **Outcome** | Cards & Payments: change lead time from about 9 days to 3–5 days; traceable sampled changes from 1 of 5 (the Cards share of the 12.2 trace) to at least 9 of 10; change fail rate not worse than baseline |
 | **Constraint addressed** | Project funding (constraint 1) and unlinked records (constraint 2), for the pilot only |
-| **Where** | Cards & Payments value stream: four teams, two suppliers |
+| **Where** | Cards & Payments value stream: three teams, two suppliers |
 | **Changes** | Product budget agreed with Tariq; risk-based change path with a catalogue of standard changes (pre-approved, low-risk change types; lesson 6.2) owned by Yousef; linked backlog, build, change and deployment records designed by Huda; the Cards service catalogue entry published by Yousef with two SLOs; a first Cards cost view from Tariq; new change-notification terms with both suppliers, agreed by Lina |
 | **Stops** | Weekly change board for Cards' standard changes; the monthly project status report for Cards; the separate supplier change spreadsheet |
 | **Decisions and records** | Reem can move up to an agreed share of the Cards budget between features; Nour agrees the control redesign and the evidence the auditors will test |
@@ -678,7 +678,7 @@ In weeks three to six, Cards' lead time got worse while teams learned; Omar had 
 </details>
 
 **🟡 Draft the three waves.** Using a constraint from your own review (or from 12.2 at Najm Bank), write a wave sheet with all seven parts for a pilot value stream. Then sketch waves 2 and 3 on one page: focus, outcome measures, value streams in scope, and what each depends on from the wave before. Check all three waves against the sequencing checklist.
-*Done when:* wave 1 has all seven parts (a baselined outcome with target range, changes across at least three layers, at least three Stops, a dated review that can stop it); three dated waves span 12–18 months, each with an outcome measure and a review date; and each of the six sequencing rules is marked met or not met, with a reason.
+*Done when:* wave 1 has all seven parts (a baselined outcome with target range, changes across at least three layers, at least three Stops, a dated review that can stop it); three dated waves span 12–18 months, each with an outcome measure and a review date; and each of the six sequencing rules is marked met or not met, with a reason for any rule not met.
 
 <details><summary>Model answer and self-check</summary>
 
@@ -696,7 +696,7 @@ In weeks three to six, Cards' lead time got worse while teams learned; Omar had 
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** Group: change managers. Before: a weekly board reviewing every change. After: they own the standard-change catalogue, review normal changes by risk and analyse failures monthly. Why now: 9-day change lead time. What stops: the weekly board for standard changes. Who helps: a platform coach, four hours a week for two months. How we know: lead time and change failure rate. Sceptic: the head of operations, owning the catalogue with authority to return any change type to full review. Sponsor: opens the wave on day one; attends the month-3 review.
+**Model answer.** Group: change managers. Before: a weekly board reviewing every change. After: they own the standard-change catalogue, review normal changes by risk and analyse failures monthly. Why now: 9-day change lead time. What stops: the weekly board for standard changes. Who helps: a platform coach, four hours a week for two months. How we know: lead time and change fail rate. Sceptic: the head of operations, owning the catalogue with authority to return any change type to full review. Sponsor: opens the wave on day one; attends the month-3 review.
 
 **Self-check.**
 - Would someone in that group recognise their own week in the sheet?

@@ -17,14 +17,14 @@
 - A **project** is temporary work with a start, an end, a budget and a defined result. It is still the right tool for some work, and the wrong container for a product.
 - The rule that matters most: **every product and every service has exactly one accountable name; every project has an end date.**
 - Decision cue: call something a product only if users recognise it, you can measure what it changes, and one team could own most of it.
-- Biggest trap: renaming the application list "the product list". Four hundred applications are not four hundred products, and a committee is not an owner.
+- Biggest trap: renaming the application list "the product list". About 420 applications are not 420 products, and a committee is not an owner.
 
 ## 🧭 Why it matters
 Najm Bank, its Technology division and the people in it are fictional. All numbers about Najm Bank in this lesson are illustrative figures, not benchmarks.
 
 Omar asked a simple question at the monthly leadership meeting: "Who owns the cards app?" Reem said she owned the backlog for new features. Yousef said his operations centre owned it when it broke. Sami said his platform ran its pipelines. Tariq said its costs sat inside the "Digital Channels Programme", a project that had closed last year. Lina said the card-processing supplier owned the part that authorised payments. Nour said the risk register named "Head of Digital Channels", a role that no longer existed.
 
-Then Omar asked what the cards app had cost last year and whether it was improving. Nobody could answer. Each slice was well managed, but the thing customers used had no owner. The same week, the head of SME banking complained that the service desk had eleven request forms with "payments" in the name, and none said what a new relationship manager would get or how long it would take. A missing **product** owner and a missing **service** are two faces of the same gap. This lesson names both, and separates them from **projects**.
+Then Omar asked what the cards app had cost last year and whether it was improving. Nobody could answer. Each slice was well managed, but the thing customers used had no owner. The same week, the head of SME banking complained that the service desk had eleven request forms with "payments" in the name, none saying what a new relationship manager would get. A missing **product** owner and a missing **service** are two faces of the same gap. This lesson names both, and separates them from **projects**.
 
 ## 📐 How it works
 
@@ -40,9 +40,9 @@ Then Omar asked what the cards app had cost last year and whether it was improvi
 
 The Project Management Institute describes a project in similar terms, as temporary work to create a unique product, service or result (as reported on its public pages). "Temporary" is the important word: a project is designed to end; a product is designed to keep going.
 
-**How the three relate.** They are three views of the same work. The Cards & Payments app is a **product**: the thing that is built, run and changed. "Card controls for retail customers" and "Test environment, small" are **services**: offers with terms. Moving the card-processing interface to a new supplier by a contract date could be a **project**; when it ends, the product carries on. One product can sit behind several services, and one service ("New employee setup") can draw on several products.
+**How the three relate.** The Cards & Payments app is a **product**: the thing that is built, run and changed. "Card controls for retail customers" and "Test environment, small" are **services**: offers with terms. Moving the card-processing interface to a new supplier by a contract date could be a **project**; when it ends, the product carries on. One product can sit behind several services, and one service ("New employee setup") can draw on several products.
 
-**Who is accountable for what.** The product manager is the one person who can give Omar a joined-up answer at any time: what the product is for, whether it is changing its outcomes, what comes next and why, how reliable it is, and what it costs. Engineers build, operations staff run and finance counts; the product manager answers for the whole. The service owner answers narrower questions: what exactly people get, who may have it, how they ask, how long it takes, what it costs and where they get help. The two can be the same person (Reem can own "Card controls" as a service) or different people (the service desk can own a request service).
+**Who is accountable for what.** The product manager is the one person who can give Omar a joined-up answer at any time: what the product is for, whether it is changing its outcomes, what comes next and why, how reliable it is, and what it costs. The service owner answers narrower questions: what people get, who may have it, how they ask, how long it takes and what it costs. The two can be the same person (Reem can own "Card controls" as a service) or different people (the service desk can own a request service).
 
 **Accountable is not the same as responsible.** Many people are **responsible**: they do parts of the work. One person is **accountable**: they answer for the result and decide trade-offs. A steering group or a role title cannot be accountable, because it cannot be called at 2 a.m. or asked why a decision was made. Put a person's name and role title on every product and every service.
 
@@ -72,7 +72,7 @@ A first product list for a division of Najm Bank's size might hold twenty to for
 
 No boundary passes perfectly. A candidate failing three or more is usually too big (a "Digital Channels" product that is really six) or too small (a "card block screen" that is a feature).
 
-**When a project is still the right tool.** Closing a data centre, switching card processor by a contract date, a one-off regulatory submission: genuinely temporary work suits a project. Two rules keep projects from undermining products. Every project names the products it changes, and their owners agree to receive what it leaves behind. When it ends, its knowledge and running costs go somewhere named. Funding is lesson 3.2.
+**When a project is still the right tool.** Closing a data centre, switching card processor by a contract date, a one-off regulatory submission: genuinely temporary work suits a project. Two rules apply: every project names the products it changes, and their owners agree to receive what it leaves behind; when it ends, its knowledge and running costs go somewhere named. Funding is lesson 3.2.
 
 ### 🔴 Expert view
 
@@ -118,7 +118,7 @@ Yousef asked: "If Reem owns it, is she woken when card payments fail at midnight
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** Cards app and corporate payments portal: products. Dispute-handling tool: product (internal users), though unsure until a business owner is agreed. Core banking and card-limit rules engine: components (core banking under a shared-system pattern). Test environment, new joiner laptop, password reset: services. Data centre exit and card-processor migration: projects with dates, naming the products whose hosting or interfaces change.
+**Model answer.** Cards app and corporate payments portal: products. Dispute-handling tool: product (internal users), though unsure until a business owner is agreed. Core banking and card-limit rules engine: components (core banking is shared; it still gets one owner's name in the next exercise). Test environment, new joiner laptop, password reset: services. Data centre exit and card-processor migration: projects with dates, naming the products whose hosting or interfaces change.
 
 **Self-check.**
 - Did you avoid calling every application a product?
@@ -127,12 +127,12 @@ Yousef asked: "If Reem owns it, is she woken when card payments fail at midnight
 
 </details>
 
-**🟡 Name the owners.** For the products and services from the first exercise, write one accountable name (or "none") and a role title. Run the ownership check on two products.
+**🟡 Name the owners.** For the products and services from the first exercise, and for any shared system such as core banking (it still needs one accountable name), write one accountable name (or "none") and a role title. Run the ownership check on two products.
 *Done when:* each line has one person or an explicit "none", no line names a committee or team, and the check is answered yes, partly or no for two products.
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** Cards & Payments: Reem; test environment: Sami; new joiner setup: a named service owner in Yousef's service desk; core banking: the head of its platform team; dispute tool: "none" until a business owner is agreed. The check for Cards & Payments: order of work, yes; cost and incidents, partly (incidents yes, cost no); release timing, partly (the weekly change board decides).
+**Model answer.** Cards & Payments: Reem; corporate payments portal: a named head of corporate payments, not the steering group; test environment: Sami; new joiner setup: a named service owner in Yousef's service desk; core banking (a shared component, still one name): the head of its platform team; dispute tool: "none" until a business owner is agreed. Check for Cards & Payments: order of work, yes; cost and incidents, partly (incidents only); release timing, partly (the change board decides). Check for the portal: order of work, partly (the steering group still reorders it); cost and incidents, no (a shared budget line; incidents logged against the application); release timing, no. Omar must grant the order of work; Tariq must split out the costs.
 
 **Self-check.**
 - Is there exactly one person per line?
@@ -322,7 +322,7 @@ Review it after the first three disputes; disputes are its test.
 
 ### 🔴 Expert view
 
-**Start with one value stream.** Reorganising 600 people on one date teaches little, because everything changes at once. Pick one stream people complain about, design its teams, decision rights, records and measures, run it for a quarter or two, compare lead time, change failure and team load before and after, then extend.
+**Start with one value stream.** Reorganising 600 people on one date teaches little, because everything changes at once. Pick one stream people complain about, design its teams, decision rights, records and measures, run it for a quarter or two, compare lead time, change fail rate and team load before and after, then extend.
 
 **Controls must move with the work.** When product teams release their own changes, risk functions worry about **segregation of duties**: one person both writing and releasing a change. The answer is usually controls built into the flow, not a team back in the path: recorded peer review, automated gates, deployment by the pipeline rather than personal access, and evidence kept automatically. Agree them with Nour's team first (lessons 6.2, 10.3); [*Cloud & DevOps: Zero to Hero*, lesson 4.3 — Securing the pipeline: secrets, signed artefacts and least-privilege deploys](../cloud/index.html#/4.3) covers the engineering. Draw suppliers on the map too: a contract with ten days' notice per change is a hand-off (lesson 10.2).
 
@@ -334,7 +334,7 @@ Review it after the first three disputes; disputes are its test.
 | **Decision-rights table** | Recurring decisions with one decider, consulted parties and a guardrail | When disputes repeat |
 | **Function landing table** | Where each functional team's work lands | Planning the transition with function heads |
 | **Team load check** | Can the team explain what it owns; time spent keeping things running; how often it waits on experts | Quarterly, and before adding scope |
-| **Pilot scorecard** | Lead time, change failure, team load and user feedback, before and after | Before extending the pilot |
+| **Pilot scorecard** | Lead time, change fail rate, team load and user feedback, before and after | Before extending the pilot |
 
 ## 🏛️ In practice at Najm Bank
 Fictional and illustrative. Omar agreed to pilot the cards change stream. Huda, Reem, Sami and Yousef wrote the target map:

@@ -35,17 +35,17 @@
       "lesson": "5.2",
       "q": {
         "en": "A quality gate's test suite fails so often from flaky tests that engineers routinely override it. Nour notices that overrides are not recorded. What should change?",
-        "ar": "تفشل مجموعة الاختبارات عند إحدى بوابات الجودة (quality gate) كثيرًا بسبب اختبارات متقلّبة، فصار المهندسون يتجاوزونها بانتظام. ولاحظت نور أن حالات التجاوز لا تُسجَّل. ما الذي ينبغي تغييره؟"
+        "ar": "تفشل مجموعة الاختبارات عند إحدى بوابات الجودة (quality gate) كثيرًا بسبب اختبارات غير مستقرة، فصار المهندسون يتجاوزونها بانتظام. ولاحظت نور أن حالات التجاوز لا تُسجَّل. ما الذي ينبغي تغييره؟"
       },
       "o": {
         "en": [
-          "Fix or set aside the flaky tests, and record every override with its reason",
+          "Fix or quarantine the flaky tests, and record every override with its reason",
           "Remove the gate, since a gate people override adds delay and no protection",
           "Add a manager's manual sign-off before each override so someone reviews it",
           "Keep the gate as it is, since the overrides show engineers using judgement"
         ],
         "ar": [
-          "إصلاح الاختبارات المتقلّبة أو عزلها، وتسجيل كل تجاوز مع سببه",
+          "إصلاح الاختبارات غير المستقرة أو عزلها، وتسجيل كل تجاوز مع سببه",
           "إزالة البوابة، فالبوابة التي يتجاوزها الناس تضيف تأخيرًا بلا حماية",
           "إضافة توقيع يدوي من مدير قبل كل تجاوز حتى يراجعه أحد",
           "إبقاء البوابة كما هي، فالتجاوزات تدل على أن المهندسين يحكّمون تقديرهم"
@@ -54,7 +54,7 @@
       "a": 0,
       "why": {
         "en": "Lesson 5.2 warns of gates that are red so often that people ignore them. Each gate card has an override rule and evidence, so make the gate trustworthy again and record overrides. The tempting option is removing the gate: that drops the check instead of fixing why it cannot be trusted. A manual sign-off on every override adds delay without fixing the flaky tests.",
-        "ar": "يحذّر الدرس 5.2 من بوابات تكون حمراء كثيرًا حتى يتجاهلها الناس. ولكل بوابة بطاقة فيها قاعدة التجاوز والدليل، فأعد للبوابة موثوقيتها وسجّل حالات التجاوز. والخيار المغري هو إزالة البوابة، وهي تُسقط الفحص بدل إصلاح سبب فقدان الثقة به. والتوقيع اليدوي على كل تجاوز يضيف تأخيرًا دون أن يُصلح الاختبارات المتقلّبة."
+        "ar": "يحذّر الدرس 5.2 من بوابات تكون حمراء كثيرًا حتى يتجاهلها الناس. ولكل بوابة بطاقة فيها قاعدة التجاوز والدليل، فأعد للبوابة موثوقيتها وسجّل حالات التجاوز. والخيار المغري هو إزالة البوابة، وهي تُسقط الفحص بدل إصلاح سبب فقدان الثقة به. والتوقيع اليدوي على كل تجاوز يضيف تأخيرًا دون أن يُصلح الاختبارات غير المستقرة."
       }
     },
     {
@@ -82,7 +82,7 @@
       "a": 3,
       "why": {
         "en": "Lesson 5.3's rule: if it runs in your product, it is in your inventory, and someone by name owns it. A pipeline-generated software bill of materials (SBOM) answers \"where do we use X?\" in minutes, transitive dependencies included. The tempting option is the yearly survey: memory misses indirect dependencies and is out of date at once. Banning open source is not realistic, since products are mostly made of it.",
-        "ar": "قاعدة الدرس 5.3: ما يعمل في منتجك موجود في سجل حصرك، ويملكه شخص مسمّى. وقائمة مكوّنات البرمجيات (SBOM) التي يولّدها خط النشر تجيب عن «أين نستخدم X؟» في دقائق، بما فيها الاعتماديات غير المباشرة. والخيار المغري هو الاستبيان السنوي، لكن الذاكرة تُغفل الاعتماديات غير المباشرة، ويتقادم الاستبيان فورًا. ومنع المصادر المفتوحة غير واقعي، فالمنتجات مبنية منها في معظمها."
+        "ar": "قاعدة الدرس 5.3: ما يعمل في منتجك موجود في سجل حصرك، ويملكه شخص مسمّى. وقائمة مكوّنات البرمجيات (SBOM) التي يولّدها خط النشر تجيب عن «أين نستخدم X؟» في دقائق، بما فيها الاعتماديات المتعدية. والخيار المغري هو الاستبيان السنوي، لكن الذاكرة تُغفل الاعتماديات المتعدية، ويتقادم الاستبيان فورًا. ومنع المصادر المفتوحة غير واقعي، فالمنتجات مبنية منها في معظمها."
       }
     },
     {
@@ -91,7 +91,7 @@
       "lesson": "5.2",
       "q": {
         "en": "Audit asks for proof that every payment change passed security scanning last quarter. Team A pastes a scan report into a wiki page for each release. Team B's pipeline stores every scan result, time-stamped and tied to the artefact's identifier. Which evidence is more trustworthy?",
-        "ar": "طلب التدقيق إثباتًا على أن كل تغيير في المدفوعات اجتاز الفحص الأمني في الربع الماضي. الفريق A يلصق تقرير الفحص في صفحة wiki لكل إصدار. وخط نشر الفريق B يحفظ كل نتيجة فحص بختم زمني ومربوطة بمعرّف الحزمة. أي الدليلين أجدر بالثقة؟"
+        "ar": "طلب التدقيق إثباتًا على أن كل تغيير في المدفوعات اجتاز الفحص الأمني في الربع الماضي. الفريق A يلصق تقرير الفحص في صفحة wiki لكل إصدار. وخط نشر الفريق B يحفظ كل نتيجة فحص مختومة بالوقت ومربوطة بمعرّف الأثر البرمجي. أي الدليلين أجدر بالثقة؟"
       },
       "o": {
         "en": [
@@ -103,14 +103,14 @@
         "ar": [
           "دليل الفريق A، لأن شخصًا راجع كل تقرير وكتبه بيده",
           "الدليلان بالقدر نفسه، فكلاهما يُظهر أن الفحص جرى لكل إصدار",
-          "دليل الفريق B، لأنه ناتج عن العمل نفسه ومربوط بالحزمة بعينها",
+          "دليل الفريق B، لأنه ناتج عن العمل نفسه ومربوط بالأثر البرمجي بعينه",
           "لا هذا ولا ذاك، فالتوقيع اليدوي من مدير هو وحده الدليل المعتبر"
         ]
       },
       "a": 2,
       "why": {
-        "en": "Lesson 5.2's rule: evidence is a by-product of doing the work, never a separate document written about it. Trustworthy evidence is generated, tied to the artefact, time-stamped, complete, retained and meaningful. The tempting option is Team A's hand-written report: a pasted page cannot show which artefact was scanned or that nothing was missed.",
-        "ar": "قاعدة الدرس 5.2: الدليل ناتج جانبي لأداء العمل، وليس وثيقة منفصلة تُكتب عنه. والدليل الموثوق مولَّد من العمل، ومربوط بالحزمة، ومختوم بزمن، ومكتمل، ومحفوظ، وذو معنى. والخيار المغري هو تقرير الفريق A المكتوب يدويًا، لكن الصفحة الملصقة لا تُظهر أي حزمة فُحصت، ولا أن شيئًا لم يُغفل."
+        "en": "Lesson 5.2's rule: evidence is a by-product of doing the work, never a separate document written about it. Trustworthy evidence is generated, tied to the artefact, time-stamped, complete, retained and meaningful. The tempting option is Team A's pasted wiki page: it cannot show which artefact was scanned or that nothing was missed.",
+        "ar": "قاعدة الدرس 5.2: الدليل ناتج جانبي لأداء العمل، وليس وثيقة منفصلة تُكتب عنه. والدليل الموثوق مولَّد من العمل، ومربوط بالأثر البرمجي، ومختوم بالوقت، ومكتمل، ومحفوظ، وذو معنى. والخيار المغري هو صفحة wiki التي ألصقها الفريق A، لكن الصفحة الملصقة لا تُظهر أي أثر برمجي فُحص، ولا أن شيئًا لم يُغفل."
       }
     }
   ],
