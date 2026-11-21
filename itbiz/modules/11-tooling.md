@@ -126,7 +126,7 @@ Illustrative and fictional. Huda and Sami built the map and checked it with each
 | Running component (cloud) | CMDB and cloud inventory both edited | Cloud inventory is home (lesson 9.1); CMDB gets a nightly feed |
 | Investment | The portfolio tool and a spreadsheet both held funding figures; the spreadsheet was more current | Spreadsheet accepted as a shadow record for one quarter, owned by Tariq, then moved into the portfolio tool |
 
-**Mistakes along the way.** Yousef first proposed the service management platform as home for everything, including deployments, "because that's where audit looks". Sami showed that deployments would then be re-typed after the fact, weaker evidence than a pipeline log. Sami's mistake was the reverse: he wanted the developer portal to be home for products, although the product record already lived in the service catalogue (lesson 2.3). The portal now displays it.
+**Mistakes along the way.** Yousef first proposed the service management platform as home for everything, including deployments, "because that's where audit looks". Sami showed that deployments would then be re-typed after the fact, weaker evidence than a pipeline log. Sami's mistake was the reverse: he wanted the developer portal to be home for products, although the product record already lived in the product inventory (lesson 2.1), held in the service management platform, which catalogue entries reference by product identifier. The portal now displays it.
 
 **Manual feeds.** The map found nine. The largest was Tariq, IT Finance Business Partner, re-typing cloud costs into a finance spreadsheet each month, about two days of work (illustrative). It became the first integration in lesson 11.2.
 
@@ -207,12 +207,12 @@ Illustrative and fictional. Huda and Sami built the map and checked it with each
 
 </details>
 
-**3. Sami proposes making the developer portal the system of record for products and their owners. The product record already lives in the service catalogue (lesson 2.3), with a named owner for each entry. What should Huda say?**
+**3. Sami proposes making the developer portal the system of record for products and their owners. The product record already lives in the product inventory (lesson 2.1), held in the service management platform, with a named owner for each product. What should Huda say?**
 
-- A. Let the portal display the catalogue's product records, not hold its own.
+- A. Let the portal display the inventory's product records, not hold its own.
 - B. Move product records into the portal, since engineers visit it most often.
 - C. Keep product records in both, with a weekly sync agreed by the two owners.
-- D. Move the catalogue's product entries into the portal and phase out the catalogue.
+- D. Move the inventory's product entries into the portal and phase out the inventory.
 
 <details><summary>Answer</summary>
 
@@ -373,11 +373,11 @@ Illustrative and fictional. Huda wrote the register with Sami, Yousef, Lina and 
 | 1 | Feed cloud costs from the cost tool to the finance reporting store | Sami | Two days of manual work a month | Totals differ from the invoice beyond tolerance for two months |
 | 2 | Cards & Payments backlog from Work tracker B to A | Reem | B's notice period closes in ten weeks | More than a tenth of items lose their parent link |
 | 3 | Pipeline creates standard changes in the platform | Sami, Yousef | Two homes for changes (lesson 11.1) | Any change reaches production without a change record |
-| 4 | Retire the old monitoring tool for cloud services | Yousef | Observability platform covers them | Any Sev 1 (top severity, lesson 8.1) symptom loses its alert |
+| 4 | Consolidate the old monitoring tool's cloud services into the observability platform | Yousef | Observability platform covers them | Any Sev 1 (top severity, lesson 8.1) symptom loses its alert |
 
 **Mistakes along the way.** Tariq's first business case counted only licence savings; adding migration, parallel running and training roughly halved the return (illustrative). Lina found that B's contract renewed automatically for two years unless notice was given, so wave 2 moved ahead of wave 3. In wave 4, Yousef planned to switch off the old monitoring tool for every cloud service on one day. Nour, IT Risk and Controls Lead, asked how the bank would prove every critical alert had moved. Yousef split the wave by service and ran both tools side by side for two weeks per service, comparing alerts.
 
-**What they reported.** After two waves, re-keying had fallen by about three days a month, and "which changes touched Cards & Payments last month?" took minutes instead of two days (illustrative). The board heard those numbers as well as "two tools removed".
+**What they reported.** After two waves, re-keying had fallen by about three days a month, and "which changes touched Cards & Payments last month?" took minutes instead of two days (illustrative). The board heard those numbers as well as "one tool removed".
 
 ## 🛠️ Exercises
 **🟢 Decide for five tools.** Take five tools from your toolchain map. For each, choose keep, consolidate, replace or retire, and write the reason in terms of records and decisions.
@@ -385,7 +385,7 @@ Illustrative and fictional. Huda wrote the register with Sami, Yousef, Lina and 
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** For example: "Service management platform — keep — home for incidents, requests and changes." "Work tracker B — consolidate into A — same records for two teams; no unique need." "Old monitoring tool — retire for cloud services — observability platform covers them; keep for mainframe for now." **Self-check.**
+**Model answer.** For example: "Service management platform — keep — home for incidents, requests and changes." "Work tracker B — consolidate into A — same records for two teams; no unique need." "Old monitoring tool — consolidate into the observability platform (for cloud services) — the platform already covers them; keep for mainframe for now." **Self-check.**
 - Does every reason mention a record, a decision or a user need?
 - Is at least one decision other than "keep"?
 - Did you mark decisions that depend on an unknown contract date?
@@ -397,7 +397,7 @@ Illustrative and fictional. Huda wrote the register with Sami, Yousef, Lina and 
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** Wave A: Cards team backlog moves from B to A; owner Reem; open items migrated with parent links; last year's closed items kept read-only in the reporting store; earlier items archived; stop if more than a tenth of items lose their parent link; rollback by reopening B for Cards for two weeks. Wave B: the remaining teams, same rules; B switched off at the confirmed notice date. Integration: work tracker A and the service management platform share the product identifier and the change number; a one-way event creates a change when a release is approved; A writes scope and release fields, the platform writes status and approval. **Self-check.**
+**Model answer.** Wave A: Cards team backlog moves from B to A; owner Reem; open items migrated with parent links; last year's closed items kept read-only in the reporting store; earlier items archived; stop if more than a tenth of items lose their parent link; rollback by reopening B for Cards for two weeks. Wave B: the remaining teams, same rules; B switched off at the confirmed notice date. Integration: work tracker A and the service management platform share the product identifier and A's backlog item key; when the pipeline creates the standard change, it carries that backlog key onto the change record, and A never creates changes; a one-way event from the platform then posts the change number and status back onto the backlog item; A writes scope fields, the pipeline writes release fields, the platform writes status and approval. **Self-check.**
 - Does each wave end with something switched off, and is its stop rule a number?
 - Does every field in the integration have exactly one writer?
 - Did you ask about retention instead of choosing a period yourself?
@@ -483,12 +483,12 @@ Illustrative and fictional. Huda wrote the register with Sami, Yousef, Lina and 
 
 </details>
 
-**5. Yousef plans to retire the old monitoring tool for every cloud service on the same day. Nour asks how the bank will prove that every critical alert moved. What is the best change to the plan?**
+**5. Yousef plans to switch off the old monitoring tool for every cloud service on the same day. Nour asks how the bank will prove that every critical alert moved. What is the best change to the plan?**
 
-- A. Split the wave by service and run both tools briefly, comparing alerts.
+- A. Split the wave by service and run both tools for a short time, comparing alerts.
 - B. Keep the single date but have each team sign that all its alerts were moved.
-- C. Postpone retirement until the new tool matches every feature of the old one.
-- D. Retire as planned and let the incident process reveal any missing alerts.
+- C. Postpone the switch-off until the new tool matches every feature of the old one.
+- D. Switch off as planned and let the incident process reveal any missing alerts.
 
 <details><summary>Answer</summary>
 
@@ -623,7 +623,7 @@ Illustrative and fictional. Nour and Yousef built the first register in a week b
 |---|---|---|---|
 | Incident summariser | Draft, medium | Incident manager approves; monthly sample of ten; customer data excluded | Keep |
 | Alert grouping | Decide, medium | On-call can split groups; weekly sample; test set re-run after updates | Keep, with stop rule |
-| Restart agent, non-payment services | Act, medium | Own identity; listed services only; tested rollback; full log | Extend only after the fixes below |
+| Restart agent, non-payment services | Act, medium | Own identity; listed services only; rate limit; approval for a second restart of the same service within an hour; tested rollback; full log | Extend only after the fixes below |
 | Restart agent, payment services | Act, high | As above, plus on-call approval for every restart | Keep at this level |
 
 **Sami's agent.** In the pilot the restart agent ran with Sami's own administrator credentials, because that was quicker. It could have deleted resources or changed network rules. Sami gave it its own identity, allowed only to restart listed services, added approval for every payment-service restart, and made each restart write to the incident record marked "AI-executed".

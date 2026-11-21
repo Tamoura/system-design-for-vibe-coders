@@ -9,7 +9,7 @@
 # 0.1 — What it means to run IT as a business, and what digital products and AI change
 *Level: 🟢 Beginner* · *Prerequisites: none* · *Step: Plan*
 
-**After this you can** write a one-page "IT as a business" diagnosis of your own IT organisation that names its customers, what they consume, how money and work flow, and three questions you cannot yet answer with evidence. *Study time: reading about 15 min, hands-on about 60 min (estimate).*
+**After this you can** write a one-page "IT as a business" diagnosis of your own IT organisation that names its customers, what they consume, how money and work flow, and three questions you cannot yet answer with evidence. *Study time: reading about 20 min, hands-on about 75 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Running IT as a business** does not mean profit from colleagues or outsourcing everything. It means knowing IT's customers, offer, costs, performance and risks, and being able to show the evidence.
@@ -37,7 +37,7 @@ The lending business can say who its customers are, what they buy and what each 
 | Question | A well-run IT organisation can show | A struggling one says |
 |---|---|---|
 | **Who are our customers?** | Named business units and end customers, and what each relies on | "The business" |
-| **What do they consume?** | A short list of products and services, each with an owner and a service level | "We support 400 applications" |
+| **What do they consume?** | A short list of products and services, each with an owner and a service level | "We support 420 applications" |
 | **What does it cost?** | The cost of each product or service, and a unit cost where it helps (per account, per payment) | One total, no breakdown |
 | **How fast and safely does change flow?** | Time from idea to customer, how often changes go out, fail and recover | "Projects are mostly on time" |
 | **Who decides, with what record?** | Funding, priority, release and risk decisions, each with an owner and a findable record | "It was agreed in a meeting" |
@@ -98,7 +98,7 @@ AI also becomes part of the bank's own products, which brings governance duties 
 |---|---|---|
 | **IT-as-a-business diagnosis** | One page answering the five questions, each rated "evidence / partial / opinion" | Before any change or board conversation |
 | **Money map** | Where the IT budget goes (run vs change; people, suppliers, cloud), unknowns marked | When only one cost total exists |
-| **Flow snapshot** | Rough lead time, deployment frequency and change failure for one product, with the source of each number | To start a factual conversation about speed and stability |
+| **Flow snapshot** | Rough lead time, deployment frequency and change fail rate for one product, with the source of each number | To start a factual conversation about speed and stability |
 | **Decision-and-record log** | Recent decisions (fund, release, accept risk), who decided and where the record is | When "agreed in a meeting" is the usual answer |
 | **AI change note** | Where AI is used in delivery and operations, and which downstream steps have not changed to match | Before scaling AI tools across teams |
 
@@ -110,7 +110,7 @@ Omar asked Huda (Head of Enterprise Architecture) and Tariq (IT Finance Business
 > | Question | What we can show | Evidence rating |
 > |---|---|---|
 > | Customers | Retail, SME and corporate banking; internal functions; end customers via digital channels | Partial: no map of who relies on which systems |
-> | Consumption | About 400 applications in the inventory; no agreed product or service list | Opinion |
+> | Consumption | About 420 applications in the inventory; no agreed product or service list | Opinion |
 > | Cost | Total known; run versus change only roughly; no cost per product | Partial |
 > | Flow | Project dates known; nobody measures idea-to-customer time | Opinion |
 > | Decisions and records | Investment decisions minuted; release and risk decisions spread across email and three tools | Partial |
@@ -158,7 +158,7 @@ Tariq first rated cost "evidence" on one line: "IT is about 8% of bank costs". H
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** Cards & Payments: AI drafts code and unit tests; review "unchanged" (same two reviewers); testing "partly changed"; change approval and release "unchanged" (weekly board, monthly window); operations "unknown"; records "unchanged". Bottleneck: review, because volume rises and reviewers do not. Action: Reem and Sami agree a smaller-change rule and a review rota by month end.
+**Model answer.** Cards & Payments: AI drafts code and unit tests; review "unchanged" (same two reviewers); testing "unchanged" (only the unit tests are AI-drafted; the test stages are the same); change approval and release "unchanged" (weekly board, monthly window); operations "unknown"; records "unchanged". Bottleneck: review, because volume rises and reviewers do not. Action: Reem and Sami agree a smaller-change rule and a review rota by month end.
 
 **Self-check.**
 - Did you name a step after code writing as the likely bottleneck?
@@ -260,7 +260,7 @@ Tariq first rated cost "evidence" on one line: "IT is about 8% of bank costs". H
 # 0.2 — Meet Najm Bank's Technology division and the eight steps
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Step: Plan*
 
-**After this you can** draw your own organisation's IT operating cycle on one page using the eight steps, name an owner, a main record and one measure for each step, and mark the two weakest hand-offs. *Study time: reading about 15 min, hands-on about 60 min (estimate).*
+**After this you can** draw your own organisation's IT operating cycle on one page using the eight steps, name an owner, a main record and one measure for each step, and mark the two weakest hand-offs. *Study time: reading about 15 min, hands-on about 105 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Najm Bank is a **fictional** mid-sized Gulf bank. This course sits in its **Technology division** (about 600 staff plus suppliers, an illustrative figure), which is moving from project-and-ticket IT to product-aligned IT.
@@ -307,7 +307,7 @@ Najm Bank teams from other library courses (platform, quality engineering, secur
 | **Plan** | What should we work on, and why? | Link from stated outcomes to approved work; prioritised demand | Share of work traceable to a stated outcome | Omar, Huda, product managers |
 | **Fund** | How much money and capacity goes where? | Funding decision per product or investment | Time from proposal to decision | Tariq, with the investment committee |
 | **Build** | How do we turn a need into working, tested software or configuration? | Backlog items, code changes, test evidence | Lead time from start of work to ready to release | Product teams, Sami's platform |
-| **Release** | When and how does a change reach customers, and who decides? | Change and release records | Deployment frequency; change failure | Product owners, Yousef for change control |
+| **Release** | When and how does a change reach customers, and who decides? | Change and release records | Deployment frequency; change fail rate | Product owners, Yousef for change control |
 | **Serve** | How do people request, get and use what IT offers? | Service catalogue entries, requests, entitlements | Time to fulfil a standard request | Yousef's service desk, product teams |
 | **Run** | How do we keep it working and recover when it fails? | Monitoring events, incidents, problems | Time to restore service; service-level performance | Yousef's operations, product teams |
 | **Govern** | Who is allowed to decide what, and how do we prove control? | Policies, risk register, control evidence | Share of controls with automated evidence | Nour, with Omar and Huda |
@@ -415,7 +415,7 @@ Huda's first draft listed "IT operations" as owner of Serve and Run. Reem pointe
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** Najm Bank: (1) Build → Release is a **wait**; link each change record to the backlog item it delivers, with "ready" and "released" timestamps, owned by Reem's team, so the wait is measured automatically. (2) Run → Plan is a **loss**; link each major incident's actions to items in the product backlog, owned by Yousef's problem manager with Reem, so the monthly review shows which actions are planned, done or dropped.
+**Model answer.** Najm Bank: (1) Build → Release is a **wait**; link each change record to the backlog item it delivers, with "ready" and "released" timestamps, owned by Reem's team, so the wait is measured automatically (evidence: each of the three traced changes was ready in about two days, then waited a median of about three weeks to release). (2) Run → Plan is a **loss**; link each major incident's actions to items in the product backlog, owned by Yousef's problem manager with Reem, so the monthly review shows which actions are planned, done or dropped (evidence: last year's three payment incident reports, none of whose actions reached the cards backlog).
 
 **Self-check.**
 - Did you distinguish a wait (time) from a loss (information) and a re-check (duplicated control)?
@@ -441,7 +441,7 @@ Huda's first draft listed "IT operations" as owner of Serve and Run. Reem pointe
 ## ✍️ Check yourself
 **1. In the workshop, Sami's pipeline can deploy daily, but changes reach customers about monthly. Which step's hand-off is the most likely first place to look?**
 
-- A. Plan → Fund, because money for the work was approved months before work started.
+- A. Fund → Build, because money for the work was approved months before work started.
 - B. Build → Release, because ready changes wait for the change board and release window.
 - C. Serve → Run, because the service desk must be trained before any change goes live.
 - D. Run → Plan, because incident data does not reach the people who set priorities.
@@ -513,7 +513,7 @@ Huda's first draft listed "IT operations" as owner of Serve and Run. Reem pointe
 # 0.3 — How to use this course, and what it is not
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Step: Plan*
 
-**After this you can** write a one-page learning plan that sets your path through the modules for your role, your artefact folder, the people in your organisation you will check facts with, and three limits you will keep. *Study time: reading about 15 min, hands-on about 60 min (estimate).*
+**After this you can** write a one-page learning plan that sets your path through the modules for your role, your artefact folder, the people in your organisation you will check facts with, and three limits you will keep. *Study time: reading about 15 min, hands-on about 65 min (estimate).*
 
 ## ⚡ In 60 seconds
 - The course teaches the **operating-model view** of IT: who decides, what record proves it, how it is measured, funded and governed. It is **not an engineering course**; it links to the library's engineering courses for depth.
@@ -530,7 +530,7 @@ Tariq, Najm Bank's IT Finance Business Partner, liked the example cost split in 
 
 Nour, the IT Risk and Controls Lead, made the opposite mistake: she assumed that adopting the course's control examples would satisfy the auditors and the central bank. It would not, and the course never says it would.
 
-Both expected the wrong thing of a course. This lesson says what the course is and is not, how a lesson is built, and how to use the next 40 lessons at work without overclaiming to your CFO, auditor or board.
+Both expected the wrong thing of a course. This lesson says what the course is and is not, how a lesson is built, and how to use the remaining 38 lessons at work without overclaiming to your CFO, auditor or board.
 
 ## 📐 How it works
 

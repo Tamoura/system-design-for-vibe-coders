@@ -91,7 +91,7 @@
       "lesson": "4.3",
       "q": {
         "en": "Sami's foundation work, such as upgrading a payment library and paying down technical debt, loses every weekly priority call to features until an outage forces it. Which arrangement fits lesson 4.3?",
-        "ar": "يخسر عمل الأساسات الذي يقوده سامي، مثل ترقية مكتبة مدفوعات وسداد الدين التقني (technical debt)، كل نقاش أسبوعي على الأولويات أمام الميزات، حتى يفرضه انقطاع. أي ترتيب يتفق مع الدرس 4.3؟"
+        "ar": "يخسر عمل الأسس الذي يقوده سامي، مثل ترقية مكتبة مدفوعات وسداد الدين التقني (technical debt)، كل نقاش أسبوعي على الأولويات أمام الميزات، حتى يفرضه انقطاع. أي ترتيب يتفق مع الدرس 4.3؟"
       },
       "o": {
         "en": [
@@ -101,16 +101,16 @@
           "Let foundation items compete with features each week, so the best idea wins"
         ],
         "ar": [
-          "تأجيل عمل الأساسات حتى الانقطاع القادم، حين يسهل الدفاع عنه",
-          "حماية حصة من طاقة الفريق للأساسات، مع قاعدة لكيفية إنفاقها",
-          "إرسال كل بند من الأساسات إلى مجلس مراجعة البنية للموافقة النهائية",
-          "ترك بنود الأساسات تنافس الميزات كل أسبوع، لتفوز الفكرة الأفضل"
+          "تأجيل عمل الأسس حتى الانقطاع القادم، حين يسهل الدفاع عنه",
+          "حماية حصة من طاقة الفريق للأسس، مع قاعدة لكيفية إنفاقها",
+          "إرسال كل بند من الأسس إلى مجلس البنية لمراجعته والموافقة النهائية",
+          "ترك بنود الأسس تنافس الميزات كل أسبوع، لتفوز الفكرة الأفضل"
         ]
       },
       "a": 1,
       "why": {
         "en": "Lesson 4.3 names this as its biggest trap: foundation work competing with features without a protected share loses every week until an outage wins the argument. The fix is a protected capacity share with a spending rule, so the runway stays healthy. The tempting option is weekly open competition, which is exactly the situation described. A late review board is what the lesson moves away from.",
-        "ar": "يسمّي الدرس 4.3 هذا أكبر فخ: عمل الأساسات الذي ينافس الميزات دون حصة محمية يخسر كل أسبوع حتى يحسم الانقطاع النقاش. والحل حصة محمية من الطاقة مع قاعدة للإنفاق، ليبقى المدرج سليمًا. والخيار المغري هو المنافسة المفتوحة كل أسبوع، وهي الوضع الموصوف نفسه. أما مجلس المراجعة المتأخر فهو ما يدعو الدرس إلى تجاوزه."
+        "ar": "يسمّي الدرس 4.3 هذا أكبر فخ: عمل الأسس الذي ينافس الميزات دون حصة محمية يخسر كل أسبوع حتى يحسم الانقطاع النقاش. والحل حصة محمية من الطاقة مع قاعدة للإنفاق، ليبقى المدرج سليمًا. والخيار المغري هو المنافسة المفتوحة كل أسبوع، وهي الوضع الموصوف نفسه. أما مجلس المراجعة المتأخر فهو ما يدعو الدرس إلى تجاوزه."
       }
     }
   ],

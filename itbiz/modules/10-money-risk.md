@@ -24,7 +24,7 @@ Najm Bank and everyone in it are fictional. All numbers about Najm Bank in this 
 
 The board's audit committee asked Omar: "What does the Cards & Payments digital product cost each year, and what would we save if we retired the old card platform?" Tariq, IT Finance Business Partner, opened the **general ledger** (the bank's master accounting record). It showed spending by **cost centre** (the organisational unit a budget is assigned to) and by **account** (salaries, licences, **depreciation** (spreading an asset's cost over its useful life), cloud, consultants), but not by product. Reem's team, the cloud bill, three supplier contracts and part of the data centre all served Cards & Payments; none said so.
 
-Tariq's first attempt made things worse. He divided shared platform and infrastructure cost by headcount. Cards & Payments, a small team running a heavy, always-on workload, came out cheap; the branch-staff portal, a large team running a light workload, came out expensive. Everyone knew it was wrong, and the next meeting argued about the method, not the cost.
+Tariq's first attempt made things worse. The tagging from lesson 7.3 covered most platform cost, but not the data centre, the network or the untagged remainder. To close the gap quickly, he fell back on the old headcount split for those shared costs, the method he had dropped for showback. Cards & Payments, with a small headcount relative to its heavy, always-on workload, came out cheap; the branch-staff portal, with a large headcount relative to its light workload, came out expensive. Everyone knew it was wrong, and the next meeting argued about the method, not the cost.
 
 Without a cost model, lesson 3.2's product funding, 7.3's showback, 8.3's priced reliability targets and 10.2's renewals all fall back to opinion.
 
@@ -128,7 +128,7 @@ Illustrative and fictional. Tariq started again with Reem for one product, using
 | Old card platform (legacy tail) | Shared | Batch jobs run | Fixed | Run | 8% |
 | **Total full cost** | | | | | **100%** |
 
-**The unit cost card.** Cost per thousand card authorisations. Numerator: the month's full cost of the authorisation service from the sheet. Denominator: authorisations counted by the card switch. Source: the sheet and the switch's transaction log.
+**The unit cost card.** Cost per thousand card authorisations. Numerator: one twelfth of the `CARDS-PAY` yearly full cost from the sheet, every line included, so Reem's change work is in it too. Denominator: authorisations counted by the card switch. Source: the sheet and the switch's transaction log.
 
 **The legacy tail** surprised everyone. The old card platform still served one batch reconciliation job. Its allocated cost looked large, but Tariq's **retirement savings sheet** showed the hardware fully depreciated and the licence committed to the end of next year. Retiring it would save the support contract and two operators' time from next year. Omar gave the audit committee that number, with its date.
 
@@ -184,7 +184,7 @@ Tariq asked the financial controller whether the tokenisation work could be capi
 - Allocate shared cost simply, freeze the method for the year, and size retirements on real savings with dates.
 
 ## ✍️ Check yourself
-**1. Tariq allocates shared platform cost to products in proportion to each product team's headcount. Cards & Payments, a small team with a heavy always-on workload, comes out cheap. What is the core problem?**
+**1. Tariq allocates shared platform cost to products in proportion to each product team's headcount. Cards & Payments, with a small headcount relative to its heavy always-on workload, comes out cheap. What is the core problem?**
 
 - A. Headcount data is held by human resources, so it is usually too out of date to use.
 - B. The driver does not move with use, so cost shifts from heavy users to light users.

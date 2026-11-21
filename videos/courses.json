@@ -212,5 +212,23 @@
       { "value": 210, "label": "practice questions" }
     ],
     "tags": ["Engineers who code · AI agents", "Graded offline labs"]
+  },
+  {
+    "slug": "itbiz",
+    "verb": "Run IT as a business",
+    "title": "Running IT as a Business",
+    "subtitle": "",
+    "titleAr": "إدارة تقنية المعلومات كعمل تجاري",
+    "color": "#7fb8e0",
+    "hook": "Know what IT is *worth,* what it *costs* and who *decides.*",
+    "topicsLabel": "Idea to running service, at a fictional bank",
+    "topics": ["Value streams & flow", "Products & operating model", "Portfolio & funding", "Release & change", "Service levels", "Cost, suppliers & risk"],
+    "stats": [
+      { "value": 14, "label": "modules" },
+      { "value": 41, "label": "lessons" },
+      { "value": 220, "label": "tools & templates" },
+      { "value": 240, "label": "practice questions" }
+    ],
+    "tags": ["IT managers · architects", "Original, framework-neutral"]
   }
 ]

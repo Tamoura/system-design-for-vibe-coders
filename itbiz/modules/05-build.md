@@ -9,7 +9,7 @@
 # 5.1 — Delivery pipelines as a managed capability
 *Level: 🟡 Intermediate* · *Prerequisites: 2.2, 4.3* · *Step: Build*
 
-**After this you can** write a service card for a shared delivery pipeline (owner, customers, standard steps, service levels, funding and the records it leaves), and a one-page pipeline scorecard with five measures, each paired with a measure that keeps it honest. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
+**After this you can** write a service card for a shared delivery pipeline (owner, customers, standard steps, service levels, funding and the records it leaves), and a one-page pipeline scorecard with five measures, each paired with a measure that keeps it honest. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **delivery pipeline** is the automated path that takes a change from version control to a tested, recorded artefact ready to deploy. It is a production system for the people who build software, and deserves an owner.
@@ -108,11 +108,11 @@ One mistake stayed in version 1: the scorecard counted adoption but not satisfac
 
 ## 🛠️ Exercises
 **🟢 Inventory your paths to production.** For one IT area (or Najm Bank's Cards & Payments), list every way code reaches production: tool, owner, users, and whether test and review results are stored per change.
-*Done when:* every path you can find is listed (at least three), each with an owner or "nobody" and a yes/no for stored evidence.
+*Done when:* every path you can find is listed (at least three), each with an owner or "nobody", its users and a yes/no for stored evidence.
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** Cards & Payments: hosted CI/CD (platform team; evidence yes); old build server (owner nobody; evidence no, logs expire in seven days); laptop release script (one developer; evidence no); vendor-run deployment of the card package (vendor under Lina's contract; evidence unknown). **Self-check.**
+**Model answer.** Cards & Payments: hosted CI/CD (owner platform team; users most of the team's services; evidence yes); old build server (owner nobody; users the card-declines service; evidence no, logs expire in seven days); laptop release script (owner one developer; users that developer, release night only; evidence no); vendor-run deployment of the card package (owner the vendor under Lina's contract; users the vendor's release staff; evidence no, none supplied). **Self-check.**
 - Did you include informal paths (laptop scripts, vendor deployments, hotfixes)? That is where the risk usually is.
 - Did you check evidence storage rather than assume it?
 
@@ -123,7 +123,7 @@ One mistake stayed in version 1: the scorecard counted adoption but not satisfac
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** See Sami's card: a named owner, a few mandatory steps each tied to evidence, service levels the customer feels, a budget line, retention set with risk, and break-glass with an approver, steps it cannot skip and a review deadline. **Self-check.**
+**Model answer.** Start from Sami's card and add the line it leaves out: **Chosen by teams:** language, test frameworks, extra tests and quality thresholds above the minimum. A strong card has a named owner, a few mandatory steps each tied to evidence, service levels the customer feels, a budget line, retention set with risk, and break-glass with an approver, steps it cannot skip and a review deadline. **Self-check.**
 - Did you leave tool choices to teams?
 - Are service levels measured from the customer's side (time to feedback), not the platform's (servers up)?
 - Are retention and break-glass agreed with risk, or marked "to confirm"?
@@ -135,7 +135,7 @@ One mistake stayed in version 1: the scorecard counted adoption but not satisfac
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** Feedback time with escaped defects; availability with platform-caused failures; month-end queue time with build cost per team; adoption with developer satisfaction; support time to fix with repeat tickets; DORA metrics reported separately. Decision: mandate the run record for every production change; attract with a template that sets up a new service in a day; allow own pipelines that meet the evidence standard and fund their upkeep. **Self-check.**
+**Model answer.** Scorecard (all targets illustrative): (1) feedback time, from submitting a change to its result, median under 15 min, paired with escaped defects per quarter; (2) availability, share of working hours in which teams can run the pipeline, 99.5%, paired with platform-caused failures, under 2% of runs; (3) month-end queue time, wait for a free build agent in the last three working days of the month, 90th percentile under 10 min, paired with build cost per team; (4) adoption, share of teams on the standard path, 80%, paired with developer satisfaction from a quarterly survey, at least 4 out of 5; (5) support time to fix, from a P1 platform ticket to resolution, under 4 hours, paired with repeat tickets per quarter. DORA metrics are reported separately. Decision: mandate the run record for every production change; attract with a template that sets up a new service in a day; allow own pipelines that meet the evidence standard and fund their upkeep. **Self-check.**
 - Would each pair catch the obvious way to game its measure?
 - Did you mandate outcomes (evidence) rather than a tool?
 
@@ -232,7 +232,7 @@ One mistake stayed in version 1: the scorecard counted adoption but not satisfac
 # 5.2 — Quality gates and evidence a manager can trust
 *Level: 🟡 Intermediate* · *Prerequisites: 4.2, 5.1* · *Step: Build*
 
-**After this you can** write gate cards for the checks a change must pass (purpose, check, threshold, owner, override rule and evidence), set them in proportion to risk with a three-tier gate matrix, and test any piece of delivery evidence against a six-point trust checklist. *Study time: reading about 15 min, hands-on about 100 min (estimate).*
+**After this you can** write gate cards for the checks a change must pass (purpose, check, threshold, owner, override rule and evidence), set them in proportion to risk with a three-tier gate matrix, and test any piece of delivery evidence against a six-point trust checklist. *Study time: reading about 20 min, hands-on about 100 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **quality gate** is a point on the path to production where a defined check must pass. Which gates exist, their thresholds and overrides are **management decisions**.
@@ -297,19 +297,19 @@ A check without a gate is information; a gate without evidence is a promise.
 5. **Retained.** Kept as long as the bank's retention rules require; ask the risk function.
 6. **Meaningful.** The check tests something that matters. Coverage from tests that assert nothing passes points 1 to 5 and fails this one.
 
-The March evidence failed points 1, 2, 4 and 5. It passed point 3, and its dates are what exposed the stale sign-off. The fix was moving the work into the pipeline so the record appears on its own.
+The March evidence failed points 1, 2, 4 and 5. It passed point 3, and its dates are what exposed the stale sign-off. Point 6 could not be judged: nothing recorded what the forty cases checked. The fix was moving the work into the pipeline so the record appears on its own.
 
 **Proportion to risk: the gate matrix.** Payment-grade gates on every internal tool slow everything and teach that gates are bureaucracy. Set tiers with risk and product owners by impact of failure:
 
 | Gate | Tier 1: customer money or regulated data | Tier 2: customer-facing, no money movement | Tier 3: internal, low impact |
 |---|---|---|---|
 | Peer review | Two reviewers, one senior | One reviewer | One reviewer |
-| Automated tests | Full suite plus contract tests (checks that two services still agree on their interface) | Full suite | Unit and smoke tests (a quick check that the main functions start and respond) |
-| Security scans | Code, dependency and container scans (checks of the packaged image); no unresolved critical findings | Code and dependency scans; critical findings need an owner and date | Dependency scan |
+| Automated tests | Full suite plus contract tests (checks that two services still agree on their interface) | Full suite | Unit, integration and smoke tests (a smoke test is a quick check that the main functions start and respond) |
+| Security scans | Code, dependency and container scans (checks of the packaged image); no unresolved critical findings | Code and dependency scans; critical findings need an owner and date | Dependency and code scans |
 | Quality requirements | Performance test against lesson 4.3 targets for each release | Performance test when the risky path changes | Not required |
 | Human judgement | Product manager acceptance; risk consulted for regulatory changes | Product manager acceptance | Team decides |
 
-Tiers and thresholds are illustrative. What matters is that the matrix is written and agreed, so nobody argues gate by gate on release night.
+Every tier, tier 3 included, meets the mandatory steps of lesson 5.1; the higher tiers add to that floor. Tiers and thresholds are illustrative. What matters is that the matrix is written and agreed, so nobody argues gate by gate on release night.
 
 **Flaky tests destroy gates.** A **flaky test** sometimes passes and sometimes fails on the same code. A 2016 Google Testing Blog post reported that almost 16% of Google's tests had some level of flakiness. When a gate is often red for no reason, people re-run it until green and it means nothing. Track the flaky rate, quarantine flaky tests with a named owner and a deadline, and do not let quarantine become a graveyard. See [*Software Testing: Zero to Hero in the AI Era*, lesson 2.3 — Are your tests any good? Coverage, mutation testing, property-based testing and flaky tests](../testing/index.html#/2.3).
 
@@ -346,15 +346,15 @@ Nour's control-to-gate map for "changes are tested before production" reads: gat
 
 Reem made one mistake: a 90% coverage target. Coverage hit 91% within a month; escaped defects did not move, because many new tests checked nothing. Escaped defects and a quarterly mutation-testing sample became the measures.
 
-The next audit sample took 20 minutes for five changes, against about a week before. Yousef also asked that tier 1 changes in the last three days of the month wait for operations to confirm capacity. That is a release-time change check, not build evidence, so it went to the change model of lesson 6.2.
+The next audit sample took 20 minutes for five changes, against about a week before. Yousef also asked for a month-end rule for high-risk changes. That is a release-time decision, not build evidence, so it went to the change model of lesson 6.2 (its month-end freeze).
 
 ## 🛠️ Exercises
 **🟢 Test evidence against the checklist.** Score one piece of delivery evidence (yours, or Najm Bank's March spreadsheet and email) on the six-point checklist, one line per point.
-*Done when:* all six points are marked pass or fail with a reason, plus one change that fixes the weakest.
+*Done when:* all six points are marked pass, fail or cannot tell, each with a reason, plus one change that fixes the weakest.
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** March evidence: generated, fail (typed); tied to artefact, fail (no version); time-stamped, pass (the dates exist and show the sign-off predates the final change); complete, fail (no failures or re-runs); retained, fail (logs expired); meaningful, unknown. Fix: run tests in the pipeline and store the report with the deployed version's run record. **Self-check.**
+**Model answer.** March evidence: generated, fail (typed); tied to artefact, fail (no version); time-stamped, pass (the dates exist and show the sign-off predates the final change); complete, fail (no failures or re-runs); retained, fail (logs expired); meaningful, cannot tell (nothing records what the 40 cases checked). Fix: run tests in the pipeline and store the report with the deployed version's run record. **Self-check.**
 - Did you separate "the testing was poor" from "the evidence is poor"? They are different problems.
 - Is your fix a change in how the work is done, not a better template?
 
@@ -365,7 +365,7 @@ The next audit sample took 20 minutes for five changes, against about a week bef
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** See "The gate card" and the tier matrix. A strong third card is security scans: thresholds from the matrix; owner security with the product team; override by the security lead with a dated risk acceptance; scan reports in the run record; measures override rate and age of open critical findings. **Self-check.**
+**Model answer.** See "The gate card" and the tier matrix. A strong third card is security scans: purpose, no known critical vulnerability reaches production unowned; check, code, dependency and (tier 1) container scans in the pipeline; thresholds from the matrix; owner security with the product team; override by the security lead with a dated risk acceptance; scan reports in the run record; measures override rate and age of open critical findings. **Self-check.**
 - Does every card name an owner who can change the threshold?
 - Is tier 3 genuinely lighter?
 
@@ -491,7 +491,7 @@ In December 2021 a critical vulnerability in Apache Log4j, a widely used open-so
 
 In March 2024 CISA reported malicious code in versions 5.6.0 and 5.6.1 of XZ Utils, a data compression package that may be present in Linux distributions (CVE-2024-3094): a deliberate backdoor, not a bug.
 
-When Nour, IT Risk and Controls Lead, ran a Log4Shell-style desk exercise, Najm Bank took nine days to confirm which products were affected. Reem's Cards & Payments app depended on more than 600 open-source packages, most never chosen directly, and seven outside services, such as fraud scoring and SMS, that Lina, Vendor and Sourcing Manager, had contracted but nobody had linked to the product.This lesson makes such components visible, owned and managed.
+When Nour, IT Risk and Controls Lead, ran a Log4Shell-style desk exercise, Najm Bank took nine days to confirm which products were affected. Reem's Cards & Payments app depended on more than 600 open-source packages, most never chosen directly, and seven outside services, such as fraud scoring and SMS, that Lina, Vendor and Sourcing Manager, had contracted but nobody had linked to the product. This lesson makes such components visible, owned and managed.
 
 ## 📐 How it works
 

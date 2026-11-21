@@ -34,27 +34,27 @@
       "level": 2,
       "lesson": "9.2",
       "q": {
-        "en": "A discovery scan finds a server at a new IP address, while the declared record from infrastructure code still shows the old one. The server's business owner is held in the HR system. How should reconciliation work?",
-        "ar": "وجد مسح الاكتشاف خادمًا على عنوان IP جديد، بينما ما زال السجل المصرَّح به من شيفرة البنية التحتية يُظهر العنوان القديم. ومالك الخادم في قطاع الأعمال محفوظ في نظام الموارد البشرية. كيف تجري المطابقة (reconciliation)؟"
+        "en": "A discovery scan finds a server at a new IP address, while the declared record from infrastructure code still shows the old one. The server's business owner is held in the product catalogue. How should reconciliation work?",
+        "ar": "وجد مسح الاكتشاف خادمًا على عنوان IP جديد، بينما ما زال السجل المعلَن من شيفرة البنية التحتية يُظهر العنوان القديم. ومالك الخادم في قطاع الأعمال محفوظ في دليل المنتجات. كيف تجري المطابقة (reconciliation)؟"
       },
       "o": {
         "en": [
           "The discovery scan wins for every attribute, since it shows what really runs",
           "The declared record wins for every attribute, since it is what was approved",
           "Whichever source changed most recently wins for the whole record at once",
-          "Set a trusted source per attribute: scan for the IP, HR for business owner"
+          "Trust one source per attribute: scan for the IP, product catalogue for owner"
         ],
         "ar": [
-          "يفوز مسح الاكتشاف في كل السمات، لأنه يُظهر ما يعمل فعلًا",
-          "يفوز السجل المصرَّح به في كل السمات، لأنه ما اعتُمد رسميًا",
+          "يفوز مسح الاكتشاف في كل السمات، لأنه يُظهر ما يعمل فعلًا الآن",
+          "يفوز السجل المعلَن في كل السمات، لأنه ما اعتُمد رسميًا",
           "يفوز المصدر الأحدث تغييرًا بالسجل كله دفعة واحدة",
-          "مصدر موثوق لكل سمة: المسح لعنوان IP، والموارد البشرية للمالك"
+          "مصدر موثوق لكل سمة: المسح لعنوان IP، ودليل المنتجات للمالك"
         ]
       },
       "a": 3,
       "why": {
-        "en": "Lesson 9.2's rule: every attribute has one owner and one trusted source. Ownership by record is not enough, because the IP address and the business owner of the same server come from different places. The tempting option is letting discovery win everywhere: a scan sees the running IP but cannot know who the business owner is.",
-        "ar": "قاعدة الدرس 9.2: لكل سمة مالك واحد ومصدر موثوق واحد. ولا تكفي الملكية على مستوى السجل، لأن عنوان IP للخادم ومالكه في الأعمال يأتيان من مكانين مختلفين. والخيار المغري أن يفوز الاكتشاف في كل شيء، لكن المسح يرى العنوان الذي يعمل ولا يستطيع أن يعرف من مالك الخادم في الأعمال."
+        "en": "Lesson 9.2's rule: every attribute has one owner and one trusted source. Ownership by record is not enough, because the IP address and the business owner of the same server come from different places. The tempting option is letting discovery win everywhere: a scan sees the running IP but cannot know who the business owner is; the product catalogue, a declared source, holds that.",
+        "ar": "قاعدة الدرس 9.2: لكل سمة مالك واحد ومصدر موثوق واحد. ولا تكفي الملكية على مستوى السجل، لأن عنوان IP للخادم ومالكه في الأعمال يأتيان من مكانين مختلفين. والخيار المغري أن يفوز الاكتشاف في كل شيء، لكن المسح يرى العنوان الذي يعمل ولا يستطيع أن يعرف من مالك الخادم في الأعمال؛ فهذا يحفظه دليل المنتجات، وهو مصدر معلَن."
       }
     },
     {
@@ -62,8 +62,8 @@
       "level": 2,
       "lesson": "9.3",
       "q": {
-        "en": "Nour picks five incidents at random and tries to trace each one back to its change, backlog item and investment. Only one traces end to end; most break between the change and the backlog item. What should happen next?",
-        "ar": "اختارت نور خمس حوادث عشوائيًا، وحاولت أن تتتبّع كلًّا منها إلى التغيير وبند قائمة الأعمال والاستثمار. لم يكتمل التتبّع إلا في واحدة، وانقطع معظمها بين التغيير وبند قائمة الأعمال. ما الخطوة التالية؟"
+        "en": "An IT risk lead at another bank runs a five-incident trace test: she picks five incidents at random and tries to trace each one back to its change, backlog item and investment. Only one traces end to end; most break between the change and the backlog item. What should happen next?",
+        "ar": "تُجري قائدة مخاطر تقنية المعلومات في بنك آخر اختبار تتبّع على خمس حوادث: اختارت خمس حوادث عشوائيًا، وحاولت أن تتتبّع كلًّا منها إلى التغيير وبند قائمة الأعمال والاستثمار. لم يكتمل التتبّع إلا في واحدة، وانقطع معظمها بين التغيير وبند قائمة الأعمال. ما الخطوة التالية؟"
       },
       "o": {
         "en": [

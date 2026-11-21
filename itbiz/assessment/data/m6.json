@@ -34,8 +34,8 @@
       "level": 2,
       "lesson": "6.2",
       "q": {
-        "en": "Najm Bank's change advisory board reviews 300 changes a week and approves almost all of them, yet it missed the two changes behind last quarter's outages. After the latest outage, someone proposes a second approval layer. What fits lesson 6.2?",
-        "ar": "يراجع مجلس استشارات التغيير (CAB) في بنك نجم 300 تغيير أسبوعيًا ويعتمد معظمها، لكنه لم يلتقط التغييرين اللذين سبّبا انقطاعات الربع الماضي. وبعد آخر انقطاع، اقترح أحدهم طبقة اعتماد ثانية. ما الذي يتفق مع الدرس 6.2؟"
+        "en": "Najm Bank's change advisory board reviews about forty changes a week and approves almost all of them, yet it missed the two changes behind last quarter's outages. After the latest outage, someone proposes a second approval layer. What fits lesson 6.2?",
+        "ar": "يراجع مجلس استشارات التغيير (CAB) في بنك نجم نحو أربعين تغييرًا أسبوعيًا ويعتمدها كلها تقريبًا، لكنه لم يلتقط التغييرين اللذين سبّبا انقطاعات الربع الماضي. وبعد آخر انقطاع، اقترح أحدهم طبقة اعتماد ثانية. ما الذي يتفق مع الدرس 6.2؟"
       },
       "o": {
         "en": [
@@ -109,8 +109,8 @@
       },
       "a": 1,
       "why": {
-        "en": "The five risk questions in lesson 6.2 (blast radius, reversibility, novelty, impact class, evidence quality) all point high here, so it goes to the authority-decided route, where people who understand the risk make a real decision. The tempting option is peer review: that route suits changes with good pipeline evidence and contained risk, not a hard-to-reverse change to every customer. Emergency is for restoring service, not for planned risk.",
-        "ar": "أسئلة المخاطر الخمسة في الدرس 6.2 (نطاق الأثر، وإمكانية التراجع، والجِدّة، وفئة الأثر، وجودة الأدلة) كلها مرتفعة هنا، فيذهب التغيير إلى مسار القرار بسلطة، حيث يتخذ قرارًا حقيقيًا أناسٌ يفهمون المخاطرة. والخيار المغري هو مراجعة الأقران، وهو مسار يناسب تغييرات لها أدلة جيدة من خط النشر ومخاطر محدودة، لا تغييرًا يصعب التراجع عنه ويمسّ كل العملاء. والمسار الطارئ لاستعادة الخدمة، لا لمخاطرة مخطط لها."
+        "en": "Three of lesson 6.2's five risk questions (blast radius, reversibility, novelty) point high, and any one of them sends a change to the authority-decided route, where people who understand the risk make a real decision. The tempting option is peer review: that route suits changes with good pipeline evidence and contained risk, not a hard-to-reverse change to every customer. Emergency is for restoring service, not for planned risk.",
+        "ar": "ثلاثة من أسئلة المخاطر الخمسة في الدرس 6.2 (نطاق الأثر، وإمكانية التراجع، والجِدّة) تشير إلى مخاطر مرتفعة، ويكفي أيٌّ منها لإرسال التغيير إلى مسار القرار بسلطة، حيث يتخذ قرارًا حقيقيًا أناسٌ يفهمون المخاطرة. والخيار المغري هو مراجعة الأقران، وهو مسار يناسب تغييرات لها أدلة جيدة من خط النشر ومخاطر محدودة، لا تغييرًا يصعب التراجع عنه ويمسّ كل العملاء. والمسار الطارئ لاستعادة الخدمة، لا لمخاطرة مخطط لها."
       }
     }
   ],

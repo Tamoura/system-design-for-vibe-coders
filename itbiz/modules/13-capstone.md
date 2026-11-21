@@ -9,7 +9,7 @@
 # 13.1 — Capstone: Najm Bank's IT operating blueprint
 *Level: 🔴 Advanced* · *Prerequisites: 12.2, 12.3* · *Step: Plan, Fund, Build, Release, Serve, Run, Govern, Improve*
 
-**After this you can** assemble your organisation's IT operating blueprint from the artefacts of this course, with a one-page spine that names, for each of the eight steps, the decision, the decider, the record and its home, and the measure; run five coherence tests on it, including a walk-through of one real change and one real incident; and present a one-page board summary that asks for named decisions. *Study time: reading about 15 min, hands-on about 4 h (estimate).*
+**After this you can** assemble your organisation's IT operating blueprint from the artefacts of this course, with a one-page spine that names, for each of the eight steps, the decision, the decider, the record and its home, and the measure; run five coherence tests on it, including a walk-through of one real change and one real incident; and present a one-page board summary that asks for named decisions. *Study time: reading about 20 min, hands-on about 4 h (estimate).*
 
 ## ⚡ In 60 seconds
 - An **IT operating blueprint** describes how your IT organisation works: who decides what, with which record, how it is measured, funded and governed. You assemble it from this course's artefacts, not from scratch.
@@ -112,7 +112,7 @@ Illustrative and fictional. Huda's first draft was 140 pages, every artefact pas
 |---|---|---|
 | One identifier | Usage report and two catalogue entries said "Cards" | Product identifier mandatory in the tagging template (Sami) |
 | No contradictions | Access review quarterly in the register (7.2), half-yearly in Nour's draft control matrix for the card-dispute system | Nour confirmed with the second line that quarterly is required; the register holds the value, the matrix points to it |
-| No contradictions | "Change fail rate" on one page, "change failure rate" on another | One term and definition in the term map of lesson 12.1 (Huda) |
+| No contradictions | "Change fail rate" on one page, "change failure rate" on another | One term, "change fail rate" (DORA's current name), with one definition in the term map of lesson 12.1 (Huda); the 6.2 measures and the 12.3 wave sheet use it |
 
 **The walk-through.** Yousef, Head of IT Operations, picked awkward examples: a month-end slowdown linked to problem record PRB-0142, and an update pushed by the card-processing supplier. The incident passed cleanly. The supplier change did not: it arrived by contract notice, not the front door (4.1) or the pipeline, so the change model (6.2) had no route. Huda added "supplier-originated change" to the change model, owned by Lina, Vendor and Sourcing Manager, on the high-risk route by default.
 
@@ -138,7 +138,7 @@ Illustrative and fictional. Huda's first draft was 140 pages, every artefact pas
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** Twelve pages: four practised widely, six in one value stream, two defined. Findings: (1) cost reports use project codes that end with projects; the finance partner adds product identifiers by quarter-end (lesson 9.1). (2) Problem actions needing money have no route to the portfolio; the portfolio office adds a "needs funding" flag, read by the evidence pack, before the next review (lessons 3.3, 8.2). (3) The SLO sheet says 99.9% of requests answered within 2 seconds over 30 days; the quality requirements say 99.95% monthly availability. They use different indicators, so the product manager and the head of operations decide by month-end on one definition and one number; the SLO sheet becomes home (lessons 4.3, 8.3).
+**Model answer.** An example from another organisation, not Najm. Twelve pages: four practised widely, six in one value stream, two defined. Findings: (1) cost reports use project codes that end with projects; the finance partner adds product identifiers by quarter-end (lesson 9.1). (2) Problem actions needing money have no route to the portfolio; the portfolio office adds a "needs funding" flag, read by the evidence pack, before the next review (lessons 3.3, 8.2). (3) The SLO sheet for online payments says 99.5% of payments succeed over 28 days; the quality requirements say 99.9% monthly availability. They use different indicators and windows, so the business owner of the product decides by month-end on one definition and one number, as Najm's head of retail banking did in lesson 8.3; the SLO sheet becomes home (lessons 4.3, 8.3).
 
 **Self-check.**
 - Is each status based on evidence you have seen?
@@ -253,7 +253,7 @@ Illustrative and fictional. Huda's first draft was 140 pages, every artefact pas
 # 13.2 — Practice exam: 40 scenario questions
 *Level: 🔴 Advanced* · *Prerequisites: 13.1* · *Step: Plan, Fund, Build, Release, Serve, Run, Govern, Improve*
 
-**After this you can** answer forty scenario questions across all thirteen modules in about an hour, mark them, and list the lessons your wrong answers send you back to. *Study time: reading about 30 min, hands-on about 105 min (estimate).*
+**After this you can** answer forty scenario questions across all fourteen modules in about an hour, mark them, and list the lessons your wrong answers send you back to. *Study time: reading about 30 min, hands-on about 105 min (estimate).*
 
 ## ⚡ In 60 seconds
 - After this lesson you can answer forty scenario questions spread across the whole course, and use your wrong answers to choose the lessons to reread.
@@ -342,16 +342,16 @@ Illustrative and fictional. Huda's first draft was 140 pages, every artefact pas
 
 </details>
 
-**7. After a workshop, someone proposes renaming the 400-application inventory "the product list". What does the course recommend instead?**
+**7. After a workshop, someone proposes renaming the inventory of about 420 applications "the product list". What does the course recommend instead?**
 
 - A. Test each candidate: recognised by users, measurable, ownable, with one owner's name
-- B. Keep all 400 names, but assign each one a product manager from the business side
+- B. Keep all 420 names, but assign each one a product manager from the business side
 - C. Group the applications by technology platform and call each platform a product
 - D. Wait until the CMDB has been fully cleaned before deciding what the products are
 
 <details><summary>Answer</summary>
 
-**A.** Products are not applications; a boundary must be recognised by users, measurable, ownable, releasable and costable, with exactly one accountable name. B makes 400 products and a crowd of owners, C groups by technology, and D waits for a clean-up that never finishes. (Lesson 2.1.)
+**A.** Products are not applications; a boundary must be recognised by users, measurable, ownable, releasable and costable, with exactly one accountable name. B makes 420 products and a crowd of owners, C groups by technology, and D waits for a clean-up that never finishes. (Lesson 2.1.)
 
 </details>
 

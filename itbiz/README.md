@@ -3,7 +3,7 @@
 **How an IT division plans, funds, builds, releases, serves, runs and governs its digital products and services, and proves the value. A free, bilingual course for IT managers and enterprise architects.**
 
 <!-- study-time -->
-**Study time for the whole course: about 81 hours** (estimate: reading plus hands-on work, summed over every lesson). At about 6 hours a week that is roughly 13 weeks. Each lesson shows its own split; a pilot with real learners will replace these estimates.
+**Study time for the whole course: about 87 hours** (estimate: reading plus hands-on work, summed over every lesson). At about 6 hours a week that is roughly 15 weeks. Each lesson shows its own split; a pilot with real learners will replace these estimates.
 <!-- /study-time -->
 
 ## What this is

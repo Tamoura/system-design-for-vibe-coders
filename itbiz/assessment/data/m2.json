@@ -6,8 +6,8 @@
       "level": 1,
       "lesson": "2.1",
       "q": {
-        "en": "Huda's team proposes relabelling the bank's 400-row application list as \"the product list\", owned by the architecture committee. What does lesson 2.1 say?",
-        "ar": "يقترح فريق هدى أن تُسمّى قائمة تطبيقات البنك ذات الأربعمئة صف «قائمة المنتجات»، وأن تملكها لجنة البنية. ماذا يقول الدرس 2.1؟"
+        "en": "Huda's team proposes relabelling the bank's application list of about 420 rows as \"the product list\", owned by the architecture committee. What does lesson 2.1 say?",
+        "ar": "يقترح فريق هدى أن تُسمّى قائمة تطبيقات البنك، وفيها نحو 420 صفًا، «قائمة المنتجات»، وأن تملكها لجنة البنية. ماذا يقول الدرس 2.1؟"
       },
       "o": {
         "en": [
@@ -25,8 +25,8 @@
       },
       "a": 3,
       "why": {
-        "en": "Lesson 2.1's biggest trap is renaming the application list as the product list: four hundred applications are not four hundred products, and every product needs exactly one accountable name. The tempting option is a committee that meets often: frequency does not turn a committee into one accountable owner. A vendor cannot be accountable for the bank's product.",
-        "ar": "أكبر فخ في الدرس 2.1 أن تُعيد تسمية قائمة التطبيقات قائمةً للمنتجات؛ فأربعمئة تطبيق ليست أربعمئة منتج، ولكل منتج اسم واحد مساءل بالضبط. والخيار المغري لجنة تجتمع كثيرًا، لكن كثرة الاجتماعات لا تجعل اللجنة مالكًا واحدًا مساءلًا. ولا يستطيع المورّد أن يكون مساءلًا عن منتج البنك."
+        "en": "Lesson 2.1's biggest trap is renaming the application list as the product list: about 420 applications are not 420 products, and every product needs exactly one accountable name. The tempting option is a committee that meets often: frequency does not turn a committee into one accountable owner. A vendor cannot be accountable for the bank's product.",
+        "ar": "أكبر فخ في الدرس 2.1 أن تُعيد تسمية قائمة التطبيقات قائمةً للمنتجات؛ فنحو 420 تطبيقًا ليست 420 منتجًا، ولكل منتج اسم واحد مساءل بالضبط. والخيار المغري لجنة تجتمع كثيرًا، لكن كثرة الاجتماعات لا تجعل اللجنة مالكًا واحدًا مساءلًا. ولا يستطيع المورّد أن يكون مساءلًا عن منتج البنك."
       }
     },
     {
