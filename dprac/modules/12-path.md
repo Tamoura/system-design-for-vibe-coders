@@ -310,7 +310,7 @@ Maha asked Dana and Faisal for something short everyone could follow; this lesso
 |---|---|---|
 | 2024 DORA report (Google Cloud's research programme on software delivery) | A 25% increase in AI adoption was associated with gains such as a 3.1% increase in code review speed; as adoption increased, delivery throughput fell an estimated 1.5% and delivery stability an estimated 7.2% | Survey data; associations, not proof of cause |
 | 2025 DORA report on AI-assisted software development | 90% of survey respondents reported using AI at work; "AI doesn't fix a team; it amplifies what's already there" | Nearly 5,000 technology professionals; self-reported |
-| METR study, July 2025 | In a randomised trial, 16 experienced open-source developers took about 19% longer on tasks where AI tools were allowed, while believing they had been faster | Experienced developers on projects they knew well; the authors warn against generalising, and in February 2026 METR marked these results out of date, saying developers were likely sped up more by early 2026 tools but that its new data was weak evidence |
+| METR study, July 2025 | In a randomised trial, 16 experienced open-source developers took about 19% longer on tasks where AI tools were allowed, while believing they had been faster | Experienced developers on projects they knew well; the authors warn against generalising, and in February 2026 METR marked these results out of date, saying developers were likely sped up more by early 2026 tools but that its new data was only very weak evidence, because of selection effects |
 
 The fair reading: gains are not automatic, and depend on the basics this course has taught: small changes, good tests, review and fast feedback.
 
@@ -669,7 +669,7 @@ Yasmin's learning plan after her review, shared with her manager and with Dana a
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** Scrum: *The Scrum Guide* by Ken Schwaber and Jeff Sutherland, CC BY-SA 4.0; one team delivering in short iterations and adjusting; related idea, lesson 5.2. ITIL®: PeopleCert; guidance on running IT-enabled services; related idea, lesson 7.2. FinOps Framework: FinOps Foundation; managing cloud spending; related idea, lesson 10.2.
+**Model answer.** Scrum: *The Scrum Guide* by Ken Schwaber and Jeff Sutherland, CC BY-SA 4.0; one team delivering in short iterations and adjusting; related idea, lesson 5.2. ITIL®: PeopleCert; guidance on running IT-enabled services; related idea, lesson 7.2. FinOps Framework: FinOps Foundation; managing the value of technology spending, cloud included; related idea, lesson 10.2.
 
 **Self-check.**
 - Did you open the owner's own page?

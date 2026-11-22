@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="dprac-source" content="548e558540c66b98">
+<meta name="dprac-source" content="fd004ddc093a54e0">
 <meta name="description" content="Digital Practice — a free, bilingual course for early-career practitioners: customers and value, discovery and first products, building and running software, teams and ways of working, product management, service and support, many teams, architecture and data, money and suppliers, governance, risk and security, and AI in daily work.">
 <title>Digital Practice</title>
 <style>
@@ -5195,7 +5195,7 @@ Assert:  the courier near branch B is offered the order
 <p><strong>Measuring speed and stability together.</strong> DORA groups its software delivery measures into throughput and instability. They include <strong>change lead time</strong> (commit to production), <strong>deployment frequency</strong>, <strong>failed deployment recovery time</strong>, <strong>change fail rate</strong> (deployments needing immediate intervention) and, since 2024, <strong>deployment rework rate</strong> (DORA&#39;s metrics guide and its history of the metrics). Lesson <a class="xref" href="#/0.1">0.1</a> introduced reading them together; at Qafila, daily CI deploys should shorten lead time without raising the change fail rate.</p>
 <h3>🟡 Going deeper</h3>
 <p><strong>Separate deploying from releasing with feature flags.</strong> A <strong>feature flag</strong> (or feature toggle) is a switch in the code, read at run time, that decides whether a behaviour is on, and for whom. Unfinished work can be deployed &quot;dark&quot;: on the servers, invisible to users. Later it is turned on for a few shops, then more, and off in seconds if it misbehaves.</p>
-<p>Pete Hodgson&#39;s article &quot;Feature Toggles (aka Feature Flags)&quot; (2016) sorts flags into four kinds (release, experiment, ops and permissioning) and compares them by how long they live and how often the on/off decision changes: release flags that hide unfinished work should generally last no more than a week or two, permissioning flags can live for years, and a few operational &quot;kill switches&quot; may stay almost indefinitely. Give each release flag an owner and a removal date, or the code fills with dead switches.</p>
+<p>Pete Hodgson&#39;s article &quot;Feature Toggles (aka Feature Flags)&quot; (2016) sorts flags into four kinds (release, experiment, ops and permissioning) and compares them by how long they live and how often the on/off decision changes: release flags that hide unfinished work should generally not stay much longer than a week or two, most operational flags are also short-lived (though a few &quot;kill switches&quot; stay long-term), and permissioning flags can live for years. Give each release flag an owner and a removal date, or the code fills with dead switches.</p>
 <p><strong>Gradual rollouts.</strong> A <strong>gradual rollout</strong> limits how many users meet a new version at first:</p>
 <div class="table-scroll"><table>
 <thead>
@@ -14935,7 +14935,7 @@ Drafted with the partner&#39;s guidance: &quot;Card details are entered into the
 <tr>
 <td>METR study, July 2025</td>
 <td>In a randomised trial, 16 experienced open-source developers took about 19% longer on tasks where AI tools were allowed, while believing they had been faster</td>
-<td>Experienced developers on projects they knew well; the authors warn against generalising, and in February 2026 METR marked these results out of date, saying developers were likely sped up more by early 2026 tools but that its new data was weak evidence</td>
+<td>Experienced developers on projects they knew well; the authors warn against generalising, and in February 2026 METR marked these results out of date, saying developers were likely sped up more by early 2026 tools but that its new data was only very weak evidence, because of selection effects</td>
 </tr>
 </tbody></table></div>
 <p>The fair reading: gains are not automatic, and depend on the basics this course has taught: small changes, good tests, review and fast feedback.</p>
@@ -15398,7 +15398,7 @@ Drafted with the partner&#39;s guidance: &quot;Card details are entered into the
 <em>Done when:</em> three notes exist, each owner is confirmed on the owner&#39;s site, and each one-line purpose is in your own words, not copied.</p>
 <details><summary>Model answer and self-check</summary>
 
-<p><strong>Model answer.</strong> Scrum: <em>The Scrum Guide</em> by Ken Schwaber and Jeff Sutherland, CC BY-SA 4.0; one team delivering in short iterations and adjusting; related idea, lesson <a class="xref" href="#/5.2">5.2</a>. ITIL®: PeopleCert; guidance on running IT-enabled services; related idea, lesson <a class="xref" href="#/7.2">7.2</a>. FinOps Framework: FinOps Foundation; managing cloud spending; related idea, lesson <a class="xref" href="#/10.2">10.2</a>.</p>
+<p><strong>Model answer.</strong> Scrum: <em>The Scrum Guide</em> by Ken Schwaber and Jeff Sutherland, CC BY-SA 4.0; one team delivering in short iterations and adjusting; related idea, lesson <a class="xref" href="#/5.2">5.2</a>. ITIL®: PeopleCert; guidance on running IT-enabled services; related idea, lesson <a class="xref" href="#/7.2">7.2</a>. FinOps Framework: FinOps Foundation; managing the value of technology spending, cloud included; related idea, lesson <a class="xref" href="#/10.2">10.2</a>.</p>
 <p><strong>Self-check.</strong></p>
 <ul>
 <li>Did you open the owner&#39;s own page?</li>

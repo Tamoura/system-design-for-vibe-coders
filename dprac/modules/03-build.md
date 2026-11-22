@@ -590,7 +590,7 @@ flowchart LR
 
 **Separate deploying from releasing with feature flags.** A **feature flag** (or feature toggle) is a switch in the code, read at run time, that decides whether a behaviour is on, and for whom. Unfinished work can be deployed "dark": on the servers, invisible to users. Later it is turned on for a few shops, then more, and off in seconds if it misbehaves.
 
-Pete Hodgson's article "Feature Toggles (aka Feature Flags)" (2016) sorts flags into four kinds (release, experiment, ops and permissioning) and compares them by how long they live and how often the on/off decision changes: release flags that hide unfinished work should generally last no more than a week or two, permissioning flags can live for years, and a few operational "kill switches" may stay almost indefinitely. Give each release flag an owner and a removal date, or the code fills with dead switches.
+Pete Hodgson's article "Feature Toggles (aka Feature Flags)" (2016) sorts flags into four kinds (release, experiment, ops and permissioning) and compares them by how long they live and how often the on/off decision changes: release flags that hide unfinished work should generally not stay much longer than a week or two, most operational flags are also short-lived (though a few "kill switches" stay long-term), and permissioning flags can live for years. Give each release flag an owner and a removal date, or the code fills with dead switches.
 
 **Gradual rollouts.** A **gradual rollout** limits how many users meet a new version at first:
 
