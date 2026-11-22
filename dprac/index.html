@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="dprac-source" content="4f114548a56564d4">
+<meta name="dprac-source" content="749e42ae0e3567cc">
 <meta name="description" content="Digital Practice — a free, bilingual course for early-career practitioners: customers and value, discovery and first products, building and running software, teams and ways of working, product management, service and support, many teams, architecture and data, money and suppliers, governance, risk and security, and AI in daily work.">
 <title>Digital Practice</title>
 <style>
@@ -9906,7 +9906,7 @@ Plan: 1 to add, 5 to change, 1 to destroy.
 <section class="sec sec-how"><h2>📐 How it works</h2>
 <h3>🟢 The essentials</h3>
 <p><strong>Why one big team stops working.</strong> A group of <em>n</em> people has <em>n × (n − 1) / 2</em> possible one-to-one conversation paths: 66 for twelve people, 7,140 for 120. So people split into teams. The question is <em>where</em>: every boundary becomes a place where work waits.</p>
-<p><strong>Structure shapes the product.</strong> In a 1968 paper in <em>Datamation</em>, &quot;How Do Committees Invent?&quot;, Melvin Conway argued that organisations which design systems are constrained to produce designs that copy their own communication structures (as reported; the idea is now called <strong>Conway&#39;s law</strong>). Parts that change independently need teams that can change independently.</p>
+<p><strong>Structure shapes the product.</strong> In a 1968 paper in <em>Datamation</em>, &quot;How Do Committees Invent?&quot;, Melvin Conway argued that organisations which design systems are constrained to produce designs that copy their own communication structures (the idea is now called <strong>Conway&#39;s law</strong>). Parts that change independently need teams that can change independently.</p>
 <p><strong>Two ways to cut.</strong> There are two basic ways to split work between teams:</p>
 <div class="table-scroll"><table>
 <thead>
@@ -10279,7 +10279,7 @@ Plan: 1 to add, 5 to change, 1 to destroy.
 </section>
 <section class="sec sec-refs"><h2>📚 References</h2>
 <ul>
-<li>Conway, M. E., &quot;How Do Committees Invent?&quot;, <em>Datamation</em> 14(4), April 1968; reprint (not opened from this environment; as reported): <a href="https://www.melconway.com/Home/Committees_Paper.html">https://www.melconway.com/Home/Committees_Paper.html</a></li>
+<li>Conway, M. E., &quot;How Do Committees Invent?&quot;, <em>Datamation</em> 14(4), April 1968; reprint on the author&#39;s site (opened 2026-11-22): <a href="https://www.melconway.com/Home/Committees_Paper.html">https://www.melconway.com/Home/Committees_Paper.html</a></li>
 <li>DORA, &quot;Capabilities: Loosely coupled teams&quot; (source file read on GitHub, 2026-11-22): <a href="https://dora.dev/capabilities/loosely-coupled-teams/">https://dora.dev/capabilities/loosely-coupled-teams/</a></li>
 <li>Skelton, M. and Pais, M., <em>Team Topologies: Organizing Business and Technology Teams for Fast Flow</em> (IT Revolution, 2019); site <a href="https://teamtopologies.com">https://teamtopologies.com</a>.</li>
 <li>Library course: <a href="../itbiz/index.html#/2.2"><em>Running IT as a Business</em>, lesson 2.2 — Designing a product-aligned operating model: product, platform and enabling teams</a> (the manager&#39;s view).</li>
@@ -10397,7 +10397,7 @@ Plan: 1 to add, 5 to change, 1 to destroy.
 <p><strong>Decouple the releases.</strong> A <strong>feature flag</strong> (a switch that turns a feature on or off without a deployment, lesson <a class="xref" href="#/3.3">3.3</a>) lets each team release its part when ready, switched off. It does not remove a timing dependency; it removes the wait to release.</p>
 <h3>🔴 Expert view</h3>
 <p><strong>Adding people rarely rescues late work.</strong> In <em>The Mythical Man-Month</em> (1975), Fred Brooks is reported to have observed that adding people to a late software project makes it later. Adding a fifth team to a late initiative likewise adds coordination faster than progress. Slice instead.</p>
-<p><strong>Persistent dependencies are a design signal.</strong> Two teams in the register quarter after quarter usually means a wrong boundary or a missing self-service offer. DORA&#39;s guide to <strong>loosely coupled teams</strong> describes teams that can test and deploy on demand without orchestrating with other services, and says DORA research shows effective organisational and technical structures predict continuous delivery. Use the register as evidence at the team-map review (lesson <a class="xref" href="#/8.1">8.1</a>).</p>
+<p><strong>Persistent dependencies are a design signal.</strong> Two teams in the register quarter after quarter usually means a wrong boundary or a missing self-service offer. DORA&#39;s guide to <strong>loosely coupled teams</strong> describes teams that can test and deploy on demand, independently of the services they depend on, and says DORA research shows effective organisational and technical structures predict continuous delivery. Use the register as evidence at the team-map review (lesson <a class="xref" href="#/8.1">8.1</a>).</p>
 <p><strong>Watch the critical path.</strong> The <strong>critical path</strong> is the longest chain of steps that must happen one after another; any delay on it delays the outcome. Put fallback plans there, and escalate early with options (wait, slice down, workaround). For the manager&#39;s view, see <a href="../itbiz/index.html#/3.2"><em>Running IT as a Business</em>, lesson 3.2 — Prioritising and funding work: business cases, cost of delay and funding products not projects</a>.</p>
 <p><strong>The memorable rule.</strong> A dependency you cannot remove gets an owner, a date and a contract.</p>
 </section>
@@ -10624,7 +10624,7 @@ Plan: 1 to add, 5 to change, 1 to destroy.
 <li>Semantic Versioning 2.0.0 specification, summary (source text on GitHub; opened 2026-11-22): <a href="https://github.com/semver/semver/blob/master/semver.md">https://github.com/semver/semver/blob/master/semver.md</a> — public site <a href="https://semver.org">https://semver.org</a></li>
 <li>GitHub Docs, &quot;About code owners&quot; (source file read on GitHub, 2026-11-22): <a href="https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners">https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners</a></li>
 <li>DORA, &quot;Capabilities: Loosely coupled teams&quot; (source file read on GitHub, 2026-11-22): <a href="https://dora.dev/capabilities/loosely-coupled-teams/">https://dora.dev/capabilities/loosely-coupled-teams/</a></li>
-<li>Brooks, F. P., <em>The Mythical Man-Month: Essays on Software Engineering</em> (Addison-Wesley, 1975; anniversary edition 1995). Full citation; Brooks&#39;s law as reported.</li>
+<li>Brooks, F. P., <em>The Mythical Man-Month: Essays on Software Engineering</em> (Addison-Wesley, 1975; anniversary edition 1995); publisher&#39;s page: <a href="https://www.informit.com/store/mythical-man-month-essays-on-software-engineering-anniversary-9780201835953">https://www.informit.com/store/mythical-man-month-essays-on-software-engineering-anniversary-9780201835953</a> (Brooks&#39;s law as reported; the book text was not opened).</li>
 <li>Library course: <a href="../testing/index.html#/2.2"><em>Software Testing</em>, lesson 2.2 — Integration testing: databases, queues, test data and contract tests</a>.</li>
 <li>Library course: <a href="../vibe/index.en.html#l6-6"><em>System Design for Vibe Coders</em>, lesson 6.6 — API Design That Survives Its Clients</a>.</li>
 <li>Library course: <a href="../itbiz/index.html#/3.2"><em>Running IT as a Business</em>, lesson 3.2 — Prioritising and funding work: business cases, cost of delay and funding products not projects</a>.</li>
@@ -10699,10 +10699,10 @@ Plan: 1 to add, 5 to change, 1 to destroy.
 <td>Ask around in chat</td>
 </tr>
 </tbody></table></div>
-<p><strong>Golden paths.</strong> A <strong>golden path</strong> is the supported, recommended route for a common task: one way with the choices already made. Spotify&#39;s engineering blog is reported to have described its Golden Paths in 2020 as a response to fragmentation in its tools and practices. Two features matter: it is <strong>the easy way</strong>, faster than going alone because the defaults are done; and it is <strong>supported, not forced</strong>: teams may leave it with a reason, but then own what the path would have handled.</p>
+<p><strong>Golden paths.</strong> A <strong>golden path</strong> is the supported, recommended route for a common task: one way with the choices already made. In August 2020, Spotify&#39;s engineering blog described its Golden Paths as a response to fragmentation in its developer tooling. Two features matter: it is <strong>the easy way</strong>, faster than going alone because the defaults are done; and it is <strong>supported, not forced</strong>: teams may leave it with a reason, but then own what the path would have handled.</p>
 <p><strong>Run the platform as a product, and self-service.</strong> Its users are other engineers: treat them like customers (Module 1), learn what slows them down, and measure adoption. A platform that answers requests (&quot;please create a database&quot;) is a ticket desk with a new name. Start with the smallest thing that helps, even a well-kept wiki page.</p>
 <h3>🟡 Going deeper</h3>
-<p><strong>What developer experience means.</strong> <strong>Developer experience</strong> (DevEx or DX) is how engineers experience building and shipping software. A 2023 <em>ACM Queue</em> article, &quot;DevEx: What Actually Drives Productivity&quot; by Abi Noda, Margaret-Anne Storey, Nicole Forsgren and Michaela Greiler, is reported to describe three dimensions:</p>
+<p><strong>What developer experience means.</strong> <strong>Developer experience</strong> (DevEx or DX) is how engineers experience building and shipping software. A 2023 <em>ACM Queue</em> article, &quot;DevEx: What Actually Drives Productivity&quot; by Abi Noda, Margaret-Anne Storey, Nicole Forsgren and Michaela Greiler, describes three dimensions:</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -10731,7 +10731,7 @@ Plan: 1 to add, 5 to change, 1 to destroy.
 <td>Owners and docs findable without asking</td>
 </tr>
 </tbody></table></div>
-<p><strong>Measuring without a single number.</strong> A 2021 <em>ACM Queue</em> article by Nicole Forsgren and colleagues, &quot;The SPACE of Developer Productivity&quot;, is reported to argue that productivity cannot be captured by one metric, and to describe five dimensions: satisfaction and well-being, performance, activity, communication and collaboration, and efficiency and flow. So combine a few kinds of measure:</p>
+<p><strong>Measuring without a single number.</strong> A 2021 <em>ACM Queue</em> article by Nicole Forsgren and colleagues, &quot;The SPACE of Developer Productivity&quot;, argues that productivity cannot be reduced to a single metric, and describes five dimensions: satisfaction and well-being, performance, activity, communication and collaboration, and efficiency and flow. So combine a few kinds of measure:</p>
 <ul>
 <li><strong>Ask people:</strong> a short quarterly survey, plus &quot;What slowed you down most this month?&quot;</li>
 <li><strong>Measure the path:</strong> time from &quot;new service&quot; to production; pipeline duration; a new engineer&#39;s time to a first production change.</li>
@@ -10962,9 +10962,9 @@ Plan: 1 to add, 5 to change, 1 to destroy.
 <section class="sec sec-refs"><h2>📚 References</h2>
 <ul>
 <li>Google Cloud blog, &quot;Announcing the 2024 DORA report&quot; (October 2024; sections on platform engineering and developer experience; opened 2026-11-22): <a href="https://cloud.google.com/blog/products/devops-sre/announcing-the-2024-dora-report">https://cloud.google.com/blog/products/devops-sre/announcing-the-2024-dora-report</a></li>
-<li>Noda, A., Storey, M.-A., Forsgren, N. and Greiler, M., &quot;DevEx: What Actually Drives Productivity&quot;, <em>ACM Queue</em>, 2023: <a href="https://queue.acm.org/detail.cfm?id=3595878">https://queue.acm.org/detail.cfm?id=3595878</a> (could not be opened from this environment; as reported).</li>
-<li>Forsgren, N., Storey, M.-A., Maddila, C., Zimmermann, T., Houck, B. and Butler, J., &quot;The SPACE of Developer Productivity&quot;, <em>ACM Queue</em> 19(1), 2021: <a href="https://queue.acm.org/detail.cfm?id=3454124">https://queue.acm.org/detail.cfm?id=3454124</a> (could not be opened from this environment; as reported).</li>
-<li>Spotify Engineering, &quot;How We Use Golden Paths to Solve Fragmentation in Our Software Ecosystem&quot; (August 2020): <a href="https://engineering.atspotify.com/2020/8/how-we-use-golden-paths-to-solve-fragmentation-in-our-software-ecosystem">https://engineering.atspotify.com/2020/8/how-we-use-golden-paths-to-solve-fragmentation-in-our-software-ecosystem</a> (could not be opened from this environment; as reported).</li>
+<li>Noda, A., Storey, M.-A., Forsgren, N. and Greiler, M., &quot;DevEx: What Actually Drives Productivity&quot;, <em>ACM Queue</em> 21(2), 2023: <a href="https://queue.acm.org/detail.cfm?id=3595878">https://queue.acm.org/detail.cfm?id=3595878</a> (the ACM page could not be opened from this environment; the article was read in the copy on co-author Michaela Greiler&#39;s site, 2026-11-22: <a href="https://michaelagreiler.com/pages/publications/media/DevEx-WhatDrivesProductivity.pdf">https://michaelagreiler.com/pages/publications/media/DevEx-WhatDrivesProductivity.pdf</a>).</li>
+<li>Forsgren, N., Storey, M.-A., Maddila, C., Zimmermann, T., Houck, B. and Butler, J., &quot;The SPACE of Developer Productivity&quot;, <em>ACM Queue</em> 19(1), 2021: <a href="https://queue.acm.org/detail.cfm?id=3454124">https://queue.acm.org/detail.cfm?id=3454124</a> (read on 22 November 2026 in its <em>Communications of the ACM</em> reprint, DOI 10.1145/3453928: <a href="https://people.uncw.edu/vetterr/classes/csc550-spring2023/The%20SPACE%20of%20Developer%20Productivity.pdf">https://people.uncw.edu/vetterr/classes/csc550-spring2023/The%20SPACE%20of%20Developer%20Productivity.pdf</a>).</li>
+<li>Spotify Engineering, &quot;How We Use Golden Paths to Solve Fragmentation in Our Software Ecosystem&quot; (August 2020): <a href="https://engineering.atspotify.com/2020/8/how-we-use-golden-paths-to-solve-fragmentation-in-our-software-ecosystem">https://engineering.atspotify.com/2020/8/how-we-use-golden-paths-to-solve-fragmentation-in-our-software-ecosystem</a> (opened 2026-11-22).</li>
 <li>Backstage repository README (opened 2026-11-22): <a href="https://github.com/backstage/backstage">https://github.com/backstage/backstage</a></li>
 <li>Library course: <a href="../cloud/index.html#/3.3"><em>Cloud &amp; DevOps: Zero to Hero</em>, lesson 3.3 — Policy as code, drift and guardrails</a>.</li>
 <li>Library course: <a href="../itbiz/index.html#/5.1"><em>Running IT as a Business</em>, lesson 5.1 — Delivery pipelines as a managed capability</a>.</li>
