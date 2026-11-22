@@ -24,7 +24,7 @@ Qafila and everyone in it are fictional. All numbers about Qafila in this lesson
 
 The payments partner's questionnaire arrived as a spreadsheet of about 200 questions. Question 14 read: "Describe who approves changes to production systems that process payment data, and how approvals are recorded." Faisal, now Head of Engineering, typed a first answer from memory: "All production changes are approved by the Head of Engineering." Salma, who leads service and reliability, read it and laughed, then stopped laughing. Qafila deploys to production many times a day across 35 teams. Faisal had not personally approved a change in two years. The answer was simply untrue.
 
-Dana, the security and risk lead, asked each of the seven teams that touch payments how a change reaches production. She got seven different answers. Two teams required a second engineer to review every change. One let engineers merge their own changes "if it is small". One had a shared admin account for emergency fixes that four people knew the password to. Nobody had done anything they thought was wrong: each team had grown its own habits, as lesson 5.1 said teams do.
+Dana, the security and risk lead, asked the seven teams that touch payments how a change reaches production, and got seven answers. Two required a second engineer's review. One let engineers merge their own "small" changes. One had a shared emergency admin account whose password four people knew. Each team had simply grown its own habits.
 
 Faisal's reflex was a weekly change board: every change touching payments would wait for a Thursday meeting. Salma counted: the seven teams together had shipped around 140 changes to payment-related services in the previous month. A weekly board would batch them into large, risky releases and make Thursday the most dangerous day of the week. Maha, the CEO, asked for something else: a one-page map of who decides what, and a list of the checks that would make the honest answer to question 14 a good one. Yasmin, now a senior engineer on Payments, was asked to draft it with Dana. This lesson is what they built.
 
@@ -100,18 +100,6 @@ Notice what is missing: Faisal's name appears nowhere. He sets the guardrails; h
 
 **Policy as code.** Many guardrails can be written as code that a machine checks: a branch protection setting that blocks merging without review, a pipeline step that rejects infrastructure without encryption turned on, a rule in a policy engine such as Open Policy Agent (an example, not an endorsement) that rejects a deployment missing an owner label. Code-based rules are consistent, versioned and leave their own evidence. For the engineering detail, see [*Cloud & DevOps: Zero to Hero*, lesson 3.3 — Policy as code, drift and guardrails](../cloud/index.html#/3.3).
 
-```mermaid
-flowchart LR
-  A[New decision or rule needed] --> B{Effects beyond the team?}
-  B -- No --> C[Team decides]
-  B -- Yes --> D{Hard to reverse?}
-  D -- No --> E[Team decides within guardrails, informs others]
-  D -- Yes --> F[Named owner decides after consulting; record kept]
-  E --> G{Can a machine check it?}
-  G -- Yes --> H[Write it as a guardrail]
-  G -- No --> I[Short policy plus review]
-```
-
 ### 🔴 Expert view
 
 **Measure the governance itself.** Rules have costs, and you can see them if you look. Useful signals: how long a typical decision in each row of the map takes; how many exceptions are open, and how many are past their end date; how often teams work around a rule (a shared admin account is a sign the access process is too slow); and how many rules nobody can explain the reason for. A rising exception count usually means a rule is wrong, not that people are careless.
@@ -119,8 +107,6 @@ flowchart LR
 **Separation of duties without a gate.** Auditors and partners often ask for **separation of duties**: the person who writes a change should not be the only person who approves it. A peer review enforced by the pipeline, with branch protection that even administrators cannot skip without leaving a record, is a common way engineering teams meet this. Whether it satisfies a particular partner or auditor is a question to ask them early, with an example of the evidence in hand, rather than to assume.
 
 **Sunset every rule.** Rules added after a scare tend to outlive the scare. Give each policy an owner and a review date, and ask at review: what risk does this rule reduce, is it still the cheapest way to reduce it, and what would happen if we deleted it? Governance that only grows becomes the thing people route around.
-
-**Governance is a product for internal customers.** Dana treats engineers as the users of her guardrails. If a rule needs a wiki page to explain how to comply, she looks for a way to make compliance automatic instead. This is the same idea as the golden path in lesson 8.3, applied to rules.
 
 **The memorable rule.** Decide who decides, then make the safe way the default way.
 
@@ -210,7 +196,6 @@ Faisal wanted the weekly board "just for the first three months". Dana asked wha
 - **Committees as deciders.** "The architecture board decides" often means nobody does. Name one accountable role; the board can be consulted.
 - **Rules without reasons or end dates.** Write the risk each rule reduces and a review date; delete rules whose risk has gone.
 - **Exceptions that never expire.** Give every exception an owner, a compensating control and an end date, and review the register monthly.
-- **Punishing the workaround instead of fixing the cause.** A shared admin account usually means access is too slow. Fix the access path.
 
 ## 🧾 Recap
 - Governance decides who decides, within what limits, and how the company checks; management makes and carries out the decisions.
@@ -413,8 +398,6 @@ The **owner** is the person accountable for the risk being treated, usually the 
 **Threat model the change, not the company.** Large, one-off threat models of the whole system go stale within weeks. Short threat models attached to significant changes (new data, new access paths, new suppliers, money flows) stay current because they are part of the work. Keep a template in the repository and link the model from the pull request or decision record.
 
 **Turn every finding into a test or a guardrail.** Yasmin's fix included an automated test that asks for another courier's record and expects a refusal. Dana then asked the platform team to add the same kind of test to the service template for every endpoint that takes an ID. A finding that becomes a test is fixed once; a finding that becomes a memo is fixed until someone forgets. For testing techniques, see [*Software Testing*, lesson 4.2 — Security testing for testers: OWASP, SAST, DAST, dependency scanning, fuzzing and authorisation tests](../testing/index.html#/4.2).
-
-**Beware of security theatre.** Long password rules nobody can remember, annual training nobody reads, and scans whose results nobody fixes look like security and reduce little risk. Ask of any control: what specific harm does this prevent, and how would we know if it stopped working?
 
 **The memorable rule.** Ask "what can go wrong?" before you build, and give every risk an owner.
 
