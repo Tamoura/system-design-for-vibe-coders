@@ -32,7 +32,7 @@ Faisal's reflex was a weekly change board. Salma counted about 140 changes to pa
 
 ### 🟢 The essentials
 
-**Governance is not bureaucracy.** Its job is to make sure the right people make the right decisions, within agreed limits, and that the company can show this happened. Peter Weill and Jeanne Ross's book *IT Governance* (2004) is widely cited for defining IT governance as "specifying the decision rights and accountability framework to encourage desirable behavior in the use of IT" (as reported in summaries of the book). Governance that people route around has failed at that job. Governance asks "who may decide whether we store card data?"; management asks "shall we store it for this feature?"
+**Governance is not bureaucracy.** Its job is to make sure the right people make the right decisions, within agreed limits, and that the company can show this happened. Peter Weill of MIT's Center for Information Systems Research defined IT governance as "specifying the decision rights and accountability framework to encourage desirable behavior in the use of IT" (working paper, 2003), a definition widely cited from his 2004 book with Jeanne Ross, *IT Governance*. Governance that people route around has failed at that job. Governance asks "who may decide whether we store card data?"; management asks "shall we store it for this feature?"
 
 **Decision rights.** For each important kind of decision, write down:
 
@@ -66,7 +66,7 @@ Keep gates for rare, high-impact, hard-to-reverse decisions: signing a payments 
 
 ### 🟡 Going deeper
 
-**Why central approval often disappoints.** DORA (DevOps Research and Assessment, a research programme now part of Google Cloud) reports on its "streamlining change approval" page that heavyweight approval by people outside the team is associated with worse delivery performance, that its research found no evidence such approval lowers the rate of failed changes, and that peer review backed by automated checks works better (as reported in search summaries of the page). The book *Accelerate* (Forsgren, Humble and Kim, 2018) reported similar findings. These describe the organisations surveyed, not a law. For the manager's view, see [*Running IT as a Business*, lesson 6.2 — Change control that protects stability without stopping flow](../itbiz/index.html#/6.2).
+**Why central approval often disappoints.** DORA (DevOps Research and Assessment, a research programme now part of Google Cloud) reports on its "streamlining change approval" page that heavyweight approval by people outside the team is associated with worse delivery performance, that its research found no evidence such approval lowers the rate of failed changes, and that peer review backed by automated checks works better. The book *Accelerate* (Forsgren, Humble and Kim, 2018) is reported to have found similar results. These describe the organisations surveyed, not a law. For the manager's view, see [*Running IT as a Business*, lesson 6.2 — Change control that protects stability without stopping flow](../itbiz/index.html#/6.2).
 
 **Federated governance.** In **federated governance**, a small central group (here Dana's team, the platform team and the architecture group) sets a short list of non-negotiable guardrails and provides tools that make them easy; teams decide everything else. Test for the list: would breaking this rule harm customers, partners or the company, and is it hard to undo?
 
@@ -247,9 +247,10 @@ Instead of the board, Dana sampled 20 pull requests a month for a quarter. Salma
 </details>
 
 ## 📚 References
-- DORA, "Capabilities: Streamlining change approval": https://dora.dev/capabilities/streamlining-change-approval/ — findings on external approval and peer review. Reported from search summaries; the page could not be opened from this environment on 2026-11-22.
-- Forsgren, N., Humble, J. and Kim, G., *Accelerate: The Science of Lean Software and DevOps* (IT Revolution, 2018). Full citation; findings on change approval as reported in summaries; not opened.
-- Weill, P. and Ross, J. W., *IT Governance: How Top Performers Manage IT Decision Rights for Superior Results* (Harvard Business School Press, 2004). Source of the quoted definition as reported in summaries; not checked against the book.
+- DORA, "Capabilities: Streamlining change approval": https://dora.dev/capabilities/streamlining-change-approval/ — findings on external approval and peer review; read 2026-11-22.
+- Forsgren, N., Humble, J. and Kim, G., *Accelerate: The Science of Lean Software and DevOps* (IT Revolution, 2018). Book record checked on the publisher's page (IT Revolution, 27 March 2018); findings on change approval as reported (quoted in David Farley's excerpt on InformIT), book not opened.
+- Weill, P. and Ross, J. W., *IT Governance: How Top Performers Manage IT Decision Rights for Superior Results* (Harvard Business School Press, 2004). Book record checked on the publisher's store page (24 June 2004). The quoted definition was read in Weill's own MIT working paper "Don't Just Lead, Govern: Implementing Effective IT Governance" (CISR WP No. 326, 2003): https://dspace.mit.edu/handle/1721.1/1846
+- Open Policy Agent documentation ("an open source, general-purpose policy engine"; read 2026-11-22): https://www.openpolicyagent.org/docs
 - Library course: [*Running IT as a Business*, lesson 6.2 — Change control that protects stability without stopping flow](../itbiz/index.html#/6.2).
 - Library course: [*Cloud & DevOps: Zero to Hero*, lesson 3.3 — Policy as code, drift and guardrails](../cloud/index.html#/3.3).
 - Library course: [*Running IT as a Business*, lesson 10.3 — Risk, controls and audit in a regulated bank](../itbiz/index.html#/10.3) (the operating-model view of the same questions).
@@ -295,7 +296,7 @@ The fix took an hour; finding it took luck. Dana told Maha that every team neede
 
 The earnings page is served by an **endpoint**: one address in Qafila's **API** (application programming interface, the set of addresses that programs call to ask for data or actions). The weakness has a name: **broken access control**, where the system checks that you are logged in but not that you may see *this* record. See [*Application & AI Security*, lesson 3.3 — Authorisation: broken access control, IDOR and multi-tenancy](../secai/index.html#/3.3).
 
-**Everyday security habits.** Verizon's annual Data Breach Investigations Report (DBIR) analyses thousands of reported breaches. Its 2026 edition, covering November 2024 to October 2025, reported that exploiting a vulnerability (31% of breaches) had overtaken credential abuse (13%) as the most common way in, for the first time in the report's history (as reported in Verizon's announcement and press coverage). That describes its dataset, not your company's future, but it points at ordinary habits:
+**Everyday security habits.** Verizon's annual Data Breach Investigations Report (DBIR) analyses thousands of reported breaches. Its 2026 edition, covering November 2024 to October 2025, reported that exploiting a vulnerability (31% of breaches) had overtaken credential abuse (13%) as the most common way in, for the first time in the report's history (Verizon's announcement and the report's executive summary). That describes its dataset, not your company's future, but it points at ordinary habits:
 
 | Habit | What it means in practice | Earlier lesson |
 |---|---|---|
@@ -306,7 +307,7 @@ The earnings page is served by an **endpoint**: one address in Qafila's **API** 
 | **Strong login** | Multi-factor authentication (a second proof besides the password, such as a code from an app) for staff | — |
 | **Useful logs** | Who did what and when, without secrets | 4.2, 9.2 |
 
-**Threat modelling in fifteen minutes.** **Threat modelling** is thinking through how a system could be attacked or fail, before you build it. The Threat Modeling Manifesto, written by practitioners, uses four questions (as reported in summaries and in the OWASP Threat Modeling Cheat Sheet):
+**Threat modelling in fifteen minutes.** **Threat modelling** is thinking through how a system could be attacked or fail, before you build it. The Threat Modeling Manifesto, written by practitioners, uses four questions (also listed in the OWASP Threat Modeling Cheat Sheet):
 
 1. **What are we working on?** Draw the change: who uses it, what data flows where, and where the trust boundaries are.
 2. **What can go wrong?** List ways it could be misused or fail.
@@ -520,10 +521,10 @@ Faisal said the partner "handles security". Dana pointed out that T1, T2 and T5 
 </details>
 
 ## 📚 References
-- Threat Modeling Manifesto: https://threatmodelingmanifesto.org/ — the four key questions. Reported from search summaries; the page could not be opened from this environment on 2026-11-22.
-- OWASP, Threat Modeling Cheat Sheet: https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html — lists the four questions and STRIDE. Reported from search summaries; not opened.
-- Verizon, "Vulnerability exploitation top breach entry point, 2026 industry-wide DBIR finds": https://www.verizon.com/about/news/breach-industry-wide-dbir-finds — 31% vulnerability exploitation versus 13% credential abuse; data period November 2024 to October 2025. Reported; confirmed by multiple secondary sources (SecurityWeek; Help Net Security, 20 May 2026) via search on 2026-11-22; not opened.
-- Shostack, A., *Threat Modeling: Designing for Security* (Wiley, 2014). Full citation; not opened.
+- Threat Modeling Manifesto: https://threatmodelingmanifesto.org/ — the four key questions; read 2026-11-22.
+- OWASP, Threat Modeling Cheat Sheet: https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html — lists the four questions and STRIDE, "originally developed by Microsoft employees"; read 2026-11-22.
+- Verizon, "Vulnerability exploitation top breach entry point, 2026 industry-wide DBIR finds": https://www.verizon.com/about/news/breach-industry-wide-dbir-finds — 19 May 2026; vulnerability exploitation (31%) surpassed stolen credentials as the top entry point for the first time in the report's 19 years; read 2026-11-22. The 13% for credential abuse is in the 2026 DBIR executive summary (read 2026-11-22): https://www.verizon.com/business/resources/executivebriefs/2026-dbir-executive-summary.pdf. Verizon's DBIR page gives the data period, 1 November to 31 October of the next year: https://www.verizon.com/business/resources/reports/dbir/
+- Shostack, A., *Threat Modeling: Designing for Security* (Wiley, 2014). Book record checked in Google Books (John Wiley & Sons, 17 February 2014); not opened.
 - Library course: [*Application & AI Security*, lesson 1.1 — Threat modelling: data flows, trust boundaries and STRIDE](../secai/index.html#/1.1).
 - Library course: [*Application & AI Security*, lesson 1.3 — Rating and prioritising risk: likelihood, impact and CVSS](../secai/index.html#/1.3).
 - Library course: [*Application & AI Security*, lesson 3.3 — Authorisation: broken access control, IDOR and multi-tenancy](../secai/index.html#/3.3).
@@ -572,10 +573,10 @@ This course does not tell you what any law requires; that varies by country and 
 **Three standards you will hear about.** Know what each is for; do not claim to meet any without checking.
 
 - **ISO/IEC 27001** (current edition 2022): an international standard from ISO and IEC for an **information security management system**, a managed set of policies, risk processes and controls. Companies can choose to be certified by an accredited body.
-- **SOC 2**: a report, under criteria set by the American Institute of Certified Public Accountants (AICPA), in which an independent auditor examines a service organisation's controls for security, availability, processing integrity, confidentiality and privacy. A **Type 1** report looks at design at one point in time; a **Type 2** report also tests operation over a period.
+- **SOC 2**: a report, under criteria set by the American Institute of Certified Public Accountants (AICPA), in which an independent auditor examines a service organisation's controls relevant to one or more of security, availability, processing integrity, confidentiality and privacy. A **Type 1** report looks at design at one point in time; a **Type 2** report also tests operation over a period.
 - **PCI DSS** (Payment Card Industry Data Security Standard), from the PCI Security Standards Council: security requirements for organisations that store, process or transmit payment card data. Version 4.0.1, a limited revision, was published in 2024. Which parts apply to Qafila depends on how card data flows, a question for Dana, the partner and a **qualified assessor** (a firm approved by the council to assess against the standard).
 
-(All three as reported from the owners' and other public descriptions.)
+(All three as described on the owners' public pages, read in November 2026.)
 
 **Scope is your biggest lever.** **Scope** is the set of systems, data and people a set of rules applies to. The smaller the scope, the less there is to control and prove. Qafila's choice in lesson 11.2 (the partner handles card numbers; Qafila stores only a reference) is a scope decision as much as a security one. Ask early: "Can we keep this data out of our systems altogether?"
 
@@ -613,7 +614,7 @@ For how a manager judges pipeline evidence, see [*Running IT as a Business*, les
 
 Answers often become part of the contract. An overstated "yes" can become a broken promise.
 
-**Who checks whom.** The Institute of Internal Auditors' **Three Lines Model** (updated in 2020) is a widely used way to describe roles (as reported). **First-line** roles deliver products and own their risks (Qafila's product teams). **Second-line** roles give expertise and challenge on risk (Dana's team). **Third-line** roles give independent assurance (internal audit). As a practitioner, you are first line: your team's risks are yours to manage.
+**Who checks whom.** The Institute of Internal Auditors' **Three Lines Model** (updated in July 2020) is a widely used way to describe roles. **First-line** roles deliver products and own their risks (Qafila's product teams). **Second-line** roles give expertise and challenge on risk (Dana's team). **Third-line** roles give independent assurance (internal audit). As a practitioner, you are first line: your team's risks are yours to manage.
 
 ### 🔴 Expert view
 
@@ -779,10 +780,10 @@ Faisal wanted question 31 answered "Yes, reviewed quarterly". Dana refused: ther
 </details>
 
 ## 📚 References
-- ISO/IEC 27001:2022, *Information security, cybersecurity and privacy protection — Information security management systems — Requirements* (ISO and IEC, 2022). Cited by title, owner and date; ISO's site: https://www.iso.org/ — edition and purpose reported from search summaries; the catalogue page could not be opened from this environment on 2026-11-22.
-- AICPA (American Institute of Certified Public Accountants), SOC 2 reports and the trust services criteria. Cited by owner; AICPA & CIMA site: https://www.aicpa-cima.com/ — description of criteria and Type 1/Type 2 reports reported from search summaries; not opened.
-- PCI Security Standards Council, *PCI DSS v4.0.1* (2024), a limited revision of v4.0. Cited by title, owner and date; council site: https://www.pcisecuritystandards.org/ — reported from search summaries; not opened.
-- The Institute of Internal Auditors, *The IIA's Three Lines Model: An Update of the Three Lines of Defense* (July 2020). Cited by title, owner and date; IIA site: https://www.theiia.org/ — reported from search summaries; not opened.
+- ISO/IEC 27001:2022, *Information security, cybersecurity and privacy protection — Information security management systems — Requirements* (ISO and IEC, 2022). ISO's standard page (Edition 3, 2022; certification is a choice), read 2026-11-22 through its committee.iso.org copy because www.iso.org refused automated access: https://committee.iso.org/standard/27001
+- AICPA (American Institute of Certified Public Accountants), SOC 2 reports and the trust services criteria. Type 1 and type 2 reports are defined in the AICPA Guide *SOC 2® Reporting on an Examination of Controls at a Service Organization Relevant to Security, Availability, Processing Integrity, Confidentiality, or Privacy* (©2018), paragraph 1.05; chapter 1 excerpt on Wiley's catalogue site, read 2026-11-22: https://catalogimages.wiley.com/images/db/pdf/9781945498602.excerpt.pdf. AICPA & CIMA site: https://www.aicpa-cima.com/
+- PCI Security Standards Council, *PCI DSS v4.0.1* (2024), a limited revision of v4.0. Announced on the council's blog on 11 June 2024 (read 2026-11-22): https://blog.pcisecuritystandards.org/just-published-pci-dss-v4-0-1. Who it applies to: https://www.pcisecuritystandards.org/standards/pci-dss/. Qualified Security Assessors are "independent security organizations qualified by PCI SSC": https://listings.pcisecuritystandards.org/documents/QSA_Qualification_Requirements_v4.0.pdf
+- The Institute of Internal Auditors, *The IIA's Three Lines Model: An Update of the Three Lines of Defense* (July 2020). Position paper, read 2026-11-22: https://www.theiia.org/globalassets/documents/resources/the-iias-three-lines-model-an-update-of-the-three-lines-of-defense-july-2020/three-lines-model-updated-english.pdf. Announcement, 20 July 2020: https://www.theiia.org/en/content/communications/2020/july/20-july-2020-iia-issues-important-update-to-three-lines-model
 - Library course: [*Running IT as a Business*, lesson 5.2 — Quality gates and evidence a manager can trust](../itbiz/index.html#/5.2).
 - Library course: [*Running IT as a Business*, lesson 10.3 — Risk, controls and audit in a regulated bank](../itbiz/index.html#/10.3).
 - Library course: [*Data Engineering & Analytics*, lesson 6.3 — Securing the data platform: access control, secrets, audit and sharing safely](../data/index.html#/6.3).
