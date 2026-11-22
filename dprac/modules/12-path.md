@@ -784,7 +784,7 @@ Yasmin's learning plan after her review, shared with her manager and with Dana a
 </details>
 
 ## 📚 References
-The owners' pages were opened on 22 November 2026, except PMI's and PeopleCert's, which refused automated access; for those, and for the BABOK Guide v3 date, which IIBA's page does not state, owners, editions and dates are as reported in search summaries (November 2026).
+The owners' pages were opened on 22 November 2026, except PMI's, which refused automated access (PeopleCert's ownership of ITIL is from its own 2021 announcement, cited in lesson 7.2); for PMI, and for the BABOK Guide v3 date, which IIBA's page does not state, owners, editions and dates are as reported in search summaries (November 2026).
 - Schwaber, K. and Sutherland, J., *The Scrum Guide* (2020), CC BY-SA 4.0: https://scrumguides.org/scrum-guide.html
 - PeopleCert, ITIL: https://www.peoplecert.org/ITIL-4
 - ISACA, COBIT: https://www.isaca.org/cobit

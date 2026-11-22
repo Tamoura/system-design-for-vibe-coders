@@ -335,7 +335,7 @@ Agents follow the same steps, customers know what to expect, and the team can se
 | **Planned route** | Not routine, or higher risk | A database migration on the orders table; changing the payment provider's settings | Written plan, second reviewer from the owning team, rollback plan, agreed time window |
 | **Urgent route** | Needed now to stop or prevent an incident | Turning off a broken feature flag during an incident | Incident lead's agreement at the time; record and review afterwards |
 
-ITIL and many service desks call these three standard, normal and emergency changes; you will hear those words at work.
+ITIL and many service desks are reported to call these three standard, normal and emergency changes; you will hear those words at work.
 
 Most of Qafila's changes should take the routine route, which leaves a record automatically. Make the safe route the easy route.
 

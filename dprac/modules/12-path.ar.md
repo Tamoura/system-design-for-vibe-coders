@@ -784,7 +784,7 @@
 </details>
 
 ## 📚 المراجع (References)
-فُتحت صفحات المالكين في 22 نوفمبر 2026، عدا صفحتي PMI وPeopleCert اللتين رفضتا الوصول الآلي؛ وفيهما، وفي تاريخ BABOK Guide v3 الذي لا تذكره صفحة IIBA، المالكون والإصدارات والتواريخ كما نقلتها ملخصات البحث (نوفمبر 2026).
+فُتحت صفحات المالكين في 22 نوفمبر 2026، عدا صفحة PMI التي رفضت الوصول الآلي (وملكية PeopleCert لـITIL مأخوذة من إعلانها لعام 2021 المذكور في الدرس 7.2)؛ وفي PMI، وفي تاريخ BABOK Guide v3 الذي لا تذكره صفحة IIBA، المالكون والإصدارات والتواريخ كما نقلتها ملخصات البحث (نوفمبر 2026).
 - Schwaber، K. وSutherland، J.، *The Scrum Guide* ‏(2020)، CC BY-SA 4.0: https://scrumguides.org/scrum-guide.html
 - PeopleCert، ITIL: https://www.peoplecert.org/ITIL-4
 - ISACA، COBIT: https://www.isaca.org/cobit
