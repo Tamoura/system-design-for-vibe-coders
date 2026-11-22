@@ -132,6 +132,20 @@ html[lang="ar"] .rule,html[lang="ar"] .brand{letter-spacing:0;}
 @media (max-width:680px){.paths{grid-template-columns:1fr;}.wrap{padding-left:1rem;padding-right:1rem;}}
 @media (max-width:680px){.courses{grid-template-columns:1fr;}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;}html{scroll-behavior:auto;}}
+.menu{position:sticky;top:0;z-index:20;margin:0 -1.5rem 2rem;padding:.55rem 1.5rem;background:var(--bg);border-bottom:1px solid var(--line);}
+.menu-links{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.3rem .4rem;align-items:center;}
+.menu-links>li{flex-shrink:0;}
+.menu-links>li>a,.menu summary{display:inline-block;white-space:nowrap;font-size:.85rem;font-weight:600;color:var(--ink);text-decoration:none;padding:.35rem .75rem;border:1px solid var(--line);border-radius:999px;background:var(--panel);cursor:pointer;}
+.menu-links>li>a:hover,.menu summary:hover,.menu-links>li>a:focus-visible,.menu summary:focus-visible{border-color:var(--accent);color:var(--accent);}
+.menu summary{list-style:none;}
+.menu summary::-webkit-details-marker{display:none;}
+.menu summary::after{content:" ▾";}
+.menu-courses{position:relative;}
+.menu-panel{position:absolute;inset-inline-start:0;top:calc(100% + .4rem);list-style:none;margin:0;padding:.5rem;min-width:min(19rem,86vw);background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-lg);}
+.menu-panel a{display:block;padding:.45rem .7rem;border-radius:8px;color:var(--ink);text-decoration:none;font-size:.9rem;}
+.menu-panel a:hover,.menu-panel a:focus-visible{background:var(--accent-soft);color:var(--accent);}
+.school,#start{scroll-margin-top:4.5rem;}
+@media (max-width:680px){.menu{margin-left:-1rem;margin-right:-1rem;padding-left:1rem;padding-right:1rem;}.menu-links{flex-wrap:nowrap;overflow-x:auto;padding-bottom:.2rem;}.menu-courses{position:static;}.menu-panel{left:1rem;right:1rem;min-width:0;}}
 </style>
 </head>
 <body>
@@ -143,12 +157,46 @@ html[lang="ar"] .rule,html[lang="ar"] .brand{letter-spacing:0;}
     <p><span class="en">Courses for the whole job: building software with AI agents, securing and governing AI systems, running platforms and data, and learning the building blocks every SaaS shares. Practical, grounded in real systems, and free to read.</span><span class="ar">دورات للمهمة كاملة (courses for the whole job): بناء البرمجيات مع وكلاء الذكاء الاصطناعي (AI agents)، وتأمين أنظمة الذكاء الاصطناعي وحوكمتها (governance)، وتشغيل المنصات والبيانات (platforms and data)، وتعلّم المكوّنات التي تشترك فيها كل أنظمة SaaS. عملية ومبنية على أنظمة حقيقية ومجانية للقراءة.</span></p>
   </header>
 
-  <div class="rule"><h2><span class="en">Where to start</span><span class="ar">من أين تبدأ (Where to start)</span></h2></div>
+  <nav class="menu" aria-label="Library menu / قائمة المكتبة">
+    <ul class="menu-links">
+      <li><a href="#start"><span class="en">Where to start</span><span class="ar">من أين تبدأ</span></a></li>
+      <li><a href="#school-ai"><span class="en">AI Engineering</span><span class="ar">هندسة الذكاء الاصطناعي</span></a></li>
+      <li><a href="#school-security"><span class="en">Security</span><span class="ar">الأمن</span></a></li>
+      <li><a href="#school-gov"><span class="en">Governance &amp; Product</span><span class="ar">الحوكمة والمنتج</span></a></li>
+      <li><a href="#school-platform"><span class="en">Platform &amp; Data</span><span class="ar">المنصات والبيانات</span></a></li>
+      <li><a href="#school-early"><span class="en">Early Talent</span><span class="ar">المواهب الناشئة</span></a></li>
+      <li class="menu-courses"><details><summary><span class="en">All courses</span><span class="ar">كل الدورات</span></summary>
+        <ul class="menu-panel">
+          <li><a href="ainative/" data-ar="ainative/index.ar.html"><span class="en">AI-Native Engineer</span><span class="ar">المهندس الأصيل في الذكاء الاصطناعي</span></a></li>
+          <li><a href="aiapps/" data-ar="aiapps/index.ar.html"><span class="en">AI Applications &amp; Agents</span><span class="ar">تطبيقات الذكاء الاصطناعي والوكلاء</span></a></li>
+          <li><a href="secai/" data-ar="secai/index.ar.html"><span class="en">Secure AI &amp; AppSec</span><span class="ar">أمن الذكاء الاصطناعي والتطبيقات</span></a></li>
+          <li><a href="aigp/" data-ar="aigp/index.ar.html"><span class="en">AI Governance</span><span class="ar">حوكمة الذكاء الاصطناعي</span></a></li>
+          <li><a href="aipm/" data-ar="aipm/index.ar.html"><span class="en">AI Product Management</span><span class="ar">إدارة منتجات الذكاء الاصطناعي</span></a></li>
+          <li><a href="founder/" data-ar="founder/index.ar.html"><span class="en">Founder's Playbook</span><span class="ar">دليل المؤسس</span></a></li>
+          <li><a href="itbiz/" data-ar="itbiz/index.ar.html"><span class="en">Running IT as a Business</span><span class="ar">إدارة تقنية المعلومات كعمل تجاري</span></a></li>
+          <li><a href="cloud/" data-ar="cloud/index.ar.html"><span class="en">Cloud &amp; DevOps</span><span class="ar">السحابة وDevOps</span></a></li>
+          <li><a href="data/" data-ar="data/index.ar.html"><span class="en">Data Engineering &amp; Analytics</span><span class="ar">هندسة البيانات والتحليلات</span></a></li>
+          <li><a href="testing/" data-ar="testing/index.ar.html"><span class="en">Software Testing</span><span class="ar">اختبار البرمجيات</span></a></li>
+          <li><a href="saas/" data-ar="saas/index.ar.html"><span class="en">SaaS Building Blocks</span><span class="ar">مكوّنات بناء SaaS</span></a></li>
+          <li><a href="vibe/" data-ar="vibe/index.ar.html"><span class="en">System Design for Vibe Coders</span><span class="ar">تصميم الأنظمة لمبرمجي الفايب</span></a></li>
+          <li><a href="career/" data-ar="career/index.ar.html"><span class="en">From Graduate to Hired</span><span class="ar">من خرّيج إلى موظّف</span></a></li>
+        </ul>
+      </details></li>
+      <li><a href="about/" data-ar="about/index.ar.html"><span class="en">About</span><span class="ar">عن المكتبة</span></a></li>
+    </ul>
+  </nav>
+
+
+  <div class="rule" id="start"><h2><span class="en">Where to start</span><span class="ar">من أين تبدأ (Where to start)</span></h2></div>
   <ul class="paths">
-    <li><span class="en"><b>I build with AI:</b> <a href="ainative/">ainative</a>, then <a href="aiapps/">aiapps</a>.</span><span class="ar"><b>أبني بالذكاء الاصطناعي (I build with AI):</b> <a href="ainative/" data-ar="ainative/index.ar.html">ainative</a> ثم <a href="aiapps/" data-ar="aiapps/index.ar.html">aiapps</a>.</span></li>
-    <li><span class="en"><b>I secure AI systems:</b> <a href="secai/">secai</a>.</span><span class="ar"><b>أؤمّن أنظمة الذكاء الاصطناعي (I secure AI systems):</b> <a href="secai/" data-ar="secai/index.ar.html">secai</a>.</span></li>
-    <li><span class="en"><b>I govern or manage AI:</b> <a href="aigp/">aigp</a>, <a href="aipm/">aipm</a>.</span><span class="ar"><b>أحكم الذكاء الاصطناعي أو أديره (I govern or manage AI):</b> <a href="aigp/" data-ar="aigp/index.ar.html">aigp</a> و<a href="aipm/" data-ar="aipm/index.ar.html">aipm</a>.</span></li>
-    <li><span class="en"><b>I run platforms and data:</b> <a href="cloud/">cloud</a>, <a href="data/">data</a>, <a href="testing/">testing</a>.</span><span class="ar"><b>أدير المنصات والبيانات (I run platforms and data):</b> <a href="cloud/" data-ar="cloud/index.ar.html">cloud</a> و<a href="data/" data-ar="data/index.ar.html">data</a> و<a href="testing/" data-ar="testing/index.ar.html">testing</a>.</span></li>
+    <li><span class="en"><b>I am starting my career in tech:</b> <a href="career/">From Graduate to Hired</a>, then <a href="vibe/">System Design for Vibe Coders</a>.</span><span class="ar"><b>أبدأ مساري المهني في التقنية:</b> <a href="career/" data-ar="career/index.ar.html">من خرّيج إلى موظّف</a> ثم <a href="vibe/" data-ar="vibe/index.ar.html">تصميم الأنظمة لمبرمجي الفايب</a>.</span></li>
+    <li><span class="en"><b>I build software with AI agents:</b> <a href="ainative/">AI-Native Engineer</a>, then <a href="aiapps/">AI Applications &amp; Agents</a>.</span><span class="ar"><b>أبني البرمجيات مع وكلاء الذكاء الاصطناعي:</b> <a href="ainative/" data-ar="ainative/index.ar.html">المهندس الأصيل في الذكاء الاصطناعي</a> ثم <a href="aiapps/" data-ar="aiapps/index.ar.html">تطبيقات الذكاء الاصطناعي والوكلاء</a>.</span></li>
+    <li><span class="en"><b>I am shipping a product to real users:</b> <a href="vibe/">System Design for Vibe Coders</a>, then <a href="saas/">SaaS Building Blocks</a>.</span><span class="ar"><b>أطلق منتجًا لمستخدمين حقيقيين:</b> <a href="vibe/" data-ar="vibe/index.ar.html">تصميم الأنظمة لمبرمجي الفايب</a> ثم <a href="saas/" data-ar="saas/index.ar.html">مكوّنات بناء SaaS</a>.</span></li>
+    <li><span class="en"><b>I am founding a product or company:</b> <a href="founder/">Founder's Playbook</a>, then <a href="saas/">SaaS Building Blocks</a>.</span><span class="ar"><b>أؤسس منتجًا أو شركة:</b> <a href="founder/" data-ar="founder/index.ar.html">دليل المؤسس</a> ثم <a href="saas/" data-ar="saas/index.ar.html">مكوّنات بناء SaaS</a>.</span></li>
+    <li><span class="en"><b>I secure applications and AI systems:</b> <a href="secai/">Secure AI &amp; AppSec</a>.</span><span class="ar"><b>أؤمّن التطبيقات وأنظمة الذكاء الاصطناعي:</b> <a href="secai/" data-ar="secai/index.ar.html">أمن الذكاء الاصطناعي والتطبيقات</a>.</span></li>
+    <li><span class="en"><b>I govern AI or manage AI products:</b> <a href="aigp/">AI Governance</a>, then <a href="aipm/">AI Product Management</a>.</span><span class="ar"><b>أحكم الذكاء الاصطناعي أو أدير منتجاته:</b> <a href="aigp/" data-ar="aigp/index.ar.html">حوكمة الذكاء الاصطناعي</a> ثم <a href="aipm/" data-ar="aipm/index.ar.html">إدارة منتجات الذكاء الاصطناعي</a>.</span></li>
+    <li><span class="en"><b>I run platforms, data or quality:</b> <a href="cloud/">Cloud &amp; DevOps</a>, <a href="data/">Data Engineering &amp; Analytics</a> and <a href="testing/">Software Testing</a>.</span><span class="ar"><b>أدير المنصات أو البيانات أو الجودة:</b> <a href="cloud/" data-ar="cloud/index.ar.html">السحابة وDevOps</a>، <a href="data/" data-ar="data/index.ar.html">هندسة البيانات والتحليلات</a> و<a href="testing/" data-ar="testing/index.ar.html">اختبار البرمجيات</a>.</span></li>
+    <li><span class="en"><b>I manage IT or design its operating model:</b> <a href="itbiz/">Running IT as a Business</a>.</span><span class="ar"><b>أدير تقنية المعلومات أو أصمّم نموذج تشغيلها:</b> <a href="itbiz/" data-ar="itbiz/index.ar.html">إدارة تقنية المعلومات كعمل تجاري</a>.</span></li>
   </ul>
 
   <div class="notebox"><span class="en">Levels and school placement are proposed (100 Foundation, 200 Practitioner, 300 Advanced, 400 Lead). Today’s courses sit at 100–200. Every course is drafted with AI and has not yet been reviewed by a subject expert.</span><span class="ar">المستويات وتوزيع المدارس مقترحة (100 تأسيسي Foundation، 200 ممارس Practitioner، 300 متقدم Advanced، 400 قيادي Lead). دورات اليوم عند 100–200. كل دورة أُعدّت بالذكاء الاصطناعي ولم يراجعها خبير في الموضوع بعدُ (not yet expert-reviewed).</span></div>
@@ -360,6 +408,14 @@ html[lang="ar"] .rule,html[lang="ar"] .brand{letter-spacing:0;}
   try{l=localStorage.getItem('lang')||'en';}catch(e){}
   if(location.hash==='#ar')l='ar';else if(location.hash==='#en')l='en';
   if(l==='ar')set('ar');
+})();
+</script>
+<script>
+(function(){
+  var d=document.querySelector('.menu-courses details');
+  if(!d)return;
+  document.addEventListener('click',function(e){if(d.open&&!d.contains(e.target))d.open=false;});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&d.open){d.open=false;d.querySelector('summary').focus();}});
 })();
 </script>
 </body>
