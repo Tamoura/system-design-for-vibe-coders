@@ -262,10 +262,10 @@ Faisal wanted Bakery B counted as a pass because "the owner loved the idea". Mah
 </details>
 
 ## 📚 References
-- Strategyzer, "How assumptions mapping can focus your teams on running experiments that matter" (David J. Bland): https://www.strategyzer.com/library/how-assumptions-mapping-can-focus-your-teams-on-running-experiments-that-matter — mapping desirability, viability and feasibility assumptions by importance and evidence (reported from search summaries; not opened, 2026-11-22; the www form of the address is as reported by search results). Strategyzer also publishes a similar "Test Card"; the test plan in this lesson is this course's own layout.
-- Bland, D. J. and Osterwalder, A., *Testing Business Ideas: A Field Guide for Rapid Experimentation* (Wiley, 2019, as reported) (full citation; not opened).
-- Ries, E., *The Lean Startup* (Crown Business, 2011): source of the term "leap-of-faith assumptions" (full citation; not opened).
-- Torres, T., *Continuous Discovery Habits* (Product Talk, 2021): weekly customer contact and assumption testing as a habit (full citation; not opened).
+- Strategyzer, "How assumptions mapping can focus your teams on running experiments that matter" (David J. Bland): https://www.strategyzer.com/library/how-assumptions-mapping-can-focus-your-teams-on-running-experiments-that-matter (4 August 2020; an excerpt from *Testing Business Ideas*) — mapping desirability, feasibility and viability hypotheses by importance and evidence; its evidence axis runs from "have evidence" to "no evidence", so the riskiest quadrant is top right. Strategyzer also publishes a similar "Test Card" (Alex Osterwalder, 5 March 2015: https://www.strategyzer.com/library/validate-your-ideas-with-the-test-card); the test plan in this lesson is this course's own layout.
+- Bland, D. J. and Osterwalder, A., *Testing Business Ideas: A Field Guide for Rapid Experimentation* (Wiley, 2019); Open Library record: https://openlibrary.org/books/OL28004111M (paperback, 12 November 2019).
+- Ries, E., *The Lean Startup* (Crown Business, 2011); the book's page, https://theleanstartup.com/book, uses the term "leap-of-faith assumptions".
+- Torres, T., *Continuous Discovery Habits* (Product Talk, 2021): https://www.producttalk.org/continuous-discovery-habits/ — interviewing customers and testing assumptions as a weekly habit.
 - Library course: [*Founder's Playbook for AI-First Builders*, lesson 1.4 — Smoke tests: a landing page and a pre-sale before you build](../founder/index.html#/1.4).
 - Library course: [*AI Product Management*, lesson 2.1 — Discovery for AI: jobs, workflows and where AI fits](../aipm/index.html#/2.1).
 
@@ -295,14 +295,14 @@ Maha remembers the first version: Faisal spent nearly three weeks on a courier r
 
 ### 🟢 The essentials
 
-**What "minimum viable product" means.** The term was popularised by Eric Ries and the "lean startup" movement that grew from his book (a way of building new products through short cycles of build, measure and learn). A definition widely attributed to him describes the MVP as the version of a new product that lets a team collect the maximum amount of **validated learning** (what you learn from evidence of real behaviour) about customers with the least effort (reported). The key word is *learning*. It is often misused in two opposite ways:
+**What "minimum viable product" means.** The term was popularised by Eric Ries and the "lean startup" movement that grew from his book (a way of building new products through short cycles of build, measure and learn). In a 2009 blog post he defined the MVP as the version of a new product that lets a team collect the maximum amount of **validated learning** (what you learn from evidence of real behaviour) about customers with the least effort. The key word is *learning*. It is often misused in two opposite ways:
 
 | Misuse | What happens | Better |
 |---|---|---|
 | "MVP" means a shoddy version 1 | You learn that broken software annoys people, which you knew | Small in scope, solid in what it does |
 | "MVP" grows into everything imagined | Months pass with nothing in users' hands | Cut until it hurts, then check it still does the job |
 
-Henrik Kniberg's widely shared drawing, which goes from a skateboard to a scooter, a bicycle, a motorcycle and on to a car (as reported), makes the point: each early version should get a person somewhere, not be one wheel of a car. He suggested names such as "earliest testable product" (reported). This course says **smallest useful product**, to keep both words in view.
+Henrik Kniberg's widely shared drawing, which goes from a skateboard to a scooter, a bicycle, a motorcycle and on to a car, makes the point: each early version should get a person somewhere, not be one wheel of a car. In his 2016 post on it he suggested other names, such as "earliest testable product". This course says **smallest useful product**, to keep both words in view.
 
 **Three tests for a first product.** A smallest useful product:
 
@@ -310,9 +310,9 @@ Henrik Kniberg's widely shared drawing, which goes from a skateboard to a scoote
 2. **Teaches you the next most important thing:** you can name the assumption it tests (lesson 2.1).
 3. **Is safe to use:** it keeps data safe, can be undone, and someone knows when it breaks.
 
-**Story maps.** Jeff Patton set out this practice in his book *User Story Mapping* (O'Reilly, 2014). Across the top, left to right, write the user's **activities** in order: the **backbone**. Under each, write smaller **tasks**, most important first. Then draw horizontal lines to cut **slices**: the first slice takes the most essential item under *each* activity, so it covers the whole journey thinly.
+**Story maps.** Jeff Patton described this practice in articles from 2005 and 2008 and set it out at length in his book *User Story Mapping* (O'Reilly, 2014). Across the top, left to right, write the user's **activities** in order: the **backbone**. Under each, write smaller **tasks**, most important first. Then draw horizontal lines to cut **slices**: the first slice takes the most essential item under *each* activity, so it covers the whole journey thinly.
 
-The first slice is sometimes called a **walking skeleton** (a term usually credited to Alistair Cockburn, as reported): ugly, slow and partly manual, but it works end to end.
+The first slice is sometimes called a **walking skeleton** (a term Patton himself credits to Alistair Cockburn): ugly, slow and partly manual, but it works end to end.
 
 **The scope list.** After slicing, write **In** (this release), **Next** (if the learning goes well) and **Out** (not now, with one line on why). The Out list is the most valuable: it ends the weekly re-opening of the same debate and shows people their request was heard. For a founder's version of the same habit, see [*Founder's Playbook for AI-First Builders*, lesson 2.1 — One job, one customer: scope and the kill list](../founder/index.html#/2.1).
 
@@ -332,7 +332,7 @@ The first slice is sometimes called a **walking skeleton** (a term usually credi
 
 **Testing a prototype with users.** In a **usability test** a person tries a real task while you watch quietly. Give a task, not a tour ("A customer just ordered two cakes. Let the courier know"). Test in the real setting; note hesitation and errors; do not explain.
 
-How many people? Jakob Nielsen's article "Why You Only Need to Test with 5 Users" (Nielsen Norman Group, 2000) argued that a round of about five users finds most usability problems, and that several small rounds with fixes between beat one large test (reported). Later writers, including his own group, note that this assumes similar users and problems that are fairly easy to find. Treat it as a habit, not a law.
+How many people? Jakob Nielsen's article "Why You Only Need to Test with 5 Users" (Nielsen Norman Group, 2000) argued that a round of about five users finds most usability problems (about 85% in his model), and that several small rounds with fixes between beat one large test. The article itself says this holds only for comparable users; distinct user groups each need their own testers. Treat it as a habit, not a law.
 
 **Do things by hand behind the product.** At Launch, much of what looks like software can be people, like Maha's morning courier checks (lesson 1.1). Write the manual work down, know its cost (lesson 1.3), and automate it once it is worth it.
 
@@ -502,15 +502,15 @@ Faisal called the predicted ready time "the clever part". It went on the Out lis
 
 <details><summary>Answer</summary>
 
-**C.** In the sense widely attributed to Eric Ries, an MVP is about learning the most for the least effort; small scope never excuses careless work. A treats "rough" as the point, B describes the misuse where an MVP grows into everything, and D makes revenue the test instead of learning. See "What 'minimum viable product' means".
+**C.** In Eric Ries's definition, an MVP is about learning the most for the least effort; small scope never excuses careless work. A treats "rough" as the point, B describes the misuse where an MVP grows into everything, and D makes revenue the test instead of learning. See "What 'minimum viable product' means".
 
 </details>
 
 ## 📚 References
-- Ries, E., *The Lean Startup* (Crown Business, 2011); book page: https://theleanstartup.com/book — the MVP definition is quoted as reported in summaries of Ries's writing; the original 2009 blog post could not be opened from this environment.
-- Kniberg, H., "Making sense of MVP (Minimum Viable Product)", Crisp blog, 25 January 2016: https://blog.crisp.se/2016/01/25/henrikkniberg/making-sense-of-mvp (reported from search summaries; not opened).
-- Patton, J., *User Story Mapping: Discover the Whole Story, Build the Right Product* (O'Reilly, 2014) (full citation; backbone, slices and walking skeleton reported from summaries; not opened).
-- Nielsen, J., "Why You Only Need to Test with 5 Users", Nielsen Norman Group, 19 March 2000: https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/ (reported from search summaries; not opened).
+- Ries, E., *The Lean Startup* (Crown Business, 2011); book page: https://theleanstartup.com/book — the MVP definition is from his post "Minimum Viable Product: a guide", Startup Lessons Learned, 3 August 2009: http://www.startuplessonslearned.com/2009/08/minimum-viable-product-guide.html
+- Kniberg, H., "Making sense of MVP (Minimum Viable Product)", Crisp blog, 25 January 2016: https://blog.crisp.se/2016/01/25/henrikkniberg/making-sense-of-mvp — the skateboard, scooter, bicycle, motorcycle and car drawing, and the names "Earliest Testable/Usable/Lovable Product".
+- Patton, J., *User Story Mapping: Discover the Whole Story, Build the Right Product* (O'Reilly, 2014; with Peter Economy). Patton's earlier post "The new user story backlog is a map" (8 October 2008): https://jpattonassociates.com/the-new-backlog/ — backbone, release slices, and "walking skeleton" credited to Alistair Cockburn.
+- Nielsen, J., "Why You Only Need to Test with 5 Users", Nielsen Norman Group, 18 March 2000: https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/ — five users find about 85% of problems; the formula "only holds for comparable users".
 - Library course: [*Founder's Playbook for AI-First Builders*, lesson 2.1 — One job, one customer: scope and the kill list](../founder/index.html#/2.1).
 - Library course: [*Founder's Playbook for AI-First Builders*, lesson 5.1 — A launch you can undo](../founder/index.html#/5.1).
 - Library course: [*SaaS Building Blocks*, lesson 6.3 — Feature flags and experiments](../saas/index.html#/6.3).
@@ -556,7 +556,7 @@ Then Salma asks: "Where is the list of why we chose each thing?" There is none; 
 
 **Build what makes you different.** Ask of each part: "Would a customer choose us because of how we do this?" For Qafila, coordinating shops and couriers around ready times might qualify; sending a text message, drawing a map or storing a password does not. Building those takes time from the part that matters and usually gives a worse result. For a one-person founder's version of this choice, see [*Founder's Playbook for AI-First Builders*, lesson 2.2 — Build, buy or borrow](../founder/index.html#/2.2).
 
-**What "cloud" means.** A widely used definition, published by the US National Institute of Standards and Technology (NIST) in 2011 as Special Publication 800-145, names five essential characteristics (on-demand self-service, broad network access, resource pooling, rapid elasticity, measured service) and three service models (reported):
+**What "cloud" means.** A widely used definition, published by the US National Institute of Standards and Technology (NIST) in 2011 as Special Publication 800-145, names five essential characteristics (on-demand self-service, broad network access, resource pooling, rapid elasticity, measured service) and three service models:
 
 | Service model | You rent | You still look after |
 |---|---|---|
@@ -566,7 +566,7 @@ Then Salma asks: "Where is the list of why we chose each thing?" There is none; 
 
 Further down the table, you run less and can change less. **Managed services** (mostly the PaaS row) suit small teams: the provider handles routine work such as patching and scheduled backups.
 
-**Shared responsibility.** Cloud providers describe a **shared responsibility model**. One large provider's page puts it as security "of" the cloud (its facilities and infrastructure, the provider's job) and security "in" the cloud (data, access, configuration, the customer's job), with the split depending on the services chosen (reported). In plain words: **the provider keeps the building secure; you decide who has keys.** For the engineering detail, see [*Cloud & DevOps: Zero to Hero*, lesson 1.2 — Cloud fundamentals: regions, zones, compute, storage, managed services and shared responsibility](../cloud/index.html#/1.2).
+**Shared responsibility.** Cloud providers describe a **shared responsibility model**. One large provider's page puts it as security "of" the cloud (its facilities and infrastructure, the provider's job) and security "in" the cloud (data, access, configuration, the customer's job), with the split depending on the services chosen. In plain words: **the provider keeps the building secure; you decide who has keys.** For the engineering detail, see [*Cloud & DevOps: Zero to Hero*, lesson 1.2 — Cloud fundamentals: regions, zones, compute, storage, managed services and shared responsibility](../cloud/index.html#/1.2).
 
 ### 🟡 Going deeper
 
@@ -582,9 +582,9 @@ Further down the table, you run less and can change less. **Managed services** (
 
 At Launch, people's time is the scarcest resource: a small monthly fee that saves Faisal a day a week is cheap.
 
-**Boring technology.** Dan McKinley's 2015 essay "Choose Boring Technology" argued that a team can afford only a few new, unfamiliar technologies at once; he described them as a small budget of "innovation tokens" (about three, in his telling, as reported). Well-known technologies have known failure modes and many people who understand them. Faisal's location database spent a token on a part that did not need one.
+**Boring technology.** Dan McKinley's 2015 essay "Choose Boring Technology" argued that a team can afford only a few new, unfamiliar technologies at once; he described them as a small budget of "innovation tokens" ("about three", in his telling). Well-known technologies have known failure modes and many people who understand them. Faisal's location database spent a token on a part that did not need one.
 
-**One app, one repository, to start.** A **repository** stores code and its history (lesson 3.1). Martin Fowler's 2015 article "MonolithFirst" observed that, in the cases he had heard of, almost all successful systems built from many separate services (**microservices**) began as one application (a **monolith**) that grew too big and was broken up, and recommended starting with one (reported). Qafila keeps one repository until Scale-up (Module 8).
+**One app, one repository, to start.** A **repository** stores code and its history (lesson 3.1). Martin Fowler's 2015 article "MonolithFirst" observed that, in the cases he had heard of, almost all successful systems built from many separate services (**microservices**) began as one application (a **monolith**) that grew too big and was broken up, and recommended starting with one. Qafila keeps one repository until Scale-up (Module 8).
 
 **Lock-in and the exit question.** **Lock-in** is how hard it is to leave a provider; some is the price of speed. Ask: can you **export your data**, and have you tried? Is the provider called from **one place in your code**? Can it change **prices or terms** at short notice? Where is data **stored and processed**, and does that matter under the data-protection rules where you operate (a question for someone who knows them)?
 
@@ -600,7 +600,7 @@ For more on vendor costs and lock-in, see [*Founder's Playbook for AI-First Buil
 
 **Secrets belong outside the code.** Keys and passwords go in a secret store, each with the least access it needs. Qafila learns this the hard way at Scale-up (Module 8).
 
-**Decision records.** An **architecture decision record (ADR)** is a short note on one significant decision. Michael Nygard proposed a lightweight format in a 2011 article, "Documenting Architecture Decisions": a **title**, the **context**, the **decision**, its **status** (proposed, accepted, superseded) and its **consequences**, good and bad (reported). Records live with the code; a changed mind gets a new record that supersedes the old. This lesson adds **options considered** and **how to undo it**. To practise writing one with an AI critic, see [*A Practical Guide to Becoming an AI-Native Engineer*, lesson 11.2 — Lab: an ADR with a critic, docs checked against code and a postmortem that sticks to the facts](../ainative/index.html#/11.2).
+**Decision records.** An **architecture decision record (ADR)** is a short note on one significant decision. Michael Nygard proposed a lightweight format in a 2011 article, "Documenting Architecture Decisions": a **title**, the **context**, the **decision**, its **status** (proposed, accepted, deprecated or superseded) and its **consequences**, good and bad. Records live with the code; a changed mind gets a new record that supersedes the old. This lesson adds **options considered** and **how to undo it**. To practise writing one with an AI critic, see [*A Practical Guide to Becoming an AI-Native Engineer*, lesson 11.2 — Lab: an ADR with a critic, docs checked against code and a postmortem that sticks to the facts](../ainative/index.html#/11.2).
 
 **AI in technology choices.** An assistant's knowledge of prices and terms may be wrong or dated: check the provider's pages, and never paste secrets into it.
 
@@ -761,11 +761,11 @@ Faisal winced at writing 004 about his own choice; Maha reminded him the log is 
 </details>
 
 ## 📚 References
-- Mell, P. and Grance, T., *The NIST Definition of Cloud Computing*, NIST Special Publication 800-145, 2011 (final version announced October 2011, as reported): https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-145.pdf — five essential characteristics, three service models, four deployment models (reported from search summaries; not opened).
-- Amazon Web Services, "Shared Responsibility Model": https://aws.amazon.com/compliance/shared-responsibility-model/ — security "of" the cloud versus "in" the cloud (reported from search summaries; not opened). Named as one provider's description, not an endorsement.
-- McKinley, D., "Choose Boring Technology", 30 March 2015: https://mcfunley.com/choose-boring-technology (reported from search summaries; not opened).
-- Fowler, M., "MonolithFirst", 3 June 2015: https://martinfowler.com/bliki/MonolithFirst.html (reported from search summaries; not opened).
-- Nygard, M., "Documenting Architecture Decisions", Cognitect blog, 15 November 2011: https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions (reported from search summaries; not opened).
+- Mell, P. and Grance, T., *The NIST Definition of Cloud Computing*, NIST Special Publication 800-145, September 2011: https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-145.pdf — five essential characteristics, three service models, four deployment models.
+- Amazon Web Services, "Shared Responsibility Model": https://aws.amazon.com/compliance/shared-responsibility-model/ — security "of" the cloud versus "in" the cloud; responsibilities vary with the services used. Named as one provider's description, not an endorsement.
+- McKinley, D., "Choose Boring Technology", 30 March 2015: https://mcfunley.com/choose-boring-technology — "Let's say every company gets about three innovation tokens."
+- Fowler, M., "MonolithFirst", 3 June 2015: https://martinfowler.com/bliki/MonolithFirst.html — "Almost all the successful microservice stories have started with a monolith that got too big and was broken up".
+- Nygard, M., "Documenting Architecture Decisions", Cognitect blog, 15 November 2011: https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions — title, context, decision, status, consequences; records kept in the project repository.
 - Library course: [*Founder's Playbook for AI-First Builders*, lesson 2.2 — Build, buy or borrow](../founder/index.html#/2.2).
 - Library course: [*Founder's Playbook for AI-First Builders*, lesson 7.2 — Costs, vendors and lock-in](../founder/index.html#/7.2).
 - Library course: [*Cloud & DevOps: Zero to Hero*, lesson 1.2 — Cloud fundamentals: regions, zones, compute, storage, managed services and shared responsibility](../cloud/index.html#/1.2).

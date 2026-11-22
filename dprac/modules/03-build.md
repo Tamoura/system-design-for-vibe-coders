@@ -69,9 +69,9 @@ Leave style to tools: a **formatter** rewrites code layout automatically, and a 
 
 ### 🟡 Going deeper
 
-**Keep changes small.** Google's published code review practices advise small, focused changes, note that reviewers rarely complain a change is too small, and say one can be rejected simply for being too large (as reported from the "Small CLs" page; a "CL" is roughly a pull request). Small changes are faster to review, conflict less and are easier to undo. A large feature can usually be split, for example with new code hidden behind a switch (lesson 3.3).
+**Keep changes small.** Google's published code review practices advise small, focused changes, note that reviewers rarely complain a change is too small, and say one can be rejected simply for being too large (the "Small CLs" page; a "CL" is roughly a pull request). Small changes are faster to review, conflict less and are easier to undo. A large feature can usually be split, for example with new code hidden behind a switch (lesson 3.3).
 
-**Branch briefly, merge often.** Long-lived branches drift from main and make painful merges. DORA, a long-running research programme on software delivery now part of Google Cloud, describes **trunk-based development** as each developer merging small batches into the main branch ("trunk") at least once a day, and associates it with better delivery performance (as reported from DORA's capability guide).
+**Branch briefly, merge often.** Long-lived branches drift from main and make painful merges. DORA, a long-running research programme on software delivery now part of Google Cloud, describes **trunk-based development** as each developer merging small batches into the main branch ("trunk") at least once a day, and associates it with better delivery performance (DORA's capability guide).
 
 ```mermaid
 flowchart LR
@@ -86,7 +86,7 @@ flowchart LR
   G --> H[Delete branch]
 ```
 
-**Protect the main branch.** Version control hosts let you set rules on main: no direct pushes, an approving review, required checks, and approval from named owners for sensitive folders (GitHub's "About protected branches" page describes such options, as reported from summaries of it). These settings are the working agreement made real, and protect you from yourself at 11 p.m. Check your host's plan documentation: some free plans may offer them only on public repositories.
+**Protect the main branch.** Version control hosts let you set rules on main: no direct pushes, an approving review, required checks, and approval from named owners for sensitive folders (GitHub's "About protected branches" page describes such options). These settings are the working agreement made real, and protect you from yourself at 11 p.m. Check your host's plan documentation: some free plans may offer them only on public repositories.
 
 **Reviewing kindly and usefully.** Comment on the code, not the person ("this returns null when the shop is closed", not "you forgot closed shops"). Mark what is blocking and what is optional ("nit:" marks a small point). Approve when the change makes the code better, even if you would have written it differently. Respond quickly: a pull request waiting two days is finished work not delivered, so agree a response time (for example one working day).
 
@@ -265,9 +265,9 @@ Faisal wanted "two approvals for everything"; the others said that with six engi
 </details>
 
 ## 📚 References
-- Google, "Small CLs", Google Engineering Practices Documentation (CC BY 3.0): https://google.github.io/eng-practices/review/developer/small-cls.html — keep changes small; reviewers rarely complain a change is too small (reported from search summaries; page not opened, 2026-11-22).
-- DORA, "Trunk-based development" capability guide: https://dora.dev/capabilities/trunk-based-development/ (reported; not opened).
-- GitHub Docs, "About protected branches": https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches (reported; not opened). One host's documentation, cited as an illustration, not an endorsement.
+- Google, "Small CLs", Google Engineering Practices Documentation (CC BY 3.0): https://google.github.io/eng-practices/review/developer/small-cls.html — keep changes small; "Reviewers rarely complain about getting CLs that are too small"; reviewers may reject a change "for the sole reason of it being too large".
+- DORA, "Trunk-based development" capability guide: https://dora.dev/capabilities/trunk-based-development/ — merging small batches into trunk at least once a day.
+- GitHub Docs, "About protected branches": https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches — required approving reviews, code owner review and required status checks. One host's documentation, cited as an illustration, not an endorsement.
 - Library course: [*A Practical Guide to Becoming an AI-Native Engineer*, lesson 5.2 — Lab: review a pull request an agent wrote](../ainative/index.html#/5.2).
 - Library course: [*Secure AI & Application Security: Zero to Hero*, lesson 5.2 — Secrets management: keys, tokens and where they leak](../secai/index.html#/5.2).
 
@@ -319,7 +319,7 @@ Because it is code, it runs the same way on every change, without anyone remembe
 | **End-to-end test** | A whole user journey through the real interfaces | Minutes | Shop creates an order, courier accepts, order marked delivered |
 | **Manual exploratory testing** | A person trying to break things in ways nobody scripted | Hours | Aisha trying Arabic shop names on a slow phone |
 
-**The test pyramid.** A common rule of thumb, often drawn as a pyramid: many unit tests at the bottom, fewer integration tests in the middle, a small number of end-to-end tests at the top. Ham Vocke's article "The Practical Test Pyramid" (2018, on Martin Fowler's site) starts from Mike Cohn's three layers and calls the model a useful rule of thumb that is too simple to follow literally (as reported from summaries of the article). The reason is cost: broad tests are slow and hard to diagnose, so keep only enough to prove the main journeys.
+**The test pyramid.** A common rule of thumb, often drawn as a pyramid: many unit tests at the bottom, fewer integration tests in the middle, a small number of end-to-end tests at the top. Ham Vocke's article "The Practical Test Pyramid" (2018, on Martin Fowler's site) starts from Mike Cohn's three layers and calls the model a useful rule of thumb that is too simple to follow literally. The reason is cost: broad tests are slow and hard to diagnose, so keep only enough to prove the main journeys.
 
 **What "good enough" testing means.** Test where a failure would hurt most and where mistakes are likely:
 
@@ -328,7 +328,7 @@ Because it is code, it runs the same way on every change, without anyone remembe
 - **Tricky logic:** rules with many cases, such as shop opening hours, branches, time zones.
 - **Things that broke before:** every bug fixed gets a test that would have caught it.
 
-**Continuous integration.** Martin Fowler's article "Continuous Integration" describes it as everyone on the team integrating their work into the mainline often (at least daily), with each integration checked by an automated build that includes tests (as reported from summaries of the article). A **CI system** (for example GitHub Actions or GitLab CI, named only as illustrations) watches the repository, and on every pull request and every merge it runs a **pipeline**: a fixed list of steps.
+**Continuous integration.** Martin Fowler's article "Continuous Integration" (first written in 2001 and rewritten in 2023) describes it as everyone on the team integrating their work into the mainline often (at least daily), with each integration checked by an automated build that includes tests. A **CI system** (for example GitHub Actions or GitLab CI, named only as illustrations) watches the repository, and on every pull request and every merge it runs a **pipeline**: a fixed list of steps.
 
 ```mermaid
 flowchart LR
@@ -346,7 +346,7 @@ The scan step looks for committed secrets and for third-party libraries with kno
 
 ### 🟡 Going deeper
 
-**Keep the pipeline fast.** A build of about ten minutes is a long-standing guideline from Extreme Programming, an agile method that popularised continuous integration (as reported from summaries of Fowler's article). To stay fast, run unit tests first, run independent steps in parallel, and keep end-to-end tests few.
+**Keep the pipeline fast.** A build of about ten minutes is a long-standing guideline from Extreme Programming, the agile method in which Kent Beck developed continuous integration in the 1990s; Fowler calls it "perfectly within reason" for most projects. To stay fast, run unit tests first, run independent steps in parallel, and keep end-to-end tests few.
 
 **A red build is the team's problem.** When main is red, every new change piles onto a broken base. Whoever broke it fixes it at once, or reverts and fixes it calmly on a branch. Reverting is not a defeat.
 
@@ -527,8 +527,8 @@ Faisal's first plan had no "not tested" line; Aisha asked what he was leaving ou
 </details>
 
 ## 📚 References
-- Fowler, M., "Continuous Integration", martinfowler.com: https://martinfowler.com/articles/continuousIntegration.html — integrating at least daily with a self-testing build; the XP ten-minute build (reported from search summaries; page not opened, 2026-11-22; revision date not confirmed).
-- Vocke, H., "The Practical Test Pyramid", martinfowler.com, 26 February 2018: https://martinfowler.com/articles/practical-test-pyramid.html (reported; not opened).
+- Fowler, M., "Continuous Integration", martinfowler.com: https://martinfowler.com/articles/continuousIntegration.html — integrating at least daily with a self-testing build; the XP ten-minute build (rewritten 2023).
+- Vocke, H., "The Practical Test Pyramid", martinfowler.com, 26 February 2018: https://martinfowler.com/articles/practical-test-pyramid.html — Cohn's three layers; the pyramid "serves as a good rule of thumb" but is "overly simplistic".
 - Library course: [*Software Testing: Zero to Hero in the AI Era*, lesson 2.1 — Unit testing and TDD: arrange-act-assert, test doubles and fast feedback](../testing/index.html#/2.1).
 - Library course: [*Software Testing: Zero to Hero in the AI Era*, lesson 2.3 — Are your tests any good? Coverage, mutation testing, property-based testing and flaky tests](../testing/index.html#/2.3).
 - Library course: [*Software Testing: Zero to Hero in the AI Era*, lesson 5.1 — Test strategy and planning: risk-based testing, the test pyramid and quality metrics](../testing/index.html#/5.1).
@@ -561,7 +561,7 @@ Aisha now wants "scheduled deliveries", letting shops book pickups for later in 
 
 ### 🟢 The essentials
 
-**From integration to delivery.** CI (lesson 3.2) keeps main tested. **Continuous delivery** goes further: every passing change is packaged and kept ready to deploy, and deploying is routine, not an event. continuousdelivery.com, the site of Jez Humble and Dave Farley (authors of the 2010 book *Continuous Delivery*), defines it as getting changes of all types into production safely and quickly in a sustainable way (as reported from summaries quoting the site). **Continuous deployment** goes further still: every passing change goes to production with no human pressing a button.
+**From integration to delivery.** CI (lesson 3.2) keeps main tested. **Continuous delivery** goes further: every passing change is packaged and kept ready to deploy, and deploying is routine, not an event. continuousdelivery.com, the site maintained by Jez Humble (co-author with Dave Farley of the 2010 book *Continuous Delivery*), defines it as getting changes of all types into production safely and quickly in a sustainable way. **Continuous deployment** goes further still: every passing change goes to production with no human pressing a button.
 
 ```mermaid
 flowchart LR
@@ -584,13 +584,13 @@ flowchart LR
 
 **Why small and often is safer.** A deployment with one change is easy to check and undo, and if something breaks you know which change did it. Three weeks of changes in one deployment fail in ways nobody can trace. Frequent deployment also keeps the process practised and boring.
 
-**Measuring speed and stability together.** DORA groups its software delivery measures into throughput and instability. They include **change lead time** (commit to production), **deployment frequency**, **failed deployment recovery time**, **change fail rate** (deployments needing immediate intervention) and, since 2024, **deployment rework rate** (as reported from DORA's guide and summaries of it). Lesson 0.1 introduced reading them together; at Qafila, daily CI deploys should shorten lead time without raising the change fail rate.
+**Measuring speed and stability together.** DORA groups its software delivery measures into throughput and instability. They include **change lead time** (commit to production), **deployment frequency**, **failed deployment recovery time**, **change fail rate** (deployments needing immediate intervention) and, since 2024, **deployment rework rate** (DORA's metrics guide and its history of the metrics). Lesson 0.1 introduced reading them together; at Qafila, daily CI deploys should shorten lead time without raising the change fail rate.
 
 ### 🟡 Going deeper
 
 **Separate deploying from releasing with feature flags.** A **feature flag** (or feature toggle) is a switch in the code, read at run time, that decides whether a behaviour is on, and for whom. Unfinished work can be deployed "dark": on the servers, invisible to users. Later it is turned on for a few shops, then more, and off in seconds if it misbehaves.
 
-Pete Hodgson's article "Feature Toggles (aka Feature Flags)" (2016) separates flags by how long they live, from short-lived release flags that hide unfinished work to longer-lived operational flags (as reported from summaries of the article). Give each release flag an owner and a removal date, or the code fills with dead switches.
+Pete Hodgson's article "Feature Toggles (aka Feature Flags)" (2016) sorts flags into four kinds (release, experiment, ops and permissioning) and compares them by how long they live and how often the on/off decision changes: release flags that hide unfinished work should generally last no more than a week or two, permissioning flags can live for years, and a few operational "kill switches" may stay almost indefinitely. Give each release flag an owner and a removal date, or the code fills with dead switches.
 
 **Gradual rollouts.** A **gradual rollout** limits how many users meet a new version at first:
 
@@ -601,7 +601,7 @@ Pete Hodgson's article "Feature Toggles (aka Feature Flags)" (2016) separates fl
 | **Canary release** | Send a small share of traffic (say 5%, illustrative) to the new version, compare, then widen | When real traffic is the real test |
 | **Flag-based rollout** | Deploy to all, turn the feature on for a growing group | New features |
 
-Google's *Site Reliability Workbook* has a chapter on canarying (as reported from summaries of it).
+Chapter 16 of Google's *Site Reliability Workbook*, "Canarying Releases", describes testing each change on a small portion of traffic before the full rollout.
 
 **Watch the right signals.** Pick two or three signals that show merchants and couriers are fine (order-creation errors, time to a courier offer) and decide in advance what level means "roll back". Module 4 covers monitoring.
 
@@ -609,7 +609,7 @@ Google's *Site Reliability Workbook* has a chapter on canarying (as reported fro
 
 ### 🔴 Expert view
 
-**Database changes need their own care.** If a deployment drops a column or rewrites rows, rolling back the code does not bring the data back. The usual safe pattern is called **expand and contract** (also "parallel change", described on Martin Fowler's site as three phases: expand, migrate, contract, as reported from summaries of the page):
+**Database changes need their own care.** If a deployment drops a column or rewrites rows, rolling back the code does not bring the data back. The usual safe pattern is called **expand and contract** (also "parallel change", described by Danilo Sato on Martin Fowler's site in 2014 as three phases: expand, migrate, contract):
 
 1. **Expand:** add the new column or table, without removing anything; new columns are usually **nullable** (allowed to be empty). Old code ignores them.
 2. **Migrate:** deploy code that writes to both old and new, copy existing data across, then switch reads to the new.
@@ -778,12 +778,12 @@ Faisal's first draft went from three test shops straight to all 300; Salma, who 
 </details>
 
 ## 📚 References
-- Humble, J. and Farley, D., "What is Continuous Delivery?", continuousdelivery.com: https://continuousdelivery.com/ (reported from search summaries; page not opened, 2026-11-22).
-- Humble, J. and Farley, D., *Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation* (Addison-Wesley, 2010) (full citation; not opened).
-- DORA, "DORA's software delivery performance metrics" (dora.dev guide): https://dora.dev/guides/dora-metrics/ (reported; not opened).
-- Hodgson, P., "Feature Toggles (aka Feature Flags)", martinfowler.com, 2016: https://martinfowler.com/articles/feature-toggles.html (reported; not opened).
-- martinfowler.com bliki, "Parallel Change" (2014): https://martinfowler.com/bliki/ParallelChange.html — expand, migrate, contract (reported; not opened; author not confirmed, so none is given).
-- Google, *The Site Reliability Workbook*, chapter 16, "Canarying Releases": https://sre.google/workbook/canarying-releases/ (reported; not opened).
+- Humble, J., "What is Continuous Delivery?", continuousdelivery.com: https://continuousdelivery.com/ — "the ability to get changes of all types ... into production, or into the hands of users, safely and quickly in a sustainable way".
+- Humble, J. and Farley, D., *Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation* (Addison-Wesley, 2010); Open Library record: https://openlibrary.org/books/OL25154801M
+- DORA, "DORA's software delivery performance metrics" (dora.dev guide): https://dora.dev/guides/dora-metrics/ — throughput and instability; history of the metrics, including the 2024 addition of deployment rework rate: https://dora.dev/insights/dora-metrics-history/
+- Hodgson, P., "Feature Toggles (aka Feature Flags)", martinfowler.com, 2016: https://martinfowler.com/articles/feature-toggles.html — release, experiment, ops and permissioning toggles.
+- Sato, D., "Parallel Change", martinfowler.com bliki, 13 May 2014: https://martinfowler.com/bliki/ParallelChange.html — expand, migrate, contract.
+- Google, *The Site Reliability Workbook*, chapter 16, "Canarying Releases": https://sre.google/workbook/canarying-releases/ (Alec Warner and Štěpán Davidovič).
 - Library course: [*System Design for Vibe Coders*, lesson 4.4 — Rollback, staging, and release gates](../vibe/index.en.html#l4-4).
 - Library course: [*Cloud & DevOps: Zero to Hero*, lesson 4.2 — Release strategies: rolling, blue-green, canary, feature flags and rollback](../cloud/index.html#/4.2).
 - Library course: [*Cloud & DevOps: Zero to Hero*, lesson 4.3 — Securing the pipeline: secrets, signed artefacts and least-privilege deploys](../cloud/index.html#/4.3).
