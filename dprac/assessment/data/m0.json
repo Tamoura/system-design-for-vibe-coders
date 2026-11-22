@@ -1,0 +1,135 @@
+{
+  "area": "m0",
+  "questions": [
+    {
+      "id": "m0-1",
+      "level": 1,
+      "lesson": "0.1",
+      "q": {
+        "en": "Faisal ships Qafila's new delivery-fee rule and says: \"The code does exactly what the spec says, so the job is done.\" Which reply applies the lesson's main rule?",
+        "ar": "أطلق فيصل قاعدة رسوم التوصيل الجديدة في قافلة، وقال: «الشيفرة تفعل بالضبط ما تقوله المواصفات، فقد انتهت المهمة». أي ردّ يطبّق القاعدة الرئيسية في الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Agree, because code that meets its spec means the customer has been served",
+          "Ask who will tell the shops, answer their questions and watch the fee in use",
+          "Ask him to add more automated tests before anyone outside the team hears of it",
+          "Leave the service side for later, since a fee rule is only a small code change"
+        ],
+        "ar": [
+          "نوافقه، فالشيفرة التي تطابق المواصفات تعني أن العميل قد خُدم فعلًا",
+          "نسأل: من سيُبلغ المتاجر، ومن يجيب عن أسئلتها، ومن يراقب الرسوم وهي تعمل",
+          "نطلب منه مزيدًا من الاختبارات الآلية قبل أن يعلم أحد خارج الفريق بالتغيير",
+          "نؤجل جانب الخدمة إلى وقت لاحق، فقاعدة الرسوم مجرد تغيير صغير في الشيفرة"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 0.1's rule is that a product is software plus the service around it plus the people who keep both going. The tempting option is agreeing because the code meets its spec: lesson 0.1 says \"the code did what it was meant to do\" is not the same as \"the customer was served\". More tests check the code again and still leave the shops uninformed.",
+        "ar": "قاعدة الدرس 0.1 أن المنتج برمجيات، ومعها الخدمة المحيطة بها، والناس الذين يُبقونهما تعملان. والخيار المغري هو الموافقة لأن الشيفرة تطابق المواصفات، لكن الدرس 0.1 يقول إن «الشيفرة فعلت ما يجب» ليس هو نفسه «العميل خُدم». أما مزيد من الاختبارات فيفحص الشيفرة مرة أخرى، وتبقى المتاجر بلا علم."
+      }
+    },
+    {
+      "id": "m0-2",
+      "level": 2,
+      "lesson": "0.2",
+      "q": {
+        "en": "At Launch, Maha and Faisal list a week of Qafila tasks: every task is coding or deploying. Nobody talked to couriers and nobody checked a backup. What does the step map suggest they do next?",
+        "ar": "في مرحلة الانطلاق، كتبت مها وفيصل مهام أسبوع في قافلة، فإذا هي كلها برمجة أو نشر. لم يتحدث أحد إلى المندوبين، ولم يتحقق أحد من نسخة احتياطية. ماذا تقترح خريطة الخطوات أن يفعلا بعد ذلك؟"
+      },
+      "o": {
+        "en": [
+          "Nothing new, because at Launch only Build and Deliver count as the real work",
+          "Hire a manager to cover the empty steps, since founders should only ever write code",
+          "Adopt the full process of a 400-person company now, so no step is ever missed",
+          "Name an owner for the empty Discover and Operate rows, and the record each one leaves"
+        ],
+        "ar": [
+          "لا شيء جديد، ففي الانطلاق لا يُحسب عملًا حقيقيًا إلا Build وDeliver",
+          "توظيف مدير يغطي الخطوات الفارغة، فالمؤسسون يجب أن يكتفوا بكتابة الشيفرة وحدها",
+          "اعتماد العملية الكاملة لشركة من 400 شخص الآن، كي لا تفوتهما أي خطوة",
+          "تسمية مالك لصفَّي Discover وOperate الفارغين، والسجل الذي يتركه كل منهما"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 0.2's rule is that every step happens whether anyone plans it or not, and the empty rows of a step map matter most: give each an owner and a record. The tempting option is counting only Build and Deliver as work, which the lesson names as the biggest trap. Copying a 400-person process would crush a team of two.",
+        "ar": "قاعدة الدرس 0.2 أن كل خطوة تحدث سواء خطّط لها أحد أم لا، وأن الصفوف الفارغة في خريطة الخطوات هي الأهم؛ فلكل منها مالك وسجل. والخيار المغري هو ألا يُحسب عملًا إلا Build وDeliver، والدرس يسمّي هذا أكبر فخ. أما نسخ عملية شركة من 400 شخص فيسحق فريقًا من شخصين."
+      }
+    },
+    {
+      "id": "m0-3",
+      "level": 2,
+      "lesson": "0.1",
+      "q": {
+        "en": "Before the courier app's first release, Faisal writes: \"The courier app project ends in March, then we all move on.\" What would lesson 0.1 change in that plan?",
+        "ar": "كتب فيصل قبل الإصدار الأول لتطبيق المندوبين: «ينتهي مشروع تطبيق المندوبين في مارس، ثم ننتقل جميعًا إلى غيره». ما الذي يغيّره الدرس 0.1 في هذه الخطة؟"
+      },
+      "o": {
+        "en": [
+          "Name who looks after the app once it is out, as a product does not finish",
+          "Nothing, as long as the March date holds and the scope is fully delivered",
+          "Move the end date to June, so the project has more time to finish everything",
+          "Give the app to whoever is free after March, as running it needs no planning"
+        ],
+        "ar": [
+          "تسمية من سيرعى التطبيق بعد صدوره، فالمنتج لا ينتهي كما ينتهي المشروع",
+          "لا شيء، ما دام موعد مارس ثابتًا والنطاق كله سيُسلَّم كاملًا",
+          "تأجيل موعد الانتهاء إلى يونيو، حتى يجد المشروع وقتًا كافيًا لإنهاء كل شيء",
+          "تسليم التطبيق لمن يكون متاحًا بعد مارس، فتشغيله لا يحتاج إلى تخطيط"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 0.1 separates a project (temporary work that changes a product) from the product itself, which does not finish: plan who looks after it after the release. The tempting option is keeping the plan because the date holds: a delivered scope says nothing about who runs, supports and improves the app afterwards. A later end date repeats the same mistake.",
+        "ar": "يفرّق الدرس 0.1 بين المشروع (project)، وهو عمل مؤقت يغيّر المنتج، وبين المنتج نفسه الذي لا ينتهي؛ فخطّط لمن يرعاه بعد الإصدار. والخيار المغري هو إبقاء الخطة لأن الموعد ثابت، لكن تسليم النطاق لا يقول شيئًا عمّن يشغّل التطبيق ويدعمه ويحسّنه بعد ذلك. وتأجيل الموعد يكرر الخطأ نفسه."
+      }
+    },
+    {
+      "id": "m0-4",
+      "level": 3,
+      "lesson": "0.3",
+      "q": {
+        "en": "Yasmin plans to quote Qafila's figures as industry benchmarks in a pitch, and to settle from the course alone whether her side project may keep users' data forever. What fits the course's stated limits?",
+        "ar": "تنوي ياسمين أن تستشهد بأرقام قافلة على أنها معايير قياسية للقطاع في عرض تقديمي، وأن تحسم اعتمادًا على الدورة وحدها هل يجوز لمشروعها الجانبي الاحتفاظ ببيانات المستخدمين إلى الأبد. ما الذي يتفق مع حدود الدورة المعلنة؟"
+      },
+      "o": {
+        "en": [
+          "Quote the figures as benchmarks, since the course checked every one of them",
+          "Decide the data rule from the lessons, since the course covers data protection",
+          "Call the figures illustrative, and take the data question to an adviser",
+          "Read all the lessons first, and leave the exercises until the course is done"
+        ],
+        "ar": [
+          "تستشهد بالأرقام معاييرَ قياسية، فالدورة تحققت من كل رقم منها",
+          "تحسم قاعدة البيانات من الدروس، فالدورة تغطي حماية البيانات",
+          "تصف الأرقام بأنها توضيحية، وتسأل مستشارًا عن البيانات",
+          "تقرأ الدروس كلها أولًا، وتؤجل التمارين حتى تنتهي الدورة"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 0.3 says every Qafila number is illustrative, not a benchmark, and that the course is not professional advice: it names the question and the person to ask. The tempting option is deciding the data rule from the lessons, which treats a course as a legal conclusion. Reading everything before doing any exercise is the lesson's biggest trap.",
+        "ar": "يقول الدرس 0.3 إن كل أرقام قافلة توضيحية لا معايير قياسية، وإن الدورة ليست استشارة مهنية؛ فهي تسمّي السؤال ومن يُسأل. والخيار المغري هو حسم قاعدة البيانات من الدروس، وهذا يجعل الدورة حكمًا قانونيًا. أما قراءة كل شيء قبل أي تمرين فهو أكبر فخ يذكره الدرس."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m0-e1",
+      "lesson": "0.1",
+      "text": {
+        "en": "I have written a one-page product and service sketch for a digital product I use, naming at least two user groups, three service elements that are not screens, and three kinds of work with a guess at who does each.",
+        "ar": "كتبتُ مخططًا من صفحة واحدة للمنتج والخدمة لمنتج رقمي أستخدمه، يسمّي مجموعتين من المستخدمين على الأقل، وثلاثة عناصر خدمة ليست شاشات، وثلاثة أنواع من العمل مع تخمين لمن يؤدي كلًّا منها."
+      }
+    },
+    {
+      "id": "m0-e2",
+      "lesson": "0.2",
+      "text": {
+        "en": "I have sorted a week of my own work into the eight steps in a step map (task, step, who, evidence), and written one action for the emptiest step.",
+        "ar": "صنّفتُ أسبوعًا من عملي في الخطوات الثماني على خريطة خطوات (المهمة، الخطوة، المنفّذ، الدليل)، وكتبتُ إجراءً واحدًا لأكثر الخطوات فراغًا."
+      }
+    }
+  ]
+}

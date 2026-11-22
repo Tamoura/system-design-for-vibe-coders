@@ -1,0 +1,135 @@
+{
+  "area": "m5",
+  "questions": [
+    {
+      "id": "m5-1",
+      "level": 1,
+      "lesson": "5.1",
+      "q": {
+        "en": "At Traction, Aisha and Faisal each believe they set the release date, and twice the team heard two different dates. What does the lesson suggest?",
+        "ar": "في مرحلة الجذب، تعتقد عائشة ويعتقد فيصل أن كلًّا منهما هو من يحدد موعد الإصدار، وقد سمع الفريق مرتين موعدين مختلفين. بماذا يوصي الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Let them decide jointly, so that neither of them ever feels left out of it at all",
+          "Go by job titles, so the product manager decides everything about releases",
+          "A decision table that names one decider, and who does, is asked and is told",
+          "Put each release date to a team vote, so the whole team owns the decision"
+        ],
+        "ar": [
+          "أن يقررا معًا في كل إصدار، كي لا يشعر أي منهما أبدًا بأنه أُقصي من القرار",
+          "الاحتكام إلى المسمّيات الوظيفية، فيقرر مدير المنتج كل ما يخص الإصدار",
+          "جدول قرارات يسمّي صاحب قرار واحدًا، ومن ينفّذ ومن يُستشار ومن يُبلَّغ",
+          "طرح كل موعد إصدار للتصويت، كي يملك الفريق كله القرار"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 5.1 says every recurring decision needs exactly one decider; two deciders means none. The tempting option is deciding jointly, which is the \"more than one decider\" trap and produces exactly the two dates the team heard. A job title does not say who decides the release date, so the lesson asks you to write decisions down.",
+        "ar": "يقول الدرس 5.1 إن كل قرار متكرر يحتاج إلى صاحب قرار واحد بالضبط؛ فصاحبا قرار يعنيان لا أحد. والخيار المغري هو القرار المشترك، وهو فخ «أكثر من صاحب قرار»، وهو بالضبط ما أنتج الموعدين اللذين سمعهما الفريق. والمسمّى الوظيفي لا يقول من يحدد موعد الإصدار، لذلك يطلب الدرس تدوين القرارات."
+      }
+    },
+    {
+      "id": "m5-2",
+      "level": 2,
+      "lesson": "5.1",
+      "q": {
+        "en": "In the morning check-in, Yasmin says a migration script might lose data. Faisal sighs, \"Probably nothing.\" She checked, and it was a false alarm. What builds psychological safety here?",
+        "ar": "في اجتماع الصباح قالت ياسمين إن سكربت ترحيل قد يُضيع بيانات. تنهّد فيصل: «على الأرجح لا شيء». تحققت، فإذا هو إنذار كاذب. ما الذي يبني الأمان النفسي (psychological safety) هنا؟"
+      },
+      "o": {
+        "en": [
+          "Asking her to be more certain before she raises alarms in front of everyone",
+          "Putting up a poster in the office that says every question is welcome here",
+          "Lowering the review standard, so that people feel less pressure to be right",
+          "Thanking her for the early warning, even though this one was a false alarm"
+        ],
+        "ar": [
+          "مطالبتها بأن تكون أكثر يقينًا قبل أن تُطلق إنذارًا أمام الفريق كله",
+          "تعليق ملصق في المكتب يقول إن كل سؤال مرحَّب به هنا",
+          "خفض معيار المراجعة، كي يشعر الناس بضغط أقل ليكونوا على صواب",
+          "شكرها على التحذير المبكر، حتى لو كان هذا التحذير نفسه إنذارًا كاذبًا"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 5.1's rule is that the person who sees a problem first must be able to say so at once, and be thanked for it, especially for early, uncertain warnings that turn out to be false alarms. The tempting option is asking her to be surer: that, like the sigh, teaches silence. Safety is built by reactions, not posters, and it does not mean lowering standards.",
+        "ar": "قاعدة الدرس 5.1 أن من يرى المشكلة أولًا يجب أن يستطيع قولها فورًا، وأن يُشكر على ذلك، ولا سيما على التحذيرات المبكرة غير المؤكدة التي يتبيّن أنها إنذارات كاذبة. والخيار المغري هو مطالبتها بيقين أكبر، وهذا، مثل التنهيدة، يعلّم الصمت. والأمان يُبنى بردود الفعل لا بالملصقات، ولا يعني خفض المعايير."
+      }
+    },
+    {
+      "id": "m5-3",
+      "level": 2,
+      "lesson": "5.2",
+      "q": {
+        "en": "Aisha receives three requests marked \"priority one\": one from sales, one from support and one from Maha. The team can start one this week. What should she do?",
+        "ar": "وصلت إلى عائشة ثلاثة طلبات كُتب على كل منها «الأولوية الأولى»: من المبيعات، ومن الدعم، ومن مها. والفريق يستطيع أن يبدأ واحدًا هذا الأسبوع. ماذا تفعل؟"
+      },
+      "o": {
+        "en": [
+          "Start all three this week, because each one of them is marked as priority one",
+          "Put all three into the one ordered backlog, and explain the order she chose",
+          "Take the request from whoever asked most loudly or most recently this week",
+          "Ask the team to estimate all three, and start the one with the most points"
+        ],
+        "ar": [
+          "تبدأ الثلاثة كلها معًا هذا الأسبوع، فكل واحد منها مكتوب عليه الأولوية الأولى",
+          "تضع الثلاثة في قائمة الأعمال الواحدة المرتبة، وتشرح الترتيب الذي اختارته",
+          "تأخذ طلب من رفع صوته أكثر أو من جاء طلبه أخيرًا هذا الأسبوع",
+          "تطلب من الفريق تقدير الثلاثة، وتبدأ صاحب أكبر عدد من النقاط"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 5.2's rule is one ordered list: one item is first, one is second, no several \"top priorities\". The tempting option is starting all three, which spreads the team thin and finishes nothing sooner. Without an explained order, the loudest request wins; and point estimates are guesses for planning, not a measure of value.",
+        "ar": "قاعدة الدرس 5.2 قائمة واحدة مرتبة: عنصر أول، وعنصر ثانٍ، لا «أولويات قصوى» متعددة. والخيار المغري هو بدء الثلاثة معًا، وهذا يشتت الفريق ولا يُنهي شيئًا أسرع. ومن دون ترتيب مشروح يفوز الطلب الأعلى صوتًا، وتقديرات النقاط تخمينات للتخطيط لا مقياس للقيمة."
+      }
+    },
+    {
+      "id": "m5-4",
+      "level": 3,
+      "lesson": "5.3",
+      "q": {
+        "en": "A Qafila team has 12 items in progress and finishes about 4 items a week. Using Little's Law, what is the average time per item now, and if work in progress falls to 6 at the same pace?",
+        "ar": "لدى أحد فرق قافلة 12 عنصرًا قيد العمل، وينهي نحو 4 عناصر أسبوعيًا. باستخدام قانون ليتل (Little's Law)، ما متوسط الوقت لكل عنصر الآن، وإذا انخفض العمل الجاري إلى 6 بالوتيرة نفسها؟"
+      },
+      "o": {
+        "en": [
+          "About 3 weeks now, and about a week and a half once work in progress falls to just 6",
+          "About 3 weeks now, and still about 3 weeks, because the team's pace is the same",
+          "About 48 weeks now, since the average time is work in progress times the pace",
+          "About a third of a week now, so cutting work in progress would change nothing"
+        ],
+        "ar": [
+          "نحو 3 أسابيع الآن، ونحو أسبوع ونصف حين ينخفض العمل الجاري إلى 6",
+          "نحو 3 أسابيع الآن، ويبقى نحو 3 أسابيع، لأن وتيرة الفريق لم تتغير",
+          "نحو 48 أسبوعًا الآن، فمتوسط الوقت هو العمل الجاري مضروبًا في الوتيرة",
+          "نحو ثلث أسبوع الآن، فتقليص العمل الجاري لن يغيّر شيئًا"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Little's Law says average time per item equals work in progress divided by items finished per week: 12 divided by 4 is 3 weeks, and 6 divided by 4 is 1.5 weeks. The tempting option keeps 3 weeks because the pace is unchanged, but the lesson's point is that less work in progress at the same pace means faster delivery. Multiplying, or dividing the wrong way, gives 48 or a third.",
+        "ar": "يقول قانون ليتل إن متوسط الوقت لكل عنصر يساوي العمل الجاري مقسومًا على العناصر المنجزة أسبوعيًا: 12 مقسومة على 4 تساوي 3 أسابيع، و6 مقسومة على 4 تساوي 1.5 أسبوع. والخيار المغري يُبقي 3 أسابيع لأن الوتيرة لم تتغير، لكن فكرة الدرس أن تقليل العمل الجاري بالوتيرة نفسها يعني تسليمًا أسرع. والضرب، أو القسمة بالاتجاه الخاطئ، يعطي 48 أو الثلث."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m5-e1",
+      "lesson": "5.1",
+      "text": {
+        "en": "I have built a decision table for six recurring decisions of a team I know, with exactly one decider in each row and who does, who is asked and who is told.",
+        "ar": "أعددتُ جدول قرارات لستة قرارات متكررة في فريق أعرفه، في كل صف منه صاحب قرار واحد بالضبط، ومن ينفّذ، ومن يُستشار، ومن يُبلَّغ."
+      }
+    },
+    {
+      "id": "m5-e2",
+      "lesson": "5.3",
+      "text": {
+        "en": "I have run a weekly flow check (work in progress, throughput, cycle time and the oldest items), compared Little's Law's prediction with the measured median, and proposed one change with a measurable expected effect.",
+        "ar": "أجريتُ فحصًا أسبوعيًا للتدفّق (العمل الجاري، والإنتاجية، وزمن الدورة، وأقدم العناصر)، وقارنتُ تنبؤ قانون ليتل بالوسيط المقيس، واقترحتُ تغييرًا واحدًا بأثر متوقع قابل للقياس."
+      }
+    }
+  ]
+}

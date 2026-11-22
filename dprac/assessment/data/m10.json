@@ -1,0 +1,135 @@
+{
+  "area": "m10",
+  "questions": [
+    {
+      "id": "m10-1",
+      "level": 1,
+      "lesson": "10.1",
+      "q": {
+        "en": "Qafila's routing team sends Bilal one line: \"Buy a commercial route-optimisation service: 300k units a year. Benefit: better routes.\" What should the request become?",
+        "ar": "أرسل فريق التوجيه في قافلة إلى بلال سطرًا واحدًا: «شراء خدمة تجارية لتحسين المسارات: 300 ألف وحدة سنويًا. الفائدة: مسارات أفضل». إلى ماذا يجب أن يتحول الطلب؟"
+      },
+      "o": {
+        "en": [
+          "A quick yes, since one clear number makes the decision simple for everyone who is involved",
+          "A quick no, since any yearly cost of that size is too much for a company like Qafila",
+          "A larger request, so that the routing team never has to come back to ask for more",
+          "At least three options, including doing nothing, with cost ranges and a measured benefit"
+        ],
+        "ar": [
+          "موافقة سريعة، فرقم واحد واضح يجعل القرار بسيطًا على كل المعنيين",
+          "رفض سريع، فأي تكلفة سنوية بهذا الحجم كثيرة على شركة مثل قافلة",
+          "طلب أكبر، كي لا يضطر فريق التوجيه إلى العودة لطلب المزيد",
+          "ثلاثة خيارات أو أكثر منها عدم فعل شيء، بنطاقات تكلفة وفائدة مقيسة"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 10.1 names one option and one confident number with no running costs as the biggest trap: compare at least three options including doing nothing, give costs as ranges, and write who will do what differently, by how much, by when. The tempting option is a quick yes because the number is clear, but \"better routes\" is not a measurable benefit. Asking for everything at once makes stopping expensive.",
+        "ar": "يسمّي الدرس 10.1 خيارًا واحدًا برقم واحد واثق دون تكاليف تشغيل أكبر فخ؛ فقارن ثلاثة خيارات على الأقل منها عدم فعل شيء، واعرض التكاليف نطاقات، واكتب من سيفعل ماذا بشكل مختلف، وبأي قدر، ومتى. والخيار المغري هو الموافقة السريعة لأن الرقم واضح، لكن «مسارات أفضل» ليست فائدة قابلة للقياس. وطلب كل شيء دفعة واحدة يجعل التوقف مكلفًا."
+      }
+    },
+    {
+      "id": "m10-2",
+      "level": 2,
+      "lesson": "10.2",
+      "q": {
+        "en": "Qafila's cloud bill was 330,000 units for 11 million deliveries in January and 390,000 for 11.3 million in March (illustrative). What should Yasmin report?",
+        "ar": "بلغت فاتورة السحابة في قافلة 330,000 وحدة مقابل 11 مليون توصيلة في يناير، و390,000 مقابل 11.3 مليون في مارس (أرقام توضيحية). ماذا تكتب ياسمين في تقريرها؟"
+      },
+      "o": {
+        "en": [
+          "The bill rose because deliveries rose, so there is nothing at all to explain here",
+          "Cost per 1,000 deliveries fell, since deliveries grew faster than the bill",
+          "Cost per 1,000 deliveries rose from 30 to about 34.5, so find what drove it",
+          "Cut the largest service by a fifth first, and ask what it buys afterwards"
+        ],
+        "ar": [
+          "الفاتورة ارتفعت لأن التوصيلات ارتفعت، فلا شيء يحتاج إلى تفسير",
+          "تكلفة كل 1,000 توصيلة انخفضت، فالتوصيلات نمت أسرع من الفاتورة",
+          "تكلفة كل 1,000 توصيلة ارتفعت من 30 إلى نحو 34.5، فلنبحث عن السبب",
+          "خفض أكبر خدمة بمقدار الخُمس أولًا، ثم السؤال عمّا تشتريه لاحقًا"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 10.2's rule is to measure cost per unit of value, not just the size of the bill: 330,000 for 11,000 thousands of deliveries is 30 per 1,000; 390,000 for 11,300 thousands is about 34.5. The tempting option blames growth: deliveries rose about 3% while the bill rose about 18%, so the unit cost needs explaining. Cutting before asking what the cost buys can break the reliability target.",
+        "ar": "قاعدة الدرس 10.2 أن تقيس التكلفة لكل وحدة قيمة، لا حجم الفاتورة فقط: 330,000 مقابل 11,000 ألف توصيلة تعني 30 لكل 1,000، و390,000 مقابل 11,300 ألف تعني نحو 34.5. والخيار المغري يُرجع الأمر إلى النمو، لكن التوصيلات زادت نحو 3% والفاتورة نحو 18%، فتكلفة الوحدة تحتاج إلى تفسير. والخفض قبل السؤال عمّا تشتريه التكلفة قد يكسر هدف الموثوقية."
+      }
+    },
+    {
+      "id": "m10-3",
+      "level": 2,
+      "lesson": "10.2",
+      "q": {
+        "en": "One idea on Yasmin's savings list is to remove the standby copy of the orders database, which would save money but put the 99.9% tracking target at risk. What should she do with it?",
+        "ar": "من الأفكار في قائمة التوفير لدى ياسمين إزالة النسخة الاحتياطية الجاهزة من قاعدة بيانات الطلبات، وهذا يوفّر المال لكنه يعرّض هدف التتبّع 99.9% للخطر. ماذا تفعل بها؟"
+      },
+      "o": {
+        "en": [
+          "Defer or reject it, unless its reliability effect is stated and then agreed",
+          "Do it now, since every saving on the cloud bill is good for the company anyway",
+          "Do it quietly at night, so that no other team notices the change being made",
+          "Do it first, then delete the untagged resources without asking anyone about them"
+        ],
+        "ar": [
+          "تأجيلها أو رفضها، ما لم يُعلَن أثرها ويُوافَق عليه",
+          "تنفيذها الآن، فكل توفير في فاتورة السحابة مفيد للشركة على أي حال",
+          "تنفيذها بهدوء في الليل، كي لا يلاحظ أي فريق آخر التغيير",
+          "تنفيذها أولًا، ثم حذف الموارد غير الموسومة دون سؤال أحد عنها"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 10.2's decision cue: before cutting, ask what the cost buys; savings that break the 99.9% reliability target are not savings. Every production saving states its reliability effect and who agreed. The tempting option is \"every saving is good\", which ignores what the standby copy protects. Deleting untagged resources without finding an owner breaks the lesson's own rule.",
+        "ar": "إشارة القرار في الدرس 10.2: قبل الخفض، اسأل عمّا تشتريه التكلفة؛ فالتوفير الذي يكسر هدف الموثوقية 99.9% ليس توفيرًا. وكل توفير في بيئة الإنتاج يذكر أثره على الموثوقية ومن وافق عليه. والخيار المغري هو «كل توفير مفيد»، وهو يتجاهل ما تحميه النسخة الاحتياطية. وحذف الموارد غير الموسومة دون البحث عن مالكها يخالف قاعدة الدرس نفسه."
+      }
+    },
+    {
+      "id": "m10-4",
+      "level": 3,
+      "lesson": "10.3",
+      "q": {
+        "en": "After a good demo and a low price, a team wants to sign with a new messaging supplier for courier offers. The contract says nothing about exporting data or leaving. What fits the lesson?",
+        "ar": "بعد عرض توضيحي جيد وسعر منخفض، يريد فريق التعاقد مع مورّد رسائل جديد لإرسال العروض إلى المندوبين. والعقد لا يقول شيئًا عن تصدير البيانات أو إنهاء العلاقة. ما الذي يتفق مع الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Sign now, because service credits will make up for any outage that may happen",
+          "Rank it by what breaks without it, check it, and plan the exit before anyone signs",
+          "Sign now, and write the exit plan later if a move ever becomes necessary",
+          "Decide for themselves that the data terms are legally fine, then sign it"
+        ],
+        "ar": [
+          "التوقيع الآن، فتعويضات الخدمة ستعوّض أي انقطاع يحدث",
+          "ترتيبه حسب أثر غيابه، وفحصه، وخطة خروج قبل التوقيع",
+          "التوقيع الآن، وكتابة خطة الخروج لاحقًا إن صار الانتقال ضروريًا",
+          "الحكم بأنفسهم بأن شروط البيانات سليمة قانونيًا، ثم التوقيع"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 10.3's rule: you can hand over the work, never the accountability; know how you would leave before you sign. A supplier close to the core service needs more checking and a better exit plan. The tempting option is relying on service credits, which the lesson lists as a trap: credits do not deliver courier offers, so critical suppliers need fallbacks. Legal conclusions belong to legal and advisers.",
+        "ar": "قاعدة الدرس 10.3: يمكنك تسليم العمل، لا المساءلة أبدًا؛ واعرف كيف ستخرج قبل أن توقّع. والمورّد القريب من الخدمة الأساسية يحتاج إلى فحص أكثر وخطة خروج أفضل. والخيار المغري هو الاعتماد على تعويضات الخدمة، والدرس يعدّه فخًا: التعويضات لا توصل العروض إلى المندوبين، فالمورّدون الحرجون يحتاجون إلى بدائل. أما الأحكام القانونية فهي للشؤون القانونية والمستشارين."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m10-e1",
+      "lesson": "10.1",
+      "text": {
+        "en": "I have written a one-page business case with at least three options including doing nothing, one-off and running costs as ranges, a measurable benefit with an owner and a review date, funding in stages, and a stop rule decided before any money is spent.",
+        "ar": "كتبتُ دراسة جدوى من صفحة واحدة فيها ثلاثة خيارات على الأقل منها عدم فعل شيء، وتكاليف لمرة واحدة وتكاليف تشغيل في صورة نطاقات، وفائدة قابلة للقياس لها مالك وتاريخ مراجعة، وتمويل على مراحل، وقاعدة توقف حُددت قبل إنفاق أي مال."
+      }
+    },
+    {
+      "id": "m10-e2",
+      "lesson": "10.3",
+      "text": {
+        "en": "I have written an exit plan for a critical or high-rank supplier: the data and configuration to take and in what format, how to test an alternative, a time range for the move, what the contract should say, and one design change that makes leaving easier.",
+        "ar": "كتبتُ خطة خروج لمورّد حرج أو عالي الأهمية: البيانات والإعدادات التي تؤخذ وبأي صيغة، وكيف يُختبر البديل، ونطاقًا زمنيًا للانتقال، وما ينبغي أن يقوله العقد، وتغييرًا واحدًا في التصميم يسهّل الخروج."
+      }
+    }
+  ]
+}

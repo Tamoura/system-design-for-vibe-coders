@@ -1,0 +1,135 @@
+{
+  "area": "m2",
+  "questions": [
+    {
+      "id": "m2-1",
+      "level": 1,
+      "lesson": "2.1",
+      "q": {
+        "en": "Maha will run a one-week test of the \"order ready\" button by hand with five shops. What should she write down before the test starts?",
+        "ar": "ستجري مها اختبارًا يدويًا لمدة أسبوع لزر «الطلب جاهز» مع خمسة متاجر. ما الذي يجب أن تكتبه قبل أن يبدأ الاختبار؟"
+      },
+      "o": {
+        "en": [
+          "A numeric result that would show the idea is wrong, and who decides",
+          "A full specification, so that Faisal can build the feature during the test",
+          "Only the interview script, since the pass line can be set after the results",
+          "A list of the friendliest pilot shops, so that the test is sure to go smoothly"
+        ],
+        "ar": [
+          "النتيجة، رقمًا، التي تُثبت أن الفكرة خاطئة، ومن يتخذ القرار",
+          "مواصفات كاملة، حتى يتمكن فيصل من بناء الميزة في أثناء الاختبار",
+          "نص المقابلة فقط، فخط النجاح يمكن تحديده بعد ظهور النتائج",
+          "قائمة بأكثر المتاجر التجريبية تعاونًا، كي يمضي الاختبار بسلاسة"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 2.1's rule is to decide what result would prove you wrong before you run the test. The tempting option is setting the pass line after the results: then any result looks like success. Choosing only friendly shops skews the evidence, and building the feature during the test is the \"building to test\" trap.",
+        "ar": "قاعدة الدرس 2.1 أن تقرر قبل الاختبار أي نتيجة تُثبت خطأك. والخيار المغري هو تحديد خط النجاح بعد النتائج، وعندها تبدو أي نتيجة نجاحًا. واختيار المتاجر المتعاونة وحدها يُميل الأدلة، وبناء الميزة في أثناء الاختبار هو فخ «البناء من أجل الاختبار»."
+      }
+    },
+    {
+      "id": "m2-2",
+      "level": 2,
+      "lesson": "2.2",
+      "q": {
+        "en": "Faisal has a polished order screen for shops, but couriers cannot yet receive an order and nobody can follow a delivery. What does a story map suggest for the first slice?",
+        "ar": "أنهى فيصل شاشة طلبات مصقولة للمتاجر، لكن المندوبين لا يستطيعون بعدُ استلام أي طلب، ولا أحد يستطيع متابعة التوصيلة. ماذا تقترح خريطة القصص (story map) للشريحة الأولى؟"
+      },
+      "o": {
+        "en": [
+          "Finish and polish the shop screen fully first, then move on to the courier's step",
+          "Draw detailed, high-fidelity mock-ups of every screen before writing more code",
+          "One thin item under each step, so that an order goes from shop to courier to customer",
+          "Drop the undo option and data protection, to free up time for the courier app"
+        ],
+        "ar": [
+          "إكمال شاشة المتجر وصقلها تمامًا أولًا، ثم الانتقال إلى خطوة المندوب في الرحلة",
+          "رسم نماذج تفصيلية عالية الدقة لكل شاشة قبل كتابة مزيد من الشيفرة",
+          "عنصر رفيع واحد تحت كل خطوة، فينتقل الطلب من المتجر إلى المندوب إلى العميل",
+          "حذف خيار التراجع وحماية البيانات، لتوفير الوقت لتطبيق المندوب"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 2.2's rule is to cut across the whole journey, not down one step: the first slice does the job end to end for one group. The tempting option is finishing the shop screen first, which the lesson calls building one step perfectly; it teaches nothing while couriers see nothing. Cutting undo and data protection is cutting care, not features.",
+        "ar": "قاعدة الدرس 2.2 أن تقطع عبر الرحلة كلها لا عموديًا في خطوة واحدة؛ فالشريحة الأولى تؤدي المهمة من أولها إلى آخرها لمجموعة واحدة. والخيار المغري هو إكمال شاشة المتجر أولًا، ويسمّي الدرس ذلك بناء خطوة واحدة بإتقان؛ فهو لا يعلّم شيئًا ما دام المندوبون لا يرون شيئًا. وحذف التراجع وحماية البيانات حذفٌ للعناية لا للميزات."
+      }
+    },
+    {
+      "id": "m2-3",
+      "level": 2,
+      "lesson": "2.3",
+      "q": {
+        "en": "At Launch, Faisal wants to write Qafila's own login and card payment handling, as well as the dispatch logic that matches orders to couriers. What does the lesson advise?",
+        "ar": "في مرحلة الانطلاق، يريد فيصل أن يكتب بنفسه نظام تسجيل الدخول ومعالجة الدفع بالبطاقات في قافلة، إلى جانب منطق التوزيع الذي يطابق الطلبات مع المندوبين. بماذا ينصح الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Build all three in-house, since owning the code is always cheaper in the end",
+          "Rent login and payments; build the dispatch logic that makes Qafila different",
+          "Use the newest frameworks for all three, so the stack attracts engineers later",
+          "Choose whichever providers have the lowest monthly price tag, and then move on"
+        ],
+        "ar": [
+          "بناء الثلاثة داخليًا، فامتلاك الشيفرة أرخص دائمًا في النهاية",
+          "استئجار تسجيل الدخول والدفع، وبناء منطق التوزيع الذي يميّز قافلة عن غيرها",
+          "استخدام أحدث أطر العمل للثلاثة، كي تجذب المهندسين الموهوبين لاحقًا",
+          "اختيار المزوّدين الأقل سعرًا شهريًا أيًّا كانوا، ثم المضي قدمًا في البناء"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 2.3 says build what makes you different and buy or rent the rest; login, maps, messages and payments rarely make a young product different. The tempting option is the lowest price tag: the lesson judges options by total cost, including the time to learn, run and leave them. Exciting new technology for routine parts is the lesson's biggest trap.",
+        "ar": "يقول الدرس 2.3: ابنِ ما يميّزك، واشترِ الباقي أو استأجره؛ فتسجيل الدخول والخرائط والرسائل والدفع نادرًا ما تميّز منتجًا ناشئًا. والخيار المغري هو أقل سعر، لكن الدرس يحكم على الخيارات بالتكلفة الإجمالية، ومنها وقت التعلم والتشغيل والخروج. واستخدام تقنيات جديدة لافتة لأجزاء روتينية هو أكبر فخ في الدرس."
+      }
+    },
+    {
+      "id": "m2-4",
+      "level": 3,
+      "lesson": "2.3",
+      "q": {
+        "en": "Qafila moves its orders database to a cloud provider's managed service. Faisal says: \"Security is now the provider's job, and the choice is easy to undo, so we need no record.\" What is right?",
+        "ar": "نقلت قافلة قاعدة بيانات الطلبات إلى خدمة مُدارة (managed service) لدى مزوّد سحابي. قال فيصل: «الأمن صار مسؤولية المزوّد، والقرار سهل التراجع عنه، فلا نحتاج إلى سجل». ما الصحيح؟"
+      },
+      "o": {
+        "en": [
+          "The provider now decides who may log in to the data, so Qafila can skip that work",
+          "Security is shared, so Qafila only has to act once the provider has reported an incident",
+          "Managed services can always be swapped later, so writing the choice down is waste",
+          "The provider runs the database; access, settings and data stay Qafila's: record why"
+        ],
+        "ar": [
+          "المزوّد صار يقرر من يدخل إلى البيانات، فتستغني قافلة عن هذا العمل اليومي كله",
+          "الأمن مشترك، فلا تتحرك قافلة إلا بعد أن يُبلغ المزوّد عن وقوع حادثة لديه",
+          "الخدمات المُدارة يمكن استبدالها دائمًا، فتدوين القرار مضيعة للوقت",
+          "المزوّد يشغّل القاعدة، والوصول والإعدادات والبيانات لقافلة، فسجّلوا السبب"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 2.3 says that with managed services the provider runs components, but security stays shared: your data, access and settings are yours. Where data lives is also hard to undo, so it deserves a short decision record. The tempting option is \"shared, so act after an incident\": sharing still leaves Qafila's half to do every day, not only after something goes wrong.",
+        "ar": "يقول الدرس 2.3 إن المزوّد في الخدمات المُدارة يشغّل المكوّنات، لكن الأمن يبقى مشتركًا؛ فبياناتك ووصولك وإعداداتك مسؤوليتك. ومكان تخزين البيانات قرار يصعب التراجع عنه، فيستحق سجل قرار قصيرًا. والخيار المغري هو «الأمن مشترك، فنتحرك بعد الحادثة»، لكن الاشتراك يُبقي على قافلة نصيبها كل يوم، لا بعد وقوع مشكلة فقط."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m2-e1",
+      "lesson": "2.1",
+      "text": {
+        "en": "I have built an assumption map of at least ten assumptions for an idea, run one cheap test with its pass line written before it started, and written a decision note saying pass, fail or unclear and what happens next.",
+        "ar": "أعددتُ خريطة افتراضات تضم عشرة افتراضات على الأقل لفكرة ما، وأجريتُ اختبارًا رخيصًا واحدًا كتبتُ خط نجاحه قبل أن يبدأ، وكتبتُ مذكرة قرار تقول: نجح أو فشل أو غير واضح، وما الخطوة التالية."
+      }
+    },
+    {
+      "id": "m2-e2",
+      "lesson": "2.3",
+      "text": {
+        "en": "I have written two short decision records, one for a choice that is easy to undo and one for a choice that is hard to undo, each with at least two options, one negative consequence and how to undo it.",
+        "ar": "كتبتُ سجلَّي قرار قصيرين، أحدهما لاختيار يسهل التراجع عنه والآخر لاختيار يصعب التراجع عنه، في كل منهما خياران على الأقل، ونتيجة سلبية واحدة، وطريقة التراجع."
+      }
+    }
+  ]
+}

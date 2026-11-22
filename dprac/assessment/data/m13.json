@@ -1,0 +1,135 @@
+{
+  "area": "m13",
+  "questions": [
+    {
+      "id": "m13-1",
+      "level": 1,
+      "lesson": "13.1",
+      "q": {
+        "en": "Maha suggests putting all 160 pages of the course artefacts into Qafila's playbook \"so nothing useful is lost\". What does the lesson recommend?",
+        "ar": "تقترح مها وضع كل الصفحات الـ160 من مخرجات الدورة في دليل قافلة «كي لا يضيع شيء مفيد». بماذا يوصي الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Paste in all 160 pages, so that every useful detail stays in one place",
+          "Rebuild it on a well-known framework's structure, so that it looks complete",
+          "Write it once at full length, then leave it for each team to read alone",
+          "Three layers: a front page, a card for each step, and the artefact pages"
+        ],
+        "ar": [
+          "لصق الصفحات الـ160 كلها، كي تبقى كل التفاصيل المفيدة في مكان واحد",
+          "إعادة بنائه على هيكل إطار معروف ومشهور، كي يبدو مكتملًا وشاملًا",
+          "كتابته مرة واحدة بطوله الكامل، ثم تركه لكل فريق يقرؤه وحده",
+          "ثلاث طبقات: صفحة أمامية، وبطاقة لكل خطوة، وصفحات المخرجات"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 13.1 says a playbook holds the habits people actually use, each with an owner, and everything else is an archive; 160 pasted pages is an archive, so keep three layers. The tempting option is pasting everything in to keep it all. Building on a framework's structure goes against assembling from your own artefacts, and a binder written once and never opened is the lesson's biggest trap.",
+        "ar": "يقول الدرس 13.1 إن الدليل يحوي العادات التي يمارسها الناس فعلًا، لكل منها مالك، وكل ما عدا ذلك أرشيف؛ و160 صفحة ملصوقة أرشيف، فأبقِ ثلاث طبقات. والخيار المغري هو لصق كل شيء للاحتفاظ به. والبناء على هيكل إطار يخالف تجميع الدليل من مخرجاتك أنت، والملف الضخم الذي يُكتب مرة ولا يُفتح أبدًا هو أكبر فخ في الدرس."
+      }
+    },
+    {
+      "id": "m13-2",
+      "level": 2,
+      "lesson": "13.1",
+      "q": {
+        "en": "While checking the playbook, Yasmin finds the incident page uses \"SEV1\" while the service desk page uses \"P1\" for the same thing. Which check found it, and what is the fix?",
+        "ar": "في أثناء فحص الدليل، وجدت ياسمين أن صفحة الحوادث تستخدم «SEV1» وصفحة مكتب الخدمة تستخدم «P1» للشيء نفسه. أي فحص كشف ذلك، وما الإصلاح؟"
+      },
+      "o": {
+        "en": [
+          "Same numbers: every page is changed until all the counts on the pages agree",
+          "Same words: one home page defines the terms, and other pages point to it",
+          "Right size: one of the two pages is cut so the playbook gets shorter",
+          "Same words: each page keeps whichever term its own author prefers"
+        ],
+        "ar": [
+          "الأرقام نفسها: تُعدَّل كل صفحة حتى تتفق كل الأعداد الواردة في الصفحات",
+          "الكلمات نفسها: صفحة مرجعية تعرّف المصطلحين، وتحيل إليها الصفحات",
+          "الحجم المناسب: تُحذف إحدى الصفحتين كي يقصر الدليل",
+          "الكلمات نفسها: تُبقي كل صفحة المصطلح الذي يفضّله كاتبها"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 13.1's \"same words\" check asks whether each important term has one definition on one home page, and uses \"P1\" and \"SEV1\" for the same thing as its example. The fix is to name the decider, keep the definition on one home page and point to it. The tempting option names the right check but lets each author keep a term, which leaves the confusion in place.",
+        "ar": "فحص «الكلمات نفسها» في الدرس 13.1 يسأل: هل لكل مصطلح مهم تعريف واحد في صفحة مرجعية واحدة؟ ومثاله استخدام «P1» و«SEV1» للشيء نفسه. والإصلاح أن تسمّي صاحب القرار، وتُبقي التعريف في صفحة مرجعية واحدة، وتحيل إليها. والخيار المغري يسمّي الفحص الصحيح لكنه يترك لكل كاتب مصطلحه، فيبقى الالتباس قائمًا."
+      }
+    },
+    {
+      "id": "m13-3",
+      "level": 2,
+      "lesson": "13.2",
+      "q": {
+        "en": "Yasmin scores 31 out of 40 on the practice exam and wants to add the score to her CV. What does the lesson suggest she does with the result?",
+        "ar": "حصلت ياسمين على 31 من 40 في الامتحان التدريبي، وتريد إضافة الدرجة إلى سيرتها الذاتية. بماذا يوصي الدرس أن تفعل بالنتيجة؟"
+      },
+      "o": {
+        "en": [
+          "List the lessons her wrong answers point to; reread them",
+          "Put the score on her CV, as proof of readiness for employers",
+          "Retake the exam at once until she scores 40, then stop there",
+          "Read only the explanations for the questions she got wrong"
+        ],
+        "ar": [
+          "تسرد الدروس التي تشير إليها إجاباتها الخاطئة، وتعيد قراءتها",
+          "تضع الدرجة في سيرتها الذاتية، دليلًا على جاهزيتها لأصحاب العمل",
+          "تعيد الامتحان فورًا حتى تحصل على 40، ثم تتوقف عند ذلك",
+          "تقرأ شرح الأسئلة التي أخطأت فيها وحدها، وتترك الباقي"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 13.2 says the exam is practice on this course only: a score proves nothing to an employer. Use wrong answers to choose the lessons to reread, and read every explanation, including for questions you got right, because the wrong options are common real mistakes. The tempting option is the CV, which treats a self-check as a qualification.",
+        "ar": "يقول الدرس 13.2 إن الامتحان تدريب على هذه الدورة وحدها، والدرجة لا تُثبت شيئًا لصاحب العمل. استخدم الإجابات الخاطئة لاختيار الدروس التي تعيد قراءتها، واقرأ كل شرح، حتى للأسئلة التي أصبت فيها، لأن الخيارات الخاطئة أخطاء شائعة في الواقع. والخيار المغري هو السيرة الذاتية، وهو يجعل الفحص الذاتي مؤهلًا."
+      }
+    },
+    {
+      "id": "m13-4",
+      "level": 3,
+      "lesson": "13.1",
+      "q": {
+        "en": "Qafila's playbook passed a careful read by three people. Before teams rely on it, which check is most likely to find a missing route between two steps?",
+        "ar": "اجتاز دليل قافلة قراءة متأنية من ثلاثة أشخاص. قبل أن تعتمد عليه الفرق، أي فحص هو الأرجح أن يكشف مسارًا مفقودًا بين خطوتين؟"
+      },
+      "o": {
+        "en": [
+          "A fourth careful reading by someone senior, who checks the spelling and the layout",
+          "Marking every page \"in use\", since each one has been written and approved already",
+          "Walking one real change and one incident through the pages, noting each improvisation",
+          "Comparing the page count with a framework's chapter list, to find what is missing"
+        ],
+        "ar": [
+          "قراءة متأنية رابعة من شخص أقدم، يتحقق من الإملاء والتنسيق في كل صفحة",
+          "وسم كل صفحة بأنها «مستخدمة»، فكل واحدة منها كُتبت واعتُمدت",
+          "تمرير تغيير وحادثة حقيقيين عبر الصفحات، وتسجيل كل موضع ارتجال",
+          "مقارنة عدد الصفحات بقائمة فصول إطار معروف، لمعرفة الناقص"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 13.1's fifth check follows one real piece of work: reading finds typing errors, while following real work finds missing routes, especially at the seams between steps. The tempting option is another careful reading, which repeats the check that already missed the gap. Marking pages \"in use\" when they were only written turns hopes into habits, which the lesson warns against.",
+        "ar": "الفحص الخامس في الدرس 13.1 يتتبّع عملًا حقيقيًا واحدًا: القراءة تكشف أخطاء الكتابة، أما تتبّع العمل الحقيقي فيكشف المسارات المفقودة، ولا سيما عند نقاط الوصل بين الخطوات. والخيار المغري هو قراءة متأنية أخرى، وهي تكرر الفحص الذي فاتته الثغرة أصلًا. ووسم الصفحات بأنها «مستخدمة» لمجرد أنها كُتبت يحوّل الأماني إلى عادات، والدرس يحذّر من ذلك."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m13-e1",
+      "lesson": "13.1",
+      "text": {
+        "en": "I have built a playbook index of at least 20 artefacts, each with its step, lesson, owner and status, covering all eight steps, and turned three gaps into actions with dates.",
+        "ar": "أعددتُ فهرسًا لدليل الممارسة يضم 20 مُخرَجًا على الأقل، لكل منها خطوته ودرسه ومالكه وحالته، ويغطي الخطوات الثماني كلها، وحوّلتُ ثلاث ثغرات إلى إجراءات بتواريخ."
+      }
+    },
+    {
+      "id": "m13-e2",
+      "lesson": "13.2",
+      "text": {
+        "en": "I have taken the practice exam in about an hour with the answers covered, read every explanation, and listed the lessons my wrong answers send me back to.",
+        "ar": "أدّيتُ الامتحان التدريبي في نحو ساعة والإجابات مغطاة، وقرأتُ كل شرح، وسردتُ الدروس التي تعيدني إليها إجاباتي الخاطئة."
+      }
+    }
+  ]
+}

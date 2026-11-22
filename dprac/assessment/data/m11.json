@@ -1,0 +1,135 @@
+{
+  "area": "m11",
+  "questions": [
+    {
+      "id": "m11-1",
+      "level": 1,
+      "lesson": "11.1",
+      "q": {
+        "en": "After an access key was found in a public repository, someone proposes that every deploy at Qafila must wait for Dana's personal approval. What does the lesson suggest instead?",
+        "ar": "بعد العثور على مفتاح وصول في مستودع عام، اقترح أحدهم أن ينتظر كل نشر في قافلة موافقة دانة الشخصية. بماذا يوصي الدرس بدلًا من ذلك؟"
+      },
+      "o": {
+        "en": [
+          "Add the central approval for every deploy, since being careful is never wrong",
+          "Ask which automatic check would stop that failure, such as a secret scanner",
+          "Form a committee that meets to decide on each deploy together, as a group",
+          "Write a strict rule now, and let the teams find out the reasons for it later"
+        ],
+        "ar": [
+          "إضافة موافقة مركزية على كل نشر، فالحذر الزائد لا يكون خطأً أبدًا",
+          "السؤال: أي فحص آلي يمنع هذا الفشل بعينه، مثل أداة فحص الأسرار",
+          "تشكيل لجنة تجتمع لتقرر في كل نشر بشكل جماعي",
+          "كتابة قاعدة صارمة الآن، وترك الفرق تكتشف أسبابها لاحقًا"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 11.1 names a central approval step after every scare as the biggest trap: ask what automatic check would stop the specific failure, and make the safe way the default way. The tempting option is the central approval, which slows every deploy without targeting committed keys. Committees as deciders and rules without reasons are both traps the lesson lists.",
+        "ar": "يسمّي الدرس 11.1 إضافة موافقة مركزية بعد كل حادثة مخيفة أكبر فخ؛ فاسأل أي فحص آلي يمنع الفشل المحدد، واجعل الطريقة الآمنة هي الطريقة الافتراضية. والخيار المغري هو الموافقة المركزية، وهي تبطئ كل نشر دون أن تستهدف المفاتيح المكشوفة. واللجان صاحبة القرار والقواعد بلا أسباب كلاهما من الفخاخ التي يذكرها الدرس."
+      }
+    },
+    {
+      "id": "m11-2",
+      "level": 2,
+      "lesson": "11.2",
+      "q": {
+        "en": "Merchants can invite staff as \"orders only\" or \"full access\". The team hides the payout settings button for \"orders only\" staff in the app. What does the lesson say?",
+        "ar": "يستطيع التجار دعوة موظفيهم بصلاحية «الطلبات فقط» أو «وصول كامل». أخفى الفريق زر إعدادات المدفوعات عن موظفي «الطلبات فقط» في التطبيق. ماذا يقول الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Hiding the button is enough, since staff only ever use the app's own screens",
+          "Leave it to the security team to check later, since that is their job",
+          "Accept the risk quietly for now, and act if a merchant ever complains",
+          "Check the permission on the server, since anyone can call the API directly"
+        ],
+        "ar": [
+          "إخفاء الزر يكفي، فالموظفون لا يستخدمون إلا شاشات التطبيق",
+          "ترك الفحص لفريق الأمن لاحقًا، فهذه مهمته",
+          "قبول المخاطرة بصمت الآن، والتحرك إن اشتكى أحد التجار",
+          "فحص الصلاحية على الخادم، فأي أحد يستطيع استدعاء الواجهة"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 11.2 lists hiding buttons instead of checking on the server as a trap: anyone can call an API directly. The tempting option is trusting the hidden button because staff use the app, but the protection must sit where the request is handled. \"Security will check it\" and accepting risk by silence are the lesson's other traps.",
+        "ar": "يعدّ الدرس 11.2 إخفاء الأزرار بدل التحقق على الخادم فخًا؛ فأي أحد يستطيع استدعاء الواجهة (API) مباشرة. والخيار المغري هو الثقة بالزر المخفي لأن الموظفين يستخدمون التطبيق، لكن الحماية يجب أن تكون حيث يُعالَج الطلب. و«سيفحصه فريق الأمن» وقبول المخاطرة بالصمت فخّان آخران في الدرس."
+      }
+    },
+    {
+      "id": "m11-3",
+      "level": 2,
+      "lesson": "11.2",
+      "q": {
+        "en": "A risk in Qafila's register has sat unfixed for two months. Nobody has written that it is accepted, and the payments partner's controls are assumed to cover it. What is needed?",
+        "ar": "بقيت مخاطرة في سجل قافلة دون إصلاح شهرين. لم يكتب أحد أنها مقبولة، ويُفترض أن ضوابط شريك المدفوعات تغطيها. ما المطلوب؟"
+      },
+      "o": {
+        "en": [
+          "Nothing: a risk left unfixed for two months has in effect been accepted by everyone",
+          "Nothing: the payments partner's controls cover Qafila's side of the trust boundary",
+          "A written acceptance by the accountable person, with a reason, an end date and a trigger",
+          "A quick fix for this one case only, with no test added for the wider class of issue"
+        ],
+        "ar": [
+          "لا شيء: مخاطرة بقيت شهرين كاملين دون إصلاح قد قبلها الجميع فعليًا",
+          "لا شيء: ضوابط شريك المدفوعات تغطي جانب قافلة من حدود الثقة",
+          "قبول مكتوب من الشخص المساءَل، مع سبب وتاريخ انتهاء ومُحفّز للمراجعة",
+          "إصلاح سريع لهذه الحالة وحدها، دون إضافة اختبار للفئة الأوسع"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 11.2 says an unfixed risk with no written acceptance is owned by nobody; an accepted risk is written by the accountable person with what, why, until when and what triggers an early look. The tempting option is assuming the partner covers it: the lesson says map the trust boundary, because your side is yours. Fixing one instance without the class is another listed trap.",
+        "ar": "يقول الدرس 11.2 إن المخاطرة غير المُصلحة دون قبول مكتوب لا يملكها أحد؛ والمخاطرة المقبولة يكتبها الشخص المساءَل، مع ماذا ولماذا وحتى متى وما الذي يستدعي مراجعة مبكرة. والخيار المغري هو افتراض أن الشريك يغطيها، لكن الدرس يقول: ارسم حدود الثقة، فجانبك مسؤوليتك. وإصلاح حالة واحدة دون الفئة فخ آخر في الدرس."
+      }
+    },
+    {
+      "id": "m11-4",
+      "level": 3,
+      "lesson": "11.3",
+      "q": {
+        "en": "The payments partner's questionnaire asks: \"Do you review user access every quarter?\" Qafila last reviewed access once, a year ago, and plans to start quarterly reviews. How should it answer?",
+        "ar": "يسأل استبيان شريك المدفوعات: «هل تراجعون صلاحيات وصول المستخدمين كل ربع سنة؟». وقد راجعت قافلة الصلاحيات مرة واحدة قبل عام، وتنوي البدء بمراجعات ربع سنوية. كيف تجيب؟"
+      },
+      "o": {
+        "en": [
+          "\"Partly\", with the gap, an owner, a dated plan and the evidence",
+          "\"Yes\", since the team fully intends to start quarterly reviews quite soon",
+          "Freeze delivery for a month and write every missing policy before answering",
+          "Read the regulations, decide the question does not apply, and leave it blank"
+        ],
+        "ar": [
+          "«جزئيًا»، مع الثغرة ومالك وخطة بتاريخ والأدلة",
+          "«نعم»، فالفريق ينوي فعلًا البدء بالمراجعات الربع سنوية قريبًا",
+          "تجميد التسليم شهرًا وكتابة كل السياسات الناقصة قبل الإجابة",
+          "قراءة اللوائح، والحكم بأن السؤال لا ينطبق، وتركه فارغًا"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 11.3 names answering with what you hope is true as the biggest trap: an honest \"partly, with a plan and a date\" builds more trust than a \"yes\" an audit later disproves, and a hopeful yes can become a contractual promise. The tempting option is \"yes\" because the plan exists. Freezing delivery for an audit season is costly, and reading the law yourself to conclude is another trap.",
+        "ar": "يسمّي الدرس 11.3 الإجابة بما تتمنى أن يكون صحيحًا أكبر فخ؛ فالإجابة الصادقة «جزئيًا، مع خطة وتاريخ» تبني ثقة أكثر من «نعم» يكذّبها التدقيق (audit) لاحقًا، و«نعم» المتفائلة قد تصبح وعدًا تعاقديًا. والخيار المغري هو «نعم» لأن الخطة موجودة. وتجميد التسليم لموسم التدقيق مكلف، وقراءة القانون بنفسك للوصول إلى حكم فخ آخر."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m11-e1",
+      "lesson": "11.2",
+      "text": {
+        "en": "I have run a threat model on a small feature with the four questions and STRIDE, named the trust boundaries, rated four threats with one treatment each, and written risk register entries with one owner, a due or review date and a residual rating.",
+        "ar": "أجريتُ نمذجة تهديدات لميزة صغيرة بالأسئلة الأربعة وSTRIDE، وسمّيتُ حدود الثقة، وقيّمتُ أربعة تهديدات مع معالجة واحدة لكل منها، وكتبتُ قيودًا في سجل المخاطر لكل منها مالك واحد، وتاريخ استحقاق أو مراجعة، وتقييم للمخاطر المتبقية."
+      }
+    },
+    {
+      "id": "m11-e2",
+      "lesson": "11.3",
+      "text": {
+        "en": "I have built a control-to-evidence map in which every control has one owner, every piece of evidence is a system record, and at least one row is honestly marked as a gap with a date.",
+        "ar": "أعددتُ خريطة تربط الضوابط الرقابية بالأدلة، لكل ضابط فيها مالك واحد، وكل دليل فيها سجل من نظام، وصف واحد على الأقل موسوم بصدق على أنه ثغرة مع تاريخ."
+      }
+    }
+  ]
+}

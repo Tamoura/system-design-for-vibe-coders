@@ -288,6 +288,26 @@
       "estimatedHours": null,
       "flagship": false,
       "flagshipProposed": false
+    },
+    {
+      "id": "dprac",
+      "title": "Digital Practice: Building and Running Digital Products, from One Person to a Whole Company",
+      "titleAr": "الممارسة الرقمية: بناء المنتجات الرقمية وتشغيلها، من شخص واحد إلى شركة كاملة",
+      "school": "governance-risk-product",
+      "level": "100-200",
+      "levelProposed": true,
+      "path": "dprac",
+      "lessons": 41,
+      "modules": 14,
+      "languages": [
+        "en",
+        "ar"
+      ],
+      "status": "ai-drafted",
+      "assurance": "draft",
+      "estimatedHours": null,
+      "flagship": false,
+      "flagshipProposed": false
     }
   ]
 }

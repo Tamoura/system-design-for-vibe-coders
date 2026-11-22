@@ -1,0 +1,135 @@
+{
+  "area": "m9",
+  "questions": [
+    {
+      "id": "m9-1",
+      "level": 1,
+      "lesson": "9.1",
+      "q": {
+        "en": "Faisal proposes splitting Qafila's application into many services \"because that is what every growing company does\". What should come first, according to the lesson?",
+        "ar": "يقترح فيصل تقسيم تطبيق قافلة إلى خدمات كثيرة «لأن هذا ما تفعله كل شركة تنمو». ما الذي يجب أن يأتي أولًا بحسب الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Naming the qualities that matter most, then comparing options against them",
+          "Following the trend, since many small services suit every company that grows",
+          "Picking the option that has no costs at all, once each one has been checked",
+          "Letting the newest engineer decide, since a split like this is easy to reverse"
+        ],
+        "ar": [
+          "تسمية صفات الجودة المهمة، ثم مقارنة الخيارات بها",
+          "اتّباع الموضة، فالخدمات الصغيرة الكثيرة تناسب كل شركة تنمو",
+          "اختيار الخيار الذي لا تكلفة له إطلاقًا، بعد فحص كل خيار",
+          "ترك القرار لأحدث مهندس، فتقسيم كهذا يسهل التراجع عنه"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 9.1's rule is to name the qualities first, compare options against them, then write down what you gave up. The tempting option is following the trend, which the lesson names as the biggest trap: choosing by fashion instead of fit to your problem, size and skills. Every option has costs, and splitting a system is hard to reverse, so it needs a slower, wider decision.",
+        "ar": "قاعدة الدرس 9.1: سمِّ صفات الجودة أولًا، ثم قارن الخيارات بها، ثم دوّن ما تخليت عنه. والخيار المغري هو اتّباع الموضة، والدرس يسمّيه أكبر فخ: الاختيار حسب الرائج بدل الملاءمة لمشكلتك وحجمك ومهاراتك. ولكل خيار تكاليف، وتقسيم النظام يصعب التراجع عنه، فيحتاج إلى قرار أبطأ وأوسع."
+      }
+    },
+    {
+      "id": "m9-2",
+      "level": 2,
+      "lesson": "9.1",
+      "q": {
+        "en": "Qafila split its code into an orders service and a payouts service, but both still read and write the same database tables. What does the lesson say about this?",
+        "ar": "قسّمت قافلة شيفرتها إلى خدمة للطلبات وخدمة للمدفوعات، لكن الخدمتين ما زالتا تقرآن وتكتبان في جداول قاعدة البيانات نفسها. ماذا يقول الدرس عن ذلك؟"
+      },
+      "o": {
+        "en": [
+          "They are now loosely coupled, because the code has been split in two",
+          "Sharing one database is fine, as long as both teams are careful with it",
+          "Add a third service to manage the shared database on behalf of both",
+          "They are still tightly coupled, so decide which one service owns each table"
+        ],
+        "ar": [
+          "صارتا مترابطتين بشكل خفيف، لأن الشيفرة قُسمت إلى قسمين",
+          "مشاركة قاعدة واحدة لا بأس بها، ما دام الفريقان حذرين",
+          "إضافة خدمة ثالثة تدير القاعدة المشتركة نيابة عن الخدمتين",
+          "ما زالتا مترابطتين بإحكام، فحدّدوا أي خدمة منهما تملك كل جدول"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 9.1 says shared data is the commonest hidden coupling: two services sharing one database are still tightly coupled, so decide who owns each table. The tempting option is believing the code split made them loosely coupled; the lesson lists \"splitting code without splitting data\" as a trap. Being careful is not a boundary, and a third service adds a part without removing the shared tables.",
+        "ar": "يقول الدرس 9.1 إن البيانات المشتركة أكثر أشكال الترابط الخفي شيوعًا؛ فخدمتان تتشاركان قاعدة واحدة تبقيان مترابطتين بإحكام، فحدّد من يملك كل جدول. والخيار المغري هو الاعتقاد بأن تقسيم الشيفرة جعل الترابط خفيفًا، والدرس يعدّ «تقسيم الشيفرة دون تقسيم البيانات» فخًا. والحذر ليس حدًّا، والخدمة الثالثة تضيف جزءًا دون إزالة الجداول المشتركة."
+      }
+    },
+    {
+      "id": "m9-3",
+      "level": 2,
+      "lesson": "9.2",
+      "q": {
+        "en": "Sales counts an \"active merchant\" as one that signed up in the last 90 days; Hamad's analytics counts one with a delivery in the last 30 days. Their reports disagree. What should happen?",
+        "ar": "تعدّ المبيعات «التاجر النشط» من سجّل خلال آخر 90 يومًا، وتعدّه تحليلات حمد من لديه توصيلة خلال آخر 30 يومًا. وتقاريرهما لا تتفق. ما الذي يجب أن يحدث؟"
+      },
+      "o": {
+        "en": [
+          "Average the two numbers, so that each team sees part of its own view in the result",
+          "Agree one definition with the data owner, and give the other meaning its own name",
+          "Keep both meanings under the one name, and add a footnote explaining the gap",
+          "Ask the platform team to choose, since it runs the warehouse the reports use"
+        ],
+        "ar": [
+          "أخذ متوسط الرقمين، كي يرى كل فريق جزءًا من رؤيته في النتيجة",
+          "تعريف واحد يُتفق عليه مع مالك البيانات، واسم مستقل للمعنى الآخر",
+          "إبقاء المعنيين تحت الاسم نفسه، مع حاشية تشرح الفرق",
+          "الطلب من فريق المنصة أن يختار، فهو يشغّل المستودع الذي تستخدمه التقارير"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 9.2's decision cue: if two reports disagree, find the definition each uses and agree one with the owner; the second meaning gets its own name. The tempting option is asking the platform team, which the lesson lists as a trap: running storage is not owning meaning. Averaging or footnoting keeps two meanings under one word, so the argument returns.",
+        "ar": "إشارة القرار في الدرس 9.2: إن اختلف تقريران، فابحث عن التعريف الذي يستخدمه كلٌّ منهما، واتفق على تعريف واحد مع المالك؛ ويأخذ المعنى الثاني اسمًا خاصًا به. والخيار المغري هو سؤال فريق المنصة، والدرس يعدّه فخًا: تشغيل التخزين ليس امتلاكًا للمعنى. وأخذ المتوسط أو إضافة حاشية يُبقي معنيين تحت كلمة واحدة، فيعود الخلاف."
+      }
+    },
+    {
+      "id": "m9-4",
+      "level": 3,
+      "lesson": "9.3",
+      "q": {
+        "en": "Qafila's courier payout calculation is tangled and untested, and the team changes it weekly. Faisal proposes a six-month rewrite with a weekend switch-over. What fits the lesson?",
+        "ar": "حساب مدفوعات المندوبين في قافلة متشابك وغير مختبَر، ويغيّره الفريق أسبوعيًا. يقترح فيصل إعادة كتابته خلال ستة أشهر ثم التحويل في عطلة نهاية أسبوع. ما الذي يتفق مع الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Rewrite all of it at once, then switch over on a single quiet weekend",
+          "Refactor it straight away, and add the tests once the new design has settled",
+          "Write characterisation tests, then replace it slice by slice behind a seam",
+          "Leave it alone for now, since debt in code that changes often can wait"
+        ],
+        "ar": [
+          "إعادة كتابته كله دفعة واحدة، ثم التحويل في عطلة نهاية أسبوع هادئة",
+          "إعادة هيكلته فورًا، وإضافة الاختبارات حين يستقر التصميم الجديد",
+          "اختبارات توصيفية أولًا، ثم استبداله شريحة بعد شريحة خلف نقطة فصل واضحة",
+          "تركه الآن، فالدَّين في الشيفرة التي تتغير كثيرًا يمكن أن ينتظر"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 9.3's rule is to pay down the debt you keep tripping over in small steps while the product keeps running; the big rewrite is its biggest trap, so replace slice by slice behind a seam, with characterisation tests first. The tempting option is the all-at-once rewrite with a weekend switch. Debt in code that changes weekly is the expensive kind, so it should not wait.",
+        "ar": "قاعدة الدرس 9.3 أن تسدد الدَّين الذي تتعثر به دائمًا بخطوات صغيرة والمنتج مستمر في العمل؛ وإعادة الكتابة الكبرى أكبر فخ فيه، فاستبدل شريحة بعد شريحة خلف نقطة فصل، بعد كتابة اختبارات توصيفية أولًا. والخيار المغري هو إعادة الكتابة دفعة واحدة مع تحويل في عطلة أسبوع. والدَّين في شيفرة تتغير أسبوعيًا هو النوع المكلف، فلا ينبغي أن ينتظر."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m9-e1",
+      "lesson": "9.1",
+      "text": {
+        "en": "I have written an architecture decision record with at least two options, the quality attributes in order, at least one bad consequence, how to undo it, a fitness check a pipeline could run and a review trigger.",
+        "ar": "كتبتُ سجل قرار معماري فيه خياران على الأقل، وصفات الجودة مرتبة، ونتيجة سيئة واحدة على الأقل، وطريقة التراجع، وفحص ملاءمة يستطيع خط النشر تشغيله، ومُحفّز للمراجعة."
+      }
+    },
+    {
+      "id": "m9-e2",
+      "lesson": "9.2",
+      "text": {
+        "en": "I have built a data inventory of at least four datasets, each with an owner, a one-sentence purpose, its personal fields, a sensitivity level and a retention period, and answered the privacy questions for one row with personal data.",
+        "ar": "أعددتُ جردًا للبيانات يضم أربع مجموعات بيانات على الأقل، لكل منها مالك، وغرض في جملة واحدة، وحقولها الشخصية، ومستوى حساسية، ومدة احتفاظ، وأجبتُ عن أسئلة الخصوصية لصف واحد فيه بيانات شخصية."
+      }
+    }
+  ]
+}

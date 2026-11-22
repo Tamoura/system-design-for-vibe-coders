@@ -26,6 +26,7 @@ body:
         - A Practical Guide to Becoming an AI-Native Engineer (ainative)
         - "Founder's Playbook for AI-First Builders (founder)"
         - "Running IT as a Business (itbiz)"
+        - "Digital Practice (dprac)"
         - The landing page or the whole site
     validations:
       required: true

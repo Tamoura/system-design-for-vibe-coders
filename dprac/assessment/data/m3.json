@@ -1,0 +1,135 @@
+{
+  "area": "m3",
+  "questions": [
+    {
+      "id": "m3-1",
+      "level": 1,
+      "lesson": "3.1",
+      "q": {
+        "en": "At 6 p.m. Faisal opens a 1,400-line pull request touching fees, login and the admin page, and asks Yasmin for a quick approval. What does the lesson suggest she do?",
+        "ar": "في السادسة مساءً فتح فيصل طلب دمج (pull request) من 1,400 سطر يمسّ الرسوم وتسجيل الدخول وصفحة الإدارة، وطلب من ياسمين موافقة سريعة. بماذا يوصي الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Approve it, since he wrote the code and knows the fee logic better than anyone else",
+          "Merge it into the main branch tonight, and review the details in the morning",
+          "Comment only on naming and layout, and leave the fee logic to the test suite",
+          "Ask him to split it into small changes that a reviewer can follow in one go"
+        ],
+        "ar": [
+          "توافق عليه، فهو كاتب الشيفرة ويعرف منطق الرسوم أكثر من أي أحد آخر في الفريق",
+          "تدمجه في الفرع الرئيسي الليلة، وتراجع التفاصيل في الصباح",
+          "تعلّق على الأسماء والتنسيق فقط، وتترك منطق الرسوم للاختبارات",
+          "تطلب منه تقسيمه إلى تغييرات صغيرة يتابعها المراجِع في جلسة واحدة"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 3.1's rule is small changes, merged often, each one reviewed and explained; giant pull requests get a rubber stamp, not a review. The tempting option is approving because Faisal knows the code best: review exists to spread knowledge and catch mistakes while they are cheap, whoever wrote it. Style is for tools; reviewers look at correctness and risk.",
+        "ar": "قاعدة الدرس 3.1: تغييرات صغيرة تُدمج كثيرًا، كل منها مُراجَع ومشروح؛ فطلبات الدمج الضخمة تنال ختمًا شكليًا لا مراجعة. والخيار المغري هو الموافقة لأن فيصل يعرف الشيفرة أكثر، لكن المراجعة وُجدت لنشر المعرفة والتقاط الأخطاء وهي رخيصة، أيًّا كان الكاتب. والتنسيق شأن الأدوات، والمراجِع ينظر في الصحة والمخاطر."
+      }
+    },
+    {
+      "id": "m3-2",
+      "level": 2,
+      "lesson": "3.1",
+      "q": {
+        "en": "Faisal commits a cloud access key by mistake, notices a minute later, and deletes it in the next commit. What should happen now?",
+        "ar": "أرسل فيصل مفتاح وصول سحابي في إيداع (commit) بالخطأ، ثم انتبه بعد دقيقة وحذفه في الإيداع التالي. ما الذي يجب أن يحدث الآن؟"
+      },
+      "o": {
+        "en": [
+          "Nothing more, because the second commit has removed the key from the repository",
+          "Rotate the key at once and add a secret scanner: the history still holds it",
+          "Make the repository private, which makes the old key safe to keep on using again",
+          "Ask the team not to open that commit, so that nobody ever sees the old key"
+        ],
+        "ar": [
+          "لا شيء آخر، فالإيداع الثاني أزال المفتاح من المستودع نهائيًا وإلى الأبد",
+          "تغيير المفتاح فورًا وإضافة أداة لفحص الأسرار، فالسجل يحتفظ به",
+          "جعل المستودع خاصًا، فيصبح المفتاح القديم آمنًا للاستخدام من جديد",
+          "الطلب من الفريق ألا يفتح ذلك الإيداع، كي لا يرى أحد المفتاح القديم"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 3.1 lists committing a secret and \"deleting\" it later as a trap: version control keeps every change, so the key stays in the history. Rotate it at once and add a scanner. The tempting option is \"the next commit removed it\": it removed it only from the latest version, not from the record of every earlier one.",
+        "ar": "يعدّ الدرس 3.1 إيداع سرّ ثم «حذفه» لاحقًا فخًا؛ فالتحكم في الإصدارات يحفظ كل تغيير، فيبقى المفتاح في السجل. غيّر المفتاح فورًا وأضف أداة فحص. والخيار المغري هو «الإيداع التالي أزاله»، لكنه أزاله من آخر نسخة فقط، لا من سجل كل النسخ السابقة."
+      }
+    },
+    {
+      "id": "m3-3",
+      "level": 2,
+      "lesson": "3.2",
+      "q": {
+        "en": "A Qafila checkout test fails about one run in five for no clear reason. Yasmin has been pressing \"re-run\" until the build turns green. What does the lesson advise?",
+        "ar": "يفشل أحد اختبارات الدفع في قافلة مرة من كل خمس مرات تقريبًا دون سبب واضح، وظلّت ياسمين تضغط «إعادة التشغيل» حتى يصبح البناء أخضر. بماذا ينصح الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Keep re-running it, since a green result on a retry shows the code is fine",
+          "Delete the test, so the pipeline stays green and the team keeps moving",
+          "Log the flaky test and fix it, so a red build keeps its meaning",
+          "Raise the coverage target, so more tests outweigh the unreliable one"
+        ],
+        "ar": [
+          "تواصل إعادة التشغيل، فالنتيجة الخضراء عند الإعادة تعني أن الشيفرة سليمة",
+          "تحذف الاختبار، كي يبقى خط النشر أخضر ويواصل الفريق العمل",
+          "تسجّل الاختبار المتقلّب وتعمل على إصلاحه، كي يبقى للبناء الأحمر معناه",
+          "ترفع هدف التغطية، كي ترجح كفة الاختبارات الكثيرة على الاختبار المتقلّب"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 3.2 names tests that fail at random as the biggest trap, because people learn to ignore red; log flaky tests and fix them. The tempting option is re-running until green, which the lesson lists as a trap: a retry that passes hides the problem instead of showing the code is fine. A coverage number does not tell you what any test would catch.",
+        "ar": "يسمّي الدرس 3.2 الاختبارات التي تفشل عشوائيًا أكبر فخ، لأن الناس يتعلمون تجاهل اللون الأحمر؛ فسجّل الاختبارات المتقلبة وأصلحها. والخيار المغري هو إعادة التشغيل حتى الأخضر، والدرس يعدّه فخًا: الإعادة الناجحة تخفي المشكلة ولا تُثبت سلامة الشيفرة. ورقم التغطية لا يخبرك بما سيلتقطه أي اختبار."
+      }
+    },
+    {
+      "id": "m3-4",
+      "level": 3,
+      "lesson": "3.3",
+      "q": {
+        "en": "Qafila wants to replace each order's single address field with separate street, building and area fields. Faisal plans one deploy that adds the new fields and drops the old one. What is safer?",
+        "ar": "تريد قافلة استبدال حقل العنوان الواحد في كل طلب بحقول منفصلة للشارع والمبنى والمنطقة. يخطط فيصل لنشر واحد يضيف الحقول الجديدة ويحذف القديم. ما الأكثر أمانًا؟"
+      },
+      "o": {
+        "en": [
+          "Add the new fields first, move readers over, drop the old one in a later deploy",
+          "Do it in one night-time deploy, since a quick rollback will bring the old field back",
+          "Put the new fields behind a feature flag and drop the old field in the same go",
+          "Rename the old field in place, since a rename cannot lose any stored address"
+        ],
+        "ar": [
+          "إضافة الحقول الجديدة، ونقل القرّاء إليها، ثم حذف القديم في نشر لاحق",
+          "تنفيذه في نشر ليلي واحد، فالتراجع السريع سيعيد الحقل القديم إن لزم الأمر",
+          "وضع الحقول الجديدة خلف مفتاح ميزة، وحذف القديم في الخطوة نفسها",
+          "إعادة تسمية الحقل القديم في مكانه، فإعادة التسمية لا تُضيع أي عنوان"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 3.3 calls database changes the biggest trap: code can be rolled back in a minute, deleted data often cannot. Use expand and contract, so no deploy removes data that the previous code still reads. The tempting option is relying on rollback: rolling back the code does not bring a dropped field's data back. A flag controls behaviour, not the data already gone.",
+        "ar": "يسمّي الدرس 3.3 تغييرات قاعدة البيانات أكبر فخ؛ فالشيفرة يمكن التراجع عنها في دقيقة، أما البيانات المحذوفة فغالبًا لا. استخدم أسلوب التوسيع ثم التقليص (expand and contract)، فلا يحذف أي نشر بيانات ما زالت الشيفرة السابقة تقرؤها. والخيار المغري هو الاعتماد على التراجع، لكن التراجع عن الشيفرة لا يعيد بيانات حقل محذوف. ومفتاح الميزة يتحكم في السلوك، لا في بيانات ضاعت."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m3-e1",
+      "lesson": "3.2",
+      "text": {
+        "en": "I have set up a CI pipeline in a practice repository that runs a linter and my tests on every pull request, and seen a broken pull request blocked by a red check before a fixed one turned green.",
+        "ar": "أعددتُ خط تكامل مستمر (CI) في مستودع تدريبي يشغّل أداة فحص الشيفرة واختباراتي مع كل طلب دمج، ورأيتُ طلب دمج معطوبًا يُمنع بفحص أحمر قبل أن تصبح النسخة المصحَّحة خضراء."
+      }
+    },
+    {
+      "id": "m3-e2",
+      "lesson": "3.3",
+      "text": {
+        "en": "I have written a release plan for one change that reaches users in at least two steps, names at least two signals with a stop level, says whether there is a database change, and has an undo route marked as tried or not tried.",
+        "ar": "كتبتُ خطة إصدار لتغيير واحد تصل إلى المستخدمين على خطوتين على الأقل، وتسمّي مؤشرين على الأقل مع حدّ للتوقف، وتذكر هل يوجد تغيير في قاعدة البيانات، وفيها طريق تراجع موصوف بأنه جُرّب أو لم يُجرَّب."
+      }
+    }
+  ]
+}

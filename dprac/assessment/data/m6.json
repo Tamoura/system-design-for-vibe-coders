@@ -1,0 +1,135 @@
+{
+  "area": "m6",
+  "questions": [
+    {
+      "id": "m6-1",
+      "level": 1,
+      "lesson": "6.1",
+      "q": {
+        "en": "Sales asks Aisha for a roadmap that lists \"courier earnings screen (Feb), multi-shop accounts (Apr), loyalty points (Jun)\" to show merchants. What fits the lesson?",
+        "ar": "طلب فريق المبيعات من عائشة خارطة طريق تسرد «شاشة أرباح المندوبين (فبراير)، حسابات متعددة المتاجر (أبريل)، نقاط الولاء (يونيو)» لعرضها على التجار. ما الذي يتفق مع الدرس؟"
+      },
+      "o": {
+        "en": [
+          "List the features with months, since merchants like clear dates they can plan around",
+          "Rank the list by RICE score, and publish the scores to merchants as the plan itself",
+          "Keep the roadmap inside the team, so nobody outside it can read it as a promise",
+          "Show problems for now, next and later with measures, and dates only for real deadlines"
+        ],
+        "ar": [
+          "سرد الميزات بأشهرها، فالتجار يحبون تواريخ واضحة يخططون أعمالهم حولها",
+          "ترتيب القائمة بدرجات RICE، ونشر الدرجات للتجار على أنها الخطة",
+          "إبقاء خارطة الطريق داخل الفريق، كي لا يقرأها أحد خارجه وعدًا",
+          "مشكلات للآن والتالي واللاحق بمقياس لكل منها، وتواريخ للمواعيد الحقيقية وحدها"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 6.1's rule is that a roadmap is a promise about problems, not about features: now, next and later, with dates only for real external deadlines. The tempting option is features with months, which the lesson names as the biggest trap because everyone outside reads them as promises. A score supports a decision but is not the plan, and a hidden roadmap fails as a communication tool.",
+        "ar": "قاعدة الدرس 6.1 أن خارطة الطريق وعدٌ بشأن المشكلات لا الميزات: الآن والتالي واللاحق، والتواريخ للمواعيد الخارجية الحقيقية فقط. والخيار المغري هو الميزات بالأشهر، والدرس يسمّيها أكبر فخ لأن كل من هو خارج الفريق يقرؤها وعودًا. والدرجة تدعم القرار ولا تكون هي الخطة، وخارطة الطريق المخفية تفشل أداةً للتواصل."
+      }
+    },
+    {
+      "id": "m6-2",
+      "level": 2,
+      "lesson": "6.2",
+      "q": {
+        "en": "The ticket for proof of delivery reads only \"Add photo upload\". Yasmin is about to start it. What should happen first?",
+        "ar": "تذكرة إثبات التسليم لا تقول إلا «أضف رفع الصور». وياسمين على وشك البدء بها. ما الذي يجب أن يحدث أولًا؟"
+      },
+      "o": {
+        "en": [
+          "Name the user, the need and the reason, then add examples such as \"no signal\"",
+          "Start now, since a one-line ticket leaves the developer free to fill the gaps",
+          "Split it into a back-end story and a front-end story, so two people can start",
+          "Write a full specification of twenty pages before speaking to anyone about it"
+        ],
+        "ar": [
+          "تسمية المستخدم والحاجة والسبب، وإضافة أمثلة مثل «لا توجد تغطية»",
+          "تبدأ الآن، فالتذكرة ذات السطر الواحد تترك للمطوّر حرية سدّ الثغرات",
+          "تقسيمها إلى قصة للخادم وقصة للواجهة، كي يبدأ شخصان معًا",
+          "كتابة مواصفات كاملة من عشرين صفحة قبل الحديث مع أي أحد"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 6.2's rule is that if you cannot say how you would check it, you do not yet know what you want: a story names who needs what and why, and acceptance criteria include unhappy paths such as no signal. The tempting option is starting from the one-line ticket, the lesson's biggest trap, because each reader fills it in differently. Splitting by technical layer delivers nothing usable alone.",
+        "ar": "قاعدة الدرس 6.2: إن لم تستطع أن تقول كيف ستتحقق منه، فأنت لا تعرف بعدُ ما تريد؛ فالقصة تسمّي من يحتاج إلى ماذا ولماذا، ومعايير القبول (acceptance criteria) تشمل المسارات غير السعيدة مثل انقطاع التغطية. والخيار المغري هو البدء من التذكرة ذات السطر الواحد، وهي أكبر فخ في الدرس لأن كل قارئ يملؤها بطريقته. والتقسيم حسب الطبقة التقنية لا يُنتج شيئًا قابلًا للاستخدام وحده."
+      }
+    },
+    {
+      "id": "m6-3",
+      "level": 2,
+      "lesson": "6.3",
+      "q": {
+        "en": "Hamad reports that total app downloads have doubled since launch and proposes this as the team's headline success measure. What does the lesson suggest?",
+        "ar": "أفاد حمد بأن إجمالي تنزيلات التطبيق تضاعف منذ الإطلاق، واقترح أن يكون هذا مقياس النجاح الرئيسي للفريق. بماذا يوصي الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Accept it, since a doubling of downloads shows the product is creating real value for shops",
+          "Compare downloads before and after the last release, and treat that as the proof",
+          "Ask what the team would do differently if it doubled; pick a rate tied to behaviour",
+          "Track every possible event from now on, so that no useful number is ever missed"
+        ],
+        "ar": [
+          "قبوله، فتضاعف التنزيلات يُثبت أن المنتج يصنع قيمة حقيقية للمتاجر",
+          "مقارنة التنزيلات قبل آخر إصدار وبعده، وعدّ ذلك برهانًا",
+          "السؤال: ماذا سنغيّر لو تضاعف؟ واختيار معدّل مرتبط بالسلوك",
+          "تتبّع كل حدث ممكن من الآن، كي لا يفوتنا أي رقم مفيد"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 6.3 calls total downloads a vanity metric and tests every metric with \"if this doubled, what would we do differently?\"; prefer rates tied to behaviour. The tempting option is accepting the doubling as value: counting what is easy instead of what matters is the lesson's biggest trap. Before-and-after is only a hint, and collecting everything \"just in case\" adds risk without purpose.",
+        "ar": "يعدّ الدرس 6.3 إجمالي التنزيلات مقياسًا للتباهي (vanity metric)، ويختبر كل مقياس بسؤال «لو تضاعف هذا، ماذا سنفعل بشكل مختلف؟»؛ ويفضّل المعدّلات المرتبطة بالسلوك. والخيار المغري هو قبول التضاعف دليلًا على القيمة، وعدّ ما هو سهل بدل ما هو مهم هو أكبر فخ في الدرس. والمقارنة قبل وبعد مجرد تلميح، وجمع كل شيء «احتياطًا» يزيد المخاطر بلا غرض."
+      }
+    },
+    {
+      "id": "m6-4",
+      "level": 3,
+      "lesson": "6.3",
+      "q": {
+        "en": "A new courier home screen was given to couriers who opted in, compared with all couriers last month, and stopped after three days when the chart looked good. Which design would show cause?",
+        "ar": "أُتيحت شاشة رئيسية جديدة للمندوبين الذين اختاروا تجربتها، وقورنوا بكل المندوبين في الشهر الماضي، وأُوقفت التجربة بعد ثلاثة أيام حين بدا الرسم البياني جيدًا. أي تصميم يُظهر السببية؟"
+      },
+      "o": {
+        "en": [
+          "Keep the opt-in group, but let it run for a whole month instead of three days",
+          "Randomly split couriers between the two screens at the same time, for a set period",
+          "Compare this month's opt-in couriers with the couriers who did not opt in last month",
+          "Stop as soon as the difference is clear, so couriers are not kept waiting longer"
+        ],
+        "ar": [
+          "إبقاء مجموعة المتطوعين، مع إطالة التجربة إلى شهر كامل بدل ثلاثة أيام",
+          "تقسيم المندوبين عشوائيًا بين الشاشتين في الوقت نفسه ولمدة محددة",
+          "مقارنة متطوعي هذا الشهر بالمندوبين الذين لم يتطوعوا في الشهر الماضي",
+          "التوقف فور وضوح الفرق، كي لا يطول انتظار المندوبين أكثر"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 6.3 says randomness, with both groups running at the same time, is what lets you say a change caused a difference; fix the duration and decision rule in advance. The tempting option is keeping the opt-in group for longer: a longer test does not remove self-selection, since keen couriers differ from the rest. Comparing different periods and stopping early are the other flaws the lesson names.",
+        "ar": "يقول الدرس 6.3 إن العشوائية، مع تشغيل المجموعتين في الوقت نفسه، هي ما يتيح القول إن التغيير سبّب الفرق؛ وثبّت المدة وقاعدة القرار مسبقًا. والخيار المغري هو إبقاء مجموعة المتطوعين مدة أطول، لكن إطالة الاختبار لا تزيل الانتقاء الذاتي، فالمندوبون المتحمسون يختلفون عن غيرهم. ومقارنة فترات مختلفة والتوقف المبكر عيبان آخران يذكرهما الدرس."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m6-e1",
+      "lesson": "6.2",
+      "text": {
+        "en": "I have written a user story with rules and at least four given-when-then examples: one happy path, two unhappy paths and one checkable quality requirement.",
+        "ar": "كتبتُ قصة مستخدم مع قواعدها وأربعة أمثلة على الأقل بصيغة «بافتراض... عندما... فإن...»: مسار سعيد واحد، ومساران غير سعيدين، ومتطلب جودة واحد قابل للتحقق."
+      }
+    },
+    {
+      "id": "m6-e2",
+      "lesson": "6.3",
+      "text": {
+        "en": "I have written an experiment brief with a hypothesis, a unit of randomisation, a primary metric, two guardrails, a fixed duration and a decision rule with a size, all set before looking at any data.",
+        "ar": "كتبتُ موجزًا لتجربة فيه فرضية، ووحدة التوزيع العشوائي، ومقياس أساسي، ومقياسان للحماية، ومدة ثابتة، وقاعدة قرار بحجم محدد، وكلها حُددت قبل النظر في أي بيانات."
+      }
+    }
+  ]
+}

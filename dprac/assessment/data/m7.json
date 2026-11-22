@@ -1,0 +1,135 @@
+{
+  "area": "m7",
+  "questions": [
+    {
+      "id": "m7-1",
+      "level": 1,
+      "lesson": "7.1",
+      "q": {
+        "en": "Salma's desk gets \"How do I change my opening hours?\" from shops several times a week. Each time someone types a fresh answer. What does the lesson suggest?",
+        "ar": "يتلقى مكتب سلمى من المتاجر سؤال «كيف أغيّر ساعات العمل؟» عدة مرات أسبوعيًا، وفي كل مرة يكتب أحدهم إجابة جديدة. بماذا يوصي الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Keep answering by hand, since every shop's case is a little bit different anyway",
+          "Write a knowledge article now; tell product if it keeps coming",
+          "Open a phone line, so shops can ask about opening hours more easily than now",
+          "Count the tickets for the monthly report, and change nothing else about it"
+        ],
+        "ar": [
+          "مواصلة الإجابة يدويًا، فحالة كل متجر مختلفة قليلًا على أي حال",
+          "كتابة مقال في قاعدة المعرفة، وإبلاغ فريق المنتج إن تكرر",
+          "فتح خط هاتفي، كي تسأل المتاجر عن ساعات العمل بسهولة أكبر",
+          "عدّ التذاكر للتقرير الشهري، دون تغيير أي شيء آخر"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 7.1's rule is to answer each question well once, write it down and make the next answer faster; a question that arrives several times a week needs an article, and one that keeps arriving needs a product change. The tempting option is opening a phone line: each new channel splits knowledge. Counting tickets without acting on the reason only measures how busy you are.",
+        "ar": "قاعدة الدرس 7.1 أن تجيب عن كل سؤال جيدًا مرة واحدة، وتدوّنه، وتجعل الإجابة التالية أسرع؛ فالسؤال الذي يتكرر عدة مرات أسبوعيًا يحتاج إلى مقال، والذي يستمر في التكرار يحتاج إلى تغيير في المنتج. والخيار المغري هو فتح خط هاتفي، لكن كل قناة جديدة تشتت المعرفة. وعدّ التذاكر دون معالجة سببها يقيس مدى انشغالك فقط."
+      }
+    },
+    {
+      "id": "m7-2",
+      "level": 2,
+      "lesson": "7.2",
+      "q": {
+        "en": "A courier is waiting, so Faisal plans to change the courier's region by hand in the production database, \"just quickly\". What does the lesson say?",
+        "ar": "مندوب ينتظر، فينوي فيصل تغيير منطقة المندوب يدويًا في قاعدة بيانات الإنتاج «بسرعة فقط». ماذا يقول الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Do it by hand now, since a customer is waiting and the change is only small",
+          "Send it to the weekly change board for approval, like every other change",
+          "It is a change: use the data-fix route, with a script, reviewer and ticket",
+          "Ask the courier to reinstall the app first, in case that fixes the region"
+        ],
+        "ar": [
+          "تنفيذه يدويًا الآن، فالعميل ينتظر والتغيير صغير",
+          "إرساله إلى مجلس التغيير الأسبوعي للموافقة، مثل أي تغيير آخر",
+          "هذا تغيير: يمر بمسار إصلاح البيانات بسكربت ومراجِع ورابط تذكرة",
+          "الطلب من المندوب إعادة تثبيت التطبيق أولًا، فربما يُصلح المنطقة"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 7.2's rule is that every change to the live system, including data, goes through a known route that leaves a record. The tempting option is doing it by hand because a customer is waiting, which the lesson names as the biggest trap; Faisal's earlier manual region change caused a three-day problem. A weekly board for routine fixes slows delivery without making it safer.",
+        "ar": "قاعدة الدرس 7.2 أن كل تغيير في النظام الحي، ومنه تغيير البيانات، يمر بمسار معروف يترك سجلًا. والخيار المغري هو التنفيذ اليدوي لأن العميل ينتظر، والدرس يسمّي هذا أكبر فخ؛ وقد سبّب تغيير يدوي سابق للمنطقة قام به فيصل مشكلة استمرت ثلاثة أيام. ومجلس أسبوعي للإصلاحات الروتينية يبطئ التسليم دون أن يزيده أمانًا."
+      }
+    },
+    {
+      "id": "m7-3",
+      "level": 2,
+      "lesson": "7.2",
+      "q": {
+        "en": "Two tickets arrive together: a large merchant phones angrily about one late invoice, and no courier in the north zone has had an offer for 20 minutes. Which comes first?",
+        "ar": "وصلت تذكرتان معًا: تاجر كبير يتصل غاضبًا بسبب فاتورة واحدة متأخرة، ولم يتلقَّ أي مندوب في المنطقة الشمالية عرضًا منذ 20 دقيقة. أيّهما يأتي أولًا؟"
+      },
+      "o": {
+        "en": [
+          "The north-zone outage, because its impact and urgency are both higher",
+          "The large merchant, because they are the loudest and they pay the most",
+          "Both at equal priority, handled strictly in the order that they arrived",
+          "Neither yet: both go to the backlog as ideas for the next planning"
+        ],
+        "ar": [
+          "انقطاع المنطقة الشمالية أولًا، لأن أثره وإلحاحه كليهما أعلى بكثير",
+          "التاجر الكبير، لأنه الأعلى صوتًا والأكثر دفعًا من غيره",
+          "الاثنتان بأولوية متساوية، وتُعالجان حسب ترتيب الوصول",
+          "لا هذه ولا تلك الآن: تذهبان إلى قائمة الأعمال فكرتين"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 7.2 sets priority from impact (how many are affected, how badly) and urgency (how fast harm grows), not from who shouts loudest. A zone with no offers is an incident hitting many shops and couriers now; one late invoice is a request. The tempting option is the large merchant: the lesson warns that a loud customer is not high impact by definition.",
+        "ar": "يحدد الدرس 7.2 الأولوية من الأثر (كم شخصًا تأثر وبأي درجة) والإلحاح (ما سرعة تزايد الضرر)، لا ممن يرفع صوته أكثر. ومنطقة بلا عروض حادثة تصيب كثيرًا من المتاجر والمندوبين الآن، أما فاتورة متأخرة واحدة فطلب. والخيار المغري هو التاجر الكبير، لكن الدرس يحذّر من أن العميل الأعلى صوتًا ليس بالضرورة الأعلى أثرًا."
+      }
+    },
+    {
+      "id": "m7-4",
+      "level": 3,
+      "lesson": "7.3",
+      "q": {
+        "en": "A pharmacy chain asks Qafila to sign an agreement promising 99.99% uptime. Qafila's internal target for order tracking is 99.9% monthly. What fits the lesson?",
+        "ar": "طلبت سلسلة صيدليات من قافلة توقيع اتفاق يَعِد بتوافر 99.99%. وهدف قافلة الداخلي لتتبّع الطلبات 99.9% شهريًا. ما الذي يتفق مع الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Agree to 99.99%, since it reassures the customer and helps to win the contract",
+          "Promise exactly 99.9%, to match the internal target and keep the promise honest",
+          "Promise 99.99%, but exclude all incidents that are caused by Qafila's suppliers",
+          "Offer a defined, measured level below 99.9%, and send the draft terms to legal review"
+        ],
+        "ar": [
+          "الموافقة على 99.99%، فهذا يطمئن العميل ويساعد على كسب العقد",
+          "الوعد بـ99.9% بالضبط، لمطابقة الهدف الداخلي وإبقاء الوعد صادقًا",
+          "الوعد بـ99.99%، مع استثناء كل الحوادث التي يسببها مورّدو قافلة",
+          "عرض مستوى محدد ومقيس أقل من 99.9%، وإرسال الشروط للمراجعة القانونية"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 7.3's rule is to promise in writing only what you measure, can usually beat and can explain: the agreement must be looser than the internal target, and legal and finance review the terms. The tempting option is matching 99.9% exactly: if the agreement equals the target, any bad month becomes a breach. 99.99% is the salesperson trap the lesson describes.",
+        "ar": "قاعدة الدرس 7.3 ألا تَعِد كتابةً إلا بما تقيسه، وتتجاوزه عادةً، وتستطيع شرحه؛ فيجب أن يكون الاتفاق (SLA) أقل صرامة من الهدف الداخلي (SLO)، وتراجع الشؤون القانونية والمالية الشروط. والخيار المغري هو مطابقة 99.9% بالضبط، لكن إن تساوى الاتفاق مع الهدف صار أي شهر سيئ إخلالًا. أما 99.99% فهو فخ مندوب المبيعات الذي يصفه الدرس."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m7-e1",
+      "lesson": "7.1",
+      "text": {
+        "en": "I have written a knowledge article for a question I have answered more than once, with numbered one-action steps, a when-to-escalate line, an owner and a status, and someone else followed it without asking me anything.",
+        "ar": "كتبتُ مقالًا في قاعدة المعرفة لسؤال أجبتُ عنه أكثر من مرة، بخطوات مرقّمة في كل منها إجراء واحد، وسطر يوضح متى يُصعَّد الأمر، ومالك وحالة، واتّبعه شخص آخر دون أن يسألني شيئًا."
+      }
+    },
+    {
+      "id": "m7-e2",
+      "lesson": "7.3",
+      "text": {
+        "en": "I have written a customer message kit for an incident: a first message with the problem in customers' words, who is affected, what to do now and the next update time, one update, and a closing note.",
+        "ar": "كتبتُ مجموعة رسائل للعملاء في حادثة: رسالة أولى تصف المشكلة بكلمات العملاء، ومن تأثر، وما يفعلونه الآن، وموعد التحديث التالي، ثم تحديثًا واحدًا، ورسالة ختامية."
+      }
+    }
+  ]
+}
