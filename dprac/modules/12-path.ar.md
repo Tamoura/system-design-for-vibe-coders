@@ -70,7 +70,7 @@
 
 ### 🟡 التعمق أكثر (Going deeper)
 
-**معايير التقنية في صورة رادار.** تنشر شركات كثيرة معايير التقنية لديها في صورة **رادار التقنية (technology radar)**: حلقات تبيّن مقدار ثقة الشركة بكل تقنية. وقد نشرت هذا الشكلَ شركةُ الاستشارات Thoughtworks، ويُنقل أن رادارها يستعمل أربع حلقات (adopt وtrial وassess وhold)، وأنها تشجّع الشركات على بناء رادارها الخاص. وبكلمات بسيطة:
+**معايير التقنية في صورة رادار.** تنشر شركات كثيرة معايير التقنية لديها في صورة **رادار التقنية (technology radar)**: حلقات تبيّن مقدار ثقة الشركة بكل تقنية. وقد نشرت هذا الشكلَ شركةُ الاستشارات Thoughtworks، ورادارها يستعمل أربع حلقات (adopt وtrial وassess وhold)، وأنها تشجّع الشركات على بناء رادارها الخاص. وبكلمات بسيطة:
 
 | الحلقة (كلمة Thoughtworks) | المعنى البسيط للفريق |
 |---|---|
@@ -265,7 +265,7 @@
 </details>
 
 ## 📚 المراجع (References)
-تعذّر فتح صفحات Thoughtworks من هذه البيئة؛ وأسماء الحلقات كما نقلتها ملخصات البحث (نوفمبر 2026)، والروابط لم يُتحقق منها.
+فُتحت صفحتا Thoughtworks في 22 نوفمبر 2026.
 - Thoughtworks، «Technology Radar FAQ» (الحلقات الأربع): https://www.thoughtworks.com/radar/faq
 - Thoughtworks، «Build your own Technology Radar»: https://www.thoughtworks.com/insights/blog/build-your-own-technology-radar
 - من المكتبة: [*إدارة تقنية المعلومات كعمل تجاري*، الدرس 3.1 — من الاستراتيجية إلى محفظة استثمار](../itbiz/index.ar.html#/3.1)
@@ -310,7 +310,7 @@
 |---|---|---|
 | تقرير DORA لعام 2024 (برنامج أبحاث Google Cloud في تسليم البرمجيات) | ارتبطت زيادة اعتماد الذكاء الاصطناعي بنسبة 25% بمكاسب مثل زيادة سرعة مراجعة الشيفرة بنسبة 3.1%؛ ومع زيادة الاعتماد انخفض معدل إنجاز التسليم (throughput) بنحو 1.5% حسب التقدير، واستقرار التسليم بنحو 7.2% حسب التقدير | بيانات استبيان؛ ارتباطات، لا دليل على السببية |
 | تقرير DORA لعام 2025 عن تطوير البرمجيات بمساعدة الذكاء الاصطناعي | أفاد 90% من المشاركين في الاستبيان بأنهم يستعملون الذكاء الاصطناعي في العمل؛ «الذكاء الاصطناعي لا يُصلح الفريق؛ إنه يضخّم ما هو موجود فيه أصلًا» | قرابة 5,000 من محترفي التقنية؛ إفادات ذاتية |
-| دراسة METR، يوليو 2025 | في تجربة عشوائية، استغرق 16 مطورًا خبيرًا في المشاريع مفتوحة المصدر وقتًا أطول بنحو 19% في المهام التي سُمح فيها بأدوات الذكاء الاصطناعي، مع اعتقادهم أنهم كانوا أسرع (بحسب ما نُقل) | مطورون خبراء في مشاريع يعرفونها جيدًا؛ ويحذّر المؤلفون من التعميم |
+| دراسة METR، يوليو 2025 | في تجربة عشوائية، استغرق 16 مطورًا خبيرًا في المشاريع مفتوحة المصدر وقتًا أطول بنحو 19% في المهام التي سُمح فيها بأدوات الذكاء الاصطناعي، مع اعتقادهم أنهم كانوا أسرع | مطورون خبراء في مشاريع يعرفونها جيدًا؛ ويحذّر المؤلفون من التعميم، وفي فبراير 2026 وصفت METR هذه النتائج بأنها قديمة، وقالت إن أدوات مطلع 2026 سرّعت المطورين على الأرجح أكثر، لكن بياناتها الجديدة دليل ضعيف |
 
 القراءة المنصفة: المكاسب ليست تلقائية، وتعتمد على الأساسيات التي علّمتها هذه الدورة: تغييرات صغيرة، واختبارات جيدة، ومراجعة، وتغذية راجعة سريعة.
 
@@ -515,10 +515,11 @@
 </details>
 
 ## 📚 المراجع (References)
-فُتحت صفحتا Google Cloud في 22 نوفمبر 2026؛ وتعذّر فتح المصادر الأخرى من هذه البيئة، وهي كما نقلتها ملخصات البحث (نوفمبر 2026).
+فُتحت كل المصادر أدناه في 22 نوفمبر 2026.
 - مدونة Google Cloud، «Announcing the 2024 DORA report»، 22 أكتوبر 2024: https://cloud.google.com/blog/products/devops-sre/announcing-the-2024-dora-report
 - مدونة Google Cloud، «Announcing the 2025 DORA report»، 23 سبتمبر 2025: https://cloud.google.com/blog/products/ai-machine-learning/announcing-the-2025-dora-report
 - METR، «Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity»، 10 يوليو 2025: https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/ (الورقة: https://arxiv.org/abs/2507.09089)
+- METR، «We are Changing our Developer Productivity Experiment Design»، 24 فبراير 2026: https://metr.org/blog/2026-02-24-uplift-update/
 - OWASP GenAI Security Project، Top 10 for LLM Applications 2025: https://genai.owasp.org/
 - NIST، AI RMF 1.0 ‏(NIST AI 100-1)، يناير 2023 (كما تستشهد به دورة *حوكمة الذكاء الاصطناعي* في المكتبة): https://doi.org/10.6028/NIST.AI.100-1
 - من المكتبة: [*أمن الذكاء الاصطناعي وأمن التطبيقات: من الصفر إلى الاحتراف*، الدرس 6.3 — تأمين الشيفرة المولَّدة بالذكاء الاصطناعي: ما الذي يخطئ فيه وكلاء البرمجة](../secai/index.ar.html#/6.3)
@@ -569,7 +570,7 @@
 | **SAFe®** | Scaled Agile, Inc. | إطار لإدارة تسليم Lean وAgile عبر فرق كثيرة ومحفظة |
 | **PMBOK® Guide** | Project Management Institute ‏(PMI)؛ ونُقل أن طبعة ثامنة صدرت في 2025 | مبادئ إدارة المشاريع وممارساتها |
 | **BABOK® Guide** | International Institute of Business Analysis ‏(IIBA)؛ ونُقل أن الإصدار 3 صدر في 2015 | مجموعة معارف لتحليل الأعمال |
-| **SWEBOK Guide** | IEEE Computer Society؛ ونُقل أن الإصدار 4.0 صدر في 2024، مجانًا للاستعمال الشخصي والأكاديمي | مجموعة معارف لهندسة البرمجيات |
+| **SWEBOK Guide** | IEEE Computer Society؛ والإصدار 4.0 صدر في 2024، ويُنزَّل مجانًا للاستعمال الفردي غير التجاري | مجموعة معارف لهندسة البرمجيات |
 | **FinOps Framework** | FinOps Foundation (جزء من Linux Foundation) | ممارسات لإدارة الإنفاق على السحابة وعلى التقنية عمومًا |
 | **The Open Group IT4IT™ Standard** | The Open Group | نموذج للبيانات والأدوات التي تحتاجها إدارة تقنية المعلومات لتدير عملها من أوله إلى آخره |
 | **VeriSM™** | IFDC ‏(International Foundation for Digital Competences) | نهج لإدارة الخدمات في المؤسسات الرقمية |
@@ -783,7 +784,7 @@
 </details>
 
 ## 📚 المراجع (References)
-تعذّر فتح مواقع المالكين من هذه البيئة. وفُتحت صفحات The Scrum Guide وTOGAF وFinOps وIT4IT لدورة *إدارة تقنية المعلومات كعمل تجاري* في 20 نوفمبر 2026؛ أما الروابط الأخرى فلم يُتحقق منها، والمالكون والإصدارات والتواريخ كما نقلتها ملخصات البحث (نوفمبر 2026).
+فُتحت صفحات المالكين في 22 نوفمبر 2026، عدا صفحتي PMI وPeopleCert اللتين رفضتا الوصول الآلي؛ وفيهما، وفي تاريخ BABOK Guide v3 الذي لا تذكره صفحة IIBA، المالكون والإصدارات والتواريخ كما نقلتها ملخصات البحث (نوفمبر 2026).
 - Schwaber، K. وSutherland، J.، *The Scrum Guide* ‏(2020)، CC BY-SA 4.0: https://scrumguides.org/scrum-guide.html
 - PeopleCert، ITIL: https://www.peoplecert.org/ITIL-4
 - ISACA، COBIT: https://www.isaca.org/cobit
@@ -792,9 +793,9 @@
 - Project Management Institute، *PMBOK® Guide*: https://www.pmi.org/standards/pmbok
 - IIBA، *BABOK® Guide* v3: https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/
 - IEEE Computer Society، *SWEBOK Guide* V4.0: https://www.computer.org/education/bodies-of-knowledge/software-engineering
-- FinOps Foundation، «What is FinOps?»: https://www.finops.org/introduction/what-is-finops/
+- FinOps Foundation، «What is FinOps?»: https://www.finops.org/introduction/what-is-finops/ و«About» (مشروع تابع لـLinux Foundation): https://www.finops.org/about/
 - The Open Group، IT4IT™: https://www.opengroup.org/about-it4it%E2%84%A2
 - IFDC، «About VeriSM»: https://verism.global/about/
-- الصفحة الرئيسية لـThe Open Group، ناشرة Digital Practitioner Body of Knowledge™ Standard (لم يمكن التأكد من صفحة مخصصة للمعيار): https://www.opengroup.org/
+- The Open Group، ناشرة Digital Practitioner Body of Knowledge™ Standard: https://www.opengroup.org/dpbok
 - من المكتبة: [*إدارة تقنية المعلومات كعمل تجاري*، الدرس 12.1 — مشهد الأطر: فيمَ يُستخدم كل منها، وكيف تستخدمها دون أن تصبح تابعًا لها](../itbiz/index.ar.html#/12.1)
 - من المكتبة: [*من التخرّج إلى التوظيف*، الدرس 6.3 — النموّ من المستوى المبتدئ إلى المتوسط: الملاحظات، وامتلاك المسؤولية، والتعلّم المستمر](../career/index.ar.html#/6.3)
