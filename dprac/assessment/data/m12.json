@@ -1,0 +1,135 @@
+{
+  "area": "m12",
+  "questions": [
+    {
+      "id": "m12-1",
+      "level": 1,
+      "lesson": "12.1",
+      "q": {
+        "en": "A team wants to build its own text-message service for late-courier alerts. On Qafila's capability map, \"Notify a merchant\" already has two applications. What does the lesson expect first?",
+        "ar": "يريد أحد الفرق بناء خدمة رسائل نصية خاصة به لتنبيهات تأخر المندوبين. وفي خريطة القدرات (capability map) لدى قافلة، لقدرة «إبلاغ التاجر» تطبيقان قائمان. ما الذي يتوقعه الدرس أولًا؟"
+      },
+      "o": {
+        "en": [
+          "Building it, since the team's own service will be quicker for it to change",
+          "Registering a new capability called \"the SMS service\" for the new system",
+          "A fit check, since a third application for that capability needs a reason",
+          "Building it outside the architecture process, then reporting it afterwards"
+        ],
+        "ar": [
+          "بناؤها، فخدمة الفريق الخاصة ستكون أسرع في التغيير بالنسبة إليه",
+          "تسجيل قدرة جديدة باسم «خدمة الرسائل النصية» للنظام الجديد",
+          "فحص ملاءمة أولًا، فالتطبيق الثالث لهذه القدرة يحتاج إلى سبب واضح",
+          "بناؤها خارج مسار البنية المؤسسية، ثم الإبلاغ عنها لاحقًا"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 12.1's rule is to check the map before you build; its decision cue says that if a capability already has two applications, a third needs a reason, which a fit check gives. The tempting option is building for speed of change: a duplicate service adds cost and risk for years. Capabilities are named without systems, and going around architecture repeats the duplication.",
+        "ar": "قاعدة الدرس 12.1: راجع الخريطة قبل أن تبني؛ وإشارة القرار فيه أن القدرة التي لها تطبيقان يحتاج تطبيقها الثالث إلى سبب، وفحص الملاءمة يقدّم هذا السبب. والخيار المغري هو البناء من أجل سرعة التغيير، لكن الخدمة المكررة تضيف تكلفة ومخاطر لسنوات. والقدرات تُسمّى دون ذكر الأنظمة، والالتفاف على البنية المؤسسية يكرر الازدواجية نفسها."
+      }
+    },
+    {
+      "id": "m12-2",
+      "level": 2,
+      "lesson": "12.2",
+      "q": {
+        "en": "The rule says courier fees are rounded to three decimal places. An AI assistant wrote a function that rounds to two, and a test asserting what that function returns. Yasmin sees both pass. What now?",
+        "ar": "تقول القاعدة إن رسوم المندوبين تُقرَّب إلى ثلاث خانات عشرية. كتب مساعد ذكاء اصطناعي دالة تقرّب إلى خانتين، واختبارًا يؤكد ما تُرجعه تلك الدالة. ورأت ياسمين أن الاثنين ينجحان. ماذا تفعل الآن؟"
+      },
+      "o": {
+        "en": [
+          "Write expected results from the rule, not from what the code returns",
+          "Trust the result, since the AI's code and its test fully agree with each other",
+          "Ask the AI to write more tests from the same code, to raise the coverage",
+          "Ban AI tools in the team, so that a mistake like this cannot happen again"
+        ],
+        "ar": [
+          "النتائج المتوقعة تُكتب من القاعدة، لا مما تُرجعه الشيفرة",
+          "الوثوق بالنتيجة، فشيفرة الذكاء الاصطناعي واختباره متفقان تمامًا",
+          "الطلب من الذكاء الاصطناعي اختبارات أكثر من الشيفرة نفسها لرفع التغطية",
+          "حظر أدوات الذكاء الاصطناعي في الفريق، كي لا يتكرر خطأ كهذا"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 12.2 warns against letting the AI write both code and tests unchecked: they share one misunderstanding, so check expected results against the requirement. The tempting option is trusting the agreement between code and test, which is exactly how the rounding error passed. More tests from the same code repeat it, and outright bans push people to personal accounts.",
+        "ar": "يحذّر الدرس 12.2 من ترك الذكاء الاصطناعي يكتب الشيفرة والاختبارات معًا دون تحقق، فهما يشتركان في سوء الفهم نفسه؛ فتحقّق من النتائج المتوقعة مقابل المتطلب. والخيار المغري هو الثقة باتفاق الشيفرة والاختبار، وهكذا بالضبط مرّ خطأ التقريب. والاختبارات الإضافية من الشيفرة نفسها تكرره، والحظر التام يدفع الناس إلى حساباتهم الشخصية."
+      }
+    },
+    {
+      "id": "m12-3",
+      "level": 2,
+      "lesson": "12.2",
+      "q": {
+        "en": "Salma wants to paste a list of shop customers' phone numbers into a chatbot the team has not approved, to draft apology messages faster. What does the paste check say?",
+        "ar": "تريد سلمى لصق قائمة بأرقام هواتف عملاء المتاجر في روبوت محادثة لم يعتمده الفريق، لتصوغ رسائل اعتذار أسرع. ماذا يقول فحص اللصق؟"
+      },
+      "o": {
+        "en": [
+          "Paste it, since the drafted messages will all be checked before any of them are sent",
+          "Check the data's level, and use only a tool approved for it, or remove the numbers",
+          "Paste it, then delete the chat history afterwards, so the data no longer exists",
+          "Use a personal account instead, since the team's approved tools are much slower"
+        ],
+        "ar": [
+          "اللصق، فالرسائل المصوغة ستُراجع قبل إرسال أي منها",
+          "معرفة مستوى البيانات واستخدام أداة معتمدة له، أو حذف الأرقام",
+          "اللصق، ثم حذف سجل المحادثة بعد ذلك، فلا تبقى البيانات",
+          "استخدام حساب شخصي بدلًا من ذلك، فالأدوات المعتمدة أبطأ بكثير"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 12.2's decision cue: before pasting, ask what data this is and whether this tool is approved for it; data sent to an unapproved tool cannot be recalled. The tempting option is relying on checking the output, but here the risk is the data pasted in, not the draft that comes out. Deleting the chat afterwards does not recall the data, and personal accounts are what bans push people towards.",
+        "ar": "إشارة القرار في الدرس 12.2: قبل اللصق، اسأل ما هذه البيانات، وهل هذه الأداة معتمدة لها؛ فالبيانات المرسلة إلى أداة غير معتمدة لا يمكن استرجاعها. والخيار المغري هو الاعتماد على مراجعة المخرجات، لكن الخطر هنا في البيانات الملصوقة لا في المسودة الناتجة. وحذف المحادثة لاحقًا لا يسترجع البيانات، والحسابات الشخصية هي ما يدفع إليه الحظر."
+      }
+    },
+    {
+      "id": "m12-4",
+      "level": 3,
+      "lesson": "12.3",
+      "q": {
+        "en": "Yasmin's home practice is operations. A certification she is considering is costly to renew, and the adverts for roles she wants rarely mention it. What fits the lesson's certification check?",
+        "ar": "الممارسة الأساسية لياسمين هي التشغيل. وهي تفكر في شهادة مكلفة التجديد، ونادرًا ما تذكرها إعلانات الوظائف التي تريدها. ما الذي يتفق مع فحص الشهادات في الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Take it now, since every certificate counts as evidence of real practice",
+          "Drop all frameworks, since this course replaces them for her entire career",
+          "Copy the framework's diagrams into her playbook, so she learns it faster",
+          "Skip or delay it, and put the time into visible evidence from her own practice"
+        ],
+        "ar": [
+          "تأخذها الآن، فكل شهادة تُعدّ دليلًا على ممارسة حقيقية في العمل",
+          "تتخلى عن كل الأطر، فهذه الدورة تغني عنها طوال مسيرتها",
+          "تنسخ مخططات الإطار في دليلها، كي تتعلمه أسرع",
+          "تتخطاها أو تؤجلها، وتضع وقتها في أدلة ظاهرة من ممارستها"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 12.3 says to take a certification when a role or contract you want asks for it, or for structured study, never instead of practice; with the adverts silent and renewal costly, her time is better spent on evidence. The tempting option treats every certificate as evidence: collecting certificates instead of artefacts is the lesson's biggest trap. Framework text and diagrams are owned, so copying them is a trap too.",
+        "ar": "يقول الدرس 12.3: خذ الشهادة حين يطلبها دور أو عقد تريده، أو من أجل دراسة منظمة، ولا تجعلها بديلًا عن الممارسة؛ ومع صمت الإعلانات وكلفة التجديد، يكون وقتها أنفع في بناء الأدلة. والخيار المغري يعدّ كل شهادة دليلًا، وجمع الشهادات بدل المخرجات هو أكبر فخ في الدرس. ونصوص الأطر ومخططاتها مملوكة، فنسخها فخ أيضًا."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m12-e1",
+      "lesson": "12.2",
+      "text": {
+        "en": "I have written a one-page AI use card that names tool categories by data level, a never-paste list, a minimum check for each risk box, who owns each output that leaves my hands, and a review date.",
+        "ar": "كتبتُ بطاقة استخدام للذكاء الاصطناعي من صفحة واحدة تسمّي فئات الأدوات حسب مستوى البيانات، وقائمة بما لا يُلصق أبدًا، وحدًّا أدنى من التحقق لكل مربع مخاطر، ومن يملك كل مُخرَج يخرج من يدي، وتاريخ مراجعة."
+      }
+    },
+    {
+      "id": "m12-e2",
+      "lesson": "12.3",
+      "text": {
+        "en": "I have written a twelve-month learning plan with a home practice, an adjacent practice, one piece of evidence per quarter that someone else could see, a certification decision (including \"none\"), three limits and review dates in my calendar.",
+        "ar": "كتبتُ خطة تعلّم لاثني عشر شهرًا فيها ممارسة أساسية، وممارسة مجاورة، ودليل واحد كل ربع سنة يستطيع غيري رؤيته، وقرار بشأن الشهادات (ولو كان «لا شيء»)، وثلاثة حدود، وتواريخ مراجعة في تقويمي."
+      }
+    }
+  ]
+}

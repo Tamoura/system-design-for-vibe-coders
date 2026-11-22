@@ -1,0 +1,135 @@
+{
+  "area": "m8",
+  "questions": [
+    {
+      "id": "m8-1",
+      "level": 1,
+      "lesson": "8.1",
+      "q": {
+        "en": "At Scale-up, Qafila considers reorganising into an app team, a back-end team and a database team. What does the lesson recommend instead?",
+        "ar": "في مرحلة التوسّع، تفكّر قافلة في إعادة تنظيم نفسها في فريق للتطبيقات، وفريق للخوادم، وفريق لقواعد البيانات. بماذا يوصي الدرس بدلًا من ذلك؟"
+      },
+      "o": {
+        "en": [
+          "Teams split by layer, so each one masters a single technology",
+          "Every team owning every part, so that nobody is ever blocked",
+          "Teams that each own a user journey or product part end to end",
+          "One large team of 120 people, with more managers to lead it"
+        ],
+        "ar": [
+          "فرق مقسّمة حسب الطبقة التقنية، فيتقن كلٌّ منها تقنية واحدة بعمق",
+          "كل فريق يملك كل أجزاء المنتج معًا، كي لا يتعطل أي فريق أبدًا",
+          "فرق يملك كلٌّ منها رحلة أو جزءًا من المنتج كاملًا",
+          "فريق واحد كبير من 120 شخصًا، مع مزيد من المديرين لقيادته"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "Lesson 8.1's rule is to draw boundaries around the flow of change, not around the technology; splitting by layer is its biggest trap, because every user-facing change becomes a relay race between teams. The tempting option is the layer split, since it sounds like expertise. \"Everyone owns it\" means nobody does, and one huge team splits informally and slows down.",
+        "ar": "قاعدة الدرس 8.1 أن ترسم الحدود حول تدفّق التغيير لا حول التقنية؛ والتقسيم حسب الطبقة أكبر فخ فيه، لأن كل تغيير يراه المستخدم يصبح سباق تتابع بين الفرق. والخيار المغري هو التقسيم حسب الطبقة لأنه يبدو تخصصًا. و«الكل يملكه» تعني ألا أحد يملكه، والفريق الضخم الواحد ينقسم بشكل غير رسمي ويتباطأ."
+      }
+    },
+    {
+      "id": "m8-2",
+      "level": 2,
+      "lesson": "8.2",
+      "q": {
+        "en": "The Courier Earnings team wants to rename a field in its earnings API, which several other teams call. What does the lesson advise?",
+        "ar": "يريد فريق أرباح المندوبين إعادة تسمية حقل في واجهة API الخاصة بالأرباح، وهي واجهة تستدعيها عدة فرق أخرى. بماذا ينصح الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Rename it now, since adapting to the change is the calling teams' own problem",
+          "Add the new name, announce it, wait for callers to move, then remove the old",
+          "Rename it quietly, and fix the callers when their bug reports come in",
+          "Freeze the API for good, so that no other team is ever affected by it"
+        ],
+        "ar": [
+          "إعادة التسمية الآن، فالتكيّف مع التغيير مشكلة الفرق المستدعية",
+          "إضافة الاسم الجديد وإعلانه، وانتظار انتقال المستدعين، ثم حذف القديم",
+          "إعادة التسمية بهدوء، وإصلاح المستدعين حين تصل بلاغات الأعطال",
+          "تجميد الواجهة نهائيًا، كي لا تتأثر أي فرقة أخرى بها أبدًا"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 8.2 treats interfaces other teams use as contracts: expand, announce, wait, then contract, with contract tests. The tempting option is renaming now and calling the breakage \"their problem\", which the lesson names as the biggest trap. Silent changes break callers you do not know about; freezing the API forever avoids the problem by blocking all improvement.",
+        "ar": "يعامل الدرس 8.2 الواجهات التي تستخدمها فرق أخرى معاملة العقود: وسّع، وأعلن، وانتظر، ثم قلّص، مع اختبارات العقد. والخيار المغري هو إعادة التسمية الآن ووصف الأعطال بأنها «مشكلتهم»، والدرس يسمّي هذا أكبر فخ. والتغييرات الصامتة تكسر مستدعين لا تعرفهم، وتجميد الواجهة إلى الأبد يتجنب المشكلة بمنع كل تحسين."
+      }
+    },
+    {
+      "id": "m8-3",
+      "level": 2,
+      "lesson": "8.3",
+      "q": {
+        "en": "Qafila's Platform team spent six months on a large deployment portal that no product team asked for, and now wants to make it mandatory. What does the lesson suggest?",
+        "ar": "قضى فريق المنصة في قافلة ستة أشهر في بناء بوابة نشر كبيرة لم يطلبها أي فريق منتج، ويريد الآن جعلها إلزامية. بماذا يوصي الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Make the portal mandatory, so that adoption reaches all teams by next quarter",
+          "Rank engineers by their deploy counts, to prove the portal makes them faster",
+          "Route every deployment through tickets, so the Platform team keeps control",
+          "Start from what several teams already do by hand, and make the right way the easy way"
+        ],
+        "ar": [
+          "جعل البوابة إلزامية، كي يصل استخدامها إلى كل الفرق في الربع القادم مباشرة",
+          "ترتيب المهندسين حسب عدد مرات النشر، لإثبات أن البوابة تسرّعهم",
+          "تمرير كل نشر عبر التذاكر، كي يبقى فريق المنصة مسيطرًا",
+          "البدء مما تفعله عدة فرق يدويًا الآن، وجعل الطريقة الصحيحة هي الأسهل"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 8.3's rule is to run the platform as a product and make the right way the easy way; building a platform nobody asked for, then forcing it on teams, is its biggest trap. The tempting option is a mandate: the lesson mandates only a few guardrails and makes the rest attractive. Ranking individuals and taking tickets are both traps the lesson lists.",
+        "ar": "قاعدة الدرس 8.3 أن تدير المنصة كمنتج، وأن تجعل الطريقة الصحيحة هي الأسهل؛ وبناء منصة لم يطلبها أحد ثم فرضها على الفرق أكبر فخ فيه. والخيار المغري هو الإلزام، لكن الدرس لا يُلزم إلا ببضعة ضوابط وقائية، ويجعل الباقي جذابًا. وترتيب الأفراد وتلقي التذاكر كلاهما من الفخاخ التي يذكرها الدرس."
+      }
+    },
+    {
+      "id": "m8-4",
+      "level": 3,
+      "lesson": "8.2",
+      "q": {
+        "en": "Every two weeks, the Merchant Orders team waits several days for Platform to create a test database through a ticket. Both teams say this is just how things work. What is the lesson's next step?",
+        "ar": "كل أسبوعين ينتظر فريق طلبات التجار عدة أيام حتى ينشئ فريق المنصة قاعدة بيانات اختبار عبر تذكرة. ويقول الفريقان إن هذه هي طبيعة العمل. ما الخطوة التالية في الدرس؟"
+      },
+      "o": {
+        "en": [
+          "Make test databases self-service, so Merchant Orders can create its own",
+          "Add it to the weekly cross-team meeting, with named owners and target dates",
+          "Accept it as normal, since repeat waits come with having many teams",
+          "Merge the two teams, so that the dependency is no longer visible"
+        ],
+        "ar": [
+          "جعل قواعد الاختبار خدمة ذاتية، فينشئ فريق طلبات التجار قاعدته بنفسه",
+          "إضافتها إلى الاجتماع الأسبوعي بين الفرق، مع مالكين مسمَّين ومواعيد مستهدفة",
+          "قبولها أمرًا عاديًا، فالانتظار المتكرر يصاحب كثرة الفرق",
+          "دمج الفريقين، كي لا تعود الاعتمادية ظاهرة للعيان"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 8.2's ladder is: remove, make self-service, put behind a contract, and only then coordinate. A repeat wait for a routine resource is a self-service candidate. The tempting option is the weekly meeting with dates, which manages the dependency instead of removing it. Treating repeat dependencies as normal is a listed trap; merging teams hides the problem without fixing the wait.",
+        "ar": "سُلّم الدرس 8.2 هو: أزِل، ثم اجعلها خدمة ذاتية، ثم ضعها خلف عقد، وبعد ذلك فقط نسّق. والانتظار المتكرر لمورد روتيني مرشح للخدمة الذاتية. والخيار المغري هو الاجتماع الأسبوعي بالمواعيد، وهو يدير الاعتمادية بدل إزالتها. وعدّ الاعتماديات المتكررة أمرًا عاديًا فخٌ يذكره الدرس، ودمج الفريقين يخفي المشكلة دون إصلاح الانتظار."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m8-e1",
+      "lesson": "8.1",
+      "text": {
+        "en": "I have written a team page for one team that lists everything it owns, what others can do themselves, where to ask for the rest, at least one promise, and an honest load check that ends in \"load is fine because…\" or one concrete change.",
+        "ar": "كتبتُ صفحة فريق لفريق واحد تسرد كل ما يملكه، وما يستطيع الآخرون فعله بأنفسهم، وأين يطلبون الباقي، ووعدًا واحدًا على الأقل، وفحصًا صادقًا للحِمل ينتهي بعبارة «الحِمل مناسب لأن...» أو بتغيير واحد محدد."
+      }
+    },
+    {
+      "id": "m8-e2",
+      "lesson": "8.2",
+      "text": {
+        "en": "I have built a dependency register for a feature that crosses teams, applied the ladder (remove, self-service, contract, coordinate) to every row, and sliced the work so the first useful slice needs no more than two or three teams.",
+        "ar": "أعددتُ سجل اعتماديات لميزة تعبر عدة فرق، وطبّقتُ السُّلّم (الإزالة، الخدمة الذاتية، العقد، التنسيق) على كل صف، وقسّمتُ العمل بحيث لا تحتاج الشريحة المفيدة الأولى إلى أكثر من فريقين أو ثلاثة."
+      }
+    }
+  ]
+}

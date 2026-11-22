@@ -1,0 +1,135 @@
+{
+  "area": "m4",
+  "questions": [
+    {
+      "id": "m4-1",
+      "level": 1,
+      "lesson": "4.1",
+      "q": {
+        "en": "A teammate's pull request only changes a version number, but the plan reads: -/+ database \"orders\" (forces replacement). What should the reviewer do?",
+        "ar": "طلب الدمج الذي قدّمه زميل لا يغيّر إلا رقم إصدار، لكن الخطة تقول: -/+ database \"orders\" (forces replacement). ماذا يفعل المراجِع؟"
+      },
+      "o": {
+        "en": [
+          "Approve it, because the code diff only changes a single version number",
+          "Stop and ask, since a replacement can mean deleted and then recreated empty",
+          "Apply it, because the data can be rebuilt from the infrastructure files",
+          "Apply it late at night, when fewer shops are placing orders on the app"
+        ],
+        "ar": [
+          "يوافق عليه، فالفرق في الشيفرة لا يغيّر إلا رقم إصدار واحد",
+          "يتوقف ويسأل، فالاستبدال قد يعني حذف القاعدة ثم إنشاءها فارغة تمامًا",
+          "يطبّقه، فالبيانات يمكن إعادة بنائها من ملفات البنية التحتية",
+          "يطبّقه في وقت متأخر من الليل، حين تقل الطلبات من المتاجر"
+        ]
+      },
+      "a": 1,
+      "why": {
+        "en": "Lesson 4.1 says the plan is the safety step: look for replace and destroy on anything that holds data, since \"replaced\" can mean deleted and created empty. The tempting option is approving because the diff looks harmless; the lesson warns against approving the code but not the plan. Infrastructure code rebuilds empty resources; data comes back only from tested backups.",
+        "ar": "يقول الدرس 4.1 إن الخطة (plan) هي خطوة الأمان: ابحث عن الاستبدال والحذف في أي شيء يحمل بيانات، فكلمة «استبدال» قد تعني الحذف والإنشاء من جديد فارغًا. والخيار المغري هو الموافقة لأن الفرق يبدو بريئًا، والدرس يحذّر من الموافقة على الشيفرة دون الخطة. وشيفرة البنية التحتية تعيد بناء موارد فارغة، أما البيانات فلا تعود إلا من نسخ احتياطية مُختبَرة."
+      }
+    },
+    {
+      "id": "m4-2",
+      "level": 2,
+      "lesson": "4.2",
+      "q": {
+        "en": "Every few nights, Qafila's on-call engineer is paged for \"database CPU above 70% for 5 minutes\". Each time, orders and tracking are fine. What should change?",
+        "ar": "كل بضع ليالٍ يُستدعى مهندس المناوبة (on-call) في قافلة بتنبيه «استخدام معالج قاعدة البيانات فوق 70% لمدة 5 دقائق»، وفي كل مرة تكون الطلبات والتتبّع على ما يرام. ما الذي يجب تغييره؟"
+      },
+      "o": {
+        "en": [
+          "Make it a ticket or dashboard; page on a symptom such as failing orders",
+          "Keep it as a page, because high CPU always comes before a full outage later",
+          "Add a second page for memory, so the on-call engineer sees more causes",
+          "Raise the threshold to 90%, and keep it paging the engineer at night"
+        ],
+        "ar": [
+          "تحويله إلى تذكرة أو لوحة، والاستدعاء على عَرَض مثل فشل الطلبات",
+          "إبقاؤه استدعاءً ليليًا، فارتفاع المعالج يسبق دائمًا الانقطاع الكامل للخدمة",
+          "إضافة استدعاء ثانٍ للذاكرة، كي يرى المهندس أسبابًا أكثر",
+          "رفع الحد إلى 90%، مع إبقائه يستدعي المهندس في الليل"
+        ]
+      },
+      "a": 0,
+      "why": {
+        "en": "Lesson 4.2's rule is that every page must point to customer pain and to a first action; CPU is a cause, useful mainly to explain symptoms. The tempting option is raising the threshold: it is still a cause, not something customers feel, so it still wakes people for nothing. Adding a memory page makes the noise worse.",
+        "ar": "قاعدة الدرس 4.2 أن كل استدعاء يجب أن يشير إلى ألم يشعر به العميل وإلى إجراء أول؛ واستخدام المعالج سببٌ يفيد أساسًا في تفسير الأعراض. والخيار المغري هو رفع الحد، لكنه يظل سببًا لا شيئًا يشعر به العملاء، فيوقظ الناس بلا داعٍ. وإضافة استدعاء للذاكرة تزيد الضجيج سوءًا."
+      }
+    },
+    {
+      "id": "m4-3",
+      "level": 2,
+      "lesson": "4.3",
+      "q": {
+        "en": "At 9 a.m. card payments fail for every Qafila merchant. Four engineers are each trying a different fix in the team chat, and nobody is talking to merchants. What comes first?",
+        "ar": "في التاسعة صباحًا فشل الدفع بالبطاقات لكل تجار قافلة. أربعة مهندسين يجرّب كلٌّ منهم إصلاحًا مختلفًا في محادثة الفريق، ولا أحد يتحدث إلى التجار. ما الذي يأتي أولًا؟"
+      },
+      "o": {
+        "en": [
+          "Find the root cause first, so that the fix is right the very first time it is tried",
+          "Wait to tell merchants until the cause is known, so the message is accurate",
+          "Let each engineer keep trying their own fix in parallel, which saves time",
+          "Name an incident lead and a communicator, restore service, keep a timeline"
+        ],
+        "ar": [
+          "إيجاد السبب الجذري أولًا، كي يكون الإصلاح صحيحًا من المحاولة الأولى نفسها",
+          "تأجيل إبلاغ التجار حتى يُعرف السبب، كي تكون الرسالة دقيقة",
+          "ترك كل مهندس يجرّب إصلاحه بالتوازي، فهذا يوفّر الوقت",
+          "تسمية قائد للحادثة ومسؤول تواصل، واستعادة الخدمة، وتدوين خط زمني"
+        ]
+      },
+      "a": 3,
+      "why": {
+        "en": "Lesson 4.3 says: restore service first, find the cause later; name someone to coordinate and someone to communicate, and keep a timeline. The tempting option is finding the root cause first, which keeps merchants without payments while people investigate. Waiting to tell merchants is the \"silence towards customers\" trap; everyone fixing with nobody leading is another.",
+        "ar": "يقول الدرس 4.3: استعد الخدمة أولًا، وابحث عن السبب لاحقًا؛ وسمِّ من ينسّق ومن يتواصل، ودوّن خطًا زمنيًا. والخيار المغري هو إيجاد السبب الجذري أولًا، وهذا يترك التجار بلا دفع في أثناء التحقيق. وتأجيل إبلاغ التجار هو فخ «الصمت تجاه العملاء»، وانشغال الجميع بالإصلاح دون قائد فخ آخر."
+      }
+    },
+    {
+      "id": "m4-4",
+      "level": 3,
+      "lesson": "4.3",
+      "q": {
+        "en": "Order tracking has a 99.9% monthly reliability target. In one 30-day month it is down for 30 minutes, then later for 20 minutes. What follows?",
+        "ar": "هدف الموثوقية لتتبّع الطلبات 99.9% شهريًا. في شهر من 30 يومًا توقف التتبّع 30 دقيقة، ثم 20 دقيقة لاحقًا. ما الذي يترتب على ذلك؟"
+      },
+      "o": {
+        "en": [
+          "Fifty minutes is under a tenth of one percent, so the target is still fully met",
+          "Only the longest outage counts, so about 13 minutes of budget are still left",
+          "About 43 bad minutes were allowed, so the budget is spent and the agreed policy applies",
+          "The target is missed, so the review should name who caused each outage"
+        ],
+        "ar": [
+          "خمسون دقيقة أقل من عُشر الواحد في المئة، فالهدف ما زال متحققًا",
+          "لا يُحسب إلا أطول انقطاع، فما زال في الميزانية نحو 13 دقيقة متاحة للفريق",
+          "المسموح نحو 43 دقيقة سيئة، فالميزانية استُنفدت وتُطبَّق السياسة",
+          "الهدف لم يتحقق، فيجب أن تسمّي المراجعة من تسبّب في كل انقطاع"
+        ]
+      },
+      "a": 2,
+      "why": {
+        "en": "A 30-day month has 43,200 minutes; 0.1% of that is about 43 minutes, the error budget. 30 plus 20 is 50 minutes, so the budget is spent and the policy agreed in advance applies. The tempting option says 50 minutes is under 0.1%: it is not, since 0.1% is only about 43. Naming culprits breaks the blameless review rule: fix the system, not the person.",
+        "ar": "الشهر ذو الثلاثين يومًا فيه 43,200 دقيقة، و0.1% منها نحو 43 دقيقة، وهذه ميزانية الخطأ (error budget). و30 مع 20 تساوي 50 دقيقة، فالميزانية استُنفدت وتُطبَّق السياسة المتفق عليها مسبقًا. والخيار المغري يقول إن 50 دقيقة أقل من 0.1%، وهذا غير صحيح لأن 0.1% نحو 43 دقيقة فقط. وتسمية المتسبّبين تخالف قاعدة المراجعة الخالية من اللوم: أصلح النظام لا الشخص."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "m4-e1",
+      "lesson": "4.2",
+      "text": {
+        "en": "I have written an alert specification for one customer journey, with a symptom, a threshold and a window, and a runbook of five steps or fewer that confirms the problem is real, gives a first safe action, an escalation point and a step to tell customer-facing staff.",
+        "ar": "كتبتُ مواصفات تنبيه لرحلة عميل واحدة فيها عَرَض وحدّ ونافذة زمنية، ودليل تشغيل من خمس خطوات أو أقل يتحقق من أن المشكلة حقيقية، ويعطي إجراءً أول آمنًا، ونقطة تصعيد، وخطوة لإبلاغ من يتعاملون مع العملاء."
+      }
+    },
+    {
+      "id": "m4-e2",
+      "lesson": "4.3",
+      "text": {
+        "en": "I have written a blameless post-incident review from a timeline, with at least three contributing factors that are not people's names or \"carelessness\", at least one thing that went well, and no more than four actions, each with an owner role and a date.",
+        "ar": "كتبتُ مراجعة ما بعد الحادثة خالية من اللوم انطلاقًا من خط زمني، فيها ثلاثة عوامل مساهمة على الأقل ليست أسماء أشخاص ولا «إهمالًا»، وأمر واحد على الأقل سار جيدًا، وأربعة إجراءات على الأكثر لكل منها دور مالك وتاريخ."
+      }
+    }
+  ]
+}

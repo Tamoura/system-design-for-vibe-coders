@@ -14,19 +14,19 @@
 ## ⚡ In 60 seconds
 - **Version control** keeps every change to the code as a named, dated, reversible record, with the reason for it. It is the team's shared memory.
 - A **pull request** (also called a merge request) proposes a change to the main branch so someone else can read it, the automated checks can run, and the discussion is recorded.
-- **Code review** is not a gate to catch the author out. It spreads knowledge, catches mistakes while they are cheap and keeps the code readable for the next person.
+- **Code review** is not a gate to catch the author out. It spreads knowledge and catches mistakes while they are cheap.
 - The rule that matters most: **small changes, merged often, each one reviewed and explained.**
-- Decision cue: if a reviewer cannot understand your change in about the time it takes to drink a coffee, split it.
-- Biggest trap: writing rules nobody agreed to. A working agreement is written *by* the team, kept short and changed when it stops helping.
+- Decision cue: if a reviewer cannot understand your change over one coffee, split it.
+- Biggest trap: rules nobody agreed to. A working agreement is written *by* the team and kept short.
 
 ## 🧭 Why it matters
 Qafila and everyone in it are fictional. All numbers about Qafila in this lesson are illustrative figures, not benchmarks.
 
-At Launch, Maha and Faisal shared one repository and simply pushed their changes to it. If they clashed, they turned round in their chairs and sorted it out. Now it is Traction: six engineers work in the same repository, 300 merchants depend on the app, and every delivery triggers a payment through the payment provider.
+At Launch, Maha and Faisal simply pushed their changes to one repository and sorted out clashes across the desk. Now it is Traction: six engineers work in the same repository, 300 merchants depend on the app, and payments run through the payment provider.
 
-On a Tuesday night two engineers have both changed the delivery-fee code: one adds a weekend surcharge, the other fixes rounding. Faisal, tired, resolves the clash at 11 p.m., keeps the wrong half and pushes straight to the main branch. Nobody else sees it. On Wednesday a bakery phones Salma's support line: every order since the morning carries last month's fee. Faisal needs two hours to find the change, because the record says only "fix fees" and nobody remembers which version was right.
+On a Tuesday night two engineers have both changed the delivery-fee code: one adds a weekend surcharge, the other fixes rounding. Faisal, tired, resolves the clash at 11 p.m., keeps the wrong half, pushes straight to the main branch and, to get the surcharge live, deploys it by hand before bed (puts it on the live servers merchants use, called **production**; lesson 3.3). Nobody else sees it. On Wednesday a bakery phones Salma's support line: every order since the morning carries last month's fee. Faisal needs two hours to find the change: the record says only "fix fees".
 
-Nobody was careless on purpose; the team had outgrown a way of working built for two people. Maha asks Faisal and Aisha, the new product manager, to propose "how we change code here", on one page, by Friday.
+The team had outgrown a way of working built for two. Maha asks Faisal and Aisha, the new product manager, for one page on "how we change code here" by Friday.
 
 ## 📐 How it works
 
@@ -36,44 +36,42 @@ Nobody was careless on purpose; the team had outgrown a way of working built for
 
 | Term | Plain meaning | At Qafila |
 |---|---|---|
-| **Commit** | One recorded change, with a message | "Add weekend surcharge to delivery fee (Fri–Sat, 2 QAR)" |
-| **Main branch** | The agreed, current version everyone builds from; often called `main` | What gets deployed to merchants |
+| **Commit** | One recorded change, with a message | "Add weekend surcharge to delivery fee (Fri–Sat, 2 riyals)" |
+| **Main branch** | The agreed, current version everyone builds from; often called `main` | The version that goes to production |
 | **Branch** | A separate line of work that starts from main and is merged back later | `fee-weekend-surcharge` |
 | **Merge** | Combining a branch's changes into main | After review and checks pass |
 | **Merge conflict** | Two changes touch the same lines; a person must decide which is right | Faisal's Tuesday night |
 | **Revert** | A new commit that undoes an earlier one, keeping the history | How Faisal finally fixed the fee |
 
-(The 2 QAR surcharge is an illustrative figure.)
-
-**A good commit message** answers "why", because the code already shows "what". Compare:
+**A good commit message** answers "why", because the code already shows "what". The usual shape is a short summary line (about 50 characters), a blank line, then a few lines on why. Compare:
 
 | Weak | Strong |
 |---|---|
-| "fix fees" | "Round delivery fee to 0.25 QAR, as agreed with merchants in pricing note 4; old rounding caused 0.01 differences on receipts" |
-| "updates" | "Show courier the shop's opening hours so they stop arriving at closed shops (support tickets about closed shops)" |
+| "fix fees" | "Round delivery fee to nearest 0.25 riyals" + blank line + "Agreed with merchants in pricing note 4; old rounding caused 0.01 differences on receipts." |
+| "updates" | "Show couriers the shop's opening hours" + blank line + "Couriers kept arriving at closed shops (support tickets)." |
 
-**Pull requests.** A **pull request** (PR) is a request to merge a branch into main. It shows the difference ("diff") line by line, runs the automated checks (lesson 3.2) and holds the conversation. A short, useful PR description has four parts:
+**Pull requests.** A **pull request** (PR) is a request to merge a branch into main. It shows the changed lines, runs the automated checks (lesson 3.2) and holds the conversation. A useful PR description has four parts:
 
-1. **What and why:** one or two sentences, linked to the ticket or request.
+1. **What and why:** one or two sentences, linked to the ticket (the team's record of the task or request).
 2. **How to check it:** what the reviewer should try or look at.
 3. **Risk:** what could break, and who would notice (merchants, couriers, payments).
 4. **Undo:** how to reverse it if it goes wrong (often "revert this PR"; sometimes more, see lesson 3.3).
 
 **Code review.** Another engineer reads the change before it is merged. A reviewer asks, in roughly this order:
 
-- **Does it do what the description says, and is that the right thing?** A perfect implementation of the wrong idea is still wrong.
-- **Could it break something?** Edge cases, error handling, payments, personal data, other parts of the app that call this code.
+- **Does it do what the description says, and is that the right thing?**
+- **Could it break something?** Edge cases, errors, payments, personal data, code that calls this code.
 - **Is it tested?** Is there a test that would fail if this change were broken (lesson 3.2)?
 - **Will the next person understand it?** Names, structure, comments where the "why" is not obvious.
-- **Is anything secret or personal in it?** Keys, passwords, real customer data in test files.
+- **Is anything secret or personal in it?** Keys, passwords, real customer data.
 
-Leave style (spacing, naming conventions) to an automatic formatter and linter.
+Leave style to tools: a **formatter** rewrites code layout automatically, and a **linter** flags suspicious or non-standard code.
 
 ### 🟡 Going deeper
 
-**Keep changes small.** Google's published code review practices advise small, focused changes, note that reviewers rarely complain a change is too small, and say one can be rejected simply for being too large (as reported from the "Small CLs" page; a "CL" is roughly a pull request). Small changes are faster to review, conflict less and are easier to undo. A large feature can almost always be split: a refactor that changes no behaviour, new code hidden behind a switch (lesson 3.3), then the change that turns it on.
+**Keep changes small.** Google's published code review practices advise small, focused changes, note that reviewers rarely complain a change is too small, and say one can be rejected simply for being too large (as reported from the "Small CLs" page; a "CL" is roughly a pull request). Small changes are faster to review, conflict less and are easier to undo. A large feature can usually be split, for example with new code hidden behind a switch (lesson 3.3).
 
-**Branch briefly, merge often.** Long-lived branches drift from main, and the longer they live the more painful the merge. DORA, a long-running research programme on software delivery now part of Google Cloud, describes **trunk-based development** as each developer merging small batches into the main branch ("trunk") at least once a day, and associates it with better delivery performance (as reported from DORA's capability guide). You need short-lived branches and a habit of merging, not a named branching model.
+**Branch briefly, merge often.** Long-lived branches drift from main and make painful merges. DORA, a long-running research programme on software delivery now part of Google Cloud, describes **trunk-based development** as each developer merging small batches into the main branch ("trunk") at least once a day, and associates it with better delivery performance (as reported from DORA's capability guide).
 
 ```mermaid
 flowchart LR
@@ -88,11 +86,9 @@ flowchart LR
   G --> H[Delete branch]
 ```
 
-**Protect the main branch.** Version control hosts let you set rules on main: no direct pushes, an approving review, required checks, and approval from named owners for sensitive folders (GitHub's "About protected branches" page describes such options, as reported from summaries of it). These settings are the working agreement made real, and protect you from yourself at 11 p.m.
+**Protect the main branch.** Version control hosts let you set rules on main: no direct pushes, an approving review, required checks, and approval from named owners for sensitive folders (GitHub's "About protected branches" page describes such options, as reported from summaries of it). These settings are the working agreement made real, and protect you from yourself at 11 p.m. Check your host's plan documentation: some free plans may offer them only on public repositories.
 
-**Reviewing kindly and usefully.** Comment on the code, not the person ("this returns null when the shop is closed", not "you forgot closed shops"). Mark what is blocking and what is optional ("nit:" is a common prefix for a small point). Approve when the change makes the code better, even if you would have written it differently. As an author, answer every comment; the review is about the change, not you.
-
-**Respond quickly.** A pull request waiting two days is finished work not delivered. Agree a response time (for example one working day) and treat reviews as real work.
+**Reviewing kindly and usefully.** Comment on the code, not the person ("this returns null when the shop is closed", not "you forgot closed shops"). Mark what is blocking and what is optional ("nit:" marks a small point). Approve when the change makes the code better, even if you would have written it differently. Respond quickly: a pull request waiting two days is finished work not delivered, so agree a response time (for example one working day).
 
 ### 🔴 Expert view
 
@@ -107,15 +103,14 @@ flowchart LR
 | Emergencies | What happens when a fix is urgent at night? Who may skip a step, and what must they do afterwards? |
 | Review of the agreement | When do we look at these rules again? |
 
-Write it with the team, not for it. Keep it to one page. Include the emergency path honestly: if there is no legitimate fast path, people will invent an illegitimate one. A common pattern is "an urgent fix may be merged with one reviewer on a call, and is reviewed again properly the next working day".
+Write it with the team, not for it, on one page. Include an honest emergency path: without a legitimate fast path, people invent one that leaves no trace.
 
-**Review is also how knowledge spreads.** Much of Qafila's payment logic lives in Faisal's head. If he reviews everything he becomes a bottleneck; if nobody reviews his code, nobody learns it. Rotate reviewers and pair newer ones with experienced authors.
+**Review is also how knowledge spreads.** If only Faisal reviews payment code he becomes a bottleneck, and nobody else learns it. Rotate reviewers.
 
-**AI-written code is still your code.** Coding assistants can draft whole pull requests. Review them with the same checklist and more suspicion, because fluent code can be confidently wrong. The library covers this in depth in [*A Practical Guide to Becoming an AI-Native Engineer*, lesson 5.2 — Lab: review a pull request an agent wrote](../ainative/index.html#/5.2).
+**AI-written code is still your code.** Review pull requests drafted by coding assistants with the same checklist and more suspicion: fluent code can be confidently wrong. See [*A Practical Guide to Becoming an AI-Native Engineer*, lesson 5.2 — Lab: review a pull request an agent wrote](../ainative/index.html#/5.2).
 
-**Secrets never go into the repository.** History is forever: deleting a committed key in a later commit does not remove it from the history. Store secrets in a secrets manager or the platform's secret settings, and scan for them automatically. See [*Secure AI & Application Security: Zero to Hero*, lesson 5.2 — Secrets management: keys, tokens and where they leak](../secai/index.html#/5.2).
+**Secrets never go into the repository.** Deleting a committed key in a later commit does not remove it from the history. Keep secrets in a secrets manager and scan for them automatically. See [*Secure AI & Application Security: Zero to Hero*, lesson 5.2 — Secrets management: keys, tokens and where they leak](../secai/index.html#/5.2).
 
-**The memorable rule.** Small changes, merged often, each one reviewed and explained.
 
 ## 🧰 The toolkit
 | Resource, tool or template | What it is and does | When to reach for it |
@@ -124,10 +119,10 @@ Write it with the team, not for it. Keep it to one page. Include the emergency p
 | **Pull request template** | Four headings in every PR: what and why, how to check, risk, undo | Set once on the repository; used on every PR |
 | **Reviewer checklist** | Five questions: right thing, could it break, tested, understandable, secrets or personal data | Every review, until it is habit |
 | **Branch protection rules** | Host settings: no direct pushes to main, required review, required checks, code owners | As soon as the team agrees its rules |
-| **Secret scanner** | A check that blocks commits or PRs containing keys and passwords | From the first day a repository holds real credentials |
+| **Secret scanner** | A check that blocks PRs containing keys and passwords | From the first real credential |
 
 ## 🏛️ In practice at Qafila
-Aisha and Faisal draft the agreement; the whole engineering team edits it on Friday. Illustrative and fictional.
+Aisha and Faisal draft it; the engineers edit it on Friday. Illustrative and fictional.
 
 > **Qafila engineering working agreement (Traction, version 1)**
 >
@@ -144,17 +139,17 @@ Aisha and Faisal draft the agreement; the whole engineering team edits it on Fri
 > | Secrets | Never in the repository. The secret scanner blocks PRs that contain one |
 > | Next review | In six weeks, at the team retrospective |
 >
-> **Fee incident follow-up:** the reverted commit now has a full message explaining the right rounding rule; the fee code has two named owners.
+> **Fee incident follow-up:** the revert commit and the corrected fee commit both have full messages explaining the right rounding rule; the fee code has two named owners.
 
-Faisal wanted "two approvals for everything"; the others said that with six engineers this would stall most work, so a second approver is needed only where money or access is involved. A newer engineer asked what "small" meant; "about 20 minutes to read" was the compromise, to be checked in six weeks.
+Faisal wanted "two approvals for everything"; the others said that with six engineers this would stall most work, so a second approver is needed only where money or access is involved.
 
 ## 🛠️ Exercises
-**🟢 Write three good commits.** In any personal project, or a new practice repository on a free version control host, make three small changes (a README section, a function, a fix). Write each commit message so a stranger understands *why*.
+**🟢 Write three good commits.** In any personal project, or a new practice repository on a free version control host, make three small changes (a README section, a function, a fix). Write each commit message so a stranger understands *why*. No Git on your computer? Most hosts let you edit a file and commit from the browser; their getting-started guide shows how.
 *Done when:* each commit changes one thing, each message has a short summary line plus a reason, and none says only "update" or "fix".
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** "Add setup steps to README so new contributors can run the app locally (two friends asked how)". "Validate phone numbers before saving a shop, because couriers could not call shops with malformed numbers". "Fix total on receipt: tax was added twice when a discount applied".
+**Model answer.** "Add local setup steps to README" / blank line / "Two friends could not run the app." "Validate shop phone numbers on save" / blank line / "Couriers could not call shops with malformed numbers." "Fix receipt total with discounts" / blank line / "Tax was added twice when a discount applied."
 
 **Self-check.**
 - Could someone reading only the history explain why each change was made?
@@ -163,7 +158,7 @@ Faisal wanted "two approvals for everything"; the others said that with six engi
 
 </details>
 
-**🟡 Review a pull request with the checklist.** Open any small, recent, merged pull request in a public open-source project you use (look for one under about 100 changed lines). Review it as if it were not yet merged, using the five reviewer questions. Write three comments: one blocking concern or question, one suggestion marked as optional, and one thing done well.
+**🟡 Review a pull request with the checklist.** Open a small, recent, merged pull request (under about 100 changed lines) in a public open-source project. Review it as if it were not yet merged, using the five reviewer questions. Write three comments: one blocking concern or question, one suggestion marked as optional, and one thing done well.
 *Done when:* every comment points to specific lines, is phrased about the code rather than the person, and is clearly marked as blocking or optional.
 
 <details><summary>Model answer and self-check</summary>
@@ -171,13 +166,12 @@ Faisal wanted "two approvals for everything"; the others said that with six engi
 **Model answer.** For a PR adding a date-parsing option: blocking, "line 42 returns an empty string when there is no timezone; intended, and tested?"; optional, "nit: `parseOpt` could be `parseOptions`"; positive, "the leap-year test is clear and would have caught the old bug".
 
 **Self-check.**
-- Did you check whether it does the right thing, not only whether the code is neat?
-- Did you look for missing tests and error cases?
-- Would the author feel helped rather than judged by your wording?
+- Did you check that it does the right thing, not only that it is neat?
+- Would the author feel helped rather than judged?
 
 </details>
 
-**🔴 Write a working agreement for a team of five.** Imagine you join Qafila's team on the day after the fee incident (or use a real team or student group you are in). Write a one-page working agreement covering the six topics in the expert view, including an honest emergency path, then translate three of your rules into branch protection settings on your practice repository.
+**🔴 Write a working agreement for a team of six.** Imagine you join Qafila's team on the day after the fee incident (or use a real team or student group you are in). Write a one-page working agreement covering the six topics in the expert view, including an honest emergency path, then translate three of your rules into branch protection settings on your practice repository. On some hosts' free plans these settings work only on public repositories; if so, make the practice repository public and keep no secrets or personal data in it.
 *Done when:* the agreement fits on one page, has a review date, includes an emergency path with a follow-up step, and at least three rules are enforced by settings rather than memory.
 
 <details><summary>Model answer and self-check</summary>
@@ -185,18 +179,16 @@ Faisal wanted "two approvals for everything"; the others said that with six engi
 **Model answer.** Rules similar to Qafila's version 1, with settings: (1) require a pull request before merging into `main`; (2) require one approving review; (3) require the test check to pass. Emergency path: "two people on a call, merge, full review next working day, note in the channel". Review date: six weeks.
 
 **Self-check.**
-- Could the team actually follow every rule at its current size?
-- Does the emergency path exist and leave a trace?
-- Did you avoid rules only one person can satisfy?
+- Could the team follow every rule at its current size?
+- Does the emergency path leave a trace?
 
 </details>
 
 ## ⚠️ Mistakes and traps
-- **Pushing straight to main "just this once".** Once becomes habit. Protect the branch, and give urgent fixes a real fast path instead.
-- **Giant pull requests.** A 2,000-line change gets a rubber stamp, not a review. Split it into steps that each make sense alone.
-- **Reviews that only check style.** Let a formatter handle spacing; spend your attention on behaviour, risk and tests.
+- **Pushing straight to main "just this once".** Protect the branch, and give urgent fixes a real fast path instead.
+- **Giant pull requests.** They get a rubber stamp, not a review. Split them.
 - **Reviews as gatekeeping.** Harsh or slow reviews teach people to hide work. Be specific, kind and quick.
-- **Rules written for the team, not by it.** Imposed rules get worked around. Write them together and review them on a date.
+- **Rules written for the team, not by it.** They get worked around. Write them together.
 - **Committing a secret and "deleting" it later.** It stays in the history. Rotate the secret at once and add a scanner.
 
 ## 🧾 Recap
@@ -205,7 +197,6 @@ Faisal wanted "two approvals for everything"; the others said that with six engi
 - Review for correctness, risk, tests and clarity, kindly and quickly; let tools handle style.
 - Keep branches short-lived and changes small; protect main with settings that match the agreement.
 - A working agreement is one page, written by the team, with an honest emergency path and a review date.
-- Rule: small changes, merged often, each one reviewed and explained.
 
 ## ✍️ Check yourself
 **1. After the fee incident, what would most have shortened the two hours Faisal spent finding the cause?**
@@ -217,7 +208,7 @@ Faisal wanted "two approvals for everything"; the others said that with six engi
 
 <details><summary>Answer</summary>
 
-**C.** A reviewed pull request records what changed and why, and a second reader might have noticed the wrong half. A makes Faisal (who made the mistake) a bottleneck, B covers plans not actual changes, and D duplicates version control by hand. See "Pull requests" and "Why it matters".
+**C.** A reviewed pull request records what changed and why, and a second reader might have caught the wrong half. A makes Faisal a bottleneck, B covers plans not changes, and D duplicates version control by hand. See "Pull requests" and "Why it matters".
 
 </details>
 
@@ -230,20 +221,20 @@ Faisal wanted "two approvals for everything"; the others said that with six engi
 
 <details><summary>Answer</summary>
 
-**A.** Small, focused changes are faster and safer to review and undo. B rubber-stamps a change nobody understood, C spreads a huge review thin, and D creates the drifting long-lived branch that causes painful merges. See "Keep changes small".
+**A.** Small, focused changes are faster and safer to review and undo. B rubber-stamps it, C spreads a huge review thin, and D creates a drifting long-lived branch. See "Keep changes small".
 
 </details>
 
 **3. Which review comment is the most useful?**
 
-- A. "This is messy. Please clean it up before I look at it properly."
-- B. "I would have done this differently, but it is your call to make."
-- C. "nit: rename this variable, and also maybe the logic is a bit off?"
+- A. "Line 58: rename `s` to `shop` and put the opening brace on the same line."
+- B. "Line 58 again: you keep missing cases like this, so please take more care."
+- C. "nit: rename this variable, and also maybe the logic here is a bit off?"
 - D. "Line 58 skips closed shops, and no test covers that case; can you add one?"
 
 <details><summary>Answer</summary>
 
-**D.** It points to a line, names a concrete risk and asks for a specific action. A is vague and about the person, B gives no information, and C mixes an optional point with a vague possible bug, so the author cannot tell what is blocking. See "Reviewing kindly and usefully".
+**D.** It points to a line, names a concrete risk and asks for a specific action. A is specific but only about style, which a formatter should handle; B is about the person, not the code; and C mixes an optional point with a vague possible bug, so the author cannot tell what is blocking. See "Code review" and "Reviewing kindly and usefully".
 
 </details>
 
@@ -256,7 +247,7 @@ Faisal wanted "two approvals for everything"; the others said that with six engi
 
 <details><summary>Answer</summary>
 
-**B.** An honest fast path with a follow-up keeps urgent fixes visible. A states a legal conclusion the lesson does not make, C misreads why reviews exist, and D turns the exception into a permanent bypass. See "The working agreement".
+**B.** An honest fast path with a follow-up keeps urgent fixes visible. A states a legal conclusion, C misreads why reviews exist, and D turns the exception into a bypass. See "The working agreement".
 
 </details>
 
@@ -264,19 +255,19 @@ Faisal wanted "two approvals for everything"; the others said that with six engi
 
 - A. Nothing more, because the later commit removed the key and the current code is clean.
 - B. Make the repository private, which removes the key from anyone else's view of the history.
-- C. Treat the key as exposed: rotate it now, and add a secret scanner to block repeats.
+- C. Treat the key as exposed: rotate it now and add secret scanning to block repeats.
 - D. Rewrite the commit message of the earlier commit so it no longer mentions the key.
 
 <details><summary>Answer</summary>
 
-**C.** History keeps the key; anyone with access to the history may have it, so it must be replaced. A ignores the history, B does not remove access already granted or copies already made, and D changes a message, not the content. See "Secrets never go into the repository".
+**C.** History keeps the key, so it must be replaced. A ignores the history, B does not undo copies already made, and D changes a message, not the content. See "Secrets never go into the repository".
 
 </details>
 
 ## 📚 References
-- Google, "Small CLs", Google Engineering Practices Documentation (CC BY 3.0): https://google.github.io/eng-practices/review/developer/small-cls.html — advice to keep changes small, that reviewers rarely complain a change is too small and may reject one for being too large (reported from search summaries; the page could not be opened from this environment on 2026-11-22).
-- DORA, "Trunk-based development" capability guide: https://dora.dev/capabilities/trunk-based-development/ — developers merge small batches into trunk at least once a day (reported from search summaries; not opened).
-- GitHub Docs, "About protected branches": https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches — required reviews, required status checks, code owner review (reported from search summaries; not opened). One host's documentation, cited as an illustration, not an endorsement.
+- Google, "Small CLs", Google Engineering Practices Documentation (CC BY 3.0): https://google.github.io/eng-practices/review/developer/small-cls.html — keep changes small; reviewers rarely complain a change is too small (reported from search summaries; page not opened, 2026-11-22).
+- DORA, "Trunk-based development" capability guide: https://dora.dev/capabilities/trunk-based-development/ (reported; not opened).
+- GitHub Docs, "About protected branches": https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches (reported; not opened). One host's documentation, cited as an illustration, not an endorsement.
 - Library course: [*A Practical Guide to Becoming an AI-Native Engineer*, lesson 5.2 — Lab: review a pull request an agent wrote](../ainative/index.html#/5.2).
 - Library course: [*Secure AI & Application Security: Zero to Hero*, lesson 5.2 — Secrets management: keys, tokens and where they leak](../secai/index.html#/5.2).
 
@@ -293,16 +284,16 @@ Faisal wanted "two approvals for everything"; the others said that with six engi
 - **Continuous integration (CI)** means everyone merges small changes into the main branch often, and every change is built and tested automatically.
 - The rule that matters most: **a red build is the team's top priority; fix it or revert it before anything else.**
 - Decision cue: for every change, ask "what test would fail if this were broken?" If the answer is "none", write one.
-- Biggest trap: tests that fail at random. People learn to ignore red, and then the real failure gets ignored too.
+- Biggest trap: tests that fail at random. People learn to ignore red.
 
 ## 🧭 Why it matters
 Qafila and everyone in it are fictional. All numbers about Qafila in this lesson are illustrative figures, not benchmarks.
 
-At Launch, Faisal tested by hand: he clicked through the merchant app, created an order, watched it reach the courier app, and deployed on Thursday evening. With 15 shops and about 150 deliveries a day, mistakes were rare and cheap. Now Qafila has 300 merchants and about 4,000 deliveries a day, six engineers merge daily, and the team has agreed (lesson 3.1) that tests must pass before merging. There are almost no tests.
+At Launch, Faisal tested by hand: he clicked through the apps and deployed on Thursday evening. With 15 shops and about 150 deliveries a day, mistakes were rare and cheap. Now Qafila has 300 merchants and about 4,000 deliveries a day, six engineers merge daily, and the team has agreed (lesson 3.1) that tests must pass before merging. There are almost no tests.
 
-A week later, a change to courier assignment passes a careful review. Nobody notices that orders from shops with two branches are now never offered to a courier. Salma, who runs support and the new on-call rota, spends Saturday phoning couriers by hand. The fix is one line; a test with a two-branch shop would have caught it in seconds.
+A week later, a change to courier assignment passes a careful review. Nobody notices that orders from two-branch shops are now never offered to a courier. Salma, who runs support and the new on-call rota (a schedule of who answers alerts out of hours; Module 4), spends Saturday phoning couriers by hand. The fix is one line; a test with a two-branch shop would have caught it in seconds.
 
-Faisal admits he skipped tests "to go faster" at Launch. Maha asks for a plan: which tests first, and how to run them on every change.
+Faisal admits he skipped tests "to go faster" at Launch. Maha asks for a plan.
 
 ## 📐 How it works
 
@@ -316,7 +307,7 @@ Act:     create an order at branch B
 Assert:  the courier near branch B is offered the order
 ```
 
-If the check fails, the test fails, and it names what went wrong. Because it is code, it runs the same way every time, on every change, without anyone remembering to do it.
+Because it is code, it runs the same way on every change, without anyone remembering to do it.
 
 **The main kinds of test.** Names vary between teams; the ideas are stable.
 
@@ -326,18 +317,18 @@ If the check fails, the test fails, and it names what went wrong. Because it is 
 | **Integration test** | Pieces working together, such as code plus a real database | Seconds | Saving an order and reading it back |
 | **Contract test** | That two parts agree on the shape of the messages they exchange | Seconds | The merchant app and the server agree on what an "order" looks like |
 | **End-to-end test** | A whole user journey through the real interfaces | Minutes | Shop creates an order, courier accepts, order marked delivered |
-| **Manual exploratory testing** | A person deliberately trying to break things in ways nobody scripted | Hours | Aisha trying the new screen with Arabic shop names and a slow phone |
+| **Manual exploratory testing** | A person trying to break things in ways nobody scripted | Hours | Aisha trying Arabic shop names on a slow phone |
 
-**The test pyramid.** A common rule of thumb, often drawn as a pyramid: many unit tests at the bottom, fewer integration tests in the middle, a small number of end-to-end tests at the top. Ham Vocke's article "The Practical Test Pyramid" (2018, on Martin Fowler's site) starts from Mike Cohn's three layers and calls the model a useful rule of thumb that is too simple to follow literally (as reported from summaries of the article). The reason for the shape is cost: broad tests are slow, break for many reasons and are hard to diagnose, so you want only enough of them to prove the main journeys work.
+**The test pyramid.** A common rule of thumb, often drawn as a pyramid: many unit tests at the bottom, fewer integration tests in the middle, a small number of end-to-end tests at the top. Ham Vocke's article "The Practical Test Pyramid" (2018, on Martin Fowler's site) starts from Mike Cohn's three layers and calls the model a useful rule of thumb that is too simple to follow literally (as reported from summaries of the article). The reason is cost: broad tests are slow and hard to diagnose, so keep only enough to prove the main journeys.
 
-**What "good enough" testing means.** You cannot test everything. Test where a failure would hurt most and where mistakes are likely:
+**What "good enough" testing means.** Test where a failure would hurt most and where mistakes are likely:
 
 - **Money:** fees, refunds, payment provider calls.
 - **Core journeys:** creating, assigning and completing a delivery.
 - **Tricky logic:** rules with many cases, such as shop opening hours, branches, time zones.
 - **Things that broke before:** every bug fixed gets a test that would have caught it.
 
-**Continuous integration.** Martin Fowler's article "Continuous Integration", rewritten in 2023, describes it as everyone on the team integrating their work into the mainline often (at least daily), with each integration checked by an automated build that includes tests (as reported from summaries of the article). A **CI system** (for example GitHub Actions or GitLab CI, named only as illustrations) watches the repository, and on every pull request and every merge it runs a **pipeline**: a fixed list of steps.
+**Continuous integration.** Martin Fowler's article "Continuous Integration" describes it as everyone on the team integrating their work into the mainline often (at least daily), with each integration checked by an automated build that includes tests (as reported from summaries of the article). A **CI system** (for example GitHub Actions or GitLab CI, named only as illustrations) watches the repository, and on every pull request and every merge it runs a **pipeline**: a fixed list of steps.
 
 ```mermaid
 flowchart LR
@@ -351,25 +342,25 @@ flowchart LR
   G -- no --> I[Author fixes]
 ```
 
-The result shows on the pull request as a green tick or a red cross. The branch protection rules from lesson 3.1 make the green tick a condition for merging.
+The scan step looks for committed secrets and for third-party libraries with known flaws (a **dependency scan**). The result shows on the pull request as a green tick or a red cross. The branch protection rules from lesson 3.1 make the green tick a condition for merging.
 
 ### 🟡 Going deeper
 
-**Keep the pipeline fast.** Feedback that takes an hour is feedback people stop waiting for. The ten-minute build is a long-standing guideline from Extreme Programming, an agile method that popularised continuous integration, and Fowler treats it as reasonable (as reported from summaries of his writing). Ways to stay fast: run unit tests first so cheap failures stop the run early; run independent steps in parallel; keep end-to-end tests few and focused on the main journeys; and do not test the same thing at every level.
+**Keep the pipeline fast.** A build of about ten minutes is a long-standing guideline from Extreme Programming, an agile method that popularised continuous integration (as reported from summaries of Fowler's article). To stay fast, run unit tests first, run independent steps in parallel, and keep end-to-end tests few.
 
-**A red build is the team's problem.** When main is red, nobody can trust it, and every new change piles onto a broken base. Most teams agree: whoever broke it fixes it straight away, or reverts their change and fixes it calmly on a branch. Reverting is not a defeat; it is the cheapest way to get everyone unblocked.
+**A red build is the team's problem.** When main is red, every new change piles onto a broken base. Whoever broke it fixes it at once, or reverts and fixes it calmly on a branch. Reverting is not a defeat.
 
-**Flaky tests.** A **flaky test** passes and fails on the same code, for example because it depends on timing, on the order tests run, on the real clock, or on an outside service. Flaky tests are worse than no tests, because they teach people that red means nothing. When a test flakes: record it, take it out of the required checks within a day (do not just keep pressing "re-run"), fix the cause, and put it back. The library goes deeper in [*Software Testing: Zero to Hero in the AI Era*, lesson 2.3 — Are your tests any good? Coverage, mutation testing, property-based testing and flaky tests](../testing/index.html#/2.3).
+**Flaky tests.** A **flaky test** passes and fails on the same code, for example because it depends on timing, on the order tests run, on the real clock, or on an outside service. Flaky tests teach people that red means nothing. When a test flakes, record it, take it out of the required checks within a day, fix the cause and put it back. The library goes deeper in [*Software Testing: Zero to Hero in the AI Era*, lesson 2.3 — Are your tests any good? Coverage, mutation testing, property-based testing and flaky tests](../testing/index.html#/2.3).
 
-**Coverage is a clue, not a goal.** **Code coverage** is the share of lines that ran during the tests. Low coverage shows gaps; high coverage proves nothing, since a test that asserts nothing still "covers" code. Ask "would a test fail if this were wrong?".
+**Coverage is a clue, not a goal.** **Code coverage** is the share of lines that ran during the tests. High coverage proves nothing: a test that asserts nothing still "covers" code. Ask "would a test fail if this were wrong?".
 
-**Tests for a bug, before the fix.** Write a test that reproduces the bug and watch it fail; fix the code and watch it pass. The fix is proved and the bug cannot quietly return.
+**Tests for a bug, before the fix.** Write a test that reproduces the bug and watch it fail; fix the code and watch it pass. The bug cannot quietly return.
 
-**Writing tests first.** **Test-driven development (TDD)** writes a failing test for the next small behaviour, then just enough code to pass it, then tidies up. It is a technique, not a creed; try it where cases are clear, like fees. See [*Software Testing: Zero to Hero in the AI Era*, lesson 2.1 — Unit testing and TDD: arrange-act-assert, test doubles and fast feedback](../testing/index.html#/2.1).
+**Writing tests first.** **Test-driven development (TDD)** writes a failing test for the next small behaviour, then just enough code to pass it, then tidies up. Try it where cases are clear, like fees. See [*Software Testing: Zero to Hero in the AI Era*, lesson 2.1 — Unit testing and TDD: arrange-act-assert, test doubles and fast feedback](../testing/index.html#/2.1).
 
 ### 🔴 Expert view
 
-**A test plan for one change.** You do not need a long document. For a change of any size, a few lines are enough:
+**A test plan for one change.** A few lines are enough:
 
 | Field | Question |
 |---|---|
@@ -380,24 +371,23 @@ The result shows on the pull request as a green tick or a red cross. The branch 
 | Not tested, and why | What risk are we accepting, knowingly? |
 | Signal after release | What will tell us in production that it works (lesson 3.3 and Module 4)? |
 
-The "not tested, and why" line is the most honest one. It turns a hidden gamble into a decision someone can question.
+The "not tested, and why" line turns a hidden gamble into a decision someone can question.
 
-**Test data and personal data.** Never copy real customers' names, phones or addresses into test files; invent data with the same shape (two-branch shops, Arabic names, long addresses). History makes a leak permanent.
+**Test data and personal data.** Never copy real customers' details into test files; invent data with the same shape (two-branch shops, Arabic names, long addresses).
 
-**What CI does not do.** CI says the code builds and your tests pass, not that you wrote the right tests, built what merchants need, or that it copes with real traffic. Exploratory testing, product checks (Module 6) and monitoring (Module 4) still matter.
+**What CI does not do.** CI says your tests pass, not that they are the right tests or that it copes with real traffic. Exploratory testing and monitoring (Module 4) still matter.
 
-**Testing AI-written code.** When a coding assistant writes code, tests become the specification it must meet, and the evidence you review. See [*Software Testing: Zero to Hero in the AI Era*, lesson 6.2 — Tests as the specification for coding agents: test-first workflows, guardrails and mutation as the judge](../testing/index.html#/6.2). For how CI pipelines are built in practice, see [*Cloud & DevOps: Zero to Hero*, lesson 4.1 — Continuous integration: pipelines, tests, artefacts and fast feedback](../cloud/index.html#/4.1).
+**Testing AI-written code.** When a coding assistant writes code, tests become the specification it must meet. See [*Software Testing: Zero to Hero in the AI Era*, lesson 6.2 — Tests as the specification for coding agents: test-first workflows, guardrails and mutation as the judge](../testing/index.html#/6.2). For how CI pipelines are built in practice, see [*Cloud & DevOps: Zero to Hero*, lesson 4.1 — Continuous integration: pipelines, tests, artefacts and fast feedback](../cloud/index.html#/4.1).
 
-**The memorable rule.** A red build is the team's top priority: fix it or revert it before anything else.
 
 ## 🧰 The toolkit
 | Resource, tool or template | What it is and does | When to reach for it |
 |---|---|---|
 | **Test plan (one change)** | Change, risks, automated tests, manual checks, not tested and why, signal after release | Before starting any change that touches money or a core journey |
-| **Test pyramid sketch** | Count of tests at each level, with the target shape | When the suite is slow or flaky, to see where the weight is |
+| **Test pyramid sketch** | Count of tests at each level, with the target shape | When the suite is slow or flaky |
 | **CI pipeline** | Steps the CI system runs on every PR and merge: build, lint, unit, integration, scans | From the moment more than one person merges code |
 | **Bug-first test** | A test that reproduces a reported bug before it is fixed | Every bug fix |
-| **Flaky test log** | A list of tests that flaked, who owns them, and when they return to required checks | The first time anyone presses "re-run" twice |
+| **Flaky test log** | Tests that flaked, their owners, and when they return to required checks | The first time anyone presses "re-run" twice |
 
 ## 🏛️ In practice at Qafila
 Faisal writes the plan for the courier-assignment fix; Aisha adds manual checks. Illustrative and fictional.
@@ -415,20 +405,19 @@ Faisal writes the plan for the courier-assignment fix; Aisha adds manual checks.
 >
 > **Pipeline (first version):** on every PR: install, build, format and lint check, unit tests, integration tests against a throwaway database, secret scan. Target: under 10 minutes. Red on `main`: the person who merged fixes or reverts within the hour.
 
-Faisal's first plan had no "not tested" line; Aisha asked what he was leaving out, and he found the many-branches case. A newer engineer wanted an end-to-end test for every screen; the team started with three journeys (create, accept, deliver) and will add more only when a bug shows the need.
+Faisal's first plan had no "not tested" line; Aisha asked what he was leaving out, and he found the many-branches case. The team started with three end-to-end journeys (create, accept, deliver), not one per screen.
 
 ## 🛠️ Exercises
-**🟢 Write three unit tests.** In any language you know, write a small function `delivery_fee(distance_km, is_weekend)` with these illustrative rules: 5 QAR for the first 3 km, plus 1 QAR per extra started kilometre, plus 2 QAR at weekends. Write three tests using arrange, act, assert.
-*Done when:* the tests run with one command, at least one test sits on a boundary (exactly 3 km, or just over), and breaking the weekend rule in the code makes a test fail.
+**🟢 Write three unit tests.** Take a small function `delivery_fee(distance_km, is_weekend)` with these illustrative rules: 5 riyals for the first 3 km, plus 1 riyal per extra started kilometre, plus 2 riyals at weekends. If you code, write it in any language and add three tests using arrange, act, assert. If you do not code yet, write the three tests as a table (arrange, act, expected result) and work out each expected value by hand.
+*Done when:* you have three tests, at least one sits on a boundary (exactly 3 km, or just over), and one would fail if the weekend rule were wrong (if you coded it, break the rule and watch it fail).
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** Tests: 3 km on a weekday is 5; 3.1 km on a weekday is 6 (a started extra kilometre); 2 km at a weekend is 7. In Python with pytest, each is three lines: arrange the inputs, call the function, assert the result.
+**Model answer.** Tests: 3 km on a weekday is 5; 3.1 km on a weekday is 6 (a started extra kilometre); 2 km at a weekend is 7. In Python with pytest (a common Python test tool), each is three lines: arrange the inputs, call the function, assert the result.
 
 **Self-check.**
 - Did you test the boundary, where most mistakes live?
-- Did you deliberately break the code once to see a test go red?
-- Does each test name say what it checks (for example `test_weekend_adds_two`)?
+- Which test would go red if the weekend rule were broken?
 
 </details>
 
@@ -441,31 +430,28 @@ Faisal's first plan had no "not tested" line; Aisha asked what he was leaving ou
 
 **Self-check.**
 - Does every risk have a test or a check next to it?
-- Did you put most tests at the unit level?
-- Is the accepted risk written down rather than forgotten?
+- Is the accepted risk written down?
 
 </details>
 
-**🔴 Build a CI pipeline.** Put your exercise-1 code in a practice repository on a free version control host and add a CI workflow that installs dependencies, runs a linter and runs your tests on every pull request. Protect the main branch so the check must pass. Then open a pull request that breaks a test.
-*Done when:* the broken pull request shows a red check and cannot be merged, a fixed version shows green, and the whole run takes under ten minutes.
+**🔴 Build a CI pipeline.** Put your exercise-1 code in a practice repository on a free version control host and add a CI workflow that installs dependencies, runs a linter and runs your tests on every pull request; start from the host's starter workflow templates, and see [*Cloud & DevOps: Zero to Hero*, lesson 4.1](../cloud/index.html#/4.1). Protect the main branch so the check must pass (on some hosts' free plans this works only on public repositories; if so, make the repository public and keep no secrets or personal data in it). Then open a pull request that breaks a test. Not coding yet? Sketch the pipeline on paper instead: the trigger, each step in order, what stops the run, and the merge rule.
+*Done when:* the broken pull request shows a red check and cannot be merged, and a fixed version shows green; or, on paper, every step from the trigger to "ready to merge" is named, with what happens when a step fails.
 
 <details><summary>Model answer and self-check</summary>
 
 **Model answer.** A workflow file with three steps (install, lint, test), triggered on `pull_request` and on pushes to `main`. Branch protection requires that check. The broken PR fails at the test step in under a minute; the fix turns it green.
 
 **Self-check.**
-- Does the pipeline stop at the first failing step and name the failing test?
-- Did you confirm merging is actually blocked, not only that a red cross appears?
+- Is merging actually blocked, not only marked with a red cross?
 - Did you keep secrets out of the workflow file?
 
 </details>
 
 ## ⚠️ Mistakes and traps
-- **Pressing "re-run" until it is green.** You are training the team to ignore failures. Log flaky tests and fix them.
-- **Chasing a coverage number.** Tests that assert nothing raise coverage and catch nothing. Ask what each test would catch.
-- **Too many end-to-end tests.** The suite becomes slow and fragile. Push checks down to unit and integration level where you can.
+- **Pressing "re-run" until it is green.** Log flaky tests and fix them.
+- **Chasing a coverage number.** Ask what each test would catch.
+- **Too many end-to-end tests.** Push checks down to unit and integration level.
 - **Leaving main red.** Every later change is built on a broken base. Fix or revert at once.
-- **Real customer data in tests.** It leaks into history forever. Use invented data with the same shape.
 
 ## 🧾 Recap
 - Automated tests check behaviour the same way every time, in seconds; arrange, act, assert.
@@ -473,10 +459,9 @@ Faisal's first plan had no "not tested" line; Aisha asked what he was leaving ou
 - CI builds and tests every change automatically and makes a green result a condition for merging.
 - Keep the pipeline fast, keep tests reliable, and treat a red main branch as the team's top priority.
 - A short test plan names risks, tests, manual checks, what is knowingly untested, and the signal after release.
-- Rule: a red build is the team's top priority; fix it or revert it before anything else.
 
 ## ✍️ Check yourself
-**1. Two engineers reviewed the courier-assignment change carefully and still missed the two-branch bug. What would most reliably have caught it before merging?**
+**1. The courier-assignment change passed a careful review and still missed the two-branch bug. What would most reliably have caught it before merging?**
 
 - A. A unit test with a two-branch shop, run automatically by CI on the pull request.
 - B. A third reviewer with more experience of the courier assignment code in the app.
@@ -485,33 +470,33 @@ Faisal's first plan had no "not tested" line; Aisha asked what he was leaving ou
 
 <details><summary>Answer</summary>
 
-**A.** A test for the case runs on every change without anyone needing to remember it. B and C still rely on people noticing an unthought-of case, and D finds the problem days later, after merchants hit it. See "What an automated test is" and "Continuous integration".
+**A.** A test runs on every change without anyone remembering it. B and C still rely on people noticing an unthought-of case, and D finds the problem days later. See "What an automated test is" and "Continuous integration".
 
 </details>
 
 **2. Qafila's end-to-end suite takes 50 minutes and fails about once a day for no clear reason. What is the best first step?**
 
-- A. Add more end-to-end tests so every screen is covered and failures are easier to spot.
+- A. Run the end-to-end suite only overnight, and re-run any failure until it passes.
 - B. Remove all the end-to-end tests and rely only on reviews for the user journeys.
 - C. Allow merging when only the end-to-end tests fail, since those failures are usually noise.
 - D. Move most checks down to unit and integration tests and log, then fix, the flaky ones.
 
 <details><summary>Answer</summary>
 
-**D.** Pushing checks down speeds the pipeline, and handling flaky tests openly restores trust in red. A makes it slower and flakier, B drops the main-journey checks, and C teaches people to ignore red. See "Keep the pipeline fast" and "Flaky tests".
+**D.** Pushing checks down speeds the pipeline, and handling flaky tests restores trust in red. A delays feedback and trains people to ignore red, B drops the main-journey checks, and C teaches people to ignore red. See "Keep the pipeline fast" and "Flaky tests".
 
 </details>
 
 **3. A manager proudly reports 95% code coverage. What should you ask first?**
 
-- A. Which tool calculated the figure, so we can compare it with other teams' coverage.
+- A. Which tool calculated the figure, so we can compare it with other teams?
 - B. Would the tests actually fail if the important logic, like fees, were wrong?
 - C. How quickly can the team raise the figure to 100% across the whole code base?
-- D. Whether coverage is measured on every pull request or only once each month.
+- D. Is coverage measured on every pull request, or only once each month?
 
 <details><summary>Answer</summary>
 
-**B.** Coverage shows what code ran, not whether anything was checked. A and D are about measurement details, and C chases the number rather than the quality of the tests. See "Coverage is a clue, not a goal".
+**B.** Coverage shows what code ran, not whether anything was checked. A and D are measurement details, and C chases the number. See "Coverage is a clue, not a goal".
 
 </details>
 
@@ -524,7 +509,7 @@ Faisal's first plan had no "not tested" line; Aisha asked what he was leaving ou
 
 <details><summary>Answer</summary>
 
-**A.** Fixing or reverting is the quickest way back to a trusted main. B piles work onto a broken base, C hides a real failure, and D leaves main broken for days. See "A red build is the team's problem".
+**A.** Fixing or reverting is the quickest way back to a trusted main. B builds on a broken base, C hides a failure, and D leaves main broken for days. See "A red build is the team's problem".
 
 </details>
 
@@ -532,18 +517,18 @@ Faisal's first plan had no "not tested" line; Aisha asked what he was leaving ou
 
 - A. "All changed code will be fully covered by unit, integration and end-to-end tests."
 - B. "Testing will be done by the QA team after the change is merged into main."
-- C. "Not tested: shops with more than five branches; none exist yet, noted for later."
+- C. "Not tested: very old phone models; few couriers use them, checked by hand once."
 - D. "The change is small, so no specific tests are needed beyond the existing suite."
 
 <details><summary>Answer</summary>
 
-**C.** It names a risk, accepts it knowingly and gives a reason someone can question. A is an unrealistic promise, B hands responsibility to someone else after the fact, and D gives no reasoning about risk. See "A test plan for one change".
+**C.** It names a risk, says why it is accepted and what was done instead, so someone can question it. A is an unrealistic promise, B hands responsibility to someone else after the fact, and D gives no reasoning about risk. See "A test plan for one change".
 
 </details>
 
 ## 📚 References
-- Fowler, M., "Continuous Integration", martinfowler.com, rewritten 2023: https://martinfowler.com/articles/continuousIntegration.html — integrating into mainline at least daily with a self-testing build; the XP ten-minute build guideline (reported from search summaries; the page could not be opened from this environment on 2026-11-22).
-- Vocke, H., "The Practical Test Pyramid", martinfowler.com, 26 February 2018: https://martinfowler.com/articles/practical-test-pyramid.html — Mike Cohn's three layers and why the pyramid is a rule of thumb (reported from search summaries; not opened).
+- Fowler, M., "Continuous Integration", martinfowler.com: https://martinfowler.com/articles/continuousIntegration.html — integrating at least daily with a self-testing build; the XP ten-minute build (reported from search summaries; page not opened, 2026-11-22; revision date not confirmed).
+- Vocke, H., "The Practical Test Pyramid", martinfowler.com, 26 February 2018: https://martinfowler.com/articles/practical-test-pyramid.html (reported; not opened).
 - Library course: [*Software Testing: Zero to Hero in the AI Era*, lesson 2.1 — Unit testing and TDD: arrange-act-assert, test doubles and fast feedback](../testing/index.html#/2.1).
 - Library course: [*Software Testing: Zero to Hero in the AI Era*, lesson 2.3 — Are your tests any good? Coverage, mutation testing, property-based testing and flaky tests](../testing/index.html#/2.3).
 - Library course: [*Software Testing: Zero to Hero in the AI Era*, lesson 5.1 — Test strategy and planning: risk-based testing, the test pyramid and quality metrics](../testing/index.html#/5.1).
@@ -555,22 +540,22 @@ Faisal's first plan had no "not tested" line; Aisha asked what he was leaving ou
 # 3.3 — Continuous delivery and safe deployment
 *Level: 🟢 Beginner* · *Prerequisites: 3.1, 3.2* · *Step: Build, Deliver*
 
-**After this you can** explain the difference between deploying and releasing, describe how continuous delivery, feature flags, gradual rollouts and rollback make frequent changes safe, and write a release plan for one change with a check after release and a tested way to undo it. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** explain the difference between deploying and releasing, describe how continuous delivery, feature flags, gradual rollouts and rollback make frequent changes safe, and write a release plan for one change with a check after release and an undo route, saying whether it has been tried. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Continuous delivery** means every change that passes the pipeline is kept in a state where it could go to production safely, at any time, with one routine action.
-- **Deploying** puts new code on the servers. **Releasing** turns a feature on for users. Keeping them apart is the main safety trick.
-- Make each deployment small, watch it with real signals, and have a **rollback** (a quick way back to the last good version) that you have actually tried.
+- **Deploying** puts new code on the servers. **Releasing** turns a feature on for users. Keep them apart.
+- Make each deployment small, watch real signals, and have a **rollback** (a quick way back to the last good version) that you have tried.
 - The rule that matters most: **deploy small and often, and never deploy anything you cannot undo or switch off.**
-- Decision cue: before each change, ask "how will we know it is broken, and what do we do in the first five minutes if it is?"
-- Biggest trap: database changes. Code can be rolled back in a minute; data that was changed or deleted often cannot.
+- Decision cue: ask "how will we know it is broken, and what do we do in the first five minutes?"
+- Biggest trap: database changes. Code can be rolled back in a minute; deleted data often cannot.
 
 ## 🧭 Why it matters
 Qafila and everyone in it are fictional. All numbers about Qafila in this lesson are illustrative figures, not benchmarks.
 
-With reviewed pull requests (lesson 3.1) and tests on every change (lesson 3.2), Qafila now deploys daily through CI instead of weekly by hand. Small changes reach merchants the day they are merged, and the "big Thursday deploy" that kept Faisal up until midnight is gone.
+With reviewed pull requests (lesson 3.1) and tests on every change (lesson 3.2), Qafila now deploys daily through CI instead of weekly by hand. Small changes reach merchants the day they are merged.
 
-It has also raised new questions. Aisha wants a "scheduled deliveries" feature that lets shops book pickups for later in the day: two weeks of work. Faisal wants to merge it in daily pieces, as the working agreement says, but merchants must not see it until it works. Salma, who carries the on-call phone, asks: "When a daily deploy goes wrong at lunchtime, with 4,000 deliveries a day running through the app, what exactly do I do?" Nobody has a written answer. And one piece changes the orders table in the database.
+Aisha now wants "scheduled deliveries", letting shops book pickups for later in the day: two weeks of work. Faisal wants to merge it in daily pieces, unseen by merchants until it works. Salma, who carries the on-call phone, asks: "When a daily deploy goes wrong at lunchtime, what exactly do I do?" Nobody has a written answer. And one piece changes the orders table in the database (a **table** holds rows of records with named fields, called **columns**, like a spreadsheet).
 
 ## 📐 How it works
 
@@ -593,21 +578,21 @@ flowchart LR
 | Term | Plain meaning |
 |---|---|
 | **Environment** | Where software runs: a laptop, a shared **staging** copy for checks, **production** where customers are |
-| **Artefact** | The packaged, built software (for example a container image); build it once and ship the same one everywhere |
-| **Smoke check** | A quick check after deploying that the basics work |
+| **Artefact** | The packaged, built software (for example a container image: a standard package holding the software and what it needs to run); build it once and ship the same one everywhere |
+| **Smoke check** | A quick post-deploy check that the basics work |
 | **Rollback / roll forward** | Go back to the previous artefact / fix with a new change instead |
 
-**Why small and often is safer.** It feels backwards, but a deployment with one change is easy to check and undo, and if something breaks you know which change did it. Three weeks of changes in one deployment are hard to test, and when they fail nobody knows where to look. Frequent deployment also keeps the process practised and boring, which is what you want.
+**Why small and often is safer.** A deployment with one change is easy to check and undo, and if something breaks you know which change did it. Three weeks of changes in one deployment fail in ways nobody can trace. Frequent deployment also keeps the process practised and boring.
 
 **Measuring speed and stability together.** DORA groups its software delivery measures into throughput and instability. They include **change lead time** (commit to production), **deployment frequency**, **failed deployment recovery time**, **change fail rate** (deployments needing immediate intervention) and, since 2024, **deployment rework rate** (as reported from DORA's guide and summaries of it). Lesson 0.1 introduced reading them together; at Qafila, daily CI deploys should shorten lead time without raising the change fail rate.
 
 ### 🟡 Going deeper
 
-**Separate deploying from releasing with feature flags.** A **feature flag** (or feature toggle) is a switch in the code, read at run time, that decides whether a behaviour is on, and for whom. Unfinished work can be merged and deployed "dark": on the servers, invisible to users. When ready, it is turned on for a few test shops, then more, and turned off in seconds if it misbehaves.
+**Separate deploying from releasing with feature flags.** A **feature flag** (or feature toggle) is a switch in the code, read at run time, that decides whether a behaviour is on, and for whom. Unfinished work can be deployed "dark": on the servers, invisible to users. Later it is turned on for a few shops, then more, and off in seconds if it misbehaves.
 
-Pete Hodgson's article "Feature Toggles (aka Feature Flags)" (2016) separates flags by how long they live, from short-lived release flags that hide unfinished work to longer-lived operational flags (as reported from summaries of the article). Release flags are temporary: give each an owner and a removal date, or the code fills with dead switches nobody dares touch.
+Pete Hodgson's article "Feature Toggles (aka Feature Flags)" (2016) separates flags by how long they live, from short-lived release flags that hide unfinished work to longer-lived operational flags (as reported from summaries of the article). Give each release flag an owner and a removal date, or the code fills with dead switches.
 
-**Gradual rollouts.** Even a well-tested change can behave differently with real traffic. A **gradual rollout** limits how many users meet a new version at first:
+**Gradual rollouts.** A **gradual rollout** limits how many users meet a new version at first:
 
 | Approach | How it works | Good for |
 |---|---|---|
@@ -616,25 +601,25 @@ Pete Hodgson's article "Feature Toggles (aka Feature Flags)" (2016) separates fl
 | **Canary release** | Send a small share of traffic (say 5%, illustrative) to the new version, compare, then widen | When real traffic is the real test |
 | **Flag-based rollout** | Deploy to all, turn the feature on for a growing group | New features |
 
-Google's *Site Reliability Workbook* has a chapter on canarying: testing each change on a small portion of traffic first (as reported from summaries of the chapter).
+Google's *Site Reliability Workbook* has a chapter on canarying (as reported from summaries of it).
 
-**Watch the right signals.** A gradual rollout only helps if someone is watching. Pick two or three signals that show merchants and couriers are fine (order-creation errors, time to a courier offer, failed payment calls) and decide in advance what level means "roll back". Module 4 covers monitoring in depth.
+**Watch the right signals.** Pick two or three signals that show merchants and couriers are fine (order-creation errors, time to a courier offer) and decide in advance what level means "roll back". Module 4 covers monitoring.
 
-**Rollback first, investigate second.** When a deployment looks wrong, go back to the last good version first, then investigate calmly. Practise rollback when nothing is broken, so it is a known two-minute action, not a lunchtime experiment. See [*System Design for Vibe Coders*, lesson 4.4 — Rollback, staging, and release gates](../vibe/index.en.html#l4-4).
+**Rollback first, investigate second.** When a deployment looks wrong, go back to the last good version, then investigate. Practise it when nothing is broken, so it is a known two-minute action. See [*System Design for Vibe Coders*, lesson 4.4 — Rollback, staging, and release gates](../vibe/index.en.html#l4-4).
 
 ### 🔴 Expert view
 
-**Database changes need their own care.** Code can be swapped back in a minute; data often cannot. If a deployment drops a column or rewrites rows, rolling back the code does not bring the data back. The usual safe pattern is called **expand and contract** (also "parallel change", described on Martin Fowler's site as three phases: expand, migrate, contract, as reported from summaries of the page):
+**Database changes need their own care.** If a deployment drops a column or rewrites rows, rolling back the code does not bring the data back. The usual safe pattern is called **expand and contract** (also "parallel change", described on Martin Fowler's site as three phases: expand, migrate, contract, as reported from summaries of the page):
 
-1. **Expand:** add the new column or table, without removing anything. Old code ignores it.
+1. **Expand:** add the new column or table, without removing anything; new columns are usually **nullable** (allowed to be empty). Old code ignores them.
 2. **Migrate:** deploy code that writes to both old and new, copy existing data across, then switch reads to the new.
 3. **Contract:** only when nothing uses the old column any more, remove it, in a later, separate deployment.
 
-Each step can be rolled back alone, and no step destroys data the previous version needs. Before any migration of important data, check that a recent backup exists and has actually been restored somewhere. Lesson 4.3 tells what happened at Qafila when a migration went wrong; [*Software Testing: Zero to Hero in the AI Era*, lesson 4.3 — Reliability and data testing: resilience experiments, backups, migrations and data quality](../testing/index.html#/4.3) shows how to test migrations.
+Each step can be rolled back alone. Before migrating important data, check that a recent backup has actually been restored somewhere. Lesson 4.3 tells what happened at Qafila when a migration went wrong; [*Software Testing: Zero to Hero in the AI Era*, lesson 4.3 — Reliability and data testing: resilience experiments, backups, migrations and data quality](../testing/index.html#/4.3) shows how to test migrations.
 
-**Things you cannot roll back.** Some effects leave the system: a payment through the payment provider, a text message to a customer. Put them behind a flag, roll out slowly, and make them **idempotent** (doing them twice has the same effect as once), so a retry never charges a merchant twice.
+**Things you cannot roll back.** Some effects leave the system: a payment, a text message to a customer. Put them behind a flag, roll out slowly, and make them **idempotent** (doing them twice has the same effect as once), so a retry never charges a merchant twice.
 
-**A release plan, scaled to risk.** A text change needs no plan. Anything touching payments, data or a core journey gets a few lines:
+**A release plan, scaled to risk.** Anything touching payments, data or a core journey gets a few lines:
 
 | Field | Question |
 |---|---|
@@ -643,17 +628,16 @@ Each step can be rolled back alone, and no step destroys data the previous versi
 | Signals and thresholds | What do we watch, and what level means "stop"? |
 | Undo | Rollback, flag off, or roll forward? Has it been tried? |
 | Data | Any database change? Is it expand-and-contract? Is a backup verified? |
-| Who and when | Who deploys, who watches, and when (when people can watch, not before an unstaffed weekend)? |
+| Who and when | Who deploys, who watches, and when (not before an unstaffed weekend)? |
 
-**The memorable rule.** Deploy small and often, and never deploy anything you cannot undo or switch off.
 
 ## 🧰 The toolkit
 | Resource, tool or template | What it is and does | When to reach for it |
 |---|---|---|
 | **Release plan** | Change and risk, path to users, signals and thresholds, undo, data, who and when | Any change touching payments, data or a core journey |
 | **Feature flag** | A run-time switch that turns behaviour on or off for chosen users | Merging unfinished work; turning on gradually; switching off fast |
-| **Flag register** | Every flag with its owner, purpose and removal date | From the first flag; reviewed monthly |
-| **Rollback runbook** | Written, tried steps to return to the last good version | Before the first daily deploy; practised regularly |
+| **Flag register** | Every flag with its owner, purpose and removal date | From the first flag |
+| **Rollback runbook** | Written, tried steps back to the last good version | Before the first daily deploy |
 
 ## 🏛️ In practice at Qafila
 Faisal and Salma write the release plan for scheduled deliveries; Aisha owns the flag. Illustrative and fictional.
@@ -666,13 +650,13 @@ Faisal and Salma write the release plan for scheduled deliveries; Aisha owns the
 > | How it reaches users | Code merged daily behind flag `scheduled_pickups` (off). Then: on for 3 test shops run by staff → 10 volunteer merchants for one week → all 300 merchants |
 > | Signals and thresholds | Booked orders with no courier offer 10 minutes after their slot (stop if more than 2 in a day); order-creation error rate (stop if above yesterday's level); support tickets mentioning "scheduled" |
 > | Undo | Flag off (tried in staging: under one minute). Code rollback via the previous artefact (tried last week: about three minutes) |
-> | Data | New `pickup_at` column added in an earlier, separate deploy (expand); old code ignores it; nothing removed. Backup restore last tested by Faisal on staging this month |
+> | Data | New `pickup_at` column added in an earlier, separate deploy (expand); old code ignores it; nothing removed. Backup restore tried by Faisal on staging this month, with small test data only |
 > | Who and when | Before 1 p.m. on working days; Salma (on call) is told in the team channel before each step |
 > | Flag removal | Owner: Aisha. Remove the flag two weeks after full rollout |
 >
-> **Rollback runbook (one card):** 1. Say in the team channel "rolling back" and why. 2. Turn off any new flag. 3. If still unhealthy, redeploy the previous artefact from the pipeline. 4. Check the three signals. 5. Write two lines on what happened for the next stand-up.
+> **Rollback runbook (one card):** 1. Say in the team channel "rolling back" and why. 2. Turn off any new flag. 3. If still unhealthy, redeploy the previous artefact from the pipeline. 4. Check the three signals. 5. Write two lines on what happened for the next team check-in.
 
-Faisal's first draft went from three test shops straight to all 300; Salma, who would answer the phone, asked for a middle step. Aisha asked what turning the flag off would do to existing bookings; the team made sure they are still delivered, with a test.
+Faisal's first draft went from three test shops straight to all 300; Salma, who would answer the phone, asked for a middle step. This is the first database change the team has planned this carefully; it is not yet their habit for every migration, and lesson 4.3 shows what happened when one was rushed.
 
 ## 🛠️ Exercises
 **🟢 Deploy or release?** For each of these, say whether it is a deployment, a release, both or neither, and why: (a) new code is put on the servers with the feature flag off; (b) the flag is turned on for 10 merchants; (c) a pull request is merged into main; (d) the previous version is redeployed after errors rise; (e) a feature flag is deleted from the code two weeks after full rollout.
@@ -680,11 +664,10 @@ Faisal's first draft went from three test shops straight to all 300; Salma, who 
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** (a) Deployment only: users see nothing. (b) Release only: no new code, behaviour changes. (c) Neither yet: in main, not on servers (continuous deployment would trigger one). (d) Deployment of an older artefact; it may also un-release features. (e) Deployment of a clean-up; users notice nothing.
+**Model answer.** (a) Deployment only: users see nothing. (b) Release only: no new code, behaviour changes. (c) Neither yet: in main, not on servers (continuous deployment would trigger one). (d) Deployment of an older artefact; it may also un-release features. (e) Neither by itself: it is a code change. When it is deployed, it is a deployment with no release; users notice nothing.
 
 **Self-check.**
 - Did you separate "code on servers" from "behaviour users see"?
-- Did you notice that a rollback is itself a deployment?
 
 </details>
 
@@ -693,13 +676,12 @@ Faisal's first draft went from three test shops straight to all 300; Salma, who 
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** Risk: notes shown to the wrong courier, or kept visible longer than needed. Path: flag on for staff couriers, then one district, then all. Signals: courier app errors on the order screen; support tickets about notes. Undo: flag off (to be tried in staging first). Data: new nullable `dropoff_note` column added first; notes hidden after delivery. Who and when: working-day mornings, on-call person told.
+**Model answer.** Risk: notes shown to the wrong courier, or kept visible longer than needed. Path: flag on for staff couriers, then one district, then all. Signals: courier app errors on the order screen (stop if above yesterday's level); support tickets mentioning notes (stop at 3 in a day). Undo: flag off (to be tried in staging first). Data: new nullable (may be empty) `dropoff_note` column added first; notes hidden after delivery. Who and when: working-day mornings, on-call person told.
 
 **Self-check.**
 - Is there a step smaller than "everyone"?
-- Are your signals things someone can see within minutes, with a stop level decided in advance?
-- Did you say honestly whether the undo route has been tried?
-- Did you think about personal data in the change?
+- Does each signal have a stop level decided in advance?
+- Did you think about personal data?
 
 </details>
 
@@ -708,21 +690,19 @@ Faisal's first draft went from three test shops straight to all 300; Salma, who 
 
 <details><summary>Model answer and self-check</summary>
 
-**Model answer.** Deploy 1 (expand): add three nullable columns. Undo: drop the empty columns. Deploy 2: code writes both `address` and the new fields; a job fills existing orders where it can and flags the rest. Undo: roll back code; `address` is still complete. Deploy 3: reads switch to the new fields behind a flag. Undo: flag off. Deploy 4 (contract), weeks later: stop writing `address`, then remove it after a verified backup. After removal only a restore can undo it, which is why it comes last.
+**Model answer.** Deploy 1 (expand): add three nullable columns. Undo: drop the empty columns. Deploy 2: code writes both `address` and the new fields; a job fills existing orders where it can and flags the rest. Undo: roll back code; `address` is still complete. Deploy 3: reads switch to the new fields behind a flag. Undo: flag off. Deploy 4 (contract), weeks later: remove the flag and all reads and writes of `address`. Undo: code rollback, which works because `address` still exists (refill any gap from the new fields). Deploy 5, after a verified backup: drop the `address` column. Only a restore can undo it, which is why it comes last and alone.
 
 **Self-check.**
 - Could you roll back any single step without losing data?
-- Is the destructive step last, separate and preceded by a verified backup?
-- Did you plan for addresses that cannot be split automatically?
+- Is the destructive step last, alone and after a verified backup?
 
 </details>
 
 ## ⚠️ Mistakes and traps
-- **Big-bang releases.** Weeks of changes in one deployment make failures hard to find and hard to undo. Deploy small and often.
-- **Rollback never tried.** A rollback you have not practised is a hope, not a plan. Try it when nothing is broken.
-- **Destructive database changes in the same deploy as code.** If the code fails, the data is already gone. Use expand and contract, and verify backups.
-- **Flags that never die.** Old flags pile up and hide behaviour nobody understands. Give each an owner and a removal date.
-- **Gradual rollout with nobody watching.** An unwatched canary is just a slow full release. Decide signals and stop levels first.
+- **Big-bang releases.** Weeks of changes in one deployment are hard to debug and undo. Deploy small and often.
+- **Rollback never tried.** An unpractised rollback is a hope, not a plan.
+- **Destructive database changes in the same deploy as code.** If the code fails, the data is already gone. Use expand and contract.
+- **Flags that never die.** Give each an owner and a removal date.
 
 ## 🧾 Recap
 - Continuous delivery keeps every passing change ready to deploy with a routine action; continuous deployment goes all the way automatically.
@@ -730,7 +710,6 @@ Faisal's first draft went from three test shops straight to all 300; Salma, who 
 - Small, frequent deployments are easier to check and to undo; watch real signals and decide stop levels in advance.
 - Rollback first, investigate second, and practise rollback when nothing is broken.
 - Database changes and effects that leave the system (payments, messages) need expand and contract, flags and idempotent operations.
-- Rule: deploy small and often, and never deploy anything you cannot undo or switch off.
 
 ## ✍️ Check yourself
 **1. Faisal wants to merge parts of scheduled deliveries daily, but merchants must not see it until it is complete. What lets him do both?**
@@ -742,7 +721,7 @@ Faisal's first draft went from three test shops straight to all 300; Salma, who 
 
 <details><summary>Answer</summary>
 
-**B.** A flag separates deploying from releasing, so pieces deploy daily while users see nothing. A brings back long-lived branches, C duplicates production, and D gives up daily delivery. See "Separate deploying from releasing with feature flags".
+**B.** A flag separates deploying from releasing. A brings back long-lived branches, C duplicates production, and D gives up daily delivery. See "Separate deploying from releasing with feature flags".
 
 </details>
 
@@ -755,20 +734,20 @@ Faisal's first draft went from three test shops straight to all 300; Salma, who 
 
 <details><summary>Answer</summary>
 
-**C.** Rollback restores service in minutes; investigation follows calmly. A and D keep merchants waiting while people debug, and B lets the damage continue at the busiest time. See "Rollback first, investigate second".
+**C.** Rollback restores service in minutes. A and D keep merchants waiting while people debug, and B lets the damage continue. See "Rollback first, investigate second".
 
 </details>
 
 **3. The team wants to rename a column in the orders table. Which plan is safest?**
 
 - A. Add the new column, write to both, move reads over, and drop the old column in a later deploy.
-- B. Rename the column and update the code in one deploy, then roll back the code if it fails.
+- B. Add the new column, copy the data across and drop the old column, all in one deploy at a quiet hour.
 - C. Rename the column at night when few orders are created, so fewer orders are affected by errors.
 - D. Rename the column in staging first, and if staging works, rename it in production the same day.
 
 <details><summary>Answer</summary>
 
-**A.** Expand and contract keeps every step reversible. In B, rolling back the code does not undo the rename, so the old code breaks; C only reduces the victims; D still makes an irreversible change together with code. See "Database changes need their own care".
+**A.** Expand and contract keeps steps reversible. B has the right steps but puts them in one deploy, so the old column is gone before anyone knows the new code works, and a code rollback cannot bring it back; C only reduces the victims; D still makes an irreversible change together with code. See "Database changes need their own care".
 
 </details>
 
@@ -776,12 +755,12 @@ Faisal's first draft went from three test shops straight to all 300; Salma, who 
 
 - A. Number of pull requests merged and number of engineers on the team each month.
 - B. Lines of code changed per week and the code coverage reported by the pipeline.
-- C. Number of feature flags created and the number of tests added each month.
+- C. Deployment frequency together with lines of code changed in each deploy.
 - D. Change lead time together with change fail rate, read side by side over time.
 
 <details><summary>Answer</summary>
 
-**D.** DORA's measures pair throughput (such as lead time) with instability (such as change fail rate), so you see speed and safety together. A and B measure activity, not delivery or stability, and C counts tools rather than outcomes. See "Measuring speed and stability together".
+**D.** DORA's measures pair throughput (lead time) with instability (change fail rate). A and B measure activity, not delivery or stability; C pairs a real throughput measure with a size count, so nothing shows whether changes fail. See "Measuring speed and stability together".
 
 </details>
 
@@ -789,22 +768,22 @@ Faisal's first draft went from three test shops straight to all 300; Salma, who 
 
 - A. Text messages are more expensive than screen changes, so the finance lead must approve them first.
 - B. A sent message cannot be rolled back, so it needs a flag, a slow rollout and retries that are safe.
-- C. Text messages are always covered by special laws, so the change must wait for a legal review.
-- D. The screen change can be tested in CI, but text messages can only ever be tested by hand.
+- C. Text messages may fall under special rules, so the change must wait for a full legal review.
+- D. The screen change can be tested in CI, while text messages need a manual test on a real phone.
 
 <details><summary>Answer</summary>
 
-**B.** Effects that leave the system cannot be rolled back, so they need a switch, a gradual start and idempotent sending. A and D are unsupported claims, and C states a legal conclusion instead of asking what rules apply. See "Things you cannot roll back".
+**B.** Effects that leave the system cannot be rolled back. A and D are unsupported claims, and C turns "ask what rules apply" into a blanket wait that does not make the change any safer. See "Things you cannot roll back".
 
 </details>
 
 ## 📚 References
-- Humble, J. and Farley, D., "What is Continuous Delivery?", continuousdelivery.com: https://continuousdelivery.com/ — the definition of continuous delivery (reported from search summaries quoting the site; the page could not be opened from this environment on 2026-11-22).
+- Humble, J. and Farley, D., "What is Continuous Delivery?", continuousdelivery.com: https://continuousdelivery.com/ (reported from search summaries; page not opened, 2026-11-22).
 - Humble, J. and Farley, D., *Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation* (Addison-Wesley, 2010) (full citation; not opened).
-- DORA, "DORA's software delivery performance metrics" (dora.dev guide): https://dora.dev/guides/dora-metrics/ — throughput and instability measures, including deployment rework rate added in 2024 (reported from search summaries; not opened).
-- Hodgson, P., "Feature Toggles (aka Feature Flags)", martinfowler.com, 2016: https://martinfowler.com/articles/feature-toggles.html — categories of toggles with different lifetimes (reported from search summaries; not opened).
-- Fowler, M., "Parallel Change", martinfowler.com bliki: https://martinfowler.com/bliki/ParallelChange.html — expand, migrate, contract (reported from search summaries; not opened).
-- Google, *The Site Reliability Workbook*, chapter 16, "Canarying Releases": https://sre.google/workbook/canarying-releases/ (reported from search summaries; not opened).
+- DORA, "DORA's software delivery performance metrics" (dora.dev guide): https://dora.dev/guides/dora-metrics/ (reported; not opened).
+- Hodgson, P., "Feature Toggles (aka Feature Flags)", martinfowler.com, 2016: https://martinfowler.com/articles/feature-toggles.html (reported; not opened).
+- martinfowler.com bliki, "Parallel Change" (2014): https://martinfowler.com/bliki/ParallelChange.html — expand, migrate, contract (reported; not opened; author not confirmed, so none is given).
+- Google, *The Site Reliability Workbook*, chapter 16, "Canarying Releases": https://sre.google/workbook/canarying-releases/ (reported; not opened).
 - Library course: [*System Design for Vibe Coders*, lesson 4.4 — Rollback, staging, and release gates](../vibe/index.en.html#l4-4).
 - Library course: [*Cloud & DevOps: Zero to Hero*, lesson 4.2 — Release strategies: rolling, blue-green, canary, feature flags and rollback](../cloud/index.html#/4.2).
 - Library course: [*Cloud & DevOps: Zero to Hero*, lesson 4.3 — Securing the pipeline: secrets, signed artefacts and least-privilege deploys](../cloud/index.html#/4.3).
