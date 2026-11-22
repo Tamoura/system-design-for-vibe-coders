@@ -9,7 +9,7 @@
 # 8.1 — Team structures and boundaries: product, platform and enabling teams
 *Level: 🟡 Intermediate* · *Prerequisites: 5.1, 5.3* · *Step: Collaborate*
 
-**After this you can** draw a team map for a growing product (which team owns which part, what role each team plays, and how each pair of teams connects), write a one-page team page for one team, and spot the two most common boundary problems: work split by technical layer, and a team that owns more than it can understand. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** draw a team map for a growing product (which team owns which part, what role each team plays, and how each pair of teams connects), write a one-page team page for one team, and spot the two most common boundary problems: work split by technical layer, and a team that owns more than it can understand. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Past one team, **where you draw boundaries decides how work flows.** A change across three teams waits at every hand-off.
@@ -271,7 +271,7 @@ Faisal's first draft kept Apps as one team "because mobile skills are rare". Ais
 # 8.2 — Dependencies, planning and coordination across teams
 *Level: 🟡 Intermediate* · *Prerequisites: 6.1, 8.1* · *Step: Collaborate*
 
-**After this you can** list the dependencies of work that crosses teams, sort them by kind, decide for each whether to remove it, make it self-service, put it behind a contract or coordinate it, and keep a dependency register and a light cross-team plan that show who needs what from whom, by when. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** list the dependencies of work that crosses teams, sort them by kind, decide for each whether to remove it, make it self-service, put it behind a contract or coordinate it, and keep a dependency register and a light cross-team plan that show who needs what from whom, by when. *Study time: reading about 15 min, hands-on about 95 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **dependency** is anything a team needs from outside itself before its work can be finished or used. Each one is a place where work waits.
@@ -510,7 +510,7 @@ The first draft had 23 rows; the ladder removed eleven. Faisal wanted Routing in
 # 8.3 — Internal platforms and developer experience
 *Level: 🟡 Intermediate* · *Prerequisites: 3.3, 4.1, 8.1* · *Step: Collaborate*
 
-**After this you can** explain what an internal platform is and why it should be run as a product, write a golden-path checklist for one common task, describe a platform on one page, and run a short developer-experience survey whose results point to one improvement. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** explain what an internal platform is and why it should be run as a product, write a golden-path checklist for one common task, describe a platform on one page, and run a short developer-experience survey whose results point to one improvement. *Study time: reading about 15 min, hands-on about 100 min (estimate).*
 
 ## ⚡ In 60 seconds
 - An **internal platform** is the shared tools, templates and documentation product teams use to build, ship and run software, offered as **self-service**, without waiting for anyone.

@@ -527,7 +527,7 @@ Qafila requests (all figures illustrative):
 # 5.3 — Making work visible and limiting work in progress
 *Level: 🟡 Intermediate* · *Prerequisites: 5.2* · *Step: Collaborate*
 
-**After this you can** design a team board that matches how work really flows, set and use work-in-progress limits, explain with Little's Law why less work in progress means faster delivery, and run a weekly flow check with four simple measures. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** design a team board that matches how work really flows, set and use work-in-progress limits, explain with Little's Law why less work in progress means faster delivery, and run a weekly flow check with four simple measures. *Study time: reading about 20 min, hands-on about 95 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Work in progress (WIP)** is everything started and not yet finished. Too much of it is a common, barely visible reason teams feel busy and finish little.

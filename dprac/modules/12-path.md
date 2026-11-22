@@ -9,7 +9,7 @@
 # 12.1 — Enterprise architecture and portfolio, seen from a team
 *Level: 🔴 Advanced* · *Prerequisites: 9.1, 10.1, 11.1* · *Step: Govern, Collaborate*
 
-**After this you can** place a team proposal on the company's capability map, check it against the application portfolio and the technology standards, name the investment theme it belongs to, and write a one-page fit check that says whether to build, reuse, extend or stop. *Study time: reading about 20 min, hands-on about 80 min (estimate).*
+**After this you can** place a team proposal on the company's capability map, check it against the application portfolio and the technology standards, name the investment theme it belongs to, and write a one-page fit check that says whether to build, reuse, extend or stop. *Study time: reading about 15 min, hands-on about 75 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Enterprise architecture** keeps a shared picture of what the business does, which systems support it and which technologies are preferred, so many teams' decisions add up.
@@ -277,7 +277,7 @@ The Thoughtworks pages could not be opened from this environment; the ring names
 # 12.2 — AI in digital work: using it well, with controls
 *Level: 🔴 Advanced* · *Prerequisites: 3.1, 9.2, 11.2* · *Step: Govern, Collaborate*
 
-**After this you can** sort AI-assisted tasks by risk, choose the check each needs, decide which data may go into which tool, and write a one-page AI use card naming tools, data limits, checks and who is accountable for each output. *Study time: reading about 20 min, hands-on about 75 min (estimate).*
+**After this you can** sort AI-assisted tasks by risk, choose the check each needs, decide which data may go into which tool, and write a one-page AI use card naming tools, data limits, checks and who is accountable for each output. *Study time: reading about 20 min, hands-on about 80 min (estimate).*
 
 ## ⚡ In 60 seconds
 - AI assistants now help with almost every step of digital work.
@@ -530,7 +530,7 @@ The two Google Cloud pages were opened on 22 November 2026; the other sources co
 # 12.3 — Frameworks, bodies of knowledge and your learning path
 *Level: 🔴 Advanced* · *Prerequisites: 0.3* · *Step: Govern, Collaborate*
 
-**After this you can** say in one line what each well-known framework is for and who owns it, decide whether a certification is worth your time for a stated goal, and write a one-page learning plan for the next twelve months. *Study time: reading about 20 min, hands-on about 70 min (estimate).*
+**After this you can** say in one line what each well-known framework is for and who owns it, decide whether a certification is worth your time for a stated goal, and write a one-page learning plan for the next twelve months. *Study time: reading about 20 min, hands-on about 85 min (estimate).*
 
 ## ⚡ In 60 seconds
 - At work you will hear many framework names (Scrum, ITIL®, COBIT®, TOGAF®, SAFe® and more). Each is one owner's answer to one kind of question, often with a certification scheme.

@@ -263,7 +263,7 @@ Recommendation: B now, D in parallel; decide on C from the trial.
 # 10.2 — The cost of running digital products: cloud costs and unit economics
 *Level: 🔴 Advanced* · *Prerequisites: 1.3, 4.1* · *Step: Invest*
 
-**After this you can** read a cloud bill by service and by team, calculate the cost per unit of value for one product (such as cost per 1,000 deliveries), explain a month's change in that number, and draw up a ranked list of savings that does not weaken the reliability target. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** read a cloud bill by service and by team, calculate the cost per unit of value for one product (such as cost per 1,000 deliveries), explain a month's change in that number, and draw up a ranked list of savings that does not weaken the reliability target. *Study time: reading about 20 min, hands-on about 85 min (estimate).*
 
 ## ⚡ In 60 seconds
 - In the cloud, every engineer who creates or resizes a resource is spending money. Cost is a design decision.
@@ -524,7 +524,7 @@ Calculate cost per 1,000 deliveries for each month, say which month needs explai
 # 10.3 — Suppliers, contracts and outsourcing
 *Level: 🔴 Advanced* · *Prerequisites: 2.3, 7.3* · *Step: Invest*
 
-**After this you can** list the outside suppliers one product depends on and rank them by how much the service would suffer without them, run a basic due-diligence check on a new supplier, read a contract summary for the terms that matter to practitioners (scope, price changes, service levels, data, security evidence, exit), and write an exit plan for one supplier. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** list the outside suppliers one product depends on and rank them by how much the service would suffer without them, run a basic due-diligence check on a new supplier, read a contract summary for the terms that matter to practitioners (scope, price changes, service levels, data, security evidence, exit), and write an exit plan for one supplier. *Study time: reading about 20 min, hands-on about 110 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Every product depends on **suppliers**: cloud providers, software-as-a-service tools, APIs (messaging, maps, payments), open-source components and people (contractors, outsourcing partners).

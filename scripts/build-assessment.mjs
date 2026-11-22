@@ -203,6 +203,19 @@ const COURSES = [
         'تعرف الأفكار الأساسية في عدد من الوحدات. الخطوة التالية: نفّذ التمارين، من خريطة مسار القيمة ولوحة المنتج ومراجعة المحفظة وورقة أهداف مستوى الخدمة (SLO)، وعلّم الأدلة.',
         'تعرف معظم الوحدات وأنتجت عددًا من المخرجات، مثل مذكرة تمويل أو نموذج تغيير أو نموذج تكلفة أو خريطة سلسلة الأدوات. الخطوة التالية: أغلق الفجوات المتبقية.',
         'إجاباتك تغطي كل الوحدات، وتذكر أنك أنتجت معظم المخرجات. هذا فحص ذاتي (self-check)، وليس مؤهلًا ولا شهادة. الخطوة التالية: اختبر مخططك التشغيلي مع من يؤدون العمل، وقِس ما يتغيّر.'] } },
+  { id: 'dprac', src: 'dprac/assessment', out: 'dprac', reader: { en: 'index.html', ar: 'index.ar.html' }, mode: 'hash', store: 'dprac', theme: 'dprac-theme',
+    name: { en: 'Digital Practice', ar: 'الممارسة الرقمية' }, brand: 'Digital Practice',
+    unit: { en: 'module', ens: 'modules', ar: 'وحدة (module)', ars: 'وحدات (modules)' },
+    evidenceHint: { en: 'for real, with something a reviewer could open — a sketch, a test plan, a runbook, a board, a cost sheet — not just planned', ar: 'فعليًا، مع شيء يستطيع المراجِع فتحه، كمخطط أو خطة اختبار أو دليل تشغيل أو لوحة أو جدول تكلفة، لا مجرد خطة' },
+    steps: { // next step for each rung of the shared SCALE: no job titles, readiness, certification or income claims
+      en: ['Next: start with the orientation and the value module, and sketch one product and the service around it. Begin with the modules marked Not yet.',
+        'You know the core ideas in several modules. Next: do the exercises — a first-product test, a release checklist, a runbook, a team board — and tick the evidence.',
+        'You know most modules and have produced several of the artefacts, such as an incident review, a service map, a cost sheet or a risk register. Next: close the remaining gaps.',
+        'Your answers cover every module and you report producing most of the artefacts. This is a self-check, not a qualification or a certification. Next: use what you built in your own work, and ask the people you work with what to improve.'],
+      ar: ['الخطوة التالية: ابدأ بوحدة التوجيه ووحدة القيمة، وارسم منتجًا واحدًا والخدمة المحيطة به. ابدأ بالوحدات المعلَّمة «ليس بعد».',
+        'تعرف الأفكار الأساسية في عدد من الوحدات. الخطوة التالية: نفّذ التمارين، من اختبار أول منتج وقائمة تحقق الإصدار ودليل التشغيل (runbook) ولوحة الفريق، وعلّم الأدلة.',
+        'تعرف معظم الوحدات وأنتجت عددًا من المخرجات، مثل مراجعة حادث أو خريطة خدمة أو جدول تكلفة أو سجل مخاطر (risk register). الخطوة التالية: أغلق الفجوات المتبقية.',
+        'إجاباتك تغطي كل الوحدات، وتذكر أنك أنتجت معظم المخرجات. هذا فحص ذاتي (self-check)، وليس مؤهلًا ولا شهادة. الخطوة التالية: استخدم ما بنيته في عملك، واسأل من تعمل معهم عمّا يمكن تحسينه.'] } },
 ];
 
 /* ---------------------------------------------------------------- load + validate */

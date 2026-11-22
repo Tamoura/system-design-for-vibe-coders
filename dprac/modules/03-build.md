@@ -9,7 +9,7 @@
 # 3.1 — Version control, code review and working agreements
 *Level: 🟢 Beginner* · *Prerequisites: 0.2, 2.3* · *Step: Build*
 
-**After this you can** explain how a team uses version control, branches and pull requests to change shared code safely, review a small pull request against a checklist, and write a one-page team working agreement that says how code gets from a laptop into the main branch. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** explain how a team uses version control, branches and pull requests to change shared code safely, review a small pull request against a checklist, and write a one-page team working agreement that says how code gets from a laptop into the main branch. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Version control** keeps every change to the code as a named, dated, reversible record, with the reason for it. It is the team's shared memory.
@@ -276,7 +276,7 @@ Faisal wanted "two approvals for everything"; the others said that with six engi
 # 3.2 — Automated testing and continuous integration
 *Level: 🟢 Beginner* · *Prerequisites: 3.1* · *Step: Build*
 
-**After this you can** explain the main kinds of automated tests and what each is for, write a short risk-based test plan for one change, and sketch a continuous integration pipeline that builds and tests every pull request and tells the team quickly when something breaks. *Study time: reading about 20 min, hands-on about 100 min (estimate).*
+**After this you can** explain the main kinds of automated tests and what each is for, write a short risk-based test plan for one change, and sketch a continuous integration pipeline that builds and tests every pull request and tells the team quickly when something breaks. *Study time: reading about 15 min, hands-on about 100 min (estimate).*
 
 ## ⚡ In 60 seconds
 - An **automated test** is code that checks other code and reports pass or fail, the same way every time, in seconds.
@@ -540,7 +540,7 @@ Faisal's first plan had no "not tested" line; Aisha asked what he was leaving ou
 # 3.3 — Continuous delivery and safe deployment
 *Level: 🟢 Beginner* · *Prerequisites: 3.1, 3.2* · *Step: Build, Deliver*
 
-**After this you can** explain the difference between deploying and releasing, describe how continuous delivery, feature flags, gradual rollouts and rollback make frequent changes safe, and write a release plan for one change with a check after release and an undo route, saying whether it has been tried. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** explain the difference between deploying and releasing, describe how continuous delivery, feature flags, gradual rollouts and rollback make frequent changes safe, and write a release plan for one change with a check after release and an undo route, saying whether it has been tried. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Continuous delivery** means every change that passes the pipeline is kept in a state where it could go to production safely, at any time, with one routine action.

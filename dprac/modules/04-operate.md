@@ -9,7 +9,7 @@
 # 4.1 — Infrastructure as code and cloud basics for practitioners
 *Level: 🟡 Intermediate* · *Prerequisites: 2.3, 3.3* · *Step: Operate*
 
-**After this you can** list the parts of a small product's cloud setup in an environment inventory, explain what infrastructure as code is and how its plan-review-apply cycle works, and read a short plan to spot a change that would destroy or replace something important before anyone applies it. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** list the parts of a small product's cloud setup in an environment inventory, explain what infrastructure as code is and how its plan-review-apply cycle works, and read a short plan to spot a change that would destroy or replace something important before anyone applies it. *Study time: reading about 15 min, hands-on about 85 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Infrastructure** is everything your code runs on: servers, the database, file storage, networks, domain names, access rules and secrets. In the cloud, all of it is created through the provider's interface.
@@ -269,7 +269,7 @@ Write your review comment: what is safe, what is dangerous, what you ask for, an
 # 4.2 — Monitoring, alerts and on-call
 *Level: 🟡 Intermediate* · *Prerequisites: 3.3, 4.1* · *Step: Operate*
 
-**After this you can** choose a few signals that show whether customers are being served, sort alerts into "wake someone", "make a ticket" and "delete", write an alert specification with a short runbook, and design a small on-call rota with handover and a regular review of alert noise. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** choose a few signals that show whether customers are being served, sort alerts into "wake someone", "make a ticket" and "delete", write an alert specification with a short runbook, and design a small on-call rota with handover and a regular review of alert noise. *Study time: reading about 15 min, hands-on about 95 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Monitoring** means collecting signals about a running system and watching them. **Observability** is how well those signals let you answer new questions about what is going on inside.
@@ -516,7 +516,7 @@ The review moved Salma off the night phone: she could not act on most pages, and
 # 4.3 — Incidents, post-incident reviews and reliability targets
 *Level: 🟡 Intermediate* · *Prerequisites: 3.3, 4.1, 4.2* · *Step: Operate*
 
-**After this you can** run the first hour of an incident with clear roles (restore service first, communicate, keep a timeline), write a blameless post-incident review with contributing factors and owned actions, and draft a reliability target for one user journey with its error budget worked out in minutes. *Study time: reading about 25 min, hands-on about 100 min (estimate).*
+**After this you can** run the first hour of an incident with clear roles (restore service first, communicate, keep a timeline), write a blameless post-incident review with contributing factors and owned actions, and draft a reliability target for one user journey with its error budget worked out in minutes. *Study time: reading about 15 min, hands-on about 110 min (estimate).*
 
 ## ⚡ In 60 seconds
 - An **incident** is an unplanned event that harms, or threatens to harm, the service customers rely on.

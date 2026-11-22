@@ -9,7 +9,7 @@
 # 1.1 — What makes a product digital, and how it creates value
 *Level: 🟢 Beginner* · *Prerequisites: 0.1, 0.2* · *Step: Discover*
 
-**After this you can** describe one digital product in terms of who it serves, what it changes in their day and how that change becomes value for the customer and for the business, and write a one-page value sheet for one customer group with a measure you could check. *Study time: reading about 20 min, hands-on about 80 min (estimate).*
+**After this you can** describe one digital product in terms of who it serves, what it changes in their day and how that change becomes value for the customer and for the business, and write a one-page value sheet for one customer group with a measure you could check. *Study time: reading about 15 min, hands-on about 80 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **digital product** is used through software (an app, a website, an interface other software calls): built once, copied cheaply, changed often, run every day.
@@ -274,7 +274,7 @@ Ranking: the button first (observed pain); dark mode second, if couriers confirm
 # 1.2 — Understanding customers: problems, jobs and evidence
 *Level: 🟢 Beginner* · *Prerequisites: 1.1* · *Step: Discover*
 
-**After this you can** write a problem statement for one customer group, run a short interview about past behaviour rather than opinions, and keep an evidence log that grades each finding. *Study time: reading about 20 min, hands-on about 100 min (estimate).*
+**After this you can** write a problem statement for one customer group, run a short interview about past behaviour rather than opinions, and keep an evidence log that grades each finding. *Study time: reading about 15 min, hands-on about 110 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **problem statement** names who has the problem, in what situation, what it costs them, and how they cope today. It says nothing about the solution.
@@ -544,7 +544,7 @@ Assumptions: (1) counter staff will remember to press "ready" in the rush (high 
 # 1.3 — Business models, costs and the unit of value
 *Level: 🟢 Beginner* · *Prerequisites: 1.1, 1.2* · *Step: Discover*
 
-**After this you can** describe a digital product's business model in plain words, choose the unit of value it is paid for, and build a one-page sheet that compares the revenue and the cost to serve for one unit, separating fixed from variable costs and showing the manual work. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** describe a digital product's business model in plain words, choose the unit of value it is paid for, and build a one-page sheet that compares the revenue and the cost to serve for one unit, separating fixed from variable costs and showing the manual work. *Study time: reading about 15 min, hands-on about 90 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **business model** answers four questions: who pays, for what, how the product reaches them, and what it costs to deliver.

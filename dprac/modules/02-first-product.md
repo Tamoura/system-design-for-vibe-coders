@@ -9,7 +9,7 @@
 # 2.1 — Discovery: framing a problem and testing assumptions
 *Level: 🟢 Beginner* · *Prerequisites: 1.2* · *Step: Discover*
 
-**After this you can** turn a product idea into an assumption map of ten or more assumptions sorted by importance and evidence, pick the one to test first, and write a test plan with a pass line decided before the test runs. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** turn a product idea into an assumption map of ten or more assumptions sorted by importance and evidence, pick the one to test first, and write a test plan with a pass line decided before the test runs. *Study time: reading about 20 min, hands-on about 95 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Discovery** is the work of finding out what to build before building it: which problem matters, which solution might solve it, and what must be true for that solution to work.
@@ -274,7 +274,7 @@ Faisal wanted Bakery B counted as a pass because "the owner loved the idea". Mah
 # 2.2 — The smallest useful product: scope, prototypes and learning
 *Level: 🟢 Beginner* · *Prerequisites: 2.1* · *Step: Discover, Design*
 
-**After this you can** draw a story map for one product or feature, cut a first slice that does the job end to end for one group, write a scope list of what is in, next and out, and choose the right kind of prototype for each open question. *Study time: reading about 20 min, hands-on about 100 min (estimate).*
+**After this you can** draw a story map for one product or feature, cut a first slice that does the job end to end for one group, write a scope list of what is in, next and out, and choose the right kind of prototype for each open question. *Study time: reading about 20 min, hands-on about 115 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A first product should be the **smallest useful product**: the least that does real users' job from start to finish and teaches you what you most need to learn next.

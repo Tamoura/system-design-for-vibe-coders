@@ -9,7 +9,7 @@
 # 0.1 — What digital practice is: products, services and the work behind them
 *Level: 🟢 Beginner* · *Prerequisites: none* · *Step: Discover*
 
-**After this you can** draw a one-page product and service sketch for one digital product: who uses it and for what, the service that surrounds the software, the kinds of work that keep both going, and who does each kind of work today. *Study time: reading about 20 min, hands-on about 70 min (estimate).*
+**After this you can** draw a one-page product and service sketch for one digital product: who uses it and for what, the service that surrounds the software, the kinds of work that keep both going, and who does each kind of work today. *Study time: reading about 15 min, hands-on about 70 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **digital product** is something people use through software: an app, a website, an online tool. A **service** is the help and promise around it: support, reliability, billing, onboarding. Customers experience both as one thing.
@@ -254,7 +254,7 @@ Faisal's first draft left out the service section: "That's not the product." Mah
 # 0.2 — Meet Qafila and the eight steps
 *Level: 🟢 Beginner* · *Prerequisites: 0.1* · *Step: Discover*
 
-**After this you can** take one week of work on a digital product and sort every task into the eight steps (Discover, Design, Build, Deliver, Operate, Collaborate, Invest, Govern), name who did it and what evidence it left, and spot the steps nobody is covering. *Study time: reading about 20 min, hands-on about 75 min (estimate).*
+**After this you can** take one week of work on a digital product and sort every task into the eight steps (Discover, Design, Build, Deliver, Operate, Collaborate, Invest, Govern), name who did it and what evidence it left, and spot the steps nobody is covering. *Study time: reading about 15 min, hands-on about 75 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Qafila** is a **fictional** Gulf startup that builds a delivery-coordination app for small businesses and their couriers, followed through five growth stages.

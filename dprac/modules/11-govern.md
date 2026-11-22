@@ -9,7 +9,7 @@
 # 11.1 — Governance that enables: decision rights and guardrails
 *Level: 🔴 Advanced* · *Prerequisites: 8.3, 9.1* · *Step: Govern*
 
-**After this you can** sort a set of decisions by how hard they are to reverse and how far their effects reach, write a decision-rights map that names who decides, who must be consulted and what evidence is kept, and turn one manual approval gate into an automatic guardrail with a time-limited exception route. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** sort a set of decisions by how hard they are to reverse and how far their effects reach, write a decision-rights map that names who decides, who must be consulted and what evidence is kept, and turn one manual approval gate into an automatic guardrail with a time-limited exception route. *Study time: reading about 20 min, hands-on about 95 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Governance** is how a company decides who makes which decisions, within what limits, and how it checks they were made well. **Management** is making and carrying out those decisions day to day.
@@ -259,7 +259,7 @@ Instead of the board, Dana sampled 20 pull requests a month for a quarter. Salma
 # 11.2 — Security and risk in everyday practice
 *Level: 🔴 Advanced* · *Prerequisites: 3.1, 9.2, 11.1* · *Step: Govern*
 
-**After this you can** run a short threat model on a planned change using four questions, rate each risk you find by likelihood and impact, choose a treatment (reduce, avoid, transfer or accept), and write risk register entries with an owner, a due date and a review date that a security lead could act on. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** run a short threat model on a planned change using four questions, rate each risk you find by likelihood and impact, choose a treatment (reduce, avoid, transfer or accept), and write risk register entries with an owner, a due date and a review date that a security lead could act on. *Study time: reading about 20 min, hands-on about 100 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Security** is protecting the **confidentiality** (only the right people see it), **integrity** (it is correct and not tampered with) and **availability** (it works when needed) of systems and data.

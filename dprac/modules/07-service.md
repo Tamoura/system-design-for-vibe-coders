@@ -9,7 +9,7 @@
 # 7.1 — Designing the service around the product: support model and knowledge
 *Level: 🟡 Intermediate* · *Prerequisites: 4.2, 4.3* · *Step: Operate*
 
-**After this you can** describe a product's support model (who contacts you, through which channels, who answers at each level and how a question moves between them), sort a week of contacts by reason, and write a knowledge article that someone else can follow without asking you. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** describe a product's support model (who contacts you, through which channels, who answers at each level and how a question moves between them), sort a week of contacts by reason, and write a knowledge article that someone else can follow without asking you. *Study time: reading about 20 min, hands-on about 85 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **product** is what people use; a **service** is the product plus the people, routes and promises around it. Customers judge the service, not the code.
@@ -261,7 +261,7 @@ Top reason: tracking stuck, 3. The product causes it, so it goes to the product 
 # 7.2 — Requests, changes and the service desk in a growing company
 *Level: 🟡 Intermediate* · *Prerequisites: 3.3, 7.1* · *Step: Operate*
 
-**After this you can** sort incoming work into questions, service requests, incidents, changes and ideas, set a priority from impact and urgency, write a request catalogue entry with its steps and target time, and choose the right route (routine, planned or urgent) for a change to the live system, including a one-off data fix. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** sort incoming work into questions, service requests, incidents, changes and ideas, set a priority from impact and urgency, write a request catalogue entry with its steps and target time, and choose the right route (routine, planned or urgent) for a change to the live system, including a one-off data fix. *Study time: reading about 20 min, hands-on about 85 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Work arrives in five kinds, each with its own route: **question**, **service request**, **incident**, **change** and **idea**.
@@ -516,7 +516,7 @@ The fee went through the new catalogue entry, and Bilal found the signed agreeme
 # 7.3 — Service levels and talking to customers when things go wrong
 *Level: 🟡 Intermediate* · *Prerequisites: 4.3, 7.1, 7.2* · *Step: Operate*
 
-**After this you can** write a service-level sheet for one journey (indicator, internal target, error budget in minutes, budget policy), explain why a written promise to customers should be looser than the internal target and what questions to ask before signing one, and write the first message, an update and a closing note for a customer-facing incident. *Study time: reading about 25 min, hands-on about 100 min (estimate).*
+**After this you can** write a service-level sheet for one journey (indicator, internal target, error budget in minutes, budget policy), explain why a written promise to customers should be looser than the internal target and what questions to ask before signing one, and write the first message, an update and a closing note for a customer-facing incident. *Study time: reading about 20 min, hands-on about 100 min (estimate).*
 
 ## ⚡ In 60 seconds
 - A **service level** is how well a service performs, in numbers: how available, how fast, how quickly support answers.

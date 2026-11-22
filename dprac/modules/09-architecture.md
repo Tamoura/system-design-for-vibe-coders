@@ -272,7 +272,7 @@ Faisal's ten-service plan became a series of records, one boundary at a time. Da
 # 9.2 — Data as an asset: quality, ownership and privacy
 *Level: 🟡 Intermediate* · *Prerequisites: 6.3, 9.1* · *Step: Design*
 
-**After this you can** build a data inventory for a product (what data exists, where, why, who owns it, whether it is personal and how long it is kept), write quality checks for one important dataset, and spot privacy questions early enough to ask the right person. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** build a data inventory for a product (what data exists, where, why, who owns it, whether it is personal and how long it is kept), write quality checks for one important dataset, and spot privacy questions early enough to ask the right person. *Study time: reading about 20 min, hands-on about 95 min (estimate).*
 
 ## ⚡ In 60 seconds
 - Data is an **asset** when the business depends on it to run, decide or comply. It needs an owner, care and a record of where it is.
@@ -528,7 +528,7 @@ Yasmin had assumed "keep order details forever" was safest. Bilal said accountin
 # 9.3 — Technical debt and modernisation
 *Level: 🟡 Intermediate* · *Prerequisites: 9.1, 6.1* · *Step: Design*
 
-**After this you can** recognise technical debt in a codebase, record it in a debt register with its cost to the team, choose between living with it, paying it down and replacing the part, and sketch an incremental modernisation plan that keeps the product running. *Study time: reading about 20 min, hands-on about 90 min (estimate).*
+**After this you can** recognise technical debt in a codebase, record it in a debt register with its cost to the team, choose between living with it, paying it down and replacing the part, and sketch an incremental modernisation plan that keeps the product running. *Study time: reading about 20 min, hands-on about 100 min (estimate).*
 
 ## ⚡ In 60 seconds
 - **Technical debt** is the future cost of shortcuts and out-of-date choices: extra work every time you touch the part, until you fix it.
