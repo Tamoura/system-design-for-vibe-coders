@@ -230,5 +230,33 @@
       { "value": 240, "label": "practice questions" }
     ],
     "tags": ["IT managers · architects", "Original, framework-neutral"]
+  },
+  {
+    "slug": "dprac",
+    "verb": "Practise digital",
+    "title": "Digital Practice",
+    "subtitle": "Building and Running Digital Products",
+    "titleAr": "الممارسة الرقمية",
+    "color": "#e3a35b",
+    "hook": "From *two people* to *four hundred:* what changes at each stage.",
+    "topicsLabel": "One fictional startup, five growth stages",
+    "topics": [
+      "Value & first product",
+      "Build & release safely",
+      "Run a reliable service",
+      "Teams & architecture",
+      "Money & suppliers",
+      "Risk, security & your path"
+    ],
+    "stats": [
+      { "value": 14, "label": "modules" },
+      { "value": 41, "label": "lessons" },
+      { "value": 193, "label": "tools & templates" },
+      { "value": 240, "label": "practice questions" }
+    ],
+    "tags": [
+      "Early-career practitioners",
+      "Original, framework-neutral"
+    ]
   }
 ]
