@@ -90,7 +90,7 @@ flowchart LR
 
 ### 🔴 Expert view
 
-**Measure speed and stability together.** Counting only speed invites breakage; counting only outages invites standstill. DORA (DevOps Research and Assessment, a long-running research programme now part of Google Cloud) groups its software delivery measures into two factors, throughput (how fast and how often changes reach production, and how quickly a failed deployment is recovered) and instability (how often changes fail or need unplanned rework), and describes them as read together (as reported in summaries of DORA's guide). The habit to form now: when someone calls a team "fast", ask how often its changes fail, and the other way round.
+**Measure speed and stability together.** Counting only speed invites breakage; counting only outages invites standstill. DORA (DevOps Research and Assessment, a long-running research programme now part of Google Cloud) groups its software delivery measures into two factors, throughput (how fast and how often changes reach production, and how quickly a failed deployment is recovered) and instability (how often changes fail or need unplanned rework), and says that taken together the two factors give a high-level view of delivery performance (DORA's metrics guide, updated January 2026). The habit to form now: when someone calls a team "fast", ask how often its changes fail, and the other way round.
 
 **The service is part of the design.** The bakery problem could be fixed with code (detect a silent courier), with a service promise (no courier confirmed ten minutes before pickup means the shop gets a call), or both. Module 7 covers the service option.
 
@@ -245,7 +245,7 @@ Faisal's first draft left out the service section: "That's not the product." Mah
 </details>
 
 ## 📚 References
-- DORA, "DORA's software delivery performance metrics" (dora.dev guide): https://dora.dev/guides/dora-metrics/ — throughput and instability factors (reported: confirmed from search summaries only, 2026-11-22; to be re-checked against the page itself).
+- DORA, "DORA's software delivery performance metrics" (dora.dev guide): https://dora.dev/guides/dora-metrics/ — five metrics in two factors, throughput and instability (page last updated 5 January 2026; opened 22 November 2026).
 - Library course: [*Running IT as a Business*, lesson 2.1 — Digital products, services and projects: what each is and who owns it](../itbiz/index.html#/2.1) (the manager's view of products and projects).
 - Library course: [*From Graduate to Hired*, lesson 0.2 — The roles map: what software, AI, data, platform and security juniors actually do all day](../career/index.html#/0.2) (what early-career roles do day to day).
 

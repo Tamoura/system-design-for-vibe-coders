@@ -263,7 +263,7 @@ flowchart RL
 
 ## 📚 المراجع (References)
 - Varian, H. R., "Markets for Information Goods", 1998 paper, University of California, Berkeley: https://people.ischool.berkeley.edu/~hal/Papers/japan/japan.html
-- Cagan, M., "Product Risk Taxonomies", Silicon Valley Product Group: https://svpg.com/product-risk-taxonomies
+- Cagan, M., "Product Risk Taxonomy", Silicon Valley Product Group, 10 July 2023: https://www.svpg.com/product-risk-taxonomies/
 - Cagan, M., *Inspired: How to Create Tech Products Customers Love*, 2nd edition (Wiley, 2018).
 - Graham, P., "Do Things that Don't Scale", July 2013: https://paulgraham.com/ds.html
 - من المكتبة: [*إدارة تقنية المعلومات كعمل تجاري*، الدرس 2.1 — المنتجات الرقمية والخدمات والمشاريع: ما كل منها ومن يملكه](../itbiz/index.ar.html#/2.1).
@@ -311,7 +311,7 @@ flowchart RL
 
 يمكن التحقق من الصيغة القوية بمراقبة ذروة غداء واحدة، وهي تترك مجالًا لحلول غير التطبيق.
 
-**المهام المطلوب إنجازها.** **المهمة المطلوب إنجازها** هي التقدّم الذي يسعى إليه شخص في موقف معيّن. نشر الفكرةَ Clayton Christensen في كتاب *The Innovator's Solution* (2003، مع Michael Raynor)، وأعاد صياغتها في مقال «Know Your Customers' Jobs to Be Done» (*Harvard Business Review*، سبتمبر 2016)؛ وطوّر آخرون، أبرزهم Anthony Ulwick، مناهج قريبة منها. فالناس «يستأجرون» منتجًا ليتقدّموا، و«يفصلونه» حين يؤدي شيء آخر المهمة أفضل منه.
+**المهام المطلوب إنجازها.** **المهمة المطلوب إنجازها** هي التقدّم الذي يسعى إليه شخص في موقف معيّن. تُنسب الفكرة عادةً إلى Clayton Christensen، ويُذكَر أنه نشرها في كتاب *The Innovator's Solution* (2003، مع Michael Raynor)، ثم أعاد صياغتها مع مؤلفين مشاركين في مقال «Know Your Customers' Jobs to Be Done» (*Harvard Business Review*، سبتمبر 2016)؛ وطوّر آخرون، أبرزهم Anthony Ulwick، مناهج قريبة منها. فالناس «يستأجرون» منتجًا ليتقدّموا، و«يفصلونه» حين يؤدي شيء آخر المهمة أفضل منه.
 
 صاحبة مخبز معها طلب هاتفي وطابور من الزبائن لا تريد «برمجيات تنسيق التوصيل»؛ مهمتها «أن يصل هذا الطلب إلى الزبون دافئًا وفي موعده، دون أن أترك الكاونتر». وقافلة، وابن أخ يملك دراجة نارية، ومندوب تعرفه صاحبة المخبز، كلهم يستطيعون أداء هذه المهمة: فكلهم منافسون.
 
@@ -574,7 +574,7 @@ flowchart RL
 | **كيف يصل إليهم؟** | تزور مها المتاجر بنفسها؛ وتطبيقا التاجر والمندوب؛ وصفحة الويب الإدارية |
 | **كم يكلّف تقديمه؟** | الخدمات السحابية، والرسائل، والخرائط، ووقت الفريق، وتنسيق المندوبين |
 
-ومن القوالب واسعة الاستخدام في صفحة واحدة **لوحة نموذج العمل (Business Model Canvas)**، التي ابتكرها Alexander Osterwalder مع Yves Pigneur وتنشرها Strategyzer: تسعة مربعات من شرائح العملاء إلى هيكل التكاليف. ويُذكَر أنها متاحة بترخيص Creative Commons Attribution-ShareAlike. مفيدة في ورش العمل، وليست إلزامية.
+ومن القوالب واسعة الاستخدام في صفحة واحدة **لوحة نموذج العمل (Business Model Canvas)**، التي ابتكرها Alexander Osterwalder (مؤلف كتاب *Business Model Generation* مع Yves Pigneur) وتنشرها Strategyzer: تسع لبنات من شرائح العملاء إلى هيكل التكاليف. وتقول Strategyzer إن اللوحة صدرت بترخيص Creative Commons، وتطلب من كل من يستخدمها ذكر مصدرها. مفيدة في ورش العمل، وليست إلزامية.
 
 **طرق شائعة لتسعير المنتجات الرقمية.** أنماط لا قواعد؛ وكثير من المنتجات يمزج بينها:
 
@@ -635,7 +635,7 @@ flowchart RL
 | المصدر أو الأداة أو القالب (Resource, tool or template) | ما هو وماذا يفعل (What it is and does) | متى تلجأ إليه (When to reach for it) |
 |---|---|---|
 | **Business model in four questions** — نموذج العمل في أربعة أسئلة | من يدفع، ومقابل ماذا، وكيف يصل إليه، وكم يكلّف تقديمه | عند بدء منتج، أو حين يصفه الناس بطرق مختلفة |
-| **Business Model Canvas** — لوحة نموذج العمل | قالب من صفحة واحدة وتسعة مربعات من Alexander Osterwalder مع Yves Pigneur، تنشره Strategyzer | في ورش العمل حين تفيد صورة مشتركة؛ ليس إلزاميًا |
+| **Business Model Canvas** — لوحة نموذج العمل | قالب من صفحة واحدة وتسعة مربعات ابتكره Alexander Osterwalder، وتنشره Strategyzer | في ورش العمل حين تفيد صورة مشتركة؛ ليس إلزاميًا |
 | **Unit-economics sheet** — ورقة اقتصاديات الوحدة | الإيراد لكل وحدة، وكل تكلفة متغيرة مع مصدرها ودرجة الثقة بها، والمساهمة | قبل التسعير، ثم كل شهر بعده |
 
 ## 🏛️ عمليًا في قافلة (In practice at Qafila)

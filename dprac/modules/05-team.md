@@ -34,11 +34,11 @@ Nobody had been told to stay quiet; the team had learned it from small reactions
 
 **Who decides, who does, who is asked, who is told.** For each recurring decision, a **decision table** names who **decides** (exactly one person or named forum, who answers for the call), who **does** the work, who must be **asked** before (few, each with a real reason) and who is **told** after (anyone affected). This is a simplified responsibility chart (a widely used variant is called RACI). The habit matters more than the tool: one decider per decision, written down. If the decider depends on a threshold (an amount, a risk level), write two rows, each with one decider.
 
-**Psychological safety.** The organisational researcher Amy Edmondson defined team psychological safety, in a 1999 study of 51 work teams in a manufacturing company, as a shared belief that the team is safe for interpersonal risk taking. She found it was associated with learning behaviour (asking for help, seeking feedback, discussing errors), which in turn was linked to team performance (as reported from the paper's abstract). In everyday terms: people can ask a basic question, say "I made a mistake" or tell someone senior "I think this will break", without fearing humiliation or punishment.
+**Psychological safety.** The organisational researcher Amy Edmondson defined team psychological safety, in a 1999 study of 51 work teams in a manufacturing company, as a shared belief that the team is safe for interpersonal risk taking. She found it was associated with learning behaviour (asking for help, seeking feedback, discussing errors), which in turn was linked to team performance (according to the paper's abstract). In everyday terms: people can ask a basic question, say "I made a mistake" or tell someone senior "I think this will break", without fearing humiliation or punishment.
 
 ### 🟡 Going deeper
 
-**What the research says, and what it does not.** DORA, a long-running research programme on software delivery, has a culture guide that draws on the sociologist Ron Westrum's typology of organisations by how they handle information, and reports that a high-trust culture that emphasises information flow is predictive of software delivery and organisational performance (as reported from the DORA page). Read such results as findings about particular samples, not laws. Westrum's typology gives a test: are messengers who bring bad news punished, neglected or trained (as reported from DORA's summary of Westrum)? This course's everyday reading of "trained": the messenger is thanked and helped to bring the next warning sooner. Qafila's "probably the merchant's wifi" reply taught Salma that early, uncertain bad news was not welcome.
+**What the research says, and what it does not.** DORA, a long-running research programme on software delivery, has a culture guide that draws on the sociologist Ron Westrum's typology of organisations by how they handle information, and reports that a high-trust culture that emphasises information flow is predictive of software delivery and organisational performance. Read such results as findings about particular samples, not laws. Westrum's typology gives a test: are messengers who bring bad news punished, neglected or trained (in DORA's table of Westrum's typology)? This course's everyday reading of "trained": the messenger is thanked and helped to bring the next warning sooner. Qafila's "probably the merchant's wifi" reply taught Salma that early, uncertain bad news was not welcome.
 
 **Safety is not comfort.** Psychological safety does not mean everyone agrees or poor work is accepted. Safety with low standards drifts; high standards without safety make people hide mistakes. Learning happens where standards are high *and* it is safe to say "this is not good enough yet".
 
@@ -249,9 +249,9 @@ Least clear before: the delivery fee, because Bilal, Aisha and Maha had each cha
 </details>
 
 ## 📚 References
-- Edmondson, A. (1999). "Psychological Safety and Learning Behavior in Work Teams". *Administrative Science Quarterly*, 44(2), 350–383. https://doi.org/10.2307/2666999 — definition; 51 teams; link to learning behaviour and performance (reported from search summaries of the abstract; not opened).
-- DORA, "Capabilities: Generative organizational culture": https://dora.dev/capabilities/generative-organizational-culture/ — Westrum's typology (how messengers are treated: punished, neglected or trained); high-trust, information-flow culture predicts performance (reported from search summaries; not opened).
-- Westrum, R. (2004). "A typology of organisational cultures". *Quality and Safety in Health Care*, 13(suppl 2), ii22–ii27. https://doi.org/10.1136/qshc.2003.009522 — the three culture types (cited via DORA; not opened).
+- Edmondson, A. (1999). "Psychological Safety and Learning Behavior in Work Teams". *Administrative Science Quarterly*, 44(2), 350–383. https://doi.org/10.2307/2666999 — definition; 51 teams; link to learning behaviour and performance (from the publisher's abstract in the paper's Crossref record).
+- DORA, "Capabilities: Generative organizational culture": https://dora.dev/capabilities/generative-organizational-culture/ — Westrum's typology (how messengers are treated: punished, neglected or trained); high-trust, information-flow culture predicts performance.
+- Westrum, R. (2004). "A typology of organisational cultures". *Quality and Safety in Health Care*, 13(suppl 2), ii22–ii27. https://doi.org/10.1136/qshc.2003.009522 — the three culture types (cited via DORA's summary; the paper's abstract was read on PubMed Central).
 - Library course: [*Cloud & DevOps: Zero to Hero*, lesson 5.3 — Incidents and blameless postmortems](../cloud/index.html#/5.3).
 - Library course: [*From Graduate to Hired*, lesson 6.2 — Your first 90 days: onboarding, the first pull request and asking good questions](../career/index.html#/6.2).
 - Library course: [*Running IT as a Business*, lesson 2.2 — Designing a product-aligned operating model: product, platform and enabling teams](../itbiz/index.html#/2.2).
@@ -316,9 +316,9 @@ The lengths are common practice, not rules. An **iteration goal** is one sentenc
 
 ### 🟡 Going deeper
 
-**Scrum, briefly.** Scrum is a widely used framework for iteration-based work, described in the freely licensed *The Scrum Guide™* (Ken Schwaber and Jeff Sutherland, November 2020). In it, a team of typically ten or fewer works in fixed-length Sprints of one month or less, with a Product Owner who orders the backlog, Developers, and a Scrum Master who helps the team use Scrum well (as reported from summaries of the guide). If your team uses Scrum, read the short guide itself.
+**Scrum, briefly.** Scrum is a widely used framework for iteration-based work, described in the freely licensed *The Scrum Guide™* (Ken Schwaber and Jeff Sutherland, November 2020). In it, a team of typically ten or fewer works in fixed-length Sprints of one month or less, with a Product Owner who orders the backlog, Developers, and a Scrum Master who helps the team use Scrum well. If your team uses Scrum, read the short guide itself.
 
-**Kanban and flow, briefly.** Kanban visualises work and limits work in progress, without fixed iterations; *The Kanban Guide* describes it, and lesson 5.3 teaches the practice.
+**Kanban and flow, briefly.** Kanban has no fixed iterations. *The Kanban Guide* (May 2025 edition) describes it as defining and visualising a workflow, actively managing the items in it (including controlling work in progress) and improving it; lesson 5.3 teaches the practice.
 
 **Iterations or flow?** Both work. Pick by the team's situation:
 
@@ -516,9 +516,9 @@ Qafila requests (all figures illustrative):
 </details>
 
 ## 📚 References
-- *Manifesto for Agile Software Development* (2001): https://agilemanifesto.org/ — the four value statements (reported from search summaries; not opened).
-- Schwaber, K. and Sutherland, J. (November 2020). *The Scrum Guide™*. https://scrumguides.org/scrum-guide.html — Scrum Team typically ten or fewer people; Product Owner, Scrum Master and Developers; Sprints of one month or less (reported from search summaries; not opened). Licensed under Creative Commons Attribution-ShareAlike.
-- *The Kanban Guide* (2020 edition), published at https://kanbanguides.org/ — definition of workflow, visualisation and work-in-progress control (reported from search summaries; not opened).
+- *Manifesto for Agile Software Development* (2001): https://agilemanifesto.org/ — the four value statements.
+- Schwaber, K. and Sutherland, J. (November 2020). *The Scrum Guide™*. https://scrumguides.org/scrum-guide.html — Scrum Team typically ten or fewer people; Product Owner, Scrum Master and Developers; Sprints of one month or less. Licensed under Creative Commons Attribution-ShareAlike.
+- Coleman, J. and Vacanti, D. (May 2025). *The Kanban Guide*. https://kanbanguides.org/the-kanban-guide/ — definition of workflow, visualisation and work-in-progress control.
 - Library course: [*Running IT as a Business*, lesson 4.2 — From requirement to backlog, with traceability](../itbiz/index.html#/4.2).
 - Library course: [*Software Testing: Zero to Hero in the AI Era*, lesson 5.3 — Exploratory testing, agile teams and BDD: working with developers, product owners and users](../testing/index.html#/5.3).
 
@@ -576,7 +576,7 @@ In a stable system work arrives about as fast as it finishes, so throughput can 
 
 Worked example (illustrative): 14 items in progress, about 7 finished a week, so an item takes on average 14 ÷ 7 = 2 weeks. Cut WIP to 7 at the same pace and it takes about 1 week. Nobody worked harder; items spent less time waiting. The law holds for long-run averages in a fairly stable system, so expect the direction to be right and the numbers to wobble.
 
-**Four flow measures.** A team needs only a few numbers, collected from the board, to see its flow. *The Kanban Guide* names these four as its basic flow measures (as reported from summaries of the guide):
+**Four flow measures.** A team needs only a few numbers, collected from the board, to see its flow. *The Kanban Guide* names these four as the minimum flow metrics a Kanban system must track:
 
 | Measure | What it is | What it tells you |
 |---|---|---|
@@ -589,7 +589,7 @@ An item in progress for twice the usual cycle time deserves a conversation at to
 
 **Walk the board, right to left.** At the daily check-in, instead of going round the people ("what did you do yesterday?"), go through the board from the right: what is closest to done, what blocks it, who can help? This keeps attention on finishing (the fix for the trap Qafila found in lesson 5.2).
 
-**What the research reports.** DORA, the software delivery research programme met in lesson 5.1, describes WIP limits and visual displays of work, combined with other **lean practices** (habits from lean manufacturing that cut waiting and waste), as associated with better delivery performance. It advises limits that reflect real capacity, including support and meetings, and fixing the cause of a delay rather than raising a limit (as reported from DORA's pages). These practices are at the core of Kanban, as described in *The Kanban Guide*.
+**What the research reports.** DORA, the software delivery research programme met in lesson 5.1, reports that WIP limits help improve software delivery performance, particularly when combined with visual displays of work and feedback from monitoring production. It advises limits that reflect real capacity, including support and meetings, and fixing the cause of a delay rather than raising a limit. These practices are at the core of Kanban, as described in *The Kanban Guide*.
 
 ### 🔴 Expert view
 
@@ -763,9 +763,9 @@ Data (illustrative): over four weeks, WIP was 12, 13, 11 and 12 items at the end
 </details>
 
 ## 📚 References
-- Little, J. D. C. (1961). "A Proof for the Queuing Formula: L = λW". *Operations Research*, 9(3), 383–387. https://doi.org/10.1287/opre.9.3.383 — the proof of Little's Law (reported from search summaries of the bibliographic record; the full text was not opened).
-- DORA, "Capabilities: Work in process limits": https://dora.dev/capabilities/wip-limits/ — limits that reflect real capacity including support and meetings; improve the cause of delays rather than raising limits (reported from search summaries; the page could not be opened from this environment on 2026-11-22).
-- DORA, "Capabilities: Visual management": https://dora.dev/capabilities/visual-management/ — visual displays combined with WIP limits and production feedback associated with higher delivery performance; involve the team in choosing measures (reported from search summaries; not opened).
-- *The Kanban Guide* (2020 edition), published at https://kanbanguides.org/ — definition of workflow, Kanban board and WIP control; the four flow measures (WIP, throughput, work item age, cycle time) (reported from search summaries; not opened).
+- Little, J. D. C. (1961). "A Proof for the Queuing Formula: L = λW". *Operations Research*, 9(3), 383–387. https://doi.org/10.1287/opre.9.3.383 — the proof of Little's Law (from the publisher's abstract in the paper's Crossref record).
+- DORA, "Capabilities: Work in process limits": https://dora.dev/capabilities/wip-limits/ — limits that reflect real capacity including support and meetings; improve the cause of delays rather than raising limits.
+- DORA, "Capabilities: Visual management": https://dora.dev/capabilities/visual-management/ — visual displays combined with WIP limits and production feedback can contribute to higher delivery performance; involve the team in choosing measures.
+- Coleman, J. and Vacanti, D. (May 2025). *The Kanban Guide*. https://kanbanguides.org/the-kanban-guide/ — definition of workflow, Kanban board and WIP control; the four flow metrics (WIP, throughput, work item age, cycle time).
 - Library course: [*Running IT as a Business*, lesson 1.3 — Flow and delivery metrics that matter, and the ones that mislead](../itbiz/index.html#/1.3).
 - Library course: [*Running IT as a Business*, lesson 1.1 — From projects to value: outcomes, value streams and flow](../itbiz/index.html#/1.1).

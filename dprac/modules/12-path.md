@@ -70,9 +70,9 @@ Yasmin's receipts belong under "Notify a merchant", which already has two applic
 
 ### 🟡 Going deeper
 
-**Technology standards as a radar.** Many companies publish their technology standards as a **technology radar**: rings that say how much the company trusts each technology. The format was made popular by the consultancy Thoughtworks, whose radar uses four rings (adopt, trial, assess, hold) and which encourages companies to build their own. In plain words:
+**Technology standards as a radar.** Many companies publish their technology standards as a **technology radar**: rings that say how much the company trusts each technology. The format was made popular by the consultancy Thoughtworks, whose radar uses four rings (adopt, trial, assess and caution; its 2016 guide to building your own radar calls the last ring hold) and which encourages companies to build their own. Many company radars use hold, as Qafila's does. In plain words:
 
-| Ring (Thoughtworks' word) | Plain meaning for a team |
+| Ring (common names) | Plain meaning for a team |
 |---|---|
 | **Adopt** | The default. Use it without asking. |
 | **Trial** | Allowed for real work, with care; tell the platform team so they learn with you |

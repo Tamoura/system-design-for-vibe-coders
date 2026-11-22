@@ -263,7 +263,7 @@ Ranking: the button first (observed pain); dark mode second, if couriers confirm
 
 ## 📚 References
 - Varian, H. R., "Markets for Information Goods", 1998 paper, University of California, Berkeley: https://people.ischool.berkeley.edu/~hal/Papers/japan/japan.html
-- Cagan, M., "Product Risk Taxonomies", Silicon Valley Product Group: https://svpg.com/product-risk-taxonomies
+- Cagan, M., "Product Risk Taxonomy", Silicon Valley Product Group, 10 July 2023: https://www.svpg.com/product-risk-taxonomies/
 - Cagan, M., *Inspired: How to Create Tech Products Customers Love*, 2nd edition (Wiley, 2018).
 - Graham, P., "Do Things that Don't Scale", July 2013: https://paulgraham.com/ds.html
 - Library course: [*Running IT as a Business*, lesson 2.1 — Digital products, services and projects: what each is and who owns it](../itbiz/index.html#/2.1).
@@ -311,7 +311,7 @@ The survey gave confidence, not evidence. They need to see what happens in a sho
 
 The strong version can be checked by watching a lunch rush, and leaves room for solutions other than an app.
 
-**Jobs to be done.** A **job to be done** is the progress a person is trying to make in a particular situation. The idea was popularised by Clayton Christensen in *The Innovator's Solution* (2003, with Michael Raynor), and restated in "Know Your Customers' Jobs to Be Done" (*Harvard Business Review*, September 2016); others, notably Anthony Ulwick, developed related methods. People "hire" a product to make progress, and "fire" it when something else does the job better.
+**Jobs to be done.** A **job to be done** is the progress a person is trying to make in a particular situation. The idea is widely credited to Clayton Christensen, who is reported to have popularised it in *The Innovator's Solution* (2003, with Michael Raynor) and who restated it with co-authors in "Know Your Customers' Jobs to Be Done" (*Harvard Business Review*, September 2016); others, notably Anthony Ulwick, developed related methods. People "hire" a product to make progress, and "fire" it when something else does the job better.
 
 A bakery owner with a phone order and a queue does not want "delivery-coordination software"; the job is "get this order to the customer warm and on time, without leaving the counter". Qafila, a nephew with a motorbike or a courier the owner knows can all do that job: they are all competitors.
 
@@ -574,7 +574,7 @@ Maha looks at her week: about 45 minutes every morning checking courier assignme
 | **How does it reach them?** | Maha visits shops in person; the merchant and courier apps; the admin web page |
 | **What does it cost to deliver?** | Cloud services, messages, maps, the team's time, courier coordination |
 
-A widely used one-page template is the **Business Model Canvas**, created by Alexander Osterwalder with Yves Pigneur and published by Strategyzer: nine boxes from customer segments to cost structure. It is reported to be shared under a Creative Commons Attribution-ShareAlike licence. Useful in workshops; not required.
+A widely used one-page template is the **Business Model Canvas**, created by Alexander Osterwalder (co-author, with Yves Pigneur, of *Business Model Generation*) and published by Strategyzer: nine building blocks from customer segments to cost structure. Strategyzer says the canvas was released under a Creative Commons licence and asks anyone using it to credit the source. Useful in workshops; not required.
 
 **Common ways digital products charge.** Patterns, not rules; many products mix them:
 
@@ -635,7 +635,7 @@ A flat price hides this per customer: a busy shop on a fixed fee can cost more t
 | Resource, tool or template | What it is and does | When to reach for it |
 |---|---|---|
 | **Business model in four questions** | Who pays, for what, how it reaches them, what it costs to deliver | When starting a product, or when people describe it differently |
-| **Business Model Canvas** | A one-page, nine-box template by Alexander Osterwalder with Yves Pigneur, published by Strategyzer | In workshops where a shared visual helps; not required |
+| **Business Model Canvas** | A one-page, nine-box template created by Alexander Osterwalder, published by Strategyzer | In workshops where a shared visual helps; not required |
 | **Unit-economics sheet** | Revenue per unit, each variable cost with source and confidence, contribution | Before pricing, and monthly after |
 
 ## 🏛️ In practice at Qafila
