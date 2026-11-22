@@ -61,13 +61,13 @@ You cannot maximise all of them: splitting into many services can improve change
 | **Modular monolith** | One deployable application, split inside into modules that each own their data and are reached only through an interface | Most of the simplicity, with clear ownership | Boundaries need discipline and tooling; still one deploy |
 | **Services** (microservices when small) | Separate applications, each deployed on its own and owning its data, talking over the network | Teams deploy independently; parts scale and fail separately | Network failures, more to monitor and secure, harder testing, higher running cost |
 
-Martin Fowler's 2015 article "MonolithFirst" reported that almost all the successful many-service systems he had heard of began as a monolith that was later split (reported). The lesson: split when you know where the boundaries are and can afford to run what you create. For a single developer's view, see [*System Design for Vibe Coders*, lesson 9.1 — You Are the Architect Now](../vibe/index.en.html#l9-1).
+Martin Fowler's 2015 article "MonolithFirst" reported that almost all the successful many-service systems he had heard of began as a monolith that was later split. The lesson: split when you know where the boundaries are and can afford to run what you create. For a single developer's view, see [*System Design for Vibe Coders*, lesson 9.1 — You Are the Architect Now](../vibe/index.en.html#l9-1).
 
-**How hard is it to undo?** Amazon's 2015 letter to shareholders separated "Type 1" decisions, consequential and hard to reverse, which deserve careful thought, from "Type 2" decisions, cheap to reverse, which small groups should make quickly; the letter describes these as one-way and two-way doors (reported). A library inside one module is usually easy to reverse; how data is split between stores, or a public API merchants' systems call, is usually hard. Ask "if this is wrong, how many teams and weeks to undo it?" One team, days: decide in the team. Several teams, months: write a record and seek wide advice.
+**How hard is it to undo?** Amazon's 2015 letter to shareholders separated "Type 1" decisions, consequential and hard to reverse, which deserve careful thought, from "Type 2" decisions, cheap to reverse, which small groups should make quickly; the letter describes these as one-way and two-way doors. A library inside one module is usually easy to reverse; how data is split between stores, or a public API merchants' systems call, is usually hard. Ask "if this is wrong, how many teams and weeks to undo it?" One team, days: decide in the team. Several teams, months: write a record and seek wide advice.
 
-**Conway's law.** In "How Do Committees Invent?" (*Datamation*, April 1968), Melvin Conway argued that organisations which design systems are constrained to produce designs that copy their own communication structures. Lesson 8.1 used this to draw team boundaries. DORA (lesson 3.3) calls architecture and teams loosely coupled when a team can test, deploy and change its part without depending on other teams (reported). Draw code boundaries where team boundaries can follow.
+**Conway's law.** In "How Do Committees Invent?" (*Datamation*, April 1968), Melvin Conway argued that organisations which design systems are constrained to produce designs that copy their own communication structures. Lesson 8.1 used this to draw team boundaries. DORA (lesson 3.3) calls architecture and teams loosely coupled when a team can test, deploy and change its part without depending on other teams. Draw code boundaries where team boundaries can follow.
 
-**Pictures that help.** Simon Brown's free **C4 model** describes a system at four levels of zoom: system context, containers (the separately running applications and data stores), components and code (reported). The first two levels are enough for most decisions. Yasmin's container view:
+**Pictures that help.** Simon Brown's free **C4 model** describes a system at four levels of zoom: system context, containers (the separately running applications and data stores), components and code. The first two levels are enough for most decisions. Yasmin's container view:
 
 ```mermaid
 flowchart LR
@@ -87,7 +87,7 @@ It showed the problem at once: almost everything goes through one application an
 
 **Who decides what.** Match the process to reversibility: easy-to-reverse choices inside one team's part, the team decides; hard-to-reverse or cross-team choices, a named decision maker (often the Head of Engineering) decides after a written record and open review; costly company-wide choices go to leadership with a business case (Module 10). Many organisations add an **architecture advice forum**, a short, open, regular meeting where draft records get advice from the people affected. If it becomes a slow gate, teams route around it.
 
-**Fitness checks.** A **fitness check** is an automated test of an architectural rule, run in the CI pipeline from lesson 3.2: "no module reads another module's tables", or "every service has a health endpoint" (an address that answers whether the service is running). The usual name, **architecture fitness function**, was popularised by the book *Building Evolutionary Architectures* by Neal Ford, Rebecca Parsons and Patrick Kua (reported). Without such checks, boundaries erode one "quick fix" at a time.
+**Fitness checks.** A **fitness check** is an automated test of an architectural rule, run in the CI pipeline from lesson 3.2: "no module reads another module's tables", or "every service has a health endpoint" (an address that answers whether the service is running). The usual name, **architecture fitness function**, comes from the book *Building Evolutionary Architectures* (2017) by Neal Ford, Rebecca Parsons and Patrick Kua. Without such checks, boundaries erode one "quick fix" at a time.
 
 **Decision records that age well.** Lesson 2.3 introduced the **architecture decision record (ADR)**, in the format Michael Nygard proposed in 2011 (title, context, decision, status, consequences). At Scale-up, add: a **trade-off table** with honest marks; a **review-by trigger**, the signal or date to look again; and **superseding, not editing**: a changed mind gets a new record, and the old one stays so the next person can see why it made sense.
 
@@ -257,12 +257,12 @@ Faisal's ten-service plan became a series of records, one boundary at a time. Da
 
 ## 📚 References
 - Michael Nygard, "Documenting Architecture Decisions", Cognitect blog, 15 November 2011: https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions
-- Martin Fowler, "MonolithFirst", 3 June 2015: https://martinfowler.com/bliki/MonolithFirst.html (as reported).
-- Melvin E. Conway, "How Do Committees Invent?", *Datamation* 14(4), April 1968, pp. 28–31; the author's copy: https://www.melconway.com/Home/Committees_Paper.html (as reported); scan of the issue: http://www.bitsavers.org/magazines/Datamation/196804.pdf
-- Jeffrey P. Bezos, 2015 letter to shareholders, Amazon.com, Inc. (Type 1 and Type 2 decisions), as reported.
+- Martin Fowler, "MonolithFirst", 3 June 2015: https://martinfowler.com/bliki/MonolithFirst.html
+- Melvin E. Conway, "How Do Committees Invent?", *Datamation* 14(4), April 1968, pp. 28–31; the author's copy: https://www.melconway.com/Home/Committees_Paper.html; scan of the issue: http://www.bitsavers.org/magazines/Datamation/196804.pdf
+- Jeffrey P. Bezos, 2015 letter to shareholders, Amazon.com, Inc. (Type 1 and Type 2 decisions): https://s2.q4cdn.com/299287126/files/doc_financials/annual/2015-Letter-to-Shareholders.PDF
 - DORA, "Loosely coupled teams": https://dora.dev/capabilities/loosely-coupled-teams/
-- Simon Brown, The C4 model: https://c4model.com/ (as reported).
-- Neal Ford, Rebecca Parsons and Patrick Kua, *Building Evolutionary Architectures*, O'Reilly, 2017, as reported.
+- Simon Brown, The C4 model: https://c4model.com/
+- Neal Ford, Rebecca Parsons and Patrick Kua, *Building Evolutionary Architectures*, O'Reilly, 2017; the authors' site: https://evolutionaryarchitecture.com/ffkatas/
 - Library course: [*Running IT as a Business*, lesson 4.3 — Architecture, non-functional requirements and the runway](../itbiz/index.html#/4.3).
 - Library course: [*System Design for Vibe Coders*, lesson 9.1 — You Are the Architect Now](../vibe/index.en.html#l9-1).
 - Library course: [*A Practical Guide to Becoming an AI-Native Engineer*, lesson 11.2 — Lab: an ADR with a critic, docs checked against code and a postmortem that sticks to the facts](../ainative/index.html#/11.2).
@@ -312,7 +312,7 @@ Hamad, now head of data, and Dana asked every team for a data inventory. Yasmin 
 
 **Owners and stewards.** A **data owner** is accountable for a dataset: decides what it means, who may use it and how long it is kept. A **data steward** looks after it day to day: definitions, quality, questions. The platform team runs the storage, but that does not make it the owner. The owner is usually the team whose product creates the data: Merchant Orders owns order data.
 
-**Quality, in six words.** **Data quality** means data good enough for its purpose. A widely used set of six dimensions was popularised by DAMA UK's 2013 paper on data quality dimensions and adopted in the UK government's Data Quality Framework (reported). In this course's words:
+**Quality, in six words.** **Data quality** means data good enough for its purpose. A widely used set of six dimensions was set out by a DAMA UK working group (in a paper reported to date from 2013) and is used in the UK government's Data Quality Framework (2020). In this course's words:
 
 | Dimension | Question | Qafila check |
 |---|---|---|
@@ -342,7 +342,7 @@ Hamad, now head of data, and Dana asked every team for a data inventory. Yasmin 
 
 Dana owns the scheme; each data owner applies it to their rows.
 
-**Personal data and privacy.** **Personal data** is information about an identifiable person: a courier's name or location trail, a merchant owner's phone, a customer's address. **Privacy** means using it only in ways people would reasonably expect and the rules allow. Laws differ by country but share ideas. Article 5 of the EU's General Data Protection Regulation (GDPR), for example, includes specified purposes, collecting only what is needed, accuracy, keeping data identifiable no longer than necessary, and being able to show compliance (reported). For the Gulf and other regions, see [*AI Governance: Zero to Hero*, lesson 4.3 — DPIAs and the global privacy map, from the EU to the GCC](../aigp/index.html#/4.3).
+**Personal data and privacy.** **Personal data** is information about an identifiable person: a courier's name or location trail, a merchant owner's phone, a customer's address. **Privacy** means using it only in ways people would reasonably expect and the rules allow. Laws differ by country but share ideas. Article 5 of the EU's General Data Protection Regulation (GDPR), for example, includes specified purposes, collecting only what is needed, accuracy, keeping data identifiable no longer than necessary, and being able to show compliance. For the Gulf and other regions, see [*AI Governance: Zero to Hero*, lesson 4.3 — DPIAs and the global privacy map, from the EU to the GCC](../aigp/index.html#/4.3).
 
 A practitioner's habit is a **privacy question card**, not a legal judgement:
 
@@ -512,9 +512,9 @@ Yasmin had assumed "keep order details forever" was safest. Bilal said accountin
 </details>
 
 ## 📚 References
-- Regulation (EU) 2016/679 (General Data Protection Regulation), Article 5, EUR-Lex: https://eur-lex.europa.eu/eli/reg/2016/679/oj (as reported).
+- Regulation (EU) 2016/679 (General Data Protection Regulation), Article 5, EUR-Lex: https://eur-lex.europa.eu/eli/reg/2016/679/oj
 - DAMA UK Working Group, *The Six Primary Dimensions for Data Quality Assessment*, white paper, October 2013 (as reported).
-- UK Government Data Quality Hub, *The Government Data Quality Framework*, GOV.UK, 2020 (as reported).
+- UK Government Data Quality Hub, *The Government Data Quality Framework*, GOV.UK, 3 December 2020: https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework
 - Library course: [*Data Engineering & Analytics: Zero to Hero*, lesson 3.2 — Data quality: tests, contracts and observability](../data/index.html#/3.2).
 - Library course: [*Data Engineering & Analytics: Zero to Hero*, lesson 4.1 — Defining metrics: one definition, a semantic layer and a metrics catalogue](../data/index.html#/4.1).
 - Library course: [*Data Engineering & Analytics: Zero to Hero*, lesson 6.1 — Data governance that works: ownership, catalogue, lineage and data contracts](../data/index.html#/6.1).
@@ -551,7 +551,7 @@ Faisal wants to rewrite Dispatch over two quarters. Aisha wants to keep shipping
 
 ### 🟢 The essentials
 
-**Where the metaphor comes from.** Ward Cunningham introduced it in a 1992 experience report about a financial system called WyCash: shipping first-time code is like going into debt, and a little debt speeds development so long as it is paid back promptly with a rewrite. Cunningham later explained that he meant refactoring the code as understanding improves (reported). Borrowing can be sensible; interest builds if you never repay.
+**Where the metaphor comes from.** Ward Cunningham introduced it in a 1992 experience report about a financial system called WyCash: shipping first-time code is like going into debt, and a little debt speeds development so long as it is paid back promptly with a rewrite. Cunningham later explained that he meant refactoring the code as understanding improves. Borrowing can be sensible; interest builds if you never repay.
 
 **What counts as technical debt.** Any part of the system that makes change slower or riskier than it needs to be:
 
@@ -567,7 +567,7 @@ Not everything old is debt. Old code that works, is understood and rarely change
 
 **Principal and interest.** The **principal** is the work to fix the shortcut. The **interest** is the extra cost each time you work around it: hours per change, incidents, slow onboarding, features avoided because the code is scary. Interest is high where code changes often.
 
-**Four kinds by how it arose.** Martin Fowler's 2009 "Technical Debt Quadrant" sorts debt as deliberate or inadvertent, and prudent or reckless (reported). In Qafila's terms:
+**Four kinds by how it arose.** Martin Fowler's 2009 "Technical Debt Quadrant" sorts debt as deliberate or inadvertent, and prudent or reckless. In Qafila's terms:
 
 | | Reckless | Prudent |
 |---|---|---|
@@ -617,7 +617,7 @@ The prudent, deliberate kind is often right at Launch; Faisal's mistake was neve
 | **Re-platform** | Move to a new platform with small changes | The platform is the problem (end of support) |
 | **Replace** | Build or buy a new part and move users to it | The design no longer fits, or a product now does the job (lesson 2.3) |
 
-**Why big rewrites go wrong.** The old system keeps changing during a rewrite, the new one must match years of unwritten rules, and no value reaches users until the end. Joel Spolsky's 2000 essay "Things You Should Never Do, Part I" called rewriting working code from scratch a serious strategic mistake (reported); others find that too absolute. Be very suspicious of all-at-once.
+**Why big rewrites go wrong.** The old system keeps changing during a rewrite, the new one must match years of unwritten rules, and no value reaches users until the end. Joel Spolsky's 2000 essay "Things You Should Never Do, Part I" called rewriting code from scratch "the single worst strategic mistake that any software company can make"; others find that too absolute. Be very suspicious of all-at-once.
 
 **Replace piece by piece.** Martin Fowler named the incremental pattern the **strangler fig** application, after a plant that grows around a tree until it replaces it, and presents it as lower-risk than a cut-over rewrite. The steps:
 
@@ -790,10 +790,10 @@ Faisal's rewrite became slice 1. In shadow the new code disagreed with the old o
 
 ## 📚 References
 - Ward Cunningham, "The WyCash Portfolio Management System", OOPSLA '92 experience report: https://c2.com/doc/oopsla92.html
-- Martin Fowler, "Technical Debt": https://martinfowler.com/bliki/TechnicalDebt.html; Agile Alliance, "Introduction to the Technical Debt Concept": https://agilealliance.org/introduction-to-the-technical-debt-concept (Cunningham's later clarification; as reported).
-- Martin Fowler, "Technical Debt Quadrant", October 2009: https://martinfowler.com/bliki/TechnicalDebtQuadrant.html (as reported).
+- Martin Fowler, "Technical Debt": https://martinfowler.com/bliki/TechnicalDebt.html; Agile Alliance, "Introduction to the Technical Debt Concept": https://agilealliance.org/introduction-to-the-technical-debt-concept (Cunningham's later clarification).
+- Martin Fowler, "Technical Debt Quadrant", October 2009: https://martinfowler.com/bliki/TechnicalDebtQuadrant.html
 - Martin Fowler, "Strangler Fig" (original 2004, since revised): https://martinfowler.com/bliki/StranglerFigApplication.html
-- Joel Spolsky, "Things You Should Never Do, Part I", 6 April 2000: https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/ (as reported).
+- Joel Spolsky, "Things You Should Never Do, Part I", 6 April 2000: https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/
 - Library course: [*Software Testing: Zero to Hero in the AI Era*, lesson 4.3 — Reliability and data testing: resilience experiments, backups, migrations and data quality](../testing/index.html#/4.3).
 - Library course: [*System Design for Vibe Coders*, lesson 8.4 — The Software You Didn't Write: Dependencies and Supply Chain](../vibe/index.en.html#l8-4).
 - Library course: [*Running IT as a Business*, lesson 4.3 — Architecture, non-functional requirements and the runway](../itbiz/index.html#/4.3).

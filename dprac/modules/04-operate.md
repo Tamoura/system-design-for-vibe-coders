@@ -290,7 +290,7 @@ One Thursday night the phone went off nine times, mostly CPU and memory alerts t
 
 ### 🟢 The essentials
 
-**Telemetry: the raw signals.** **Telemetry** is data a running system sends about itself. OpenTelemetry, an open-source project for collecting it, describes several kinds of signal; the three most used are metrics, logs and traces (its documentation also lists others, as reported from search summaries):
+**Telemetry: the raw signals.** **Telemetry** is data a running system sends about itself. OpenTelemetry, an open-source project for collecting it, lists the signals it supports as traces, metrics, logs and baggage (context passed between signals), with others such as profiles still in development. This lesson uses the first three:
 
 | Signal | Plain meaning | Qafila example | Good for |
 |---|---|---|---|
@@ -300,7 +300,7 @@ One Thursday night the phone went off nine times, mostly CPU and memory alerts t
 
 Start with journey metrics and structured logs (with named, searchable fields such as `order_id`); add traces where requests cross several services.
 
-**Symptoms first.** Google's *Site Reliability Engineering* book suggests four "golden signals" for a user-facing system: **latency** (how long requests take), **traffic** (how much demand there is), **errors** (how many requests fail) and **saturation** (how full the system is) (as reported). Translate them into your product's language:
+**Symptoms first.** Google's *Site Reliability Engineering* book suggests four "golden signals" for a user-facing system: **latency** (how long requests take), **traffic** (how much demand there is), **errors** (how many requests fail) and **saturation** (how full the system is). Translate them into your product's language:
 
 | Generic signal | Qafila's version |
 |---|---|
@@ -339,7 +339,7 @@ The Thursday-night problem would have shown up in two of these: **latency**, bec
 | **Recovery** | Time off or a late start after a bad night; pay and hours depend on employment law and contracts, so ask HR or management rather than assume |
 | **Noise review** | Every week, look at every page: needed? actionable? Fix or delete the ones that were not |
 
-Google's SRE book describes its own targets: SREs spend no more than 25% of their time on call, and there are at most two incidents per 12-hour on-call shift, so each can be handled and followed up properly (as reported from summaries of its on-call chapter). They are one company's numbers, not a standard, but the idea travels: if every shift is busy, fix the system or the alerts.
+Google's SRE book describes its own targets: SREs spend no more than 25% of their time on call, and there are at most two incidents per 12-hour on-call shift, so each can be handled and followed up properly. They are one company's numbers, not a standard, but the idea travels: if every shift is busy, fix the system or the alerts.
 
 ### 🔴 Expert view
 
@@ -347,7 +347,7 @@ Google's SRE book describes its own targets: SREs spend no more than 25% of thei
 
 **Background work is the blind spot.** Jobs that run in the background (sending offers, settling payments) fail silently, because no user request errors. Give each important job a "heartbeat" metric (last successful run, items processed) and alert when it stops. See [*System Design for Vibe Coders*, lesson 7.4 — Background Jobs: The Code Nobody Watches](../vibe/index.en.html#l7-4).
 
-**A preview: alerting on targets.** Once a journey has a reliability target (lesson 4.3), the small amount of failure the target allows is called the **error budget**. Teams can then alert on how fast that budget is being used up, the **burn rate**; Google's *Site Reliability Workbook* describes this (as reported from summaries of its "Alerting on SLOs" chapter). That is Qafila's next step once targets exist.
+**A preview: alerting on targets.** Once a journey has a reliability target (lesson 4.3), the small amount of failure the target allows is called the **error budget**. Teams can then alert on how fast that budget is being used up, the **burn rate**; Google's *Site Reliability Workbook* describes this in its "Alerting on SLOs" chapter. That is Qafila's next step once targets exist.
 
 ## 🧰 The toolkit
 | Resource, tool or template | What it is and does | When to reach for it |
@@ -503,10 +503,10 @@ The review moved Salma off the night phone: she could not act on most pages, and
 </details>
 
 ## 📚 References
-- Beyer, B., Jones, C., Petoff, J. and Murphy, N. R. (eds.), *Site Reliability Engineering: How Google Runs Production Systems* (O'Reilly, 2016), chapter 6, "Monitoring Distributed Systems": https://sre.google/sre-book/monitoring-distributed-systems/ (reported from search summaries; not opened from this environment on 2026-11-22).
-- Same book, chapter 11, "Being On-Call": https://sre.google/sre-book/being-on-call/ (reported; not opened).
-- Beyer, B. et al. (eds.), *The Site Reliability Workbook* (O'Reilly, 2018), chapter 5, "Alerting on SLOs": https://sre.google/workbook/alerting-on-slos/ (reported; not opened).
-- OpenTelemetry, "Signals": https://opentelemetry.io/docs/concepts/signals/ (reported; not opened).
+- Beyer, B., Jones, C., Petoff, J. and Murphy, N. R. (eds.), *Site Reliability Engineering: How Google Runs Production Systems* (O'Reilly, 2016), chapter 6, "Monitoring Distributed Systems": https://sre.google/sre-book/monitoring-distributed-systems/.
+- Same book, chapter 11, "Being On-Call": https://sre.google/sre-book/being-on-call/.
+- Beyer, B. et al. (eds.), *The Site Reliability Workbook* (O'Reilly, 2018), chapter 5, "Alerting on SLOs": https://sre.google/workbook/alerting-on-slos/.
+- OpenTelemetry, "Signals": https://opentelemetry.io/docs/concepts/signals/.
 - Library course: [*Cloud & DevOps: Zero to Hero*, lesson 5.1 — Telemetry: logs, metrics, traces and OpenTelemetry](../cloud/index.html#/5.1).
 - Library course: [*Cloud & DevOps: Zero to Hero*, lesson 5.2 — SLOs, error budgets, alerting and on-call that people can sustain](../cloud/index.html#/5.2).
 - Library course: [*Running IT as a Business*, lesson 8.1 — Monitoring, events and incident management](../itbiz/index.html#/8.1) (the manager's view).
@@ -555,7 +555,7 @@ For about two hours, orders were lost from the live system. Rolling the code bac
 | **Fixers** | Investigate and change things, saying what they will do before doing it |
 | **Scribe** (can be the lead in a small team) | Keeps a timestamped timeline of what was seen, decided and done |
 
-PagerDuty's public incident response training describes the incident commander as a coordinator who does not carry out fixes (as reported from search summaries).
+PagerDuty's public incident response guide says the incident commander's job "is to coordinate the response, not make technical changes".
 
 **Restore first, explain later.** Stop the harm: roll back, turn off a flag, use a workaround, stop writes to damaged data. Why it happened is for the review.
 
@@ -563,11 +563,11 @@ PagerDuty's public incident response training describes the incident commander a
 
 ### 🟡 Going deeper
 
-**Data incidents need extra care.** First stop further damage (pause the job, go read-only, stop the migration). Then plan recovery with two terms from NIST's glossary (as reported from search summaries): the **recovery point objective (RPO)**, the point in time to which data must be recovered, which sets how much recent data you can afford to lose; and the **recovery time objective (RTO)**, how long recovery can take before the harm becomes unacceptable. A daily backup means you could lose up to a day of changes: an RPO of 24 hours, whether or not you chose it.
+**Data incidents need extra care.** First stop further damage (pause the job, go read-only, stop the migration). Then plan recovery with two terms from NIST's glossary: the **recovery point objective (RPO)**, the point in time to which data must be recovered, which sets how much recent data you can afford to lose; and the **recovery time objective (RTO)**, how long recovery can take before the harm becomes unacceptable. A daily backup means you could lose up to a day of changes: an RPO of 24 hours, whether or not you chose it.
 
-Backups are only as good as your last successful restore. GitLab's published postmortem of its 31 January 2017 outage reports data deleted by mistake during work on replication (keeping a live copy of a database in step with it), several backup methods not working, and hours of changes lost (as reported).
+Backups are only as good as your last successful restore. GitLab's published postmortem of its 31 January 2017 outage reports data deleted by mistake during work on replication (keeping a live copy of a database in step with it), several backup methods not working, and about six hours of database changes lost.
 
-**The post-incident review.** Google's SRE book describes a postmortem culture that looks for contributing causes without blaming any individual or team, with triggers agreed in advance, such as user-visible downtime beyond a threshold or any data loss (as reported from summaries). A simple template (its "went well" and "got lucky" prompts follow the example postmortem in an appendix of the same book, as reported):
+**The post-incident review.** Google's SRE book describes a postmortem culture that looks for contributing causes without blaming any individual or team, with triggers agreed in advance, such as user-visible downtime beyond a threshold or any data loss. A simple template (its "went well" and "got lucky" prompts follow the example postmortem in Appendix D of the same book):
 
 | Section | What goes in it |
 |---|---|
@@ -588,7 +588,7 @@ Backups are only as good as your last successful restore. GitLab's published pos
 
 ### 🔴 Expert view
 
-**Reliability targets: SLI, SLO, SLA.** Three related terms, defined in Google's SRE book (as reported from summaries of its chapter on service level objectives):
+**Reliability targets: SLI, SLO, SLA.** Three related terms, defined in Google's SRE book (in its chapter on service level objectives):
 
 | Term | Plain meaning | Qafila example |
 |---|---|---|
@@ -596,7 +596,7 @@ Backups are only as good as your last successful restore. GitLab's published pos
 | **Service level objective (SLO)** | The target for that measure over a period | 99.9% of minutes in a calendar month |
 | **Service level agreement (SLA)** | A promise in a contract, often with consequences if missed | None yet: no contractual uptime promise to merchants |
 
-An SLO should be stricter than any SLA, so trouble shows before a promise breaks. And 100% is the wrong target: Google's SRE material argues that users cannot notice reliability beyond a certain point (as reported), and perfection would stop all change.
+An SLO should be stricter than any SLA, so trouble shows before a promise breaks. And 100% is the wrong target: Google's SRE book calls it "probably never the right reliability target", because beyond a certain point users typically do not notice the difference, and chasing it slows how fast changes reach them.
 
 **The error budget in minutes.** The error budget is 100% minus the target. A 30-day month has 30 × 24 × 60 = 43,200 minutes:
 
@@ -759,9 +759,10 @@ The first draft said "engineer did not test the migration properly". Salma asked
 </details>
 
 ## 📚 References
-- Beyer, B., Jones, C., Petoff, J. and Murphy, N. R. (eds.), *Site Reliability Engineering: How Google Runs Production Systems* (O'Reilly, 2016), chapter 4, "Service Level Objectives": https://sre.google/sre-book/service-level-objectives/ (reported from search summaries; not opened from this environment on 2026-11-22).
-- Same book, chapter 15, "Postmortem Culture: Learning from Failure": https://sre.google/sre-book/postmortem-culture/; the book's appendix "Example Postmortem" (reported; not opened).
-- PagerDuty, Incident Response documentation, "Incident Commander" training: https://response.pagerduty.com/training/incident_commander/ (reported; not opened).
-- NIST CSRC glossary, "Recovery Point Objective": https://csrc.nist.gov/glossary/term/recovery_point_objective and "Recovery Time Objective": https://csrc.nist.gov/glossary/term/rto (from NIST SP 800-34 Rev. 1; reported; not opened).
-- GitLab, "Postmortem of database outage of January 31", 10 February 2017: https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/ (reported; not opened).
+- Beyer, B., Jones, C., Petoff, J. and Murphy, N. R. (eds.), *Site Reliability Engineering: How Google Runs Production Systems* (O'Reilly, 2016), chapter 4, "Service Level Objectives": https://sre.google/sre-book/service-level-objectives/.
+- Same book, chapter 3, "Embracing Risk": https://sre.google/sre-book/embracing-risk/.
+- Same book, chapter 15, "Postmortem Culture: Learning from Failure": https://sre.google/sre-book/postmortem-culture/; and Appendix D, "Example Postmortem": https://sre.google/sre-book/example-postmortem/.
+- PagerDuty, Incident Response documentation, "Incident Commander" training: https://docs.pagerduty.com/ops-guides/incident-response-guide/incident-commander.
+- NIST CSRC glossary, "Recovery Point Objective": https://csrc.nist.gov/glossary/term/recovery_point_objective and "Recovery Time Objective": https://csrc.nist.gov/glossary/term/rto (both from NIST SP 800-34 Rev. 1).
+- GitLab, "Postmortem of database outage of January 31", 10 February 2017: https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/.
 - Library course: [*Cloud & DevOps: Zero to Hero*, lesson 5.3 — Incidents and blameless postmortems](../cloud/index.html#/5.3).

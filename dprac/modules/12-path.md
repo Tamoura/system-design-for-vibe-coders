@@ -70,9 +70,9 @@ Yasmin's receipts belong under "Notify a merchant", which already has two applic
 
 ### 🟡 Going deeper
 
-**Technology standards as a radar.** Many companies publish their technology standards as a **technology radar**: rings that say how much the company trusts each technology. The format was made popular by the consultancy Thoughtworks, whose radar is reported to use four rings (adopt, trial, assess, hold) and which encourages companies to build their own. In plain words:
+**Technology standards as a radar.** Many companies publish their technology standards as a **technology radar**: rings that say how much the company trusts each technology. The format was made popular by the consultancy Thoughtworks, whose radar uses four rings (adopt, trial, assess and caution; its 2016 guide to building your own radar calls the last ring hold) and which encourages companies to build their own. Many company radars use hold, as Qafila's does. In plain words:
 
-| Ring (Thoughtworks' word) | Plain meaning for a team |
+| Ring (common names) | Plain meaning for a team |
 |---|---|
 | **Adopt** | The default. Use it without asking. |
 | **Trial** | Allowed for real work, with care; tell the platform team so they learn with you |
@@ -265,7 +265,7 @@ Yasmin's mistake: her first draft placed the work under "payments and trust" bec
 </details>
 
 ## 📚 References
-The Thoughtworks pages could not be opened from this environment; the ring names are as reported in search summaries (November 2026), URLs unchecked.
+Both Thoughtworks pages were opened on 22 November 2026.
 - Thoughtworks, "Technology Radar FAQ" (the four rings): https://www.thoughtworks.com/radar/faq
 - Thoughtworks, "Build your own Technology Radar": https://www.thoughtworks.com/insights/blog/build-your-own-technology-radar
 - Library course: [*Running IT as a Business*, lesson 3.1 — From strategy to an investment portfolio](../itbiz/index.html#/3.1)
@@ -310,7 +310,7 @@ Maha asked Dana and Faisal for something short everyone could follow; this lesso
 |---|---|---|
 | 2024 DORA report (Google Cloud's research programme on software delivery) | A 25% increase in AI adoption was associated with gains such as a 3.1% increase in code review speed; as adoption increased, delivery throughput fell an estimated 1.5% and delivery stability an estimated 7.2% | Survey data; associations, not proof of cause |
 | 2025 DORA report on AI-assisted software development | 90% of survey respondents reported using AI at work; "AI doesn't fix a team; it amplifies what's already there" | Nearly 5,000 technology professionals; self-reported |
-| METR study, July 2025 | In a randomised trial, 16 experienced open-source developers took about 19% longer on tasks where AI tools were allowed, while believing they had been faster (as reported) | Experienced developers on projects they knew well; the authors warn against generalising |
+| METR study, July 2025 | In a randomised trial, 16 experienced open-source developers took about 19% longer on tasks where AI tools were allowed, while believing they had been faster | Experienced developers on projects they knew well; the authors warn against generalising, and in February 2026 METR marked these results out of date, saying developers were likely sped up more by early 2026 tools but that its new data was weak evidence |
 
 The fair reading: gains are not automatic, and depend on the basics this course has taught: small changes, good tests, review and fast feedback.
 
@@ -515,10 +515,11 @@ Faisal's first instinct had been to ban AI tools near payments. Yasmin argued th
 </details>
 
 ## 📚 References
-The two Google Cloud pages were opened on 22 November 2026; the other sources could not be opened from this environment and are as reported in search summaries (November 2026).
+All sources below were opened on 22 November 2026.
 - Google Cloud blog, "Announcing the 2024 DORA report", 22 October 2024: https://cloud.google.com/blog/products/devops-sre/announcing-the-2024-dora-report
 - Google Cloud blog, "Announcing the 2025 DORA report", 23 September 2025: https://cloud.google.com/blog/products/ai-machine-learning/announcing-the-2025-dora-report
 - METR, "Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity", 10 July 2025: https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/ (paper: https://arxiv.org/abs/2507.09089)
+- METR, "We are Changing our Developer Productivity Experiment Design", 24 February 2026: https://metr.org/blog/2026-02-24-uplift-update/
 - OWASP GenAI Security Project, Top 10 for LLM Applications 2025: https://genai.owasp.org/
 - NIST, AI RMF 1.0 (NIST AI 100-1), January 2023 (as cited in the library's *AI Governance* course): https://doi.org/10.6028/NIST.AI.100-1
 - Library course: [*Secure AI & Application Security: Zero to Hero*, lesson 6.3 — Securing AI-generated code: what coding agents get wrong](../secai/index.html#/6.3)
@@ -569,7 +570,7 @@ Most are owned by an organisation that protects the name with a trademark and ru
 | **SAFe®** | Scaled Agile, Inc. | A framework for running lean and agile delivery across many teams and a portfolio |
 | **PMBOK® Guide** | Project Management Institute (PMI); an eighth edition was reported published in 2025 | Principles and practices of project management |
 | **BABOK® Guide** | International Institute of Business Analysis (IIBA); version 3 reported released in 2015 | A body of knowledge for business analysis |
-| **SWEBOK Guide** | IEEE Computer Society; version 4.0 reported released in 2024, free for personal and academic use | A body of knowledge for software engineering |
+| **SWEBOK Guide** | IEEE Computer Society; version 4.0 released in 2024, free to download for individual, non-commercial use | A body of knowledge for software engineering |
 | **FinOps Framework** | FinOps Foundation (part of the Linux Foundation) | Practices for managing cloud and wider technology spending |
 | **The Open Group IT4IT™ Standard** | The Open Group | A model of the data and tools an IT department needs to run its own work end to end |
 | **VeriSM™** | IFDC (International Foundation for Digital Competences) | An approach to service management for digital organisations |
@@ -783,7 +784,7 @@ Yasmin's learning plan after her review, shared with her manager and with Dana a
 </details>
 
 ## 📚 References
-Owners' sites could not be opened from this environment. The Scrum Guide, TOGAF, FinOps and IT4IT pages were opened for *Running IT as a Business* on 20 November 2026; the other URLs are unchecked, with owners, editions and dates as reported in search summaries (November 2026).
+The owners' pages were opened on 22 November 2026, except PMI's, which refused automated access (PeopleCert's ownership of ITIL is from its own 2021 announcement, cited in lesson 7.2); for PMI, and for the BABOK Guide v3 date, which IIBA's page does not state, owners, editions and dates are as reported in search summaries (November 2026).
 - Schwaber, K. and Sutherland, J., *The Scrum Guide* (2020), CC BY-SA 4.0: https://scrumguides.org/scrum-guide.html
 - PeopleCert, ITIL: https://www.peoplecert.org/ITIL-4
 - ISACA, COBIT: https://www.isaca.org/cobit
@@ -792,9 +793,9 @@ Owners' sites could not be opened from this environment. The Scrum Guide, TOGAF,
 - Project Management Institute, *PMBOK® Guide*: https://www.pmi.org/standards/pmbok
 - IIBA, *BABOK® Guide* v3: https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/
 - IEEE Computer Society, *SWEBOK Guide* V4.0: https://www.computer.org/education/bodies-of-knowledge/software-engineering
-- FinOps Foundation, "What is FinOps?": https://www.finops.org/introduction/what-is-finops/
+- FinOps Foundation, "What is FinOps?": https://www.finops.org/introduction/what-is-finops/ and "About" (a project of the Linux Foundation): https://www.finops.org/about/
 - The Open Group, IT4IT™: https://www.opengroup.org/about-it4it%E2%84%A2
 - IFDC, "About VeriSM": https://verism.global/about/
-- The Open Group home page, publisher of the Digital Practitioner Body of Knowledge™ Standard (a dedicated page for the standard could not be confirmed): https://www.opengroup.org/
+- The Open Group, publisher of the Digital Practitioner Body of Knowledge™ Standard: https://www.opengroup.org/dpbok
 - Library course: [*Running IT as a Business*, lesson 12.1 — The frameworks landscape: what each is for, and how to use them without becoming their servant](../itbiz/index.html#/12.1)
 - Library course: [*From Graduate to Hired*, lesson 6.3 — Growing from junior to mid-level: feedback, ownership and continuous learning](../career/index.html#/6.3)
